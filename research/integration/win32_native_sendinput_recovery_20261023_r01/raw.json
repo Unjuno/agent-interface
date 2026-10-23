@@ -1,0 +1,19 @@
+{
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r01",
+  "cleanup_errors": [],
+  "ended_utc": "2026-10-23T14:39:41.273104+00:00",
+  "error": {
+    "detail": "prestarted cancellation helper failed readiness: recovery helper readiness timed out",
+    "type": "RuntimeError"
+  },
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "resource_commands": [],
+  "schedules": [],
+  "schema": "win32-native-sendinput-recovery-raw-v1",
+  "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "started_utc": "2026-10-23T14:39:36.011970+00:00",
+  "status": "FAIL_OR_UNKNOWN",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\runtime\\guarded_win32_v1\\process_cancellation.py\", line 60, in __init__\n    self._helpers[\"recovery\"] = self._start_helper(\n                                ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\runtime\\guarded_win32_v1\\process_cancellation.py\", line 95, in _start_helper\n    raise TimeoutError(name + \" helper readiness timed out\")\nTimeoutError: recovery helper readiness timed out\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r01\\probe.py\", line 571, in main\n    result = _run_schedule(context, owner, mode, index)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r01\\probe.py\", line 317, in _run_schedule\n    supervisor = OperationCancellationSupervisor(owner,\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\runtime\\guarded_win32_v1\\process_cancellation.py\", line 66, in __init__\n    raise RuntimeError(\nRuntimeError: prestarted cancellation helper failed readiness: recovery helper readiness timed out\n"
+}

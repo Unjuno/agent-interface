@@ -1,0 +1,176 @@
+{
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r02",
+  "cleanup_errors": [],
+  "ended_utc": "2026-10-23T14:41:46.040143+00:00",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "resource_commands": [],
+  "schedules": [
+    {
+      "cancel_response": {
+        "cleanup_deadline_ns": 457820187000000,
+        "deadline_ns": 457831984000000,
+        "obligations": [
+          "CTRL"
+        ],
+        "operation_id": "native-sendinput-r02-schedule-1",
+        "phase": "cancel_pending",
+        "producer_exit_code": null,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134372401037603805,
+          "pid": 56084
+        },
+        "recovery_id": null,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "pending",
+        "target_generation": "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "cancel_response_ms": 0.0,
+      "cancel_returned_ns": 457812187000000,
+      "fixture": {
+        "close_posted": true,
+        "closed_ns": 457814265000000,
+        "effect": null,
+        "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r02\\run\\schedule-1\\effect.json",
+        "events": [
+          {
+            "hwnd": 19268970,
+            "kind": "ready"
+          }
+        ],
+        "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r02\\run\\schedule-1\\events.jsonl",
+        "exit_code": 0,
+        "hwnd": 19268970,
+        "label": "schedule-1",
+        "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r02\\run\\schedule-1\\fixture.log",
+        "meta": {
+          "height": 220,
+          "hwnd": 19268970,
+          "width": 420
+        },
+        "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r02\\run\\schedule-1\\fixture-meta.json",
+        "owner_identity": {
+          "creation_time_100ns": 134372401031632200,
+          "pid": 42012,
+          "window_thread_id": 21576
+        },
+        "pid": 42012,
+        "started_ns": 457811390000000,
+        "target_generation": "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c",
+        "window_exists_after_exit": false
+      },
+      "helper_events": [],
+      "initial_ctrl_state": {
+        "foreground_hwnd": 19268970,
+        "monotonic_ns": 457811546000000,
+        "state": false,
+        "witness": [
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 19268970,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 42012,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 21576
+          },
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 19268970,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 42012,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 21576
+          }
+        ]
+      },
+      "mode": "blocked-before-native-call",
+      "producer_alive_after_terminal": false,
+      "producer_exitcode": -15,
+      "producer_trigger": {
+        "monotonic_ns": 457812187000000,
+        "phase": "before_native_call"
+      },
+      "state_before_cancel": {
+        "foreground_hwnd": 19268970,
+        "monotonic_ns": 457812187000000,
+        "state": false,
+        "witness": [
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 19268970,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 42012,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 21576
+          },
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 19268970,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 42012,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 21576
+          }
+        ]
+      },
+      "status": "FAIL_OR_UNKNOWN",
+      "target_generation": "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c",
+      "terminal": {
+        "cleanup_deadline_ns": 457820187000000,
+        "deadline_ns": 457831984000000,
+        "obligations": [
+          "CTRL"
+        ],
+        "operation_id": "native-sendinput-r02-schedule-1",
+        "phase": "cancel_pending",
+        "producer_exit_code": null,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134372401037603805,
+          "pid": 56084
+        },
+        "recovery_id": null,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "pending",
+        "target_generation": "896acc915d3707130e172d064553c85c4bf358668c417ce6b7bca5363ff3da0c",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "terminal_elapsed_ms": 0.0,
+      "terminal_ns": 457812187000000,
+      "timeline": [
+        {
+          "kind": "trigger_received",
+          "monotonic_ns": 457812187000000
+        },
+        {
+          "exitcode": -15,
+          "kind": "producer_exit_confirmed_by_join",
+          "monotonic_ns": 457812187000000
+        }
+      ]
+    }
+  ],
+  "schema": "win32-native-sendinput-recovery-raw-v1",
+  "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "started_utc": "2026-10-23T14:41:43.131628+00:00",
+  "status": "FAIL_OR_UNKNOWN"
+}

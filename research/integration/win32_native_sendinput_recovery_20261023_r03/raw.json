@@ -1,0 +1,4688 @@
+{
+  "attempt_id": "win32-native-sendinput-recovery-20261023-r03",
+  "cleanup_errors": [],
+  "effect_readback": {
+    "clicked": false,
+    "saved": true,
+    "text": "NATIVE-RECOVERY-EFFECT-R03"
+  },
+  "effect_readback_ns": 457858093000000,
+  "ended_utc": "2026-10-23T14:42:29.951241+00:00",
+  "fresh_effect_checks": {
+    "effect_exact": true,
+    "effect_persists_after_close": true,
+    "event_count": 28,
+    "expected_event_count": 28,
+    "fixture_exit": 0,
+    "fresh_generation": "b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f",
+    "hwnd_gone": true,
+    "previous_generations": [
+      "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+      "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046"
+    ],
+    "release_verified": true
+  },
+  "fresh_effect_fixture": {
+    "close_posted": true,
+    "closed_ns": 457858171000000,
+    "effect": {
+      "clicked": false,
+      "saved": true,
+      "text": "NATIVE-RECOVERY-EFFECT-R03"
+    },
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect\\effect.json",
+    "events": [
+      {
+        "hwnd": 19596650,
+        "kind": "ready"
+      },
+      {
+        "code": 78,
+        "kind": "char"
+      },
+      {
+        "code": 65,
+        "kind": "char"
+      },
+      {
+        "code": 84,
+        "kind": "char"
+      },
+      {
+        "code": 73,
+        "kind": "char"
+      },
+      {
+        "code": 86,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 79,
+        "kind": "char"
+      },
+      {
+        "code": 86,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 89,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 70,
+        "kind": "char"
+      },
+      {
+        "code": 70,
+        "kind": "char"
+      },
+      {
+        "code": 69,
+        "kind": "char"
+      },
+      {
+        "code": 67,
+        "kind": "char"
+      },
+      {
+        "code": 84,
+        "kind": "char"
+      },
+      {
+        "code": 45,
+        "kind": "char"
+      },
+      {
+        "code": 82,
+        "kind": "char"
+      },
+      {
+        "code": 48,
+        "kind": "char"
+      },
+      {
+        "code": 51,
+        "kind": "char"
+      },
+      {
+        "clicked": false,
+        "kind": "save",
+        "saved": true,
+        "text": "NATIVE-RECOVERY-EFFECT-R03"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 19596650,
+    "label": "fresh-effect",
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 19596650,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect\\fixture-meta.json",
+    "owner_identity": {
+      "creation_time_100ns": 134372401483590696,
+      "pid": 42520,
+      "window_thread_id": 8632
+    },
+    "pid": 42520,
+    "started_ns": 457856578000000,
+    "target_generation": "b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f",
+    "window_exists_after_exit": false
+  },
+  "platform": "Windows-10-10.0.26300-SP0",
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"0a29c832a37641e9882d7c0f77ee88bb6b5b069d0a03d6a8ed57d8ed16092240\", \"bytes\": 1472, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"input.keyboard\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 457858062000000, \"ended_ns\": 457858093000000, \"emissions\": 58, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 457858093000000}]}, \"recovery_required\": false}}}, \"report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\", \"result\": {\"status\": \"completed\", \"admission\": \"accepted\", \"required_capabilities\": [\"input.keyboard\", \"input.release_all\", \"input.text\", \"window.focus\"], \"execution\": {\"started_ns\": 457858062000000, \"ended_ns\": 457858093000000, \"emissions\": 58, \"observations\": [], \"releases\": [{\"keys_down\": [], \"buttons_down\": [], \"keys_unknown\": [], \"buttons_unknown\": [], \"state_query_witnesses\": {\"17\": [{\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}], \"83\": [{\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}, {\"target\": \"fixture\", \"hwnd\": 19596650, \"pid\": 42520, \"thread_id\": 8632, \"input_desktop\": \"Default\", \"input_desktop_active\": true, \"desktop_hookcontrol_opened\": true, \"probe_integrity_rid\": 8192, \"target_integrity_rid\": 8192}]}, \"verified\": true, \"monotonic_ns\": 457858093000000}]}, \"recovery_required\": false}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null, \"input_release_verified\": true, \"failure_detail\": null, \"validation_operation_index\": null, \"failed_operation_index\": null, \"failed_operation_effect\": null, \"execution_status\": \"completed\", \"execution_error\": null, \"execution_detail\": null, \"recovery_required\": false}, \"image_status\": \"no_observation\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_native_sendinput_recovery_20261023_r03\\\\run\\\\fresh-effect-calls\\\\dde09cd90ad149688c464cbdf485eb7f\", \"call_id\": \"dde09cd90ad149688c464cbdf485eb7f\"}",
+        "type": "text"
+      }
+    ],
+    "ended_ns": 457858093000000,
+    "is_error": false,
+    "raw_report": {
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "emissions": 58,
+          "ended_ns": 457858093000000,
+          "observations": [],
+          "releases": [
+            {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 457858093000000,
+              "state_query_witnesses": {
+                "17": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 19596650,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 42520,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 8632
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 19596650,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 42520,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 8632
+                  }
+                ],
+                "83": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 19596650,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 42520,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 8632
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 19596650,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 42520,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 8632
+                  }
+                ]
+              },
+              "verified": true
+            }
+          ],
+          "started_ns": 457858062000000
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "status": "returned"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect-calls\\dde09cd90ad149688c464cbdf485eb7f",
+      "call_id": "dde09cd90ad149688c464cbdf485eb7f",
+      "image_status": "no_observation",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "execution_detail": null,
+        "execution_error": null,
+        "execution_status": "completed",
+        "failed_operation_effect": null,
+        "failed_operation_index": null,
+        "failure_detail": null,
+        "failure_phase": null,
+        "input_release_verified": true,
+        "recovery_required": false,
+        "reported_status": "returned",
+        "validation_operation_index": null
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "emissions": 58,
+              "ended_ns": 457858093000000,
+              "observations": [],
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 457858093000000,
+                  "state_query_witnesses": {
+                    "17": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 19596650,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 42520,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 8632
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 19596650,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 42520,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 8632
+                      }
+                    ],
+                    "83": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 19596650,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 42520,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 8632
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 19596650,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 42520,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 8632
+                      }
+                    ]
+                  },
+                  "verified": true
+                }
+              ],
+              "started_ns": 457858062000000
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "input.keyboard",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1472,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "result": {
+              "admission": "accepted",
+              "execution": {
+                "emissions": 58,
+                "ended_ns": 457858093000000,
+                "observations": [],
+                "releases": [
+                  {
+                    "buttons_down": [],
+                    "buttons_unknown": [],
+                    "keys_down": [],
+                    "keys_unknown": [],
+                    "monotonic_ns": 457858093000000,
+                    "state_query_witnesses": {
+                      "17": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 19596650,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 42520,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 8632
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 19596650,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 42520,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 8632
+                        }
+                      ],
+                      "83": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 19596650,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 42520,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 8632
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 19596650,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 42520,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 8632
+                        }
+                      ]
+                    },
+                    "verified": true
+                  }
+                ],
+                "started_ns": 457858062000000
+              },
+              "recovery_required": false,
+              "required_capabilities": [
+                "input.keyboard",
+                "input.release_all",
+                "input.text",
+                "window.focus"
+              ],
+              "status": "completed"
+            },
+            "schema": "agent-interface/runtime-dispatch-result-v1",
+            "status": "returned"
+          },
+          "sha256": "0a29c832a37641e9882d7c0f77ee88bb6b5b069d0a03d6a8ed57d8ed16092240"
+        }
+      },
+      "schema": "agent-interface/review-v1"
+    },
+    "started_ns": 457858062000000
+  },
+  "public_dispatch_attempts": 1,
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"908fd0bb51dfc6e1b77ca8f2f856068b52167482e0ba3170b45682ccce4bd786\", \"bytes\": 1298, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"0d05668a796b44c8b13bb0ffcf58271e\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 120000, \"sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"width\": 300, \"height\": 100, \"target\": \"fixture\", \"native_window_id\": 19596650, \"frame\": \"window_client\", \"region\": [0, 0, 300, 100], \"capture_started_ns\": 457858046000000, \"capture_ended_ns\": 457858046000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_native_sendinput_recovery_20261023_r03\\\\run\\\\fresh-effect-calls\\\\ad4770f08afa4460b21d0e41815e89c3\\\\images\\\\bdffc2a101cd4362a405cbf20928521c.png\", \"sha256\": \"21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd\", \"bytes\": 869, \"width\": 300, \"height\": 100, \"source_raw_sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"timing_ns\": {\"started\": 457858046000000, \"converted\": 457858046000000, \"encoded\": 457858062000000, \"written\": 457858062000000}}}, \"target_generation\": \"b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\"}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"0d05668a796b44c8b13bb0ffcf58271e\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 120000, \"sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"width\": 300, \"height\": 100, \"target\": \"fixture\", \"native_window_id\": 19596650, \"frame\": \"window_client\", \"region\": [0, 0, 300, 100], \"capture_started_ns\": 457858046000000, \"capture_ended_ns\": 457858046000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_native_sendinput_recovery_20261023_r03\\\\run\\\\fresh-effect-calls\\\\ad4770f08afa4460b21d0e41815e89c3\\\\images\\\\bdffc2a101cd4362a405cbf20928521c.png\", \"sha256\": \"21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd\", \"bytes\": 869, \"width\": 300, \"height\": 100, \"source_raw_sha256\": \"e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9\", \"timing_ns\": {\"started\": 457858046000000, \"converted\": 457858046000000, \"encoded\": 457858062000000, \"written\": 457858062000000}}}, \"target_generation\": \"b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 457858046000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_native_sendinput_recovery_20261023_r03\\\\run\\\\fresh-effect-calls\\\\ad4770f08afa4460b21d0e41815e89c3\\\\images\\\\bdffc2a101cd4362a405cbf20928521c.png\", \"relative_path\": \"images\\\\bdffc2a101cd4362a405cbf20928521c.png\", \"sha256\": \"21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"0d05668a796b44c8b13bb0ffcf58271e\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 19596650, \"frame\": \"window_client\", \"region\": [0, 0, 300, 100], \"width\": 300, \"height\": 100, \"capture_started_ns\": 457858046000000, \"capture_ended_ns\": 457858046000000}}, \"image_status\": \"image\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_native_sendinput_recovery_20261023_r03\\\\run\\\\fresh-effect-calls\\\\ad4770f08afa4460b21d0e41815e89c3\", \"call_id\": \"ad4770f08afa4460b21d0e41815e89c3\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAASwAAABkCAIAAACzY5qXAAADLElEQVR4nO3cQZKbMBRFUfa/2t5BMoqLAiR9hOXXrpwzcmMQQuaa7kGy/QGitvQE4H8nQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYSKEMBFCmAghTIQQJkIIEyGEiRDCRAhhIoQwEUKYCCFMhBAmQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYSKEMBFC2O0IfyBtRQlBIuT7rCgh6GmE27atXvH+KbZ/Ho7zfCbPDa+0OIdtp7L94Rk/cA8crCgh6OsjrM/h4VTjVzqXxOvH1vbhOCJc7VGE9e/mJ35DhJ+5zyoR3h1kLsJb1yvCh0T4njm8y/5Erdf1EX5E+A3mIxzeIsO/TFo77++byp8xh5nUx2nN5PVWZcDWVRe396/l/PrW4hQX7XKe+xW43H87Oe92mPblaleW5WBFCUGrIhzeTP0R+oMXzzX3Viuhu2cvXund0c4vWj9OFFg8dfH14dj6TTKc/4oSgpZE2P86rLy1OsL6TIZz6B/YP1dn/9ZTqBjh3Y2dfd4V4XAaw6/ClxUlBE1GePdbbXjU10W47fTnGYywvlvnqPPr+oc1HWHfihKC5iM8q3wSraM+H2FxJvVhOxl01qp1rt8Z4eUI0xHeWpa9FSUEhZ+Ew0P6R9VPXR9zGOHdq6vfW/v9pyN8spLDo87z6Z+iH2FxMmcrSgiaiXB4t018EvEI60/C5xG+5Yoebp+YQGUxn0ToSVjVWay7H9JEPLfOO/fWMMLisRMP4VvT/p0RVo4tDtKZ8IoSglZF+FrH82q2NhY/nvNJ96PdGqcyk+GxhxEux+xsb11U69TFK+1MrDKT8wQur+hyJpcT6NwzneVqTW9FCUGf+FcUxTsPilaUELQkwsqzBaatKCFo1ZOw+GsPTFhRQpD/3gLCRAhhIoQwEUKYCCFMhBAmQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYSKEMBFCmAghTIQQJkIIEyGEiRDCRAhhIoQwEUKYCCFMhBAmQggTIYSJEMJECGEihDARQpgIIUyEECZCCBMhhIkQwkQIYX8Bin+7doxgAQEAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "ended_ns": 457858062000000,
+    "is_error": false,
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect-calls\\ad4770f08afa4460b21d0e41815e89c3",
+      "call_id": "ad4770f08afa4460b21d0e41815e89c3",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 457858046000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "0d05668a796b44c8b13bb0ffcf58271e",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect-calls\\ad4770f08afa4460b21d0e41815e89c3\\images\\bdffc2a101cd4362a405cbf20928521c.png",
+        "recorded_capture": {
+          "capture_ended_ns": 457858046000000,
+          "capture_started_ns": 457858046000000,
+          "frame": "window_client",
+          "height": 100,
+          "native_window_id": 19596650,
+          "region": [
+            0,
+            0,
+            300,
+            100
+          ],
+          "target": "fixture",
+          "width": 300
+        },
+        "relative_path": "images\\bdffc2a101cd4362a405cbf20928521c.png",
+        "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 869,
+              "height": 100,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect-calls\\ad4770f08afa4460b21d0e41815e89c3\\images\\bdffc2a101cd4362a405cbf20928521c.png",
+              "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+              "source_raw_sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+              "timing_ns": {
+                "converted": 457858046000000,
+                "encoded": 457858062000000,
+                "started": 457858046000000,
+                "written": 457858062000000
+              },
+              "width": 300
+            },
+            "bytes": 120000,
+            "capture_ended_ns": 457858046000000,
+            "capture_started_ns": 457858046000000,
+            "frame": "window_client",
+            "height": 100,
+            "native_window_id": 19596650,
+            "region": [
+              0,
+              0,
+              300,
+              100
+            ],
+            "sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+            "target": "fixture",
+            "width": 300
+          },
+          "observation_id": "0d05668a796b44c8b13bb0ffcf58271e",
+          "schema": "agent-interface/runtime-observation-v1",
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1298,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 869,
+                "height": 100,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\fresh-effect-calls\\ad4770f08afa4460b21d0e41815e89c3\\images\\bdffc2a101cd4362a405cbf20928521c.png",
+                "sha256": "21df09aa65e09dad266ebbd78059123afbec2a098e95109f3cae4a498ed0eebd",
+                "source_raw_sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+                "timing_ns": {
+                  "converted": 457858046000000,
+                  "encoded": 457858062000000,
+                  "started": 457858046000000,
+                  "written": 457858062000000
+                },
+                "width": 300
+              },
+              "bytes": 120000,
+              "capture_ended_ns": 457858046000000,
+              "capture_started_ns": 457858046000000,
+              "frame": "window_client",
+              "height": 100,
+              "native_window_id": 19596650,
+              "region": [
+                0,
+                0,
+                300,
+                100
+              ],
+              "sha256": "e6c6baee8a1fb717c6a89c63cbfa56bc2616dcc91078589bb28e5d21ebefcee9",
+              "target": "fixture",
+              "width": 300
+            },
+            "observation_id": "0d05668a796b44c8b13bb0ffcf58271e",
+            "schema": "agent-interface/runtime-observation-v1",
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "908fd0bb51dfc6e1b77ca8f2f856068b52167482e0ba3170b45682ccce4bd786"
+        }
+      },
+      "schema": "agent-interface/review-v1"
+    },
+    "started_ns": 457858046000000
+  },
+  "public_program": {
+    "authority": {
+      "expires_at_ns": 457918062000000,
+      "lease_id": "native-recovery-r01"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "op": "text",
+        "text": "NATIVE-RECOVERY-EFFECT-R03"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "native-recovery-fresh-effect-r01",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "b689dbe17bbea498249fabca3c6acfeb06ef7c7c967fc0e6649c8b701b7ccb8f"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_tools": [
+    "interface_clock",
+    "interface_dispatch",
+    "interface_observe",
+    "interface_results",
+    "interface_validate"
+  ],
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 4, \"expanded_operation_count\": 4, \"required_capabilities\": [\"input.keyboard\", \"input.release_all\", \"input.text\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "ended_ns": 457858062000000,
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 4,
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 4,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "started_ns": 457858062000000
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "resource_commands": [],
+  "schedules": [
+    {
+      "cancel_response": {
+        "cleanup_deadline_ns": 457860625000000,
+        "deadline_ns": 457872421000000,
+        "obligations": [
+          "CTRL"
+        ],
+        "operation_id": "native-sendinput-r03-schedule-1",
+        "phase": "cancel_pending",
+        "producer_exit_code": null,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134372401442038629,
+          "pid": 22236
+        },
+        "recovery_id": null,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "pending",
+        "target_generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "cancel_response_ms": 0.0,
+      "cancel_returned_ns": 457852625000000,
+      "fixture": {
+        "close_posted": true,
+        "closed_ns": 457854218000000,
+        "effect": null,
+        "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-1\\effect.json",
+        "events": [
+          {
+            "hwnd": 31982998,
+            "kind": "ready"
+          }
+        ],
+        "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-1\\events.jsonl",
+        "exit_code": 0,
+        "hwnd": 31982998,
+        "label": "schedule-1",
+        "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-1\\fixture.log",
+        "meta": {
+          "height": 220,
+          "hwnd": 31982998,
+          "width": 420
+        },
+        "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-1\\fixture-meta.json",
+        "owner_identity": {
+          "creation_time_100ns": 134372401436111777,
+          "pid": 32440,
+          "window_thread_id": 16900
+        },
+        "pid": 32440,
+        "started_ns": 457851828000000,
+        "target_generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+        "window_exists_after_exit": false
+      },
+      "helper_events": [
+        {
+          "ended_ns": 457852640000000,
+          "foreground_hwnd": 31982998,
+          "foreground_ok": true,
+          "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+          "generation_ok": true,
+          "kind": "recovery",
+          "monotonic_ns": 457852625000000,
+          "release_accepted": true,
+          "release_receipt": {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 457852640000000,
+            "state_query_witnesses": {
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            "verified": true
+          }
+        },
+        {
+          "ended_ns": 457854156000000,
+          "horizon_ns": 1500000000,
+          "kind": "observer",
+          "neutral": true,
+          "sample_count": 60,
+          "samples": [
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852640000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852671000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852703000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852718000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852750000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852765000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852796000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852828000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852843000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852875000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852906000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852921000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852953000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457852984000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853000000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853031000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853062000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853078000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853109000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853140000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853156000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853187000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853218000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853234000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853265000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853296000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853312000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853343000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853375000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853390000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853421000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853453000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853468000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853500000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853531000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853546000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853578000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853609000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853625000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853656000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853671000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853703000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853734000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853750000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853781000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853812000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853828000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853859000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853890000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853906000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853937000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853968000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457853984000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854015000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854046000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854062000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854093000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854125000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854125000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 31982998,
+              "generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+              "monotonic_ns": 457854156000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 31982998,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 32440,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 16900
+                }
+              ]
+            }
+          ],
+          "started_ns": 457852640000000
+        }
+      ],
+      "initial_ctrl_state": {
+        "foreground_hwnd": 31982998,
+        "monotonic_ns": 457851984000000,
+        "state": false,
+        "witness": [
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 31982998,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 32440,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 16900
+          },
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 31982998,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 32440,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 16900
+          }
+        ]
+      },
+      "mode": "blocked-before-native-call",
+      "producer_alive_after_terminal": false,
+      "producer_exitcode": -15,
+      "producer_trigger": {
+        "monotonic_ns": 457852625000000,
+        "phase": "before_native_call"
+      },
+      "state_before_cancel": {
+        "foreground_hwnd": 31982998,
+        "monotonic_ns": 457852625000000,
+        "state": false,
+        "witness": [
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 31982998,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 32440,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 16900
+          },
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 31982998,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 32440,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 16900
+          }
+        ]
+      },
+      "status": "PASS",
+      "target_generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+      "terminal": {
+        "cleanup_deadline_ns": 457860625000000,
+        "deadline_ns": 457872421000000,
+        "obligations": [
+          "CTRL"
+        ],
+        "operation_id": "native-sendinput-r03-schedule-1",
+        "phase": "recovered",
+        "producer_exit_code": -15,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134372401442038629,
+          "pid": 22236
+        },
+        "recovery_id": "35186a224f084de8a6aca2cca443bee2",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "status": "recovered",
+        "target_generation": "cd3a6922bb197897ecaf1d27e280fda9c16ce357c3cd0831b037e9a01c5ea046",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "terminal_elapsed_ms": 1531.0,
+      "terminal_ns": 457854156000000,
+      "timeline": [
+        {
+          "kind": "trigger_received",
+          "monotonic_ns": 457852625000000
+        },
+        {
+          "exitcode": -15,
+          "kind": "producer_exit_confirmed_by_join",
+          "monotonic_ns": 457852625000000
+        }
+      ]
+    },
+    {
+      "cancel_response": {
+        "cleanup_deadline_ns": 457863000000000,
+        "deadline_ns": 457874796000000,
+        "obligations": [
+          "CTRL"
+        ],
+        "operation_id": "native-sendinput-r03-schedule-2",
+        "phase": "cancel_pending",
+        "producer_exit_code": null,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134372401465804020,
+          "pid": 48860
+        },
+        "recovery_id": null,
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "pending",
+        "target_generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "cancel_response_ms": 0.0,
+      "cancel_returned_ns": 457855000000000,
+      "fixture": {
+        "close_posted": true,
+        "closed_ns": 457856578000000,
+        "effect": null,
+        "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-2\\effect.json",
+        "events": [
+          {
+            "hwnd": 21170408,
+            "kind": "ready"
+          }
+        ],
+        "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-2\\events.jsonl",
+        "exit_code": 0,
+        "hwnd": 21170408,
+        "label": "schedule-2",
+        "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-2\\fixture.log",
+        "meta": {
+          "height": 220,
+          "hwnd": 21170408,
+          "width": 420
+        },
+        "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_native_sendinput_recovery_20261023_r03\\run\\schedule-2\\fixture-meta.json",
+        "owner_identity": {
+          "creation_time_100ns": 134372401459944406,
+          "pid": 24060,
+          "window_thread_id": 53796
+        },
+        "pid": 24060,
+        "started_ns": 457854218000000,
+        "target_generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+        "window_exists_after_exit": false
+      },
+      "helper_events": [
+        {
+          "ended_ns": 457855015000000,
+          "foreground_hwnd": 21170408,
+          "foreground_ok": true,
+          "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+          "generation_ok": true,
+          "kind": "recovery",
+          "monotonic_ns": 457855015000000,
+          "release_accepted": true,
+          "release_receipt": {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 457855015000000,
+            "state_query_witnesses": {
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            "verified": true
+          }
+        },
+        {
+          "ended_ns": 457856515000000,
+          "horizon_ns": 1500000000,
+          "kind": "observer",
+          "neutral": true,
+          "sample_count": 59,
+          "samples": [
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855015000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855046000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855078000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855093000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855125000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855156000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855171000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855203000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855234000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855250000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855281000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855296000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855328000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855359000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855375000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855406000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855437000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855453000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855484000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855515000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855531000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855562000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855593000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855609000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855640000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855671000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855687000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855718000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855750000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855765000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855796000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855812000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855843000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855875000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855890000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855921000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855953000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457855968000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856000000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856031000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856046000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856078000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856109000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856125000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856156000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856187000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856203000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856234000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856250000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856281000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856312000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856328000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856359000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856390000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856406000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856437000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856468000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856484000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            },
+            {
+              "foreground_hwnd": 21170408,
+              "generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+              "monotonic_ns": 457856515000000,
+              "state": false,
+              "witness": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 21170408,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 24060,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53796
+                }
+              ]
+            }
+          ],
+          "started_ns": 457855015000000
+        }
+      ],
+      "initial_ctrl_state": {
+        "foreground_hwnd": 21170408,
+        "monotonic_ns": 457854375000000,
+        "state": false,
+        "witness": [
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 21170408,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 24060,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 53796
+          },
+          {
+            "desktop_hookcontrol_opened": true,
+            "hwnd": 21170408,
+            "input_desktop": "Default",
+            "input_desktop_active": true,
+            "pid": 24060,
+            "probe_integrity_rid": 8192,
+            "target": "fixture",
+            "target_integrity_rid": 8192,
+            "thread_id": 53796
+          }
+        ]
+      },
+      "mode": "real-sendinput-accepted-before-backend-return",
+      "producer_alive_after_terminal": false,
+      "producer_exitcode": -15,
+      "producer_trigger": {
+        "accepted_emissions": 1,
+        "monotonic_ns": 457855000000000,
+        "phase": "sendinput_accepted"
+      },
+      "state_before_cancel": {
+        "foreground_hwnd": 21170408,
+        "monotonic_ns": 457855000000000,
+        "state": true,
+        "witness": []
+      },
+      "status": "PASS",
+      "target_generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+      "terminal": {
+        "cleanup_deadline_ns": 457863000000000,
+        "deadline_ns": 457874796000000,
+        "obligations": [
+          "CTRL"
+        ],
+        "operation_id": "native-sendinput-r03-schedule-2",
+        "phase": "recovered",
+        "producer_exit_code": -15,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134372401465804020,
+          "pid": 48860
+        },
+        "recovery_id": "083fd94525264b6894cf0b6ec36ec174",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "status": "recovered",
+        "target_generation": "2bb21d185f0e5e415e5b8e207600676df4c58af50a5d6ca77513a6cc209da810",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "terminal_elapsed_ms": 1515.0,
+      "terminal_ns": 457856515000000,
+      "timeline": [
+        {
+          "kind": "trigger_received",
+          "monotonic_ns": 457855000000000
+        },
+        {
+          "exitcode": -15,
+          "kind": "producer_exit_confirmed_by_join",
+          "monotonic_ns": 457855015000000
+        }
+      ]
+    }
+  ],
+  "schema": "win32-native-sendinput-recovery-raw-v1",
+  "scope": "one key (CTRL) and only fresh fixture HWNDs created by this runner",
+  "source_commit": "0aceb89d2cebcd7fe3f052a76b30782b12df3154",
+  "started_utc": "2026-10-23T14:42:23.577050+00:00",
+  "status": "PASS"
+}
