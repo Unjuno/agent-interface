@@ -1,0 +1,61 @@
+{
+  "attempt_id": "win32-public-mcp-effect-timing-20261024-r04",
+  "caller_kind": "mcp_stdio",
+  "dispatch_attempts": 0,
+  "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+  "error_type": "ExceptionGroup",
+  "finished_utc": "2026-10-23T17:55:29.309100+00:00",
+  "fixture_close_posted": true,
+  "fixture_exit_code": 0,
+  "fixture_hwnd": 45352342,
+  "fixture_pid": 54576,
+  "fixture_stderr": "",
+  "listed_tools": [
+    "interface_clock",
+    "interface_dispatch",
+    "interface_observe",
+    "interface_results",
+    "interface_validate"
+  ],
+  "observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"b3cc91e8007373ec205709fe50e7069474e11b09fdb691d25edc101d73f313ad\", \"bytes\": 260, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"bb1b30b6e129453fbb71b2b5f3cdecdd\", \"side_effect_authority\": false, \"input_dispatched\": false, \"status\": \"observation_failed\", \"error\": \"Win32BackendError('capture outside client bounds')\"}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"bb1b30b6e129453fbb71b2b5f3cdecdd\", \"side_effect_authority\": false, \"input_dispatched\": false, \"status\": \"observation_failed\", \"error\": \"Win32BackendError('capture outside client bounds')\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"observation_failed\", \"error\": \"Win32BackendError('capture outside client bounds')\", \"failure_phase\": null, \"cleanup_error\": null}, \"image_status\": \"no_observation\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_public_mcp_effect_timing_20261024_r04\\\\run\\\\mcp-calls\\\\cdc44663e3df472992cb7fc53c93da66\", \"call_id\": \"cdc44663e3df472992cb7fc53c93da66\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "returned_monotonic_ns": 469437231176100,
+    "started_monotonic_ns": 469437223427200
+  },
+  "observation_target_generation_consistency": null,
+  "observed_target_generation": null,
+  "oracle": {
+    "nonclaims": [
+      "atomic target fencing",
+      "blocked-I/O release bound",
+      "supervisor recovery",
+      "model/token efficiency",
+      "MAP01",
+      "broad reliability"
+    ]
+  },
+  "schema": "win32-public-mcp-effect-timing-receipt-v1",
+  "source_commit": "82f42b47e1701fa975c654d1d9d53312eef399a6",
+  "started_utc": "2026-10-23T17:55:27.830140+00:00",
+  "status": "UNKNOWN",
+  "target_identity_before": {
+    "generation": "996231ab895a15dfdb0dc130630821e1b50664d6e5132c7a8984de4dfec39766",
+    "owner": {
+      "creation_time_100ns": 134372517278320367,
+      "pid": 54576,
+      "window_thread_id": 37232
+    }
+  },
+  "timing_clock": {
+    "adjustable": false,
+    "implementation": "QueryPerformanceCounter()",
+    "monotonic": true,
+    "resolution_seconds": 1e-07
+  }
+}

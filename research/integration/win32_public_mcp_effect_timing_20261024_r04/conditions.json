@@ -1,0 +1,39 @@
+{
+  "attempt_id": "win32-public-mcp-effect-timing-20261024-r04",
+  "caller": "actual runtime.cli_v1.mcp_server stdio process; public interface_observe then interface_dispatch",
+  "cleanup": "close only the owned fixture HWND/process; preserve raw report if its state is uncertain",
+  "dispatch": "one finite program: focus, click/down+up, known text, Ctrl+S, wait, observe a 420x140 client region, release_all; matching observed target generation forwarded; all timing endpoints use perf_counter_ns",
+  "frozen_files": {
+    "audit.py": "58e6705e0d294aa55c0efa9aa970fb65aa014ebe185bb48474011a690e68ece2",
+    "probe.py": "0cb2a81fd8654d38edfd06323da17ed878892a59d868db0a4e0ed02d1231a53b",
+    "timed_fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e"
+  },
+  "input_scope": "visible foreground window is the owned fixture; no other target is configured or acted on",
+  "nonclaims": [
+    "atomic target fencing",
+    "blocked-I/O release bound",
+    "supervisor recovery",
+    "model/token efficiency",
+    "MAP01",
+    "broad reliability"
+  ],
+  "observation_region": {
+    "frame": "window_client",
+    "height": 140,
+    "width": 420
+  },
+  "platform": "Windows local desktop; user-authorized host use",
+  "release_pass": "public report has final release receipt verified=true, no keys/buttons down, and no unknown keys/buttons",
+  "retry_policy": "one dispatch only; unknown/timeout never retried",
+  "schema": "win32-public-mcp-effect-timing-conditions-v1",
+  "source_commit": "82f42b47e1701fa975c654d1d9d53312eef399a6",
+  "target": "one fresh process-owned Agent Interface Win32 fixture window; exact configured HWND only",
+  "target_generation_claim": "one live positive path forwards the immediately preceding matching Win32 observation generation through the standard caller and completes admission",
+  "task": {
+    "effect": "fixture writes one JSON record with saved=true, exact text, clicked=true",
+    "independent_oracle": "read exact effect JSON and event journal; inspect the retained 420x140 post-action MCP image for the complete visible task sentinel",
+    "text": "MCP-LIVE-R07-VISUAL-R04"
+  },
+  "task_pass": "independent effect JSON exactly matches the frozen task and event journal has exact character count plus one save",
+  "timing_claim": "one descriptive sample using the QueryPerformanceCounter-backed perf_counter_ns clock; no matched comparison or general latency claim"
+}

@@ -1,5 +1,33 @@
 # Current objective and working direction
 
+**Public Win32 effect and timing (2026-10-24):** R01 was refused before input
+with `TARGET_GENERATION_REQUIRED`; its raw, audit, and clean fixture exit are
+preserved. R02 forwarded the matching generation from public observe to the
+standard dispatch and passed its 25-check audit with one exact independent
+effect and verified release. R02 exposed a 15.625 ms GetTickCount64 resolution,
+so its 78/141/94 ms endpoint readings are explicitly coarse. R03 uses the
+100 ns QueryPerformanceCounter-backed `perf_counter_ns()` clock and also passed
+25/25: click at 5.5515 ms, first/last text at 46.9063/60.5935 ms, effect file
+close at 61.8722 ms, public response at 122.9508 ms, then independent readback
+106.1251 ms after file close. See the
+[R01](../research/integration/win32_public_mcp_effect_timing_20261024_r01/README.md),
+[R02](../research/integration/win32_public_mcp_effect_timing_20261024_r02/README.md),
+[R03](../research/integration/win32_public_mcp_effect_timing_20261024_r03/README.md),
+[R04](../research/integration/win32_public_mcp_effect_timing_20261024_r04/README.md),
+and [R05](../research/integration/win32_public_mcp_effect_timing_20261024_r05/README.md)
+packets. This is one host/fixture positive path; release's exact sub-call time,
+blocked-I/O release bounds, recovery, atomic generation fencing, MAP01,
+matched efficiency, and broad reliability remain unproven. R03's 300 px final
+image clipped the sentinel tail; R04's assumed 420 px width exceeded the actual
+client area and failed at observe before input; both limits and the clean R04
+UNKNOWN are preserved. R05 measures `GetClientRect`, uses the actual 404x181 client region,
+and passes 29/29 with exact independent task effect, verified release, clean
+fixture exit, and a retained screenshot showing all of `VISUAL-R05`. It records
+dispatch-to-save at 59.7386 ms, public response at 129.0408 ms, and independent
+readback 116.0156 ms after save close; see the R05 packet. This one positive
+sample does not qualify blocked-I/O release, bounded recovery, MAP01, matched
+efficiency, or broad reliability.
+
 **Win32 unresolved producer fence (2026-10-24, synthetic):** while a direct
 session dispatch is inside a synchronous input call, concurrent recovery and
 overlapping dispatch now return `pending`/`INPUT_PRODUCER_UNRESOLVED` without
