@@ -253,6 +253,10 @@ class X11Backend:
             self._publish_input_obligations()
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
+        if getattr(self, '_tap_defer_sync', False):
+            # The owning chord queues UP before its final reply barrier and
+            # retains the original obligation until that barrier completes.
+            return
         self.d.sync()
         if not down:
             self.held_keycodes.pop(key, None)
@@ -282,6 +286,25 @@ class X11Backend:
         # whose key-down edge is required by the chord or text operation.
         # Compare physical keycodes so aliases such as SHIFT and Shift_L match.
         self._reject_held_nonmodifier_overlap([keys])
+        if len(keys) == 1 and not self.held_keycodes:
+            # A tap must queue its release before awaiting a server reply.
+            # Keep the possible-DOWN obligation until that final reply confirms
+            # both requests. Sending either request may still block/fail; this
+            # is neither an atomic X transaction nor a bounded-release claim.
+            key = keys[0]
+            # Keep dispatch through key_state: guarded subclasses perform
+            # their focus/pixel checks there before delegating to this backend.
+            previous = getattr(self, '_tap_defer_sync', False)
+            self._tap_defer_sync = True
+            try:
+                self.key_state(key, True)
+                self.key_state(key, False)
+            finally:
+                self._tap_defer_sync = previous
+            self.d.sync()
+            self.held_keycodes.pop(key, None)
+            self._publish_input_obligations()
+            return
         owned_codes = set(self.held_keycodes.values())
         acquired = []
         for key in keys:

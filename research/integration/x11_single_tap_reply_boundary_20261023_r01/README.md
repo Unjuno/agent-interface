@@ -1,0 +1,15 @@
+# Single-key chord reply-boundary repair — R01
+
+The counted live trials showed repeated old held-key handlers. Source inspection also found that substituting a single-key `key_chord` alone could still wait for a reply after DOWN and before UP. The retained RED trace reproduces that deterministic boundary using the actual X11 backend and inert X requests: the first failed reply sees only DOWN, with UP not attempted.
+
+The backend now queues DOWN and UP before one final key-state reply barrier for a single-key chord with no preheld keys. It still calls `self.key_state` for both edges, preserving guarded subclass focus/pixel/lease checks and prearmed custody. A private scoped deferral is restored on every exit; the possible-DOWN obligation stays published until the final sync succeeds. Uncertain DOWN send, UP send or reply keeps the original keycode obligation. Releases do not acquire fresh press authority.
+
+Explicit `key_state(..., True)` remains a held-key operation. Multi-key chords and chords with preheld keys keep their existing path, including borrowed-modifier preservation. Text that expands into an eligible single-key chord uses the repaired path. No repeat setting, task definition or guard is weakened.
+
+## Verification
+
+- `raw-red.txt`: the initial five tests include three expected failures against base `6e7f88d2d`: first-reply UP absence, two reply barriers rather than one, and the UP-send failure case having already awaited an earlier reply.
+- `raw-normal.txt`, `raw-optimized.txt`, `local-checks.json`: 143 related tests pass in each mode. The seven new cases cover first-reply ordering and retained custody, success, both uncertain sends/deferral restoration, authority rejection, subclass interception, actual guarded focus refusal, and unchanged explicit-hold semantics. Related backend text/mapping/partial-execution/recovery, held modifiers, guarded deadline/process identity, counted oracles and pause-helper cases are included. Native integration discovery was excluded from these pure commands.
+- Source freeze `80696c010` and `SOURCES.json` retain implementation/test/guard identities. The [new live public-caller composition packet](../x11_single_tap_live_20261023_r01/README.md) ran once on a fresh authenticated Xvfb: strict fresh count `[0]→[1]→[1]` passed; old explicit-hold count `[1]→[3]` failed honestly; UNKNOWN/no replay and cleanup were preserved.
+
+This removes one explicit key-state synchronous roundtrip from the eligible chord, not every guarded/X11 query. It is not an atomic X transaction: request writes may themselves block, other queued requests can delay UP, and a process can stop between sends. The live trial does not stall the fresh chord's first reply. The before-first-reply ordering property is proved by the actual-method inert tests; the live run establishes composition/compatibility in one environment. No measured speedup, universal repeat prevention, bounded release under arbitrary I/O, physical/MAP01 success, efficiency or reliability claim follows.
