@@ -212,6 +212,9 @@ async def run_trial():
         'fresh_effect_rows_at_horizon':None, 'process_cleanup':{}}
     xvfb = None
     xvfb_fd = None
+    xvfb_log = None
+    previous_display = os.environ.get('DISPLAY')
+    previous_xauthority = os.environ.get('XAUTHORITY')
     observer = None
     old_server = fresh_server = None
     old_terminal = fresh_terminal = None
@@ -227,6 +230,12 @@ async def run_trial():
         auth.touch(mode=0o600)
         subprocess.run(['/usr/bin/xauth', '-f', str(auth), 'add', ':188', '.', secrets.token_hex(16)],
             check=True, timeout=5, capture_output=True)
+        report['previous_display_environment'] = {
+            'DISPLAY':previous_display,
+            'XAUTHORITY_was_set':previous_xauthority is not None,
+        }
+        os.environ['DISPLAY'] = ':188'
+        os.environ['XAUTHORITY'] = str(auth)
         xvfb_log = (HERE / 'xvfb.log').open('wb')
         xvfb = subprocess.Popen(['/usr/bin/Xvfb', ':188', '-screen', '0',
             '1024x768x24', '-nolisten', 'tcp', '-auth', str(auth)],
@@ -389,6 +398,17 @@ async def run_trial():
             report['xvfb_exit_code'] = xvfb.wait(timeout=5)
         if 'auth_dir' in locals():
             shutil.rmtree(auth_dir, ignore_errors=True)
+        if 'previous_display_environment' in report:
+            if previous_display is None:
+                os.environ.pop('DISPLAY',None)
+            else:
+                os.environ['DISPLAY'] = previous_display
+            if previous_xauthority is not None:
+                os.environ['XAUTHORITY'] = previous_xauthority
+            else:
+                os.environ.pop('XAUTHORITY',None)
+        if xvfb_log is not None and not xvfb_log.closed:
+            xvfb_log.close()
         try:
             report['native_postrun'] = verify_native_binaries()
         except BaseException as error:
