@@ -59,12 +59,13 @@ class OperationOwner:
             prior = (self._records.get(self._active_operation_id)
                      if self._active_operation_id is not None else None)
             if prior is not None:
-                if prior["status"] != "recovered":
+                if prior["status"] not in ("recovered", "completed"):
                     raise OwnerRefused(
                         "prior producer or cleanup remains unresolved",
                         code="INPUT_PRODUCER_UNRESOLVED",
                         operation_id=prior["operation_id"])
-                if target_generation == prior["target_generation"]:
+                if (prior["status"] == "recovered"
+                        and target_generation == prior["target_generation"]):
                     raise OwnerRefused("fresh target generation required after cancellation")
             record = {
                 "operation_id": operation_id,
@@ -230,6 +231,94 @@ class OperationOwner:
                 return False
             record["status"] = "producer_retired"
             return True
+
+    def producer_completed(self, operation_id, target_generation, process_handle,
+                           *, release_receipt, readback):
+        """Retain completion only after exact exit and independent neutral readback.
+
+        Process exit and the child's release receipt do not independently prove
+        input is up. The caller must also pass a generation-bound readback from
+        the separately supervised observer after exact producer exit.
+        """
+        now_ns = self._clock_ns()
+        release_verified = (
+            type(release_receipt) is dict
+            and release_receipt.get("verified") is True
+            and release_receipt.get("keys_down") == []
+            and release_receipt.get("buttons_down") == []
+            and release_receipt.get("keys_unknown") == []
+            and release_receipt.get("buttons_unknown") == []
+        )
+        readback_verified = (
+            type(readback) is dict
+            and set(readback) == {"operation_id", "target_generation",
+                "producer_exit_confirmed_ns", "observed_monotonic_ns", "neutral"}
+            and readback.get("operation_id") == operation_id
+            and readback.get("target_generation") == target_generation
+            and type(readback.get("producer_exit_confirmed_ns")) is int
+            and readback["producer_exit_confirmed_ns"] > 0
+            and type(readback.get("observed_monotonic_ns")) is int
+            and readback["observed_monotonic_ns"] >= readback["producer_exit_confirmed_ns"]
+            and readback["observed_monotonic_ns"] <= now_ns
+            and readback.get("neutral") is True
+        )
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if record["status"] == "completed":
+                if (self._producer_handles.get(operation_id) is process_handle
+                        and release_verified and readback_verified
+                        and record["release_confirmed"]):
+                    return self._public(record)
+                raise OwnerRefused("completed operation only accepts its exact verified receipt")
+            if record["status"] != "running":
+                if record["status"] in ("cancel_pending", "producer_retired",
+                                         "recovery_pending", "recovered", "unknown"):
+                    return self._public(record)
+                raise OwnerRefused("operation is not awaiting normal producer completion")
+            if (record["producer_identity"] is None
+                    or self._producer_handles.get(operation_id) is not process_handle):
+                raise OwnerRefused("exact running producer handle required for completion")
+            expected_identity = dict(record["producer_identity"])
+        try:
+            alive = process_handle.is_alive()
+            exit_code = process_handle.exitcode
+            current_identity = self._process_identity_reader(process_handle)
+        except Exception:
+            alive = None
+            exit_code = None
+            current_identity = None
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "running"
+                    or self._producer_handles.get(operation_id) is not process_handle
+                    or record["producer_identity"] != expected_identity):
+                if record["status"] in ("cancel_pending", "producer_retired",
+                                         "recovery_pending", "recovered", "unknown"):
+                    return self._public(record)
+                raise OwnerRefused("producer custody changed during normal completion")
+            if (alive is not False or type(exit_code) is not int
+                    or current_identity != expected_identity):
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_exit_or_identity_unconfirmed"
+            elif self._clock_ns() >= record["deadline_ns"]:
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_completion_after_deadline"
+            elif record["producer_gate_state"] != "authorization_attempted":
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_completion_without_authorized_gate"
+            elif not release_verified:
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_release_unconfirmed"
+            else:
+                record["producer_exit_code"] = exit_code
+                if release_verified and readback_verified:
+                    record["release_confirmed"] = True
+                    record["status"] = "completed"
+                else:
+                    record["status"] = "unknown"
+                    record["uncertainty"] = (
+                        "normal_producer_release_or_independent_readback_unconfirmed")
+            return self._public(record)
 
     def mark_unknown(self, operation_id, target_generation, reason):
         if type(reason) is not str or not reason:

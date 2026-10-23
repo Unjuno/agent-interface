@@ -27,6 +27,15 @@ class FakeProcess:
         return self.alive
 
 
+class StartableFakeProcess(FakeProcess):
+    def __init__(self, pid):
+        super().__init__(None)
+        self.requested_pid = pid
+
+    def start(self):
+        self.pid = self.requested_pid
+
+
 class FakeCancellationSupervisor:
     def __init__(self, owner):
         self.owner = owner
@@ -172,6 +181,260 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(result["status"], "busy")
         self.assertEqual(self.session.state, "open")
         self.assertFalse(self.supervisor.closed)
+
+    def test_standard_action_completion_keeps_action_and_release_receipt_separate(self):
+        self.start_action()
+        self.process.alive = False
+        self.process.exitcode = 0
+        result = {"status": "completed", "task_success": None,
+                  "replay_allowed": False, "effect_status": "unknown"}
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        complete = getattr(self.session, "complete_action", None)
+        self.assertTrue(callable(complete), "standard action completion is not retained")
+        row = complete(CALL_ID, self.process, result, release_receipt=release,
+            readback={"operation_id": ACTION_ID, "target_generation": GEN_A,
+                "producer_exit_confirmed_ns": 1,
+                "observed_monotonic_ns": self.clock(), "neutral": True})
+
+        self.assertEqual(row["action"]["status"], "completed")
+        self.assertEqual(row["action"]["result"], result)
+        self.assertTrue(row["action"]["release_confirmed"])
+        self.assertIsNone(row["action"]["task_success"])
+        self.assertFalse(row["action"]["replay_allowed"])
+        self.assertIsNone(row["cancellation"])
+        self.assertEqual(self.session.close()["status"], "closed")
+        self.assertTrue(self.supervisor.closed)
+
+    def test_exited_action_collects_backend_release_and_independent_readback_once(self):
+        self.start_action()
+        self.process.alive = False
+        self.process.exitcode = 0
+        reads = []
+        backend_result = {"status": "completed", "effect_status": "unknown"}
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        def read_result(process):
+            self.assertIs(process, self.process)
+            self.assertFalse(process.is_alive())
+            reads.append("result")
+            return {"result": backend_result, "release_receipt": release}
+
+        def readback(request):
+            reads.append("readback")
+            return {"operation_id": request["operation_id"],
+                "target_generation": request["target_generation"],
+                "producer_exit_confirmed_ns": request["producer_exit_confirmed_ns"],
+                "observed_monotonic_ns": self.clock(), "neutral": True}
+
+        complete = getattr(self.session, "complete_exited_action", None)
+        self.assertTrue(callable(complete), "exited producer result collection is missing")
+        row = complete(CALL_ID, result_reader=read_result,
+                       readback_reader=readback)
+
+        self.assertEqual(reads, ["result", "readback"])
+        self.assertEqual(row["action"]["result"], backend_result)
+        self.assertTrue(row["action"]["release_confirmed"])
+        self.assertIsNone(row["action"]["task_success"])
+        self.assertFalse(row["action"]["replay_allowed"])
+
+        repeated = complete(CALL_ID,
+            result_reader=lambda _process: self.fail("completed result reread"),
+            readback_reader=lambda _request: self.fail("completed readback repeated"))
+        self.assertEqual(repeated, row)
+
+    def test_live_action_is_not_read_as_completed(self):
+        self.start_action()
+        reads = []
+
+        row = self.session.complete_exited_action(CALL_ID,
+            result_reader=lambda _process: reads.append("result"),
+            readback_reader=lambda _request: reads.append("readback"))
+
+        self.assertEqual(row["action"]["status"], "running")
+        self.assertEqual(reads, [])
+
+    def test_invalid_exited_result_keeps_release_and_task_effect_unknown(self):
+        self.start_action()
+        self.process.alive = False
+        self.process.exitcode = 1
+
+        row = self.session.complete_exited_action(CALL_ID,
+            result_reader=lambda _process: {"result": {"status": "failed"}},
+            readback_reader=lambda _request: self.fail("invalid producer packet must stop"))
+
+        self.assertEqual(row["action"]["status"], "unknown")
+        self.assertFalse(row["action"].get("release_confirmed", False))
+        self.assertIsNone(row["action"]["task_success"])
+        self.assertFalse(row["action"]["replay_allowed"])
+
+    def test_standard_program_admission_freezes_target_and_full_input_obligations(self):
+        self.session.bind_target_generation_reader(lambda: GEN_A)
+        binding = self.session.bind_target_generation()
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "standard-caller-save",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": GEN_A}},
+            "authority": {"lease_id": "standard-save",
+                "expires_at_ns": self.clock() + 4_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [
+                {"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "text", "text": "A😀"},
+                {"op": "release_all"},
+            ]}
+
+        admit = getattr(self.session, "admit_standard_action", None)
+        self.assertTrue(callable(admit), "standard program admission is not connected")
+        row = admit(CALL_ID, ACTION_ID, binding["target_binding_id"], program,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            current_observation_seq=1, current_binding_revision=1)
+
+        self.assertEqual(row["action"]["target_generation"], GEN_A)
+        self.assertEqual(self.session._calls[CALL_ID]["standard_program"], program)
+        self.assertEqual(self.owner.result(ACTION_ID)["obligations"], [
+            "key:fixture:CTRL", "key:fixture:S", "unicode:0041",
+            "unicode:D83D", "unicode:DE00",
+        ])
+        self.assertEqual(row["action"]["metadata"]["source"], "interface_dispatch")
+
+    def test_standard_program_is_forwarded_to_the_supervised_producer(self):
+        self.session.bind_target_generation_reader(lambda: GEN_A)
+        binding = self.session.bind_target_generation()
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "standard-caller-save",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": GEN_A}},
+            "authority": {"lease_id": "standard-save",
+                "expires_at_ns": self.clock() + 4_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+        self.session.admit_standard_action(CALL_ID, ACTION_ID,
+            binding["target_binding_id"], program,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            current_observation_seq=1, current_binding_revision=1)
+
+        process = StartableFakeProcess(4102)
+        identity = {"pid": 4102, "creation_time_100ns": 9002}
+        self.process = process
+        self.identity = identity
+        received = []
+        result = self.session.start_producer(CALL_ID, lambda action: (
+            received.append(action) or process,
+            lambda: identity,
+            lambda: None))
+
+        self.assertEqual(result["action"]["status"], "running")
+        self.assertEqual(received[0]["program"], program)
+        self.assertEqual(received[0]["operation_id"], ACTION_ID)
+
+    def test_standard_program_authority_lease_cannot_be_reused_for_replay(self):
+        self.session.bind_target_generation_reader(lambda: GEN_A)
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "standard-caller-save",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": GEN_A}},
+            "authority": {"lease_id": "one-use-save-lease",
+                "expires_at_ns": self.clock() + 4_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+        first_binding = self.session.bind_target_generation()
+        self.session.admit_standard_action(CALL_ID, ACTION_ID,
+            first_binding["target_binding_id"], program,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            current_observation_seq=1, current_binding_revision=1)
+        self.assertTrue(self.session.producer_started(CALL_ID, self.process,
+            process_identity=self.identity))
+        self.assertTrue(self.owner.authorize_producer_start(ACTION_ID, GEN_A,
+            self.process, lambda: None))
+        self.process.alive = False
+        self.process.exitcode = 0
+        self.session.complete_action(CALL_ID, self.process,
+            {"status": "completed"},
+            release_receipt={"verified": True, "keys_down": [],
+                "buttons_down": [], "keys_unknown": [], "buttons_unknown": []},
+            readback={"operation_id": ACTION_ID,
+                "target_generation": GEN_A,
+                "producer_exit_confirmed_ns": 1,
+                "observed_monotonic_ns": self.clock(), "neutral": True})
+
+        second_binding = self.session.bind_target_generation()
+        with self.assertRaisesRegex(ValueError, "lease ID already used"):
+            self.session.admit_standard_action("3" * 32, "4" * 32,
+                second_binding["target_binding_id"], program,
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                current_observation_seq=1, current_binding_revision=1)
+
+        self.assertEqual(set(self.owner._records), {ACTION_ID})
+
+    def test_invalid_standard_program_is_rejected_before_custody_admission(self):
+        self.session.bind_target_generation_reader(lambda: GEN_A)
+        binding = self.session.bind_target_generation()
+
+        admit = getattr(self.session, "admit_standard_action", None)
+        self.assertTrue(callable(admit), "standard program admission is not connected")
+        with self.assertRaises(ValueError):
+            admit(CALL_ID, ACTION_ID, binding["target_binding_id"],
+                {"program_id": "invalid", "ops": [
+                    {"op": "focus", "target": "fixture"},
+                    {"op": "key_chord", "keys": ["CTRL"]},
+                ]}, operation_deadline_ns=self.clock() + 5_000_000_000,
+                current_observation_seq=1, current_binding_revision=1)
+        self.assertEqual(self.owner._records, {})
+
+    def test_standard_program_stale_generation_is_rejected_before_admission(self):
+        self.session.bind_target_generation_reader(lambda: GEN_A)
+        binding = self.session.bind_target_generation()
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "stale-generation",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": GEN_B}},
+            "authority": {"lease_id": "stale-generation",
+                "expires_at_ns": self.clock() + 4_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL"]},
+                {"op": "release_all"}]}
+
+        with self.assertRaisesRegex(ValueError, "TARGET_GENERATION_CHANGED"):
+            self.session.admit_standard_action(CALL_ID, ACTION_ID,
+                binding["target_binding_id"], program,
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                current_observation_seq=1, current_binding_revision=1)
+        self.assertEqual(self.owner._records, {})
+
+    def test_standard_program_source_sequence_or_binding_mismatch_is_rejected(self):
+        self.session.bind_target_generation_reader(lambda: GEN_A)
+        binding = self.session.bind_target_generation()
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "source-mismatch",
+            "source": {"observation_seq": 7, "binding_revision": 3,
+                "target_generations": {"fixture": GEN_A}},
+            "authority": {"lease_id": "source-mismatch",
+                "expires_at_ns": self.clock() + 4_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL"]},
+                {"op": "release_all"}]}
+
+        for observation_seq, binding_revision in ((6, 3), (7, 2)):
+            with self.subTest(observation_seq=observation_seq,
+                              binding_revision=binding_revision):
+                with self.assertRaisesRegex(ValueError,
+                        "STANDARD_SOURCE_BINDING_MISMATCH"):
+                    self.session.admit_standard_action(CALL_ID, ACTION_ID,
+                        binding["target_binding_id"], program,
+                        operation_deadline_ns=self.clock() + 5_000_000_000,
+                        current_observation_seq=observation_seq,
+                        current_binding_revision=binding_revision)
+        self.assertEqual(self.owner._records, {})
 
     def test_cancel_during_producer_factory_never_opens_the_child_start_gate(self):
         import threading
