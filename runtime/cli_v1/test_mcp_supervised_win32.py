@@ -241,7 +241,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         with TemporaryDirectory() as root:
             server = self.make_server(root, owner, producer)
             program = self.valid_program()
-            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 600_000_000
+            # Leave room for Windows event-loop and worker startup scheduling;
+            # the test measures cancellation drain, not a subsecond lease race.
+            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
             pending = self.row(await server.call_tool("interface_dispatch", {
                 "program": program,
                 "current_observation_seq": 1,
@@ -265,14 +267,17 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(retained["cancellation"]["status"], "recovered")
 
             close_statuses = []
-            deadline = time.monotonic() + 0.15
+            # Recovered cancellation ends input custody; the public dispatch
+            # still has to persist and present its terminal receipt before the
+            # serialized close can enter. Bound that full drain separately.
+            deadline = time.monotonic() + 2
             try:
                 while time.monotonic() < deadline:
                     closed = self.row(await server.call_tool("interface_close", {}))
                     close_statuses.append(closed.get("status"))
                     if closed.get("status") == "closed":
                         break
-                    await asyncio.sleep(0.01)
+                    await asyncio.sleep(0.05)
                 self.assertEqual(close_statuses[-1], "closed", close_statuses)
             finally:
                 if owner.state != "closed":
@@ -394,6 +399,17 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             operation_id = row["action"]["operation_id"]
             owner._owner.mark_unknown(operation_id, GENERATION,
                 "test_closed_gate_cancellation")
+            # The supervised lookup exposes custody, not the MCP worker state.
+            # Wait for its atomic report publication before removing the root.
+            report_path = Path(root) / pending["call_id"] / "report.json"
+            report_temp = report_path.with_name(".report.json.tmp")
+            deadline = time.monotonic() + 2
+            while time.monotonic() < deadline:
+                if report_path.is_file() and not report_temp.exists():
+                    break
+                await asyncio.sleep(0.01)
+            self.assertTrue(report_path.is_file(), "dispatch report was not finalized")
+            self.assertFalse(report_temp.exists(), "dispatch report is still being written")
             await server.call_tool("interface_close", {})
 
 

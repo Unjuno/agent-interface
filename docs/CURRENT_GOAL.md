@@ -592,11 +592,16 @@ while the owner phase is unknown. A composed MCP regression first failed on the
 old `action=running` result, then passed after the change while asserting that
 the owner remains unresolved. The four focused session, supervised-MCP,
 operation-owner, and MCP server suites pass 69/69 in CPython 3.11.9 and 3.13,
-both normal and optimized. Broader CLI discovery reaches a separate X11 Fake X
-relay-composition failure at
-`test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`; its
-worker is blocked in `OwnedGuardedSessionOwner._request_locked`, and teardown
-waits for that child. This path is outside the Win32 dispatch change and is
-preserved as an unresolved validation failure, not counted as a pass. The
-public-caller Win32 path has not been live-retested after this code change; a
-new run still requires a verified unused WSLc allocation under the active goal.
+both normal and optimized. Later full CLI verification exposed an offline
+Fake X request-order mismatch: the standard caller emits a matching XTEST
+KeyRelease between KeyPress and GetPointerControl, while the test-only parser
+candidate discarded the association. R01 fixes that ordering, corrects the
+lifecycle race to accept both scheduler-valid outcomes, and makes the
+supervised cancellation test wait for its finalized receipt and bounded close
+drain. The full CLI suite then passed 593 tests (8 skipped) in 149.996 s; the
+focused parser, relay, composition, supervised-Win32 and lifecycle set passed
+48/48 in normal and optimized CPython 3.11.9. Raw output, conditions and
+limitations are in the [R01 packet](../research/integration/offline_proxy_reply_framing_20261019/standard-caller-order-r01/README.md).
+These are local synthetic checks only. The public-caller Win32 path has not
+been live-retested; a new run still requires a verified unused WSLc allocation
+under the active goal.

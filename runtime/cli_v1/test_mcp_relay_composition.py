@@ -345,6 +345,11 @@ def _socket_owner_factory(targets, directory, display_name, options):
                 "event": "KeyPress", "keycode": KEYCODE,
                 "state": "accepted_and_held_in_synthetic_queue",
                 "protocol_order_is_modeled_not_observed": True})
+            release = _receive_exact(upstream_socket, 36)
+            if release != _fake_input_request(X.KeyRelease, KEYCODE):
+                write_record("fake-x-upstream-error.json", {
+                    "release_hex": release.hex(), "expected": "matching KeyRelease"})
+                return
             sync = _receive_exact(upstream_socket, 4)
             if sync != b"\x6a\0\x01\0":
                 write_record("fake-x-upstream-error.json", {"sync_hex": sync.hex()})
@@ -355,7 +360,7 @@ def _socket_owner_factory(targets, directory, display_name, options):
             if not relay._independent_event:
                 write_record("fake-x-upstream-error.json", {"reason": "event_receipt_not_seen"})
                 return
-            upstream_socket.sendall(_pointer_reply(3))
+            upstream_socket.sendall(_pointer_reply(4))
         except (EOFError, OSError) as error:
             write_record("fake-x-upstream-error.json", {"error": type(error).__name__})
 

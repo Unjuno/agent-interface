@@ -134,10 +134,18 @@ class X11ProxyConnection:
                 role = "query_extension"
         elif (self.xtest_major_opcode is not None
               and major == self.xtest_major_opcode and minor == 2
-              and len(frame) == 36 and frame[4] == 2):
-            role = "xtest_key_press"
-            action_id = self.action_id
+              and len(frame) == 36 and frame[4] in (2, 3)):
             keycode = frame[5]
+            if frame[4] == 2:
+                role = "xtest_key_press"
+                action_id = self.action_id
+            else:
+                role = "xtest_key_release"
+                pending = self._pending_press
+                if pending is None or pending[1] != keycode:
+                    self._pending_press = None
+                # A matching release completes the same chord; keep the press
+                # association until its immediate synchronization request.
         elif major == 106 and len(frame) == 4:
             role = "get_pointer_control"
             if self._pending_press is not None:

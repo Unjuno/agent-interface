@@ -96,6 +96,18 @@ class ProxyCandidateTests(unittest.TestCase):
             reply(target.sequence), action_id="action-1", keycode=38,
             peer_pid=24, independently_observed=True))
 
+    def test_matching_key_release_does_not_clear_pending_press_before_sync(self):
+        tracker = self.connected()
+        tracker.feed_client(query_extension())
+        tracker.feed_server(query_extension_reply(1, 200))
+        press = tracker.feed_client(fake_input(200, 2, 38))[0]
+        release = tracker.feed_client(fake_input(200, 3, 38))[0]
+        target = tracker.feed_client(get_pointer_control())[0]
+        self.assertEqual(press.role, "xtest_key_press")
+        self.assertEqual(release.role, "xtest_key_release")
+        self.assertEqual(target.action_id, "action-1")
+        self.assertEqual(target.keycode, 38)
+
     def test_same_pid_second_connection_and_colliding_sequence_are_not_selected(self):
         identity = self.connected("identity")
         input_conn = self.connected("input")
@@ -120,7 +132,7 @@ class ProxyCandidateTests(unittest.TestCase):
         self.assertEqual(wrong_opcode.role, "other")
         tracker.feed_client(get_pointer_control())
         non_press = tracker.feed_client(fake_input(200, 3, 38))[0]
-        self.assertEqual(non_press.role, "other")
+        self.assertEqual(non_press.role, "xtest_key_release")
         tracker.feed_client(get_pointer_control())
         tracker.feed_client(fake_input(200, 2, 38))
         tracker.feed_client(request(127))
