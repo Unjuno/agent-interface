@@ -118,15 +118,15 @@ def audit():
     return {'status': 'PASS_QUEUED_UP_PATH_OBSERVABILITY_SCOPED', 'checks': checks,
         'scientific_task_outcomes': r['counted_task_outcomes'],
         'recomputed_ms': {'cancel_invocation_to_return': cancel_ms,
-            'resume_to_independent_all_up': (release['observed_ns']-resumed)/1e6,
+            'release_anchor_to_independent_all_up': (release['observed_ns']-resumed)/1e6,
             'fresh_input_to_independent_effect_readback': fresh_ms},
-        'exact_once_counterexample': {
+        'effect_multiplicity_observation': {
             'claimed_task_definition': r['independent_task_oracle']['task_definition'],
             'runtime_test_oracle_status': r['independent_task_oracle']['status'],
             'old_target_keypress_count': len(old_presses), 'old_target_keypress_events': old_presses,
             'old_property_remained': r['synthetic_application_effect']['property_value'],
             'exactly_one_old_keypress': len(old_presses) == 1,
-            'interpretation': 'Idempotent property assignment masks repeated KeyPress/effect handlers. '
+            'interpretation': 'Per-handler count and idempotent value are separate evidence. '
                 'Trace alone does not prove the cause of repeats or a non-idempotent external task outcome.'}}
 
 
