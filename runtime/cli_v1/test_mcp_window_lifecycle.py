@@ -120,13 +120,20 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
                         'query_error': query_errors[0],
                         'event_order': ['final local check passed', 'release obligation prearmed',
                             'Fake X DestroyNotify queued', 'lifecycle query drained event and retired reader',
-                            'first XTEST KeyPress emitted', 'later press denied by retired lifecycle reader',
-                            'prefix release emitted and locally read back'],
+                            ('first XTEST KeyPress crossed the race before reader retirement'
+                                if fake.emissions and fake.emissions[0] == (2, 1) else
+                                'first XTEST KeyPress denied by retired lifecycle reader'),
+                            'prearmed release emitted and locally read back'],
                     }
                 expected = 'refused' if fault == 'stale' and selected else 'execution_failed' if fault in ('modifier','destroy_gap','blocked','qualified') else 'completed'
                 self.assertEqual(result['status'], expected, result)
                 if expected == 'completed': self.assertEqual(fake.emissions, [(2,1),(2,2),(3,2),(3,1)])
                 elif fault == 'stale': self.assertEqual(fake.emissions, [])
+                elif fault == 'destroy_gap':
+                    # Depending on scheduling, the first press may cross the
+                    # final-check race. Both paths must terminate with release.
+                    self.assertIn(fake.emissions, [[(3,1)], [(2,1),(3,1)]])
+                    self.assertTrue(result['result']['execution']['releases'][-1]['verified'])
                 else:
                     self.assertEqual(fake.emissions, [(2,1),(3,1)])
                     self.assertTrue(result['result']['execution']['releases'][-1]['verified'])

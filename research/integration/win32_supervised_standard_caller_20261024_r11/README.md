@@ -1,0 +1,7 @@
+# Win32 supervised standard MCP cancellation with in-window status polling — R11
+
+R11 is a one-shot local Windows trial through the public stdio-MCP caller, frozen at source `f7225d8dedc2170ba1aa73292c1eab314ca6de9d`. R06, R07, R09 and R10 all reached injected Q-down about 0.75–0.79 seconds after their finite hook wait ended. R11 tests whether polling `interface_results` for the exact dispatch call during the hook window advances the queued worker promptly.
+
+The caller returns one call ID with zero wait, then polls that same call every 250 ms for at most 30 seconds while also checking the probe-owned low-level hook. Each result call has a 500 ms cap. Once injected Q-down enters, the runner reads the same call again with a 500 ms cap and requires `action.status=running` before issuing exactly one `interface_cancel` with a 1-second cap. The hook releases immediately after the cancel response and has a 2.5-second self-release cap. PASS requires the callback to remain held through the cancel response, exact producer exit before recovery UP, same-generation independent all-up readback within 2500 ms, exact fixture effect, and complete cleanup. Missing the finite hook gate or any mismatch is retained as FAIL_OR_UNKNOWN; no retry or replay.
+
+Only this user-authorized PC and one owned fixture are used. No WSLc or Docker allocation is used. Hook setup/teardown and compilation are preflighted before freezing the packet.

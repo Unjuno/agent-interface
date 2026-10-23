@@ -9,10 +9,23 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from runtime.cli_v1.mcp_server import create_server
+from runtime.cli_v1.mcp_server import create_server, main
 
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
+
+    def test_cli_exposes_supervised_win32_standard_session(self):
+        with tempfile.TemporaryDirectory() as td:
+            targets = Path(td) / 'targets.json'
+            targets.write_text('{"fixture": 123}', encoding='utf-8')
+            output = Path(td) / 'output'
+            server = type('ServerStub', (), {'run': lambda self, **kwargs: None})()
+            with patch('sys.argv', ['mcp_server', '--targets', str(targets),
+                                    '--output-directory', str(output),
+                                    '--session-mode', 'supervised-win32']), \
+                 patch('runtime.cli_v1.mcp_server.create_server', return_value=server) as factory:
+                main()
+            self.assertEqual(factory.call_args.kwargs['session_mode'], 'supervised-win32')
 
     async def test_real_executor_rejection_does_not_strand_admission(self):
         from concurrent.futures import ThreadPoolExecutor

@@ -1,0 +1,7 @@
+# Win32 supervised standard MCP cancellation and recovery — R06
+
+This one-shot Windows trial uses the public stdio MCP caller and one fresh owned EDIT fixture. It saves a unique sentinel, then sends one Q-down. A probe-owned `WH_KEYBOARD_LL` callback pauses only that injected Q-down. The public dispatch uses the supported zero-wait option so the call ID is returned before any later result wait; after the hook fires, a read-only `interface_results` call must show the same action still running. The probe then calls `interface_cancel` once for that exact ID.
+
+The packet retains public request/response evidence, hook callback timing, a PID-and-creation-time-matched producer exit witness, the cancellation receipt, an independent fresh-process generation and Q-state readback, the fixture's saved task effect, and cleanup records. PASS requires the cancellation to remain bound to the original operation and target generation, producer exit to precede the recovery Q-up event, independent Q-up observation within the frozen 2500 ms window, exact saved effect, and confirmed cleanup. Runtime `task_success` remains null.
+
+The prior R05 one-shot construction outcome is retained separately and is not rerun. R06 conditions, code, audit, preflight, and source hashes are frozen before one trial. Any failed or unknown result remains immutable. The run uses this local PC and an owned fixture only; no WSLc or Docker allocation is involved.

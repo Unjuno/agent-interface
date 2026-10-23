@@ -1,4 +1,4 @@
-"""Optional stdio MCP transport; one-shot by default, explicit persistent X11 option."""
+"""Optional stdio MCP transport; one-shot by default, with explicit owned-session modes."""
 import argparse
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -30,6 +30,133 @@ from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 # Reserve time to resume the loop and encode a response within the caller budget.
 _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
 _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
+_SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
+_SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
+
+
+def _normalize_supervised_win32_program(program):
+    """Apply the standard caller's bounded syntax expansion before admission."""
+    if type(program) is not dict or type(program.get('ops')) is not list:
+        raise ValueError('PROGRAM_NOT_OBJECT')
+    from runtime.core_v1.sequence import normalize_observation_regions
+    operations, region_indices = normalize_observation_regions(program['ops'])
+    normalized = deepcopy(program)
+    normalized['ops'] = operations
+    compilation = None
+    if any(isinstance(op, dict) and 'gap_ms' in op for op in operations):
+        from runtime.core_v1.sequence import expand_text_gaps
+        expanded, sources = expand_text_gaps(operations)
+        compilation = {'kind': 'bounded_text_gap',
+                       'source_program': deepcopy(normalized),
+                       'operation_sources': sources}
+        normalized['ops'] = expanded
+    elif any(isinstance(op, dict) and 'repeat' in op for op in operations):
+        from runtime.core_v1.sequence import expand_key_repeats
+        expanded = expand_key_repeats(operations, max_ops=128)
+        compilation = {'kind': 'bounded_key_repeat',
+                       'source_program': deepcopy(normalized),
+                       'operation_sources': [index for index, op in enumerate(operations)
+                           for _ in range(op.get('repeat', 1))]}
+        normalized['ops'] = expanded
+    normalization = ({'kind': 'explicit_observation_region',
+        'source_program': deepcopy(program), 'source_operation_indices': region_indices}
+        if region_indices else None)
+    return normalized, normalization, compilation
+
+
+def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
+                                   cancel_requested=lambda: False):
+    """Run one standard program through native producer and custody receipts."""
+    from copy import deepcopy
+    program, normalization, compilation = _normalize_supervised_win32_program(
+        arguments['program'])
+    read_result = getattr(producer_factory, 'read_result', None)
+    if not callable(read_result):
+        raise ValueError('NATIVE_PRODUCER_RESULT_READER_REQUIRED')
+    authority = program.get('authority')
+    if type(authority) is not dict or type(authority.get('expires_at_ns')) is not int:
+        raise ValueError('INVALID_AUTHORITY_DEADLINE')
+    operation_id = uuid.uuid4().hex
+    binding = owner.bind_target_generation()
+    owner.admit_standard_action(call_id, operation_id,
+        binding['target_binding_id'], program,
+        operation_deadline_ns=authority['expires_at_ns'],
+        current_observation_seq=arguments['current_observation_seq'],
+        current_binding_revision=arguments['current_binding_revision'])
+    if cancel_requested():
+        owner.cancel_guarded(call_id,
+            cleanup_deadline_ns=time.monotonic_ns() + _SUPERVISED_WIN32_CLEANUP_NS)
+        row = owner.interface_result(call_id)
+        return {'schema': 'agent-interface/runtime-dispatch-result-v1',
+            'status': 'returned', 'result': {'status': 'cancel_pending',
+                'input_dispatched': False, 'task_success': None,
+                'replay_allowed': False}, 'supervision': row,
+            'target_generation': binding['target_generation'],
+            'operation_id': operation_id, 'call_id': call_id,
+            'operation_invoked': False, 'input_dispatched': False,
+            'release_confirmed': False, 'task_success': None,
+            'replay_allowed': False}
+    owner.start_producer(call_id, producer_factory)
+    deadline_ns = authority['expires_at_ns']
+    while True:
+        row = owner.complete_exited_action(call_id, result_reader=read_result,
+            readback_reader=lambda request: owner.observe_completed_producer(
+                request['operation_id'], request['target_generation'],
+                producer_exit_confirmed_ns=request['producer_exit_confirmed_ns'],
+                deadline_ns=max(deadline_ns,
+                    time.monotonic_ns() + _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS)))
+        action = row['action']
+        cancellation = row.get('cancellation')
+        if (action.get('status') != 'running'
+                or (isinstance(cancellation, dict)
+                    and cancellation.get('status') in ('recovered', 'unknown'))):
+            break
+        now_ns = time.monotonic_ns()
+        if now_ns >= deadline_ns:
+            owner.cancel_guarded(call_id,
+                cleanup_deadline_ns=now_ns + _SUPERVISED_WIN32_CLEANUP_NS)
+            row = owner.interface_result(call_id)
+            break
+        time.sleep(min(0.01, max(0.001,
+            (deadline_ns - now_ns) / 1_000_000_000)))
+    action = row['action']
+    cancellation = row.get('cancellation')
+    if (action.get('status') in ('running', 'cancel_pending')
+            and isinstance(cancellation, dict)
+            and cancellation.get('status') == 'unknown'):
+        # This dispatch worker is returning without an action receipt. Retain
+        # that terminal uncertainty on the action record while leaving owner
+        # custody UNKNOWN; cancellation status alone must not imply release.
+        row = owner.record_action_result(call_id, {
+            'status': 'unknown', 'input_dispatched': None,
+            'release_confirmed': False, 'effect_status': 'unknown',
+            'task_success': None, 'replay_allowed': False})
+        action = row['action']
+    result = action.get('result') or {'status': action.get('status', 'unknown'),
+        'task_success': None, 'replay_allowed': False}
+    cancellation = row.get('cancellation')
+    release_confirmed = action.get('release_confirmed') is True
+    if isinstance(cancellation, dict):
+        release_confirmed = release_confirmed or cancellation.get('release_confirmed') is True
+    execution = result.get('execution') if type(result) is dict else None
+    program_emissions = (execution.get('program_emissions')
+        if type(execution) is dict else None)
+    if type(program_emissions) is int:
+        input_dispatched = program_emissions > 0
+    elif type(result.get('input_dispatched')) is bool:
+        input_dispatched = result['input_dispatched']
+    else:
+        emissions = execution.get('emissions') if type(execution) is dict else None
+        input_dispatched = emissions > 0 if type(emissions) is int else None
+    return {'schema': 'agent-interface/runtime-dispatch-result-v1',
+        'status': 'returned', 'result': deepcopy(result),
+        'normalization': normalization, 'compilation': compilation,
+        'supervision': row, 'target_generation': action['target_generation'],
+        'operation_id': operation_id, 'call_id': call_id,
+        'operation_invoked': True,
+        'input_dispatched': input_dispatched,
+        'release_confirmed': release_confirmed,
+        'task_success': None, 'replay_allowed': False}
 
 
 # Documentation metadata only: the public compiler and core remain the validators.
@@ -176,10 +303,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_owner_factory=None,
                   _guarded_win32_owner_factory=None,
                   _guarded_win32_producer_factory=None,
-                  _guarded_win32_task_oracle=None):
-    if session_mode not in ("one-shot", "persistent-x11", "guarded-x11", "guarded-win32"):
+                  _guarded_win32_task_oracle=None,
+                  _supervised_win32_owner_factory=None,
+                  _supervised_win32_producer_factory=None):
+    if session_mode not in ("one-shot", "persistent-x11", "guarded-x11",
+                            "guarded-win32", "supervised-win32"):
         raise ValueError("unknown session mode")
     guarded_win32 = session_mode == 'guarded-win32'
+    supervised_win32 = session_mode == 'supervised-win32'
     if guarded_win32 and os.name != 'nt':
         raise ValueError('guarded-win32 requires a Windows host')
     if guarded_win32 and (not isinstance(targets, dict) or len(targets) != 1):
@@ -188,6 +319,13 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         raise ValueError('guarded-win32 requires an explicit injected owner factory')
     if guarded_win32 and not callable(_guarded_win32_producer_factory):
         raise ValueError('guarded-win32 requires an explicit gated synthetic producer factory')
+    if supervised_win32 and os.name != 'nt':
+        raise ValueError('supervised-win32 requires a Windows host')
+    if supervised_win32 and (not isinstance(targets, dict) or len(targets) != 1):
+        raise ValueError('supervised-win32 requires exactly one explicitly configured target')
+    if supervised_win32 and ((_supervised_win32_owner_factory is None)
+            != (_supervised_win32_producer_factory is None)):
+        raise ValueError('supervised-win32 test factories must be injected as a pair')
     if type(guarded_process_identity) is not bool:
         raise ValueError('guarded_process_identity must be a boolean')
     if guarded_process_identity and session_mode != 'guarded-x11':
@@ -225,11 +363,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     workers = set()
     calls = {}
     calls_lock = threading.Lock()
+    supervised_cancel_requests = set()
     cancellation_executor = (ThreadPoolExecutor(max_workers=1,
         thread_name_prefix='guarded-cancel') if guarded_owned_process else None)
     cancellation_futures = {}
     active_cancellation_operation = None
     unarchived_cancellation_call_id = None
+
+    def _supervised_cancel_requested(call_id):
+        with calls_lock:
+            return call_id in supervised_cancel_requests
 
     async def load_cancellation_record(call_id, call_record):
         cancellation = call_record.get('cancellation')
@@ -271,6 +414,27 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         if (getattr(owner, 'mode', None) != 'guarded-win32'
                 or getattr(owner, 'synthetic_only', None) is not True):
             raise ValueError('guarded-win32 requires the inert synthetic operation owner')
+    elif supervised_win32:
+        producer_root = root / 'supervised-win32-producers'
+        if callable(_supervised_win32_owner_factory):
+            owner = _supervised_win32_owner_factory(
+                deepcopy(targets), root, display_name)
+            supervised_win32_producer_factory = _supervised_win32_producer_factory(
+                deepcopy(targets), producer_root, display_name)
+        else:
+            from .win32_supervisor_helpers import create_native_win32_components
+            owner, supervised_win32_producer_factory = create_native_win32_components(
+                deepcopy(targets), producer_root)
+        required = ('bind_target_generation', 'admit_standard_action',
+                    'start_producer', 'complete_exited_action', 'cancel_guarded',
+                    'interface_result', 'list_results', 'close')
+        if (any(not callable(getattr(owner, name, None)) for name in required)
+                or getattr(owner, 'mode', None) != 'supervised-win32'
+                or getattr(owner, 'synthetic_only', None) is not False
+                or not callable(supervised_win32_producer_factory)
+                or not callable(getattr(supervised_win32_producer_factory,
+                                        'read_result', None))):
+            raise ValueError('supervised-win32 components are incomplete')
     if guarded:
         from .mcp_guarded import GuardedSessionOwner
         owner_options = dict(process_identity=guarded_process_identity,
@@ -336,7 +500,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     server = PublicArgumentMCP('Agent Interface public API', lifespan=lifespan, instructions=(
         'Configured target names: ' + json.dumps(sorted(targets)) + '. ' +
         ('Each call owns one backend session. ' if owner is None else
-         'One guarded X11 connection remains until close or transport shutdown; no reopen. ' if guarded else
+         'One guarded X11 connection remains until close or transport shutdown; no reopen. '
+         'Use session.binding_revision (initially 1) for dispatch. Explicit target review advances it. '
+         if guarded else
+         'One supervised Win32 target session remains until interface_close or transport shutdown; '
+         'no automatic reopen. ' if supervised_win32 else
          'One X11 connection is retained until interface_close or transport shutdown; no automatic reopen. '
          'Use session.binding_revision (initially 1) for dispatch. Explicit target review advances it. ') +
         ('Guarded mode provides bridge source sequences and internally bounded guarded input; '
@@ -364,7 +532,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     calls[call_id]['response_wait_ms'] = wait_for_result_ms
             # Serialize before calling the backend. A persistence failure here sends no input.
             authored_program = deepcopy(kwargs.get('program'))
-            request = {'operation': operation, 'arguments': kwargs, 'targets': deepcopy(owner.targets) if owner else targets,
+            request = {'operation': operation, 'arguments': kwargs,
+                       'targets': deepcopy(getattr(owner, 'targets', targets)) if owner else targets,
                        'display_name': display_name}
             if wait_for_result_ms is not None: request['response_wait_ms'] = wait_for_result_ms
             if owner is not None:
@@ -401,6 +570,20 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         call_root, call_id)
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
+                elif supervised_win32 and operation == 'dispatch':
+                    try:
+                        report = _run_supervised_win32_dispatch(owner,
+                            supervised_win32_producer_factory, call_id, kwargs,
+                            cancel_requested=lambda: _supervised_cancel_requested(call_id))
+                    except (RuntimeError, ValueError) as error:
+                        report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                            'status': 'invalid_request', 'error': str(error),
+                            'operation_invoked': False, 'input_dispatched': False,
+                            'release_confirmed': False, 'task_success': None,
+                            'replay_allowed': False}
+                elif supervised_win32 and operation == 'observe':
+                    options.pop('display_name')
+                    report = observe(deepcopy(targets), **options)
                 elif operation in ('inspect_target', 'review_target'):
                     try:
                         review_options = dict(kwargs)
@@ -539,11 +722,13 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if call_id is not None:
                 with calls_lock:
                     calls[call_id]["state"] = "finished"
+                    supervised_cancel_requests.discard(call_id)
             admission.finish()
 
     async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
         nonlocal shutting_down
         if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled')
+                and not (supervised_win32 and operation == 'dispatch')
                 or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
             return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
                             'operation_invoked':False,'replay_allowed':False},error=True)
@@ -995,7 +1180,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                detail: Literal["full", "brief", "summary"] = "full",
                                inspect_after: StrictStr | None = None,
                                inspect_after_region: list[StrictInt] | None = None,
-                               inspect_after_wait_ms: StrictInt | None = None) -> CallToolResult:
+                               inspect_after_wait_ms: StrictInt | None = None,
+                               wait_for_result_ms: StrictInt | None = None) -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
@@ -1038,6 +1224,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     or not 0 <= inspect_after_wait_ms <= 1000):
                 return content({'status': 'invalid_request', 'error': 'INVALID_POST_DISPATCH_CAPTURE_WAIT',
                                 'operation_invoked': False, 'input_dispatched': False}, error=True)
+            if wait_for_result_ms is not None and not supervised_win32:
+                return content({'status': 'invalid_request',
+                    'error': 'RESPONSE_WAIT_REQUIRES_SUPERVISED_WIN32',
+                    'operation_invoked': False, 'input_dispatched': False}, error=True)
             arguments = {'program': program, 'current_observation_seq': current_observation_seq,
                          'current_binding_revision': current_binding_revision}
             if inspect_after is not None:
@@ -1046,7 +1236,35 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 arguments['inspect_after_region'] = inspect_after_region
             if inspect_after_wait_ms is not None:
                 arguments['inspect_after_wait_ms'] = inspect_after_wait_ms
-            return await submit('dispatch', arguments, compact, report_refs, detail)
+            return await submit('dispatch', arguments, compact, report_refs, detail,
+                                wait_for_result_ms=wait_for_result_ms)
+
+    if supervised_win32:
+        @server.tool()
+        async def interface_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
+            """Cancel the exact supervised standard dispatch and retain custody."""
+            with calls_lock:
+                call = calls.get(call_id)
+                if call is None:
+                    return content({'status': 'unknown_call', 'call_id': call_id,
+                        'operation_invoked': False, 'replay_allowed': False}, error=True)
+                if call.get('state') == 'finished':
+                    return content({'status': 'not_cancellable', 'call_id': call_id,
+                        'operation_invoked': False, 'replay_allowed': False})
+                supervised_cancel_requests.add(call_id)
+            existing = owner.interface_result(call_id)
+            if existing is None:
+                return content({'status': 'cancel_pending', 'call_id': call_id,
+                    'release_confirmed': False, 'task_success': None,
+                    'input_dispatched': False, 'replay_allowed': False,
+                    'scope': 'supervised_win32',
+                    'note': 'Cancellation is retained before operation admission; '
+                            'the dispatch worker will close admission before producer start.'})
+            result = owner.cancel_guarded(call_id,
+                cleanup_deadline_ns=time.monotonic_ns() + _SUPERVISED_WIN32_CLEANUP_NS)
+            result.update(operation_invoked=False, input_dispatched=False,
+                task_success=None, replay_allowed=False, scope='supervised_win32')
+            return content(result)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
@@ -1077,7 +1295,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
                 'operation_invoked': False}, error=True)
-        if guarded_win32:
+        if guarded_win32 or supervised_win32:
             if call_id is None:
                 rows = owner.list_results()
                 return content({'status': 'call_list', 'scope': 'current_server',
@@ -1177,7 +1395,8 @@ def main():
     parser.add_argument('--targets', type=Path, required=True)
     parser.add_argument('--output-directory', type=Path, required=True)
     parser.add_argument('--display')
-    parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11', 'guarded-x11'), default='one-shot')
+    parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11', 'guarded-x11',
+                                                   'supervised-win32'), default='one-shot')
     parser.add_argument('--guarded-process-identity', action='store_true',
                         help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
     parser.add_argument('--guarded-query-worker',action='store_true',

@@ -1,0 +1,225 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r05",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-supervised-standard-caller-20261024-r05",
+        "source_commit": "2547e1e0374c4c8fda399f95c0f24b07ce477f89",
+        "tracked_tree_clean": true
+      },
+      "name": "attempt_and_source_identity",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_pid": 22740,
+        "generation": "119007574988862bb5c133764234bcdd81bddd9a63cea5dbb1a28cc0da3bd598",
+        "owner": {
+          "creation_time_100ns": 134372584387189388,
+          "pid": 22740,
+          "window_thread_id": 55768
+        }
+      },
+      "name": "one_owned_fixture_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observed": "119007574988862bb5c133764234bcdd81bddd9a63cea5dbb1a28cc0da3bd598",
+        "owned": "119007574988862bb5c133764234bcdd81bddd9a63cea5dbb1a28cc0da3bd598"
+      },
+      "name": "public_observation_generation_matches_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 8,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 8,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "static_validation_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "operations": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024-R05"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-effect-r05"
+      },
+      "name": "one_exact_dispatch_program",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cancel_started_ns": null,
+        "hook": {}
+      },
+      "name": "hook_observed_injected_q_down_before_cancel",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "blocked_call_id": null,
+        "cancel": {}
+      },
+      "name": "call_id_custody_and_single_cancel",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "elapsed_ms": null,
+        "limit_ms": 1000
+      },
+      "name": "bounded_public_cancel_response",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "identity": null,
+        "witness": {}
+      },
+      "name": "exact_producer_process_retired",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "hook_events": [],
+        "injected_q_up_callback_ns": null,
+        "producer_exit_observed_ns": null
+      },
+      "name": "recovery_up_hook_event_follows_exact_exit",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_operation_id": null,
+        "action_status": null,
+        "cancellation": {}
+      },
+      "name": "same_operation_generation_recovered",
+      "passed": false
+    },
+    {
+      "evidence": {},
+      "name": "separate_process_independent_neutral_readback",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "cancel_started_ns": null,
+        "limit_ms": 2500,
+        "readback_returned_ns": null
+      },
+      "name": "bounded_recovery_window",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect": null,
+        "event_count": 1,
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R05"
+        },
+        "journal_prefix_matches": false
+      },
+      "name": "independent_saved_task_effect_and_journal_prefix",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "close": {},
+        "fixture_exit_code": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "hook_stopped": {
+          "callback_entry_ns": null,
+          "callback_return_ns": null,
+          "error": null,
+          "events": [],
+          "hook_handle": 174195993,
+          "ready_ns": 476146727999100,
+          "thread_exited": true,
+          "thread_id": 39212
+        }
+      },
+      "name": "fixture_session_hook_and_foreground_cleanup",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_task_success": null,
+        "cancellation_task_success": null
+      },
+      "name": "runtime_task_success_remains_unclaimed",
+      "passed": true
+    }
+  ],
+  "passed": 6,
+  "schema": "win32-supervised-standard-caller-cancel-audit-v1",
+  "source_commit": "2547e1e0374c4c8fda399f95c0f24b07ce477f89",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 16
+}

@@ -1,5 +1,146 @@
 # Current objective and working direction
 
+**Dispatch lock repair (2026-10-24):** the dispatch worker now exits after a
+verified `recovered` or terminal `unknown` cancellation, allowing its shared MCP
+operation lock to be released before the lease deadline. A public-path
+regression reproduces recovered cancellation and requires session close within
+a 150 ms bounded retry window. The targeted supervised Win32, owned-session and
+composition modules pass 42 tests in normal and `-O` Python. The relay test's
+observation does contain `source.sequence` and a process-generation digest; a
+minimal public observe/close call confirms that contract. The full CLI run's
+actual failure is later: `test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`
+times out waiting for `held-reply.json`. Its Fake X caller emits a KeyPress and
+then a KeyRelease before `GetPointerControl`; the offline proxy candidate clears
+its pending-press association on that intervening request, so it forwards the
+later sync reply instead of holding it. The test then leaves an owner IPC worker
+blocked during executor shutdown. This is an unresolved event-order mismatch
+between the composed caller and test-only relay candidate, not a missing public
+observation field. The complete suite has not produced a summary.
+
+**Standard-caller blocked-hook trial R14 (2026-10-24):** the one-shot public
+stdio-MCP run is preserved in the [R14 result](../research/integration/win32_supervised_standard_caller_20261024_r14/RESULT.md).
+It held one injected Q-down inside the owned low-level callback for 700.934 ms
+after cancel. The cancel returned pending in 1.431 ms; eleven exact-call polls
+all retained `running / pending / release_confirmed=false`, and the callback
+was still blocked at hold end. An independent same-generation process saw Q-up
+during the hold, but this does not prove release because Q-down had not passed
+the hook. After callback return at 701.097 ms, exact producer exit and recovery
+UP followed; final independent readback was neutral, the fixture saved its
+sentinel, session/hook/fixture cleanup passed, foreground was restored, and
+runtime `task_success` remained null. The frozen audit is FAIL_OR_UNKNOWN
+19/20 on the blocked-I/O release check. Public close also reported
+`release_confirmed=false`. The next boundary is a safe way to retire or fence
+the blocked producer before recovery UP, without permitting late input, while
+preserving UNKNOWN until independent neutral readback. This was a
+user-authorized Windows-PC test, not a WSLc allocation. No rerun.
+
+**R15 hook-timeout trial launch (2026-10-24):** R15 prepared a 1250 ms
+low-level hook hold to test the documented Windows timeout boundary, but its
+source preflight refused to start because this page had an uncommitted tracked
+edit. The failure happened before output-directory/fixture/hook creation, MCP
+dispatch, or native input (`caller_dispatches=0`). Preserve it as a prelaunch
+failure; do not rerun R15. Its conditions and source are in the
+[R15 packet](../research/integration/win32_supervised_standard_caller_20261024_r15/RESULT.md).
+The next attempt needs a clean committed source SHA and a new attempt ID.
+
+**Standard-caller cancellation R13 (2026-10-24):** the repaired public stdio-MCP
+path passed its frozen auditor 19/19 on one fresh owned fixture. Same-call
+polling reached injected Q-down in 775.292 ms; one cancel returned in 1.495 ms,
+then exact producer exit, `recovered / release_confirmed=true`, and independent
+same-generation Q-up were observed within 235.151 ms of cancel. `interface_close`
+returned `closed` on its first call in 90.154 ms; fixture exit, hook exit and
+foreground restore passed. The fixture saved the exact R13 sentinel while
+runtime `task_success` remained null. This verifies the specific R12 lock-release
+repair for one Windows fixture; it does not establish MAP01, efficiency, broad
+reliability, or WSLc transfer. See the [R13 packet](../research/integration/win32_supervised_standard_caller_20261024_r13/RESULT.md).
+**Standard-caller cancellation R12 (2026-10-24):** the first pre-admission
+`unknown_call` was recorded, subsequent same-call polling reached the hook in
+1.003 s, and one cancel returned in 1.479 ms. Exact producer exit preceded hook
+UP; public results reached `recovered / release_confirmed=true`, independent
+same-generation readback observed Q-up, and the exact fixture effect was saved.
+The audit is FAIL_OR_UNKNOWN 18/19 because close stayed busy through 37
+attempts/4 s. Source inspection locates the likely cause: the dispatch worker
+continues while action status is `running` after cancellation has reached
+`recovered`, retaining the shared MCP operation lock. No local child remained;
+public close still did not confirm. The next step is a local regression and
+minimal exit-condition repair before another one-shot live check. See the
+[R12 result](../research/integration/win32_supervised_standard_caller_20261024_r12/RESULT.md).
+
+**Standard-caller cancellation R11 (2026-10-24):** 250 ms polling of the
+returned public call ID advanced execution to injected Q-down in 984.654 ms.
+The callback was held through a 1.699 ms public cancel response; the exact
+producer exited, hook UP followed, and an independent same-generation readback
+observed Q-up. The terminal same-call result reported `recovered` and
+`release_confirmed=true`; exact R11 fixture effect was saved, while runtime
+`task_success` stayed null. The immutable audit remains FAIL_OR_UNKNOWN 17/19:
+it counts an initial pre-admission `unknown_call` poll as a failure and the
+immediate session close was busy while cleanup was draining. Processes and
+fixture exited, hook and foreground cleanup passed. See the
+[R11 result](../research/integration/win32_supervised_standard_caller_20261024_r11/RESULT.md).
+The next one-shot should preserve the transient `unknown_call` and retry only
+busy `interface_close` within a finite drain window.
+
+**Standard-caller cancellation R10 (2026-10-24):** the one-shot public
+stdio-MCP run again completed the fixture effect and independent same-generation
+Q-up readback, but the 100 s hook gate expired about 0.780 s before injected
+Q-down reached the hook (100.780 s after wait start; 103.483 s after hook
+readiness). No cancel was sent; session close still reports release unknown.
+The frozen audit is FAIL_OR_UNKNOWN 9/17. Across R06/R07/R09/R10 the Q-down
+arrived 0.75–0.79 s after each finite hook wait, so the next test should poll
+same-call results during the wait instead of extending it. Preserve R10 and do
+not replay it; see its
+[result](../research/integration/win32_supervised_standard_caller_20261024_r10/RESULT.md).
+The goal remains active; no WSLc or Docker allocation was used.
+
+**Standard-caller cancellation R09 (2026-10-24):** R09 preserved one public
+stdio-MCP normal completion and exact fixture effect, but its 75 s cancellation
+gate expired about 0.788 s before injected Q-down reached the owned hook
+(75.788 s after gate start; 78.482 s after hook readiness). The frozen audit is
+FAIL_OR_UNKNOWN 9/17; no public cancel was sent, session close did not confirm
+release, and a separate same-generation readback later observed Q up. Do not
+replay R09. See its [result](../research/integration/win32_supervised_standard_caller_20261024_r09/RESULT.md)
+and raw. The next one-shot caller trial should use a 100 s finite hook-entry
+gate and 180 s lease, preserving the hook/running/cancel ordering. No WSLc or
+Docker allocation was used.
+
+**Standard-caller cancellation follow-up (2026-10-24):** the new [R05
+packet](../research/integration/win32_supervised_standard_caller_20261024_r05/README.md)
+records a caller-teardown construction failure before native input. R06 and
+R07 each returned a public zero-wait pending call ID and then completed the
+owned fixture task normally, with an exact saved sentinel, verified empty
+release, independent same-generation all-up readback, and clean foreground
+restoration. They did **not** exercise cancellation: injected Q-down reached
+the hook 10.7526 s after R06's 10 s wait and 45.7678 s after R07's 45 s wait,
+after each finite hook gate had already been released. Both immutable packets
+record FAIL_OR_UNKNOWN for the cancellation question; R05–R07 do not establish
+public cancellation recovery. The [R06](../research/integration/win32_supervised_standard_caller_20261024_r06/README.md)
+and [R07](../research/integration/win32_supervised_standard_caller_20261024_r07/README.md)
+records preserve the delayed producer-start boundary. The next caller trial
+must retain a finite window long enough to reach the hook, confirm the same
+call is still running, then cancel once and verify exit-before-UP and
+independent neutral state. The goal remains active; no WSLc or Docker allocation
+was used.
+
+**Supervised Win32 standard-caller effect path (2026-10-24):** the fresh [R04
+packet](../research/integration/win32_supervised_standard_caller_20261024_r04/README.md)
+passes its 15-check audit on the public stdio-MCP route. Observation and the
+owned fixture share a target generation; one dispatch returned pending after
+10.0028 s, and same-call readback showed `operation_invoked=true`,
+`input_dispatched=true`, verified empty release, and completed action. An
+independent neutral readback followed producer-exit confirmation, though both
+timestamps rounded to the same monotonic tick. The exact fixture journal and
+saved effect match, fixture cleanup restored the previous foreground, and the
+session closed. Runtime task success remains `null`. R01's producer-directory
+collision is repaired in `5da333c6`; R02's missing input-dispatch summary is
+repaired in `a448064e`. R01 and R03 are preserved pre-effect failures: R01 hit
+the path collision; R03 exceeded the public 10000 ms wait bound and was refused
+before input. R02 independently passes a supplemental audit after its first
+audit's pending-response assumption mis-scored the same-call terminal result.
+Across this sequence, 84 related local tests pass in normal and optimized
+Python. These results do not establish blocked-I/O release/recovery, a hard
+deadline, atomic generation fencing, MAP01, integrated task success, matched
+efficiency, or broad reliability. No WSLc/Docker allocation was used.
+
 **Native Win32 low-level hook delay probe (2026-10-24):** the frozen one-run
 [R01 packet](../research/integration/win32_sendinput_lowlevel_hook_20261024_r01/README.md)
 delayed one injected F13 key-down in `WH_KEYBOARD_LL`. `SendInput` returned
@@ -411,3 +552,60 @@ Its dated directions and allocations are history, not fresh instructions.
 R04's input-free Win32 R02 diagnostic recorded the exact owned fixture in foreground on the active `Default` input desktop, successful input-desktop open with hook-control/read-object access, same named desktop for probe and fixture threads, and matching process integrity RID 8192. Neutral Ctrl/S/left-button `GetAsyncKeyState` samples were raw zero. The 10/10 auditor outcome is diagnostic completeness only; no input or release was tested. These conditions justify evaluating a narrowly scoped availability witness for interpreting zero as UP. The older public R03 receipt remains `release_unverified`; do not rewrite it. The implementation keeps UNKNOWN whenever foreground, active desktop, desktop access, or integrity cannot be proved. The separate R06 public trial passed for one owned fixture; it still does not establish bounded release under blocked I/O.
 
 **R05/R06 public Win32 release qualification (2026-10-23):** R05 remains `FAIL_OR_UNKNOWN` under its frozen 11/12 auditor because the probe searched the wrong result nesting; its raw public report records completed and verified release, but this does not rewrite its outcome. A separate one-shot R06 with corrected pre-frozen extraction/audit passed 14/14: public stdio observe/validate/dispatch, exact fixture effect and event counts, verified release with empty down/unknown sets and active-desktop query witnesses, and clean fixture exit. See the R05 and R06 packets; this is one scoped fixture result and does not establish blocked-I/O timing, generation admission, recovery, MAP01, or efficiency.
+
+**Blocked Win32 callback continuation (2026-10-24):** R14 observed a 650 ms
+held callback with cancel pending and no release receipt; R15 stopped before
+dispatch because the tracked goal document was dirty. R16–R19 are separate
+one-shot public MCP attempts against owned fixtures, all on this PC; none used
+WSLc or Docker. R16's effect check read the stale R14 sentinel. R17 and R18
+matched their exact fixture effects, while all held-window polls remained
+running/pending with release unconfirmed. R18's exact producer PID/creation-time
+samples changed from indeterminate at +3.1 ms to exited at +251 ms, before the
+2.0 s callback hold ended; the recovery-helper blockage explanation remains an
+inference because helper stage was not directly traced.
+
+R19 held the callback for 4.059 s. Cancellation changed to `unknown` at +2.866
+s with release and replay both false and task success null, while action stayed
+`running` in all 65 held-window polls. The producer identity was exited by +232
+ms. The R19 sentinel effect was independently saved, and fixture/hook/foreground
+cleanup succeeded; public close remained busy/UNKNOWN after 37 attempts. Its
+frozen audit is `FAIL_OR_UNKNOWN` (6/9): two checks fail to read the callback
+return and suppression evidence from the recorded event row; a third exposes
+the unresolved action state by requiring action `unknown` alongside cancellation
+`unknown`. The packet preserves that audit and raw; its result note separates
+the audit extraction defects from the actual unresolved terminal-action and
+input-release questions. These results narrow the boundary:
+cancellation uncertainty becomes visible within 3.5 s even while the callback
+is held, but action completion, release, recovery, and public close remain
+unproved. The source path and existing focused tests confirm cancel and action
+receipts are separate, and custody stays open while the owner is unresolved.
+Do not repeat these one-shot trials. No verified unused WSLc allocation is
+available, so this does not qualify WSLc or MAP01.
+
+**Terminal action receipt follow-up (2026-10-24):** the R19 state path confirms
+the supervised Win32 dispatch worker has itself returned when it observes
+terminal cancellation `unknown`. At that boundary `mcp_server` now retains an
+action result with `status=unknown`, `effect_status=unknown`, unknown
+`input_dispatched`, `release_confirmed=false`, `task_success=null`, and
+replay denied. It does not mutate owner custody; `interface_close` stays busy
+while the owner phase is unknown. A composed MCP regression first failed on the
+old `action=running` result, then passed after the change while asserting that
+the owner remains unresolved. The four focused session, supervised-MCP,
+operation-owner, and MCP server suites pass 69/69 in CPython 3.11.9 and 3.13,
+both normal and optimized. Later full CLI verification exposed an offline
+Fake X request-order mismatch: the standard caller emits a matching XTEST
+KeyRelease between KeyPress and GetPointerControl, while the test-only parser
+candidate discarded the association. R01 fixes that ordering, corrects the
+lifecycle race to accept both scheduler-valid outcomes, and makes the
+supervised cancellation test wait for its finalized receipt and bounded close
+drain. The full CLI suite then passed 593 tests (8 skipped) in 149.996 s; the
+focused parser, relay, composition, supervised-Win32 and lifecycle set passed
+48/48 in normal and optimized CPython 3.11.9. Raw output, conditions and
+limitations are in the [R01 packet](../research/integration/offline_proxy_reply_framing_20261019/standard-caller-order-r01/README.md).
+These are local synthetic checks only. The public-caller Win32 path has not
+been live-retested; a new run still requires a verified unused WSLc allocation
+under the active goal. The newest [#7924 readiness update](https://github.com/Unjuno/agent-interface/issues/7924#issuecomment-6370065073)
+records `WSLC_E_IMAGE_NOT_FOUND` before application code ran and no full
+container-ID cleanup receipt; it retains STOP/HOLD and must not be retried as
+the same allocation. A separate #9451 change repairs WSL version-log decoding,
+not that image or ownership condition.

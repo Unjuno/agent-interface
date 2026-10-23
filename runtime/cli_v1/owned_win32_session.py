@@ -1,8 +1,9 @@
-"""Narrow caller journal for the opt-in inert Win32 operation owner.
+"""Caller journal and standard-program custody adapter for Win32 sessions.
 
-This adapter keeps original action outcomes separate from cancellation
-transactions for the opt-in synthetic guarded-win32 MCP route. It does not
-construct a Win32 backend, emit input, or imply that process exit proves release.
+The synthetic guarded-win32 route uses inert injected components. The
+supervised-win32 route composes a native gated producer with separate recovery
+and observation helpers. Both keep action outcomes separate from cancellation
+transactions; producer exit alone never proves release.
 """
 from __future__ import annotations
 
@@ -29,7 +30,8 @@ class OwnedWin32SessionOwner:
     or connect a native input adapter.
     """
 
-    def __init__(self, operation_owner, cancellation_supervisor, *, session_id=None):
+    def __init__(self, operation_owner, cancellation_supervisor, *, session_id=None,
+                 synthetic_only=True):
         if (not callable(getattr(operation_owner, "admit", None))
                 or not callable(getattr(operation_owner, "result", None))
                 or not callable(getattr(operation_owner, "mark_unknown", None))
@@ -42,16 +44,20 @@ class OwnedWin32SessionOwner:
             session_id = uuid.uuid4().hex
         self._validate_id(session_id, "session_id")
         self.session_id = session_id
-        self.mode = "guarded-win32"
-        self.synthetic_only = True
+        if type(synthetic_only) is not bool:
+            raise ValueError("synthetic_only must be a boolean")
+        self.mode = "guarded-win32" if synthetic_only else "supervised-win32"
+        self.synthetic_only = synthetic_only
         self.state = "open"
         self._owner = operation_owner
         self._supervisor = cancellation_supervisor
         self._target_generation_reader = None
         self._lock = threading.RLock()
         self._calls = {}
+        self._producer_handles = {}
         self._cancellation_ids = set()
         self._target_bindings = {}
+        self._used_authority_leases = set()
 
     def bind_target_generation_reader(self, reader):
         """Bind a host-supplied identity query; this adapter never opens Win32 APIs."""
@@ -95,7 +101,8 @@ class OwnedWin32SessionOwner:
 
     def admit_action_from_binding(self, call_id, action_operation_id,
                                   target_binding_id, *, operation_deadline_ns,
-                                  obligations, action_metadata=None):
+                                  obligations, action_metadata=None,
+                                  standard_program=None):
         self._validate_id(target_binding_id, "target_binding_id")
         with self._lock:
             binding = self._target_bindings.pop(target_binding_id, None)
@@ -113,7 +120,58 @@ class OwnedWin32SessionOwner:
         # Admission freezes the exact generation observed before the wait.
         return self.admit_action(call_id, action_operation_id, generation,
             operation_deadline_ns=operation_deadline_ns,
-            obligations=obligations, action_metadata=action_metadata)
+            obligations=obligations, action_metadata=action_metadata,
+            standard_program=standard_program)
+
+    def admit_standard_action(self, call_id, action_operation_id,
+                              target_binding_id, program, *,
+                              operation_deadline_ns,
+                              current_observation_seq,
+                              current_binding_revision):
+        """Freeze a standard program's target generation and all input obligations."""
+        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
+        if type(program) is not dict:
+            raise ValueError("standard program must be an object")
+        from runtime.core_v1.contract import validate_program
+        validate_program(program)
+        if (type(current_observation_seq) is not int
+                or type(current_binding_revision) is not int
+                or program["source"].get("observation_seq") != current_observation_seq
+                or program["source"].get("binding_revision") != current_binding_revision):
+            raise ValueError("STANDARD_SOURCE_BINDING_MISMATCH")
+        program_id = program.get("program_id")
+        if type(program_id) is not str or not program_id:
+            raise ValueError("standard program ID is required")
+        focused_target = None
+        action_targets = set()
+        target_actions = {"key_chord", "key_state", "text", "pointer_move",
+                          "pointer_button", "scroll", "observe"}
+        for operation in program["ops"]:
+            kind = operation["op"]
+            if kind in ("focus", "activate"):
+                focused_target = operation["target"]
+                action_targets.add(focused_target)
+            elif kind in target_actions:
+                if not isinstance(focused_target, str):
+                    raise ValueError("TARGET_GENERATION_REQUIRES_EXPLICIT_FOCUS")
+                action_targets.add(focused_target)
+        if len(action_targets) != 1:
+            raise ValueError("standard Win32 dispatch requires exactly one focused target")
+        target = next(iter(action_targets))
+        expected_generations = program["source"].get("target_generations")
+        try:
+            current_generation = self.current_target_generation()
+        except Exception as error:
+            raise ValueError("TARGET_GENERATION_UNAVAILABLE") from error
+        if expected_generations != {target: current_generation}:
+            raise ValueError("TARGET_GENERATION_CHANGED")
+        obligations = derive_input_obligations(program)
+        return self.admit_action_from_binding(call_id, action_operation_id,
+            target_binding_id, operation_deadline_ns=operation_deadline_ns,
+            obligations=obligations,
+            action_metadata={"source": "interface_dispatch",
+                             "program_id": program_id},
+            standard_program=program)
 
     def close(self):
         with self._lock:
@@ -122,7 +180,7 @@ class OwnedWin32SessionOwner:
                         "task_success": None, "replay_allowed": False}
             for record in self._calls.values():
                 phase = self._owner.result(record["action"]["operation_id"]).get("phase")
-                if phase != "recovered":
+                if phase not in ("recovered", "completed"):
                     return {"status": "busy", "release_confirmed": False,
                             "task_success": None, "replay_allowed": False,
                             "unresolved_operation_id": record["action"]["operation_id"]}
@@ -132,15 +190,40 @@ class OwnedWin32SessionOwner:
         return {"status": "closed", "release_confirmed": False,
                 "task_success": None, "replay_allowed": False}
 
+    def snapshot(self):
+        """Return a small custody summary for standard MCP audit records."""
+        with self._lock:
+            unresolved = []
+            for call_id, record in self._calls.items():
+                phase = self._owner.result(record["action"]["operation_id"]).get("phase")
+                if phase not in ("recovered", "completed"):
+                    unresolved.append(call_id)
+            return {"session_id": self.session_id, "mode": self.mode,
+                "state": self.state, "synthetic_only": self.synthetic_only,
+                "call_count": len(self._calls),
+                "unresolved_call_ids": unresolved}
+
     def admit_action(self, call_id, action_operation_id, target_generation, *,
-                     operation_deadline_ns, obligations, action_metadata=None):
+                     operation_deadline_ns, obligations, action_metadata=None,
+                     standard_program=None):
         self._validate_id(call_id, "call_id")
         self._validate_id(action_operation_id, "action_operation_id")
         if action_metadata is not None and type(action_metadata) is not dict:
             raise ValueError("action_metadata must be a dictionary")
+        authority_lease = None
+        if standard_program is not None:
+            if (type(standard_program) is not dict
+                    or type(standard_program.get("authority")) is not dict):
+                raise ValueError("standard program authority is required")
+            authority_lease = standard_program["authority"].get("lease_id")
+            if type(authority_lease) is not str or not authority_lease:
+                raise ValueError("standard program authority lease is required")
         with self._lock:
             if self.state != "open":
                 raise RuntimeError("Win32 session is not open")
+            if (authority_lease is not None
+                    and authority_lease in self._used_authority_leases):
+                raise ValueError("authority lease ID already used")
             used_action_ids = {item["action"]["operation_id"]
                                for item in self._calls.values()}
             if (call_id in self._calls or action_operation_id in used_action_ids
@@ -149,6 +232,8 @@ class OwnedWin32SessionOwner:
             custody = self._owner.admit(action_operation_id, target_generation,
                                         operation_deadline_ns, obligations,
                                         start_gate_required=True)
+            if authority_lease is not None:
+                self._used_authority_leases.add(authority_lease)
             self._calls[call_id] = {
                 "call_id": call_id,
                 "action": {
@@ -160,6 +245,8 @@ class OwnedWin32SessionOwner:
                 },
                 "cancellation": None,
                 "task_effect": None,
+                "standard_program": (deepcopy(standard_program)
+                                     if standard_program is not None else None),
             }
             return self.interface_result(call_id)
 
@@ -179,6 +266,7 @@ class OwnedWin32SessionOwner:
         with self._lock:
             record = self._calls.get(call_id)
             if record is not None:
+                self._producer_handles[call_id] = process_handle
                 action = record["action"]
                 if action["operation_id"] != operation_id:
                     return False
@@ -208,6 +296,7 @@ class OwnedWin32SessionOwner:
             if record is None:
                 raise ValueError("unknown caller action")
             action = deepcopy(record["action"])
+            standard_program = deepcopy(record.get("standard_program"))
             if action["status"] != "admitted":
                 return self.interface_result(call_id)
             record["action"]["status"] = "starting"
@@ -216,7 +305,11 @@ class OwnedWin32SessionOwner:
             generation_error = self._start_generation_error(action)
             if generation_error is not None:
                 return self._refuse_start_generation(call_id, action, generation_error)
-            produced = producer_factory(action)
+            producer_request = deepcopy(action)
+            producer_request["call_id"] = call_id
+            if standard_program is not None:
+                producer_request["program"] = standard_program
+            produced = producer_factory(producer_request)
             if (not isinstance(produced, tuple) or len(produced) != 3):
                 raise ValueError("producer factory must return process, identity and start gate")
             process, process_identity, authorize_start = produced
@@ -388,6 +481,118 @@ class OwnedWin32SessionOwner:
             action["result"] = deepcopy(result)
             action["status"] = result.get("status", "unknown")
             return self.interface_result(call_id)
+
+    def complete_action(self, call_id, process_handle, result, *, release_receipt,
+                        readback):
+        """Retain a standard dispatch result after custody confirms normal exit.
+
+        The backend result remains separate from the owner custody receipt.
+        Process completion alone cannot confirm release or task success.
+        """
+        if type(result) is not dict:
+            raise ValueError("standard action result must be a dictionary")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            action = record["action"]
+            operation_id = action["operation_id"]
+            generation = action["target_generation"]
+        custody = self._owner.producer_completed(operation_id, generation,
+            process_handle, release_receipt=release_receipt, readback=readback)
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None or record["action"]["operation_id"] != operation_id:
+                raise ValueError("caller action changed during completion")
+            action = record["action"]
+            action.update(status=custody["phase"], result=deepcopy(result),
+                release_confirmed=custody["release_confirmed"],
+                task_success=None, replay_allowed=False,
+                completion_custody=deepcopy(custody))
+            return deepcopy(record)
+
+    def complete_exited_action(self, call_id, *, result_reader, readback_reader):
+        """Collect one exited producer result and independent neutral readback.
+
+        The result reader runs only after the retained process handle reports an
+        exact exit code. It must return separate backend result and release
+        receipt fields; the observer receives the bound action and parent exit
+        witness. Missing or malformed evidence leaves custody UNKNOWN.
+        """
+        if not callable(result_reader) or not callable(readback_reader):
+            raise ValueError("producer result and independent readback readers required")
+        with self._lock:
+            record = self._calls.get(call_id)
+            process_handle = self._producer_handles.get(call_id)
+            if record is None or process_handle is None:
+                raise ValueError("unknown caller action or producer")
+            action = deepcopy(record["action"])
+            if action["status"] != "running" or record["cancellation"] is not None:
+                return self.interface_result(call_id)
+
+        def retain_unknown(error_code, error_type=None):
+            try:
+                phase = self._owner.result(action["operation_id"])["phase"]
+            except Exception:
+                phase = "unknown"
+            if phase == "running":
+                self._owner.mark_unknown(action["operation_id"],
+                    action["target_generation"], error_code.lower())
+            result = {"status": "unknown", "error": error_code,
+                      "task_success": None, "replay_allowed": False}
+            if error_type is not None:
+                result["error_type"] = error_type
+            with self._lock:
+                current = self._calls.get(call_id)
+                if current is None or current["cancellation"] is not None:
+                    return self.interface_result(call_id)
+                current["action"].update(status="unknown", result=result,
+                    release_confirmed=False, task_success=None,
+                    replay_allowed=False)
+            return self.interface_result(call_id)
+        try:
+            alive = process_handle.is_alive()
+            exit_code = process_handle.exitcode
+        except Exception as error:
+            return retain_unknown("PRODUCER_EXIT_UNCONFIRMED", type(error).__name__)
+        if alive is True:
+            return self.interface_result(call_id)
+        if alive is not False or type(exit_code) is not int:
+            return retain_unknown("PRODUCER_EXIT_UNCONFIRMED")
+        exit_confirmed_ns = time.monotonic_ns()
+        try:
+            packet = result_reader(process_handle)
+            if (type(packet) is not dict
+                    or set(packet) != {"result", "release_receipt"}
+                    or type(packet["result"]) is not dict
+                    or type(packet["release_receipt"]) is not dict):
+                raise ValueError("producer result packet schema mismatch")
+            with self._lock:
+                current = self._calls.get(call_id)
+                if (current is None or current["action"]["status"] != "running"
+                        or current["cancellation"] is not None):
+                    return self.interface_result(call_id)
+            readback = readback_reader({
+                "call_id": call_id,
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "producer_exit_confirmed_ns": exit_confirmed_ns,
+            })
+            return self.complete_action(call_id, process_handle,
+                packet["result"], release_receipt=packet["release_receipt"],
+                readback=readback)
+        except Exception as error:
+            return retain_unknown("COMPLETION_EVIDENCE_UNCONFIRMED",
+                                 type(error).__name__)
+
+    def observe_completed_producer(self, operation_id, target_generation, *,
+                                   producer_exit_confirmed_ns, deadline_ns):
+        observer = getattr(self._supervisor, "observe_completed", None)
+        if not callable(observer):
+            raise RuntimeError("normal-completion observer is unavailable")
+        return observer(operation_id, target_generation,
+            producer_exit_confirmed_ns=producer_exit_confirmed_ns,
+            deadline_ns=deadline_ns)
 
     def begin_task_effect_verification(self, call_id):
         """Reserve one independent oracle attempt without changing action/cancel."""

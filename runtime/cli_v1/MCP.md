@@ -291,6 +291,33 @@ outside the busy slot. It requires `--guarded-process-identity`; see the
 [exact coverage and remaining synchronous boundaries](../guarded_x11_v1/TARGET_QUERIES.md).
 It does not establish a physical release deadline or isolate all observations.
 
+## Opt-in supervised Win32 mode
+
+On Windows, `--session-mode supervised-win32` selects the standard
+`interface_observe` / `interface_validate` / `interface_dispatch` route for
+one explicitly configured HWND. Copy the matching
+`target_generation` from the full observation receipt into
+`program.source.target_generations`; the owner checks it again at admission
+and immediately before opening the gated producer. Producer exit, its release
+receipt, and a separately supervised neutral-state readback are retained as
+distinct custody evidence. `interface_results` retrieves the exact call's
+retained result; `interface_cancel` requests bounded recovery for that call.
+
+`task_success` remains null unless an independent task-effect certificate is
+integrated for that task. This opt-in route has focused synthetic composition
+coverage and native Win32 implementation, but does not establish atomic
+capture-to-input fencing, a hard physical release deadline, all blocked-I/O
+recovery classes, MAP01, matched efficiency, or broad reliability. Use only a
+fresh owned fixture or an explicitly assigned target; the server does not
+discover or launch targets.
+
+```sh
+python -m runtime.cli_v1.mcp_server \
+  --targets /absolute/one-window.json \
+  --output-directory /absolute/fresh-receipts \
+  --session-mode supervised-win32
+```
+
 ```sh
 python /absolute/agent-interface-runtime.pyz mcp \
   --targets /absolute/one-target.json \

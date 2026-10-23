@@ -12,6 +12,7 @@ from __future__ import annotations
 import queue
 import threading
 import time
+import uuid
 
 
 class OperationCancellationSupervisor:
@@ -140,6 +141,66 @@ class OperationCancellationSupervisor:
         if not accepted and self._owner.result(operation_id)["phase"] == "cancel_pending":
             self._schedule(operation_id, target_generation)
         return accepted
+
+    def observe_completed(self, operation_id, target_generation, *,
+                          producer_exit_confirmed_ns, deadline_ns):
+        """Use the prestarted independent observer for normal completion.
+
+        The result is suitable for OperationOwner.producer_completed only when
+        the observer returns a matching operation/generation receipt with a
+        monotonic neutral observation after the caller's producer-exit witness.
+        """
+        if (type(producer_exit_confirmed_ns) is not int
+                or producer_exit_confirmed_ns <= 0
+                or type(deadline_ns) is not int
+                or deadline_ns <= self._clock_ns()):
+            raise ValueError("valid producer-exit witness and future deadline required")
+        try:
+            operation = self._owner.result(operation_id)
+        except Exception as error:
+            raise ValueError("unknown operation for normal readback") from error
+        if (operation.get("target_generation") != target_generation
+                or operation.get("phase") != "running"):
+            return None
+        completion_id = uuid.uuid4().hex
+        request = {
+            "request_id": completion_id,
+            "operation_id": operation_id,
+            "target_generation": target_generation,
+            "recovery_id": completion_id,
+            "deadline_ns": deadline_ns,
+            "obligations": operation["obligations"],
+        }
+        try:
+            receipt = self._exchange_helper("observer", request, deadline_ns)
+        except Exception as error:
+            self._owner.mark_unknown(operation_id, target_generation,
+                "normal_completion_observer_unconfirmed: " + type(error).__name__)
+            return None
+        now_ns = self._clock_ns()
+        valid = (
+            type(receipt) is dict
+            and receipt.get("operation_id") == operation_id
+            and receipt.get("target_generation") == target_generation
+            and receipt.get("recovery_id") == completion_id
+            and type(receipt.get("neutral")) is bool
+            and type(receipt.get("observed_monotonic_ns")) is int
+            and receipt["observed_monotonic_ns"] >= producer_exit_confirmed_ns
+            and receipt["observed_monotonic_ns"] <= now_ns
+            and now_ns < deadline_ns
+        )
+        if not valid:
+            self._invalidate_helper("observer", deadline_ns)
+            self._owner.mark_unknown(operation_id, target_generation,
+                "normal_completion_observer_receipt_invalid_or_late")
+            return None
+        return {
+            "operation_id": operation_id,
+            "target_generation": target_generation,
+            "producer_exit_confirmed_ns": producer_exit_confirmed_ns,
+            "observed_monotonic_ns": receipt["observed_monotonic_ns"],
+            "neutral": receipt["neutral"],
+        }
 
     def _schedule(self, operation_id, target_generation):
         with self._lock:

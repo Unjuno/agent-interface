@@ -83,6 +83,13 @@ experimental prestarted cancellation worker. It requires
 off; it does not change release, replay, or task-success claims. See the
 [supervisor design and evidence limits](../architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
 
+For one explicitly configured Windows HWND, the stdio server also provides the
+opt-in `--session-mode supervised-win32` standard MCP route. It binds the
+generation returned by public observation through admission and a gated native
+producer, then retains producer exit, release receipt and independent neutral
+readback. `task_success` remains unknown without a separate task-effect
+certificate. See [MCP mode details and limits](MCP.md#opt-in-supervised-win32-mode).
+
 ### Retain a CLI attempt before delivering stdout
 
 For `observe` or `dispatch`, optionally specify `--run-directory /absolute/new-run`.

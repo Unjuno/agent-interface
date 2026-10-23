@@ -74,6 +74,15 @@ generation refusal, but does not exercise actual XRes request/reply bytes or
 live PID discovery. It preserves the existing late-request/UNKNOWN result and
 does not establish physical release, task effect, or a WSLc result.
 
+The later [standard-caller request-order R01 packet](standard-caller-order-r01/README.md)
+repaired the composed Fake X test's actual `KeyPress → KeyRelease →
+GetPointerControl` request order. It also corrected two scheduler-sensitive
+test assumptions. The full CLI suite passes 593 tests (8 skipped), and the 48
+focused parser/relay/composition/lifecycle/supervisor tests pass in normal and
+optimized Python. These remain local synthetic checks; no live X server,
+physical release, application task success, WSLc transfer or efficiency result
+is established.
+
 ## Next boundary
 
 Next, pass actual XRes QueryVersion/QueryClientIds request and reply frames over

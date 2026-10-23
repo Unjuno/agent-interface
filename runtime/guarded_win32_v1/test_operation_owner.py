@@ -117,6 +117,103 @@ class OperationOwnerTests(unittest.TestCase):
         with self.assertRaises(OwnerRefused):
             self.owner.admit("op-1", GEN_B, 1_000, ["key:a"])
 
+    def test_normal_completion_requires_exact_exit_and_verified_neutral_release(self):
+        self.owner.admit("op-complete", GEN_A, 1_000, ["CTRL"],
+                         start_gate_required=True)
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-complete", GEN_A,
+            process, process_identity=PRODUCER))
+        self.assertTrue(self.owner.authorize_producer_start(
+            "op-complete", GEN_A, process, lambda: None))
+        process.alive = False
+        process.exitcode = 0
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        readback = {"operation_id": "op-complete", "target_generation": GEN_A,
+                    "producer_exit_confirmed_ns": 100,
+                    "observed_monotonic_ns": 100, "neutral": True}
+
+        complete = getattr(self.owner, "producer_completed", None)
+        self.assertTrue(callable(complete), "normal producer completion is not implemented")
+        try:
+            completed = complete("op-complete", GEN_A, process,
+                release_receipt=release, readback=readback)
+        except TypeError as error:
+            self.fail(f"normal completion does not require independent readback: {error}")
+
+        self.assertEqual(completed["phase"], "completed")
+        self.assertTrue(completed["release_confirmed"])
+        self.assertEqual(completed["completion_release_receipt"], release)
+        self.assertEqual(completed["completion_readback"], readback)
+        self.assertIsNone(completed["task_success"])
+        self.assertFalse(completed["replay_allowed"])
+        try:
+            repeated = complete("op-complete", GEN_A, process,
+                                release_receipt=release, readback=readback)
+        except OwnerRefused as error:
+            self.fail(f"identical completed producer receipt was not idempotent: {error}")
+        self.assertEqual(repeated["phase"], "completed")
+        changed_release = dict(release, receipt_source="different")
+        with self.assertRaises(OwnerRefused):
+            complete("op-complete", GEN_A, process,
+                     release_receipt=changed_release, readback=readback)
+        self.assertEqual(self.owner.admit("op-next", GEN_A, 1_000, [])[
+            "status"], "admitted")
+
+    def test_normal_completion_with_unknown_release_keeps_admission_closed(self):
+        self.owner.admit("op-unknown-complete", GEN_A, 1_000, ["CTRL"],
+                         start_gate_required=True)
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-unknown-complete", GEN_A,
+            process, process_identity=PRODUCER))
+        self.assertTrue(self.owner.authorize_producer_start(
+            "op-unknown-complete", GEN_A, process, lambda: None))
+        process.alive = False
+        process.exitcode = 0
+        readback = {"operation_id": "op-unknown-complete",
+                    "target_generation": GEN_A,
+                    "producer_exit_confirmed_ns": 100,
+                    "observed_monotonic_ns": 100, "neutral": True}
+
+        complete = getattr(self.owner, "producer_completed", None)
+        self.assertTrue(callable(complete), "normal producer completion is not implemented")
+        completed = complete("op-unknown-complete", GEN_A,
+            process, release_receipt={"verified": False,
+                "keys_down": [], "buttons_down": [],
+                "keys_unknown": ["CTRL"], "buttons_unknown": []},
+            readback=readback)
+
+        self.assertEqual(completed["phase"], "unknown")
+        self.assertFalse(completed["release_confirmed"])
+        with self.assertRaises(OwnerRefused):
+            self.owner.admit("op-next", GEN_B, 1_000, [])
+
+    def test_wrong_completion_handle_does_not_strand_live_producer_outside_cancel(self):
+        self.owner.admit("op-wrong-completion", GEN_A, 1_000, ["CTRL"],
+                         start_gate_required=True)
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-wrong-completion", GEN_A,
+            process, process_identity=PRODUCER))
+        self.assertTrue(self.owner.authorize_producer_start(
+            "op-wrong-completion", GEN_A, process, lambda: None))
+        impostor = FakeProcess(OTHER_PRODUCER)
+        impostor.alive = False
+        impostor.exitcode = 0
+        complete = self.owner.producer_completed
+
+        with self.assertRaises(OwnerRefused):
+            complete("op-wrong-completion", GEN_A, impostor,
+                release_receipt={"verified": True, "keys_down": [],
+                    "buttons_down": [], "keys_unknown": [], "buttons_unknown": []},
+                readback={"operation_id": "op-wrong-completion",
+                    "target_generation": GEN_A,
+                    "producer_exit_confirmed_ns": 100,
+                    "observed_monotonic_ns": 100, "neutral": True})
+
+        self.assertEqual(self.owner.result("op-wrong-completion")["phase"], "running")
+        self.assertEqual(self.owner.request_cancel("op-wrong-completion", GEN_A,
+            cleanup_deadline_ns=900)["status"], "pending")
+
     def test_cancel_winning_before_start_authorization_keeps_child_gate_closed(self):
         self.owner.admit("op-gate", GEN_A, 1_000, ["key:a"])
         process = FakeProcess(PRODUCER)

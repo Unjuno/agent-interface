@@ -1,0 +1,615 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r04",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-supervised-standard-caller-20261024-r04",
+        "session_mode": "supervised-win32",
+        "source_commit": "a448064ec27fcc67b8da6663cb9f01a646629039",
+        "tracked_tree_clean": true
+      },
+      "name": "attempt_and_source_identity",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "interface_cancel",
+        "interface_clock",
+        "interface_close",
+        "interface_dispatch",
+        "interface_inspect_target",
+        "interface_observe",
+        "interface_recover_input",
+        "interface_results",
+        "interface_review_target",
+        "interface_validate"
+      ],
+      "name": "public_tool_surface",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "f981384e93b70c0d29cf65e2818eec8811065493d7fac47d1b676539d3624b4f",
+        "hwnd": 130943252,
+        "owner": {
+          "creation_time_100ns": 134372579134251398,
+          "pid": 50196,
+          "window_thread_id": 21268
+        },
+        "pid": 50196
+      },
+      "name": "one_owned_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "consistency": "matched",
+        "observed_generation": "f981384e93b70c0d29cf65e2818eec8811065493d7fac47d1b676539d3624b4f",
+        "owned_generation": "f981384e93b70c0d29cf65e2818eec8811065493d7fac47d1b676539d3624b4f"
+      },
+      "name": "public_observation_generation_matches_owned_target",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "operations": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024-R04"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-effect-r04",
+        "source_generations": {
+          "fixture": "f981384e93b70c0d29cf65e2818eec8811065493d7fac47d1b676539d3624b4f"
+        }
+      },
+      "name": "exact_program_and_generation_forwarding",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 7,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 7,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "public_static_validation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "call_id": "9bcf7d60288d49a48e0db778d2160606",
+        "dispatch_error": false,
+        "dispatch_status": "pending",
+        "input_dispatched_at_initial_response": null,
+        "operation_invoked_at_initial_response": null,
+        "replay_allowed": false,
+        "wait_for_result_ms": 10000
+      },
+      "name": "single_public_dispatch",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_status": "completed",
+        "dispatch_call_id": "9bcf7d60288d49a48e0db778d2160606",
+        "dispatch_status": "pending",
+        "input_dispatched": true,
+        "operation_id": "a6948055c850492bacdac422f0da3fa0",
+        "retained_call_id": "9bcf7d60288d49a48e0db778d2160606",
+        "retained_status": "returned",
+        "terminal_readback_call_id": "9bcf7d60288d49a48e0db778d2160606"
+      },
+      "name": "same_call_terminal_readback",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_status": "completed",
+        "call_id": null,
+        "completion_phase": "completed",
+        "operation_id": "a6948055c850492bacdac422f0da3fa0",
+        "result_status": "completed",
+        "target_generation": "f981384e93b70c0d29cf65e2818eec8811065493d7fac47d1b676539d3624b4f"
+      },
+      "name": "retained_standard_action_completed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "buttons_down": [],
+        "buttons_unknown": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "monotonic_ns": 475634937000000,
+        "state_query_witnesses": {
+          "1": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 130943252,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 50196,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21268
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 130943252,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 50196,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21268
+            }
+          ],
+          "17": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 130943252,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 50196,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21268
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 130943252,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 50196,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21268
+            }
+          ],
+          "83": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 130943252,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 50196,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21268
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 130943252,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 50196,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 21268
+            }
+          ]
+        },
+        "verified": true
+      },
+      "name": "verified_empty_release_receipt_retained",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "neutral": true,
+        "observed_monotonic_ns": 475635031000000,
+        "operation_id": "a6948055c850492bacdac422f0da3fa0",
+        "producer_exit_confirmed_ns": 475635031000000,
+        "target_generation": "f981384e93b70c0d29cf65e2818eec8811065493d7fac47d1b676539d3624b4f"
+      },
+      "name": "independent_neutral_readback_retained",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect_readback": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R04"
+        },
+        "expected_effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R04"
+        },
+        "fixture_effect_after_close": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R04"
+        },
+        "runtime_task_success": null
+      },
+      "name": "task_effect_independent_of_runtime_success",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "actual": [
+          {
+            "hwnd": 130943252,
+            "kind": "ready"
+          },
+          {
+            "kind": "click"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 86,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 68,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 54,
+            "kind": "char"
+          },
+          {
+            "code": 49,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 52,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 52,
+            "kind": "char"
+          },
+          {
+            "clicked": true,
+            "kind": "save",
+            "saved": true,
+            "text": "SUPERVISED-MCP-OK-20261024-R04"
+          }
+        ],
+        "expected": [
+          {
+            "hwnd": 130943252,
+            "kind": "ready"
+          },
+          {
+            "kind": "click"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 86,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 68,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 54,
+            "kind": "char"
+          },
+          {
+            "code": 49,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 52,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 52,
+            "kind": "char"
+          },
+          {
+            "clicked": true,
+            "kind": "save",
+            "saved": true,
+            "text": "SUPERVISED-MCP-OK-20261024-R04"
+          }
+        ]
+      },
+      "name": "event_journal_exact",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close_posted": true,
+        "exit_code": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "window_exists_after_exit": false
+      },
+      "name": "fixture_shutdown_and_foreground_restore",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close_report": {
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "closed",
+          "task_success": null
+        },
+        "public_close": {
+          "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r04\\run\\calls\\0550abb5ef3e461fa42d4f070961a91b",
+          "call_id": "0550abb5ef3e461fa42d4f070961a91b",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "f716c54192e941fda08d8d5c03e17f58",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        }
+      },
+      "name": "supervised_session_closed",
+      "passed": true
+    }
+  ],
+  "passed": 15,
+  "schema": "win32-supervised-standard-caller-audit-v4",
+  "source_commit": "a448064ec27fcc67b8da6663cb9f01a646629039",
+  "status": "PASS",
+  "timing": {
+    "public_close_ms": 86.3976,
+    "public_dispatch_ms": 10002.7942,
+    "public_observation_ms": 21.4085,
+    "public_results_readback_count": 15,
+    "public_validation_ms": 1.2113
+  },
+  "total": 15
+}
