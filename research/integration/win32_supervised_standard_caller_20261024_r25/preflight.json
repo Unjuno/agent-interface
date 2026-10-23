@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "frozen_commit": true,
+    "frozen_packet_hashes": true,
+    "frozen_source_hashes": true,
+    "native_windows": true,
+    "predecessor_hashes_match": true,
+    "predecessor_semantics": true,
+    "python_sources_compile": true,
+    "tracked_tree_clean": true
+  },
+  "frozen_packet_hashes": {
+    "README.md": "e6cf6d539faec65c2f7b9bd508aa0a7461ee60f62b107e6eea7ea619ba9161cd",
+    "audit.py": "2fe2f2788640f2911c5cab2be127d90acc2e8366ef137d56b79d341716385e57",
+    "fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e",
+    "preflight.py": "30f33b0f0ce68c834315fedf29634365b55b425012a99d4e88c1a584873f1175",
+    "probe.py": "7dec8a2986d659e352ad7c6d8e507ed93fd35312076a092d46c21686566a977f"
+  },
+  "native_input_sent": false,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "predecessor_generation": "4dfde70c60ac2d706642aaad099984a6448999c3bbc78e39e259d97dfb4bb100",
+  "predecessor_hashes": {
+    "followup_audit": "0676f6cbfb34f7813374a4d93c17b8b2311cc05685bcf61773bf71bedfced8f7",
+    "raw": "7b82856cb85a36f4fae5951a403e584756d9847e1ecaf4695db877f43dde6b87",
+    "report": "85fca10628897fadd37a4455a946fb37e4c7a5f543ec1507051bf7b203059023"
+  },
+  "predecessor_semantics": {
+    "followup_audit_classification": true,
+    "formal_outcome_fail_unknown": true,
+    "independent_effect_and_cleanup": true,
+    "persisted_dispatch_completed": true,
+    "public_pending_and_close_busy": true,
+    "release_verified": true
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema": "win32-supervised-standard-caller-r25-preflight-v1",
+  "source_commit": "6d67189d4a6d5051be0058344da5b48a4fd2793f",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "status": "PASS",
+  "utc": "2026-10-23T22:27:16.811069+00:00"
+}

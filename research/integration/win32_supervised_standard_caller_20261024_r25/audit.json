@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r25",
+  "checks": {
+    "exact_independent_fixture_effect": false,
+    "foreground_restored": true,
+    "frozen_attempt_and_source_match": true,
+    "frozen_packet_hashes_match": true,
+    "input_free_preflight_passed": true,
+    "new_public_session_and_generation": true,
+    "predecessor_hashes_and_r24_boundary_match": true,
+    "public_close_closed_and_fixture_cleanup": true,
+    "raw_pass": false,
+    "runtime_success_unclaimed": true,
+    "single_dispatch_returned_completed": false,
+    "verified_all_up_release_and_timing": false
+  },
+  "nonclaims": [
+    "this is a new action after R24, not a retry or continuous transaction",
+    "runtime-integrated task_success",
+    "release under blocked Win32 I/O",
+    "atomic target-generation fencing",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "passed": 8,
+  "schema": "win32-supervised-standard-caller-r25-audit-v1",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 12
+}

@@ -1,0 +1,271 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r25",
+  "caller_kind": "mcp_stdio",
+  "client_rect": {
+    "bottom": 181,
+    "height": 181,
+    "left": 0,
+    "right": 404,
+    "top": 0,
+    "width": 404
+  },
+  "dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"invalid_request\", \"error\": \"INVALID_RESPONSE_WAIT\", \"operation_invoked\": false, \"replay_allowed\": false}",
+        "type": "text"
+      }
+    ],
+    "is_error": true,
+    "returned_monotonic_ns": 485750189048800,
+    "started_monotonic_ns": 485750188066900
+  },
+  "dispatch_attempts": 1,
+  "finished_utc": "2026-10-23T22:27:24.677405+00:00",
+  "fixture_close_posted": true,
+  "fixture_events": [
+    {
+      "hwnd": 29360836,
+      "kind": "ready",
+      "monotonic_ns": 485747477579800
+    }
+  ],
+  "fixture_exit_code": 0,
+  "fixture_hwnd": 29360836,
+  "fixture_pid": 49780,
+  "fixture_stderr": "",
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 393882,
+    "set_foreground_return": true
+  },
+  "listed_tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ],
+  "observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"e0533054d28ce946daa7e0c60a406b2c56d25893addbc8e5e1e3bc500e163f82\", \"bytes\": 1459, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"06f5589f06ae4097aa4f0ff06bb6dbb8\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 29360836, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 485750140000000, \"capture_ended_ns\": 485750140000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r25\\\\run\\\\mcp-calls\\\\c210583d7c254618b3bfa236102527ad\\\\images\\\\a1ca7a40ad5742f0983552853d600540.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 485750140000000, \"converted\": 485750156000000, \"encoded\": 485750156000000, \"written\": 485750156000000}}}, \"target_generation\": \"b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"1695f4464d4c45e0b425f49d82a682f7\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"06f5589f06ae4097aa4f0ff06bb6dbb8\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 29360836, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 485750140000000, \"capture_ended_ns\": 485750140000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r25\\\\run\\\\mcp-calls\\\\c210583d7c254618b3bfa236102527ad\\\\images\\\\a1ca7a40ad5742f0983552853d600540.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 485750140000000, \"converted\": 485750156000000, \"encoded\": 485750156000000, \"written\": 485750156000000}}}, \"target_generation\": \"b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"1695f4464d4c45e0b425f49d82a682f7\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 485750140000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r25\\\\run\\\\mcp-calls\\\\c210583d7c254618b3bfa236102527ad\\\\images\\\\a1ca7a40ad5742f0983552853d600540.png\", \"relative_path\": \"images\\\\a1ca7a40ad5742f0983552853d600540.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"06f5589f06ae4097aa4f0ff06bb6dbb8\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 29360836, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 485750140000000, \"capture_ended_ns\": 485750140000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"1695f4464d4c45e0b425f49d82a682f7\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r25\\\\run\\\\mcp-calls\\\\c210583d7c254618b3bfa236102527ad\", \"call_id\": \"c210583d7c254618b3bfa236102527ad\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "returned_monotonic_ns": 485750186778600,
+    "started_monotonic_ns": 485750166360800
+  },
+  "observation_region": [
+    0,
+    0,
+    404,
+    181
+  ],
+  "observation_target_generation_consistency": "matched",
+  "observed_target_generation": "b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888",
+  "oracle": {
+    "char_event_count": 0,
+    "event_text": "",
+    "event_text_matches": false,
+    "expected_char_event_count": 30,
+    "fresh_public_generation": true,
+    "new_generation": true,
+    "nonclaims": [
+      "this is a new action after R24, not a retry or continuous transaction",
+      "runtime-integrated task_success",
+      "release under blocked Win32 I/O",
+      "atomic target-generation fencing",
+      "MAP01",
+      "WSLc or Docker portability",
+      "matched efficiency",
+      "broad reliability"
+    ],
+    "public_close": true,
+    "release_pass": false,
+    "release_receipt": {},
+    "runtime_completed": false,
+    "runtime_task_success_null": true,
+    "save_event_count": 0,
+    "task_pass": false
+  },
+  "predecessor": {
+    "action_status": "completed",
+    "attempt_id": "win32-supervised-standard-caller-20261024-r24",
+    "followup_audit_path": "research/integration/win32_supervised_standard_caller_20261024_r24/audit_followup.json",
+    "followup_audit_sha256": "0676f6cbfb34f7813374a4d93c17b8b2311cc05685bcf61773bf71bedfced8f7",
+    "formal_outcome": "FAIL_OR_UNKNOWN",
+    "producer_exit_code": 0,
+    "public_close": "busy",
+    "public_response": "pending",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r24/raw.json",
+    "raw_sha256": "7b82856cb85a36f4fae5951a403e584756d9847e1ecaf4695db877f43dde6b87",
+    "release_confirmed": true,
+    "report_path": "research/integration/win32_supervised_standard_caller_20261024_r24/run/mcp-calls/9293864843a34415ae8f3ed5dec070ae/report.json",
+    "report_sha256": "85fca10628897fadd37a4455a946fb37e4c7a5f543ec1507051bf7b203059023",
+    "target_generation": "4dfde70c60ac2d706642aaad099984a6448999c3bbc78e39e259d97dfb4bb100"
+  },
+  "previous_foreground_hwnd": 393882,
+  "program": {
+    "authority": {
+      "expires_at_ns": 485840156000000,
+      "lease_id": "supervised-standard-r25-terminal-report-lease"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "R25-12S-TERMINAL-REPORT-EFFECT"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": 181,
+        "op": "observe",
+        "w": 404,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-r25-terminal-report-effect",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "program_validation": {
+    "backend_checked": false,
+    "compilation": null,
+    "expanded_operation_count": 10,
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "runtime_admission": "not_evaluated",
+    "schema": "agent-interface/static-program-validation-v1",
+    "side_effect_authority": false,
+    "source_operation_count": 10,
+    "static_valid": true,
+    "status": "valid",
+    "task_success": null
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"1695f4464d4c45e0b425f49d82a682f7\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r25\\\\run\\\\mcp-calls\\\\9e8938e210214e6f8923f1e6550271a9\", \"call_id\": \"9e8938e210214e6f8923f1e6550271a9\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r25\\run\\mcp-calls\\9e8938e210214e6f8923f1e6550271a9",
+      "call_id": "9e8938e210214e6f8923f1e6550271a9",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "1695f4464d4c45e0b425f49d82a682f7",
+        "state": "closed",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "closed",
+      "task_success": null
+    }
+  },
+  "public_response": {
+    "error": "INVALID_RESPONSE_WAIT",
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "status": "invalid_request"
+  },
+  "schema": "win32-supervised-standard-caller-r25-receipt-v1",
+  "session_mode": "supervised-win32",
+  "source_commit": "6d67189d4a6d5051be0058344da5b48a4fd2793f",
+  "started_utc": "2026-10-23T22:27:19.707997+00:00",
+  "status": "FAIL_OR_UNKNOWN",
+  "target_identity_after": {
+    "generation": "b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888",
+    "owner": {
+      "creation_time_100ns": 134372680397091493,
+      "pid": 49780,
+      "window_thread_id": 54264
+    }
+  },
+  "target_identity_before": {
+    "generation": "b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888",
+    "owner": {
+      "creation_time_100ns": 134372680397091493,
+      "pid": 49780,
+      "window_thread_id": 54264
+    }
+  },
+  "timing_clock": {
+    "adjustable": false,
+    "implementation": "QueryPerformanceCounter()",
+    "monotonic": true,
+    "resolution_seconds": 1e-07
+  }
+}
