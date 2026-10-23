@@ -1,0 +1,11 @@
+# R22 result interpretation correction
+
+This append-only correction clarifies the R22 disposition in the [packet result](../../research/integration/win32_supervised_standard_caller_20261024_r22/RESULT.md). The packet, raw evidence, frozen audit, and additive audits remain unchanged.
+
+The frozen R22 `conditions.json` defines the narrow PASS gate as one dispatch and one cancel; the injected Q-down callback held for the post-cancel window then forwarded; exact producer retirement; public recovered cancellation with confirmed release; same-generation Q-up independently read after callback return; exact fixture effect; and fixture, hook, and foreground cleanup. It does not require `interface_close.release_confirmed=true`.
+
+R22 meets that scoped gate: cancel returned pending in 1.4062 ms; callback return was 259.200 ms after the cancel response; the exact producer exited 0.398 ms after callback return; Q-up reached the hook 5.407 ms after callback return; an independent reader observed Q-up on the same generation; the retained action and cancellation both reached recovered with matching generation and confirmed release; the fixture sentinel was saved; fixture exit was 0; the hook exited; the prior foreground window was restored; and no emergency Q-up was used. The frozen auditor's 8/10 and inherited R21-specific supplement's 6/7 remain unchanged. The additive R22 audit checks final evidence 9/9 but labels it PARTIAL because it additionally treats the close receipt's false release bit as a gate.
+
+That extra gate was too strict. `OwnedWin32SessionOwner.close()` deliberately returns `release_confirmed=false` for the close operation, including after the owner has no unresolved calls. The public `interface_close` description separates close/release evidence from prior task outcomes. Thus `closed / release_confirmed=false` does not revoke R22's earlier cancellation recovery receipt or the independent Q-up readback.
+
+Disposition: **PASS for the frozen, one-run cancellation/recovery criterion only.** The broader objective remains incomplete: the fixture effect preceded cancellation, runtime `task_success` is null, and this does not establish post-recovery task continuation, MAP01, matched efficiency, or broad reliability. WSLc remains STOP/HOLD under #7924; this correction authorizes no WSLc or Docker operation.
