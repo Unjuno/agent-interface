@@ -18,6 +18,11 @@ _GENERATION = re.compile(r"^[0-9a-f]{64}$")
 class OwnerRefused(ValueError):
     """The owner cannot safely admit or advance this operation."""
 
+    def __init__(self, message, *, code="OWNER_REFUSED", operation_id=None):
+        super().__init__(message)
+        self.code = code
+        self.operation_id = operation_id
+
 
 class OperationOwner:
     """Parent-side state gate; the identity reader must query the owned handle.
@@ -55,7 +60,10 @@ class OperationOwner:
                      if self._active_operation_id is not None else None)
             if prior is not None:
                 if prior["status"] != "recovered":
-                    raise OwnerRefused("prior producer or cleanup remains unresolved")
+                    raise OwnerRefused(
+                        "prior producer or cleanup remains unresolved",
+                        code="INPUT_PRODUCER_UNRESOLVED",
+                        operation_id=prior["operation_id"])
                 if target_generation == prior["target_generation"]:
                     raise OwnerRefused("fresh target generation required after cancellation")
             record = {

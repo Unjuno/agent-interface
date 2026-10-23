@@ -25,6 +25,16 @@ aborts. This is one finite host/schedule and does not qualify the standard MCP
 caller, task success, MAP01, bounded recovery across failure classes, efficiency
 or broad reliability. Do not rerun this packet.
 
+**Public Win32 overlap refusal (2026-10-24, synthetic):** the standard
+`interface_guarded_win32_admit` endpoint now preserves the owner’s unresolved
+producer refusal as a machine-readable `INPUT_PRODUCER_UNRESOLVED` result,
+including the earlier operation ID. A public route regression confirms the
+second action creates no call and never invokes another producer; replay and
+task success remain false/unknown. The 57 selected public composition,
+backend, owner and cancellation tests pass in normal and optimized Python.
+This improves caller handling of the unresolved native operation but does not
+prove native fencing or release. WSLc remains STOP/HOLD under #7924.
+
 **Public Win32 effect and timing (2026-10-24):** R01 was refused before input
 with `TARGET_GENERATION_REQUIRED`; its raw, audit, and clean fixture exit are
 preserved. R02 forwarded the matching generation from public observe to the

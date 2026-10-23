@@ -62,6 +62,13 @@ def register_guarded_win32_tools(server, owner, content, *, producer_factory,
                 'operation_invoked': False, 'input_dispatched': False,
                 'task_success': None, 'replay_allowed': False}, error=True)
         except ValueError as error:
+            error_code = getattr(error, 'code', None)
+            if error_code == 'INPUT_PRODUCER_UNRESOLVED':
+                return content({'status': 'blocked',
+                    'error': error_code,
+                    'prior_operation_id': getattr(error, 'operation_id', None),
+                    'operation_invoked': False, 'input_dispatched': False,
+                    'task_success': None, 'replay_allowed': False}, error=True)
             return content({'status': 'invalid_request', 'error': repr(error),
                 'operation_invoked': False, 'input_dispatched': False,
                 'task_success': None, 'replay_allowed': False}, error=True)

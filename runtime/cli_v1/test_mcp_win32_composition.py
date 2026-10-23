@@ -341,6 +341,27 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(repeated_cancel["cancellation"]["operation_id"],
                              canceled["cancellation"]["operation_id"])
             self.assertEqual(repeated_cancel["cancellation"]["status"], "pending")
+            next_binding = json.loads((await server.call_tool(
+                "interface_guarded_win32_bind_target", {})).content[0].text)
+            overlapping = await server.call_tool("interface_guarded_win32_admit", {
+                "action_operation_id": "e" * 32,
+                "target_binding_id": next_binding["target_binding_id"],
+                "operation_deadline_ns": time.monotonic_ns() + 2_000_000_000,
+                "obligations": ["key:next"],
+            })
+            self.assertTrue(overlapping.isError)
+            overlap_error = json.loads(overlapping.content[0].text)
+            self.assertEqual(overlap_error["status"], "blocked")
+            self.assertEqual(overlap_error["error"], "INPUT_PRODUCER_UNRESOLVED")
+            self.assertEqual(overlap_error["prior_operation_id"], "c" * 32)
+            self.assertFalse(overlap_error["operation_invoked"])
+            self.assertFalse(overlap_error["input_dispatched"])
+            self.assertFalse(overlap_error["replay_allowed"])
+            self.assertIsNone(overlap_error["task_success"])
+            self.assertEqual(producer_factory_calls, ["c" * 32])
+            still_one_call = json.loads((await server.call_tool(
+                "interface_results", {})).content[0].text)
+            self.assertEqual(still_one_call["total_calls"], 1)
             retained = json.loads((await server.call_tool("interface_results", {
                 "call_id": call_id})).content[0].text)
             self.assertEqual(retained["action"]["status"], "running")
