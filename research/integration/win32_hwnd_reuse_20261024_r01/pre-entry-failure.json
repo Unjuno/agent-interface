@@ -1,0 +1,14 @@
+{
+  "schema": "win32-hidden-hwnd-reuse-pre-entry-failure-v1",
+  "attempt_id": "win32-hwnd-reuse-20261024-r01",
+  "source_commit": "01c16903f57650d7b42571d1590602e000042025",
+  "command": "python research/integration/win32_hwnd_reuse_20261024_r01/probe.py",
+  "status": "PRE_ENTRY_SETUP_FAILURE_NO_NATIVE_WINDOW_OR_INPUT",
+  "failing_stage": "Win32Backend._configure_api before first CreateWindowExW",
+  "error_type": "AttributeError",
+  "error": "'Win32Backend' object has no attribute 'advapi32'",
+  "input_sent": false,
+  "window_activated": false,
+  "raw_hwnds_created": 0,
+  "retry": "Do not reuse attempt ID; preserve this setup failure and use a distinct attempt."
+}
