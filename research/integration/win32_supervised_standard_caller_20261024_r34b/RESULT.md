@@ -1,0 +1,11 @@
+# R34b — bounded release readback passes; distinct recovery hook event remains unproven
+
+**Disposition: FAIL_OR_UNKNOWN under the frozen strict gate.** One fresh public stdio-MCP attempt ran on the user-authorized Windows PC after input-free preflight PASS (10/10). It used one owned fixture, one dispatch, one cancel, no retry/replay, and the exact source commit `0526a4f358b95c47e8f1b1c63e7636382eb7a01a`. Raw is immutable.
+
+The pre-cancel independent process observed Q-down=true for the exact target generation. The public cancel returned pending in 1.287 ms. The 1250 ms callback hold lasted 1248.909 ms and captured 76 same-call polls. The recovery helper’s exact Q-up `SendInput` call returned 313.276 ms after its entry; an independent same-generation process then observed Q-up while the first Q-up callback remained blocked. Later public results reached recovered/release-confirmed; the exact producer exited after callback return.
+
+The strict hook-event gate did not pass. The hook recorded only the held Q-up callback and no distinct second Q-up callback after its return; no Q-up hook event followed the exact producer exit. The separate supplemental audit therefore has 20 of 22 checks pass, but its overall disposition remains FAIL_OR_UNKNOWN; both failed checks concern the missing hook event. The frozen `audit.py` itself stopped on its inherited undefined `readback` binding; that execution failure is preserved and the posthoc repaired audit does not replace it.
+
+The fixture independently recorded click/save success with empty text; a `q` character event followed the save as a post-save side effect. Runtime `task_success` remains null, replay remains denied, and the exact fixture, hook thread, producer, session, and foreground cleanup were recorded. This is one-run evidence of bounded state release/readback, not an input-release PASS, task success after recovery, MAP01, efficiency, or reliability result.
+
+See `audit_repaired.json`, `trace_analysis_posthoc.json`, `raw.json`, `conditions.json`, `preflight.json`, `PRERUN_CUSTODY.json`, and the frozen evaluator failure records. Do not replay R34b. The next step is to inspect whether the missing second callback reflects Windows low-level-hook delivery semantics or an observability limitation, then select a non-replayed, independently discriminating experiment.

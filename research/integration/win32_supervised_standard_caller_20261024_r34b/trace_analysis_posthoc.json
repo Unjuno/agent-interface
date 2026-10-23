@@ -1,0 +1,50 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r34b",
+  "facts": {
+    "callback_return_ms_after_cancel": 1250.4431,
+    "cancel_elapsed_ms": 1.2869,
+    "cancel_status": "pending",
+    "distinct_q_up_after_held_callback_return": false,
+    "fixture_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "fixture_events": [
+      {
+        "hwnd": 79103382,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": ""
+      },
+      {
+        "code": 113,
+        "kind": "char"
+      }
+    ],
+    "fixture_exit": 0,
+    "hold_poll_count": 76,
+    "hook_hold_ms": 1248.9089,
+    "hook_q_up_event_count": 1,
+    "independent_blocked_readback_ms_after_cancel": 890.9209,
+    "independent_q_down_while_callback_held": false,
+    "producer_exit_ms_after_cancel": 1250.694,
+    "recovery_q_up_sendinput_elapsed_ms": 313.2757,
+    "recovery_q_up_sendinput_entry_ms_after_cancel": 310.7573,
+    "recovery_q_up_sendinput_return_ms_after_cancel": 624.2844,
+    "runtime_task_success": null,
+    "terminal_action_status": "recovered",
+    "terminal_release_confirmed": true
+  },
+  "interpretation": "The recovery helper Q-up SendInput call returned and the independent same-generation readback observed Q-up while the first low-level hook callback remained blocked. No second injected Q-up callback appeared after that callback returned, and no Q-up hook event followed exact producer exit. This preserves FAIL_OR_UNKNOWN for the frozen hook-event gate. Timing is observed evidence only; it does not establish kernel causality or physical application time.",
+  "preflight_status": "PASS",
+  "raw_sha256": "fe2eb3c4d5d354819220071a62a5eaadc9caee85314d692e6c5d3e64f4eb9a02",
+  "schema": "win32-supervised-standard-caller-r34-posthoc-trace-v1"
+}
