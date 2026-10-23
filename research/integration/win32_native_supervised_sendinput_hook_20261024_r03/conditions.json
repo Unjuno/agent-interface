@@ -1,0 +1,35 @@
+{
+  "packet": "win32_native_supervised_sendinput_hook_20261024_r03",
+  "run_count": 1,
+  "source_commit": "3a198067f722fc957d802b679005e7a2ca959e82",
+  "source_sha256": {
+    "probe.py": "72037b78c32e36f840bcd7378a016e375c85061ad82ee8acb18afeeed38c4865",
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/guarded_win32_v1/operation_owner.py": "3a3d868510d1c41250516aacaddac9daed428a7eab72ca336d3b9684c90ba342",
+    "runtime/guarded_win32_v1/process_cancellation.py": "49202af88ced51a73c4218d113f118a57ad9f63f73fdd3b134cd31f41f9dfec6"
+  },
+  "target": "one visible owned EDIT fixture; target generation from Win32Backend.target_generation",
+  "producer": "one spawned child; one real SendInput VK_F13 down; WH_KEYBOARD_LL blocks only the injected F13 down for 200 ms maximum",
+  "recovery": "one prestarted helper; only after exact producer retirement; recheck same HWND generation; one real Win32Backend release_all UP",
+  "observer": "one separately prestarted helper; same target-generation check and backend state witness",
+  "cleanup_deadline_ms": 2500,
+  "late_state_horizon_ms": 1500,
+  "clock": "time.perf_counter_ns, Windows QPC-backed monotonic clock",
+  "pass": "callback entry occurs before producer return; cancellation response <=250 ms; confirmed producer exit precedes recovery UP; release and independent readback are generation-matched and complete before 2500 ms; an independent post-horizon sample remains up; fixture/process cleanup confirmed",
+  "construction_delta_from_r01": "Adds the repository root to sys.path before importing runtime; no scientific condition or runtime source changes",
+  "unknown": "missing or stale generation, uncertain producer identity/retirement, helper failure, unknown state, timeout, or incomplete cleanup",
+  "emergency_cleanup": "if needed, exactly one separately labeled UP only after cancellation thread stopped and exact producer retired; never promotes the scientific disposition",
+  "replay": false,
+  "task_success": null,
+  "forbidden": [
+    "second run",
+    "second formal recovery attempt",
+    "input replay",
+    "registry mutation",
+    "privilege change",
+    "Docker",
+    "WSLc"
+  ],
+  "construction_delta_from_r02": "Require the exact supervisor ready receipt {status: ready, helper: role}; process identity remains recorded by the supervisor. No runtime source or scientific condition change.",
+  "predecessor": "R02 aborted before producer start; readiness receipt included unsupported pid and ready_ns fields."
+}

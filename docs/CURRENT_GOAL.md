@@ -11,6 +11,20 @@ ordering observation for one finite callback stall only; it does not establish
 a hard release deadline, indefinite-block recovery, public MCP recovery, MAP01,
 or matched efficiency. Do not rerun this allocation.
 
+**Native Win32 supervised recovery (2026-10-24):** the frozen [R03 packet](../research/integration/win32_native_supervised_sendinput_hook_20261024_r03/README.md)
+passed all 20 predeclared audit checks in one owned EDIT fixture schedule. A
+real F13 DOWN entered the injected `WH_KEYBOARD_LL` callback while its producer
+was still inside `SendInput`; cancellation returned `pending` in 0.1971 ms,
+the exact producer exited before recovery, and the prestarted helper performed
+one same-generation `release_all` UP. An independent helper observed all-up
+14.2328 ms after recovery began and again after the 1.5 s horizon. Cleanup
+restored the previous foreground window, destroyed the fixture, retired all
+children and closed the supervisor; emergency UP was unnecessary. The raw and
+read-only audit are hash-bound. R01/R02 are preserved pre-action construction
+aborts. This is one finite host/schedule and does not qualify the standard MCP
+caller, task success, MAP01, bounded recovery across failure classes, efficiency
+or broad reliability. Do not rerun this packet.
+
 **Public Win32 effect and timing (2026-10-24):** R01 was refused before input
 with `TARGET_GENERATION_REQUIRED`; its raw, audit, and clean fixture exit are
 preserved. R02 forwarded the matching generation from public observe to the
