@@ -1,0 +1,53 @@
+{
+  "status": "PASS_PROCESS_SIGNALLING_SCOPED",
+  "checks": {
+    "outer_success": true,
+    "scoped_result": true,
+    "frozen_helper": true,
+    "frozen_executable": true,
+    "all_declared_cases_once": true,
+    "healthy_independent_stop": true,
+    "cleanup_confirmed": true,
+    "postrun_pid_and_files_absent": true,
+    "no_container_runtime": true,
+    "healthy:scope": true,
+    "healthy:stop_cont": true,
+    "healthy:owned_pidfds": true,
+    "healthy:syscall_order": true,
+    "healthy:live_same_process_after_cont": true,
+    "healthy:same_process_observed_stopped": true,
+    "status_read_error:scope": true,
+    "status_read_error:stop_cont": true,
+    "status_read_error:owned_pidfds": true,
+    "status_read_error:syscall_order": true,
+    "status_read_error:live_same_process_after_cont": true,
+    "status_read_error:declared_fault": true,
+    "timer_start_error:scope": true,
+    "timer_start_error:stop_cont": true,
+    "timer_start_error:owned_pidfds": true,
+    "timer_start_error:syscall_order": true,
+    "timer_start_error:live_same_process_after_cont": true,
+    "timer_start_error:declared_fault": true
+  },
+  "descriptive_intervals": [
+    {
+      "schedule": "healthy",
+      "resumed_state": "S",
+      "signal_request_interval_ms": 507.370269,
+      "inference_limit": "descriptive interval, not an effect bound"
+    },
+    {
+      "schedule": "status_read_error",
+      "resumed_state": "S",
+      "signal_request_interval_ms": 0.043619,
+      "inference_limit": "descriptive interval, not an effect bound"
+    },
+    {
+      "schedule": "timer_start_error",
+      "resumed_state": "S",
+      "signal_request_interval_ms": 0.064604,
+      "inference_limit": "descriptive interval, not an effect bound"
+    }
+  ],
+  "limits": "One owned Xvfb, three schedules; no GUI input, release, task, efficiency or reliability proof."
+}

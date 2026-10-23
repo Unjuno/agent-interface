@@ -1,0 +1,157 @@
+{
+  "status": "PASS_PROCESS_SIGNALLING_SCOPED",
+  "scope": "R02 local WSL2 process signalling; process-only readiness",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cases": [
+    {
+      "schedule": "healthy",
+      "signals": [
+        {
+          "signal": 19,
+          "fdinfo": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t730\nPid:\t379\nNSpid:\t379\n",
+          "invoked_monotonic_ns": 3020920712,
+          "returned_monotonic_ns": 3020940012
+        },
+        {
+          "signal": 18,
+          "fdinfo": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t730\nPid:\t379\nNSpid:\t379\n",
+          "invoked_monotonic_ns": 3528290981,
+          "returned_monotonic_ns": 3528318958
+        }
+      ],
+      "stopped_readback": {
+        "pid": 379,
+        "status": "Name:\tXvfb\nUmask:\t0022\nState:\tT (stopped)\nTgid:\t379\nNgid:\t0\nPid:\t379\nPPid:\t290\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t379\nNSpid:\t379\nNSpgid:\t290\nNSsid:\t290\nKthread:\t0\nVmPeak:\t  241936 kB\nVmSize:\t  198436 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   62964 kB\nVmRSS:\t   61192 kB\nRssAnon:\t   11828 kB\nRssFile:\t   49364 kB\nRssShmem:\t       0 kB\nVmData:\t    5792 kB\nVmStk:\t     132 kB\nVmExe:\t    1460 kB\nVmLib:\t  145836 kB\nVmPTE:\t     300 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t1/127998\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000000418064ef\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tffffff\nCpus_allowed_list:\t0-23\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t136\nnonvoluntary_ctxt_switches:\t0\n",
+        "stat": "379 (Xvfb) T 290 290 290 34816 290 4194304 4404 667 58 2 1 7 0 0 20 0 1 0 267 203198464 15244 18446744073709551615 109908411965440 109908413456773 140721585319392 0 0 0 0 4096 1098933487 1 0 0 17 21 0 0 0 0 0 109908413783120 109908413831432 109909382348800 140721585324543 140721585324596 140721585324596 140721585328106 19\n",
+        "observed_monotonic_ns": 3050365503,
+        "state": "T"
+      },
+      "pause_receipt": {
+        "pid": 379,
+        "executable": "/usr/bin/Xvfb",
+        "argv": [
+          "/usr/bin/Xvfb",
+          ":88",
+          "-screen",
+          "0",
+          "320x240x24",
+          "-nolisten",
+          "tcp"
+        ],
+        "signal_identity": "retained_pidfd",
+        "requested_pause_ms": 500,
+        "stopped_monotonic_ns": 3020884976,
+        "resumed": {
+          "monotonic_ns": 3528319385,
+          "error": null
+        }
+      },
+      "resumed_readback": {
+        "pid": 379,
+        "status": "Name:\tXvfb\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t379\nNgid:\t0\nPid:\t379\nPPid:\t290\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t379\nNSpid:\t379\nNSpgid:\t290\nNSsid:\t290\nKthread:\t0\nVmPeak:\t  241936 kB\nVmSize:\t  198436 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   62964 kB\nVmRSS:\t   61192 kB\nRssAnon:\t   11828 kB\nRssFile:\t   49364 kB\nRssShmem:\t       0 kB\nVmData:\t    5792 kB\nVmStk:\t     132 kB\nVmExe:\t    1460 kB\nVmLib:\t  145836 kB\nVmPTE:\t     300 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t1/127998\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000000418064ef\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tffffff\nCpus_allowed_list:\t0-23\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t137\nnonvoluntary_ctxt_switches:\t0\n",
+        "stat": "379 (Xvfb) S 290 290 290 34816 290 4194304 4404 667 58 2 1 7 0 0 20 0 1 0 267 203198464 15244 18446744073709551615 109908411965440 109908413456773 140721585319392 0 0 0 0 4096 1098933487 1 0 0 17 21 0 0 0 0 0 109908413783120 109908413831432 109909382348800 140721585324543 140721585324596 140721585324596 140721585328106 0\n",
+        "observed_monotonic_ns": 3545204653,
+        "state": "S"
+      },
+      "status": "PASS_PROCESS_SIGNALLING_SCOPED"
+    },
+    {
+      "schedule": "status_read_error",
+      "signals": [
+        {
+          "signal": 19,
+          "fdinfo": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t730\nPid:\t379\nNSpid:\t379\n",
+          "invoked_monotonic_ns": 3547907144,
+          "returned_monotonic_ns": 3547923257
+        },
+        {
+          "signal": 18,
+          "fdinfo": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t730\nPid:\t379\nNSpid:\t379\n",
+          "invoked_monotonic_ns": 3547950763,
+          "returned_monotonic_ns": 3547960772
+        }
+      ],
+      "exception": "OSError('declared injected post-STOP status read failure')",
+      "resumed_readback": {
+        "pid": 379,
+        "status": "Name:\tXvfb\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t379\nNgid:\t0\nPid:\t379\nPPid:\t290\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t379\nNSpid:\t379\nNSpgid:\t290\nNSsid:\t290\nKthread:\t0\nVmPeak:\t  241936 kB\nVmSize:\t  198436 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   62964 kB\nVmRSS:\t   61192 kB\nRssAnon:\t   11828 kB\nRssFile:\t   49364 kB\nRssShmem:\t       0 kB\nVmData:\t    5792 kB\nVmStk:\t     132 kB\nVmExe:\t    1460 kB\nVmLib:\t  145836 kB\nVmPTE:\t     300 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t1/127998\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000000418064ef\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tffffff\nCpus_allowed_list:\t0-23\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t139\nnonvoluntary_ctxt_switches:\t0\n",
+        "stat": "379 (Xvfb) S 290 290 290 34816 290 4194304 4404 667 58 2 1 7 0 0 20 0 1 0 267 203198464 15244 18446744073709551615 109908411965440 109908413456773 140721585319392 0 0 0 0 4096 1098933487 1 0 0 17 21 0 0 0 0 0 109908413783120 109908413831432 109909382348800 140721585324543 140721585324596 140721585324596 140721585328106 0\n",
+        "observed_monotonic_ns": 3566010246,
+        "state": "S"
+      },
+      "status": "PASS_PROCESS_SIGNALLING_SCOPED"
+    },
+    {
+      "schedule": "timer_start_error",
+      "signals": [
+        {
+          "signal": 19,
+          "fdinfo": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t730\nPid:\t379\nNSpid:\t379\n",
+          "invoked_monotonic_ns": 3568650977,
+          "returned_monotonic_ns": 3568667674
+        },
+        {
+          "signal": 18,
+          "fdinfo": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t730\nPid:\t379\nNSpid:\t379\n",
+          "invoked_monotonic_ns": 3568715581,
+          "returned_monotonic_ns": 3568725097
+        }
+      ],
+      "exception": "RuntimeError('declared injected resume timer startup failure')",
+      "resumed_readback": {
+        "pid": 379,
+        "status": "Name:\tXvfb\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t379\nNgid:\t0\nPid:\t379\nPPid:\t290\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t379\nNSpid:\t379\nNSpgid:\t290\nNSsid:\t290\nKthread:\t0\nVmPeak:\t  241936 kB\nVmSize:\t  198436 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   62964 kB\nVmRSS:\t   61192 kB\nRssAnon:\t   11828 kB\nRssFile:\t   49364 kB\nRssShmem:\t       0 kB\nVmData:\t    5792 kB\nVmStk:\t     132 kB\nVmExe:\t    1460 kB\nVmLib:\t  145836 kB\nVmPTE:\t     300 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t1/127998\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000000418064ef\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tffffff\nCpus_allowed_list:\t0-23\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t141\nnonvoluntary_ctxt_switches:\t0\n",
+        "stat": "379 (Xvfb) S 290 290 290 34816 290 4194304 4404 667 58 2 1 7 0 0 20 0 1 0 267 203198464 15244 18446744073709551615 109908411965440 109908413456773 140721585319392 0 0 0 0 4096 1098933487 1 0 0 17 21 0 0 0 0 0 109908413783120 109908413831432 109909382348800 140721585324543 140721585324596 140721585324596 140721585328106 0\n",
+        "observed_monotonic_ns": 3585233802,
+        "state": "S"
+      },
+      "status": "PASS_PROCESS_SIGNALLING_SCOPED"
+    }
+  ],
+  "declared_input_emission_calls": 0,
+  "wslc_operations": 0,
+  "docker_operations": 0,
+  "xvfb": {
+    "path": "/usr/bin/Xvfb",
+    "sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "pid": 379,
+    "argv": [
+      "/usr/bin/Xvfb",
+      ":88",
+      "-screen",
+      "0",
+      "320x240x24",
+      "-nolisten",
+      "tcp"
+    ]
+  },
+  "source": {
+    "path": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py",
+    "normalized_sha256": "f13fa32bd40f266383ba0c61feaedaff7c5d8f6f40649aaddd7030a601000fec",
+    "function_ast_sha256": "779dc92de46690440e9ddee192641bd4db5250f377d91f1820b31494be12ed34"
+  },
+  "readiness_before_settle": {
+    "pid": 379,
+    "status": "Name:\tXvfb\nUmask:\t0022\nState:\tD (disk sleep)\nTgid:\t379\nNgid:\t0\nPid:\t379\nPPid:\t290\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t379\nNSpid:\t379\nNSpgid:\t290\nNSsid:\t290\nKthread:\t0\nVmPeak:\t   15564 kB\nVmSize:\t   15564 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    1740 kB\nVmRSS:\t    1740 kB\nRssAnon:\t     328 kB\nRssFile:\t    1412 kB\nRssShmem:\t       0 kB\nVmData:\t    1172 kB\nVmStk:\t     132 kB\nVmExe:\t    1460 kB\nVmLib:\t    8252 kB\nVmPTE:\t      64 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t1/127998\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000000000\nSigCgt:\t0000000000000000\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tffffff\nCpus_allowed_list:\t0-23\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t29\nnonvoluntary_ctxt_switches:\t0\n",
+    "stat": "379 (Xvfb) D 290 290 290 34816 290 4194304 145 0 14 0 0 0 0 0 20 0 1 0 267 15937536 385 18446744073709551615 109908411965440 109908413456773 140721585319392 0 0 0 0 0 0 1 0 0 17 21 0 0 0 0 0 109908413783120 109908413831432 109909382348800 140721585324543 140721585324596 140721585324596 140721585328106 0\n",
+    "observed_monotonic_ns": 2694052528,
+    "state": "D"
+  },
+  "initial_state": {
+    "pid": 379,
+    "status": "Name:\tXvfb\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t379\nNgid:\t0\nPid:\t379\nPPid:\t290\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t379\nNSpid:\t379\nNSpgid:\t290\nNSsid:\t290\nKthread:\t0\nVmPeak:\t  241936 kB\nVmSize:\t  198436 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   62964 kB\nVmRSS:\t   61192 kB\nRssAnon:\t   11828 kB\nRssFile:\t   49364 kB\nRssShmem:\t       0 kB\nVmData:\t    5792 kB\nVmStk:\t     132 kB\nVmExe:\t    1460 kB\nVmLib:\t  145836 kB\nVmPTE:\t     300 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t1/127998\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000000418064ef\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tffffff\nCpus_allowed_list:\t0-23\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t135\nnonvoluntary_ctxt_switches:\t0\n",
+    "stat": "379 (Xvfb) S 290 290 290 34816 290 4194304 4404 667 58 2 1 7 0 0 20 0 1 0 267 203198464 15244 18446744073709551615 109908411965440 109908413456773 140721585319392 0 0 0 0 4096 1098933487 1 0 0 17 21 0 0 0 0 0 109908413783120 109908413831432 109909382348800 140721585324543 140721585324596 140721585324596 140721585328106 0\n",
+    "observed_monotonic_ns": 3018144334,
+    "state": "S"
+  },
+  "pathname_socket_present": false,
+  "cleanup": {
+    "signals": [
+      18,
+      15
+    ],
+    "exit_code": 0,
+    "confirmed_exited": true
+  }
+}
