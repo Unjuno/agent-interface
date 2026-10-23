@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_synthetic_task_oracle",
+      "runtime.cli_v1.test_xvfb_pause_cleanup",
+      "-q"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_synthetic_task_oracle",
+      "runtime.cli_v1.test_xvfb_pause_cleanup",
+      "-q"
+    ],
+    "exit_code": 0
+  }
+]
