@@ -1,5 +1,6 @@
 """Admission wrapper connecting runtime core v1 to the Win32 backend."""
 from __future__ import annotations
+import threading
 from typing import Any
 
 from runtime.core_v1.contract import admit_program
@@ -11,6 +12,9 @@ class Win32RuntimeSession:
         self.backend = backend
         # A new binding or direct backend cleanup is not session recovery.
         self.recovery_required = False
+        self._state_lock = threading.Lock()
+        self._dispatch_inflight = False
+        self._recovery_requested_during_dispatch = False
 
     def _record_release(self, releases):
         verified = isinstance(releases, list) and bool(releases) and all(
@@ -18,12 +22,32 @@ class Win32RuntimeSession:
             and row.get("keys_down") == [] and row.get("buttons_down") == []
             for row in releases
         )
-        self.recovery_required = self.recovery_required or not verified
+        with self._state_lock:
+            if verified and self._recovery_requested_during_dispatch:
+                # The in-flight producer has returned and its terminal
+                # release/readback proves neutral state after the request.
+                self.recovery_required = False
+                self._recovery_requested_during_dispatch = False
+            else:
+                self.recovery_required = self.recovery_required or not verified
         return verified
 
     def recover_input(self):
         """Attempt neutralization once; never replay the failed program."""
-        if not self.recovery_required:
+        with self._state_lock:
+            if self._dispatch_inflight:
+                self.recovery_required = True
+                self._recovery_requested_during_dispatch = True
+                return {
+                    "status": "pending",
+                    "error": "INPUT_PRODUCER_UNRESOLVED",
+                    "release_attempted": False,
+                    "recovery_required": True,
+                    "task_success": None,
+                    "replay_allowed": False,
+                }
+            recovery_required = self.recovery_required
+        if not recovery_required:
             return {"status": "refused", "error": "INPUT_RECOVERY_NOT_REQUIRED",
                     "release_attempted": False, "recovery_required": False}
         try:
@@ -40,6 +64,39 @@ class Win32RuntimeSession:
                 "task_success": None, "replay_allowed": False}
 
     def dispatch(
+        self,
+        program: dict[str, Any],
+        *,
+        current_observation_seq: int,
+        current_binding_revision: int,
+        now_ns: int | None = None,
+    ) -> dict[str, Any]:
+        with self._state_lock:
+            if self._dispatch_inflight:
+                self.recovery_required = True
+                self._recovery_requested_during_dispatch = True
+                return {
+                    "status": "pending",
+                    "error": "INPUT_PRODUCER_UNRESOLVED",
+                    "release_attempted": False,
+                    "input_dispatched": False,
+                    "recovery_required": True,
+                    "task_success": None,
+                    "replay_allowed": False,
+                }
+            self._dispatch_inflight = True
+        try:
+            return self._dispatch(
+                program,
+                current_observation_seq=current_observation_seq,
+                current_binding_revision=current_binding_revision,
+                now_ns=now_ns,
+            )
+        finally:
+            with self._state_lock:
+                self._dispatch_inflight = False
+
+    def _dispatch(
         self,
         program: dict[str, Any],
         *,

@@ -1,5 +1,17 @@
 # Current objective and working direction
 
+**Win32 unresolved producer fence (2026-10-24, synthetic):** while a direct
+session dispatch is inside a synchronous input call, concurrent recovery and
+overlapping dispatch now return `pending`/`INPUT_PRODUCER_UNRESOLVED` without
+issuing UP or another producer. The [R01 packet](../research/integration/win32_inflight_recovery_fence_20261024_r01/README.md)
+retains both accepted-before-return and blocked-before-acceptance fake-API
+schedules; all 76 selected backend/session/MCP tests pass in normal and
+optimized Python. After the fake producer resumes, its terminal UP/readback
+returns the model to neutral and clears the deferred recovery request. This
+narrows duplicate-producer and premature-recovery behavior in one session; it
+does not interrupt a blocked native call, impose a hard release deadline,
+qualify physical input or task effect, or use WSLc.
+
 **Win32 target-incarnation cookie lifecycle (2026-10-24):** production
 `target_generation()` now adds a per-HWND-lifetime property and fails closed if
 the property is denied, changed, or missing after binding. `close()` retains
