@@ -1,0 +1,29 @@
+{
+  "schema": "win32-public-live-generation-v1",
+  "attempt_id": "win32-public-live-generation-20261023-r01",
+  "source_commit": "8f4aa65163dee86024371f8ad1e46888ef04de2f",
+  "host": "user-authorized local Windows PC; no WSLc or Docker",
+  "scope": "one public guarded-win32 call on registered create_server tools; two owned fixture_app HWND generations; no input dispatch",
+  "sequence": [
+    "bind generation A",
+    "admit one action under generation A",
+    "create fixture generation B and switch injected current-target reader",
+    "start the admitted public action",
+    "read terminal state through interface_results"
+  ],
+  "expected": {
+    "generation_a_differs_from_b": true,
+    "start_status": "unknown",
+    "action_error": "target_generation_changed_before_start",
+    "producer_factory_calls": 0,
+    "input_dispatched": false,
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "limits": [
+    "in-process server.call_tool exercises registered public MCP tool handlers but not stdio transport",
+    "no native input is sent",
+    "this qualifies one observed generation change before producer factory work; it is not atomic OS-side fencing",
+    "no MAP01, WSLc portability, blocked SendInput, efficiency, or broad reliability claim"
+  ]
+}
