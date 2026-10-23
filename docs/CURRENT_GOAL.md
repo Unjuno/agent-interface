@@ -1,5 +1,17 @@
 # Current objective and working direction
 
+**Standard-caller cancellation R13 preparation (2026-10-24):** the dispatch
+worker now exits after a verified `recovered` or terminal `unknown` cancellation,
+so its shared MCP operation lock can be released before the lease deadline. A
+public-path regression reproduces recovered cancellation and requires session
+close to succeed within a 150 ms bounded retry window. The targeted supervised
+Win32, owned-session and composition modules pass 42 tests in normal and `-O`
+Python. A broader CLI `unittest` run reached a separate saturated-relay test
+that failed and then left an owned IPC worker blocked during asyncio executor
+shutdown; the run was interrupted before a complete summary. R13 will freeze
+the repaired source and use one fresh fixture attempt to audit cancel, effect,
+independent Q-up, and close.
+
 **Standard-caller cancellation R12 (2026-10-24):** the first pre-admission
 `unknown_call` was recorded, subsequent same-call polling reached the hook in
 1.003 s, and one cancel returned in 1.479 ms. Exact producer exit preceded hook

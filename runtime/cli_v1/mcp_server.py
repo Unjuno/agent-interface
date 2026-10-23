@@ -106,7 +106,10 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
                 deadline_ns=max(deadline_ns,
                     time.monotonic_ns() + _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS)))
         action = row['action']
-        if action.get('status') != 'running':
+        cancellation = row.get('cancellation')
+        if (action.get('status') != 'running'
+                or (isinstance(cancellation, dict)
+                    and cancellation.get('status') in ('recovered', 'unknown'))):
             break
         now_ns = time.monotonic_ns()
         if now_ns >= deadline_ns:

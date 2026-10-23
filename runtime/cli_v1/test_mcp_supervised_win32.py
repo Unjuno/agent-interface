@@ -80,6 +80,47 @@ class FakeProducerFactory:
                 "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}}
 
 
+class HeldProducerFactory:
+    def __init__(self, process, identity):
+        self.process = process
+        self.identity = identity
+        self.started = threading.Event()
+
+    def __call__(self, _action):
+        return self.process, lambda: self.identity, self.started.set
+
+    def read_result(self, process):
+        if process is not self.process or process.is_alive():
+            raise RuntimeError("producer has not exited")
+        raise AssertionError("a cancelled producer has no normal completion receipt")
+
+
+class RecoveringFakeSupervisor(FakeSupervisor):
+    def __init__(self, operation_owner, process):
+        super().__init__(operation_owner)
+        self.process = process
+
+    def cancel(self, operation_id, generation, *, cleanup_deadline_ns):
+        self.operation_owner.request_cancel(operation_id, generation,
+            cleanup_deadline_ns=cleanup_deadline_ns)
+        self.process.alive = False
+        self.process.exitcode = -15
+        if not self.operation_owner.producer_retired(
+                operation_id, generation, self.process):
+            raise AssertionError("fake producer retirement was not accepted")
+        recovery = self.operation_owner.claim_recovery(operation_id, generation)
+        if recovery is None:
+            raise AssertionError("fake recovery was not admitted")
+        readback = {"operation_id": operation_id,
+            "target_generation": generation,
+            "recovery_id": recovery["recovery_id"], "neutral": True}
+        if not self.operation_owner.recovery_completed(operation_id, generation,
+                recovery["recovery_id"], release_accepted=True,
+                readback=readback):
+            raise AssertionError("fake recovery was not confirmed")
+        return self.operation_owner.result(operation_id)
+
+
 class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
     def make_components(self, generation=GENERATION):
         process = FakeProcess()
@@ -179,6 +220,56 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             close_report = json.loads((Path(root) /
                 f"session-{owner.session_id}-close.json").read_text(encoding="utf-8"))
             self.assertEqual(close_report["status"], "closed")
+
+    async def test_dispatch_releases_public_operation_lock_after_recovered_cancel(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        op_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(op_owner, process)
+        owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = HeldProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            program = self.valid_program()
+            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 600_000_000
+            pending = self.row(await server.call_tool("interface_dispatch", {
+                "program": program,
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 0}))
+            self.assertEqual(pending["status"], "pending")
+            for _ in range(20):
+                self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if producer.started.is_set():
+                    break
+                await asyncio.sleep(0.01)
+            self.assertTrue(await asyncio.wait_for(
+                asyncio.to_thread(producer.started.wait, 1), 1))
+
+            cancelled = self.row(await server.call_tool("interface_cancel", {
+                "call_id": pending["call_id"]}))
+            self.assertEqual(cancelled["status"], "recovered")
+            retained = self.row(await server.call_tool("interface_results", {
+                "call_id": pending["call_id"]}))
+            self.assertEqual(retained["cancellation"]["status"], "recovered")
+
+            close_statuses = []
+            deadline = time.monotonic() + 0.15
+            try:
+                while time.monotonic() < deadline:
+                    closed = self.row(await server.call_tool("interface_close", {}))
+                    close_statuses.append(closed.get("status"))
+                    if closed.get("status") == "closed":
+                        break
+                    await asyncio.sleep(0.01)
+                self.assertEqual(close_statuses[-1], "closed", close_statuses)
+            finally:
+                if owner.state != "closed":
+                    await asyncio.sleep(0.55)
+                    self.row(await server.call_tool("interface_close", {}))
 
     async def test_stale_target_generation_is_refused_before_producer_start(self):
         owner, producer, _ = self.make_components(generation="b" * 64)
