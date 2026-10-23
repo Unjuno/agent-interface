@@ -24,6 +24,12 @@ PASS means this one attempt produced the exact independent effect and event sequ
 
 The result is one positive-path Windows fixture observation. It does not compare strategies or estimate a population distribution, and it says nothing about blocked platform I/O, recovery bounds, MAP01, model/token efficiency, or broad reliability. Timing may include scheduler delay, window message dispatch, fixture I/O, and MCP serialization.
 
+## Frozen R01 outcome
+
+The single public dispatch was refused with `TARGET_GENERATION_REQUIRED` before invoking input. The public observation had returned a matched target generation, but the probe omitted it from `program.source.target_generations`. The independent journal contains only the fixture's `ready` event; no click or character event was received, no effect file was written, and the owned fixture exited 0 after close was posted. The retained runtime result reports `input_dispatched=false`, `operation_invoked=false`, and `replay_allowed=false`. This is a failed compatibility attempt, not a timing sample, and it was not replayed.
+
+The frozen auditor reports 11/20. Its `timing_events_inside_dispatch` check is vacuously true when there are no click/character/save events; this check does not make the experiment pass because the independent effect, save, and release checks fail. A successor auditor requires the complete expected set of timestamped events. R01 `raw.json`, the public MCP call records, its audit output, and SHA-256 manifest retain this result.
+
 ## Run and audit
 
 From the repository root on the authorized Windows host, run:
