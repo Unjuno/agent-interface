@@ -82,47 +82,74 @@ def _xvfb_provenance():
 
 
 def _pause_owned_xvfb_for_test(duration_ms):
-    """Pause only the exact private :88 Xvfb process and always resume it."""
+    """Pin the private :88 Xvfb and resume that exact process after any stop attempt."""
     pid_text = os.environ.get('AGENT_INTERFACE_XVFB_PID')
-    if not pid_text or not pid_text.isdigit():
+    if not pid_text or not pid_text.isdigit() or int(pid_text) <= 1:
         raise RuntimeError('private Xvfb PID was not supplied')
+    open_pidfd = getattr(os, 'pidfd_open', None)
+    send_pidfd = getattr(signal, 'pidfd_send_signal', None)
+    if not callable(open_pidfd) or not callable(send_pidfd):
+        raise RuntimeError('private Xvfb pause requires pidfd support; no PID-only fallback')
     pid = int(pid_text)
-    executable = Path('/proc', pid_text, 'exe')
-    command_line = Path('/proc', pid_text, 'cmdline')
-    resolved = Path(os.readlink(executable))
-    argv = command_line.read_bytes().replace(b'\0', b' ').decode(
-        errors='replace').split()
-    if resolved.name != 'Xvfb' or ':88' not in argv:
-        raise RuntimeError('refusing to pause a process other than private Xvfb :88')
-    started_ns = time.monotonic_ns()
-    state_path = Path('/proc', pid_text, 'status')
-    os.kill(pid, signal.SIGSTOP)
-    deadline = time.monotonic() + 1.0
-    while time.monotonic() < deadline:
-        state = next((line.split(':', 1)[1].strip().split()[0]
-                      for line in state_path.read_text().splitlines()
-                      if line.startswith('State:')), '')
-        if state in ('T', 't'):
-            break
-        time.sleep(0.005)
-    else:
-        os.kill(pid, signal.SIGCONT)
-        raise RuntimeError('private Xvfb did not enter stopped state')
+    pidfd = open_pidfd(pid, 0)
+    closed = False
+    stop_attempted = False
     resumed = {'monotonic_ns':None, 'error':None}
+    resume_lock = threading.Lock()
+
+    def close_handle():
+        nonlocal closed
+        if not closed:
+            closed = True
+            os.close(pidfd)
 
     def resume():
-        try:
-            os.kill(pid, signal.SIGCONT)
-            resumed['monotonic_ns'] = time.monotonic_ns()
-        except OSError as error:
-            resumed['error'] = repr(error)
+        with resume_lock:
+            if closed:
+                return
+            try:
+                send_pidfd(pidfd, signal.SIGCONT)
+                resumed['monotonic_ns'] = time.monotonic_ns()
+            except OSError as error:
+                resumed['error'] = repr(error)
+            finally:
+                close_handle()
 
-    timer = threading.Timer(duration_ms/1000, resume)
-    timer.daemon = True
-    timer.start()
-    return {'pid':pid, 'executable':str(resolved), 'argv':argv,
-            'requested_pause_ms':duration_ms, 'stopped_monotonic_ns':started_ns,
-            'resumed':resumed}, timer, resume
+    try:
+        executable = Path('/proc', pid_text, 'exe')
+        command_line = Path('/proc', pid_text, 'cmdline')
+        resolved = Path(os.readlink(executable))
+        argv = command_line.read_bytes().replace(b'\0', b' ').decode(
+            errors='replace').split()
+        if resolved.name != 'Xvfb' or ':88' not in argv:
+            raise RuntimeError('refusing to pause a process other than private Xvfb :88')
+        started_ns = time.monotonic_ns()
+        state_path = Path('/proc', pid_text, 'status')
+        stop_attempted = True
+        send_pidfd(pidfd, signal.SIGSTOP)
+        deadline = time.monotonic() + 1.0
+        while time.monotonic() < deadline:
+            state = next((line.split(':', 1)[1].strip().split()[0]
+                          for line in state_path.read_text().splitlines()
+                          if line.startswith('State:')), '')
+            if state in ('T', 't'):
+                break
+            time.sleep(0.005)
+        else:
+            raise RuntimeError('private Xvfb did not enter stopped state')
+        timer = threading.Timer(duration_ms/1000, resume)
+        timer.daemon = True
+        timer.start()
+        return {'pid':pid, 'executable':str(resolved), 'argv':argv,
+                'signal_identity':'retained_pidfd',
+                'requested_pause_ms':duration_ms, 'stopped_monotonic_ns':started_ns,
+                'resumed':resumed}, timer, resume
+    except BaseException:
+        if stop_attempted:
+            resume()
+        else:
+            close_handle()
+        raise
 
 
 def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
