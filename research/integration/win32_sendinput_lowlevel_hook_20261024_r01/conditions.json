@@ -1,0 +1,13 @@
+{
+  "packet": "win32_sendinput_lowlevel_hook_20261024_r01",
+  "run_count": 1,
+  "os_scope": "current interactive Windows desktop",
+  "stimulus": "one injected VK_F13 key-down, followed by one injected VK_F13 key-up",
+  "hook": "WH_KEYBOARD_LL; only the first injected F13 key-down is delayed; callback wait cap 50 ms",
+  "other_events": "immediately passed to CallNextHookEx",
+  "clock": "time.perf_counter_ns (QPC-backed monotonic clock on Windows)",
+  "initial_state": "F13 must be up before input; otherwise setup fails before injection",
+  "pass": "hook callback receives exactly one injected F13 down and one up; down callback delay <=60 ms; SendInput down call spans callback delay and returns after callback; each SendInput reports one event; final F13 state is up; hook is removed and hook thread exits",
+  "unknown": "setup failure, no matching callback, timeout, unexpected event count, API error, state not neutral, or uncertain cleanup",
+  "forbidden": ["replay", "registry mutation", "privilege change", "second run", "other injected keys", "mouse input"]
+}
