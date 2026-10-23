@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import json
+import math
+import os
+import selectors
 import re
 import shutil
 import subprocess
@@ -25,6 +28,39 @@ def first(records, event):
     return next(row for row in records if row.get("event") == event)
 
 
+def read_endpoint(stream, timeout=30, max_bytes=65536):
+    """Bound the first JSON line from an owned POSIX subprocess pipe."""
+    if (isinstance(timeout, bool) or not isinstance(timeout, (int, float))
+            or not math.isfinite(timeout) or timeout <= 0):
+        raise ValueError("endpoint timeout must be positive and finite")
+    if type(max_bytes) is not int or max_bytes <= 0:
+        raise ValueError("endpoint byte limit must be a positive integer")
+    deadline = time.monotonic() + timeout
+    data = bytearray()
+    with selectors.DefaultSelector() as selector:
+        selector.register(stream.fileno(), selectors.EVENT_READ)
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or not selector.select(remaining):
+                raise TimeoutError("runtime endpoint line deadline expired")
+            chunk = os.read(stream.fileno(), min(4096, max_bytes + 1 - len(data)))
+            if not chunk:
+                raise EOFError("runtime stdout closed before endpoint newline")
+            data.extend(chunk)
+            newline = data.find(b"\n")
+            if newline >= 0:
+                if newline + 1 > max_bytes:
+                    raise ValueError("runtime endpoint line exceeds byte limit")
+                endpoint = json.loads(bytes(data[:newline]).decode("utf-8"))
+                if (not isinstance(endpoint, dict)
+                        or not isinstance(endpoint.get("socket"), str)
+                        or not endpoint["socket"]):
+                    raise ValueError("runtime endpoint must contain a socket string")
+                return endpoint
+            if len(data) >= max_bytes:
+                raise ValueError("runtime endpoint line exceeds byte limit")
+
+
 class RuntimeClient:
     def __init__(self, root: Path, seed: int):
         self.root = Path(root)
@@ -39,7 +75,7 @@ class RuntimeClient:
         self.programs = []
         self.durable_calls = 0
 
-    def start(self):
+    def start(self, endpoint_timeout=30):
         self.root.mkdir(parents=True, exist_ok=False)
         self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
         self.process = subprocess.Popen([
@@ -49,19 +85,63 @@ class RuntimeClient:
         ], stdout=subprocess.PIPE, stderr=self.errors, text=True)
         self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
         self.journal = Path(self.temporary.name) / "journal.jsonl"
-        self.endpoint = json.loads(self.process.stdout.readline())
-        initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
-                               {"events": ["observation"], "timeout": 30})
-        self.ready = first(initial["reply"]["records"], "ready")
-        initialize(self.journal, initial["continuation"])
+        try:
+            self.endpoint = read_endpoint(self.process.stdout, timeout=endpoint_timeout)
+            initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
+                                   {"events": ["observation"], "timeout": 30})
+            self.ready = first(initial["reply"]["records"], "ready")
+            initialize(self.journal, initial["continuation"])
+        except BaseException as primary:
+            # Startup has not returned to the caller. Stop only the
+            # directly owned launcher; no descendant/global cleanup is claimed.
+            try:
+                if self.process.poll() is None:
+                    self.process.terminate()
+                    try:
+                        self.process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        self.process.kill()
+                        self.process.wait(timeout=1)
+            except BaseException as cleanup_error:
+                if hasattr(primary, "add_note"):
+                    primary.add_note("endpoint cleanup failed: " + repr(cleanup_error))
+            finally:
+                for label, cleanup in (
+                    ("stdout close", self.process.stdout.close),
+                    ("stderr close", self.errors.close),
+                    ("temporary cleanup", self.temporary.cleanup),
+                ):
+                    try:
+                        cleanup()
+                    except BaseException as cleanup_error:
+                        if hasattr(primary, "add_note"):
+                            primary.add_note(label + " failed: " + repr(cleanup_error))
+            raise
         return self
 
     def call(self, spec):
         started = time.perf_counter_ns()
+        timeout = spec.get("timeout", 2)
+        if (type(timeout) not in (int, float) or not math.isfinite(timeout)
+                or not 0 <= timeout <= 30):
+            raise ValueError("call timeout must be finite and within 0..30")
+        deadline = time.monotonic() + timeout
         result = run(self.journal, spec)
-        ended = time.perf_counter_ns()
         self.durable_calls += 1
-        assert result["state"]["pending"] is None
+        records = list(result["reply"]["records"])
+        reads = 0
+        while result["state"]["pending"] is not None:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or reads >= 32:
+                raise TimeoutError("runtime command unresolved; journal retained; no resend")
+            # Durable run carries the original action identity and current cursor.
+            # A command-free read cannot mint or resend an input request.
+            result = run(self.journal, {"timeout": min(remaining, 30)})
+            self.durable_calls += 1
+            reads += 1
+            records.extend(result["reply"]["records"])
+        result["records"] = records
+        ended = time.perf_counter_ns()
         return result, started, ended
 
     def clock(self):
@@ -74,7 +154,7 @@ class RuntimeClient:
             "expected_sequence": current["sequence"],
             "valid_until_ns": current["runtime_ns"] + 10_000_000_000,
             "steps": steps}, "timeout": timeout})
-        records = result["reply"]["records"]
+        records = result["records"]
         terminal = first(records, "terminal")
         record = {"label": label, "started_ns": started, "ended_ns": ended,
                   "terminal": terminal,
@@ -189,18 +269,83 @@ class RuntimeClient:
         shutil.copy2(self.journal, self.root / "journal.jsonl")
         return evaluation
 
+    def _retain_failed_response(self):
+        if self.journal is None:
+            return
+        diagnostic = Path(str(self.journal) + ".invalid-response.json")
+        if not diagnostic.exists():
+            return
+        # Local private artifacts: never infer admission or replay from these.
+        for source in (self.journal, diagnostic):
+            destination = self.root / source.name
+            if destination.exists():
+                if destination.read_bytes() != source.read_bytes():
+                    raise FileExistsError("retained evidence differs: " + str(destination))
+                continue
+            # Publish only a fully copied/read-back file. An interrupted copy
+            # must not leave a conflicting partial destination on retry.
+            with tempfile.TemporaryDirectory(dir=self.root, prefix=".custody-") as staging:
+                staged = Path(staging) / "receipt"
+                with source.open("rb") as incoming, staged.open("xb") as outgoing:
+                    shutil.copyfileobj(incoming, outgoing)
+                    outgoing.flush()
+                    os.fsync(outgoing.fileno())
+                if staged.read_bytes() != source.read_bytes():
+                    raise OSError("retained evidence staging readback differs")
+                try:
+                    os.link(staged, destination)
+                except FileExistsError:
+                    if destination.read_bytes() != source.read_bytes():
+                        raise FileExistsError("retained evidence differs: " + str(destination))
+                if destination.read_bytes() != source.read_bytes():
+                    raise OSError("retained evidence readback differs")
+
     def close(self):
-        if self.process is not None and self.process.poll() is None:
-            self.process.terminate()
-        if self.process is not None:
-            self.process.wait(timeout=10)
-        if self.errors is not None:
-            self.errors.close()
+        failures = []
+        process_failed = False
+        try:
+            if self.process is not None and self.process.poll() is None:
+                self.process.terminate()
+            if self.process is not None:
+                self.process.wait(timeout=10)
+        except BaseException as error:
+            process_failed = True
+            failures.append(error)
+        try:
+            if self.errors is not None:
+                self.errors.close()
+        except BaseException as error:
+            failures.append(error)
         if self.temporary is not None:
-            self.temporary.cleanup()
+            custody_failed = False
+            try:
+                self._retain_failed_response()
+            except BaseException as error:
+                custody_failed = True
+                failures.append(error)
+            if custody_failed or process_failed:
+                # Keep the only raw, or files an unconfirmed child may use.
+                self.temporary._finalizer.detach()
+            else:
+                try:
+                    self.temporary.cleanup()
+                except BaseException as error:
+                    failures.append(error)
+        if failures:
+            primary = failures[0]
+            if hasattr(primary, "add_note"):
+                for error in failures[1:]:
+                    primary.add_note("additional client close failure: " + repr(error))
+            raise primary
 
     def __enter__(self):
         return self.start()
 
-    def __exit__(self, *_exc):
-        self.close()
+    def __exit__(self, _type, primary, _traceback):
+        try:
+            self.close()
+        except BaseException as cleanup_error:
+            if primary is None:
+                raise
+            if hasattr(primary, "add_note"):
+                primary.add_note("client close failed: " + repr(cleanup_error))

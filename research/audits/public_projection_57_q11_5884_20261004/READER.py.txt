@@ -1,0 +1,35 @@
+import pathlib,json,tarfile,io,hashlib,re
+w=pathlib.Path(__file__).resolve().parent;m=json.loads((w/'projection-manifest.json').read_text());counts={'archives':0,'nested_archives':0,'members':0,'bytecode_omitted':0}
+def fail(msg):raise ValueError(msg)
+def compare(old,new,name):
+ if name.endswith(('.tar','.tar.gz')):
+  counts['nested_archives']+=1
+  with tarfile.open(fileobj=io.BytesIO(old),mode='r:*') as a,tarfile.open(fileobj=io.BytesIO(new),mode='r:*') as b:
+   before={x.name:a.extractfile(x).read() for x in a.getmembers() if x.isfile()};after={x.name:b.extractfile(x).read() for x in b.getmembers() if x.isfile()}
+   expected={k for k in before if not k.endswith('.pyc')}
+   if set(after)!=expected:fail('nested member set differs')
+   for k in before:
+    if k.endswith('.pyc'):
+     if not any(o['name']==k and o['sha256']==hashlib.sha256(before[k]).hexdigest() for o in m['nested_bytecode_omissions']):fail('unbound omission')
+     counts['bytecode_omitted']+=1
+    else:compare(before[k],after[k],k)
+  return
+ counts['members']+=1
+ if b'/Users/' in new:fail('home prefix remains')
+ try:expected=re.sub(r'/Users/[^/\s]+','/PRIVATE_HOME',old.decode()).encode()
+ except UnicodeDecodeError:expected=old
+ if new!=expected:fail('unrelated bytes changed')
+for row in m['archives']:
+ counts['archives']+=1;new=pathlib.Path(row['local_projection']).read_bytes()
+ if hashlib.sha256(new).hexdigest()!=row['public_archive_sha256']:fail('public archive SHA mismatch')
+ olds=[p for p in (w/'private-originals').glob('*.gz') if hashlib.sha256(p.read_bytes()).hexdigest()==row['original_archive_sha256']]
+ if len(olds)!=1:fail('private original absent')
+ with tarfile.open(olds[0]) as a,tarfile.open(fileobj=io.BytesIO(new),mode='r:gz') as b:
+  before={x.name:a.extractfile(x).read() for x in a.getmembers() if x.isfile()};after={x.name:b.extractfile(x).read() for x in b.getmembers() if x.isfile()}
+  if set(before)!=set(after):fail('outer member set differs')
+  for binding in row['members']:
+   name=binding['name'];old=before[name];public=after[name]
+   for prefix,raw in [('original',old),('public',public)]:
+    if len(raw)!=binding[prefix+'_bytes'] or hashlib.sha256(raw).hexdigest()!=binding[prefix+'_sha256']:fail('member binding mismatch')
+   compare(old,public,name)
+(w/'independent-verification.json').write_text(json.dumps({'PASS':True,**counts,'scope':'separate recursive reader; no received code execution'},indent=2)+'\n');print(counts)
