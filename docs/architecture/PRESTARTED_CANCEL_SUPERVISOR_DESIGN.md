@@ -338,3 +338,33 @@ The separate [Win32 operation-owner implementation plan](WIN32_OPERATION_OWNER_I
 `runtime.guarded_x11_v1.test_cancel_supervisor.PrestartedCancellationSupervisorTests.test_x11_worker_does_not_start_release_if_deadline_expires_after_xres` advances the injected monotonic clock to the exact transaction deadline after the owner base is observed absent and immediately before cleanup backend creation. It verifies the worker returns `UNKNOWN`, records `owner_release_attempt.status=not_attempted`, does not construct `X11Backend`, and emits no XTest event; `task_success` remains null and replay remains denied. The combined supervisor and public owned-process suites pass 59/59 in normal and optimized Windows CPython 3.11.9.
 
 This closes only a missing regression assertion for the worker's existing final pre-release deadline check. The public MCP blocked-helper Fake X case separately covers a delayed supervisor that resumes after its transaction deadline and produces no effect. Neither test establishes a hard OS scheduling bound, retracts a release already submitted before expiry, demonstrates live-Xvfb bystander reuse refusal, or qualifies physical input ownership. Those gates remain open; no WSLc or Docker allocation was used.
+
+## Win32 persistent-helper integration checkpoint (2026-10-23)
+
+The approved Win32 candidate is now implemented on local branch
+`codex/win32-supervisor-implementation-plan` through commit `4121be229`. The
+Win32 `OperationCancellationSupervisor` synchronously starts recovery and
+observer helpers before operation admission, validates each helper's exact
+ready message and retained process identity, and reuses each process through
+one operation-scoped result/completion protocol. It does not create a new
+recovery sender after a helper failure. Unknown, malformed, late, and
+mismatched receipts remain `UNKNOWN` and replay denied.
+
+The [custody R01 packet](../../research/integration/win32_supervisor_custody_20261023_r01/README.md)
+records 79 selected pure/fake tests passing in both normal and optimized
+Python, plus 67 MCP owned-process and guarded-X11 process-identity regression
+tests in each mode. Its process-shared fake API invokes the actual
+`Win32RuntimeSession.dispatch()` and `Win32Backend.execute()` paths for both
+blocked-before-acceptance and accepted-before-return schedules. It records
+producer exit before the fake recovery UP and observes fake neutral state
+independently. A stubborn producer remains `UNKNOWN` without recovery UP.
+
+These are process/state-machine results only. The packet's earlier invalid
+native fixture-test execution is explicitly not counted as evidence. No
+successful backend emission was recorded before that test's failure, but the
+run does not exclude every native API call or fixture-side effect; the fixture
+process was later confirmed absent. Do not rerun the native integration class.
+The actual Win32 operation-custody question remains unqualified: no late-DOWN
+horizon, live target/app effect, MAP01, exclusive input allocation, hard
+release bound, matched efficiency, or repeated reliability result exists.
+WSLc #7924 remains STOP/HOLD; this work used no WSLc or Docker allocation.

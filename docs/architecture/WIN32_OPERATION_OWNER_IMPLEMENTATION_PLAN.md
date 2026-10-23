@@ -12,44 +12,36 @@ allocation.
 
 ## Current implementation checkpoint (2026-10-23)
 
-The approved synthetic integration slice now reaches the standard public MCP
-caller on branch `codex/win32-supervisor-implementation-plan`. The opt-in
-`guarded-win32` route remains explicitly dependency-injected and has no native
-input backend. It rejects non-Windows host startup and requires one configured
-target plus an owner marked synthetic-only. The target-generation binding is
-single-use and admission re-reads generation before creating the action.
+The local branch `codex/win32-supervisor-implementation-plan` now implements
+the approved persistent-helper candidate and extends the synthetic public
+caller slice. `OperationCancellationSupervisor` starts one recovery and one
+observer process before the first producer can be admitted, checks exact
+readiness receipts and retained process identities, and reuses the helpers
+through request/result/completion receipts. A missing, malformed, late, or
+mismatched response keeps custody UNKNOWN; invalid helpers are retired and
+never replaced during cancellation. The public caller retains one producer
+start and one oracle reservation per call. A late Generation-A oracle success
+cannot promote the earlier timeout, duplicate cancellation returns the same
+attempt, and Generation B scores as a distinct attempt.
 
-The public composition test starts a gated producer in a spawned process,
-passes its synthetic request to a separate application-simulator process, and
-obtains a task-effect receipt from a third process that reads the simulator's
-completion state. It then requests public cancellation and verifies producer
-retirement, separate recovery, and independent neutral-state observation. The
-retained result keeps action state, cancellation state, and task effect in
-separate fields: neutral readback and cancellation do not set task success;
-only the generation-bound independent oracle receipt does. An oracle timeout
-or malformed/mismatched receipt remains unknown and cannot be retried into a
-replacement result. The oracle tool is absent unless an explicit injected
-oracle is supplied. R04 further exercises two standard-caller generations:
-generation A remains UNKNOWN/replay-denied after a mismatched recovery receipt;
-a separate server/session admits generation B and receives a distinct oracle
-receipt, while a final lookup confirms generation A did not change.
+The new fake-API test dispatches through the actual `Win32RuntimeSession` and
+`Win32Backend.execute()` paths. It covers blocked-before-acceptance and
+accepted-before-return schedules plus producer-retirement timeout. The
+process-shared fake key state and parent event log show confirmed exact
+producer exit before the fake backend recovery UP; an independent helper then
+reads neutral state. Timeout remains UNKNOWN and emits no recovery UP. No
+production injection seam was required.
 
-Local verification on this checkpoint passes the focused Win32 adapter,
-public-composition, and cancellation suite 25/25 in normal and optimized
-CPython 3.11.9. The existing MCP owned-process and guarded-X11 regression suite
-passes 90/90 in both modes. The exact public-caller result and raw test output
-are recorded in the [R04 two-generation public-caller packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r04/README.md); the [R03 application-effect packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r03/README.md) and [R02 predecessor](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r02/README.md) remain immutable. A regression also confirms that a late oracle receipt cannot promote an earlier timeout from UNKNOWN.
-
-This completes only the current synthetic composition slice of phases 2b–2d.
-It does not supply the full failure-schedule/attempt-accounting matrix, a
-production HWND identity adapter, native `SendInput`, exclusive input
-authority, late-DOWN exclusion, an application-backed task oracle, MAP01, or a
-matched efficiency/reliability comparison. The next local implementation
-slice is to finish the uncovered synthetic failure schedules and standard
-caller accounting before any native qualification request. Native testing
-remains a separate HOLD pending an independently verified disposable target,
-exclusive allocation, observer, and cleanup procedure; no WSLc allocation is
-granted here, and Issue #7924 STOP/HOLD remains in force.
+The source-bound [R01 custody packet](../../research/integration/win32_supervisor_custody_20261023_r01/README.md)
+records 79/79 selected pure/fake tests and 67/67 MCP-owned-process/guarded-X11
+compatibility tests passing in normal and optimized CPython 3.11.9, raw output,
+conditions, source hashes, and an invalid native-test execution incident. The
+native fixture integration class is excluded from valid verification. This
+branch has no native `SendInput` adapter, physical
+release proof, late-DOWN horizon, live MAP01 oracle, exclusive input
+authority, matched efficiency result, or repeated reliability result. The
+mechanism remains opt-in and synthetic only. Issue #7924 remains STOP/HOLD;
+this work used no WSLc allocation or Docker.
 
 ## Problem and scope
 

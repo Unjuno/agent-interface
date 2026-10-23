@@ -82,26 +82,26 @@
 - [x] **Step 3: Run the tests** normally and under `python -O`; check process cleanup in `finally` paths and ensure the tests fail if recovery is moved before producer exit.
 - [x] **Step 4: No construction seam was needed**: the test creates `Win32Backend` via `__new__` and assigns a fake `user32`; production construction remains unchanged.
 - [x] **Step 5: Re-run Win32 pure helper, backend ledger, owner, process-cancellation, and public-route tests** in both modes. The native fixture integration class was excluded from the valid verification set.
-- [ ] **Step 6: Commit** the isolated actual-backend/fake-API composition test.
+- [x] **Step 6: Commit** the isolated actual-backend/fake-API composition test (`9ab23ccff`).
 
 ### Task 4: Make attempt accounting and retained evidence auditable
 
 **Files:**
 - Modify: `runtime/cli_v1/test_mcp_win32_composition.py`
 - Modify: `runtime/cli_v1/test_attempt.py` only if the existing attempt ledger cannot express the assertions
-- Create: `research/integration/win32_supervisor_public_attempts_<date>_r01/README.md`, `conditions.json`, `SHA256SUMS`, and raw normal/optimized outputs
+- Create: `research/integration/win32_supervisor_custody_20261023_r01/README.md`, `conditions.json`, `SHA256SUMS`, and raw normal/optimized outputs
 - Update after results: `docs/CURRENT_GOAL.md`, `docs/architecture/WIN32_OPERATION_OWNER_IMPLEMENTATION_PLAN.md`
 
 **Interfaces:**
 - Consumes: public MCP call IDs, frozen action operation IDs, generation-bound owner receipts, and independent oracle receipts.
 - Produces: a retained row per attempted action/cancel/recovery/observer/oracle phase, including pending/unknown outcomes, exact invocation count, and a content-addressed source/result packet.
 
-- [ ] **Step 1: Add an accounting regression** that submits one action, repeats retrieval/cancel, times out the oracle, supplies a late receipt, and starts a separate fresh generation. Assert exactly one producer start and one oracle reservation per original call; retrieval and duplicate requests do not create attempts; the old result remains byte-for-byte equivalent after the new generation succeeds.
-- [ ] **Step 2: Run the regression** normally and under `python -O`; require exact attempt totals and old-generation immutability.
-- [ ] **Step 3: Capture the complete focused test commands, exit codes, Python/platform versions, source revision, and raw outputs** into the new packet. Hash source files and all packet files; do not edit prior R01–R04 packets or the prestarted-helper R01 packet.
-- [ ] **Step 4: Update the architecture checkpoint and current-goal summary** with only the observed synthetic result, exact local test counts, and remaining qualification boundary.
-- [ ] **Step 5: Run `git diff --check`, the focused Win32 suite, the existing MCP-owned-process/guarded-X11 regression suite, and the relevant backend/owner suites** in normal and optimized modes; preserve failures as well as passes.
-- [ ] **Step 6: Commit** the test, packet, and concise status updates together after verifying every recorded hash.
+- [x] **Step 1: Add an accounting regression** that submits one action, repeats retrieval/cancel, times out the oracle, supplies a late receipt, and starts a separate fresh generation. Assert exactly one producer start and one oracle reservation per original call; retrieval and duplicate requests do not create attempts; the old result remains byte-for-byte equivalent after the new generation succeeds.
+- [x] **Step 2: Run the regression** normally and under `python -O`; exact per-generation producer/oracle counts and old-generation immutability passed.
+- [x] **Step 3: Capture the complete focused test commands, exit codes, Python/platform versions, source revision, and raw outputs** into the new packet. Hash source files and all packet files; do not edit prior R01–R04 packets or the prestarted-helper R01 packet.
+- [x] **Step 4: Update the architecture checkpoint and current-goal summary** with only the observed synthetic result, exact local test counts, and remaining qualification boundary.
+- [x] **Step 5: Run `git diff --check`, the focused Win32 suite, the existing MCP-owned-process/guarded-X11 regression suite, and the relevant backend/owner suites** in normal and optimized modes; preserve failures as well as passes (79 focused + 67 compatibility tests per mode).
+- [ ] **Step 6: Verify every recorded source and packet hash, then commit** the test, packet, and concise status updates together.
 
 ## Explicit later gates (not part of this implementation plan)
 
