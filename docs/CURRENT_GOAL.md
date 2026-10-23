@@ -1,5 +1,17 @@
 # Current objective and working direction
 
+**Standard-caller cancellation R10 (2026-10-24):** the one-shot public
+stdio-MCP run again completed the fixture effect and independent same-generation
+Q-up readback, but the 100 s hook gate expired about 0.780 s before injected
+Q-down reached the hook (100.780 s after wait start; 103.483 s after hook
+readiness). No cancel was sent; session close still reports release unknown.
+The frozen audit is FAIL_OR_UNKNOWN 9/17. Across R06/R07/R09/R10 the Q-down
+arrived 0.75–0.79 s after each finite hook wait, so the next test should poll
+same-call results during the wait instead of extending it. Preserve R10 and do
+not replay it; see its
+[result](../research/integration/win32_supervised_standard_caller_20261024_r10/RESULT.md).
+The goal remains active; no WSLc or Docker allocation was used.
+
 **Standard-caller cancellation R09 (2026-10-24):** R09 preserved one public
 stdio-MCP normal completion and exact fixture effect, but its 75 s cancellation
 gate expired about 0.788 s before injected Q-down reached the owned hook
