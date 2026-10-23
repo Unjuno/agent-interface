@@ -65,7 +65,8 @@ for index, row in enumerate(schedules, 1):
           and terminal.get("status") == "recovered"
           and terminal.get("release_confirmed") is True
           and terminal.get("task_success") is None
-          and terminal.get("replay_allowed") is False,
+          and terminal.get("replay_allowed") is False
+          and "emergency_safety_cleanup" not in row,
           {"cancel_ms": row.get("cancel_response_ms"),
            "terminal_ms": row.get("terminal_elapsed_ms"),
            "exitcode": row.get("producer_exitcode"),

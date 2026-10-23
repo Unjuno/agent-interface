@@ -376,6 +376,24 @@ def _run_schedule(context, owner, mode, index):
         producer.join(1.0)
     row["producer_exitcode"] = producer.exitcode
     row["producer_alive_after_terminal"] = producer.is_alive()
+    if (terminal.get("status") == "unknown"
+            and not row["producer_alive_after_terminal"]
+            and not supervisor._thread.is_alive()):
+        residual = _observe_ctrl(backend)
+        row["residual_state_after_unknown"] = residual
+        if (residual.get("state") is True
+                and residual.get("foreground_hwnd") == hwnd
+                and backend.target_generation("fixture") == generation):
+            backend.held_keys["CTRL"] = VK_CONTROL
+            backend.held_key_targets["CTRL"] = "fixture"
+            cleanup_receipt = backend.release_all()
+            row["emergency_safety_cleanup"] = {
+                "monotonic_ns": time.monotonic_ns(),
+                "reason": "supervisor terminal UNKNOWN with confirmed residual CTRL-down",
+                "receipt": cleanup_receipt,
+                "outcome_remains": "FAIL_OR_UNKNOWN",
+            }
+            row["post_emergency_state"] = _observe_ctrl(backend)
     try:
         producer.close()
     except Exception:
@@ -412,7 +430,8 @@ def _run_schedule(context, owner, mode, index):
         and row["producer_exitcode"] is not None
         and not row["producer_alive_after_terminal"]
         and row["cancel_response_ms"] <= 1000
-        and row["terminal_elapsed_ms"] <= 8000) else "FAIL_OR_UNKNOWN"
+        and row["terminal_elapsed_ms"] <= 8000
+        and "emergency_safety_cleanup" not in row) else "FAIL_OR_UNKNOWN"
     return row
 
 

@@ -24,6 +24,7 @@
     "late_down_poll_interval_ms": 25,
     "retry_policy": "one child per schedule, one cancellation per child, no replay, no retries"
   },
+  "emergency_cleanup": "If the supervisor terminates UNKNOWN and its cancellation thread is confirmed stopped, the exact producer is confirmed exited, the same fixture generation remains foreground, and independent state still reports CTRL down, the parent may issue one separately recorded safety UP. This cleanup never changes the experiment outcome from UNKNOWN/FAIL and is not a retry or task replay.",
   "success": {
     "pre_schedule_initial_state": "CTRL observed up before native call; remains UNKNOWN if state or witness is unavailable",
     "accepted_schedule_initial_state": "CTRL observed down after the actual SendInput call returned accepted count 1",
