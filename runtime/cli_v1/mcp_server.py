@@ -126,8 +126,13 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
     execution = result.get('execution') if type(result) is dict else None
     program_emissions = (execution.get('program_emissions')
         if type(execution) is dict else None)
-    input_dispatched = (program_emissions > 0 if type(program_emissions) is int
-        else result.get('input_dispatched'))
+    if type(program_emissions) is int:
+        input_dispatched = program_emissions > 0
+    elif type(result.get('input_dispatched')) is bool:
+        input_dispatched = result['input_dispatched']
+    else:
+        emissions = execution.get('emissions') if type(execution) is dict else None
+        input_dispatched = emissions > 0 if type(emissions) is int else None
     return {'schema': 'agent-interface/runtime-dispatch-result-v1',
         'status': 'returned', 'result': deepcopy(result),
         'normalization': normalization, 'compilation': compilation,

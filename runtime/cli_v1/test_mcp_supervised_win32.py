@@ -75,7 +75,7 @@ class FakeProducerFactory:
         if process is not self.process or process.is_alive():
             raise RuntimeError("producer has not exited")
         return {"result": {"status": "completed",
-                "execution": {"program_emissions": 1}},
+                "execution": {"emissions": 1}},
             "release_receipt": {"verified": True, "keys_down": [],
                 "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}}
 
