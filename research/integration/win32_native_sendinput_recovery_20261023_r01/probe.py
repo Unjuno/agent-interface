@@ -489,6 +489,7 @@ async def _run_fresh_public_effect(fixture, record):
             if validated.isError or validation.get("static_valid") is not True:
                 return
             dispatch_started = time.monotonic_ns()
+            record["public_dispatch_attempts"] = 1
             dispatched = await asyncio.wait_for(client.call_tool("interface_dispatch", {
                 "program": program, "current_observation_seq": 1,
                 "current_binding_revision": 1}), 15)
@@ -536,7 +537,8 @@ def main():
         "source_commit": os.environ["SOURCE_COMMIT"],
         "started_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "platform": platform.platform(), "python": sys.version,
-        "scope": CONDITIONS["scope"], "status": "FAIL_OR_UNKNOWN",
+        "scope": CONDITIONS["scope"], "resource_commands": [],
+        "status": "FAIL_OR_UNKNOWN",
         "schedules": []}
     active_fixture = None
     context = mp.get_context("spawn")

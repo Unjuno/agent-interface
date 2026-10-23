@@ -23,7 +23,7 @@ check("attempt_and_source_pinned",
 check("native_windows_and_no_wslc",
       "Windows" in RAW.get("platform", "")
       and RAW.get("scope") == CONDITIONS.get("scope")
-      and "wslc" not in RAW.get("resource_commands", "").lower(),
+      and RAW.get("resource_commands") == [],
       {"platform": RAW.get("platform"), "scope": RAW.get("scope"),
        "resource_commands": RAW.get("resource_commands", "")})
 schedules = RAW.get("schedules", [])
@@ -111,6 +111,9 @@ effect = RAW.get("effect_readback")
 expected_effect = CONDITIONS["task_effect"]["expected"]
 fresh_generation = fresh.get("target_generation")
 old_generations = {row.get("target_generation") for row in schedules}
+expected_effect_events = ([{"kind": "ready", "hwnd": fresh.get("hwnd")}] +
+    [{"kind": "char", "code": ord(ch)} for ch in expected_effect["text"]] +
+    [{"kind": "save", **expected_effect}])
 check("fresh_target_independent_task_effect",
       len(schedules) == 2 and all(row.get("terminal", {}).get("status") == "recovered"
                                   for row in schedules)
@@ -118,7 +121,7 @@ check("fresh_target_independent_task_effect",
       and effect == expected_effect and fresh.get("effect") == expected_effect
       and fresh.get("exit_code") == 0
       and fresh.get("window_exists_after_exit") is False
-      and len(fresh.get("events", [])) == len(expected_effect["text"]) + 2,
+      and fresh.get("events") == expected_effect_events,
       {"effect_readback": effect, "effect_after_close": fresh.get("effect"),
        "fresh_generation": fresh_generation, "prior_generations": sorted(old_generations),
        "exit_code": fresh.get("exit_code"), "hwnd_gone": fresh.get("window_exists_after_exit"),
@@ -128,9 +131,16 @@ releases = dispatch.get("execution", {}).get("releases", [])
 task_release = releases[-1] if releases else {}
 check("fresh_public_mcp_task_and_verified_release",
       RAW.get("public_observation", {}).get("is_error") is False
+      and {"interface_observe", "interface_validate", "interface_dispatch"}
+          .issubset(set(RAW.get("public_tools", [])))
+      and RAW.get("public_dispatch_attempts") == 1
+      and RAW.get("public_observation", {}).get("response", {}).get("receipt", {})
+          .get("source", {}).get("raw_report", {}).get("target_generation") == fresh_generation
       and RAW.get("public_validation", {}).get("response", {}).get("static_valid") is True
       and RAW.get("public_dispatch", {}).get("is_error") is False
       and dispatch.get("status") == "completed"
+      and RAW.get("public_program", {}).get("source", {}).get("target_generations", {})
+          .get("fixture") == fresh_generation
       and task_release.get("verified") is True
       and task_release.get("keys_down") == [] and task_release.get("buttons_down") == []
       and task_release.get("keys_unknown", []) == []
