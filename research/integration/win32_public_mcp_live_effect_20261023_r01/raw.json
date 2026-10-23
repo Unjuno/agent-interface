@@ -1,0 +1,231 @@
+{
+  "attempt_id": "win32-public-mcp-live-effect-20261023-r01",
+  "caller_kind": "mcp_stdio",
+  "dispatch": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"45dc8fac56ee476f7acfd427269a8091657e83dde7aefbc5a6cfdf77a05a3b4c\", \"bytes\": 140, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"runtime_failed\", \"error\": \"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')\"}}, \"report\": {\"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"runtime_failed\", \"error\": \"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"runtime_failed\", \"error\": \"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')\", \"failure_phase\": null, \"cleanup_error\": null, \"input_release_verified\": null, \"failure_detail\": null, \"validation_operation_index\": null, \"failed_operation_index\": null, \"failed_operation_effect\": null, \"execution_status\": null, \"execution_error\": null, \"execution_detail\": null, \"recovery_required\": null}, \"image_status\": \"no_observation\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_live_effect_20261023_r01\\\\run\\\\mcp-calls\\\\920c0f201bac4e7590c247d0e1385c9b\", \"call_id\": \"920c0f201bac4e7590c247d0e1385c9b\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "returned_monotonic_ns": 452552328000000,
+    "started_monotonic_ns": 452552312000000
+  },
+  "dispatch_attempts": 1,
+  "finished_utc": "2026-10-23T13:14:06.085629+00:00",
+  "fixture_close_posted": true,
+  "fixture_events": [
+    {
+      "hwnd": 22414742,
+      "kind": "ready"
+    }
+  ],
+  "fixture_exit_code": 0,
+  "fixture_hwnd": 22414742,
+  "fixture_pid": 42736,
+  "fixture_stderr": "",
+  "listed_tools": [
+    "interface_clock",
+    "interface_dispatch",
+    "interface_observe",
+    "interface_results",
+    "interface_validate"
+  ],
+  "observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"b8b464bb054260974973b1ec9c8ec696864bd5b4bada90f31d6c4498da066c5a\", \"bytes\": 253, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"17cfe77709d7407692c9fa7c0d9359a4\", \"side_effect_authority\": false, \"input_dispatched\": false, \"status\": \"observation_failed\", \"error\": \"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')\"}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"17cfe77709d7407692c9fa7c0d9359a4\", \"side_effect_authority\": false, \"input_dispatched\": false, \"status\": \"observation_failed\", \"error\": \"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')\"}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"observation_failed\", \"error\": \"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')\", \"failure_phase\": null, \"cleanup_error\": null}, \"image_status\": \"no_observation\", \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-supervisor-plan\\\\research\\\\integration\\\\win32_public_mcp_live_effect_20261023_r01\\\\run\\\\mcp-calls\\\\ac47ff18685547c6b09f4f4eeec456e1\", \"call_id\": \"ac47ff18685547c6b09f4f4eeec456e1\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "returned_monotonic_ns": 452552312000000,
+    "started_monotonic_ns": 452552312000000
+  },
+  "oracle": {
+    "char_event_count": 0,
+    "event_text": "",
+    "event_text_matches": false,
+    "expected_char_event_count": 17,
+    "nonclaims": [
+      "blocked-I/O bound",
+      "generation admission",
+      "supervisor recovery",
+      "model/token efficiency",
+      "MAP01",
+      "broad reliability"
+    ],
+    "release_pass": false,
+    "release_receipt": {},
+    "save_event_count": 0,
+    "task_pass": false
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 452572312000000,
+      "lease_id": "win32-mcp-live-r01"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "MCP-LIVE-R01-ONLY"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": 140,
+        "op": "observe",
+        "w": 300,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "win32-public-mcp-live-r01",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 3,
+      "observation_seq": 7
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "program_validation": {
+    "backend_checked": false,
+    "compilation": null,
+    "expanded_operation_count": 10,
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "runtime_admission": "not_evaluated",
+    "schema": "agent-interface/static-program-validation-v1",
+    "side_effect_authority": false,
+    "source_operation_count": 10,
+    "static_valid": true,
+    "status": "valid",
+    "task_success": null
+  },
+  "public_response": {
+    "authority": "none",
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-supervisor-plan\\research\\integration\\win32_public_mcp_live_effect_20261023_r01\\run\\mcp-calls\\920c0f201bac4e7590c247d0e1385c9b",
+    "call_id": "920c0f201bac4e7590c247d0e1385c9b",
+    "image_status": "no_observation",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": "ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')",
+      "execution_detail": null,
+      "execution_error": null,
+      "execution_status": null,
+      "failed_operation_effect": null,
+      "failed_operation_index": null,
+      "failure_detail": null,
+      "failure_phase": null,
+      "input_release_verified": null,
+      "recovery_required": null,
+      "reported_status": "runtime_failed",
+      "validation_operation_index": null
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "report": {
+        "error": "ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')",
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "runtime_failed"
+      },
+      "schema": "agent-interface/receipt-view-v1",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 140,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "error": "ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')",
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "runtime_failed"
+        },
+        "sha256": "45dc8fac56ee476f7acfd427269a8091657e83dde7aefbc5a6cfdf77a05a3b4c"
+      }
+    },
+    "schema": "agent-interface/review-v1"
+  },
+  "retained_report": {
+    "error": "ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')",
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "runtime_failed"
+  },
+  "schema": "win32-public-mcp-live-effect-receipt-v1",
+  "source_commit": "f0322635761689431cdcf63820c6082c8a0542bb",
+  "started_utc": "2026-10-23T13:14:02.512118+00:00",
+  "status": "FAIL_OR_UNKNOWN",
+  "target_identity_after": {
+    "generation": "bbdcfe996df66132941e427b743ab818c619a3fdc320da99a4132b5a793aa9d1",
+    "owner": {
+      "creation_time_100ns": 134372348425136725,
+      "pid": 42736,
+      "window_thread_id": 39540
+    }
+  },
+  "target_identity_before": {
+    "generation": "bbdcfe996df66132941e427b743ab818c619a3fdc320da99a4132b5a793aa9d1",
+    "owner": {
+      "creation_time_100ns": 134372348425136725,
+      "pid": 42736,
+      "window_thread_id": 39540
+    }
+  }
+}

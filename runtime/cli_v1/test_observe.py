@@ -1,4 +1,6 @@
 import unittest
+import hashlib
+import tempfile
 from types import SimpleNamespace
 from unittest import mock
 
@@ -200,12 +202,20 @@ class Win32ReadOnlyObserveTests(unittest.TestCase):
                         backend.user32.IsWindow.assert_called_once_with(42)
                     self.assert_untouched(backend, session)
 
-    def test_win32_artifact_request_still_refuses_before_capture(self):
+    def test_win32_artifact_request_saves_the_exact_capture_without_input(self):
         backend, session, _ = self.backend_session()
-        row = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 4, 4], capture_directory="unused")
-        self.assertEqual(row["status"], "observation_failed")
-        self.assertIn("CAPTURE_ARTIFACTS_UNSUPPORTED", row["error"])
-        backend._capture_hdc.assert_not_called()
+        with tempfile.TemporaryDirectory() as directory:
+            row = observe_in_session(session, target="fixture", frame="window_client",
+                                     region=[0, 0, 4, 4], capture_directory=directory)
+            self.assertEqual(row["status"], "returned")
+            artifact = row["observation"]["artifact"]
+            from pathlib import Path
+            saved = Path(artifact["path"]).read_bytes()
+            self.assertEqual(artifact["mime_type"], "image/png")
+            self.assertEqual(artifact["sha256"], hashlib.sha256(saved).hexdigest())
+            self.assertEqual(artifact["source_raw_sha256"], row["observation"]["sha256"])
+            self.assertTrue(Path(artifact["path"]).is_relative_to(Path(directory)))
+        backend._capture_hdc.assert_called_once()
         self.assert_untouched(backend, session)
 
 
