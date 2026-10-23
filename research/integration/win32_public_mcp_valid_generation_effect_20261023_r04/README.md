@@ -30,3 +30,25 @@ protection, the post-focus foreground race, hard release deadlines, blocked
 I/O recovery, MAP01, efficiency, or broad reliability. No WSLc or Docker
 allocation is used.
 
+## Frozen R04 outcome
+
+R04 passed all 14 frozen audit checks. Public `interface_observe` returned a
+matched target generation, identical to the independent native identity for
+the owned fixture. Public static validation accepted the exact frozen program,
+and its one standard dispatch completed. The final `release_all` receipt was
+verified with empty `keys_down`, `buttons_down`, `keys_unknown`, and
+`buttons_unknown`. The independent fixture effect file recorded
+`{"clicked":false,"saved":true,"text":"PUBLIC-MCP-OK-B741"}`; its event journal
+contains `ready`, all 18 expected WM_CHAR records, and one save event. The
+fixture closed with exit code 0 and its HWND no longer existed. The full raw
+MCP responses, call reports, capture, fixture records, and 14-check audit are
+retained below `run/` and in `raw.json`/`audit.json`; `SHA256SUMS` covers them.
+
+This is one owned-fixture sample of accepted input, verified release, and
+independent task-effect readback through the public stdio-MCP caller. R01 and
+R02 were setup failures. R03 emitted the same kind of effect but its frozen
+expected string disagreed with its frozen operation and remains an audit
+failure. None of these samples establish a hard release deadline, the
+post-focus foreground race, blocked-I/O recovery, MAP01, efficiency, or broad
+reliability.
+
