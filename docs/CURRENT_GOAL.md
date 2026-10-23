@@ -1,3 +1,15 @@
+**Win32 retirement-call trace R30 (2026-10-24):** with one fresh native
+fixture and a 1,253.867 ms blocked-hook hold, all 20 same-call polls remained
+`running / pending / release_confirmed=false`; strict audit 19/20
+FAIL_OR_UNKNOWN. A test-only trace on the exact producer showed
+`OperationCancellationSupervisor._retire_process` returned true about 8.6 ms
+after cancel start: `terminate()` took 0.366 ms, `join(0.1)` 4.128 ms, then
+`is_alive()` was false. Process retirement therefore did not span the blocked
+hook interval in this sample. The callback returned after the hold and only
+then did recovery/all-up/readback finish. The remaining recovery helper /
+`SendInput` boundary is the next instrumentation target; its blocking is still
+a hypothesis. See [R30](../research/integration/win32_supervised_standard_caller_20261024_r30/RESULT.md).
+
 **Blocked-hook boundary R29 (2026-10-24):** the fresh current-main Windows
 trial held the owned low-level Q-down callback for 1,304.466 ms after a 1.336
 ms cancel response. All 21 same-call polls during the hold remained

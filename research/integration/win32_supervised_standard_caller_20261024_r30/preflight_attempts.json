@@ -1,0 +1,40 @@
+[
+  {
+    "error": "No module named 'runtime'",
+    "native_input_sent": false,
+    "reason": "sitecustomize loaded, but the input-free subprocess did not place repository root on sys.path, so runtime import could not be checked.",
+    "sequence": 1,
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  {
+    "error": "cannot import name 'ProcessCancellationSupervisor' from 'runtime.guarded_win32_v1.process_cancellation' (C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\runtime\\guarded_win32_v1\\process_cancellation.py)",
+    "native_input_sent": false,
+    "reason": "The test module was imported after fixing sys.path, but the current-main class is OperationCancellationSupervisor, not the R27 prototype name.",
+    "sequence": 2,
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  {
+    "native_input_sent": false,
+    "reason": "The wrapper imported, but no offline test proved it could wrap the current class and Process instance methods; a fake-process selftest was added before live use.",
+    "sequence": 3,
+    "status": "PASS"
+  },
+  {
+    "checks": {
+      "R29_hashes_match": true,
+      "R29_semantics_match": true,
+      "frozen_commit_and_conditions_hash": true,
+      "frozen_packet_hashes_match": true,
+      "native_windows": true,
+      "registry_value_unchanged_absent": true,
+      "sitecustomize_wrapper_fake_process_selftest": true,
+      "source_hashes_match": true,
+      "sources_compile": true,
+      "tracked_tree_clean": true
+    },
+    "native_input_sent": false,
+    "sequence": 4,
+    "status": "PASS",
+    "utc": "2026-10-23T22:50:02.683240+00:00"
+  }
+]
