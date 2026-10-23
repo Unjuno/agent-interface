@@ -120,6 +120,18 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
         time.sleep(min(0.01, max(0.001,
             (deadline_ns - now_ns) / 1_000_000_000)))
     action = row['action']
+    cancellation = row.get('cancellation')
+    if (action.get('status') in ('running', 'cancel_pending')
+            and isinstance(cancellation, dict)
+            and cancellation.get('status') == 'unknown'):
+        # This dispatch worker is returning without an action receipt. Retain
+        # that terminal uncertainty on the action record while leaving owner
+        # custody UNKNOWN; cancellation status alone must not imply release.
+        row = owner.record_action_result(call_id, {
+            'status': 'unknown', 'input_dispatched': None,
+            'release_confirmed': False, 'effect_status': 'unknown',
+            'task_success': None, 'replay_allowed': False})
+        action = row['action']
     result = action.get('result') or {'status': action.get('status', 'unknown'),
         'task_success': None, 'replay_allowed': False}
     cancellation = row.get('cancellation')

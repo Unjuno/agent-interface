@@ -577,12 +577,26 @@ the audit extraction defects from the actual unresolved terminal-action and
 input-release questions. These results narrow the boundary:
 cancellation uncertainty becomes visible within 3.5 s even while the callback
 is held, but action completion, release, recovery, and public close remain
-unproved. The source path and two existing focused tests confirm that cancel
-and action receipts are intentionally separate and custody remains open while
-the owner is unresolved; blindly changing action to `unknown` would hide that
-custody state. Next work should design a terminal action receipt that preserves
-unresolved ownership, then exercise the composed path with distinct evidence.
+unproved. The source path and existing focused tests confirm cancel and action
+receipts are separate, and custody stays open while the owner is unresolved.
 Do not repeat these one-shot trials. No verified unused WSLc allocation is
-available, so this does not qualify WSLc or MAP01. The existing focused local session, supervised-MCP,
-and operation-owner suite passes 42/42 on Windows CPython 3.11.9; it does not
-yet cover the R19 `cancellation=unknown` / `action=running` composition state.
+available, so this does not qualify WSLc or MAP01.
+
+**Terminal action receipt follow-up (2026-10-24):** the R19 state path confirms
+the supervised Win32 dispatch worker has itself returned when it observes
+terminal cancellation `unknown`. At that boundary `mcp_server` now retains an
+action result with `status=unknown`, `effect_status=unknown`, unknown
+`input_dispatched`, `release_confirmed=false`, `task_success=null`, and
+replay denied. It does not mutate owner custody; `interface_close` stays busy
+while the owner phase is unknown. A composed MCP regression first failed on the
+old `action=running` result, then passed after the change while asserting that
+the owner remains unresolved. The four focused session, supervised-MCP,
+operation-owner, and MCP server suites pass 69/69 in CPython 3.11.9 and 3.13,
+both normal and optimized. Broader CLI discovery reaches a separate X11 Fake X
+relay-composition failure at
+`test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`; its
+worker is blocked in `OwnedGuardedSessionOwner._request_locked`, and teardown
+waits for that child. This path is outside the Win32 dispatch change and is
+preserved as an unresolved validation failure, not counted as a pass. The
+public-caller Win32 path has not been live-retested after this code change; a
+new run still requires a verified unused WSLc allocation under the active goal.

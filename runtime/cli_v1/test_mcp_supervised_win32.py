@@ -121,6 +121,14 @@ class RecoveringFakeSupervisor(FakeSupervisor):
         return self.operation_owner.result(operation_id)
 
 
+class UnknownAfterCancelSupervisor(FakeSupervisor):
+    def cancel(self, operation_id, generation, *, cleanup_deadline_ns):
+        self.operation_owner.request_cancel(operation_id, generation,
+            cleanup_deadline_ns=cleanup_deadline_ns)
+        return self.operation_owner.mark_unknown(operation_id, generation,
+            "test_cleanup_deadline_expired")
+
+
 class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
     def make_components(self, generation=GENERATION):
         process = FakeProcess()
@@ -270,6 +278,51 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 if owner.state != "closed":
                     await asyncio.sleep(0.55)
                     self.row(await server.call_tool("interface_close", {}))
+
+    async def test_terminal_unknown_dispatch_marks_action_unknown_but_keeps_custody_open(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        op_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        supervisor = UnknownAfterCancelSupervisor(op_owner)
+        owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = HeldProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                pending = self.row(await server.call_tool("interface_dispatch", {
+                    "program": self.valid_program(),
+                    "current_observation_seq": 1,
+                    "current_binding_revision": 1,
+                    "wait_for_result_ms": 0}))
+                self.assertEqual(pending["status"], "pending")
+                self.assertTrue(await asyncio.wait_for(
+                    asyncio.to_thread(producer.started.wait, 1), 1))
+
+                cancelled = self.row(await server.call_tool("interface_cancel", {
+                    "call_id": pending["call_id"]}))
+                self.assertEqual(cancelled["status"], "unknown")
+                deadline = time.monotonic() + 1
+                retained = None
+                while time.monotonic() < deadline:
+                    retained = self.row(await server.call_tool("interface_results", {
+                        "call_id": pending["call_id"]}))
+                    if retained["action"]["status"] != "running":
+                        break
+                    await asyncio.sleep(0.01)
+
+                self.assertEqual(retained["action"]["status"], "unknown")
+                action_result = retained["action"]["result"]
+                self.assertEqual(action_result["status"], "unknown")
+                self.assertIsNone(action_result["task_success"])
+                self.assertFalse(action_result["release_confirmed"])
+                self.assertFalse(action_result["replay_allowed"])
+                self.assertEqual(retained["cancellation"]["status"], "unknown")
+                self.assertEqual(op_owner.result(retained["action"]["operation_id"])[
+                    "phase"], "unknown")
+                self.assertEqual(owner.close()["status"], "busy")
+                self.assertEqual(owner.state, "open")
 
     async def test_stale_target_generation_is_refused_before_producer_start(self):
         owner, producer, _ = self.make_components(generation="b" * 64)
