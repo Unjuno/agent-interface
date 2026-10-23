@@ -228,6 +228,10 @@ broader 2d failure-schedule and attempt-accounting matrix remains open. Its
 local tests do not establish native release behavior. The new implementation
 plan defines the next bounded synthetic work and its local regression gates.
 
+#### Current-main regression recheck (2026-10-23)
+
+The preceding status predates the [additive current-main R02 packet](../../research/integration/win32_public_backend_composition_currentmain_20261023_r02/README.md). On current main `4c0fe4d31`, 48 selected public-caller, backend-composition, operation-owner, and cancellation-supervisor tests pass in both normal and optimized Python. Eight retained traces independently confirm one producer attempt, exact target-generation and operation binding, retirement before synthetic recovery UP, observer ordering, and conservative UNKNOWN results for a closed start gate or unretired producer. The packet binds 13 source blobs and preserves both raw runs and traces. This rechecks the listed synthetic regression paths; it does not qualify native SendInput, physical release, a real task oracle, WSLc, matched efficiency, or reliability. Phase 3 remains gated on a verified isolated allocation and native discriminator.
+
 ### Phase 3: isolated native discriminator
 
 Before native input, require an identified disposable Windows target, a
