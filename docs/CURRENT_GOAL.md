@@ -552,3 +552,35 @@ Its dated directions and allocations are history, not fresh instructions.
 R04's input-free Win32 R02 diagnostic recorded the exact owned fixture in foreground on the active `Default` input desktop, successful input-desktop open with hook-control/read-object access, same named desktop for probe and fixture threads, and matching process integrity RID 8192. Neutral Ctrl/S/left-button `GetAsyncKeyState` samples were raw zero. The 10/10 auditor outcome is diagnostic completeness only; no input or release was tested. These conditions justify evaluating a narrowly scoped availability witness for interpreting zero as UP. The older public R03 receipt remains `release_unverified`; do not rewrite it. The implementation keeps UNKNOWN whenever foreground, active desktop, desktop access, or integrity cannot be proved. The separate R06 public trial passed for one owned fixture; it still does not establish bounded release under blocked I/O.
 
 **R05/R06 public Win32 release qualification (2026-10-23):** R05 remains `FAIL_OR_UNKNOWN` under its frozen 11/12 auditor because the probe searched the wrong result nesting; its raw public report records completed and verified release, but this does not rewrite its outcome. A separate one-shot R06 with corrected pre-frozen extraction/audit passed 14/14: public stdio observe/validate/dispatch, exact fixture effect and event counts, verified release with empty down/unknown sets and active-desktop query witnesses, and clean fixture exit. See the R05 and R06 packets; this is one scoped fixture result and does not establish blocked-I/O timing, generation admission, recovery, MAP01, or efficiency.
+
+**Blocked Win32 callback continuation (2026-10-24):** R14 observed a 650 ms
+held callback with cancel pending and no release receipt; R15 stopped before
+dispatch because the tracked goal document was dirty. R16–R19 are separate
+one-shot public MCP attempts against owned fixtures, all on this PC; none used
+WSLc or Docker. R16's effect check read the stale R14 sentinel. R17 and R18
+matched their exact fixture effects, while all held-window polls remained
+running/pending with release unconfirmed. R18's exact producer PID/creation-time
+samples changed from indeterminate at +3.1 ms to exited at +251 ms, before the
+2.0 s callback hold ended; the recovery-helper blockage explanation remains an
+inference because helper stage was not directly traced.
+
+R19 held the callback for 4.059 s. Cancellation changed to `unknown` at +2.866
+s with release and replay both false and task success null, while action stayed
+`running` in all 65 held-window polls. The producer identity was exited by +232
+ms. The R19 sentinel effect was independently saved, and fixture/hook/foreground
+cleanup succeeded; public close remained busy/UNKNOWN after 37 attempts. Its
+frozen audit is `FAIL_OR_UNKNOWN` (6/9): two checks fail to read the callback
+return and suppression evidence from the recorded event row; a third exposes
+the unresolved action state by requiring action `unknown` alongside cancellation
+`unknown`. The packet preserves that audit and raw; its result note separates
+the audit extraction defects from the actual unresolved terminal-action and
+input-release questions. These results narrow the boundary:
+cancellation uncertainty becomes visible within 3.5 s even while the callback
+is held, but action completion, release, recovery, and public close remain
+unproved. See the immutable R14–R19 packets. Next work should trace and fix the
+runtime cancellation/action state relationship and public close behavior in a
+new source change, then predeclare a distinct attempt; do not repeat these
+one-shot trials. No verified unused WSLc allocation is available, so this does
+not qualify WSLc or MAP01. The existing focused local session, supervised-MCP,
+and operation-owner suite passes 42/42 on Windows CPython 3.11.9; it does not
+yet cover the R19 `cancellation=unknown` / `action=running` composition state.
