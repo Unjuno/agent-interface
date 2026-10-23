@@ -1,0 +1,71 @@
+{
+  "schema": "wslc-local-runtime-api-smoke-s04-v1",
+  "attempt_id": "wslc-local-runtime-api-smoke-20261024-s04",
+  "preregistered_utc": "2026-10-23T23:26:46.9789920Z",
+  "source_commit": "64543a8ac5b01ac8acff3910e4fc2e0458276f6c",
+  "session_name": "agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb",
+  "storage_path_absent_before_start": true,
+  "session_api": "Microsoft.WSL.Containers",
+  "session_api_version": "3.0.3",
+  "net_sdk_reference": "10.0.26100.80",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "container_name": "agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb-probe",
+  "probe_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local_runtime_smoke_20261024_s04\\run\\probe",
+  "program_sha256": "9c070e8fb027fbf8574b46d9b39f615e7fdb0552daaabba90636109c70524ba6",
+  "sentinel_sha256": "b6226bcdfb1e25639d1b443906d7cc227c81fbac974fbb1d2c9d058795b0c14d",
+  "question": "Can the official WSLc API create a fresh dedicated session, pull one digest-pinned Python image, run exactly one network-disabled container with a read-only bind mount, then delete exact resources and terminate that session?",
+  "success_criteria": [
+    "WslcService reports required components present",
+    "Session.Start succeeds for unique name and absent per-attempt storage path",
+    "one pinned digest image pull completes",
+    "one container configured NetworkingMode.None and ContainerVolume.ReadOnly=true exits 0 with marker PASS and EROFS",
+    "container ID is captured and exact container deleted",
+    "exact image reference is removed from this dedicated session",
+    "session termination returns successfully",
+    "only exact unique session storage directory is removed after successful termination"
+  ],
+  "failure_criteria": [
+    "any timeout, error, missing exit or output evidence, unexpected writable mount, failed delete, session termination ambiguity or storage path ambiguity => HOLD/UNKNOWN with no rerun"
+  ],
+  "operations": [
+    "compile preregistered harness before session creation",
+    "start exactly one Session via official Microsoft.WSL.Containers API with unique machine-wide session name containing no secrets",
+    "pull only pinned digest through dedicated WSLc session (host-side registry networking required)",
+    "run one container with NetworkingMode.None, session limits 1 CPU/1024MB, read-only mount, exact unique name, Python probe",
+    "delete only created container and exact image, terminate only created session, remove only exact session storage path after successful termination"
+  ],
+  "prohibitions": [
+    "no Docker; no wslc CLI session enter; no default/shared session; no global inventory; no foreign objects or cleanup; no GUI/provider/control efficacy claim; no retries"
+  ],
+  "limits": {
+    "pull_internal_timeout_seconds": 600,
+    "pull_outer_process_timeout_seconds": 660,
+    "container_process_timeout_seconds": 90,
+    "outer_process_timeout_seconds": 720,
+    "session_cpu_count": 1,
+    "session_memory_mb": 1024,
+    "container_network": "none",
+    "bind_mount": "read-only",
+    "container_count": 1,
+    "pull_count": 1
+  },
+  "cleanup": "delete the created container by retained API object; delete exact pinned image after container deletion; terminate dedicated API session; remove exact temp session-storage folder after successful termination; preserve outputs",
+  "nonclaims": [
+    "no Windows GUI input/output",
+    "no input release confirmation",
+    "no environment response or bounded recovery",
+    "no task success/effect",
+    "no hard enforcement proof for session resource settings",
+    "one sample does not establish reliability"
+  ],
+  "official_api_docs": [
+    "https://learn.microsoft.com/en-us/windows/wsl/wsl-container",
+    "https://wsl.dev/api-reference/csharp/end-to-end-example/",
+    "https://wsl.dev/api-reference/csharp/settings-classes/sessionsettings/",
+    "https://wsl.dev/api-reference/csharp/settings-classes/containersettings/",
+    "https://wsl.dev/api-reference/csharp/data-classes/containervolume/",
+    "https://wsl.dev/api-reference/csharp/core-classes/session/",
+    "https://wsl.dev/api-reference/csharp/core-classes/container/"
+  ]
+}

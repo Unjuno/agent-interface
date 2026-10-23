@@ -1,0 +1,56 @@
+{
+  "schema": "wslc-local-runtime-api-smoke-s04-audit-v1",
+  "classification": "RUNTIME_PASS_WITH_RUNNER_FALSE_NEGATIVE_AND_CLEANUP_HOLD",
+  "criteria": {
+    "prerequisites_empty": true,
+    "session_started": true,
+    "image_pull_complete": true,
+    "container_id_full_sha256": true,
+    "container_network_none": true,
+    "mount_readonly": true,
+    "probe_marker": true,
+    "sentinel_sha256_matches": true,
+    "write_rejected_ero_fs": true,
+    "container_process_exit_zero": true,
+    "container_deleted": true,
+    "image_deleted": true,
+    "dedicated_session_terminated": true,
+    "session_storage_removed": false,
+    "wrapper_false_negative_is_known_matcher": true
+  },
+  "probe_stdout_json": {
+    "bytes_sha256": "b6226bcdfb1e25639d1b443906d7cc227c81fbac974fbb1d2c9d058795b0c14d",
+    "probe": "PASS",
+    "python": "3.12.14",
+    "write_rejected_errno": "EROFS"
+  },
+  "container_id": "0f562cd1ca6b3b6e6194aa324aa33624c991664f43d0e0b8351b3fc284d1695c",
+  "container_configuration": {
+    "containerId": "0f562cd1ca6b3b6e6194aa324aa33624c991664f43d0e0b8351b3fc284d1695c",
+    "containerName": "agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb-probe",
+    "networkingMode": "None",
+    "volumeReadOnly": true
+  },
+  "runner_failure": {
+    "type": "System.InvalidOperationException",
+    "message": "Probe did not produce the expected PASS marker and zero exit code.",
+    "hresult": -2146233079,
+    "containerId": "0f562cd1ca6b3b6e6194aa324aa33624c991664f43d0e0b8351b3fc284d1695c"
+  },
+  "wrapper_exit_code": 1,
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb",
+  "session_storage_exists_after_termination": true,
+  "storage_cleanup": {
+    "captured_utc": "2026-10-23T23:29:23.6523531Z",
+    "session_termination_event_seen": true,
+    "path": "D:\\CodexData\\Temp\\agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb",
+    "storage_file": "D:\\CodexData\\Temp\\agent-interface-wslc-s04-18b5966286de4f9486eecc30b90059eb\\storage.vhdx",
+    "length_bytes": 203423744,
+    "sha256": "828dd2a49b96cc064f201a1a360b04446538584654dca3de0e6b8ddcca685e1c",
+    "retained_after_termination": true,
+    "removal_attempt": "A shell command to remove this exact generated VHDX was rejected by the execution policy before running; file was retained",
+    "removal_command_executed": false,
+    "classification": "cleanup_hold"
+  },
+  "pull_progress_event_count": 115
+}
