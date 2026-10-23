@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import ctypes
 import hashlib
+import json
 import sys
 import time
 from ctypes import wintypes
@@ -263,6 +264,10 @@ class Win32Backend:
         discriminator, not an atomic guarantee against a later HWND change.
         """
         hwnd = self._target(target)
+        return self._process_identity_for_hwnd(hwnd)
+
+    def _process_identity_for_hwnd(self, hwnd: int) -> dict[str, int]:
+        """Read the process identity for one already-resolved HWND."""
         pid = wintypes.DWORD()
         if not self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid)) or not pid.value:
             raise Win32BackendError("GetWindowThreadProcessId failed")
@@ -288,6 +293,22 @@ class Win32Backend:
                     "creation_time_100ns": created_100ns}
         finally:
             self.kernel32.CloseHandle(owner)
+
+    def target_generation(self, target: str) -> str:
+        """Return a fail-closed SHA-256 discriminator for the configured HWND.
+
+        The digest binds the numeric HWND to its owner PID and process creation
+        time so a different window in the same process cannot reuse a prior
+        caller binding. The checks are observations, not an atomic fence against
+        HWND destruction/reuse after this method returns.
+        """
+        hwnd = self._target(target)
+        identity = self.process_identity(target)
+        if self._target(target) != hwnd:
+            raise Win32BackendError("target HWND changed during generation query")
+        payload = [hwnd, identity["pid"], identity["creation_time_100ns"]]
+        return hashlib.sha256(json.dumps(
+            payload, separators=(",", ":")).encode("ascii")).hexdigest()
 
     def geometry(self, target: str) -> dict[str, int]:
         hwnd = self._target(target)
