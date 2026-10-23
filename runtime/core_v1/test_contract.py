@@ -109,6 +109,19 @@ class ProgramTests(unittest.TestCase):
     def test_valid_program(self):
         self.assertEqual(validate_program(program()), program())
 
+    def test_optional_target_generation_map_is_strictly_validated(self):
+        row = program()
+        row["source"]["target_generations"] = {"window-1": "a" * 64}
+        self.assertEqual(validate_program(row), row)
+        for mapping in ({"window 1": "a" * 64}, {"window-1": "A" * 64},
+                        {"window-1": True}, [], {"window-1": "a" * 63},
+                        {"window-1": "a" * 64, "window-2": "b" * 63}):
+            with self.subTest(mapping=mapping):
+                malformed = program()
+                malformed["source"]["target_generations"] = mapping
+                with self.assertRaises(ContractError):
+                    validate_program(malformed)
+
     def test_required_capabilities(self):
         required = set(required_capabilities(program()))
         self.assertEqual(required, {
