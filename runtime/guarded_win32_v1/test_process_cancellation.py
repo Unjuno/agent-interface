@@ -1,5 +1,6 @@
 """Process-level cancellation composition with inert fake input state."""
 import multiprocessing
+import os
 import time
 import unittest
 
@@ -64,6 +65,91 @@ def _blocked_readback_worker(started, result_send):
         time.sleep(0.01)
 
 
+def _ready_loop_helper(connection, name):
+    connection.send({"status": "ready", "helper": name})
+    while True:
+        request = connection.recv()
+        if request is None:
+            return
+        connection.send({"status": "completed", "helper": name,
+                         "request_id": request["request_id"]})
+
+
+def _invalid_ready_helper(connection):
+    connection.send({"status": "ready", "helper": "unexpected"})
+    time.sleep(2)
+
+
+def _handle_crash_helper(_request, _response):
+    os._exit(17)
+
+
+class _OpenStartGate:
+    def wait(self, _timeout=None):
+        return True
+
+
+class _PersistentResponse:
+    def __init__(self, connection):
+        self._connection = connection
+
+    def send(self, value):
+        self._connection.send(value)
+
+    def close(self):
+        return None
+
+
+def _persistent_helper_server(connection, name, handler, handler_args):
+    connection.send({"status": "ready", "helper": name})
+    while True:
+        request = connection.recv()
+        if request is None:
+            return
+        handler(request, _PersistentResponse(connection), *handler_args)
+        connection.send({"control": "operation_complete",
+                         "request_id": request["request_id"]})
+
+
+def _persistent_helper_factory(context, name, handler, handler_args, handles):
+    def factory():
+        receive, send = context.Pipe(duplex=True)
+        process = context.Process(target=_persistent_helper_server,
+            args=(send, name, handler, tuple(handler_args)), daemon=True)
+        handles.append((process, receive, send))
+        return process, receive
+    return factory
+
+
+def _handle_fake_recovery(request, response, down, neutral):
+    _fake_recovery_worker(down, neutral, _OpenStartGate(), response, request)
+
+
+def _handle_fake_observation(request, response, neutral):
+    _fake_readback_worker(neutral, request, response)
+
+
+def _handle_blocked_recovery(_request, response, started):
+    _blocked_recovery_worker(_OpenStartGate(), started, response)
+
+
+def _handle_blocked_observation(_request, response, started):
+    _blocked_readback_worker(started, response)
+
+
+def _handle_no_recovery_receipt(_request, _response):
+    return None
+
+
+def _handle_wrong_recovery_receipt(request, response):
+    _recovery_with_wrong_receipt(_OpenStartGate(), response, request)
+
+
+def _handle_mark_requested(_request, response, requested):
+    requested.set()
+    response.send({"status": "requested"})
+
+
 def _recovery_without_receipt(start_gate):
     start_gate.wait(3)
 
@@ -102,6 +188,88 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_helper_startup_and_readiness_failures_prevent_supervisor(self):
+        context = multiprocessing.get_context("spawn")
+        owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=_identity)
+        handles = []
+
+        def failed_factory():
+            raise RuntimeError("injected helper startup failure")
+
+        with self.assertRaisesRegex(RuntimeError, "startup failure"):
+            OperationCancellationSupervisor(owner,
+                recovery_process_factory=failed_factory,
+                observer_process_factory=failed_factory,
+                process_identity_reader=_identity)
+
+        receive, send = context.Pipe(duplex=True)
+        bad_ready = context.Process(target=_invalid_ready_helper, args=(send,),
+                                    daemon=True)
+        handles.append((bad_ready, receive, send))
+
+        def bad_ready_factory():
+            return bad_ready, receive
+
+        good_factory = _persistent_helper_factory(context, "recovery",
+            _handle_no_recovery_receipt, (), handles)
+        with self.assertRaisesRegex(RuntimeError, "readiness or identity"):
+            OperationCancellationSupervisor(owner,
+                recovery_process_factory=good_factory,
+                observer_process_factory=bad_ready_factory,
+                process_identity_reader=_identity, startup_timeout_s=0.2,
+                terminate_grace_s=0.05, kill_grace_s=0.05)
+        self._dispose_children(handles)
+
+    def test_recovery_and_observer_helpers_are_ready_before_admission(self):
+        context = multiprocessing.get_context("spawn")
+        factories_called = []
+        processes = []
+        endpoints = []
+
+        def make_helper(name):
+            receive, send = context.Pipe(duplex=True)
+            process = context.Process(target=_ready_loop_helper,
+                args=(send, name), daemon=True)
+            factories_called.append(name)
+            processes.append(process)
+            endpoints.append((receive, send))
+            return process, receive
+
+        owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=_identity)
+        supervisor = None
+        try:
+            supervisor = OperationCancellationSupervisor(owner,
+                recovery_process_factory=lambda: make_helper("recovery"),
+                observer_process_factory=lambda: make_helper("observer"),
+                process_identity_reader=_identity)
+
+            self.assertEqual(factories_called, ["recovery", "observer"])
+            self.assertEqual(len(processes), 2)
+            self.assertTrue(all(process.is_alive() for process in processes))
+        finally:
+            if supervisor is not None:
+                supervisor.close()
+            for receive, send in endpoints:
+                try:
+                    receive.close()
+                except OSError:
+                    pass
+                try:
+                    send.close()
+                except OSError:
+                    pass
+            for process in processes:
+                try:
+                    if process.is_alive():
+                        process.terminate()
+                        process.join(1)
+                    if not process.is_alive():
+                        process.close()
+                except ValueError:
+                    pass
+
     def test_cancel_returns_pending_and_recovers_only_after_exact_child_exit(self):
         context = multiprocessing.get_context("spawn")
         down = context.Event()
@@ -112,7 +280,8 @@ class ProcessCancellationTests(unittest.TestCase):
         producer.start()
         supervisor = None
         recovery_checks = []
-        recovery_exit_codes = []
+        recovery_handles = []
+        observer_handles = []
         try:
             self.assertTrue(producer_started.wait(5))
             self.assertTrue(down.is_set())
@@ -125,29 +294,19 @@ class ProcessCancellationTests(unittest.TestCase):
                 "operation-1", GENERATION, producer,
                 process_identity=identity))
 
-            recovery_handles = []
-
-            def recovery_process_factory(request, start_gate):
-                recovery_checks.append(producer.is_alive())
-                receive, send = context.Pipe(duplex=False)
-                recovery = context.Process(target=_fake_recovery_worker,
-                    args=(down, neutral, start_gate, send, request))
-                recovery_handles.append((recovery, receive, send))
-                return recovery, receive
-
-            observer_handles = []
-
-            def observer_process_factory(request):
-                receive, send = context.Pipe(duplex=False)
-                observer = context.Process(target=_fake_readback_worker,
-                    args=(neutral, request, send))
-                observer_handles.append((observer, receive, send))
-                return observer, receive
+            recovery_process_factory = _persistent_helper_factory(context,
+                "recovery", _handle_fake_recovery, (down, neutral),
+                recovery_handles)
+            observer_process_factory = _persistent_helper_factory(context,
+                "observer", _handle_fake_observation, (neutral,),
+                observer_handles)
 
             supervisor = OperationCancellationSupervisor(
                 owner, recovery_process_factory=recovery_process_factory,
                 observer_process_factory=observer_process_factory,
                 process_identity_reader=_identity)
+            self.assertEqual(len(recovery_handles), 1)
+            self.assertEqual(len(observer_handles), 1)
             deadline_ns = time.monotonic_ns() + 3_000_000_000
             before = time.monotonic_ns()
             first = supervisor.cancel("operation-1", GENERATION,
@@ -169,7 +328,8 @@ class ProcessCancellationTests(unittest.TestCase):
                 result = owner.result("operation-1")
             self.assertEqual(result["status"], "recovered", result)
             self.assertFalse(producer.is_alive())
-            self.assertEqual(recovery_checks, [False])
+            self.assertEqual(len(recovery_handles), 1)
+            self.assertEqual(len(observer_handles), 1)
             self.assertFalse(down.is_set())
             self.assertTrue(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
@@ -231,19 +391,10 @@ class ProcessCancellationTests(unittest.TestCase):
             owner.admit("operation-late-producer", GENERATION,
                         time.monotonic_ns() + 4_000_000_000, ["key:a"])
 
-            def recovery_factory(request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_recovery_worker,
-                    args=(down, neutral, start_gate, send, request))
-                child_handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(request):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_readback_worker,
-                    args=(neutral, request, send))
-                child_handles.append((process, receive, send))
-                return process, receive
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_fake_recovery, (down, neutral), child_handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_fake_observation, (neutral,), child_handles)
 
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
@@ -309,19 +460,10 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertTrue(owner.producer_started("operation-before-accept",
                 GENERATION, producer, process_identity=_identity(producer)))
 
-            def recovery_factory(request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_recovery_worker,
-                    args=(down, neutral, start_gate, send, request))
-                handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(request):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_readback_worker,
-                    args=(neutral, request, send))
-                handles.append((process, receive, send))
-                return process, receive
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_fake_recovery, (down, neutral), handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_fake_observation, (neutral,), handles)
 
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
@@ -375,24 +517,16 @@ class ProcessCancellationTests(unittest.TestCase):
                 "operation-blocked-recovery", GENERATION, producer,
                 process_identity=producer_identity))
 
-            def recovery_process_factory(request, start_gate):
-                result_receive, result_send = context.Pipe(duplex=False)
-                process = context.Process(target=_blocked_recovery_worker,
-                    args=(start_gate, recovery_started, result_send))
-                recovery_handles.append((process, result_receive, result_send))
-                return process, result_receive
-
-            def readback_reader(request):
-                readback_calls.append(request["recovery_id"])
-                receive, send = context.Pipe(duplex=False)
-                observer = context.Process(target=_fake_readback_worker,
-                    args=(neutral, request, send))
-                recovery_handles.append((observer, receive, send))
-                return observer, receive
+            recovery_process_factory = _persistent_helper_factory(context,
+                "recovery", _handle_blocked_recovery, (recovery_started,),
+                recovery_handles)
+            observer_process_factory = _persistent_helper_factory(context,
+                "observer", _handle_fake_observation, (neutral,),
+                recovery_handles)
 
             supervisor = OperationCancellationSupervisor(
                 owner, recovery_process_factory=recovery_process_factory,
-                observer_process_factory=readback_reader,
+                observer_process_factory=observer_process_factory,
                 process_identity_reader=identity_reader,
                 terminate_grace_s=0.05, kill_grace_s=0.05)
             deadline_ns = time.monotonic_ns() + 700_000_000
@@ -408,7 +542,7 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertEqual(result["status"], "unknown", result)
             self.assertTrue(recovery_started.is_set())
             self.assertFalse(neutral.is_set())
-            self.assertEqual(readback_calls, [])
+            self.assertFalse(neutral.is_set())
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
@@ -457,19 +591,10 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertTrue(owner.producer_started("operation-blocked-observer",
                 GENERATION, producer, process_identity=identity))
 
-            def recovery_factory(request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_recovery_worker,
-                    args=(down, neutral, start_gate, send, request))
-                child_handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(request):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_blocked_readback_worker,
-                    args=(observer_started, send))
-                child_handles.append((process, receive, send))
-                return process, receive
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_fake_recovery, (down, neutral), child_handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_blocked_observation, (observer_started,), child_handles)
 
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
@@ -523,19 +648,20 @@ class ProcessCancellationTests(unittest.TestCase):
                     time.monotonic_ns() + 1_000_000_000, ["key:a"])
         self.assertTrue(owner.producer_started("operation-stuck-producer",
             GENERATION, producer, process_identity=identity))
-        recovery_factory_calls = []
-
-        def forbidden_recovery_factory(_request, _start_gate):
-            recovery_factory_calls.append(True)
-            raise AssertionError("recovery must not start before producer retirement")
-
-        def forbidden_observer_factory(_request):
-            raise AssertionError("observer must not run before confirmed recovery")
+        context = multiprocessing.get_context("spawn")
+        recovery_requested = context.Event()
+        observer_requested = context.Event()
+        helper_handles = []
+        recovery_factory = _persistent_helper_factory(context, "recovery",
+            _handle_mark_requested, (recovery_requested,), helper_handles)
+        observer_factory = _persistent_helper_factory(context, "observer",
+            _handle_mark_requested, (observer_requested,), helper_handles)
 
         supervisor = OperationCancellationSupervisor(owner,
-            recovery_process_factory=forbidden_recovery_factory,
-            observer_process_factory=forbidden_observer_factory,
-            process_identity_reader=lambda handle: identity if handle is producer else None,
+            recovery_process_factory=recovery_factory,
+            observer_process_factory=observer_factory,
+            process_identity_reader=lambda handle: (identity if handle is producer
+                else _identity(handle)),
             terminate_grace_s=0, kill_grace_s=0)
         try:
             response = supervisor.cancel("operation-stuck-producer", GENERATION,
@@ -550,78 +676,37 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
-            self.assertEqual(recovery_factory_calls, [])
+            self.assertFalse(recovery_requested.is_set())
+            self.assertFalse(observer_requested.is_set())
             with self.assertRaises(OwnerRefused):
                 owner.admit("operation-after-unknown", "b" * 64,
                     time.monotonic_ns() + 1_000_000_000, ["key:b"])
         finally:
             supervisor.close()
+            self._dispose_children(helper_handles)
 
-    def test_recovery_identity_mismatch_never_opens_start_gate(self):
+    def test_prestarted_helper_identity_mismatch_prevents_ready_supervisor(self):
         context = multiprocessing.get_context("spawn")
-        down = context.Event()
-        producer_started = context.Event()
-        recovery_started = context.Event()
-        neutral = context.Event()
-        producer = context.Process(target=_blocked_fake_producer,
-                                   args=(down, producer_started))
-        producer.start()
-        supervisor = None
+        owner = OperationOwner(clock_ns=time.monotonic_ns,
+                               process_identity_reader=_identity)
         handles = []
-        try:
-            self.assertTrue(producer_started.wait(5))
 
-            def mismatching_identity_reader(handle):
-                value = _identity(handle)
-                if handle is not producer:
-                    value = dict(value)
-                    value["pid"] += 1
-                return value
+        def mismatching_identity_reader(handle):
+            value = _identity(handle)
+            value["pid"] += 1
+            return value
 
-            owner = OperationOwner(clock_ns=time.monotonic_ns,
-                                   process_identity_reader=_identity)
-            owner.admit("operation-wrong-recovery-identity", GENERATION,
-                        time.monotonic_ns() + 3_000_000_000, ["key:a"])
-            self.assertTrue(owner.producer_started(
-                "operation-wrong-recovery-identity", GENERATION, producer,
-                process_identity=_identity(producer)))
-
-            def recovery_factory(request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_blocked_recovery_worker,
-                    args=(start_gate, recovery_started, send))
-                handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(_request):
-                raise AssertionError("identity mismatch must prevent readback")
-
-            supervisor = OperationCancellationSupervisor(owner,
+        recovery_factory = _persistent_helper_factory(context, "recovery",
+            _handle_no_recovery_receipt, (), handles)
+        observer_factory = _persistent_helper_factory(context, "observer",
+            _handle_no_recovery_receipt, (), handles)
+        with self.assertRaisesRegex(RuntimeError, "identity"):
+            OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
                 observer_process_factory=observer_factory,
                 process_identity_reader=mismatching_identity_reader,
                 terminate_grace_s=0.05, kill_grace_s=0.05)
-            response = supervisor.cancel("operation-wrong-recovery-identity",
-                GENERATION, cleanup_deadline_ns=time.monotonic_ns() + 1_500_000_000)
-            self.assertEqual(response["status"], "pending")
-            limit = time.monotonic() + 2
-            result = owner.result("operation-wrong-recovery-identity")
-            while result["status"] != "unknown" and time.monotonic() < limit:
-                time.sleep(0.005)
-                result = owner.result("operation-wrong-recovery-identity")
-            self.assertEqual(result["status"], "unknown", result)
-            self.assertFalse(recovery_started.is_set())
-            self.assertFalse(neutral.is_set())
-            self.assertFalse(result["release_confirmed"])
-            self.assertFalse(result["replay_allowed"])
-        finally:
-            if supervisor is not None:
-                supervisor.close()
-            self._dispose_children(handles)
-            if producer.is_alive():
-                producer.terminate()
-                producer.join(2)
-            producer.close()
+        self._dispose_children(handles)
 
     def test_missing_recovery_ipc_receipt_stays_unknown(self):
         context = multiprocessing.get_context("spawn")
@@ -633,7 +718,7 @@ class ProcessCancellationTests(unittest.TestCase):
         producer.start()
         supervisor = None
         handles = []
-        observer_factory_calls = []
+        observer_requested = context.Event()
         try:
             self.assertTrue(producer_started.wait(5))
             owner = OperationOwner(clock_ns=time.monotonic_ns,
@@ -644,16 +729,10 @@ class ProcessCancellationTests(unittest.TestCase):
                 "operation-lost-recovery-receipt", GENERATION, producer,
                 process_identity=_identity(producer)))
 
-            def recovery_factory(_request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_recovery_without_receipt,
-                    args=(start_gate,))
-                handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(_request):
-                observer_factory_calls.append(True)
-                raise AssertionError("missing recovery receipt must block observer")
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_no_recovery_receipt, (), handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_mark_requested, (observer_requested,), handles)
 
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
@@ -671,7 +750,7 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
-            self.assertEqual(observer_factory_calls, [])
+            self.assertFalse(observer_requested.is_set())
         finally:
             if supervisor is not None:
                 supervisor.close()
@@ -690,7 +769,7 @@ class ProcessCancellationTests(unittest.TestCase):
         producer.start()
         supervisor = None
         handles = []
-        observer_factory_calls = []
+        observer_requested = context.Event()
         try:
             self.assertTrue(producer_started.wait(5))
             owner = OperationOwner(clock_ns=time.monotonic_ns,
@@ -700,16 +779,10 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertTrue(owner.producer_started("operation-wrong-receipt",
                 GENERATION, producer, process_identity=_identity(producer)))
 
-            def recovery_factory(request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_recovery_with_wrong_receipt,
-                    args=(start_gate, send, request))
-                handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(_request):
-                observer_factory_calls.append(True)
-                raise AssertionError("wrong recovery receipt must block observer")
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_wrong_recovery_receipt, (), handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_mark_requested, (observer_requested,), handles)
 
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
@@ -728,7 +801,62 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
-            self.assertEqual(observer_factory_calls, [])
+            self.assertFalse(observer_requested.is_set())
+        finally:
+            if supervisor is not None:
+                supervisor.close()
+            self._dispose_children(handles)
+            if producer.is_alive():
+                producer.terminate()
+                producer.join(2)
+            producer.close()
+
+    def test_helper_death_during_request_is_unknown_without_replacement(self):
+        context = multiprocessing.get_context("spawn")
+        producer_started = context.Event()
+        producer = context.Process(target=_blocked_before_fake_acceptance,
+                                   args=(producer_started,))
+        producer.start()
+        supervisor = None
+        handles = []
+        factory_calls = {"recovery": 0, "observer": 0}
+        try:
+            self.assertTrue(producer_started.wait(5))
+            owner = OperationOwner(clock_ns=time.monotonic_ns,
+                process_identity_reader=_identity)
+            owner.admit("operation-helper-died", GENERATION,
+                time.monotonic_ns() + 3_000_000_000, ["key:a"])
+            self.assertTrue(owner.producer_started("operation-helper-died",
+                GENERATION, producer, process_identity=_identity(producer)))
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_crash_helper, (), handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_mark_requested, (context.Event(),), handles)
+
+            def counted_recovery_factory():
+                factory_calls["recovery"] += 1
+                return recovery_factory()
+
+            def counted_observer_factory():
+                factory_calls["observer"] += 1
+                return observer_factory()
+
+            supervisor = OperationCancellationSupervisor(owner,
+                recovery_process_factory=counted_recovery_factory,
+                observer_process_factory=counted_observer_factory,
+                process_identity_reader=_identity)
+            supervisor.cancel("operation-helper-died", GENERATION,
+                cleanup_deadline_ns=time.monotonic_ns() + 2_000_000_000)
+            limit = time.monotonic() + 2
+            result = owner.result("operation-helper-died")
+            while result["status"] != "unknown" and time.monotonic() < limit:
+                time.sleep(0.005)
+                result = owner.result("operation-helper-died")
+            self.assertEqual(result["status"], "unknown")
+            self.assertFalse(result["release_confirmed"])
+            self.assertFalse(result["replay_allowed"])
+            self.assertEqual(factory_calls, {"recovery": 1, "observer": 1})
+            self.assertEqual(len(handles), 2)
         finally:
             if supervisor is not None:
                 supervisor.close()

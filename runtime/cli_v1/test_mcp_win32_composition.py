@@ -13,7 +13,8 @@ from runtime.guarded_win32_v1.operation_owner import OperationOwner
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
 from runtime.guarded_win32_v1.test_process_cancellation import (
-    _fake_readback_worker, _fake_recovery_worker,
+    _handle_fake_observation, _handle_fake_recovery,
+    _handle_wrong_recovery_receipt, _persistent_helper_factory,
 )
 
 
@@ -358,19 +359,10 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
             gate = OperationOwner(clock_ns=time.monotonic_ns,
                 process_identity_reader=_synthetic_process_identity)
 
-            def recovery_factory(request, start_gate):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_recovery_worker,
-                    args=(down, neutral, start_gate, send, request))
-                child_handles.append((process, receive, send))
-                return process, receive
-
-            def observer_factory(request):
-                receive, send = context.Pipe(duplex=False)
-                process = context.Process(target=_fake_readback_worker,
-                    args=(neutral, request, send))
-                child_handles.append((process, receive, send))
-                return process, receive
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_fake_recovery, (down, neutral), child_handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_fake_observation, (neutral,), child_handles)
 
             supervisor = OperationCancellationSupervisor(gate,
                 recovery_process_factory=recovery_factory,
@@ -520,22 +512,12 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                 owner = OperationOwner(clock_ns=time.monotonic_ns,
                     process_identity_reader=_synthetic_process_identity)
 
-                def recovery_factory(recovery_request, start_gate):
-                    receive, send = context.Pipe(duplex=False)
-                    worker = (_synthetic_wrong_recovery_worker if index == 0
-                              else _fake_recovery_worker)
-                    args = ((start_gate, send, recovery_request) if index == 0 else
-                            (down, neutral, start_gate, send, recovery_request))
-                    process = context.Process(target=worker, args=args)
-                    child_handles.append((process, receive, send))
-                    return process, receive
-
-                def observer_factory(observer_request):
-                    receive, send = context.Pipe(duplex=False)
-                    process = context.Process(target=_fake_readback_worker,
-                        args=(neutral, observer_request, send))
-                    child_handles.append((process, receive, send))
-                    return process, receive
+                recovery_factory = _persistent_helper_factory(context, "recovery",
+                    _handle_wrong_recovery_receipt if index == 0
+                    else _handle_fake_recovery,
+                    () if index == 0 else (down, neutral), child_handles)
+                observer_factory = _persistent_helper_factory(context, "observer",
+                    _handle_fake_observation, (neutral,), child_handles)
 
                 supervisor = OperationCancellationSupervisor(owner,
                     recovery_process_factory=recovery_factory,
