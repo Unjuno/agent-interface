@@ -1,0 +1,150 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r24",
+  "caller": "one new runtime.cli_v1.mcp_server stdio process with session-mode supervised-win32",
+  "cleanup": "one interface_close; close only the exact owned fixture HWND/process; restore only the foreground window that preceded this run; preserve raw on every outcome",
+  "decision": {
+    "fail_or_unknown": "Preserve FAIL_OR_UNKNOWN if source/predecessor preflight fails, the new public observation is not generation-matched to the owned new fixture, the new generation aliases R23, the one action does not complete, the independent effect or exact event journal is missing, release is not verified all-up, task_success is non-null, interface_close is not closed, the owned fixture does not exit cleanly, or foreground restoration fails. Never retry.",
+    "pass": "R23's recovered cancellation, confirmed release, independent Q-up, closed session, and clean fixture exit are verified from its immutable main packet. A new owned fixture and a new supervised stdio-MCP session return a distinct target generation; the public observation matches the independently bound fixture identity; exactly one fresh validated action completes the frozen fixture effect; the independent file and event journal match exactly; the retained runtime receipt reports completed with verified all-up release and task_success=null; interface_close and fixture/foreground cleanup pass."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "host": "the user-authorized local Windows PC",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "frozen_files": {
+    "PREPARATION.md": "f67718718a5fe5ffe3b874a8a6d593138731d85f8905c7337d11d76851766982",
+    "README.md": "d7f922e317b447718d08c91c56dd010b36d343dd0a9804a532095b096bf5e6be",
+    "audit.py": "183f0b06fc1991500daecea3c80333d126a575cab4669d7e41ebec22e1771f1e",
+    "fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e",
+    "preflight.py": "eed0c6a29c6141d4ceee7819ee0332916d253938ed941334b13751686016a525",
+    "probe.py": "ae26beab7eec615622240eafedb7546f8a5e91d7679fa93730feeb4b0741f3c7"
+  },
+  "hypothesis": "After R23's recovered cancellation and same-generation refusal, a genuinely new owned target generation in a new supervised public stdio-MCP session can accept one newly observed and leased action, complete an independently scored task effect, and close with verified release.",
+  "nonclaims": [
+    "this is not one continuous session across the R23 cancellation and the R24 task",
+    "runtime-integrated task_success (must remain null)",
+    "release under blocked Win32 I/O",
+    "release while an input callback remains blocked",
+    "atomic target-generation fencing",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "predecessor": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r23",
+    "audit_path": "research/integration/win32_supervised_standard_caller_20261024_r23/audit_followup.json",
+    "audit_status": "HYPOTHESIS_REJECTED_FAIL_CLOSED",
+    "final_manifest_raw_sha256": "b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8",
+    "fixture_exit_code": 0,
+    "hash_discrepancy_note": "The current-main raw blob and the identical raw in the retained predecessor branch hash to e4106c26a078dd57a1379e456506f983b1fa5761ed7f00168b145b961807ea5f. R23 SHA256SUMS.final and audit_followup.json instead claim b46e11d7abc460cf1160960fbf683462f0a5c9bb13bffac33f0844e8f3becda8. Preserve R23 audit/outcome unchanged; R24 preflight independently checks semantic fields and records this integrity limitation.",
+    "independent_q_down": false,
+    "manifest_path": "research/integration/win32_supervised_standard_caller_20261024_r23/SHA256SUMS.final",
+    "public_close_status": "closed",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r23/raw.json",
+    "raw_sha256": "e4106c26a078dd57a1379e456506f983b1fa5761ed7f00168b145b961807ea5f",
+    "recovery_status": "recovered",
+    "release_confirmed": true,
+    "target_generation": "c6bae565a1df5816216a6641af0f99883e715ab6fa97e315f58af36c38112e62",
+    "target_owner": {
+      "creation_time_100ns": 134372666585070329,
+      "pid": 8940,
+      "window_thread_id": 26784
+    }
+  },
+  "resource_boundary": "One fresh fixture process/window, one fresh supervised MCP session, one observation, one validation, at most one dispatch, one public close. No WSLc/Docker, external window, replay, retry, cancellation, fallback input, or registry change.",
+  "retry_policy": "One preflight and one public dispatch at most. Validation refusal means zero dispatch. Any timeout/UNKNOWN is retained and never retried.",
+  "schema": "win32-supervised-standard-caller-r24-conditions-v1",
+  "source_commit": "de71908a580d9b79938031a4690c09912f17eacc",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "timeouts_seconds": {
+    "attempt_total": 45,
+    "dispatch_response": 25,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "public_close": 5,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe and independently matched to the new fixture"
+    },
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "R24-NEW-GEN-SESSION-EFFECT"
+    },
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-r24-new-generation-lease",
+    "observation_region": "the exact GetClientRect width and height of this new owned fixture",
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "R24-NEW-GEN-SESSION-EFFECT"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": "measured client height",
+        "op": "observe",
+        "w": "measured client width",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-r24-new-generation-effect",
+    "task_effect_oracle": "independently read effect.json and exact fixture events.jsonl after public dispatch; require one click, exact UTF-16 character sequence, and one save",
+    "wait_for_result_ms": 8000
+  }
+}
