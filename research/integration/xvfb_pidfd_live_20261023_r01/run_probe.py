@@ -76,6 +76,11 @@ def run():
                 child = subprocess.Popen(argv, stdout=log, stderr=log)
                 cleanup_fd = os.pidfd_open(child.pid, 0)
                 report["xvfb"].update(pid=child.pid, argv=argv)
+                (OUT / "process-started.json").write_text(json.dumps({
+                    "pid": child.pid, "argv": argv,
+                    "stat": Path(f"/proc/{child.pid}/stat").read_text(),
+                    "pidfd_info": Path(f"/proc/self/fdinfo/{cleanup_fd}").read_text(),
+                }, indent=2) + "\n", encoding="utf-8")
                 deadline = time.monotonic() + 5
                 while not os.path.exists("/tmp/.X11-unix/X88"):
                     if child.poll() is not None or time.monotonic() >= deadline:
