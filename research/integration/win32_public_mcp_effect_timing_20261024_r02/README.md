@@ -24,6 +24,12 @@ PASS means this one attempt produced the exact independent effect and event sequ
 
 The result is one positive-path Windows fixture observation. It does not compare strategies or estimate a population distribution, and it says nothing about blocked platform I/O, recovery bounds, MAP01, model/token efficiency, or broad reliability. Timing may include scheduler delay, window message dispatch, fixture I/O, and MCP serialization.
 
+## Frozen R02 outcome
+
+The public observation returned a matched target generation, which the probe forwarded unchanged in `program.source.target_generations.fixture`. The public stdio-MCP dispatch was accepted and completed once. The independent effect file contains the exact R02 sentinel with `saved=true` and `clicked=true`; the event journal contains one click, 23 matching character events, and one save. The release receipt is verified with empty key/button down and unknown sets, and the owned fixture exited 0 after close. The frozen auditor passes 25/25.
+
+The recorded coarse-clock intervals are 78 ms from dispatch start to save-file close, 141 ms to public response, and 94 ms from save close to independent read start; the read took 15 ms. Windows Python reports this host's `time.monotonic_ns()` implementation as `GetTickCount64()` with 15.625 ms resolution. The save-write duration measured as 0 ms, which is below that resolution and must not be read as zero physical time. R03 uses the available `QueryPerformanceCounter()`-backed `perf_counter_ns()` for finer endpoints. R02 establishes only one positive caller/generation/effect/release path; the coarse timing values are retained as bounded-resolution observations.
+
 ## Frozen R01 outcome
 
 The single public dispatch was refused with `TARGET_GENERATION_REQUIRED` before invoking input. The public observation had returned a matched target generation, but the probe omitted it from `program.source.target_generations`. The independent journal contains only the fixture's `ready` event; no click or character event was received, no effect file was written, and the owned fixture exited 0 after close was posted. The retained runtime result reports `input_dispatched=false`, `operation_invoked=false`, and `replay_allowed=false`. This is a failed compatibility attempt, not a timing sample, and it was not replayed.
