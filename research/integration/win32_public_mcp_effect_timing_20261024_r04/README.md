@@ -38,6 +38,10 @@ Using the recorded `QueryPerformanceCounter()` clock (100 ns reported resolution
 
 The retained post-action MCP image shows the fixture reflecting typed input, but its 300 px crop clips the tail of the sentinel after the visible `MCP-LIVE` prefix. R03 therefore confirms a visual response began, while the exact full on-screen sentinel remains unverified. The independent file and complete event journal still confirm the exact task effect.
 
+## Frozen R04 outcome
+
+The initial public observation failed before validation or dispatch with `Win32BackendError('capture outside client bounds')` because 420 px was the fixture's outer width, not its client width. `dispatch_attempts` is 0 and the event journal contains no input events. The owned fixture close was posted and it exited 0. R04 is UNKNOWN/FAIL and was not retried. The successor measures `GetClientRect` on the owned HWND, uses that exact client size for both observation calls, and uses a short exact sentinel that fits the visible row.
+
 ## Frozen R01 outcome
 
 The single public dispatch was refused with `TARGET_GENERATION_REQUIRED` before invoking input. The public observation had returned a matched target generation, but the probe omitted it from `program.source.target_generations`. The independent journal contains only the fixture's `ready` event; no click or character event was received, no effect file was written, and the owned fixture exited 0 after close was posted. The retained runtime result reports `input_dispatched=false`, `operation_invoked=false`, and `replay_allowed=false`. This is a failed compatibility attempt, not a timing sample, and it was not replayed.

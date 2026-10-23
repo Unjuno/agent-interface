@@ -17,7 +17,11 @@ packets. This is one host/fixture positive path; release's exact sub-call time,
 blocked-I/O release bounds, recovery, atomic generation fencing, MAP01,
 matched efficiency, and broad reliability remain unproven. R03's 300 px final
 image shows a visible response but clips the sentinel tail; exact full visual
-confirmation is pending a wider crop.
+confirmation is pending a wider crop. R04's assumed 420 px width exceeded the
+actual client area and failed at observe before input; its clean UNKNOWN is
+preserved. R05 measures `GetClientRect`, uses that exact region, and types a
+short sentinel sized to fit so the final public capture can show the full
+visible response.
 
 **Win32 unresolved producer fence (2026-10-24, synthetic):** while a direct
 session dispatch is inside a synchronous input call, concurrent recovery and
