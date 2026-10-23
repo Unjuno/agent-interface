@@ -1,0 +1,10 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+  "corrected_classification": "normal terminal-release state observation under a held Q-up callback; no evidence of public cancellation or cancellation recovery.",
+  "raw_changed": false,
+  "reason": "raw.json has no public_cancel field; run/calls has no cancel artifact; producer-result.json reports result.status=completed and verified terminal release_all.",
+  "schema": "r35-classification-correction-v1",
+  "strict_gate": "FAIL_OR_UNKNOWN; only 4 status polls versus 21 required despite 1490.357 ms callback duration.",
+  "supersedes": "Initial RESULT.md and docs/CURRENT_GOAL.md entry merged in PR #9479 stated that observed Q-up samples followed cancellation recovery.",
+  "task_success": "null; no post-cancel task success."
+}
