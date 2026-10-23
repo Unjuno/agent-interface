@@ -17,6 +17,32 @@ blocked during executor shutdown. This is an unresolved event-order mismatch
 between the composed caller and test-only relay candidate, not a missing public
 observation field. The complete suite has not produced a summary.
 
+**Standard-caller blocked-hook trial R14 (2026-10-24):** the one-shot public
+stdio-MCP run is preserved in the [R14 result](../research/integration/win32_supervised_standard_caller_20261024_r14/RESULT.md).
+It held one injected Q-down inside the owned low-level callback for 700.934 ms
+after cancel. The cancel returned pending in 1.431 ms; eleven exact-call polls
+all retained `running / pending / release_confirmed=false`, and the callback
+was still blocked at hold end. An independent same-generation process saw Q-up
+during the hold, but this does not prove release because Q-down had not passed
+the hook. After callback return at 701.097 ms, exact producer exit and recovery
+UP followed; final independent readback was neutral, the fixture saved its
+sentinel, session/hook/fixture cleanup passed, foreground was restored, and
+runtime `task_success` remained null. The frozen audit is FAIL_OR_UNKNOWN
+19/20 on the blocked-I/O release check. Public close also reported
+`release_confirmed=false`. The next boundary is a safe way to retire or fence
+the blocked producer before recovery UP, without permitting late input, while
+preserving UNKNOWN until independent neutral readback. This was a
+user-authorized Windows-PC test, not a WSLc allocation. No rerun.
+
+**R15 hook-timeout trial launch (2026-10-24):** R15 prepared a 1250 ms
+low-level hook hold to test the documented Windows timeout boundary, but its
+source preflight refused to start because this page had an uncommitted tracked
+edit. The failure happened before output-directory/fixture/hook creation, MCP
+dispatch, or native input (`caller_dispatches=0`). Preserve it as a prelaunch
+failure; do not rerun R15. Its conditions and source are in the
+[R15 packet](../research/integration/win32_supervised_standard_caller_20261024_r15/RESULT.md).
+The next attempt needs a clean committed source SHA and a new attempt ID.
+
 **Standard-caller cancellation R13 (2026-10-24):** the repaired public stdio-MCP
 path passed its frozen auditor 19/19 on one fresh owned fixture. Same-call
 polling reached injected Q-down in 775.292 ms; one cancel returned in 1.495 ms,
