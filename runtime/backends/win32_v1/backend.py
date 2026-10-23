@@ -178,6 +178,7 @@ class Win32Backend:
         self.held_buttons: set[str] = set()
         self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
+        self.capture_artifacts = None
 
     def _configure_api(self) -> None:
         self.user32.IsWindow.argtypes = [wintypes.HWND]
@@ -485,6 +486,10 @@ class Win32Backend:
         self._target(target)
         return self.capture(target, frame, *region)
 
+    def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
+        from .capture_artifacts import CaptureArtifacts
+        self.capture_artifacts = CaptureArtifacts(directory, retain_rgb=retain_rgb)
+
     def capture_pixels(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> bytes:
         if w <= 0 or h <= 0:
@@ -511,27 +516,22 @@ class Win32Backend:
 
     def capture(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> dict[str, Any]:
-        if w <= 0 or h <= 0:
-            raise Win32BackendError("capture dimensions must be positive")
-        if frame == "window_client":
-            hwnd = self._target(target)
-            g = self.geometry(target)
-            if x < 0 or y < 0 or x + w > g["width"] or y + h > g["height"]:
-                raise Win32BackendError("capture outside client bounds")
-            full = self._capture_hdc(hwnd, 0, 0, g["width"], g["height"],
-                                     print_window=True)
-            stride = g["width"] * 4
-            raw = b"".join(
-                full[(y + row) * stride + x * 4:
-                     (y + row) * stride + (x + w) * 4]
-                for row in range(h)
-            )
-        elif frame == "screen_physical_px":
-            raw = self._capture_hdc(0, x, y, w, h, print_window=False)
-        else:
-            raise Win32BackendError(f"unsupported capture frame {frame}")
-        return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
-                "width": w, "height": h}
+        started_ns = time.monotonic_ns()
+        raw = self.capture_pixels(target, frame, x, y, w, h)
+        ended_ns = time.monotonic_ns()
+        row = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
+               "width": w, "height": h}
+        artifacts = getattr(self, "capture_artifacts", None)
+        if artifacts is not None:
+            row.update(target=target, native_window_id=self.targets[target],
+                       frame=frame, region=[x, y, w, h],
+                       capture_started_ns=started_ns, capture_ended_ns=ended_ns)
+            try:
+                row["artifact"] = artifacts.write(raw, w, h)
+            except Exception as error:
+                # Keep the capture result even when PNG presentation fails.
+                row["artifact_error"] = repr(error)
+        return row
 
     def preflight(self, program: dict[str, Any], *, bound_target=None, guard=None) -> None:
         if bound_target is not None:
