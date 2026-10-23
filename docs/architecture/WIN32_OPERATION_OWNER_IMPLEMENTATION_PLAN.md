@@ -61,6 +61,15 @@ This is test-only composition, not a production native-input adapter. The
 public route still requires injected factories; live target identity, physical
 release, task effect, timing, efficiency and reliability remain open.
 
+The [closed-gate cancellation packet](../../research/integration/win32_unopened_gate_cancel_20261023_r01/README.md)
+additionally reproduces a cancellation during the final generation query that
+previously sent an UP despite the producer gate never opening. Public caller
+admission now declares that a parent gate is required. The owner tracks closed
+versus attempted authorization; retiring a known-closed producer stays UNKNOWN
+without claiming recovery or emitting UP. Direct clients without a declared
+gate remain untracked, not presumed closed. Native recovery-time authority
+after authorized input is still an open qualification boundary.
+
 ### Platform call boundary
 
 The current `Win32RuntimeSession.dispatch()` and `Win32Backend.execute()` call

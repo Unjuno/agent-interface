@@ -8,6 +8,8 @@
 
 **Win32 start-generation repair (2026-10-23, `d06b5d280`):** the [recheck packet](../research/integration/win32_start_generation_recheck_20261023_r01/README.md) reproduces stale/unavailable target generations incorrectly authorizing a producer after admission. The caller now rechecks before factory work and before gate authorization, retains UNKNOWN on failure, and retires a still-gated child without requesting compensating input. Five pre-fix cases fail as expected; 43 related tests pass normally and under `-O`, including cancellation during a blocked generation query. Atomic native target fencing and recovery-time target authority remain open.
 
+**Closed-gate cancellation repair (2026-10-23, `aa891d55f`):** the [new packet](../research/integration/win32_unopened_gate_cancel_20261023_r01/README.md) reproduces an unwanted recovery UP while the final generation query was blocked and the producer gate was still closed. The public caller now declares the gate requirement, and the owner refuses recovery after retiring a never-authorized child. The fixed trace contains only child exit; UNKNOWN/no replay is retained. All 112 focused and compatibility tests pass normally and under `-O`. This is a synthetic-only repair, not native release qualification.
+
 The X11 supervisor remains opt-in. Public-caller live-Xvfb bystander refusal has one scoped test-wrapper sample. For current local Win32 evidence and limits, use the dated checkpoints above and the [supervisor design and qualification record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md) and [Win32 operation-owner implementation plan](architecture/WIN32_OPERATION_OWNER_IMPLEMENTATION_PLAN.md).
 
 **Prior checkpoint before PR #9408:**

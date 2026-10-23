@@ -1,0 +1,85 @@
+{
+  "scope": "synthetic_only",
+  "accept_before_block": true,
+  "stubborn_producer": true,
+  "cancel_before_gate": false,
+  "result": {
+    "call_id": "501f95e2a73e46918cce97e0e6aa92e9",
+    "action": {
+      "operation_id": "dddddddddddddddddddddddddddddddd",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "status": "running",
+      "metadata": {
+        "source": "synthetic_public_mcp_admission"
+      },
+      "result": null
+    },
+    "cancellation": {
+      "operation_id": "bc8ed91a327844f3b5ed65e2b65eb303",
+      "action_operation_id": "dddddddddddddddddddddddddddddddd",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "status": "unknown",
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "deadline_ns": 426007234000000,
+        "obligations": [
+          "key:CTRL"
+        ],
+        "status": "unknown",
+        "producer_identity": {
+          "pid": 49116,
+          "creation_time_100ns": 1000049116
+        },
+        "producer_exit_code": null,
+        "producer_gate_state": "authorization_attempted",
+        "cleanup_deadline_ns": 425998015000000,
+        "recovery_id": null,
+        "release_confirmed": false,
+        "task_success": null,
+        "replay_allowed": false,
+        "uncertainty": "producer_retirement_unconfirmed",
+        "phase": "unknown"
+      },
+      "owner_phase": "unknown"
+    },
+    "task_effect": null,
+    "operation_invoked": false,
+    "input_dispatched": false,
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "events": [
+    {
+      "kind": "producer_authorized",
+      "action": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "status": "admitted",
+        "metadata": {
+          "source": "synthetic_public_mcp_admission"
+        },
+        "result": null
+      },
+      "pid": 49116
+    },
+    {
+      "kind": "producer_down_entered",
+      "pid": 49116
+    },
+    {
+      "kind": "producer_down_accepted",
+      "pid": 49116
+    }
+  ],
+  "helper_pids": [
+    28472,
+    18036
+  ],
+  "producer_factory_calls": [
+    "dddddddddddddddddddddddddddddddd"
+  ]
+}
