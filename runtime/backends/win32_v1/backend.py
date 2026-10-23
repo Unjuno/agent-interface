@@ -259,17 +259,20 @@ class Win32Backend:
         """Return the HWND owner's PID and process creation time, fail closed.
 
         The process handle is opened only for PROCESS_QUERY_LIMITED_INFORMATION.
-        The HWND-to-PID association is sampled again after GetProcessTimes to
-        reject an observed owner change during the query. This is a generation
-        discriminator, not an atomic guarantee against a later HWND change.
+        The HWND-to-PID/TID association is sampled again after GetProcessTimes
+        to reject an observed owner change during the query. This is a
+        generation discriminator, not an atomic guarantee against later change.
         """
         hwnd = self._target(target)
-        return self._process_identity_for_hwnd(hwnd)
+        identity = self._window_owner_identity_for_hwnd(hwnd)
+        return {"pid": identity["pid"],
+                "creation_time_100ns": identity["creation_time_100ns"]}
 
-    def _process_identity_for_hwnd(self, hwnd: int) -> dict[str, int]:
-        """Read the process identity for one already-resolved HWND."""
+    def _window_owner_identity_for_hwnd(self, hwnd: int) -> dict[str, int]:
+        """Read process and GUI-thread identity for one resolved HWND."""
         pid = wintypes.DWORD()
-        if not self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid)) or not pid.value:
+        thread_id = self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+        if not thread_id or not pid.value:
             raise Win32BackendError("GetWindowThreadProcessId failed")
         owner = self.kernel32.OpenProcess(0x1000, False, pid.value)
         if not owner:
@@ -281,8 +284,9 @@ class Win32Backend:
                     ctypes.byref(kernel), ctypes.byref(user)):
                 raise Win32BackendError("GetProcessTimes for target identity failed")
             confirmed_pid = wintypes.DWORD()
-            if (not self.user32.GetWindowThreadProcessId(
-                    hwnd, ctypes.byref(confirmed_pid))
+            confirmed_thread_id = self.user32.GetWindowThreadProcessId(
+                hwnd, ctypes.byref(confirmed_pid))
+            if (not confirmed_thread_id or confirmed_thread_id != thread_id
                     or confirmed_pid.value != pid.value):
                 raise Win32BackendError("target owner changed during identity query")
             created_100ns = ((int(creation.dwHighDateTime) << 32)
@@ -290,23 +294,25 @@ class Win32Backend:
             if created_100ns <= 0:
                 raise Win32BackendError("invalid target process creation time")
             return {"pid": int(pid.value),
-                    "creation_time_100ns": created_100ns}
+                    "creation_time_100ns": created_100ns,
+                    "window_thread_id": int(thread_id)}
         finally:
             self.kernel32.CloseHandle(owner)
 
     def target_generation(self, target: str) -> str:
         """Return a fail-closed SHA-256 discriminator for the configured HWND.
 
-        The digest binds the numeric HWND to its owner PID and process creation
-        time so a different window in the same process cannot reuse a prior
-        caller binding. The checks are observations, not an atomic fence against
-        HWND destruction/reuse after this method returns.
+        The digest binds the numeric HWND to its GUI thread, owner PID, and
+        process creation time. This detects an observed HWND or thread change,
+        but can alias if Windows reuses the same numeric HWND on the same live
+        thread. The checks are not an atomic lifetime fence.
         """
         hwnd = self._target(target)
-        identity = self.process_identity(target)
+        identity = self._window_owner_identity_for_hwnd(hwnd)
         if self._target(target) != hwnd:
             raise Win32BackendError("target HWND changed during generation query")
-        payload = [hwnd, identity["pid"], identity["creation_time_100ns"]]
+        payload = [hwnd, identity["window_thread_id"], identity["pid"],
+                   identity["creation_time_100ns"]]
         return hashlib.sha256(json.dumps(
             payload, separators=(",", ":")).encode("ascii")).hexdigest()
 

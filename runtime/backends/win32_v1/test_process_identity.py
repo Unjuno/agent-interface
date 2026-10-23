@@ -18,9 +18,9 @@ class ProcessIdentityTests(unittest.TestCase):
         return backend
 
     @staticmethod
-    def set_pid(out, value):
+    def set_pid(out, value, thread_id=101):
         out._obj.value = value
-        return 1
+        return thread_id
 
     def test_returns_owner_pid_and_process_creation_time(self):
         backend = self.backend()
@@ -58,7 +58,7 @@ class ProcessIdentityTests(unittest.TestCase):
 
         backend.kernel32.GetProcessTimes.side_effect = process_times
         expected = hashlib.sha256(json.dumps(
-            [42, 51, 0x9ABCDEF012345678], separators=(',', ':')
+            [42, 101, 51, 0x9ABCDEF012345678], separators=(',', ':')
         ).encode('ascii')).hexdigest()
 
         self.assertEqual(backend.target_generation('fixture'), expected)
@@ -66,14 +66,39 @@ class ProcessIdentityTests(unittest.TestCase):
 
     def test_target_generation_changes_when_hwnd_changes_with_same_process(self):
         backend = self.backend()
-        backend.process_identity = Mock(return_value={
-            'pid': 51, 'creation_time_100ns': 7001})
+        backend._window_owner_identity_for_hwnd = Mock(return_value={
+            'pid': 51, 'creation_time_100ns': 7001,
+            'window_thread_id': 101})
         first = backend.target_generation('fixture')
         backend.targets['fixture'] = 43
         second = backend.target_generation('fixture')
 
         self.assertNotEqual(first, second)
-        self.assertEqual(backend.process_identity.call_count, 2)
+        self.assertEqual(backend._window_owner_identity_for_hwnd.call_count, 2)
+
+    def test_target_generation_changes_when_window_thread_changes(self):
+        backend = self.backend()
+        backend._window_owner_identity_for_hwnd = Mock(side_effect=[
+            {'pid': 51, 'creation_time_100ns': 7001, 'window_thread_id': 101},
+            {'pid': 51, 'creation_time_100ns': 7001, 'window_thread_id': 102},
+        ])
+
+        first = backend.target_generation('fixture')
+        second = backend.target_generation('fixture')
+
+        self.assertNotEqual(first, second)
+
+    def test_process_identity_query_refuses_owner_thread_change(self):
+        backend = self.backend()
+        thread_ids = iter([101, 102])
+        backend.user32.GetWindowThreadProcessId.side_effect = (
+            lambda hwnd, out: self.set_pid(out, 51, next(thread_ids)))
+        backend.kernel32.OpenProcess.return_value = 99
+        backend.kernel32.GetProcessTimes.return_value = 1
+
+        with self.assertRaisesRegex(Win32BackendError, 'owner changed'):
+            backend.process_identity('fixture')
+        backend.kernel32.CloseHandle.assert_called_once_with(99)
 
     def test_owner_change_during_identity_query_fails_closed_and_closes_handle(self):
         backend = self.backend()
