@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- [Matched completion-hold discriminator](integration/x11_tap_completion_hold_20261023_r01/README.md) — prior methods DOWN/count10 vs repaired methods UP/count1 in two samples each; client-facing completion hold after actual X sync, not blocked sends or general reliability.
+
 - [Single-key chord reply-boundary repair](integration/x11_single_tap_reply_boundary_20261023_r01/README.md) and [native caller composition](integration/x11_single_tap_live_20261023_r01/README.md) — eligible taps queue UP before their first key-state reply; held-key repeats remain failed outcomes, with no atomicity or speed claim.
 
 - [Counted task-oracle repair](integration/xvfb_effect_count_oracle_20261023_r01/README.md) and [independent live X count reads](integration/xvfb_counted_effect_local_20261023_r01/README.md) — old task count4 now fails despite stable value; fresh count1 passes; control completion remains separate.

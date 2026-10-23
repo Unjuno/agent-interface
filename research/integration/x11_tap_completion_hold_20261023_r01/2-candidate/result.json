@@ -1,0 +1,286 @@
+{
+  "arm": "candidate",
+  "index": 2,
+  "status": "OBSERVED",
+  "started_ns": 77634071924,
+  "xvfb_pid": 415,
+  "xvfb_stat": "415 (Xvfb) R 287 287 287 34816 287 4194304 11 0 0 0 0 0 0 0 30 10 1 0 7763 2719744 0 18446744073709551615 110322022256640 110322023747973 140730499908576 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0 110322024074320 110322024122632 110322378133504 140730499911890 140730499911992 140730499911992 140730499915754 0\n",
+  "pidfd_info": "pos:\t0\nflags:\t02000002\nmnt_id:\t4\nino:\t1338\nPid:\t415\nNSpid:\t415\n",
+  "window_id": 2097152,
+  "keycode": 38,
+  "keyboard_controls": {
+    "global_auto_repeat": 1,
+    "auto_repeats_hex": "00ffffffdffffbbffadfffefffedffff9ffffffffffffffffff7ffffffffffff"
+  },
+  "initial": {
+    "count": [
+      0
+    ],
+    "key_down": false,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "started_ns": 78153503985,
+    "completed_ns": 78153707512
+  },
+  "source_binding": {
+    "focus": 2097152,
+    "surface": 2097152,
+    "geometry": [
+      20,
+      20,
+      128,
+      128
+    ],
+    "process_generation": "6db34997d0e7466c895c2dc680e74bdf0401563c3c01eddd9bba2d8899374512"
+  },
+  "input_invoked_ns": 78227955273,
+  "held_start": {
+    "count": [
+      1
+    ],
+    "key_down": false,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "started_ns": 78262621475,
+    "completed_ns": 78262742470
+  },
+  "held_end": {
+    "count": [
+      1
+    ],
+    "key_down": false,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "started_ns": 79267814243,
+    "completed_ns": 79268044385
+  },
+  "gate_released_ns": 79268045879,
+  "input_result": {
+    "operation": "guarded_input",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "completed",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 78251291211,
+        "ended_ns": 79268335618,
+        "emissions": 2,
+        "program_emissions": 2,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 79268334162
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            52,
+            52
+          ],
+          "observed_box": [
+            40,
+            40,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 79738811352,
+          "patch_sha256": "3182c28359a2e10e13ebeb51e868b4827796f0cfd2351cf2c5aa536eb9cbaca9",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            52,
+            52
+          ],
+          "observed_box": [
+            40,
+            40,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 79751597901,
+          "patch_sha256": "3182c28359a2e10e13ebeb51e868b4827796f0cfd2351cf2c5aa536eb9cbaca9",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "feedback_status": "not_requested",
+    "session": {
+      "session_id": "a0d1f4261971400d85aff3e0acde8bd3",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 2097152
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "compiled_scope": "native-x11:7568d044e9014fc59689e80901bc3bfe",
+      "compiled_surface": "x11-window-2097152",
+      "observations": null,
+      "target_queries": null,
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": false
+    },
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/x11_tap_completion_hold_20261023_r01/2-candidate/mcp/7a34b19c7c2f4d8390e4159c34f35c32",
+    "call_id": "7a34b19c7c2f4d8390e4159c34f35c32"
+  },
+  "input_returned_ns": 79282141124,
+  "final": {
+    "count": [
+      1
+    ],
+    "key_down": false,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "started_ns": 79432976752,
+    "completed_ns": 79433229299
+  },
+  "close": {
+    "status": "closed",
+    "session_id": "a0d1f4261971400d85aff3e0acde8bd3",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 79441297446
+    },
+    "session": {
+      "session_id": "a0d1f4261971400d85aff3e0acde8bd3",
+      "mode": "guarded-x11",
+      "state": "closed",
+      "binding_revision": 0,
+      "targets": {
+        "app": 2097152
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "compiled_scope": "native-x11:7568d044e9014fc59689e80901bc3bfe",
+      "compiled_surface": "x11-window-2097152",
+      "observations": null,
+      "target_queries": null,
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": false
+    },
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/x11_tap_completion_hold_20261023_r01/2-candidate/mcp/d92b9c458cb94e43b215a78b74fb1a1c",
+    "call_id": "d92b9c458cb94e43b215a78b74fb1a1c"
+  },
+  "hold": {
+    "real_sync_returned_ns": 78261632989,
+    "requests_at_entry": [
+      {
+        "type": 2,
+        "detail": 38,
+        "returned_ns": 78261523870
+      },
+      {
+        "type": 3,
+        "detail": 38,
+        "returned_ns": 78261532964
+      }
+    ],
+    "obligations_at_entry": {
+      "a": 38
+    },
+    "completion_returned_ns": 79268081907
+  },
+  "requests": [
+    {
+      "type": 2,
+      "detail": 38,
+      "returned_ns": 78261523870
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "returned_ns": 78261532964
+    }
+  ],
+  "application_thread_stopped": true,
+  "application_events": [
+    {
+      "type": 2,
+      "detail": 38,
+      "observed_ns": 78262443048,
+      "count": 1,
+      "committed_ns": 78262537374
+    },
+    {
+      "type": 3,
+      "detail": 38,
+      "observed_ns": 78262557759
+    }
+  ],
+  "xvfb_exit_code": 0,
+  "ended_ns": 79484122394
+}
