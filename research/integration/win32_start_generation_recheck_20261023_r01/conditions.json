@@ -1,0 +1,61 @@
+{
+  "source_commit": "d06b5d280011eb27a7f9776e83d7a8614cc9c8f6",
+  "baseline_commit": "6ee0c639b40322eff2a5d580cbc549eadb664ac4",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "scope": "synthetic_only",
+  "runs": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_win32_composition",
+        "runtime.cli_v1.test_owned_win32_session",
+        "runtime.cli_v1.test_mcp_win32_backend_composition",
+        "runtime.guarded_win32_v1.test_process_cancellation",
+        "runtime.guarded_win32_v1.test_operation_owner",
+        "-v"
+      ],
+      "raw": "raw-normal.txt",
+      "exit_code": 0,
+      "tests": 43
+    },
+    {
+      "command": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_win32_composition",
+        "runtime.cli_v1.test_owned_win32_session",
+        "runtime.cli_v1.test_mcp_win32_backend_composition",
+        "runtime.guarded_win32_v1.test_process_cancellation",
+        "runtime.guarded_win32_v1.test_operation_owner",
+        "-v"
+      ],
+      "raw": "raw-optimized.txt",
+      "exit_code": 0,
+      "tests": 43
+    },
+    {
+      "command": [
+        "python",
+        "research\\integration\\win32_start_generation_recheck_20261023_r01\\reproduce_baseline.py"
+      ],
+      "raw": "raw-baseline-final-tests.txt",
+      "exit_code": 1,
+      "expected_subtest_failures": 5
+    }
+  ],
+  "preliminary_red": {
+    "raw": "raw-red.txt",
+    "exit_code": 1,
+    "expected_subtest_failures": 4,
+    "source_limit": "initial four-case test predates final test; baseline-final run is the reproducible control"
+  },
+  "post_run_change": "start_producer docstring only; no executable statements changed",
+  "native_input": false,
+  "wslc": false,
+  "docker": false
+}

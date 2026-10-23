@@ -1,0 +1,54 @@
+test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) ... 
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='admission') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='factory') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='identity') ... FAIL
+  test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='unavailable') ... FAIL
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='admission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': '1d90ad30ed824858b4985c0356fd1cf5', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='factory')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': '6243e5e16708426ca4adcebbed0daf63', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='identity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': 'b60d950749124bf3a3d39d7b8aa049cb', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_target_generation_is_rechecked_after_admission_and_before_start_gate (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_target_generation_is_rechecked_after_admission_and_before_start_gate) (change_at='unavailable')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 153, in test_target_generation_is_rechecked_after_admission_and_before_start_gate
+    self.assertEqual(response["status"], "unknown", response)
+AssertionError: 'running' != 'unknown'
+- running
++ unknown
+ : {'call_id': '6f6f8de08cf6488aa0c120eb91b64576', 'action': {'operation_id': '88888888888888888888888888888888', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'status': 'running', 'metadata': {'source': 'synthetic_public_mcp_admission'}, 'result': None}, 'cancellation': None, 'task_effect': None, 'status': 'running', 'operation_invoked': True, 'input_dispatched': False, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.086s
+
+FAILED (failures=4)
