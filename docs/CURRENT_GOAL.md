@@ -1,3 +1,19 @@
+**Standard-caller exact-call retrieval repeat R28 (2026-10-24):** on the
+current #9470 main commit (`380e1a9`), a fresh supervised Win32 fixture again
+returned `pending` after the supported 10,000 ms dispatch wait. One dispatch was
+issued; six read-only `interface_results` polls for the exact call ID reached
+`completed` 11,052.806 ms after dispatch start. The producer's verified all-up
+receipt was timestamped at 10,826.954 ms; independent neutral readback, the
+exact one-click/38-character/one-save fixture oracle, public session close,
+fixture exit, and foreground restore all passed. Strict R28 audit: 14/14 PASS.
+The public close response itself still reports `release_confirmed=false`; the
+terminal action receipt is the verified release evidence. R27 is independently
+reproduced once on current main, not a reliability claim. This remains a local
+Windows fixture result, not WSLc, blocked-I/O release, MAP01, runtime task
+success, or matched efficiency. R28 packet preserves an initial sparse-checkout
+preflight stop and a first audit attempt's field-name mismatch; neither sent
+additional input. See [R28](../research/integration/win32_supervised_standard_caller_20261024_r28/RESULT.md).
+
 # Current objective and working direction
 
 **Dispatch lock repair (2026-10-24):** the dispatch worker now exits after a
