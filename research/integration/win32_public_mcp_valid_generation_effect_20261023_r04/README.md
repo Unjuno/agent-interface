@@ -51,4 +51,3 @@ expected string disagreed with its frozen operation and remains an audit
 failure. None of these samples establish a hard release deadline, the
 post-focus foreground race, blocked-I/O recovery, MAP01, efficiency, or broad
 reliability.
-

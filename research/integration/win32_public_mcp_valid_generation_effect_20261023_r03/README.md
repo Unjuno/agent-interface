@@ -41,4 +41,3 @@ is `PUBLIC-MCP-OK-E5F0`. The probe and audit therefore score
 acceptance condition. No retry was made. `raw.json`, `audit.json`, the public
 responses, call reports and artifact are retained under `run/` and covered by
 `SHA256SUMS`. R04 will add a pre-run consistency guard in its own packet.
-
