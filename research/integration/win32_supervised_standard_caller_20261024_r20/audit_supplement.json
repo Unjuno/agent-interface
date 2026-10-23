@@ -199,18 +199,63 @@
       },
       "name": "held_injected_q_down_suppressed_on_callback_return",
       "passed": true
+    },
+    {
+      "evidence": {
+        "hook_callback_entry_ns": 482311254137200,
+        "hook_callback_return_ns": 482315269313000,
+        "interpretation": "q_down=false while this injected Q-down was still held before CallNextHookEx; this readback is not proof of release",
+        "readback": {
+          "exit_code": 0,
+          "expected_generation": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "generation_after": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "generation_before": "87aedfc3de0ea2cd26b5df77d4a957f3e9074f8870a6a666b8b5670e3e33e764",
+          "pid": 8948,
+          "process_retired": true,
+          "q_down": false,
+          "returned_monotonic_ns": 482311450703800,
+          "started_monotonic_ns": 482311450103100,
+          "state_witness": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 45614442,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 26776,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 31588
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 45614442,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 26776,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 31588
+            }
+          ],
+          "status": "observed"
+        }
+      },
+      "name": "same_generation_q_up_sample_occurred_before_blocked_down_was_forwarded",
+      "passed": true
     }
   ],
   "claim_scope": "one-run bounded terminal UNKNOWN with action UNKNOWN while the owned callback is held; no input release or recovery claim",
   "frozen_audit_passed": 7,
   "frozen_audit_status": "FAIL_OR_UNKNOWN",
   "frozen_audit_total": 10,
-  "passed": 3,
+  "passed": 4,
   "release_proven": false,
   "replay_allowed": false,
   "schema": "win32-supervised-standard-caller-r20-posthoc-audit-v1",
   "source_commit": "18541e1752cc26dcae45591a50f81697dbf853dd",
   "status": "PASS_SCOPED_POSTHOC",
   "task_success": null,
-  "total": 3
+  "total": 4
 }
