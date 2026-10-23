@@ -505,6 +505,49 @@ Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not
 assign people, grant resources or replace current user instructions.
 
+## Win32 R24 fresh-generation result (2026-10-24)
+
+The additive [R24 packet](../research/integration/win32_supervised_standard_caller_20261024_r24/RESULT.md)
+tested one new supervised stdio-MCP session and target generation after R23.
+The independent fixture effect was exact, and the persisted runtime report
+records completed execution, verified all-up release, producer exit, and
+neutral readback. The public dispatch nevertheless returned `pending` at
+8,004 ms; the immediate close returned `busy` with release unconfirmed. The
+session close later recorded `closed` but still `release_confirmed=false`.
+Strict R24 outcome remains `FAIL_OR_UNKNOWN`; the persisted result only narrows
+the failure to caller response/close timing. The raw's release timestamp
+annotation is contradicted by the persisted receipt and is rejected in the
+additive audit. A new attempt should wait longer than the observed 8.886 s
+producer completion and record the actual terminal receipt. R23's separate
+raw/manifest hash discrepancy remains an explicit preflight limitation.
+
+The separate [R25 result](../research/integration/win32_supervised_standard_caller_20261024_r25/RESULT.md)
+stopped before input: the public caller rejected `wait_for_result_ms=12000`
+with `INVALID_RESPONSE_WAIT` and `operation_invoked=false`. The source caps
+this wait at 10,000 ms. R25 used a new fixture and generation, wrote no effect,
+and cleaned up normally. R26 uses the supported 10,000 ms maximum in a fresh
+session; no R24 or R25 action is replayed.
+
+R26 used the supported 10,000 ms response wait but still returned `pending`
+at 10,010.6 ms. Its independent effect completed at 10,835.7 ms; the persisted
+report later records all-up release at 10,852.9 ms and neutral producer-exit
+readback at 10,915.9 ms. Public close returned `busy`, while later session
+shutdown reported closed without release confirmation. The strict result is
+`FAIL_OR_UNKNOWN`; an additive audit verified the persisted effect/release
+without changing that outcome. R27 will follow the pending receipt with
+bounded read-only `interface_results(call_id)` retrieval before closing.
+
+R27 follows that protocol and passes 14/14: after the 10 s public dispatch
+returned `pending`, six read-only lookups of its exact call ID produced the
+terminal `completed` receipt at 11,059.7 ms from dispatch start. The receipt
+records verified all-up release at 10,818.8 ms, producer exit and neutral
+readback; the independent fixture effect and event journal match exactly. The
+public session closed, fixture exited cleanly, and foreground was restored.
+`interface_close` itself says `release_confirmed=false`; the separate terminal
+dispatch receipt provides the release evidence. This is one local Windows
+fixture trial, with no WSLc, MAP01, blocked-I/O release, matched efficiency, or
+broad-reliability claim. See the [R27 packet](../research/integration/win32_supervised_standard_caller_20261024_r27/RESULT.md).
+
 ## Remaining scientific gates
 
 The release-supervision packet preserves main run [39444638512](https://github.com/Unjuno/agent-interface/actions/runs/39444638512), instrumented run [39446039020](https://github.com/Unjuno/agent-interface/actions/runs/39446039020), rebased-head failure [39447636867](https://github.com/Unjuno/agent-interface/actions/runs/39447636867), and fixture-fixed rerun [39448218110](https://github.com/Unjuno/agent-interface/actions/runs/39448218110). r01 retained two `worker_did_not_exit_cleanly` failures among four cancel-retirement comparisons; its receipts discarded child result status. The supervisor diagnostics preserve status and monotonic receipt/exit times while leaving forced termination `UNKNOWN`. r02 had five blocked-owner cases with independent release readback and synthetic-oracle PASS; release took 337–411 ms and cancel 390–654 ms. In r04, all five blocked-owner oracle checks passed (cancel 628–879 ms; release-worker 549–570 ms), with release `UNKNOWN`, runtime `task_success=null`, replay denied. The r03 fixture race was fixed by atomic marker publication and the full Xvfb workflow passed; r03 remains preserved as failure. The separate whole-server-stop task oracle also failed. These results do not establish release while platform I/O is unavailable, physical input, MAP01, or efficiency.

@@ -1,0 +1,154 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r27",
+  "caller": "supervised-win32 public stdio-MCP caller; one max-10,000 ms dispatch wait, then read-only exact-call interface_results polling for at most 15 s",
+  "cleanup": "one interface_close; close only the exact owned fixture HWND/process; restore only the foreground window that preceded this run; preserve raw on every outcome",
+  "decision": {
+    "fail_or_unknown": "Preserve FAIL_OR_UNKNOWN for missing or mismatched dispatch call ID, a retrieval timeout or unknown call, stale generation, missing release/effect, close uncertainty, or any need to retry. Never redispatch.",
+    "pass": "One new fixture and supervised session yield a distinct public observation generation; one dispatch returns pending; read-only interface_results polls the exact call ID and returns completed within 15 seconds; the retrieved action contains a verified all-up release and producer/neutral-readback receipt; the exact independent fixture effect and event journal match; the interface closes and the owned fixture exits; the prior foreground is restored; task_success remains null."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "host": "the user-authorized local Windows PC",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "frozen_files": {
+    "README.md": "8bd67a98101b8cc34c7e84400304978178af20deb737e168abf350a05313a16c",
+    "audit.py": "2b6b5aecffb6fedd0e1a475500d0abc5a748f1d16308052da15b3492298a784c",
+    "fixture_app.py": "dd55fec601d46a06320c79baf9487adf2abd55f9f7031b052a7181ae8e9d1d4e",
+    "preflight.py": "0433bec6427c6faaae4abc1b387507f54361e3b169c33f7391bab0deb7b46cf7",
+    "probe.py": "0e7c25c3420d759e9bff34020337b60c342f84a9a054819a31e65f95b063d688"
+  },
+  "hypothesis": "When a public dispatch returns pending, polling interface_results for its exact call ID within a finite 15-second retrieval budget yields the same terminal completion/release receipt before session close.",
+  "nonclaims": [
+    "this is a new action after R24 and the R25 pre-input refusal, not a retry or continuous transaction",
+    "runtime-integrated task_success",
+    "release under blocked Win32 I/O",
+    "atomic target-generation fencing",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "predecessor": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r26",
+    "followup_audit_path": "research/integration/win32_supervised_standard_caller_20261024_r26/audit_followup.json",
+    "followup_audit_sha256": "277b78b01e6879eb79360c5290d9c1f3a5c7be7ca5a41421e5b57719948f8f20",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r26/raw.json",
+    "raw_sha256": "19abcb329078297987ee898befafc9fe143c95294b49e852ca576b444f51dc0b",
+    "report_path": "research/integration/win32_supervised_standard_caller_20261024_r26/run/mcp-calls/6ad7ffb9e7694fdea854dd7305828748/report.json",
+    "report_sha256": "d96e04259b1b3cc1723bde7c67681197e441463a60209123d7cd52718923e290",
+    "target_generation": "e212eeb117ca964eac005fa699a2fcc9a5c4bb5a043553fe6be622a9c01a9896"
+  },
+  "previous_no_input_attempt": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r25",
+    "audit_path": "research/integration/win32_supervised_standard_caller_20261024_r25/audit.json",
+    "audit_sha256": "4569782d3a93b9a6a88357475dcec5ea67f949a62031bc31cdc30fe708d07e6e",
+    "error": "INVALID_RESPONSE_WAIT",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r25/raw.json",
+    "raw_sha256": "925d71c7f552a1b59b4eef46d5f46194af4d4f2886b544486cb375b049206ce4",
+    "target_generation": "b4c6c5356a6716a9252a9b870d34a382e339559f42d9e60d9b3ca5f038217888"
+  },
+  "resource_boundary": "One new fixture process/window, one new supervised session, one observation, one validation, one dispatch, read-only exact-call result retrieval for at most 15 s, one public close. No WSLc/Docker, external window, replay, retry, cancellation, fallback input, or registry changes.",
+  "retrieval": {
+    "call_id_source": "the exact call_id returned by this attempt interface_dispatch",
+    "deadline_seconds": 15,
+    "dispatch_wait_ms": 10000,
+    "never_retry_dispatch": true,
+    "poll_interval_ms": 200,
+    "tool": "interface_results"
+  },
+  "retry_policy": "One input-free preflight, one dispatch, and finite read-only retrieval of that exact call ID. Any retrieval timeout stays UNKNOWN; never redispatch.",
+  "schema": "win32-supervised-standard-caller-r27-conditions-v1",
+  "source_commit": "7eb221c164cee4cdc4076d807caf876ee06627a0",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/cli_v1/mcp_server.py": "769cbcf7b9641c89294999c3de39c250b1713d5322f6e96b6f6d1da0eb135d02",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "timeouts_seconds": {
+    "attempt_total": 45,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "public_close": 5,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe and independently matched to the new fixture"
+    },
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "R27-EXACT-CALL-RESULT-RETRIEVAL"
+    },
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-r27-exact-call-lease",
+    "observation_region": "the exact GetClientRect width and height of this new owned fixture",
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "op": "text",
+        "text": "R26-10S-MAX-WAIT-TERMINAL-RETURN"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 40
+      },
+      {
+        "frame": "window_client",
+        "h": "measured client height",
+        "op": "observe",
+        "w": "measured client width",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-r27-exact-call-result",
+    "task_effect_oracle": "independently read effect.json and exact fixture events.jsonl after public dispatch; require one click, exact UTF-16 character sequence, and one save",
+    "wait_for_result_ms": 10000
+  }
+}

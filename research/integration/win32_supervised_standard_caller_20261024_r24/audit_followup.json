@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r24",
+  "audited_utc": "2026-10-23T22:25:29.290050+00:00",
+  "checks": {
+    "clean_fixture_and_foreground_cleanup": true,
+    "independent_task_effect_and_exact_events": true,
+    "one_dispatch_only": true,
+    "persisted_action_completed_after_deadline": true,
+    "persisted_all_up_release_verified": true,
+    "producer_exit_and_neutral_readback": true,
+    "public_close_did_not_confirm_release": true,
+    "public_response_pending_at_8s": true,
+    "raw_release_timing_annotation_rejected": true,
+    "runtime_task_success_not_overclaimed": true
+  },
+  "classification": "POST_DISPATCH_EFFECT_AND_RELEASE_VERIFIED_BUT_PUBLIC_PENDING_AND_CLOSE_RELEASE_UNCONFIRMED",
+  "formal_trial_outcome": "FAIL_OR_UNKNOWN",
+  "interpretation": "The public dispatch returned pending at 8 seconds and public close returned busy. Persisted runtime records later show completed execution, verified all-up release, producer exit, and neutral readback. The independent fixture journal confirms the effect after the public dispatch deadline. The session close record says closed but release_confirmed=false. The raw field that equates dispatch-return time with release receipt time is contradicted by the persisted receipt and is not valid timing evidence. The strict frozen trial remains FAIL_OR_UNKNOWN; this additive audit does not rewrite it.",
+  "passed": 10,
+  "raw_sha256": "7b82856cb85a36f4fae5951a403e584756d9847e1ecaf4695db877f43dde6b87",
+  "runtime_report_sha256": "85fca10628897fadd37a4455a946fb37e4c7a5f543ec1507051bf7b203059023",
+  "schema": "win32-supervised-standard-caller-r24-followup-audit-v1",
+  "session_close_sha256": "248ddaabec98949c81d29c2b0a0872aae0851df3c763a19f0b1944a15579b8d1",
+  "timing_ms_from_dispatch_start": {
+    "effect_commit": 8799.5868,
+    "producer_exit_neutral_readback": 8885.8262,
+    "public_pending_response": 8004.0466,
+    "verified_release": 8823.8262
+  },
+  "total": 10
+}
