@@ -1,0 +1,27 @@
+{
+  "schema": "win32-public-mcp-live-effect-conditions-v1",
+  "attempt_id": "win32-public-mcp-live-effect-20261023-r05",
+  "source_commit": "28db8816564e88dd54d15de716d939a8e51bdb9f",
+  "platform": "Windows local desktop; user-authorized host use",
+  "target": "one fresh process-owned Agent Interface Win32 fixture window; exact configured HWND only",
+  "task": {
+    "text": "MCP-LIVE-R05-ONLY",
+    "effect": "fixture writes one JSON record with saved=true, exact text, clicked=true",
+    "independent_oracle": "read fixture effect file and JSONL event journal after the public MCP call"
+  },
+  "caller": "actual runtime.cli_v1.mcp_server stdio process; public interface_observe then interface_dispatch",
+  "dispatch": "one finite program: focus, click/down+up, known text, Ctrl+S, wait, observe, release_all",
+  "release_pass": "public report has final release receipt verified=true, no keys/buttons down, and no unknown keys/buttons",
+  "task_pass": "independent effect JSON exactly matches the frozen task and event journal has exact character count plus one save",
+  "retry_policy": "one dispatch only; unknown/timeout never retried",
+  "cleanup": "close only the owned fixture HWND/process; preserve raw report if its state is uncertain",
+  "input_scope": "visible foreground window is the owned fixture; no other target is configured or acted on",
+  "nonclaims": [
+    "blocked-I/O bound",
+    "generation admission",
+    "supervisor recovery",
+    "model/token efficiency",
+    "MAP01",
+    "broad reliability"
+  ]
+}
