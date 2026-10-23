@@ -1,0 +1,78 @@
+{
+  "status": "PASS_XTERM_CANCEL_NEW_GENERATION_EFFECT_SCOPED",
+  "checks": [
+    {
+      "check": "formal runner completed and Xvfb cleaned",
+      "passed": true
+    },
+    {
+      "check": "frozen real xterm and interactive PTY preflight passed with no input",
+      "passed": true
+    },
+    {
+      "check": "actual xterm targets in private Xvfb",
+      "passed": true
+    },
+    {
+      "check": "initial input had one pending public request",
+      "passed": true
+    },
+    {
+      "check": "delay was flushed before real sync reply wait",
+      "passed": true
+    },
+    {
+      "check": "caller cancellation returned within frozen bound",
+      "passed": true
+    },
+    {
+      "check": "old runtime outcome remains conservative UNKNOWN",
+      "passed": true
+    },
+    {
+      "check": "prestarted supervisor verified all-up while old result remains UNKNOWN",
+      "passed": true
+    },
+    {
+      "check": "old attempt not replayed and effect count preserved as observed",
+      "passed": true
+    },
+    {
+      "check": "finite delayed request horizon reached before changing focus",
+      "passed": true
+    },
+    {
+      "check": "old target/session retired before fresh application started",
+      "passed": true
+    },
+    {
+      "check": "standard caller observed distinct new generations",
+      "passed": true
+    },
+    {
+      "check": "fresh task created one independently saved PTY effect",
+      "passed": true
+    },
+    {
+      "check": "effect timing and horizon readback follow input",
+      "passed": true
+    },
+    {
+      "check": "fresh close and xterm cleanup completed",
+      "passed": true
+    },
+    {
+      "check": "no model calls or input retries",
+      "passed": true
+    }
+  ],
+  "old_effect_count": 0,
+  "fresh_effect_count": 1,
+  "cancel_elapsed_ms": 97.198438,
+  "fresh_input_to_fsync_ms": 106.570376,
+  "fresh_input_to_public_return_ms": 86.329352,
+  "fresh_fsync_after_public_return_ms": 20.241024,
+  "native_surface_reused": true,
+  "scope": "One injected XTEST delayed-request fault in a real xterm, one old attempt retained UNKNOWN, then a distinct xterm process/window and task. Repeat sample; custom saved-file oracle; no model/provider economics.",
+  "auditor_revision": "This independent repeat checks distinct process_generation and window_generation, whether or not Xvfb reuses the numeric surface XID. The retained xterm session exit code may be 15 after SIGTERM; exact PID/session absence remains required."
+}
