@@ -39,6 +39,7 @@
   "held_q_up_callback_entry_ns": 490580603221800,
   "held_q_up_callback_return_ns": 490582093578900,
   "planned_callback_hold_ms": 700,
+  "pre_cancel_abort_root_cause": "UnboundLocalError: probe.py uses local hold_ms in the projected callback duration before assigning it later in run_public_calls; interface_cancel is below this code and was never reached. Outer TaskGroup surfaced an ExceptionGroup.",
   "producer_execution_ended_ns": 490581843000000,
   "producer_execution_started_ns": 490580562000000,
   "producer_release_verified": true,

@@ -7,7 +7,8 @@ state observation only, not cancellation recovery. The callback lasted
 1490.357 ms, but only 4 status polls were recorded against the strict 21-poll
 gate; observer teardown ended `unknown`, no second Q-up hook event appeared,
 and runtime `task_success` remains null. The original R35 classification in
-PR #9479 was too strong; [the correction](../research/integration/win32_supervised_standard_caller_20261024_r35/correction.json)
+PR #9479 was too strong; source inspection found hold_ms used before its local
+assignment, raising UnboundLocalError before interface_cancel; [the correction](../research/integration/win32_supervised_standard_caller_20261024_r35/correction.json)
 and [corrected result](../research/integration/win32_supervised_standard_caller_20261024_r35/RESULT.md)
 preserve the raw trial and supersede it. Strict R29 remains FAIL_OR_UNKNOWN.
 
