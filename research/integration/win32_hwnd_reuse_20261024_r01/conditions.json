@@ -1,0 +1,20 @@
+{
+  "schema": "win32-hidden-hwnd-reuse-batch-conditions-v1",
+  "attempt_id": "win32-hwnd-reuse-20261024-r01",
+  "source_commit": "01c16903f57650d7b42571d1590602e000042025",
+  "target": "hidden STATIC windows created on current Windows host by one Python process and one thread; no activation, capture, or input",
+  "cohort_size": 256,
+  "cohorts": 2,
+  "order": "create first cohort sequentially; read each production identity and target_generation; destroy in reverse order; confirm IsWindow false for each; create second cohort sequentially; read production identity and target_generation; compare handles to first cohort; destroy in reverse order",
+  "max_simultaneous_windows": 256,
+  "input_sent": false,
+  "window_activated": false,
+  "retry_policy": "one frozen batch experiment; preserve no-reuse as inconclusive; no rerun",
+  "discriminator": {
+    "same_hwnd_same_identity_same_generation": "COUNTEREXAMPLE_CONFIRMED",
+    "same_hwnd_same_identity_different_generation": "REUSED_HANDLE_DISTINGUISHED",
+    "no_same_hwnd": "NO_HANDLE_REUSE_OBSERVED_IN_THIS_BATCH",
+    "any_creation_or_cleanup_error": "INVALID_EXPERIMENT_HOLD"
+  },
+  "decision": "A repeated numeric HWND after confirmed destruction, on same PID/thread/process creation time, tests whether current production target_generation aliases across lifetime."
+}
