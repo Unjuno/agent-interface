@@ -1,0 +1,64 @@
+{
+  "status": "PASS_SAVED_XTERM_EFFECT_SCOPED",
+  "checks": [
+    {
+      "check": "actual run success",
+      "passed": true
+    },
+    {
+      "check": "one non-idempotent saved record",
+      "passed": true
+    },
+    {
+      "check": "command ran inside terminal PTY",
+      "passed": true
+    },
+    {
+      "check": "command ancestry belongs to owned xterm",
+      "passed": true
+    },
+    {
+      "check": "fsync completion agrees with record",
+      "passed": true
+    },
+    {
+      "check": "input precedes command, oracle follows fsync",
+      "passed": true
+    },
+    {
+      "check": "complete public input and close",
+      "passed": true
+    },
+    {
+      "check": "independent final neutral keymap",
+      "passed": true
+    },
+    {
+      "check": "initial neutral keymap",
+      "passed": true
+    },
+    {
+      "check": "real app fixture target and generation evidence",
+      "passed": true
+    },
+    {
+      "check": "no replayed input request",
+      "passed": true
+    },
+    {
+      "check": "owned app/server cleanup",
+      "passed": true
+    },
+    {
+      "check": "independent owned absence",
+      "passed": true
+    },
+    {
+      "check": "zero model calls",
+      "passed": true
+    }
+  ],
+  "input_to_fsync_ms": 72.875542,
+  "input_to_oracle_read_ms": 337.266103,
+  "scope": "Known typed shell command through real xterm; custom append helper, one task, no fault or model."
+}

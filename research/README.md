@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- [Real xterm public-MCP saved effect](integration/xterm_public_task_20261023_r01/README.md) — one known zero-model task through actual PTY/shell, exactly one saved record; API completion precedes fsync in the sample. Custom task helper, no fault/efficiency/generalization claim.
+
 - [Queued-UP cancellation and interpretation correction](integration/x11_queued_up_cancel_20261023_r01/README.md) — initial operation is a chord behind an injected delayed request; no-pause count1 passes, paused count3 fails, fresh tasks pass. UP queueing and server release are separate evidence.
 
 - [Matched completion-hold discriminator](integration/x11_tap_completion_hold_20261023_r01/README.md) — prior methods DOWN/count10 vs repaired methods UP/count1 in two samples each; client-facing completion hold after actual X sync, not blocked sends or general reliability.

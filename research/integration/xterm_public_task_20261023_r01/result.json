@@ -1,0 +1,268 @@
+{
+  "status": "PASS_XTERM_TASK_SCOPED",
+  "model_calls": 0,
+  "xvfb_pid": 367,
+  "xvfb_stat": "367 (Xvfb) R 287 287 287 34816 287 4194304 11 0 0 0 0 0 0 0 30 10 1 0 5691 2719744 54 18446744073709551615 96871196262400 96871197753733 140721532177456 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 96871198080080 96871198128392 96872183709696 140721532182577 140721532182681 140721532182681 140721532186602 0\n",
+  "xterm_pid": 371,
+  "xterm_command": [
+    "/home/user/.cache/agent-interface/xterm-20261023-r01/root/usr/bin/xterm",
+    "-ut",
+    "+bc",
+    "-fn",
+    "fixed",
+    "-geometry",
+    "80x24+20+20",
+    "-title",
+    "AI-XTERM-TASK-R01",
+    "-e",
+    "/bin/sh",
+    "-i"
+  ],
+  "xterm_stat": "371 (xterm) R 287 371 371 0 -1 4194304 11 0 0 0 0 0 0 0 30 10 1 0 5793 1327104 0 18446744073709551615 99289827188736 99289827677313 140729175237248 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0 99289827859760 99289827920784 99290831634432 140729175243341 140729175243492 140729175243492 140729175244720 0\n",
+  "window": {
+    "id": 4194316,
+    "x": 20,
+    "y": 20,
+    "width": 484,
+    "height": 316,
+    "wm_class": [
+      "xterm",
+      "XTerm"
+    ]
+  },
+  "initial_keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+  "source_binding": {
+    "focus": 4194316,
+    "surface": 4194316,
+    "geometry": [
+      21,
+      21,
+      484,
+      316
+    ],
+    "process_generation": "628778c4223e14e0fc0791cd866f2ba65bb425c0d0f709bab495bb573609768d"
+  },
+  "prompt_anchor": {
+    "point": [
+      38,
+      34
+    ],
+    "box": [
+      26,
+      22,
+      50,
+      46
+    ],
+    "stddev": [
+      87.72218427227097,
+      87.72218427227097,
+      87.72218427227097
+    ]
+  },
+  "input_started_ns": 59236350590,
+  "input_result": {
+    "operation": "guarded_input",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "completed",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 59268012345,
+        "ended_ns": 59292560227,
+        "emissions": 20,
+        "program_emissions": 20,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 59292558510
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "prompt",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "prompt",
+          "point": [
+            38,
+            34
+          ],
+          "observed_box": [
+            26,
+            22,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 60745594887,
+          "patch_sha256": "5402bf0451435cac2ae2787b6f3c75efa43d1b81d5cb01cae9f23ad9599e83f8",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "prompt",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "prompt",
+          "point": [
+            38,
+            34
+          ],
+          "observed_box": [
+            26,
+            22,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 60768356513,
+          "patch_sha256": "5402bf0451435cac2ae2787b6f3c75efa43d1b81d5cb01cae9f23ad9599e83f8",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "feedback_status": "not_requested",
+    "session": {
+      "session_id": "1f6f63cbc2dc432db2c528a8792e9b68",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "terminal": 4194316
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "compiled_scope": "native-x11:36bd1f53e2be46a4aa12ae8e5b98b579",
+      "compiled_surface": "x11-window-4194316",
+      "observations": null,
+      "target_queries": null,
+      "target": "terminal",
+      "observation_sequence": 3,
+      "review_required": false
+    },
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xterm_public_task_20261023_r01/mcp/25b1ab55433944dd91dc7a611b52139a",
+    "call_id": "25b1ab55433944dd91dc7a611b52139a"
+  },
+  "input_returned_ns": 59301789035,
+  "oracle_read_started_ns": 59564691080,
+  "oracle_read_completed_ns": 59573616693,
+  "journal_rows": [
+    {
+      "argv": [
+        "a1"
+      ],
+      "pid": 374,
+      "ppid": 372,
+      "parent_ppid": 371,
+      "stdin_tty": true,
+      "stdout_tty": true,
+      "term": "xterm",
+      "display": ":188",
+      "started_ns": 59307369287
+    }
+  ],
+  "application_commit": {
+    "effect_committed_ns": 59309226132,
+    "pid": 374,
+    "argv": [
+      "a1"
+    ]
+  },
+  "final_keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+  "task_success": true,
+  "close": {
+    "status": "closed",
+    "session_id": "1f6f63cbc2dc432db2c528a8792e9b68",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 59579837750
+    },
+    "session": {
+      "session_id": "1f6f63cbc2dc432db2c528a8792e9b68",
+      "mode": "guarded-x11",
+      "state": "closed",
+      "binding_revision": 0,
+      "targets": {
+        "terminal": 4194316
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": false,
+      "observation_worker": false,
+      "window_lifecycle": false,
+      "compiled_scope": "native-x11:36bd1f53e2be46a4aa12ae8e5b98b579",
+      "compiled_surface": "x11-window-4194316",
+      "observations": null,
+      "target_queries": null,
+      "target": "terminal",
+      "observation_sequence": 3,
+      "review_required": false
+    },
+    "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xterm_public_task_20261023_r01/mcp/90a821d7359746fcbe175b6999f75fc6",
+    "call_id": "90a821d7359746fcbe175b6999f75fc6"
+  },
+  "xterm_cleanup_exit_code": 15,
+  "xvfb_cleanup_exit_code": 0,
+  "ended_ns": 59627742868
+}
