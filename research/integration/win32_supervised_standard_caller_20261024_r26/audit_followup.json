@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r26",
+  "audited_utc": "2026-10-23T22:30:00.723895+00:00",
+  "checks": {
+    "independent_effect_and_exact_event_journal": true,
+    "one_dispatch_only": true,
+    "owned_fixture_and_foreground_cleanup": true,
+    "persisted_action_completed_after_public_deadline": true,
+    "producer_exit_and_neutral_readback": true,
+    "public_close_busy_and_close_receipt_release_unconfirmed": true,
+    "public_wait_expired_without_replay": true,
+    "raw_does_not_claim_unknown_release_as_confirmed": true,
+    "runtime_task_success_remains_null": true,
+    "verified_all_up_release_with_owned_desktop_witnesses": true
+  },
+  "classification": "POST_DISPATCH_EFFECT_AND_RELEASE_VERIFIED_BUT_PUBLIC_WAIT_AND_CLOSE_RELEASE_UNCONFIRMED",
+  "formal_trial_outcome": "FAIL_OR_UNKNOWN",
+  "interpretation": "At the supported 10 s public response-wait maximum the dispatch remained pending, and public close returned busy with release unconfirmed. Persisted runtime records later show completed execution, a verified all-up release, producer exit, and neutral readback; the independent fixture journal confirms the exact effect after the public deadline. The session-close record is closed but does not itself confirm release. The frozen trial remains FAIL_OR_UNKNOWN; this additive audit does not rewrite it.",
+  "passed": 10,
+  "raw_sha256": "19abcb329078297987ee898befafc9fe143c95294b49e852ca576b444f51dc0b",
+  "runtime_report_sha256": "d96e04259b1b3cc1723bde7c67681197e441463a60209123d7cd52718923e290",
+  "schema": "win32-supervised-standard-caller-r26-followup-audit-v1",
+  "session_close_sha256": "248ddaabec98949c81d29c2b0a0872aae0851df3c763a19f0b1944a15579b8d1",
+  "timing_ms_from_public_dispatch_start": {
+    "effect_commit": 10835.7218,
+    "pending_response": 10010.5596,
+    "producer_exit_neutral_readback": 10915.8594,
+    "verified_release": 10852.8594
+  },
+  "total": 10
+}
