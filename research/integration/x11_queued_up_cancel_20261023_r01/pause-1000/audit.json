@@ -1,0 +1,160 @@
+{
+  "status": "PASS_QUEUED_UP_PATH_OBSERVABILITY_SCOPED",
+  "checks": [
+    {
+      "check": "host and inner exit zero",
+      "passed": true
+    },
+    {
+      "check": "one actual test, no skips/errors/failures",
+      "passed": true
+    },
+    {
+      "check": "frozen sources unchanged",
+      "passed": true
+    },
+    {
+      "check": "actual cancel response within 300ms",
+      "passed": true
+    },
+    {
+      "check": "composite cancel interval within 3000ms",
+      "passed": true
+    },
+    {
+      "check": "exact owned pidfd pause and successful resume",
+      "passed": true
+    },
+    {
+      "check": "same producer/client and target key",
+      "passed": true
+    },
+    {
+      "check": "UP queued behind delay before real sync and cancellation",
+      "passed": true
+    },
+    {
+      "check": "queue receipt does not claim server release",
+      "passed": true
+    },
+    {
+      "check": "pause selection matches actual test",
+      "passed": true
+    },
+    {
+      "check": "exact owner retired before recorded supervisor release",
+      "passed": true
+    },
+    {
+      "check": "independent all-up after resume",
+      "passed": true
+    },
+    {
+      "check": "8.5 second horizon and independent all-up",
+      "passed": true
+    },
+    {
+      "check": "fresh target distinct from old target",
+      "passed": true
+    },
+    {
+      "check": "fresh property transition and horizon value",
+      "passed": true
+    },
+    {
+      "check": "one fresh keypress in captured app trace",
+      "passed": true
+    },
+    {
+      "check": "fresh input/event/commit/readback ordering",
+      "passed": true
+    },
+    {
+      "check": "fresh interval recomputes from timestamps",
+      "passed": true
+    },
+    {
+      "check": "fresh task before old horizon",
+      "passed": true
+    },
+    {
+      "check": "cancel UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "terminal UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "after_fresh UNKNOWN/no-replay/null-task preserved",
+      "passed": true
+    },
+    {
+      "check": "neutral final cleanup",
+      "passed": true
+    },
+    {
+      "check": "owned server/test exited, no old-session members",
+      "passed": true
+    },
+    {
+      "check": "independent old counts match captured handlers",
+      "passed": true
+    },
+    {
+      "check": "strict old oracle distinguishes duplicates from final value",
+      "passed": true
+    },
+    {
+      "check": "fresh independent counts and strict oracle",
+      "passed": true
+    },
+    {
+      "check": "explicit separated task outcomes",
+      "passed": true
+    }
+  ],
+  "scientific_task_outcomes": {
+    "fresh_task": "pass",
+    "old_task": "fail",
+    "scope": "Separate from control-path test completion and runtime UNKNOWN receipts"
+  },
+  "recomputed_ms": {
+    "cancel_invocation_to_return": 254.85452,
+    "release_anchor_to_independent_all_up": 103.609722,
+    "fresh_input_to_independent_effect_readback": 94.322129
+  },
+  "effect_multiplicity_observation": {
+    "claimed_task_definition": "one initial a effect; no delayed b effect; both keys up after release and at the delayed-request horizon",
+    "runtime_test_oracle_status": "fail",
+    "old_target_keypress_count": 3,
+    "old_target_keypress_events": [
+      {
+        "detail": 38,
+        "effect_committed_ns": 18897787332,
+        "monotonic_ns": 18897669258,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 19944619649,
+        "monotonic_ns": 19944291502,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 38,
+        "effect_committed_ns": 19984377500,
+        "monotonic_ns": 19984285103,
+        "type": 2,
+        "window": 2097152
+      }
+    ],
+    "old_property_remained": [
+      1
+    ],
+    "exactly_one_old_keypress": false,
+    "interpretation": "Per-handler count and idempotent value are separate evidence. Trace alone does not prove the cause of repeats or a non-idempotent external task outcome."
+  }
+}

@@ -256,8 +256,9 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                 return result
             return original_sync(*args, **kwargs)
 
-        # Backend.key_state calls sync immediately after sending the press.
-        # The real XTEST delayed request makes that server reply wait pending.
+        # The single-key chord queues UP behind the delayed XTEST request.
+        # Its final real sync still waits for that earlier server request;
+        # queueing UP is not a server-side release acknowledgement.
         xtest.fake_input = fake_input
         backend.d.sync = sync_with_boundary_receipt
         return session
