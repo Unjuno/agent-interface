@@ -1,0 +1,31 @@
+{
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "source_commit": "8eac9f9e5ff05cc0f2739a8688f96cbd99f67b92",
+  "run_id": "AI-LOCAL-WSL2-XVFB-PIDFD-20261023-R01",
+  "frozen_at_utc": "2026-10-23T06:21:41.910553+00:00",
+  "runtime": "local Ubuntu WSL2, not WSLc or Docker",
+  "hypothesis": "The current pinned Xvfb pause helper resumes its exact owned process after normal delay, injected post-STOP status-read failure and injected timer-start failure.",
+  "schedules": [
+    "healthy",
+    "status_read_error",
+    "timer_start_error"
+  ],
+  "samples": "one new Xvfb process, one invocation, three predeclared schedules; stop on first failure, no retry",
+  "helper_normalized_sha256": "f13fa32bd40f266383ba0c61feaedaff7c5d8f6f40649aaddd7030a601000fec",
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "python3",
+    "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xvfb_pidfd_live_20261023_r01/run_probe.py"
+  ],
+  "host_timeout_seconds": 60,
+  "pass": "all three rows PASS_PROCESS_SIGNALLING_SCOPED; healthy stopped readback T/t; all resumed readbacks non-T/t/Z; exactly STOP/CONT through pidfds identifying the owned child; cleanup confirms exact child exited",
+  "failure": "any exception or unmet predicate after child launch; preserve first outcome; cleanup failure/unknown never counts as PASS",
+  "input_emission_calls": 0,
+  "wslc_allocations_consumed": 0,
+  "docker_operations": 0,
+  "image_or_package_install": false,
+  "scope_limit": "No GUI/XTEST/SendInput/application task, physical release, hard deadline, efficiency or reliability claim. Path/Timer faults are injected; signal syscalls and independent /proc observers are real."
+}
