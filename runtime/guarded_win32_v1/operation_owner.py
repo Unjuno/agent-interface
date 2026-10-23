@@ -81,6 +81,8 @@ class OperationOwner:
                 "cleanup_deadline_ns": None,
                 "recovery_id": None,
                 "release_confirmed": False,
+                "completion_release_receipt": None,
+                "completion_readback": None,
                 "task_success": None,
                 "replay_allowed": False,
                 "uncertainty": None,
@@ -267,7 +269,9 @@ class OperationOwner:
             if record["status"] == "completed":
                 if (self._producer_handles.get(operation_id) is process_handle
                         and release_verified and readback_verified
-                        and record["release_confirmed"]):
+                        and record["release_confirmed"]
+                        and record["completion_release_receipt"] == release_receipt
+                        and record["completion_readback"] == readback):
                     return self._public(record)
                 raise OwnerRefused("completed operation only accepts its exact verified receipt")
             if record["status"] != "running":
@@ -313,6 +317,8 @@ class OperationOwner:
                 record["producer_exit_code"] = exit_code
                 if release_verified and readback_verified:
                     record["release_confirmed"] = True
+                    record["completion_release_receipt"] = copy.deepcopy(release_receipt)
+                    record["completion_readback"] = copy.deepcopy(readback)
                     record["status"] = "completed"
                 else:
                     record["status"] = "unknown"

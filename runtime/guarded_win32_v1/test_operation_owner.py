@@ -143,6 +143,8 @@ class OperationOwnerTests(unittest.TestCase):
 
         self.assertEqual(completed["phase"], "completed")
         self.assertTrue(completed["release_confirmed"])
+        self.assertEqual(completed["completion_release_receipt"], release)
+        self.assertEqual(completed["completion_readback"], readback)
         self.assertIsNone(completed["task_success"])
         self.assertFalse(completed["replay_allowed"])
         try:
@@ -151,6 +153,10 @@ class OperationOwnerTests(unittest.TestCase):
         except OwnerRefused as error:
             self.fail(f"identical completed producer receipt was not idempotent: {error}")
         self.assertEqual(repeated["phase"], "completed")
+        changed_release = dict(release, receipt_source="different")
+        with self.assertRaises(OwnerRefused):
+            complete("op-complete", GEN_A, process,
+                     release_receipt=changed_release, readback=readback)
         self.assertEqual(self.owner.admit("op-next", GEN_A, 1_000, [])[
             "status"], "admitted")
 
