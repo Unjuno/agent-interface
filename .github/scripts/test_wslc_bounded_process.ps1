@@ -28,4 +28,16 @@ if (Get-Process -Id $timeout.ProcessId -ErrorAction SilentlyContinue) {
     throw "Timed-out CLI child $($timeout.ProcessId) remained alive."
 }
 
-Write-Output 'Bounded child output/exit/timeout checks: PASS (2 cases)'
+$unicode = Invoke-WslcBoundedProcess -FilePath $powershell -TimeoutSeconds 10 `
+    -ArgumentList @('-NoProfile', '-NonInteractive', '-Command',
+        '[Console]::OutputEncoding = [System.Text.Encoding]::Unicode; [Console]::Error.WriteLine("stderr unicode marker"); [Console]::Out.WriteLine("stdout unicode marker"); exit 0') `
+    -OutputEncoding ([System.Text.Encoding]::Unicode)
+if ($unicode.TimedOut -or $unicode.ExitCode -ne 0 -or
+        $unicode.StandardOutput -notmatch 'stdout unicode marker' -or
+        $unicode.StandardError -notmatch 'stderr unicode marker' -or
+        $unicode.StandardOutput.Contains([char]0) -or
+        $unicode.StandardError.Contains([char]0)) {
+    throw "Unicode child output decoding mismatch: $($unicode | ConvertTo-Json -Compress)"
+}
+
+Write-Output 'Bounded child output/exit/timeout checks: PASS (3 cases)'

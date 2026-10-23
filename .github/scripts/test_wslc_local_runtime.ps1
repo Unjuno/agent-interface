@@ -12,11 +12,13 @@ function Invoke-ProbeCli {
         [Parameter(Mandatory)][string]$FilePath,
         [Parameter(Mandatory)][string[]]$Arguments,
         [Parameter(Mandatory)][ValidateRange(1, 3600)][int]$TimeoutSeconds,
-        [Parameter(Mandatory)][string]$LogName
+        [Parameter(Mandatory)][string]$LogName,
+        [System.Text.Encoding]$OutputEncoding
     )
 
     $result = Invoke-WslcBoundedProcess -FilePath $FilePath `
-        -ArgumentList $Arguments -TimeoutSeconds $TimeoutSeconds
+        -ArgumentList $Arguments -TimeoutSeconds $TimeoutSeconds `
+        -OutputEncoding $OutputEncoding
     [System.IO.File]::WriteAllText((Join-Path $probePath "$LogName.stdout.txt"),
         $result.StandardOutput, [System.Text.UTF8Encoding]::new($false))
     [System.IO.File]::WriteAllText((Join-Path $probePath "$LogName.stderr.txt"),
@@ -77,7 +79,8 @@ try {
     [void](New-Item -ItemType Directory -Path $probePath)
     Write-Output 'WSL version:'
     Invoke-ProbeCli -FilePath $wsl.Source -Arguments @('--version') `
-        -TimeoutSeconds $CliTimeoutSeconds -LogName 'wsl-version' | Out-Null
+        -TimeoutSeconds $CliTimeoutSeconds -LogName 'wsl-version' `
+        -OutputEncoding ([System.Text.Encoding]::Unicode) | Out-Null
     Write-Output 'WSLc version:'
     Invoke-ProbeCli -FilePath $wslc.Source -Arguments @('version') `
         -TimeoutSeconds $CliTimeoutSeconds -LogName 'wslc-version' | Out-Null

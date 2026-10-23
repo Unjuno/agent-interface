@@ -37,7 +37,8 @@ function Invoke-WslcBoundedProcess {
     param(
         [Parameter(Mandatory)][string]$FilePath,
         [Parameter(Mandatory)][AllowEmptyCollection()][string[]]$ArgumentList,
-        [Parameter(Mandatory)][ValidateRange(1, 3600)][int]$TimeoutSeconds
+        [Parameter(Mandatory)][ValidateRange(1, 3600)][int]$TimeoutSeconds,
+        [System.Text.Encoding]$OutputEncoding
     )
 
     $quotedArguments = foreach ($argument in $ArgumentList) {
@@ -50,6 +51,10 @@ function Invoke-WslcBoundedProcess {
     $startInfo.CreateNoWindow = $true
     $startInfo.RedirectStandardOutput = $true
     $startInfo.RedirectStandardError = $true
+    if ($null -ne $OutputEncoding) {
+        $startInfo.StandardOutputEncoding = $OutputEncoding
+        $startInfo.StandardErrorEncoding = $OutputEncoding
+    }
 
     $process = [System.Diagnostics.Process]::new()
     $process.StartInfo = $startInfo
