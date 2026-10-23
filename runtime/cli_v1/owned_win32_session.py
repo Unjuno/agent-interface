@@ -104,7 +104,11 @@ class OwnedWin32SessionOwner:
         if time.monotonic_ns() >= binding["expires_at_ns"]:
             raise ValueError("target binding expired; bind the target again")
         generation = binding["generation"]
-        if self.current_target_generation() != generation:
+        try:
+            current_generation = self.current_target_generation()
+        except Exception as error:
+            raise RuntimeError("TARGET_GENERATION_CHANGED") from error
+        if current_generation != generation:
             raise RuntimeError("TARGET_GENERATION_CHANGED")
         # Admission freezes the exact generation observed before the wait.
         return self.admit_action(call_id, action_operation_id, generation,

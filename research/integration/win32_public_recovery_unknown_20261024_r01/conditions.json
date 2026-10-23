@@ -1,0 +1,24 @@
+{
+  "packet": "win32_public_recovery_unknown_20261024_r01",
+  "date": "2026-10-24",
+  "base_commit": "0138d58f97c10c7ba3388c37dfcbb5d2840e2ea4",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (64-bit, MSC v.1938)",
+  "primary_test_commands": [
+    "python -m unittest runtime.cli_v1.test_mcp_win32_composition runtime.cli_v1.test_mcp_win32_backend_composition runtime.cli_v1.test_owned_win32_session runtime.guarded_win32_v1.test_process_cancellation runtime.guarded_win32_v1.test_operation_owner",
+    "python -O -m unittest runtime.cli_v1.test_mcp_win32_composition runtime.cli_v1.test_mcp_win32_backend_composition runtime.cli_v1.test_owned_win32_session runtime.guarded_win32_v1.test_process_cancellation runtime.guarded_win32_v1.test_operation_owner"
+  ],
+  "primary_result": "51 tests passed in each mode",
+  "backend_composition_result": "5 tests passed in normal and optimized modes",
+  "new_public_failure_case": "wrong operation receipt from recovery helper; public retained state stays UNKNOWN and observer is not invoked",
+  "test_fixture_incident": "unconfigured Mock GetPropW return caused ctypes.cast recursion and process exit 0xC00000FD; retained faulthandler trace identifies test fixture",
+  "native_input": false,
+  "wslc": false,
+  "docker": false,
+  "task_effect_oracle": false,
+  "limitations": [
+    "synthetic process and fake input state only",
+    "does not prove native SendInput interruption or bounded physical release",
+    "does not establish live task effect, MAP01, efficiency, or reliability"
+  ]
+}
