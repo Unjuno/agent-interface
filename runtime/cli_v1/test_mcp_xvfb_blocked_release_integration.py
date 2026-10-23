@@ -168,6 +168,7 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
     marker = root/'xvfb-delayed-request-queued.json'
     sync_entered = root/'xvfb-owner-sync-entered.json'
     sync_returned = root/'xvfb-owner-sync-returned.json'
+    release_queued = root/'xvfb-target-release-queued.json'
     cancel_ack_withheld = root/'xvfb-cancel-ack-withheld.json'
 
     original_cancel = owner.cancel_guarded
@@ -194,6 +195,7 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
         original_sync = backend.d.sync
         injected = {'value':False}
         sync_seen = {'value':False}
+        first_keycode = {'value':None}
 
         def fake_input(display_connection, event_type, detail=0, time=0,
                        root=0, x=0, y=0):
@@ -201,6 +203,7 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                 display_connection, event_type, detail=detail, time=time,
                 root=root, x=x, y=y)
             if event_type == X.KeyPress and not injected['value']:
+                first_keycode['value'] = detail
                 delayed_keycode = backend._keycode('b')
                 original_fake_input(
                     display_connection, X.KeyPress, detail=delayed_keycode,
@@ -222,6 +225,16 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                                       encoding='utf-8')
                 temporary.replace(marker)
                 injected['value'] = True
+            if (display_connection is backend.d and event_type == X.KeyRelease
+                    and detail == first_keycode['value'] and not release_queued.exists()):
+                row = {'owner_pid':os.getpid(),
+                       'resource_base':display_connection.display.info.resource_id_base,
+                       'keycode':detail, 'queued_ns':_monotonic_ns(),
+                       'server_release_confirmed':False,
+                       'scope':'Xlib request call returned; no server acknowledgement'}
+                temporary = release_queued.with_suffix('.tmp')
+                temporary.write_text(json.dumps(row, sort_keys=True), encoding='utf-8')
+                temporary.replace(release_queued)
             return result
 
         def sync_with_boundary_receipt(*args, **kwargs):
@@ -243,8 +256,9 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                 return result
             return original_sync(*args, **kwargs)
 
-        # Backend.key_state calls sync immediately after sending the press.
-        # The real XTEST delayed request makes that server reply wait pending.
+        # The single-key chord queues UP behind the delayed XTEST request.
+        # Its final real sync still waits for that earlier server request;
+        # queueing UP is not a server-side release acknowledgement.
         xtest.fake_input = fake_input
         backend.d.sync = sync_with_boundary_receipt
         return session
@@ -586,6 +600,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['blocked_owner_sync'] = sync_marker
                 self.assertEqual(sync_marker['owner_pid'], owner_marker['owner_pid'])
                 self.assertEqual(sync_marker['resource_base'], owner_marker['resource_base'])
+                report['owner_target_release_queued'] = await self._wait_for_file(
+                    owner_output_root/'xvfb-target-release-queued.json')
+                self.assertLessEqual(report['owner_target_release_queued']['queued_ns'],
+                                     sync_marker['entered_ns'])
                 await self._wait_for_event(effect_committed)
                 before_cancel_effect = observer.create_resource_object(
                     'window', window.id).get_full_property(effect_atom, X.AnyPropertyType)

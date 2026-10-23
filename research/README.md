@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- [Queued-UP cancellation and interpretation correction](integration/x11_queued_up_cancel_20261023_r01/README.md) — initial operation is a chord behind an injected delayed request; no-pause count1 passes, paused count3 fails, fresh tasks pass. UP queueing and server release are separate evidence.
+
 - [Matched completion-hold discriminator](integration/x11_tap_completion_hold_20261023_r01/README.md) — prior methods DOWN/count10 vs repaired methods UP/count1 in two samples each; client-facing completion hold after actual X sync, not blocked sends or general reliability.
 
 - [Single-key chord reply-boundary repair](integration/x11_single_tap_reply_boundary_20261023_r01/README.md) and [native caller composition](integration/x11_single_tap_live_20261023_r01/README.md) — eligible taps queue UP before their first key-state reply; held-key repeats remain failed outcomes, with no atomicity or speed claim.
