@@ -9,6 +9,9 @@ import uuid
 import zlib
 from pathlib import Path
 
+MAX_IMAGE_DIMENSION = 8192
+MAX_IMAGE_PIXELS = 16_777_216
+
 
 class CaptureArtifacts:
     def __init__(self, directory, *, retain_rgb=False):
@@ -43,6 +46,8 @@ class CaptureArtifacts:
     def write(self, raw, width, height):
         if (type(width) is not int or type(height) is not int
                 or width <= 0 or height <= 0
+                or width > MAX_IMAGE_DIMENSION or height > MAX_IMAGE_DIMENSION
+                or width * height > MAX_IMAGE_PIXELS
                 or len(raw) != width * height * 4):
             raise ValueError("Win32 artifact pixel dimensions mismatch")
         started_ns = time.monotonic_ns()

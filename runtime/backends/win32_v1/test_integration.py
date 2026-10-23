@@ -145,6 +145,41 @@ class PureWin32HelperTests(unittest.TestCase):
         self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
         self.assertEqual(backend.held_buttons, set())
 
+    def test_zero_state_with_stable_active_desktop_witness_retires_owned_inputs(self):
+        backend, _ = self._release_backend({17: None, 1: None})
+        backend.targets = {"fixture": 42}
+        backend.held_key_targets = {"CTRL": "fixture", "LEFT_CTRL": "fixture"}
+        backend.held_button_targets = {"left": "fixture"}
+        evidence = {"target": "fixture", "input_desktop_active": True,
+                    "desktop_hookcontrol_opened": True, "probe_integrity_rid": 8192,
+                    "target_integrity_rid": 8192}
+        backend._async_key_state_query_witness = lambda target: evidence
+
+        result = backend.release_all()
+
+        self.assertTrue(result["verified"])
+        self.assertEqual(result["keys_unknown"], [])
+        self.assertEqual(result["buttons_unknown"], [])
+        self.assertEqual(result["state_query_witnesses"], {"17": [evidence, evidence],
+                                                              "1": [evidence, evidence]})
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, set())
+
+    def test_zero_state_without_stable_witness_remains_unknown(self):
+        backend, _ = self._release_backend({17: None, 1: False})
+        backend.targets = {"fixture": 42}
+        backend.held_key_targets = {"CTRL": "fixture", "LEFT_CTRL": "fixture"}
+        backend.held_button_targets = {"left": "fixture"}
+        evidence = {"target": "fixture", "input_desktop_active": True}
+        witnesses = iter((evidence, None))
+        backend._async_key_state_query_witness = lambda _target: next(witnesses)
+
+        result = backend.release_all()
+
+        self.assertFalse(result["verified"])
+        self.assertEqual(result["keys_unknown"], ["CTRL", "LEFT_CTRL"])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+
     def test_release_all_persistent_hold_then_later_clear(self):
         backend, _ = self._release_backend({17: True, 1: False})
         result = backend.release_all()

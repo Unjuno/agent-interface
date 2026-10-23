@@ -72,8 +72,13 @@ class Win32CaptureArtifactTests(unittest.TestCase):
     def test_artifact_manager_rejects_invalid_dimensions(self):
         with tempfile.TemporaryDirectory() as directory:
             artifacts = CaptureArtifacts(directory)
-            with self.assertRaisesRegex(ValueError, "dimensions mismatch"):
-                artifacts.write(b"short", 2, 1)
+            invalid = ((b"short", 2, 1), (bytes(4), True, 1),
+                       (bytes(4), 8193, 1), (b"", 8192, 8192))
+            for raw, width, height in invalid:
+                with self.subTest(width=width, height=height, size=len(raw)):
+                    with self.assertRaisesRegex(ValueError, "dimensions mismatch"):
+                        artifacts.write(raw, width, height)
+            self.assertEqual(list(Path(directory).iterdir()), [])
 
     def test_rgb_handoff_is_explicitly_unsupported(self):
         with tempfile.TemporaryDirectory() as directory:
