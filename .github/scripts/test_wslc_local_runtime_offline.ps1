@@ -29,6 +29,18 @@ public static class FakeWslcCli
         }
         if (args.Length >= 3 && args[0] == "container" && args[1] == "list")
         {
+            string cleanupMode = Environment.GetEnvironmentVariable("FAKE_WSLC_MODE") ?? "success";
+            if (cleanupMode == "cleanup-timeout")
+            {
+                string root = Environment.GetEnvironmentVariable("FAKE_WSLC_TEST_ROOT");
+                File.WriteAllText(Path.Combine(root, "cleanup.pid"), Process.GetCurrentProcess().Id.ToString());
+                Thread.Sleep(30000);
+            }
+            if (cleanupMode == "cleanup-nonempty")
+            {
+                Console.WriteLine("[{\"id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}]");
+                return 0;
+            }
             Console.WriteLine("[]");
             return 0;
         }
@@ -63,6 +75,7 @@ public static class FakeWslcCli
 
 $oldPath = $env:PATH
 $oldMode = $env:FAKE_WSLC_MODE
+$oldFakeRoot = $env:FAKE_WSLC_TEST_ROOT
 $probePathsBefore = @(
     Get-ChildItem -LiteralPath $tempRoot -Directory -Filter 'agent-interface-wslc-probe-*' -ErrorAction SilentlyContinue |
         ForEach-Object { $_.FullName })
@@ -73,6 +86,7 @@ try {
     Copy-Item -LiteralPath $fakeBase -Destination (Join-Path $fakeRoot 'wsl.exe')
     Copy-Item -LiteralPath $fakeBase -Destination (Join-Path $fakeRoot 'wslc.exe')
     $env:PATH = $fakeRoot + ';' + $oldPath
+    $env:FAKE_WSLC_TEST_ROOT = $fakeRoot
     $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
     $smokeScript = Join-Path $PSScriptRoot 'test_wslc_local_runtime.ps1'
 
@@ -90,16 +104,17 @@ try {
         throw 'Offline successful cleanup left a new probe directory.'
     }
 
-    foreach ($mode in @('failure', 'timeout')) {
+    foreach ($mode in @('failure', 'timeout', 'cleanup-timeout', 'cleanup-nonempty')) {
         $env:FAKE_WSLC_MODE = $mode
         $runLimit = if ($mode -eq 'timeout') { '1' } else { '2' }
+        $cleanupLimit = if ($mode -eq 'cleanup-timeout') { '1' } else { '2' }
         $outcome = Invoke-WslcBoundedProcess -FilePath $powershell -TimeoutSeconds 20 `
             -ArgumentList @('-NoProfile', '-NonInteractive', '-File', $smokeScript,
-                '-RunTimeoutSeconds', $runLimit)
+                '-RunTimeoutSeconds', $runLimit, '-CleanupTimeoutSeconds', $cleanupLimit)
         if ($outcome.ExitCode -eq 0) {
             throw "Expected offline $mode failure, but smoke succeeded."
         }
-        if ($mode -eq 'timeout' -and
+        if ($mode -in @('timeout', 'cleanup-timeout') -and
                 (($outcome.StandardOutput + $outcome.StandardError) -notmatch 'Timed out after 1s')) {
             throw "Timed-out run was not reported: $($outcome | ConvertTo-Json -Compress)"
         }
@@ -120,21 +135,33 @@ try {
         if (-not (Test-Path -LiteralPath (Join-Path $preserved 'wslc-run.stderr.txt'))) {
             throw "Unconfirmed $mode outcome lost its raw CLI log."
         }
-        $fakePid = [int](Get-Content -LiteralPath ($cidPath + '.pid') -Raw)
-        if (Get-Process -Id $fakePid -ErrorAction SilentlyContinue) {
+        if ($mode -eq 'cleanup-timeout') {
+            $fakePid = [int](Get-Content -LiteralPath (Join-Path $fakeRoot 'cleanup.pid') -Raw)
+        }
+        else {
+            $fakePid = [int](Get-Content -LiteralPath ($cidPath + '.pid') -Raw)
+        }
+        if ($mode -in @('timeout', 'cleanup-timeout') -and
+                (Get-Process -Id $fakePid -ErrorAction SilentlyContinue)) {
             throw "Offline $mode CLI process $fakePid was not retired."
+        }
+        if ($mode -in @('cleanup-timeout', 'cleanup-nonempty') -and
+                -not (Test-Path -LiteralPath (Join-Path $preserved 'wslc-cleanup-query.stdout.txt'))) {
+            throw "Unconfirmed $mode outcome lost its scoped cleanup output file."
         }
         # The fake executable cannot create a real container. Remove only this
         # test's GUID-owned directory after its receipt/log assertions pass.
         Remove-Item -LiteralPath $preserved -Recurse -Force
     }
 
-    Write-Output 'Offline WSLc smoke harness: PASS (success cleanup, failed-run retention, bounded-timeout retention)'
+    Write-Output 'Offline WSLc smoke harness: PASS (success cleanup, failed-run retention, run/cleanup timeouts, non-empty cleanup retention)'
 }
 finally {
     $env:PATH = $oldPath
     if ($null -eq $oldMode) { Remove-Item Env:FAKE_WSLC_MODE -ErrorAction SilentlyContinue }
     else { $env:FAKE_WSLC_MODE = $oldMode }
+    if ($null -eq $oldFakeRoot) { Remove-Item Env:FAKE_WSLC_TEST_ROOT -ErrorAction SilentlyContinue }
+    else { $env:FAKE_WSLC_TEST_ROOT = $oldFakeRoot }
     if (Test-Path -LiteralPath $fakeRoot) {
         Remove-Item -LiteralPath $fakeRoot -Recurse -Force
     }
