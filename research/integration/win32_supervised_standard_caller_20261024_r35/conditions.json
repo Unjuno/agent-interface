@@ -1,0 +1,211 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+  "claims_excluded": [
+    "MAP01",
+    "R29 strict 1250 ms blocked-callback gate",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "efficiency",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-recovery task effect",
+    "reliability",
+    "runtime-integrated task_success (must remain null)",
+    "second attempt reliability",
+    "strict input-release PASS",
+    "task success after cancellation",
+    "task_success after recovery"
+  ],
+  "decision": {
+    "diagnostic_pass": "instrumentation is proven loaded by an input-free subprocess and the live run records exact producer retirement method entry/return timestamps or a bounded trace showing which call remains open at callback release.",
+    "stop": "One fixture, one dispatch, at most one cancel; never replay or retry. Any setup mismatch stops before input.",
+    "strict_action_outcome": "The R29 strict gate remains unchanged and requires a full 1250 ms post-cancel hold. R35 is a sub-second diagnostic only and can never be reported as strict-gate PASS. It separately tests whether a pre-armed independent state sampler observes Q-up after recovery SendInput returns but before the 700 ms callback release, and whether a distinct second Q-up hook callback is visible below the nominal timeout cap."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "host": "user-authorized local Windows PC; one owned fixture process/window",
+    "low_level_hooks_timeout_registry": "HKCU\\Control Panel\\Desktop\\LowLevelHooksTimeout absent at R29 preflight; read only",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "frozen_files": {
+    "PREPARATION.md": "7bf2edaad7fed98541df7d54cd74c0fd14d3a279274d070bf3f88d58bac6aa0e",
+    "README.md": "1d52aed996c93f52d98c9d06cd353b8d18a59bf11556da5f570f02a534f81a58",
+    "audit.py": "40bc331af6bf1a8de956ce12ef48df7ae566eacc93609216e795303ffc19e2d7",
+    "audit_repaired.py": "6766f984c427ded873ef51d8d266865d83bd34d999fdf2e50f461c41d0382e4f",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight.py": "a83fa4710cb8bfe5b9d14a24230c077ed6e12023be6aff78ac6e7c58a76b12ea",
+    "probe.py": "98e58d635f3914dc2eb6a9f04013fa5d0a11fbd6c4541d1b362d3843f516faf9",
+    "trace_analysis.py": "960d84d34bcaf40df6d87b78c5da1ce3b87313f0a37704ba7b51002e7dcd6982"
+  },
+  "host": "user-authorized local Windows PC; one owned fixture process/window",
+  "hypothesis": "After independently proving the fixture is actually in Q-down state, a single held injected Q-up callback and public cancellation will show whether recovery clears that exact key while the hook callback is blocked.",
+  "instrumentation": {
+    "boundaries": [
+      "supervisor_exchange",
+      "recovery_helper_process",
+      "_recover",
+      "release_all",
+      "exact_VK_Q_SendInput"
+    ],
+    "diagnosis_script": "trace_analysis.py",
+    "mode": "R35 adds a finite 10 ms independent same-generation state series process, started before dispatch, to avoid post-event process startup latency. The Q-up callback hold is 700 ms; cancel is withheld if the projected callback total exceeds 950 ms. No runtime source changes, retry or replay.",
+    "no_runtime_source_change": true,
+    "preflight_smoke_path": "instrumentation_preflight.jsonl",
+    "trace_path": "run/cancellation_call_trace.jsonl"
+  },
+  "nonclaims": [
+    "indefinite native blocking",
+    "hard real-time bound beyond frozen finite windows",
+    "atomic capture-to-input fencing",
+    "runtime-integrated task_success (must remain null)",
+    "MAP01",
+    "WSLc or Docker portability",
+    "matched efficiency",
+    "broad reliability",
+    "kernel-causality attribution",
+    "WSLc application control",
+    "kernel causality",
+    "exact physical application time"
+  ],
+  "packet_source_files": [
+    "audit.py",
+    "audit_repaired.py",
+    "instrumentation/sitecustomize.py",
+    "preflight.py",
+    "probe.py",
+    "trace_analysis.py"
+  ],
+  "predecessor": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r34b",
+    "audit_path": "research/integration/win32_supervised_standard_caller_20261024_r34b/audit_repaired.json",
+    "audit_sha256": "e9f9e4cf20c56eb940a5658b81483987dae42e74eaef05672f0d4e0b9e0ac60a",
+    "audit_status": "FAIL_OR_UNKNOWN",
+    "passed": 20,
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r34b/raw.json",
+    "raw_sha256": "fe2eb3c4d5d354819220071a62a5eaadc9caee85314d692e6c5d3e64f4eb9a02",
+    "total": 22,
+    "trace_diagnosis_path": "research/integration/win32_supervised_standard_caller_20261024_r34b/trace_analysis_posthoc.json",
+    "trace_diagnosis_sha256": "11dbeba290caeea42de8d7b54ef7017dd35bccdafd39f49e6b0bc0d60b6df8f7"
+  },
+  "previous_no_input_attempt": null,
+  "previous_prelaunch_stop": null,
+  "resource_boundary": "One user-authorized local Windows PC, one owned fixture/window and hook; one dispatch, at most one cancellation, one 700 ms Q-up callback hold; no retries or replay, no registry change, no WSLc or Docker. A separate child process performs finite read-only Q-state sampling.",
+  "retry_policy": "Input-free frozen-source, R34b predecessor, registry and instrumentation preflight; one fresh fixture and dispatch; require same-generation Q-down baseline and a projected callback duration <=950 ms before one cancel. No retry/replay. Any mismatch stops before cancellation; preserve failure.",
+  "schema": "win32-supervised-standard-caller-r35-conditions-v1",
+  "source_commit": "ba91a17fe5ced2e4fdb72803e66c0d531b6d4f9c",
+  "source_sha256": {
+    "audit.py": "40bc331af6bf1a8de956ce12ef48df7ae566eacc93609216e795303ffc19e2d7",
+    "audit_repaired.py": "6766f984c427ded873ef51d8d266865d83bd34d999fdf2e50f461c41d0382e4f",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight.py": "a83fa4710cb8bfe5b9d14a24230c077ed6e12023be6aff78ac6e7c58a76b12ea",
+    "probe.py": "98e58d635f3914dc2eb6a9f04013fa5d0a11fbd6c4541d1b362d3843f516faf9",
+    "trace_analysis.py": "960d84d34bcaf40df6d87b78c5da1ce3b87313f0a37704ba7b51002e7dcd6982"
+  },
+  "timeout_registry_expected": "absent",
+  "timeouts_seconds": {
+    "attempt_total": 90,
+    "cancel_response": 1,
+    "close_drain": 4,
+    "close_response": 1,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "hook_entry": 30,
+    "independent_readback": 8,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "owned_process_terminate": 2,
+    "poll_response": 0.5,
+    "pre_cancel_readback": 0.5,
+    "producer_exit": 2.5,
+    "recovery_deadline_ms": 2500,
+    "recovery_up_observation": 4,
+    "result_readback": 12,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe"
+    },
+    "caller": "public stdio MCP interface_observe/interface_validate/interface_dispatch/interface_cancel/interface_results/interface_close",
+    "cancel": "one public interface_cancel for the exact dispatch call_id; no second cancel",
+    "close_retry_interval_ms": 100,
+    "effect_order": "Fixture click and CTRL+S save occur before cancellation, as in R34b. This remains independent fixture effect only; no post-recovery task success is claimed.",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "hold_poll_delay_ms": 10,
+    "hook_status_poll_interval_ms": 250,
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-cancel-r35",
+    "max_callback_total_before_cancel_ms": 950,
+    "native_stimulus": {
+      "event": "first injected VK_Q WM_KEYUP after the injected Q-down callback returned and independent same-generation readback proved Q-down",
+      "hook": "one WH_KEYBOARD_LL hook in the probe process",
+      "max_callback_hold_ms": 1500,
+      "release": "Hold only the first Q-up callback for 700 ms after the cancel response; release at the frozen hold end or the 1500 ms self-deadline. A pre-armed independent readback child samples same-generation Q state every 10 ms from before dispatch. Abort before cancel if projected callback duration would exceed 950 ms; keep the documented Windows timeout confound below the nominal 1000 ms cap."
+    },
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "post_cancel_hook_hold_ms": 700,
+    "post_cancel_readback_delay_ms": 700,
+    "pre_cancel_readback": "After hook entry, interface_results must show action status running before one interface_cancel call.",
+    "prearmed_state_series": true,
+    "program_id": "supervised-standard-cancel-q-release-r35",
+    "recovery_deadline_ms": 2500,
+    "required_hold_poll_count": 21,
+    "state_series_interval_ms": 10,
+    "state_series_max_duration_ms": 8000,
+    "target": "One fresh owned fixture process/window and one exact generation; require independent Q-down true before the single cancel.",
+    "text_effect": "",
+    "wait_for_result_ms": 0
+  }
+}

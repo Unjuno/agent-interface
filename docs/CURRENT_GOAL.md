@@ -1,3 +1,14 @@
+**Win32 R35 sub-second held-callback diagnostic (2026-10-24):** one fresh
+fixture and one dispatch produced 105 independent same-generation `Q=false`
+samples after the exact recovery Q-up SendInput returned and before its held
+hook callback returned. This is bounded state-release evidence for the
+sub-second diagnostic. The callback lasted 1490.357 ms against a planned 700
+ms; only 4 public polls were recorded, below the strict R29 requirement of 21.
+No second distinct Q-up hook event appeared, the sample series ended `unknown`
+after fixture teardown, and the frozen audit stopped at an inherited undefined
+`readback` reference. The click/save oracle matched before cancellation, but a
+later `q` event followed; runtime task_success remains null. Strict R29 stays
+FAIL_OR_UNKNOWN. See [R35](../research/integration/win32_supervised_standard_caller_20261024_r35/RESULT.md).
 **Win32 proven-down release boundary R33 (2026-10-24):** one fresh public
 stdio-MCP attempt passed the 10-check input-free preflight and independently
 read `Q=true` for the fixture's exact generation before cancellation. The exact

@@ -1,0 +1,73 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+  "checks": {
+    "fixture_exit_and_foreground_restoration": true,
+    "independent_same_generation_q_up_sample_after_sendinput_return_before_callback_return": true,
+    "independent_series_clean_exit": false,
+    "pre_cancel_same_generation_q_down": true,
+    "pre_cancel_save_oracle_matched": true,
+    "r29_strict_gate_conditions_met": false,
+    "recovery_q_up_sendinput_return_observed": true,
+    "runtime_task_success_claimed": false,
+    "second_distinct_q_up_hook_event_observed": false,
+    "single_dispatch": true
+  },
+  "classification": "subsecond diagnostic evidence; strict R29 gate remains FAIL_OR_UNKNOWN; no task_success claim",
+  "facts": {
+    "callback_hold_ms": 1490.357,
+    "dispatch_attempts": 1,
+    "eligible_q_up_samples": 105,
+    "eligible_samples": 106,
+    "fixture_effect_at_save": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "fixture_events": [
+      {
+        "hwnd": 92997916,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": ""
+      },
+      {
+        "code": 113,
+        "kind": "char"
+      }
+    ],
+    "foreground_restored": true,
+    "hook_event_count": 2,
+    "hook_q_up_callbacks": 1,
+    "independent_series_final_error": "unknown or stale target fixture",
+    "independent_series_final_status": "unknown",
+    "planned_hold_ms": 700,
+    "post_save_char_event": true,
+    "pre_cancel_q_down": true,
+    "probe_error": {
+      "detail": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "type": "ExceptionGroup"
+    },
+    "probe_status": "FAIL_OR_UNKNOWN",
+    "public_poll_count_during_hold": 4,
+    "q_up_sendinput_return_ms": 311.077,
+    "r29_minimum_polls_required": 21,
+    "same_generation": true,
+    "sample_first_start_ns": 490580916229100,
+    "sample_last_return_ns": 490582061430800,
+    "samples_total": 231,
+    "strict_hold_ms": 1250,
+    "task_success": null
+  },
+  "interpretation": "A distinct-process, same-generation sampler recorded Q-up (q_down=false) repeatedly after recovery VK_Q key-up SendInput returned and before the held callback returned. This supports a bounded observed state-release interval for this diagnostic window. The callback lasted 1490.357 ms despite the planned 700 ms hold, but R35 recorded only a few public status polls, so the frozen 21-poll R29 strict gate was not satisfied. The sampler ended with unknown/stale-target after fixture teardown. The hook trace has no second distinct Q-up callback. The fixture click/save oracle matched at save time before cancellation, but a later Q character event occurred; this is not post-cancel task success. No strict gate PASS, broad reliability claim, or runtime task_success is justified.",
+  "passed_evidence_checks": 5,
+  "raw_sha256": "712d2cb0ff0feac3d1ff7a76ab2afdaff5b2ee8988f2cbb0dd3c46795872ccde",
+  "schema": "r35-evidence-review-v1",
+  "source_commit": "ba91a17fe5ced2e4fdb72803e66c0d531b6d4f9c"
+}
