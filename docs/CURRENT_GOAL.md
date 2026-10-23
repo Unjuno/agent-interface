@@ -1,5 +1,19 @@
 # Current objective and working direction
 
+**Standard-caller cancellation R11 (2026-10-24):** 250 ms polling of the
+returned public call ID advanced execution to injected Q-down in 984.654 ms.
+The callback was held through a 1.699 ms public cancel response; the exact
+producer exited, hook UP followed, and an independent same-generation readback
+observed Q-up. The terminal same-call result reported `recovered` and
+`release_confirmed=true`; exact R11 fixture effect was saved, while runtime
+`task_success` stayed null. The immutable audit remains FAIL_OR_UNKNOWN 17/19:
+it counts an initial pre-admission `unknown_call` poll as a failure and the
+immediate session close was busy while cleanup was draining. Processes and
+fixture exited, hook and foreground cleanup passed. See the
+[R11 result](../research/integration/win32_supervised_standard_caller_20261024_r11/RESULT.md).
+The next one-shot should preserve the transient `unknown_call` and retry only
+busy `interface_close` within a finite drain window.
+
 **Standard-caller cancellation R10 (2026-10-24):** the one-shot public
 stdio-MCP run again completed the fixture effect and independent same-generation
 Q-up readback, but the 100 s hook gate expired about 0.780 s before injected
