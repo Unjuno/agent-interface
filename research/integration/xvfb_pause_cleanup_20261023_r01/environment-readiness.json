@@ -1,0 +1,23 @@
+{
+  "issue": {
+    "url": "https://github.com/Unjuno/agent-interface/issues/7924",
+    "state": "open",
+    "updated_at": "2026-10-22T02:15:08Z",
+    "comment_count": 65
+  },
+  "latest_published_comment": {
+    "url": "https://github.com/Unjuno/agent-interface/issues/7924#issuecomment-6331056117",
+    "body": "## 2026-10-22 attached-host readiness check (read-only)\n\n- `wsl --version` reports WSL `3.0.3.0`; `wslc.exe --version` reports WSLc `3.0.3.0` on this Windows host.\n- A read-only `Win32_Process` snapshot found no visible `wslc.exe` processes at the time of inspection.\n- No WSLc container/image inventory or run, Docker command, cleanup, or allocation was performed.\n\nThis does **not** establish that the shared WSLc runtime has no existing containers, that their ownership is reconciled, or that a named allocation is unused. Keep the STOP/HOLD disposition and do not start the repo smoke or experiment until the shared owners are reconciled or an allocator confirms a specific unused slot. The version observation does not update or replace any earlier experiment result.",
+    "id": 6331056117,
+    "pull_request_review_id": null,
+    "in_reply_to_id": null,
+    "created_at": null,
+    "updated_at": null,
+    "review": null,
+    "side": null,
+    "line": null,
+    "start_line": null,
+    "path": null
+  },
+  "interpretation": "No explicit specific-unused-WSLc-slot confirmation found in the current issue body/latest comments. Runtime execution remains pending a real target allocation; zero-client/distro observations are insufficient."
+}
