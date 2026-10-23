@@ -1,0 +1,33 @@
+{
+  "attempt_id": "win32-public-mcp-effect-timing-20261024-r01",
+  "caller": "actual runtime.cli_v1.mcp_server stdio process; public interface_observe then interface_dispatch",
+  "cleanup": "close only the owned fixture HWND/process; preserve raw report if its state is uncertain",
+  "dispatch": "one finite program: focus, click/down+up, known text, Ctrl+S, wait, observe, release_all; exact R07 task differs from prior R06 sentinel only",
+  "frozen_files": {
+    "audit.py": "a4aaaa36656eb2c3fa75b6b582763db76a7944d686e73a281cebba554b8a49c5",
+    "probe.py": "ce48561ab4ee58aa06fc8b9723d9841304183cde4c3dd1a72d839085dddc33bf",
+    "timed_fixture_app.py": "152671cc0d3964e643fbb16550a4710fe936046470b073a67d94713c6d6417ad"
+  },
+  "input_scope": "visible foreground window is the owned fixture; no other target is configured or acted on",
+  "nonclaims": [
+    "blocked-I/O bound",
+    "generation admission",
+    "supervisor recovery",
+    "model/token efficiency",
+    "MAP01",
+    "broad reliability"
+  ],
+  "platform": "Windows local desktop; user-authorized host use",
+  "release_pass": "public report has final release receipt verified=true, no keys/buttons down, and no unknown keys/buttons",
+  "retry_policy": "one dispatch only; unknown/timeout never retried",
+  "schema": "win32-public-mcp-effect-timing-conditions-v1",
+  "source_commit": "82f42b47e1701fa975c654d1d9d53312eef399a6",
+  "target": "one fresh process-owned Agent Interface Win32 fixture window; exact configured HWND only",
+  "task": {
+    "effect": "fixture writes one JSON record with saved=true, exact text, clicked=true",
+    "independent_oracle": "read fixture effect file and JSONL event journal after the public MCP call; use monotonic_ns for event, file commit, public call and readback boundaries",
+    "text": "MCP-LIVE-R07-TIMING-ONLY"
+  },
+  "task_pass": "independent effect JSON exactly matches the frozen task and event journal has exact character count plus one save",
+  "timing_claim": "one descriptive sample of public observation/dispatch, fixture input/save, independent file readback, and release timing; no matched comparison or general latency claim"
+}
