@@ -537,6 +537,17 @@ shutdown reported closed without release confirmation. The strict result is
 without changing that outcome. R27 will follow the pending receipt with
 bounded read-only `interface_results(call_id)` retrieval before closing.
 
+R27 follows that protocol and passes 14/14: after the 10 s public dispatch
+returned `pending`, six read-only lookups of its exact call ID produced the
+terminal `completed` receipt at 11,059.7 ms from dispatch start. The receipt
+records verified all-up release at 10,818.8 ms, producer exit and neutral
+readback; the independent fixture effect and event journal match exactly. The
+public session closed, fixture exited cleanly, and foreground was restored.
+`interface_close` itself says `release_confirmed=false`; the separate terminal
+dispatch receipt provides the release evidence. This is one local Windows
+fixture trial, with no WSLc, MAP01, blocked-I/O release, matched efficiency, or
+broad-reliability claim. See the [R27 packet](../research/integration/win32_supervised_standard_caller_20261024_r27/RESULT.md).
+
 ## Remaining scientific gates
 
 The release-supervision packet preserves main run [39444638512](https://github.com/Unjuno/agent-interface/actions/runs/39444638512), instrumented run [39446039020](https://github.com/Unjuno/agent-interface/actions/runs/39446039020), rebased-head failure [39447636867](https://github.com/Unjuno/agent-interface/actions/runs/39447636867), and fixture-fixed rerun [39448218110](https://github.com/Unjuno/agent-interface/actions/runs/39448218110). r01 retained two `worker_did_not_exit_cleanly` failures among four cancel-retirement comparisons; its receipts discarded child result status. The supervisor diagnostics preserve status and monotonic receipt/exit times while leaving forced termination `UNKNOWN`. r02 had five blocked-owner cases with independent release readback and synthetic-oracle PASS; release took 337–411 ms and cancel 390–654 ms. In r04, all five blocked-owner oracle checks passed (cancel 628–879 ms; release-worker 549–570 ms), with release `UNKNOWN`, runtime `task_success=null`, replay denied. The r03 fixture race was fixed by atomic marker publication and the full Xvfb workflow passed; r03 remains preserved as failure. The separate whole-server-stop task oracle also failed. These results do not establish release while platform I/O is unavailable, physical input, MAP01, or efficiency.
