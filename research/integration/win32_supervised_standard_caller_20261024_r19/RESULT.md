@@ -25,3 +25,17 @@ check correctly exposes the unresolved action state by requiring action
 raw polls and event trace carry the direct evidence. R19 demonstrates bounded
 fail-closed cancellation status only, not a terminal action, input release,
 recovery, MAP01, or WSLc behavior. Do not repeat this one-shot attempt.
+
+Code-path check after the run: `_supervised_win32_standard_dispatch` exits its
+poll loop when cancellation reaches `unknown` (`runtime/cli_v1/mcp_server.py`);
+`OwnedWin32SessionOwner._refresh` refreshes only the cancellation record, while
+`close` requires the owner phase to be `recovered` or `completed`
+(`runtime/cli_v1/owned_win32_session.py`). Existing tests explicitly preserve
+separate action/cancellation receipts and require close to stay busy while
+ownership is unresolved (`test_owned_win32_session.py`). The 2 focused tests
+for those invariants pass. Therefore changing action to `unknown` alone would
+not resolve custody and risks misrepresenting a still-unresolved native effect.
+The remaining design requirement is a terminal action receipt that can report
+unknown while retaining the owner record and keeping close gated until an
+authoritative recovery receipt or a separately specified shutdown policy
+resolves custody.

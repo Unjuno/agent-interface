@@ -577,10 +577,12 @@ the audit extraction defects from the actual unresolved terminal-action and
 input-release questions. These results narrow the boundary:
 cancellation uncertainty becomes visible within 3.5 s even while the callback
 is held, but action completion, release, recovery, and public close remain
-unproved. See the immutable R14–R19 packets. Next work should trace and fix the
-runtime cancellation/action state relationship and public close behavior in a
-new source change, then predeclare a distinct attempt; do not repeat these
-one-shot trials. No verified unused WSLc allocation is available, so this does
-not qualify WSLc or MAP01. The existing focused local session, supervised-MCP,
+unproved. The source path and two existing focused tests confirm that cancel
+and action receipts are intentionally separate and custody remains open while
+the owner is unresolved; blindly changing action to `unknown` would hide that
+custody state. Next work should design a terminal action receipt that preserves
+unresolved ownership, then exercise the composed path with distinct evidence.
+Do not repeat these one-shot trials. No verified unused WSLc allocation is
+available, so this does not qualify WSLc or MAP01. The existing focused local session, supervised-MCP,
 and operation-owner suite passes 42/42 on Windows CPython 3.11.9; it does not
 yet cover the R19 `cancellation=unknown` / `action=running` composition state.
