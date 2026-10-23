@@ -207,6 +207,15 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
     _need(isinstance(source, dict), "source must be object")
     _bounded_int(source.get("observation_seq"), "source.observation_seq", 0, 2**63 - 1)
     _bounded_int(source.get("binding_revision"), "source.binding_revision", 0, 2**63 - 1)
+    if "target_generations" in source:
+        target_generations = source["target_generations"]
+        _need(isinstance(target_generations, dict) and len(target_generations) <= 128,
+              "source.target_generations must be an object with at most 128 targets")
+        for target, generation in target_generations.items():
+            _identifier(target, "target generation target")
+            _need(isinstance(generation, str)
+                  and re.fullmatch(r"[0-9a-f]{64}", generation) is not None,
+                  "target generation must be a lowercase SHA-256 digest")
 
     authority = program.get("authority")
     _need(isinstance(authority, dict), "authority must be object")

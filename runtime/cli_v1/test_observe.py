@@ -111,6 +111,7 @@ class Win32ReadOnlyObserveTests(unittest.TestCase):
         from runtime.backends.win32_v1.session import Win32RuntimeSession
         backend = object.__new__(Win32Backend)
         backend.targets = {"fixture": 42}
+        backend.target_generation = mock.Mock(return_value="a" * 64)
         backend.user32 = SimpleNamespace(IsWindow=mock.Mock(return_value=True))
         backend.geometry = mock.Mock(return_value={"width": 16, "height": 16})
         backend.held_keys = {"SHIFT": 16}
@@ -214,8 +215,28 @@ class Win32ReadOnlyObserveTests(unittest.TestCase):
             self.assertEqual(artifact["mime_type"], "image/png")
             self.assertEqual(artifact["sha256"], hashlib.sha256(saved).hexdigest())
             self.assertEqual(artifact["source_raw_sha256"], row["observation"]["sha256"])
-            self.assertTrue(Path(artifact["path"]).is_relative_to(Path(directory)))
+            self.assertTrue(Path(artifact["path"]).resolve().is_relative_to(Path(directory).resolve()))
         backend._capture_hdc.assert_called_once()
+        self.assert_untouched(backend, session)
+
+    def test_win32_observation_pins_generation_around_capture(self):
+        backend, session, _ = self.backend_session()
+        row = observe_in_session(session, target="fixture", frame="window_client",
+                                 region=[0, 0, 4, 4])
+        self.assertEqual(row["status"], "returned")
+        self.assertEqual(row["target_generation"], "a" * 64)
+        self.assertEqual(row["target_generation_consistency"], "matched")
+        backend.target_generation.assert_has_calls([mock.call("fixture"), mock.call("fixture")])
+
+    def test_win32_observation_generation_change_preserves_capture_but_refuses_freshness(self):
+        backend, session, _ = self.backend_session()
+        backend.target_generation.side_effect = ["a" * 64, "b" * 64]
+        row = observe_in_session(session, target="fixture", frame="window_client",
+                                 region=[0, 0, 4, 4])
+        self.assertEqual(row["status"], "observation_failed")
+        self.assertEqual(row["error"], "TARGET_GENERATION_CHANGED_DURING_OBSERVATION")
+        self.assertIn("observation", row)
+        self.assertEqual(row["target_generation_consistency"], "changed")
         self.assert_untouched(backend, session)
 
 

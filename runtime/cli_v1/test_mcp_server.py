@@ -654,19 +654,69 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(json.loads((root/'report.json').read_text()), report)
             self.assertEqual(json.loads((root/'request.json').read_text())['targets'], {'fixture': 123})
 
+    async def test_public_win32_dispatch_rechecks_observed_generation_before_input(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        class FakeWin32Backend:
+            def __init__(self, current):
+                self.current = current
+                self.configure_capture_artifacts = Mock()
+                self.close = Mock()
+
+            def target_generation(self, target):
+                if target != 'fixture':
+                    raise ValueError('unknown target')
+                return self.current
+
+        generation = 'a' * 64
+        program = {
+            'schema': 'agent-interface/program-v1', 'program_id': 'public-generation-check',
+            'source': {'observation_seq': 4, 'binding_revision': 2,
+                       'target_generations': {'fixture': generation}},
+            'authority': {'lease_id': 'test', 'expires_at_ns': 99},
+            'terminal': {'release_all_required': True},
+            'ops': [{'op': 'focus', 'target': 'fixture'}, {'op': 'text', 'text': 'x'},
+                    {'op': 'release_all'}]}
+        for current, expected_status in ((generation, 'completed'), ('b' * 64, 'refused')):
+            with self.subTest(current=current), tempfile.TemporaryDirectory() as td:
+                backend = FakeWin32Backend(current)
+                session = SimpleNamespace(backend=backend,
+                    dispatch=Mock(return_value={'status': 'completed',
+                        'execution': {'releases': [{'verified': True, 'keys_down': [], 'buttons_down': []}]},
+                        'recovery_required': False}))
+                server = create_server({'fixture': 123}, td)
+                with patch('runtime.cli_v1.api.open_session', return_value=session):
+                    reply = await server.call_tool('interface_dispatch', {
+                        'program': program, 'current_observation_seq': 4,
+                        'current_binding_revision': 2})
+                receipt = json.loads(reply.content[0].text)
+                report = json.loads((Path(receipt['call_directory']) / 'report.json').read_text())
+                self.assertEqual(report['result']['status'], expected_status)
+                if expected_status == 'completed':
+                    session.dispatch.assert_called_once()
+                    backend.configure_capture_artifacts.assert_called_once()
+                else:
+                    session.dispatch.assert_not_called()
+                    backend.configure_capture_artifacts.assert_not_called()
+                backend.close.assert_called_once()
+
     async def test_image_is_forwarded_once_outside_text(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
+            generation = 'a' * 64
             envelope = {'status': 'returned', 'image': {
                 'type': 'image', 'mimeType': 'image/png', 'data': 'YWJj'}}
             with patch('runtime.cli_v1.mcp_server.observe', return_value={'status': 'returned'}) as observe, patch(
-                    'runtime.cli_v1.review.review_bytes', return_value=envelope):
+                    'runtime.cli_v1.review.review_bytes', return_value={**envelope,
+                        'receipt': {'source': {'raw_report': {'target_generation': generation}}}}):
                 reply = await server.call_tool('interface_observe', {
                     'target': 'fixture', 'frame': 'window_client', 'region': [0, 0, 10, 10]})
             observe.assert_called_once()
             self.assertEqual(len(reply.content), 2)
             self.assertEqual(reply.content[1].data, 'YWJj')
             self.assertNotIn('YWJj', reply.content[0].text)
+            self.assertIn(generation, reply.content[0].text)
+            self.assertIn('target_generation', reply.content[0].text)
             self.assertIn('image', envelope)
 
     async def test_unexpected_backend_and_review_errors_never_repeat_input(self):

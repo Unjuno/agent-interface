@@ -1,6 +1,7 @@
 """One fresh native observation, independent of input dispatch or task scoring."""
 from __future__ import annotations
 
+import re
 import uuid
 from runtime.selector_v1 import BackendUnavailable, open_session
 
@@ -61,7 +62,29 @@ def _observe(targets, *, target, frame, region, capture_directory=None,
             if not callable(configure):
                 raise ValueError("CAPTURE_ARTIFACTS_UNSUPPORTED")
             configure(capture_directory)
-        row.update(status="returned", observation=reader(target, frame, region))
+        backend = session.backend
+        generation_reader = getattr(backend, "target_generation", None)
+        if not callable(getattr(type(backend), "target_generation", None)):
+            generation_reader = None
+        generation_before = None
+        if callable(generation_reader):
+            generation_before = generation_reader(target)
+            if not isinstance(generation_before, str) or not re.fullmatch(
+                    r"[0-9a-f]{64}", generation_before):
+                raise ValueError("TARGET_GENERATION_INVALID")
+        observation = reader(target, frame, region)
+        row["observation"] = observation
+        if callable(generation_reader):
+            generation_after = generation_reader(target)
+            if generation_after != generation_before:
+                row.update(status="observation_failed",
+                           error="TARGET_GENERATION_CHANGED_DURING_OBSERVATION",
+                           target_generation=generation_before,
+                           target_generation_consistency="changed")
+                return row
+            row.update(target_generation=generation_before,
+                       target_generation_consistency="matched")
+        row.update(status="returned")
     except Exception as error:
         row.update(status="observation_failed", error=repr(error))
     finally:

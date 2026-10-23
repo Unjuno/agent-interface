@@ -37,14 +37,19 @@ _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 PublicProgram = Annotated[dict, Field(description=(
     'Bounded agent-interface/program-v1 object. Required fields: '
     'schema="agent-interface/program-v1", program_id (1..64 letters/digits/._-), '
-    'source={observation_seq: integer, binding_revision: integer}, '
+    'source={observation_seq: integer, binding_revision: integer, target_generations?: {configured_target: sha256}}, '
     'authority={lease_id: identifier, expires_at_ns: integer in the execution host monotonic clock}, '
     'terminal={release_all_required: true}, and ops (ordered objects). '
     'The caller must supply a valid current lease and matching source/binding assertions; '
     'this server does not mint them. Begin with {"op":"focus","target":"configured-name"} '
     'when input requires focus. On X11, each program containing pointer_move or observe '
     'must put focus or activate before those operations; a previous dispatch or '
-    'interface_observe does not supply that program-local target. Focus does not '
+    'interface_observe does not supply that program-local target. '
+    'For Win32, interface_observe returns target_generation; include it under '
+    'source.target_generations for every target focused by this program. The standard '
+    'caller rechecks those generations before dispatch and refuses missing or changed '
+    'values. This is a pre-dispatch check, not an atomic window-lifetime fence. '
+    'Focus does not '
     'acknowledge widget readiness or text delivery. '
     'Operation examples: {"op":"text","text":"abc","gap_ms":20}, '
     '{"op":"key_chord","keys":["Left"],"repeat":2}, '
@@ -974,6 +979,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             other visible windows in that region. Choose an explicit screen region
             when an overlapping dialog is needed to interpret the target's state.
             A capture is not a redraw or task-completion acknowledgement.
+            On Win32, the full receipt exposes a stable target_generation at
+            receipt.source.raw_report.target_generation; include it in
+            source.target_generations for matching focused dispatches.
             report_refs requires compact=true and a v3 receipt decoder.
             In v3, read the full report at receipt.source.raw_report in this response;
             the report reference requires no additional tool call.
