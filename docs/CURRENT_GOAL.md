@@ -292,3 +292,6 @@ rather than treating this status check as a fresh assignment.
 The previous 2,219-line document is preserved verbatim in
 [CURRENT_GOAL_HISTORY_20261015.md](CURRENT_GOAL_HISTORY_20261015.md).
 Its dated directions and allocations are history, not fresh instructions.
+## Release-state diagnostic checkpoint (2026-10-23)
+
+R04's input-free Win32 R02 diagnostic recorded the exact owned fixture in foreground on the active `Default` input desktop, successful input-desktop open with hook-control/read-object access, same named desktop for probe and fixture threads, and matching process integrity RID 8192. Neutral Ctrl/S/left-button `GetAsyncKeyState` samples were raw zero. The 10/10 auditor outcome is diagnostic completeness only; no input or release was tested. These conditions justify evaluating a narrowly scoped availability witness for interpreting zero as UP. The older public R03 receipt remains `release_unverified`; do not rewrite it. The candidate implementation must continue to return UNKNOWN whenever foreground, active desktop, desktop access, or integrity cannot be proved and does not establish bounded release under blocked I/O.

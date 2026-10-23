@@ -1,0 +1,11 @@
+{
+  "schema": "win32-release-state-witness-conditions-v1",
+  "attempt_id": "win32-release-state-witness-20261023-r01",
+  "source_commit": "8f922580da062695252fec7dd2975c040c57dada",
+  "mode": "read-only native state query; sends no mouse or keyboard input",
+  "target": "one visible fixture process created and owned by the probe",
+  "queries": ["foreground HWND and owner", "input desktop open with DESKTOP_HOOKCONTROL", "UOI_IO input-desktop flag", "current/fixture/input desktop names", "raw GetAsyncKeyState for CTRL, S, and left button"],
+  "pass_scope": "diagnostic completeness only; does not establish injected-input release",
+  "retry_policy": "one fresh fixture; no replay",
+  "cleanup": "close only the owned fixture HWND and process"
+}

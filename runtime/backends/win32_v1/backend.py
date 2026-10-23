@@ -64,6 +64,13 @@ VK_UP = 0x26
 VK_RIGHT = 0x27
 VK_DOWN = 0x28
 VK_DELETE = 0x2E
+UOI_NAME = 2
+UOI_IO = 6
+DESKTOP_READOBJECTS = 0x0001
+DESKTOP_HOOKCONTROL = 0x0008
+PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+TOKEN_QUERY = 0x0008
+TOKEN_INTEGRITY_LEVEL = 25
 
 KEY_ALIASES = {
     "CTRL": VK_CONTROL, "CONTROL": VK_CONTROL, "SHIFT": VK_SHIFT,
@@ -165,6 +172,7 @@ class Win32Backend:
         self.user32 = ctypes.WinDLL("user32", use_last_error=True)
         self.gdi32 = ctypes.WinDLL("gdi32", use_last_error=True)
         self.kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        self.advapi32 = ctypes.WinDLL("advapi32", use_last_error=True)
         self._configure_api()
         try:
             self.user32.SetProcessDPIAware()
@@ -175,7 +183,11 @@ class Win32Backend:
             if not self.user32.IsWindow(hwnd):
                 raise Win32BackendError(f"invalid HWND for target {name}")
         self.held_keys: dict[str, int] = {}
+        self.held_key_targets: dict[str, str | None] = {}
         self.held_buttons: set[str] = set()
+        self.held_button_targets: dict[str, str | None] = {}
+        self.focused_target: str | None = None
+        self._last_state_query_witness: list[dict[str, Any]] = []
         self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
         self.capture_artifacts = None
@@ -202,6 +214,15 @@ class Win32Backend:
         self.user32.SendInput.restype = wintypes.UINT
         self.user32.GetAsyncKeyState.argtypes = [ctypes.c_int]
         self.user32.GetAsyncKeyState.restype = wintypes.SHORT
+        self.user32.OpenInputDesktop.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+        self.user32.OpenInputDesktop.restype = wintypes.HANDLE
+        self.user32.GetUserObjectInformationW.argtypes = [wintypes.HANDLE, ctypes.c_int,
+            wintypes.LPVOID, wintypes.DWORD, ctypes.POINTER(wintypes.DWORD)]
+        self.user32.GetUserObjectInformationW.restype = wintypes.BOOL
+        self.user32.GetThreadDesktop.argtypes = [wintypes.DWORD]
+        self.user32.GetThreadDesktop.restype = wintypes.HANDLE
+        self.user32.CloseDesktop.argtypes = [wintypes.HANDLE]
+        self.user32.CloseDesktop.restype = wintypes.BOOL
         self.user32.GetDC.argtypes = [wintypes.HWND]
         self.user32.GetDC.restype = wintypes.HDC
         self.user32.ReleaseDC.argtypes = [wintypes.HWND, wintypes.HDC]
@@ -235,6 +256,14 @@ class Win32Backend:
         self.kernel32.GetProcessTimes.restype = wintypes.BOOL
         self.kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
         self.kernel32.CloseHandle.restype = wintypes.BOOL
+        self.kernel32.GetCurrentThreadId.restype = wintypes.DWORD
+        self.kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        self.advapi32.OpenProcessToken.argtypes = [wintypes.HANDLE, wintypes.DWORD,
+                                                   ctypes.POINTER(wintypes.HANDLE)]
+        self.advapi32.OpenProcessToken.restype = wintypes.BOOL
+        self.advapi32.GetTokenInformation.argtypes = [wintypes.HANDLE, ctypes.c_int,
+            wintypes.LPVOID, wintypes.DWORD, ctypes.POINTER(wintypes.DWORD)]
+        self.advapi32.GetTokenInformation.restype = wintypes.BOOL
 
     def manifest(self) -> dict[str, Any]:
         row = capability_manifest(
@@ -337,6 +366,7 @@ class Win32Backend:
         deadline = time.monotonic() + 1.0
         while time.monotonic() < deadline:
             if int(self.user32.GetForegroundWindow() or 0) == hwnd:
+                self.focused_target = target
                 return
             time.sleep(0.01)
         raise Win32BackendError("foreground focus verification failed")
@@ -361,17 +391,136 @@ class Win32Backend:
         item.ki = KEYBDINPUT(vk, 0, 0 if down else KEYEVENTF_KEYUP, 0, 0)
         self._send(item)
 
-    def _key_down_state(self, vk: int) -> bool | None:
+    def _desktop_name(self, handle) -> str | None:
+        needed = wintypes.DWORD()
+        self.user32.GetUserObjectInformationW(handle, UOI_NAME, None, 0,
+                                              ctypes.byref(needed))
+        if not needed.value:
+            return None
+        buffer = ctypes.create_unicode_buffer(
+            needed.value // ctypes.sizeof(wintypes.WCHAR) + 2)
+        if not self.user32.GetUserObjectInformationW(
+                handle, UOI_NAME, buffer, ctypes.sizeof(buffer), ctypes.byref(needed)):
+            return None
+        return buffer.value
+
+    def _process_integrity_rid(self, process_handle) -> int | None:
+        token = wintypes.HANDLE()
+        if not self.advapi32.OpenProcessToken(process_handle, TOKEN_QUERY,
+                                             ctypes.byref(token)):
+            return None
         try:
-            state = self.user32.GetAsyncKeyState(vk) & 0x8001
+            needed = wintypes.DWORD()
+            self.advapi32.GetTokenInformation(token, TOKEN_INTEGRITY_LEVEL,
+                None, 0, ctypes.byref(needed))
+            if not needed.value:
+                return None
+            buffer = ctypes.create_string_buffer(needed.value)
+            if not self.advapi32.GetTokenInformation(token, TOKEN_INTEGRITY_LEVEL,
+                    buffer, needed.value, ctypes.byref(needed)):
+                return None
+            sid = ctypes.c_void_p.from_buffer(buffer).value
+            if not sid:
+                return None
+            count = ctypes.c_ubyte.from_address(sid + 1).value
+            if not count:
+                return None
+            return ctypes.c_uint32.from_address(sid + 8 + 4 * (count - 1)).value
+        finally:
+            self.kernel32.CloseHandle(token)
+
+    def _async_key_state_query_witness(self, target: str | None):
+        """Return evidence that a zero GetAsyncKeyState sample means key-up here.
+
+        A zero sample is ambiguous unless this target is the foreground window
+        on the active input desktop, the caller can open that desktop with
+        hook-control rights, and the caller is at least as privileged as the
+        target. Any unavailable fact leaves the input obligation UNKNOWN.
+        """
+        targets = getattr(self, "targets", {})
+        if target not in targets:
+            return None
+        desktop = None
+        process = None
+        try:
+            hwnd = int(self.user32.GetForegroundWindow() or 0)
+            if hwnd != targets[target]:
+                return None
+            pid = wintypes.DWORD()
+            thread_id = int(self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid)))
+            if not thread_id or not pid.value:
+                return None
+            desktop = self.user32.OpenInputDesktop(
+                0, False, DESKTOP_READOBJECTS | DESKTOP_HOOKCONTROL)
+            if not desktop:
+                return None
+            is_input = wintypes.DWORD()
+            needed = wintypes.DWORD()
+            if not self.user32.GetUserObjectInformationW(
+                    desktop, UOI_IO, ctypes.byref(is_input), ctypes.sizeof(is_input),
+                    ctypes.byref(needed)) or not is_input.value:
+                return None
+            input_name = self._desktop_name(desktop)
+            probe_desktop = self.user32.GetThreadDesktop(
+                self.kernel32.GetCurrentThreadId())
+            target_desktop = self.user32.GetThreadDesktop(thread_id)
+            probe_name = self._desktop_name(probe_desktop) if probe_desktop else None
+            target_name = self._desktop_name(target_desktop) if target_desktop else None
+            if not input_name or input_name != probe_name or input_name != target_name:
+                return None
+            process = self.kernel32.OpenProcess(
+                PROCESS_QUERY_LIMITED_INFORMATION, False, pid.value)
+            if not process:
+                return None
+            probe_rid = self._process_integrity_rid(self.kernel32.GetCurrentProcess())
+            target_rid = self._process_integrity_rid(process)
+            if probe_rid is None or target_rid is None or probe_rid < target_rid:
+                return None
+            # Recheck that the same configured foreground target still owns
+            # the active input desktop after the access and token queries.
+            if int(self.user32.GetForegroundWindow() or 0) != hwnd:
+                return None
+            return {"target": target, "hwnd": hwnd, "pid": int(pid.value),
+                    "thread_id": thread_id, "input_desktop": input_name,
+                    "input_desktop_active": True,
+                    "desktop_hookcontrol_opened": True,
+                    "probe_integrity_rid": probe_rid,
+                    "target_integrity_rid": target_rid}
+        except Exception:
+            return None
+        finally:
+            if process:
+                self.kernel32.CloseHandle(process)
+            if desktop:
+                self.user32.CloseDesktop(desktop)
+
+    def _key_down_state(self, vk: int, target: str | None = None) -> bool | None:
+        self._last_state_query_witness = []
+        try:
+            state = int(self.user32.GetAsyncKeyState(vk)) & 0x8001
         except Exception as error:
             raise Win32BackendError(f"key state query failed for {vk}: {error}") from error
-        # Zero also denotes documented desktop/UIPI/access failure. With no
-        # separate availability witness it cannot discharge tracked custody.
-        return bool(state & 0x8000) if state else None
+        if state & 0x8000:
+            return True
+        if state & 1:
+            return False
+        before = self._async_key_state_query_witness(target)
+        try:
+            confirmed = int(self.user32.GetAsyncKeyState(vk)) & 0x8001
+        except Exception as error:
+            raise Win32BackendError(f"key state query failed for {vk}: {error}") from error
+        if confirmed & 0x8000:
+            return True
+        if confirmed & 1:
+            return False
+        after = self._async_key_state_query_witness(target)
+        if before is not None and after is not None and before == after:
+            self._last_state_query_witness = [before, after]
+            return False
+        return None
 
-    def _key_is_down(self, vk: int) -> bool:
-        state = self._key_down_state(vk)
+    def _key_is_down(self, vk: int, target: str | None = None) -> bool:
+        state = self._key_down_state(vk, target)
         if state is None:
             raise Win32BackendError(f"key state is unknown for {vk}")
         return state
@@ -387,7 +536,11 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
-        elif self._key_is_down(vk):
+            if not hasattr(self, "held_key_targets"):
+                self.held_key_targets = {}
+            self.held_key_targets[key] = getattr(self, "focused_target", None)
+        elif self._key_is_down(vk, getattr(self, "held_key_targets", {}).get(
+                key, getattr(self, "focused_target", None))):
             # Do not let later operations run while an explicit UP remains
             # unresolved. The enclosing execute path will retain custody and
             # attempt cleanup before returning the failure.
@@ -423,7 +576,12 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
-        elif self._key_is_down(BUTTON_FLAGS[button][2]):
+            if not hasattr(self, "held_button_targets"):
+                self.held_button_targets = {}
+            self.held_button_targets[button] = getattr(self, "focused_target", None)
+        elif self._key_is_down(BUTTON_FLAGS[button][2],
+                               getattr(self, "held_button_targets", {}).get(
+                                   button, getattr(self, "focused_target", None))):
             raise Win32BackendError(f"button UP unverified: {button}")
 
     def scroll(self, dx: int, dy: int) -> None:
@@ -580,6 +738,14 @@ class Win32Backend:
                 self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
+        target_sets: dict[int, set[str | None]] = {}
+        key_targets = getattr(self, "held_key_targets", {})
+        button_targets = getattr(self, "held_button_targets", {})
+        for name, vk in tracked_keys.items():
+            target_sets.setdefault(vk, set()).add(key_targets.get(name))
+        for button in tracked_buttons:
+            target_sets.setdefault(BUTTON_FLAGS[button][2], set()).add(
+                button_targets.get(button))
         for vk in sorted(set(tracked_keys.values())):
             self._send_key(vk, False)
         for button in list(self.held_buttons):
@@ -590,10 +756,20 @@ class Win32Backend:
         time.sleep(0.01)
         # Aliases share one sample: querying the same VK twice can consume the
         # unreliable legacy low bit and create an artificial zero ambiguity.
-        states = {vk: self._key_down_state(vk)
-                  for vk in sorted(set(tracked_keys.values()))}
-        button_states = {button: self._key_down_state(BUTTON_FLAGS[button][2])
-                         for button in tracked_buttons}
+        state_targets = {vk: next(iter(targets)) if len(targets) == 1 else None
+                         for vk, targets in target_sets.items()}
+        states = {}
+        button_states = {}
+        state_witnesses = {}
+        for vk in sorted(set(tracked_keys.values())):
+            states[vk] = self._key_down_state(vk, state_targets.get(vk))
+            if self._last_state_query_witness:
+                state_witnesses[str(vk)] = self._last_state_query_witness
+        for button in tracked_buttons:
+            vk = BUTTON_FLAGS[button][2]
+            button_states[button] = self._key_down_state(vk, state_targets.get(vk))
+            if self._last_state_query_witness:
+                state_witnesses[str(vk)] = self._last_state_query_witness
         keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is True)
         buttons = sorted(button for button in tracked_buttons if button_states[button] is True)
         unknown_keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is None)
@@ -605,10 +781,15 @@ class Win32Backend:
         for name in tracked_keys:
             if states[tracked_keys[name]] is False:
                 self.held_keys.pop(name, None)
+                getattr(self, "held_key_targets", {}).pop(name, None)
         self.held_buttons.difference_update(button for button in tracked_buttons
                                             if button_states[button] is False)
+        for button in tracked_buttons:
+            if button_states[button] is False:
+                getattr(self, "held_button_targets", {}).pop(button, None)
         return {"keys_down": keys, "buttons_down": buttons,
                 "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
+                "state_query_witnesses": state_witnesses,
                 "verified": not keys and not buttons and not unknown_keys and not unknown_buttons,
                 "monotonic_ns": time.monotonic_ns()}
 
