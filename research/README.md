@@ -8,6 +8,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 - [Real xterm public-MCP saved effect](integration/xterm_public_task_20261023_r01/README.md) — one known zero-model task through actual PTY/shell, exactly one saved record; API completion precedes fsync in the sample. Custom task helper, no fault/efficiency/generalization claim.
 
+- [Xterm blocked-input cancellation/recovery repeats R04/R05](integration/xterm_cancel_recovery_20261023_r05/README.md) — two real-xterm runs passed 16/16 scoped checks; supervisor readback verified all-up while each old task remained UNKNOWN, and one new task was independently fsynced per run. Raw packets and cross-run comparison are retained. Two samples do not establish broad reliability, MAP01, or efficiency.
+
 - [Queued-UP cancellation and interpretation correction](integration/x11_queued_up_cancel_20261023_r01/README.md) — initial operation is a chord behind an injected delayed request; no-pause count1 passes, paused count3 fails, fresh tasks pass. UP queueing and server release are separate evidence.
 
 - [Matched completion-hold discriminator](integration/x11_tap_completion_hold_20261023_r01/README.md) — prior methods DOWN/count10 vs repaired methods UP/count1 in two samples each; client-facing completion hold after actual X sync, not blocked sends or general reliability.
@@ -233,7 +235,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
-- [Issue #57 A01 compiled graph × pixel-handle composition](integration/compiled_handle_graph_composition_57_a01_20261004/README.md) — offline scenario counts meet the behavioral thresholds, but frozen disposition is `FAIL_SOURCE_BASE_LABEL_MISMATCH`; live GUI semantics and integrated efficiency remain HOLD, with custody limits documented.
+- [Issue #57 A01 compiled graph × pixel-handle composition](integration/compiled_handle_graph_composition_57_a01_20261004/README.md) — offline scenario counts meet the behavioral thresholds, but this artifact's frozen disposition is `FAIL_SOURCE_BASE_LABEL_MISMATCH`; it supplies no live GUI result. The separate finite three-arm comparison is recorded in [the v1 report](live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md), with its summary provenance limitation documented in [the reconciliation](live_control/INTEGRATED_EFFICIENCY_LIVE_AUDIT_RECONCILIATION_20261004.md).
 - [Tk first-character #5260 construction record](integration/tk_firstchar_5260_a01_20261002/PREREG.md) — construction-only Docker/Xvfb runner/auditor checks; proposed 96-trial allocation remains HOLD_NOT_AUTHORIZED.
 - [Tk validation-lifecycle #4367 / Draft PR #4375 metadata archive](integration/tk_validation_lifecycle_v9m3_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [X11 transition coalescing #4422 / Draft PR #4438 metadata archive](integration/x11_transition_coalescing_c4d7_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files; formal remains 0/12 cases and 0/38 captures, and no blocked source payload or construction result is independently recovered.

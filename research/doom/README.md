@@ -145,14 +145,14 @@ the matching cancel in136.780ms from capture and verify empty release in138.694m
 The first allocation's pre-input stale-source failure is retained. This is a
 single controller-authored no-model safety probe, not gameplay or general speed.
 
-Planned next DOOM gate (after the integrated efficiency report): run packaged
-Freedoom `MAP01` as an ordinary continuously advancing map, with asynchronous
-35-tic game time continuing through model waits.  The controller may use visible
-screen/audio evidence and OS keyboard/mouse input only.  An isolated scorer will
-distinguish actual map exit from death or timeout and retain game-tic, wall-time,
-pause/menu, hold/release and video evidence.  This is planned work; no full-map
-clear is currently claimed.  See
-[`INTEGRATED_EFFICIENCY_PLAN_V1.md`](../live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md).
+Registered next DOOM gate: Issue #2679 preregisters an additive ordinary-speed
+Freedoom `MAP01` clear attempt, with asynchronous 35-tic game time continuing
+through model waits. The controller may use visible screen/audio evidence and OS
+keyboard/mouse input only. An independent scorer must distinguish actual map exit
+from death or timeout and retain game-tic, wall-time, pause/menu, hold/release and
+video evidence. No actual run is recorded under its preregistered result path, and
+no full-map clear is claimed. See
+[`map01_finite_clear_attempt_v1/README.md`](map01_finite_clear_attempt_v1/README.md).
 
 ## Continuously advancing MAP01 feasibility
 

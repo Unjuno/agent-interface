@@ -87,23 +87,28 @@ primary frames; health-loss and zero-ammo controls require cancel and verified
 empty release. It is not yet wired into a live controller and makes no latency
 or gameplay claim.
 
-Current next block: [integrated token-efficiency evaluation plan v1](INTEGRATED_EFFICIENCY_PLAN_V1.md).
-Issue #57's three-arm comparison retains a batched plain baseline and measures the
-same cold/warm/layout-invalidation/repair sequence against ephemeral and persistent
-compiled paths.  The composition and requirement matrix are selected; the live
-allocation is not yet preregistered or run.  The subsequent DOOM gate is a
-continuously advancing Freedoom `MAP01` clear attempt, not the existing small
-`basic.wad` transport scenario.
+Current status: the finite three-arm comparison in
+[integrated efficiency result v1](INTEGRATED_EFFICIENCY_LIVE_V1.md) is recorded as
+`RETAIN` for its declared six-task allocation. The independent
+[reconciliation](INTEGRATED_EFFICIENCY_LIVE_AUDIT_RECONCILIATION_20261004.md)
+reproduces the detailed report and audit, while leaving the separately committed
+aggregate-only summary unresolved. Broader reliability and transfer claims remain
+unestablished. The next registered domain gate is the ordinary-speed Freedoom
+`MAP01` attempt in
+[`research/doom/map01_finite_clear_attempt_v1/`](../doom/map01_finite_clear_attempt_v1/README.md),
+not the earlier small `basic.wad` transport scenario.
 
-Fixture checkpoint: `integrated_efficiency_fixture_v1.py` implements one
+Retained pre-formal integration work: `integrated_efficiency_fixture_v1.py` implements one
 append-only six-task scorer with A/A/A/B/B/B layouts.  Its exact, duplicate and
 wrong-token controls pass, and runtime/socket adapters now expose it through the
 existing `session_v33` checked-input path.  A no-input X11 smoke returns an exact
-initial frame and correctly scores all six tasks missing.  No arm has been run.
-The new `integrated_efficiency_protocol_v1.py` also fixes the arm schedule and
+initial frame and correctly scores all six tasks missing. The formal arms and
+their separate result report are recorded above. The
+`integrated_efficiency_protocol_v1.py` fixes the arm schedule and
 scores the frozen decision rule.  Five fail-closed controls pass after repairing
 an initial cross-task duplicate-call-ID validation hole.  The live controller
-and preregistration remain open.
+and formal run are documented in the retained v1 plan and result above; these
+pre-formal probes remain engineering evidence, not extra comparison arms.
 The two-layout socket probe initially rejected query-string URL text before any
 task input.  The preserved failure motivated path-only fixture URLs; the fresh
 probe then observes distinct exact A/B frames and four verified releases through
@@ -114,10 +119,11 @@ handles, refuses the old A handle as `MISSING` at task 4 with zero stale input,
 repairs by minting B handles, records 12 intended button-down admissions and
 verifies release on all 41 programs.  Human-inspected points and zero model calls
 exclude this evidence from the formal efficiency result.
-Issue #57's integration-gap follow-up is now represented by
-`integrated_efficiency_discoveries_v1.json`: three interface mismatches and four
-benchmark/setup/accounting defects, each tied to its retained allocation,
-smallest repair, regression and non-additive overhead.  The protocol rejects
+Issue #57's integration-gap follow-up is represented by
+`integrated_efficiency_discoveries_v1.json`: eight discoveries, comprising three
+interface mismatches and five benchmark/setup/accounting defects, each tied to
+its retained allocation, smallest repair, regression and non-additive overhead.
+The protocol rejects
 missing provenance and silent post-start repair, and returns HOLD when a formal
 discovery invalidates the allocation.
 The first common-client three-arm run then exposes and retains an invalid
