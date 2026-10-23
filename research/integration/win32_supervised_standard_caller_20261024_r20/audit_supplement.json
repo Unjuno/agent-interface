@@ -1,0 +1,216 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r20",
+  "checks": [
+    {
+      "evidence": {
+        "callback_return_ns": 482315269313000,
+        "hold_end_ns": 482315268636600,
+        "hold_start_ns": 482311257332700,
+        "matching_exit_samples": [
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482311496327800,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482311747155500,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482311995091100,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482312245895400,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482312494964300,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482312748728400,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482312999945600,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482313251200900,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482313502794500,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482313754701600,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482314004219200,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482314193074000,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482314446772800,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482314701363500,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482314958463500,
+            "status": "exited",
+            "wait_result": 0
+          },
+          {
+            "creation_time_100ns": 134372646025352181,
+            "exit_code": 65536,
+            "pid": 39056,
+            "sampled_monotonic_ns": 482315208714800,
+            "status": "exited",
+            "wait_result": 0
+          }
+        ],
+        "producer_identity": {
+          "creation_time_100ns": 134372646025352181,
+          "pid": 39056
+        }
+      },
+      "name": "exact_producer_exit_during_hold_before_callback_return",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "callback_return_ns": 482315269313000,
+        "cancel_to_unknown_ms": 2874.5778,
+        "hold_end_ns": 482315268636600,
+        "hold_ms": 4011.3039,
+        "unknown_poll": {
+          "action_status": "unknown",
+          "cancellation_release_confirmed": false,
+          "cancellation_status": "unknown",
+          "is_error": false,
+          "owner_release_confirmed": false,
+          "returned_monotonic_ns": 482314130426200,
+          "started_monotonic_ns": 482314126335100,
+          "status": null
+        }
+      },
+      "name": "terminal_action_unknown_within_bound_while_hook_held",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "hook_trace_after_release": {
+          "callback_entry_ns": 482311254137200,
+          "callback_return_ns": null,
+          "error": null,
+          "events": [
+            {
+              "callback_entry_ns": 482311254137200,
+              "callback_return_ns": 482315269313000,
+              "flags": 16,
+              "message": 256,
+              "suppressed": true,
+              "vk": 81
+            }
+          ],
+          "flags": 16,
+          "hook_handle": 406259439,
+          "ready_ns": 482307496063000,
+          "thread_id": 53068,
+          "vk": 81
+        },
+        "matching_suppressed_events": [
+          {
+            "callback_entry_ns": 482311254137200,
+            "callback_return_ns": 482315269313000,
+            "flags": 16,
+            "message": 256,
+            "suppressed": true,
+            "vk": 81
+          }
+        ]
+      },
+      "name": "held_injected_q_down_suppressed_on_callback_return",
+      "passed": true
+    }
+  ],
+  "claim_scope": "one-run bounded terminal UNKNOWN with action UNKNOWN while the owned callback is held; no input release or recovery claim",
+  "frozen_audit_passed": 7,
+  "frozen_audit_status": "FAIL_OR_UNKNOWN",
+  "frozen_audit_total": 10,
+  "passed": 3,
+  "release_proven": false,
+  "replay_allowed": false,
+  "schema": "win32-supervised-standard-caller-r20-posthoc-audit-v1",
+  "source_commit": "18541e1752cc26dcae45591a50f81697dbf853dd",
+  "status": "PASS_SCOPED_POSTHOC",
+  "task_success": null,
+  "total": 3
+}
