@@ -1,3 +1,17 @@
+**Win32 proven-down release boundary R33 (2026-10-24):** one fresh public
+stdio-MCP attempt passed the 10-check input-free preflight and independently
+read `Q=true` for the fixture's exact generation before cancellation. The exact
+recovery `VK_Q` key-up `SendInput` returned at +619.931 ms; a second process
+read `Q=false` for that same generation at +930.848 ms, while the Q-up hook
+callback remained blocked until +1237.935 ms after cancellation. Public polls
+first reported recovered/release-confirmed at about +983 ms (four of 20 polls);
+the fixture's click/save/empty-text oracle matched at save time. Strict result
+stays FAIL_OR_UNKNOWN: the frozen gate requires at least 21 held polls (20 recorded),
+and no second Q-up hook event was observed. A posthoc evaluator repairs the
+frozen audit script's missing `readback` binding and snapshot-timing bug, but
+does not change this result. The raw also records a post-save `q` char event;
+runtime task_success remains null. See [R33](../research/integration/win32_supervised_standard_caller_20261024_r33/RESULT.md).
+
 **Win32 exact Q-up isolation R32 (2026-10-24):** the corrected no-text fixture
 matched click/save/empty-text exactly. During a 1258.489 ms held Q-down callback,
 the exact recovery Q-up `SendInput` returned after 310.487 ms; `release_all`,

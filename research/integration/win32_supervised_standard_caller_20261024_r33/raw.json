@@ -1,0 +1,1984 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r33",
+  "blocked_call_id": "58db03cb84e1489d98eb04b829b535c5",
+  "blocked_io_independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "generation_after": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "generation_before": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "pid": 19916,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 488414135833500,
+    "started_monotonic_ns": 488414135224900,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 33227460,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 52788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 53584
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 33227460,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 52788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 53584
+      }
+    ],
+    "status": "observed"
+  },
+  "caller_kind": "mcp_stdio",
+  "cancellation_call_trace": [
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 488409783665500,
+      "pid": 46100
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 488409898297300,
+      "pid": 46100
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 488410540899300,
+      "pid": 51424
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 488410647572200,
+      "pid": 51424
+    },
+    {
+      "event": "helper_enter",
+      "helper": "recovery",
+      "monotonic_ns": 488411232290100,
+      "pid": 51424
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 488411280886900,
+      "pid": 40192
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 488411388962400,
+      "pid": 40192
+    },
+    {
+      "event": "helper_enter",
+      "helper": "observer",
+      "monotonic_ns": 488411964096800,
+      "pid": 40192
+    },
+    {
+      "event": "sitecustomize_loaded",
+      "monotonic_ns": 488412306230200,
+      "pid": 18300
+    },
+    {
+      "event": "recovery_trace_wrappers_installed",
+      "monotonic_ns": 488412415375400,
+      "pid": 18300
+    },
+    {
+      "event": "sendinput_enter",
+      "input_type": 0,
+      "monotonic_ns": 488412994940800,
+      "mouse_flags": 2,
+      "pid": 18300
+    },
+    {
+      "elapsed_ns": 6618400,
+      "event": "sendinput_return",
+      "input_type": 0,
+      "monotonic_ns": 488413001795900,
+      "mouse_flags": 2,
+      "pid": 18300
+    },
+    {
+      "event": "sendinput_enter",
+      "input_type": 0,
+      "monotonic_ns": 488413002206200,
+      "mouse_flags": 4,
+      "pid": 18300
+    },
+    {
+      "elapsed_ns": 317400,
+      "event": "sendinput_return",
+      "input_type": 0,
+      "monotonic_ns": 488413002707800,
+      "mouse_flags": 4,
+      "pid": 18300
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 488413002964600,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "elapsed_ns": 248300,
+      "event": "sendinput_return",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 488413003359900,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 488413003562600,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "elapsed_ns": 308300,
+      "event": "sendinput_return",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 488413004018200,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413004213500,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "elapsed_ns": 505100,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413004866800,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413005054100,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "elapsed_ns": 784800,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413006008600,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 488413006243800,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "elapsed_ns": 203300,
+      "event": "sendinput_return",
+      "flags": 0,
+      "input_type": 1,
+      "key_up": false,
+      "monotonic_ns": 488413006601200,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413006833500,
+      "pid": 18300,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "deadline_ns": 488416171000000,
+      "event": "exchange_enter",
+      "helper": "recovery",
+      "monotonic_ns": 488413210207700,
+      "pid": 46100,
+      "recovery_id": "c9a2eb1547674b24a762ecc64042dfe9",
+      "request_id": "c9a2eb1547674b24a762ecc64042dfe9"
+    },
+    {
+      "event": "recover_enter",
+      "monotonic_ns": 488413210624900,
+      "operation_id": "38f6163e0806416893ae5943f4d49356",
+      "pid": 51424,
+      "recovery_id": "c9a2eb1547674b24a762ecc64042dfe9"
+    },
+    {
+      "event": "release_all_enter",
+      "monotonic_ns": 488413211362200,
+      "pid": 51424
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413211592200,
+      "pid": 51424,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "elapsed_ns": 301462400,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413513253500,
+      "pid": 51424,
+      "scan_code": 0,
+      "vk": 17
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413514578900,
+      "pid": 51424,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "elapsed_ns": 308928500,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413824916600,
+      "pid": 51424,
+      "scan_code": 0,
+      "vk": 81
+    },
+    {
+      "event": "sendinput_enter",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488413827305100,
+      "pid": 51424,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "elapsed_ns": 309701200,
+      "event": "sendinput_return",
+      "flags": 2,
+      "input_type": 1,
+      "key_up": true,
+      "monotonic_ns": 488414139104300,
+      "pid": 51424,
+      "scan_code": 0,
+      "vk": 83
+    },
+    {
+      "event": "sendinput_enter",
+      "input_type": 0,
+      "monotonic_ns": 488414139505500,
+      "mouse_flags": 4,
+      "pid": 51424
+    },
+    {
+      "elapsed_ns": 1096900,
+      "event": "sendinput_return",
+      "input_type": 0,
+      "monotonic_ns": 488414140843700,
+      "mouse_flags": 4,
+      "pid": 51424
+    },
+    {
+      "elapsed_ns": 940005200,
+      "event": "release_all_return",
+      "monotonic_ns": 488414151577700,
+      "pid": 51424,
+      "verified": true
+    },
+    {
+      "elapsed_ns": 941006500,
+      "event": "recover_return",
+      "monotonic_ns": 488414151859900,
+      "operation_id": "38f6163e0806416893ae5943f4d49356",
+      "pid": 51424,
+      "recovery_id": "c9a2eb1547674b24a762ecc64042dfe9",
+      "release_accepted": true
+    },
+    {
+      "elapsed_ns": 941635100,
+      "event": "exchange_return",
+      "helper": "recovery",
+      "monotonic_ns": 488414152136900,
+      "pid": 46100,
+      "request_id": "c9a2eb1547674b24a762ecc64042dfe9",
+      "result_neutral": null,
+      "result_release_accepted": true
+    },
+    {
+      "deadline_ns": 488416171000000,
+      "event": "exchange_enter",
+      "helper": "observer",
+      "monotonic_ns": 488414152387700,
+      "pid": 46100,
+      "recovery_id": "c9a2eb1547674b24a762ecc64042dfe9",
+      "request_id": "c9a2eb1547674b24a762ecc64042dfe9"
+    },
+    {
+      "elapsed_ns": 1109600,
+      "event": "exchange_return",
+      "helper": "observer",
+      "monotonic_ns": 488414153649800,
+      "pid": 46100,
+      "request_id": "c9a2eb1547674b24a762ecc64042dfe9",
+      "result_neutral": true,
+      "result_release_accepted": null
+    },
+    {
+      "event": "helper_exit",
+      "helper": "recovery",
+      "monotonic_ns": 488414645770800,
+      "pid": 51424
+    },
+    {
+      "event": "helper_exit",
+      "helper": "observer",
+      "monotonic_ns": 488414685204400,
+      "pid": 40192
+    }
+  ],
+  "clock": {
+    "authority_granted": false,
+    "clock": "time.monotonic_ns",
+    "input_dispatched": false,
+    "lease_issued": false,
+    "monotonic_ns": 488411968000000,
+    "schema": "agent-interface/execution-clock-v1",
+    "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+    "server_instance_id": "56bfc3fb01734fbc8975d189b3018177"
+  },
+  "conditions_sha256": "0139c2e2378f2f9b06576eb72f943349bdc174dc6cba811de86a572f2d2137f1",
+  "dispatch_attempts": 1,
+  "effect_readback": {
+    "clicked": true,
+    "saved": true,
+    "text": ""
+  },
+  "ended_utc": "2026-10-23T23:11:47.196145+00:00",
+  "fixture": {
+    "client_rect": {
+      "bottom": 181,
+      "height": 181,
+      "left": 0,
+      "right": 404,
+      "top": 0,
+      "width": 404
+    },
+    "close_posted": true,
+    "effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "effect_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\fixture\\effect.json",
+    "events": [
+      {
+        "hwnd": 33227460,
+        "kind": "ready"
+      },
+      {
+        "kind": "click"
+      },
+      {
+        "clicked": true,
+        "kind": "save",
+        "saved": true,
+        "text": ""
+      },
+      {
+        "code": 113,
+        "kind": "char"
+      }
+    ],
+    "events_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\fixture\\events.jsonl",
+    "exit_code": 0,
+    "hwnd": 33227460,
+    "log_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\fixture\\fixture.log",
+    "meta": {
+      "height": 220,
+      "hwnd": 33227460,
+      "width": 420
+    },
+    "meta_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\fixture\\fixture-meta.json",
+    "pid": 52788,
+    "target_identity": {
+      "generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+      "owner": {
+        "creation_time_100ns": 134372707013522755,
+        "pid": 52788,
+        "window_thread_id": 53584
+      }
+    },
+    "window_exists_after_exit": false
+  },
+  "foreground_restore": {
+    "attempted": true,
+    "observed_hwnd": 393882,
+    "prior_hwnd_exists": true,
+    "restored": true,
+    "set_foreground_return": true
+  },
+  "hook_started": {
+    "callback_entry_ns": null,
+    "callback_return_ns": null,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 488413006424800,
+        "callback_return_ns": 488413006517100,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 488413007051600,
+        "callback_return_ns": 488414442919900,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "hook_handle": 395379591,
+    "ready_ns": 488409156515700,
+    "thread_id": 9224
+  },
+  "hook_stopped": {
+    "callback_entry_ns": 488413007051600,
+    "callback_return_ns": 488414442919900,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 488413006424800,
+        "callback_return_ns": 488413006517100,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 488413007051600,
+        "callback_return_ns": 488414442919900,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 144,
+    "held_message": 257,
+    "hook_handle": 395379591,
+    "q_down_callback_ns": 488413006424800,
+    "q_down_callback_return_ns": 488413006517100,
+    "q_up_callback_ns": 488413007051600,
+    "ready_ns": 488409156515700,
+    "thread_exited": true,
+    "thread_id": 9224,
+    "unhook_last_error": null,
+    "unhook_return": true,
+    "vk": 81
+  },
+  "hook_trace_after_dispatch": {
+    "callback_entry_ns": 488413007051600,
+    "callback_return_ns": 488414442919900,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 488413006424800,
+        "callback_return_ns": 488413006517100,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 488413007051600,
+        "callback_return_ns": 488414442919900,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 144,
+    "held_message": 257,
+    "hook_handle": 395379591,
+    "q_down_callback_ns": 488413006424800,
+    "q_down_callback_return_ns": 488413006517100,
+    "q_up_callback_ns": 488413007051600,
+    "ready_ns": 488409156515700,
+    "thread_id": 9224,
+    "vk": 81
+  },
+  "hook_trace_after_recovery": {
+    "callback_entry_ns": 488413007051600,
+    "callback_return_ns": 488414442919900,
+    "error": null,
+    "events": [
+      {
+        "callback_entry_ns": 488413006424800,
+        "callback_return_ns": 488413006517100,
+        "flags": 16,
+        "message": 256,
+        "vk": 81
+      },
+      {
+        "callback_entry_ns": 488413007051600,
+        "callback_return_ns": 488414442919900,
+        "flags": 144,
+        "message": 257,
+        "vk": 81
+      }
+    ],
+    "flags": 144,
+    "held_message": 257,
+    "hook_handle": 395379591,
+    "q_down_callback_ns": 488413006424800,
+    "q_down_callback_return_ns": 488413006517100,
+    "q_up_callback_ns": 488413007051600,
+    "ready_ns": 488409156515700,
+    "thread_id": 9224,
+    "vk": 81
+  },
+  "hook_wait": {
+    "ended_monotonic_ns": 488413007243400,
+    "entered": true,
+    "hook_trace": {
+      "callback_entry_ns": 488413007051600,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 488413006424800,
+          "callback_return_ns": 488413006517100,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 488413007051600,
+          "callback_return_ns": 488414442919900,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 144,
+      "held_message": 257,
+      "hook_handle": 395379591,
+      "q_down_callback_ns": 488413006424800,
+      "q_down_callback_return_ns": 488413006517100,
+      "q_up_callback_ns": 488413007051600,
+      "ready_ns": 488409156515700,
+      "thread_id": 9224,
+      "vk": 81
+    },
+    "poll_interval_ms": 250,
+    "started_monotonic_ns": 488412017283300,
+    "status_polls": [
+      {
+        "action_status": null,
+        "call_id": null,
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": null,
+        "is_error": true,
+        "operation_id": null,
+        "operation_invoked": false,
+        "returned_monotonic_ns": 488412018354800,
+        "started_monotonic_ns": 488412017286300,
+        "status": "unknown_call"
+      },
+      {
+        "action_status": "running",
+        "call_id": "58db03cb84e1489d98eb04b829b535c5",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "38f6163e0806416893ae5943f4d49356",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 488412278624200,
+        "started_monotonic_ns": 488412274614100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "58db03cb84e1489d98eb04b829b535c5",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "38f6163e0806416893ae5943f4d49356",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 488412540920100,
+        "started_monotonic_ns": 488412539611500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "call_id": "58db03cb84e1489d98eb04b829b535c5",
+        "cancellation_status": null,
+        "error": null,
+        "input_dispatched": false,
+        "is_error": false,
+        "operation_id": "38f6163e0806416893ae5943f4d49356",
+        "operation_invoked": false,
+        "returned_monotonic_ns": 488412806374400,
+        "started_monotonic_ns": 488412804728800,
+        "status": null
+      }
+    ]
+  },
+  "independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "generation_after": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "generation_before": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "pid": 34088,
+    "process_retired": true,
+    "q_down": false,
+    "returned_monotonic_ns": 488414625938600,
+    "started_monotonic_ns": 488414625340800,
+    "state_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 33227460,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 52788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 53584
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 33227460,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 52788,
+        "probe_integrity_rid": 8192,
+        "target": "fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 53584
+      }
+    ],
+    "status": "observed"
+  },
+  "post_cancel_io_hold": {
+    "ended_monotonic_ns": 488414442656300,
+    "hook_trace_after_release": {
+      "callback_entry_ns": 488413007051600,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 488413006424800,
+          "callback_return_ns": 488413006517100,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 488413007051600,
+          "callback_return_ns": 488414442919900,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 144,
+      "held_message": 257,
+      "hook_handle": 395379591,
+      "q_down_callback_ns": 488413006424800,
+      "q_down_callback_return_ns": 488413006517100,
+      "q_up_callback_ns": 488413007051600,
+      "ready_ns": 488409156515700,
+      "thread_id": 9224,
+      "vk": 81
+    },
+    "hook_trace_before_release": {
+      "callback_entry_ns": 488413007051600,
+      "callback_return_ns": null,
+      "error": null,
+      "events": [
+        {
+          "callback_entry_ns": 488413006424800,
+          "callback_return_ns": 488413006517100,
+          "flags": 16,
+          "message": 256,
+          "vk": 81
+        },
+        {
+          "callback_entry_ns": 488413007051600,
+          "callback_return_ns": 488414442919900,
+          "flags": 144,
+          "message": 257,
+          "vk": 81
+        }
+      ],
+      "flags": 144,
+      "held_message": 257,
+      "hook_handle": 395379591,
+      "q_down_callback_ns": 488413006424800,
+      "q_down_callback_return_ns": 488413006517100,
+      "q_up_callback_ns": 488413007051600,
+      "ready_ns": 488409156515700,
+      "thread_id": 9224,
+      "vk": 81
+    },
+    "independent_readback_completed_before_release": true,
+    "independent_readback_delay_ms": 700,
+    "independent_readback_started_ns": 488413949874700,
+    "started_monotonic_ns": 488413206169900,
+    "status_polls": [
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413207187500,
+        "started_monotonic_ns": 488413206171100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413261026300,
+        "started_monotonic_ns": 488413259261800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413324157000,
+        "started_monotonic_ns": 488413322711800,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413388334300,
+        "started_monotonic_ns": 488413385817900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413452793300,
+        "started_monotonic_ns": 488413449012900,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413517961600,
+        "started_monotonic_ns": 488413512231300,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413577717300,
+        "started_monotonic_ns": 488413574102000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413639770000,
+        "started_monotonic_ns": 488413636879000,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413704011000,
+        "started_monotonic_ns": 488413699988500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413765778300,
+        "started_monotonic_ns": 488413761966600,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413831205600,
+        "started_monotonic_ns": 488413824375500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413890882700,
+        "started_monotonic_ns": 488413887646100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488413952066800,
+        "started_monotonic_ns": 488413949902100,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488414014233900,
+        "started_monotonic_ns": 488414012602500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488414078168500,
+        "started_monotonic_ns": 488414076473500,
+        "status": null
+      },
+      {
+        "action_status": "running",
+        "cancellation_release_confirmed": false,
+        "cancellation_status": "pending",
+        "is_error": false,
+        "owner_release_confirmed": false,
+        "returned_monotonic_ns": 488414140721200,
+        "started_monotonic_ns": 488414138894500,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 488414188155200,
+        "started_monotonic_ns": 488414186394300,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 488414253063100,
+        "started_monotonic_ns": 488414250524100,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 488414318234200,
+        "started_monotonic_ns": 488414314303500,
+        "status": null
+      },
+      {
+        "action_status": "recovered",
+        "cancellation_release_confirmed": true,
+        "cancellation_status": "recovered",
+        "is_error": false,
+        "owner_release_confirmed": true,
+        "returned_monotonic_ns": 488414382358400,
+        "started_monotonic_ns": 488414378707400,
+        "status": null
+      }
+    ],
+    "target_hold_ms": 1250
+  },
+  "pre_cancel_independent_readback": {
+    "exit_code": 0,
+    "expected_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "generation_after": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "generation_before": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "pid": 17464,
+    "process_retired": true,
+    "q_down": true,
+    "returned_monotonic_ns": 488413189565700,
+    "started_monotonic_ns": 488413189125100,
+    "state_witness": [],
+    "status": "observed"
+  },
+  "pre_cancel_status_readback": {
+    "action": {
+      "metadata": {
+        "program_id": "supervised-standard-cancel-q-release-r33",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "38f6163e0806416893ae5943f4d49356",
+      "result": null,
+      "status": "running",
+      "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+    },
+    "call_id": "58db03cb84e1489d98eb04b829b535c5",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 488501968000000,
+        "lease_id": "supervised-standard-cancel-r33"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "supervised-standard-cancel-q-release-r33",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "previous_foreground_hwnd": 393882,
+  "probe_pid": 51232,
+  "probe_status": "completed_with_independent_effect",
+  "producer_exit_witness": {
+    "creation_time_100ns": 134372707044061805,
+    "observed_monotonic_ns": 488414443285500,
+    "pid": 18300,
+    "status": "exited",
+    "wait_started_monotonic_ns": 488414442760700
+  },
+  "producer_identity_from_cancel": {
+    "creation_time_100ns": 134372707044061805,
+    "pid": 18300
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 488501968000000,
+      "lease_id": "supervised-standard-cancel-r33"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "supervised-standard-cancel-q-release-r33",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fixture": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "public_cancel": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"58db03cb84e1489d98eb04b829b535c5\", \"operation_id\": \"268353502ad44523a1cda77ef90b9593\", \"cancellation\": {\"operation_id\": \"268353502ad44523a1cda77ef90b9593\", \"action_operation_id\": \"38f6163e0806416893ae5943f4d49356\", \"target_generation\": \"b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c\", \"status\": \"pending\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"operation_id\": \"38f6163e0806416893ae5943f4d49356\", \"target_generation\": \"b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c\", \"deadline_ns\": 488501968000000, \"obligations\": [\"button:fixture:left\", \"key:fixture:CTRL\", \"key:fixture:Q\", \"key:fixture:S\"], \"status\": \"pending\", \"producer_identity\": {\"pid\": 18300, \"creation_time_100ns\": 134372707044061805}, \"producer_exit_code\": null, \"producer_gate_state\": \"authorization_attempted\", \"cleanup_deadline_ns\": 488416171000000, \"recovery_id\": null, \"release_confirmed\": false, \"completion_release_receipt\": null, \"completion_readback\": null, \"task_success\": null, \"replay_allowed\": false, \"uncertainty\": null, \"phase\": \"cancel_pending\"}, \"owner_phase\": \"cancel_pending\"}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"operation_invoked\": false, \"input_dispatched\": false, \"scope\": \"supervised_win32\"}",
+        "type": "text"
+      }
+    ],
+    "elapsed_ms": 1.1673,
+    "is_error": false,
+    "response": {
+      "call_id": "58db03cb84e1489d98eb04b829b535c5",
+      "cancellation": {
+        "action_operation_id": "38f6163e0806416893ae5943f4d49356",
+        "operation_id": "268353502ad44523a1cda77ef90b9593",
+        "owner_phase": "cancel_pending",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 488416171000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 488501968000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S"
+          ],
+          "operation_id": "38f6163e0806416893ae5943f4d49356",
+          "phase": "cancel_pending",
+          "producer_exit_code": null,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372707044061805,
+            "pid": 18300
+          },
+          "recovery_id": null,
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "pending",
+        "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+        "task_success": null
+      },
+      "input_dispatched": false,
+      "operation_id": "268353502ad44523a1cda77ef90b9593",
+      "operation_invoked": false,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "scope": "supervised_win32",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 488413206152500,
+    "started_monotonic_ns": 488413204985200
+  },
+  "public_close": {
+    "content": [
+      {
+        "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"2928125ce16d4deb8bc60692d5d536b9\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r33\\\\run\\\\calls\\\\30f0f3b54ddf4a0fb4909ecd52d30b9b\", \"call_id\": \"30f0f3b54ddf4a0fb4909ecd52d30b9b\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\30f0f3b54ddf4a0fb4909ecd52d30b9b",
+      "call_id": "30f0f3b54ddf4a0fb4909ecd52d30b9b",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "session": {
+        "call_count": 1,
+        "mode": "supervised-win32",
+        "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+        "state": "closed",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "closed",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 488414729875800,
+    "started_monotonic_ns": 488414643201600
+  },
+  "public_close_attempts": [
+    {
+      "content": [
+        {
+          "text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"2928125ce16d4deb8bc60692d5d536b9\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 1, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r33\\\\run\\\\calls\\\\30f0f3b54ddf4a0fb4909ecd52d30b9b\", \"call_id\": \"30f0f3b54ddf4a0fb4909ecd52d30b9b\"}",
+          "type": "text"
+        }
+      ],
+      "is_error": false,
+      "response": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\30f0f3b54ddf4a0fb4909ecd52d30b9b",
+        "call_id": "30f0f3b54ddf4a0fb4909ecd52d30b9b",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+          "state": "closed",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "closed",
+        "task_success": null
+      },
+      "returned_monotonic_ns": 488414729875800,
+      "started_monotonic_ns": 488414643201600
+    }
+  ],
+  "public_dispatch": {
+    "content": [
+      {
+        "text": "{\"status\": \"pending\", \"call_id\": \"58db03cb84e1489d98eb04b829b535c5\", \"call\": {\"call_id\": \"58db03cb84e1489d98eb04b829b535c5\", \"operation\": \"dispatch\", \"state\": \"queued\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"supervised-standard-cancel-q-release-r33\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"fixture\": \"b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c\"}}, \"authority\": {\"lease_id\": \"supervised-standard-cancel-r33\", \"expires_at_ns\": 488501968000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"fixture\"}, {\"frame\": \"window_client\", \"op\": \"pointer_move\", \"x\": 70, \"y\": 70}, {\"button\": \"left\", \"down\": true, \"op\": \"pointer_button\"}, {\"button\": \"left\", \"down\": false, \"op\": \"pointer_button\"}, {\"keys\": [\"CTRL\", \"S\"], \"op\": \"key_chord\"}, {\"keys\": [\"Q\"], \"op\": \"key_chord\"}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": false, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 488501968000000,
+              "lease_id": "supervised-standard-cancel-r33"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-q-release-r33",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "58db03cb84e1489d98eb04b829b535c5",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "58db03cb84e1489d98eb04b829b535c5",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "response_envelope": {
+      "call": {
+        "arguments": {
+          "current_binding_revision": 1,
+          "current_observation_seq": 1,
+          "program": {
+            "authority": {
+              "expires_at_ns": 488501968000000,
+              "lease_id": "supervised-standard-cancel-r33"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 70,
+                "y": 70
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "keys": [
+                  "Q"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "supervised-standard-cancel-q-release-r33",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "backend_attempted": false,
+        "call_id": "58db03cb84e1489d98eb04b829b535c5",
+        "operation": "dispatch",
+        "persistence_failure": null,
+        "response_wait_ms": 0,
+        "state": "queued"
+      },
+      "call_id": "58db03cb84e1489d98eb04b829b535c5",
+      "effect_status": "unknown",
+      "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result_available": false,
+      "scope": "current_server",
+      "status": "pending",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 488412017264500,
+    "started_monotonic_ns": 488412015913000,
+    "wait_for_result_ms": 0
+  },
+  "public_observation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"5c508f5cbcec925ef9915da4a411b030b1892a52e39d03169bb5112f97fb3160\", \"bytes\": 1459, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"d1f5467cf99b4d70ae1ffe2e4c5aad2c\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 33227460, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 488411968000000, \"capture_ended_ns\": 488411968000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r33\\\\run\\\\calls\\\\ed05081222c347709e58c717c41efff4\\\\images\\\\7531b993a6e94b99b87e071bb2dc5155.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 488411968000000, \"converted\": 488411984000000, \"encoded\": 488411984000000, \"written\": 488411984000000}}}, \"target_generation\": \"b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"2928125ce16d4deb8bc60692d5d536b9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"d1f5467cf99b4d70ae1ffe2e4c5aad2c\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 292496, \"sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"width\": 404, \"height\": 181, \"target\": \"fixture\", \"native_window_id\": 33227460, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"capture_started_ns\": 488411968000000, \"capture_ended_ns\": 488411968000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r33\\\\run\\\\calls\\\\ed05081222c347709e58c717c41efff4\\\\images\\\\7531b993a6e94b99b87e071bb2dc5155.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"bytes\": 1199, \"width\": 404, \"height\": 181, \"source_raw_sha256\": \"54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e\", \"timing_ns\": {\"started\": 488411968000000, \"converted\": 488411984000000, \"encoded\": 488411984000000, \"written\": 488411984000000}}}, \"target_generation\": \"b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"2928125ce16d4deb8bc60692d5d536b9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 488411968000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r33\\\\run\\\\calls\\\\ed05081222c347709e58c717c41efff4\\\\images\\\\7531b993a6e94b99b87e071bb2dc5155.png\", \"relative_path\": \"images\\\\7531b993a6e94b99b87e071bb2dc5155.png\", \"sha256\": \"3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"d1f5467cf99b4d70ae1ffe2e4c5aad2c\", \"recorded_capture\": {\"target\": \"fixture\", \"native_window_id\": 33227460, \"frame\": \"window_client\", \"region\": [0, 0, 404, 181], \"width\": 404, \"height\": 181, \"capture_started_ns\": 488411968000000, \"capture_ended_ns\": 488411968000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"2928125ce16d4deb8bc60692d5d536b9\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\main-a396aac-r28\\\\research\\\\integration\\\\win32_supervised_standard_caller_20261024_r33\\\\run\\\\calls\\\\ed05081222c347709e58c717c41efff4\", \"call_id\": \"ed05081222c347709e58c717c41efff4\"}",
+        "type": "text"
+      },
+      {
+        "data_b64": "iVBORw0KGgoAAAANSUhEUgAAAZQAAAC1CAIAAAD3IJ7QAAAEdklEQVR4nO3cQXKjOABAUd//tH2DntWkXMYIAVGc3/XeysFGCBp901nk8Rcg6PHpCQBcIV5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSeIFJIkXkCReQJJ4AUniBSSJF5AkXkCSeAFJ4gUkiReQJF5AkngBSafj9Qc+bcVKIEe86FmxEsi5G6/H47H6Th0f4vG/m+Pcn8l9h2c6OYfHk5ntN4/4A/fAixUrgZx8vObncHOqHz/Tayn5+nFv++E44sXvdCte888Cd/yGeP3M+pyJ19lBrsXr1PmKFx8hXt8zh+/yfKC91/Mj/BEv/l3X43W4tA5/87L34ef1NvNrmpeZzI+zN5Ovt2YG3Dvrye3jc9m+PnVxJi/a23k+X4G3n39sbD/2Mu23V3vmsrxYsRLIWRWvw0U4HmE8+OSxrr21l56zR58807OjbV/s/XihXJOHnnz9su/8TXI4/xUrgZwl8Rp//c68tTpe8zM5nMN4x/GxBp/fe+qZjNfZjYPPfFe8Dqdx+BXyZcVKIOdivM5+ix7ulYvX48l4nh+M1/zHBnttX8//Y12O19iKlUDO9XhtzdzBe3v9fLwmZzI/7CAfg2u1d6zfGa+3I1yO16nL8mzFSiDnw09eh7uM95o/9PyYh/E6e3bza/L585fjdedKHu61nc/4EON4TU5ma8VKIOdKvA5X6YU7+OPxmn/yuh+vbzmjm9svTGDmYt6JlycvTlkSr5uvx2/NH/faW4fxmtz3wkPfqWn/znjN7Ds5yGDCK1YCOavi9XX/be/CvY2Tt/X2oM+jnRpnZiaH+76M8HbMwfa9k9o79OSZDiY2M5PtBN6e0duZvJ3A4J4ZXK696a1YCeT8xF+VmFyxMGnFSiBnSbxmnmXgshUrgZxVT16T/z2BC1asBHL8GWggSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECksQLSBIvIEm8gCTxApLEC0gSLyBJvIAk8QKSxAtIEi8gSbyAJPECkv4Da9c7ol6HHMcAAAAASUVORK5CYII=",
+        "mimeType": "image/png",
+        "type": "image"
+      }
+    ],
+    "is_error": false,
+    "raw_report": {
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1199,
+          "height": 181,
+          "mime_type": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\ed05081222c347709e58c717c41efff4\\images\\7531b993a6e94b99b87e071bb2dc5155.png",
+          "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+          "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+          "timing_ns": {
+            "converted": 488411984000000,
+            "encoded": 488411984000000,
+            "started": 488411968000000,
+            "written": 488411984000000
+          },
+          "width": 404
+        },
+        "bytes": 292496,
+        "capture_ended_ns": 488411968000000,
+        "capture_started_ns": 488411968000000,
+        "frame": "window_client",
+        "height": 181,
+        "native_window_id": 33227460,
+        "region": [
+          0,
+          0,
+          404,
+          181
+        ],
+        "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+        "target": "fixture",
+        "width": 404
+      },
+      "observation_id": "d1f5467cf99b4d70ae1ffe2e4c5aad2c",
+      "schema": "agent-interface/runtime-observation-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "side_effect_authority": false,
+      "status": "returned",
+      "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+      "target_generation_consistency": "matched"
+    },
+    "response": {
+      "authority": "none",
+      "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\ed05081222c347709e58c717c41efff4",
+      "call_id": "ed05081222c347709e58c717c41efff4",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 488411968000000,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "d1f5467cf99b4d70ae1ffe2e4c5aad2c",
+        "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\ed05081222c347709e58c717c41efff4\\images\\7531b993a6e94b99b87e071bb2dc5155.png",
+        "recorded_capture": {
+          "capture_ended_ns": 488411968000000,
+          "capture_started_ns": 488411968000000,
+          "frame": "window_client",
+          "height": 181,
+          "native_window_id": 33227460,
+          "region": [
+            0,
+            0,
+            404,
+            181
+          ],
+          "target": "fixture",
+          "width": 404
+        },
+        "relative_path": "images\\7531b993a6e94b99b87e071bb2dc5155.png",
+        "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+        "status": "image"
+      },
+      "image_status": "image",
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1199,
+              "height": 181,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\ed05081222c347709e58c717c41efff4\\images\\7531b993a6e94b99b87e071bb2dc5155.png",
+              "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+              "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "timing_ns": {
+                "converted": 488411984000000,
+                "encoded": 488411984000000,
+                "started": 488411968000000,
+                "written": 488411984000000
+              },
+              "width": 404
+            },
+            "bytes": 292496,
+            "capture_ended_ns": 488411968000000,
+            "capture_started_ns": 488411968000000,
+            "frame": "window_client",
+            "height": 181,
+            "native_window_id": 33227460,
+            "region": [
+              0,
+              0,
+              404,
+              181
+            ],
+            "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+            "target": "fixture",
+            "width": 404
+          },
+          "observation_id": "d1f5467cf99b4d70ae1ffe2e4c5aad2c",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+          "target_generation_consistency": "matched"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1459,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1199,
+                "height": 181,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_supervised_standard_caller_20261024_r33\\run\\calls\\ed05081222c347709e58c717c41efff4\\images\\7531b993a6e94b99b87e071bb2dc5155.png",
+                "sha256": "3859291ef110480b72d2da43c3f3a15b90d86276ab49afeaea48d82de87999b5",
+                "source_raw_sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+                "timing_ns": {
+                  "converted": 488411984000000,
+                  "encoded": 488411984000000,
+                  "started": 488411968000000,
+                  "written": 488411984000000
+                },
+                "width": 404
+              },
+              "bytes": 292496,
+              "capture_ended_ns": 488411968000000,
+              "capture_started_ns": 488411968000000,
+              "frame": "window_client",
+              "height": 181,
+              "native_window_id": 33227460,
+              "region": [
+                0,
+                0,
+                404,
+                181
+              ],
+              "sha256": "54e922ac0b19986c9d83a0459ad46defd5bdb6fed8376ff29cf3ec89d0c4e87e",
+              "target": "fixture",
+              "width": 404
+            },
+            "observation_id": "d1f5467cf99b4d70ae1ffe2e4c5aad2c",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+            "target_generation_consistency": "matched"
+          },
+          "sha256": "5c508f5cbcec925ef9915da4a411b030b1892a52e39d03169bb5112f97fb3160"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "call_count": 0,
+        "mode": "supervised-win32",
+        "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      }
+    },
+    "returned_monotonic_ns": 488412014589700,
+    "started_monotonic_ns": 488411993030200
+  },
+  "public_validation": {
+    "content": [
+      {
+        "text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"valid\", \"static_valid\": true, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"source_operation_count\": 7, \"expanded_operation_count\": 7, \"required_capabilities\": [\"display.geometry\", \"input.keyboard\", \"input.pointer\", \"input.release_all\", \"window.focus\"], \"compilation\": null}",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "response": {
+      "backend_checked": false,
+      "compilation": null,
+      "expanded_operation_count": 7,
+      "required_capabilities": [
+        "display.geometry",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "runtime_admission": "not_evaluated",
+      "schema": "agent-interface/static-program-validation-v1",
+      "side_effect_authority": false,
+      "source_operation_count": 7,
+      "static_valid": true,
+      "status": "valid",
+      "task_success": null
+    },
+    "returned_monotonic_ns": 488412015899700,
+    "started_monotonic_ns": 488412014632600
+  },
+  "result_readbacks": [
+    {
+      "is_error": false,
+      "response": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-q-release-r33",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "38f6163e0806416893ae5943f4d49356",
+          "result": {
+            "effect_status": "unknown",
+            "input_dispatched": null,
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "task_success": null
+          },
+          "status": "recovered",
+          "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+        },
+        "call_id": "58db03cb84e1489d98eb04b829b535c5",
+        "cancellation": {
+          "action_operation_id": "38f6163e0806416893ae5943f4d49356",
+          "operation_id": "268353502ad44523a1cda77ef90b9593",
+          "owner_phase": "recovered",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "cleanup_deadline_ns": 488416171000000,
+            "completion_readback": null,
+            "completion_release_receipt": null,
+            "deadline_ns": 488501968000000,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:Q",
+              "key:fixture:S"
+            ],
+            "operation_id": "38f6163e0806416893ae5943f4d49356",
+            "phase": "recovered",
+            "producer_exit_code": -15,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372707044061805,
+              "pid": 18300
+            },
+            "recovery_id": "c9a2eb1547674b24a762ecc64042dfe9",
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "recovered",
+            "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "status": "recovered",
+          "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+          "task_success": null
+        },
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 488501968000000,
+            "lease_id": "supervised-standard-cancel-r33"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-q-release-r33",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "returned_monotonic_ns": 488414446696500,
+      "started_monotonic_ns": 488414443643700
+    }
+  ],
+  "retained_report": {
+    "call_id": "58db03cb84e1489d98eb04b829b535c5",
+    "compilation": null,
+    "input_dispatched": null,
+    "normalization": null,
+    "operation_id": "38f6163e0806416893ae5943f4d49356",
+    "operation_invoked": true,
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "effect_status": "unknown",
+      "input_dispatched": null,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "recovered",
+      "task_success": null
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "2928125ce16d4deb8bc60692d5d536b9",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "metadata": {
+          "program_id": "supervised-standard-cancel-q-release-r33",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "38f6163e0806416893ae5943f4d49356",
+        "result": {
+          "effect_status": "unknown",
+          "input_dispatched": null,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "task_success": null
+        },
+        "status": "recovered",
+        "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+      },
+      "call_id": "58db03cb84e1489d98eb04b829b535c5",
+      "cancellation": {
+        "action_operation_id": "38f6163e0806416893ae5943f4d49356",
+        "operation_id": "268353502ad44523a1cda77ef90b9593",
+        "owner_phase": "recovered",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_deadline_ns": 488416171000000,
+          "completion_readback": null,
+          "completion_release_receipt": null,
+          "deadline_ns": 488501968000000,
+          "obligations": [
+            "button:fixture:left",
+            "key:fixture:CTRL",
+            "key:fixture:Q",
+            "key:fixture:S"
+          ],
+          "operation_id": "38f6163e0806416893ae5943f4d49356",
+          "phase": "recovered",
+          "producer_exit_code": -15,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134372707044061805,
+            "pid": 18300
+          },
+          "recovery_id": "c9a2eb1547674b24a762ecc64042dfe9",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "recovered",
+          "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "status": "recovered",
+        "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+        "task_success": null
+      },
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 488501968000000,
+          "lease_id": "supervised-standard-cancel-r33"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Q"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-cancel-q-release-r33",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "b8572bbe6c0fcbfbf579d9ce13bd13463c06e230157283537e0fec373f90fd9c",
+    "task_success": null
+  },
+  "session_close_report": {
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "closed",
+    "task_success": null
+  },
+  "session_mode": "supervised-win32",
+  "source_commit": "ea20642b35a11621fa94e2b90523dab07f7b3c88",
+  "source_tracked_tree_clean": true,
+  "started_utc": "2026-10-23T23:11:41.119539+00:00",
+  "tools": [
+    "interface_cancel",
+    "interface_clock",
+    "interface_close",
+    "interface_dispatch",
+    "interface_inspect_target",
+    "interface_observe",
+    "interface_recover_input",
+    "interface_results",
+    "interface_review_target",
+    "interface_validate"
+  ]
+}
