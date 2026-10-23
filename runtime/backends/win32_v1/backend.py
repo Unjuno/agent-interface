@@ -8,6 +8,7 @@ from __future__ import annotations
 import ctypes
 import hashlib
 import json
+import secrets
 import sys
 import time
 from ctypes import wintypes
@@ -71,6 +72,7 @@ DESKTOP_HOOKCONTROL = 0x0008
 PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
 TOKEN_QUERY = 0x0008
 TOKEN_INTEGRITY_LEVEL = 25
+TARGET_INCARNATION_PROPERTY = "Unjuno.AgentInterface.Win32TargetIncarnation.v1"
 
 KEY_ALIASES = {
     "CTRL": VK_CONTROL, "CONTROL": VK_CONTROL, "SHIFT": VK_SHIFT,
@@ -191,10 +193,18 @@ class Win32Backend:
         self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
         self.capture_artifacts = None
+        self._target_incarnation_bindings: dict[tuple[str, int], dict[str, Any]] = {}
+        self._closed = False
+        self._close_report = None
 
     def _configure_api(self) -> None:
         self.user32.IsWindow.argtypes = [wintypes.HWND]
         self.user32.IsWindow.restype = wintypes.BOOL
+        self.user32.SetPropW.argtypes = [wintypes.HWND, wintypes.LPCWSTR,
+                                         wintypes.HANDLE]
+        self.user32.SetPropW.restype = wintypes.BOOL
+        self.user32.GetPropW.argtypes = [wintypes.HWND, wintypes.LPCWSTR]
+        self.user32.GetPropW.restype = wintypes.HANDLE
         self.user32.GetWindowThreadProcessId.argtypes = [
             wintypes.HWND, ctypes.POINTER(wintypes.DWORD)]
         self.user32.GetWindowThreadProcessId.restype = wintypes.DWORD
@@ -333,18 +343,109 @@ class Win32Backend:
         """Return a fail-closed SHA-256 discriminator for the configured HWND.
 
         The digest binds the numeric HWND to its GUI thread, owner PID, and
-        process creation time. This detects an observed HWND or thread change,
-        but can alias if Windows reuses the same numeric HWND on the same live
-        thread. The checks are not an atomic lifetime fence.
+        process creation time and a per-window-lifetime property. A reused
+        numeric HWND without the original property is refused for this backend.
+        The property read is not an atomic fence against destruction immediately
+        after the check.
         """
+        if getattr(self, "_closed", False):
+            raise Win32BackendError("target generation unavailable after backend close")
         hwnd = self._target(target)
         identity = self._window_owner_identity_for_hwnd(hwnd)
         if self._target(target) != hwnd:
             raise Win32BackendError("target HWND changed during generation query")
+        cookie = self._target_incarnation_cookie(target, hwnd, identity)
+        if self._target(target) != hwnd:
+            raise Win32BackendError("target HWND changed during generation query")
         payload = [hwnd, identity["window_thread_id"], identity["pid"],
-                   identity["creation_time_100ns"]]
+                   identity["creation_time_100ns"], cookie]
         return hashlib.sha256(json.dumps(
             payload, separators=(",", ":")).encode("ascii")).hexdigest()
+
+    def _target_incarnation_cookie(self, target: str, hwnd: int,
+                                   identity: dict[str, int]) -> int:
+        bindings = getattr(self, "_target_incarnation_bindings", None)
+        if bindings is None:
+            bindings = self._target_incarnation_bindings = {}
+        key = (target, hwnd)
+        binding = bindings.get(key)
+        try:
+            current = self._handle_value(self.user32.GetPropW(
+                hwnd, TARGET_INCARNATION_PROPERTY))
+        except Exception as error:
+            raise Win32BackendError("target incarnation property read failed") from error
+        if binding is not None:
+            if (binding["identity"] != identity or
+                    current != binding["cookie"]):
+                raise Win32BackendError("target HWND incarnation property changed")
+            return current
+        if current:
+            cookie = current
+        else:
+            cookie = secrets.randbits(ctypes.sizeof(ctypes.c_void_p) * 8 - 1) or 1
+            ctypes.set_last_error(0)
+            try:
+                set_ok = self.user32.SetPropW(
+                    hwnd, TARGET_INCARNATION_PROPERTY, wintypes.HANDLE(cookie))
+                error_code = ctypes.get_last_error()
+            except Exception as error:
+                raise Win32BackendError("target incarnation property set failed") from error
+            if not set_ok:
+                raise Win32BackendError(
+                    f"target incarnation property set failed error={error_code}")
+            try:
+                current = self._handle_value(self.user32.GetPropW(
+                    hwnd, TARGET_INCARNATION_PROPERTY))
+            except Exception as error:
+                raise Win32BackendError(
+                    "target incarnation property readback failed") from error
+            if current != cookie:
+                raise Win32BackendError("target incarnation property readback mismatch")
+        bindings[key] = {"hwnd": hwnd, "identity": dict(identity),
+                         "cookie": cookie}
+        return cookie
+
+    @staticmethod
+    def _handle_value(value) -> int:
+        if value is None:
+            return 0
+        if type(value) is int:
+            return value
+        return int(ctypes.cast(value, ctypes.c_void_p).value or 0)
+
+    def close(self) -> dict[str, Any]:
+        """Close this backend while leaving HWND-lifetime markers to Windows.
+
+        A property can be shared by multiple backend instances. Win32 has no
+        compare-and-remove operation, so deleting it here could invalidate a
+        concurrent session or remove a marker another session just replaced.
+        Windows destroys the property with its HWND.
+        """
+        if getattr(self, "_closed", False):
+            return self._close_report
+        results = []
+        for binding in getattr(self, "_target_incarnation_bindings", {}).values():
+            row = {"hwnd": binding["hwnd"],
+                   "status": "retained_until_window_destroyed"}
+            try:
+                if not self.user32.IsWindow(binding["hwnd"]):
+                    row["status"] = "window_destroyed"
+                else:
+                    current = self._handle_value(self.user32.GetPropW(
+                        binding["hwnd"], TARGET_INCARNATION_PROPERTY))
+                    if current == 0:
+                        row["status"] = "property_missing"
+                    elif current != binding["cookie"]:
+                        row["status"] = "property_value_changed"
+            except Exception as error:
+                row["error"] = repr(error)
+            results.append(row)
+        self._close_report = {
+            "status": "closed",
+            "property_cleanup": results,
+        }
+        self._closed = True
+        return self._close_report
 
     def geometry(self, target: str) -> dict[str, int]:
         hwnd = self._target(target)

@@ -1,5 +1,19 @@
 # Current objective and working direction
 
+**Win32 target-incarnation cookie lifecycle (2026-10-24):** production
+`target_generation()` now adds a per-HWND-lifetime property and fails closed if
+the property is denied, changed, or missing after binding. `close()` retains
+the shared marker until Windows destroys the HWND, avoiding unsafe removal that
+could invalidate another backend. The standard MCP session records backend
+close receipts. A no-input native hidden-HWND probe passed with two backend
+instances sharing the cookie and Windows removing it at HWND destruction; see
+the [R04 packet](../research/integration/win32_target_incarnation_cookie_20261024_r04/README.md).
+Two earlier setup failures remain in R01/R02, and the superseded removal design
+is preserved in R03. The 79-test composed run passed in normal and optimized
+Python. This does not
+demonstrate numeric HWND reuse, cross-integrity behavior, an atomic check/use
+fence, input/release, bounded recovery, MAP01, WSLc, efficiency, or reliability.
+
 **Win32 target-incarnation property feasibility (2026-10-24):** the frozen [R01 packet](../research/integration/win32_property_cookie_20261024_r01/README.md) shows a same-integrity parent can `SetPropW` and read back a unique value on a hidden HWND owned by its child process. After destruction, the old handle was invalid and returned no property; a new HWND on the same PID/thread also had no value, but its numeric HWND differed, so reuse was not tested. The child exited cleanly and the 9/9 structural audit passes. Microsoft documents UIPI restrictions and per-window property cleanup requirements; this is a feasibility sample only, not a production generation fix or evidence for elevated targets, atomic fencing, input/release, recovery, MAP01, efficiency, or reliability.
 
 **Native Win32 same-thread HWND allocation discriminator (2026-10-24):** the frozen [R02 packet](../research/integration/win32_hwnd_reuse_20261024_r02/README.md) created and destroyed two sequential cohorts of 256 hidden windows on one process/thread, using production owner-identity and `target_generation()` methods. All 512 windows were confirmed destroyed; no numeric HWND repeated across cohorts, so the result is `NO_HANDLE_REUSE_OBSERVED_IN_THIS_BATCH`. Its 10/10 structural audit passes. R01's pre-entry `advapi32` setup failure is separately preserved. This finite host-specific allocation pattern does not prove HWND reuse cannot occur or close the same-number alias, target-fencing, input/release, recovery, MAP01, WSLc, efficiency, or reliability gates.

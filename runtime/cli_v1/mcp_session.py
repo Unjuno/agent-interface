@@ -269,7 +269,11 @@ class MCPSessionOwner:
             finally:
                 row['connection_close_attempted'] = True
                 try:
-                    self.session.backend.close()
+                    backend_close = self.session.backend.close()
+                    if isinstance(backend_close, dict):
+                        row['backend_close'] = backend_close
+                        if backend_close.get('status') != 'closed':
+                            row['status'] = 'cleanup_failed'
                 except Exception as error:
                     row.update(status='cleanup_failed', close_error=repr(error))
         self.close_report = row
