@@ -611,6 +611,11 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
         adapter_holders = [[], []]
         roots = [tempfile.TemporaryDirectory(), tempfile.TemporaryDirectory()]
         old_down = context.Event()
+        old_oracle_started = threading.Event()
+        old_oracle_release = threading.Event()
+        old_oracle_finished = threading.Event()
+        producer_calls = [[], []]
+        oracle_calls = [[], []]
         new_down, new_neutral, new_request, new_completed = (
             context.Event(), context.Event(), context.Event(), context.Event())
         app_ready, app_stop, old_producer_started, new_started = (
@@ -648,6 +653,7 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                 return adapter
 
             def producer_factory(_action):
+                producer_calls[index].append(_action["operation_id"])
                 start_gate = context.Event()
                 process = context.Process(target=_spawned_gate_producer,
                     args=(start_gate, down, request, started))
@@ -659,8 +665,25 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                 "_guarded_win32_owner_factory": make_owner,
                 "_guarded_win32_producer_factory": producer_factory,
             }
-            if index == 1:
-                def task_oracle(action):
+            def task_oracle(action):
+                oracle_calls[index].append(action["call_id"])
+                if index == 0:
+                    old_oracle_started.set()
+                    try:
+                        if not old_oracle_release.wait(5):
+                            raise TimeoutError("generation-A oracle remained blocked")
+                        return {
+                            "call_id": action["call_id"],
+                            "operation_id": action["operation_id"],
+                            "target_generation": action["target_generation"],
+                            "oracle_id": "d" * 32,
+                            "outcome": "success",
+                            "observed_monotonic_ns": time.monotonic_ns(),
+                            "evidence_ref": "late-generation-A-oracle",
+                        }
+                    finally:
+                        old_oracle_finished.set()
+                else:
                     receive, send = context.Pipe(duplex=False)
                     process = context.Process(target=_synthetic_task_effect_oracle,
                         args=(new_completed, action, "e" * 32, send))
@@ -672,7 +695,7 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                         return receive.recv()
                     finally:
                         process.join(1)
-                kwargs["_guarded_win32_task_oracle"] = task_oracle
+            kwargs["_guarded_win32_task_oracle"] = task_oracle
             return create_server({"fixture": 123}, roots[index].name, **kwargs)
 
         servers = []
@@ -695,15 +718,31 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                     "call_id": old_call, "wait_for_result_ms": 2000,
                 })).content[0].text)
             self.assertEqual(old_start_result["status"], "running")
+            self.assertEqual(producer_calls[0], ["9" * 32])
             self.assertTrue(await asyncio.to_thread(old_producer_started.wait, 5),
                 {"start": old_start_result, "admit": old_admitted})
             self.assertTrue(old_down.is_set())
+            old_timeout = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_verify_task", {
+                    "call_id": old_call, "wait_for_result_ms": 0,
+                })).content[0].text)
+            self.assertEqual(old_timeout["status"], "unknown")
+            self.assertIsNone(old_timeout["task_success"])
+            self.assertTrue(await asyncio.to_thread(old_oracle_started.wait, 5))
             cancel = json.loads((await servers[0].call_tool(
                 "interface_guarded_win32_cancel", {
                     "call_id": old_call,
                     "cleanup_deadline_ns": time.monotonic_ns() + 4_000_000_000,
                 })).content[0].text)
             self.assertIn(cancel["status"], ("pending", "unknown"), cancel)
+
+            repeated_cancel = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_cancel", {
+                    "call_id": old_call,
+                    "cleanup_deadline_ns": time.monotonic_ns() + 4_000_000_000,
+                })).content[0].text)
+            self.assertEqual(repeated_cancel["cancellation"]["operation_id"],
+                             cancel["cancellation"]["operation_id"])
 
             deadline = time.monotonic() + 4
             while time.monotonic() < deadline:
@@ -718,7 +757,20 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
             self.assertIsNone(old_result["task_success"])
             self.assertFalse(old_result["cancellation"]["release_confirmed"])
             self.assertFalse(old_result["cancellation"]["replay_allowed"])
+            self.assertEqual(old_result["task_effect"]["status"], "unknown")
+            self.assertIsNone(old_result["task_effect"]["receipt"])
+            self.assertEqual(oracle_calls[0], [old_call])
             frozen_old = json.loads(json.dumps(old_result, sort_keys=True))
+
+            old_oracle_release.set()
+            self.assertTrue(await asyncio.to_thread(old_oracle_finished.wait, 5))
+            duplicate_oracle = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_verify_task", {
+                    "call_id": old_call, "wait_for_result_ms": 1000,
+                })).content[0].text)
+            self.assertEqual(duplicate_oracle["status"], "unknown")
+            self.assertFalse(duplicate_oracle["operation_invoked"])
+            self.assertEqual(oracle_calls[0], [old_call])
 
             new_binding = json.loads((await servers[1].call_tool(
                 "interface_guarded_win32_bind_target", {})).content[0].text)
@@ -737,6 +789,7 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                     "call_id": new_call, "wait_for_result_ms": 2000,
                 })).content[0].text)
             self.assertEqual(new_started_result["status"], "running")
+            self.assertEqual(producer_calls[1], ["a" * 32])
             self.assertTrue(await asyncio.to_thread(new_started.wait, 5))
             self.assertTrue(await asyncio.to_thread(new_completed.wait, 5))
             new_effect = json.loads((await servers[1].call_tool(
@@ -745,6 +798,7 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                 })).content[0].text)
             self.assertEqual(new_effect["status"], "verified", new_effect)
             self.assertTrue(new_effect["task_success"])
+            self.assertEqual(oracle_calls[1], [new_call])
             self.assertEqual(new_effect["task_effect"]["receipt"]["oracle_id"], "e" * 32)
             self.assertNotEqual(new_effect["task_effect"]["receipt"]["oracle_id"],
                 ((frozen_old.get("task_effect") or {}).get("receipt") or {}).get("oracle_id"))
@@ -760,6 +814,7 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
             self.assertIsNone(new_after["cancellation"])
         finally:
             app_stop.set()
+            old_oracle_release.set()
             for holder in adapter_holders:
                 for adapter in holder:
                     adapter._supervisor.close()
