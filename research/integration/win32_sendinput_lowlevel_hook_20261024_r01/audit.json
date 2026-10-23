@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "both_sendinput_calls_reported_one": true,
+    "down_callback_delay_at_most_60ms": false,
+    "final_f13_up": true,
+    "frozen_sources_unchanged": true,
+    "hook_removed": true,
+    "hook_thread_exited": true,
+    "no_runner_errors": true,
+    "one_injected_down_callback": true,
+    "one_injected_up_callback": true,
+    "send_down_returned_after_callback": true
+  },
+  "disposition": "FAIL",
+  "hashes": {
+    "conditions.json": "f50437a1ff21cf394a9cfaa7ee1169be35937515df415079e3aa5a0521e642b1",
+    "probe.py": "5c4496bd06a1f5c630db2f97339e398bf64fda03ec3c3ef67a1ae3414e3b1ea3",
+    "raw.json": "2784a77da82b1c16b116cf8eafb31d4967d4b333bca1b19832c3437ddb53cd71"
+  },
+  "interpretation": "SendInput returned after the delayed low-level callback and a later UP was observed; the frozen callback-delay quality limit was exceeded, so the packet is FAIL. This single finite callback stall does not establish a hard release bound or recovery from an indefinitely blocked producer.",
+  "measurements": {
+    "callback_blocked_ns": 64428400,
+    "callback_exit_ns": 469908208622700,
+    "send_down_duration_ns": 65398200,
+    "send_down_return_ns": 469908209532000,
+    "send_up_duration_ns": 329000
+  },
+  "method": "independent read-only JSON/timing/hash audit; no experiment re-execution",
+  "packet": "win32_sendinput_lowlevel_hook_20261024_r01"
+}
