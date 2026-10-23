@@ -215,7 +215,7 @@ class Win32ReadOnlyObserveTests(unittest.TestCase):
             self.assertEqual(artifact["mime_type"], "image/png")
             self.assertEqual(artifact["sha256"], hashlib.sha256(saved).hexdigest())
             self.assertEqual(artifact["source_raw_sha256"], row["observation"]["sha256"])
-            self.assertTrue(Path(artifact["path"]).is_relative_to(Path(directory)))
+            self.assertTrue(Path(artifact["path"]).resolve().is_relative_to(Path(directory).resolve()))
         backend._capture_hdc.assert_called_once()
         self.assert_untouched(backend, session)
 
