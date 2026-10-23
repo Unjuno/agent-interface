@@ -1,5 +1,23 @@
 # Current objective and working direction
 
+**Standard-caller cancellation follow-up (2026-10-24):** the new [R05
+packet](../research/integration/win32_supervised_standard_caller_20261024_r05/README.md)
+records a caller-teardown construction failure before native input. R06 and
+R07 each returned a public zero-wait pending call ID and then completed the
+owned fixture task normally, with an exact saved sentinel, verified empty
+release, independent same-generation all-up readback, and clean foreground
+restoration. They did **not** exercise cancellation: injected Q-down reached
+the hook 10.7526 s after R06's 10 s wait and 45.7678 s after R07's 45 s wait,
+after each finite hook gate had already been released. Both immutable packets
+record FAIL_OR_UNKNOWN for the cancellation question; R05–R07 do not establish
+public cancellation recovery. The [R06](../research/integration/win32_supervised_standard_caller_20261024_r06/README.md)
+and [R07](../research/integration/win32_supervised_standard_caller_20261024_r07/README.md)
+records preserve the delayed producer-start boundary. The next caller trial
+must retain a finite window long enough to reach the hook, confirm the same
+call is still running, then cancel once and verify exit-before-UP and
+independent neutral state. The goal remains active; no WSLc or Docker allocation
+was used.
+
 **Supervised Win32 standard-caller effect path (2026-10-24):** the fresh [R04
 packet](../research/integration/win32_supervised_standard_caller_20261024_r04/README.md)
 passes its 15-check audit on the public stdio-MCP route. Observation and the
