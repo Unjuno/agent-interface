@@ -1,3 +1,16 @@
+**Blocked-hook boundary R29 (2026-10-24):** the fresh current-main Windows
+trial held the owned low-level Q-down callback for 1,304.466 ms after a 1.336
+ms cancel response. All 21 same-call polls during the hold remained
+`running / pending / release_confirmed=false`; the frozen audit is
+FAIL_OR_UNKNOWN 19/20 on release while blocked. A separate same-generation
+Q-up observation during the hold is nondiscriminating because the Q-down had not
+passed the hook. After callback return (1,306.210 ms after cancel start), exact
+producer exit, recovered/all-up receipt, same-generation neutral readback,
+fixture effect, and cleanup passed. This narrows the R14 result to one current
+main fixture; kernel scheduling cause and other Windows paths remain unknown.
+WSLc remained HOLD per #7924's uncached-image/unknown-cleanup record. See
+[R29](../research/integration/win32_supervised_standard_caller_20261024_r29/RESULT.md).
+
 **Standard-caller exact-call retrieval repeat R28 (2026-10-24):** on the
 current #9470 main commit (`380e1a9`), a fresh supervised Win32 fixture again
 returned `pending` after the supported 10,000 ms dispatch wait. One dispatch was
