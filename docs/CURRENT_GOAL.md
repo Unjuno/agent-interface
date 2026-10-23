@@ -1,5 +1,16 @@
 # Current objective and working direction
 
+**Standard-caller cancellation R09 (2026-10-24):** R09 preserved one public
+stdio-MCP normal completion and exact fixture effect, but its 75 s cancellation
+gate expired about 0.788 s before injected Q-down reached the owned hook
+(75.788 s after gate start; 78.482 s after hook readiness). The frozen audit is
+FAIL_OR_UNKNOWN 9/17; no public cancel was sent, session close did not confirm
+release, and a separate same-generation readback later observed Q up. Do not
+replay R09. See its [result](../research/integration/win32_supervised_standard_caller_20261024_r09/RESULT.md)
+and raw. The next one-shot caller trial should use a 100 s finite hook-entry
+gate and 180 s lease, preserving the hook/running/cancel ordering. No WSLc or
+Docker allocation was used.
+
 **Standard-caller cancellation follow-up (2026-10-24):** the new [R05
 packet](../research/integration/win32_supervised_standard_caller_20261024_r05/README.md)
 records a caller-teardown construction failure before native input. R06 and
