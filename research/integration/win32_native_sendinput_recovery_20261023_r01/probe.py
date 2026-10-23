@@ -302,6 +302,7 @@ def _run_schedule(context, owner, mode, index):
                                       if k not in ("process", "log_handle")},
            "target_generation": generation, "timeline": []}
     backend = Win32Backend({"fixture": hwnd})
+    backend.focus("fixture")
     initial = _observe_ctrl(backend)
     row["initial_ctrl_state"] = initial
     if initial["state"] is not False or initial["foreground_hwnd"] != hwnd or not initial["witness"]:
