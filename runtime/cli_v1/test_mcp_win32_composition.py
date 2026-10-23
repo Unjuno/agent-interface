@@ -78,6 +78,17 @@ def _synthetic_task_effect_oracle(application_completed, action, oracle_id, send
     send.close()
 
 
+def _synthetic_wrong_recovery_worker(start_gate, send, request):
+    if start_gate.wait(3):
+        send.send({
+            "operation_id": "f" * 32,
+            "target_generation": request["target_generation"],
+            "recovery_id": request["recovery_id"],
+            "release_accepted": True,
+        })
+    send.close()
+
+
 def _synthetic_process_identity(process):
     return {"pid": process.pid, "creation_time_100ns": id(process) or 1}
 
@@ -481,6 +492,195 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                         process.close()
                     except (OSError, ValueError):
                         pass
+
+    async def test_public_fresh_generation_scores_separately_from_old_unknown(self):
+        context = multiprocessing.get_context("spawn")
+        generations = ("c" * 64, "d" * 64)
+        child_handles = []
+        adapter_holders = [[], []]
+        roots = [tempfile.TemporaryDirectory(), tempfile.TemporaryDirectory()]
+        old_down = context.Event()
+        new_down, new_neutral, new_request, new_completed = (
+            context.Event(), context.Event(), context.Event(), context.Event())
+        app_ready, app_stop, old_producer_started, new_started = (
+            context.Event(), context.Event(), context.Event(), context.Event())
+        application = context.Process(target=_synthetic_application_worker,
+            args=(new_request, new_completed, app_ready, app_stop))
+        child_handles.append((application, None, None))
+        application.start()
+
+        def build_server(index):
+            generation = generations[index]
+            down = old_down if index == 0 else new_down
+            neutral = context.Event() if index == 0 else new_neutral
+            request = context.Event() if index == 0 else new_request
+            started = old_producer_started if index == 0 else new_started
+
+            def make_owner(*_args):
+                owner = OperationOwner(clock_ns=time.monotonic_ns,
+                    process_identity_reader=_synthetic_process_identity)
+
+                def recovery_factory(recovery_request, start_gate):
+                    receive, send = context.Pipe(duplex=False)
+                    worker = (_synthetic_wrong_recovery_worker if index == 0
+                              else _fake_recovery_worker)
+                    args = ((start_gate, send, recovery_request) if index == 0 else
+                            (down, neutral, start_gate, send, recovery_request))
+                    process = context.Process(target=worker, args=args)
+                    child_handles.append((process, receive, send))
+                    return process, receive
+
+                def observer_factory(observer_request):
+                    receive, send = context.Pipe(duplex=False)
+                    process = context.Process(target=_fake_readback_worker,
+                        args=(neutral, observer_request, send))
+                    child_handles.append((process, receive, send))
+                    return process, receive
+
+                supervisor = OperationCancellationSupervisor(owner,
+                    recovery_process_factory=recovery_factory,
+                    observer_process_factory=observer_factory,
+                    process_identity_reader=_synthetic_process_identity)
+                adapter = OwnedWin32SessionOwner(owner, supervisor)
+                adapter.bind_target_generation_reader(lambda: generation)
+                adapter_holders[index].append(adapter)
+                return adapter
+
+            def producer_factory(_action):
+                start_gate = context.Event()
+                process = context.Process(target=_spawned_gate_producer,
+                    args=(start_gate, down, request, started))
+                child_handles.append((process, None, None))
+                return process, lambda: _synthetic_process_identity(process), start_gate.set
+
+            kwargs = {
+                "session_mode": "guarded-win32",
+                "_guarded_win32_owner_factory": make_owner,
+                "_guarded_win32_producer_factory": producer_factory,
+            }
+            if index == 1:
+                def task_oracle(action):
+                    receive, send = context.Pipe(duplex=False)
+                    process = context.Process(target=_synthetic_task_effect_oracle,
+                        args=(new_completed, action, "e" * 32, send))
+                    child_handles.append((process, receive, send))
+                    process.start()
+                    try:
+                        if not receive.poll(3):
+                            raise TimeoutError("generation-B oracle deadline")
+                        return receive.recv()
+                    finally:
+                        process.join(1)
+                kwargs["_guarded_win32_task_oracle"] = task_oracle
+            return create_server({"fixture": 123}, roots[index].name, **kwargs)
+
+        servers = []
+        try:
+            self.assertTrue(await asyncio.to_thread(app_ready.wait, 5))
+            servers = [build_server(0), build_server(1)]
+
+            old_binding = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_bind_target", {})).content[0].text)
+            old_admitted = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_admit", {
+                    "action_operation_id": "9" * 32,
+                    "target_binding_id": old_binding["target_binding_id"],
+                    "operation_deadline_ns": time.monotonic_ns() + 10_000_000_000,
+                    "obligations": ["key:old"],
+                })).content[0].text)
+            old_call = old_admitted["call_id"]
+            old_start_result = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_start", {
+                    "call_id": old_call, "wait_for_result_ms": 2000,
+                })).content[0].text)
+            self.assertEqual(old_start_result["status"], "running")
+            self.assertTrue(await asyncio.to_thread(old_producer_started.wait, 5),
+                {"start": old_start_result, "admit": old_admitted})
+            self.assertTrue(old_down.is_set())
+            cancel = json.loads((await servers[0].call_tool(
+                "interface_guarded_win32_cancel", {
+                    "call_id": old_call,
+                    "cleanup_deadline_ns": time.monotonic_ns() + 4_000_000_000,
+                })).content[0].text)
+            self.assertIn(cancel["status"], ("pending", "unknown"), cancel)
+
+            deadline = time.monotonic() + 4
+            while time.monotonic() < deadline:
+                old_result = json.loads((await servers[0].call_tool(
+                    "interface_results", {"call_id": old_call})).content[0].text)
+                if old_result.get("cancellation", {}).get("status") == "unknown":
+                    break
+                await asyncio.sleep(0.01)
+            self.assertEqual(old_result["cancellation"]["status"], "unknown", old_result)
+            self.assertEqual(old_result["action"]["target_generation"], generations[0])
+            self.assertIsNone(old_result["cancellation"]["task_success"])
+            self.assertIsNone(old_result["task_success"])
+            self.assertFalse(old_result["cancellation"]["release_confirmed"])
+            self.assertFalse(old_result["cancellation"]["replay_allowed"])
+            frozen_old = json.loads(json.dumps(old_result, sort_keys=True))
+
+            new_binding = json.loads((await servers[1].call_tool(
+                "interface_guarded_win32_bind_target", {})).content[0].text)
+            new_admitted = json.loads((await servers[1].call_tool(
+                "interface_guarded_win32_admit", {
+                    "action_operation_id": "a" * 32,
+                    "target_binding_id": new_binding["target_binding_id"],
+                    "operation_deadline_ns": time.monotonic_ns() + 10_000_000_000,
+                    "obligations": ["key:new"],
+                })).content[0].text)
+            new_call = new_admitted["call_id"]
+            self.assertNotEqual(old_call, new_call)
+            self.assertEqual(new_admitted["action"]["target_generation"], generations[1])
+            new_started_result = json.loads((await servers[1].call_tool(
+                "interface_guarded_win32_start", {
+                    "call_id": new_call, "wait_for_result_ms": 2000,
+                })).content[0].text)
+            self.assertEqual(new_started_result["status"], "running")
+            self.assertTrue(await asyncio.to_thread(new_started.wait, 5))
+            self.assertTrue(await asyncio.to_thread(new_completed.wait, 5))
+            new_effect = json.loads((await servers[1].call_tool(
+                "interface_guarded_win32_verify_task", {
+                    "call_id": new_call, "wait_for_result_ms": 3000,
+                })).content[0].text)
+            self.assertEqual(new_effect["status"], "verified", new_effect)
+            self.assertTrue(new_effect["task_success"])
+            self.assertEqual(new_effect["task_effect"]["receipt"]["oracle_id"], "e" * 32)
+            self.assertNotEqual(new_effect["task_effect"]["receipt"]["oracle_id"],
+                ((frozen_old.get("task_effect") or {}).get("receipt") or {}).get("oracle_id"))
+
+            old_after = json.loads((await servers[0].call_tool(
+                "interface_results", {"call_id": old_call})).content[0].text)
+            self.assertEqual(old_after, frozen_old)
+            new_after = json.loads((await servers[1].call_tool(
+                "interface_results", {"call_id": new_call})).content[0].text)
+            self.assertTrue(new_after["task_success"])
+            self.assertEqual(new_after["action"]["target_generation"], generations[1])
+            self.assertEqual(new_after["action"]["operation_id"], "a" * 32)
+            self.assertIsNone(new_after["cancellation"])
+        finally:
+            app_stop.set()
+            for holder in adapter_holders:
+                for adapter in holder:
+                    adapter._supervisor.close()
+            for process, receive, send in child_handles:
+                try:
+                    if process.is_alive():
+                        process.terminate()
+                        process.join(2)
+                except (OSError, ValueError):
+                    pass
+                for connection in (receive, send):
+                    if connection is not None:
+                        try:
+                            connection.close()
+                        except OSError:
+                            pass
+                try:
+                    process.close()
+                except (OSError, ValueError):
+                    pass
+            for root in roots:
+                root.cleanup()
 
 
 if __name__ == "__main__":
