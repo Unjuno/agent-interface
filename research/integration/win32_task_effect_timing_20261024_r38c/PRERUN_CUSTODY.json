@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-task-effect-timing-20261024-r38c-5b54735428624e2e848201a6da9be5cd",
+  "conditions_sha256": "6045cc9cd0990cec8dce2e081b703a93fb4de77d1afb5aeaad83f494ce83e170",
+  "frozen_file_hashes": {
+    "audit.py": "1f723ecb5e4c9b03df1e636077a8253a1bd7c930cbd9b6f7f4d8442b63ddc9bb",
+    "fixture_app_timed.py": "d2b0c77d1472a79d715af0d1366bc7670535480bac10b38ad4040fd55d724c29",
+    "preflight.py": "9d4380f3796c1bce8fb850c06b56d2c2c32a91aa88890092d0d2664c9773aff6",
+    "server_with_oracle.py": "4e0d156f95dfc13d5a43a631b49751cd679178463476d8867dfe9cccd88d306d",
+    "task_probe.py": "e86aa002cf0b0bf17de6aa15c0a386fc827078749296a104351121974519af4c"
+  },
+  "no_input_confirmed": true,
+  "pre_run_entries": [],
+  "predecessor": {
+    "artifacts": [
+      "../win32_task_effect_timing_20261024_r38b/preflight.json",
+      "../win32_task_effect_timing_20261024_r38b/DECISION.json"
+    ],
+    "attempt_id": "win32-task-effect-timing-20261024-r38b-8855f7415dd142dd825874531ae7f922",
+    "decision_sha256": "e9f7feafd8d5de1fb25a7c1d706cefaf0178c9b8f7143b1773079143460b6e5f",
+    "preflight_sha256": "4dad2dadc0c45cf7c55ba773301b7f2a37dcc5f726c21706f71990d607fa554e",
+    "reason": "post-preflight review found the previous audit assumed a pending dispatch; the corrected audit finds terminal action results in either immediate dispatch or exact-call read-only polls",
+    "status": "NOT_RUN_NO_INPUT"
+  },
+  "runtime_hashes": {
+    "runtime/cli_v1/mcp_server.py": "92f25890d65fae4b0d80c2bb5929f2a8ec54437a4d9bc61c510594a9419d4285",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600"
+  },
+  "schema": "win32-task-effect-timing-r38-custody-v1",
+  "source_commit": "3ce70e742abf47f5f7c39a09df0c97f58fe62c26"
+}

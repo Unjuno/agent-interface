@@ -1,0 +1,106 @@
+{
+  "attempt_id": "win32-task-effect-timing-20261024-r38d-95f53e00e722477c8d8208abba20a793",
+  "checks": [
+    {
+      "name": "input_free_preflight_14_of_14",
+      "passed": true
+    },
+    {
+      "name": "runner_passed_and_cleanup",
+      "passed": true
+    },
+    {
+      "name": "exact_effect_and_timed_save_match",
+      "passed": true
+    },
+    {
+      "name": "exact_action_identity_and_success",
+      "passed": true
+    },
+    {
+      "name": "single_observation_dispatch_oracle",
+      "passed": true
+    },
+    {
+      "name": "fixture_input_sequence_exact",
+      "passed": true
+    },
+    {
+      "name": "effect_time_interval_ordered",
+      "passed": true
+    },
+    {
+      "name": "neutral_terminal_release",
+      "passed": true
+    },
+    {
+      "name": "same_clock_timing_bounds",
+      "passed": true
+    }
+  ],
+  "conditions_sha256": "6d90b2eb9950c5fd4c2117ec2d5dd450a65dc9d8f35c449870714cdd61d18d0f",
+  "limitations": [
+    "one fixture sample",
+    "effect transition is bounded by file-write interval, not observed at a hardware timestamp",
+    "not matched efficiency or reliability",
+    "not MAP01 or real-app transfer",
+    "task oracle is fixture-specific",
+    "clock is GetTickCount64-backed with reported 15.625 ms resolution; timing delta expanded by one clock quantum"
+  ],
+  "passed": 9,
+  "raw_sha256": "2561f45eab44ae727d10179a87e6c7b3788eb0d7a4bec9bfcd5d8125adb4cc11",
+  "schema": "win32-task-effect-timing-r38d-additive-audit-v2",
+  "source_commit": "3ce70e742abf47f5f7c39a09df0c97f58fe62c26",
+  "status": "PASS_SCOPED",
+  "timing": {
+    "clock": "same-host time.monotonic_ns",
+    "clock_implementation": "GetTickCount64()",
+    "clock_quantum_ns": 15625000,
+    "completion_readback_ns": 498560640000000,
+    "dispatch_pending_response_ns": 498559781000000,
+    "dispatch_request_ns": 498549781000000,
+    "dispatch_request_to_save_interval_ns": [
+      10797000000,
+      10797000000
+    ],
+    "dispatch_response_to_save_interval_ns": [
+      797000000,
+      797000000
+    ],
+    "effect_to_oracle_observation_interval_ns": {
+      "lower_bound_ns": 265000000,
+      "upper_bound_ns": 265000000
+    },
+    "effect_to_oracle_observation_quantized_interval_ms": [
+      249.375,
+      280.625
+    ],
+    "effect_to_oracle_observation_quantized_interval_ns": [
+      249375000,
+      280625000
+    ],
+    "execution_end_ns": 498560578000000,
+    "execution_start_ns": 498560546000000,
+    "note": "GetTickCount64-backed monotonic_ns readings are quantized; the raw delta is not exact. The interval expands by one reported clock quantum for the difference of two timestamps.",
+    "observation_capture_ns": 498549765000000,
+    "observation_to_save_interval_ns": [
+      10813000000,
+      10813000000
+    ],
+    "reported_timer_resolution_seconds": 0.015625,
+    "save_to_execution_end_interval_ns": [
+      0,
+      0
+    ],
+    "save_write_elapsed_upper_bound_ns_when_readings_equal": 15625000,
+    "save_write_interval_ns": [
+      498560578000000,
+      498560578000000
+    ],
+    "save_write_interval_width_ns": 0,
+    "task_oracle_observed_ns": 498560843000000,
+    "task_oracle_reply_ns": 498560859000000,
+    "task_oracle_request_ns": 498560843000000
+  },
+  "total": 9
+}

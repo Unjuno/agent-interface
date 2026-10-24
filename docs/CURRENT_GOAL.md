@@ -57,6 +57,22 @@ used; MAP01, efficiency, broad reliability and real-app transfer remain open.
 R37a's input-free root-path preflight failure is preserved separately. See the
 [R37b packet](../research/integration/win32_supervised_standard_caller_20261024_r37b/RESULT.md).
 
+**Win32 R38d timestamped task-effect observation (2026-10-24):** one fresh
+native-Windows fixture run completed one public observation, validation,
+dispatch, five read-only result polls and one exact-call server task-oracle
+check. The click/save/token effect matched; the task receipt matched call,
+operation, target generation and oracle ID; terminal release and neutral
+readback passed; fixture cleanup and foreground restoration passed. A
+packet-local fixture timestamped the effect-file write. The raw event-to-oracle
+difference was 265 ms, but this host's `monotonic_ns` uses `GetTickCount64()`
+with 15.625 ms reported resolution; the conservative interval is 249.375–280.625
+ms. The effect occurred 797 ms after the caller received `pending`. This is one
+fixture timing sample, not matched efficiency or reliability. R38/R38b/R38c
+setup failures are preserved; R38d's frozen audit schema error is also preserved
+with a corrected additive audit over unchanged raw. No WSLc or Docker was used;
+MAP01, real-app transfer and matched efficiency remain open. See the
+[R38d packet](../research/integration/win32_task_effect_timing_20261024_r38d/RESULT.md).
+
 **Win32 R35 terminal-release diagnostic correction (2026-10-24):** R35 did
 not record a public `interface_cancel`; the exact producer completed normally
 with verified terminal `release_all`. After the final Q-up SendInput return and
