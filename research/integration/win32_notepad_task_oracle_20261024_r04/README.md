@@ -56,3 +56,8 @@ A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the 
 ## R13 held-keyup recovery follow-up
 
 `attempt-13-held-keyup-recovery/` injects a producer block at the SHIFT-up backend-send boundary after native SHIFT-down has succeeded. The same-generation independent observer saw SHIFT-down during the hold and SHIFT-up after bounded parent recovery. The high-resolution owner interval was 17.5451 ms, within the three-second monotonic deadline. This is not a fault inside the native API/kernel and does not establish task success, MAP01, efficiency, or broad reliability.
+
+
+## R14 fixed-condition repeatability series
+
+`attempt-14-held-keyup-repeat/` contains ten preplanned sequential repetitions of the held-keyup backend-boundary fault. All 10 passed the scoped recovery gate. The high-resolution owner interval mean was 17.368 ms (median 17.318 ms; range 16.781–18.716 ms), with at least 2.984 s monotonic deadline margin. Runs shared one target generation and host; the exact binomial interval is only illustrative under an unverified independence assumption. This is conditional repeatability, not general reliability; no task-success or native-API-internal hang claim. See `SUMMARY.md` and per-trial raw.
