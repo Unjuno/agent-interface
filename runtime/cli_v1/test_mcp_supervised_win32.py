@@ -196,6 +196,84 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(retrieved["action"]["release_confirmed"])
         self.assertTrue(supervisor.closed)
 
+    async def test_public_dispatch_keeps_child_release_unconfirmed_without_observer_readback(self):
+        owner, producer, supervisor = self.make_components()
+        supervisor.observe_completed = lambda *_args, **_kwargs: None
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            reply = await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000})
+            result = self.row(reply)
+            self.assertEqual(result.get("status"), "returned", result)
+            action = result["supervision"]["action"]
+            self.assertEqual(action["result"]["status"], "completed")
+            self.assertEqual(action["status"], "unknown")
+            self.assertFalse(result["release_confirmed"])
+            self.assertFalse(action["release_confirmed"])
+            self.assertEqual(action["completion_custody"]["completion_readback_outcome"],
+                             "missing")
+            self.assertIsNone(action["completion_custody"]["completion_readback"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            close = self.row(await server.call_tool("interface_close", {}))
+            self.assertEqual(close["status"], "busy")
+            self.assertFalse(close["release_confirmed"])
+        self.assertFalse(supervisor.closed)
+
+    async def test_task_oracle_is_not_invoked_for_unknown_public_custody(self):
+        owner, producer, supervisor = self.make_components()
+
+        def non_neutral_readback(operation_id, generation, *,
+                                 producer_exit_confirmed_ns, deadline_ns):
+            return {"operation_id": operation_id,
+                "target_generation": generation,
+                "producer_exit_confirmed_ns": producer_exit_confirmed_ns,
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "neutral": False}
+
+        supervisor.observe_completed = non_neutral_readback
+        oracle_calls = []
+
+        def oracle(action):
+            oracle_calls.append(action["call_id"])
+            return {
+                "call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "oracle_id": "c" * 32,
+                "outcome": "success",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-oracle:must-not-run",
+            }
+
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                supervised_win32_task_oracle=oracle)
+            dispatched = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            verified = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 1000})).content[0].text)
+            self.assertEqual(verified["status"], "unknown", verified)
+            action = dispatched["supervision"]["action"]
+            self.assertEqual(action["completion_custody"]["completion_readback_outcome"],
+                             "non_neutral")
+            self.assertIsNone(verified["task_success"])
+            self.assertFalse(verified["replay_allowed"])
+            self.assertEqual(oracle_calls, [])
+            close = self.row(await server.call_tool("interface_close", {}))
+            self.assertEqual(close["status"], "busy")
+        self.assertFalse(supervisor.closed)
+
     async def test_supervised_task_oracle_certifies_exact_completed_action_once(self):
         owner, producer, _ = self.make_components()
         oracle_calls = []
