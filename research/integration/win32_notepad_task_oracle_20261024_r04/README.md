@@ -71,3 +71,8 @@ A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the 
 ## R16 public-caller repeat
 
 `attempt-16-public-task-effect-repeat/` adds one preregistered same-generation exact-token task through the standard supervised-Win32 public MCP caller. It passed exact-call task verification and separate cleanup; a fresh postflight read found the same generation, empty text and SHIFT-up. R15/R16 are two conditional passes on one target generation, not a broad reliability result. R16 retains one preflight-free startup failure and a successful single task run; see the assessment for timing and limits.
+
+
+## R17 fresh target generation
+
+`attempt-17-fresh-generation-task/` verifies exact task effect and input release through the standard supervised-Win32 public MCP caller on a distinct HWND and GUI thread. Same-generation observation, exact-call task oracle, cleanup, and independent postflight passed. The Notepad PID/process creation time matched R16, so this is a new target generation within one process, not a process-restart test. A first no-input selector stop and delayed new-window discovery are both preserved. See the assessment for timing and limits.
