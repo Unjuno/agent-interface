@@ -397,8 +397,10 @@ class Map01V39CoastTests(unittest.TestCase):
         next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', loop_break)
         finish_path = source.index('failure_cleanup.set_stage("session_finish")', next_input_path)
         report_path = source.index('failure_cleanup.set_stage("report_write")', finish_path)
-        model_session_filter = source.index('row["model_session_id"] for row in decisions if "model_session_id" in row', report_path - 8000)
-        model_wall_sum = source.index('x.get("model_ns", 0)', report_path - 1000)
+        model_session_filter = source.index(
+            'row["model_session_id"] for row in decisions if "model_session_id" in row',
+            finish_path, report_path)
+        model_wall_sum = source.index('x.get("model_ns", 0)', finish_path, report_path)
         self.assertLess(refresh, terminal_predicate)
         self.assertLess(terminal_predicate, terminal_break)
         self.assertLess(terminal_break, loop_break)
