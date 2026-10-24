@@ -1,0 +1,13 @@
+{
+  "schema": "win32-r51-publication-custody-supplement-v1",
+  "reason": "Clarifies the distinction between the dispatch action envelope and the subsequent independent task-verification response.",
+  "immutable_run_evidence_changed": false,
+  "source_correction": {
+    "file": "RESULT.md",
+    "change": "The initial dispatch response has task_success=null; the subsequent standard interface_verify_task response returned status=verified and task_success=true, bound to the same call, operation and target generation.",
+    "authoritative_raw": "run/phase2_task/verify-task-0.json"
+  },
+  "prior_public_manifest": "SHA256SUMS_PUBLIC_R01",
+  "supplemental_public_manifest": "SHA256SUMS_PUBLIC_R02",
+  "manifest_note": "R01 records the original publication snapshot. RESULT.md is now corrected; its R01 hash therefore differs by design. R02 covers the current packet bytes, including the unchanged original R01 manifest and all run evidence."
+}
