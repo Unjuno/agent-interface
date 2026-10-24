@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Win32 foreground eligibility R01: [input-free foreground activation and backend check](integration/win32_focus_eligibility_input_free_20261024_r01/RESULT.md) — exact user-authorized activation allowed the backend focus check to return, target readback matched, and no input was emitted. Focus subtest PASS_SCOPED; attempt FAIL_OR_UNKNOWN because the fixture exit code was not retained.
+
 - Win32 R39/R40/R41: [setup failures, foreground-gate diagnostic, and local PC WSLc boundary](integration/win32_pc_wslc_eligibility_20261024/RESULT.md) — R39/R40 sent no native input; R41 passed preflight and failed focus. A local regression later recorded `SetForegroundWindow=False` before any emission. The WSLc probe stopped before container execution because its pinned image was absent. These are not release, task-success, MAP01, efficiency, or reliability evidence.
 
 - Win32 R03: [supervised public caller + independent task-oracle fixture](integration/win32_live_task_oracle_20261024_r03/RESULT.md) — one exact click/save/token task passed with generation-bound dispatch, verified all-up, neutral readback, exact-call oracle success, clean close, and foreground restoration. R01/R02 failures stay preserved; five read-only result lookups after the 10 s pending response were needed. One sample only; no MAP01, blocked-I/O recovery, reliability, efficiency, or WSLc GUI claim.
