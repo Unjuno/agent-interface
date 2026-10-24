@@ -1,0 +1,384 @@
+{
+  "authority": "none",
+  "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-live-r06\\research\\integration\\win32_screen_calculator_task_20261024_r19\\run\\server\\4e4b4cee1a0a4f41be6642cbba9e90bc",
+  "call_id": "4e4b4cee1a0a4f41be6642cbba9e90bc",
+  "image_status": "no_observation",
+  "outcome_summary": {
+    "cleanup_error": null,
+    "error": null,
+    "execution_detail": null,
+    "execution_error": null,
+    "execution_status": "completed",
+    "failed_operation_effect": null,
+    "failed_operation_index": null,
+    "failed_source_operation": null,
+    "failure_detail": null,
+    "failure_phase": null,
+    "input_release_verified": true,
+    "recovery_required": false,
+    "reported_status": "returned",
+    "validation_operation_index": null,
+    "validation_source_operation": null
+  },
+  "receipt": {
+    "authority": "none",
+    "events": [],
+    "latest_observations": [],
+    "motor_state_validation": {
+      "accepted": false,
+      "present": false,
+      "reason": "missing"
+    },
+    "omitted_from_view": 0,
+    "record_counts": {},
+    "report": {
+      "call_id": "4e4b4cee1a0a4f41be6642cbba9e90bc",
+      "compilation": null,
+      "input_dispatched": true,
+      "normalization": null,
+      "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+      "operation_invoked": true,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "emissions": 6,
+          "ended_ns": 522741281000000,
+          "observations": [],
+          "releases": [
+            {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 522741281000000,
+              "state_query_witnesses": {},
+              "verified": true
+            }
+          ],
+          "started_ns": 522741281000000
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "session": {
+        "call_count": 1,
+        "mode": "supervised-win32",
+        "session_id": "ec0bbf321b714e01a7a1e43b0ca363be",
+        "state": "open",
+        "synthetic_only": false,
+        "unresolved_call_ids": []
+      },
+      "status": "returned",
+      "supervision": {
+        "action": {
+          "completion_custody": {
+            "cleanup_deadline_ns": null,
+            "completion_readback": {
+              "neutral": true,
+              "observed_monotonic_ns": 522741343000000,
+              "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+              "producer_exit_confirmed_ns": 522741328000000,
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            },
+            "completion_readback_attempt": null,
+            "completion_readback_outcome": "verified",
+            "completion_release_receipt": {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 522741281000000,
+              "state_query_witnesses": {},
+              "verified": true
+            },
+            "deadline_ns": 522750500000000,
+            "obligations": [
+              "unicode:002B",
+              "unicode:0031",
+              "unicode:003D"
+            ],
+            "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+            "phase": "completed",
+            "producer_exit_code": 0,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134373050336862801,
+              "pid": 13216
+            },
+            "recovery_id": null,
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "completed",
+            "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "metadata": {
+            "program_id": "calculator-plus-one-r19",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "emissions": 6,
+              "ended_ns": 522741281000000,
+              "observations": [],
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 522741281000000,
+                  "state_query_witnesses": {},
+                  "verified": true
+                }
+              ],
+              "started_ns": 522741281000000
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "status": "completed",
+          "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+          "task_success": null
+        },
+        "call_id": "4e4b4cee1a0a4f41be6642cbba9e90bc",
+        "cancellation": null,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 522750500000000,
+            "lease_id": "r19-calculator-one-shot"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "calculator"
+            },
+            {
+              "op": "text",
+              "text": "+1="
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "calculator-plus-one-r19",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null
+      },
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+      "task_success": null
+    },
+    "schema": "agent-interface/receipt-view-v1",
+    "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+    "source": {
+      "bytes": 3617,
+      "kind": "received_bytes",
+      "path": null,
+      "raw_report": {
+        "call_id": "4e4b4cee1a0a4f41be6642cbba9e90bc",
+        "compilation": null,
+        "input_dispatched": true,
+        "normalization": null,
+        "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+        "operation_invoked": true,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "emissions": 6,
+            "ended_ns": 522741281000000,
+            "observations": [],
+            "releases": [
+              {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 522741281000000,
+                "state_query_witnesses": {},
+                "verified": true
+              }
+            ],
+            "started_ns": 522741281000000
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "ec0bbf321b714e01a7a1e43b0ca363be",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "returned",
+        "supervision": {
+          "action": {
+            "completion_custody": {
+              "cleanup_deadline_ns": null,
+              "completion_readback": {
+                "neutral": true,
+                "observed_monotonic_ns": 522741343000000,
+                "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+                "producer_exit_confirmed_ns": 522741328000000,
+                "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+              },
+              "completion_readback_attempt": null,
+              "completion_readback_outcome": "verified",
+              "completion_release_receipt": {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 522741281000000,
+                "state_query_witnesses": {},
+                "verified": true
+              },
+              "deadline_ns": 522750500000000,
+              "obligations": [
+                "unicode:002B",
+                "unicode:0031",
+                "unicode:003D"
+              ],
+              "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+              "phase": "completed",
+              "producer_exit_code": 0,
+              "producer_gate_state": "authorization_attempted",
+              "producer_identity": {
+                "creation_time_100ns": 134373050336862801,
+                "pid": 13216
+              },
+              "recovery_id": null,
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "status": "completed",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+              "task_success": null,
+              "uncertainty": null
+            },
+            "metadata": {
+              "program_id": "calculator-plus-one-r19",
+              "source": "interface_dispatch"
+            },
+            "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "result": {
+              "admission": "accepted",
+              "execution": {
+                "emissions": 6,
+                "ended_ns": 522741281000000,
+                "observations": [],
+                "releases": [
+                  {
+                    "buttons_down": [],
+                    "buttons_unknown": [],
+                    "keys_down": [],
+                    "keys_unknown": [],
+                    "monotonic_ns": 522741281000000,
+                    "state_query_witnesses": {},
+                    "verified": true
+                  }
+                ],
+                "started_ns": 522741281000000
+              },
+              "recovery_required": false,
+              "required_capabilities": [
+                "input.release_all",
+                "input.text",
+                "window.focus"
+              ],
+              "status": "completed"
+            },
+            "status": "completed",
+            "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+            "task_success": null
+          },
+          "call_id": "4e4b4cee1a0a4f41be6642cbba9e90bc",
+          "cancellation": null,
+          "standard_program": {
+            "authority": {
+              "expires_at_ns": 522750500000000,
+              "lease_id": "r19-calculator-one-shot"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "calculator"
+              },
+              {
+                "op": "text",
+                "text": "+1="
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "calculator-plus-one-r19",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          },
+          "task_effect": null
+        },
+        "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+        "task_success": null
+      },
+      "sha256": "b37180afc06ec49f761a4d011dc036cac0387b1566225adb16209d0f1f58b27c"
+    }
+  },
+  "schema": "agent-interface/review-v1",
+  "session": {
+    "call_count": 1,
+    "mode": "supervised-win32",
+    "session_id": "ec0bbf321b714e01a7a1e43b0ca363be",
+    "state": "open",
+    "synthetic_only": false,
+    "unresolved_call_ids": []
+  }
+}

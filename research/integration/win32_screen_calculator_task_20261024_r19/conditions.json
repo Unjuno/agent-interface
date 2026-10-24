@@ -1,0 +1,35 @@
+{
+  "schema": "win32-screen-calculator-r19-conditions-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r19-97150b9f",
+  "frozen_utc": "2026-10-24T08:43:34.222594+00:00",
+  "host": "attached Windows PC; user-authorized native Win32 route",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "runner_sha256": "dee41b51848cd44a136991a15aa3a9fddf9f49d00da42d34d21646300f85601e",
+  "uia_scorer_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b",
+  "preregistration_sha256": "cacfc6943855d9c8b64358d21f960cf2d9ae7bc39c829ce9db15f83052078a0d",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "baseline_display": "1044",
+  "expected_display": "1045",
+  "frame": "screen_physical_px",
+  "region": [
+    48,
+    32,
+    320,
+    533
+  ],
+  "task_oracle_schema_required": [
+    "call_id",
+    "operation_id",
+    "target_generation",
+    "oracle_id",
+    "outcome",
+    "observed_monotonic_ns",
+    "evidence_ref"
+  ],
+  "interaction_gate": "visual prompt is generated from EXPECTED_DISPLAY; inspect image before one PROCEED_R19 token",
+  "pending_rule": "one exact-call cancel and read-only poll <=4s; never replay",
+  "scope": "native Windows Calculator only"
+}

@@ -1,0 +1,77 @@
+{
+  "schema": "win32-screen-calculator-r19-audit-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r19-97150b9f",
+  "frozen_manifest_matches": true,
+  "visual_observation": {
+    "status": "returned",
+    "frame": "screen_physical_px",
+    "region": [
+      48,
+      32,
+      320,
+      533
+    ],
+    "dimensions": [
+      320,
+      533
+    ],
+    "png_sha256": "de0c35c9b28b8a0c67f00a85b0a2af3f0db4fb9e04b9d97f5b8d588710689339",
+    "all_black": false,
+    "visually_inspected": "Calculator showed 1,044 before dispatch"
+  },
+  "dispatch": {
+    "call_id": "4e4b4cee1a0a4f41be6642cbba9e90bc",
+    "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "status": "returned",
+    "input_dispatched": true,
+    "action_status": "completed",
+    "release_confirmed": true,
+    "release_receipt": {
+      "buttons_down": [],
+      "buttons_unknown": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "monotonic_ns": 522741281000000,
+      "state_query_witnesses": {},
+      "verified": true
+    },
+    "completion_readback": {
+      "neutral": true,
+      "observed_monotonic_ns": 522741343000000,
+      "operation_id": "fb5d8156604d490d8ed3ec8df313ce64",
+      "producer_exit_confirmed_ns": 522741328000000,
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+    },
+    "replay_allowed": false
+  },
+  "task_effect": {
+    "receipt_exact_schema": true,
+    "receipt_keys": [
+      "call_id",
+      "evidence_ref",
+      "observed_monotonic_ns",
+      "operation_id",
+      "oracle_id",
+      "outcome",
+      "target_generation"
+    ],
+    "outcome": "success",
+    "same_call_operation_generation": true,
+    "verifier_status": "verified",
+    "verifier_task_success": true,
+    "retained_task_success": true,
+    "uia_before": "1044",
+    "uia_at_oracle": "1045",
+    "uia_after": "1045",
+    "expected": "1045"
+  },
+  "close": {
+    "status": "closed",
+    "close_release_confirmed": false,
+    "session_state": "closed",
+    "unresolved_call_ids": []
+  },
+  "strict_disposition": "PASS_SCOPED: one visibly grounded physical-screen Calculator action achieved exact UIA task effect, exact-schema task_success certificate, verified release, neutral readback, and close without unresolved calls.",
+  "limits": "One native Windows Calculator sample; no WSLc, MAP01, blocked-I/O recovery, matched efficiency, or reliability conclusion."
+}
