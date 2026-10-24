@@ -1,0 +1,1 @@
+S10 local WSLc harness build: dotnet restore harness/S10.csproj --ignore-failed-sources PASS; dotnet build harness/S10.csproj --no-restore --configuration Release --output C:\wslc-s10-c03cf909\bin PASS, 0 warnings/errors. Native DLL path length 60. No S10 session used by build.

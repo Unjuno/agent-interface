@@ -1,0 +1,21 @@
+﻿Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/probe.py", line 158, in <module>
+    main()
+  File "/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/probe.py", line 151, in main
+    'cases': [run_case(mode) for mode in ('healthy', 'focus_query', 'release_sync')],
+              ^^^^^^^^^^^^^^
+  File "/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/probe.py", line 98, in run_case
+    raise RuntimeError('named fake boundary was not reached: ' + repr(returned))
+RuntimeError: named fake boundary was not reached: [{'schema': 'agent-interface/runtime-dispatch-result-v1', 'status': 'returned', 'result': {'status': 'execution_failed', 'admission': 'accepted', 'error': 'BACKEND_EXECUTION_FAILED', 'required_capabilities': ['input.keyboard', 'input.release_all'], 'execution': {'started_ns': 1000000, 'ended_ns': 1000000, 'emissions': 0, 'program_emissions': 0, 'observations': [], 'releases': [{'keys_down': [], 'buttons_down': [], 'verified': True, 'monotonic_ns': 1000000}], 'waits': [], 'activations': [], 'completed_ops': [], 'error': 'AttributeError("\'types.SimpleNamespace\' object has no attribute \'_prearm_key_press\'")', 'failed_op': 0, 'failed_op_effect': 'unknown; may have emitted partial input'}, 'recovery_required': False}}]
+Traceback (most recent call last):
+  File "/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/runner.py", line 54, in <module>
+    run_probe(False, 'normal.json')
+  File "/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/runner.py", line 44, in run_probe
+    subprocess.run(command, env=ENV, check=True)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/local/bin/python', '-B', '-c', "import runpy,sys;sys.path.insert(0,'/src');sys.argv=['/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/probe.py', '--output', '/out/normal.json'];runpy.run_path('/src/research/live_control/wslc_fake_x_public_currentmain_20261024_s09/probe.py',run_name='__main__')"]' returned non-zero exit status 1.
