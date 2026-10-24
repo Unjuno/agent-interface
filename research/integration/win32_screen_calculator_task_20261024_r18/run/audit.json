@@ -1,0 +1,35 @@
+{
+  "schema": "win32-screen-calculator-r18-audit-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r18-18835bf5",
+  "frozen_manifest_matches": true,
+  "baseline": "1044",
+  "observation": {
+    "status": "returned",
+    "frame": "screen_physical_px",
+    "region": [
+      48,
+      32,
+      320,
+      533
+    ],
+    "dimensions": [
+      320,
+      533
+    ],
+    "png_sha256": "de0c35c9b28b8a0c67f00a85b0a2af3f0db4fb9e04b9d97f5b8d588710689339",
+    "all_black": false,
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "input_dispatched": false
+  },
+  "dispatch_files_present": false,
+  "close": {
+    "status": "closed",
+    "call_count": 0,
+    "unresolved_call_ids": []
+  },
+  "runner_stop": {
+    "type": "RuntimeError",
+    "error": "STOP before input: visual check was not approved"
+  },
+  "disposition": "PRE_INPUT_STOP: the frozen runner prompt named 1,043 while the preregistered baseline was 1,044; the observation showed 1,044 and no input was sent."
+}

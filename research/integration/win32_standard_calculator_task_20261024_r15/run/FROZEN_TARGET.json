@@ -1,0 +1,45 @@
+{
+  "attempt_id": "win32-standard-calculator-task-20261024-r15-6dd1e43e",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "baseline_display": "1042",
+  "expected_display": "1043",
+  "frozen_utc": "2026-10-24T08:36:12.069712+00:00",
+  "observation_ids": [
+    "ccad269a56654b1595f9f131aa273b49"
+  ],
+  "program": {
+    "ops": [
+      {
+        "op": "focus",
+        "target": "calculator"
+      },
+      {
+        "op": "text",
+        "text": "+1="
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "runner_sha256": "b3db78e1f3888236715bc19c1be4ac3f11f2aa7bf438e6506421ccfd98bcc4d1",
+  "schema": "win32-standard-calculator-r15-frozen-target-v1",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "stop_rule": "One dispatch only; no replay. If it remains pending after 10s, one exact-call cancel, then read-only polling for at most 4s.",
+  "target": "calculator",
+  "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "uia_oracle_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b"
+}

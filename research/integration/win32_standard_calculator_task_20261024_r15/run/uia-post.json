@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-live-r06\\research\\integration\\win32_standard_calculator_task_20261024_r15\\uia_read.ps1",
+    "-Hwnd",
+    "55117672",
+    "-ExpectedDisplay",
+    "",
+    "-TimeoutMs",
+    "0"
+  ],
+  "ended_monotonic_ns": 522280036577600,
+  "parsed": {
+    "display_digits": "1043",
+    "elapsed_ms": 80.8871,
+    "expected_display_seen": true,
+    "expression_name": "式は 1042 + 1= です",
+    "hwnd": 55117672,
+    "poll_count": 1,
+    "read_completed_utc": "2026-10-24T08:36:13.1453699Z",
+    "read_started_utc": "2026-10-24T08:36:13.0610274Z",
+    "result_name": "表示は 1,043 です",
+    "root_name": "電卓"
+  },
+  "returncode": 0,
+  "started_monotonic_ns": 522279769452100,
+  "stderr": "",
+  "stdout": "{\"hwnd\":55117672,\"root_name\":\"電卓\",\"result_name\":\"表示は 1,043 です\",\"expression_name\":\"式は 1042 + 1= です\",\"display_digits\":\"1043\",\"expected_display_seen\":true,\"poll_count\":1,\"read_started_utc\":\"2026-10-24T08:36:13.0610274Z\",\"read_completed_utc\":\"2026-10-24T08:36:13.1453699Z\",\"elapsed_ms\":80.8871}\n"
+}

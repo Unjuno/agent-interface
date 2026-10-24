@@ -1,0 +1,23 @@
+{
+  "schema": "win32-screen-calculator-r16-conditions-v1",
+  "attempt_id": "win32-screen-calculator-observation-20261024-r16-537c22e9",
+  "frozen_utc": "2026-10-24T08:39:02.881300+00:00",
+  "host": "attached Windows PC; user-authorized; read-only native Win32 experiment",
+  "source_commit": "21f53e7ed7ce200fe4959a858b59160f81569e21",
+  "source_tree": "8356510627ae897467ce57317708f99b74a8c2d2",
+  "backend_sha256": "87516d863db92c8a6e3202dfbf7d03063c942f19d8082b5142c128ffaf201b6c",
+  "runner_sha256": "5a868890bef4f33e9edea2eafd981e42a0670977e9eb0bbaa860dfaf82e0b3e6",
+  "uia_scorer_sha256": "285a7cc641e8760e1a4772f1c4094da170ca948af9b1a3a36e0e7ac179c0404b",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "baseline_display": "1043",
+  "client_rect_screen_physical_px": [
+    48,
+    32,
+    320,
+    533
+  ],
+  "frame": "screen_physical_px",
+  "operation": "one interface_observe and interface_close only",
+  "prior_comparison": "R15 corrected client bounds 320x533 but captured uniform black; prior R02 in merged PR #9496 used screen_physical_px but lost process session before dispatch"
+}
