@@ -1,0 +1,278 @@
+{
+  "attempt_id": "win32-public-mcp-calculator-20261024-r04-cd8092b5c5d04a8aa24c45f566046dd5",
+  "conditions_sha256": "24a5b7fc5e5be1840e59f2bcd0bc3fd3e52990f0221fb0aa173140d8a9b345b1",
+  "observation": {
+    "height": 541,
+    "image_file": "observe-0-1.png",
+    "native_window_id": 55117672,
+    "observation_id": "1c86a33598544b6181a038befb80bf59",
+    "region": [
+      40,
+      32,
+      336,
+      541
+    ],
+    "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+    "width": 336
+  },
+  "schema": "win32-public-mcp-calculator-run-v1",
+  "source_commit": "6aea5d3f359f42811d4e1dd1060fc575560ceeae",
+  "status": "FAIL_OR_UNKNOWN",
+  "steps": [
+    {
+      "blocks": [
+        {
+          "sha256": "78dc8304491470d04df6640a236ce9d40cc2ef4433047763d0572e6f0989df86",
+          "type": "text"
+        },
+        {
+          "bytes": 25823,
+          "mimeType": "image/png",
+          "path": "observe-0-1.png",
+          "sha256": "5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985",
+          "type": "image"
+        }
+      ],
+      "isError": false,
+      "name": "observation",
+      "parsed": {
+        "authority": "none",
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r04\\run\\server-receipts\\ebb211a1dee94f8694a90cae478333db",
+        "call_id": "ebb211a1dee94f8694a90cae478333db",
+        "image_reference": {
+          "authority": "none",
+          "capture_ns": 500987359000000,
+          "freshness": "historical referenced capture; no new observation",
+          "observation_id": "1c86a33598544b6181a038befb80bf59",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r04\\run\\server-receipts\\ebb211a1dee94f8694a90cae478333db\\images\\e0aaf7c8553b4977b5e3ea42bc0ce134.png",
+          "recorded_capture": {
+            "capture_ended_ns": 500987375000000,
+            "capture_started_ns": 500987359000000,
+            "frame": "screen_physical_px",
+            "height": 541,
+            "native_window_id": 55117672,
+            "region": [
+              40,
+              32,
+              336,
+              541
+            ],
+            "target": "calculator",
+            "width": 336
+          },
+          "relative_path": "images\\e0aaf7c8553b4977b5e3ea42bc0ce134.png",
+          "sha256": "5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985",
+          "status": "image"
+        },
+        "image_status": "image",
+        "outcome_summary": {
+          "cleanup_error": null,
+          "error": null,
+          "failure_phase": null,
+          "reported_status": "returned"
+        },
+        "receipt": {
+          "authority": "none",
+          "events": [],
+          "latest_observations": [],
+          "motor_state_validation": {
+            "accepted": false,
+            "present": false,
+            "reason": "missing"
+          },
+          "omitted_from_view": 0,
+          "record_counts": {},
+          "report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 25823,
+                "height": 541,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r04\\run\\server-receipts\\ebb211a1dee94f8694a90cae478333db\\images\\e0aaf7c8553b4977b5e3ea42bc0ce134.png",
+                "sha256": "5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985",
+                "source_raw_sha256": "d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd",
+                "timing_ns": {
+                  "converted": 500987406000000,
+                  "encoded": 500987406000000,
+                  "started": 500987375000000,
+                  "written": 500987406000000
+                },
+                "width": 336
+              },
+              "bytes": 727104,
+              "capture_ended_ns": 500987375000000,
+              "capture_started_ns": 500987359000000,
+              "frame": "screen_physical_px",
+              "height": 541,
+              "native_window_id": 55117672,
+              "region": [
+                40,
+                32,
+                336,
+                541
+              ],
+              "sha256": "d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd",
+              "target": "calculator",
+              "width": 336
+            },
+            "observation_id": "1c86a33598544b6181a038befb80bf59",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "7e0e05f250dc42eb8477370a6c8b73e8",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+            "target_generation_consistency": "matched"
+          },
+          "schema": "agent-interface/receipt-view-v1",
+          "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+          "source": {
+            "bytes": 1495,
+            "kind": "received_bytes",
+            "path": null,
+            "raw_report": {
+              "input_dispatched": false,
+              "observation": {
+                "artifact": {
+                  "bytes": 25823,
+                  "height": 541,
+                  "mime_type": "image/png",
+                  "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r04\\run\\server-receipts\\ebb211a1dee94f8694a90cae478333db\\images\\e0aaf7c8553b4977b5e3ea42bc0ce134.png",
+                  "sha256": "5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985",
+                  "source_raw_sha256": "d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd",
+                  "timing_ns": {
+                    "converted": 500987406000000,
+                    "encoded": 500987406000000,
+                    "started": 500987375000000,
+                    "written": 500987406000000
+                  },
+                  "width": 336
+                },
+                "bytes": 727104,
+                "capture_ended_ns": 500987375000000,
+                "capture_started_ns": 500987359000000,
+                "frame": "screen_physical_px",
+                "height": 541,
+                "native_window_id": 55117672,
+                "region": [
+                  40,
+                  32,
+                  336,
+                  541
+                ],
+                "sha256": "d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd",
+                "target": "calculator",
+                "width": 336
+              },
+              "observation_id": "1c86a33598544b6181a038befb80bf59",
+              "schema": "agent-interface/runtime-observation-v1",
+              "session": {
+                "call_count": 0,
+                "mode": "supervised-win32",
+                "session_id": "7e0e05f250dc42eb8477370a6c8b73e8",
+                "state": "open",
+                "synthetic_only": false,
+                "unresolved_call_ids": []
+              },
+              "side_effect_authority": false,
+              "status": "returned",
+              "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c",
+              "target_generation_consistency": "matched"
+            },
+            "sha256": "2b968e569a56eff33d669bfb2ed59bdc33ab71b3aef9ebb0c73708d29152275b"
+          }
+        },
+        "schema": "agent-interface/review-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "7e0e05f250dc42eb8477370a6c8b73e8",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        }
+      },
+      "raw_text": "{\"schema\": \"agent-interface/review-v1\", \"receipt\": {\"schema\": \"agent-interface/receipt-view-v1\", \"authority\": \"none\", \"source\": {\"path\": null, \"sha256\": \"2b968e569a56eff33d669bfb2ed59bdc33ab71b3aef9ebb0c73708d29152275b\", \"bytes\": 1495, \"kind\": \"received_bytes\", \"raw_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"1c86a33598544b6181a038befb80bf59\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 727104, \"sha256\": \"d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd\", \"width\": 336, \"height\": 541, \"target\": \"calculator\", \"native_window_id\": 55117672, \"frame\": \"screen_physical_px\", \"region\": [40, 32, 336, 541], \"capture_started_ns\": 500987359000000, \"capture_ended_ns\": 500987375000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r04\\\\run\\\\server-receipts\\\\ebb211a1dee94f8694a90cae478333db\\\\images\\\\e0aaf7c8553b4977b5e3ea42bc0ce134.png\", \"sha256\": \"5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985\", \"bytes\": 25823, \"width\": 336, \"height\": 541, \"source_raw_sha256\": \"d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd\", \"timing_ns\": {\"started\": 500987375000000, \"converted\": 500987406000000, \"encoded\": 500987406000000, \"written\": 500987406000000}}}, \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"7e0e05f250dc42eb8477370a6c8b73e8\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}}, \"report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"observation_id\": \"1c86a33598544b6181a038befb80bf59\", \"side_effect_authority\": false, \"input_dispatched\": false, \"observation\": {\"bytes\": 727104, \"sha256\": \"d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd\", \"width\": 336, \"height\": 541, \"target\": \"calculator\", \"native_window_id\": 55117672, \"frame\": \"screen_physical_px\", \"region\": [40, 32, 336, 541], \"capture_started_ns\": 500987359000000, \"capture_ended_ns\": 500987375000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r04\\\\run\\\\server-receipts\\\\ebb211a1dee94f8694a90cae478333db\\\\images\\\\e0aaf7c8553b4977b5e3ea42bc0ce134.png\", \"sha256\": \"5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985\", \"bytes\": 25823, \"width\": 336, \"height\": 541, \"source_raw_sha256\": \"d0ca888b14d486de65eea4da168edc514e9eed2d5be46c15c2808328c1897bdd\", \"timing_ns\": {\"started\": 500987375000000, \"converted\": 500987406000000, \"encoded\": 500987406000000, \"written\": 500987406000000}}}, \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"target_generation_consistency\": \"matched\", \"status\": \"returned\", \"session\": {\"session_id\": \"7e0e05f250dc42eb8477370a6c8b73e8\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}}, \"latest_observations\": [], \"events\": [], \"record_counts\": {}, \"omitted_from_view\": 0, \"scope\": \"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\", \"motor_state_validation\": {\"present\": false, \"accepted\": false, \"reason\": \"missing\"}}, \"authority\": \"none\", \"outcome_summary\": {\"reported_status\": \"returned\", \"error\": null, \"failure_phase\": null, \"cleanup_error\": null}, \"image_reference\": {\"status\": \"image\", \"capture_ns\": 500987359000000, \"path\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r04\\\\run\\\\server-receipts\\\\ebb211a1dee94f8694a90cae478333db\\\\images\\\\e0aaf7c8553b4977b5e3ea42bc0ce134.png\", \"relative_path\": \"images\\\\e0aaf7c8553b4977b5e3ea42bc0ce134.png\", \"sha256\": \"5b5debca40e2777375bacbfd318c95e497f88642f456a8b8db7a896ca4bc6985\", \"authority\": \"none\", \"freshness\": \"historical referenced capture; no new observation\", \"observation_id\": \"1c86a33598544b6181a038befb80bf59\", \"recorded_capture\": {\"target\": \"calculator\", \"native_window_id\": 55117672, \"frame\": \"screen_physical_px\", \"region\": [40, 32, 336, 541], \"width\": 336, \"height\": 541, \"capture_started_ns\": 500987359000000, \"capture_ended_ns\": 500987375000000}}, \"image_status\": \"image\", \"session\": {\"session_id\": \"7e0e05f250dc42eb8477370a6c8b73e8\", \"mode\": \"supervised-win32\", \"state\": \"open\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r04\\\\run\\\\server-receipts\\\\ebb211a1dee94f8694a90cae478333db\", \"call_id\": \"ebb211a1dee94f8694a90cae478333db\"}"
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "238204d390f04b1cd16ee18c5785276e03969fb976ce595f31978ab6b87a5df3",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "clock",
+      "parsed": {
+        "authority_granted": false,
+        "clock": "time.monotonic_ns",
+        "input_dispatched": false,
+        "lease_issued": false,
+        "monotonic_ns": 501002515000000,
+        "schema": "agent-interface/execution-clock-v1",
+        "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+        "server_instance_id": "c1a55fa33a684c038a653ecb41c73421"
+      },
+      "raw_text": "{\"schema\": \"agent-interface/execution-clock-v1\", \"monotonic_ns\": 501002515000000, \"clock\": \"time.monotonic_ns\", \"server_instance_id\": \"c1a55fa33a684c038a653ecb41c73421\", \"input_dispatched\": false, \"authority_granted\": false, \"lease_issued\": false, \"scope\": \"Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.\"}"
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "24288eabc197b645f0ab468590f1119b267ba2f744ce24c55e07a156fc503e1f",
+          "type": "text"
+        }
+      ],
+      "isError": true,
+      "name": "validation",
+      "parsed": {
+        "backend_checked": false,
+        "compilation": null,
+        "detail": "invalid program_id",
+        "detail_source": "program_validation",
+        "error": "INVALID_PROGRAM",
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "static_valid": false,
+        "status": "invalid",
+        "task_success": null
+      },
+      "raw_text": "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"invalid\", \"static_valid\": false, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"error\": \"INVALID_PROGRAM\", \"detail\": \"invalid program_id\", \"detail_source\": \"program_validation\", \"compilation\": null}"
+    },
+    {
+      "blocks": [
+        {
+          "sha256": "eb7c92877d4e3f665926dea37963fd75e0057aa976fa10d921fae68fca4ef648",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "server_close",
+      "parsed": {
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-calculator-standard-caller-r01\\research\\integration\\win32_public_mcp_calculator_20261024_r04\\run\\server-receipts\\2be162a6b8564a2bb417ae9e40db5038",
+        "call_id": "2be162a6b8564a2bb417ae9e40db5038",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "7e0e05f250dc42eb8477370a6c8b73e8",
+          "state": "closed",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "closed",
+        "task_success": null
+      },
+      "raw_text": "{\"status\": \"closed\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"session\": {\"session_id\": \"7e0e05f250dc42eb8477370a6c8b73e8\", \"mode\": \"supervised-win32\", \"state\": \"closed\", \"synthetic_only\": false, \"call_count\": 0, \"unresolved_call_ids\": []}, \"call_directory\": \"C:\\\\Users\\\\user\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-2\\\\worktrees\\\\win32-calculator-standard-caller-r01\\\\research\\\\integration\\\\win32_public_mcp_calculator_20261024_r04\\\\run\\\\server-receipts\\\\2be162a6b8564a2bb417ae9e40db5038\", \"call_id\": \"2be162a6b8564a2bb417ae9e40db5038\"}"
+    }
+  ],
+  "stop_reason": "frozen program failed static validation; no dispatch issued"
+}

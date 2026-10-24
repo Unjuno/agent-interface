@@ -1,0 +1,200 @@
+{
+  "blocks": [
+    {
+      "sha256": "2f365b2235f220ca7381152ab55bc5d39c1ef2b9254ab02dd73f54f584cb7d85",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "parsed": {
+    "action": {
+      "metadata": {
+        "program_id": "calc-r05-314plus728",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "2145f00d3f834fceb0adf3f28494e852",
+      "result": null,
+      "status": "starting",
+      "target_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+    },
+    "call_id": "6c7f575eaffa461b8fdeb26b12422b2f",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 501143484000000,
+        "lease_id": "65fd42f65d194e78855dc56479ca261f"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "calculator"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 248,
+          "y": 239
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 248,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 90,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 90,
+          "y": 429
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 328,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 90,
+          "y": 375
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 168,
+          "y": 484
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 168,
+          "y": 375
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "frame": "screen_physical_px",
+          "op": "pointer_move",
+          "x": 328,
+          "y": 536
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "calc-r05-314plus728",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  },
+  "raw_text": "{\"call_id\": \"6c7f575eaffa461b8fdeb26b12422b2f\", \"action\": {\"operation_id\": \"2145f00d3f834fceb0adf3f28494e852\", \"target_generation\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\", \"status\": \"starting\", \"metadata\": {\"source\": \"interface_dispatch\", \"program_id\": \"calc-r05-314plus728\"}, \"result\": null}, \"cancellation\": null, \"task_effect\": null, \"standard_program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"calc-r05-314plus728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"65fd42f65d194e78855dc56479ca261f\", \"expires_at_ns\": 501143484000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 239}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}"
+}
