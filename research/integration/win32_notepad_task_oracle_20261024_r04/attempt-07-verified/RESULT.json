@@ -1,0 +1,84 @@
+{
+  "condition": "paced per-character standard Win32 MCP dispatch",
+  "marker": "AI-CTRL-20261024-R04",
+  "target_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+  "tasks": [
+    {
+      "dispatch": {
+        "call_id": "c090d35516d24b93b12e91e422efefe5",
+        "status": "completed",
+        "emissions": 40,
+        "release_confirmed": true,
+        "task_success_from_dispatch": null,
+        "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+        "detail": null
+      },
+      "verification_status": "verified",
+      "task_success": true,
+      "oracle_outcome": "success",
+      "verification_uncertainty": null,
+      "oracle_observation": {
+        "callback_start_ns": 529627953000000,
+        "observed_monotonic_ns": 529627953000000,
+        "callback_return_ns": 529627953000000,
+        "expected": "AI-CTRL-20261024-R04",
+        "observed_text": "AI-CTRL-20261024-R04",
+        "characters": 20,
+        "child_hwnd": 746588126,
+        "target_generation_match": true
+      }
+    }
+  ],
+  "after_paced_task": {
+    "text": "AI-CTRL-20261024-R04",
+    "characters": 20
+  },
+  "cleanup": {
+    "dispatch": {
+      "call_id": "3b0c5ccf08ba42b9add87a7a2488974f",
+      "status": "completed",
+      "emissions": 9,
+      "release_confirmed": true,
+      "task_success_from_dispatch": null,
+      "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "detail": null
+    },
+    "verification_status": "verified",
+    "task_success": false,
+    "oracle_outcome": "failure",
+    "verification_uncertainty": null,
+    "oracle_observation": {
+      "callback_start_ns": 529629046000000,
+      "observed_monotonic_ns": 529629046000000,
+      "callback_return_ns": 529629046000000,
+      "expected": "",
+      "observed_text": "AI-CTRL-20261024-R04",
+      "characters": 20,
+      "child_hwnd": 746588126,
+      "target_generation_match": true
+    }
+  },
+  "final_readback": {
+    "text": "AI-CTRL-20261024-R04",
+    "characters": 20,
+    "child_hwnd": 746588126
+  },
+  "empty_after_cleanup": false,
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "4a2f1c5cd8da41af8b13502b5d0c68fe",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 2,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "D:\\CodexData\\Temp\\agent-interface-v39-wslc-20261024-main\\research\\integration\\win32_notepad_task_oracle_20261024_r04\\attempt-07-verified\\mcp-calls\\9401f883c0ca418ab46292a7d91b28ce",
+    "call_id": "9401f883c0ca418ab46292a7d91b28ce"
+  },
+  "overall": "FAIL_OR_UNKNOWN"
+}

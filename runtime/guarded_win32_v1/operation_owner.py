@@ -79,6 +79,9 @@ class OperationOwner:
                 # that guarantees a parent-owned gate may declare it closed.
                 "producer_gate_state": "closed" if start_gate_required else "untracked",
                 "cleanup_deadline_ns": None,
+                "cleanup_requested_monotonic_ns": None,
+                "recovery_completed_monotonic_ns": None,
+                "cleanup_latency_ns": None,
                 "recovery_id": None,
                 "release_confirmed": False,
                 "completion_release_receipt": None,
@@ -190,13 +193,15 @@ class OperationOwner:
                 return self._public(record)
             if record["status"] not in ("admitted", "running"):
                 raise OwnerRefused("operation has no cancellable producer")
+            requested_ns = self._clock_ns()
             if (type(cleanup_deadline_ns) is not int
-                    or cleanup_deadline_ns <= self._clock_ns()):
+                    or cleanup_deadline_ns <= requested_ns):
                 record["status"] = "unknown"
                 record["cleanup_deadline_ns"] = cleanup_deadline_ns
                 return self._public(record)
             record["status"] = "cancel_pending"
             record["cleanup_deadline_ns"] = cleanup_deadline_ns
+            record["cleanup_requested_monotonic_ns"] = requested_ns
             return self._public(record)
 
     def producer_retired(self, operation_id, target_generation, process_handle):
@@ -408,14 +413,19 @@ class OperationOwner:
                 and readback.get("recovery_id") == recovery_id
                 and readback.get("neutral") is True
             )
+            completed_ns = self._clock_ns()
             confirmed = (
                 release_accepted is True
                 and valid_readback
-                and self._clock_ns() < record["cleanup_deadline_ns"]
+                and completed_ns < record["cleanup_deadline_ns"]
             )
             record["status"] = "recovered" if confirmed else "unknown"
             record["release_confirmed"] = bool(confirmed)
-            if not confirmed:
+            if confirmed:
+                record["recovery_completed_monotonic_ns"] = completed_ns
+                record["cleanup_latency_ns"] = (
+                    completed_ns - record["cleanup_requested_monotonic_ns"])
+            else:
                 record["uncertainty"] = "recovery_or_neutral_readback_unconfirmed"
             return bool(confirmed)
 

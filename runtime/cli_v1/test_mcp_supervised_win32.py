@@ -700,6 +700,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(retained["action"]["status"], "recovered", retained)
             action_result = retained["action"]["result"]
             self.assertEqual(action_result["status"], "recovered")
+            cleanup = retained["cancellation"]["result"]
+            self.assertIsInstance(cleanup["cleanup_requested_monotonic_ns"], int)
+            self.assertIsInstance(cleanup["recovery_completed_monotonic_ns"], int)
+            self.assertEqual(cleanup["cleanup_latency_ns"],
+                             cleanup["recovery_completed_monotonic_ns"]
+                             - cleanup["cleanup_requested_monotonic_ns"])
+            self.assertLess(cleanup["recovery_completed_monotonic_ns"],
+                            cleanup["cleanup_deadline_ns"])
             self.assertTrue(action_result["release_confirmed"])
             self.assertIsNone(action_result["input_dispatched"])
             self.assertEqual(action_result["effect_status"], "unknown")

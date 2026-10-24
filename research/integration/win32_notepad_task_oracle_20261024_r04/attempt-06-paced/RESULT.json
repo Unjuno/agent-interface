@@ -1,0 +1,84 @@
+{
+  "condition": "paced per-character standard Win32 MCP dispatch",
+  "marker": "AI-CTRL-20261024-R04",
+  "target_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+  "tasks": [
+    {
+      "dispatch": {
+        "call_id": "278d42d4d7c04b4697241e5a9d8aeaa2",
+        "status": "completed",
+        "emissions": 40,
+        "release_confirmed": true,
+        "task_success_from_dispatch": null,
+        "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+        "detail": null
+      },
+      "verification_status": "unknown",
+      "task_success": null,
+      "oracle_outcome": null,
+      "verification_uncertainty": "independent_task_oracle_receipt_invalid: ValueError('task-effect observation is outside the oracle request/receipt window')",
+      "oracle_observation": {
+        "callback_start_ns": 529607546000000,
+        "observed_monotonic_ns": 529607546000000,
+        "callback_return_ns": 529607546000000,
+        "expected": "AI-CTRL-20261024-R04",
+        "observed_text": "AI-CTRL-20261024-R04",
+        "characters": 20,
+        "child_hwnd": 746588126,
+        "target_generation_match": true
+      }
+    }
+  ],
+  "after_paced_task": {
+    "text": "AI-CTRL-20261024-R04",
+    "characters": 20
+  },
+  "cleanup": {
+    "dispatch": {
+      "call_id": "cd9d0ffa218f40f4874e1ba441930fbf",
+      "status": "completed",
+      "emissions": 9,
+      "release_confirmed": true,
+      "task_success_from_dispatch": null,
+      "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "detail": null
+    },
+    "verification_status": "unknown",
+    "task_success": null,
+    "oracle_outcome": null,
+    "verification_uncertainty": "independent_task_oracle_receipt_invalid: ValueError('task-effect observation is outside the oracle request/receipt window')",
+    "oracle_observation": {
+      "callback_start_ns": 529608609000000,
+      "observed_monotonic_ns": 529608609000000,
+      "callback_return_ns": 529608609000000,
+      "expected": "",
+      "observed_text": "",
+      "characters": 0,
+      "child_hwnd": 746588126,
+      "target_generation_match": true
+    }
+  },
+  "final_readback": {
+    "text": "",
+    "characters": 0,
+    "child_hwnd": 746588126
+  },
+  "empty_after_cleanup": true,
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "1c4f54be67cc4bb4abc9943b071857c6",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 2,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "D:\\CodexData\\Temp\\agent-interface-v39-wslc-20261024-main\\research\\integration\\win32_notepad_task_oracle_20261024_r04\\attempt-06-paced\\mcp-calls\\bab537d0c0dc4378a3bc89826528ae27",
+    "call_id": "bab537d0c0dc4378a3bc89826528ae27"
+  },
+  "overall": "FAIL_OR_UNKNOWN"
+}

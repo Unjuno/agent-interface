@@ -7,6 +7,14 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+The [Win32 Notepad task-oracle packet](win32_notepad_task_oracle_20261024_r04/README.md)
+retains matched text-entry trials and one native SHIFT-down hold/cancel/recovery
+run through the supervised MCP implementation. R10 confirms recovery and
+independent key-up inside the configured deadline gate, while exact recovery
+latency is absent from that historical raw result. The current owner now emits
+monotonic cleanup timing for future runs. This does not qualify a hang inside
+the Windows API, stdio transport, MAP01, efficiency, or reliability.
+
 The [standard-caller process-start cancellation probe](standard_caller_cancel_process_start_20261021/README.md)
 shows that actual Windows helper-process creation is included in synchronous
 cancel latency and pauses the MCP event loop; the current XRes supervision
