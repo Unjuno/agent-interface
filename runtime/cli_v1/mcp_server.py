@@ -927,7 +927,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             """Close this owned connection, retaining cleanup evidence; never reopen.
 
             Busy refuses while an operation runs. Retained results remain readable.
-            Release/close failures are separate from prior task outcomes.
+            This operation does not issue a new input release; inspect the retained
+            action or cancellation receipt for its release evidence. Close results
+            are separate from prior task outcomes.
             """
             nonlocal shutting_down
             # Reserve shutdown under the same lock used to admit cancellation.
