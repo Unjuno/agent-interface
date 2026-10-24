@@ -1,0 +1,57 @@
+{
+  "schema": "win32-supervised-standard-caller-r52-r53-public-summary-v1",
+  "source_commit": "0f6464adbb4d2c7331b8aae71ee148a638c0ae79",
+  "current_main_checked": "d95430720c6396227772f8d4b3cc7e4e8b245ba3",
+  "runtime_source_files_unchanged": 6,
+  "attempts": [
+    {
+      "attempt": "R52",
+      "disposition": "FAIL_OR_UNKNOWN",
+      "diagnosis": "NO_INPUT_PRELAUNCH_STOP",
+      "preflight": {"passed": 15, "total": 15},
+      "strict_release_audit": {"passed": 1, "total": 11, "meaning": "not reached; no input or cancel"},
+      "combined_audit": {"passed": 1, "total": 14},
+      "dispatch_count": 0,
+      "cancel_count": 0,
+      "phase2_started": false,
+      "input_sent": false,
+      "task_success": null,
+      "cause": "Computer Use foreground activation was unavailable"
+    },
+    {
+      "attempt": "R53",
+      "disposition": "FAIL_OR_UNKNOWN",
+      "preflight": {"passed": 18, "total": 18},
+      "phase1_strict_release": {"passed": 11, "total": 11},
+      "callback_held_after_cancel_ms": 1403.6837,
+      "exact_call_polls": 90,
+      "recovery_q_up_return_after_cancel_ms": 637.0034,
+      "independent_q_up_observed_after_cancel_ms": 641.936,
+      "eligible_q_up_samples_while_callback_held": 73,
+      "phase1_fixture_effect_before_cancel": true,
+      "phase1_task_success": null,
+      "phase2_started": true,
+      "phase2_activation_receipt": false,
+      "phase2_dispatch_count": 0,
+      "phase2_cancel_count": 0,
+      "phase2_task_effect": false,
+      "combined_audit": {"passed": 3, "total": 14},
+      "cleanup_and_foreground_restore": true
+    }
+  ],
+  "manifest_verification": {
+    "r52_public_entries": 24,
+    "r52_public_mismatches": 0,
+    "r52_private_original_entries": 20,
+    "r52_private_original_mismatches": 0,
+    "r53_entries": 43,
+    "r53_mismatches": 0
+  },
+  "nonclaims": [
+    "WSLc behavior or allocation eligibility",
+    "MAP01 or real-application transfer",
+    "matched efficiency",
+    "broad reliability",
+    "hard real-time release bound"
+  ]
+}
