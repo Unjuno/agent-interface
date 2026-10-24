@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from PIL import Image
 
@@ -30,7 +31,316 @@ from runtime.cli_v1.test_mcp_owned_process import (
 )
 
 
+def _reviewable_fake_owner_factory(targets, directory, display_name, options):
+    owner = _fake_owner_factory(targets, directory, display_name, options)
+    owner.get()
+    owner.bridge.backend.d.create_resource_object = lambda _kind, window_id: (
+        SimpleNamespace(id=window_id))
+    generation_path = Path(directory) / "fake-process-generation"
+    identity_patch = patch(
+        "runtime.guarded_x11_v1.bridge.read_linux_x11_process_identity",
+        side_effect=lambda _connection, _window_id: (
+            generation_path.read_text(encoding="utf-8")
+            if generation_path.exists() else "a" * 64))
+    identity_patch.start()
+    owner._owned_process_test_cleanup.addCleanup(identity_patch.stop)
+    return owner
+
+
 class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stale_review_receipt_does_not_start_second_attempt(self):
+        initial_body = {
+            "method_receipt": {
+                "outcome": "SAFE_YIELD", "reason": "association_changed",
+                "completed_transitions": 0,
+                "critical_events": [{
+                    "event": "admission_refused",
+                    "status": "association_changed",
+                }],
+            },
+            "session": {
+                "recovery_required": False,
+                "owner_input_obligations_source": "child_rpc_snapshot",
+                "owner_input_obligations": {"keys": {}, "buttons": []},
+                "owner_process": {"alive": True, "retired": False},
+            },
+        }
+        initial_response = {
+            "status": "returned", "tool": "interface_guarded_compiled",
+            "result": {"content": [{"text": json.dumps(initial_body)}]},
+        }
+        refused_review = {
+            "status": "returned", "tool": "interface_guarded_review_window",
+            "result": {"content": [{"text": json.dumps({"status": "refused"})}]},
+        }
+        caller = object.__new__(RecordedPublicMcpCaller)
+        invocations = []
+
+        async def initial_only(*args):
+            invocations.append(args)
+            return {"tool_call_submitted": True,
+                    "tool_response": initial_response}
+
+        caller.invoke_generation_to_tool = initial_only
+
+        async def stale_recovery_plan(_initial):
+            return {
+                "attempt_id": "attempt-2", "request_bytes": b"replan",
+                "provider_call": lambda: self.fail("provider must not be called"),
+                "call_id": "call-2", "method": "interface_guarded_compiled",
+                "prepare_arguments": lambda generation: generation,
+                "review_response": refused_review,
+                "target_response": refused_review,
+            }
+
+        result = await caller.invoke_generation_to_tool_with_one_safe_recovery(
+            "attempt-1", b"request", lambda: self.fail("initial is stubbed"),
+            "call-1", "interface_guarded_compiled", lambda generation: generation,
+            stale_recovery_plan)
+
+        self.assertFalse(result["recovery_started"])
+        self.assertIsNone(result["recovery"])
+        self.assertEqual(result["review"], refused_review)
+        self.assertEqual(len(invocations), 1)
+
+    async def test_replanned_arguments_must_bind_fresh_mint_before_dispatch(self):
+        owner = {"pid": 1234, "alive": True, "retired": False}
+        session = {
+            "owner_process": owner, "review_required": False,
+            "recovery_required": False,
+            "owner_input_obligations_source": "child_rpc_snapshot",
+            "owner_input_obligations": {"keys": {}, "buttons": []},
+            "compiled_scope": "scope-1", "compiled_surface": "surface-1",
+        }
+
+        def response(tool, body):
+            return {"status": "returned", "tool": tool,
+                    "result": {"content": [{"text": json.dumps(body)}]}}
+
+        stale_payload = {"interface": {"symbols": {
+            "field": {"target_reference": "field"}}}}
+        initial = {
+            "tool_call_submitted": True,
+            "tool_response": response("interface_guarded_compiled", {
+                "method_receipt": {
+                    "outcome": "SAFE_YIELD", "reason": "association_changed",
+                    "completed_transitions": 0,
+                    "critical_events": [{"event": "admission_refused",
+                                         "status": "association_changed"}],
+                },
+                "session": {**session, "observation_sequence": 1},
+            }),
+            "generation": {"response_bytes": json.dumps(
+                stale_payload).encode("utf-8")},
+        }
+        reviewed = response("interface_guarded_review_window", {
+            "status": "reviewed", "input_dispatched": False,
+            "source": {"sequence": 2, "pointer_binding": {
+                "process_generation": "b" * 64}},
+            "session": session,
+        })
+        minted = response("interface_guarded_mint", {
+            "status": "minted", "input_dispatched": False,
+            "alias": "field_fresh", "offset": [8, 8], "source_sequence": 2,
+            "session": session,
+        })
+        caller = object.__new__(RecordedPublicMcpCaller)
+        invoke_rows = []
+        dispatched = []
+
+        async def invoke(*args):
+            invoke_rows.append(args)
+            if len(invoke_rows) == 1:
+                return initial
+            arguments = args[5]({"response_bytes": json.dumps({
+                "interface": {
+                    "session_scope": "scope-1", "surface": "surface-1",
+                    "symbols": {"field": {"target_reference": "field"}},
+                    "actions": {"enter": {"target_symbol": "field"}},
+                },
+                "bindings": {"enter": {"offset": [8, 8]}},
+            }).encode("utf-8")})
+            dispatched.append(arguments)
+            return {"tool_call_submitted": True}
+
+        caller.invoke_generation_to_tool = invoke
+
+        async def replan(_initial):
+            return {
+                "attempt_id": "attempt-2", "request_bytes": b"replan",
+                "provider_call": lambda: {"status": "completed"},
+                "call_id": "call-2", "method": "interface_guarded_compiled",
+                "prepare_arguments": lambda generation: json.loads(
+                    generation["response_bytes"]),
+                "review_response": reviewed, "target_response": minted,
+            }
+
+        with self.assertRaisesRegex(ValueError, "do not bind the reviewed target"):
+            await caller.invoke_generation_to_tool_with_one_safe_recovery(
+                "attempt-1", b"initial", lambda: None, "call-1",
+                "interface_guarded_compiled", lambda generation: generation,
+                replan)
+        self.assertEqual(len(invoke_rows), 2)
+        self.assertEqual(dispatched, [])
+
+    async def test_preinput_refusal_requires_fresh_review_before_one_replan(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            (server_root / "compiled-profile-mode").write_text("enabled")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_reviewable_fake_owner_factory,
+            )
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            provider_calls = 0
+            recovery_calls = 0
+            try:
+                first_observation = await caller.call_tool(
+                    None, "observe-before-stale", "interface_guarded_observe", {})
+                first = json.loads(first_observation["result"]["content"][0]["text"])
+                self.assertIn("source", first, repr(first))
+                first_target = json.loads((await caller.call_tool(
+                    None, "mint-before-stale", "interface_guarded_mint", {
+                        "alias": "field",
+                        "source_sequence": first["source"]["sequence"],
+                        "point": [8, 8], "region_size": [12, 12],
+                    }))["result"]["content"][0]["text"])["offset"]
+                first_payload = _compiled_profile_payload(
+                    first["session"]["compiled_scope"],
+                    first["session"]["compiled_surface"], first_target)
+                first_payload["wait_for_result_ms"] = 10000
+                first_bytes = json.dumps(
+                    first_payload, sort_keys=True, separators=(",", ":")
+                ).encode("utf-8")
+
+                async def provider(response_bytes):
+                    nonlocal provider_calls
+                    provider_calls += 1
+                    return {"status": "completed", "response_bytes": response_bytes,
+                            "usage": {"status": "reported", "input_tokens": 11,
+                                      "output_tokens": 4}}
+
+                def make_stale(generation):
+                    (server_root / "fake-process-generation").write_text(
+                        "b" * 64, encoding="utf-8")
+                    return json.loads(generation["response_bytes"])
+
+                async def reobserve_and_replan(first_result):
+                    nonlocal recovery_calls
+                    recovery_calls += 1
+                    review_response = await caller.call_tool(
+                        None, "recovery-window-review",
+                        "interface_guarded_review_window", {"window_id": 20})
+                    reviewed = json.loads(
+                        review_response["result"]["content"][0]["text"])
+                    self.assertEqual(reviewed["status"], "reviewed", reviewed)
+                    self.assertGreater(reviewed["source"]["sequence"],
+                                       first["source"]["sequence"])
+                    self.assertEqual(
+                        reviewed["source"]["pointer_binding"]["process_generation"],
+                        "b" * 64)
+                    minted_response = await caller.call_tool(
+                        None, "mint-after-review", "interface_guarded_mint", {
+                            "alias": "field_recovered",
+                            "source_sequence": reviewed["source"]["sequence"],
+                            "point": [8, 8], "region_size": [12, 12],
+                        })
+                    minted_body = json.loads(
+                        minted_response["result"]["content"][0]["text"])
+                    self.assertIn("offset", minted_body, repr(minted_body))
+                    minted = minted_body["offset"]
+                    payload = _compiled_profile_payload(
+                        reviewed["session"]["compiled_scope"],
+                        reviewed["session"]["compiled_surface"], minted)
+                    payload["interface"]["symbols"]["field"][
+                        "target_reference"] = "field_recovered"
+                    payload["wait_for_result_ms"] = 10000
+                    response_bytes = json.dumps(
+                        payload, sort_keys=True, separators=(",", ":")
+                    ).encode("utf-8")
+                    return {
+                        "attempt_id": "replan-generation",
+                        "request_bytes": b"fresh reviewed target and replan",
+                        "provider_call": lambda: provider(response_bytes),
+                        "call_id": "replan-compiled-call",
+                        "method": "interface_guarded_compiled",
+                        "prepare_arguments": lambda generation: json.loads(
+                            generation["response_bytes"]),
+                        "review_response": review_response,
+                        "target_response": minted_response,
+                    }
+
+                result = await caller.invoke_generation_to_tool_with_one_safe_recovery(
+                    "initial-generation", b"initial observed-target request",
+                    lambda: provider(first_bytes), "initial-compiled-call",
+                    "interface_guarded_compiled", make_stale,
+                    reobserve_and_replan)
+
+                self.assertTrue(result["recovery_started"], repr(
+                    result["initial"]["tool_response"]))
+                self.assertEqual(recovery_calls, 1)
+                self.assertEqual(provider_calls, 2)
+                self.assertEqual(result["review"]["status"], "returned")
+                first_receipt = json.loads(
+                    result["initial"]["tool_response"]["result"]["content"][0]["text"])
+                self.assertEqual(first_receipt["method_receipt"]["outcome"],
+                                 "SAFE_YIELD")
+                self.assertEqual(first_receipt["method_receipt"]["reason"],
+                                 "association_changed")
+                self.assertEqual(first_receipt["method_receipt"]["completed_transitions"],
+                                 0)
+                admission = [event for event in first_receipt["method_receipt"][
+                    "critical_events"] if event["event"] == "admission_refused"]
+                self.assertEqual(len(admission), 1)
+                self.assertEqual(admission[0]["status"], "association_changed")
+                self.assertFalse(any(
+                    event["event"] == "action_terminal"
+                    for event in first_receipt["method_receipt"]["critical_events"]))
+                self.assertIsNotNone(result["recovery"])
+                second_receipt = json.loads(
+                    result["recovery"]["tool_response"]["result"]["content"][0]["text"])
+                self.assertEqual(second_receipt["method_receipt"]["outcome"],
+                                 "TASK_SUCCEEDED", repr(second_receipt))
+                self.assertEqual(second_receipt["method_receipt"]["completed_transitions"],
+                                 1)
+                self.assertIsNone(second_receipt["task_success"])
+                self.assertFalse(second_receipt["replay_allowed"])
+                release_events = [event for event in second_receipt["method_receipt"][
+                    "critical_events"] if event["event"] == "action_terminal"]
+                self.assertEqual(len(release_events), 1)
+                self.assertTrue(release_events[0]["release_verified"])
+                initial_state = (server_root /
+                                 "synthetic-application-initial.rgb").read_bytes()
+                final_state = (server_root /
+                               "synthetic-application-state.rgb").read_bytes()
+                task_success = Image.frombytes(
+                    "RGB", (32, 32), final_state, "raw", "BGRX"
+                ).getpixel((1, 1)) == (255, 0, 0)
+                self.assertTrue(task_success)
+                recorder.record_task_score(
+                    "separate-fake-app-pixel-oracle-v1", task_success, final_state)
+                self.assertFalse(
+                    initial_state == final_state)
+                summary = summarize(recorder.reconcile()["events"])
+                self.assertEqual(summary["model_attempt_count"], 2)
+                self.assertEqual(summary["tool_call_count"], 6)
+                self.assertEqual(summary["input_tokens"], 22)
+                self.assertEqual(summary["output_tokens"], 8)
+                self.assertTrue(summary["task_success"])
+            finally:
+                await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("fresh-review-replan-after-stale-generation", root)
+
     async def test_fake_app_server_turn_reaches_public_compiled_tool_and_effect_oracle(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
