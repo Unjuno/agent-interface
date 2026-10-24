@@ -1,0 +1,58 @@
+{
+  "schema": "win32-public-mcp-calculator-r01-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r01-5909d88e5d7a4d69b030c39033cb4f73",
+  "host_scope": "user-authorized native Windows PC",
+  "runtime_ref": "origin/main at run start",
+  "route": "runtime.cli_v1.mcp_server.create_server(session_mode=supervised-win32), stdio MCP standard interface_observe/interface_validate/interface_dispatch/interface_results path",
+  "target": {
+    "app_id": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
+    "window_id": 55117672,
+    "title": "電卓",
+    "task_surface": "Calculator Standard mode"
+  },
+  "expected_observation": {"frame": "window_client", "region": [0, 0, 320, 533], "image_size": [320, 533], "display_before": "0"},
+  "task": {
+    "instruction": "Use the Calculator to compute 314 + 728.",
+    "expected_display": "1042",
+    "independent_check": "fresh post-dispatch Calculator screenshot captured outside the runtime call; record exactly what is visible and normalize only locale group separators when checking 1042",
+    "task_success_contract": "visible result numerically equals 1042 after removing locale group separators, and the caller's terminal receipt/readback shows neutral input state"
+  },
+  "comparison": {
+    "arms": 1,
+    "model_calls": 0,
+    "efficiency_comparison": false,
+    "reason": "This is a narrow standard-caller real-app effect qualification; actual model usage and a matched baseline are not available in this attempt."
+  },
+  "pre_run_validation": {
+    "source_commit": "e3b6293b4be42c54739936160e524b92ba706178",
+    "python": "3.11.9",
+    "standard_caller_tests": {"normal": "14/14 passed", "optimized": "14/14 passed"},
+    "runner_compile": "passed",
+    "details": "local_checks.json"
+  },
+  "limits": {
+    "attempts": 1,
+    "observations": 1,
+    "validations": 1,
+    "dispatches": 1,
+    "clock_reads": 1,
+    "results_polls": 5,
+    "recovery_calls": 0,
+    "replays": 0,
+    "wall_clock_seconds": 90,
+    "on_uncertain_or_failed_delivery": "stop; retain UNKNOWN; no replay or repair"
+  },
+  "input_program": {
+    "actions": ["click 3", "click 1", "click 4", "click +", "click 7", "click 2", "click 8", "click ="],
+    "input_release": "explicit terminal release_all plus runtime completion readback",
+    "coordinate_basis": "fresh interface_observe screenshot for Calculator window_client; centers of visible buttons only; expected 320x533 image and matching Standard-mode layout required",
+    "centers_as_image_fraction": {"left_column_x": 0.13, "second_column_x": 0.375, "third_column_x": 0.625, "right_column_x": 0.875, "row_7_8_9_y": 0.643, "row_4_5_6_y": 0.745, "row_1_2_3_plus_y": 0.848, "row_0_equals_y": 0.945},
+    "action_replay": false
+  },
+  "excluded_claims": [
+    "actual model efficiency, token reduction, speed comparison, or cost",
+    "broad reliability, human-tempo, or hard-real-time guarantee",
+    "input release under blocked native OS/platform I/O",
+    "MAP01, WSLc, Docker, cross-domain transfer, or generalized application success"
+  ]
+}

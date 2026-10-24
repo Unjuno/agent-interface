@@ -1,0 +1,18 @@
+{
+  "schema": "win32-public-mcp-calculator-r02-prerun-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r02-2c8f1a17bf8b439ead88732edba5662f",
+  "recorded_at_utc": "2026-10-24T02:24:55Z",
+  "source_commit": "e3b6293b4be42c54739936160e524b92ba706178",
+  "parent_attempt": {"attempt_id": "win32-public-mcp-calculator-20261024-r01-5909d88e5d7a4d69b030c39033cb4f73", "disposition": "HOLD_BEFORE_INPUT", "changed_factor": "capture frame"},
+  "custody": {
+    "isolation": "fresh worktree research/win32-calculator-standard-caller-r01 from exact origin/main commit",
+    "authority": "user explicitly approved use of this native Windows PC for computer-control experiments",
+    "target": {"hwnd": 55117672, "title": "電卓", "window_class": "ApplicationFrameWindow", "is_foreground": true, "confirmed_again_after_local_checks": true},
+    "read_only_geometry": {"dpi_aware_probe_process": true, "window_rect": [40, 32, 336, 541], "client_size": [320, 533], "client_origin_screen": [48, 32], "screen_size": [1920, 1080]},
+    "resource_scope": {"wslc_used": false, "docker_used": false, "user_files_touched": false},
+    "local_test_boundary": "46/46 normal passed; optimized mixed suite had one native fixture foreground failure before input emission, reproducible as `foreground focus verification failed`; the standard public-MCP supervised tests passed 14/14 optimized before this attempt. No code source changed."
+  },
+  "protocol_frozen_before_r02_observation": true,
+  "input_sent_before_freeze": false,
+  "formal_limits": "one pre-action observation, one validation, one dispatch, one post-action observation if terminal, no recovery or replay"
+}
