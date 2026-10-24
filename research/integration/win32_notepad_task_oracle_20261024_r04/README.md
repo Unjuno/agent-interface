@@ -76,3 +76,8 @@ A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the 
 ## R17 fresh target generation
 
 `attempt-17-fresh-generation-task/` verifies exact task effect and input release through the standard supervised-Win32 public MCP caller on a distinct HWND and GUI thread. Same-generation observation, exact-call task oracle, cleanup, and independent postflight passed. The Notepad PID/process creation time matched R16, so this is a new target generation within one process, not a process-restart test. A first no-input selector stop and delayed new-window discovery are both preserved. See the assessment for timing and limits.
+
+
+## R18 recovery on a distinct target generation
+
+`attempt-18-fresh-generation-recovery/` repeats the held-keyup backend-boundary recovery once on R17’s distinct HWND/GUI thread. A real SHIFT-down was observed during the held producer; bounded supervisor recovery confirmed release before the 3 s deadline, with a 17.211 ms high-resolution owner interval and independent same-generation postflight. This is not a hang inside the Windows API/kernel or a general reliability claim.
