@@ -1,0 +1,49 @@
+{
+  "schema": "integrated_efficiency_summary_provenance_a01_v1",
+  "disposition": "ALLOCATION_ORIGIN_IDENTIFIED_RAW_USAGE_NOT_RECONSTRUCTABLE",
+  "scope": "Read-only audit of public repository, merged PR #2962 and its linked Issue #2558 outcome; no model, GUI, container, or formal allocation run.",
+  "pr_number": 2962,
+  "pr_merge_commit": "13d0ccbf2559cc1f70aa2652497ae941ceb13eb7",
+  "checked_repository_head": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "pr_changed_files": [
+    "research/live_control/formal_host_exec_broker_v1.py",
+    "research/live_control/results/integrated-efficiency-live-01-summary.json"
+  ],
+  "summary_source_main_commit": "9c9d7cf2bea50e47638c63effa72a5059fdb4e58",
+  "summary_study_seed": [
+    "integrated-efficiency-live-01",
+    991028
+  ],
+  "separate_allocation_claim_present_in_pr_and_issue": true,
+  "per_arm": {
+    "plain": {
+      "trace_plus_preflight_input_tokens": 63128,
+      "report_final_input_tokens": 63128,
+      "prior_raw_reconciliation_input_tokens": 63128,
+      "separate_allocation_summary_input_tokens": 131517,
+      "summary_minus_reconciled_delta": 68389,
+      "raw_model_result_count_joined": 6
+    },
+    "ephemeral": {
+      "trace_plus_preflight_input_tokens": 63779,
+      "report_final_input_tokens": 63779,
+      "prior_raw_reconciliation_input_tokens": 63779,
+      "separate_allocation_summary_input_tokens": 136473,
+      "summary_minus_reconciled_delta": 72694,
+      "raw_model_result_count_joined": 6
+    },
+    "persistent": {
+      "trace_plus_preflight_input_tokens": 26563,
+      "report_final_input_tokens": 26563,
+      "prior_raw_reconciliation_input_tokens": 26563,
+      "separate_allocation_summary_input_tokens": 56403,
+      "summary_minus_reconciled_delta": 29840,
+      "raw_model_result_count_joined": 2
+    }
+  },
+  "detailed_raw_model_result_records": 14,
+  "summary_allocation_per_call_receipts_in_pr_diff": false,
+  "retained_summary_values_recomputed_from_that_allocation": false,
+  "no_pooling_or_relabeling": true,
+  "errors": []
+}
