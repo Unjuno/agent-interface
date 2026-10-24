@@ -1,0 +1,110 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "owned-compiled-profile",
+  "method": "one-visible-transition",
+  "method_version": "1",
+  "session_scope": "native-x11:5d50f2c77b204da2899d4c22774e87e0",
+  "outcome": "TASK_SUCCEEDED",
+  "reason": "method_complete",
+  "completed_transitions": 1,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 4,
+      "captured_ns": 528129970161700,
+      "evidence_ref": "observation-4",
+      "evidence_digest": "bd261bf859a108e93e8947bf2b9323875ec4fd2bf526499506d507d4cb6f4ce3",
+      "predicates": {
+        "phase": 0,
+        "present": true
+      },
+      "observation_started_ns": 528129969714800,
+      "observation_accepted_ns": 528129970774500
+    },
+    {
+      "sequence": 8,
+      "captured_ns": 528129978407900,
+      "evidence_ref": "observation-8",
+      "evidence_digest": "9a33a893ef576cb873deecfadc9e02ac9073e4e11e865dd075dc2165fddb1367",
+      "predicates": {
+        "phase": 1,
+        "present": true
+      },
+      "observation_started_ns": 528129977929400,
+      "observation_accepted_ns": 528129979986200
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "before",
+      "to_state": "done",
+      "action": "enter",
+      "matched_conditions": {
+        "phase": 0
+      },
+      "observation_sequence": 4,
+      "evidence_ref": "observation-4",
+      "action_id": "action-53dd723a6f49491692d6dcec582cb895",
+      "effect_ref": "compiled-f289ddedd602448b9b158c89cf199e86-10-execution",
+      "release_verified": true,
+      "execution_started_ns": 528129971640700,
+      "execution_accepted_ns": 528129977830400
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "before",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "phase": 0
+      },
+      "evidence_ref": "observation-4"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "completed",
+      "action_id": "action-53dd723a6f49491692d6dcec582cb895",
+      "release_verified": true,
+      "execution_started_ns": 528129971640700,
+      "execution_accepted_ns": 528129977830400
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter",
+      "status": "succeeded",
+      "evidence_ref": "observation-8",
+      "action_id": "action-53dd723a6f49491692d6dcec582cb895",
+      "execution_accepted_ns": 528129977830400,
+      "effect_observation_captured_ns": 528129978407900,
+      "effect_observation_accepted_ns": 528129979986200,
+      "effect_verification_started_ns": 528129980089500,
+      "effect_verification_accepted_ns": 528129980242300
+    },
+    {
+      "event": "branch_selected",
+      "state": "done",
+      "outcome": "complete",
+      "action": null,
+      "matched_conditions": {
+        "phase": 1
+      },
+      "evidence_ref": "observation-8"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 1
+    }
+  ],
+  "latest_evidence_ref": "observation-8",
+  "pending_effect": null,
+  "started_ns": 528129969710700,
+  "ended_ns": 528129980428600,
+  "elapsed_ns": 10717900,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

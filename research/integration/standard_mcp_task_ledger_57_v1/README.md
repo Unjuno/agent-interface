@@ -176,6 +176,33 @@ preserved in [`composition-evidence-20261020`](composition-evidence-20261020/REA
 with a per-file SHA-256 manifest. It records the tested synthetic outcomes; it
 does not increase their scope.
 
+## Finite reviewed-target replan composition (2026-10-24)
+
+`RecordedPublicMcpCaller.invoke_generation_to_tool_with_one_safe_recovery`
+adds one optional recovery after an explicit pre-input refusal with zero
+transitions and an owner snapshot showing no tracked obligations or pending
+recovery. It requires a newer public window-review receipt and the matching
+public mint receipt. Before the second tool call, it checks that the mint came
+from the reviewed sequence and same live owner/scope, that the alias differs
+from aliases in the first provider response, and that the second compiled
+profile binds the minted alias and offset to the reviewed scope/surface. A
+refused review, invalid mint, stale alias, or mismatched compiled target fails
+closed before dispatch. There is no retry loop. Empty obligation snapshots do
+not constitute physical-neutrality evidence.
+
+The positive composition test changes Fake X process generation after the
+first provider response, observes pre-input `association_changed`, explicitly
+reviews and remints, then completes one new transition. A separate synthetic
+pixel oracle verifies the changed application state; the action receipt also
+reports fixture release verification. Negative cases reject a refused review
+without another provider attempt and reject stale-alias arguments before tool
+dispatch. The normal and optimized three-module suites each pass 22 tests.
+Exact raw calls, ledger, synthetic states, stdout and SHA-256 manifests are
+retained in [`composition-evidence-20261024-r03`](composition-evidence-20261024-r03/README.md).
+This is a local Fake X result only; it proves neither physical release nor a
+hard deadline under permanently blocked platform I/O, and it is not a live
+provider run, WSLc result, or integrated efficiency/reliability comparison.
+
 `test_independent_task_score_is_terminal_and_preserves_state_bytes` verifies
 the journal contract for a caller-supplied score certificate. The composed
 tests additionally run a small pixel oracle against the Fake X side channel;
