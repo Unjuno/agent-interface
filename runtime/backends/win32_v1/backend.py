@@ -32,6 +32,7 @@ class Win32ExecutionError(Win32BackendError):
 
 
 SW_RESTORE = 9
+GA_ROOT = 2
 PW_CLIENTONLY = 0x00000001
 SRCCOPY = 0x00CC0020
 DIB_RGB_COLORS = 0
@@ -218,6 +219,12 @@ class Win32Backend:
         self.user32.BringWindowToTop.restype = wintypes.BOOL
         self.user32.ShowWindow.argtypes = [wintypes.HWND, ctypes.c_int]
         self.user32.GetForegroundWindow.restype = wintypes.HWND
+        self.user32.GetCursorPos.argtypes = [ctypes.POINTER(POINT)]
+        self.user32.GetCursorPos.restype = wintypes.BOOL
+        self.user32.WindowFromPoint.argtypes = [POINT]
+        self.user32.WindowFromPoint.restype = wintypes.HWND
+        self.user32.GetAncestor.argtypes = [wintypes.HWND, wintypes.UINT]
+        self.user32.GetAncestor.restype = wintypes.HWND
         self.user32.SetCursorPos.argtypes = [ctypes.c_int, ctypes.c_int]
         self.user32.SetCursorPos.restype = wintypes.BOOL
         self.user32.SendInput.argtypes = [wintypes.UINT, ctypes.POINTER(INPUT), ctypes.c_int]
@@ -466,11 +473,14 @@ class Win32Backend:
         set_foreground_result = bool(self.user32.SetForegroundWindow(hwnd))
         deadline = time.monotonic() + 1.0
         while time.monotonic() < deadline:
-            if int(self.user32.GetForegroundWindow() or 0) == hwnd:
+            observed = self._handle_value(self.user32.GetForegroundWindow())
+            if observed == hwnd or (observed and self._handle_value(
+                    self.user32.GetAncestor(observed, GA_ROOT)) == hwnd):
                 self.focused_target = target
                 return
             time.sleep(0.01)
-        observed_foreground_hwnd = int(self.user32.GetForegroundWindow() or 0)
+        observed_foreground_hwnd = self._handle_value(
+            self.user32.GetForegroundWindow())
         raise Win32BackendError(
             "foreground focus verification failed "
             f"(SetForegroundWindow={set_foreground_result}, "
@@ -690,6 +700,25 @@ class Win32Backend:
                                getattr(self, "held_button_targets", {}).get(
                                    button, getattr(self, "focused_target", None))):
             raise Win32BackendError(f"button UP unverified: {button}")
+
+    def _require_pointer_target(self, target: str) -> None:
+        """Refuse a global mouse-down when another top-level window owns the cursor."""
+        target_hwnd = self._target(target)
+        point = POINT()
+        if not self.user32.GetCursorPos(ctypes.byref(point)):
+            raise Win32BackendError("POINTER_TARGET_CHECK_CURSOR_UNAVAILABLE")
+        hit_hwnd = self._handle_value(self.user32.WindowFromPoint(point))
+        if not hit_hwnd:
+            raise Win32BackendError("POINTER_TARGET_CHECK_HIT_UNAVAILABLE")
+        root_hwnd = self._handle_value(
+            self.user32.GetAncestor(hit_hwnd, GA_ROOT))
+        if not root_hwnd:
+            raise Win32BackendError("POINTER_TARGET_CHECK_ROOT_UNAVAILABLE")
+        if root_hwnd != target_hwnd:
+            raise Win32BackendError(
+                "POINTER_TARGET_OCCLUDED "
+                f"(expected_hwnd={target_hwnd}, hit_hwnd={hit_hwnd}, "
+                f"root_hwnd={root_hwnd}, cursor=({point.x},{point.y}))")
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
@@ -952,9 +981,18 @@ class Win32Backend:
                     self.pointer_move(current_target, op["frame"], op["x"], op["y"])
                 elif kind == "pointer_button":
                     check_target_generation(current_target)
+                    if op["down"] is True:
+                        if current_target is None:
+                            raise Win32BackendError(
+                                "pointer_button down requires focused target")
+                        self._require_pointer_target(current_target)
                     self.pointer_button(op["button"], op["down"])
                 elif kind == "scroll":
                     check_target_generation(current_target)
+                    if current_target is None:
+                        raise Win32BackendError(
+                            "scroll requires focused target")
+                    self._require_pointer_target(current_target)
                     self.scroll(op["dx"], op["dy"])
                 elif kind == "observe":
                     if current_target is None:
