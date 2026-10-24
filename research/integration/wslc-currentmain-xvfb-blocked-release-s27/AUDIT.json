@@ -1,0 +1,268 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s27",
+  "audited_utc": "2026-10-24T18:47:31.766666+00:00",
+  "classification": "PASS_SCOPED_3930MS",
+  "evidence_checks": {
+    "attempt_binding": true,
+    "bounded_fresh_session_recovery": true,
+    "build_pass": true,
+    "caller_cancel_under_3s": true,
+    "current_main_source": true,
+    "deps_asset_manifest": true,
+    "fresh_close_verified": true,
+    "full_cid_and_exact_cleanup": true,
+    "independent_readback_within_5s": true,
+    "late_horizon_clean": true,
+    "network_none_readonly": true,
+    "no_global_inventory_or_docker": true,
+    "old_task_effect_oracle": true,
+    "pinned_wslc_and_exact_name_preflight": true,
+    "privacy_redaction_hashes": true,
+    "release_readback_within_deadline": true,
+    "runner_pins": true,
+    "runtime_unknown_no_replay": true,
+    "source_runtime_cli_v1_mcp_server.py": true,
+    "source_runtime_cli_v1_test_mcp_xvfb_blocked_release_integration.py": true,
+    "source_runtime_guarded_x11_v1_process_identity.py": true,
+    "stage_asset_manifest": true,
+    "terminated_session_storage_retained_with_hash": true,
+    "test_exit_pass": true,
+    "test_started_after_local_xres_preflight": true,
+    "transaction_within_4s": true,
+    "trial_conditions": true,
+    "xkb_asset_manifest": true,
+    "xvfb_process_terminated": true
+  },
+  "evidence_counts": {
+    "passed": 29,
+    "total": 29
+  },
+  "failed_evidence_checks": [],
+  "observations": {
+    "container_removed": true,
+    "fresh_task_oracle": "pass",
+    "image_removed": true,
+    "independent_readback_ms_from_admission": 4075.390559,
+    "late_horizon_ms": 8501.694703,
+    "observed_pause_ms": 3930.344858,
+    "old_task_oracle": "pass",
+    "public_cancel_response_ms": 313.66342,
+    "release_readback_ms_from_admission": 3985.902862,
+    "requested_pause_ms": 3930,
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_release_confirmed": false,
+    "runtime_replay_allowed": false,
+    "runtime_task_success": null,
+    "session_terminated": true,
+    "transaction_margin_ms": 7.198348,
+    "transaction_ms": 3992.801652
+  },
+  "raw_files": [
+    {
+      "bytes": 8937,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/audit_s27.py",
+      "sha256": "458b5d94488e12672a2e1f871446bc857a57d7a2ade32c886eed1c758a39a146"
+    },
+    {
+      "bytes": 2027,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/CONDITIONS.json",
+      "sha256": "9f0dc4adab1c72a6a2451dfdf676aa6e331520bb19fa361d1e0213ef0694fbee"
+    },
+    {
+      "bytes": 10,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/harness/.gitignore",
+      "sha256": "6c5082c7e6de3e350189c67a1aacf757485ecc26e0a3cf96683528565f3e5f12"
+    },
+    {
+      "bytes": 6669,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/harness/Program.cs",
+      "sha256": "440c170b312eb4f36bcdbb93e0cbf24ce5e619f7f20192a7f83b5c2d872b622f"
+    },
+    {
+      "bytes": 434,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/harness/S27.csproj",
+      "sha256": "adf68f75cc17f732bede8aa8d07ef2c5e725232b0e3b93fb09d966fbd9983888"
+    },
+    {
+      "bytes": 1,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/HARNESS-BUILD-EXIT-CODE.txt",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "bytes": 574,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/HARNESS-BUILD.log",
+      "sha256": "3eb8b704f7824c9cc65991e6e30b8619eb2971f4da9837e83428f2239d7459e2"
+    },
+    {
+      "bytes": 913,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/INPUT-READINESS-AUDIT.log",
+      "sha256": "c4d98b511314f82d8a306d2cd006cb145369dc97ead6dc8014cee43ea0297f74"
+    },
+    {
+      "bytes": 392726,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/inputs/deps-manifest.json",
+      "sha256": "3b40d83b19c9a1dce11351a45e21f884d0d9fb353f847638a5683cf09713703b"
+    },
+    {
+      "bytes": 226966,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/inputs/stage-manifest.json",
+      "sha256": "c0fd4d6a3e1b9f5bb77708cc78170e7b09f7d0b71f7b4f6966b75e282fe57560"
+    },
+    {
+      "bytes": 44041,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/inputs/xkb-manifest.json",
+      "sha256": "9e4bc264149ba4a1044e9f3cd29b3debfc3231802da074bb575cfec7da2dfc4d"
+    },
+    {
+      "bytes": 36062,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/inputs/xkb-materialization.json",
+      "sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673"
+    },
+    {
+      "bytes": 1315,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/INVOCATION-METADATA.json",
+      "sha256": "1b61cb99d24632d3e4d260b5a022bd1dc20661f8f7ffea916ec0354296176ab8"
+    },
+    {
+      "bytes": 107,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/container-setup.json",
+      "sha256": "40dd3d3ed057b5d894008d56fe566aa30d260c32a27e076aee95b05a53e969a1"
+    },
+    {
+      "bytes": 65,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/container.cid",
+      "sha256": "42e84f3de39569b3523902ffdecfd6863d5ad03db31e584d2946e44931542cb4"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/container.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 98,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/container.stdout.txt",
+      "sha256": "ae0b299e1a3500dc77a3f25908c813707128795a36e2be032f0388e87e137e43"
+    },
+    {
+      "bytes": 5,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/preflight-status.txt",
+      "sha256": "9f56e761d79bfdb34304a012586cb04d16b435ef6130091a97702e559260a2f2"
+    },
+    {
+      "bytes": 464,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/resource-cleanup.json",
+      "sha256": "9ab86b8f0c403511d096283ee23ab912c7166573c249d623b31ed7f7ba49de71"
+    },
+    {
+      "bytes": 44051,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/result.json",
+      "sha256": "81b5bef95070ed8cbe6f04f05262ae5336285d89a08c96b11c3998a08769c0f0"
+    },
+    {
+      "bytes": 3029,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/result.observation.png",
+      "sha256": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef"
+    },
+    {
+      "bytes": 328,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/runner.stderr.txt",
+      "sha256": "a260dd586e736a3046be52b130e4bef9b37ca38ebffb34295c60bb1eee815742"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/runner.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/test-exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "bytes": 65,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/trial-started.txt",
+      "sha256": "eaf7994667f897116ad7922137b73add2152065a6e9a46cca2aac508e32bed67"
+    },
+    {
+      "bytes": 1,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/wslc-host-harness-exit-code.txt",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "bytes": 9494,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/wslc-host-harness.log",
+      "sha256": "5c2f153809d31eba77a4653ec2cf6974639020b55e052e22fbe3da7be7115d1f"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xauth.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xauth.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 291,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xvfb-argv.json",
+      "sha256": "daa9798ac4b4eff80035b1fb0ca3550f9599892afbf8b7e91bd5eb32d95b35d9"
+    },
+    {
+      "bytes": 2,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xvfb-pid.txt",
+      "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    },
+    {
+      "bytes": 5,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xvfb-process-absent-after-run.txt",
+      "sha256": "a9ac0c3ac83c40e1b4c3416066d63d324ee9f8c144641dfeed72d140b6557245"
+    },
+    {
+      "bytes": 0,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xvfb-process-identity-preflight.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 85,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xvfb-process-identity-preflight.txt",
+      "sha256": "13d0c5504b2daa30b04e8f350bc1336bcfdc487c8486e8c6c05dd49723010e53"
+    },
+    {
+      "bytes": 3522,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/output/xvfb.log",
+      "sha256": "f55e2a6894d1dfbec3e5fcb281a8d1d729dfe04923cdfe02ca3a4e801739b3f2"
+    },
+    {
+      "bytes": 512,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/POST_CLEANUP.json",
+      "sha256": "fed4a378f22e729db1cd14859b73921bbe3bc28b8450ab4d165859d4f7ed88e1"
+    },
+    {
+      "bytes": 3692,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/PREREGISTRATION.json",
+      "sha256": "42788cda6a53ed1c921cfc34934923d02f9299813aac29649f1efbb9907e93e9"
+    },
+    {
+      "bytes": 1025,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/README.md",
+      "sha256": "6d00d563a7590b2b356d86bbe2c7d99096fd4d7b19836242592ea08a4c013e3f"
+    },
+    {
+      "bytes": 2299,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/REDACTIONS.json",
+      "sha256": "7ba621abf6674ba1227629797aa24374826dd4112efb5d089a9c8c2042847d27"
+    },
+    {
+      "bytes": 361,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/runner/container-init.sh",
+      "sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e"
+    },
+    {
+      "bytes": 4514,
+      "path": "research/integration/wslc-currentmain-xvfb-blocked-release-s27/runner/run-container.py",
+      "sha256": "7c81e934704d2605d4f7ff47f9513960fb7e52dc91bccb6a641fb08b52329840"
+    }
+  ],
+  "schema": "wslc-s27-boundary-audit-v1"
+}

@@ -1,0 +1,67 @@
+{
+  "scope": "privacy-only path redaction; timing, model/runtime behavior, payloads, and outcomes are unchanged",
+  "redactions": [
+    {
+      "path": "INVOCATION-METADATA.json",
+      "original_sha256": "fdef923586dced576b40d2ea73ae679dddad13bcc3f6a91e2c4ac864b276dbf4",
+      "sanitized_sha256": "1b61cb99d24632d3e4d260b5a022bd1dc20661f8f7ffea916ec0354296176ab8",
+      "fields": [
+        "storage_path",
+        "repo_path",
+        "deps_path",
+        "stage_path",
+        "xkb_path",
+        "runner_path",
+        "output_path"
+      ]
+    },
+    {
+      "path": "inputs/deps-manifest.json",
+      "original_sha256": "5328946e7af2816b3113245bc5e89390f33a13fb3cf6d34eea73f4ef211f86cc",
+      "sanitized_sha256": "3b40d83b19c9a1dce11351a45e21f884d0d9fb353f847638a5683cf09713703b",
+      "fields": [
+        "source"
+      ]
+    },
+    {
+      "path": "inputs/stage-manifest.json",
+      "original_sha256": "b040cabac9c605a7590e5b6aab640f08bcb409b59550ecc65c29d274e947a8b1",
+      "sanitized_sha256": "c0fd4d6a3e1b9f5bb77708cc78170e7b09f7d0b71f7b4f6966b75e282fe57560",
+      "fields": [
+        "source"
+      ]
+    },
+    {
+      "path": "inputs/xkb-manifest.json",
+      "original_sha256": "1496e615580fb1d2ec871328887f8790ef2eaea291d9955a040f85a9e65c20ac",
+      "sanitized_sha256": "9e4bc264149ba4a1044e9f3cd29b3debfc3231802da074bb575cfec7da2dfc4d",
+      "fields": [
+        "source"
+      ]
+    },
+    {
+      "path": "output/resource-cleanup.json",
+      "original_sha256": "48eb38240114c4e1d198fd61bfe1ed20934e5195bfb62822986f459c80228b4e",
+      "sanitized_sha256": "9ab86b8f0c403511d096283ee23ab912c7166573c249d623b31ed7f7ba49de71",
+      "fields": [
+        "storagePath"
+      ]
+    },
+    {
+      "path": "output/wslc-host-harness.log",
+      "original_sha256": "6447de6b4838c372a90b3ffdc92fe6bc9a6f07c7cc6c28f353e1b05be252bfa7",
+      "sanitized_sha256": "5c2f153809d31eba77a4653ec2cf6974639020b55e052e22fbe3da7be7115d1f",
+      "fields": [
+        "storagePath"
+      ]
+    },
+    {
+      "path": "HARNESS-BUILD.log",
+      "original_sha256": "c8347e3bc974442b5bd68e239f34cb5f2311ba434aa7db396514c7b68f8b573a",
+      "sanitized_sha256": "3eb8b704f7824c9cc65991e6e30b8619eb2971f4da9837e83428f2239d7459e2",
+      "fields": [
+        "absolute_workspace_path"
+      ]
+    }
+  ]
+}

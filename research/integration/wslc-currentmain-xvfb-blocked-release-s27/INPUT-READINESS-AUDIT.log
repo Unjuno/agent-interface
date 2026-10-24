@@ -1,0 +1,17 @@
+{
+  "note": "Transcribed from the prelaunch verification command output returned before the first WSLc invocation; no global session/container inventory was used.",
+  "checks": {
+    "source test, mcp server, and identity hashes match current main and commit blobs": true,
+    "deps/stage/xkb manifests match all local files before run": true,
+    "runner/init/harness source hashes match frozen values": true,
+    "output directory empty before WSLc run": true,
+    "generated session storage path absent before run": true,
+    "generated session/container names absent from repository before run": true,
+    ".NET harness build exit code 0": true,
+    "WSLc session version 3.0.3": true,
+    "exact generated container name preflight returned empty stdout/stderr": true,
+    "network none and all source mounts read-only": true,
+    "pre-test local XRes identity check passed": true
+  },
+  "all_passed": true
+}
