@@ -66,3 +66,8 @@ A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the 
 ## R15 public-caller task effect and observation timing
 
 `attempt-15-task-effect-timing/` records one exact text task through the standard supervised-Win32 public MCP caller. The exact-call native task oracle verified the same-generation Notepad text and task_success; both task and cleanup releases were confirmed, and standalone postflight found SHIFT-up and an empty document. Dispatch-start-to-first exact observation was 1.270 s; terminal return was 1.385 s. This is scripted one-fixture evidence, not model timing, saved-file completion, matched efficiency, fresh-generation transfer, MAP01, or broad reliability.
+
+
+## R16 public-caller repeat
+
+`attempt-16-public-task-effect-repeat/` adds one preregistered same-generation exact-token task through the standard supervised-Win32 public MCP caller. It passed exact-call task verification and separate cleanup; a fresh postflight read found the same generation, empty text and SHIFT-up. R15/R16 are two conditional passes on one target generation, not a broad reliability result. R16 retains one preflight-free startup failure and a successful single task run; see the assessment for timing and limits.

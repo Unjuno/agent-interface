@@ -1,0 +1,140 @@
+{
+  "preflight": {
+    "recorded_at_utc": "2026-10-24T11:40:56.953453+00:00",
+    "target": {
+      "name": "notepad",
+      "hwnd": 24840738,
+      "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "edit_hwnd": 746588126
+    },
+    "conditions": {
+      "is_window": true,
+      "visible": true,
+      "enabled": true,
+      "foreground_hwnd": 24840738,
+      "foreground_is_target": true,
+      "shift_down": false,
+      "text": "",
+      "characters": 0
+    },
+    "allocation": "authorized local Windows PC; WSLc=false; Docker=false"
+  },
+  "target_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+  "marker": "AI-CTRL-20261024-R16",
+  "faults": [],
+  "task": {
+    "dispatch": {
+      "call_id": "780bfa93a52644869df8746fb24b636d",
+      "status": "completed",
+      "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "release_confirmed": true,
+      "task_success_from_dispatch": null,
+      "emissions": 40,
+      "detail": null
+    },
+    "dispatch_start_perf_counter_ns": 533365135440200,
+    "dispatch_return_perf_counter_ns": 533366552040700,
+    "dispatch_elapsed_ns": 1416600500,
+    "poll_count": 93,
+    "first_nonempty_observation": {
+      "perf_counter_ns": 533365931731900,
+      "elapsed_from_dispatch_start_ns": 796291700,
+      "text": "A",
+      "characters": 1
+    },
+    "first_exact_observation": {
+      "perf_counter_ns": 533366429567400,
+      "elapsed_from_dispatch_start_ns": 1294127200,
+      "text": "AI-CTRL-20261024-R16",
+      "characters": 20,
+      "edit_hwnd": 746588126
+    },
+    "verification_status": "verified",
+    "task_success": true,
+    "oracle_outcome": "success",
+    "oracle_observation": {
+      "start_perf_counter_ns": 533366552486600,
+      "observed_perf_counter_ns": 533366553101500,
+      "return_perf_counter_ns": 533366553102200,
+      "expected": "AI-CTRL-20261024-R16",
+      "observed_text": "AI-CTRL-20261024-R16",
+      "characters": 20,
+      "edit_hwnd": 746588126,
+      "observed_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "generation_match": true,
+      "shift_down": false,
+      "foreground_hwnd": 24840738
+    },
+    "retained_result": {
+      "status": "verified",
+      "task_success": true,
+      "receipt": {
+        "call_id": "780bfa93a52644869df8746fb24b636d",
+        "operation_id": "b187573977ad437a9af968867deb67cb",
+        "target_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+        "oracle_id": "16161616161616161616161616161616",
+        "outcome": "success",
+        "observed_monotonic_ns": 533366531000000,
+        "evidence_ref": "oracle-log.json#780bfa93a52644869df8746fb24b636d"
+      },
+      "requested_monotonic_ns": 533366531000000,
+      "receipt_received_monotonic_ns": 533366531000000
+    },
+    "independent_text_after": {
+      "text": "AI-CTRL-20261024-R16",
+      "characters": 20,
+      "child_hwnd": 746588126
+    }
+  },
+  "cleanup": {
+    "dispatch": {
+      "call_id": "11c8d9193d204a089b5a0ac63cf8ee6f",
+      "status": "completed",
+      "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "release_confirmed": true,
+      "task_success_from_dispatch": null,
+      "emissions": 9,
+      "detail": null
+    },
+    "final_text": {
+      "text": "",
+      "characters": 0,
+      "child_hwnd": 746588126
+    },
+    "verification_status": "verified",
+    "task_success": true,
+    "oracle_outcome": "success",
+    "oracle_observation": {
+      "start_perf_counter_ns": 533367670038300,
+      "observed_perf_counter_ns": 533367670884800,
+      "return_perf_counter_ns": 533367670885900,
+      "expected": "",
+      "observed_text": "",
+      "characters": 0,
+      "edit_hwnd": 746588126,
+      "observed_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+      "generation_match": true,
+      "shift_down": false,
+      "foreground_hwnd": 24840738
+    }
+  },
+  "scope": "one exact token through standard public supervised-Win32 caller; independent native text/generation oracle; no model/provider calls",
+  "observation_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "c6260100afbf411aaaf63e12821c8a7f",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 2,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "D:\\CodexData\\Temp\\agent-interface-v39-wslc-20261024-main\\research\\integration\\win32_notepad_task_oracle_20261024_r04\\attempt-16-public-task-effect-repeat\\mcp-calls\\c4242a478e7e4d359bf15eedd4b07fef",
+    "call_id": "c4242a478e7e4d359bf15eedd4b07fef"
+  },
+  "status": "PASS_TASK_EFFECT_AND_TIMING_SCOPED"
+}
