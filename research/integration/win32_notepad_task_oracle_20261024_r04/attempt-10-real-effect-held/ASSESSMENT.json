@@ -1,0 +1,28 @@
+{
+  "classification": "RECOVERY_RELEASE_AND_DEADLINE_GATE_CONFIRMED_ELAPSED_LATENCY_UNMEASURED",
+  "checks": {
+    "native_effect_observed_during_hold": true,
+    "final_native_key_up_observed": true,
+    "same_target_generation": true,
+    "terminal_dispatch_recovered": true,
+    "dispatch_release_confirmed": true,
+    "retained_action_recovered": true,
+    "retained_cancel_recovered": true,
+    "retained_cancel_release_confirmed": true,
+    "task_success_not_claimed": true,
+    "replay_not_allowed": true,
+    "cleanup_deadline_configured_three_seconds": true,
+    "terminal_completion_timestamp_available": false,
+    "deadline_gate_contract": "recovered is only committed before cleanup_deadline_ns at runtime/guarded_win32_v1/operation_owner.py:397-416",
+    "late_recovery_receipt_rejected": "runtime/guarded_win32_v1/process_cancellation.py:331-356"
+  },
+  "configured_cleanup_deadline_ns": 530007296000000,
+  "hold_started_monotonic_ns": 530004296000000,
+  "measured_recovery_elapsed_ns": null,
+  "original_run_status_preserved": "FAIL_OR_UNKNOWN",
+  "limitations": [
+    "Fault injection blocks after the native SendInput call returns; it does not block inside the Windows API.",
+    "No claim about arbitrary platform-I/O stalls.",
+    "No WSLc allocation used."
+  ]
+}

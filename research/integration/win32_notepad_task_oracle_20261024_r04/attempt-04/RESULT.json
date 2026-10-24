@@ -1,0 +1,61 @@
+{
+  "scope": "single native Notepad task via public supervised-win32 MCP route",
+  "target": "one freshly opened blank Notepad window",
+  "initial_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+  "tasks": [
+    {
+      "call_id": "1dd1c07341fc4b4c89ab850426666f0f",
+      "program_id": "notepad-r04-type-marker",
+      "dispatch_started_ns": 529464906000000,
+      "dispatch_received_ns": 529465859000000,
+      "dispatch_summary": {
+        "call_id": "1dd1c07341fc4b4c89ab850426666f0f",
+        "status": "completed",
+        "release_confirmed": true,
+        "task_success": null,
+        "input_dispatched": true,
+        "replay_allowed": false,
+        "target_generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a",
+        "backend_emissions": null,
+        "detail": null
+      },
+      "verification": {
+        "status": "verified",
+        "task_success": false,
+        "outcome": "failure",
+        "oracle": {
+          "started_ns": 529465859000000,
+          "finished_ns": 529465859000000,
+          "observed_ns": 529465859000000,
+          "characters": 20,
+          "child_hwnd": 746588126,
+          "observed_text_sha256": "00aee11273ae9334e0038e0494364baf9b72dfe5a34d77e0b0af75a709672afa"
+        }
+      },
+      "raw_execution_status": "completed"
+    }
+  ],
+  "limitations": [
+    "No blocked-platform-I/O recovery trial in this run.",
+    "No WSLc allocation used.",
+    "Single-task result is not a reliability estimate."
+  ],
+  "cleanup_skipped": "first action or independent task check did not fully pass",
+  "overall": "FAIL_OR_UNKNOWN",
+  "close": {
+    "status": "closed",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "session": {
+      "session_id": "c997558893ce48d2b876267ba908121e",
+      "mode": "supervised-win32",
+      "state": "closed",
+      "synthetic_only": false,
+      "call_count": 1,
+      "unresolved_call_ids": []
+    },
+    "call_directory": "D:\\CodexData\\Temp\\agent-interface-v39-wslc-20261024-main\\research\\integration\\win32_notepad_task_oracle_20261024_r04\\attempt-04\\mcp-calls\\4cd399b8b860468da7c4db524f800cb0",
+    "call_id": "4cd399b8b860468da7c4db524f800cb0"
+  }
+}
