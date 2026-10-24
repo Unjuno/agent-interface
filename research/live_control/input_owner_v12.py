@@ -556,8 +556,25 @@ class InputOwner:
                     break
                 # Check before dequeue so a busy request queue cannot starve expiry.
                 if active is not None:
+                    # Cancellation already invalidates this lease. Do not start a
+                    # focus query with a cancelled callback and misreport that
+                    # expected cancellation as a target-query failure.
+                    if active.cancel.is_set():
+                        try:
+                            release('stop_requested' if self.stop_requested.is_set() else 'cancelled')
+                        except Exception as exc:
+                            fault = exc
+                            active = None
+                        continue
                     expired = time.perf_counter_ns() >= active.deadline
                     changed=invalid_focus(active,pointer=active_pointer)
+                    if active.cancel.is_set():
+                        try:
+                            release('stop_requested' if self.stop_requested.is_set() else 'cancelled')
+                        except Exception as exc:
+                            fault = exc
+                            active = None
+                        continue
                     query_invalidated = self.identity_reader is not None and focus_query_failed
                     expired = time.perf_counter_ns() >= active.deadline
                     generation_changed = False

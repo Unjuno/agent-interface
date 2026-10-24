@@ -1,0 +1,105 @@
+{
+  "allocation_id": "map01-v39-current-main-threat-live-20261024-r02",
+  "repository_commit": "26c383a983782be25d6a1ae33814f7c551d88d63",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "planner_turns_completed": 2,
+  "input_admissions": 5,
+  "completed_steps": 5,
+  "explicit_keyups_server_verified": 4,
+  "release_batch_keyup_attempts": 1,
+  "release_batch_keyups_server_verified": 1,
+  "all_owner_release_records_verified_empty": true,
+  "health_observations": {
+    "count": 38,
+    "first": 97,
+    "last": 97,
+    "unique": [
+      97
+    ]
+  },
+  "ammo_observations": {
+    "count": 38,
+    "first": 48,
+    "last": 46,
+    "unique": [
+      46,
+      47,
+      48
+    ]
+  },
+  "independent_score": {
+    "map": "MAP01",
+    "map_exit": false,
+    "player_dead": false,
+    "death_count": 0,
+    "kill_count": 0,
+    "reward": 0.0,
+    "wall_control_ns": 6875254600
+  },
+  "scorer_sample_count": 242,
+  "scorer_hz": 34.99999947500001,
+  "final_terminal_statuses": [
+    {
+      "id": "cover-0",
+      "status": "cancelled",
+      "steps_completed": 0
+    },
+    {
+      "id": "plan-0-primary-0-0",
+      "status": "completed",
+      "steps_completed": 1
+    },
+    {
+      "id": "cover-1",
+      "status": "cancelled",
+      "steps_completed": 4
+    },
+    {
+      "id": "plan-1-primary-0-0",
+      "status": "needs_decision",
+      "steps_completed": 0
+    }
+  ],
+  "limitations": [
+    "one additive local WSL2 experiment; not a WSLc allocation",
+    "not a MAP01 clear or reliability distribution",
+    "X11 keymap evidence is not physical-key verification",
+    "focus-query cancellation retired the observer; a later accepted step failed closed",
+    "no matched efficiency comparison or human-tempo certification"
+  ],
+  "a03_stdout_json_parse_failures": 0,
+  "prereg_digests_verified": 4,
+  "source_hash_audit": [
+    {
+      "path": "research\\doom\\map01-v39-current-main-threat-live-20261024-r01\\PREREG.json",
+      "commit": "fd9f7be36806b088a2b7df7c17d2cd2e3b7ab174",
+      "source_hash_count": 48,
+      "all_source_hashes_match_commit": true,
+      "mismatches": []
+    },
+    {
+      "path": "research\\doom\\map01-v39-current-main-threat-live-20261024-r01\\diagnostics\\session-stdout-probe-a02\\DIAGNOSTIC_PREREG.json",
+      "commit": "fd9f7be36806b088a2b7df7c17d2cd2e3b7ab174",
+      "source_hash_count": 19,
+      "all_source_hashes_match_commit": true,
+      "mismatches": []
+    },
+    {
+      "path": "research\\doom\\map01-v39-current-main-threat-live-20261024-r01\\diagnostics\\session-stdout-probe-a03\\DIAGNOSTIC_PREREG.json",
+      "commit": "26c383a983782be25d6a1ae33814f7c551d88d63",
+      "source_hash_count": 7,
+      "all_source_hashes_match_commit": true,
+      "mismatches": []
+    },
+    {
+      "path": "research\\doom\\map01-v39-current-main-threat-live-20261024-r02\\PREREG.json",
+      "commit": "26c383a983782be25d6a1ae33814f7c551d88d63",
+      "source_hash_count": 48,
+      "all_source_hashes_match_commit": true,
+      "mismatches": []
+    }
+  ],
+  "integrity_manifest": "research/doom/map01-v39-current-main-threat-live-20261024-r01/RAW_SHA256.jsonl",
+  "integrity_manifest_entries": 165
+}

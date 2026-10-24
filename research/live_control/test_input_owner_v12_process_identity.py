@@ -110,6 +110,7 @@ class OwnerIdentityTests(unittest.TestCase):
                 self.assertFalse(resume.is_set())
                 self.assertTrue(owner.identity_reader.worker.snapshot()['retired'])
                 self.assertTrue(owner.identity_reader.worker.snapshot()['pending'])
+                self.assertEqual(lease.interruption_snapshot()['record']['reason'], 'cancelled')
                 self.assertTrue(lease.interruption_snapshot()['record']['target_focus_query_failed'])
             finally:
                 resume.set()
