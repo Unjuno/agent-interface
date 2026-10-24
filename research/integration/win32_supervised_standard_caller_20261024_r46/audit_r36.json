@@ -1,0 +1,274 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r46-59e927d9c5884c7cb6d1d5f5980e35d0",
+  "checks": [
+    {
+      "evidence": {
+        "cancel_attempt": {
+          "attempt_count": 1,
+          "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+          "invocation_started": true,
+          "is_error": false,
+          "returned_monotonic_ns": 507889414148800,
+          "started_monotonic_ns": 507889412849900
+        },
+        "cancel_recorded": true,
+        "dispatch_attempts": 1
+      },
+      "name": "one_dispatch_and_one_recorded_cancel_attempt",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_hwnd": 527192,
+        "foreground_activation": {
+          "activated": true,
+          "activation_result": "activated exact owned fixture using Computer Use",
+          "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r46-59e927d9c5884c7cb6d1d5f5980e35d0",
+          "created_utc": "2026-10-24T04:36:17.9252920Z",
+          "cua_window_id": 527192,
+          "fixture_hwnd": 527192,
+          "observed_foreground_hwnd": 527192,
+          "observed_monotonic_ns": 507885234000000,
+          "phase": "phase1",
+          "screenshot_inspected": true,
+          "window_title": "Agent Interface Win32 Fixture"
+        }
+      },
+      "name": "foreground_activation_receipt_matches_owned_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+        "pre_cancel": {
+          "exit_code": 0,
+          "expected_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "generation_after": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "generation_before": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "pid": 11368,
+          "process_retired": true,
+          "q_down": true,
+          "returned_monotonic_ns": 507889400986200,
+          "started_monotonic_ns": 507889400549900,
+          "state_witness": [],
+          "status": "observed"
+        }
+      },
+      "name": "same_generation_q_down_before_cancel",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action": {
+          "metadata": {
+            "program_id": "supervised-standard-cancel-q-release-r46",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "67eab78864604a48b8d82a620dfe340b",
+          "result": null,
+          "status": "running",
+          "target_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+        },
+        "call_id": "becf347058bb4030a22fe2c455c3c9b7",
+        "cancellation": null,
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "standard_program": {
+          "authority": {
+            "expires_at_ns": 507978140000000,
+            "lease_id": "supervised-standard-recovery-r46"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "fixture"
+            },
+            {
+              "frame": "window_client",
+              "op": "pointer_move",
+              "x": 70,
+              "y": 70
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "keys": [
+                "CTRL",
+                "S"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "op": "key_chord"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "supervised-standard-cancel-q-release-r46",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "fixture": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        },
+        "task_effect": null,
+        "task_success": null
+      },
+      "name": "exact_call_status_remained_running_before_cancel",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "is_error": false,
+        "returned_ns": 507889414148800,
+        "started_ns": 507889412849900
+      },
+      "name": "public_cancel_response_bounded_and_successful",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "after_cancel_ms": 1406.7954,
+        "callback_entry_ns": 507889213173700,
+        "callback_return_ns": 507890820944200,
+        "cancel_return_ns": 507889414148800,
+        "required_ms": 1400
+      },
+      "name": "callback_held_for_preregistered_duration_after_cancel_response",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "call_ids": [
+          "becf347058bb4030a22fe2c455c3c9b7"
+        ],
+        "count": 89,
+        "required": 21
+      },
+      "name": "minimum_21_same_call_polls_during_hold",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "eligible_q_up_sample_count": 73,
+        "recovery_deadline_ms": 2500,
+        "recovery_q_up_sendinput_returns": [
+          {
+            "elapsed_ns": 313740200,
+            "event": "sendinput_return",
+            "flags": 2,
+            "input_type": 1,
+            "key_up": true,
+            "monotonic_ns": 507890047655500,
+            "pid": 27536,
+            "scan_code": 0,
+            "vk": 81
+          }
+        ]
+      },
+      "name": "same_generation_q_up_independently_observed_while_callback_held",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "series_meta": {
+          "child_summary": {
+            "ended_monotonic_ns": 507895052580300,
+            "expected_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+            "pid": 29488,
+            "record_type": "summary",
+            "sample_count": 632,
+            "started_monotonic_ns": 507888371365900,
+            "status": "observed"
+          },
+          "ended_monotonic_ns": 507895071350300,
+          "exit_code": 0,
+          "forced_termination": false,
+          "pid": 29488,
+          "samples_count": 632,
+          "samples_path": "run/independent-state-series.jsonl",
+          "started_monotonic_ns": 507888204061800,
+          "status": "observed"
+        },
+        "summary": {
+          "ended_monotonic_ns": 507895052580300,
+          "expected_generation": "a305b728cf71f7fa892937c3dbc42d4f59906465bbde297e3a9d27c5230173dd",
+          "pid": 29488,
+          "record_type": "summary",
+          "sample_count": 632,
+          "started_monotonic_ns": 507888371365900,
+          "status": "observed"
+        }
+      },
+      "name": "sampler_exited_cleanly_before_fixture_close",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close": {
+          "call_directory": "[LOCAL_PATH_REDACTED]",
+          "call_id": "936546940ee04c2f8bb7f4c2d6d5ad4a",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "24f557316f4743cb9c3b137f6cb3541e",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        },
+        "fixture_exit": 0,
+        "foreground_restored": true,
+        "hook_exited": true,
+        "producer_exit": {
+          "creation_time_100ns": 134372901812181888,
+          "observed_monotonic_ns": 507890821102000,
+          "pid": 54500,
+          "status": "exited",
+          "wait_started_monotonic_ns": 507890820851500
+        },
+        "window_exists": false
+      },
+      "name": "producer_retired_and_fixture_session_cleaned",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect_task_success": null,
+        "runtime_task_success": null
+      },
+      "name": "runtime_task_success_unclaimed",
+      "passed": true
+    }
+  ],
+  "passed": 11,
+  "schema": "win32-supervised-standard-caller-r44-release-audit-v1",
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "status": "STRICT_RELEASE_PASS",
+  "strict_release_gate_passed": true,
+  "task_success": null,
+  "total": 11
+}

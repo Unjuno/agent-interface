@@ -1,0 +1,287 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r44-f88ad4382bcf4491b214d1291bb20674",
+  "checks": [
+    {
+      "evidence": {
+        "all_attempt_outputs_absent": true,
+        "conditions_id_matches_schema": true,
+        "foreground_markers_absent_before_attempt": true,
+        "frozen_packet_hashes_match": true,
+        "hook_timeout_registry_matches": true,
+        "instrumentation_loaded_without_input": true,
+        "mcp_sdk_available": true,
+        "native_windows": true,
+        "predecessors_match": true,
+        "runtime_source_hashes_match": true,
+        "source_commit_matches": true,
+        "tracked_tree_clean": true
+      },
+      "name": "preflight_passed_without_input",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "passed": 11,
+        "status": "STRICT_RELEASE_PASS",
+        "total": 11
+      },
+      "name": "phase1_strict_release_gate_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_audit_returned_monotonic_ns": 507040581955300,
+        "phase2_started_monotonic_ns": 507040587675600
+      },
+      "name": "phase2_started_only_after_phase1_gate",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_generation": "a74607e468522091a04a290b6027d87139aba01f301055e869c95aa4368a4865",
+        "phase2_generation": "9d246371df0eaf2829cb530e7ea7e108f4877e6eb4e0c0dcd49a5a1e4e4a095a"
+      },
+      "name": "fresh_target_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_call_id": "bf2bed502e2b46158ee86d658e6d92c3",
+        "phase1_operation_id": "69ca8e491bbf41f1a52ee4d13266d914",
+        "phase2_call_id": "1dcd4f9f42944ccabeca534f818422e7",
+        "phase2_operation_id": "0fee4a763c9a4efbb4ee5ebebc4e0580"
+      },
+      "name": "distinct_call_and_operation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "receipt": {
+          "call_id": "1dcd4f9f42944ccabeca534f818422e7",
+          "evidence_ref": "[LOCAL_PATH_REDACTED]",
+          "observed_monotonic_ns": 507077167838300,
+          "operation_id": "0fee4a763c9a4efbb4ee5ebebc4e0580",
+          "oracle_id": "f88ad4382bcf4491b214d1291bb20674",
+          "outcome": "success",
+          "target_generation": "9d246371df0eaf2829cb530e7ea7e108f4877e6eb4e0c0dcd49a5a1e4e4a095a"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "name": "task_oracle_success_bound_to_new_action",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_status": "completed",
+        "recovery_required": false,
+        "release_confirmed": true,
+        "release_receipts": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 507076923708900,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 4065806,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 53948,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 54220
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 4065806,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 53948,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 54220
+                }
+              ],
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 4065806,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 53948,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 54220
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 4065806,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 53948,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 54220
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 4065806,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 53948,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 54220
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 4065806,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 53948,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 54220
+                }
+              ]
+            },
+            "verified": true
+          }
+        ]
+      },
+      "name": "phase2_action_completed_with_verified_neutral_release",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "release_receipt_count": 1,
+        "state_query_witnesses_present": true
+      },
+      "name": "phase2_completion_readback_has_independent_state_witness",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r44-f88ad4382bcf"
+        },
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r44-f88ad4382bcf"
+        },
+        "oracle_actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r44-f88ad4382bcf"
+        },
+        "oracle_outcome": "success"
+      },
+      "name": "task_effect_exactly_matches_frozen_expectation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "oracle_observed_monotonic_ns": 507077167838300,
+        "phase2_started_monotonic_ns": 507040587675600
+      },
+      "name": "task_effect_observed_after_recovery_phase",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_hwnd": 4065806,
+        "foreground_activation": {
+          "activated": true,
+          "activation_result": "sky.activate_window resolved without error; exact window screenshot inspected",
+          "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r44-f88ad4382bcf4491b214d1291bb20674",
+          "created_utc": "2026-10-24T04:22:37.4883950Z",
+          "cua_window_id": "4065806",
+          "fixture_hwnd": 4065806,
+          "fixture_process_command_line": "[LOCAL_PATH_REDACTED] -m runtime.backends.win32_v1.fixture_app --meta [LOCAL_PATH_REDACTED] --effect [LOCAL_PATH_REDACTED] --events [LOCAL_PATH_REDACTED]",
+          "fixture_process_pid": 53948,
+          "foreground_hwnd_observed": 4065806,
+          "observed_foreground_hwnd": 4065806,
+          "observed_monotonic_ns": 507064718309800,
+          "owner_pid_observed": 53948,
+          "phase": "phase2",
+          "screenshot_inspected": true,
+          "window_title": "Agent Interface Win32 Fixture"
+        }
+      },
+      "name": "phase2_cua_activation_receipt_matches_fresh_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_exit_code": 0,
+        "foreground_restored": true,
+        "phase2_exit_code": 0,
+        "server_close": {
+          "call_directory": "[LOCAL_PATH_REDACTED]",
+          "call_id": "26bb7658e0554086b7b73ab30eba4c83",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "a07eb25e255746f9a5b56e6df6e4c718",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        }
+      },
+      "name": "bounded_cleanup_and_foreground_restore",
+      "passed": true
+    }
+  ],
+  "conditions_sha256": "4ba6c8109c6c858c57ee371c13e0b21425b8e6d131e5b46631a1ccc4561703e6",
+  "nonclaims": [
+    "CUA privilege transfer to backend process",
+    "MAP01",
+    "R39 broad reliability estimate",
+    "R40 broad reliability estimate",
+    "R41 queued/busy cause unless independently isolated",
+    "WSLc GUI behavior",
+    "WSLc allocation eligibility",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-cancel task_success unless independently verified",
+    "proven cancellation release unless every strict-gate check passes",
+    "real-application transfer",
+    "runtime-integrated task_success (must remain null)",
+    "same-run task_success in R42 or R43"
+  ],
+  "passed": 12,
+  "phase1_release_status": "STRICT_RELEASE_PASS",
+  "schema": "win32-r44-combined-audit-v1",
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "status": "PASS_SCOPED",
+  "task_success": true,
+  "total": 12
+}
