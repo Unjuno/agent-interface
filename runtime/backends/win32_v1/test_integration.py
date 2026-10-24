@@ -519,7 +519,7 @@ class Win32IntegrationTests(unittest.TestCase):
     def test_valid_program_has_independent_effect_capture_and_release(self):
         before = self.backend.emissions
         row = self.session.dispatch(make_program("valid"), current_observation_seq=7, current_binding_revision=3)
-        self.assertGreater(self.backend.emissions, before)
+        self.assertGreater(self.backend.emissions, before, row)
         deadline = time.time() + 2
         while time.time() < deadline and not self.effect.exists():
             time.sleep(0.02)
