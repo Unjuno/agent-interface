@@ -1,0 +1,296 @@
+{
+  "scope": "FAKE_X_PUBLIC_PATH_CHARACTERIZATION",
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "optimized": 1,
+  "freeze_sha256": "fdb7342248978fb361bd1809bf83cf2ec66e52ee0010008e93706bf7173c77e5",
+  "cases": [
+    {
+      "mode": "healthy",
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "public-fake-healthy",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "fake-only",
+          "expires_at_ns": 11000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "a"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "blocked": null,
+      "final_fake_keys_down": [],
+      "emissions": [
+        {
+          "kind": 2,
+          "code": 1,
+          "clock_ns": 1000000
+        },
+        {
+          "kind": 2,
+          "code": 2,
+          "clock_ns": 1000000
+        },
+        {
+          "kind": 3,
+          "code": 2,
+          "clock_ns": 1000000
+        },
+        {
+          "kind": 3,
+          "code": 1,
+          "clock_ns": 1000000
+        }
+      ],
+      "public_result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 1000000,
+            "ended_ns": 1000000,
+            "emissions": 4,
+            "program_emissions": 4,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 1000000
+              }
+            ],
+            "waits": [],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        }
+      },
+      "worker_stopped": true,
+      "session_recovery_required": false
+    },
+    {
+      "mode": "focus_query",
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "public-fake-focus_query",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "fake-only",
+          "expires_at_ns": 11000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "a"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "blocked": {
+        "fake_keys_down": [
+          1
+        ],
+        "dispatch_returned": false,
+        "worker_alive": true,
+        "clock_ns": 11000000,
+        "deadline_ns": 11000000,
+        "emissions": [
+          {
+            "kind": 2,
+            "code": 1,
+            "clock_ns": 1000000
+          }
+        ]
+      },
+      "final_fake_keys_down": [],
+      "emissions": [
+        {
+          "kind": 2,
+          "code": 1,
+          "clock_ns": 1000000
+        },
+        {
+          "kind": 3,
+          "code": 1,
+          "clock_ns": 11000000
+        }
+      ],
+      "public_result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "execution_failed",
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 1000000,
+            "ended_ns": 11000000,
+            "emissions": 2,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 11000000
+              }
+            ],
+            "waits": [],
+            "activations": [],
+            "completed_ops": [],
+            "error": "X11BackendError('native target guard lease expired before input press')",
+            "failed_op": 0,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        }
+      },
+      "worker_stopped": true,
+      "session_recovery_required": false
+    },
+    {
+      "mode": "release_sync",
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "public-fake-release_sync",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "fake-only",
+          "expires_at_ns": 11000000
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "a"
+            ]
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "blocked": {
+        "fake_keys_down": [],
+        "dispatch_returned": false,
+        "worker_alive": true,
+        "clock_ns": 11000000,
+        "deadline_ns": 11000000,
+        "emissions": [
+          {
+            "kind": 2,
+            "code": 1,
+            "clock_ns": 1000000
+          },
+          {
+            "kind": 3,
+            "code": 1,
+            "clock_ns": 11000000
+          }
+        ]
+      },
+      "final_fake_keys_down": [],
+      "emissions": [
+        {
+          "kind": 2,
+          "code": 1,
+          "clock_ns": 1000000
+        },
+        {
+          "kind": 3,
+          "code": 1,
+          "clock_ns": 11000000
+        }
+      ],
+      "public_result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "execution_failed",
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 1000000,
+            "ended_ns": 11000000,
+            "emissions": 2,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 11000000
+              }
+            ],
+            "waits": [],
+            "activations": [],
+            "completed_ops": [],
+            "error": "X11BackendError('native target guard lease expired before input press')",
+            "failed_op": 0,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        }
+      },
+      "worker_stopped": true,
+      "session_recovery_required": false
+    }
+  ],
+  "real_x_connection": false,
+  "live_allocation_invocations": 0
+}

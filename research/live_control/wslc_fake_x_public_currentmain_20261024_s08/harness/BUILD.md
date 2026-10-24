@@ -1,0 +1,1 @@
+S08 local WSLc harness build: `dotnet restore harness/S08.csproj --ignore-failed-sources` PASS; `dotnet build harness/S08.csproj --no-restore --configuration Release --output C:\wslc-s08-49b8a6dc\bin` PASS, 0 warnings/errors. Native `wslcsdk.dll` path is 60 characters. Both completed before any S08 WSLc session.

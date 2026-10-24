@@ -1,0 +1,72 @@
+{
+  "schema": "wslc-fake-x-public-currentmain-s05-v1",
+  "attempt_id": "wslc-fake-x-public-currentmain-20261024-s06",
+  "preregistered_utc": "2026-10-24T14:03:31.3499836+00:00",
+  "source_baseline": "2166707229958e095d472c80e160c26449de7a29",
+  "session_api": "Microsoft.WSL.Containers",
+  "session_api_version": "3.0.3",
+  "session_name": "agent-interface-wslc-fake-x-s06-5302b011bd584e4e87e2cea3491d18f7",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fake-x-s06-5302b011bd584e4e87e2cea3491d18f7",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "agent-interface-wslc-fake-x-s06-5302b011bd584e4e87e2cea3491d18f7-probe",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "container_count": 1,
+  "pull_count": 1,
+  "container_network": "none",
+  "runtime_source_mount": "read-only",
+  "probe_and_auditor_mount": "read-only",
+  "dependency_mount": "read-only",
+  "dependency_hash_validation": "runner verifies every byte under /deps against inputs/DEPENDENCIES.json before importing Xlib and six",
+  "output_mount": "writable dedicated attempt path",
+  "requested_cpu_count": 1,
+  "requested_memory_mb": 1024,
+  "gpu": false,
+  "privileged": false,
+  "test_modes": [
+    "normal",
+    "optimized"
+  ],
+  "cases_per_mode": [
+    "healthy",
+    "focus_query",
+    "release_sync"
+  ],
+  "raw_files": [
+    "run/normal.json",
+    "run/normal-audit.json",
+    "run/optimized.json",
+    "run/optimized-audit.json",
+    "run/runner-summary.json",
+    "run/api.stdout.jsonl",
+    "run/api.stderr.txt",
+    "run/runner-exit.json",
+    "run/api-container.stdout.txt",
+    "run/resource-cleanup.json"
+  ],
+  "prohibitions": [
+    "no Docker",
+    "no WSLc global inventory",
+    "no CLI default/shared session",
+    "no real X server",
+    "no physical input",
+    "no GUI or app",
+    "no retries",
+    "no unrelated cleanup"
+  ],
+  "timeout_seconds": {
+    "image_pull": 600,
+    "container": 180,
+    "session": 720
+  },
+  "decision": "PASS_PORTABILITY_SCOPED only when both saved audits pass 26 checks and four mutations, all raw/effect limits reconcile, and exact resources are cleaned; otherwise HOLD/UNKNOWN with no rerun",
+  "nonclaims": [
+    "no cancellation tested",
+    "no real X/OS sensing",
+    "no input-release bound",
+    "no application/MAP01 task effect",
+    "no efficiency or reliability",
+    "no hard memory-ceiling claim"
+  ],
+  "native_harness_output_path": "C:\\wslc-s06-5302b011\\bin",
+  "native_dll_path_length": 60
+}
