@@ -214,7 +214,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 session_mode="supervised-win32",
                 _supervised_win32_owner_factory=lambda *_args: owner,
                 _supervised_win32_producer_factory=lambda *_args: producer,
-                _supervised_win32_task_oracle=oracle)
+                supervised_win32_task_oracle=oracle)
             dispatched = self.row(await server.call_tool("interface_dispatch", {
                 "program": self.valid_program(),
                 "current_observation_seq": 1,
@@ -264,7 +264,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 session_mode="supervised-win32",
                 _supervised_win32_owner_factory=lambda *_args: owner,
                 _supervised_win32_producer_factory=lambda *_args: producer,
-                _supervised_win32_task_oracle=oracle)
+                supervised_win32_task_oracle=oracle)
             dispatched = self.row(await server.call_tool("interface_dispatch", {
                 "program": self.valid_program(),
                 "current_observation_seq": 1,
@@ -310,7 +310,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 session_mode="supervised-win32",
                 _supervised_win32_owner_factory=lambda *_args: owner,
                 _supervised_win32_producer_factory=lambda *_args: producer,
-                _supervised_win32_task_oracle=oracle)
+                supervised_win32_task_oracle=oracle)
             dispatched = self.row(await server.call_tool("interface_dispatch", {
                 "program": self.valid_program(),
                 "current_observation_seq": 1,
