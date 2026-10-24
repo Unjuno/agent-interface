@@ -1,32 +1,34 @@
 {
-  "captured_utc": "2026-10-23T23:20:29.0026874Z",
-  "wslc_version": "wslc 3.0.3.0",
-  "wsl_version": "W\u0000S\u0000L\u0000 \u0000�0�0�0�0�0:\u0000 \u00003\u0000.\u00000\u0000.\u00003\u0000.\u00000\u0000\r\n\u0000\r\n\u0000�0�0�0�0 \u0000�0�0�0�0�0:\u0000 \u00006\u0000.\u00001\u00008\u0000.\u00005\u00004\u0000.\u00001\u0000-\u00001\u0000\r\n\u0000\r\n\u0000W\u0000S\u0000L\u0000g\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u0000.\u00000\u0000.\u00007\u00009\u0000\r\n\u0000\r\n\u0000M\u0000S\u0000R\u0000D\u0000C\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u0000.\u00002\u0000.\u00007\u00003\u00009\u00001\u0000\r\n\u0000\r\n\u0000D\u0000i\u0000r\u0000e\u0000c\u0000t\u00003\u0000D\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u0000.\u00006\u00001\u00001\u0000.\u00001\u0000-\u00008\u00001\u00005\u00002\u00008\u00005\u00001\u00001\u0000\r\n\u0000\r\n\u0000D\u0000X\u0000C\u0000o\u0000r\u0000e\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u00000\u0000.\u00000\u0000.\u00002\u00006\u00001\u00000\u00000\u0000.\u00001\u0000-\u00002\u00004\u00000\u00003\u00003\u00001\u0000-\u00001\u00004\u00003\u00005\u0000.\u0000g\u0000e\u0000-\u0000r\u0000e\u0000l\u0000e\u0000a\u0000s\u0000e\u0000\r\n\u0000\r\n\u0000W\u0000i\u0000n\u0000d\u0000o\u0000w\u0000s\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u00000\u0000.\u00000\u0000.\u00002\u00006\u00003\u00000\u00000\u0000.\u00009\u00007\u00001\u00001\u0000\r\n\u0000\r\n\u0000",
-  "free_bytes_on_c": 109265195008,
-  "total_physical_memory_bytes": 68542832640,
-  "session": "agent-interface-wslc-s02-e8fb33d5af824e7eb4496edd27c5116d",
-  "attempt_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local_runtime_smoke_20261024_s02",
-  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
-  "probe_sha256": "8c42f0728a5f852d35a4a209ce97446e66ed70a7e79508fdf4d53899c306d099",
-  "sentinel_sha256": "b6226bcdfb1e25639d1b443906d7cc227c81fbac974fbb1d2c9d058795b0c14d",
-  "pre_pull_image_inspect": {
-    "captured_utc": "2026-10-23T23:20:43.0039536Z",
-    "command": [
-      "wslc",
-      "--session",
-      "agent-interface-wslc-s02-e8fb33d5af824e7eb4496edd27c5116d",
-      "inspect",
-      "--type",
-      "image",
-      "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
-      "--format",
-      "json"
-    ],
-    "exit_code": 1,
-    "timed_out": false,
-    "stdout": "",
-    "stderr": "セッションが見つかりません: 'agent-interface-wslc-s02-e8fb33d5af824e7eb4496edd27c5116d'\r\nエラー コード: WSLC_E_SESSION_NOT_FOUND\r\nこのエラーが予期しないものである場合は、既存の問題を検索するか、https://github.com/microsoft/WSL/issues で新しい問題を提出することを検討してください。\r\n",
-    "classification": "unexpected_inspect_result"
+  "schema": "wslc-local-runtime-smoke-s02-preflight-v1",
+  "observed_at_utc": "2026-10-24T00:46:08.2136881Z",
+  "source_commit": "9cd878dec80e4a3d7e8a524815f4a8a4cc18f5c2",
+  "allocation": {
+    "active_wslc_process_count": 0,
+    "name_query_stderr": "",
+    "global_inventory_used": false,
+    "name_query_stdout": "",
+    "container_name": "agent-interface-goal-20261024-288fe2e44ce141cd8d87acb0b901386a",
+    "name_query_timed_out": false,
+    "name_query_exit": 0
   },
-  "session_storage_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local_runtime_smoke_20261024_s02\\run\\wslc-session-storage"
+  "image": {
+    "inspect_stdout": "[]\r\n",
+    "inspect_timed_out": false,
+    "inspect_stderr": "オブジェクトが見つかりません: python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f\r\n",
+    "inspect_exit": 1,
+    "reference": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f"
+  },
+  "wsl": {
+    "exit": 0,
+    "stdout": "WSL バージョン: 3.0.3.0\r\nカーネル バージョン: 6.18.54.1-1\r\nWSLg バージョン: 1.0.79\r\nMSRDC バージョン: 1.2.7391\r\nDirect3D バージョン: 1.611.1-81528511\r\nDXCore バージョン: 10.0.26100.1-240331-1435.ge-release\r\nWindows バージョン: 10.0.26300.9711\r\n",
+    "stderr": "",
+    "timed_out": false
+  },
+  "wslc": {
+    "exit": 0,
+    "stdout": "wslc 3.0.3.0\r\n",
+    "stderr": "",
+    "timed_out": false
+  },
+  "decision": "UNIQUE_NAME_CLEAR_IMAGE_MISSING"
 }
