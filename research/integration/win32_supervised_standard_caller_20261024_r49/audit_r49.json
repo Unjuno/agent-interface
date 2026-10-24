@@ -1,0 +1,296 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r49-831ad349ef9f4194972ec91cc81641d2",
+  "checks": [
+    {
+      "evidence": {
+        "all_attempt_outputs_absent": true,
+        "conditions_id_matches_schema": true,
+        "foreground_markers_absent_before_attempt": true,
+        "frozen_packet_hashes_match": true,
+        "hold_deadline_and_audit_use_perf_counter_ns": true,
+        "hook_timeout_registry_matches": true,
+        "instrumentation_loaded_without_input": true,
+        "mcp_sdk_available": true,
+        "native_windows": true,
+        "predecessors_match": true,
+        "runtime_source_hashes_match": true,
+        "source_commit_matches": true,
+        "tracked_tree_clean": true
+      },
+      "name": "preflight_passed_without_input",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "passed": 11,
+        "status": "STRICT_RELEASE_PASS",
+        "total": 11
+      },
+      "name": "phase1_strict_release_gate_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_audit_returned_monotonic_ns": 512908774099300,
+        "phase2_started_monotonic_ns": 512908780455000
+      },
+      "name": "phase2_started_only_after_phase1_gate",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_generation": "f49a8635728b39a2913364174a82d7f61afd5703a54b941de73ddecfc2b2d652",
+        "phase2_generation": "ed2f39d5e0d93a285c97f68656e263ff5d8e6d7357717ce2d714d9d2ab594928"
+      },
+      "name": "fresh_target_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_call_id": "7665cf00bdc64a4aa33f7b7b41ec0606",
+        "phase1_operation_id": "e8d35620d938415ea8fe73706c06d7c5",
+        "phase2_call_id": "501a2deae6914c20b1fb6636c0c4982d",
+        "phase2_operation_id": "3bb4edf2c5944d06bdf9188669abea46"
+      },
+      "name": "distinct_call_and_operation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "receipt": {
+          "call_id": "501a2deae6914c20b1fb6636c0c4982d",
+          "evidence_ref": "[LOCAL_PATH_REDACTED]",
+          "observed_monotonic_ns": 512936221008100,
+          "operation_id": "3bb4edf2c5944d06bdf9188669abea46",
+          "oracle_id": "4fcaa06b4fd14704b8ed3fc5c6db9f2f",
+          "outcome": "success",
+          "target_generation": "ed2f39d5e0d93a285c97f68656e263ff5d8e6d7357717ce2d714d9d2ab594928"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "name": "task_oracle_success_bound_to_new_action",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action_status": "completed",
+        "recovery_required": false,
+        "release_confirmed": true,
+        "release_receipts": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 512936007295400,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 7472494,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 45432,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51816
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 7472494,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 45432,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51816
+                }
+              ],
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 7472494,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 45432,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51816
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 7472494,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 45432,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51816
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 7472494,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 45432,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51816
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 7472494,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 45432,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 51816
+                }
+              ]
+            },
+            "verified": true
+          }
+        ]
+      },
+      "name": "phase2_action_completed_with_verified_neutral_release",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "release_receipt_count": 1,
+        "state_query_witnesses_present": true
+      },
+      "name": "phase2_completion_readback_has_independent_state_witness",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r49-b8abd9ff3168"
+        },
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r49-b8abd9ff3168"
+        },
+        "oracle_actual": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r49-b8abd9ff3168"
+        },
+        "oracle_outcome": "success"
+      },
+      "name": "task_effect_exactly_matches_frozen_expectation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "oracle_observed_monotonic_ns": 512936221008100,
+        "phase2_started_monotonic_ns": 512908780455000
+      },
+      "name": "task_effect_observed_after_recovery_phase",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect_sha256_matches": true,
+        "effect_write_return_monotonic_ns": 512936000293200,
+        "oracle_observed_monotonic_ns": 512936221008100,
+        "oracle_read_returned_monotonic_ns": 512936221008100,
+        "oracle_read_started_monotonic_ns": 512936220871500,
+        "write_return_to_oracle_read_start_ms": 220.5783
+      },
+      "name": "effect_write_timestamp_bracketed_by_independent_oracle_read",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_hwnd": 7472494,
+        "foreground_activation": {
+          "activated": true,
+          "activation_result": "Computer Use activated exact owned R49 phase2 fixture and inspected its screenshot",
+          "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r49-831ad349ef9f4194972ec91cc81641d2",
+          "created_utc": "2026-10-24T06:00:16.5358574+00:00",
+          "cua_window_id": 7472494,
+          "fixture_hwnd": 7472494,
+          "observed_foreground_hwnd": 7472494,
+          "observed_monotonic_ns": 512923768403600,
+          "phase": "phase2",
+          "screenshot_inspected": true,
+          "window_title": "Agent Interface Win32 Fixture"
+        }
+      },
+      "name": "phase2_cua_activation_receipt_matches_fresh_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "fixture_exit_code": 0,
+        "foreground_restored": true,
+        "phase2_exit_code": 0,
+        "server_close": {
+          "call_directory": "[LOCAL_PATH_REDACTED]",
+          "call_id": "66b62dbebd6e48edbe7c6ec2babe5380",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "53a0d5cd4df145dc9447472670b10a58",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        }
+      },
+      "name": "bounded_cleanup_and_foreground_restore",
+      "passed": true
+    }
+  ],
+  "conditions_sha256": "28d8cb8eb50f5cec1167bb8036832d09ad4bd91e52e36f27a8f2603402034f6b",
+  "nonclaims": [
+    "CUA privilege transfer to backend process",
+    "MAP01",
+    "R39 broad reliability estimate",
+    "R40 broad reliability estimate",
+    "R41 queued/busy cause unless independently isolated",
+    "WSLc GUI behavior",
+    "WSLc allocation eligibility",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-cancel task_success unless independently verified",
+    "proven cancellation release unless every strict-gate check passes",
+    "real-application transfer",
+    "runtime-integrated task_success (must remain null)",
+    "same-run task_success in R42 or R43"
+  ],
+  "passed": 13,
+  "phase1_release_status": "STRICT_RELEASE_PASS",
+  "schema": "win32-r49-combined-audit-v1",
+  "source_commit": "eb0c4b81954369fcd57198150ebf59a9c7db76d5",
+  "status": "PASS_SCOPED",
+  "task_success": true,
+  "total": 13
+}
