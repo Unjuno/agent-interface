@@ -41,3 +41,13 @@ This packet now includes one native held-effect recovery diagnostic through the 
 - Python `pytest` is unavailable in this environment.
 - No tracked runtime source was changed.
 
+
+
+## R11 measured recovery follow-up
+
+A fresh attempt on the same owned blank Notepad fixture is retained in `attempt-11-measured-recovery/`. It confirms a native SHIFT-down during the post-SendInput producer hold, terminal action/cancellation recovery, independent same-generation SHIFT-up, and an empty-document readback. The owner recorded a 15 ms cleanup interval before the 3 s deadline. On this host `monotonic_ns` resolution is 15.625 ms, so this is one coarse tick, not a precise latency. See the attempt assessment. A follow-up code change now preserves a separate `perf_counter_ns` interval for future runs, but R11 predates that instrumentation and remains unchanged. This single recovery-only sample does not establish arbitrary blocked-I/O behavior, task success, MAP01, efficiency, or reliability.
+
+
+## R12 high-resolution recovery follow-up
+
+A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the `perf_counter_ns` owner receipt. It measured 17.2395 ms from accepted cleanup request to owner confirmation of release plus neutral readback; the coarse monotonic interval was 32 ms and independently enforced the three-second deadline. Same-generation SHIFT-up and empty-document readback were observed. This is one bounded recovery sample only; it does not establish task success, API-internal blocking recovery, MAP01, efficiency, or reliability. R11 remains immutable.

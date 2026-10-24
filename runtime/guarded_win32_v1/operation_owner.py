@@ -9,6 +9,7 @@ from __future__ import annotations
 import copy
 import re
 import threading
+import time
 import uuid
 
 
@@ -31,10 +32,14 @@ class OperationOwner:
     that binds the queried creation time to this exact child across PID reuse.
     """
 
-    def __init__(self, *, clock_ns, process_identity_reader):
-        if not callable(clock_ns) or not callable(process_identity_reader):
+    def __init__(self, *, clock_ns, process_identity_reader,
+                 perf_counter_ns=None):
+        if (not callable(clock_ns) or not callable(process_identity_reader)
+                or (perf_counter_ns is not None
+                    and not callable(perf_counter_ns))):
             raise ValueError("monotonic clock and process identity reader required")
         self._clock_ns = clock_ns
+        self._perf_counter_ns = perf_counter_ns or time.perf_counter_ns
         self._process_identity_reader = process_identity_reader
         self._lock = threading.RLock()
         self._records = {}
@@ -82,6 +87,9 @@ class OperationOwner:
                 "cleanup_requested_monotonic_ns": None,
                 "recovery_completed_monotonic_ns": None,
                 "cleanup_latency_ns": None,
+                "cleanup_requested_perf_counter_ns": None,
+                "recovery_completed_perf_counter_ns": None,
+                "cleanup_latency_perf_counter_ns": None,
                 "recovery_id": None,
                 "release_confirmed": False,
                 "completion_release_receipt": None,
@@ -194,6 +202,7 @@ class OperationOwner:
             if record["status"] not in ("admitted", "running"):
                 raise OwnerRefused("operation has no cancellable producer")
             requested_ns = self._clock_ns()
+            requested_perf_ns = self._perf_counter_ns()
             if (type(cleanup_deadline_ns) is not int
                     or cleanup_deadline_ns <= requested_ns):
                 record["status"] = "unknown"
@@ -202,6 +211,7 @@ class OperationOwner:
             record["status"] = "cancel_pending"
             record["cleanup_deadline_ns"] = cleanup_deadline_ns
             record["cleanup_requested_monotonic_ns"] = requested_ns
+            record["cleanup_requested_perf_counter_ns"] = requested_perf_ns
             return self._public(record)
 
     def producer_retired(self, operation_id, target_generation, process_handle):
@@ -414,6 +424,7 @@ class OperationOwner:
                 and readback.get("neutral") is True
             )
             completed_ns = self._clock_ns()
+            completed_perf_ns = self._perf_counter_ns()
             confirmed = (
                 release_accepted is True
                 and valid_readback
@@ -425,6 +436,10 @@ class OperationOwner:
                 record["recovery_completed_monotonic_ns"] = completed_ns
                 record["cleanup_latency_ns"] = (
                     completed_ns - record["cleanup_requested_monotonic_ns"])
+                record["recovery_completed_perf_counter_ns"] = completed_perf_ns
+                record["cleanup_latency_perf_counter_ns"] = (
+                    completed_perf_ns
+                    - record["cleanup_requested_perf_counter_ns"])
             else:
                 record["uncertainty"] = "recovery_or_neutral_readback_unconfirmed"
             return bool(confirmed)

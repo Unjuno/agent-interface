@@ -142,6 +142,38 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertEqual(recovered["recovery_completed_monotonic_ns"], 250)
         self.assertEqual(recovered["cleanup_latency_ns"], 150)
 
+    def test_recovered_result_records_high_resolution_cleanup_latency(self):
+        measure_clock = FakeClock()
+        measure_clock.now = 1_000
+        owner = OperationOwner(clock_ns=self.clock,
+            perf_counter_ns=measure_clock,
+            process_identity_reader=lambda process: PROCESS_IDENTITIES.get(process.pid))
+        owner.admit("op-hires", GEN_A, 1_000, ["key:a"])
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(owner.producer_started("op-hires", GEN_A, process,
+            process_identity=PRODUCER))
+        pending = owner.request_cancel("op-hires", GEN_A,
+                                       cleanup_deadline_ns=900)
+        self.assertEqual(pending["cleanup_requested_monotonic_ns"], 100)
+        self.assertEqual(pending["cleanup_requested_perf_counter_ns"], 1_000)
+
+        process.alive = False
+        process.exitcode = 17
+        self.assertTrue(owner.producer_retired("op-hires", GEN_A, process))
+        recovery = owner.claim_recovery("op-hires", GEN_A)
+        self.clock.now = 250
+        measure_clock.now = 1_575
+        self.assertTrue(owner.recovery_completed(
+            "op-hires", GEN_A, recovery["recovery_id"], release_accepted=True,
+            readback={"operation_id": "op-hires", "target_generation": GEN_A,
+                      "recovery_id": recovery["recovery_id"], "neutral": True}))
+
+        result = owner.result("op-hires")
+        self.assertEqual(result["recovery_completed_monotonic_ns"], 250)
+        self.assertEqual(result["cleanup_latency_ns"], 150)
+        self.assertEqual(result["recovery_completed_perf_counter_ns"], 1_575)
+        self.assertEqual(result["cleanup_latency_perf_counter_ns"], 575)
+
     def test_normal_completion_requires_exact_exit_and_verified_neutral_release(self):
         self.owner.admit("op-complete", GEN_A, 1_000, ["CTRL"],
                          start_gate_required=True)
@@ -353,6 +385,8 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertFalse(receipt["release_confirmed"])
         self.assertIsNone(receipt["recovery_completed_monotonic_ns"])
         self.assertIsNone(receipt["cleanup_latency_ns"])
+        self.assertIsNone(receipt["recovery_completed_perf_counter_ns"])
+        self.assertIsNone(receipt["cleanup_latency_perf_counter_ns"])
         self.assertIsNone(receipt["task_success"])
         with self.assertRaises(OwnerRefused):
             self.owner.admit("op-2", GEN_B, 1_000, ["key:a"])
@@ -370,6 +404,8 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertFalse(receipt["release_confirmed"])
         self.assertIsNone(receipt["recovery_completed_monotonic_ns"])
         self.assertIsNone(receipt["cleanup_latency_ns"])
+        self.assertIsNone(receipt["recovery_completed_perf_counter_ns"])
+        self.assertIsNone(receipt["cleanup_latency_perf_counter_ns"])
 
     def test_cancel_during_child_startup_never_authorizes_late_child(self):
         self.owner.admit("op-1", GEN_A, 1_000, ["key:a"])
