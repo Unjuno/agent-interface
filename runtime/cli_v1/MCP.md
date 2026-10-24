@@ -308,14 +308,18 @@ integrated for that task. An embedding application may configure a
 server-side task oracle with the public `supervised_win32_task_oracle=`
 parameter when constructing the supervised server. In that
 case, `interface_verify_task(call_id, wait_for_result_ms)` asks that configured
-oracle to inspect the exact completed or recovered action. The client provides
-only the action call ID; it cannot submit a success receipt or choose the
-oracle. The oracle must return the one-use receipt bound to that action's call
-ID, operation ID, target generation, and observation time window. A timeout,
-invalid or mismatched receipt, or repeated verification leaves the effect
-unknown and cannot be retried. Without an application-configured oracle, the
-tool is not registered and `task_success` remains null. This mechanism proves
-only the application-specific effect checked by that oracle.
+oracle to inspect the application-specific effect of that exact action. This
+check is independent of producer completion and cancellation recovery: the
+application effect may be observed while the input producer is still running.
+A verified task effect does not confirm input release, neutral readback, or
+recovery. The client provides only the action call ID; it cannot submit a
+success receipt or choose the oracle. The oracle must return the one-use
+receipt bound to that action's call ID, operation ID, target generation, and
+observation time window. A timeout, invalid or mismatched receipt, or repeated
+verification leaves the effect unknown and cannot be retried. Without an
+application-configured oracle, the tool is not registered and `task_success`
+remains null. This mechanism proves only the application-specific effect
+checked by that oracle.
 
 This opt-in route has focused synthetic composition coverage and native Win32
 implementation, but does not establish atomic
