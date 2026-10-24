@@ -1,0 +1,77 @@
+{
+  "schema": "wslc-standard-caller-xvfb-r30-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r30",
+  "preregistered_utc": "2026-10-24T16:01:24.3255558+00:00",
+  "source_commit": "aaa4fce67440fcd475e71e3134345f5649336f39",
+  "source_remote_main": "058ab3c36092d5883d15bf44c7f0d4c573d2e763",
+  "source_hashes": {
+    "test": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "xres": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+    "runner": "623c6e79b342210054bb337e0c70269fe6233199f82d2f6ad1d4bdc0196c9ed6",
+    "harness": "198d7c723679da6e75ba081163c66dcdcb8fee4f76ba8a1071ec1d3469f3bc41",
+    "stage_manifest": "0ed4edad0c497789c0db967e1bb359b753df8d966606e746321ec02b12b22493",
+    "comparison_packet_readme": "713507ed12b0c4af186c2e8efaceb5f1883c3bd4072476a9e068c70420c94486",
+    "mcp_server": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "regression_test": "c1c676648a77d7361293f18f739ccbb5be4b82864d183079359de08c5fc82720"
+  },
+  "session_name": "ai-control-r30-f222f351a0fc434b95c6c58dd3938e0b",
+  "container_name": "ai-control-r30-f222f351a0fc434b95c6c58dd3938e0b-container",
+  "session_storage_path": "D:\\CodexData\\Temp\\ai-control-r30-f222f351a0fc434b95c6c58dd3938e0b",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "session_limits": {
+    "gpu": false,
+    "timeout_minutes": 15,
+    "memory_mb": 2048,
+    "cpu_count": 2
+  },
+  "container": {
+    "privileged": false,
+    "output_mount": "read-write",
+    "networking": "None",
+    "dependencies_mount": "read-only",
+    "gpu": false,
+    "xkb_mount": "read-only",
+    "count": 1,
+    "stage_mount": "read-only",
+    "repo_mount": "read-only"
+  },
+  "test": "unmodified current-main runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+  "question": "Does the 4.0 s transaction budget allow the unmodified public Xvfb standard caller to complete XRes release/readback at the same 2950 ms pause that failed R29 under 3.0 s, preserving public response bound, independent observations, old/fresh task oracles and cleanup?",
+  "comparison_reference": {
+    "known_result": "R29 3.0 s budget expired with transaction_deadline after Xvfb resumed 101.597ms before deadline; task oracles were not reached",
+    "packet": "research/integration/wslc_standard_caller_xvfb_20261025_r29",
+    "caveat": "same 2950ms pause, public test and pinned image; source changes only in transaction budget plus its regression test; one trial per version"
+  },
+  "changed_factor": "internal guarded cancellation transaction timeout default increased from 3.0 s to 4.0 s; private Xvfb pause remains 2950 ms and all caller/image settings match R29",
+  "conditions": {
+    "AGENT_INTERFACE_MCP_XVFB_TEST": "1",
+    "AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS": "1",
+    "LD_LIBRARY_PATH": "/tmp/stage/lib",
+    "AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS": "2950",
+    "AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR": "1",
+    "AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S": "0"
+  },
+  "pretrial_gate": "digest image and read-only mounts; private Xvfb :88; input-free Xlib/XRes PID+start-tick identity pass before input or stop with zero input",
+  "bounds": {
+    "cancel_response_ms": 3000,
+    "session_timeout_minutes": 15,
+    "retries": 0,
+    "independent_release_readback_ms_from_cancel_start": 5000,
+    "container_seconds": 240,
+    "supervisor_release_before_transaction_deadline": true,
+    "harness_seconds": 900,
+    "image_pull_seconds": 600,
+    "late_event_horizon_ms": 8500,
+    "test_seconds": 210,
+    "transaction_deadline_ms": 4000
+  },
+  "preregistered_decision": {
+    "comparison": "old task exact effect remains 1 and passes independently; fresh task exact-once remains required",
+    "scoped_outcome": "PASS only if public cancel response <3000ms, supervisor XRes release/readback completes by its exact 4000ms transaction deadline, independent parent sees all keys up by +5000ms, no delayed b and all keys up at >=+8500ms, old and fresh task exact-effect oracles pass, old UNKNOWN/replay fence is preserved, test/harness exit 0, and exact owned cleanup succeeds. Otherwise preserve first failure and do not retry.",
+    "claim": "one patched-branch WSLc synthetic-Xvfb replication of R29 at 2950 ms; only internal transaction timeout differs; not Windows desktop/MAP01, matched efficiency or broad reliability"
+  },
+  "cleanup": "exact unique session/container/image/storage in CONDITIONS only; no global inventory/list; hash/remove storage only after exact session termination",
+  "retry": "none",
+  "source_base_commit": "058ab3c36092d5883d15bf44c7f0d4c573d2e763",
+  "source_ref": "fix/x11-cancel-deadline-recovery"
+}
