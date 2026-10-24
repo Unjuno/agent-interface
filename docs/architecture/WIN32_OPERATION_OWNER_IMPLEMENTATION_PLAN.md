@@ -18,8 +18,8 @@ is normalized to `TARGET_GENERATION_CHANGED`. The [R01 packet](../../research/in
 records 51 focused public-caller, backend, owner, and supervisor tests passing
 in normal and optimized Python. This closes one public failure-path test gap.
 At that dated checkpoint, live native producer/recovery evidence had not yet
-been added; the later R04/R03 packets below provide scoped Phase 3 evidence,
-while standard-caller composition remains open.
+been added. The later R04/R03 packets provide scoped Phase 3 evidence, and
+R54/R55 add the standard-caller evidence summarized below.
 
 Current-main continuation (2026-10-24): PR #9460 makes admission refusal while
 an earlier producer remains unresolved machine-readable at the public
@@ -285,7 +285,7 @@ PR #9448 retains the R04 native fixture experiment: the existing operation owner
 
 The [R03 public live-generation packet](../../research/integration/win32_public_live_generation_20261023_r03/README.md) then used real `Win32Backend.target_generation()` reads for two owned HWND generations through the registered `mcp_server.create_server()` guarded-Win32 tools. After Generation A was admitted and the current target changed to Generation B, the public start handler returned UNKNOWN before invoking its injected producer factory; `interface_results` retained UNKNOWN, the producer gate stayed closed, and task success/replay remained denied. Its independent audit passes 8/8. The calls used in-process `server.call_tool`, and no input was emitted. R01 exploratory and R02 harness-failure records remain preserved.
 
-These samples strengthen native-state and public target-generation evidence separately. They do not join native producer/recovery with the standard public caller. `mcp_win32` still labels its route synthetic-only and `mcp_server.create_server()` requires an injected synthetic owner/producer. The later R04/R03 packets satisfy the scoped local fixture gate: both acceptance schedules, a blocked-call schedule, bounded neutral readback, late-DOWN horizon, and independent task effect are recorded. This evidence supports proceeding to standard-caller implementation on the authorized Windows PC; it does not itself qualify that integration or establish WSLc allocation. Preserve UNKNOWN, generation binding, and retirement-before-recovery. Issue #7924 remains STOP/HOLD; Docker is unused.
+These early samples strengthened native-state and public target-generation evidence separately; they did not join native producer/recovery with the standard public caller. The later R04/R03 packets satisfied the scoped local fixture gate. R54/R55 then supplied two fresh public stdio-MCP standard-caller attempts with strict release and independent fresh-generation task-oracle passes. The [R52/R53 summary](../../research/integration/win32_supervised_standard_caller_20261024_r52_r53_public/README.md) preserves an earlier prelaunch stop and a strict release pass whose later task phase timed out before activation. Together, these records qualify only the owned native-Windows fixture route; they do not establish MAP01/real-app transfer, matched efficiency, broad reliability, or WSLc allocation. Preserve UNKNOWN, generation binding, and retirement-before-recovery. Issue #7924 remains STOP/HOLD; Docker is unused.
 
 ### Phase 3: local native discriminator — scoped PASS; WSLc unresolved
 
@@ -298,16 +298,25 @@ standard-caller integration, hard real-time bound, MAP01, or broad reliability.
 WSLc remains STOP/HOLD under Issue #7924 until a fresh unused allocation is
 verified; this plan grants no WSLc access.
 
-### Phase 4: standard-caller qualification
+### Phase 4: standard-caller qualification — scoped fixture pass; efficiency open
 
-Only if both native schedules establish the producer fence, bounded neutral
-state, and late-DOWN absence should the adapter enter a matched comparison.
-Freeze baseline, task order, model/settings, all-attempt usage accounting,
-latency endpoints, repair policy, repetition count, and stopping rule before
-seeing results. Report task correctness, collateral effects, release
-confirmation coverage, late inputs, uncertainty, model usage, and full time to
-independent task effect. A negative or inconclusive result completes this
-qualification attempt and does not authorize automatic adoption.
+R54 and R55 each passed the strict phase-1 release gate and then a separate
+fresh-generation task through the public stdio-MCP caller and independent task
+oracle. The paired attempts establish this controlled native-Windows fixture
+path for those samples. R52 and R53 remain visible as a no-input prelaunch stop
+and a release pass with no phase-2 activation; they are not discarded or pooled
+as successes. The [redacted R54/R55 packet](../../research/integration/win32_supervised_standard_caller_20261024_r54_r55_public/README.md)
+and [R52/R53 packet](../../research/integration/win32_supervised_standard_caller_20261024_r52_r53_public/README.md)
+retain their respective limits.
+
+The next qualification step is a matched comparison. Freeze baseline, task
+order, model/settings, all-attempt usage accounting, latency endpoints, repair
+policy, repetition count, and stopping rule before seeing results. Report task
+correctness, collateral effects, release confirmation coverage, late inputs,
+uncertainty, model usage, and full time to independent task effect. These
+fixture passes do not establish MAP01/real-app transfer, matched efficiency,
+broad reliability, or a hard real-time release bound. A negative or inconclusive
+comparison completes its attempt without authorizing automatic adoption.
 
 ## Rejection conditions
 
