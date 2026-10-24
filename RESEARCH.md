@@ -1,6 +1,6 @@
-# WSLc R31–R38 — standard-caller 3.5–3.6 s transaction boundary (2026-10-25)
+# WSLc R31–R42 — standard-caller 3.5–3.9 s transaction boundary (2026-10-25)
 
-R37 passed at a 3,500 ms private-Xvfb pause with 377.305 ms release margin; R38 passed at 3,600 ms with 272.051 ms margin (27/27 audit checks). Both independent readbacks and +8.5 s horizons found keys up with no delayed `b`; old/fresh synthetic task oracles passed while runtime cancellation remained UNKNOWN, replay denied, and runtime task success null. R31–R36 are retained pre-input setup stops. See the [R31–R38 rollup](research/integration/wslc_standard_caller_xvfb_20261025_R31-R38.md), [R37 packet](research/integration/wslc_standard_caller_xvfb_20261025_r37/RESULT.md), and [R38 packet](research/integration/wslc_standard_caller_xvfb_20261025_r38/RESULT.md). Synthetic Xvfb only; no Win32/MAP01, real-app transfer, efficiency or reliability claim.
+R37–R41 passed at 3,500–3,800 ms private-Xvfb pauses with release margins shrinking from 377.305 to 72.300 ms; all had independent readbacks and old/fresh synthetic task oracles. R42 at 3,900 ms exceeded the 4 s transaction deadline by 4.988 ms; runtime release stayed UNKNOWN and independent readback/task oracles were not reached. R31–R36 are retained pre-input setup stops. See the [R31–R42 rollup](research/integration/wslc_standard_caller_xvfb_20261025_R31-R42.md), [R37–R41 packets](research/integration/wslc_standard_caller_xvfb_20261025_R31-R42.md), and [R42 boundary result](research/integration/wslc_standard_caller_xvfb_20261025_r42/RESULT.md). Synthetic Xvfb only; no Win32/MAP01, real-app transfer, efficiency or reliability claim.
 
 # Prior WSLc R28–R30 — guarded-cancel transaction deadline boundary (2026-10-25)
 
