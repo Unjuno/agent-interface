@@ -1,0 +1,57 @@
+{
+  "completed_transitions": 0,
+  "critical_events": [
+    {
+      "action": "enter",
+      "event": "branch_selected",
+      "evidence_ref": "observation-2",
+      "matched_conditions": {
+        "phase": 0
+      },
+      "outcome": "action",
+      "state": "before"
+    },
+    {
+      "action": "enter",
+      "event": "admission_refused",
+      "reason": "association_changed",
+      "status": "association_changed"
+    },
+    {
+      "completed_transitions": 0,
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed"
+    }
+  ],
+  "elapsed_ns": 4358400,
+  "ended_ns": 561223670193700,
+  "format": "compiled-gui-runtime-receipt-v1",
+  "frontier_model_resumptions": 0,
+  "input_authority": "admission_per_action_only",
+  "interface_id": "owned-compiled-profile",
+  "latest_evidence_ref": "observation-2",
+  "method": "one-visible-transition",
+  "method_version": "1",
+  "observations": [
+    {
+      "captured_ns": 561223666512100,
+      "evidence_digest": "c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d",
+      "evidence_ref": "observation-2",
+      "observation_accepted_ns": 561223668373500,
+      "observation_started_ns": 561223665842400,
+      "predicates": {
+        "phase": 0,
+        "present": true
+      },
+      "sequence": 2
+    }
+  ],
+  "outcome": "SAFE_YIELD",
+  "pending_effect": null,
+  "raw_evidence_retention": "adapter_responsibility_unverified",
+  "reason": "association_changed",
+  "session_scope": "native-x11:d5a722eb3fcc4c8d97f9a821bf0eb895",
+  "started_ns": 561223665835300,
+  "transitions": []
+}

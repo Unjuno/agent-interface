@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "answer_matches_selected_point": true,
+    "ledger_complete": true,
+    "one_completed_turn": true,
+    "provider_call_completed": true,
+    "retained_raw_hashes_match": true,
+    "usage_matches_protocol_provider_and_ledger": true
+  },
+  "classification": "PASS_SCOPED",
+  "efficiency_or_reliability_claim": false,
+  "schema": "agent-interface/p08-provider-usage-reconciliation-v1",
+  "scope": "one real App Server turn on synthetic Fake X",
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 10185,
+    "output_tokens": 60,
+    "reasoning_output_tokens": 41
+  }
+}
