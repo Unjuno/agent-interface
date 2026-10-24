@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- WSLc R01: [compiled-control core verification](integration/wslc_compiled_core_20261024_r01/RESULT.md) — 37 current-main tests passed; the composed Fake X caller test is separately preserved as [blocked before execution](integration/wslc_fake_x_standard_caller_20261024_r01/RESULT.md) because the cached image lacks `mcp`. Neither result establishes GUI or physical-input control.
+
 - [Real xterm public-MCP saved effect](integration/xterm_public_task_20261023_r01/README.md) — one known zero-model task through actual PTY/shell, exactly one saved record; API completion precedes fsync in the sample. Custom task helper, no fault/efficiency/generalization claim.
 
 - [Xterm blocked-input cancellation/recovery repeats R04/R05](integration/xterm_cancel_recovery_20261023_r05/README.md) — two real-xterm runs passed 16/16 scoped checks; supervisor readback verified all-up while each old task remained UNKNOWN, and one new task was independently fsynced per run. Raw packets and cross-run comparison are retained. Two samples do not establish broad reliability, MAP01, or efficiency.
