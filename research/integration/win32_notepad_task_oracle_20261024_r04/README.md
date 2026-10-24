@@ -81,3 +81,8 @@ A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the 
 ## R18 recovery on a distinct target generation
 
 `attempt-18-fresh-generation-recovery/` repeats the held-keyup backend-boundary recovery once on R17’s distinct HWND/GUI thread. A real SHIFT-down was observed during the held producer; bounded supervisor recovery confirmed release before the 3 s deadline, with a 17.211 ms high-resolution owner interval and independent same-generation postflight. This is not a hang inside the Windows API/kernel or a general reliability claim.
+
+
+## R19 simulated SendInput-entry stall
+
+`attempt-19-sendinput-call-boundary/` advances the held-keyup recovery fault to the producer-local `user32.SendInput` callable entry for SHIFT-up. A Python substitution blocks before invoking native SendInput; the production recovery helper then sends real key-up and independent same-generation postflight confirms all-up/empty. Owner recovery measured 16.976 ms with 2.985 s deadline margin. This does not establish a hang inside native Windows API/kernel I/O.
