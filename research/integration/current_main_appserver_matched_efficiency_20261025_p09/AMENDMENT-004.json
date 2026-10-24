@@ -1,0 +1,12 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p09-amendment-v1",
+  "time": "2026-10-25",
+  "trigger": "Offline ProviderAttemptRecorder reconciliation reports provider raw evidence digest mismatch in all six trial directories. REDACTIONS.json shows the redactor rewrote JSON-like .bin files under ledger/raw before their original bytes were retained elsewhere.",
+  "classification": "RAW_LEDGER_CUSTODY_FAILURE",
+  "finding": "The recorded before/after SHA-256 values prove which stored files were transformed, but hashes cannot restore the original provider/MCP raw bytes. Full raw custody and token-to-ledger reconciliation therefore fail the preregistered decision rule.",
+  "correction_for_future_runs": "privacy_redact now skips ledger/raw and all .bin files; a focused unit test asserts raw-byte immutability and valid nested JSON redaction. No existing outcome or artifact is replaced.",
+  "study_decision": "P09 is not a preregistered full pass. Retain the six independently observed task-effect/release outcomes and descriptive paired measurements, but classify the study as incomplete for raw custody and end-to-end qualification.",
+  "wslc_used": false,
+  "docker_used": false,
+  "physical_input": false
+}

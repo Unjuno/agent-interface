@@ -42,6 +42,12 @@ def redact_run(run_root):
     for path in sorted(run_root.rglob("*")):
         if not path.is_file() or path.suffix.lower() in {".png", ".rgb", ".bgrx"}:
             continue
+        # ProviderAttemptRecorder hashes these files as immutable raw evidence.
+        # Never sanitize them in place, even when their bytes happen to be JSON.
+        if "raw" in path.relative_to(run_root).parts and "ledger" in path.relative_to(run_root).parts:
+            continue
+        if path.suffix.lower() == ".bin":
+            continue
         before = path.read_bytes()
         try:
             if path.suffix.lower() == ".jsonl":

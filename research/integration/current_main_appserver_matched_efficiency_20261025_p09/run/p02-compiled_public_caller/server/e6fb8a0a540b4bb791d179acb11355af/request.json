@@ -1,0 +1,191 @@
+{
+  "arguments": {
+    "bindings": {
+      "enter": {
+        "interaction": "click",
+        "offset": [
+          2,
+          2
+        ],
+        "tail": []
+      }
+    },
+    "effect_rules": {
+      "enter": {
+        "point": [
+          1,
+          1
+        ],
+        "rgb": [
+          255,
+          0,
+          0
+        ]
+      }
+    },
+    "interface": {
+      "actions": {
+        "enter": {
+          "expected_effect": {
+            "phase": 1
+          },
+          "operation": "enter",
+          "target_symbol": "field"
+        }
+      },
+      "format": "compiled-gui-interface-v1",
+      "interface_id": "owned-compiled-profile",
+      "method": {
+        "initial_state": "before",
+        "max_runtime_ms": 5000,
+        "max_transitions": 1,
+        "name": "one-visible-transition",
+        "states": {
+          "before": {
+            "branches": [
+              {
+                "action": "enter",
+                "next_state": "done",
+                "outcome": "action",
+                "reason": null,
+                "when": {
+                  "phase": 0
+                }
+              }
+            ]
+          },
+          "done": {
+            "branches": [
+              {
+                "action": null,
+                "next_state": null,
+                "outcome": "complete",
+                "reason": null,
+                "when": {
+                  "phase": 1
+                }
+              }
+            ]
+          }
+        },
+        "version": "1"
+      },
+      "predicates": [
+        "phase",
+        "present"
+      ],
+      "session_scope": "native-x11:631dbb129e644653a7c1462388d8bc50",
+      "surface": "x11-window-20",
+      "symbols": {
+        "field": {
+          "dependencies": [
+            "present"
+          ],
+          "identity_predicate": "present",
+          "kind": "target_reference",
+          "target_reference": "grounded_green"
+        }
+      }
+    },
+    "predicate_rules": {
+      "phase": {
+        "point": [
+          1,
+          1
+        ],
+        "states": [
+          {
+            "rgb": [
+              31,
+              29,
+              1
+            ],
+            "value": 0
+          },
+          {
+            "rgb": [
+              255,
+              0,
+              0
+            ],
+            "value": 1
+          }
+        ]
+      },
+      "present": {
+        "point": [
+          2,
+          2
+        ],
+        "states": [
+          {
+            "rgb": [
+              62,
+              58,
+              4
+            ],
+            "value": true
+          }
+        ]
+      }
+    }
+  },
+  "display_name": null,
+  "operation": "guarded_compiled",
+  "response_wait_ms": 10000,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 0,
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:631dbb129e644653a7c1462388d8bc50",
+    "compiled_surface": "x11-window-20",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 1,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 561721900136200,
+      "pid": 42140,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 18874368
+    },
+    "owner_process_pid": 42140,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 18874368,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "review_required": false,
+    "session_id": "93c5731c7b5a4e32881f8e21bf329ce6",
+    "state": "open",
+    "target": "app",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": false,
+      "thread_alive": false
+    },
+    "targets": {
+      "app": 20
+    },
+    "window_lifecycle": false
+  },
+  "targets": {
+    "app": 20
+  }
+}

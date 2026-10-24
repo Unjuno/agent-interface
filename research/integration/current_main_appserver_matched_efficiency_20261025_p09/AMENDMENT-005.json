@@ -1,0 +1,12 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p09-amendment-v1",
+  "time": "2026-10-25",
+  "trigger": "A privacy review found local Windows user/workspace path tails still present in some already-redacted exports, including protocol response files that the original redactor could not parse as one JSON document.",
+  "classification": "POSTHOC_PRIVACY_SANITIZATION",
+  "correction": "Sanitize remaining absolute-path strings in retained exports and record before/after hashes. Preserve the original packet manifest as SHA256SUMS-PACKET-INITIAL and produce a final manifest after all edits.",
+  "integrity_effect": "This additional text transformation further changes the already-invalid raw-ledger byte copies. It does not restore or validate original raw bytes; P09 remains a preregistered custody failure.",
+  "remaining_trial_policy": "No provider or GUI actions. All six first outcomes remain retained.",
+  "wslc_used": false,
+  "docker_used": false,
+  "physical_input": false
+}

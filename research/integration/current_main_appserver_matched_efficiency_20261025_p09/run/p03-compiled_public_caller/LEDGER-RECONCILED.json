@@ -1,0 +1,223 @@
+{
+  "complete": true,
+  "events": [
+    {
+      "call_id": "observe-p09",
+      "ended_ns": 561782526141800,
+      "kind": "tool_call",
+      "method": "interface_guarded_observe",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-7d1dc25ff564c32d5bfa17916697f8b02a0ba7f0a65b468225ee38d1baf22c0d.tool-request.bin",
+          "sha256": "698edc53661982c2d68654907d3636fd3a34c4484442eb507783967c1d0eff89"
+        },
+        {
+          "path": "raw/tool-7d1dc25ff564c32d5bfa17916697f8b02a0ba7f0a65b468225ee38d1baf22c0d.tool-response.bin",
+          "sha256": "1901a8bd63ae24d08ca37019d699008329c8dbd0562d8fefb80ae928278bfaa3"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"call_directory\":\"<private-path>\",\"call_id\":\"65dfc1e9e0f84f0d9b045948b17a9bf9\",\"image_status\":\"image\",\"input_dispatched\":false,\"observation_report\":{\"input_dispatched\":false,\"observation\":{\"artifact\":{\"bytes\":534,\"height\":32,\"mime_type\":\"image/png\",\"path\":\"<private-path>\",\"sha256\":\"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\",\"source_raw_sha256\":\"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\",\"timing_ns\":{\"converted\":561782508475900,\"encoded\":561782515105700,\"hashed\":561782515460500,\"started\":561782508448100,\"written\":561782515441800},\"width\":32},\"capture_started_ns\":561782515482800,\"height\":32,\"sha256\":\"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\",\"width\":32},\"observation_id\":\"5694ac84ad8546a8b72e647bb0a74165\",\"schema\":\"agent-interface/runtime-observation-v1\",\"side_effect_authority\":false,\"status\":\"returned\"},\"operation\":\"guarded_observe\",\"replay_allowed\":false,\"session\":{\"authority_granted\":false,\"binding_revision\":0,\"cleanup_status\":null,\"compiled_scope\":\"native-x11:613c8f5633f240a4b271cf3c4fd0bd12\",\"compiled_surface\":\"x11-window-20\",\"error\":null,\"interrupted_execution\":null,\"mode\":\"guarded-x11-owned-process\",\"observation_sequence\":1,\"observation_worker\":false,\"observations\":null,\"owner_client_disconnect\":null,\"owner_input_obligations\":{\"buttons\":[],\"keys\":{}},\"owner_input_obligations_live_read\":{\"status\":\"not_read\"},\"owner_input_obligations_source\":\"child_rpc_snapshot\",\"owner_process\":{\"alive\":true,\"exitcode\":null,\"liveness_observed_monotonic_ns\":561782519386000,\"pid\":55380,\"release_confirmed\":null,\"retired\":false,\"x_client_resource_base\":18874368},\"owner_process_pid\":55380,\"owner_release_attempt\":null,\"owner_x_client_resource_base\":18874368,\"process_identity\":true,\"query_worker\":true,\"recovery_required\":false,\"restart_allowed\":false,\"review_required\":false,\"session_id\":\"c76ca9a3c7a147de89a76a5ebfbebf68\",\"state\":\"open\",\"target\":\"app\",\"target_queries\":{\"close_error\":null,\"pending\":false,\"retired\":false,\"thread_alive\":false},\"targets\":{\"app\":20},\"window_lifecycle\":false},\"source\":{\"binding_revision\":0,\"capture_ns\":561782515482800,\"image_source\":\"exact_capture_rgb_handoff\",\"native\":{\"artifact\":{\"bytes\":534,\"height\":32,\"mime_type\":\"image/png\",\"path\":\"<private-path>\",\"sha256\":\"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\",\"source_raw_sha256\":\"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\",\"timing_ns\":{\"converted\":561782508475900,\"encoded\":561782515105700,\"hashed\":561782515460500,\"started\":561782508448100,\"written\":561782515441800},\"width\":32},\"capture_started_ns\":561782515482800,\"height\":32,\"sha256\":\"760b6ba2feb12178aaa457d4deecbc076045c5c3922930046bf6e56745987388\",\"width\":32},\"observation_id\":\"5694ac84ad8546a8b72e647bb0a74165\",\"pointer_binding\":{\"focus\":20,\"geometry\":[0,0,32,32],\"process_generation\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"surface\":20},\"sequence\":1,\"timing_ns\":{\"artifact_verified\":561782516647400,\"binding_checked\":561782515842000,\"decoded\":561782516650800,\"public_returned\":561782515485400,\"started\":561782508397300}},\"status\":\"observed\",\"task_success\":null}",
+              "type": "text"
+            },
+            {
+              "annotations": null,
+              "data": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAB3UlEQVR4nGOUkJBgoCVgYmBgYGd9SVsLfv4WV1N6QyMLGOFBdPfuXeoarayszMDAwIIs9NzYGFOd5NmzDAwM3M+xSH2VBEkZBz7HlDq7XhIRRDQFLFhFlc6f/3H5MgMjIxM3938mpn///sGl0vjCUvhC/vz/++HfJ0ZGxv///8Olzm9SunzzByMjAw8XEzMzXgv+//79LC6OgYGBTU1Nev36Hz9+QMRdOa0CuV2sn0b9/v+nXCDFTcD658+fcF2///yPK33GwMCgocS2bpoMUUH06/ZtRkZGOLdEIKnu3eTf//8wMDBM+7Qcl66b93/B2QQs4LK2Rg4fbTaVS79uQtif/31Fdj4yMDfg/PXrF74gYmRllVq0iJGFhU1J6SdMKUg1I1R9kUCCH5cTBzsHPPQYGBhYWRgXdUuxsTLqqHMw/P+LzweQOHgaFfV+9mwWFoQjbv9+oMemzsDA0PdhQcCLbCYmFO2QOIgoeBqU9RguRSCIvh87hmzKrE+rmoRyWcH+yOaPxqXrw6d/8NSFPSdzcnJ+//4dk83AwMDKysrMzPz///+/f/+ysrIiS3Fxcf37BzX69+/fioqKKBbQCDDR1HSGUQuIAKNxQBCMBhFBMBpEBMFoEBEENA8iACn6qy5hckfXAAAAAElFTkSuQmCC",
+              "meta": null,
+              "mimeType": "image/png",
+              "type": "image"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 561781917744400,
+        "sdk_return_ns": 561782519779500,
+        "status": "returned",
+        "tool": "interface_guarded_observe"
+      },
+      "seq": 1,
+      "session_id": "e578d89e37f2499b95922af3ccad11a4",
+      "started_ns": 561781916055200
+    },
+    {
+      "attempt_id": "appserver-p09",
+      "ended_ns": 561787399773500,
+      "kind": "model_attempt",
+      "raw_refs": [
+        {
+          "path": "raw/appserver-p09.request.bin",
+          "sha256": "8c720b58ec4e9e5608d30db35be801ecb2aa650c9993bde12cf784666db582c4"
+        },
+        {
+          "path": "raw/appserver-p09.response.bin",
+          "sha256": "185d9dfe9fbc09be7819ba50e8751e9a69d7ec5cafe745bc90ac1e4cd4a0b7b3"
+        }
+      ],
+      "response_status": "raw_retained",
+      "seq": 2,
+      "session_id": "e578d89e37f2499b95922af3ccad11a4",
+      "started_ns": 561782702584900,
+      "status": "completed",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10203,
+        "output_tokens": 54,
+        "reasoning_output_tokens": 35,
+        "status": "reported"
+      }
+    },
+    {
+      "call_id": "mint-p09",
+      "ended_ns": 561787426406100,
+      "kind": "tool_call",
+      "method": "interface_guarded_mint",
+      "model_attempt_id": "appserver-p09",
+      "raw_refs": [
+        {
+          "path": "raw/tool-b7571a1b81b6f1a6a49c7c6268d9e95370faa1d00a5360b8742b1f57f8ae389d.tool-request.bin",
+          "sha256": "471f02ed88fb20ae169aafb1514bbcf3d2223bc03d8f4d0fb9bfbd36ba594e14"
+        },
+        {
+          "path": "raw/tool-b7571a1b81b6f1a6a49c7c6268d9e95370faa1d00a5360b8742b1f57f8ae389d.tool-response.bin",
+          "sha256": "d60eb7625a605777941369d047b418285db2d93b75817d37a873a65d71337c17"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 2,
+        "next_id": 3,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"alias\":\"grounded_green\",\"call_directory\":\"<private-path>\",\"call_id\":\"0d65d22e3ff94827accd799e88c824ff\",\"input_dispatched\":false,\"lifetime\":{\"authority_granted\":false,\"capture_freshness_ms\":1500,\"clock\":\"time.monotonic_ns\",\"expires_ns\":562087416611300,\"minted_ns\":561787416611300,\"scope\":\"Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.\"},\"offset\":[2,2],\"operation\":\"guarded_mint\",\"replay_allowed\":false,\"session\":{\"authority_granted\":false,\"binding_revision\":0,\"cleanup_status\":null,\"compiled_scope\":\"native-x11:613c8f5633f240a4b271cf3c4fd0bd12\",\"compiled_surface\":\"x11-window-20\",\"error\":null,\"interrupted_execution\":null,\"mode\":\"guarded-x11-owned-process\",\"observation_sequence\":1,\"observation_worker\":false,\"observations\":null,\"owner_client_disconnect\":null,\"owner_input_obligations\":{\"buttons\":[],\"keys\":{}},\"owner_input_obligations_live_read\":{\"status\":\"not_read\"},\"owner_input_obligations_source\":\"child_rpc_snapshot\",\"owner_process\":{\"alive\":true,\"exitcode\":null,\"liveness_observed_monotonic_ns\":561787418459200,\"pid\":55380,\"release_confirmed\":null,\"retired\":false,\"x_client_resource_base\":18874368},\"owner_process_pid\":55380,\"owner_release_attempt\":null,\"owner_x_client_resource_base\":18874368,\"process_identity\":true,\"query_worker\":true,\"recovery_required\":false,\"restart_allowed\":false,\"review_required\":false,\"session_id\":\"c76ca9a3c7a147de89a76a5ebfbebf68\",\"state\":\"open\",\"target\":\"app\",\"target_queries\":{\"close_error\":null,\"pending\":false,\"retired\":false,\"thread_alive\":false},\"targets\":{\"app\":20},\"window_lifecycle\":false},\"source_sequence\":1,\"status\":\"minted\",\"task_success\":null}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 561787414570700,
+        "sdk_return_ns": 561787418665500,
+        "status": "returned",
+        "tool": "interface_guarded_mint"
+      },
+      "seq": 3,
+      "session_id": "e578d89e37f2499b95922af3ccad11a4",
+      "started_ns": 561787413077800
+    },
+    {
+      "call_id": "compiled-p09",
+      "ended_ns": 561787485518500,
+      "kind": "tool_call",
+      "method": "interface_guarded_compiled",
+      "model_attempt_id": "appserver-p09",
+      "raw_refs": [
+        {
+          "path": "raw/tool-b79b3fd274b163eed488423d163b26c54dd93aa81840d483a16203d99d60e8b6.tool-request.bin",
+          "sha256": "4b60e9d074c7195ef786d222dc59bd0ca38ce3a8c5010a28926eae995ef0d36e"
+        },
+        {
+          "path": "raw/tool-b79b3fd274b163eed488423d163b26c54dd93aa81840d483a16203d99d60e8b6.tool-response.bin",
+          "sha256": "6f1872b7d62392a0b379547cb54e41e49da4f7cc90b947e83f9770c35c8e12d8"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 3,
+        "next_id": 4,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"call_directory\":\"<private-path>\",\"call_id\":\"cd681230772147358ca82cdf4493f172\",\"feedback\":{\"authority\":\"none\",\"image\":{\"data\":\"iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAB3UlEQVR4nGOUkJBgoCVgYmBgeP7iBW0tkJSQUFN6QyMLGOFBdPfuXeoarayszMDAwIIs9NzYGFOd5NmzDAwM3M+xSH2VBEkZBz7HlDq7XhIRRDQFLFhFlc6f/3H5MgMjIxM3938mpn///sGl0vjCUvhC/vz/++HfJ0ZGxv///8Olzm9SunzzByMjAw8XEzMzXgv+//79LC6OgYGBTU1Nev36Hz9+QMRdOa0CuV2sn0b9/v+nXCDFTcD658+fcF2///yPK33GwMCgocS2bpoMUUH06/ZtRkZGOLdEIKnu3eTf//8wMDBM+7Qcl66b93/B2QQs4LK2Rg4fbTaVS79uQtif/31Fdj4yMDfg/PXrF74gYmRllVq0iJGFhU1J6SdMKUg1I1R9kUCCH5cTBzsHPPQYGBhYWRgXdUuxsTLqqHMw/P+LzweQOHgaFfV+9mwWFoQjbv9+oMemzsDA0PdhQcCLbCYmFO2QOIgoeBqU9RguRSCIvh87hmzKrE+rmoRyWcH+yOaPxqXrw6d/8NSFPSdzcnJ+//4dk83AwMDKysrMzPz///+/f/+ysrIiS3Fxcf37BzX69+/fioqKKBbQCDDR1HSGUQuIAKNxQBCMBhFBMBpEBMFoEBEENA8iANR8qy7iZioVAAAAAElFTkSuQmCC\",\"mimeType\":\"image/png\",\"type\":\"image\"},\"image_reference\":{\"authority\":\"none\",\"capture_ns\":561787463694900,\"freshness\":\"historical referenced capture; no new observation\",\"observation_id\":\"74c877473fbd4bcbbc59a9cf1c44bc08\",\"path\":\"<private-path>\",\"recorded_capture\":{\"capture_started_ns\":561787463694900,\"height\":32,\"width\":32},\"relative_path\":\"images\\\\38a6b1a94a6a44f292d19a6c5681929d.png\",\"sha256\":\"7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8\",\"status\":\"image\"},\"image_status\":\"image\",\"outcome_summary\":{\"cleanup_error\":null,\"error\":null,\"failure_phase\":null,\"reported_status\":\"returned\"},\"receipt\":{\"authority\":\"none\",\"events\":[],\"latest_observations\":[],\"motor_state_validation\":{\"accepted\":false,\"present\":false,\"reason\":\"missing\"},\"omitted_from_view\":0,\"record_counts\":{},\"reference_scope\":\"Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.\",\"report\":{\"report_ref\":\"/source/raw_report\"},\"report_reference\":\"/source/raw_report\",\"schema\":\"agent-interface/receipt-view-v3-report-ref\",\"scope\":\"Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.\",\"source\":{\"bytes\":1079,\"kind\":\"received_bytes\",\"path\":null,\"raw_report\":{\"input_dispatched\":false,\"observation\":{\"artifact\":{\"bytes\":534,\"height\":32,\"mime_type\":\"image/png\",\"path\":\"<private-path>\",\"sha256\":\"7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8\",\"source_raw_sha256\":\"88c538da3dcd911d565f8bcf98a0e0339801180238e54494c93114e4aa31d044\",\"timing_ns\":{\"converted\":561787463242300,\"encoded\":561787463332900,\"hashed\":561787463674600,\"started\":561787463229400,\"written\":561787463661400},\"width\":32},\"capture_started_ns\":561787463694900,\"height\":32,\"sha256\":\"88c538da3dcd911d565f8bcf98a0e0339801180238e54494c93114e4aa31d044\",\"width\":32},\"observation_id\":\"74c877473fbd4bcbbc59a9cf1c44bc08\",\"schema\":\"agent-interface/runtime-observation-v1\",\"side_effect_authority\":false,\"status\":\"returned\"},\"sha256\":\"24784a0997065d32a45fd18561c5de96c5d00eae4bd12cef2510c98633aa61c6\"}},\"schema\":\"agent-interface/review-v1\"},\"method_receipt\":{\"completed_transitions\":1,\"critical_events\":[{\"action\":\"enter\",\"event\":\"branch_selected\",\"evidence_ref\":\"observation-2\",\"matched_conditions\":{\"phase\":0},\"outcome\":\"action\",\"state\":\"before\"},{\"action\":\"enter\",\"action_id\":\"action-71bddef74dae4f9295dcf5e891ef4ef5\",\"event\":\"action_terminal\",\"execution_accepted_ns\":561787462847100,\"execution_started_ns\":561787450470200,\"release_verified\":true,\"status\":\"completed\"},{\"action\":\"enter\",\"action_id\":\"action-71bddef74dae4f9295dcf5e891ef4ef5\",\"effect_observation_accepted_ns\":561787465669200,\"effect_observation_captured_ns\":561787463694900,\"effect_verification_accepted_ns\":561787466631300,\"effect_verification_started_ns\":561787465999500,\"event\":\"effect_checked\",\"evidence_ref\":\"observation-6\",\"execution_accepted_ns\":561787462847100,\"status\":\"succeeded\"},{\"action\":null,\"event\":\"branch_selected\",\"evidence_ref\":\"observation-6\",\"matched_conditions\":{\"phase\":1},\"outcome\":\"complete\",\"state\":\"done\"},{\"completed_transitions\":1,\"event\":\"runtime_finished\",\"outcome\":\"TASK_SUCCEEDED\",\"reason\":\"method_complete\"}],\"elapsed_ns\":20639600,\"ended_ns\":561787467308800,\"format\":\"compiled-gui-runtime-receipt-v1\",\"frontier_model_resumptions\":0,\"input_authority\":\"admission_per_action_only\",\"interface_id\":\"owned-compiled-profile\",\"latest_evidence_ref\":\"observation-6\",\"method\":\"one-visible-transition\",\"method_version\":\"1\",\"observations\":[{\"captured_ns\":561787447254900,\"evidence_digest\":\"c6034332235c9d4fb0c0969605d8046468fb0a13e3952c369ba834fbfd224c5d\",\"evidence_ref\":\"observation-2\",\"observation_accepted_ns\":561787449084900,\"observation_started_ns\":561787446674300,\"predicates\":{\"phase\":0,\"present\":true},\"sequence\":2},{\"captured_ns\":561787463694900,\"evidence_digest\":\"7a538df8e680ee126f085d612770f720961c02da922fa2fbb3801c8023a522a8\",\"evidence_ref\":\"observation-6\",\"observation_accepted_ns\":561787465669200,\"observation_started_ns\":561787463189200,\"predicates\":{\"phase\":1,\"present\":true},\"sequence\":6}],\"outcome\":\"TASK_SUCCEEDED\",\"pending_effect\":null,\"raw_evidence_retention\":\"adapter_responsibility_unverified\",\"reason\":\"method_complete\",\"session_scope\":\"native-x11:613c8f5633f240a4b271cf3c4fd0bd12\",\"started_ns\":561787446669200,\"transitions\":[{\"action\":\"enter\",\"action_id\":\"action-71bddef74dae4f9295dcf5e891ef4ef5\",\"effect_ref\":\"compiled-78df78e8acac489797246aaa9a54e615-10-execution\",\"evidence_ref\":\"observation-2\",\"execution_accepted_ns\":561787462847100,\"execution_started_ns\":561787450470200,\"from_state\":\"before\",\"matched_conditions\":{\"phase\":0},\"observation_sequence\":2,\"release_verified\":true,\"to_state\":\"done\"}]},\"owner_timing\":{\"clock\":\"time.monotonic_ns\",\"completed_ns\":561787469545500,\"effect_status\":null,\"elapsed_ns\":24260800,\"error_type\":null,\"method_outcome\":\"TASK_SUCCEEDED\",\"replay_allowed\":false,\"schema\":\"agent-interface/compiled-owner-attempt-timing-v1\",\"scope\":\"run_compiled method entry through graph, feedback and session snapshot\",\"started_ns\":561787445284700,\"status\":\"returned\"},\"owner_timing_retention\":{\"status\":\"recorded\"},\"replay_allowed\":false,\"session\":{\"authority_granted\":false,\"binding_revision\":0,\"cleanup_status\":null,\"compiled_scope\":\"native-x11:613c8f5633f240a4b271cf3c4fd0bd12\",\"compiled_surface\":\"x11-window-20\",\"error\":null,\"interrupted_execution\":null,\"mode\":\"guarded-x11-owned-process\",\"observation_sequence\":6,\"observation_worker\":false,\"observations\":null,\"owner_client_disconnect\":null,\"owner_input_obligations\":{\"buttons\":[],\"keys\":{}},\"owner_input_obligations_live_read\":{\"status\":\"not_read\"},\"owner_input_obligations_source\":\"child_rpc_snapshot\",\"owner_process\":{\"alive\":true,\"exitcode\":null,\"liveness_observed_monotonic_ns\":561787472036400,\"pid\":55380,\"release_confirmed\":null,\"retired\":false,\"x_client_resource_base\":18874368},\"owner_process_pid\":55380,\"owner_release_attempt\":null,\"owner_x_client_resource_base\":18874368,\"process_identity\":true,\"query_worker\":true,\"recovery_required\":false,\"restart_allowed\":false,\"review_required\":false,\"session_id\":\"c76ca9a3c7a147de89a76a5ebfbebf68\",\"state\":\"open\",\"target\":\"app\",\"target_queries\":{\"close_error\":null,\"pending\":false,\"retired\":false,\"thread_alive\":true},\"targets\":{\"app\":20},\"window_lifecycle\":false},\"task_success\":null}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 561787442644400,
+        "sdk_return_ns": 561787472335300,
+        "status": "returned",
+        "tool": "interface_guarded_compiled"
+      },
+      "seq": 4,
+      "session_id": "e578d89e37f2499b95922af3ccad11a4",
+      "started_ns": 561787441081500
+    },
+    {
+      "ended_ns": 561787518510400,
+      "independent": true,
+      "kind": "task_score",
+      "raw_refs": [
+        {
+          "path": "raw/task-score.state.bin",
+          "sha256": "c2474e2604caddf12a03b699ed54650da9f698bc4f3931c0889c10256e18274a"
+        }
+      ],
+      "scorer_id": "independent-green-target-click-pixel-v1",
+      "seq": 5,
+      "session_id": "e578d89e37f2499b95922af3ccad11a4",
+      "started_ns": 561787518510400,
+      "state_sha256": "c2474e2604caddf12a03b699ed54650da9f698bc4f3931c0889c10256e18274a",
+      "task_success": true
+    }
+  ],
+  "raw_refs": [
+    {
+      "path": "raw/tool-7d1dc25ff564c32d5bfa17916697f8b02a0ba7f0a65b468225ee38d1baf22c0d.tool-request.bin",
+      "sha256": "698edc53661982c2d68654907d3636fd3a34c4484442eb507783967c1d0eff89"
+    },
+    {
+      "path": "raw/tool-7d1dc25ff564c32d5bfa17916697f8b02a0ba7f0a65b468225ee38d1baf22c0d.tool-response.bin",
+      "sha256": "1901a8bd63ae24d08ca37019d699008329c8dbd0562d8fefb80ae928278bfaa3"
+    },
+    {
+      "path": "raw/appserver-p09.request.bin",
+      "sha256": "8c720b58ec4e9e5608d30db35be801ecb2aa650c9993bde12cf784666db582c4"
+    },
+    {
+      "path": "raw/appserver-p09.response.bin",
+      "sha256": "185d9dfe9fbc09be7819ba50e8751e9a69d7ec5cafe745bc90ac1e4cd4a0b7b3"
+    },
+    {
+      "path": "raw/tool-b7571a1b81b6f1a6a49c7c6268d9e95370faa1d00a5360b8742b1f57f8ae389d.tool-request.bin",
+      "sha256": "471f02ed88fb20ae169aafb1514bbcf3d2223bc03d8f4d0fb9bfbd36ba594e14"
+    },
+    {
+      "path": "raw/tool-b7571a1b81b6f1a6a49c7c6268d9e95370faa1d00a5360b8742b1f57f8ae389d.tool-response.bin",
+      "sha256": "d60eb7625a605777941369d047b418285db2d93b75817d37a873a65d71337c17"
+    },
+    {
+      "path": "raw/tool-b79b3fd274b163eed488423d163b26c54dd93aa81840d483a16203d99d60e8b6.tool-request.bin",
+      "sha256": "4b60e9d074c7195ef786d222dc59bd0ca38ce3a8c5010a28926eae995ef0d36e"
+    },
+    {
+      "path": "raw/tool-b79b3fd274b163eed488423d163b26c54dd93aa81840d483a16203d99d60e8b6.tool-response.bin",
+      "sha256": "6f1872b7d62392a0b379547cb54e41e49da4f7cc90b947e83f9770c35c8e12d8"
+    },
+    {
+      "path": "raw/task-score.state.bin",
+      "sha256": "c2474e2604caddf12a03b699ed54650da9f698bc4f3931c0889c10256e18274a"
+    }
+  ],
+  "unresolved_attempt_ids": [],
+  "unresolved_tool_call_ids": []
+}
