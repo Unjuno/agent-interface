@@ -1,0 +1,32 @@
+{
+  "allocation": "RAW-ARTIFACT-BYPASS-8581-T0-A03-20261009",
+  "base": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "candidates": 16,
+  "cells": [
+    "FULL_RELEASE/SEALED",
+    "FULL_RELEASE/RAW_BYPASS",
+    "CONTROLLED/SEALED",
+    "CONTROLLED/RAW_BYPASS"
+  ],
+  "controlled_feedback": "one-bit incumbent-improvement response; exact hard-safety vetoes disclosed immediately",
+  "decision": {
+    "bypass_defeats_feedback_scoped": "controlled/raw-bypass has optimism >= full/sealed or no longer retains the preregistered optimism advantage over full/sealed",
+    "controlled_resilient_scoped": "controlled/sealed has lower optimism than full/sealed and controlled/raw-bypass retains that strict advantage",
+    "integrity_pass": "independent audit exactly reconstructs all calls, returns, updates, denominators, hard vetoes, seal and publication boundary; detects returned canary, distinguishes denied from successful access, accepts benign docs, returns UNKNOWN for unmonitored route, rejects all mutations",
+    "otherwise": "NO_ADVANTAGE or HOLD, without population claims"
+  },
+  "development_cases": 24,
+  "fresh_cases": 256,
+  "limitations": [
+    "one authored deterministic updater and cohort",
+    "cannot establish real researcher behavior or absence of unknown channels",
+    "exact safety vetoes are never hidden",
+    "no historical result is invalidated"
+  ],
+  "prior_allocation_note": "A01 and A02 first outcomes are preserved separately in Draft PRs #8760 and #8762. A03 changes the candidate label generator to match the frozen independent RNG contract and fixes the A02 final logging variable; new seed, fresh output, no pooling.",
+  "question": "Does controlled development feedback limit adaptive overfit only when raw evaluation artifacts are sealed?",
+  "raw_bypass": "candidate-author route returns per-case development outcomes; fresh cohort remains inaccessible until lock",
+  "rounds": 16,
+  "scope": "deterministic synthetic method fixture; no model, GUI, network, real/private evaluation data, or shared runtime",
+  "seed": 858103
+}
