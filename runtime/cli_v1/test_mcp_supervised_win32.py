@@ -877,6 +877,24 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
         owner.bind_target_generation_reader(lambda: generation["value"])
         producer = FakeProducerFactory(process, identity)
+        fixture_effects = []
+
+        def effectful_producer(request):
+            child, identity_reader, open_gate = producer(request)
+
+            def commit_fixture_effect():
+                # Model the fixture application's state separately from the
+                # compiled graph predicate and the public dispatch receipt.
+                fixture_effects.append({
+                    "operation_id": request["operation_id"],
+                    "target_generation": request["target_generation"],
+                    "effect": "saved",
+                })
+                open_gate()
+
+            return child, identity_reader, commit_fixture_effect
+
+        effectful_producer.read_result = producer.read_result
 
         interface = {
             "format": "compiled-gui-interface-v1",
@@ -907,8 +925,28 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         }
         observations = 0
         dispatch_rows = []
+        oracle_calls = []
+
+        def task_oracle(action):
+            if not any(effect["operation_id"] == action["operation_id"]
+                       and effect["target_generation"] == action["target_generation"]
+                       and effect["effect"] == "saved"
+                       for effect in fixture_effects):
+                raise AssertionError("independent fixture effect does not match exact action")
+            oracle_calls.append(dict(action))
+            return {"call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "oracle_id": "f" * 32, "outcome": "success",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-task-oracle:compiled-prefix"}
+
         with TemporaryDirectory() as root:
-            server = self.make_server(root, owner, producer)
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: effectful_producer,
+                supervised_win32_task_oracle=task_oracle)
             loop = asyncio.get_running_loop()
 
             def observe(_request):
@@ -920,7 +958,10 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     # Simulate target replacement during the graph's post-effect
                     # observation, before the graph-selected suffix is dispatched.
                     generation["value"] = "b" * 64
-                    predicates = {"ready": True, "first_done": True}
+                    predicates = {"ready": True,
+                        "first_done": any(effect["effect"] == "saved"
+                            and effect["target_generation"] == GENERATION
+                            for effect in fixture_effects)}
                 return {"sequence": observations,
                     "captured_ns": time.perf_counter_ns(), "surface": "fixture",
                     "predicates": predicates, "evidence_ref": f"obs-{observations}",
@@ -981,6 +1022,32 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(retained["action"],
                     dispatch_rows[0]["supervision"]["action"])
                 self.assertIsNone(retained["task_success"])
+                verified = json.loads((await server.call_tool(
+                    "interface_verify_task", {
+                        "call_id": dispatch_rows[0]["call_id"],
+                        "wait_for_result_ms": 1000})).content[0].text)
+                self.assertEqual(verified["status"], "verified", verified)
+                self.assertTrue(verified["task_success"])
+                self.assertFalse(verified["operation_invoked"])
+                self.assertFalse(verified["input_dispatched"])
+                self.assertFalse(verified["replay_allowed"])
+                self.assertEqual(len(oracle_calls), 1)
+                self.assertEqual(oracle_calls[0]["call_id"],
+                    dispatch_rows[0]["call_id"])
+                self.assertEqual(oracle_calls[0]["operation_id"],
+                    dispatch_rows[0]["supervision"]["action"]["operation_id"])
+                self.assertEqual(oracle_calls[0]["target_generation"], GENERATION)
+                self.assertEqual(fixture_effects, [{
+                    "operation_id": oracle_calls[0]["operation_id"],
+                    "target_generation": GENERATION,
+                    "effect": "saved",
+                }])
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": dispatch_rows[0]["call_id"]}))
+                self.assertTrue(retained["task_success"], retained)
+                self.assertEqual(retained["task_effect"]["receipt"]["evidence_ref"],
+                    "fixture-task-oracle:compiled-prefix")
+                self.assertEqual(producer.started, 1)
             finally:
                 await server.call_tool("interface_close", {})
 
