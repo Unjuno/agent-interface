@@ -51,3 +51,8 @@ A fresh attempt on the same owned blank Notepad fixture is retained in `attempt-
 ## R12 high-resolution recovery follow-up
 
 A new recovery-only run in `attempt-12-high-resolution-recovery/` exercised the `perf_counter_ns` owner receipt. It measured 17.2395 ms from accepted cleanup request to owner confirmation of release plus neutral readback; the coarse monotonic interval was 32 ms and independently enforced the three-second deadline. Same-generation SHIFT-up and empty-document readback were observed. This is one bounded recovery sample only; it does not establish task success, API-internal blocking recovery, MAP01, efficiency, or reliability. R11 remains immutable.
+
+
+## R13 held-keyup recovery follow-up
+
+`attempt-13-held-keyup-recovery/` injects a producer block at the SHIFT-up backend-send boundary after native SHIFT-down has succeeded. The same-generation independent observer saw SHIFT-down during the hold and SHIFT-up after bounded parent recovery. The high-resolution owner interval was 17.5451 ms, within the three-second monotonic deadline. This is not a fault inside the native API/kernel and does not establish task success, MAP01, efficiency, or broad reliability.

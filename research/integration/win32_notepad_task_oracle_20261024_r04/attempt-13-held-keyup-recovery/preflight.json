@@ -1,0 +1,27 @@
+{
+  "recorded_on": "2026-10-24",
+  "source_commit": "a69a42c01e93071356e6780098c1b8b5dac040b7",
+  "scope": "fresh R13 native supervised-Win32 recovery; producer blocks before native SendInput for SHIFT-up after real SHIFT-down",
+  "target": {
+    "name": "notepad",
+    "hwnd": 24840738,
+    "pid": 18100,
+    "thread_id": 2616,
+    "class_name": "Notepad",
+    "edit_control_hwnd": 746588126,
+    "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a"
+  },
+  "preconditions": {
+    "is_window": true,
+    "shift_down": false,
+    "document_text": "",
+    "document_characters": 0
+  },
+  "allocation": "local Windows PC authorized in this thread",
+  "wslc_used": false,
+  "docker_used": false,
+  "limits": [
+    "Fault is injected before the native SHIFT-up call, not inside the Windows API/kernel.",
+    "Recovery-only sample; task_success remains null; no MAP01, efficiency, or reliability claim."
+  ]
+}
