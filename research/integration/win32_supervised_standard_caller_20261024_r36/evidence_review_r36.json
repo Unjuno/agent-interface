@@ -1,0 +1,94 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r36",
+  "checks": {
+    "cancel_response_bounded": true,
+    "exact_cancelled_producer_retired": true,
+    "fixture_and_app_cleanup": true,
+    "full_hold_and_poll_coverage": true,
+    "independent_final_readback_same_generation_neutral": true,
+    "independent_same_generation_q_up_during_callback": true,
+    "pre_cancel_action_running": true,
+    "pre_cancel_fixture_effect_oracle": true,
+    "pre_cancel_qdown_same_generation": true,
+    "runtime_task_success_unclaimed": true,
+    "sampler_clean_before_close": true,
+    "single_dispatch_and_one_cancel": true,
+    "terminal_recovery_receipt_matches_cancelled_action": true
+  },
+  "interpretation": "The exact public cancellation reached recovered with an operation/generation-matched release receipt. The independent same-generation state sampler recorded Q-up after recovery VK_Q SendInput returned while the held callback was still running; 78 exact-call polls covered the full 1250 ms hold, followed by independent neutral readback and clean exact-producer retirement. interface_close later reported release_confirmed=false despite the cancellation receipt and neutral readback; preserve that discrepancy. The fixture save occurred before cancel and a later q event followed; runtime task_success stays null.",
+  "measurements": {
+    "callback_return_after_cancel_ms": 1252.1201,
+    "cancel_response_ms": 1.2663,
+    "exact_recovery_q_up_sendinput_returns": [
+      {
+        "elapsed_ns": 307967600,
+        "event": "sendinput_return",
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "monotonic_ns": 491286535193900,
+        "pid": 13224,
+        "scan_code": 0,
+        "vk": 81
+      }
+    ],
+    "final_independent_readback": {
+      "exit_code": 0,
+      "expected_generation": "12357ae7c79c7fc81d1489169c92f8a92609a805fd213ba82f762a2615e05c40",
+      "generation_after": "12357ae7c79c7fc81d1489169c92f8a92609a805fd213ba82f762a2615e05c40",
+      "generation_before": "12357ae7c79c7fc81d1489169c92f8a92609a805fd213ba82f762a2615e05c40",
+      "pid": 16988,
+      "process_retired": true,
+      "q_down": false,
+      "returned_monotonic_ns": 491291361789500,
+      "started_monotonic_ns": 491291361061200,
+      "state_witness": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 85263766,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 54332,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 15180
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 85263766,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 54332,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 15180
+        }
+      ],
+      "status": "observed"
+    },
+    "fixture_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "independent_q_up_samples_during_held_callback": 59,
+    "interface_close_release_confirmed": false,
+    "later_char_event": {
+      "code": 113,
+      "kind": "char"
+    },
+    "post_cancel_hold_ms": 1251.953,
+    "producer_exit_ms_after_cancel_start": 1253.5419,
+    "runtime_task_success": null,
+    "status_polls": 78,
+    "terminal_recovery_release_confirmed": true
+  },
+  "passed": 13,
+  "raw_sha256": "4c71e67382573ca1d957a5fece7769d72c84034f34532ed8bf2c98000846c12a",
+  "schema": "win32-supervised-standard-caller-r36-evidence-review-v1",
+  "status": "STRICT_RELEASE_PASS",
+  "strict_release_gate_passed": true,
+  "total": 13
+}
