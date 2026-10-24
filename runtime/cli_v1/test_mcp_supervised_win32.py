@@ -190,7 +190,10 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(retrieved["action"]["status"], "completed")
             self.assertTrue(retrieved["action"]["release_confirmed"])
             self.assertIsNone(retrieved["task_success"])
-            await server.call_tool("interface_close", {})
+            close = self.row(await server.call_tool("interface_close", {}))
+            self.assertEqual(close["status"], "closed")
+            self.assertFalse(close["release_confirmed"])
+            self.assertTrue(retrieved["action"]["release_confirmed"])
         self.assertTrue(supervisor.closed)
 
     async def test_supervised_task_oracle_certifies_exact_completed_action_once(self):

@@ -321,6 +321,13 @@ application-configured oracle, the tool is not registered and `task_success`
 remains null. This mechanism proves only the application-specific effect
 checked by that oracle.
 
+`interface_close.release_confirmed` describes release performed by the close
+operation itself. A successful close retires the owned session but does not
+issue another input release, so this field remains false even when a retained
+completed-action or cancellation receipt independently confirms neutral input
+state. Inspect that exact action or cancellation result for its release
+evidence; do not interpret the close field as revoking or replacing it.
+
 This opt-in route has focused synthetic composition coverage and native Win32
 implementation, but does not establish atomic
 capture-to-input fencing, a hard physical release deadline, all blocked-I/O
