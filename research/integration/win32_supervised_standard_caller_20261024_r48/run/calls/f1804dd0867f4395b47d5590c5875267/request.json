@@ -1,0 +1,76 @@
+{
+  "operation": "dispatch",
+  "arguments": {
+    "program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "supervised-standard-cancel-q-release-r48-0df4e0a3",
+      "source": {
+        "observation_seq": 1,
+        "binding_revision": 1,
+        "target_generations": {
+          "fixture": "1570664455df37e561cf4f777d44a343d1a8e86700c5bf2170c2a474eddf3f7c"
+        }
+      },
+      "authority": {
+        "lease_id": "supervised-standard-recovery-r48-c773bf05",
+        "expires_at_ns": 512389510919000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 70,
+          "y": 70
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Q"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "current_observation_seq": 1,
+    "current_binding_revision": 1
+  },
+  "targets": {
+    "fixture": 19924114
+  },
+  "display_name": null,
+  "response_wait_ms": 0,
+  "session": {
+    "session_id": "4b9ad3a6c0984d7d85e602dc73c3f8e9",
+    "mode": "supervised-win32",
+    "state": "open",
+    "synthetic_only": false,
+    "call_count": 0,
+    "unresolved_call_ids": []
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r48-0169b23ca60f4a859395051020e16318",
+  "checks": {
+    "all_attempt_outputs_absent": true,
+    "conditions_id_matches_schema": true,
+    "foreground_markers_absent_before_attempt": true,
+    "frozen_packet_hashes_match": true,
+    "hold_deadline_and_audit_use_perf_counter_ns": true,
+    "hook_timeout_registry_matches": true,
+    "instrumentation_loaded_without_input": true,
+    "mcp_sdk_available": true,
+    "native_windows": true,
+    "predecessors_match": true,
+    "runtime_source_hashes_match": true,
+    "source_commit_matches": true,
+    "tracked_tree_clean": true
+  },
+  "clock_info": {
+    "monotonic": {
+      "adjustable": false,
+      "implementation": "QueryPerformanceCounter()",
+      "monotonic": true,
+      "resolution_seconds": 1e-07
+    },
+    "perf_counter": {
+      "adjustable": false,
+      "implementation": "QueryPerformanceCounter()",
+      "monotonic": true,
+      "resolution_seconds": 1e-07
+    }
+  },
+  "conditions_sha256": "15c5f87ea076328b5cb99636f1923208d7bc7fdb24239941a304add95a9c1f1c",
+  "existing_outputs": [],
+  "foreground_markers_before_attempt": {
+    "run\\phase1-foreground.json": false,
+    "run\\phase2_task\\phase2-foreground.json": false
+  },
+  "frozen_files": {
+    "audit_r48.py": "825b7adaa4da7c1bc136cec2544a8a96fb973602257f9a4996b42856e023259e",
+    "audit_release.py": "a83af77e5e8434da568fc7d9112cc37b6bc082a76039c23f50ccaf4c8ad4a9b3",
+    "fixture_app_timed.py": "5b1742b90f15d93fba56222dff3b78e4afb5d12f7d3a290a7292464d74d64cab",
+    "instrumentation/sitecustomize.py": "dd8465f63ed02b864ffd19385c9ba1a39a8794ee191e5dea5ee36eb189a0ed8c",
+    "preflight_r48.py": "7a155f09dbd6909b6e5a57a7e6cdc79b0e6b89993331dab379bad8e6057629ec",
+    "probe.py": "6dc6960fe1dc53e75803ecb4bcb4e86ffd841a26b5b2d82a202d85e35edc12d6",
+    "run_r48.py": "b0d5f32a7ff99c4eff900249475f765db5ffcb5c06989c48cc62d24a63a6d143",
+    "server_with_oracle.py": "83c2054b9aa0c2575e24c24b8b7c776acb7d7d14eaa8febc9bdccd86ab8403ea",
+    "task_probe.py": "5b0ecd95ed15b2e62ba9196eddfc49f03fa0fba3267eb5af8ff7a7adc1f5026c"
+  },
+  "host": "[HOST_REDACTED]",
+  "instrumentation_smoke": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "R48_TRACE_IMPORT_OK\n",
+    "trace": [
+      {
+        "event": "sitecustomize_loaded",
+        "monotonic_ns": 512252042730300,
+        "pid": 13596
+      },
+      {
+        "event": "recovery_trace_wrappers_installed",
+        "monotonic_ns": 512252209887900,
+        "pid": 13596
+      }
+    ]
+  },
+  "low_level_hooks_timeout_registry": null,
+  "native_input_sent": false,
+  "platform": "Windows-11-10.0.26300-SP0",
+  "predecessor_hashes": {
+    "r47_audit": "5a42b16a6fe7a859bd2030a209d0ec51d3e0ff3255d411f60e2c1db961839d96",
+    "r47_conditions": "780c0cbcbafbe5253651953914f36e6c85af09ece863a00e9492444cce5fa5bb",
+    "r47_raw": "19a59d88aa08be727d5832595185521a403fe00f1d6e3ea96e97b8770acce1b2",
+    "r47_result": "fa36017e96f1fccd0ed52516c047c9d74af0e9b1897cc6a1e20afd51a2b635f5"
+  },
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "runtime_source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "4309df45fb19473ca753c5affaca2583d1cc505bb2070c8b81c41c3d66e18828",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "92f25890d65fae4b0d80c2bb5929f2a8ec54437a4d9bc61c510594a9419d4285",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/guarded_win32_v1/operation_owner.py": "3c18c605fb1c65f7e036b9b792bb57d503b444cb8d60aec93e3a928593df3f9b"
+  },
+  "schema": "win32-r48-preflight-v1",
+  "source_commit": "58bf2b2268d315179d248f00f2fa5da7e4a1d5f8",
+  "status": "PASS",
+  "tracked_status": "",
+  "utc": "2026-10-24T05:49:04.725801+00:00"
+}
