@@ -317,6 +317,9 @@ async def run():
                 close_body = tool_body(close_receipt, "interface_close")
             write_json(OUT / "post-action-close.json", close_receipt)
         released = releases or bool((tool_body(close_receipt, "interface_close") or {}).get("verified"))
+        action_completed = bool(action is not None and (
+            receipt.get("outcome") == "TASK_SUCCEEDED" if CLI.arm == "compiled_public_caller"
+            else receipt.get("status") == "completed"))
         task_success = bool(
             point_inside and click_inside and click_matches_selected and exact_one_click and effect is not None and
             effect.get("button_press_count") == 1 and
@@ -324,7 +327,7 @@ async def run():
             mint_request.get("source_sequence") == selected_record.get("observation_sequence") and
             owner_mint is not None and owner_mint.get("created_sequence") == selected_record.get("observation_sequence") and
             final_pixel == SUCCESS_RGB and
-            action is not None and action.get("status") == "completed" and released)
+            action_completed and released)
         recorder.record_task_score(
             "independent-green-target-click-pixel-v1", task_success,
             json.dumps({"point": point, "click": click,
