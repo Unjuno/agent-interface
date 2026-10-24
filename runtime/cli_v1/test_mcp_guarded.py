@@ -496,6 +496,30 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             opened[0].click.assert_not_called()
             await server.call_tool('interface_close',{})
 
+    async def test_public_input_forwards_multikey_chord_once(self):
+        opened=[]
+        def open_fixture(*args,**kwargs):
+            bridge=FakeBridge(*args,**kwargs);opened.append(bridge);return bridge
+        tail=[{'op':'key_chord','keys':['Shift_L','a']}]
+        with tempfile.TemporaryDirectory() as td, patch(
+                'runtime.cli_v1.mcp_guarded.open_bridge',side_effect=open_fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            reply=await server.call_tool('interface_guarded_input',{
+                'alias':'browser_context','offset':[12,12],
+                'tail':tail,'interaction':'keyboard'})
+            row=metadata(reply)
+            self.assertEqual(row['status'],'completed')
+            self.assertIsNone(row['task_success'])
+            self.assertFalse(row['replay_allowed'])
+            opened[0].keyboard.assert_called_once_with(
+                'browser_context',[12,12],tail=tail)
+            opened[0].click.assert_not_called()
+            retained=await server.call_tool('interface_results',{'call_id':row['call_id']})
+            self.assertEqual(metadata(retained)['result'],row['result'])
+            self.assertFalse(metadata(retained)['operation_invoked'])
+            opened[0].keyboard.assert_called_once()
+            await server.call_tool('interface_close',{})
+
     async def test_explicit_mode_tools_shared_retention_and_no_replay(self):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge) as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
