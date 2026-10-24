@@ -1,4 +1,16 @@
 **WSLc compiled-control core R01 (2026-10-24):** On current main `5e378a4`, the cached WSLc image ran 37 compiled-GUI and conservative release-recovery tests successfully under Python 3.14.8. This confirms software-contract compatibility for that isolated test set only. Memory hard-limit enforcement is unverified because the WSL kernel lacks swap/cgroup limit capabilities. The separate composed Fake X standard-caller attempt R01 stopped at import because the image lacks the MCP SDK; no test body or synthetic input ran, and exact-CID cleanup was verified. See the [core result](../research/integration/wslc_compiled_core_20261024_r01/RESULT.md) and [composed caller result](../research/integration/wslc_fake_x_standard_caller_20261024_r01/RESULT.md).
+
+**Win32 supervised caller + task oracle R03 (2026-10-24):** one fresh fixture
+passed the exact public observation → generation-bound validation/dispatch →
+same-call retained result → server-configured task-oracle path. The dispatch
+returned pending at 10 s; five read-only same-call lookups reached completed.
+The fixture's exact click/save/token effect passed, terminal all-up and separate
+neutral readback passed, the oracle receipt matched call/operation/generation,
+server and fixture closed, and foreground restoration was confirmed. R01/R02
+startup/response failures remain preserved; R02's fixture did complete, but its
+5 s caller timeout prevented the public oracle call and remains
+FAIL_OR_UNKNOWN. R03 is one fixture sample only; blocked-I/O release, recovery,
+MAP01, reliability, efficiency, and WSLc GUI remain open. See the [R03 packet](../research/integration/win32_live_task_oracle_20261024_r03/RESULT.md).
 **Win32 R36 strict public-cancel release gate (2026-10-24):** one fresh
 fixture/dispatch with same-generation Q-down baseline and one recorded public
 cancel passed the finite gate. Cancel response 1.266 ms; callback remained held
