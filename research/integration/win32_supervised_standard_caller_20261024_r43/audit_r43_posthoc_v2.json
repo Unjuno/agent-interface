@@ -1,0 +1,782 @@
+{
+  "attempt_id": "win32-supervised-task-oracle-20261024-r43-4a56346e321d4a8190baa0ebd6125e8b",
+  "checks": [
+    {
+      "evidence": {
+        "all_attempt_outputs_absent": true,
+        "attempt_id_matches_schema": true,
+        "foreground_marker_absent": true,
+        "frozen_packet_hashes_match": true,
+        "mcp_sdk_available": true,
+        "native_windows": true,
+        "predecessors_match": true,
+        "runtime_source_hashes_match": true,
+        "source_commit_matches": true,
+        "tracked_tree_clean": true
+      },
+      "name": "input_free_preflight_and_custody",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "activated": true,
+        "activation_result": "sky.activate_window resolved without error; exact window screenshot inspected",
+        "attempt_id": "win32-supervised-task-oracle-20261024-r43-4a56346e321d4a8190baa0ebd6125e8b",
+        "created_utc": "2026-10-24T04:18:02.0867097Z",
+        "cua_window_id": "1116982",
+        "fixture_hwnd": 1116982,
+        "fixture_process_command_line": "[LOCAL_PATH_REDACTED] -m runtime.backends.win32_v1.fixture_app --meta [LOCAL_PATH_REDACTED] --effect [LOCAL_PATH_REDACTED] --events [LOCAL_PATH_REDACTED]",
+        "fixture_process_pid": 38908,
+        "foreground_hwnd_observed": 1116982,
+        "observed_foreground_hwnd": 1116982,
+        "observed_monotonic_ns": 506789319627400,
+        "owner_pid_observed": 38908,
+        "phase": "phase2",
+        "screenshot_inspected": true,
+        "window_title": "Agent Interface Win32 Fixture"
+      },
+      "name": "phase2_cua_activation_and_foreground_match",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "new_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90",
+        "prior_generation": "b571178a11515abdb59de6ca49d1a11993742fc8c9527ea46746ef2962f21b36"
+      },
+      "name": "fresh_generation_differs_from_release_predecessor",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "dispatch_count": 1,
+        "oracle_count": 1,
+        "task_status": "PASS_SCOPED"
+      },
+      "name": "exactly_one_dispatch_and_oracle_attempt",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "receipt": {
+          "call_id": "ee5c25f4bca24599a7908e0b022e2f94",
+          "evidence_ref": "[LOCAL_PATH_REDACTED]",
+          "observed_monotonic_ns": 506801817939200,
+          "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+          "oracle_id": "4a56346e321d4a8190baa0ebd6125e8b",
+          "outcome": "success",
+          "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90"
+        },
+        "verification": {
+          "call_id": "ee5c25f4bca24599a7908e0b022e2f94",
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "replay_allowed": false,
+          "scope": "supervised_win32",
+          "status": "verified",
+          "task_effect": {
+            "receipt": {
+              "call_id": "ee5c25f4bca24599a7908e0b022e2f94",
+              "evidence_ref": "[LOCAL_PATH_REDACTED]",
+              "observed_monotonic_ns": 506801817939200,
+              "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+              "oracle_id": "4a56346e321d4a8190baa0ebd6125e8b",
+              "outcome": "success",
+              "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90"
+            },
+            "receipt_received_monotonic_ns": 506801823773500,
+            "requested_monotonic_ns": 506801817848900,
+            "status": "verified",
+            "task_success": true
+          },
+          "task_success": true
+        }
+      },
+      "name": "independent_oracle_binds_call_operation_generation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r43-4a56346e321d"
+        },
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r43-4a56346e321d"
+        },
+        "oracle": {
+          "action": {
+            "call_id": "ee5c25f4bca24599a7908e0b022e2f94",
+            "completion_custody": {
+              "cleanup_deadline_ns": null,
+              "completion_readback": {
+                "neutral": true,
+                "observed_monotonic_ns": 506801630282200,
+                "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+                "producer_exit_confirmed_ns": 506801621140500,
+                "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90"
+              },
+              "completion_readback_attempt": null,
+              "completion_readback_outcome": "verified",
+              "completion_release_receipt": {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 506801564906000,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 1116982,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 38908,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 23268
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 1116982,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 38908,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 23268
+                    }
+                  ],
+                  "17": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 1116982,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 38908,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 23268
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 1116982,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 38908,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 23268
+                    }
+                  ],
+                  "83": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 1116982,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 38908,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 23268
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 1116982,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 38908,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 23268
+                    }
+                  ]
+                },
+                "verified": true
+              },
+              "deadline_ns": 506835997877900,
+              "obligations": [
+                "button:fixture:left",
+                "key:fixture:CTRL",
+                "key:fixture:S",
+                "unicode:002D",
+                "unicode:0031",
+                "unicode:0032",
+                "unicode:0033",
+                "unicode:0034",
+                "unicode:0035",
+                "unicode:0036",
+                "unicode:0061",
+                "unicode:0063",
+                "unicode:0064",
+                "unicode:0065",
+                "unicode:006B",
+                "unicode:006C",
+                "unicode:006F",
+                "unicode:0072",
+                "unicode:0073",
+                "unicode:0074"
+              ],
+              "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+              "phase": "completed",
+              "producer_exit_code": 0,
+              "producer_gate_state": "authorization_attempted",
+              "producer_identity": {
+                "creation_time_100ns": 134372890838171725,
+                "pid": 3848
+              },
+              "recovery_id": null,
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "status": "completed",
+              "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90",
+              "task_success": null,
+              "uncertainty": null
+            },
+            "metadata": {
+              "program_id": "win32-r41-fresh-generation-task",
+              "source": "interface_dispatch"
+            },
+            "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "result": {
+              "admission": "accepted",
+              "execution": {
+                "emissions": 66,
+                "ended_ns": 506801564908100,
+                "observations": [],
+                "releases": [
+                  {
+                    "buttons_down": [],
+                    "buttons_unknown": [],
+                    "keys_down": [],
+                    "keys_unknown": [],
+                    "monotonic_ns": 506801564906000,
+                    "state_query_witnesses": {
+                      "1": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 1116982,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 38908,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 23268
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 1116982,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 38908,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 23268
+                        }
+                      ],
+                      "17": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 1116982,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 38908,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 23268
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 1116982,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 38908,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 23268
+                        }
+                      ],
+                      "83": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 1116982,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 38908,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 23268
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 1116982,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 38908,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 23268
+                        }
+                      ]
+                    },
+                    "verified": true
+                  }
+                ],
+                "started_ns": 506801518109100
+              },
+              "recovery_required": false,
+              "required_capabilities": [
+                "display.geometry",
+                "input.keyboard",
+                "input.pointer",
+                "input.release_all",
+                "input.text",
+                "window.focus"
+              ],
+              "status": "completed"
+            },
+            "status": "completed",
+            "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90",
+            "task_success": null
+          },
+          "actual": {
+            "clicked": true,
+            "saved": true,
+            "text": "task-oracle-r43-4a56346e321d"
+          },
+          "effect_sha256": "05a59945aab4dbfaf83f1359c6a1c1f3f70ee3d14c7f2e3976665b904cdad8b5",
+          "expected": {
+            "clicked": true,
+            "saved": true,
+            "text": "task-oracle-r43-4a56346e321d"
+          },
+          "observed_monotonic_ns": 506801817939200,
+          "oracle_id": "4a56346e321d4a8190baa0ebd6125e8b",
+          "outcome": "success",
+          "reason": "exact_effect_match",
+          "schema": "win32-task-oracle-evidence-r01-v1"
+        }
+      },
+      "name": "effect_exactly_matches_frozen_task",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "action": {
+          "completion_custody": {
+            "cleanup_deadline_ns": null,
+            "completion_readback": {
+              "neutral": true,
+              "observed_monotonic_ns": 506801630282200,
+              "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+              "producer_exit_confirmed_ns": 506801621140500,
+              "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90"
+            },
+            "completion_readback_attempt": null,
+            "completion_readback_outcome": "verified",
+            "completion_release_receipt": {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 506801564906000,
+              "state_query_witnesses": {
+                "1": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 1116982,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 38908,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 23268
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 1116982,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 38908,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 23268
+                  }
+                ],
+                "17": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 1116982,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 38908,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 23268
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 1116982,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 38908,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 23268
+                  }
+                ],
+                "83": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 1116982,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 38908,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 23268
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 1116982,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 38908,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 23268
+                  }
+                ]
+              },
+              "verified": true
+            },
+            "deadline_ns": 506835997877900,
+            "obligations": [
+              "button:fixture:left",
+              "key:fixture:CTRL",
+              "key:fixture:S",
+              "unicode:002D",
+              "unicode:0031",
+              "unicode:0032",
+              "unicode:0033",
+              "unicode:0034",
+              "unicode:0035",
+              "unicode:0036",
+              "unicode:0061",
+              "unicode:0063",
+              "unicode:0064",
+              "unicode:0065",
+              "unicode:006B",
+              "unicode:006C",
+              "unicode:006F",
+              "unicode:0072",
+              "unicode:0073",
+              "unicode:0074"
+            ],
+            "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+            "phase": "completed",
+            "producer_exit_code": 0,
+            "producer_gate_state": "authorization_attempted",
+            "producer_identity": {
+              "creation_time_100ns": 134372890838171725,
+              "pid": 3848
+            },
+            "recovery_id": null,
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "status": "completed",
+            "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90",
+            "task_success": null,
+            "uncertainty": null
+          },
+          "metadata": {
+            "program_id": "win32-r41-fresh-generation-task",
+            "source": "interface_dispatch"
+          },
+          "operation_id": "89aa532da7f84686b7ac28c41f2c2684",
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "emissions": 66,
+              "ended_ns": 506801564908100,
+              "observations": [],
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 506801564906000,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 1116982,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 38908,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 23268
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 1116982,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 38908,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 23268
+                      }
+                    ],
+                    "17": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 1116982,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 38908,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 23268
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 1116982,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 38908,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 23268
+                      }
+                    ],
+                    "83": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 1116982,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 38908,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 23268
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 1116982,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 38908,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 23268
+                      }
+                    ]
+                  },
+                  "verified": true
+                }
+              ],
+              "started_ns": 506801518109100
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "display.geometry",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "status": "completed",
+          "target_generation": "88916ab61abb27ac5d68fe2fdcf5471ebe4e7a73a7f0bc2493a70a8df56b6d90",
+          "task_success": null
+        },
+        "release_receipts": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 506801564906000,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 1116982,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 38908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 23268
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 1116982,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 38908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 23268
+                }
+              ],
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 1116982,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 38908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 23268
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 1116982,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 38908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 23268
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 1116982,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 38908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 23268
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 1116982,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 38908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 23268
+                }
+              ]
+            },
+            "verified": true
+          }
+        ]
+      },
+      "name": "action_completed_with_verified_neutral_release",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "release_receipt_count": 1,
+        "witness_present": true
+      },
+      "name": "independent_state_witness_present",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "cleanup": {
+          "finished_unix_ns": 1792815494803727300,
+          "fixture_exit_code": 0,
+          "foreground_after": {
+            "hwnd": 133750,
+            "is_window": true,
+            "title": "名前を付けて保存"
+          },
+          "foreground_before": {
+            "hwnd": 133750,
+            "is_window": true,
+            "title": "名前を付けて保存"
+          },
+          "foreground_restored": true
+        },
+        "exit_code": 0,
+        "server_close": {
+          "call_directory": "[LOCAL_PATH_REDACTED]",
+          "call_id": "de4cd98fda7441e0903d2780123fe277",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "f4fe7124ce634c8cbe364ff5c6d9d6a1",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        }
+      },
+      "name": "bounded_process_cleanup_and_foreground_restore",
+      "passed": true
+    }
+  ],
+  "conditions_sha256": "dec2914bd34f3673bc40dde21017c754761b3d3b7028c1b9d4de7ca4db9275ee",
+  "nonclaims": [
+    "same-attempt paired recovery and task success",
+    "WSLc allocation eligibility",
+    "WSLc GUI behavior",
+    "MAP01",
+    "broad reliability",
+    "matched efficiency",
+    "exact physical application time",
+    "kernel causality",
+    "real-application transfer",
+    "runtime-integrated task_success unless separately represented by verified server oracle"
+  ],
+  "passed": 9,
+  "schema": "win32-r43-task-audit-posthoc-v2",
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "status": "PASS_SCOPED",
+  "task_success": true,
+  "total": 9
+}

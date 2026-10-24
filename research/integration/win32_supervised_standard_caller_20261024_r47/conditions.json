@@ -1,0 +1,425 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r47-1eabc91d59e3488ca08e33f43297b6d6",
+  "claims_excluded": [
+    "MAP01",
+    "R29 strict 1250 ms blocked-callback gate",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "efficiency",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "physical durable-storage latency",
+    "post-recovery task effect",
+    "reliability",
+    "runtime-integrated task_success (must remain null)",
+    "second attempt reliability",
+    "strict input-release PASS",
+    "task success after cancellation",
+    "task_success after recovery"
+  ],
+  "clock_contract": {
+    "audit_clock": "time.perf_counter_ns",
+    "deadline_clock": "time.perf_counter_ns",
+    "implementation": "QueryPerformanceCounter()",
+    "max_resolution_seconds": 1e-06
+  },
+  "counterhypotheses": [
+    "R42 release behavior may not recur under a fresh process and generation.",
+    "R42 phase-2 harness error is repaired, but other phase integration errors may remain.",
+    "A task may complete while neutral release, independent oracle binding or cleanup fails."
+  ],
+  "decision": {
+    "fail": "Any frozen source, timeout, gate, effect, timestamp ordering, oracle binding, cleanup or custody mismatch is FAIL_OR_UNKNOWN. No retry or replay.",
+    "pass": "Phase 1 meets the unchanged 1250 ms minimum (planned hold 1400 ms) and all strict release checks; phase 2 effect, oracle binding, timestamp ordering, neutral release and cleanup pass. Any strict or timing gate failure is retained without retry.",
+    "stop": "One dispatch and at most one cancel in phase 1; one dispatch and one oracle verification in phase 2; no retry or replay. CUA activation waits are bounded to 120 seconds per phase."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "foreground_activation": "CUA activates only the unique exact fixture; screenshot inspected; a receipt binds phase, attempt, HWND and returned CUA window id. The experiment process independently confirms the exact foreground HWND and owning process before public API calls.",
+    "host": "user-authorized local Windows PC; single sequential fixture windows",
+    "low_level_hooks_timeout_registry": "HKCU\\Control Panel\\Desktop\\LowLevelHooksTimeout absent at R29 preflight; read only",
+    "python": "3.13.14",
+    "session_mode": "supervised-win32"
+  },
+  "foreground_activation_protocol": {
+    "gate": "wait at most 120 seconds; independently read exact foreground HWND after marker; mismatch fails closed before public observation or dispatch",
+    "marker_fields": [
+      "attempt_id",
+      "phase",
+      "fixture_hwnd",
+      "cua_window_id",
+      "window_title",
+      "activated",
+      "activation_result",
+      "screenshot_inspected",
+      "created_utc"
+    ],
+    "phase1_marker": "run/phase1-foreground.json",
+    "phase2_marker": "run/phase2_task/phase2-foreground.json"
+  },
+  "frozen_at_utc": "2026-10-24T04:37:12.211634+00:00",
+  "frozen_files": {
+    "audit_r47.py": "d44adb27d340ca291b246356707196380462f06d3098a1476276647fcc645a35",
+    "audit_release.py": "641dcba3f5b83a752a485b0f71f0b69c0743dc41115667f656d8c756bbaf6b4a",
+    "fixture_app_timed.py": "f8a05c4f41c2cae28b62f2a6ace61f9f531bdb2f6b9860337f76a11fb9413c23",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight_r47.py": "279cb45baf2bcffff1208c50cc16ccf55dd8f716174847e409abe47da8a5e6a1",
+    "probe.py": "f5d15e7f3b382af9853140f686aab97522ce779922b301254f85681ade5230b6",
+    "run_r47.py": "2a9ae2c4337c49b237e2f8b5138307f0712b414a90337ad36d357237cc544ee2",
+    "server_with_oracle.py": "7fb631532029f380372cd671e6df1e9d30478882b02086915f5c3a4c8fcba639",
+    "task_probe.py": "d296fd68b264be52cc5bef37a5fafdba1d869190c17534d10c1cb3c486746768"
+  },
+  "host": "user-authorized local Windows PC; one owned fixture process/window; foreground restoration required",
+  "hypothesis": "Replacing the R45 mixed monotonic/perf-counter hold deadline with a same-domain perf_counter_ns deadline and a 1400 ms planned hold will produce at least 1250 ms of measured post-cancel callback hold, while preserving exact same-generation Q-up observation, finite recovery, fresh-generation task-oracle success and fixture effect-write timing.",
+  "instrumentation": {
+    "boundaries": [
+      "supervisor_exchange",
+      "recovery_helper_process",
+      "_recover",
+      "release_all",
+      "exact_VK_Q_SendInput"
+    ],
+    "diagnosis_script": "trace_analysis.py",
+    "mode": "R46 changes only the finite hold-deadline clock to perf_counter_ns, matching existing QPC audit timestamps; the planned hold is raised to 1400 ms, within the frozen 2900/3000 ms projected/callback ceilings. No production runtime source changes.",
+    "no_runtime_source_change": true,
+    "preflight_smoke_path": "instrumentation_preflight.jsonl",
+    "trace_path": "run/cancellation_call_trace.jsonl"
+  },
+  "nonclaims": [
+    "CUA privilege transfer to backend process",
+    "MAP01",
+    "R39 broad reliability estimate",
+    "R40 broad reliability estimate",
+    "R41 queued/busy cause unless independently isolated",
+    "WSLc GUI behavior",
+    "WSLc allocation eligibility",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-cancel task_success unless independently verified",
+    "proven cancellation release unless every strict-gate check passes",
+    "real-application transfer",
+    "runtime-integrated task_success (must remain null)",
+    "same-run task_success in R42 or R43"
+  ],
+  "packet_source_files": [
+    "probe.py",
+    "audit_release.py",
+    "task_probe.py",
+    "server_with_oracle.py",
+    "run_r47.py",
+    "preflight_r47.py",
+    "audit_r47.py",
+    "fixture_app_timed.py",
+    "instrumentation/sitecustomize.py"
+  ],
+  "paired_predecessor_evidence": {
+    "R42_combined_result": "research/integration/win32_supervised_standard_caller_20261024_r42/audit_r42.json",
+    "R42_release_audit": "research/integration/win32_supervised_standard_caller_20261024_r42/audit_r36.json",
+    "R43_posthoc_task_audit": "research/integration/win32_supervised_standard_caller_20261024_r43/audit_r43_posthoc_v2.json"
+  },
+  "phase2_protocol": {
+    "dispatch_response_wait_ms": 10000,
+    "dispatches": 1,
+    "exact_program": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "task-oracle-r47-2700430551fa"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord",
+        "text": "task-oracle-r47-2700430551fa"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "fixture_instances": 1,
+    "max_attempt_total_seconds": 180,
+    "public_observations": 1,
+    "read_only_results_wait_max_seconds": 25,
+    "replays": 0,
+    "retries": 0,
+    "validations": 1,
+    "verification_calls": 1
+  },
+  "phase2_task": {
+    "evidence": "owned fixture effect.json plus independent same-host monotonic write-return sidecar; server oracle separately brackets effect-file read",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "task-oracle-r47-2700430551fa"
+    },
+    "oracle_id": "09bf52ae05c74ed4b8d911e1cb793c00",
+    "token": "task-oracle-r47-2700430551fa"
+  },
+  "predecessor": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+    "audit_path": "research/integration/win32_supervised_standard_caller_20261024_r35/evidence_review.json",
+    "audit_sha256": "e8994a304cc07063622b64b3960194055780c27536396715b31a5f51dc235eb2",
+    "classification": "no public cancel; normal terminal release; probe hold_ms UnboundLocalError before interface_cancel",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r35/raw.json",
+    "raw_sha256": "712d2cb0ff0feac3d1ff7a76ab2afdaff5b2ee8988f2cbb0dd3c46795872ccde",
+    "trace_diagnosis_path": "research/integration/win32_supervised_standard_caller_20261024_r35/trace_analysis_posthoc.json",
+    "trace_diagnosis_sha256": "6262f81e2767ee982c0cf253108ef901250429bba38359c36a6df2be095e49f6"
+  },
+  "predecessor_hashes": {
+    "R45_clock_diagnosis": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r45/CLOCK_DIAGNOSIS.md",
+      "sha256": "bc36528aedb8e99f235203c72ece01710eec9493506b3005ac3eeeb5d102907b"
+    },
+    "R45_failure_result": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r45/audit_r45_posthoc.json",
+      "sha256": "0bedb04247616ce795074fde02b8094cecf56a2a40e3f25e37efdb92d247a650"
+    },
+    "r03_conditions": {
+      "path": "research/integration/win32_live_task_oracle_20261024_r03/conditions.json",
+      "sha256": "994e54c67f0d7fa83f0f5ba290b61ff8c013b74d24b4f0347b7ba965260a68ef"
+    },
+    "r03_result": {
+      "path": "research/integration/win32_live_task_oracle_20261024_r03/run/result.json",
+      "sha256": "d8ee8b5bda7f08cd306a42f128e59f08d6779b8423fffeb279c20027e6e5a71c"
+    },
+    "r36_audit": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r36/audit_r36.json",
+      "sha256": "6a5ee164406cd724039a658b9073a4fc4d7bf19a852c9ce80cf0dcea6a5c0e7d"
+    },
+    "r36_raw": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r36/raw.json",
+      "sha256": "4c71e67382573ca1d957a5fece7769d72c84034f34532ed8bf2c98000846c12a"
+    },
+    "r39_preflight_failure": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r39/preflight.json",
+      "sha256": "6fae1fe9b18258b836d3b4ea992d1aa1b7b9758336585fd2dc2373e55d827378"
+    },
+    "r40_preflight_failure": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r40/preflight.json",
+      "sha256": "36ff80c008dc4f3068a9ccbab8a14d7baab5f32f3c92c2dba9a5fe81105c2cec"
+    },
+    "r42_combined_audit": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r42/audit_r42.json",
+      "sha256": "c0003b4f65b3237a5e9de34ea737e08a8302bb00e52410ea234da87e8c46d14b"
+    },
+    "r42_conditions": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r42/conditions.json",
+      "sha256": "2dca08215006228c91142fa81e9795b08dbd454fa0cefe0faf31fe5b5d879df7"
+    },
+    "r42_phase1_raw": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r42/raw.json",
+      "sha256": "f8b84b7aef6fa88eb93e52eecde63ccb701e8a343c461dd6ded18a0a7b3f39b6"
+    },
+    "r42_release_audit": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r42/audit_r36.json",
+      "sha256": "8572164c29736681bbb78b7acded871c5f5050955e36c26a55eaa960db804a30"
+    },
+    "r43_conditions": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r43/conditions.json",
+      "sha256": "dec2914bd34f3673bc40dde21017c754761b3d3b7028c1b9d4de7ca4db9275ee"
+    },
+    "r43_posthoc_task_audit": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r43/audit_r43_posthoc_v2.json",
+      "sha256": "7bd2979b8c2d91a67cc358f227c72989fcebf6d39f39775c513ec2665cd87d36"
+    },
+    "r43_task_raw": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r43/task_raw.json",
+      "sha256": "1b756cd04f08c124d60ca58b4044e8de3b8303946a183d769643c54ac80a1be3"
+    }
+  },
+  "predecessor_notes": {
+    "r37a_preflight_failure": "The historical path is unavailable in the reviewed current/local worktrees; it is not hash-pinned or treated as absent evidence."
+  },
+  "previous_no_input_attempt": {
+    "attempt_id": "win32-focus-eligibility-input-free-20261024-r01-5f239f00b7534ddba912d1b7a40f8064",
+    "classification": "focus subtest PASS_SCOPED; overall FAIL_OR_UNKNOWN because fixture process exit code was not retained by its controller; no input, no task effect, no release sample",
+    "path": "outputs/win32-focus-eligibility-input-free-20261024-r01-5f239f00b7534ddba912d1b7a40f8064"
+  },
+  "previous_prelaunch_stop": {
+    "attempt_id": "R42 and R43, distinct",
+    "classification": "R42 phase1 strict release PASS 11/11; R42 phase2 harness failed with NameError before any API call/input; R43 separate task attempt passed posthoc audit 9/9 with independent oracle task_success=true. R44 is a new paired attempt, not a replay."
+  },
+  "resource_boundary": "One user-authorized local Windows PC; one sequential owned fixture per phase; one phase-1 dispatch and at most one cancel; phase 2 only after strict phase-1 PASS; one phase-2 dispatch and oracle; no retries/replays; no WSLc/Docker.",
+  "retry_policy": "One input-free frozen-source/predecessor preflight immediately before a fresh paired attempt. Each phase waits for its unique CUA activation receipt and independent foreground/process-owner match before public calls. On any error or timeout, retain evidence and never retry.",
+  "runtime_source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "4309df45fb19473ca753c5affaca2583d1cc505bb2070c8b81c41c3d66e18828",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "92f25890d65fae4b0d80c2bb5929f2a8ec54437a4d9bc61c510594a9419d4285",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/guarded_win32_v1/operation_owner.py": "3c18c605fb1c65f7e036b9b792bb57d503b444cb8d60aec93e3a928593df3f9b"
+  },
+  "schema": "win32-supervised-recovery-fresh-generation-task-r47-v1",
+  "scope": {
+    "efficiency": "excluded",
+    "environment": "Native Win32 supervised caller on the user-authorized local Windows PC; WSLc and Docker are not used.",
+    "phase_order": [
+      "phase 1 one fresh fixture and one dispatch/cancel attempt; strict release gate",
+      "close phase-1 hook, server session and fixture",
+      "only if strict gate passes, phase 2 new fixture/process/window/generation/session, one task and independent oracle",
+      "no retry, replay or third phase"
+    ],
+    "question": "Can the native supervised caller release input within the frozen bounded-cancel protocol and, in the same attempt, complete one exact task on a distinct fresh fixture generation with an independent oracle receipt?",
+    "reliability": "single paired sequence; no reliability estimate",
+    "stop": "If phase 1 is not STRICT_RELEASE_PASS, do not start phase 2. Preserve all evidence. Any mismatch or cleanup uncertainty is FAIL_OR_UNKNOWN."
+  },
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "source_sha256": {
+    "audit_r44.py": "732fdde5abed2db3db382ba4a452159d925763d91c44b9c7c3e55371a0a8bd9e",
+    "audit_release.py": "5f2c2e33d9f4de2b2e97774e5ec569a6b22074a2a0bbab6bda94744c412f831b",
+    "probe.py": "e9e27a5db65a76cd0d3ea74ae98e737754d3829519a5d194c01899e0c6af0c1b",
+    "task_probe.py": "fe82f3168b5f66e6bb9def35c107ae100be0fb45696aae2334301858500886fc"
+  },
+  "timeout_registry_expected": "absent",
+  "timeouts_seconds": {
+    "attempt_total": 150,
+    "cancel_response": 1,
+    "close_drain": 4,
+    "close_response": 1,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "foreground_activation": 120,
+    "hook_entry": 30,
+    "independent_readback": 8,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "owned_process_terminate": 2,
+    "poll_response": 0.5,
+    "pre_cancel_readback": 0.5,
+    "producer_exit": 2.5,
+    "recovery_deadline_ms": 2500,
+    "recovery_up_observation": 4,
+    "result_readback": 12,
+    "validate": 10
+  },
+  "timing_repair": {
+    "based_on": "R45 mixed-clock diagnosis; not a causal proof",
+    "callback_safety_ceiling_ms": 3000,
+    "deadline": "integer nanosecond deadline from perf_counter_ns; loop predicate uses perf_counter_ns",
+    "fixed_minimum_ms": 1250,
+    "margin_ms": 150,
+    "planned_post_cancel_hold_ms": 1400,
+    "projected_ceiling_ms": 2900
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe"
+    },
+    "caller": "public stdio MCP interface_observe/interface_validate/interface_dispatch/interface_cancel/interface_results/interface_close",
+    "cancel": "one public interface_cancel for the exact dispatch call_id; no second cancel",
+    "close_retry_interval_ms": 100,
+    "effect_order": "Strict phase-1 gate completes before phase 2 starts a separate fresh fixture, target generation, MCP session, call, operation and task-oracle receipt.",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": ""
+    },
+    "hold_poll_delay_ms": 10,
+    "hook_status_poll_interval_ms": 50,
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-recovery-r47",
+    "max_callback_total_before_cancel_ms": 950,
+    "max_projected_callback_total_ms": 2900,
+    "native_stimulus": {
+      "event": "first injected VK_Q WM_KEYUP after the injected Q-down callback returned and independent same-generation readback proved Q-down",
+      "hook": "one WH_KEYBOARD_LL hook in the probe process",
+      "max_callback_hold_ms": 3000,
+      "release": "Release the first Q-up callback after 1250 ms of post-cancel public polling or immediately on error; callback thread has a 3000 ms absolute self-deadline from entry."
+    },
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "post_cancel_hook_hold_ms": 1400,
+    "post_cancel_readback_delay_ms": 650,
+    "post_cancel_task_success_claimed": false,
+    "pre_cancel_readback": "After hook entry, interface_results must show action status running before one interface_cancel call.",
+    "prearmed_state_series": true,
+    "program_id": "supervised-standard-cancel-q-release-r47",
+    "recovery_deadline_ms": 2500,
+    "required_hold_poll_count": 21,
+    "state_series_interval_ms": 10,
+    "state_series_max_duration_ms": 8000,
+    "target": "One fresh owned fixture process/window and one exact generation; require independent Q-down true before the single cancel.",
+    "text_effect": "",
+    "wait_for_result_ms": 0
+  },
+  "uncertainty": [
+    "One paired native-PC sample does not establish reliability.",
+    "The native Windows result does not establish WSLc, MAP01, efficiency or transfer to a real application.",
+    "Task success is the external server-side oracle claim; runtime-level task_success remains null."
+  ]
+}

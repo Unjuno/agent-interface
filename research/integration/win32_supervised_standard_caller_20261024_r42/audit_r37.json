@@ -1,0 +1,156 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r42-ecdad4966b7846de95f9a8eb087f81a8",
+  "checks": [
+    {
+      "evidence": {
+        "all_attempt_outputs_absent": true,
+        "conditions_id_matches_schema": true,
+        "foreground_markers_absent_before_attempt": true,
+        "frozen_packet_hashes_match": true,
+        "hook_timeout_registry_matches": true,
+        "instrumentation_loaded_without_input": true,
+        "mcp_sdk_available": true,
+        "native_windows": true,
+        "predecessors_match": true,
+        "runtime_source_hashes_match": true,
+        "source_commit_matches": true,
+        "tracked_tree_clean": true
+      },
+      "name": "preflight_passed_without_input",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "passed": 11,
+        "status": "STRICT_RELEASE_PASS",
+        "total": 11
+      },
+      "name": "phase1_strict_release_gate_passed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_audit_returned_monotonic_ns": 506530465299800,
+        "phase2_started_monotonic_ns": 506530470286900
+      },
+      "name": "phase2_started_only_after_phase1_gate",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "phase1_generation": "b571178a11515abdb59de6ca49d1a11993742fc8c9527ea46746ef2962f21b36",
+        "phase2_generation": null
+      },
+      "name": "fresh_target_generation",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "phase1_call_id": "3fa2ce54da024f6490bdef8eb9ecda86",
+        "phase1_operation_id": "936ee32615c94416991b9bd5c1792705",
+        "phase2_call_id": null,
+        "phase2_operation_id": null
+      },
+      "name": "distinct_call_and_operation",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "receipt": {},
+        "status": null,
+        "task_success": null
+      },
+      "name": "task_oracle_success_bound_to_new_action",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_status": null,
+        "recovery_required": null,
+        "release_confirmed": null,
+        "release_receipts": []
+      },
+      "name": "phase2_action_completed_with_verified_neutral_release",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "release_receipt_count": 0,
+        "state_query_witnesses_present": false
+      },
+      "name": "phase2_completion_readback_has_independent_state_witness",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": null,
+        "expected": {
+          "clicked": true,
+          "saved": true,
+          "text": "task-oracle-r42-ecdad4966b78"
+        },
+        "oracle_actual": null,
+        "oracle_outcome": null
+      },
+      "name": "task_effect_exactly_matches_frozen_expectation",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "oracle_observed_monotonic_ns": null,
+        "phase2_started_monotonic_ns": 506530470286900
+      },
+      "name": "task_effect_observed_after_recovery_phase",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "fixture_hwnd": 527148,
+        "foreground_activation": null
+      },
+      "name": "phase2_cua_activation_receipt_matches_fresh_fixture",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "fixture_exit_code": 0,
+        "foreground_restored": true,
+        "phase2_exit_code": 1,
+        "server_close": {}
+      },
+      "name": "bounded_cleanup_and_foreground_restore",
+      "passed": false
+    }
+  ],
+  "conditions_sha256": "2dca08215006228c91142fa81e9795b08dbd454fa0cefe0faf31fe5b5d879df7",
+  "nonclaims": [
+    "CUA privilege transfer to backend process",
+    "MAP01",
+    "R39 broad reliability estimate",
+    "R40 broad reliability estimate",
+    "R41 queued/busy cause unless independently isolated",
+    "WSLc GUI behavior",
+    "WSLc allocation eligibility",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-cancel task_success unless independently verified",
+    "proven cancellation release unless every strict-gate check passes",
+    "real-application transfer",
+    "runtime-integrated task_success (must remain null)"
+  ],
+  "passed": 3,
+  "phase1_release_status": "STRICT_RELEASE_PASS",
+  "schema": "win32-r42-combined-audit-v1",
+  "source_commit": "e6192a4294aac0d94d51e75b24583216c718d654",
+  "status": "FAIL_OR_UNKNOWN",
+  "task_success": null,
+  "total": 12
+}
