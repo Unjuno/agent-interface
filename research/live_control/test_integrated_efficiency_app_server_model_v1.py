@@ -4,7 +4,7 @@ import tempfile
 import unittest
 
 from research.live_control.codex_app_server_command_v1 import (
-    DISABLED_FEATURES, DISABLED_MCPS, command,
+    DISABLED_FEATURES, command,
 )
 from research.live_control.integrated_efficiency_app_server_model_v1 import (
     PersistentGroundingModel, per_turn_usage,
@@ -64,12 +64,13 @@ def usage(input_tokens, cached):
 
 
 class PersistentIntegratedModelTests(unittest.TestCase):
-    def test_minimal_command_is_explicit(self):
-        value = command("node", "cli.js")
+    def test_minimal_command_disables_features_without_unknown_mcp_rows(self):
+        with tempfile.TemporaryDirectory() as directory:
+            value = command("node", "cli.js", codex_home=directory)
         self.assertEqual(value[:4], ["node", "cli.js", "app-server", "--stdio"])
         self.assertTrue(all(feature in value for feature in DISABLED_FEATURES))
-        self.assertTrue(all(f"mcp_servers.{name}.enabled=false" in value
-                            for name in DISABLED_MCPS))
+        self.assertFalse(any(item.startswith("mcp_servers.") for item in value))
+
         self.assertNotIn("mcp_servers={}", value)
 
     def test_two_calls_keep_thread_and_return_distinct_call_ids_and_last_usage(self):

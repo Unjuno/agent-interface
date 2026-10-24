@@ -1,0 +1,10 @@
+{
+  "study": "current-main-appserver-public-mcp-fake-x-20261025-p03",
+  "classification": "FAIL_APP_SERVER_CONFIG_BEFORE_MODEL_TURN",
+  "primary_error": "AppServerError: app-server closed during initialize: stderr not drained",
+  "followup_diagnostic": "The exact argv emitted by the runner exits 1 with stderr 'Error: invalid transport in mcp_servers.blender'. The configured user MCP list contains only openaiDeveloperDocs and node_repl; adding disabled entries for nonexistent blender/chrome-devtools/playwright/puppeteer creates malformed server rows.",
+  "successful_bounded_diagnostic": "Initialize-only using the same CLI and feature disables but only existing MCP names exits 0, returns initialize, and emits no stderr.",
+  "model_turn_started": false,
+  "public_tool_input_dispatched": false,
+  "disposition": "retained; p03 is not rerun"
+}
