@@ -1,0 +1,22 @@
+{
+  "schema": "win32-public-mcp-calculator-prerun-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r01-5909d88e5d7a4d69b030c39033cb4f73",
+  "recorded_at_utc": "2026-10-24T02:19:22Z",
+  "source_commit": "e3b6293b4be42c54739936160e524b92ba706178",
+  "custody": {
+    "isolation": "fresh worktree research/win32-calculator-standard-caller-r01 from origin/main",
+    "app": "preinstalled Calculator; visible window observed and selected through Windows Computer Use",
+    "window": {"app_id": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App", "window_id": 55117672, "title": "電卓"},
+    "baseline": "Calculator Standard mode displayed 0; no task input had been sent at freeze time",
+    "read_only_native_geometry": {"client_width": 320, "client_height": 533, "target_is_window": true, "target_root_hwnd": 55117672, "target_class": "ApplicationFrameWindow", "foreground_child_hwnd": 23988268, "foreground_root_hwnd": 55117672},
+    "local_public_caller_tests": "14/14 passed under Python 3.11.9 normally and 14/14 under -O; record in local_checks.json",
+    "wslc_or_docker_used": false,
+    "attempt_authority": "user explicitly approved using this PC for the experiment"
+  },
+  "protocol_frozen_before_task_input": true,
+  "first_attempt_boundary": "one observation, one validation, one dispatch; no replay, recovery, or retry",
+  "prior_attempts": [
+    {"attempt_id": "win32-task-effect-timing-20261024-r38d-95f53e00e722477c8d8208abba20a793", "application": "synthetic Win32 fixture", "relation": "different task and prior completed allocation; preserved and not replayed"},
+    {"attempt_id": "native-Windows Calculator #9489 S01/S02", "application": "Calculator via direct @oai/sky diagnostics", "relation": "different input path; only contextual evidence, not replayed as a standard MCP attempt"}
+  ]
+}
