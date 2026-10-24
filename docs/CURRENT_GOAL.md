@@ -26,6 +26,19 @@ runtime `task_success` remains null. Strict bounded release is PASS for this
 single Win32 attempt only; reliability, task success, MAP01, WSLc and efficiency
 remain open. See [R36](../research/integration/win32_supervised_standard_caller_20261024_r36/RESULT.md).
 
+**Win32 standard-caller recovery → fresh-generation task-oracle construction check (2026-10-24):**
+the standard `interface_dispatch` / `interface_cancel` / `interface_results`
+path now has a local synthetic regression that recovers an old-generation call,
+keeps its task outcome unknown and its retained result unchanged, then dispatches
+and independently scores a distinct call under a new target generation. The
+new task receipt must match its exact call, operation and generation; one oracle
+invocation is allowed. The focused 88-test public MCP/Win32/session/oracle set
+passes in CPython 3.11.9 in both normal and `-O` modes, and the research workspace
+index passes. This is a construction check with fake processes and oracle; it is
+not a live Win32 sequence, WSLc evidence, MAP01, or a reliability estimate. The
+live standard-caller recovery-plus-task-effect sequence remains unverified. See
+`runtime/cli_v1/test_mcp_supervised_win32.py::test_standard_recovered_cancel_then_fresh_generation_task_success`.
+
 **Win32 R35 terminal-release diagnostic correction (2026-10-24):** R35 did
 not record a public `interface_cancel`; the exact producer completed normally
 with verified terminal `release_all`. After the final Q-up SendInput return and

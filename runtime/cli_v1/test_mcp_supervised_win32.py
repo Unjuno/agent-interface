@@ -481,6 +481,105 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     await asyncio.sleep(0.55)
                     self.row(await server.call_tool("interface_close", {}))
 
+    async def test_standard_recovered_cancel_then_fresh_generation_task_success(self):
+        old_generation = "a" * 64
+        new_generation = "b" * 64
+        old_process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        old_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is old_process else None)
+        old_supervisor = RecoveringFakeSupervisor(old_owner, old_process)
+        old_session = OwnedWin32SessionOwner(old_owner, old_supervisor,
+            synthetic_only=False)
+        old_session.bind_target_generation_reader(lambda: old_generation)
+        old_producer = HeldProducerFactory(old_process, identity)
+
+        new_session, new_producer, _ = self.make_components(new_generation)
+        oracle_calls = []
+
+        def oracle(action):
+            oracle_calls.append(dict(action))
+            return {
+                "call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "oracle_id": "e" * 32,
+                "outcome": "success",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-oracle:fresh-generation-save",
+            }
+
+        with TemporaryDirectory() as old_root, TemporaryDirectory() as new_root:
+            old_server = self.make_server(old_root, old_session, old_producer)
+            new_server = create_server({"fixture": 123}, new_root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: new_session,
+                _supervised_win32_producer_factory=lambda *_args: new_producer,
+                supervised_win32_task_oracle=oracle)
+            try:
+                old_program = self.valid_program()
+                old_program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
+                old_pending = self.row(await old_server.call_tool("interface_dispatch", {
+                    "program": old_program,
+                    "current_observation_seq": 1,
+                    "current_binding_revision": 1,
+                    "wait_for_result_ms": 0}))
+                self.assertEqual(old_pending["status"], "pending", old_pending)
+                self.assertTrue(await asyncio.wait_for(
+                    asyncio.to_thread(old_producer.started.wait, 1), 1))
+
+                old_cancel = self.row(await old_server.call_tool("interface_cancel", {
+                    "call_id": old_pending["call_id"]}))
+                self.assertEqual(old_cancel["status"], "recovered", old_cancel)
+                deadline = time.monotonic() + 2
+                while True:
+                    old_result = self.row(await old_server.call_tool("interface_results", {
+                        "call_id": old_pending["call_id"]}))
+                    if old_result["action"]["status"] != "running":
+                        break
+                    self.assertLess(time.monotonic(), deadline, old_result)
+                    await asyncio.sleep(0.01)
+                self.assertEqual(old_result["action"]["target_generation"], old_generation)
+                self.assertEqual(old_result["action"]["status"], "recovered")
+                self.assertTrue(old_result["cancellation"]["release_confirmed"])
+                self.assertIsNone(old_result["task_success"])
+                frozen_old = json.loads(json.dumps(old_result, sort_keys=True))
+
+                new_program = self.valid_program()
+                new_program["program_id"] = "public-standard-save-fresh-generation"
+                new_program["source"]["target_generations"] = {"fixture": new_generation}
+                new = self.row(await new_server.call_tool("interface_dispatch", {
+                    "program": new_program,
+                    "current_observation_seq": 1,
+                    "current_binding_revision": 1,
+                    "wait_for_result_ms": 5000}))
+                self.assertEqual(new["status"], "returned", new)
+                self.assertNotEqual(new["call_id"], old_pending["call_id"])
+                self.assertNotEqual(new["operation_id"], old_result["action"]["operation_id"])
+                self.assertEqual(new["target_generation"], new_generation)
+
+                verified = json.loads((await new_server.call_tool(
+                    "interface_verify_task", {
+                        "call_id": new["call_id"],
+                        "wait_for_result_ms": 1000})).content[0].text)
+                self.assertEqual(verified["status"], "verified", verified)
+                self.assertTrue(verified["task_success"])
+                receipt = verified["task_effect"]["receipt"]
+                self.assertEqual(receipt["call_id"], new["call_id"])
+                self.assertEqual(receipt["operation_id"], new["operation_id"])
+                self.assertEqual(receipt["target_generation"], new_generation)
+                self.assertEqual(receipt["oracle_id"], "e" * 32)
+                self.assertEqual(len(oracle_calls), 1)
+                self.assertEqual(oracle_calls[0]["call_id"], new["call_id"])
+
+                old_after = self.row(await old_server.call_tool("interface_results", {
+                    "call_id": old_pending["call_id"]}))
+                self.assertEqual(old_after, frozen_old)
+            finally:
+                await new_server.call_tool("interface_close", {})
+                if old_session.state != "closed":
+                    await old_server.call_tool("interface_close", {})
+
     async def test_recovered_cancel_persists_terminal_action_receipt(self):
         process = FakeProcess()
         identity = {"pid": 7101, "creation_time_100ns": 90101}
