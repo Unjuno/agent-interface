@@ -1,0 +1,320 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r37b-46d475b8a8324a11b40ff4b2719e369d",
+  "claims_excluded": [
+    "MAP01",
+    "R29 strict 1250 ms blocked-callback gate",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "efficiency",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-recovery task effect",
+    "reliability",
+    "runtime-integrated task_success (must remain null)",
+    "second attempt reliability",
+    "strict input-release PASS",
+    "task success after cancellation",
+    "task_success after recovery"
+  ],
+  "decision": {
+    "diagnostic_pass": "instrumentation is proven loaded by an input-free subprocess and the live run records exact producer retirement method entry/return timestamps or a bounded trace showing which call remains open at callback release.",
+    "stop": "One fixture, one dispatch, one public cancel attempt maximum; never replay or retry. Abort before cancellation on mismatch. After cancellation, release the hook at bounded hold end or immediately on exception.",
+    "strict_action_outcome": "R36 tests the unchanged strict gate: one recorded public interface_cancel, at least 1250 ms callback hold measured from cancel response, at least 21 same-call results polls during the hold, independent same-generation Q-up evidence, and bounded cleanup. Any missing condition is FAIL_OR_UNKNOWN. Runtime task_success remains null; no retries/replay."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "host": "user-authorized local Windows PC; one owned fixture process/window",
+    "low_level_hooks_timeout_registry": "HKCU\\Control Panel\\Desktop\\LowLevelHooksTimeout absent at R29 preflight; read only",
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "frozen_at_utc": "2026-10-24T01:46:16Z",
+  "frozen_files": {
+    "PREPARATION.md": "812129d1db6f69a7288ffcd1ffba05477cdd9987da14c72ccca5622202a07945",
+    "README.md": "a8deaf64c6c0ce9415fd83013b6d1e864bc97f4d8798cbc16c535dd80fa3ca9d",
+    "audit_r37.py": "35d0852951b10b3b8cb7a27d78300410fea2cbceb0d78816ea371ae0d63cea50",
+    "audit_release.py": "b04deedc28916f1df0a0dc902abddfd428c597fe6dc91be3f1817d58b0d8eb37",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight_r37.py": "aae53aa9cb12ebb2b0e31cb2d51db9cb23ecaaeb5de42c8d31d34ae54828418f",
+    "probe.py": "99215195b872ef83bcee5ef3513f6b91fb27374efc16f73537e42f6b0acd3c2a",
+    "run_r37.py": "58fd211b561ee1f743188a05a3a54176c22a00ee8fbaef546ca0947843743835",
+    "server_with_oracle.py": "0c9cf1461396ef9385756a92abd3ff4167cc9868dc6349c0c90a49da2a0ea2cb",
+    "task_probe.py": "9474b20b76fd739c6714ddd82c5b0733511a015b3ff367dd838e9f7175ba69f4"
+  },
+  "host": "user-authorized local Windows PC; one owned fixture process/window",
+  "hypothesis": "After independently proving the fixture is actually in Q-down state, a single held injected Q-up callback and public cancellation will show whether recovery clears that exact key while the hook callback is blocked.",
+  "instrumentation": {
+    "boundaries": [
+      "supervisor_exchange",
+      "recovery_helper_process",
+      "_recover",
+      "release_all",
+      "exact_VK_Q_SendInput"
+    ],
+    "diagnosis_script": "trace_analysis.py",
+    "mode": "R35 adds a finite 10 ms independent same-generation state series process, started before dispatch, to avoid post-event process startup latency. The Q-up callback hold is 700 ms; cancel is withheld if the projected callback total exceeds 950 ms. No runtime source changes, retry or replay.",
+    "no_runtime_source_change": true,
+    "preflight_smoke_path": "instrumentation_preflight.jsonl",
+    "trace_path": "run/cancellation_call_trace.jsonl"
+  },
+  "nonclaims": [
+    "MAP01",
+    "WSLc GUI behavior",
+    "WSLc application control",
+    "WSLc or Docker portability",
+    "atomic capture-to-input fencing",
+    "broad reliability",
+    "exact physical application time",
+    "hard real-time bound beyond frozen finite windows",
+    "indefinite native blocking",
+    "kernel causality",
+    "kernel-causality attribution",
+    "matched efficiency",
+    "post-cancel task_success unless independently verified",
+    "proven cancellation release unless every strict-gate check passes",
+    "real-application transfer",
+    "runtime-integrated task_success (must remain null)"
+  ],
+  "packet_source_files": [
+    "probe.py",
+    "audit_release.py",
+    "task_probe.py",
+    "server_with_oracle.py",
+    "run_r37.py",
+    "preflight_r37.py",
+    "audit_r37.py",
+    "instrumentation/sitecustomize.py"
+  ],
+  "phase2_protocol": {
+    "dispatch_response_wait_ms": 10000,
+    "dispatches": 1,
+    "exact_program": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "task-oracle-r37b-afd15137daa2"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "fixture_instances": 1,
+    "max_attempt_total_seconds": 60,
+    "public_observations": 1,
+    "read_only_results_wait_max_seconds": 25,
+    "replays": 0,
+    "retries": 0,
+    "validations": 1,
+    "verification_calls": 1
+  },
+  "phase2_task": {
+    "evidence": "owned fixture effect.json, read by server-side oracle after terminal action",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "task-oracle-r37b-afd15137daa2"
+    },
+    "oracle_id": "46d475b8a8324a11b40ff4b2719e369d",
+    "token": "task-oracle-r37b-afd15137daa2"
+  },
+  "predecessor": {
+    "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+    "audit_path": "research/integration/win32_supervised_standard_caller_20261024_r35/evidence_review.json",
+    "audit_sha256": "e8994a304cc07063622b64b3960194055780c27536396715b31a5f51dc235eb2",
+    "classification": "no public cancel; normal terminal release; probe hold_ms UnboundLocalError before interface_cancel",
+    "raw_path": "research/integration/win32_supervised_standard_caller_20261024_r35/raw.json",
+    "raw_sha256": "712d2cb0ff0feac3d1ff7a76ab2afdaff5b2ee8988f2cbb0dd3c46795872ccde",
+    "trace_diagnosis_path": "research/integration/win32_supervised_standard_caller_20261024_r35/trace_analysis_posthoc.json",
+    "trace_diagnosis_sha256": "6262f81e2767ee982c0cf253108ef901250429bba38359c36a6df2be095e49f6"
+  },
+  "predecessor_hashes": {
+    "r03_conditions": {
+      "path": "research/integration/win32_live_task_oracle_20261024_r03/conditions.json",
+      "sha256": "46fc3759b39ec63b9fed99c855eb38a57f3701a351d5572ea50f56a925bc915f"
+    },
+    "r03_result": {
+      "path": "research/integration/win32_live_task_oracle_20261024_r03/run/result.json",
+      "sha256": "d8ee8b5bda7f08cd306a42f128e59f08d6779b8423fffeb279c20027e6e5a71c"
+    },
+    "r36_audit": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r36/audit_r36.json",
+      "sha256": "6a5ee164406cd724039a658b9073a4fc4d7bf19a852c9ce80cf0dcea6a5c0e7d"
+    },
+    "r36_raw": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r36/raw.json",
+      "sha256": "4c71e67382573ca1d957a5fece7769d72c84034f34532ed8bf2c98000846c12a"
+    },
+    "r37a_preflight_failure": {
+      "path": "research/integration/win32_supervised_standard_caller_20261024_r37/preflight.json",
+      "sha256": "0ce7371536ad4d2ba28554bb47aff119cbc3369b24eff1314338ec07e67f309e"
+    }
+  },
+  "previous_no_input_attempt": null,
+  "previous_prelaunch_stop": null,
+  "resource_boundary": "One user-authorized local Windows PC, one owned fixture/window and hook; one dispatch, at most one public cancellation attempt, 1250 ms post-cancel Q-up callback hold with a 3000 ms absolute callback timeout; no retries/replay, no registry change, no WSLc or Docker. Independent state sampler stops while fixture exists.",
+  "retry_policy": "Input-free frozen-source, predecessor classification, read-only registry and instrumentation preflight; one fresh fixture/dispatch/cancel attempt. Require same-generation Q-down baseline and projected callback duration including cancel timeout plus hold <=2900 ms before one public cancel. Preserve all failures. Never retry or replay.",
+  "runtime_source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "b7b6d898f604cce8d8978cfc6af57d73872bec5581c03357ab0c150e317903f4",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600"
+  },
+  "schema": "win32-supervised-recovery-fresh-generation-task-r37b-v1",
+  "scope": {
+    "efficiency": "excluded",
+    "environment": "Native Win32 supervised caller on the user-authorized local Windows PC; WSLc and Docker are not used.",
+    "phase_order": [
+      "phase 1 one fresh fixture/observation/validation/dispatch/cancel; apply existing strict R36 gate",
+      "close phase-1 hook, session and fixture; only if strict gate passes, continue",
+      "phase 2 one new fixture/process/window and standard MCP session; observe, validate, dispatch once, retrieve the exact result read-only if pending, verify once with independent server-side oracle",
+      "no retry, replay or third phase"
+    ],
+    "question": "After one strict bounded cancellation/recovery pass, can a fresh fixture generation in a separate standard MCP session complete one exact task whose independent server-side oracle receipt binds the new call, operation, and generation?",
+    "reliability": "single paired sequence; no reliability estimate",
+    "stop": "If phase 1 is not STRICT_RELEASE_PASS, do not start phase 2. Preserve all evidence. Any phase-2 mismatch, timeout, duplicate attempt, stale generation, wrong effect, oracle mismatch, or cleanup uncertainty is FAIL_OR_UNKNOWN; never retry."
+  },
+  "source_commit": "5c907bb27f30b055180d3b9cdf7a4b706b1ff34f",
+  "source_sha256": {
+    "audit_r36.py": "b04deedc28916f1df0a0dc902abddfd428c597fe6dc91be3f1817d58b0d8eb37",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight.py": "2c902b04e841e43deb700e13d187381d40a0a971e5e2f7fbb9aa46ef4d2c6b8c",
+    "probe.py": "99215195b872ef83bcee5ef3513f6b91fb27374efc16f73537e42f6b0acd3c2a",
+    "trace_analysis.py": "842dacaf514f20c16130a519708d85c228214d6c5526d4641e4f526fcb299f5b"
+  },
+  "timeout_registry_expected": "absent",
+  "timeouts_seconds": {
+    "attempt_total": 90,
+    "cancel_response": 1,
+    "close_drain": 4,
+    "close_response": 1,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "hook_entry": 30,
+    "independent_readback": 8,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "owned_process_terminate": 2,
+    "poll_response": 0.5,
+    "pre_cancel_readback": 0.5,
+    "producer_exit": 2.5,
+    "recovery_deadline_ms": 2500,
+    "recovery_up_observation": 4,
+    "result_readback": 12,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe"
+    },
+    "caller": "public stdio MCP interface_observe/interface_validate/interface_dispatch/interface_cancel/interface_results/interface_close",
+    "cancel": "one public interface_cancel for the exact dispatch call_id; no second cancel",
+    "close_retry_interval_ms": 100,
+    "effect_order": "Stage 1 cancellation/recovery and strict release gate complete before stage 2 starts a separate fixture process, target generation, MCP session, call, operation, and task-oracle receipt.",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "task-oracle-r37-710af03a8627"
+    },
+    "hold_poll_delay_ms": 10,
+    "hook_status_poll_interval_ms": 50,
+    "lease_duration_seconds": 90,
+    "lease_id": "supervised-standard-recovery-r37b",
+    "max_callback_total_before_cancel_ms": 950,
+    "max_projected_callback_total_ms": 2900,
+    "native_stimulus": {
+      "event": "first injected VK_Q WM_KEYUP after the injected Q-down callback returned and independent same-generation readback proved Q-down",
+      "hook": "one WH_KEYBOARD_LL hook in the probe process",
+      "max_callback_hold_ms": 3000,
+      "release": "Release the first Q-up callback after 1250 ms of post-cancel public polling or immediately on error; callback thread has a 3000 ms absolute self-deadline from entry."
+    },
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "post_cancel_hook_hold_ms": 1250,
+    "post_cancel_readback_delay_ms": 650,
+    "post_cancel_task_success_claimed": false,
+    "pre_cancel_readback": "After hook entry, interface_results must show action status running before one interface_cancel call.",
+    "prearmed_state_series": true,
+    "program_id": "supervised-standard-cancel-q-release-r37b",
+    "recovery_deadline_ms": 2500,
+    "required_hold_poll_count": 21,
+    "state_series_interval_ms": 10,
+    "state_series_max_duration_ms": 8000,
+    "target": "One fresh owned fixture process/window and one exact generation; require independent Q-down true before the single cancel.",
+    "text_effect": "",
+    "wait_for_result_ms": 0
+  }
+}

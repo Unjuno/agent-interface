@@ -1,0 +1,72 @@
+{
+  "attempt_id": "win32-supervised-recovery-fresh-generation-task-20261024-r37b-46d475b8a8324a11b40ff4b2719e369d",
+  "checks": {
+    "all_attempt_outputs_absent": true,
+    "conditions_id_matches_schema": true,
+    "frozen_packet_hashes_match": true,
+    "hook_timeout_registry_matches": true,
+    "instrumentation_loaded_without_input": true,
+    "mcp_sdk_available": true,
+    "native_windows": true,
+    "predecessors_match": true,
+    "runtime_source_hashes_match": true,
+    "source_commit_matches": true,
+    "tracked_tree_clean": true
+  },
+  "conditions_sha256": "f4294ee42a34e85a7273e9b8a0d44e4608ba1b1c237d27f525d57e4318dd99a4",
+  "existing_outputs": [],
+  "frozen_files": {
+    "PREPARATION.md": "812129d1db6f69a7288ffcd1ffba05477cdd9987da14c72ccca5622202a07945",
+    "README.md": "a8deaf64c6c0ce9415fd83013b6d1e864bc97f4d8798cbc16c535dd80fa3ca9d",
+    "audit_r37.py": "35d0852951b10b3b8cb7a27d78300410fea2cbceb0d78816ea371ae0d63cea50",
+    "audit_release.py": "b04deedc28916f1df0a0dc902abddfd428c597fe6dc91be3f1817d58b0d8eb37",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight_r37.py": "aae53aa9cb12ebb2b0e31cb2d51db9cb23ecaaeb5de42c8d31d34ae54828418f",
+    "probe.py": "99215195b872ef83bcee5ef3513f6b91fb27374efc16f73537e42f6b0acd3c2a",
+    "run_r37.py": "58fd211b561ee1f743188a05a3a54176c22a00ee8fbaef546ca0947843743835",
+    "server_with_oracle.py": "0c9cf1461396ef9385756a92abd3ff4167cc9868dc6349c0c90a49da2a0ea2cb",
+    "task_probe.py": "9474b20b76fd739c6714ddd82c5b0733511a015b3ff367dd838e9f7175ba69f4"
+  },
+  "host": "DESKTOP-DRP9HRE",
+  "instrumentation_smoke": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "R37_TRACE_IMPORT_OK\n",
+    "trace": [
+      {
+        "event": "sitecustomize_loaded",
+        "monotonic_ns": 497687532658800,
+        "pid": 18036
+      },
+      {
+        "event": "recovery_trace_wrappers_installed",
+        "monotonic_ns": 497687643059400,
+        "pid": 18036
+      }
+    ]
+  },
+  "low_level_hooks_timeout_registry": null,
+  "native_input_sent": false,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "predecessor_hashes": {
+    "r03_conditions": "46fc3759b39ec63b9fed99c855eb38a57f3701a351d5572ea50f56a925bc915f",
+    "r03_result": "d8ee8b5bda7f08cd306a42f128e59f08d6779b8423fffeb279c20027e6e5a71c",
+    "r36_audit": "6a5ee164406cd724039a658b9073a4fc4d7bf19a852c9ce80cf0dcea6a5c0e7d",
+    "r36_raw": "4c71e67382573ca1d957a5fece7769d72c84034f34532ed8bf2c98000846c12a",
+    "r37a_preflight_failure": "0ce7371536ad4d2ba28554bb47aff119cbc3369b24eff1314338ec07e67f309e"
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "runtime_source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "b7b6d898f604cce8d8978cfc6af57d73872bec5581c03357ab0c150e317903f4",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600"
+  },
+  "schema": "win32-r37-preflight-v1",
+  "source_commit": "5c907bb27f30b055180d3b9cdf7a4b706b1ff34f",
+  "status": "PASS",
+  "tracked_status": "",
+  "utc": "2026-10-24T01:46:19.811887+00:00"
+}
