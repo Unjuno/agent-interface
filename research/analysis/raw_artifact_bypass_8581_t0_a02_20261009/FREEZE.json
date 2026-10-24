@@ -1,0 +1,22 @@
+{
+  "allocation": "RAW-ARTIFACT-BYPASS-8581-T0-A02-20261009",
+  "issue": 8581,
+  "frozen_main": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8581-feedback-bypass-a02-20261009",
+  "package": "research/analysis/raw_artifact_bypass_8581_t0_a02_20261009",
+  "frozen_at": "2026-10-09 Asia/Tokyo",
+  "runtime": "CPython 3.14.5; stdlib only; macOS 27.0 ARM64 host CPU; no container, network, model, GUI, or shared runtime",
+  "source_hashes_sha256": {
+    "design.json": "b913931831fbf4f83afb00be54911baa003e30bd99dfa1d6ba2db354a06600c1",
+    "protocol.json": "306ef94b48446cedad03b6a54d86e32dd2ebc2edce99848a21db50db8dd3c43e",
+    "candidate.py": "ab4e7f05368973eb37a79ca808b93140f07bf59966b44a41a284715ec33b2026",
+    "auditor.py": "10f7e3e732e6934de788404392099af7d6f7a6be62fdca6a2f28411afdaaf5ef",
+    "test_model.py": "d60700d81d554fb99d99708edef898683a1d81611ee32275dee3bc869f593b1e"
+  },
+  "candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retry_policy": "one candidate invocation; only on exit 0, one independent raw-only auditor invocation; preserve first outcome; no retries",
+  "construction": "py_compile and 3 deterministic model-boundary/mutation tests passed before freeze",
+  "fresh_cohort": "candidate code has no fresh-label generation or fresh-score path; independent auditor computes fresh score post-lock",
+  "successor_reason": "A01 candidate/raw are preserved in PR #8760; its auditor raised AttributeError because mutation booleans, not mutated candidate records, were supplied to validate. A02 uses new seed 858102 and corrected mutation validation; A01 raw is neither input nor pooled."
+}
