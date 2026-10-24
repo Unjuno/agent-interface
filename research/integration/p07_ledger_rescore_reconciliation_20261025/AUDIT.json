@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "all_retained_raw_hashes_match": true,
+    "close_release_confirmed": true,
+    "compiled_receipt_and_terminal_reconcile": true,
+    "exactly_one_completed_turn": true,
+    "initial_ledger_false_score_preserved": true,
+    "ledger_complete": true,
+    "model_turn_point_matches_saved_selection": true,
+    "observation_mint_sequence_reconciles": true,
+    "owner_click_and_effect_reconcile": true,
+    "persisted_effect_pixel_is_success": true,
+    "protocol_provider_ledger_usage_agree": true,
+    "runtime_task_success_untouched": true
+  },
+  "classification": "PASS_SCOPED",
+  "efficiency_or_reliability_claim": false,
+  "original_ledger_score": false,
+  "posthoc_evidence_rescore": true,
+  "rescore_relationship": "The raw ledger score remains false and unchanged; the additive auditor uses separately retained owner click/effect/pixel and release receipts to correct the score. This report does not rewrite the historical run or runtime task_success.",
+  "schema": "agent-interface/p07-provider-ledger-rescore-reconciliation-v1",
+  "scope": "one real model turn, standard public MCP, synthetic Fake X only"
+}
