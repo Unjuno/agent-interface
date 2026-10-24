@@ -16,6 +16,10 @@ the actual supported caller. Versioned research clients are not interchangeable.
 | 4. Live task | Run a fresh permitted allocation through the supported caller, with frozen conditions and bounded cleanup. | Independent task score, per-action/release evidence, raw/audit and retained failures. |
 | 5. Efficiency and transfer | Compare matched baseline and integrated arms, then qualify another domain/platform. | Correctness plus calls/tokens, latency, resources, recovery/failure cost and uncertainty for all attempts. |
 
+## Latest scoped result
+
+- [P06 App Server visual-grounding outcome](../research/integration/current_main_appserver_public_mcp_visual_grounding_20261025_p06/RESULT.md): the real model selected the correct green-target point from the exact public Fake X observation, but the frozen runner failed before mint because the public observation has no `window_generation` field. Raw is retained and the outcome is corrected additively. This does not pass target-generation mint, task effect, release, recovery, live transfer or efficiency; P06 was not retried.
+
 Offline composition, reference mapping and evidence checks can proceed while a
 specific live resource is unavailable. A narrow blocked operation does not stop
 all independent work. Do not substitute repeated construction for the eventual
