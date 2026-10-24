@@ -275,7 +275,7 @@ class OperationOwner:
             readback_outcome = "missing"
         else:
             readback_outcome = "invalid"
-        readback_attempt = (copy.deepcopy(readback)
+        readback_attempt = (self._safe_readback_attempt(readback)
             if type(readback) is dict and not readback_verified else None)
         with self._lock:
             record = self._matching(operation_id, target_generation)
@@ -467,3 +467,20 @@ class OperationOwner:
                                 "recovery_pending"):
             value["status"] = "pending"
         return value
+
+    @staticmethod
+    def _safe_readback_attempt(readback):
+        """Retain bounded JSON-safe fields from a rejected observer response."""
+        fields = ("operation_id", "target_generation",
+                  "producer_exit_confirmed_ns", "observed_monotonic_ns",
+                  "neutral")
+        retained = {}
+        for name in fields:
+            value = readback.get(name)
+            if type(value) is str and len(value) <= 256:
+                retained[name] = value
+            elif type(value) is int and -(1 << 63) <= value < (1 << 63):
+                retained[name] = value
+            elif type(value) is bool:
+                retained[name] = value
+        return retained

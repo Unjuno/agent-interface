@@ -1,4 +1,5 @@
 """Inert custody-gate tests for the Win32 operation owner."""
+import json
 import unittest
 import threading
 import multiprocessing
@@ -240,6 +241,38 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertEqual(result["completion_readback_attempt"], readback)
         self.assertIsNone(result["completion_readback"])
         self.assertIsNone(result["task_success"])
+        with self.assertRaises(OwnerRefused):
+            self.owner.admit("op-next", GEN_B, 1_000, [])
+
+    def test_invalid_readback_attempt_remains_json_safe_for_public_reporting(self):
+        self.owner.admit("op-invalid-readback", GEN_A, 1_000, ["CTRL"],
+                         start_gate_required=True)
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-invalid-readback", GEN_A,
+            process, process_identity=PRODUCER))
+        self.assertTrue(self.owner.authorize_producer_start(
+            "op-invalid-readback", GEN_A, process, lambda: None))
+        process.alive = False
+        process.exitcode = 0
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        readback = {"operation_id": "op-invalid-readback",
+            "target_generation": GEN_A, "producer_exit_confirmed_ns": 100,
+            "observed_monotonic_ns": 100, "neutral": float("nan")}
+
+        result = self.owner.producer_completed("op-invalid-readback", GEN_A,
+            process, release_receipt=release, readback=readback)
+
+        self.assertEqual(result["completion_readback_outcome"], "invalid")
+        self.assertEqual(result["phase"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        report = json.loads(json.dumps(result, allow_nan=False))
+        self.assertEqual(report["completion_readback_attempt"], {
+            "operation_id": "op-invalid-readback",
+            "target_generation": GEN_A,
+            "producer_exit_confirmed_ns": 100,
+            "observed_monotonic_ns": 100})
+        self.assertIsNone(report["completion_readback"])
         with self.assertRaises(OwnerRefused):
             self.owner.admit("op-next", GEN_B, 1_000, [])
 
