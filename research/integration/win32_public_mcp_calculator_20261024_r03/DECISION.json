@@ -1,0 +1,13 @@
+{
+  "attempt_id": "win32-public-mcp-calculator-20261024-r03-9950ba9bfed148f6866ae8c3872ea8e9",
+  "decision": "SCOPED_NORMAL_RELEASE_EVIDENCE; STRICT_INTEGRATED_ATTEMPT_FAIL_OR_UNKNOWN",
+  "action_status": "completed",
+  "release_confirmed": true,
+  "task_success": null,
+  "strict_runner_status": "FAIL_OR_UNKNOWN",
+  "reason": "The public completion receipt and same-generation neutral readback support normal-path release. The runner skipped its planned same-session task-effect observation because it read target_generation at the wrong level. The only preserved public MCP follow-up was captured 93.094 seconds after the pre-dispatch clock, 3.094 seconds beyond the frozen 90-second limit; therefore it is late supplemental evidence and does not satisfy the R03 task-effect gate.",
+  "known_harness_defects": [
+    "The runner searched interface_results.target_generation instead of interface_results.action.target_generation and omitted its planned same-session observation.",
+    "The generated program_id says R01 although the attempt is R03."
+  ]
+}
