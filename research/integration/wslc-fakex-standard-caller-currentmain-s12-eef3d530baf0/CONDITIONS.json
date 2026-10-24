@@ -1,0 +1,34 @@
+{
+  "schema": "wslc-fakex-standard-caller-currentmain-s12-v1",
+  "attempt_id": "wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "frozen_at_utc": "2026-10-24T17:05:28.1973603Z",
+  "source_commit": "0024d763a106753eb8059cf6828417dca4467a58",
+  "replicates": "new current-main standard MCP caller Fake X scenario, inspired by failed R01; R01 remains immutable",
+  "question": "Does the current main standard MCP caller preserve the exact Fake X target-generation receipt and fail-closed UNKNOWN/no-replay result when the fake X server reply is blocked and public cancellation arrives?",
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+  "session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "ai-control-wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "containers": 1,
+  "network": "none",
+  "source_mount": "current-main Git archive read-only",
+  "dependency_source": "pinned research/integration/public_mcp_three_app_2907_docker_20260927_v1/requirements-lock.txt; linux CPython 3.14 wheels only; hash manifest retained",
+  "dependency_install": "offline pip install into ephemeral /deps at start",
+  "run_timeout_seconds": 90,
+  "retries": 0,
+  "pass": [
+    "single unittest exits 0",
+    "raw test stdout/stderr and exact identity/cancel evidence retained",
+    "test keeps release UNKNOWN, task_success null, replay denied"
+  ],
+  "fail": "Any import error, test assertion, timeout, missing raw output or cleanup ambiguity yields FAIL_OR_UNKNOWN; do not rerun",
+  "nonclaims": [
+    "real X or physical input",
+    "GUI/application or MAP01 effect",
+    "actual provider/model",
+    "matched efficiency or broad reliability"
+  ]
+}

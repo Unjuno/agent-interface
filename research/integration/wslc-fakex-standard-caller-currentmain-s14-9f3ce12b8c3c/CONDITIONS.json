@@ -1,0 +1,38 @@
+{
+  "schema": "wslc-fakex-standard-caller-currentmain-s14-v1",
+  "attempt_id": "wslc-fakex-standard-caller-currentmain-s14-9f3ce12b8c3c",
+  "created_utc": "2026-10-24T17:15:11.6530442Z",
+  "source_commit": "0024d763a106753eb8059cf6828417dca4467a58",
+  "source_snapshot_reference": "../wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0/source-py",
+  "source_manifest": "inputs/SOURCE-PY-SHA256.json",
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+  "new_attempt_reason": "S13 could not import PIL before the test body; this one new allocation adds the S11 hash-verified Pillow 11.3.0 CPython 3.12 wheel; no S12/S13 allocation is repeated",
+  "wslc_session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-standard-caller-currentmain-s14-9f3ce12b8c3c",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-standard-caller-currentmain-s14-9f3ce12b8c3c",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "ai-control-wslc-fakex-standard-caller-currentmain-s14-9f3ce12b8c3c",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "expected_python": "CPython 3.12.14",
+  "wheel_count": 31,
+  "wheel_manifest": "inputs/WHEELHOUSE-SHA256.json",
+  "requirements": "inputs/requirements-s14-cp312.lock",
+  "source_manifest_sha256": "c216834ddf88f4c3bc1c945e2ffff83e4456311fe49f2b515868fce65d6a42dc",
+  "pythonwheel_pillow_sha256": "676b2815362456b5b3216b4fd5bd89d362100dc6f4945154ff172e206a22c024",
+  "network": "none in formal container",
+  "container_count": 1,
+  "retries": 0,
+  "pass": [
+    "one unittest exits 0",
+    "current standard caller identity/cancel assertions pass",
+    "release UNKNOWN, task_success null, replay denied",
+    "raw inputs/outputs and exact cleanup retained"
+  ],
+  "fail": "Any install/import/test failure, timeout, or cleanup uncertainty is FAIL_OR_UNKNOWN; no further attempt",
+  "nonclaims": [
+    "real X or physical input",
+    "GUI/app/MAP01 effect",
+    "provider/model",
+    "efficiency or reliability estimate"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "wslc-fakex-standard-caller-currentmain-s15-v1",
+  "attempt_id": "wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42",
+  "source_commit": "0024d763a106753eb8059cf6828417dca4467a58",
+  "source_snapshot_reference": "../wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0/source-py",
+  "source_manifest": "inputs/SOURCE-PY-SHA256.json",
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+  "new_attempt_reason": "S14 passed but omitted the test-specific AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR, so detailed receipts were not preserved. S15 repeats the same one test solely with raw receipt output enabled; no S14 data or allocation reused.",
+  "wslc_session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42",
+  "session_storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42",
+  "session_storage_path_absent_before_start": true,
+  "container_name": "ai-control-wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "expected_python": "CPython 3.12.14",
+  "wheel_count": 31,
+  "wheel_manifest": "inputs/WHEELHOUSE-SHA256.json",
+  "requirements": "inputs/requirements-s15-cp312.lock",
+  "raw_output": "/out/fake-x-raw",
+  "pass": [
+    "one exact unittest exits 0",
+    "standard-caller-result.json saved and parsed",
+    "all Fake X raw record files hash-manifested",
+    "release UNKNOWN, task_success null, replay denied",
+    "exact container/session/image cleanup confirmed"
+  ],
+  "fail": "Any install/test/receipt/cleanup failure is FAIL_OR_UNKNOWN; no further attempt",
+  "network": "none",
+  "container_count": 1,
+  "retries": 0,
+  "nonclaims": [
+    "real X or physical input",
+    "GUI/application/MAP01",
+    "provider/model",
+    "matched efficiency or reliability"
+  ]
+}
