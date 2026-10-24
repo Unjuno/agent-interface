@@ -1,0 +1,3 @@
+# R31–R46 runtime label correction
+
+The R31–R46 result files and rollup were named and summarized as WSLc. Their own frozen conditions and launch receipts show the runtime was a Docker Desktop container: R46 `CONDITIONS.json` says `Docker Desktop container on the user-authorized local PC`, and `launch_r46.ps1` invokes `docker.exe` for preflight, run, inspect and cleanup. These trials remain valid scoped synthetic-Xvfb Docker evidence, but they are not WSLc experiments and must not be counted toward WSLc verification. This correction changes the runtime classification only; raw outcomes and hashes remain untouched.
