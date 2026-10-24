@@ -1,0 +1,3 @@
+# Win32 supervised caller R50
+
+One new native-Windows paired attempt following R49's frozen bounded-release and fresh-generation task protocol. The strict phase-1 release gate passed 11/11. Phase 2 reached the exact fixture effect and neutral release, but public task-oracle verification failed because the frozen oracle ID contained UUID hyphens rather than the required 32 lowercase hex characters. The overall outcome remains `FAIL_OR_UNKNOWN`; there was no retry. See [RESULT.md](RESULT.md), [R50 preparation](PREPARATION.md), [post-run diagnosis](R50_POSTRUN_DIAGNOSIS.json), raw receipts and frozen conditions.

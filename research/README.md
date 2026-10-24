@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Win32 R50/R51: [paired bounded-release and fresh-generation task results](integration/win32_supervised_standard_caller_20261024_r51/RESULT.md) — R50's strict release phase passed but task verification was rejected because of a malformed oracle ID; its failed outcome is preserved. A new R51 added a preflight format guard and passed 14/14 preflight, 11/11 strict release, and 13/13 paired audit checks. This is one more fixture sample, not a reliability estimate; real-app/MAP01, matched efficiency, model/token accounting and WSLc remain open. See the [R50 failure packet](integration/win32_supervised_standard_caller_20261024_r50/RESULT.md).
+
 - Win32 foreground eligibility R01: [input-free foreground activation and backend check](integration/win32_focus_eligibility_input_free_20261024_r01/RESULT.md) — exact user-authorized activation allowed the backend focus check to return, target readback matched, and no input was emitted. Focus subtest PASS_SCOPED; attempt FAIL_OR_UNKNOWN because the fixture exit code was not retained.
 
 - Win32 R39/R40/R41: [setup failures, foreground-gate diagnostic, and local PC WSLc boundary](integration/win32_pc_wslc_eligibility_20261024/RESULT.md) — R39/R40 sent no native input; R41 passed preflight and failed focus. A local regression later recorded `SetForegroundWindow=False` before any emission. The WSLc probe stopped before container execution because its pinned image was absent. These are not release, task-success, MAP01, efficiency, or reliability evidence.
