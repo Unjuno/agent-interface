@@ -1,4 +1,5 @@
 """Actual Win32 method/session regressions with inert endpoints only."""
+import ctypes
 import json
 import unittest
 from unittest.mock import patch
@@ -39,6 +40,24 @@ class InputState:
             self.down.add(vk)
         elif not self.stubborn:
             self.down.discard(vk)
+        return 1
+
+    def IsWindow(self, hwnd):
+        return True
+
+    def SetCursorPos(self, x, y):
+        self.cursor = (x, y)
+        return True
+
+    def GetCursorPos(self, pointer):
+        point = ctypes.cast(pointer, ctypes.POINTER(native.POINT)).contents
+        point.x, point.y = getattr(self, 'cursor', (0, 0))
+        return True
+
+    def WindowFromPoint(self, point):
+        return 200
+
+    def GetAncestor(self, hwnd, flags):
         return 1
 
     def GetAsyncKeyState(self, vk):
@@ -83,6 +102,11 @@ class ExplicitUpLedgerTests(unittest.TestCase):
                           'emissions': obj.emissions}, sort_keys=True))
 
     def dispatch(self, obj, case, ops):
+        if any(op.get('op') == 'pointer_button' and op.get('down') is True
+               for op in ops):
+            obj.targets = {'fixture': 1}
+            obj.focus = lambda target: setattr(obj, 'focused_target', target)
+            ops = [{'op': 'focus', 'target': 'fixture'}, *ops]
         program = {'schema': SCHEMA_PROGRAM, 'program_id': case,
                    'source': {'observation_seq': 7, 'binding_revision': 3},
                    'authority': {'lease_id': 'ordinary-explicit-up', 'expires_at_ns': 100},
