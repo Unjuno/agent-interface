@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Win32 R15: [exact task effect and observation timing through the public caller](integration/win32_notepad_task_oracle_20261024_r04/attempt-15-task-effect-timing/ASSESSMENT.md) — same-generation exact text task_success verified by an independent native read; release and postflight neutral state confirmed. One scripted Notepad fixture, no model/provider or WSLc; no efficiency, fresh-generation or MAP01 claim.
+
 - Win32 R14: [ten fixed-condition held-keyup recovery repeats](integration/win32_notepad_task_oracle_20261024_r04/attempt-14-held-keyup-repeat/SUMMARY.md) — 10/10 scoped recoveries after native SHIFT-down and producer stop before native SHIFT-up, with same-generation independent key-up and high-resolution timing. One target/host only; not broad reliability, API-internal hang, task success, MAP01, or efficiency. No WSLc allocation used.
 
 - Win32 R50/R51: [paired bounded-release and fresh-generation task results](integration/win32_supervised_standard_caller_20261024_r51/RESULT.md) — R50's strict release phase passed but task verification was rejected because of a malformed oracle ID; its failed outcome is preserved. A new R51 added a preflight format guard and passed 14/14 preflight, 11/11 strict release, and 13/13 paired audit checks. This is one more fixture sample, not a reliability estimate; real-app/MAP01, matched efficiency, model/token accounting and WSLc remain open. See the [R50 failure packet](integration/win32_supervised_standard_caller_20261024_r50/RESULT.md).
