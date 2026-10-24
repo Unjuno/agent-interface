@@ -1,0 +1,43 @@
+{
+  "scope": "path privacy only; trial conditions, raw outcome timing, and task results are unchanged",
+  "redactions": [
+    {
+      "path": "INVOCATION-METADATA.json",
+      "original_sha256": "8847b7e3de5cbc46abf875240dbb5b5d34eeace4252ef72c5f54d4aefd01f26e",
+      "sanitized_sha256": "836b397b655282e9d21555121081f26281cee8ba6c1d6d3737aa6df80fe71c6a",
+      "fields": [
+        "storage_path",
+        "repo_path",
+        "deps_path",
+        "stage_path",
+        "xkb_path",
+        "runner_path",
+        "output_path"
+      ]
+    },
+    {
+      "path": "output/resource-cleanup.json",
+      "original_sha256": "489a76f2454cd88ce91ebdcf5c76468c5f47b85cae70bb918e114c19584466d7",
+      "sanitized_sha256": "b05d865f0710a62f7728a4ba658cde264a667b982a739bc0b555385d9d36b97d",
+      "fields": [
+        "storagePath"
+      ]
+    },
+    {
+      "path": "output/wslc-host-harness.log",
+      "original_sha256": "9ff36aac1d4761a0962cb8afb05cd68de9a563b092311b1258f5ae8cad7ce966",
+      "sanitized_sha256": "bf215bf486449fcbaf88bc54887eeb609a589c60fd03ae45d69232eb9401db87",
+      "fields": [
+        "storagePath"
+      ]
+    },
+    {
+      "path": "HARNESS-BUILD.log",
+      "original_sha256": "0dc81196d94350016b32905b60d1f894c7ed197461b474e4e84bbbd046035c88",
+      "sanitized_sha256": "00e80723b23115fecf94794c5869970febfb69722845c4128c3379c3a70c4097",
+      "fields": [
+        "absolute_workspace_path"
+      ]
+    }
+  ]
+}
