@@ -1,0 +1,37 @@
+{
+  "schema": "wslc-standard-caller-xvfb-r37-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r37",
+  "source_commit": "e4e34a163e1f288d8841d300ae719abcf9e58223",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "pre_registered_local": "2026-10-25",
+  "question": "Does the public standard caller release and independently verify input after a 3500 ms private-Xvfb pause with a 4 s cancellation transaction deadline?",
+  "setup_change": "R36 stopped before runner because CRLF entered script path; R37 writes LF-only container-init file, retaining R30 staged-runtime startup",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "limits": {
+    "network": "none",
+    "cpu": 2,
+    "memory_mb": 2048,
+    "gpu": false,
+    "pids": 128,
+    "rootfs": "ephemeral writable container layer",
+    "tmpfs": "/tmp rw,exec,nosuid,nodev,mode=1777,size=512m",
+    "repo": "read-only",
+    "deps": "read-only",
+    "stage": "read-only",
+    "xkb": "read-only",
+    "output": "read-write"
+  },
+  "pause_ms": 3500,
+  "transaction_deadline_ms": 4000,
+  "public_cancel_response_bound_ms": 3000,
+  "independent_readback_ms": 5000,
+  "late_event_horizon_ms": 8500,
+  "retries": 0,
+  "xkb_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673",
+  "decision": "PASS only if private XRes preflight passes before input; caller/harness exit 0; release within transaction deadline; independent key-up readback <=5000ms; no delayed b and all keys up at >=8500ms; old and fresh task oracles pass; UNKNOWN/replay-denied remain; exact container cleanup succeeds. Else preserve first failure and do not retry.",
+  "comparison": "R30 passed with same source/caller/image at 2950ms and 995.384ms margin. R37 tests 3500ms; synthetic Xvfb only, no MAP01/Win32/real-app or broad efficiency/reliability claim."
+}

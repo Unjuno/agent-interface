@@ -6,6 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- WSLc R31–R37: [standard-caller setup stops and 3.5 s transaction boundary](integration/wslc_standard_caller_xvfb_20261025_R31-R37.md) — R31–R36 stopped before input; R37 passed 26/26 at a 3,500 ms pause with 377.305 ms release margin. Runtime cancellation remains UNKNOWN; synthetic Xvfb only.
 - WSLc R28–R30: [guarded-cancel transaction deadline boundary](integration/wslc_standard_caller_xvfb_20261025_R28-R30.md) — a 2,950 ms private-Xvfb pause failed under the prior 3 s transaction deadline, then passed on the 4 s branch with a 995.384 ms release/readback margin. Runtime custody remains UNKNOWN; synthetic Xvfb only.
 
 - Win32 R15: [exact task effect and observation timing through the public caller](integration/win32_notepad_task_oracle_20261024_r04/attempt-15-task-effect-timing/ASSESSMENT.md) — same-generation exact text task_success verified by an independent native read; release and postflight neutral state confirmed. One scripted Notepad fixture, no model/provider or WSLc; no efficiency, fresh-generation or MAP01 claim.
