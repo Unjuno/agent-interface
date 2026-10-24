@@ -1,0 +1,64 @@
+{
+  "schema": "wslc-currentmain-fakex-generation-refusal-s18-v1",
+  "attempt_id": "s18-747a0c78ccbe",
+  "created_utc": "2026-10-24T17:37:24.6562402Z",
+  "source_commit": "7a32514819294cf16297c414da5c297ed4d0d2e3",
+  "source_snapshot_reference": "../wslc-fakex-standard-caller-currentmain-s12-eef3d530baf0/source-py",
+  "source_manifest_sha256": "c216834ddf88f4c3bc1c945e2ffff83e4456311fe49f2b515868fce65d6a42dc",
+  "source_files": {
+    "runtime/guarded_x11_v1/process_identity.py": {
+      "equal": true,
+      "working_sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+      "origin_main_sha256": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+    },
+    "research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py": {
+      "equal": true,
+      "working_sha256": "172a5b80984ead1d1fd637428b3843919a889c9d783e7c36f8c8f30c59e44bfb",
+      "origin_main_sha256": "172a5b80984ead1d1fd637428b3843919a889c9d783e7c36f8c8f30c59e44bfb"
+    },
+    "runtime/cli_v1/test_mcp_relay_composition.py": {
+      "equal": true,
+      "working_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199",
+      "origin_main_sha256": "94ef6b11804e78927b2f587422e235e7a09b1dafc058efdbdb9a28610da41199"
+    },
+    "runtime/cli_v1/mcp_server.py": {
+      "equal": true,
+      "working_sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+      "origin_main_sha256": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce"
+    },
+    "research/integration/offline_proxy_reply_framing_20261019/fake_socket_relay.py": {
+      "equal": true,
+      "working_sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd",
+      "origin_main_sha256": "4a50a706e5ba7600a190ba3ac531d184bdbdf74498d837dd1c56add9aa94a7fd"
+    },
+    "runtime/cli_v1/owned_guarded_session.py": {
+      "equal": true,
+      "working_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "origin_main_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786"
+    }
+  },
+  "test_selector": "runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_generation_change_refuses_before_any_relay_action",
+  "session_api": "Microsoft.WSL.Containers 3.0.3",
+  "session_name": "agent-interface-wslc-fakex-generation-refusal-s18-747a0c78ccbe",
+  "storage_path": "D:\\CodexData\\Temp\\agent-interface-wslc-fakex-generation-refusal-s18-747a0c78ccbe",
+  "container_name": "ai-control-wslc-fakex-generation-refusal-s18-747a0c78ccbe",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "wheelhouse_reference": "../wslc-fakex-standard-caller-currentmain-s15-3a94a47ddf42/inputs/wheelhouse-cp312",
+  "wheel_manifest_sha256": "22d87feb3b0e92b144ab7e412deb3ef5cfab3d7731577a80b84b65df9cd014c8",
+  "runner_sha256": "a4e2a0feb335bb4f5e83e50930ac46021f76f1ffc5458fff1c185348757fa379",
+  "harness_source_sha256": "7cf465672c8a408f51e431be577ed818600ae68ded86ff566782a069df2fc9b5",
+  "harness_exe_sha256": "298fa87508fe39cfbda4d0e487011ac9486652b09cf746bc86dc7ad24a1cf426",
+  "pass": [
+    "one exact test passes through standard caller",
+    "observed and current target generations differ",
+    "input_dispatched false and no accepted Fake X press",
+    "task_success null and replay denied",
+    "exact container/image/session cleanup recorded"
+  ],
+  "fail": "Any preflight/test/receipt/cleanup failure is FAIL_OR_UNKNOWN; no retry",
+  "preflight": "scoped exact-name filter in new isolated session; S16/S17 observed exit 0 and empty stdout/stderr for no rows; S18 requires exit 0, empty stdout and empty stderr",
+  "network": "none inside container",
+  "container_count": 1,
+  "retries": 0,
+  "scope": "Synthetic Fake X standard caller only"
+}
