@@ -2283,6 +2283,44 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
 
+    async def test_prestarted_supervisor_allows_release_to_finish_after_three_seconds(self):
+        """A delayed but finite release may finish after the old 3 s budget."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root/'block-cleanup-supervisor').write_text('block', encoding='utf-8')
+            server, action = await self._start_prestarted_cancel_case(root)
+            try:
+                started = time.monotonic()
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                self.assertLess(time.monotonic() - started, 0.45, cancel)
+                self.assertEqual(cancel['status'], 'pending', cancel)
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertIsNone(cancel['task_success'])
+                self.assertFalse(cancel['replay_allowed'])
+
+                # Keep the real public composition and supervisor alive beyond
+                # the former 3 s deadline, then let its one-shot worker finish.
+                await asyncio.sleep(3.2)
+                (root/'continue-cleanup-supervisor').write_text(
+                    'continue', encoding='utf-8')
+                result = await self._wait_for_cancel_terminal(
+                    server, action['call_id'], timeout_s=1.5)
+                cleanup = result['cancellation']['result']
+                self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                 'readback_verified', cleanup)
+                self.assertFalse(cleanup['release_confirmed'])
+                self.assertIsNone(cleanup['task_success'])
+                self.assertFalse(cleanup['replay_allowed'])
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                self.assertEqual(state['down'], [])
+                self.assertEqual(len(state['effects']), 1)
+            finally:
+                (root/'continue-cleanup-supervisor').write_text(
+                    'continue', encoding='utf-8')
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
     async def test_prestarted_supervisor_deadline_kills_blocked_worker_and_preserves_unknown(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

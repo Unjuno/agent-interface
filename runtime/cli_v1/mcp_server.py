@@ -30,6 +30,7 @@ from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 # Reserve time to resume the loop and encode a response within the caller budget.
 _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
 _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
+_GUARDED_CANCEL_TRANSACTION_TIMEOUT_S = 4.0
 _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 
@@ -322,7 +323,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   guarded_window_lifecycle=False, guarded_owned_process=False,
                   guarded_prestarted_cancel_supervisor=False,
                   _guarded_cancel_supervisor_target=None,
-                  _guarded_cancel_transaction_timeout_s=3.0,
+                  _guarded_cancel_transaction_timeout_s=(
+                      _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S),
                   _guarded_owner_factory=None,
                   _guarded_win32_owner_factory=None,
                   _guarded_win32_producer_factory=None,

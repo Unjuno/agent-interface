@@ -1,0 +1,73 @@
+{
+  "schema": "wslc-standard-caller-xvfb-r28-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-r28",
+  "preregistered_utc": "2026-10-24T15:48:48.4451436+00:00",
+  "source_commit": "058ab3c36092d5883d15bf44c7f0d4c573d2e763",
+  "source_remote_main": "058ab3c36092d5883d15bf44c7f0d4c573d2e763",
+  "source_hashes": {
+    "test": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "xres": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+    "runner": "2063fabc2e241657ae0c08e6667eb0069dc23e1e3b7cc5c4a0d67b3630c9ed2c",
+    "harness": "198d7c723679da6e75ba081163c66dcdcb8fee4f76ba8a1071ec1d3469f3bc41",
+    "stage_manifest": "0ed4edad0c497789c0db967e1bb359b753df8d966606e746321ec02b12b22493",
+    "comparison_packet_readme": "713507ed12b0c4af186c2e8efaceb5f1883c3bd4072476a9e068c70420c94486"
+  },
+  "session_name": "ai-control-r28-44dc9bab4f5f433f87092e3c9f791b60",
+  "container_name": "ai-control-r28-44dc9bab4f5f433f87092e3c9f791b60-container",
+  "session_storage_path": "D:\\CodexData\\Temp\\ai-control-r28-44dc9bab4f5f433f87092e3c9f791b60",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "session_limits": {
+    "gpu": false,
+    "timeout_minutes": 15,
+    "memory_mb": 2048,
+    "cpu_count": 2
+  },
+  "container": {
+    "privileged": false,
+    "output_mount": "read-write",
+    "networking": "None",
+    "dependencies_mount": "read-only",
+    "gpu": false,
+    "xkb_mount": "read-only",
+    "count": 1,
+    "stage_mount": "read-only",
+    "repo_mount": "read-only"
+  },
+  "test": "unmodified current-main runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+  "question": "Does the standard caller complete supervisor XRes release/readback before the exact 3000ms transaction deadline at a 2900ms private Xvfb pause, with independent release and task/horizon oracles passing? Single boundary stress sample.",
+  "comparison_reference": {
+    "caveat": "different source freeze and execution packaging; environment-only effect cannot be inferred",
+    "packet": "research/integration/x11_queued_up_cancel_20261023_r01",
+    "known_result": "native WSL2 no-pause old effect count 1; 1000ms-pause old effect count 3 and task FAIL; source freeze 708171052/base d0d623ad",
+    "published_readme_sha256": "713507ed12b0c4af186c2e8efaceb5f1883c3bd4072476a9e068c70420c94486"
+  },
+  "changed_factor": "private Xvfb pause from R26 2800 ms to 2900 ms, approaching the fixed 3000 ms cancellation transaction deadline; source/image/caller unchanged",
+  "conditions": {
+    "AGENT_INTERFACE_MCP_XVFB_TEST": "1",
+    "AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS": "1",
+    "LD_LIBRARY_PATH": "/tmp/stage/lib",
+    "AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS": "2900",
+    "AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR": "1",
+    "AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S": "0"
+  },
+  "pretrial_gate": "digest image and read-only mounts; private Xvfb :88; input-free Xlib/XRes PID+start-tick identity pass before input or stop with zero input",
+  "bounds": {
+    "cancel_response_ms": 3000,
+    "session_timeout_minutes": 15,
+    "retries": 0,
+    "independent_release_readback_ms_from_cancel_start": 5000,
+    "container_seconds": 240,
+    "supervisor_release_before_transaction_deadline": true,
+    "harness_seconds": 900,
+    "image_pull_seconds": 600,
+    "late_event_horizon_ms": 8500,
+    "test_seconds": 210
+  },
+  "preregistered_decision": {
+    "comparison": "old task exact effect remains 1 and passes independently; fresh task exact-once remains required",
+    "scoped_outcome": "PASS only if test exits 0, supervisor release/readback timestamp is <= transaction deadline, independent parent sees all keys up by +5000ms, no delayed b and all keys up at >=+8500ms, old/fresh task oracles pass, old UNKNOWN fence is preserved, and exact owned cleanup succeeds; otherwise preserve and classify failure without retry",
+    "claim": "one current-main WSLc synthetic-Xvfb deadline-boundary stress sample; not Windows desktop/MAP01, efficiency, or broad reliability"
+  },
+  "cleanup": "only exact unique session/container/image/storage in CONDITIONS; no global inventory/list; hash/remove exact storage only after own session termination",
+  "retry": "none"
+}
