@@ -305,7 +305,8 @@ retained result; `interface_cancel` requests bounded recovery for that call.
 
 `task_success` remains null unless an independent task-effect certificate is
 integrated for that task. An embedding application may configure a
-server-side task oracle when constructing the supervised server. In that
+server-side task oracle with the public `supervised_win32_task_oracle=`
+parameter when constructing the supervised server. In that
 case, `interface_verify_task(call_id, wait_for_result_ms)` asks that configured
 oracle to inspect the exact completed or recovered action. The client provides
 only the action call ID; it cannot submit a success receipt or choose the

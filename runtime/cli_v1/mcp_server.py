@@ -329,14 +329,21 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_win32_task_oracle=None,
                   _supervised_win32_owner_factory=None,
                   _supervised_win32_producer_factory=None,
-                  _supervised_win32_task_oracle=None):
+                  _supervised_win32_task_oracle=None,
+                  supervised_win32_task_oracle=None):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11",
                             "guarded-win32", "supervised-win32"):
         raise ValueError("unknown session mode")
     guarded_win32 = session_mode == 'guarded-win32'
     supervised_win32 = session_mode == 'supervised-win32'
     if (_supervised_win32_task_oracle is not None
-            and (not supervised_win32 or not callable(_supervised_win32_task_oracle))):
+            and supervised_win32_task_oracle is not None):
+        raise ValueError('configure only one supervised Win32 task oracle')
+    task_oracle = (supervised_win32_task_oracle
+                   if supervised_win32_task_oracle is not None
+                   else _supervised_win32_task_oracle)
+    if (task_oracle is not None
+            and (not supervised_win32 or not callable(task_oracle))):
         raise ValueError('supervised Win32 task oracle must be a callable configured for supervised-win32')
     if guarded_win32 and os.name != 'nt':
         raise ValueError('guarded-win32 requires a Windows host')
@@ -1268,7 +1275,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 wait_for_result_ms=wait_for_result_ms)
 
     if supervised_win32:
-        if callable(_supervised_win32_task_oracle):
+        if callable(task_oracle):
             @server.tool()
             async def interface_verify_task(
                     call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')],
@@ -1311,7 +1318,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         'replay_allowed':False,'scope':'supervised_win32'},
                         error=effect.get('status')=='unknown')
                 task = asyncio.create_task(asyncio.to_thread(
-                    _supervised_win32_task_oracle, {'call_id':call_id, **action}))
+                    task_oracle, {'call_id':call_id, **action}))
                 task_oracle_tasks.add(task)
 
                 def task_oracle_finished(done):
