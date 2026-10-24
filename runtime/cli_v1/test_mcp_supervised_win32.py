@@ -285,6 +285,54 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(oracle_calls, [dispatched["call_id"]])
             await server.call_tool("interface_close", {})
 
+    async def test_supervised_task_oracle_timeout_is_unknown_and_cannot_be_retried(self):
+        owner, producer, _ = self.make_components()
+        oracle_started = threading.Event()
+        release_oracle = threading.Event()
+        oracle_calls = []
+
+        def oracle(action):
+            oracle_calls.append(action["call_id"])
+            oracle_started.set()
+            release_oracle.wait(2)
+            return {
+                "call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "oracle_id": "f" * 32,
+                "outcome": "success",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-oracle:late-result",
+            }
+
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                _supervised_win32_task_oracle=oracle)
+            dispatched = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            timed_out = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 0})).content[0].text)
+            self.assertTrue(oracle_started.wait(1))
+            self.assertEqual(timed_out["status"], "unknown", timed_out)
+            self.assertIsNone(timed_out["task_success"])
+            self.assertFalse(timed_out["replay_allowed"])
+            release_oracle.set()
+            await asyncio.sleep(0.05)
+            repeated = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 1000})).content[0].text)
+            self.assertEqual(repeated["status"], "unknown", repeated)
+            self.assertIsNone(repeated["task_success"])
+            self.assertEqual(oracle_calls, [dispatched["call_id"]])
+            await server.call_tool("interface_close", {})
+
     async def test_native_producer_directory_is_disjoint_from_public_call_receipts(self):
         owner, producer, _ = self.make_components()
         producer_roots = []
