@@ -78,7 +78,7 @@ def _run_standard_program(start_gate, targets, action, packet_path):
         except BaseException:
             # Missing or partial output is retained as an unconfirmed producer
             # result by the parent. Never retry a possibly emitted program.
-            return
+            pass
 
 
 class NativeWin32StandardProducerFactory:
