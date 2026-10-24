@@ -1,0 +1,32 @@
+{
+  "schema": "win32-screen-calculator-r20-conditions-v1",
+  "attempt_id": "win32-screen-calculator-task-20261024-r20-8c91a6e4",
+  "frozen_utc": "2026-10-24T08:59:00.924995+00:00",
+  "host": "attached Windows PC; user-authorized native Win32 route",
+  "source_commit": "212c5f1494d0c84f48c6b6ebbe64fb4c77c2bed7",
+  "source_tree": "f9b12ec434ce48c0d084b884bb3bfcc136d035b6",
+  "target_hwnd": 55117672,
+  "target_pid": 35132,
+  "baseline_display": "1045",
+  "expected_display": "1046",
+  "frame": "screen_physical_px",
+  "region": [
+    48,
+    32,
+    320,
+    533
+  ],
+  "effect_timing": "independent UIA observer continuously samples CalculatorResults before and during one public dispatch; QPC start/end bracket each property-tree read",
+  "uia_monitor_poll_ms": 10,
+  "task_oracle_schema_required": [
+    "call_id",
+    "operation_id",
+    "target_generation",
+    "oracle_id",
+    "outcome",
+    "observed_monotonic_ns",
+    "evidence_ref"
+  ],
+  "stop_rule": "One fresh dispatch. Require three stable UIA samples at 1045 before dispatch. Stop before input on any target, image, generation, focus, geometry, or baseline mismatch. No replay; if pending, cancel only exact call once and read-only poll for at most 4 seconds.",
+  "scope": "one native Windows Calculator sample; no WSLc, MAP01, blocked-I/O release, matched efficiency, or reliability estimate"
+}
