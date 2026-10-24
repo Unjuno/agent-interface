@@ -1,0 +1,13 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p09-amendment-v1",
+  "time": "2026-10-25",
+  "trigger": "The compiled public response reports its outcome in method_receipt.outcome and has no top-level status property; the independent scorer incorrectly required a direct-input status field.",
+  "classification": "ROUTE_SPECIFIC_RESPONSE_SHAPE_MISMATCH",
+  "correction": "Determine compiled action completion from method_receipt.outcome == TASK_SUCCEEDED, and direct action completion from result.status == completed. Keep owner receipts, effect pixel and verified release as independent requirements.",
+  "corrected_runner_sha256": "6c6d2f904b2d618424e2962e24a23c9c93d1ece59c309dcf790d290137fdfcfd",
+  "scope_affected": "Scoring only. No prompt, model, effort, target, action route, runtime, retry, or recovery change.",
+  "remaining_trial_policy": "Continue the four remaining predeclared cells once each; do not replay prior outcomes.",
+  "wslc_used": false,
+  "docker_used": false,
+  "physical_input": false
+}

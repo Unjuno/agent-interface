@@ -1,6 +1,6 @@
 # Integration plan
 
-Updated 2026-10-20 after PR #9268. Promote evidence into one usable
+Updated 2026-10-25 after P09 matched caller trial. Promote evidence into one usable
 computer-control path.
 Use [the work map](WORKER_WORK_MAP.md) to choose a finite contribution and
 [the current interface guide](../runtime/USING_CURRENT_INTERFACE.md) to identify
@@ -22,6 +22,7 @@ the actual supported caller. Versioned research clients are not interchangeable.
 - [P07 App Server visual-grounding outcome](../research/integration/current_main_appserver_public_mcp_visual_grounding_20261025_p07/RESULT.md): one real model turn selected and clicked the green target through standard public MCP on Fake X; mint sequence, exact-one-click owner evidence, effect pixel, and release receipts independently pass. The frozen runner's scorer missed owner files because it searched at the wrong directory depth; the raw failure label is retained and corrected additively. This does not qualify WSLc/live transfer, MAP01, blocked-I/O recovery, matched efficiency, or reliability.
 - [P08 real-provider stale-generation outcome](../research/integration/current_main_appserver_public_mcp_generation_refusal_20261025_p08/RESULT.md): after one real model response and before mint/action, the child-owned Fake X process generation changed. The standard compiled public caller refused the old generation with `SAFE_YIELD / association_changed`, zero transitions/input/effect, and a verified neutral close. Frozen audit and usage receipts are retained; runtime `task_success` stays null. This qualifies only one synthetic refusal sample, not WSLc/live transfer, blocked-I/O release, matched efficiency or reliability.
 - [P08 provider usage reconciliation](../research/integration/p08_provider_usage_reconciliation_20261025/README.md): App Server usage, provider result and all-attempt ledger agree for the one completed turn (10,185 input / 60 output / 41 reasoning); the final point and raw hashes also reconcile. One sample only; no matched efficiency or reliability estimate.
+- [P09 matched caller comparison](../research/integration/current_main_appserver_matched_efficiency_20261025_p09/RESULT.md): three counterbalanced direct-input/compiled-caller pairs on Fake X produced 6/6 independent target effects and verified releases. Descriptive paired medians favor compiled action-return by 1,188 ms, with only three pairs and no broad claim. The full preregistered result is **incomplete**: a redaction bug rewrote JSON-like `ledger/raw` `.bin` files, and ProviderAttemptRecorder reports raw digest mismatch in all six cells. Before any further provider run, use the corrected redactor and prove raw bytes remain immutable. This does not qualify WSLc, live GUI, MAP01, blocked-I/O recovery or full usage-to-ledger custody.
 
 Offline composition, reference mapping and evidence checks can proceed while a
 specific live resource is unavailable. A narrow blocked operation does not stop
