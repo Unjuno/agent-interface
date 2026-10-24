@@ -365,6 +365,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 
 ### Recent direct-root evidence
+- [Issue #57 Win32 Calculator R01–R03](integration/win32_public_mcp_calculator_20261024_r03/RESULT.md) — R03 confirms one normal-path public Win32 action and neutral release; strict task-effect gate remains `FAIL_OR_UNKNOWN` after a runner omission and late post-observation.
 - [Issue #8488 PSI-triggered shedding T0 A01](analysis/psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — post-run review found an exclusive-deadline semantics mismatch; disposition is `HOLD_DEADLINE_SEMANTICS_MISMATCH` and the original `NO_RESIDUAL` interpretation is withdrawn. See the [append-only correction](analysis/psi_work_shedding_8488_t0_a01_20261008/SEMANTICS_CORRECTION.md); no runtime/container/production claim.
 - [Issue #8471 T0 A01/A02](analysis/switched_dwell_stability_8471_t0_a01_20261008/REPORT.md) — finite exact-rational switched-mode enumeration and independent audit: 4,096 rows, 1,248 non-Schur-stable products, 129 finite-envelope crossings; A02 independently verifies 20/20 abstract emergency overrides and rejects 3/3 mutations. Method-scoped only; no runtime/safety claim.
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.

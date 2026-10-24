@@ -1,0 +1,46 @@
+{
+  "schema": "win32-public-mcp-calculator-r03-reconciliation-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r03-9950ba9bfed148f6866ae8c3872ea8e9",
+  "checks": {
+    "frozen_conditions_hash_matches_preflight": true,
+    "attempt_and_source_match": true,
+    "pre_observation_generation_matched": true,
+    "static_validation_passed": true,
+    "one_dispatch_call_bound": true,
+    "retained_action_completed": true,
+    "neutral_release_receipt_verified": true,
+    "producer_exit_precedes_readback": true,
+    "generation_matches_action_and_followup": true,
+    "followup_public_observation_is_read_only": true,
+    "followup_dimensions_and_raw_image_hash_match": true,
+    "followup_within_frozen_90s_from_pre_dispatch_clock": false,
+    "followup_is_late_beyond_frozen_90s_bound": true,
+    "server_closed_without_unresolved_calls": true,
+    "runtime_task_success_remains_null": true,
+    "strict_runner_status_preserved_as_fail_or_unknown": true,
+    "runner_skipped_in_session_post_action_observation": true,
+    "program_id_matches_attempt": false,
+    "conditions_record_r02_to_r03_harness_change": true
+  },
+  "passed": 17,
+  "total": 19,
+  "strict_runner_status": "FAIL_OR_UNKNOWN",
+  "scoped_disposition": "normal completion release confirmed; strict integrated attempt remains FAIL_OR_UNKNOWN because the planned post-action observation was skipped and the later follow-up exceeded the frozen 90-second bound",
+  "visual_assessment": "Manual inspection of the hash-bound late follow-up screenshot shows Calculator Standard mode, expression 314 + 728 =, and display 1,042. It was captured 93.094 seconds after the pre-dispatch clock, 3.094 seconds beyond the frozen 90-second limit. It does not qualify as R03 task-effect evidence and does not set task_success.",
+  "task_success": null,
+  "timing_ns": {
+    "action_start": 500499625000000,
+    "pre_dispatch_clock": 500488843000000,
+    "neutral_completion_readback": 500499828000000,
+    "followup_capture_start": 500581937000000,
+    "action_start_to_followup": 82172000000,
+    "neutral_readback_to_followup": 82109000000,
+    "pre_dispatch_clock_to_followup": 93094000000,
+    "late_by_ns": 3094000000
+  },
+  "known_harness_defects": [
+    "interface_results nests target_generation under action.target_generation; runner searched the top-level object and skipped its planned same-session observation.",
+    "The frozen program_id incorrectly retains an R01 label."
+  ],
+  "protocol_deviation": "A separate read-only sky screenshot was viewed before the public-MCP follow-up. It is not used by these checks or as the formal visual artifact."
+}

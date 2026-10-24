@@ -1,0 +1,35 @@
+{
+  "schema": "win32-public-mcp-calculator-followup-observation-v1",
+  "attempt_id": "win32-public-mcp-calculator-followup-20261024-bc9872b0e4984aa4bca7ab200ca4681e",
+  "related_input_attempt": "win32-public-mcp-calculator-20261024-r03-9950ba9bfed148f6866ae8c3872ea8e9",
+  "purpose": "Capture the single frozen post-action public MCP observation that the runner omitted after it incorrectly looked for target_generation at the top level of interface_results; action itself is complete and release-confirmed in saved receipt.",
+  "source_commit": "35bbc613e6a6b70aeadcd3f9db86ac3fc5182d12",
+  "route": "public stdio MCP supervised-win32; interface_observe then interface_close only",
+  "target": {
+    "name": "calculator",
+    "hwnd": 55117672,
+    "expected_generation": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+  },
+  "observation": {
+    "frame": "screen_physical_px",
+    "region": [
+      40,
+      32,
+      336,
+      541
+    ],
+    "expected_dimensions": [
+      336,
+      541
+    ],
+    "read_only": true
+  },
+  "limits": {
+    "observations": 1,
+    "validations": 0,
+    "dispatches": 0,
+    "recovery": 0,
+    "replay": 0
+  },
+  "interpretation": "visual value readback only; no change to R03 result, no task_success promotion; any target/generation mismatch remains unknown"
+}
