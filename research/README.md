@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Win32 R39/R40/R41: [setup failures, foreground-gate diagnostic, and local PC WSLc boundary](integration/win32_pc_wslc_eligibility_20261024/RESULT.md) — R39/R40 sent no native input; R41 passed preflight and failed focus. A local regression later recorded `SetForegroundWindow=False` before any emission. The WSLc probe stopped before container execution because its pinned image was absent. These are not release, task-success, MAP01, efficiency, or reliability evidence.
+
 - Win32 R03: [supervised public caller + independent task-oracle fixture](integration/win32_live_task_oracle_20261024_r03/RESULT.md) — one exact click/save/token task passed with generation-bound dispatch, verified all-up, neutral readback, exact-call oracle success, clean close, and foreground restoration. R01/R02 failures stay preserved; five read-only result lookups after the 10 s pending response were needed. One sample only; no MAP01, blocked-I/O recovery, reliability, efficiency, or WSLc GUI claim.
 
 - Win32 R37b: [strict blocked-callback recovery followed by a fresh-generation task](integration/win32_supervised_standard_caller_20261024_r37b/RESULT.md) — one native-Windows pair passed the R36 strict release gate and then independently verified an exact task effect on a new fixture/session/generation. 11/11 combined audit checks; one paired sample only. Both close responses still report `release_confirmed=false`, no second Q-up hook callback was observed, and this is not WSLc, MAP01, matched efficiency, broad reliability or real-app evidence. The input-free R37a preflight failure is retained separately.

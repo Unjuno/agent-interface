@@ -463,14 +463,18 @@ class Win32Backend:
         hwnd = self._target(target)
         self.user32.ShowWindow(hwnd, SW_RESTORE)
         self.user32.BringWindowToTop(hwnd)
-        self.user32.SetForegroundWindow(hwnd)
+        set_foreground_result = bool(self.user32.SetForegroundWindow(hwnd))
         deadline = time.monotonic() + 1.0
         while time.monotonic() < deadline:
             if int(self.user32.GetForegroundWindow() or 0) == hwnd:
                 self.focused_target = target
                 return
             time.sleep(0.01)
-        raise Win32BackendError("foreground focus verification failed")
+        observed_foreground_hwnd = int(self.user32.GetForegroundWindow() or 0)
+        raise Win32BackendError(
+            "foreground focus verification failed "
+            f"(SetForegroundWindow={set_foreground_result}, "
+            f"observed_foreground_hwnd={observed_foreground_hwnd})")
 
     def _root_point(self, target: str, frame: str, x: int, y: int) -> tuple[int, int]:
         if frame == "screen_physical_px":
