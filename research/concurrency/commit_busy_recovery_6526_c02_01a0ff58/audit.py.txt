@@ -1,0 +1,49 @@
+import copy, hashlib, json, pathlib, sqlite3, tempfile
+
+ROOT=pathlib.Path(__file__).resolve().parent
+def check(rows):
+    if len(rows)!=6 or len({r['id'] for r in rows})!=6: raise ValueError('coverage')
+    for mode in ('DELETE','WAL'):
+        for policy in ('RELEASE_FIRST','COMMIT_ONLY','UPDATE_AGAIN'):
+            r=next(x for x in rows if x['id']==mode+'_'+policy)
+            busy=mode=='DELETE' and policy!='RELEASE_FIRST'
+            expected_revision=2 if busy and policy=='UPDATE_AGAIN' else 1
+            if r['mode']!=mode or r['policy']!=policy or type(r['initial']) is not int or r['initial']!=0: raise ValueError('identity')
+            if type(r['active_after_first_commit']) is not bool or r['active_after_first_commit']!=busy: raise ValueError('active')
+            if type(r['second_commit']) is not bool or r['second_commit']!=busy or r['final_active'] is not False: raise ValueError('commit')
+            error=r['first_error']
+            if busy:
+                if error is None or type(error['code']) is not int or error['code']!=5 or error['name']!='SQLITE_BUSY': raise ValueError('busy')
+            elif error is not None: raise ValueError('unexpected error')
+            e=r['endpoint']
+            if type(e['revision']) is not int or e['revision']!=expected_revision or e['integrity']!='ok' or type(e['changes']) is not int or e['changes']!=0: raise ValueError('endpoint')
+            if type(r['endpoint_exit']) is not int or r['endpoint_exit']!=0 or r['endpoint_stderr_hex']!='': raise ValueError('process')
+            if json.loads(bytes.fromhex(r['endpoint_stdout_hex']))!=e: raise ValueError('stdout')
+            updates=[sql for role,sql in r['trace'] if role=='writer' and sql.startswith('UPDATE ')]
+            commits=[sql for role,sql in r['trace'] if role=='writer' and sql=='COMMIT']
+            if len(updates)!=expected_revision or len(commits)!=(2 if busy else 1): raise ValueError('trace')
+
+if __name__=='__main__':
+    rows=[json.loads(x) for x in (ROOT/'first/rows.jsonl').read_text().splitlines()]
+    check(rows)
+    for r in rows:
+        data=(ROOT/'first'/(r['id']+'.db')).read_bytes()
+        if hashlib.sha256(data).hexdigest()!=r['db_sha256']: raise ValueError('DB hash')
+        with tempfile.TemporaryDirectory(prefix='c02-audit-') as tmp:
+            target=pathlib.Path(tmp)/'copy.db'; target.write_bytes(data)
+            conn=sqlite3.connect(target.as_uri()+'?mode=ro',uri=True)
+            actual=conn.execute('SELECT revision FROM task WHERE id=1').fetchone()[0]
+            integrity=conn.execute('PRAGMA integrity_check').fetchone()[0]
+            conn.close()
+            if actual!=r['endpoint']['revision'] or integrity!='ok': raise ValueError('DB truth')
+    rejected=[]
+    for name in ('revision_bool','erase_busy','duplicate_missing','trace_missing'):
+        changed=copy.deepcopy(rows)
+        if name=='revision_bool': changed[0]['endpoint']['revision']=True
+        elif name=='erase_busy': changed[1]['first_error']=None
+        elif name=='duplicate_missing': changed[2]['endpoint']['revision']=1
+        else: changed[1]['trace']=[x for x in changed[1]['trace'] if x!=['writer','COMMIT']]
+        try: check(changed)
+        except ValueError: rejected.append(name)
+        else: raise ValueError('ineffective control '+name)
+    print(json.dumps({'status':'PASS_NATIVE_COMPATIBILITY_SCOPED','rows':6,'rejected_controls':rejected,'duplicate_revision_cases':[r['id'] for r in rows if r['endpoint']['revision']==2]},sort_keys=True))
