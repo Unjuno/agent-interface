@@ -1,3 +1,18 @@
+**Win32 R36 strict public-cancel release gate (2026-10-24):** one fresh
+fixture/dispatch with same-generation Q-down baseline and one recorded public
+cancel passed the finite gate. Cancel response 1.266 ms; callback remained held
+1252.120 ms after cancel response; 78 exact-call status polls covered the
+1251.953 ms hold. Recovery Q-up SendInput returned at +627.600 ms; an
+independent same-generation sampler recorded 59 Q-up samples before callback
+return, exited cleanly with 602 samples, and a final separate readback was
+neutral. Matched terminal recovery receipt, exact producer exit, fixture/app
+cleanup and foreground restoration passed. `interface_close` nevertheless
+reported `release_confirmed=false`, and no second Q-up hook callback appeared.
+The click/save effect preceded cancellation; a later `q` char event followed;
+runtime `task_success` remains null. Strict bounded release is PASS for this
+single Win32 attempt only; reliability, task success, MAP01, WSLc and efficiency
+remain open. See [R36](../research/integration/win32_supervised_standard_caller_20261024_r36/RESULT.md).
+
 **Win32 R35 terminal-release diagnostic correction (2026-10-24):** R35 did
 not record a public `interface_cancel`; the exact producer completed normally
 with verified terminal `release_all`. After the final Q-up SendInput return and

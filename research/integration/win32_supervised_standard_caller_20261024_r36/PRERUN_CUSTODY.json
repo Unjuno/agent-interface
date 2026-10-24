@@ -1,0 +1,28 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r36",
+  "conditions_sha256": "d365aed3d0c00c90e06b2a2cb9826fc57faab92bfd5ca38cda0ee7d7403b696f",
+  "decision": {
+    "diagnostic_pass": "instrumentation is proven loaded by an input-free subprocess and the live run records exact producer retirement method entry/return timestamps or a bounded trace showing which call remains open at callback release.",
+    "stop": "One fixture, one dispatch, one public cancel attempt maximum; never replay or retry. Abort before cancellation on mismatch. After cancellation, release the hook at bounded hold end or immediately on exception.",
+    "strict_action_outcome": "R36 tests the unchanged strict gate: one recorded public interface_cancel, at least 1250 ms callback hold measured from cancel response, at least 21 same-call results polls during the hold, independent same-generation Q-up evidence, and bounded cleanup. Any missing condition is FAIL_OR_UNKNOWN. Runtime task_success remains null; no retries/replay."
+  },
+  "frozen_files": {
+    "PREPARATION.md": "e721da42d7c08ddc379233149c69a512187030c1b4838e64e17931ce61845ddb",
+    "README.md": "21b0324c21fd5b5e85da738d55aec6a248bf09310e1cb4b401178f1aad0bdb9d",
+    "audit_r36.py": "b04deedc28916f1df0a0dc902abddfd428c597fe6dc91be3f1817d58b0d8eb37",
+    "instrumentation/sitecustomize.py": "213a1869f55020271cca5e3347e579a05045400df6b32daeb88389402bbb9c03",
+    "preflight.py": "2c902b04e841e43deb700e13d187381d40a0a971e5e2f7fbb9aa46ef4d2c6b8c",
+    "probe.py": "99215195b872ef83bcee5ef3513f6b91fb27374efc16f73537e42f6b0acd3c2a",
+    "trace_analysis.py": "842dacaf514f20c16130a519708d85c228214d6c5526d4641e4f526fcb299f5b"
+  },
+  "preflight_sha256": "a7fbffd3f6e0d27aef0f453a2c36efc1de55f376f330fced85af25f157d7f342",
+  "prelaunch_checks": {
+    "all_frozen_hashes_match": true,
+    "all_outputs_absent": true,
+    "input_free_preflight_pass": true,
+    "source_commit_matches": true,
+    "tracked_tree_clean": true
+  },
+  "schema": "win32-r36-prerun-custody-v1",
+  "source_commit": "2f4001b42037156624363c95585193845278b2c7"
+}
