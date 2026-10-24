@@ -1,0 +1,30 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s22",
+  "source_commit": "4391bd82aec748e9f3b3e5ef00e5f604babae111",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "runtime": "WSLc 3.0.3 isolated session/container",
+  "pause_ms": 3860,
+  "transaction_deadline_ms": 4000,
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "network": "none",
+  "cpu": 2,
+  "memory_mb": 2048,
+  "gpu": false,
+  "retries": 0,
+  "xkb_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673",
+  "runner_sha256": "5d3f1a6d122ffd9bb02fc5d5df9038138f14b62470a7a63edb40c312bfc2be29",
+  "init_sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+  "question": "On WSLc 3.0.3 with private Xvfb, can the current-main standard caller preserve independently verified release and task oracles at a 3860 ms X-server pause under the unchanged 4 s transaction deadline?",
+  "mounts": {
+    "deps": "read-only",
+    "repo": "read-only",
+    "xkb": "read-only",
+    "runner": "read-only",
+    "output": "read-write",
+    "stage": "read-only"
+  }
+}

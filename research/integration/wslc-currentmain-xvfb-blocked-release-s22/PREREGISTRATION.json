@@ -1,0 +1,40 @@
+{
+  "schema": "wslc-currentmain-xvfb-s22-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s22",
+  "preregistered_local": "2026-10-25",
+  "source_commit": "4391bd82aec748e9f3b3e5ef00e5f604babae111",
+  "source_hashes": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "1c6722a9d9aa41283a42f5640528e58c6b8afae59681b2d6b7c2bdb7fe59b634",
+    "runtime/cli_v1/mcp_server.py": "937641914b9305cb7cae26d5a83b55a912d534ff2b75420b5a780fb97914f7ce",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7"
+  },
+  "runner_sha256": "5d3f1a6d122ffd9bb02fc5d5df9038138f14b62470a7a63edb40c312bfc2be29",
+  "init_sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+  "question": "On WSLc 3.0.3 with private Xvfb, can the current-main standard caller preserve independently verified release and task oracles at a 3860 ms X-server pause under the unchanged 4 s transaction deadline?",
+  "conditions": {
+    "runtime": "WSLc isolated session and container on user-authorized PC",
+    "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+    "network": "none",
+    "cpu": 2,
+    "memory_mb": 2048,
+    "gpu": false,
+    "pause_ms": 3860,
+    "transaction_deadline_ms": 4000,
+    "public_cancel_response_bound_ms": 3000,
+    "independent_readback_bound_ms": 5000,
+    "delayed_event_horizon_ms": 8500,
+    "source_test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration",
+    "retries": 0,
+    "mounts": {
+      "deps": "read-only",
+      "repo": "read-only",
+      "xkb": "read-only",
+      "runner": "read-only",
+      "output": "read-write",
+      "stage": "read-only"
+    }
+  },
+  "decision": "PASS only if local XRes preflight passes before test input; public caller exits zero; 3860 ms pause is observed; release receipt precedes the exact 4000 ms deadline; independently sampled all-keys-up readback is <=5000 ms; horizon >=8500 ms has no delayed key; old and fresh task oracles pass; old status remains UNKNOWN with replay denied; exact container/session/image cleanup succeeds. Any setup/preflight failure is zero-input and is never retried.",
+  "replication_of": "R46 3860 ms Docker Desktop caller test; exact test and runtime source blobs must match current-main hashes",
+  "limits": "Synthetic private Xvfb only; no physical desktop, MAP01, real application, efficiency comparison, or reliability generalization."
+}
