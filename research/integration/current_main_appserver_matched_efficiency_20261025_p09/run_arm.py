@@ -295,8 +295,8 @@ async def run():
             type(click_point) is list and len(click_point) == 2 and
             GREEN_RECT[0] <= click_point[0] <= GREEN_RECT[2] and
             GREEN_RECT[1] <= click_point[1] <= GREEN_RECT[3])
-        exact_one_click = bool(click and click.get("event", {}).get(
-            "button_press_count") == 1)
+        exact_one_click = bool(len(click_files) == 1 and click and effect and
+            effect.get("button_press_count") == 1)
         click_matches_selected = click_point == point
         method = "interface_guarded_input" if CLI.arm == "direct_public_input" else "interface_guarded_compiled"
         action = tool_body(action_response, method)
@@ -366,8 +366,8 @@ async def run():
             "selected_point": point, "selected_point_inside_green": point_inside,
             "owner_click_point": click_point, "owner_click_inside_green": click_inside,
             "owner_click_matches_model_point": click_matches_selected,
-            "owner_button_press_count": None if click is None else
-                click.get("event", {}).get("button_press_count"),
+            "owner_button_press_count": None if effect is None else
+                effect.get("button_press_count"),
             "independent_final_pixel": final_pixel,
             "independent_task_success": task_success,
             "ledger_complete": ledger.get("complete"),
