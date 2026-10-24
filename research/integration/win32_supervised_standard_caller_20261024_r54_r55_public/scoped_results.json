@@ -1,0 +1,89 @@
+{
+  "schema": "win32-supervised-caller-r54-r55-public-summary-v1",
+  "source_commit": "0f6464adbb4d2c7331b8aae71ee148a638c0ae79",
+  "current_main_at_publication": "291b8c8c5880c8de4d8deaeee1ab0d5125c45c29",
+  "scope": {
+    "environment": "native Windows on the user-authorized PC",
+    "caller": "public stdio MCP",
+    "container_or_wslc": false,
+    "attempts": 2,
+    "retries_or_replays": 0,
+    "reliability_estimate": false,
+    "matched_efficiency": false
+  },
+  "runtime_source_current_main_unchanged": [
+    "runtime/backends/win32_v1/backend.py",
+    "runtime/backends/win32_v1/session.py",
+    "runtime/backends/win32_v1/fixture_app.py",
+    "runtime/cli_v1/mcp_server.py",
+    "runtime/cli_v1/owned_win32_session.py",
+    "runtime/guarded_win32_v1/operation_owner.py"
+  ],
+  "attempts": [
+    {
+      "attempt": "R54",
+      "preflight": "PASS",
+      "phase1_strict_release": "STRICT_RELEASE_PASS",
+      "phase1_release_checks": "11/11",
+      "combined_audit": "PASS_SCOPED",
+      "combined_checks": "14/14",
+      "callback_hold_after_cancel_ms": 1404.9483,
+      "recovery_sendinput_q_up_after_cancel_ms": 619.7598,
+      "independent_same_generation_q_up_after_cancel_ms": 621.229,
+      "eligible_q_up_samples_while_callback_held": 75,
+      "phase2": {
+        "fresh_target_generation": true,
+        "distinct_call_and_operation": true,
+        "task_verifier_status": "verified",
+        "task_success": true,
+        "verified_neutral_release": true,
+        "independently_observed_exact_effect": true,
+        "cleanup_and_foreground_restore": true
+      },
+      "timing_ms": {
+        "sendinput_entry_to_click_wndproc": 9.2367,
+        "sendinput_entry_to_save_handler": 1.3844,
+        "sendinput_entry_to_effect_file_write_return": 1.762,
+        "effect_file_write_return_to_oracle_read_start": 238.8358
+      },
+      "activation_receipt_deviation": "The activation helper raised a retained TypeError after the supported window API returned; the marker was manually recorded and exact foreground HWND/PID were independently checked before input."
+    },
+    {
+      "attempt": "R55",
+      "preflight": "PASS",
+      "phase1_strict_release": "STRICT_RELEASE_PASS",
+      "phase1_release_checks": "11/11",
+      "combined_audit": "PASS_SCOPED",
+      "combined_checks": "14/14",
+      "callback_hold_after_cancel_ms": 1402.8097,
+      "recovery_sendinput_q_up_after_cancel_ms": 632.4875,
+      "independent_same_generation_q_up_after_cancel_ms": 638.4985,
+      "eligible_q_up_samples_while_callback_held": 73,
+      "phase2": {
+        "fresh_target_generation": true,
+        "distinct_call_and_operation": true,
+        "task_verifier_status": "verified",
+        "task_success": true,
+        "verified_neutral_release": true,
+        "independently_observed_exact_effect": true,
+        "cleanup_and_foreground_restore": true
+      },
+      "timing_ms": {
+        "sendinput_entry_to_click_wndproc": 19.3173,
+        "sendinput_entry_to_save_handler": 2.0544,
+        "sendinput_entry_to_effect_file_write_return": 2.4658,
+        "effect_file_write_return_to_oracle_read_start": 210.7989
+      },
+      "activation_receipt_deviation": null
+    }
+  ],
+  "nonclaims": [
+    "WSLc input/release/recovery behavior",
+    "MAP01 or real-application transfer",
+    "physical input-to-display latency",
+    "durable-storage latency",
+    "matched efficiency",
+    "broad reliability estimate",
+    "post-recovery phase-1 task success"
+  ]
+}
