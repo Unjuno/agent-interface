@@ -16,3 +16,9 @@ The completion timestamp is taken when the owner evaluates the release/readback 
 - Combined test runs had one-second async/helper startup timeouts on two separate attempts; each affected test passed on isolated rerun and all modules passed when run separately. Keep these scheduling-sensitive tests under observation.
 
 This prepares future native runs to report measured recovery latency from the retained receipt. It does not retrofit timestamps into historical R10 raw records and is not a new live experiment or proof of model efficiency.
+
+## High-resolution follow-up
+
+R11 showed that this host's `monotonic_ns()` resolution is 15.625 ms. The owner now also records `cleanup_requested_perf_counter_ns`, `recovery_completed_perf_counter_ns`, and `cleanup_latency_perf_counter_ns` from `time.perf_counter_ns()`. The original monotonic request/completion values and strict monotonic deadline gate remain unchanged. The high-resolution interval is populated only for confirmed recovery; unconfirmed/late outcomes keep completion and latency null. It measures owner-side receipt processing, not physical key-up latency. The retained R11 record predates this field and is intentionally unchanged; a subsequent run must capture the new interval before it can support a live duration claim.
+
+The deterministic owner test uses independent fake monotonic and performance clocks. A standard caller test verifies that the high-resolution fields survive in `interface_results`. Local verification after this extension: owner tests 17 passed; process-cancellation tests 12 passed; standard supervised-Win32 and composition tests 29 passed; optimized owner tests plus the composed retained-result test 18 passed.

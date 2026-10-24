@@ -1,0 +1,28 @@
+{
+  "recorded_at_utc": "2026-10-24T11:13:05.112460+00:00",
+  "source_commit": "e44452df2c8017f1b7aef177429cf5b509e9b79b",
+  "scope": "fresh R11 native supervised-Win32 recovery timing run; producer will be held after successful native SendInput return",
+  "target": {
+    "name": "notepad",
+    "hwnd": 24840738,
+    "pid": 18100,
+    "thread_id": 2616,
+    "class_name": "Notepad",
+    "edit_control_hwnd": 746588126,
+    "generation": "ff2b6086b6d8dcff988483ce4294eb3962d5864a0941b0e50bd820d8a120636a"
+  },
+  "preconditions": {
+    "is_window": true,
+    "shift_down": false,
+    "document_text": "",
+    "document_characters": 0
+  },
+  "allocation": "local Windows PC authorized in this thread",
+  "wslc_used": false,
+  "docker_used": false,
+  "limits": [
+    "No claim of a hang inside Windows SendInput.",
+    "This attempt scores recovery/release timing only; no task_success claim.",
+    "Single sample; no reliability or efficiency estimate."
+  ]
+}
