@@ -328,12 +328,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_win32_producer_factory=None,
                   _guarded_win32_task_oracle=None,
                   _supervised_win32_owner_factory=None,
-                  _supervised_win32_producer_factory=None):
+                  _supervised_win32_producer_factory=None,
+                  _supervised_win32_task_oracle=None):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11",
                             "guarded-win32", "supervised-win32"):
         raise ValueError("unknown session mode")
     guarded_win32 = session_mode == 'guarded-win32'
     supervised_win32 = session_mode == 'supervised-win32'
+    if (_supervised_win32_task_oracle is not None
+            and (not supervised_win32 or not callable(_supervised_win32_task_oracle))):
+        raise ValueError('supervised Win32 task oracle must be a callable configured for supervised-win32')
     if guarded_win32 and os.name != 'nt':
         raise ValueError('guarded-win32 requires a Windows host')
     if guarded_win32 and (not isinstance(targets, dict) or len(targets) != 1):
@@ -384,6 +388,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     root.mkdir(parents=True, exist_ok=True)
     lock = threading.Lock()
     workers = set()
+    task_oracle_tasks = set()
     calls = {}
     calls_lock = threading.Lock()
     supervised_cancel_requests = set()
@@ -1263,6 +1268,78 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 wait_for_result_ms=wait_for_result_ms)
 
     if supervised_win32:
+        if callable(_supervised_win32_task_oracle):
+            @server.tool()
+            async def interface_verify_task(
+                    call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')],
+                    wait_for_result_ms: Annotated[StrictInt, Field(ge=0, le=10000)] = 2000
+                    ) -> CallToolResult:
+                """Verify one terminal action with the server-configured independent task oracle.
+
+                The caller supplies only the exact action call ID. The oracle,
+                its evidence source and its identity are configured inside the
+                server; clients cannot submit a self-asserted success receipt.
+                """
+                existing = owner.interface_result(call_id)
+                if existing is None:
+                    return content({'status':'unknown_call','call_id':call_id,
+                        'operation_invoked':False,'task_success':None,
+                        'replay_allowed':False,'scope':'supervised_win32'}, error=True)
+                action = existing.get('action') or {}
+                if action.get('status') not in ('completed','recovered'):
+                    status = ('pending' if action.get('status') in
+                              ('pending','queued','running','cancel_pending') else 'unknown')
+                    return content({'status':status,'call_id':call_id,
+                        'action_status':action.get('status'),'task_success':None,
+                        'operation_invoked':False,'input_dispatched':False,
+                        'replay_allowed':False,'scope':'supervised_win32'})
+                try:
+                    reserved = owner.begin_task_effect_verification(call_id)
+                except ValueError:
+                    return content({'status':'unknown_call','call_id':call_id,
+                        'operation_invoked':False,'task_success':None,
+                        'replay_allowed':False,'scope':'supervised_win32'}, error=True)
+                if not reserved:
+                    existing = owner.interface_result(call_id)
+                    effect = (existing or {}).get('task_effect')
+                    if not isinstance(effect, dict):
+                        effect = {'status':'unknown','task_success':None}
+                    return content({'status':effect.get('status','unknown'),
+                        'call_id':call_id,'task_effect':effect,
+                        'task_success':effect.get('task_success'),
+                        'operation_invoked':False,'input_dispatched':False,
+                        'replay_allowed':False,'scope':'supervised_win32'},
+                        error=effect.get('status')=='unknown')
+                task = asyncio.create_task(asyncio.to_thread(
+                    _supervised_win32_task_oracle, {'call_id':call_id, **action}))
+                task_oracle_tasks.add(task)
+
+                def task_oracle_finished(done):
+                    task_oracle_tasks.discard(done)
+                    if not done.cancelled():
+                        done.exception()
+
+                task.add_done_callback(task_oracle_finished)
+                done, _ = await asyncio.wait({task},
+                    timeout=max(0, wait_for_result_ms * 1_000_000
+                                - _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS)
+                    / 1_000_000_000)
+                if not done:
+                    row = owner.fail_task_effect_verification(
+                        call_id, 'independent_task_oracle_response_timeout')
+                else:
+                    try:
+                        row = owner.record_task_effect(call_id, task.result())
+                    except Exception as error:
+                        row = owner.fail_task_effect_verification(call_id,
+                            'independent_task_oracle_receipt_invalid: ' + repr(error))
+                effect = row['task_effect']
+                return content({'status':effect['status'],'call_id':call_id,
+                    'task_effect':effect,'task_success':effect['task_success'],
+                    'operation_invoked':False,'input_dispatched':False,
+                    'replay_allowed':False,'scope':'supervised_win32'},
+                    error=effect['status']=='unknown')
+
         @server.tool()
         async def interface_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
             """Cancel the exact supervised standard dispatch and retain custody."""
