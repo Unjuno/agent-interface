@@ -1,0 +1,13 @@
+{
+  "schema": "win32-computer-use-live-smoke-v1",
+  "attempt_id": "win32-calc-s02-20261024-005743Z",
+  "frozen_at_utc": "2026-10-24T00:57:43Z",
+  "question": "Does clicking the observed Calculator controls complete the same harmless arithmetic task after the S01 plus-key path visibly produced 12 =?",
+  "hypothesis": "Using the visible plus control will distinguish a key-symbol mapping failure from a broader target-window input failure.",
+  "target": {"app_id":"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App","window_id":76874832,"title":"電卓","mode":"標準","pre_trial_display":"30"},
+  "setup": {"action":"click C using the latest screenshot id and observed coordinates","expected_display":"0","retry_count":0},
+  "action": {"route":"node_repl @oai/sky sky.click with latest screenshot id","sequence":[{"label":"1","x":42,"y":451},{"label":"2","x":122,"y":451},{"label":"plus button","x":279,"y":452},{"label":"3","x":200,"y":452},{"label":"0","x":122,"y":505},{"label":"equals button","x":279,"y":505}],"semantic_expression":"12+30","expected_display":"42","maximum_submissions":1,"retries":0},
+  "pass": ["reset reaches visible 0","each targeted click returns and is followed by a fresh screenshot","final visible result is exactly 42","no retry or second submission"],
+  "unknowns": ["OS key-up state is not exposed by this API","no forced blocking or recovery is tested","visual result is not an independent application oracle","one app, one task, one attempt only; not WSLc, MAP01, efficiency or reliability"],
+  "scope": "One new button-click route diagnostic following S01; not a retry of the S01 method."
+}
