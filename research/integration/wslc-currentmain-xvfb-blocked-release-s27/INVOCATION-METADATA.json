@@ -1,0 +1,33 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s27",
+  "session_name": "agent-interface-wslc-s27-20261025-03f0",
+  "container_name": "ai-control-wslc-s27-03f0",
+  "storage_path": "<private-wslc-session-storage>",
+  "image": "ubuntu@sha256:a2d43bffc46670d7108bb3c0468c67c5557c4c92e83e1e34cbff1322ad1b94dc",
+  "wslc_version": "3.0.3 expected",
+  "network": "none",
+  "cpu": 2,
+  "memory_mb": 2048,
+  "gpu": false,
+  "retries": 0,
+  "repo_path": "<workspace-root>",
+  "deps_path": "<external-dependency-bundle>",
+  "stage_path": "<external-python-stage>",
+  "xkb_path": "<external-xkb-assets>",
+  "runner_path": "<packet-runner>",
+  "output_path": "<packet-output>",
+  "source_commit": "cccfc7e617941d5420da9a71c511a5340320ae71",
+  "runner_sha256": "7c81e934704d2605d4f7ff47f9513960fb7e52dc91bccb6a641fb08b52329840",
+  "init_sha256": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e",
+  "harness_source_sha256": "440c170b312eb4f36bcdbb93e0cbf24ce5e619f7f20192a7f83b5c2d872b622f",
+  "xkb_materialization_manifest_sha256": "c127c3eb684a176ad0b4b6fe3955acaa24d726ccb0a7408fea2c80b8cc53d673",
+  "mounts": {
+    "repo": "read-only",
+    "deps": "read-only",
+    "stage": "read-only",
+    "xkb": "read-only",
+    "runner": "read-only",
+    "output": "read-write"
+  },
+  "no_global_inventory": true
+}
