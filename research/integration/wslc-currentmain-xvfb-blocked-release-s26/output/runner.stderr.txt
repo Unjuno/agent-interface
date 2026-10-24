@@ -1,0 +1,29 @@
+test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb) ... FAIL
+
+======================================================================
+FAIL: test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb (runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/stage/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/stage/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/stage/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/stage/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/repo/runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", line 899, in test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb
+    self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
+AssertionError: 'unknown' != 'disconnected'
+- unknown
++ disconnected
+ : {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'supervisor_status': 'unknown', 'supervisor_reason': 'transaction_deadline'}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'a': 38}, 'buttons': []}}, 'owner_release_attempt': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'worker_exitcode': -15}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True, 'operation_id': '1e4841ff3c2a477196d72b3f82a18196', 'cancellation': {'operation_id': '1e4841ff3c2a477196d72b3f82a18196', 'status': 'completed', 'admitted_monotonic_ns': 29322288591, 'caller_response_deadline_monotonic_ns': 29622288591, 'transaction_deadline_monotonic_ns': 33322288591, 'owner_generation': {'session_id': '4a92fb6fb91f498f8dd8d62499761df9', 'child_pid': 26, 'x_resource_base': 6291456, 'binding_revision': 0}, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'result': {'status': 'cancel_requested', 'already_requested': False, 'input_dispatched': False, 'release_confirmed': False, 'review_required': True, 'replay_allowed': False, 'owner_process_retired': True, 'owner_process_exitcode': -15, 'owner_client_disconnect': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'supervisor_status': 'unknown', 'supervisor_reason': 'transaction_deadline'}, 'owner_input_obligations': {'keys': {'a': 38}, 'buttons': []}, 'owner_input_obligations_source': 'retired_child_shared_state', 'owner_input_obligations_live_read': {'status': 'snapshot', 'obligations': {'keys': {'a': 38}, 'buttons': []}}, 'owner_release_attempt': {'status': 'unknown', 'reason': 'transaction_deadline', 'worker_retired': True, 'worker_exitcode': -15}, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'late_server_request_possible': True}, 'completed_monotonic_ns': 33325805091}}
+
+----------------------------------------------------------------------
+Ran 1 test in 6.789s
+
+FAILED (failures=1)
