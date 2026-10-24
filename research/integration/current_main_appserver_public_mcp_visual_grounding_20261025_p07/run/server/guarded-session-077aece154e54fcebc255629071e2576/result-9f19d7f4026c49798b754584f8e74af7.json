@@ -1,0 +1,168 @@
+{
+  "additional_input_checks": [
+    {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "eligible": true,
+      "ended_ns": 560654862346500,
+      "observation_sequence": 3,
+      "scope": "native-x11:df34bbe7416047fdab364342c62d767f",
+      "stage": "before_admission",
+      "started_ns": 560654861677400
+    },
+    {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "eligible": true,
+      "ended_ns": 560654865458600,
+      "observation_sequence": 4,
+      "scope": "native-x11:df34bbe7416047fdab364342c62d767f",
+      "stage": "before_move",
+      "started_ns": 560654864922800
+    },
+    {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "eligible": true,
+      "ended_ns": 560654868174900,
+      "observation_sequence": 5,
+      "scope": "native-x11:df34bbe7416047fdab364342c62d767f",
+      "stage": "before_press",
+      "started_ns": 560654867643900
+    }
+  ],
+  "admission": "accepted",
+  "execution": {
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "emissions": 3,
+    "ended_ns": 560654869187300,
+    "observations": [],
+    "program_emissions": 3,
+    "releases": [
+      {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 560654869186000,
+        "verified": true
+      }
+    ],
+    "started_ns": 560654862865500,
+    "waits": []
+  },
+  "guard_checks": [
+    {
+      "authority": "resolution only; ordinary admission remains required",
+      "binding_translation": [
+        0,
+        0
+      ],
+      "eligible": true,
+      "handle": "grounded_green",
+      "local_translation": [
+        0,
+        0
+      ],
+      "name": "grounded_green",
+      "observation_sequence": 3,
+      "observed_box": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "patch_sha256": "e0148b0a42da11c615a163dff1e1b08c5409886abdf7c95b1dc5cc10f035e6ee",
+      "point": [
+        16,
+        8
+      ],
+      "private_registry_id_exposed": false,
+      "reason": "exact_region_match",
+      "reference_kind": "session_alias",
+      "sequence": 3,
+      "stage": "before_admission",
+      "status": "VALID",
+      "valid_until_ns": 560656360119200
+    },
+    {
+      "authority": "resolution only; ordinary admission remains required",
+      "binding_translation": [
+        0,
+        0
+      ],
+      "eligible": true,
+      "handle": "grounded_green",
+      "local_translation": [
+        0,
+        0
+      ],
+      "name": "grounded_green",
+      "observation_sequence": 4,
+      "observed_box": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "patch_sha256": "e0148b0a42da11c615a163dff1e1b08c5409886abdf7c95b1dc5cc10f035e6ee",
+      "point": [
+        16,
+        8
+      ],
+      "private_registry_id_exposed": false,
+      "reason": "exact_region_match",
+      "reference_kind": "session_alias",
+      "sequence": 4,
+      "stage": "before_move",
+      "status": "VALID",
+      "valid_until_ns": 560656363543600
+    },
+    {
+      "authority": "resolution only; ordinary admission remains required",
+      "binding_translation": [
+        0,
+        0
+      ],
+      "eligible": true,
+      "handle": "grounded_green",
+      "local_translation": [
+        0,
+        0
+      ],
+      "name": "grounded_green",
+      "observation_sequence": 5,
+      "observed_box": [
+        14,
+        6,
+        4,
+        4
+      ],
+      "patch_sha256": "e0148b0a42da11c615a163dff1e1b08c5409886abdf7c95b1dc5cc10f035e6ee",
+      "point": [
+        16,
+        8
+      ],
+      "private_registry_id_exposed": false,
+      "reason": "exact_region_match",
+      "reference_kind": "session_alias",
+      "sequence": 5,
+      "stage": "before_press",
+      "status": "VALID",
+      "valid_until_ns": 560656366090300
+    }
+  ],
+  "recovery_required": false,
+  "required_capabilities": [
+    "display.geometry",
+    "input.pointer",
+    "input.release_all",
+    "window.focus"
+  ],
+  "status": "completed"
+}

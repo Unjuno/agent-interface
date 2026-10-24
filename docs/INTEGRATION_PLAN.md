@@ -19,6 +19,7 @@ the actual supported caller. Versioned research clients are not interchangeable.
 ## Latest scoped result
 
 - [P06 App Server visual-grounding outcome](../research/integration/current_main_appserver_public_mcp_visual_grounding_20261025_p06/RESULT.md): the real model selected the correct green-target point from the exact public Fake X observation, but the frozen runner failed before mint because the public observation has no `window_generation` field. Raw is retained and the outcome is corrected additively. This does not pass target-generation mint, task effect, release, recovery, live transfer or efficiency; P06 was not retried.
+- [P07 App Server visual-grounding outcome](../research/integration/current_main_appserver_public_mcp_visual_grounding_20261025_p07/RESULT.md): one real model turn selected and clicked the green target through standard public MCP on Fake X; mint sequence, exact-one-click owner evidence, effect pixel, and release receipts independently pass. The frozen runner's scorer missed owner files because it searched at the wrong directory depth; the raw failure label is retained and corrected additively. This does not qualify WSLc/live transfer, MAP01, blocked-I/O recovery, matched efficiency, or reliability.
 
 Offline composition, reference mapping and evidence checks can proceed while a
 specific live resource is unavailable. A narrow blocked operation does not stop
