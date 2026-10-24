@@ -193,6 +193,98 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             await server.call_tool("interface_close", {})
         self.assertTrue(supervisor.closed)
 
+    async def test_supervised_task_oracle_certifies_exact_completed_action_once(self):
+        owner, producer, _ = self.make_components()
+        oracle_calls = []
+
+        def oracle(action):
+            oracle_calls.append(dict(action))
+            return {
+                "call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "oracle_id": "b" * 32,
+                "outcome": "success",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-oracle:save-receipt:sha256:" + "c" * 64,
+            }
+
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                _supervised_win32_task_oracle=oracle)
+            dispatched = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            self.assertEqual(dispatched.get("status"), "returned", dispatched)
+            verified = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 1000})).content[0].text)
+            self.assertEqual(verified["status"], "verified", verified)
+            self.assertTrue(verified["task_success"])
+            self.assertFalse(verified["operation_invoked"])
+            self.assertFalse(verified["input_dispatched"])
+            self.assertFalse(verified["replay_allowed"])
+            retained = self.row(await server.call_tool("interface_results", {
+                "call_id": dispatched["call_id"]}))
+            self.assertTrue(retained["task_success"], retained)
+            self.assertEqual(retained["task_effect"]["receipt"]["evidence_ref"],
+                "fixture-oracle:save-receipt:sha256:" + "c" * 64)
+            repeated = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 1000})).content[0].text)
+            self.assertEqual(repeated["status"], "verified", repeated)
+            self.assertEqual(len(oracle_calls), 1)
+            self.assertEqual(oracle_calls[0]["call_id"], dispatched["call_id"])
+            self.assertEqual(oracle_calls[0]["target_generation"], GENERATION)
+            await server.call_tool("interface_close", {})
+
+    async def test_supervised_task_oracle_rejects_wrong_generation_without_retry(self):
+        owner, producer, _ = self.make_components()
+        oracle_calls = []
+
+        def oracle(action):
+            oracle_calls.append(action["call_id"])
+            return {
+                "call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": "d" * 64,
+                "oracle_id": "e" * 32,
+                "outcome": "success",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-oracle:wrong-generation",
+            }
+
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                _supervised_win32_task_oracle=oracle)
+            dispatched = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            failed = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 1000})).content[0].text)
+            self.assertEqual(failed["status"], "unknown", failed)
+            self.assertIsNone(failed["task_success"])
+            self.assertFalse(failed["replay_allowed"])
+            self.assertIn("different action generation",
+                failed["task_effect"]["uncertainty"])
+            repeated = json.loads((await server.call_tool("interface_verify_task", {
+                "call_id": dispatched["call_id"],
+                "wait_for_result_ms": 1000})).content[0].text)
+            self.assertEqual(repeated["status"], "unknown", repeated)
+            self.assertEqual(oracle_calls, [dispatched["call_id"]])
+            await server.call_tool("interface_close", {})
+
     async def test_native_producer_directory_is_disjoint_from_public_call_receipts(self):
         owner, producer, _ = self.make_components()
         producer_roots = []
