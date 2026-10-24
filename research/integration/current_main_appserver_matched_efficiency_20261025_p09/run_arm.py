@@ -75,7 +75,19 @@ def sha(data):
 
 
 def write_json(path, value):
-    Path(path).write_text(json.dumps(value, indent=2, sort_keys=True) + "\n",
+    def normalize(item):
+        if item is None or type(item) in (bool, int, float, str):
+            return item
+        if type(item) is dict:
+            return {str(key): normalize(child) for key, child in item.items()}
+        if type(item) in (list, tuple):
+            return [normalize(child) for child in item]
+        if hasattr(item, "model_dump"):
+            return normalize(item.model_dump(mode="json", by_alias=True))
+        if hasattr(item, "__dict__"):
+            return normalize(vars(item))
+        raise TypeError(f"unsupported JSON evidence object: {type(item).__name__}")
+    Path(path).write_text(json.dumps(normalize(value), indent=2, sort_keys=True) + "\n",
                           encoding="utf-8", newline="\n")
 
 
@@ -296,10 +308,12 @@ async def run():
         close_receipt = None
         if action is not None and action.get("status") == "completed":
             close_receipt = await server.call_tool("interface_close", {})
+            close_receipt = json.loads(close_receipt.model_dump_json(by_alias=True))
             close_body = tool_body(close_receipt, "interface_close")
             if close_body and close_body.get("status") == "busy":
                 await asyncio.sleep(0.01)
                 close_receipt = await server.call_tool("interface_close", {})
+                close_receipt = json.loads(close_receipt.model_dump_json(by_alias=True))
                 close_body = tool_body(close_receipt, "interface_close")
             write_json(OUT / "post-action-close.json", close_receipt)
         released = releases or bool((tool_body(close_receipt, "interface_close") or {}).get("verified"))

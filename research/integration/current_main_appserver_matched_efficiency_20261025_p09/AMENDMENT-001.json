@@ -1,0 +1,14 @@
+{
+  "schema": "agent-interface/appserver-matched-efficiency-p09-amendment-v1",
+  "time": "2026-10-25",
+  "trigger": "The first direct arm completed an owner-side click, effect and verified release, but the run harness raised TypeError while serializing the MCP CallToolResult returned by post-action close. The original RESULT.json and all first-run raw evidence are retained; p01-direct_public_input will not be repeated.",
+  "classification": "POST_ACTION_EVIDENCE_SERIALIZATION_DEFECT",
+  "observed_first_outcome": "FAIL_AFTER_MINT_DURING_DIRECT_ACTION",
+  "correction": "Normalize MCP Pydantic CallToolResult values before writing evidence, and redact embedded JSON strings structurally so the retained envelopes remain parseable.",
+  "corrected_runner_sha256": "5434a2a66930c630a32e7f39a8cb9295e58cb4d8077f487391de51b66ee51dfb",
+  "scope_affected": "Evidence serialization and privacy redaction only. No model prompt, model, effort, target image, task, mint rule, action route, retry rule, or runtime code changes.",
+  "remaining_trial_policy": "Continue only the five remaining predeclared pair-arm cells in original order; retain each once. The first cell remains a harness failure and counts as a non-pass in reliability summaries.",
+  "wslc_used": false,
+  "docker_used": false,
+  "physical_input": false
+}

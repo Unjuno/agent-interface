@@ -26,6 +26,12 @@ def scrub(value):
     if type(value) is list:
         return [scrub(item) for item in value]
     if type(value) is str:
+        try:
+            nested = json.loads(value)
+        except json.JSONDecodeError:
+            nested = None
+        if nested is not None:
+            return json.dumps(scrub(nested), sort_keys=True, separators=(",", ":"))
         return PRIVATE_PATH.sub("<private-path>", value)
     return value
 
