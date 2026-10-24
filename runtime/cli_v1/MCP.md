@@ -302,6 +302,13 @@ and immediately before opening the gated producer. Producer exit, its release
 receipt, and a separately supervised neutral-state readback are retained as
 distinct custody evidence. `interface_results` retrieves the exact call's
 retained result; `interface_cancel` requests bounded recovery for that call.
+When normal completion does not have an accepted neutral readback, the action
+stays `unknown` and `release_confirmed` stays false. Its
+`completion_custody.completion_readback_outcome` distinguishes
+`not_attempted`, `missing`, `non_neutral`, `invalid`, and `verified`; a rejected
+attempt, when present, is retained in `completion_readback_attempt`. Only the
+accepted `completion_readback` alongside completed custody confirms neutral
+state. A retained attempt by itself never confirms release.
 
 `task_success` remains null unless an independent task-effect certificate is
 integrated for that task. An embedding application may configure a

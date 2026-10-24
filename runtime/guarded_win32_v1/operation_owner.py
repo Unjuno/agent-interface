@@ -83,6 +83,8 @@ class OperationOwner:
                 "release_confirmed": False,
                 "completion_release_receipt": None,
                 "completion_readback": None,
+                "completion_readback_outcome": "not_attempted",
+                "completion_readback_attempt": None,
                 "task_success": None,
                 "replay_allowed": False,
                 "uncertainty": None,
@@ -251,7 +253,7 @@ class OperationOwner:
             and release_receipt.get("keys_unknown") == []
             and release_receipt.get("buttons_unknown") == []
         )
-        readback_verified = (
+        readback_bound = (
             type(readback) is dict
             and set(readback) == {"operation_id", "target_generation",
                 "producer_exit_confirmed_ns", "observed_monotonic_ns", "neutral"}
@@ -262,8 +264,19 @@ class OperationOwner:
             and type(readback.get("observed_monotonic_ns")) is int
             and readback["observed_monotonic_ns"] >= readback["producer_exit_confirmed_ns"]
             and readback["observed_monotonic_ns"] <= now_ns
-            and readback.get("neutral") is True
+            and type(readback.get("neutral")) is bool
         )
+        readback_verified = readback_bound and readback["neutral"] is True
+        if readback_verified:
+            readback_outcome = "verified"
+        elif readback_bound:
+            readback_outcome = "non_neutral"
+        elif readback is None:
+            readback_outcome = "missing"
+        else:
+            readback_outcome = "invalid"
+        readback_attempt = (self._safe_readback_attempt(readback)
+            if type(readback) is dict and not readback_verified else None)
         with self._lock:
             record = self._matching(operation_id, target_generation)
             if record["status"] == "completed":
@@ -277,6 +290,11 @@ class OperationOwner:
             if record["status"] != "running":
                 if record["status"] in ("cancel_pending", "producer_retired",
                                          "recovery_pending", "recovered", "unknown"):
+                    if (record["status"] == "unknown"
+                            and self._producer_handles.get(operation_id) is process_handle
+                            and record["completion_readback_outcome"] == "not_attempted"):
+                        record["completion_readback_outcome"] = readback_outcome
+                        record["completion_readback_attempt"] = readback_attempt
                     return self._public(record)
                 raise OwnerRefused("operation is not awaiting normal producer completion")
             if (record["producer_identity"] is None
@@ -293,6 +311,11 @@ class OperationOwner:
             current_identity = None
         with self._lock:
             record = self._matching(operation_id, target_generation)
+            if (record["completion_readback_outcome"] == "not_attempted"
+                    and self._producer_handles.get(operation_id) is process_handle
+                    and record["producer_identity"] == expected_identity):
+                record["completion_readback_outcome"] = readback_outcome
+                record["completion_readback_attempt"] = readback_attempt
             if (record["status"] != "running"
                     or self._producer_handles.get(operation_id) is not process_handle
                     or record["producer_identity"] != expected_identity):
@@ -444,3 +467,20 @@ class OperationOwner:
                                 "recovery_pending"):
             value["status"] = "pending"
         return value
+
+    @staticmethod
+    def _safe_readback_attempt(readback):
+        """Retain bounded JSON-safe fields from a rejected observer response."""
+        fields = ("operation_id", "target_generation",
+                  "producer_exit_confirmed_ns", "observed_monotonic_ns",
+                  "neutral")
+        retained = {}
+        for name in fields:
+            value = readback.get(name)
+            if type(value) is str and len(value) <= 256:
+                retained[name] = value
+            elif type(value) is int and -(1 << 63) <= value < (1 << 63):
+                retained[name] = value
+            elif type(value) is bool:
+                retained[name] = value
+        return retained
