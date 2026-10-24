@@ -1,0 +1,18 @@
+{
+  "schema": "win32-public-mcp-calculator-r04-audit-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r04-cd8092b5c5d04a8aa24c45f566046dd5",
+  "checks": {
+    "frozen_conditions_hash_matches": true,
+    "source_and_attempt_match": true,
+    "target_foreground_verified": true,
+    "pre_action_generation_matches": true,
+    "validation_rejected_before_runtime_admission": true,
+    "invalid_program_id_length_explains_rejection": true,
+    "dispatch_not_called": true,
+    "session_closed_no_calls_or_unresolved": true,
+    "task_success_not_claimed": true
+  },
+  "passed": 9,
+  "total": 9,
+  "disposition": "STOP_BEFORE_DISPATCH; frozen program invalid because program_id length 73 exceeds 64-character contract; no input, runtime admission or task effect"
+}

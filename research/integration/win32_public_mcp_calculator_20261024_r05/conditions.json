@@ -1,0 +1,113 @@
+{
+  "schema": "win32-public-mcp-calculator-r05-v1",
+  "attempt_id": "win32-public-mcp-calculator-20261024-r05-76fe423b62db484a9ee279c57cb36e65",
+  "hypothesis": "The corrected public MCP runner extracts generation from the terminal action result and captures the one post-action observation within the frozen 90-second bound.",
+  "changed_factor_from_r01": "Capture frame only: screen_physical_px desktop BitBlt instead of window_client PrintWindow. New attempt ID; R01 remains unchanged.",
+  "host_scope": "user-authorized native Windows PC",
+  "source_commit": "6aea5d3f359f42811d4e1dd1060fc575560ceeae",
+  "route": "runtime.cli_v1.mcp_server.create_server(session_mode=supervised-win32), public stdio MCP interface_observe/interface_validate/interface_dispatch/interface_results/interface_close",
+  "target": {
+    "app_id": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
+    "window_id": 55117672,
+    "title": "電卓",
+    "task_surface": "Calculator Standard mode"
+  },
+  "expected_observation": {
+    "frame": "screen_physical_px",
+    "region": [
+      40,
+      32,
+      336,
+      541
+    ],
+    "image_size": [
+      336,
+      541
+    ],
+    "window_rect": [
+      40,
+      32,
+      336,
+      541
+    ],
+    "client_size": [
+      320,
+      533
+    ],
+    "client_origin_screen": [
+      48,
+      32
+    ],
+    "screen_size": [
+      1920,
+      1080
+    ],
+    "initial_display": "1042",
+    "target_must_be_foreground": true
+  },
+  "task": {
+    "instruction": "Clear the displayed prior result, then use Calculator to compute 314 + 728.",
+    "expected_display_numeric_value": 1042,
+    "visible_value_normalization": "ignore only locale group separators such as comma or space",
+    "effect_evidence": "One fresh same-session public MCP screen_physical_px observation after completed terminal result and confirmed neutral readback, within 90 seconds of pre-dispatch clock; runtime task_success remains null."
+  },
+  "comparison": {
+    "arms": 1,
+    "model_calls": 0,
+    "efficiency_comparison": false,
+    "price": "unavailable"
+  },
+  "limits": {
+    "attempts": 1,
+    "pre_action_observations": 1,
+    "post_action_observations": 1,
+    "validations": 1,
+    "dispatches": 1,
+    "clock_reads": 1,
+    "results_polls_max": 5,
+    "recovery_calls": 0,
+    "replays": 0,
+    "wall_clock_seconds": 90,
+    "on_unexpected_or_uncertain_result": "stop; preserve UNKNOWN; no repair, replay, or retry"
+  },
+  "input_program": {
+    "actions": [
+      "click C",
+      "click 3",
+      "click 1",
+      "click 4",
+      "click +",
+      "click 7",
+      "click 2",
+      "click 8",
+      "click ="
+    ],
+    "input_release": "explicit terminal release_all and action receipt completion readback",
+    "coordinate_basis": "fresh screen observation must visibly show the expected Calculator layout; compute button centers from the frozen fractions over the read-only client geometry and convert to absolute screen coordinates",
+    "client_center_fractions": {
+      "left_x": 0.13,
+      "second_x": 0.375,
+      "third_x": 0.625,
+      "right_x": 0.875,
+      "row_789_y": 0.643,
+      "row_456_y": 0.745,
+      "row_123_plus_y": 0.848,
+      "row_0_equals_y": 0.945,
+      "clear_row_y": 0.388
+    },
+    "action_replay": false,
+    "program_id": "calc-r05-314plus728"
+  },
+  "excluded_claims": [
+    "model efficiency/tokens/cost",
+    "broad reliability",
+    "blocked-I/O release",
+    "MAP01",
+    "WSLc",
+    "cross-domain transfer",
+    "task_success field promotion"
+  ],
+  "changed_factor_from_r02": "Harness process-session custody only; target, task, public route, capture frame, coordinate program, poll bound, and stop rules are unchanged. R02 dispatched no input.",
+  "changed_factor_from_r03": "Runner result binding/program id correction; task now explicitly clears the retained 1042 then enters the same calculation. Public route, target, frame, and one-attempt discipline remain.",
+  "changed_factor_from_r04": "program_id shortened to the contract-valid fixed identifier calc-r05-314plus728. R04 stopped before admission and emitted no input; the task, target, route, click sequence and bound are unchanged."
+}

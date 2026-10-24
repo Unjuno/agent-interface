@@ -1,0 +1,204 @@
+{
+  "blocks": [
+    {
+      "sha256": "81aa70efbba757cf218ed4a7facab430dc44b84b05bbdc32280efa566b5078b7",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "parsed": {
+    "call": {
+      "arguments": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "program": {
+          "authority": {
+            "expires_at_ns": 501143484000000,
+            "lease_id": "65fd42f65d194e78855dc56479ca261f"
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "calculator"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 248,
+              "y": 239
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 248,
+              "y": 484
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 90,
+              "y": 484
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 90,
+              "y": 429
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 328,
+              "y": 484
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 90,
+              "y": 375
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 168,
+              "y": 484
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 168,
+              "y": 375
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "frame": "screen_physical_px",
+              "op": "pointer_move",
+              "x": 328,
+              "y": 536
+            },
+            {
+              "button": "left",
+              "down": true,
+              "op": "pointer_button"
+            },
+            {
+              "button": "left",
+              "down": false,
+              "op": "pointer_button"
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "program_id": "calc-r05-314plus728",
+          "schema": "agent-interface/program-v1",
+          "source": {
+            "binding_revision": 1,
+            "observation_seq": 1,
+            "target_generations": {
+              "calculator": "6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c"
+            }
+          },
+          "terminal": {
+            "release_all_required": true
+          }
+        }
+      },
+      "backend_attempted": true,
+      "call_id": "6c7f575eaffa461b8fdeb26b12422b2f",
+      "operation": "dispatch",
+      "persistence_failure": null,
+      "response_wait_ms": 10000,
+      "state": "running"
+    },
+    "call_id": "6c7f575eaffa461b8fdeb26b12422b2f",
+    "effect_status": "unknown",
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "result_available": false,
+    "scope": "current_server",
+    "status": "pending",
+    "task_success": null
+  },
+  "raw_text": "{\"status\": \"pending\", \"call_id\": \"6c7f575eaffa461b8fdeb26b12422b2f\", \"call\": {\"call_id\": \"6c7f575eaffa461b8fdeb26b12422b2f\", \"operation\": \"dispatch\", \"state\": \"running\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"calc-r05-314plus728\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"calculator\": \"6c8471d23316dfac526a53a0249470c0289b6744ab2124b19b24df8d9f321c7c\"}}, \"authority\": {\"lease_id\": \"65fd42f65d194e78855dc56479ca261f\", \"expires_at_ns\": 501143484000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"calculator\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 239}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 248, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 429}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 90, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 484}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 168, \"y\": 375}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 328, \"y\": 536}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": true, \"persistence_failure\": null, \"response_wait_ms\": 10000}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}"
+}
