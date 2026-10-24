@@ -1,0 +1,139 @@
+{
+  "call_id": "9eae039eec2c47de90853c3fb7c105f5",
+  "operation_id": "08c5583a3fb74b7f84204db693f5d655",
+  "target_generation": "8dd17b0a4c43a3cffb6e0ac28b28dc602be366320d039549a7e04d1096bc1ab8",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "display.geometry",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 496313406000000,
+      "ended_ns": 496313453000000,
+      "emissions": 66,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "keys_unknown": [],
+          "buttons_unknown": [],
+          "state_query_witnesses": {
+            "17": [
+              "@{target=fixture; hwnd=3999942; pid=50712; thread_id=49552; input_desktop=Default; input_desktop_active=True; desktop_hookcontrol_opened=True; probe_integrity_rid=8192; target_integrity_rid=8192}",
+              "@{target=fixture; hwnd=3999942; pid=50712; thread_id=49552; input_desktop=Default; input_desktop_active=True; desktop_hookcontrol_opened=True; probe_integrity_rid=8192; target_integrity_rid=8192}"
+            ],
+            "83": [
+              "@{target=fixture; hwnd=3999942; pid=50712; thread_id=49552; input_desktop=Default; input_desktop_active=True; desktop_hookcontrol_opened=True; probe_integrity_rid=8192; target_integrity_rid=8192}",
+              "@{target=fixture; hwnd=3999942; pid=50712; thread_id=49552; input_desktop=Default; input_desktop_active=True; desktop_hookcontrol_opened=True; probe_integrity_rid=8192; target_integrity_rid=8192}"
+            ],
+            "1": [
+              "@{target=fixture; hwnd=3999942; pid=50712; thread_id=49552; input_desktop=Default; input_desktop_active=True; desktop_hookcontrol_opened=True; probe_integrity_rid=8192; target_integrity_rid=8192}",
+              "@{target=fixture; hwnd=3999942; pid=50712; thread_id=49552; input_desktop=Default; input_desktop_active=True; desktop_hookcontrol_opened=True; probe_integrity_rid=8192; target_integrity_rid=8192}"
+            ]
+          },
+          "verified": true,
+          "monotonic_ns": 496313453000000
+        }
+      ]
+    },
+    "recovery_required": false
+  },
+  "release_receipt": {
+    "keys_down": [],
+    "buttons_down": [],
+    "keys_unknown": [],
+    "buttons_unknown": [],
+    "state_query_witnesses": {
+      "17": [
+        {
+          "target": "fixture",
+          "hwnd": 3999942,
+          "pid": 50712,
+          "thread_id": 49552,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "desktop_hookcontrol_opened": true,
+          "probe_integrity_rid": 8192,
+          "target_integrity_rid": 8192
+        },
+        {
+          "target": "fixture",
+          "hwnd": 3999942,
+          "pid": 50712,
+          "thread_id": 49552,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "desktop_hookcontrol_opened": true,
+          "probe_integrity_rid": 8192,
+          "target_integrity_rid": 8192
+        }
+      ],
+      "83": [
+        {
+          "target": "fixture",
+          "hwnd": 3999942,
+          "pid": 50712,
+          "thread_id": 49552,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "desktop_hookcontrol_opened": true,
+          "probe_integrity_rid": 8192,
+          "target_integrity_rid": 8192
+        },
+        {
+          "target": "fixture",
+          "hwnd": 3999942,
+          "pid": 50712,
+          "thread_id": 49552,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "desktop_hookcontrol_opened": true,
+          "probe_integrity_rid": 8192,
+          "target_integrity_rid": 8192
+        }
+      ],
+      "1": [
+        {
+          "target": "fixture",
+          "hwnd": 3999942,
+          "pid": 50712,
+          "thread_id": 49552,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "desktop_hookcontrol_opened": true,
+          "probe_integrity_rid": 8192,
+          "target_integrity_rid": 8192
+        },
+        {
+          "target": "fixture",
+          "hwnd": 3999942,
+          "pid": 50712,
+          "thread_id": 49552,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "desktop_hookcontrol_opened": true,
+          "probe_integrity_rid": 8192,
+          "target_integrity_rid": 8192
+        }
+      ]
+    },
+    "verified": true,
+    "monotonic_ns": 496313453000000
+  },
+  "backend_close": {
+    "status": "closed",
+    "property_cleanup": [
+      {
+        "hwnd": 3999942,
+        "status": "retained_until_window_destroyed"
+      }
+    ]
+  }
+}

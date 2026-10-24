@@ -1,0 +1,347 @@
+{
+  "attempt_id": "win32-live-task-oracle-r02-723729e08c9f4c9db6a60fb582a52406",
+  "cleanup": {
+    "finished_unix_ns": 1792805006255035300,
+    "fixture_exit_code": 0,
+    "foreground_after": {
+      "hwnd": 393882,
+      "is_window": true,
+      "title": "ChatGPT"
+    },
+    "foreground_before": {
+      "hwnd": 393882,
+      "is_window": true,
+      "title": "ChatGPT"
+    },
+    "foreground_restored": true
+  },
+  "error": {
+    "message": "unhandled errors in a TaskGroup (1 sub-exception)",
+    "type": "ExceptionGroup"
+  },
+  "status": "FAIL_OR_UNKNOWN",
+  "steps": [
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\observe-0.json",
+          "sha256": "b3130902210107643ca935198b11dbc7dd2f295cc1854bd55e0d720bcb80dd4b",
+          "type": "text"
+        },
+        {
+          "bytes": 1195,
+          "mimeType": "image/png",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\observe-1.png",
+          "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+          "type": "image"
+        }
+      ],
+      "isError": false,
+      "name": "observation",
+      "parsed": {
+        "authority": "none",
+        "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\server-receipts\\1818cda995be43f5a84dd6f87c473da8",
+        "call_id": "1818cda995be43f5a84dd6f87c473da8",
+        "image_reference": {
+          "authority": "none",
+          "capture_ns": 496307671000000,
+          "freshness": "historical referenced capture; no new observation",
+          "observation_id": "702034cd43ef4fb3a694fa56515b10e6",
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\server-receipts\\1818cda995be43f5a84dd6f87c473da8\\images\\fb5daa8c330842c6980b6c05e5793801.png",
+          "recorded_capture": {
+            "capture_ended_ns": 496307671000000,
+            "capture_started_ns": 496307671000000,
+            "frame": "window_client",
+            "height": 180,
+            "native_window_id": 3999942,
+            "region": [
+              0,
+              0,
+              400,
+              180
+            ],
+            "target": "fixture",
+            "width": 400
+          },
+          "relative_path": "images\\fb5daa8c330842c6980b6c05e5793801.png",
+          "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+          "status": "image"
+        },
+        "image_status": "image",
+        "outcome_summary": {
+          "cleanup_error": null,
+          "error": null,
+          "failure_phase": null,
+          "reported_status": "returned"
+        },
+        "receipt": {
+          "authority": "none",
+          "events": [],
+          "latest_observations": [],
+          "motor_state_validation": {
+            "accepted": false,
+            "present": false,
+            "reason": "missing"
+          },
+          "omitted_from_view": 0,
+          "record_counts": {},
+          "report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 1195,
+                "height": 180,
+                "mime_type": "image/png",
+                "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\server-receipts\\1818cda995be43f5a84dd6f87c473da8\\images\\fb5daa8c330842c6980b6c05e5793801.png",
+                "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+                "source_raw_sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+                "timing_ns": {
+                  "converted": 496307671000000,
+                  "encoded": 496307671000000,
+                  "started": 496307671000000,
+                  "written": 496307671000000
+                },
+                "width": 400
+              },
+              "bytes": 288000,
+              "capture_ended_ns": 496307671000000,
+              "capture_started_ns": 496307671000000,
+              "frame": "window_client",
+              "height": 180,
+              "native_window_id": 3999942,
+              "region": [
+                0,
+                0,
+                400,
+                180
+              ],
+              "sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+              "target": "fixture",
+              "width": 400
+            },
+            "observation_id": "702034cd43ef4fb3a694fa56515b10e6",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "call_count": 0,
+              "mode": "supervised-win32",
+              "session_id": "40aed9446b1446bfb4ea20e47417d6b4",
+              "state": "open",
+              "synthetic_only": false,
+              "unresolved_call_ids": []
+            },
+            "side_effect_authority": false,
+            "status": "returned",
+            "target_generation": "8dd17b0a4c43a3cffb6e0ac28b28dc602be366320d039549a7e04d1096bc1ab8",
+            "target_generation_consistency": "matched"
+          },
+          "schema": "agent-interface/receipt-view-v1",
+          "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+          "source": {
+            "bytes": 1458,
+            "kind": "received_bytes",
+            "path": null,
+            "raw_report": {
+              "input_dispatched": false,
+              "observation": {
+                "artifact": {
+                  "bytes": 1195,
+                  "height": 180,
+                  "mime_type": "image/png",
+                  "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\server-receipts\\1818cda995be43f5a84dd6f87c473da8\\images\\fb5daa8c330842c6980b6c05e5793801.png",
+                  "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+                  "source_raw_sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+                  "timing_ns": {
+                    "converted": 496307671000000,
+                    "encoded": 496307671000000,
+                    "started": 496307671000000,
+                    "written": 496307671000000
+                  },
+                  "width": 400
+                },
+                "bytes": 288000,
+                "capture_ended_ns": 496307671000000,
+                "capture_started_ns": 496307671000000,
+                "frame": "window_client",
+                "height": 180,
+                "native_window_id": 3999942,
+                "region": [
+                  0,
+                  0,
+                  400,
+                  180
+                ],
+                "sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+                "target": "fixture",
+                "width": 400
+              },
+              "observation_id": "702034cd43ef4fb3a694fa56515b10e6",
+              "schema": "agent-interface/runtime-observation-v1",
+              "session": {
+                "call_count": 0,
+                "mode": "supervised-win32",
+                "session_id": "40aed9446b1446bfb4ea20e47417d6b4",
+                "state": "open",
+                "synthetic_only": false,
+                "unresolved_call_ids": []
+              },
+              "side_effect_authority": false,
+              "status": "returned",
+              "target_generation": "8dd17b0a4c43a3cffb6e0ac28b28dc602be366320d039549a7e04d1096bc1ab8",
+              "target_generation_consistency": "matched"
+            },
+            "sha256": "d6c015350f26f66c5563074f41fb373353d9e9640a1621c614049b7c5cc19122"
+          }
+        },
+        "schema": "agent-interface/review-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "40aed9446b1446bfb4ea20e47417d6b4",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        }
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\clock-0.json",
+          "sha256": "7fae8187be9c4ef301c80687e6b452f2a3f417addb369cade46ca6aba448f6c3",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "clock",
+      "parsed": {
+        "authority_granted": false,
+        "clock": "time.monotonic_ns",
+        "input_dispatched": false,
+        "lease_issued": false,
+        "monotonic_ns": 496307687000000,
+        "schema": "agent-interface/execution-clock-v1",
+        "scope": "Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.",
+        "server_instance_id": "36d91fa248e749349dd3cd4e422b5ded"
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\validation-0.json",
+          "sha256": "39532b0ec9db2eea29de6cdb300ac97fe28f7b5cee20bca5f38828504d9ac74d",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "validation",
+      "parsed": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 7,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 7,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      }
+    },
+    {
+      "blocks": [
+        {
+          "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\win32_live_task_oracle_20261024_r02\\run\\dispatch-0.json",
+          "sha256": "becac195977709d112f21a46928b84ee26f9c8a2ea6343aafd20f165f18bf100",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "name": "dispatch",
+      "parsed": {
+        "call": {
+          "arguments": {
+            "current_binding_revision": 1,
+            "current_observation_seq": 1,
+            "program": {
+              "authority": {
+                "expires_at_ns": 496352687000000,
+                "lease_id": "a09f87ec18024f12ab7e170ca738f314"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 70,
+                  "y": 70
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "text",
+                  "text": "task-oracle-r02-79b5f8991ace"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "win32-task-oracle-r02",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "8dd17b0a4c43a3cffb6e0ac28b28dc602be366320d039549a7e04d1096bc1ab8"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            }
+          },
+          "backend_attempted": true,
+          "call_id": "9eae039eec2c47de90853c3fb7c105f5",
+          "operation": "dispatch",
+          "persistence_failure": null,
+          "response_wait_ms": 5000,
+          "state": "running"
+        },
+        "call_id": "9eae039eec2c47de90853c3fb7c105f5",
+        "effect_status": "unknown",
+        "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result_available": false,
+        "scope": "current_server",
+        "status": "pending",
+        "task_success": null
+      }
+    }
+  ]
+}

@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Win32 R03: [supervised public caller + independent task-oracle fixture](integration/win32_live_task_oracle_20261024_r03/RESULT.md) — one exact click/save/token task passed with generation-bound dispatch, verified all-up, neutral readback, exact-call oracle success, clean close, and foreground restoration. R01/R02 failures stay preserved; five read-only result lookups after the 10 s pending response were needed. One sample only; no MAP01, blocked-I/O recovery, reliability, efficiency, or WSLc GUI claim.
+
 - WSLc R01: [compiled-control core verification](integration/wslc_compiled_core_20261024_r01/RESULT.md) — 37 current-main tests passed; the composed Fake X caller test is separately preserved as [blocked before execution](integration/wslc_fake_x_standard_caller_20261024_r01/RESULT.md) because the cached image lacks `mcp`. Neither result establishes GUI or physical-input control.
 
 - [Real xterm public-MCP saved effect](integration/xterm_public_task_20261023_r01/README.md) — one known zero-model task through actual PTY/shell, exactly one saved record; API completion precedes fsync in the sample. Custom task helper, no fault/efficiency/generalization claim.
