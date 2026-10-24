@@ -35,9 +35,27 @@ new task receipt must match its exact call, operation and generation; one oracle
 invocation is allowed. The focused 88-test public MCP/Win32/session/oracle set
 passes in CPython 3.11.9 in both normal and `-O` modes, and the research workspace
 index passes. This is a construction check with fake processes and oracle; it is
-not a live Win32 sequence, WSLc evidence, MAP01, or a reliability estimate. The
-live standard-caller recovery-plus-task-effect sequence remains unverified. See
+not live evidence, WSLc evidence, MAP01, or a reliability estimate. R37b now
+adds one live paired sequence; the regression still covers the controlled old-
+UNKNOWN/fresh-generation boundary locally. See
 `runtime/cli_v1/test_mcp_supervised_win32.py::test_standard_recovered_cancel_then_fresh_generation_task_success`.
+
+**Win32 R37b bounded recovery → fresh-generation task effect (2026-10-24):**
+one new native-Windows sequence passed the unchanged R36 strict release audit
+(10/10), then completed a separate task on a new fixture and target generation.
+Phase 1 held the Q-up callback 1,250.649 ms after a 2.039 ms cancel response,
+with 77 same-call polls; recovery Q-up returned at +626.382 ms, and 57
+same-generation samples observed Q-up before callback return. A final readback
+was neutral. Phase 2 began after cleanup, used one new observation/validation/
+dispatch, retrieved the exact pending call with five read-only polls, and the
+server-side oracle verified the exact click/save/token effect against the new
+call, operation and generation (`task_success=true`). Combined audit: 11/11
+`PASS_SCOPED`, one paired sample only. Both `interface_close` responses said
+`closed` but returned `release_confirmed=false`; phase 1 had no second distinct
+Q-up hook callback, and phase-1 task effect preceded cancellation. WSLc was not
+used; MAP01, efficiency, broad reliability and real-app transfer remain open.
+R37a's input-free root-path preflight failure is preserved separately. See the
+[R37b packet](../research/integration/win32_supervised_standard_caller_20261024_r37b/RESULT.md).
 
 **Win32 R35 terminal-release diagnostic correction (2026-10-24):** R35 did
 not record a public `interface_cancel`; the exact producer completed normally
