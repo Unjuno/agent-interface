@@ -1,0 +1,42 @@
+{
+  "schema": "map01-v39-session-stdout-probe-prereg-v1",
+  "status": "FROZEN_BEFORE_DIAGNOSTIC_START",
+  "diagnostic_id": "map01-v39-session-stdout-probe-a02",
+  "repository_commit": "fd9f7be36806b088a2b7df7c17d2cd2e3b7ab174",
+  "created_utc": "2026-10-24T09:30:34.6900335Z",
+  "output": "research/doom/map01-v39-current-main-threat-live-20261024-r01/diagnostics/session-stdout-probe-a02/raw",
+  "model_calls": 0,
+  "model_runner": false,
+  "session": "V15 target-process-identity session; current fixture; Xvfb+Openbox+XTEST",
+  "fixture_manifest_sha256": "37a1b3bdcabdc77ac6f1d32951f9db1e40e31dcee85f349ee963b9291ebf2857",
+  "fixture_save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+  "iwad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "command": [
+    "python3",
+    "research/doom/map01-v39-current-main-threat-live-20261024-r01/diagnostics/session-stdout-probe-a02/probe_stdout.py"
+  ],
+  "purpose": "Capture each session child stdout line before JSON parsing to identify the parent runner JSONDecodeError observed in the retained first live outcome.",
+  "stop_rule": "Send finish immediately after first initial exact observation; otherwise at 45 seconds send finish; at 55 seconds terminate and preserve output. No retries.",
+  "scope": "Session startup and one initial observation only; fixture setup inputs only; no planner/app-server/model call and no task-control decision.",
+  "source_sha256": {
+    "research/doom/map01-v39-current-main-threat-live-20261024-r01/diagnostics/session-stdout-probe-a02/probe_stdout.py": "18d7978b8585190e6dfc1a04eb24296aef55dbfd56d37e4c02813e52d17fd87c",
+    "research/doom/session_map01_v15.py": "dd75cc1f760e0ba212dcbb74a63d772735745e902ee975eaf25720bbb26eea32",
+    "research/doom/session_map01_v12.py": "ce4310e8acab0712ada1412a6342090f97b2381300492a1a9b4b24aec52dfa80",
+    "research/doom/doom_process_identity_backend_v1.py": "448be33b7e7b6cd75d87ef63706eea452ef7aa83bb9a078c0e579858432f4464",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "72cae2a54e1c86a68f8037ffed2e4da1204b52a7f202d3d04406837f89265103",
+    "research/doom/doom_typed_release_backend_v2.py": "227c51c2dd0dddea509d6cd4a76c2cc9ce28a5a4a6468ea513ea6f076aabe785",
+    "research/live_control/executor_v13.py": "6932a6b0a63d5300f19b6b3875bbb2e3871df8b0f1f1c985ae07d657c1928782",
+    "research/live_control/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "research/live_control/input_owner_v12.py": "61401a8fb582460ad25198018407f83e662f6c213480a469a4b89ee862b7189b",
+    "research/live_control/input_owner_rpc_v2.py": "fe89ac65f077ce4699f9930ae455f996271bf562626e7bb9508d6a0b482dd116",
+    "research/live_control/target_process_identity_v1.py": "b0de63ef020dcb9eae121c315a0b101fd441d0a950fbecf73235eaf179bb5c36",
+    "research/live_control/lease_cause_v2.py": "af6dc0adf94127ec122df9295e2418cf8a378bd62a8ab2d05a5fd5889ffadb2c",
+    "runtime/guarded_x11_v1/process_identity.py": "aae1c07a5e972a4cfeec7c56183645ace7c0c2c5846e6292301d58b84ba7a8f7",
+    "runtime/guarded_x11_v1/target_queries.py": "c7d3667a875383b0f7ad4496a29e86efa547d89979d95324c2528548b6aa33cf",
+    "research/observation_gating/gui_suite.py": "b7aec705c80ac22db2fe01ab871b51da8830c8f43ad9d476f5fb99aeb57bbee3",
+    "research/observation_gating/exact_gate.py": "e3d818ebf3c682d1c09e9a8a0169303d09f20830308c354f496a397afa66a9d5",
+    "research/real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24",
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": "37a1b3bdcabdc77ac6f1d32951f9db1e40e31dcee85f349ee963b9291ebf2857",
+    "research/doom/fixtures/map01-threat-contact-v2/save.png": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401"
+  }
+}
