@@ -1,0 +1,29 @@
+{
+  "schema": "agent-interface/wslc-s30-preparation-attempts-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s30-a57146d1c900",
+  "formal_session_started": false,
+  "attempts": [
+    {
+      "id": 1,
+      "operation": "Windows PowerShell per-file input hashing",
+      "outcome": "failed_preflight",
+      "error": "WinError 1920 while reading the WSL-staged _sysconfigdata__linux_x86_64-linux-gnu.py path",
+      "formal_wslc_session_or_container": false
+    },
+    {
+      "id": 2,
+      "operation": "Windows Python manifest-inputs.py",
+      "outcome": "failed_preflight",
+      "error": "pathlib.Path.is_symlink raised WinError 1920 on the same WSL-staged Linux path",
+      "formal_wslc_session_or_container": false
+    },
+    {
+      "id": 3,
+      "operation": "Same retained S29 manifest generator under Ubuntu WSL",
+      "outcome": "passed_preflight",
+      "result": "Repo, dependencies, Python stage, XKB, and runner manifest hashes and sizes exactly matched S29 INPUT-READINESS-AUDIT.json",
+      "formal_wslc_session_or_container": false
+    }
+  ],
+  "interpretation": "The first two failures were host-side file metadata/read limitations before WSLc allocation. No input was modified and no formal experiment was started. The third path preserved and verified the exact prior input set."
+}

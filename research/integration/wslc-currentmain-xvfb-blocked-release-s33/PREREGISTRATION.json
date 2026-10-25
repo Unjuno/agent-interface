@@ -1,0 +1,19 @@
+{
+  "schema": "agent-interface/wslc-s33-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s33-b87c4e2f9a16",
+  "preregistered_utc": "2026-10-25T11:16:33.8552268+00:00",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "question": "At which exact SDK call does the fresh-session path failure occur, and does the exception chain identify the missing path?",
+  "condition": "Same current-main standard-caller private-Xvfb task and pinned inputs as S29-S32; one SDK-created fresh named session; add only pull invocation start/return markers and full Exception.ToString/InnerException logging.",
+  "session_name": "agent-interface-wslc-s33-b87c4e2f9a16",
+  "container_name": "ai-control-wslc-s33-b87c4e2f9a16",
+  "storage_path": "C:\\Users\\user\\AppData\\Local\\agent-interface-research\\wslc-s33-b87c4e2f9a16\\session-storage-s33",
+  "output_path": "C:\\Users\\user\\AppData\\Local\\agent-interface-research\\wslc-s33-b87c4e2f9a16\\output",
+  "runtime": "WSLc 3.0.3",
+  "allocation": "Unique nonce, absent session storage and output paths verified before invocation; no global inventory",
+  "one_invocation_only": true,
+  "failure_rule": "Any pre-input failure is HOLD; preserve raw, terminate own session, no retry of this attempt.",
+  "no_docker": true,
+  "no_global_inventory": true,
+  "input_not_started_until_pull_success": true
+}

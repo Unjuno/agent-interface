@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface/wslc-s32-independent-audit-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s32-36a51eb610b0",
+  "audit_utc": "2026-10-25T20:15:18.7774527+09:00",
+  "checks": {
+    "prerequisites_passed": true,
+    "sdk_version_3_0_3": true,
+    "unique_session_started": true,
+    "new_sdk_handle_route": true,
+    "failure_is_directory_not_found": true,
+    "no_container_or_test": true,
+    "session_terminated": true,
+    "empty_container_stdout": true,
+    "empty_container_stderr": true,
+    "formal_exit_1": true,
+    "sdk_pull_call_present_before_exception_catch": true,
+    "no_pull_progress_or_completion_recorded": true,
+    "failure_location_unresolved": true
+  },
+  "decision": "HOLD_PRETRIAL_SDK_SESSION_PATH_FAILURE",
+  "trial_started": false,
+  "no_retry": true
+}

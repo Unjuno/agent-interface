@@ -1,0 +1,24 @@
+{
+  "schema": "agent-interface/wslc-s35-preregistration-v1",
+  "attempt_id": "wslc-standard-caller-generation-xvfb-20261025-s35-9b3d17a0fe62",
+  "preregistered_utc": "2026-10-25T11:23:57.7314908+00:00",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "session_name": "agent-interface-wslc-s35-9b3d17a0fe62",
+  "container_name": "ai-control-wslc-s35-9b3d17a0fe62",
+  "storage_path": "C:\\Users\\user\\AppData\\Local\\agent-interface-research\\wslc-s35-9b3d17a0fe62\\session-storage-s35",
+  "output_path": "C:\\Users\\user\\AppData\\Local\\agent-interface-research\\wslc-s35-9b3d17a0fe62\\output",
+  "runtime": "WSLc 3.0.3; one new SDK session; same pinned repo/deps/stage/XKB/image as S34",
+  "task": "runtime.cli_v1.test_mcp_xvfb_generation_integration.StandardCallerXvfbGenerationTests.test_process_and_window_generation_flow_through_standard_mcp",
+  "condition": "Exact S34 test/runtime/data condition; one trial in a new uniquely named session, no code/task-condition change.",
+  "execution": "one invocation, one test body, no retry",
+  "success_rule": "test exits zero and report status PASS_SCOPED_XVFB_STANDARD_CALLER_RECOVERY; independent raw audit checks generation, recovery, effects, stale refusal and exact SDK cleanup.",
+  "allocation": "unique nonce; absent storage/output checked; no global inventory",
+  "host_authority": "User authorized this PC for WSLc",
+  "no_docker": true,
+  "no_global_inventory": true,
+  "no_retry": true,
+  "limitations": [
+    "synthetic private Xvfb only",
+    "not physical Windows input, MAP01/live app, efficiency, or reliability estimate"
+  ]
+}

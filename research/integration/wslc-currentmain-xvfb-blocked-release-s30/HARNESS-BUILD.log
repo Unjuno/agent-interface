@@ -1,0 +1,9 @@
+Command: dotnet restore harness/S30.csproj --source <user NuGet global package cache> --ignore-failed-sources
+Exit code: 0
+Output: project restored in 86 ms.
+
+Command: dotnet build harness/S30.csproj --no-restore --configuration Release
+Exit code: 0
+Output: S30.dll built for net9.0-windows10.0.26100.0; 0 warnings; 0 errors; elapsed 2.22 s.
+
+The restore used only the local NuGet global package cache. No WSLc session/container was started during build.

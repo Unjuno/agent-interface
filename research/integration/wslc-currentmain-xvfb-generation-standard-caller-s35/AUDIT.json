@@ -1,0 +1,53 @@
+{
+  "schema": "agent-interface/wslc-s35-independent-audit-v1",
+  "attempt_id": "wslc-standard-caller-generation-xvfb-20261025-s35-9b3d17a0fe62",
+  "audited_utc": "2026-10-25T20:24:37.5400765+09:00",
+  "checks": {
+    "test_exit_zero": true,
+    "generation_matches_public_observation": true,
+    "observation_side_effect_free": true,
+    "observation_capture_precedes_response": true,
+    "fresh_alias_minted": true,
+    "initial_effect_independent_exact": true,
+    "initial_release_verified": true,
+    "fault_did_leave_key_down": true,
+    "fault_is_unknown_and_recovery_required": true,
+    "auto_release_fault_recorded": true,
+    "recovery_release_verified": true,
+    "recovery_independent_readback_up": true,
+    "no_replay_and_task_unknown_after_recovery": true,
+    "recovery_effect_independent_exact": true,
+    "continuation_effect_exact": true,
+    "continuation_event_to_effect_lt_100ms": true,
+    "stale_generation_refused_before_input": true,
+    "old_alias_refused_before_input": true,
+    "close_release_verified": true,
+    "raw_mirror_present": true,
+    "container_deleted": true,
+    "image_deleted": true,
+    "session_terminated": true,
+    "runner_exit_zero": true
+  },
+  "metrics": {
+    "observe_call_ms": 1061.157,
+    "capture_span_ms": 7.633,
+    "capture_to_public_response_ms": 26.978,
+    "mint_ms": 7.488,
+    "input_ms": 40.99,
+    "initial_event_to_effect_ms": 0.07,
+    "faulted_input_ms": 35.919,
+    "recovery_ms": 6.936,
+    "recovery_to_independent_readback_ms": 7.039,
+    "recovery_event_to_effect_ms": 0.097,
+    "continuation_event_to_effect_ms": 0.136,
+    "continuation_call_to_effect_ms": 34.073,
+    "stale_refusal_ms": 6.813
+  },
+  "decision": "PASS_SCOPED",
+  "failed": [],
+  "limitations": [
+    "single synthetic private-Xvfb replicate",
+    "not physical Windows input, live application, or MAP01",
+    "not matched efficiency or a reliability estimate"
+  ]
+}
