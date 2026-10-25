@@ -2,10 +2,13 @@ import unittest
 import os
 from tempfile import TemporaryDirectory
 
-from runtime.cli_v1.win32_supervisor_helpers import _observe, _parse_obligations, _recover
+from runtime.cli_v1.win32_supervisor_helpers import (
+    _helper_main, _observe, _parse_obligations, _recover)
+from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
 
 
 GENERATION = "a" * 64
+OPERATION = "1" * 32
 
 
 class FakeBackend:
@@ -133,6 +136,71 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         result = _observe(self.request(), backend_factory=lambda _targets: backend,
             clock_ns=lambda: 50, configured_targets={"fixture": 44})
         self.assertFalse(result["neutral"])
+
+    def test_observer_error_does_not_claim_non_neutral_measurement(self):
+        class Connection:
+            def __init__(self):
+                self.incoming = [self_test.request(obligations=[]), None]
+                self.sent = []
+
+            def send(self, value):
+                self.sent.append(value)
+
+            def recv(self):
+                return self.incoming.pop(0)
+
+        self_test = self
+        connection = Connection()
+        _helper_main("observer", {"fixture": 44}, connection)
+
+        self.assertEqual(connection.sent[1]["error_type"], "ValueError")
+        self.assertNotIn("neutral", connection.sent[1])
+        self.assertNotIn("observed_monotonic_ns", connection.sent[1])
+        self.assertEqual(connection.sent[2], {
+            "control": "operation_complete", "request_id": "2" * 32})
+
+    def test_empty_obligation_helper_error_remains_unknown_at_completion_boundary(self):
+        class Connection:
+            def __init__(self):
+                self.incoming = [self_test.request(obligations=[]), None]
+                self.sent = []
+
+            def send(self, value):
+                self.sent.append(value)
+
+            def recv(self):
+                return self.incoming.pop(0)
+
+        class OperationOwner:
+            def __init__(self):
+                self.unknown = []
+
+            def result(self, operation_id):
+                return {"phase": "running", "target_generation": GENERATION,
+                        "obligations": []}
+
+            def mark_unknown(self, operation_id, generation, reason):
+                self.unknown.append((operation_id, generation, reason))
+
+        self_test = self
+        connection = Connection()
+        _helper_main("observer", {"fixture": 44}, connection)
+        helper_error = connection.sent[1]
+        owner = OperationOwner()
+        invalidations = []
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: 80
+        supervisor._exchange_helper = lambda _role, _request, _deadline: helper_error
+        supervisor._invalidate_helper = lambda role, deadline: invalidations.append(role)
+
+        result = supervisor.observe_completed(OPERATION, GENERATION,
+            producer_exit_confirmed_ns=50, deadline_ns=100)
+
+        self.assertIsNone(result)
+        self.assertEqual(len(owner.unknown), 1)
+        self.assertIn("invalid_or_late", owner.unknown[0][2])
+        self.assertEqual(invalidations, ["observer"])
 
     @unittest.skipUnless(os.name == "nt", "native helper startup is Windows-only")
     def test_native_components_start_helpers_before_any_operation(self):
