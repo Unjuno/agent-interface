@@ -349,6 +349,44 @@ python -m runtime.cli_v1.mcp_server \
   --session-mode supervised-win32
 ```
 
+## Caller-side compiled methods over supervised Win32
+
+`runtime.cli_v1.supervised_win32_compiled.run_public_compiled` composes the
+existing bounded compiled graph through a caller's standard
+`interface_observe` and `interface_dispatch` MCP calls. It is a Python caller
+adapter; the supervised Win32 MCP server does not register a new compiled
+endpoint. Supply one ordinary standard program template for each compiled
+action, an explicit client-region, and application-owned `perceive` and
+`verify_effect` callbacks. The callbacks receive both the retained raw
+observation report and the standard MCP reply (including its delivered image
+block when available). They are trusted caller code, not an independent task
+oracle.
+
+The adapter pins the SHA-256 `target_generation` returned by the first
+standard observation. A missing, malformed, or changed generation stops the
+graph before another dispatch. Each selected action receives a copied program
+template with a fresh local observation sequence, the configured target's
+generation, and new program/lease IDs; the standard Win32 admission still
+rechecks that generation before producer start. The adapter never retries a
+dispatch and returns the standard action call IDs so the caller can retrieve
+each action receipt. It also returns standard observation call IDs so callers
+can retrieve raw capture evidence. Separately invoke `interface_verify_task`
+for each action where configured. Its graph outcome is not task success:
+`task_success` remains null in this adapter's result; only the separate
+independent tool can return a verified task effect.
+
+Callbacks are synchronous and trusted. A blocked observation, perception,
+dispatch transport, or effect verifier can block the caller; the compiled graph
+deadline cannot preempt it. This caller adapter does not add cancellation or
+durable recovery for the whole graph. Use it only with one live supervised
+server session, preserve returned observation/action call IDs, and treat a
+raised or uncertain call as no-replay until its standard custody receipt is
+reconciled.
+The local composition tests prove the configured fixture path through the
+standard MCP observation/dispatch operations; they do not prove native Win32
+behavior, physical release under blocked platform I/O, MAP01 success, or
+efficiency.
+
 ```sh
 python /absolute/agent-interface-runtime.pyz mcp \
   --targets /absolute/one-target.json \

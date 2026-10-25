@@ -5,11 +5,12 @@ import asyncio
 import threading
 from tempfile import TemporaryDirectory
 from pathlib import Path
+from unittest.mock import patch
 
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
+from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
 from runtime.guarded_win32_v1.operation_owner import OperationOwner
-from runtime.core_v1 import compiled_gui
 
 
 GENERATION = "a" * 64
@@ -945,8 +946,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         "next_state": "after", "reason": None}]},
                 }},
         }
-        observations = 0
+        public_observations = 0
         dispatch_rows = []
+        observation_call_ids = []
         oracle_calls = []
 
         def task_oracle(action):
@@ -963,7 +965,27 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "observed_monotonic_ns": time.monotonic_ns(),
                 "evidence_ref": "fixture-task-oracle:compiled-prefix"}
 
-        with TemporaryDirectory() as root:
+        def standard_observe(_targets, *, target, frame, region,
+                             capture_directory=None, display_name=None):
+            nonlocal public_observations
+            del capture_directory, display_name
+            public_observations += 1
+            if public_observations == 2:
+                # Replace the target between the standard caller's fresh
+                # observation and any graph-selected suffix action.
+                generation["value"] = "b" * 64
+            return {"schema": "agent-interface/runtime-observation-v1",
+                "observation_id": f"public-observation-{public_observations}",
+                "status": "returned", "target": target,
+                "target_generation": generation["value"],
+                "target_generation_consistency": "matched",
+                "observation": {"frame": frame, "region": region,
+                    "capture_started_ns": time.monotonic_ns(),
+                    "capture_ended_ns": time.monotonic_ns()},
+                "side_effect_authority": False, "input_dispatched": False}
+
+        with TemporaryDirectory() as root, patch(
+                "runtime.cli_v1.mcp_server.observe", standard_observe):
             server = create_server({"fixture": 123}, root,
                 session_mode="supervised-win32",
                 _supervised_win32_owner_factory=lambda *_args: owner,
@@ -971,71 +993,60 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 supervised_win32_task_oracle=task_oracle)
             loop = asyncio.get_running_loop()
 
-            def observe(_request):
-                nonlocal observations
-                observations += 1
-                if observations == 1:
-                    predicates = {"ready": True, "first_done": False}
-                else:
-                    # Simulate target replacement during the graph's post-effect
-                    # observation, before the graph-selected suffix is dispatched.
-                    generation["value"] = "b" * 64
-                    predicates = {"ready": True,
-                        "first_done": any(effect["effect"] == "saved"
-                            and effect["target_generation"] == GENERATION
-                            for effect in fixture_effects)}
-                return {"sequence": observations,
-                    "captured_ns": time.perf_counter_ns(), "surface": "fixture",
-                    "predicates": predicates, "evidence_ref": f"obs-{observations}",
-                    "evidence_digest": f"digest-{observations}"}
+            def standard_observe(target, frame, region):
+                reply = asyncio.run_coroutine_threadsafe(server.call_tool(
+                    "interface_observe", {"target": target, "frame": frame,
+                        "region": region}), loop).result(timeout=8)
+                observation_call_ids.append(json.loads(
+                    reply.content[0].text)["call_id"])
+                return reply
 
-            def admit(request):
-                # This is only a graph precondition. The public dispatch below
-                # remains the authoritative generation and custody gate.
-                return {"eligible": True, "status": "revalidated",
-                    "authorization": f"graph-precondition-{request['action']}",
-                    "expected_sequence": request["observation"]["sequence"],
-                    "valid_until_ns": time.monotonic_ns() + 4_000_000_000}
-
-            def execute(request):
-                seq = request["expected_sequence"]
-                program = self.valid_program()
-                program["program_id"] = f"compiled-{request['action']}"
-                program["authority"]["lease_id"] = f"lease-{request['action']}"
-                program["source"]["observation_seq"] = seq
+            def standard_dispatch(program, sequence, binding_revision):
+                self.assertEqual(program["source"]["target_generations"],
+                    {"fixture": GENERATION})
                 reply = asyncio.run_coroutine_threadsafe(server.call_tool(
                     "interface_dispatch", {"program": program,
-                    "current_observation_seq": seq,
-                    "current_binding_revision": 1,
+                    "current_observation_seq": sequence,
+                    "current_binding_revision": binding_revision,
                     "wait_for_result_ms": 5000}), loop).result(timeout=8)
-                row = self.row(reply)
-                dispatch_rows.append(row)
-                if row.get("status") != "returned":
-                    return {"status": "refused", "action_id": f"refused-{seq}",
-                        "effect_ref": f"effect-{seq}", "input_dispatched": False,
-                        "release": {"verified": False, "keys_down": [],
-                                    "buttons_down": []}}
-                custody = row["supervision"]["action"]["completion_custody"]
-                return {"status": "completed", "action_id": row["call_id"],
-                    "effect_ref": f"effect-{seq}",
-                    "release": {"verified": custody["release_confirmed"],
-                        "keys_down": [], "buttons_down": []},
-                    "input_dispatched": row["input_dispatched"]}
+                dispatch_rows.append(self.row(reply))
+                return reply
 
-            adapters = {"observe": observe, "admit": admit, "execute": execute,
-                "verify_effect": lambda _request: {"status": "succeeded",
+            def stale_template():
+                program = self.valid_program()
+                program["source"]["target_generations"] = {"fixture": "c" * 64}
+                return program
+
+            def perceive(report, _reply):
+                first_observation = report["observation_id"] == "public-observation-1"
+                return {"ready": True,
+                    "first_done": (not first_observation and any(
+                        effect["effect"] == "saved"
+                        and effect["target_generation"] == GENERATION
+                        for effect in fixture_effects))}
+
+            receipt = await asyncio.to_thread(run_public_compiled,
+                interface,
+                {"first": stale_template(), "suffix": stale_template()},
+                target="fixture", current_binding_revision=1,
+                region=[0, 0, 1, 1], observe=standard_observe,
+                dispatch=standard_dispatch, perceive=perceive,
+                verify_effect=lambda _request, _report, _reply: {
+                    "status": "succeeded",
                     "evidence_ref": "test-effect-predicate-confirmation"},
-                "cancelled": lambda: False}
-            receipt = await asyncio.to_thread(compiled_gui.run, interface, adapters)
+                cancelled=lambda: False)
             try:
                 self.assertEqual(receipt["outcome"], "SAFE_YIELD")
-                self.assertEqual(receipt["reason"], "execution_refused", receipt)
+                self.assertEqual(receipt["reason"], "association_changed", receipt)
                 self.assertEqual(receipt["completed_transitions"], 1)
-                self.assertEqual([row["status"] for row in dispatch_rows],
-                    ["returned", "invalid_request"])
+                self.assertEqual([row["status"] for row in dispatch_rows], ["returned"])
+                self.assertEqual(receipt["standard_action_call_ids"],
+                    [dispatch_rows[0]["call_id"]])
+                self.assertEqual(receipt["standard_observation_call_ids"],
+                    observation_call_ids)
+                self.assertEqual(len(observation_call_ids), 2)
+                self.assertIsNone(receipt["task_success"])
                 self.assertTrue(dispatch_rows[0]["input_dispatched"])
-                self.assertFalse(dispatch_rows[1]["operation_invoked"])
-                self.assertFalse(dispatch_rows[1]["input_dispatched"])
                 self.assertEqual(producer.started, 1)
                 self.assertEqual(len(owner.list_results()), 1)
                 self.assertIsNone(dispatch_rows[0]["task_success"])
