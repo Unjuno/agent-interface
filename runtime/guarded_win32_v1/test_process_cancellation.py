@@ -49,6 +49,38 @@ def _blocked_recovery_worker(start_gate, started, result_send):
     result_send.close()
 
 
+class _BlockedNativeReleaseBackend:
+    """Inert backend whose native release boundary never returns."""
+    def __init__(self, targets, release_started):
+        self.targets = targets
+        self.release_started = release_started
+        self.pending_unicode_ups = set()
+        self.held_keys = {}
+        self.held_key_targets = {}
+        self.held_buttons = set()
+        self.held_button_targets = {}
+
+    def target_generation(self, _target):
+        return GENERATION
+
+    def release_all(self):
+        self.release_started.set()
+        while True:
+            time.sleep(0.01)
+
+    def close(self):
+        return None
+
+
+def _handle_blocked_native_recovery(request, response, release_started):
+    from runtime.cli_v1.win32_supervisor_helpers import _recover
+    result = _recover(request,
+        backend_factory=lambda targets: _BlockedNativeReleaseBackend(
+            targets, release_started),
+        configured_targets={"fixture": 123})
+    response.send(result)
+
+
 def _fake_readback_worker(neutral, request, result_send):
     result_send.send({
         "operation_id": request["operation_id"],
@@ -550,6 +582,81 @@ class ProcessCancellationTests(unittest.TestCase):
             if supervisor is not None:
                 supervisor.close()
             for process, receive, send in recovery_handles:
+                try:
+                    if process.is_alive():
+                        process.terminate()
+                        process.join(2)
+                except ValueError:
+                    pass
+                for connection in (receive, send):
+                    try:
+                        connection.close()
+                    except OSError:
+                        pass
+                try:
+                    process.close()
+                except ValueError:
+                    pass
+            if producer.is_alive():
+                producer.terminate()
+                producer.join(2)
+            producer.close()
+
+    def test_blocked_release_inside_native_recovery_adapter_stays_unknown(self):
+        context = multiprocessing.get_context("spawn")
+        down = context.Event()
+        producer_started = context.Event()
+        release_started = context.Event()
+        neutral = context.Event()
+        producer = context.Process(target=_blocked_fake_producer,
+                                   args=(down, producer_started))
+        producer.start()
+        supervisor = None
+        helper_handles = []
+        try:
+            self.assertTrue(producer_started.wait(5))
+            owner = OperationOwner(clock_ns=time.monotonic_ns,
+                                   process_identity_reader=_identity)
+            owner.admit("operation-blocked-native-release", GENERATION,
+                time.monotonic_ns() + 3_000_000_000, ["unicode:0041"])
+            self.assertTrue(owner.producer_started(
+                "operation-blocked-native-release", GENERATION, producer,
+                process_identity=_identity(producer)))
+
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_blocked_native_recovery, (release_started,), helper_handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_fake_observation, (neutral,), helper_handles)
+            supervisor = OperationCancellationSupervisor(owner,
+                recovery_process_factory=recovery_factory,
+                observer_process_factory=observer_factory,
+                process_identity_reader=_identity,
+                terminate_grace_s=0.05, kill_grace_s=0.05)
+
+            deadline_ns = time.monotonic_ns() + 900_000_000
+            response = supervisor.cancel("operation-blocked-native-release",
+                GENERATION, cleanup_deadline_ns=deadline_ns)
+            self.assertEqual(response["status"], "pending")
+            self.assertTrue(release_started.wait(2))
+
+            limit = time.monotonic() + 2
+            result = owner.result("operation-blocked-native-release")
+            while result["status"] != "unknown" and time.monotonic() < limit:
+                time.sleep(0.01)
+                result = owner.result("operation-blocked-native-release")
+
+            self.assertEqual(result["status"], "unknown", result)
+            self.assertTrue(down.is_set())
+            self.assertFalse(neutral.is_set())
+            self.assertFalse(result["release_confirmed"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            recovery_helper = helper_handles[0][0]
+            self.assertFalse(recovery_helper.is_alive())
+        finally:
+            if supervisor is not None:
+                supervisor.close()
+            for process, receive, send in helper_handles:
                 try:
                     if process.is_alive():
                         process.terminate()
