@@ -10,7 +10,9 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import time
+import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -28,7 +30,7 @@ from runtime.guarded_x11_v1.xres_client_fence import (
 _DELAY_MS = 8000
 _POST_HORIZON_XRES_TIMEOUT_S = 10.0
 _OWNER_START = r"""
-import json, sys, time
+import json, os, sys, time
 from Xlib import X, XK
 from Xlib.display import Display
 from Xlib.ext import xtest
@@ -41,9 +43,11 @@ base = d.display.info.resource_id_base
 xtest.fake_input(d, X.KeyPress, detail=keycodes['a'], time=int(delay_ms))
 xtest.fake_input(d, X.KeyPress, detail=keycodes['b'])
 d.flush()
-with open(marker, 'w', encoding='utf-8') as f:
+temporary_marker = marker + '.tmp'
+with open(temporary_marker, 'w', encoding='utf-8') as f:
     json.dump({'resource_base':base, 'keycodes':keycodes,
                'queued_ns':time.monotonic_ns()}, f)
+os.replace(temporary_marker, marker)
 d.sync()  # blocks until the delayed request is processed or the server closes it
 """
 _IDLE_OWNER_START = r"""
@@ -429,7 +433,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
 
 
 _HELD_OWNER_START = r"""
-import json, sys, time
+import json, os, sys, time
 from Xlib import X, XK
 from Xlib.display import Display
 from Xlib.ext import xtest
@@ -442,11 +446,96 @@ base = d.display.info.resource_id_base
 xtest.fake_input(d, X.KeyPress, detail=keys['a'])
 xtest.fake_input(d, X.KeyPress, detail=keys['b'], time=int(delay_ms))
 d.flush()
-with open(marker, 'w', encoding='utf-8') as f:
+temporary_marker = marker + '.tmp'
+with open(temporary_marker, 'w', encoding='utf-8') as f:
     json.dump({'resource_base':base, 'keycodes':keys,
                'flushed_ns':time.monotonic_ns()}, f)
+os.replace(temporary_marker, marker)
 d.sync()
 """
+
+
+class OwnerMarkerPublicationTests(unittest.TestCase):
+    def test_owner_helpers_publish_complete_json_by_atomic_replace(self):
+        for name, source in (('_OWNER_START', _OWNER_START),
+                             ('_IDLE_OWNER_START', _IDLE_OWNER_START),
+                             ('_HELD_OWNER_START', _HELD_OWNER_START)):
+            with self.subTest(helper=name):
+                compile(source, f'<{name}>', 'exec')
+                self.assertIn("os.replace(temporary_marker, marker)", source)
+                self.assertNotIn("with open(marker, 'w'", source)
+
+    def test_owner_final_marker_stays_absent_during_partial_json_write(self):
+        entered_dump = threading.Event()
+        continue_dump = threading.Event()
+        completed = []
+        failures = []
+        original_dump = json.dump
+
+        class FakeDisplay:
+            def __init__(self, _display_name):
+                self.display = types.SimpleNamespace(
+                    info=types.SimpleNamespace(resource_id_base=1234))
+
+            @staticmethod
+            def keysym_to_keycode(_keysym):
+                return 38
+
+            @staticmethod
+            def flush():
+                return None
+
+            @staticmethod
+            def sync():
+                completed.append(True)
+
+        fake_xlib = types.ModuleType('Xlib')
+        fake_xlib.X = types.SimpleNamespace(KeyPress=2)
+        fake_xlib.XK = types.SimpleNamespace(string_to_keysym=lambda name: name)
+        fake_display_module = types.ModuleType('Xlib.display')
+        fake_display_module.Display = FakeDisplay
+        fake_ext = types.ModuleType('Xlib.ext')
+        fake_ext.xtest = types.SimpleNamespace(fake_input=lambda *_a, **_k: None)
+
+        def paused_dump(value, stream):
+            entered_dump.set()
+            if not continue_dump.wait(2):
+                raise TimeoutError('test did not release paused JSON writer')
+            original_dump(value, stream)
+
+        with tempfile.TemporaryDirectory() as td:
+            marker = Path(td)/'owner.json'
+
+            def run_owner():
+                try:
+                    exec(_OWNER_START, {})
+                except BaseException as error:
+                    failures.append(error)
+
+            fake_modules = {
+                'Xlib':fake_xlib,
+                'Xlib.display':fake_display_module,
+                'Xlib.ext':fake_ext,
+            }
+            with patch.dict(sys.modules, fake_modules), \
+                    patch.object(sys, 'argv', [
+                        'fake-owner', ':88', str(marker), '8000']), \
+                    patch('json.dump', side_effect=paused_dump):
+                worker = threading.Thread(target=run_owner)
+                worker.start()
+                try:
+                    self.assertTrue(entered_dump.wait(1))
+                    self.assertFalse(marker.exists())
+                    self.assertTrue(Path(str(marker)+'.tmp').exists())
+                finally:
+                    continue_dump.set()
+                    worker.join(1)
+
+            self.assertFalse(worker.is_alive())
+            self.assertEqual(failures, [])
+            self.assertEqual(completed, [True])
+            self.assertEqual(json.loads(marker.read_text(encoding='utf-8'))[
+                'resource_base'], 1234)
 
 
 @unittest.skipUnless(
