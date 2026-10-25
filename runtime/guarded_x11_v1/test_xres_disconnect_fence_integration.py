@@ -28,7 +28,7 @@ from runtime.guarded_x11_v1.xres_client_fence import (
 _DELAY_MS = 8000
 _POST_HORIZON_XRES_TIMEOUT_S = 10.0
 _OWNER_START = r"""
-import json, sys, time
+import json, os, sys, time
 from Xlib import X, XK
 from Xlib.display import Display
 from Xlib.ext import xtest
@@ -41,9 +41,11 @@ base = d.display.info.resource_id_base
 xtest.fake_input(d, X.KeyPress, detail=keycodes['a'], time=int(delay_ms))
 xtest.fake_input(d, X.KeyPress, detail=keycodes['b'])
 d.flush()
-with open(marker, 'w', encoding='utf-8') as f:
+temporary_marker = marker + '.tmp'
+with open(temporary_marker, 'w', encoding='utf-8') as f:
     json.dump({'resource_base':base, 'keycodes':keycodes,
                'queued_ns':time.monotonic_ns()}, f)
+os.replace(temporary_marker, marker)
 d.sync()  # blocks until the delayed request is processed or the server closes it
 """
 _IDLE_OWNER_START = r"""
@@ -429,7 +431,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
 
 
 _HELD_OWNER_START = r"""
-import json, sys, time
+import json, os, sys, time
 from Xlib import X, XK
 from Xlib.display import Display
 from Xlib.ext import xtest
@@ -442,11 +444,24 @@ base = d.display.info.resource_id_base
 xtest.fake_input(d, X.KeyPress, detail=keys['a'])
 xtest.fake_input(d, X.KeyPress, detail=keys['b'], time=int(delay_ms))
 d.flush()
-with open(marker, 'w', encoding='utf-8') as f:
+temporary_marker = marker + '.tmp'
+with open(temporary_marker, 'w', encoding='utf-8') as f:
     json.dump({'resource_base':base, 'keycodes':keys,
                'flushed_ns':time.monotonic_ns()}, f)
+os.replace(temporary_marker, marker)
 d.sync()
 """
+
+
+class OwnerMarkerPublicationTests(unittest.TestCase):
+    def test_owner_helpers_publish_complete_json_by_atomic_replace(self):
+        for name, source in (('_OWNER_START', _OWNER_START),
+                             ('_IDLE_OWNER_START', _IDLE_OWNER_START),
+                             ('_HELD_OWNER_START', _HELD_OWNER_START)):
+            with self.subTest(helper=name):
+                compile(source, f'<{name}>', 'exec')
+                self.assertIn("os.replace(temporary_marker, marker)", source)
+                self.assertNotIn("with open(marker, 'w'", source)
 
 
 @unittest.skipUnless(
