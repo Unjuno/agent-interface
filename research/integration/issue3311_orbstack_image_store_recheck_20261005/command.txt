@@ -1,0 +1,2 @@
+docker context inspect orbstack --format '{{.Name}} {{.Endpoints.docker.Host}}'
+docker --context orbstack image inspect sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916 --format '{{.Id}} {{.Os}}/{{.Architecture}} {{json .RepoDigests}}'

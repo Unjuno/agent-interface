@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import json, pathlib, sys
+args=sys.argv[1:]
+schema=pathlib.Path(args[args.index('--output-schema')+1])
+work=pathlib.Path(args[args.index('-C')+1])
+assert schema.is_file() and work.is_dir()
+assert json.loads(schema.read_text())['required']==['compatible']
+events=[{'type':'thread.started','thread_id':'inert-call'},{'type':'item.completed','item':{'type':'agent_message','text':'{\"compatible\": true}'}},{'type':'turn.completed','usage':{'input_tokens':5,'output_tokens':2}}]
+for event in events: print(json.dumps(event))
