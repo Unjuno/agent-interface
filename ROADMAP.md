@@ -11,13 +11,13 @@ adds one scoped current-main click/text/save effect and verified-release sample;
 MAP01/real-game transfer, standard-caller composition, blocked-I/O recovery,
 matched efficiency, and reliability remain open.
 The separate [Freedoom MAP01 probes](research/integration/win32_freedoom_map01_live_20261026/README.md)
-now show one scoped forward effect with a verified runtime release receipt;
-their dense follow-up found material scene motion through the +2 s sample and
-failed the preregistered sampled-settle gate. A fresh zero-input control remained
-stable over the matched nominal interval, making ordinary idle animation an
-unlikely explanation for the motion in that sample. This does not prove
-causality or qualify application stop timing, blocked-I/O release, recovery,
-standard-caller integration, or task success.
+show one scoped forward effect with a verified runtime release receipt. Two
+fresh input attempts showed material scene motion through the +2 s sample and
+failed the preregistered sampled-settle gate; a fresh zero-input control stayed
+stable over the same nominal interval. This supports input-associated delayed
+application/game response but does not prove causality or qualify continuous
+stop timing, blocked-I/O release, recovery, standard-caller integration, or task
+success.
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) tracks real-time
 control. Neither this roadmap nor an unchecked item grants a new allocation or
 changes a retained result.
