@@ -2,6 +2,7 @@
 import multiprocessing
 import os
 import time
+import traceback
 import unittest
 
 from runtime.guarded_win32_v1.operation_owner import OperationOwner, OwnerRefused
@@ -141,6 +142,41 @@ def _persistent_helper_server(connection, name, handler, handler_args):
         handler(request, _PersistentResponse(connection), *handler_args)
         connection.send({"control": "operation_complete",
                          "request_id": request["request_id"]})
+
+
+def _diagnostic_persistent_helper_server(connection, error_connection, name,
+                                         handler, handler_args):
+    connection.send({"status": "ready", "helper": name})
+    while True:
+        request = connection.recv()
+        if request is None:
+            return
+        try:
+            handler(request, _PersistentResponse(connection), *handler_args)
+        except BaseException as exc:
+            error_connection.send({
+                "exception_type": type(exc).__name__,
+                "exception": str(exc),
+                "traceback": traceback.format_exc(),
+            })
+            raise
+        connection.send({"control": "operation_complete",
+                         "request_id": request["request_id"]})
+
+
+def _diagnostic_persistent_helper_factory(context, name, handler,
+                                          handler_args, handles,
+                                          error_channels):
+    def factory():
+        receive, send = context.Pipe(duplex=True)
+        error_receive, error_send = context.Pipe(duplex=False)
+        process = context.Process(target=_diagnostic_persistent_helper_server,
+            args=(send, error_send, name, handler, tuple(handler_args)),
+            daemon=True)
+        handles.append((process, receive, send))
+        error_channels.append((error_receive, error_send))
+        return process, receive
+    return factory
 
 
 def _persistent_helper_factory(context, name, handler, handler_args, handles):
@@ -613,6 +649,7 @@ class ProcessCancellationTests(unittest.TestCase):
         producer.start()
         supervisor = None
         helper_handles = []
+        helper_error_channels = []
         try:
             self.assertTrue(producer_started.wait(5))
             owner = OperationOwner(clock_ns=time.monotonic_ns,
@@ -623,38 +660,58 @@ class ProcessCancellationTests(unittest.TestCase):
                 "operation-blocked-native-release", GENERATION, producer,
                 process_identity=_identity(producer)))
 
-            recovery_factory = _persistent_helper_factory(context, "recovery",
-                _handle_blocked_native_recovery, (release_started,), helper_handles)
+            recovery_factory = _diagnostic_persistent_helper_factory(context,
+                "recovery", _handle_blocked_native_recovery,
+                (release_started,), helper_handles, helper_error_channels)
             observer_factory = _persistent_helper_factory(context, "observer",
                 _handle_fake_observation, (neutral,), helper_handles)
+            clock_offset_ns = [0]
+
+            def supervisor_clock_ns():
+                return time.monotonic_ns() + clock_offset_ns[0]
+
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
                 observer_process_factory=observer_factory,
                 process_identity_reader=_identity,
+                clock_ns=supervisor_clock_ns,
                 terminate_grace_s=0.05, kill_grace_s=0.05)
 
-            deadline_ns = time.monotonic_ns() + 900_000_000
+            # Give the Windows CI worker enough time to schedule the spawned
+            # recovery helper into the blocking adapter before its deadline.
+            deadline_ns = time.monotonic_ns() + 30_000_000_000
             response = supervisor.cancel("operation-blocked-native-release",
                 GENERATION, cleanup_deadline_ns=deadline_ns)
             self.assertEqual(response["status"], "pending")
-            self.assertTrue(release_started.wait(2))
+            started = release_started.wait(10)
+            recovery_helper = helper_handles[0][0]
+            self.assertTrue(started, {
+                "owner": owner.result("operation-blocked-native-release"),
+                "recovery_helper_alive": recovery_helper.is_alive(),
+                "recovery_helper_exitcode": recovery_helper.exitcode,
+                "recovery_helper_error": (
+                    helper_error_channels[0][0].recv()
+                    if helper_error_channels[0][0].poll(0) else None),
+            })
 
-            limit = time.monotonic() + 2
+            deadline_advanced_at_ns = time.monotonic_ns()
+            clock_offset_ns[0] = deadline_ns + 1 - time.monotonic_ns()
+            unknown_limit_ns = deadline_advanced_at_ns + 1_000_000_000
             result = owner.result("operation-blocked-native-release")
-            while result["status"] != "unknown" and time.monotonic() < limit:
+            while (result["status"] != "unknown"
+                    and time.monotonic_ns() < unknown_limit_ns):
                 time.sleep(0.01)
                 result = owner.result("operation-blocked-native-release")
             unknown_observed_ns = time.monotonic_ns()
 
             self.assertEqual(result["status"], "unknown", result)
-            self.assertLessEqual(unknown_observed_ns, deadline_ns + 500_000_000,
-                "blocked release must become UNKNOWN within the finite cleanup window")
+            self.assertLessEqual(unknown_observed_ns, unknown_limit_ns,
+                "blocked release must become UNKNOWN promptly after deadline")
             self.assertTrue(down.is_set())
             self.assertFalse(neutral.is_set())
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
-            recovery_helper = helper_handles[0][0]
             self.assertFalse(recovery_helper.is_alive())
         finally:
             if supervisor is not None:
@@ -675,6 +732,12 @@ class ProcessCancellationTests(unittest.TestCase):
                     process.close()
                 except ValueError:
                     pass
+            for error_receive, error_send in helper_error_channels:
+                for connection in (error_receive, error_send):
+                    try:
+                        connection.close()
+                    except OSError:
+                        pass
             if producer.is_alive():
                 producer.terminate()
                 producer.join(2)
