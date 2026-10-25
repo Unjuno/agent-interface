@@ -695,7 +695,15 @@ class ProcessCancellationTests(unittest.TestCase):
             })
 
             deadline_advanced_at_ns = time.monotonic_ns()
-            clock_offset_ns[0] = deadline_ns + 1 - time.monotonic_ns()
+            # Fast-forward only to the start of the reserved retirement
+            # window. The helper must still get the configured terminate
+            # and kill grace before the absolute cleanup deadline; jumping
+            # past the deadline here made _retire_process correctly refuse
+            # further waits while this test incorrectly required immediate
+            # process death.
+            retirement_grace_ns = 100_000_000
+            retirement_cutoff_ns = deadline_ns - retirement_grace_ns
+            clock_offset_ns[0] = retirement_cutoff_ns + 1 - time.monotonic_ns()
             unknown_limit_ns = deadline_advanced_at_ns + 1_000_000_000
             result = owner.result("operation-blocked-native-release")
             while (result["status"] != "unknown"
@@ -707,6 +715,8 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertEqual(result["status"], "unknown", result)
             self.assertLessEqual(unknown_observed_ns, unknown_limit_ns,
                 "blocked release must become UNKNOWN promptly after deadline")
+            self.assertLessEqual(unknown_observed_ns, deadline_ns,
+                "blocked recovery must reach UNKNOWN before its cleanup deadline")
             self.assertTrue(down.is_set())
             self.assertFalse(neutral.is_set())
             self.assertFalse(result["release_confirmed"])
