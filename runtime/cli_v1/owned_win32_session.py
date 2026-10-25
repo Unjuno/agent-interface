@@ -706,6 +706,25 @@ class OwnedWin32SessionOwner:
             release_confirmed=result.get("release_confirmed") is True,
             task_success=None, replay_allowed=False,
             result=deepcopy(result))
+        action = record.get("action") or {}
+        if (record.get("standard_program") is not None
+                and action.get("status") in ("running", "cancel_pending")
+                and status in ("recovered", "unknown")):
+            confirmed = (status == "recovered"
+                and cancellation.get("action_operation_id") == action.get("operation_id")
+                and cancellation.get("target_generation") == action.get("target_generation")
+                and result.get("operation_id") == action.get("operation_id")
+                and result.get("target_generation") == action.get("target_generation")
+                and result.get("phase") == "recovered"
+                and result.get("status") == "recovered"
+                and result.get("release_confirmed") is True)
+            action_status = "recovered" if confirmed else "unknown"
+            action.update(status=action_status, release_confirmed=confirmed,
+                task_success=None, replay_allowed=False,
+                result={"status": action_status, "input_dispatched": None,
+                    "release_confirmed": confirmed,
+                    "effect_status": "unknown", "task_success": None,
+                    "replay_allowed": False})
 
     @staticmethod
     def _public_cancel_result(call_id, cancellation):

@@ -123,6 +123,39 @@ class RecoveringFakeSupervisor(FakeSupervisor):
         return self.operation_owner.result(operation_id)
 
 
+class DelayedRecoveringFakeSupervisor(RecoveringFakeSupervisor):
+    """Model lease expiry returning before the recovery receipt is published."""
+    def __init__(self, operation_owner, process):
+        super().__init__(operation_owner, process)
+        self.recovery_thread = None
+
+    def cancel(self, operation_id, generation, *, cleanup_deadline_ns):
+        self.operation_owner.request_cancel(operation_id, generation,
+            cleanup_deadline_ns=cleanup_deadline_ns)
+        self.process.alive = False
+        self.process.exitcode = -15
+        if not self.operation_owner.producer_retired(
+                operation_id, generation, self.process):
+            raise AssertionError("fake producer retirement was not accepted")
+        recovery = self.operation_owner.claim_recovery(operation_id, generation)
+        if recovery is None:
+            raise AssertionError("fake recovery was not admitted")
+        readback = {"operation_id": operation_id,
+            "target_generation": generation,
+            "recovery_id": recovery["recovery_id"], "neutral": True}
+
+        def finish_recovery():
+            time.sleep(0.05)
+            if not self.operation_owner.recovery_completed(operation_id,
+                    generation, recovery["recovery_id"],
+                    release_accepted=True, readback=readback):
+                raise AssertionError("delayed fake recovery was not confirmed")
+
+        self.recovery_thread = threading.Thread(target=finish_recovery, daemon=True)
+        self.recovery_thread.start()
+        return self.operation_owner.result(operation_id)
+
+
 class UnknownAfterCancelSupervisor(FakeSupervisor):
     def cancel(self, operation_id, generation, *, cleanup_deadline_ns):
         self.operation_owner.request_cancel(operation_id, generation,
@@ -725,6 +758,70 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertIsNone(retained["task_success"])
             self.assertFalse(retained["replay_allowed"])
 
+    async def test_late_recovery_after_dispatch_return_promotes_action_receipt(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        op_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        supervisor = DelayedRecoveringFakeSupervisor(op_owner, process)
+        owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = HeldProducerFactory(process, identity)
+        oracle_calls = []
+
+        def oracle(action):
+            oracle_calls.append(dict(action))
+            return {"call_id": action["call_id"],
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "oracle_id": "f" * 32, "outcome": "failure",
+                "observed_monotonic_ns": time.monotonic_ns(),
+                "evidence_ref": "fixture-oracle:late-recovered-action"}
+
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                supervised_win32_task_oracle=oracle)
+            program = self.valid_program()
+            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 800_000_000
+            pending = self.row(await server.call_tool("interface_dispatch", {
+                "program": program,
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 0}))
+            self.assertEqual(pending["status"], "pending")
+            self.assertTrue(await asyncio.wait_for(
+                asyncio.to_thread(producer.started.wait, 1), 1))
+
+            while time.monotonic_ns() < program["authority"]["expires_at_ns"]:
+                await asyncio.sleep(0.01)
+            deadline = time.monotonic() + 2
+            retained = None
+            while time.monotonic() < deadline:
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                cancellation = retained.get("cancellation")
+                if (isinstance(cancellation, dict)
+                        and cancellation.get("status") == "recovered"):
+                    break
+                await asyncio.sleep(0.01)
+
+            self.assertIsNotNone(retained)
+            self.assertEqual(retained["cancellation"]["status"], "recovered")
+            self.assertTrue(retained["cancellation"]["release_confirmed"])
+            self.assertEqual(retained["action"]["status"], "recovered", retained)
+            self.assertEqual(retained["action"]["result"]["status"], "recovered")
+            self.assertIsNone(retained["action"]["result"]["task_success"])
+            self.assertIsNone(retained["task_success"])
+            verified = self.row(await server.call_tool("interface_verify_task", {
+                "call_id": pending["call_id"], "wait_for_result_ms": 1000}))
+            self.assertEqual(verified["status"], "verified", verified)
+            self.assertFalse(verified["task_success"])
+            self.assertEqual(len(oracle_calls), 1)
+            self.assertEqual(oracle_calls[0]["operation_id"],
+                             retained["action"]["operation_id"])
             close_statuses = []
             deadline = time.monotonic() + 2
             try:
