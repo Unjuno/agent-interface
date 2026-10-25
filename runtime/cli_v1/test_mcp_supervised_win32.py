@@ -798,6 +798,28 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(owner.list_results(), [])
             await server.call_tool("interface_close", {})
 
+    async def test_unavailable_target_generation_has_stable_public_refusal(self):
+        owner, producer, _ = self.make_components()
+        def unavailable_generation():
+            raise RuntimeError("invalid HWND for target fixture")
+        owner.bind_target_generation_reader(unavailable_generation)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            reply = await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1})
+            result = self.row(reply)
+            self.assertEqual(result.get("status"), "invalid_request", result)
+            self.assertEqual(result.get("error"), "TARGET_GENERATION_UNAVAILABLE", result)
+            self.assertFalse(result["operation_invoked"])
+            self.assertFalse(result["input_dispatched"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            self.assertEqual(owner.list_results(), [])
+            self.assertEqual(producer.started, 0)
+            await server.call_tool("interface_close", {})
+
     async def test_source_binding_mismatch_creates_no_operation(self):
         owner, producer, _ = self.make_components()
         program = self.valid_program()
