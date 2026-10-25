@@ -155,8 +155,7 @@ def _helper_main(kind, targets, connection):
                 "target_generation": request.get("target_generation"),
                 "recovery_id": request.get("recovery_id"),
                 "error_type": type(error).__name__, "error": str(error)[:256],
-                "release_accepted": False, "neutral": False,
-                "observed_monotonic_ns": time.monotonic_ns()}
+                "release_accepted": False}
         connection.send(operation)
         connection.send({"control": "operation_complete",
                          "request_id": request.get("request_id")})
