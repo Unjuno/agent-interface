@@ -4,6 +4,15 @@ This directory contains experiments that compose previously isolated mechanisms 
 
 Child directories are retained integration studies. Their existence does not imply that the composed mechanism is globally promoted or production-ready.
 
+The [Win32 Freedoom MAP01 producer-startup crosscheck](win32_freedoom_startup_timing_20261026/RESULT.md)
+re-audits three successful native-Windows standard-caller packets. Each records
+10.203 s from parent `process.start` call to producer child readiness, within a
+30 s authority-lease run that completed release and the separate task-effect
+oracle. The timing files are unchanged through the current source. The lease
+origin-to-completion margin was not retained; these are descriptive samples,
+not a startup bound, blocked-I/O result, efficiency estimate, or reliability
+claim. Raw artifacts remain in local private custody.
+
 
 ## Composition path
 
