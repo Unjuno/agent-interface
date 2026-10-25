@@ -79,12 +79,15 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
             packet = {"call_id": "1" * 32, "operation_id": "2" * 32,
                 "target_generation": "a" * 64,
                 "result": {"status": "completed"},
+                "producer_timing": {"clock": "time.monotonic_ns",
+                    "child_ready_monotonic_ns": 123},
                 "release_receipt": {"verified": True}}
             with open(packet_path, "x", encoding="utf-8") as stream:
                 json.dump(packet, stream)
 
             self.assertEqual(factory.read_result(process), {
                 "result": packet["result"],
+                "producer_timing": packet["producer_timing"],
                 "release_receipt": packet["release_receipt"]})
             with self.assertRaisesRegex(ValueError, "already consumed"):
                 factory.read_result(process)

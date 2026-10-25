@@ -220,7 +220,9 @@ class OwnedWin32SessionTests(unittest.TestCase):
             self.assertIs(process, self.process)
             self.assertFalse(process.is_alive())
             reads.append("result")
-            return {"result": backend_result, "release_receipt": release}
+            return {"result": backend_result, "release_receipt": release,
+                "producer_timing": {"clock": "time.monotonic_ns",
+                    "child_ready_monotonic_ns": self.clock()}}
 
         def readback(request):
             reads.append("readback")
@@ -236,6 +238,8 @@ class OwnedWin32SessionTests(unittest.TestCase):
 
         self.assertEqual(reads, ["result", "readback"])
         self.assertEqual(row["action"]["result"], backend_result)
+        self.assertIn("child_ready_monotonic_ns",
+                      row["action"]["producer_timing"])
         self.assertTrue(row["action"]["release_confirmed"])
         self.assertIsNone(row["action"]["task_success"])
         self.assertFalse(row["action"]["replay_allowed"])
@@ -332,6 +336,17 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(result["action"]["status"], "running")
         self.assertEqual(received[0]["program"], program)
         self.assertEqual(received[0]["operation_id"], ACTION_ID)
+        timing = result["action"]["producer_timing"]
+        self.assertEqual(timing["clock"], "time.monotonic_ns")
+        stages = ("factory_requested_monotonic_ns",
+                  "factory_returned_monotonic_ns",
+                  "process_start_called_monotonic_ns",
+                  "process_start_returned_monotonic_ns",
+                  "identity_verified_monotonic_ns",
+                  "start_gate_authorized_monotonic_ns")
+        self.assertTrue(all(type(timing.get(stage)) is int for stage in stages), timing)
+        self.assertEqual(sorted(timing[stage] for stage in stages),
+                         [timing[stage] for stage in stages])
 
     def test_standard_program_authority_lease_cannot_be_reused_for_replay(self):
         self.session.bind_target_generation_reader(lambda: GEN_A)
