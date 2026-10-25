@@ -627,21 +627,35 @@ class ProcessCancellationTests(unittest.TestCase):
                 _handle_blocked_native_recovery, (release_started,), helper_handles)
             observer_factory = _persistent_helper_factory(context, "observer",
                 _handle_fake_observation, (neutral,), helper_handles)
+            clock_offset_ns = [0]
+
+            def supervisor_clock_ns():
+                return time.monotonic_ns() + clock_offset_ns[0]
+
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
                 observer_process_factory=observer_factory,
                 process_identity_reader=_identity,
+                clock_ns=supervisor_clock_ns,
                 terminate_grace_s=0.05, kill_grace_s=0.05)
 
             # Give the Windows CI worker enough time to schedule the spawned
             # recovery helper into the blocking adapter before its deadline.
-            deadline_ns = time.monotonic_ns() + 3_000_000_000
+            deadline_ns = time.monotonic_ns() + 30_000_000_000
             response = supervisor.cancel("operation-blocked-native-release",
                 GENERATION, cleanup_deadline_ns=deadline_ns)
             self.assertEqual(response["status"], "pending")
-            self.assertTrue(release_started.wait(3))
+            started = release_started.wait(10)
+            recovery_helper = helper_handles[0][0]
+            self.assertTrue(started, {
+                "owner": owner.result("operation-blocked-native-release"),
+                "recovery_helper_alive": recovery_helper.is_alive(),
+                "recovery_helper_exitcode": recovery_helper.exitcode,
+            })
 
-            unknown_limit_ns = deadline_ns + 500_000_000
+            deadline_advanced_at_ns = time.monotonic_ns()
+            clock_offset_ns[0] = deadline_ns + 1 - time.monotonic_ns()
+            unknown_limit_ns = deadline_advanced_at_ns + 1_000_000_000
             result = owner.result("operation-blocked-native-release")
             while (result["status"] != "unknown"
                     and time.monotonic_ns() < unknown_limit_ns):
@@ -650,14 +664,13 @@ class ProcessCancellationTests(unittest.TestCase):
             unknown_observed_ns = time.monotonic_ns()
 
             self.assertEqual(result["status"], "unknown", result)
-            self.assertLessEqual(unknown_observed_ns, deadline_ns + 500_000_000,
-                "blocked release must become UNKNOWN within the finite cleanup window")
+            self.assertLessEqual(unknown_observed_ns, unknown_limit_ns,
+                "blocked release must become UNKNOWN promptly after deadline")
             self.assertTrue(down.is_set())
             self.assertFalse(neutral.is_set())
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
-            recovery_helper = helper_handles[0][0]
             self.assertFalse(recovery_helper.is_alive())
         finally:
             if supervisor is not None:
