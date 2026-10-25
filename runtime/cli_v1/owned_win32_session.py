@@ -71,8 +71,11 @@ class OwnedWin32SessionOwner:
     def current_target_generation(self):
         reader = self._target_generation_reader
         if not callable(reader):
-            raise RuntimeError("target generation reader is not configured")
-        generation = reader()
+            raise RuntimeError("TARGET_GENERATION_UNAVAILABLE")
+        try:
+            generation = reader()
+        except Exception as error:
+            raise RuntimeError("TARGET_GENERATION_UNAVAILABLE") from error
         if type(generation) is not str or re.fullmatch(r"[0-9a-f]{64}", generation) is None:
             raise ValueError("configured target generation must be a SHA-256 digest")
         return generation
