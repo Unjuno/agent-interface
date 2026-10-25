@@ -312,7 +312,11 @@ class OwnedWin32SessionOwner:
             producer_request["call_id"] = call_id
             if standard_program is not None:
                 producer_request["program"] = standard_program
+            self._stamp_producer_timing(
+                call_id, "factory_requested_monotonic_ns")
             produced = producer_factory(producer_request)
+            self._stamp_producer_timing(
+                call_id, "factory_returned_monotonic_ns")
             if (not isinstance(produced, tuple) or len(produced) != 3):
                 raise ValueError("producer factory must return process, identity and start gate")
             process, process_identity, authorize_start = produced
@@ -324,11 +328,18 @@ class OwnedWin32SessionOwner:
             if phase not in ("admitted", "cancel_pending"):
                 self._close_unstarted_process(process)
                 return self.interface_result(call_id)
+            self._stamp_producer_timing(
+                call_id, "process_start_called_monotonic_ns")
             process.start()
+            self._stamp_producer_timing(
+                call_id, "process_start_returned_monotonic_ns")
             if callable(process_identity):
                 process_identity = process_identity()
             accepted = self.producer_started(call_id, process,
                 process_identity=process_identity)
+            if accepted:
+                self._stamp_producer_timing(
+                    call_id, "identity_verified_monotonic_ns")
             phase = self._owner.result(action["operation_id"]).get("phase")
             if accepted:
                 # Factory/start/identity queries may block. Recheck after those
@@ -341,6 +352,9 @@ class OwnedWin32SessionOwner:
                 authorized = self._owner.authorize_producer_start(
                     action["operation_id"], action["target_generation"],
                     process, authorize_start)
+                if authorized:
+                    self._stamp_producer_timing(
+                        call_id, "start_gate_authorized_monotonic_ns")
                 phase = self._owner.result(action["operation_id"]).get("phase")
                 if not authorized and phase != "cancel_pending":
                     self._retire_gated_process(process)
@@ -393,6 +407,14 @@ class OwnedWin32SessionOwner:
                 "status": "unknown", "error": reason,
                 "task_success": None, "replay_allowed": False})
         return self.interface_result(call_id)
+
+    def _stamp_producer_timing(self, call_id, field):
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is not None:
+                timing = record["action"].setdefault("producer_timing", {})
+                timing.setdefault("clock", "time.monotonic_ns")
+                timing[field] = time.monotonic_ns()
 
     @staticmethod
     def _close_unstarted_process(process):
@@ -486,7 +508,7 @@ class OwnedWin32SessionOwner:
             return self.interface_result(call_id)
 
     def complete_action(self, call_id, process_handle, result, *, release_receipt,
-                        readback):
+                        readback, producer_timing=None):
         """Retain a standard dispatch result after custody confirms normal exit.
 
         The backend result remains separate from the owner custody receipt.
@@ -494,6 +516,13 @@ class OwnedWin32SessionOwner:
         """
         if type(result) is not dict:
             raise ValueError("standard action result must be a dictionary")
+        if producer_timing is not None and (
+                type(producer_timing) is not dict
+                or set(producer_timing) != {"clock", "child_ready_monotonic_ns"}
+                or producer_timing["clock"] != "time.monotonic_ns"
+                or type(producer_timing["child_ready_monotonic_ns"]) is not int
+                or producer_timing["child_ready_monotonic_ns"] <= 0):
+            raise ValueError("standard producer timing receipt is invalid")
         with self._lock:
             record = self._calls.get(call_id)
             if record is None:
@@ -512,6 +541,9 @@ class OwnedWin32SessionOwner:
                 release_confirmed=custody["release_confirmed"],
                 task_success=None, replay_allowed=False,
                 completion_custody=deepcopy(custody))
+            if producer_timing is not None:
+                action.setdefault("producer_timing", {}).update(
+                    deepcopy(producer_timing))
             return deepcopy(record)
 
     def complete_exited_action(self, call_id, *, result_reader, readback_reader):
@@ -566,10 +598,21 @@ class OwnedWin32SessionOwner:
         try:
             packet = result_reader(process_handle)
             if (type(packet) is not dict
-                    or set(packet) != {"result", "release_receipt"}
+                    or not {"result", "release_receipt"} <= set(packet)
+                    or not set(packet) <= {"result", "release_receipt",
+                                          "producer_timing"}
                     or type(packet["result"]) is not dict
                     or type(packet["release_receipt"]) is not dict):
                 raise ValueError("producer result packet schema mismatch")
+            producer_timing = packet.get("producer_timing")
+            if producer_timing is not None and (
+                    type(producer_timing) is not dict
+                    or set(producer_timing) != {
+                        "clock", "child_ready_monotonic_ns"}
+                    or producer_timing["clock"] != "time.monotonic_ns"
+                    or type(producer_timing["child_ready_monotonic_ns"]) is not int
+                    or producer_timing["child_ready_monotonic_ns"] <= 0):
+                raise ValueError("producer timing packet schema mismatch")
             with self._lock:
                 current = self._calls.get(call_id)
                 if (current is None or current["action"]["status"] != "running"
@@ -583,7 +626,7 @@ class OwnedWin32SessionOwner:
             })
             return self.complete_action(call_id, process_handle,
                 packet["result"], release_receipt=packet["release_receipt"],
-                readback=readback)
+                readback=readback, producer_timing=producer_timing)
         except Exception as error:
             return retain_unknown("COMPLETION_EVIDENCE_UNCONFIRMED",
                                  type(error).__name__)

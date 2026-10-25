@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import sys
 import threading
+import time
 
 from runtime.guarded_win32_v1.win32_process_identity import Win32ProcessIdentityReader
 
@@ -41,12 +42,17 @@ def _release_receipt(result):
 def _run_standard_program(start_gate, targets, action, packet_path):
     if not start_gate.wait():
         return
+    producer_ready_ns = time.monotonic_ns()
     program = action["program"]
     source = program["source"]
     packet = {
         "call_id": action["call_id"],
         "operation_id": action["operation_id"],
         "target_generation": action["target_generation"],
+        "producer_timing": {
+            "clock": "time.monotonic_ns",
+            "child_ready_monotonic_ns": producer_ready_ns,
+        },
     }
     backend = session = None
     try:
@@ -148,9 +154,18 @@ class NativeWin32StandardProducerFactory:
         if (type(packet) is not dict or any(packet.get(key) != value
                                            for key, value in expected.items())
                 or type(packet.get("result")) is not dict
-                or type(packet.get("release_receipt")) is not dict):
+                or type(packet.get("release_receipt")) is not dict
+                or type(packet.get("producer_timing")) is not dict
+                or set(packet["producer_timing"])
+                    != {"clock", "child_ready_monotonic_ns"}
+                or packet["producer_timing"].get("clock")
+                    != "time.monotonic_ns"
+                or type(packet["producer_timing"]["child_ready_monotonic_ns"])
+                    is not int
+                or packet["producer_timing"]["child_ready_monotonic_ns"] <= 0):
             raise RuntimeError("native producer result identity or schema mismatch")
         with self._lock:
             self._consumed.add(id(process))
         return {"result": packet["result"],
-                "release_receipt": packet["release_receipt"]}
+                "release_receipt": packet["release_receipt"],
+                "producer_timing": packet["producer_timing"]}
