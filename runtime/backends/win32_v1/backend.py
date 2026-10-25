@@ -41,6 +41,8 @@ INPUT_MOUSE = 0
 INPUT_KEYBOARD = 1
 KEYEVENTF_KEYUP = 0x0002
 KEYEVENTF_UNICODE = 0x0004
+KEYEVENTF_SCANCODE = 0x0008
+KEYEVENTF_EXTENDEDKEY = 0x0001
 MOUSEEVENTF_LEFTDOWN = 0x0002
 MOUSEEVENTF_LEFTUP = 0x0004
 MOUSEEVENTF_RIGHTDOWN = 0x0008
@@ -81,6 +83,12 @@ KEY_ALIASES = {
     "TAB": VK_TAB, "ESC": VK_ESCAPE, "ESCAPE": VK_ESCAPE,
     "SPACE": VK_SPACE, "BACKSPACE": VK_BACK, "DELETE": VK_DELETE,
     "LEFT": VK_LEFT, "RIGHT": VK_RIGHT, "UP": VK_UP, "DOWN": VK_DOWN,
+}
+EXTENDED_ARROW_SCAN_CODES = {
+    VK_LEFT: 0x4B,
+    VK_UP: 0x48,
+    VK_RIGHT: 0x4D,
+    VK_DOWN: 0x50,
 }
 BUTTON_FLAGS = {
     "left": (MOUSEEVENTF_LEFTDOWN, MOUSEEVENTF_LEFTUP, VK_LBUTTON),
@@ -503,7 +511,15 @@ class Win32Backend:
 
     def _send_key(self, vk: int, down: bool) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
-        item.ki = KEYBDINPUT(vk, 0, 0 if down else KEYEVENTF_KEYUP, 0, 0)
+        flags = 0 if down else KEYEVENTF_KEYUP
+        scan_code = EXTENDED_ARROW_SCAN_CODES.get(vk)
+        if scan_code is None:
+            item.ki = KEYBDINPUT(vk, 0, flags, 0, 0)
+        else:
+            item.ki = KEYBDINPUT(
+                0, scan_code,
+                flags | KEYEVENTF_SCANCODE | KEYEVENTF_EXTENDEDKEY, 0, 0,
+            )
         self._send(item)
 
     def _desktop_name(self, handle) -> str | None:
