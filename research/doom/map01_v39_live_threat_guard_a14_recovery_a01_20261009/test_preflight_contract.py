@@ -2,6 +2,7 @@
 import unittest
 from pathlib import Path
 import sys
+import tempfile
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from run_live import (
     ENTRY, MIN_MEMORY_AVAILABLE_BYTES, MIN_TMP_AVAILABLE_BYTES,
@@ -12,10 +13,13 @@ from run_live import (
 
 class PreflightContractTests(unittest.TestCase):
     def test_host_checkout_maps_to_its_exact_guest_source_path(self):
-        mapping = guest_source_mapping()
+        with tempfile.TemporaryDirectory() as mount:
+            mount_root = Path(mount)
+            repo = mount_root / "results-local" / "doom" / "a14-source"
+            mapping = guest_source_mapping(repo=repo, host_mount_root=mount_root)
         self.assertEqual(mapping["relative_repo"], "results-local/doom/a14-source")
-        self.assertEqual(mapping["guest_source_root"],
-                         "/mnt/source/results-local/doom/a14-source")
+        guest = str(mapping["guest_source_root"]).replace("\\", "/")
+        self.assertEqual(guest, "/mnt/source/results-local/doom/a14-source")
         self.assertEqual(Path(mapping["host_repo_root"]),
                          Path(mapping["host_mount_root"]) / mapping["relative_repo"])
 
