@@ -6,6 +6,10 @@ For active task priority, use [CURRENT_GOAL](docs/CURRENT_GOAL.md) and the
 [worker work map](docs/WORKER_WORK_MAP.md). The current maintainer priority is
 repository convergence that enables independent research and verified integration;
 computer control and human-tempo operation remain unresolved objectives.
+The [native Win32 fixture UI trial](research/integration/win32_native_fixture_live_20261026_r01/RESULT.md)
+adds one scoped current-main click/text/save effect and verified-release sample;
+MAP01/real-game transfer, standard-caller composition, blocked-I/O recovery,
+matched efficiency, and reliability remain open.
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) tracks real-time
 control. Neither this roadmap nor an unchecked item grants a new allocation or
 changes a retained result.
