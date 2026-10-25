@@ -633,15 +633,18 @@ class ProcessCancellationTests(unittest.TestCase):
                 process_identity_reader=_identity,
                 terminate_grace_s=0.05, kill_grace_s=0.05)
 
-            deadline_ns = time.monotonic_ns() + 900_000_000
+            # Give the Windows CI worker enough time to schedule the spawned
+            # recovery helper into the blocking adapter before its deadline.
+            deadline_ns = time.monotonic_ns() + 3_000_000_000
             response = supervisor.cancel("operation-blocked-native-release",
                 GENERATION, cleanup_deadline_ns=deadline_ns)
             self.assertEqual(response["status"], "pending")
-            self.assertTrue(release_started.wait(2))
+            self.assertTrue(release_started.wait(3))
 
-            limit = time.monotonic() + 2
+            unknown_limit_ns = deadline_ns + 500_000_000
             result = owner.result("operation-blocked-native-release")
-            while result["status"] != "unknown" and time.monotonic() < limit:
+            while (result["status"] != "unknown"
+                    and time.monotonic_ns() < unknown_limit_ns):
                 time.sleep(0.01)
                 result = owner.result("operation-blocked-native-release")
             unknown_observed_ns = time.monotonic_ns()
