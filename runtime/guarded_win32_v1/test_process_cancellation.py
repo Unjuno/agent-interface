@@ -644,8 +644,11 @@ class ProcessCancellationTests(unittest.TestCase):
             while result["status"] != "unknown" and time.monotonic() < limit:
                 time.sleep(0.01)
                 result = owner.result("operation-blocked-native-release")
+            unknown_observed_ns = time.monotonic_ns()
 
             self.assertEqual(result["status"], "unknown", result)
+            self.assertLessEqual(unknown_observed_ns, deadline_ns + 500_000_000,
+                "blocked release must become UNKNOWN within the finite cleanup window")
             self.assertTrue(down.is_set())
             self.assertFalse(neutral.is_set())
             self.assertFalse(result["release_confirmed"])
