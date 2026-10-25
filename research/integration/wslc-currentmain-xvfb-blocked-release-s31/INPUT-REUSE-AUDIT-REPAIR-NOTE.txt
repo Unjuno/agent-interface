@@ -1,0 +1,1 @@
+The first S31 input-reuse audit emitted the un-evaluated PowerShell expression for the local HEAD comparison because of operator grouping. Its recorded status was not accepted as a boolean pass. The failed audit is retained. The check is corrected below by resolving local HEAD first, then comparing the scalar SHA to the preregistered SHA.

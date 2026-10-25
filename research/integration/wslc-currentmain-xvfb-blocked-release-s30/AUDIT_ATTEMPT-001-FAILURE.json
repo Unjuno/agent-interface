@@ -1,0 +1,37 @@
+{
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s30-a57146d1c900",
+  "audited_without_runtime_import": true,
+  "checks": {
+    "attempt_binding": true,
+    "input_audit_passed": true,
+    "no_container_cleanup_needed": true,
+    "no_container_created": true,
+    "no_global_inventory_or_docker_in_harness": false,
+    "no_image_pull": true,
+    "no_retry": true,
+    "one_exact_name_preflight": true,
+    "one_session_start": true,
+    "preflight_path_not_found": true,
+    "session_storage_empty": true,
+    "session_terminated": true,
+    "source_main_frozen": true,
+    "task_never_started": true,
+    "unique_named_session": true
+  },
+  "classification": "HOLD_PRETRIAL_EXACT_NAME_PREFLIGHT_PATH_NOT_FOUND",
+  "failed": [
+    "no_global_inventory_or_docker_in_harness"
+  ],
+  "observations": {
+    "container_created": false,
+    "failure": "wslc.exe exact-name preflight returned ERROR_PATH_NOT_FOUND",
+    "formal_invocation_exit_code": 1,
+    "image_pulled": false,
+    "session_storage_empty": true,
+    "session_terminated": true,
+    "task_input_started": false
+  },
+  "passed": 14,
+  "schema": "agent-interface/wslc-s30-independent-setup-audit-v1",
+  "total": 15
+}

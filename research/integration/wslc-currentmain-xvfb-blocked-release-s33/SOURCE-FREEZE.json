@@ -1,0 +1,66 @@
+{
+  "schema": "agent-interface/wslc-s33-source-freeze-v1",
+  "attempt_id": "wslc-standard-caller-xvfb-20261025-s33-b87c4e2f9a16",
+  "frozen_utc": "2026-10-25T11:17:08.0265478+00:00",
+  "source_commit": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "local_head": "c3a6bb2fe715e0ad3d1b0c3cd13a5d8c080dbaf0",
+  "wslc_version": "wslc 3.0.3.0",
+  "wslc_processes_before_start": 0,
+  "session_name": "agent-interface-wslc-s33-b87c4e2f9a16",
+  "container_name": "ai-control-wslc-s33-b87c4e2f9a16",
+  "output_empty": true,
+  "session_storage_absent": true,
+  "manifests": {
+    "deps": {
+      "bytes": 76673565,
+      "files": 3147,
+      "manifest_sha256": "94e1ae5ec5138be6af4c5cf8d9f0a4162be252faa719159ef27c43cd95041e53"
+    },
+    "deps_versions": {
+      "Pillow": "13.0.0",
+      "mcp": "1.30.0",
+      "python-xlib": "system python-xlib",
+      "six": "system python-six"
+    },
+    "repo": {
+      "bytes": 478750040,
+      "files": 20761,
+      "manifest_sha256": "d7526199a2ba46a991e5d677ccc7b829814a7cb71c74ab825ef5d334c6eb4741"
+    },
+    "runner": {
+      "bytes": 4875,
+      "files": 2,
+      "manifest_sha256": "376f69d98a391e66916ca6d68570b2e6c1f40e62951333bf1347706b1f7f90d5"
+    },
+    "stage": {
+      "bytes": 77038569,
+      "files": 1278,
+      "manifest_sha256": "d6f58b39e5753aa845049d540a515d8f29b07b3f7a18979439dfb3624facab20"
+    },
+    "stage_python_version": "3.12.3",
+    "xkb": {
+      "bytes": 3388828,
+      "files": 293,
+      "manifest_sha256": "dd7411e7ca7a17a3aa1706f79f015f5ac33e9400da4f04e7d895803e496193d3"
+    },
+    "xkb_source": "Ubuntu 24.04.3 /usr/share/X11/xkb"
+  },
+  "asset_manifest_hashes": {
+    "repo": "d7526199a2ba46a991e5d677ccc7b829814a7cb71c74ab825ef5d334c6eb4741",
+    "xkb": "dd7411e7ca7a17a3aa1706f79f015f5ac33e9400da4f04e7d895803e496193d3",
+    "deps": "94e1ae5ec5138be6af4c5cf8d9f0a4162be252faa719159ef27c43cd95041e53",
+    "stage": "d6f58b39e5753aa845049d540a515d8f29b07b3f7a18979439dfb3624facab20",
+    "runner": "376f69d98a391e66916ca6d68570b2e6c1f40e62951333bf1347706b1f7f90d5"
+  },
+  "files_sha256": {
+    "preregistration": "e44a6948fdce5c0e9bb8399c08c5652c8cb5985bfa9e6872330290c00c1b0719",
+    "harness_source": "83bc26ab1eee6ff521e506d5c6002756c10f319806992170a3c23f00a348ffac",
+    "harness_project": "fbb54b1a3a3d2d4c73746793866ea78d76c7bcd00b9c5be61962c13613ea5988",
+    "harness_dll": "39a3763c3008e2c4e75c009e047d127d6b81b4b253af92df273c141a8eb7a7f3",
+    "runner_init": "ad3c1d8156c0f9a22b2ce5ae72cda7ec237c6ea20997c9aaf685e3dbd199b17e"
+  },
+  "runtime_route": "new SDK Session handle only; emits pull_invocation_started, pull_object_created and exception chain",
+  "no_global_inventory": true,
+  "no_docker": true,
+  "no_retry": true
+}
