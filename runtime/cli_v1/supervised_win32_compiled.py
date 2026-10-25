@@ -179,11 +179,21 @@ def run_public_compiled(interface, program_templates, *, target,
         observe_call_id = report.get("call_id") or _content_object(reply).get("call_id")
         if type(observe_call_id) is str and observe_call_id:
             observation_call_ids.append(observe_call_id)
+        observation = report.get("observation")
+        top_level_target = report.get("target")
+        nested_target = (observation.get("target")
+            if type(observation) is dict else None)
+        if (top_level_target is not None and nested_target is not None
+                and top_level_target != nested_target):
+            raise ObservationAssociationChanged(
+                "standard Win32 observation target fields disagree")
+        observed_target = (top_level_target if top_level_target is not None
+            else nested_target)
         observed_generation = report.get("target_generation")
         if (type(observed_generation) is not str
                 or _GENERATION.fullmatch(observed_generation) is None
                 or report.get("status") != "returned"
-                or report.get("target") != target
+                or observed_target != target
                 or report.get("target_generation_consistency") != "matched"):
             raise ObservationAssociationChanged(
                 "standard Win32 observation has no valid target generation")

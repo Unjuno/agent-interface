@@ -47,10 +47,11 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             observations += 1
             if observations == 2:
                 generation = "b" * 64
-            return {"status": "returned", "target": "fixture",
+            return {"status": "returned",
                 "target_generation": generation,
                 "target_generation_consistency": "matched",
-                "observation": {"capture_started_ns": time.monotonic_ns()},
+                "observation": {"target": "fixture",
+                    "capture_started_ns": time.monotonic_ns()},
                 "observation_id": f"observe-{observations}"}
 
         def dispatch(program, sequence, binding_revision):
