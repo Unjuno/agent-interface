@@ -1,0 +1,41 @@
+{
+  "study": "current-main-appserver-matched-efficiency-20261025-p13",
+  "runtime_source_commit": "d50c35097aa0f5ec8ebacf34778ee050c15c47c6",
+  "runtime": "Python 3.13.14",
+  "pair_count": 1,
+  "trial_count": 2,
+  "pair_order": [
+    [
+      "compiled_public_caller",
+      "direct_public_input"
+    ]
+  ],
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "provider": "Codex App Server CLI on authorized local Windows PC",
+  "provider_turn_limit": 1,
+  "timeout_seconds": 90,
+  "retry_count": 0,
+  "recovery_count": 0,
+  "public_caller": "RecordedPublicMcpCaller via interface_guarded_observe, interface_guarded_mint, and one of interface_guarded_input or interface_guarded_compiled",
+  "backend": "Child-owned deterministic Fake X",
+  "task": "Select and click the visually labeled green tile from the exact public observation PNG.",
+  "equivalence": "Within this pair all conditions match except final public action route. Pair order is reversed from P12.",
+  "independent_effect": "One owner-side XTEST click inside green target changes pixel (1,1) to RGB [255,0,0] exactly once.",
+  "independent_success": "Model-selected point and click receipt match inside green rectangle; exactly one effect; expected pixel; verified release; complete usage ledger.",
+  "efficiency_endpoints": [
+    "provider_turn_ms",
+    "observation_to_action_return_ms",
+    "total_trial_ms",
+    "input_tokens",
+    "output_tokens",
+    "reasoning_output_tokens",
+    "public_tool_call_count",
+    "compiled_transition_count"
+  ],
+  "usage_agreement": "App Server journal, provider response, and per-attempt recorder reconcile for every cell.",
+  "wslc_used": false,
+  "docker_used": false,
+  "physical_input": false,
+  "decision": "A cell passes only if every preregistered check passes. Retain first outcomes, no retry or replacement. Report one pair descriptively; n=1 is not inferential."
+}

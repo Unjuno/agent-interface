@@ -1,0 +1,133 @@
+{
+  "classification": "PASS_SCOPED_COUNTERBALANCED_TWO_PAIR_FAKE_X_REPLICATION",
+  "evidence_integrity": {
+    "all_4_cell_manifests_verified": true,
+    "each_cell_15_of_15": true,
+    "p12_audit_all_checks_passed": true,
+    "p13_audit_all_checks_passed": true,
+    "provider_protocol_ledger_reconciled_per_cell": true,
+    "public_tool_call_count_each_cell": 5,
+    "release_each_cell": true,
+    "task_effect_each_cell": true
+  },
+  "limits": [
+    "Two matched pairs only; descriptive, no causal/efficiency effect or reliability estimate.",
+    "P12 was direct-first; P13 was compiled-first. Pairwise latency signs reverse across the order-balanced pairs.",
+    "Synthetic deterministic Fake X only; no live GUI/MAP01, WSLc, Docker, blocked-I/O recovery or physical input.",
+    "Image-token breakdown and upstream billing unavailable; runtime task_success remains null.",
+    "The raw P12 and P13 packets remain local-only; public derivatives exclude raw and cannot independently replay the audits."
+  ],
+  "paired_medians_direct_minus_compiled": {
+    "input_tokens": -6.0,
+    "observation_to_action_return_ms": 34.23880000000008,
+    "output_tokens": 23.5,
+    "provider_turn_ms": 40.91805000000022,
+    "reasoning_output_tokens": 23.5,
+    "total_trial_ms": 205.59310000000005
+  },
+  "pairs": {
+    "p12": {
+      "both_independent_task_success": true,
+      "both_release_verified": true,
+      "both_scoped_pass": true,
+      "compiled": {
+        "input_tokens": 10194,
+        "observation_to_action_return_ms": 5606.4438,
+        "output_tokens": 53,
+        "provider_turn_ms": 5345.6676,
+        "reasoning_output_tokens": 34,
+        "total_trial_ms": 6255.135
+      },
+      "compiled_transitions": {
+        "compiled": 1,
+        "direct": 0
+      },
+      "direct": {
+        "input_tokens": 10188,
+        "observation_to_action_return_ms": 6731.4826,
+        "output_tokens": 59,
+        "provider_turn_ms": 6464.2388,
+        "reasoning_output_tokens": 40,
+        "total_trial_ms": 7568.8099
+      },
+      "direct_minus_compiled": {
+        "input_tokens": -6,
+        "observation_to_action_return_ms": 1125.0388000000003,
+        "output_tokens": 6,
+        "provider_turn_ms": 1118.5712000000003,
+        "reasoning_output_tokens": 6,
+        "total_trial_ms": 1313.6749
+      },
+      "order": [
+        "direct_public_input",
+        "compiled_public_caller"
+      ],
+      "provider_usage_reported": true,
+      "public_tool_calls": {
+        "compiled": 5,
+        "direct": 5
+      }
+    },
+    "p13": {
+      "both_independent_task_success": true,
+      "both_release_verified": true,
+      "both_scoped_pass": true,
+      "compiled": {
+        "input_tokens": 10194,
+        "observation_to_action_return_ms": 11446.0977,
+        "output_tokens": 76,
+        "provider_turn_ms": 11179.7524,
+        "reasoning_output_tokens": 57,
+        "total_trial_ms": 12087.3521
+      },
+      "compiled_transitions": {
+        "compiled": 1,
+        "direct": 0
+      },
+      "direct": {
+        "input_tokens": 10188,
+        "observation_to_action_return_ms": 10389.5365,
+        "output_tokens": 117,
+        "provider_turn_ms": 10143.0173,
+        "reasoning_output_tokens": 98,
+        "total_trial_ms": 11184.8634
+      },
+      "direct_minus_compiled": {
+        "input_tokens": -6,
+        "observation_to_action_return_ms": -1056.5612,
+        "output_tokens": 41,
+        "provider_turn_ms": -1036.7350999999999,
+        "reasoning_output_tokens": 41,
+        "total_trial_ms": -902.4886999999999
+      },
+      "order": [
+        "compiled_public_caller",
+        "direct_public_input"
+      ],
+      "provider_usage_reported": true,
+      "public_tool_calls": {
+        "compiled": 5,
+        "direct": 5
+      }
+    }
+  },
+  "per_arm_medians": {
+    "compiled": {
+      "input_tokens": 10194.0,
+      "observation_to_action_return_ms": 8526.27075,
+      "output_tokens": 64.5,
+      "provider_turn_ms": 8262.71,
+      "reasoning_output_tokens": 45.5,
+      "total_trial_ms": 9171.24355
+    },
+    "direct": {
+      "input_tokens": 10188.0,
+      "observation_to_action_return_ms": 8560.50955,
+      "output_tokens": 88.0,
+      "provider_turn_ms": 8303.62805,
+      "reasoning_output_tokens": 69.0,
+      "total_trial_ms": 9376.836650000001
+    }
+  },
+  "schema": "agent-interface/appserver-matched-efficiency-p12-p13-rollup-v1"
+}
