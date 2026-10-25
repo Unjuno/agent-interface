@@ -182,8 +182,18 @@ class PrestartedCancellationSupervisor:
                 return {'status': 'unknown', 'reason': 'supervisor_send_failed',
                         'error': repr(error), 'operation_id': request['operation_id'],
                         'session_id': request['session_id'], **retirement}
-            remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
-            if not self._receive.poll(remaining_s):
+            received = False
+            while True:
+                remaining_ns = deadline_monotonic_ns - time.monotonic_ns()
+                if remaining_ns <= 0:
+                    break
+                if self._receive.poll(remaining_ns / 1e9):
+                    received = True
+                    break
+                # Windows pipe waits can report a timeout before the absolute
+                # deadline. Recheck that deadline before retiring the worker.
+                time.sleep(min(0.001, remaining_ns / 1e9))
+            if not received:
                 retirement = self._terminate_locked()
                 return {'status': 'unknown', 'reason': 'transaction_deadline',
                         'operation_id': request['operation_id'],

@@ -104,6 +104,36 @@ class PrestartedCancellationSupervisorTests(unittest.TestCase):
         self.assertEqual(self.state()['down'], ['a'])
         self.assertEqual(self.state()['accepted'], [])
 
+    def test_early_pipe_poll_timeout_rechecks_until_absolute_deadline(self):
+        receive = self.supervisor._receive
+
+        class EarlyTimeoutOnce:
+            def __init__(self, wrapped):
+                self.wrapped = wrapped
+                self.polls = 0
+
+            def poll(self, timeout):
+                self.polls += 1
+                if self.polls == 1:
+                    return False
+                return self.wrapped.poll(timeout)
+
+            def recv(self):
+                return self.wrapped.recv()
+
+        delayed_timeout = EarlyTimeoutOnce(receive)
+        self.supervisor._receive = delayed_timeout
+        deadline = time.monotonic_ns() + 2_000_000_000
+        result = self.supervisor.run(
+            self.request(),
+            deadline_monotonic_ns=deadline)
+
+        self.assertEqual(result['status'], 'accepted', result)
+        self.assertLess(time.monotonic_ns(), deadline)
+        self.assertGreaterEqual(delayed_timeout.polls, 2)
+        self.assertEqual(self.state()['down'], [])
+        self.assertEqual(len(self.state()['accepted']), 1)
+
     def test_close_waits_for_pending_transaction_deadline_and_keeps_one_shot_custody(self):
         started_path = Path(self.temp.name) / 'blocked-worker-started'
         supervisor = PrestartedCancellationSupervisor(
