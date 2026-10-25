@@ -103,6 +103,18 @@ class CaptureContractDLL:
 
 
 class PureWin32HelperTests(unittest.TestCase):
+    def test_arrow_key_events_use_extended_scan_codes(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        emitted = []
+        backend._send = lambda item: emitted.append(
+            (int(item.ki.wVk), int(item.ki.wScan), int(item.ki.dwFlags))
+        )
+
+        backend._send_key(virtual_key("Up"), True)
+        backend._send_key(virtual_key("Up"), False)
+
+        self.assertEqual(emitted, [(0, 0x48, 0x0009), (0, 0x48, 0x000B)])
+
     def _release_backend(self, states):
         backend = Win32Backend.__new__(Win32Backend)
         backend.held_keys = {"CTRL": 17, "LEFT_CTRL": 17}
