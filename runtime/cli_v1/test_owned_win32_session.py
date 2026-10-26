@@ -23,6 +23,7 @@ def orphan_custody_record():
     return {"classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
         "operation_id": ACTION_ID, "target_generation": GEN_A,
         "obligations": ["key:map01:W"], "do_not_replay": True,
+        "observed_producer_live": False,
         "dispatch": {"input_dispatched": None, "release_confirmed": False,
             "task_success": None, "replay_allowed": False}}
 
@@ -753,6 +754,24 @@ class OwnedWin32SessionTests(unittest.TestCase):
         session.bind_target_generation_reader(lambda: GEN_A)
         record = orphan_custody_record()
         record["dispatch"]["release_confirmed"] = True
+
+        result = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"],
+            source_custody_record=record)
+
+        self.assertEqual(result["reason"], "custody_record_mismatch")
+        supervisor.recover_orphaned_input.assert_not_called()
+
+    def test_orphan_recovery_refuses_while_source_producer_is_live(self):
+        supervisor = FakeCancellationSupervisor(self.owner)
+        supervisor.recover_orphaned_input = Mock()
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        session.bind_target_generation_reader(lambda: GEN_A)
+        record = orphan_custody_record()
+        record["observed_producer_live"] = True
 
         result = session.recover_orphaned_input(
             source_operation_id=ACTION_ID,

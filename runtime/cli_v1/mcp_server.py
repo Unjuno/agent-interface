@@ -1390,7 +1390,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
             Requires a fresh supervised-Win32 session with no admitted action,
             the exact source target generation, frozen obligations, and the
-            retained UNKNOWN custody record. The server checks those fields and
+            retained UNKNOWN custody record with the source producer observed
+            absent. The server checks those fields and
             hashes the canonical record into its receipt; this is a trace digest,
             not an authenticity signature. A successful recovery
             proves only release/readback. The source action remains UNKNOWN,
