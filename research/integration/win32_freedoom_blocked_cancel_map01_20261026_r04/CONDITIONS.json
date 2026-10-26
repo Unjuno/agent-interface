@@ -1,0 +1,28 @@
+{
+  "run_id": "win32-freedoom-blocked-cancel-map01-20261026-r04",
+  "source": {
+    "repository": "Unjuno/agent-interface",
+    "main_sha": "29020f09a65a0f6e37bbaa248141f872e3aff4ff"
+  },
+  "hypothesis": "After one generation-bound visible MAP01 effect, canceling the exact standard Win32 public call while injected CTRL-down is held inside the native low-level hook returns the action to a released, neutral state without replay and preserves the prior independently verifiable effect.",
+  "minimum_test": "One fresh pinned ViZDoom/Freedoom MAP01 process; one public observation/generation bind; one action dispatch; poll public results read-only every 250 ms while observing hook entry for at most 24 seconds; cancel the exact call once only after hook-entry evidence; reconcile and independently verify.",
+  "decision": {
+    "pass": "Hook entry precedes cancel request, callback returns after cancel releases it before the 500 ms failsafe, terminal state is recovered, release is confirmed, replay is denied, two same-generation Ctrl-up readbacks are neutral, task oracle is bound to call/operation/generation and exceeds 5% pixel change, and exact cleanup is verified.",
+    "fail_or_inconclusive": "Any missing identity, generation, held-callback, recovery, neutral-state, task-effect or cleanup gate; no hook entry means no cancellation claim and no replay."
+  },
+  "conditions": {
+    "application": "ViZDoom 1.3.1 with pinned Freedoom 2 IWAD; MAP01, skill 1, windowed.",
+    "executable_sha256": "8a24dff3bb4c39769537ec58292602eec4e25e07b1b5681d649145fe8c2d99f7",
+    "iwad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "lease_ms": 30000,
+    "hook_observation_deadline_ms": 24000,
+    "public_result_poll_period_ms": 250,
+    "hook_callback_failsafe_ms": 500,
+    "effect_oracle": "Fresh same-generation screen capture; RGB pixels in the fixed 640x400 world region must differ from baseline by strictly more than 5%; receipt binds exact call, operation and generation.",
+    "independent_release_horizons_ms": [0, 1500],
+    "replay": "never",
+    "resource_boundary": "Native Windows only; no WSLc or Docker."
+  },
+  "competing_explanation": "Producer startup or application scheduling can delay the hook event beyond a monitor deadline; R01-R03 retain those misses. R04 polls public results concurrently with event observation.",
+  "uncertainty": "Single live run; does not establish rates, MAP01 completion, efficiency, or generalization to other applications or hosts."
+}
