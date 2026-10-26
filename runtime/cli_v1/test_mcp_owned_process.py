@@ -2348,7 +2348,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(pending['cancellation']['status'], 'pending')
                 self.assertFalse(pending['cancellation']['replay_allowed'])
                 result = await self._wait_for_cancel_terminal(
-                    server, action['call_id'])
+                    server, action['call_id'], timeout_s=5)
                 cleanup = result['cancellation']['result']
                 self.assertEqual(cleanup['owner_release_attempt']['status'],
                                  'unknown')
