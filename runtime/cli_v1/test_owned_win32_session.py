@@ -695,6 +695,39 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(duplicate["reason"], "source_recovery_already_attempted")
         supervisor.recover_orphaned_input.assert_called_once()
 
+    def test_orphan_recovery_accepts_known_dispatch_but_rejects_known_no_dispatch(self):
+        for dispatched, expected in ((True, "recovered"), (False, "refused")):
+            with self.subTest(input_dispatched=dispatched):
+                supervisor = FakeCancellationSupervisor(self.owner)
+                def recover_orphaned_input(operation_id, generation,
+                                           recovery_id, deadline_ns, obligations):
+                    return {"status": "recovered", "release_confirmed": True,
+                        "operation_id": operation_id,
+                        "target_generation": generation,
+                        "recovery_id": recovery_id,
+                        "readback": {"neutral": True}}
+                supervisor.recover_orphaned_input = Mock(
+                    side_effect=recover_orphaned_input)
+                session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                                 synthetic_only=False)
+                session.bind_target_generation_reader(lambda: GEN_A)
+                record = orphan_custody_record()
+                record["dispatch"]["input_dispatched"] = dispatched
+
+                result = session.recover_orphaned_input(
+                    source_operation_id=ACTION_ID,
+                    source_target_generation=GEN_A,
+                    obligations=["key:map01:W"],
+                    source_custody_record=record)
+
+                self.assertEqual(result["recovery_status"], expected)
+                self.assertEqual(supervisor.recover_orphaned_input.called,
+                                 dispatched)
+                if dispatched:
+                    self.assertEqual(result["source_action_status"], "unknown")
+                    self.assertIsNone(result["task_success"])
+                    self.assertFalse(result["replay_allowed"])
+
     def test_orphan_recovery_generation_mismatch_sends_no_release(self):
         supervisor = FakeCancellationSupervisor(self.owner)
         supervisor.recover_orphaned_input = Mock()
