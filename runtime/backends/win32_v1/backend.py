@@ -43,6 +43,7 @@ KEYEVENTF_KEYUP = 0x0002
 KEYEVENTF_UNICODE = 0x0004
 KEYEVENTF_SCANCODE = 0x0008
 KEYEVENTF_EXTENDEDKEY = 0x0001
+MAPVK_VK_TO_VSC_EX = 4
 MOUSEEVENTF_LEFTDOWN = 0x0002
 MOUSEEVENTF_LEFTUP = 0x0004
 MOUSEEVENTF_RIGHTDOWN = 0x0008
@@ -194,6 +195,7 @@ class Win32Backend:
             if not self.user32.IsWindow(hwnd):
                 raise Win32BackendError(f"invalid HWND for target {name}")
         self.held_keys: dict[str, int] = {}
+        self.held_key_encodings: dict[str, str | None] = {}
         self.held_key_targets: dict[str, str | None] = {}
         self.held_buttons: set[str] = set()
         self.held_button_targets: dict[str, str | None] = {}
@@ -237,6 +239,8 @@ class Win32Backend:
         self.user32.SetCursorPos.restype = wintypes.BOOL
         self.user32.SendInput.argtypes = [wintypes.UINT, ctypes.POINTER(INPUT), ctypes.c_int]
         self.user32.SendInput.restype = wintypes.UINT
+        self.user32.MapVirtualKeyW.argtypes = [wintypes.UINT, wintypes.UINT]
+        self.user32.MapVirtualKeyW.restype = wintypes.UINT
         self.user32.GetAsyncKeyState.argtypes = [ctypes.c_int]
         self.user32.GetAsyncKeyState.restype = wintypes.SHORT
         self.user32.OpenInputDesktop.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
@@ -509,9 +513,23 @@ class Win32Backend:
             raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
         self.emissions += 1
 
-    def _send_key(self, vk: int, down: bool) -> None:
+    def _send_key(self, vk: int, down: bool, encoding: str | None = None) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
         flags = 0 if down else KEYEVENTF_KEYUP
+        if encoding == "scan_code":
+            mapped = int(self.user32.MapVirtualKeyW(vk, MAPVK_VK_TO_VSC_EX))
+            scan_code = mapped & 0xFF
+            if not scan_code:
+                raise Win32BackendError(f"key {vk} has no scan code")
+            prefix = (mapped >> 8) & 0xFF
+            flags |= KEYEVENTF_SCANCODE
+            if prefix in {0xE0, 0xE1}:
+                flags |= KEYEVENTF_EXTENDEDKEY
+            item.ki = KEYBDINPUT(0, scan_code, flags, 0, 0)
+            self._send(item)
+            return
+        if encoding not in {None, "virtual_key"}:
+            raise Win32BackendError(f"unsupported key encoding {encoding!r}")
         scan_code = EXTENDED_ARROW_SCAN_CODES.get(vk)
         if scan_code is None:
             item.ki = KEYBDINPUT(vk, 0, flags, 0, 0)
@@ -664,11 +682,21 @@ class Win32Backend:
         item.ki = KEYBDINPUT(0, unit, flags, 0, 0)
         self._send(item)
 
-    def key_state(self, key: str, down: bool) -> None:
+    def key_state(self, key: str, down: bool, encoding: str | None = None) -> None:
         vk = virtual_key(key)
-        self._send_key(vk, down)
+        if down:
+            self._send_key(vk, True, encoding) if encoding is not None else self._send_key(vk, True)
+        else:
+            held_encoding = getattr(self, "held_key_encodings", {}).get(key)
+            if encoding is not None and held_encoding != encoding:
+                raise Win32BackendError(f"key UP encoding differs from held DOWN: {key}")
+            effective_encoding = held_encoding if encoding is None else encoding
+            self._send_key(vk, False, effective_encoding) if effective_encoding is not None else self._send_key(vk, False)
         if down:
             self.held_keys[key] = vk
+            if not hasattr(self, "held_key_encodings"):
+                self.held_key_encodings = {}
+            self.held_key_encodings[key] = encoding
             if not hasattr(self, "held_key_targets"):
                 self.held_key_targets = {}
             self.held_key_targets[key] = getattr(self, "focused_target", None)
@@ -679,11 +707,11 @@ class Win32Backend:
             # attempt cleanup before returning the failure.
             raise Win32BackendError(f"key UP unverified: {key}")
 
-    def key_chord(self, keys: list[str]) -> None:
+    def key_chord(self, keys: list[str], encoding: str | None = None) -> None:
         for key in keys:
-            self.key_state(key, True)
+            self.key_state(key, True, encoding) if encoding is not None else self.key_state(key, True)
         for key in reversed(keys):
-            self.key_state(key, False)
+            self.key_state(key, False, encoding) if encoding is not None else self.key_state(key, False)
 
     def text(self, value: str) -> None:
         if self.pending_unicode_ups:
@@ -870,10 +898,24 @@ class Win32Backend:
             elif kind == "text":
                 utf16_units(op["text"])
             elif kind == "key_chord":
+                encoding = op.get("encoding")
+                if encoding not in {None, "virtual_key", "scan_code"}:
+                    raise Win32BackendError(f"unsupported key encoding {encoding!r}")
                 for key in op["keys"]:
-                    virtual_key(key)
+                    vk = virtual_key(key)
+                    if encoding == "scan_code":
+                        mapped = int(self.user32.MapVirtualKeyW(vk, MAPVK_VK_TO_VSC_EX))
+                        if not (mapped & 0xFF):
+                            raise Win32BackendError(f"key {key} has no scan code")
             elif kind == "key_state":
-                virtual_key(op["key"])
+                encoding = op.get("encoding")
+                if encoding not in {None, "virtual_key", "scan_code"}:
+                    raise Win32BackendError(f"unsupported key encoding {encoding!r}")
+                vk = virtual_key(op["key"])
+                if encoding == "scan_code":
+                    mapped = int(self.user32.MapVirtualKeyW(vk, MAPVK_VK_TO_VSC_EX))
+                    if not (mapped & 0xFF):
+                        raise Win32BackendError(f"key {op['key']} has no scan code")
             elif kind == "pointer_button" and op["button"] not in BUTTON_FLAGS:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
@@ -892,14 +934,24 @@ class Win32Backend:
         tracked_buttons = set(self.held_buttons)
         target_sets: dict[int, set[str | None]] = {}
         key_targets = getattr(self, "held_key_targets", {})
+        key_encodings = getattr(self, "held_key_encodings", {})
         button_targets = getattr(self, "held_button_targets", {})
         for name, vk in tracked_keys.items():
             target_sets.setdefault(vk, set()).add(key_targets.get(name))
         for button in tracked_buttons:
             target_sets.setdefault(BUTTON_FLAGS[button][2], set()).add(
                 button_targets.get(button))
-        for vk in sorted(set(tracked_keys.values())):
-            self._send_key(vk, False)
+        sent_key_ups = set()
+        for name, vk in tracked_keys.items():
+            encoding = key_encodings.get(name)
+            marker = (vk, encoding)
+            if marker in sent_key_ups:
+                continue
+            sent_key_ups.add(marker)
+            if encoding is None:
+                self._send_key(vk, False)
+            else:
+                self._send_key(vk, False, encoding)
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
             item = INPUT(type=INPUT_MOUSE)
@@ -933,6 +985,7 @@ class Win32Backend:
         for name in tracked_keys:
             if states[tracked_keys[name]] is False:
                 self.held_keys.pop(name, None)
+                getattr(self, "held_key_encodings", {}).pop(name, None)
                 getattr(self, "held_key_targets", {}).pop(name, None)
         self.held_buttons.difference_update(button for button in tracked_buttons
                                             if button_states[button] is False)
@@ -983,10 +1036,10 @@ class Win32Backend:
                     check_target_generation(current_target)
                 elif kind == "key_chord":
                     check_target_generation(current_target)
-                    self.key_chord(op["keys"])
+                    self.key_chord(op["keys"], encoding=op["encoding"]) if "encoding" in op else self.key_chord(op["keys"])
                 elif kind == "key_state":
                     check_target_generation(current_target)
-                    self.key_state(op["key"], op["down"])
+                    self.key_state(op["key"], op["down"], encoding=op["encoding"]) if "encoding" in op else self.key_state(op["key"], op["down"])
                 elif kind == "text":
                     check_target_generation(current_target)
                     self.text(op["text"])

@@ -71,6 +71,38 @@ FULL = OFFICE_FLOOR
 
 
 class ProgramTests(unittest.TestCase):
+    def test_key_chord_accepts_explicit_scan_code_encoding(self):
+        row = program()
+        row["ops"] = [
+            {"op": "key_chord", "keys": ["TAB"], "encoding": "scan_code"},
+            {"op": "release_all"},
+        ]
+
+        self.assertEqual(validate_program(row), row)
+
+    def test_key_chord_rejects_unknown_encoding(self):
+        row = program()
+        row["ops"] = [
+            {"op": "key_chord", "keys": ["TAB"], "encoding": "scancode"},
+            {"op": "release_all"},
+        ]
+
+        with self.assertRaises(ContractError):
+            validate_program(row)
+
+    def test_key_state_rejects_release_encoding_different_from_press(self):
+        row = program()
+        row["ops"] = [
+            {"op": "key_state", "key": "TAB", "down": True,
+             "encoding": "scan_code"},
+            {"op": "key_state", "key": "TAB", "down": False,
+             "encoding": "virtual_key"},
+            {"op": "release_all"},
+        ]
+
+        with self.assertRaisesRegex(ContractError, "different encoding"):
+            validate_program(row)
+
     def test_activation_requires_explicit_optional_capability(self):
         row = program()
         row['ops'] = [{'op': 'activate', 'target': 'app', 'timeout_ms': 250},

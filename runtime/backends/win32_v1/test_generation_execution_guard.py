@@ -69,6 +69,17 @@ class TargetGenerationExecutionGuardTests(unittest.TestCase):
         backend.key_chord.assert_called_once_with(["CTRL", "S"])
         backend.release_all.assert_called_once()
 
+    def test_scan_code_mode_reaches_the_standard_key_chord_dispatch(self):
+        backend = self.backend(["a" * 64] * 4)
+        program = self.program()
+        program["ops"][2]["encoding"] = "scan_code"
+
+        backend.execute(program)
+
+        backend.key_chord.assert_called_once_with(
+            ["CTRL", "S"], encoding="scan_code"
+        )
+
     def test_legacy_program_without_generation_map_keeps_backend_behavior(self):
         backend = self.backend([])
         program = self.program()
