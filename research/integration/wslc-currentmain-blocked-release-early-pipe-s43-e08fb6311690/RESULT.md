@@ -1,0 +1,11 @@
+# S43 blocked-release integration with injected early supervisor-pipe timeouts
+
+**Decision: `PASS_SCOPED` (28/28 independent checks).** The current-main standard MCP blocked-release test ran once on WSLc 3.0.3 with private Xvfb paused for 3,935 ms. A test-only `sitecustomize` hook forced the first two result-pipe polls to return false immediately. The supervisor then polled the real pipe and received the response; the recorded trace ties all three polls to the same cancellation operation. This directly exercised the `poll == False` recheck branch in the integrated standard caller under the blocked-I/O condition.
+
+The platform I/O pause and queued delayed keypress were observed. The public cancel response took 306.268 ms. The supervisor release receipt was verified all-up 3,943.861 ms after cancellation admission, within the 4,000 ms bound. A separate X client read all-up at 3,998.095 ms; the 8,504.358 ms delayed-request horizon remained all-up and observed no late `b` keypress. Old-task and fresh-session synthetic task oracles passed with exact effect counts. Generation was observed and carried through mint.
+
+The old public call correctly remains UNKNOWN: `release_confirmed=false`, replay denied, `task_success=null`, and a late server request remains possible. This run therefore proves a verified supervisor release and independent synthetic task effects under the injected timing fault, while preserving uncertain public execution custody. It does not convert the old call into confirmed task success.
+
+The test and container exited zero. The exact container and image were deleted and the uniquely named session terminated. Raw SDK output, full test result, forced-poll trace, output files, source/runner hashes, cleanup receipt, conditions, and audit are retained. The 235,929,600-byte post-termination VHDX remains retained and hashed in `raw/RAW-SHA256.json`.
+
+This is synthetic private Xvfb only. The two poll timeouts were injected by a test shim; they are not native Windows kernel pipe timing. This is not physical GUI/MAP01 evidence, a latency distribution, reliability estimate, matched-efficiency comparison, or model/token/energy result. The 3,943.861 ms release is one near-deadline observation, not a guarantee.

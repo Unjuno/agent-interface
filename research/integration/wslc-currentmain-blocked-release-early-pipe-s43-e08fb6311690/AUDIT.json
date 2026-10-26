@@ -1,0 +1,52 @@
+{
+  "attempt_id": "wslc-currentmain-blocked-release-early-pipe-20261026-s43-e08fb6311690",
+  "checks": {
+    "blocked_release_report_present": true,
+    "cancel_response_under_3000ms": true,
+    "delayed_horizon_at_least_8500ms_all_up": true,
+    "exact_container_image_session_cleanup": true,
+    "exactly_two_forced_early_false_polls": true,
+    "final_independent_key_state_all_up": true,
+    "fresh_task_oracle_pass": true,
+    "independent_readback_all_up_within_5000ms": true,
+    "initial_effect_observed_before_cancel": true,
+    "old_task_oracle_pass": true,
+    "owner_release_receipt_verified": true,
+    "owner_release_within_4000ms": true,
+    "poll_retried_and_received_real_pipe_response": true,
+    "public_old_call_remains_unknown_and_no_replay": true,
+    "real_blocked_owner_sync_entered": true,
+    "runner_sha_container-init.sh": true,
+    "runner_sha_run-container.py": true,
+    "runner_sha_sitecustomize.py": true,
+    "runtime_result_capture_present": true,
+    "source_sha_runtime_cli_v1_test_mcp_xvfb_blocked_release_integration.py": true,
+    "source_sha_runtime_guarded_x11_v1_cancel_supervisor.py": true,
+    "source_sha_runtime_guarded_x11_v1_test_cancel_supervisor.py": true,
+    "source_sha_runtime_guarded_x11_v1_test_xres_disconnect_fence_integration.py": true,
+    "target_generation_observed_and_minted": true,
+    "test_body_exit_zero": true,
+    "test_container_exit_zero": true,
+    "trace_belongs_to_same_cancel_operation": true,
+    "vhdx_retained_nonempty": true
+  },
+  "decision": "PASS_SCOPED",
+  "failed": [],
+  "limitations": [
+    "synthetic private Xvfb only",
+    "early poll timeouts injected by a test shim; not native Windows kernel pipe timing",
+    "public old-call result remains UNKNOWN/replay denied/task_success=null",
+    "not physical GUI/MAP01, efficiency, or reliability estimate"
+  ],
+  "metrics": {
+    "cancel_response_ms": 306.267538,
+    "delayed_request_horizon_ms": 8504.357596,
+    "forced_early_false_polls": 2,
+    "independent_all_up_readback_ms_after_admission": 3998.095336,
+    "owner_release_readback_ms_after_admission": 3943.860607,
+    "poll_retries_until_pipe_response": 3
+  },
+  "passed": 28,
+  "schema": "agent-interface/wslc-s43-early-poll-independent-audit-v1",
+  "total": 28
+}
