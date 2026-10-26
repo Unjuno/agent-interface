@@ -146,7 +146,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         output_entered=threading.Event();release_output=threading.Event()
         cancel_dispatched=threading.Event();read_lock=threading.Lock()
         lines=(b'{"id":1,"tool":"interface_guarded_compiled","arguments":{"wait_for_result_ms":10}}\n'
-               b'{"id":2,"tool":"interface_guarded_cancel","arguments":{"call_id":"' + b'a'*32 + b'"}}\n')
+               b'{"id":2,"tool":"interface_cancel","arguments":{"call_id":"' + b'a'*32 + b'"}}\n')
         class TrackingInput:
             def __init__(self):
                 self.stream=io.BytesIO(lines);self.read_count=0
@@ -176,7 +176,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
             async def initialize(self):pass
             async def call_tool(self,name,arguments):
                 self.calls.append(name)
-                if name=='interface_guarded_cancel':cancel_dispatched.set()
+                if name=='interface_cancel':cancel_dispatched.set()
                 return CallToolResult(content=[TextContent(type='text',text=name)])
 
         client=Client();stdin=TrackingInput();stdout=BlockingOutput();errors=[]
@@ -200,7 +200,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
                 await asyncio.to_thread(server_thread.join,2)
         self.assertFalse(server_thread.is_alive(),'relay did not finish after stdout resumed')
         self.assertEqual(errors,[])
-        self.assertEqual(client.calls,['interface_guarded_compiled','interface_guarded_cancel'])
+        self.assertEqual(client.calls,['interface_guarded_compiled','interface_cancel'])
 
     async def test_pending_stdout_limit_reads_past_one_queued_ordinary_for_cancel(self):
         from runtime.cli_v1 import mcp_relay as module
@@ -213,9 +213,9 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
                   for i in range(1,module.MAX_PENDING_STDOUT_RESPONSES+1)]
         queued_ordinary=(json.dumps({'id':len(ordinary)+1,'tool':'interface_guarded_compiled',
                                      'arguments':{'marker':'queued-before-cancel'}}).encode()+b'\n')
-        cancel=(json.dumps({'id':len(ordinary)+2,'tool':'interface_guarded_cancel',
+        cancel=(json.dumps({'id':len(ordinary)+2,'tool':'interface_cancel',
                             'arguments':{'call_id':'a'*32}}).encode()+b'\n')
-        second_cancel=(json.dumps({'id':len(ordinary)+3,'tool':'interface_guarded_cancel',
+        second_cancel=(json.dumps({'id':len(ordinary)+3,'tool':'interface_cancel',
                                    'arguments':{'call_id':'b'*32}}).encode()+b'\n')
         tail=(json.dumps({'id':len(ordinary)+4,'tool':'interface_guarded_compiled',
                           'arguments':{'marker':'tail'}}).encode()+b'\n')
@@ -250,7 +250,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
             async def initialize(self):pass
             async def call_tool(self,name,arguments):
                 self.calls.append((name,arguments))
-                if name=='interface_guarded_cancel':
+                if name=='interface_cancel':
                     cancel_calls.append(arguments['call_id'])
                     cancel_dispatched.set()
                 if arguments.get('marker')=='queued-before-cancel':queued_ordinary_dispatched.set()
@@ -293,9 +293,9 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(errors,[])
         self.assertEqual(client.calls,
                          [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES+
-                         [('interface_guarded_cancel',{'call_id':'a'*32}),
+                         [('interface_cancel',{'call_id':'a'*32}),
                           ('interface_guarded_compiled',{'marker':'queued-before-cancel'}),
-                          ('interface_guarded_cancel',{'call_id':'b'*32}),
+                          ('interface_cancel',{'call_id':'b'*32}),
                           ('interface_guarded_compiled',{'marker':'tail'})])
         self.assertTrue(tail_dispatched.is_set())
 
