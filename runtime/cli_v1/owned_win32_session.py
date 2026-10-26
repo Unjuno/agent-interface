@@ -8,6 +8,8 @@ transactions; producer exit alone never proves release.
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
+import json
 import re
 import threading
 import time
@@ -17,6 +19,7 @@ import uuid
 _IDENTIFIER = re.compile(r"^[0-9a-f]{32}$")
 _PENDING_PHASES = {"cancel_pending", "producer_retired", "recovery_pending"}
 _CANCEL_TRANSACTION_NS = 3_000_000_000
+_ORPHAN_RECOVERY_WINDOW_NS = 5_000_000_000
 _TARGET_BINDING_TTL_NS = 60_000_000_000
 _MAX_TARGET_BINDINGS = 64
 
@@ -58,6 +61,7 @@ class OwnedWin32SessionOwner:
         self._cancellation_ids = set()
         self._target_bindings = {}
         self._used_authority_leases = set()
+        self._orphan_recovery_sources = set()
 
     def bind_target_generation_reader(self, reader):
         """Bind a host-supplied identity query; this adapter never opens Win32 APIs."""
@@ -720,6 +724,112 @@ class OwnedWin32SessionOwner:
                 return None
             self._refresh(record)
             return deepcopy(record)
+
+    def recover_orphaned_input(self, *, source_operation_id,
+                               source_target_generation, obligations,
+                               source_custody_record):
+        """Release one externally documented orphan without rewriting its action.
+
+        This entry point is only for a fresh supervised-Win32 session. The
+        supplied source action remains UNKNOWN; recovery is a separate bounded
+        transaction that is bound to the exact configured target generation.
+        """
+        try:
+            self._validate_id(source_operation_id, "source_operation_id")
+        except ValueError as error:
+            return self._orphan_recovery_refusal("source_operation_id_invalid",
+                                                  str(error))
+        if (type(source_target_generation) is not str
+                or re.fullmatch(r"[0-9a-f]{64}", source_target_generation) is None):
+            return self._orphan_recovery_refusal("target_generation_invalid")
+        if (not isinstance(obligations, (list, tuple)) or not obligations
+                or any(type(item) is not str or not item for item in obligations)
+                or len(set(obligations)) != len(obligations)):
+            return self._orphan_recovery_refusal("obligations_invalid")
+        if type(source_custody_record) is not dict:
+            return self._orphan_recovery_refusal("custody_record_invalid")
+        try:
+            custody_bytes = json.dumps(source_custody_record, sort_keys=True,
+                separators=(",", ":"), ensure_ascii=False,
+                allow_nan=False).encode("utf-8")
+        except (TypeError, ValueError):
+            return self._orphan_recovery_refusal("custody_record_not_json")
+        if len(custody_bytes) > 65536:
+            return self._orphan_recovery_refusal("custody_record_too_large")
+        dispatch = source_custody_record.get("dispatch")
+        if (source_custody_record.get("classification")
+                != "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED"
+                or source_custody_record.get("operation_id") != source_operation_id
+                or source_custody_record.get("target_generation")
+                    != source_target_generation
+                or source_custody_record.get("obligations") != list(obligations)
+                or source_custody_record.get("do_not_replay") is not True
+                or type(dispatch) is not dict
+                or dispatch.get("input_dispatched") is not None
+                or dispatch.get("release_confirmed") is not False
+                or dispatch.get("task_success") is not None
+                or dispatch.get("replay_allowed") is not False):
+            return self._orphan_recovery_refusal("custody_record_mismatch")
+        source_custody_sha256 = hashlib.sha256(custody_bytes).hexdigest()
+        if self.synthetic_only:
+            return self._orphan_recovery_refusal("native_supervised_win32_required")
+        recover = getattr(self._supervisor, "recover_orphaned_input", None)
+        if not callable(recover):
+            return self._orphan_recovery_refusal("orphan_recovery_unavailable")
+
+        with self._lock:
+            if self.state != "open" or self._calls:
+                return self._orphan_recovery_refusal(
+                    "fresh_empty_session_required")
+            if source_operation_id in self._orphan_recovery_sources:
+                return self._orphan_recovery_refusal(
+                    "source_recovery_already_attempted")
+            self._orphan_recovery_sources.add(source_operation_id)
+            try:
+                current_generation = self.current_target_generation()
+            except Exception:
+                return self._orphan_recovery_refusal(
+                    "current_target_generation_unavailable")
+            if current_generation != source_target_generation:
+                return self._orphan_recovery_refusal(
+                    "target_generation_mismatch")
+            recovery_id = uuid.uuid4().hex
+            deadline_ns = time.monotonic_ns() + _ORPHAN_RECOVERY_WINDOW_NS
+            try:
+                receipt = recover(source_operation_id, source_target_generation,
+                    recovery_id, deadline_ns, list(obligations))
+            except Exception as error:
+                receipt = {"status": "unknown",
+                           "reason": type(error).__name__}
+            confirmed = (type(receipt) is dict
+                and receipt.get("status") == "recovered"
+                and receipt.get("operation_id") == source_operation_id
+                and receipt.get("target_generation") == source_target_generation
+                and receipt.get("recovery_id") == recovery_id
+                and receipt.get("release_confirmed") is True)
+            return {
+                "recovery_status": "recovered" if confirmed else "unknown",
+                "source_operation_id": source_operation_id,
+                "source_target_generation": source_target_generation,
+                "source_custody_canonical_sha256": source_custody_sha256,
+                "source_action_status": "unknown",
+                "release_confirmed": bool(confirmed),
+                "recovery_id": recovery_id,
+                "recovery_receipt": deepcopy(receipt),
+                "task_success": None,
+                "replay_allowed": False,
+                "next_action_requires_fresh_generation": True,
+            }
+
+    @staticmethod
+    def _orphan_recovery_refusal(reason, detail=None):
+        result = {"recovery_status": "refused", "reason": reason,
+                  "source_action_status": "unknown",
+                  "release_confirmed": False, "task_success": None,
+                  "replay_allowed": False}
+        if detail is not None:
+            result["detail"] = detail
+        return result
 
     def list_results(self):
         with self._lock:

@@ -1,6 +1,8 @@
 """Narrow caller journal tests for the opt-in Win32 operation owner."""
 import copy
 import asyncio
+import hashlib
+import json
 import time
 import unittest
 from unittest.mock import Mock
@@ -15,6 +17,14 @@ GEN_A = "a" * 64
 GEN_B = "b" * 64
 CALL_ID = "1" * 32
 ACTION_ID = "2" * 32
+
+
+def orphan_custody_record():
+    return {"classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+        "operation_id": ACTION_ID, "target_generation": GEN_A,
+        "obligations": ["key:map01:W"], "do_not_replay": True,
+        "dispatch": {"input_dispatched": None, "release_confirmed": False,
+            "task_success": None, "replay_allowed": False}}
 
 
 class FakeProcess:
@@ -643,6 +653,82 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertTrue(result["cancellation"]["release_confirmed"])
         self.assertIsNone(result["cancellation"]["task_success"])
         self.assertFalse(result["cancellation"]["replay_allowed"])
+
+    def test_orphan_recovery_is_generation_bound_and_keeps_source_action_unknown(self):
+        recovery_receipt = {"status": "recovered", "release_confirmed": True,
+            "operation_id": ACTION_ID, "target_generation": GEN_A,
+            "recovery_id": "3" * 32, "readback": {"neutral": True}}
+        supervisor = FakeCancellationSupervisor(self.owner)
+        def recover_orphaned_input(operation_id, generation, recovery_id,
+                                   deadline_ns, obligations):
+            return {**recovery_receipt, "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id}
+        supervisor.recover_orphaned_input = Mock(
+            side_effect=recover_orphaned_input)
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        session.bind_target_generation_reader(lambda: GEN_A)
+
+        result = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"],
+            source_custody_record=orphan_custody_record())
+
+        self.assertEqual(result["recovery_status"], "recovered")
+        self.assertEqual(result["source_action_status"], "unknown")
+        self.assertIsNone(result["task_success"])
+        self.assertFalse(result["replay_allowed"])
+        self.assertTrue(result["next_action_requires_fresh_generation"])
+        canonical = json.dumps(orphan_custody_record(), sort_keys=True,
+            separators=(",", ":"), ensure_ascii=False,
+            allow_nan=False).encode("utf-8")
+        self.assertEqual(result["source_custody_canonical_sha256"],
+                         hashlib.sha256(canonical).hexdigest())
+        supervisor.recover_orphaned_input.assert_called_once()
+        duplicate = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"],
+            source_custody_record=orphan_custody_record())
+        self.assertEqual(duplicate["reason"], "source_recovery_already_attempted")
+        supervisor.recover_orphaned_input.assert_called_once()
+
+    def test_orphan_recovery_generation_mismatch_sends_no_release(self):
+        supervisor = FakeCancellationSupervisor(self.owner)
+        supervisor.recover_orphaned_input = Mock()
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        session.bind_target_generation_reader(lambda: GEN_B)
+
+        result = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"],
+            source_custody_record=orphan_custody_record())
+
+        self.assertEqual(result["recovery_status"], "refused")
+        self.assertEqual(result["reason"], "target_generation_mismatch")
+        supervisor.recover_orphaned_input.assert_not_called()
+
+    def test_inconsistent_orphan_record_refuses_before_release(self):
+        supervisor = FakeCancellationSupervisor(self.owner)
+        supervisor.recover_orphaned_input = Mock()
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        session.bind_target_generation_reader(lambda: GEN_A)
+        record = orphan_custody_record()
+        record["dispatch"]["release_confirmed"] = True
+
+        result = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"],
+            source_custody_record=record)
+
+        self.assertEqual(result["reason"], "custody_record_mismatch")
+        supervisor.recover_orphaned_input.assert_not_called()
 
 
 if __name__ == "__main__":

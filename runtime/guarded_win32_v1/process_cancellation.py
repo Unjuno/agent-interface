@@ -15,6 +15,9 @@ import time
 import uuid
 
 
+_ORPHAN_RECOVERY_TRANSACTION_NS = 5_000_000_000
+
+
 class OperationCancellationSupervisor:
     def __init__(self, owner, *, recovery_process_factory,
                  observer_process_factory, process_identity_reader,
@@ -360,6 +363,94 @@ class OperationCancellationSupervisor:
             return
         self._owner.recovery_completed(operation_id, generation,
             request["recovery_id"], release_accepted=True, readback=readback)
+
+    def recover_orphaned_input(self, operation_id, generation, recovery_id,
+                               deadline_ns, obligations):
+        """Run one bounded release/readback for a custody record from a prior server.
+
+        This transaction is deliberately separate from the source action owner:
+        a successful release does not rewrite that action's UNKNOWN result.
+        """
+        if (type(operation_id) is not str or len(operation_id) != 32
+                or any(char not in "0123456789abcdef" for char in operation_id)
+                or type(generation) is not str or len(generation) != 64
+                or any(char not in "0123456789abcdef" for char in generation)
+                or type(recovery_id) is not str or len(recovery_id) != 32
+                or any(char not in "0123456789abcdef" for char in recovery_id)
+                or type(deadline_ns) is not int or type(obligations) not in (list, tuple)
+                or not obligations
+                or any(type(item) is not str or not item for item in obligations)
+                or len(set(obligations)) != len(obligations)):
+            raise ValueError("orphan recovery request schema mismatch")
+        now_ns = self._clock_ns()
+        if now_ns >= deadline_ns:
+            return {"status": "unknown", "reason": "deadline_before_recovery",
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False}
+        if deadline_ns - now_ns > _ORPHAN_RECOVERY_TRANSACTION_NS:
+            raise ValueError("orphan recovery deadline exceeds the fixed bound")
+
+        request = {"operation_id": operation_id,
+                   "target_generation": generation,
+                   "recovery_id": recovery_id,
+                   "request_id": recovery_id,
+                   "deadline_ns": deadline_ns,
+                   "focus_target_before_release": True,
+                   "obligations": list(obligations)}
+        try:
+            release = self._exchange_helper("recovery", request, deadline_ns)
+        except BaseException as error:
+            return {"status": "unknown", "reason": "recovery_helper_unconfirmed",
+                    "error_type": type(error).__name__,
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False}
+        release_matches = (type(release) is dict
+            and release.get("operation_id") == operation_id
+            and release.get("target_generation") == generation
+            and release.get("recovery_id") == recovery_id
+            and release.get("release_accepted") is True)
+        if not release_matches or self._clock_ns() >= deadline_ns:
+            self._invalidate_helper("recovery", deadline_ns)
+            return {"status": "unknown", "reason": "release_receipt_unconfirmed",
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release if type(release) is dict else None}
+
+        try:
+            readback = self._exchange_helper("observer", request, deadline_ns)
+        except BaseException as error:
+            return {"status": "unknown", "reason": "neutral_readback_unconfirmed",
+                    "error_type": type(error).__name__,
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release}
+        readback_matches = (type(readback) is dict
+            and readback.get("operation_id") == operation_id
+            and readback.get("target_generation") == generation
+            and readback.get("recovery_id") == recovery_id
+            and readback.get("neutral") is True)
+        if not readback_matches or self._clock_ns() >= deadline_ns:
+            self._invalidate_helper("observer", deadline_ns)
+            return {"status": "unknown", "reason": "neutral_readback_not_confirmed",
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release,
+                    "readback": readback if type(readback) is dict else None}
+        return {"status": "recovered", "operation_id": operation_id,
+                "target_generation": generation, "recovery_id": recovery_id,
+                "release_confirmed": True, "release_receipt": release,
+                "readback": readback,
+                "recovery_completed_monotonic_ns": self._clock_ns()}
 
     def _run_observer(self, operation_id, generation, request):
         observation_request = dict(request)
