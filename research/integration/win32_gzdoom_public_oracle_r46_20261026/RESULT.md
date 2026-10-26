@@ -1,4 +1,4 @@
-# GZDoom public task-effect oracle integration and R49–R50 idle control
+# GZDoom public task-effect oracle integration and R49–R51 replications
 
 ## Result
 
@@ -22,6 +22,10 @@ R50 completed the preregistered 13.234-second no-input control in 13.281 seconds
 
 Descriptively, R48's action interval changed 99.3161% of the same region while R50's matched-duration idle interval changed 0.0299%. This single action/control pair supports visible movement as an action-associated effect on this fixture; it is not a reliability estimate, full MAP01 success, general causal guarantee, latency bound, or efficiency comparison. R49 and R50 used no WSLc, Docker, or provider calls.
 
+R51 independently repeated the same one-shot scan-code W protocol on a distinct fresh process and generation. The public dispatch result reported `input_dispatched=true`, and the action receipt confirmed release; the independent same-generation W readback found the high bit clear. The server-configured visual oracle measured 995,245/1,003,200 changed pixels (99.2070%) in the upper 80%. `interface_verify_task` returned `status=verified` and `task_success=true` bound to the exact dispatch call, operation and generation. The exact fresh process exited 0 after WM_CLOSE, all three protected UNKNOWN processes remained alive, and R51's 64-entry raw manifest rehashed with zero mismatches. The action result itself still correctly had `task_success=null`; success came from the later verification call. R51 used no WSLc, Docker, or provider calls.
+
+Across R48 and R51, the configured W-forward effect was independently verified in two fresh generations, with 99.3161% and 99.2070% changed pixels. R50's duration-matched no-input control changed 0.0299%. These are three small single-host fixture samples, not broad reliability, MAP01 completion, or efficiency evidence. R51's task-verification request-to-receipt interval was 438 ms by the public monotonic timestamps; this is descriptive for that call, not a bounded latency guarantee.
+
 ## Timing and remaining boundary
 
 R48's public baseline capture began 13.234 s before the server oracle's independent post-capture began. The oracle's own capture took 31 ms; the accepted task-effect receipt arrived 453 ms after that capture began. These are descriptive single-run timings, not a latency bound or comparative efficiency result.
@@ -30,4 +34,4 @@ No task completion oracle for finishing MAP01 was exercised. No reliability esti
 
 ## Evidence locations
 
-Private raw packets: `private-packets/map01_native_windows_20261026_r46_public_oracle/`, `..._r47_spawn_safe_oracle/`, `..._r48_oracle_receipt/`, `..._r49_idle_control/`, and `..._r50_idle_control/`. R46, R47, R48, and R50 manifests contain 84, 62, 65, and 34 entries respectively. R49 contains a pre-input stop and schema diagnosis, not pixel observations. R50 manifest includes only R50-specific records; copied R49 files are excluded.
+Private raw packets: `private-packets/map01_native_windows_20261026_r46_public_oracle/`, `..._r47_spawn_safe_oracle/`, `..._r48_oracle_receipt/`, `..._r49_idle_control/`, `..._r50_idle_control/`, and `..._r51_oracle_replication/`. R46, R47, R48, R50, and R51 manifests contain 84, 62, 65, 34, and 64 entries respectively. R49 contains a pre-input stop and schema diagnosis, not pixel observations. R50's manifest includes only R50-specific records; copied R49 files are excluded.
