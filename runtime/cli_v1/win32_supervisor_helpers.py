@@ -101,7 +101,9 @@ def _observe(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
     parsed = _parse_obligations(request["obligations"])
     targets = {target for target, _ in parsed["keys"] + parsed["buttons"]}
     configured_targets = configured_targets or {}
-    if not targets and len(configured_targets) == 1 and parsed["unicode"]:
+    # An empty obligation set is still observable when there is exactly one
+    # configured target: bind the neutral, empty state sample to its generation.
+    if not targets and len(configured_targets) == 1:
         targets = set(configured_targets)
     if not targets:
         raise ValueError("native observation requires an attributable input obligation")
