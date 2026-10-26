@@ -414,26 +414,30 @@ def run_public_compiled(interface, program_templates, *, target,
     receipt["bound_target_generation"] = generation
     receipt["task_success"] = None
     receipt["task_verification"] = None
+    final_transition = (receipt["transitions"][-1]
+        if receipt["transitions"] else None)
+    final_dispatch = (next((row for row in reversed(target_evidence)
+        if row["kind"] == "dispatch"
+        and final_transition is not None
+        and row["action_id"] == final_transition["action_id"]), None))
+    final_call_id = (final_dispatch.get("call_id")
+        if final_dispatch is not None else None)
     if (verify_task is not None and receipt.get("outcome") == "TASK_SUCCEEDED"
-            and action_call_ids
-            and _IDENTIFIER.fullmatch(action_call_ids[-1]) is not None):
-        final_call_id = action_call_ids[-1]
-        final_dispatch = next((row for row in reversed(target_evidence)
-            if row["kind"] == "dispatch" and row["call_id"] == final_call_id), None)
-        if final_dispatch is not None:
-            try:
-                task_evidence = _task_oracle_evidence(
-                    verify_task(final_call_id), final_call_id,
-                    final_dispatch["target_generation"])
-                task_evidence["target_generation"] = final_dispatch["target_generation"]
-                receipt["task_verification"] = task_evidence
-                if task_evidence["valid"]:
-                    receipt["task_success"] = task_evidence["task_success"]
-            except Exception as error:
-                receipt["task_verification"] = {
-                    "status": "unavailable", "action_call_id": final_call_id,
-                    "target_generation": final_dispatch["target_generation"],
-                    "task_success": None, "valid": False,
-                    "error_type": type(error).__name__,
-                    "evidence_digest": None}
+            and type(final_call_id) is str
+            and _IDENTIFIER.fullmatch(final_call_id) is not None):
+        try:
+            task_evidence = _task_oracle_evidence(
+                verify_task(final_call_id), final_call_id,
+                final_dispatch["target_generation"])
+            task_evidence["target_generation"] = final_dispatch["target_generation"]
+            receipt["task_verification"] = task_evidence
+            if task_evidence["valid"]:
+                receipt["task_success"] = task_evidence["task_success"]
+        except Exception as error:
+            receipt["task_verification"] = {
+                "status": "unavailable", "action_call_id": final_call_id,
+                "target_generation": final_dispatch["target_generation"],
+                "task_success": None, "valid": False,
+                "error_type": type(error).__name__,
+                "evidence_digest": None}
     return receipt

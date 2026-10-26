@@ -225,6 +225,100 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(task_calls, [call_id(102), call_id(103), call_id(104),
             call_id(105), call_id(106), call_id(107)])
 
+    def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
+        generation = "a" * 64
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "final-dispatch-oracle-identity",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready", "saved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"save": {"target_symbol": "fixture",
+                "operation": "save", "expected_effect": {"saved": True}}},
+            "method": {"name": "save-twice", "version": "1",
+                "initial_state": "before", "max_transitions": 2,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True,
+                        "saved": False}, "outcome": "action", "action": "save",
+                        "next_state": "middle", "reason": None}]},
+                    "middle": {"branches": [{"when": {"ready": True,
+                        "saved": True}, "outcome": "action", "action": "save",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"saved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "two-dispatch-template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "two-dispatch-lease",
+                "expires_at_ns": time.monotonic_ns() + 10_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+        observations = 0
+        dispatches = []
+        oracle_calls = []
+
+        def observe(target, frame, region):
+            nonlocal observations
+            observations += 1
+            call_id = f"{observations:032x}"
+            return {"status": "returned", "call_id": call_id,
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observation-{observations}"}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            dispatches.append(len(dispatches) + 1)
+            reply = {"status": "completed",
+                "action_id": f"action-{dispatches[-1]}",
+                "effect_ref": f"effect-{dispatches[-1]}",
+                "input_dispatched": True,
+                "release": {"verified": True, "keys_down": [],
+                    "buttons_down": []}}
+            if dispatches[-1] == 1:
+                reply["call_id"] = "b" * 32
+            return reply
+
+        def verify_task(call_id):
+            oracle_calls.append(call_id)
+            now = time.monotonic_ns()
+            receipt = {"call_id": call_id, "operation_id": "c" * 32,
+                "target_generation": generation, "oracle_id": "d" * 32,
+                "outcome": "success", "observed_monotonic_ns": now,
+                "evidence_ref": "prior-action-effect"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": receipt, "requested_monotonic_ns": now - 1,
+                    "receipt_received_monotonic_ns": now + 1}}
+
+        receipt = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _report, _reply: {"ready": True,
+                "saved": observations >= 2},
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "succeeded", "evidence_ref": "effect"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED", receipt)
+        self.assertEqual(receipt["completed_transitions"], 2)
+        self.assertEqual(dispatches, [1, 2])
+        self.assertIsNone(receipt["task_success"])
+        self.assertIsNone(receipt["task_verification"])
+        self.assertEqual(oracle_calls, [])
+
     def test_generation_change_from_standard_observation_stops_compiled_suffix(self):
         generation = "a" * 64
         observations = 0
