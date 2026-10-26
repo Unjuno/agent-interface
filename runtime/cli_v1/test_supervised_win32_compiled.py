@@ -101,6 +101,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         generation = "a" * 64
         observations = 0
         dispatches = []
+        forced_generation = None
         interface = {
             "format": "compiled-gui-interface-v1",
             "interface_id": "public-win32-generation-check",
@@ -137,7 +138,9 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         def observe(_target, _frame, _region):
             nonlocal observations, generation
             observations += 1
-            if observations == 2:
+            if observations == 1 and forced_generation is not None:
+                generation = forced_generation
+            elif observations == 2:
                 generation = "b" * 64
             return {"status": "returned",
                 "target_generation": generation,
@@ -153,6 +156,25 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                 "release": {"verified": True, "keys_down": [],
                     "buttons_down": []}}
 
+        grounded_generation = generation
+        forced_generation = "b" * 64
+        after_model_wait = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, _reply: {"ready": True, "saved": False},
+            verify_effect=lambda _request, _row, _reply: {
+                "status": "succeeded", "evidence_ref": "unused"},
+            expected_generation=grounded_generation, cancelled=lambda: False)
+        self.assertEqual(after_model_wait["outcome"], "SAFE_YIELD")
+        self.assertEqual(after_model_wait["reason"], "association_changed")
+        self.assertEqual(after_model_wait["completed_transitions"], 0)
+        self.assertEqual(after_model_wait["observations"], [])
+        self.assertEqual(observations, 1)
+        self.assertEqual(dispatches, [])
+
+        observations = 0
+        generation = grounded_generation
+        forced_generation = None
         receipt = run_public_compiled(interface, {"save": program},
             target="fixture", current_binding_revision=7,
             region=[0, 0, 1, 1],

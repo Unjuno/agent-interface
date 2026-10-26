@@ -119,6 +119,7 @@ def _terminal(reply, action_name):
 
 def run_public_compiled(interface, program_templates, *, target,
         current_binding_revision, region, observe, dispatch, perceive, verify_effect,
+        expected_generation=None,
         cancelled=lambda: False, clock=time.monotonic_ns, journal=None):
     """Run one compiled graph using standard supervised Win32 MCP calls.
 
@@ -139,6 +140,10 @@ def run_public_compiled(interface, program_templates, *, target,
             or type(current_binding_revision) is not int
             or current_binding_revision < 1):
         raise ValueError("explicit target and positive binding revision required")
+    if (expected_generation is not None
+            and (type(expected_generation) is not str
+                 or _GENERATION.fullmatch(expected_generation) is None)):
+        raise ValueError("expected model-grounding target generation must be a SHA-256 digest")
     if (type(region) is not list or len(region) != 4
             or any(type(value) is not int for value in region)
             or not 0 <= region[0] <= 32767 or not 0 <= region[1] <= 32767
@@ -206,6 +211,10 @@ def run_public_compiled(interface, program_templates, *, target,
             raise ObservationAssociationChanged(
                 "standard Win32 observation has no valid target generation")
         if generation is None:
+            if (expected_generation is not None
+                    and observed_generation != expected_generation):
+                raise ObservationAssociationChanged(
+                    "standard Win32 target generation changed during model wait")
             generation = observed_generation
         elif generation != observed_generation:
             raise ObservationAssociationChanged(

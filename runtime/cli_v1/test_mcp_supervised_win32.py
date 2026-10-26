@@ -1122,6 +1122,30 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         and effect["target_generation"] == GENERATION
                         for effect in fixture_effects))}
 
+            # Simulate the provider wait between its grounding observation and
+            # compiled execution. The first fresh public observation must match
+            # that original generation before perception or dispatch can start.
+            generation["value"] = "b" * 64
+            pre_wait = await asyncio.to_thread(run_public_compiled,
+                interface,
+                {"first": stale_template(), "suffix": stale_template()},
+                target="fixture", current_binding_revision=1,
+                region=[0, 0, 1, 1], observe=standard_observe,
+                dispatch=standard_dispatch, perceive=perceive,
+                verify_effect=lambda _request, _report, _reply: {
+                    "status": "succeeded",
+                    "evidence_ref": "unused-stale-generation"},
+                expected_generation=GENERATION, cancelled=lambda: False)
+            self.assertEqual(pre_wait["outcome"], "SAFE_YIELD", pre_wait)
+            self.assertEqual(pre_wait["reason"], "association_changed")
+            self.assertEqual(pre_wait["completed_transitions"], 0)
+            self.assertEqual(pre_wait["observations"], [])
+            self.assertEqual(dispatch_rows, [])
+            self.assertEqual(len(observation_call_ids), 1)
+
+            generation["value"] = GENERATION
+            public_observations = 0
+            observation_call_ids.clear()
             receipt = await asyncio.to_thread(run_public_compiled,
                 interface,
                 {"first": stale_template(), "suffix": stale_template()},
@@ -1131,6 +1155,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 verify_effect=lambda _request, _report, _reply: {
                     "status": "succeeded",
                     "evidence_ref": "test-effect-predicate-confirmation"},
+                expected_generation=GENERATION,
                 cancelled=lambda: False)
             try:
                 self.assertEqual(receipt["outcome"], "SAFE_YIELD")
