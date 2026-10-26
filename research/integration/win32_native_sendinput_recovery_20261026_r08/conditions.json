@@ -1,0 +1,41 @@
+{
+  "attempt_id": "win32-native-sendinput-r08-20261026",
+  "source_commit": "f2f7dbb2e043919e0773655e5fab543cc3682fcd",
+  "host_scope": "user-authorized Windows workstation; two sequential repository-owned disposable Win32 fixture processes",
+  "question": "After bounded recovery on a blocked producer, does the standard compiled public caller refuse the old target generation and independently verify a task effect on a fresh target generation?",
+  "correction_from_r07": [
+    "Add the required single release_all operation to the focus-only stale-generation probe.",
+    "Close the continuation fixture using its current task-fixture metadata path."
+  ],
+  "sequence": [
+    "Phase 1 repeats the frozen R06 held-SHIFT recovery fault on one owned fixture and must pass before phase 2 starts.",
+    "Retire the first supervised session and fixture process; require exit code zero.",
+    "Start a distinct fixture process and supervised session; require a different native generation.",
+    "Submit one focus-only standard program with exactly one release_all, bound to the old generation; require TARGET_GENERATION_CHANGED and input_dispatched=false.",
+    "Observe the new generation through public MCP, then run one compiled caller transition: click x=100,y=60, type office, Ctrl+S, release_all.",
+    "Require a post-dispatch observation and an independent server-configured task oracle bound to the exact call, operation and fresh generation.",
+    "Verify neutral native readback, clean fixture exit, and foreground restoration."
+  ],
+  "task_effect": {"saved": true, "text": "office", "clicked": true},
+  "oracle_id": "r08-fresh-generation-effect-v1",
+  "pass_requires": [
+    "R06 bounded recovery phase passes",
+    "old fixture retires cleanly before new session input",
+    "new fixture PID and target generation differ from old fixture",
+    "old-generation probe refusal reason is TARGET_GENERATION_CHANGED with zero input",
+    "compiled caller returns exactly one matching action call ID",
+    "action release confirmed and native same-generation SHIFT/CTRL/S/left-button readback all up",
+    "post-observation capture starts after dispatch response return",
+    "fixture event journal has exactly one click, six ordered office character events, and one save",
+    "exact effect file and independent verifier receipt match call ID, operation ID and fresh generation",
+    "new fixture exits with code zero and foreground is restored",
+    "all raw and preregistration files match manifests"
+  ],
+  "limits": [
+    "The producer fault is injected before native SendInput; it does not simulate an OS/kernel hang.",
+    "No AppServer model call, matched efficiency, WSLc allocation, MAP01, or reliability estimate is included.",
+    "One trial; first failure is immutable and is not replayed."
+  ],
+  "wslc_used": false,
+  "docker_used": false
+}

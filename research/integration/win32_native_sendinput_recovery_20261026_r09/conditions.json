@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-native-sendinput-r09-20261026",
+  "source_commit": "f2f7dbb2e043919e0773655e5fab543cc3682fcd",
+  "host_scope": "user-authorized Windows workstation; two sequential repository-owned disposable Win32 fixture processes",
+  "correction_from_r08": [
+    "Use a fresh, valid 32-lowercase-hex server oracle ID.",
+    "Read action-level release_confirmed from the retained action record rather than its nested execution result."
+  ],
+  "procedure": "Repeat R08's complete recovery, old-generation refusal, fresh-generation compiled click/type/save, independent exact task oracle, neutral input readback, and cleanup protocol. Any failure remains immutable; do not replay R09.",
+  "task_effect": {"saved": true, "text": "office", "clicked": true},
+  "oracle_id": "9cf3b010d1aa4c4cb19188c6c6040008",
+  "required_checks": [
+    "bounded phase-1 recovery and same-generation key-up readback",
+    "old process exits before fresh process starts",
+    "fresh PID and generation differ",
+    "old generation refusal has TARGET_GENERATION_CHANGED and zero input",
+    "one compiled action has action-level release_confirmed=true",
+    "post-dispatch observation begins after action response return",
+    "exact fixture click/type/save effect and journal sequence",
+    "independent task receipt verifies exact action call ID, operation ID and fresh generation",
+    "SHIFT, CTRL, S and left button are up on fresh generation",
+    "fixture exits cleanly, foreground restores, raw/pretrial hashes reconcile"
+  ],
+  "limits": [
+    "The producer fault is injected before native SendInput; it does not simulate an OS/kernel hang.",
+    "No AppServer model call, matched efficiency, WSLc allocation, MAP01, or reliability estimate is included.",
+    "One trial; preserve first outcome."
+  ],
+  "wslc_used": false,
+  "docker_used": false
+}

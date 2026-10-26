@@ -1,0 +1,1384 @@
+{
+  "body": {
+    "authority": "none",
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r08\\run\\task-server\\0bcb1cf5628b46c0a891490d71f8ca50",
+    "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+    "image_status": "no_observation",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": null,
+      "execution_detail": null,
+      "execution_error": null,
+      "execution_status": "completed",
+      "failed_operation_effect": null,
+      "failed_operation_index": null,
+      "failed_source_operation": null,
+      "failure_detail": null,
+      "failure_phase": null,
+      "input_release_verified": true,
+      "recovery_required": false,
+      "reported_status": "returned",
+      "validation_operation_index": null,
+      "validation_source_operation": null
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "report": {
+        "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+        "compilation": null,
+        "input_dispatched": true,
+        "normalization": null,
+        "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+        "operation_invoked": true,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "emissions": 22,
+            "ended_ns": 666631774216800,
+            "observations": [],
+            "releases": [
+              {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 666631774214400,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ],
+                  "17": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ],
+                  "83": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ]
+                },
+                "verified": true
+              }
+            ],
+            "started_ns": 666631646742600
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "display.geometry",
+            "event.feedback",
+            "input.keyboard",
+            "input.pointer",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "94b45586bad64344b1d94800022c0407",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "returned",
+        "supervision": {
+          "action": {
+            "completion_custody": {
+              "cleanup_deadline_ns": null,
+              "cleanup_latency_ns": null,
+              "cleanup_latency_perf_counter_ns": null,
+              "cleanup_requested_monotonic_ns": null,
+              "cleanup_requested_perf_counter_ns": null,
+              "completion_readback": {
+                "neutral": true,
+                "observed_monotonic_ns": 666631835532200,
+                "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+                "producer_exit_confirmed_ns": 666631828073700,
+                "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54"
+              },
+              "completion_readback_attempt": null,
+              "completion_readback_outcome": "verified",
+              "completion_release_receipt": {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 666631774214400,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ],
+                  "17": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ],
+                  "83": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ]
+                },
+                "verified": true
+              },
+              "deadline_ns": 666641106006900,
+              "obligations": [
+                "button:r08-owned-fixture:left",
+                "key:r08-owned-fixture:CTRL",
+                "key:r08-owned-fixture:S",
+                "unicode:0063",
+                "unicode:0065",
+                "unicode:0066",
+                "unicode:0069",
+                "unicode:006F"
+              ],
+              "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+              "phase": "completed",
+              "producer_exit_code": 0,
+              "producer_gate_state": "authorization_attempted",
+              "producer_identity": {
+                "creation_time_100ns": 134374489274006112,
+                "pid": 580
+              },
+              "recovery_completed_monotonic_ns": null,
+              "recovery_completed_perf_counter_ns": null,
+              "recovery_id": null,
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "status": "completed",
+              "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+              "task_success": null,
+              "uncertainty": null
+            },
+            "metadata": {
+              "program_id": "compiled-29757d5b883541a291e0373dd8a9dfc5",
+              "source": "interface_dispatch"
+            },
+            "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+            "producer_timing": {
+              "child_ready_monotonic_ns": 666631645593100,
+              "clock": "time.monotonic_ns",
+              "factory_requested_monotonic_ns": 666631126953500,
+              "factory_returned_monotonic_ns": 666631127262000,
+              "identity_verified_monotonic_ns": 666631139330700,
+              "process_start_called_monotonic_ns": 666631127283800,
+              "process_start_returned_monotonic_ns": 666631139268000,
+              "start_gate_authorized_monotonic_ns": 666631139796800
+            },
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "result": {
+              "admission": "accepted",
+              "execution": {
+                "emissions": 22,
+                "ended_ns": 666631774216800,
+                "observations": [],
+                "releases": [
+                  {
+                    "buttons_down": [],
+                    "buttons_unknown": [],
+                    "keys_down": [],
+                    "keys_unknown": [],
+                    "monotonic_ns": 666631774214400,
+                    "state_query_witnesses": {
+                      "1": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 18416878,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 7504,
+                          "probe_integrity_rid": 8192,
+                          "target": "r08-owned-fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 22700
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 18416878,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 7504,
+                          "probe_integrity_rid": 8192,
+                          "target": "r08-owned-fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 22700
+                        }
+                      ],
+                      "17": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 18416878,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 7504,
+                          "probe_integrity_rid": 8192,
+                          "target": "r08-owned-fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 22700
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 18416878,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 7504,
+                          "probe_integrity_rid": 8192,
+                          "target": "r08-owned-fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 22700
+                        }
+                      ],
+                      "83": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 18416878,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 7504,
+                          "probe_integrity_rid": 8192,
+                          "target": "r08-owned-fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 22700
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 18416878,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 7504,
+                          "probe_integrity_rid": 8192,
+                          "target": "r08-owned-fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 22700
+                        }
+                      ]
+                    },
+                    "verified": true
+                  }
+                ],
+                "started_ns": 666631646742600
+              },
+              "recovery_required": false,
+              "required_capabilities": [
+                "clock.monotonic",
+                "display.geometry",
+                "event.feedback",
+                "input.keyboard",
+                "input.pointer",
+                "input.release_all",
+                "input.text",
+                "window.focus"
+              ],
+              "status": "completed"
+            },
+            "status": "completed",
+            "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+            "task_success": null
+          },
+          "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+          "cancellation": null,
+          "standard_program": {
+            "authority": {
+              "expires_at_ns": 666641106006900,
+              "lease_id": "compiled-b1ac3360ebb4471bb0ec72c5d56fbb5e"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "r08-owned-fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 100,
+                "y": 60
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "wait_update",
+                "timeout_ms": 100
+              },
+              {
+                "op": "text",
+                "text": "office"
+              },
+              {
+                "keys": [
+                  "CTRL",
+                  "S"
+                ],
+                "op": "key_chord"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "compiled-29757d5b883541a291e0373dd8a9dfc5",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "r08-owned-fixture": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          },
+          "task_effect": null
+        },
+        "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+        "task_success": null
+      },
+      "schema": "agent-interface/receipt-view-v1",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 9245,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+          "compilation": null,
+          "input_dispatched": true,
+          "normalization": null,
+          "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+          "operation_invoked": true,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "emissions": 22,
+              "ended_ns": 666631774216800,
+              "observations": [],
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 666631774214400,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      }
+                    ],
+                    "17": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      }
+                    ],
+                    "83": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      }
+                    ]
+                  },
+                  "verified": true
+                }
+              ],
+              "started_ns": 666631646742600
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "94b45586bad64344b1d94800022c0407",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "returned",
+          "supervision": {
+            "action": {
+              "completion_custody": {
+                "cleanup_deadline_ns": null,
+                "cleanup_latency_ns": null,
+                "cleanup_latency_perf_counter_ns": null,
+                "cleanup_requested_monotonic_ns": null,
+                "cleanup_requested_perf_counter_ns": null,
+                "completion_readback": {
+                  "neutral": true,
+                  "observed_monotonic_ns": 666631835532200,
+                  "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+                  "producer_exit_confirmed_ns": 666631828073700,
+                  "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54"
+                },
+                "completion_readback_attempt": null,
+                "completion_readback_outcome": "verified",
+                "completion_release_receipt": {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 666631774214400,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      }
+                    ],
+                    "17": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      }
+                    ],
+                    "83": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 18416878,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 7504,
+                        "probe_integrity_rid": 8192,
+                        "target": "r08-owned-fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 22700
+                      }
+                    ]
+                  },
+                  "verified": true
+                },
+                "deadline_ns": 666641106006900,
+                "obligations": [
+                  "button:r08-owned-fixture:left",
+                  "key:r08-owned-fixture:CTRL",
+                  "key:r08-owned-fixture:S",
+                  "unicode:0063",
+                  "unicode:0065",
+                  "unicode:0066",
+                  "unicode:0069",
+                  "unicode:006F"
+                ],
+                "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+                "phase": "completed",
+                "producer_exit_code": 0,
+                "producer_gate_state": "authorization_attempted",
+                "producer_identity": {
+                  "creation_time_100ns": 134374489274006112,
+                  "pid": 580
+                },
+                "recovery_completed_monotonic_ns": null,
+                "recovery_completed_perf_counter_ns": null,
+                "recovery_id": null,
+                "release_confirmed": true,
+                "replay_allowed": false,
+                "status": "completed",
+                "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+                "task_success": null,
+                "uncertainty": null
+              },
+              "metadata": {
+                "program_id": "compiled-29757d5b883541a291e0373dd8a9dfc5",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+              "producer_timing": {
+                "child_ready_monotonic_ns": 666631645593100,
+                "clock": "time.monotonic_ns",
+                "factory_requested_monotonic_ns": 666631126953500,
+                "factory_returned_monotonic_ns": 666631127262000,
+                "identity_verified_monotonic_ns": 666631139330700,
+                "process_start_called_monotonic_ns": 666631127283800,
+                "process_start_returned_monotonic_ns": 666631139268000,
+                "start_gate_authorized_monotonic_ns": 666631139796800
+              },
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "result": {
+                "admission": "accepted",
+                "execution": {
+                  "emissions": 22,
+                  "ended_ns": 666631774216800,
+                  "observations": [],
+                  "releases": [
+                    {
+                      "buttons_down": [],
+                      "buttons_unknown": [],
+                      "keys_down": [],
+                      "keys_unknown": [],
+                      "monotonic_ns": 666631774214400,
+                      "state_query_witnesses": {
+                        "1": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 18416878,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 7504,
+                            "probe_integrity_rid": 8192,
+                            "target": "r08-owned-fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 22700
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 18416878,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 7504,
+                            "probe_integrity_rid": 8192,
+                            "target": "r08-owned-fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 22700
+                          }
+                        ],
+                        "17": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 18416878,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 7504,
+                            "probe_integrity_rid": 8192,
+                            "target": "r08-owned-fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 22700
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 18416878,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 7504,
+                            "probe_integrity_rid": 8192,
+                            "target": "r08-owned-fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 22700
+                          }
+                        ],
+                        "83": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 18416878,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 7504,
+                            "probe_integrity_rid": 8192,
+                            "target": "r08-owned-fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 22700
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 18416878,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 7504,
+                            "probe_integrity_rid": 8192,
+                            "target": "r08-owned-fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 22700
+                          }
+                        ]
+                      },
+                      "verified": true
+                    }
+                  ],
+                  "started_ns": 666631646742600
+                },
+                "recovery_required": false,
+                "required_capabilities": [
+                  "clock.monotonic",
+                  "display.geometry",
+                  "event.feedback",
+                  "input.keyboard",
+                  "input.pointer",
+                  "input.release_all",
+                  "input.text",
+                  "window.focus"
+                ],
+                "status": "completed"
+              },
+              "status": "completed",
+              "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+              "task_success": null
+            },
+            "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+            "cancellation": null,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 666641106006900,
+                "lease_id": "compiled-b1ac3360ebb4471bb0ec72c5d56fbb5e"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "r08-owned-fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 100,
+                  "y": 60
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "wait_update",
+                  "timeout_ms": 100
+                },
+                {
+                  "op": "text",
+                  "text": "office"
+                },
+                {
+                  "keys": [
+                    "CTRL",
+                    "S"
+                  ],
+                  "op": "key_chord"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "compiled-29757d5b883541a291e0373dd8a9dfc5",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "r08-owned-fixture": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null
+          },
+          "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+          "task_success": null
+        },
+        "sha256": "30d87e634d074c79d39fb4c67c1fa913a63b7cf25c24fbfc030eeaf6a25b9e07"
+      }
+    },
+    "schema": "agent-interface/review-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "94b45586bad64344b1d94800022c0407",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    }
+  },
+  "raw_report": {
+    "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+    "compilation": null,
+    "input_dispatched": true,
+    "normalization": null,
+    "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+    "operation_invoked": true,
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "emissions": 22,
+        "ended_ns": 666631774216800,
+        "observations": [],
+        "releases": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 666631774214400,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                }
+              ],
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                }
+              ]
+            },
+            "verified": true
+          }
+        ],
+        "started_ns": 666631646742600
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "94b45586bad64344b1d94800022c0407",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "completion_custody": {
+          "cleanup_deadline_ns": null,
+          "cleanup_latency_ns": null,
+          "cleanup_latency_perf_counter_ns": null,
+          "cleanup_requested_monotonic_ns": null,
+          "cleanup_requested_perf_counter_ns": null,
+          "completion_readback": {
+            "neutral": true,
+            "observed_monotonic_ns": 666631835532200,
+            "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+            "producer_exit_confirmed_ns": 666631828073700,
+            "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54"
+          },
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "verified",
+          "completion_release_receipt": {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 666631774214400,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                }
+              ],
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 18416878,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 7504,
+                  "probe_integrity_rid": 8192,
+                  "target": "r08-owned-fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 22700
+                }
+              ]
+            },
+            "verified": true
+          },
+          "deadline_ns": 666641106006900,
+          "obligations": [
+            "button:r08-owned-fixture:left",
+            "key:r08-owned-fixture:CTRL",
+            "key:r08-owned-fixture:S",
+            "unicode:0063",
+            "unicode:0065",
+            "unicode:0066",
+            "unicode:0069",
+            "unicode:006F"
+          ],
+          "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+          "phase": "completed",
+          "producer_exit_code": 0,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134374489274006112,
+            "pid": 580
+          },
+          "recovery_completed_monotonic_ns": null,
+          "recovery_completed_perf_counter_ns": null,
+          "recovery_id": null,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "completed",
+          "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "metadata": {
+          "program_id": "compiled-29757d5b883541a291e0373dd8a9dfc5",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "22a43b11c47945aebb7424968f53c1fe",
+        "producer_timing": {
+          "child_ready_monotonic_ns": 666631645593100,
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 666631126953500,
+          "factory_returned_monotonic_ns": 666631127262000,
+          "identity_verified_monotonic_ns": 666631139330700,
+          "process_start_called_monotonic_ns": 666631127283800,
+          "process_start_returned_monotonic_ns": 666631139268000,
+          "start_gate_authorized_monotonic_ns": 666631139796800
+        },
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "emissions": 22,
+            "ended_ns": 666631774216800,
+            "observations": [],
+            "releases": [
+              {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 666631774214400,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ],
+                  "17": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ],
+                  "83": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 18416878,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 7504,
+                      "probe_integrity_rid": 8192,
+                      "target": "r08-owned-fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 22700
+                    }
+                  ]
+                },
+                "verified": true
+              }
+            ],
+            "started_ns": 666631646742600
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "display.geometry",
+            "event.feedback",
+            "input.keyboard",
+            "input.pointer",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "status": "completed",
+        "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+        "task_success": null
+      },
+      "call_id": "0bcb1cf5628b46c0a891490d71f8ca50",
+      "cancellation": null,
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 666641106006900,
+          "lease_id": "compiled-b1ac3360ebb4471bb0ec72c5d56fbb5e"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "r08-owned-fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 100,
+            "y": 60
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 100
+          },
+          {
+            "op": "text",
+            "text": "office"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "compiled-29757d5b883541a291e0373dd8a9dfc5",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "r08-owned-fixture": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "3d7f7d98c5f4b49a4f28cce58ed7eaaa8bc5226ab648831a8106cb64ea982e54",
+    "task_success": null
+  },
+  "response_returned_monotonic_ns": 666631837941200
+}
