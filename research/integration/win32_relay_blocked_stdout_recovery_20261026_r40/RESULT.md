@@ -1,0 +1,7 @@
+# R40 public-relay blocked-stdout recovery
+
+One preregistered Windows synthetic-fixture run on source `b7ed7d22a8aa275ead08e689a5738d6e0e1c4826` passed all scoped conditions. The public stdio relay accepted standard `interface_cancel`; after 16 ordinary calls filled the pending-response limit, cancellation request 18 overtook deferred ordinary request 17. The first stdout write remained blocked while recovery reached `recovered / release_confirmed=true` and an independent same-generation Win32 query observed SHIFT up. High-resolution timestamps put both observations before stdout resumed. The cancel response row was emitted after output resumed.
+
+The old target generation was refused before input on a new fixture. One compiled standard action then clicked, typed `office`, and saved; the exact effect and event sequence matched an independent task oracle bound to the same call, operation and generation. All input states read neutral, the fresh fixture exited cleanly, and the originally foregrounded Codex HWND was restored exactly.
+
+The additive audit reports 12/12 checks, 8/8 frozen-source hashes and 38/38 raw hashes. Raw files remain local-only under the ignored `run/` directory. This is a single synthetic-fixture result with an in-process blocked stdout writer, not OS pipe saturation, a production app or MAP01, WSLc, an efficiency comparison or a reliability estimate. No GZDoom process was targeted; WSLc and Docker were not used.
