@@ -764,6 +764,7 @@ class OwnedWin32SessionOwner:
                     != source_target_generation
                 or source_custody_record.get("obligations") != list(obligations)
                 or source_custody_record.get("do_not_replay") is not True
+                or source_custody_record.get("observed_producer_live") is not False
                 or type(dispatch) is not dict
                 or (dispatch.get("input_dispatched") is not None
                     and dispatch.get("input_dispatched") is not True)

@@ -223,6 +223,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             "target_generation": GENERATION,
                             "obligations": ["key:fixture:W"],
                             "do_not_replay": True,
+                            "observed_producer_live": False,
                             "dispatch": {"input_dispatched": None,
                                 "release_confirmed": False,
                                 "task_success": None,
