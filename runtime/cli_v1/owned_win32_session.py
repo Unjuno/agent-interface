@@ -765,7 +765,8 @@ class OwnedWin32SessionOwner:
                 or source_custody_record.get("obligations") != list(obligations)
                 or source_custody_record.get("do_not_replay") is not True
                 or type(dispatch) is not dict
-                or dispatch.get("input_dispatched") is not None
+                or (dispatch.get("input_dispatched") is not None
+                    and dispatch.get("input_dispatched") is not True)
                 or dispatch.get("release_confirmed") is not False
                 or dispatch.get("task_success") is not None
                 or dispatch.get("replay_allowed") is not False):
