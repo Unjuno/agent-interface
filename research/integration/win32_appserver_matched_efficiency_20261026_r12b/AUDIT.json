@@ -1,0 +1,152 @@
+{
+  "audit_pass": false,
+  "cells": [
+    {
+      "appserver_latency_ns": null,
+      "arm": "direct",
+      "audit_pass": false,
+      "cell_id": "pair1-direct",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": false,
+        "fresh_effect_observation": false,
+        "generation_continuity": false,
+        "native_neutral_readback": false,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": false,
+        "provider_count_and_usage_reconciled": false,
+        "second_model_decision_authorized_save": false,
+        "two_action_release_receipts": false
+      },
+      "elapsed_ns": null,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "raw_hash_audit": {
+        "entries": 28,
+        "failures": []
+      },
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "audit_pass": false,
+      "cell_id": "pair1-compiled",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "compiled_two_transition_graph": false,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": false,
+        "fresh_effect_observation": false,
+        "generation_continuity": false,
+        "native_neutral_readback": false,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": false,
+        "provider_count_and_usage_reconciled": false,
+        "two_action_release_receipts": false
+      },
+      "elapsed_ns": null,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "raw_hash_audit": {
+        "entries": 29,
+        "failures": []
+      },
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "audit_pass": false,
+      "cell_id": "pair2-compiled",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "compiled_two_transition_graph": false,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": false,
+        "fresh_effect_observation": false,
+        "generation_continuity": false,
+        "native_neutral_readback": false,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": false,
+        "provider_count_and_usage_reconciled": false,
+        "two_action_release_receipts": false
+      },
+      "elapsed_ns": null,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "raw_hash_audit": {
+        "entries": 29,
+        "failures": []
+      },
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "direct",
+      "audit_pass": false,
+      "cell_id": "pair2-direct",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": false,
+        "fresh_effect_observation": false,
+        "generation_continuity": false,
+        "native_neutral_readback": false,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": false,
+        "provider_count_and_usage_reconciled": false,
+        "second_model_decision_authorized_save": false,
+        "two_action_release_receipts": false
+      },
+      "elapsed_ns": null,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "raw_hash_audit": {
+        "entries": 28,
+        "failures": []
+      },
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    }
+  ],
+  "checks": {
+    "all_four_cells_in_counterbalanced_order": false,
+    "both_matched_pairs_complete": false,
+    "every_cell_passes_independent_gates": false,
+    "no_wslc_or_docker": true,
+    "paired_differences_reconcile": false,
+    "pretrial_hashes": true,
+    "run_raw_hashes": true
+  },
+  "classification": "FAIL_OR_INCOMPLETE_FIRST_OUTCOME_RETAINED",
+  "pairs": [
+    {
+      "both_cells_pass": false,
+      "both_cells_present": true,
+      "pair": 1
+    },
+    {
+      "both_cells_pass": false,
+      "both_cells_present": true,
+      "pair": 2
+    }
+  ],
+  "pretrial_hash_audit": {
+    "entries": 5,
+    "failures": []
+  },
+  "run_raw_hash_audit": {
+    "entries": 115,
+    "failures": []
+  },
+  "study_id": "win32-appserver-matched-efficiency-r12b-20261026"
+}

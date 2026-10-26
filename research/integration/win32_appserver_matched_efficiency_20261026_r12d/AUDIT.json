@@ -1,0 +1,170 @@
+{
+  "audit_pass": false,
+  "cells": [
+    {
+      "appserver_latency_ns": 6344076800,
+      "arm": "direct",
+      "audit_pass": true,
+      "cell_id": "pair1-direct",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": true,
+        "fresh_effect_observation": true,
+        "generation_continuity": true,
+        "native_neutral_readback": true,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": true,
+        "provider_count_and_usage_reconciled": true,
+        "second_model_decision_authorized_save": true,
+        "two_action_release_receipts": true
+      },
+      "elapsed_ns": 7867354000,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "raw_hash_audit": {
+        "entries": 61,
+        "failures": []
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "audit_pass": false,
+      "cell_id": "pair1-compiled",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "compiled_two_transition_graph": false,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": false,
+        "fresh_effect_observation": false,
+        "generation_continuity": false,
+        "native_neutral_readback": false,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": false,
+        "provider_count_and_usage_reconciled": false,
+        "two_action_release_receipts": false
+      },
+      "elapsed_ns": null,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "raw_hash_audit": {
+        "entries": 37,
+        "failures": []
+      },
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "audit_pass": false,
+      "cell_id": "pair2-compiled",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "compiled_two_transition_graph": false,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": false,
+        "fresh_effect_observation": false,
+        "generation_continuity": false,
+        "native_neutral_readback": false,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": false,
+        "provider_count_and_usage_reconciled": false,
+        "two_action_release_receipts": false
+      },
+      "elapsed_ns": null,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "raw_hash_audit": {
+        "entries": 37,
+        "failures": []
+      },
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": 8024797100,
+      "arm": "direct",
+      "audit_pass": true,
+      "cell_id": "pair2-direct",
+      "checks": {
+        "cell_raw_hashes": true,
+        "clean_owned_resources": true,
+        "correct_cell_and_arm": true,
+        "exact_fixture_effect_and_event_order": true,
+        "fresh_effect_observation": true,
+        "generation_continuity": true,
+        "native_neutral_readback": true,
+        "no_wslc_or_docker": true,
+        "oracle_bound_to_terminal_action_and_generation": true,
+        "provider_count_and_usage_reconciled": true,
+        "second_model_decision_authorized_save": true,
+        "two_action_release_receipts": true
+      },
+      "elapsed_ns": 9571592400,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "raw_hash_audit": {
+        "entries": 61,
+        "failures": []
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "checks": {
+    "all_four_cells_in_counterbalanced_order": false,
+    "both_matched_pairs_complete": false,
+    "every_cell_passes_independent_gates": false,
+    "no_wslc_or_docker": true,
+    "paired_differences_reconcile": false,
+    "pretrial_hashes": true,
+    "run_raw_hashes": true
+  },
+  "classification": "FAIL_OR_INCOMPLETE_FIRST_OUTCOME_RETAINED",
+  "pairs": [
+    {
+      "both_cells_pass": false,
+      "both_cells_present": true,
+      "pair": 1
+    },
+    {
+      "both_cells_pass": false,
+      "both_cells_present": true,
+      "pair": 2
+    }
+  ],
+  "pretrial_hash_audit": {
+    "entries": 5,
+    "failures": []
+  },
+  "run_raw_hash_audit": {
+    "entries": 197,
+    "failures": []
+  },
+  "study_id": "win32-appserver-matched-efficiency-r12d-20261026"
+}

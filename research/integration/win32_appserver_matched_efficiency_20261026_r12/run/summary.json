@@ -1,0 +1,94 @@
+{
+  "cell_count": 4,
+  "cells": [
+    {
+      "appserver_latency_ns": null,
+      "arm": "direct",
+      "cell_id": "pair1-direct",
+      "elapsed_ns": null,
+      "error": "supervised-win32 test factories must be injected as a pair",
+      "pair": 1,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "cell_id": "pair1-compiled",
+      "elapsed_ns": null,
+      "error": "supervised-win32 test factories must be injected as a pair",
+      "pair": 1,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "cell_id": "pair2-compiled",
+      "elapsed_ns": null,
+      "error": "supervised-win32 test factories must be injected as a pair",
+      "pair": 2,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "direct",
+      "cell_id": "pair2-direct",
+      "elapsed_ns": null,
+      "error": "supervised-win32 test factories must be injected as a pair",
+      "pair": 2,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    }
+  ],
+  "classification": "FAIL_OR_INCOMPLETE_FIRST_OUTCOME_RETAINED",
+  "conditions_sha256": "373864db5d93bb0a2d2ded5d442583ad6a621069b26d3699bbc5739bd93876b7",
+  "docker_used": false,
+  "interpretation": "Two counterbalanced pairs (n=2 per arm) are descriptive only. AppServer protocol usage is not independent upstream billing evidence; image-token accounting is unavailable. No causal or reliability claim is permitted.",
+  "paired_differences": [
+    {
+      "both_task_pass": false,
+      "compiled_cell": "pair1-compiled",
+      "direct_cell": "pair1-direct",
+      "direct_minus_compiled": {
+        "appserver_latency_ns": null,
+        "dispatch_calls": 0,
+        "elapsed_ns": null,
+        "input_tokens": 0,
+        "observation_calls": 0,
+        "output_tokens": 0,
+        "provider_turn_count": null
+      },
+      "pair": 1
+    },
+    {
+      "both_task_pass": false,
+      "compiled_cell": "pair2-compiled",
+      "direct_cell": "pair2-direct",
+      "direct_minus_compiled": {
+        "appserver_latency_ns": null,
+        "dispatch_calls": 0,
+        "elapsed_ns": null,
+        "input_tokens": 0,
+        "observation_calls": 0,
+        "output_tokens": 0,
+        "provider_turn_count": null
+      },
+      "pair": 2
+    }
+  ],
+  "pretrial_sha256": "9b5471d3ab72a31b7314fcc48ea030e708e3094ca3c2bddbf52d69996602c9dc",
+  "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "source_commit": "cc42df79f4c6dbef2e9457d3dae31663e7368f31",
+  "study_id": "win32-appserver-matched-efficiency-r12-20261026",
+  "wslc_used": false
+}

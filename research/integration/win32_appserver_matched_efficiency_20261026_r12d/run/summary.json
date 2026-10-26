@@ -1,0 +1,112 @@
+{
+  "cell_count": 4,
+  "cells": [
+    {
+      "appserver_latency_ns": 6344076800,
+      "arm": "direct",
+      "cell_id": "pair1-direct",
+      "elapsed_ns": 7867354000,
+      "error": null,
+      "pair": 1,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "cell_id": "pair1-compiled",
+      "elapsed_ns": null,
+      "error": "compiled graph did not complete exactly two public actions",
+      "pair": 1,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": null,
+      "arm": "compiled",
+      "cell_id": "pair2-compiled",
+      "elapsed_ns": null,
+      "error": "compiled graph did not complete exactly two public actions",
+      "pair": 2,
+      "provider_turn_count": null,
+      "public_call_counts": null,
+      "reported_tokens": null,
+      "status": "FAIL_OR_UNKNOWN"
+    },
+    {
+      "appserver_latency_ns": 8024797100,
+      "arm": "direct",
+      "cell_id": "pair2-direct",
+      "elapsed_ns": 9571592400,
+      "error": null,
+      "pair": 2,
+      "provider_turn_count": 2,
+      "public_call_counts": {
+        "dispatch": 2,
+        "observation": 5,
+        "oracle": 1,
+        "results": 2
+      },
+      "reported_tokens": {
+        "input_tokens": 20737,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "classification": "FAIL_OR_INCOMPLETE_FIRST_OUTCOME_RETAINED",
+  "conditions_sha256": "b8e6cc1bfe6395a353a73335aa98070cafeee1f51db69a2c27448c8108ef5807",
+  "docker_used": false,
+  "interpretation": "Two counterbalanced pairs (n=2 per arm) are descriptive only. AppServer protocol usage is not independent upstream billing evidence; image-token accounting is unavailable. No causal or reliability claim is permitted.",
+  "paired_differences": [
+    {
+      "both_task_pass": false,
+      "compiled_cell": "pair1-compiled",
+      "direct_cell": "pair1-direct",
+      "direct_minus_compiled": {
+        "appserver_latency_ns": null,
+        "dispatch_calls": 2,
+        "elapsed_ns": null,
+        "input_tokens": 20737,
+        "observation_calls": 5,
+        "output_tokens": 34,
+        "provider_turn_count": null
+      },
+      "pair": 1
+    },
+    {
+      "both_task_pass": false,
+      "compiled_cell": "pair2-compiled",
+      "direct_cell": "pair2-direct",
+      "direct_minus_compiled": {
+        "appserver_latency_ns": null,
+        "dispatch_calls": 2,
+        "elapsed_ns": null,
+        "input_tokens": 20737,
+        "observation_calls": 5,
+        "output_tokens": 34,
+        "provider_turn_count": null
+      },
+      "pair": 2
+    }
+  ],
+  "pretrial_sha256": "b019a94ff65a7ad384cb2e8a846cf78442a1b107e059b670801088603ed3da78",
+  "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "source_commit": "cc42df79f4c6dbef2e9457d3dae31663e7368f31",
+  "study_id": "win32-appserver-matched-efficiency-r12d-20261026",
+  "wslc_used": false
+}
