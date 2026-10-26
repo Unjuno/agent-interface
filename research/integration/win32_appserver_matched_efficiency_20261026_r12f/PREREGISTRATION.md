@@ -1,0 +1,3 @@
+# R12f preregistration — independent counterbalanced replication
+
+R12e is retained unchanged as the first two pairs. R12f repeats the same four-cell task, arms, model, effort, coordinate bounds, server wait limit, transition-scoped verifier, measurements, and fixed pair order with four new fixtures and oracle IDs. The combined descriptive block has four direct and four compiled cells, ordered direct/compiled, compiled/direct, direct/compiled, compiled/direct. Each cell has its own raw and cleanup evidence. No cross-block cell is replaced or retried. Both blocks remain local owned-fixture studies and do not establish MAP01, WSLc, broad reliability, causal efficiency, or independent billing.
