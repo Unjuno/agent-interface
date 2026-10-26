@@ -422,9 +422,11 @@ class OwnedWin32SessionOwner:
         # against a target whose current identity is no longer established.
         self._owner.mark_unknown(action["operation_id"], action["target_generation"], reason)
         with self._lock:
-            self._calls[call_id]["action"].update(status="unknown", result={
-                "status": "unknown", "error": reason,
-                "task_success": None, "replay_allowed": False})
+            self._calls[call_id]["action"].update(status="unknown",
+                release_confirmed=False, task_success=None, replay_allowed=False,
+                result={"status": "unknown", "error": reason,
+                    "input_dispatched": False, "release_confirmed": False,
+                    "task_success": None, "replay_allowed": False})
         return self.interface_result(call_id)
 
     def _stamp_producer_timing(self, call_id, field):
@@ -577,12 +579,14 @@ class OwnedWin32SessionOwner:
             raise ValueError("producer result and independent readback readers required")
         with self._lock:
             record = self._calls.get(call_id)
-            process_handle = self._producer_handles.get(call_id)
-            if record is None or process_handle is None:
-                raise ValueError("unknown caller action or producer")
+            if record is None:
+                raise ValueError("unknown caller action")
             action = deepcopy(record["action"])
             if action["status"] != "running" or record["cancellation"] is not None:
                 return self.interface_result(call_id)
+            process_handle = self._producer_handles.get(call_id)
+            if process_handle is None:
+                raise ValueError("running caller action has no retained producer")
 
         def retain_unknown(error_code, error_type=None):
             try:

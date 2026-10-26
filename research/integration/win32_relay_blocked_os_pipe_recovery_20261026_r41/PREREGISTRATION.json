@@ -1,0 +1,18 @@
+{
+  "attempt_id": "win32-public-relay-os-pipe-r41-20261026",
+  "source_commit": "51f4652e59acdfcf3709916340f584ab083a7a82",
+  "checkout_head_at_preregistration": "bc50f10998bb96a31d14e6a8f0fcba01255bf1d2",
+  "question": "Can the public stdio relay route cancellation and supervised Win32 release while its actual child-process stdout OS pipe is full and a write is blocked?",
+  "scope": "One synthetic owned Win32 fixture. Relay child uses actual subprocess stdin/stdout pipes; its MCP server/session transport is an in-process adapter. No GZDoom, MAP01, WSLc, Docker, provider, model, efficiency, or reliability claim.",
+  "frozen_conditions": {
+    "fixture": "Fresh runtime.backends.win32_v1.fixture_app process and exact HWND only; never attach to or control an existing application.",
+    "action": "Public interface_dispatch through runtime.cli_v1.mcp_relay: focus exact fixture, SHIFT down, wait_update 8000 ms, SHIFT up, release_all.",
+    "stdout_pressure": "Stop parent reads after setup, send sixteen ordinary interface_observe calls, one ordinary interface_clock call, then standard interface_cancel for the exact dispatch call.",
+    "blocked_pipe_evidence": "Before any stdout drain, require PeekNamedPipe buffered bytes >= GetNamedPipeInfo outbound capacity, a writer write_started without a corresponding write_completed, server-side interface_cancel_returned, and independent exact-generation native SHIFT-up.",
+    "success": "All blocked-pipe gate conditions hold before drain; after drain, retained exact-call result says cancellation status recovered and release_confirmed true, with same target generation and independent SHIFT-up.",
+    "failure": "Any unmet/ambiguous gate is retained as the first FAIL_OR_UNKNOWN outcome; never replay the attempt. Emergency release may be used only on the owned fixture and must be recorded.",
+    "retention": "Save full result, raw fixture/relay logs, pipe observations and SHA256SUMS under run/ before reporting."
+  },
+  "operator_boundary": "Run only on this Windows PC and only against the newly started fixture. Do not launch, focus, or input to GZDoom or any pre-existing process in this attempt.",
+  "preflight": "Both Python modules compile; source hashes frozen before first fixture or input action."
+}
