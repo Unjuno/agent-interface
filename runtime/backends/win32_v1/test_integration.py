@@ -115,6 +115,50 @@ class PureWin32HelperTests(unittest.TestCase):
 
         self.assertEqual(emitted, [(0, 0x48, 0x0009), (0, 0x48, 0x000B)])
 
+    def test_scan_code_mode_emits_tab_make_and_break_codes(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.user32 = type("MapApi", (), {
+            "MapVirtualKeyW": staticmethod(lambda vk, mode: 0x0F)
+        })()
+        emitted = []
+        backend._send = lambda item: emitted.append(
+            (int(item.ki.wVk), int(item.ki.wScan), int(item.ki.dwFlags))
+        )
+
+        backend._send_key(virtual_key("TAB"), True, encoding="scan_code")
+        backend._send_key(virtual_key("TAB"), False, encoding="scan_code")
+
+        self.assertEqual(emitted, [(0, 0x0F, 0x0008), (0, 0x0F, 0x000A)])
+
+    def test_scan_code_mode_refuses_a_virtual_key_without_a_scan_code(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.user32 = type("MapApi", (), {
+            "MapVirtualKeyW": staticmethod(lambda vk, mode: 0)
+        })()
+        emitted = []
+        backend._send = lambda item: emitted.append(item)
+
+        with self.assertRaisesRegex(Win32BackendError, "no scan code"):
+            backend._send_key(virtual_key("TAB"), True, encoding="scan_code")
+
+        self.assertEqual(emitted, [])
+
+    def test_release_all_reuses_the_held_key_encoding(self):
+        backend, events = self._release_backend({9: False, 1: False})
+        backend.held_keys = {"TAB": 9}
+        backend.held_key_encodings = {"TAB": "scan_code"}
+        backend.held_key_targets = {"TAB": None}
+        backend._last_state_query_witness = []
+        backend._send_key = lambda vk, down, encoding=None: events.append(
+            ("key", vk, down, encoding)
+        )
+
+        receipt = backend.release_all()
+
+        self.assertEqual(events[0], ("key", 9, False, "scan_code"))
+        self.assertEqual(backend.held_key_encodings, {})
+        self.assertTrue(receipt["verified"])
+
     def _release_backend(self, states):
         backend = Win32Backend.__new__(Win32Backend)
         backend.held_keys = {"CTRL": 17, "LEFT_CTRL": 17}
