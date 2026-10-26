@@ -1,0 +1,46 @@
+{
+  "schema": "agent-interface/wslc-s43-publication-redactions-v1",
+  "attempt_id": "wslc-currentmain-blocked-release-early-pipe-20261026-s43-e08fb6311690",
+  "modified_files": [
+    {
+      "path": "PREREGISTRATION.json",
+      "original_sha256": "255ef99bbc12361fb4d827ae79cc5797517a4d13ea33c143e25fb8e11c868e37",
+      "published_sha256": "6d00a991a965490ad4d646df4efc635f446b709152df1854c4029334c0e338b7",
+      "fields": [
+        "storage_path",
+        "output_path",
+        "source_root"
+      ]
+    },
+    {
+      "path": "SOURCE-FREEZE.json",
+      "original_sha256": "35777399c7b89dae475790af286644eda03e05f6222a5bbd2975e7ef0919c77b",
+      "published_sha256": "17b6d2e8262b83a6e2313ac12ae288a1027e7ced59599d31012ae48ce9bca2b5",
+      "fields": [
+        "source_root"
+      ]
+    },
+    {
+      "path": "raw/output/resource-cleanup.json",
+      "original_sha256": "efe8688f2ba9f36ebefbe8af74682d355678d85e53203ca8cbb0eba080c37cfc",
+      "published_sha256": "38bb577944376bfc01b81097532d61a3bef660ef1221e9e474de3a265d93e65b",
+      "fields": [
+        "storagePath"
+      ]
+    }
+  ],
+  "omitted_paths": [
+    {
+      "path": "harness/prebuilt/**",
+      "reason": "Compiled SDK artifacts include local absolute PDB paths; source and project retained."
+    }
+  ],
+  "retained_private_artifacts": [
+    {
+      "path": "<private-wslc-session-storage>/storage.vhdx",
+      "bytes": 236978176,
+      "sha256": "d23c5987eecdfca7306a091f93a90ae0b30e975f17ab995ddbb9fec55e6fc25a",
+      "published": false
+    }
+  ]
+}
