@@ -1,0 +1,24 @@
+{
+  "attempt_id": "win32-appserver-recovery-r10-20261026",
+  "audit_pass": true,
+  "checks": {
+    "bounded_phase_one_recovery_passed": true,
+    "cleanup_and_host_restoration": true,
+    "first_outcome_retained_as_failure": true,
+    "no_task_action_or_effect": true,
+    "no_wslc_or_docker": true,
+    "old_generation_refused_before_any_input": true,
+    "runner_stopped_at_python_runtime_gate": true
+  },
+  "classification": "FAIL_RUNTIME_PREREQUISITE_RETAINED",
+  "frozen_audit_hash_base_correction": "PRETRIAL_SHA256SUMS paths are packet-relative; the frozen audit mistakenly resolved them from the repository root. Original audit.json is preserved.",
+  "pretrial_hash_audit": {
+    "entries": 5,
+    "failures": []
+  },
+  "raw_hash_audit": {
+    "entries": 27,
+    "failures": []
+  },
+  "task_server_dispatch_program_ids": []
+}
