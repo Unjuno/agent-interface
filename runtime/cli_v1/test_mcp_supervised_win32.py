@@ -1220,8 +1220,15 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(dispatch_rows[0]["task_success"])
                 retained = self.row(await server.call_tool("interface_results", {
                     "call_id": dispatch_rows[0]["call_id"]}))
-                self.assertEqual(retained["action"],
+                expected_action = dict(
                     dispatch_rows[0]["supervision"]["action"])
+                expected_action["input_dispatched"] = dispatch_rows[0][
+                    "input_dispatched"]
+                self.assertEqual(retained["action"], expected_action)
+                # Retrieval did not dispatch input: keep the query envelope
+                # false while exposing the original action's dispatch evidence.
+                self.assertFalse(retained["input_dispatched"])
+                self.assertTrue(retained["action"]["input_dispatched"])
                 self.assertIsNone(retained["task_success"])
                 verified = json.loads((await server.call_tool(
                     "interface_verify_task", {

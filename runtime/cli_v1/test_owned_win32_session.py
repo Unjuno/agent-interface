@@ -98,6 +98,29 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertTrue(self.owner.authorize_producer_start(
             ACTION_ID, GEN_A, self.process, lambda: None))
 
+    def test_results_view_projects_dispatch_flag_onto_original_action(self):
+        self.start_action()
+        cases = [
+            ({"status": "completed", "execution": {
+                "program_emissions": 2, "emissions": 4}}, True),
+            ({"status": "completed", "execution": {
+                "program_emissions": 0, "emissions": 4}}, False),
+            ({"status": "completed", "execution": {"emissions": 3}}, True),
+            ({"status": "completed", "input_dispatched": False,
+                "execution": {"emissions": 3}}, False),
+            ({"status": "unknown", "input_dispatched": None,
+                "execution": {}}, None),
+        ]
+        for result, expected in cases:
+            with self.subTest(result=result):
+                self.session.record_action_result(CALL_ID, result)
+                row = self.session.interface_result(CALL_ID)
+                action = row["action"]
+                self.assertEqual(action.get("input_dispatched"), expected)
+                self.assertEqual(action["result"], result)
+                self.assertIsNone(action.get("task_success"))
+                self.assertFalse(action.get("replay_allowed", False))
+
     def test_backend_target_generation_rejects_same_process_new_hwnd_at_public_admission(self):
         backend = object.__new__(Win32Backend)
         backend.targets = {'fixture': 42}
