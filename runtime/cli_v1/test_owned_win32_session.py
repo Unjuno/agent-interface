@@ -339,6 +339,44 @@ class OwnedWin32SessionTests(unittest.TestCase):
         ])
         self.assertEqual(row["action"]["metadata"]["source"], "interface_dispatch")
 
+    def test_generation_refusal_without_producer_returns_retained_action(self):
+        current_generation = {"value": GEN_A}
+        self.session.bind_target_generation_reader(
+            lambda: current_generation["value"])
+        binding = self.session.bind_target_generation()
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "standard-refused-before-producer",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": GEN_A}},
+            "authority": {"lease_id": "generation-refusal",
+                "expires_at_ns": self.clock() + 4_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                    {"op": "key_state", "key": "SHIFT", "down": True},
+                    {"op": "release_all"}]}
+        self.session.admit_standard_action(CALL_ID, ACTION_ID,
+            binding["target_binding_id"], program,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            current_observation_seq=1, current_binding_revision=1)
+        current_generation["value"] = GEN_B
+        factory_calls = []
+
+        row = self.session.start_producer(CALL_ID,
+            lambda _action: factory_calls.append("called"))
+        self.assertEqual(row["action"]["status"], "unknown")
+        self.assertEqual(factory_calls, [])
+
+        retained = self.session.complete_exited_action(CALL_ID,
+            result_reader=lambda _process: self.fail("no producer was started"),
+            readback_reader=lambda _request: self.fail("no producer was started"))
+
+        self.assertEqual(retained, row)
+        self.assertEqual(retained["action"]["result"]["error"],
+                         "target_generation_changed_before_start")
+        self.assertFalse(retained["action"]["release_confirmed"])
+        self.assertIsNone(retained["action"]["task_success"])
+        self.assertFalse(retained["action"]["replay_allowed"])
+
     def test_standard_program_is_forwarded_to_the_supervised_producer(self):
         self.session.bind_target_generation_reader(lambda: GEN_A)
         binding = self.session.bind_target_generation()
