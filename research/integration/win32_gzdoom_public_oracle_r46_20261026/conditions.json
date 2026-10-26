@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface/gzdoom-public-task-effect-r46-v1",
+  "attempt_id": "map01-native-gzdoom-public-oracle-r46-20261026",
+  "source_commit": "55c717e1f8c6252574e93b31d4ead6fe7f55cbae",
+  "question": "Can the supervised Win32 standard caller attach a same-generation independent visual task-effect result via interface_verify_task?",
+  "task_effect": {
+    "target": "Fresh GZDoom Freedoom MAP01 process",
+    "action": "One standard public W scan-code down, 600 ms wait, W up, release_all",
+    "oracle": "Same-generation public screen_physical_px captures before and after; >5% changed pixels in upper 80%",
+    "claim_ceiling": "Visible forward effect only; not MAP01 completion"
+  },
+  "limits": {
+    "new_target_processes_max": 1,
+    "public_dispatches_max": 1,
+    "direct_wait_ms": 10000,
+    "oracle_calls_max": 1,
+    "cancellations": 0,
+    "recovery": 0,
+    "replay": 0,
+    "wslc": false,
+    "docker": false,
+    "provider_calls": 0
+  },
+  "protected_unknown_processes": [21660, 6696, 60320],
+  "stop": "Any identity, generation, CUA gate, release/readback, observation, oracle binding, timeout or cleanup uncertainty stops the attempt; no replay. Preserve unresolved target and mark UNKNOWN."
+}

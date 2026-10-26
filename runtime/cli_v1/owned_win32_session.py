@@ -24,6 +24,21 @@ _TARGET_BINDING_TTL_NS = 60_000_000_000
 _MAX_TARGET_BINDINGS = 64
 
 
+def _input_dispatched_from_result(result):
+    """Project dispatch evidence using the same precedence as the MCP result."""
+    if type(result) is not dict:
+        return None
+    execution = result.get("execution")
+    program_emissions = (execution.get("program_emissions")
+        if type(execution) is dict else None)
+    if type(program_emissions) is int:
+        return program_emissions > 0
+    if type(result.get("input_dispatched")) is bool:
+        return result["input_dispatched"]
+    emissions = execution.get("emissions") if type(execution) is dict else None
+    return emissions > 0 if type(emissions) is int else None
+
+
 class OwnedWin32SessionOwner:
     """Separate action/cancellation receipts around injected custody components.
 
@@ -723,7 +738,16 @@ class OwnedWin32SessionOwner:
             if record is None:
                 return None
             self._refresh(record)
-            return deepcopy(record)
+            view = deepcopy(record)
+            action = view.get("action")
+            if type(action) is dict:
+                input_dispatched = _input_dispatched_from_result(
+                    action.get("result"))
+                if input_dispatched is not None:
+                    # This belongs to the retained action. The MCP envelope's
+                    # input_dispatched field describes the results query itself.
+                    action["input_dispatched"] = input_dispatched
+            return view
 
     def recover_orphaned_input(self, *, source_operation_id,
                                source_target_generation, obligations,
