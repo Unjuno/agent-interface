@@ -1,0 +1,31 @@
+{
+  "attempt_id": "win32-relay-blocked-stdout-r40-20261026",
+  "checks": {
+    "bounded_release_and_independent_readback": true,
+    "cancel_row_written_after_stdout_resumed": true,
+    "clean_fixture_exit": true,
+    "foreground_restoration": true,
+    "fresh_compiled_effect_and_exact_oracle": true,
+    "neutral_input_and_fresh_observation": true,
+    "no_wslc_or_docker": true,
+    "pretrial_hashes_match": true,
+    "raw_hashes_match": true,
+    "relay_priority_overtook_one_queued_ordinary": true,
+    "release_and_same_generation_readback_preceded_stdout_resume": true,
+    "stale_generation_refused_without_input": true
+  },
+  "frozen_classification": "PASS_RECOVERY_FRESH_GENERATION_TASK",
+  "integrity_pass": true,
+  "interpretation": "All preregistered scoped relay recovery, fresh-generation task effect, cleanup, and original foreground restoration checks passed for this single owned-fixture run. This is not OS-pipe saturation, production-app, MAP01, WSLc, efficiency, or reliability evidence.",
+  "overall_attempt_pass": true,
+  "pretrial_hash_audit": {
+    "entries": 8,
+    "errors": []
+  },
+  "raw_hash_audit": {
+    "entries": 38,
+    "errors": []
+  },
+  "scoped_recovery_pass": true,
+  "task_effect_pass": true
+}

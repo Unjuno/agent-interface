@@ -13,7 +13,7 @@ from mcp.client.stdio import stdio_client
 
 
 PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interface_observe', 'interface_dispatch',
-                'interface_results', 'interface_inspect_target', 'interface_review_target',
+                'interface_cancel', 'interface_results', 'interface_inspect_target', 'interface_review_target',
                 'interface_close', 'interface_recover_input', 'interface_guarded_observe', 'interface_guarded_mint',
                 'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many',
                 'interface_guarded_activate_window', 'interface_guarded_recover_input',
@@ -22,6 +22,7 @@ PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interfac
 MAX_PENDING_STDOUT_RESPONSES = 16
 MAX_PENDING_CANCEL_RESPONSES = 1
 MAX_CANCEL_READAHEAD_LINES = 1
+CANCELLATION_TOOLS = ('interface_cancel', 'interface_guarded_cancel')
 
 
 def _finite_float(value):
@@ -72,7 +73,7 @@ class Relay:
             expected_id = (type(request['id']) is int
                 and request['id'] == self.next_id)
             priority_cancel_id = (allow_priority_cancel
-                and request.get('tool') == 'interface_guarded_cancel'
+                and request.get('tool') in CANCELLATION_TOOLS
                 and type(request.get('id')) is int
                 and request['id'] == self.next_id + 1
                 and self._priority_cancel_id is None)
@@ -92,7 +93,7 @@ class Relay:
     def is_cancellation_request(self, line):
         try:
             return self._parse_request(
-                line, allow_priority_cancel=True)['tool'] == 'interface_guarded_cancel'
+                line, allow_priority_cancel=True)['tool'] in CANCELLATION_TOOLS
         except ValueError:
             return False
 
