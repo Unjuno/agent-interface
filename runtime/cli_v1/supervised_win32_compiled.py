@@ -73,7 +73,15 @@ def _terminal(reply, action_name):
             and type(row.get("action_id")) is str
             and type(row.get("effect_ref")) is str
             and type(row.get("release")) is dict):
-        return deepcopy(row)
+        # The compiled core accepts only its terminal contract. Standard
+        # Win32 receipts also carry call IDs and other caller-level evidence;
+        # those are retained by the wrapper's receipt join, not forwarded as
+        # undeclared terminal fields.
+        terminal = {key: deepcopy(row[key]) for key in
+            ("status", "action_id", "effect_ref", "release")}
+        if "input_dispatched" in row:
+            terminal["input_dispatched"] = deepcopy(row["input_dispatched"])
+        return terminal
     supervision = row.get("supervision")
     action = supervision.get("action") if type(supervision) is dict else None
     custody = (action.get("completion_custody")
