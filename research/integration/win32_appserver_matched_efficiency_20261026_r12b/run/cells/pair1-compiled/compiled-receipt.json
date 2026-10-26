@@ -1,0 +1,69 @@
+{
+  "completed_transitions": 0,
+  "critical_events": [
+    {
+      "action": "enter_text",
+      "event": "branch_selected",
+      "evidence_ref": "18f4343d82c04ca889fd854268b8f62e",
+      "matched_conditions": {
+        "clicked": false,
+        "ready": true,
+        "typed": false
+      },
+      "outcome": "action",
+      "state": "before"
+    },
+    {
+      "action": "enter_text",
+      "action_id": "compiled-559c7db814db42f39d097892fc932386",
+      "event": "action_terminal",
+      "execution_accepted_ns": 667757235564800,
+      "execution_started_ns": 667757234560400,
+      "release_verified": false,
+      "status": "uncertain"
+    },
+    {
+      "completed_transitions": 0,
+      "event": "runtime_finished",
+      "outcome": "RUNTIME_FAILED",
+      "reason": "execution_failed"
+    }
+  ],
+  "elapsed_ns": 24341400,
+  "ended_ns": 667757235576700,
+  "format": "compiled-gui-runtime-receipt-v1",
+  "frontier_model_resumptions": 0,
+  "input_authority": "admission_per_action_only",
+  "interface_id": "win32-r12-two-stage-save",
+  "latest_evidence_ref": "18f4343d82c04ca889fd854268b8f62e",
+  "method": "model-grounded-two-stage-save",
+  "method_version": "1",
+  "observations": [
+    {
+      "captured_ns": 667757214646200,
+      "evidence_digest": "6d39d6850c6d5240f15923c329472edf0e88c179e332c883679001d0401746e1",
+      "evidence_ref": "18f4343d82c04ca889fd854268b8f62e",
+      "observation_accepted_ns": 667757234488200,
+      "observation_started_ns": 667757211237800,
+      "predicates": {
+        "clicked": false,
+        "ready": true,
+        "saved": false,
+        "typed": false
+      },
+      "sequence": 1
+    }
+  ],
+  "outcome": "RUNTIME_FAILED",
+  "pending_effect": null,
+  "raw_evidence_retention": "adapter_responsibility_unverified",
+  "reason": "execution_failed",
+  "session_scope": "one-owned-fixture-process",
+  "standard_action_call_ids": [],
+  "standard_observation_call_ids": [
+    "15eed7b2606e4f0c9b58aee47eccac2e"
+  ],
+  "started_ns": 667757211235300,
+  "task_success": null,
+  "transitions": []
+}

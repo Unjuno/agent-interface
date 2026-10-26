@@ -1,0 +1,251 @@
+{
+  "action": {
+    "completion_custody": {
+      "cleanup_deadline_ns": null,
+      "cleanup_latency_ns": null,
+      "cleanup_latency_perf_counter_ns": null,
+      "cleanup_requested_monotonic_ns": null,
+      "cleanup_requested_perf_counter_ns": null,
+      "completion_readback": {
+        "neutral": true,
+        "observed_monotonic_ns": 668091533829500,
+        "operation_id": "b75fbb5f639044c4a81f398a3980164d",
+        "producer_exit_confirmed_ns": 668091523361500,
+        "target_generation": "c5de99857cf0563c3bedf615b009181121a68e4dfe9dbb4abecd7c6b4e04bf56"
+      },
+      "completion_readback_attempt": null,
+      "completion_readback_outcome": "verified",
+      "completion_release_receipt": {
+        "buttons_down": [],
+        "buttons_unknown": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "monotonic_ns": 668091464437000,
+        "state_query_witnesses": {
+          "17": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 46795386,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 4860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 38624
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 46795386,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 4860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 38624
+            }
+          ],
+          "83": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 46795386,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 4860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 38624
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 46795386,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 4860,
+              "probe_integrity_rid": 8192,
+              "target": "fixture",
+              "target_integrity_rid": 8192,
+              "thread_id": 38624
+            }
+          ]
+        },
+        "verified": true
+      },
+      "deadline_ns": 668100063409700,
+      "obligations": [
+        "key:fixture:CTRL",
+        "key:fixture:S"
+      ],
+      "operation_id": "b75fbb5f639044c4a81f398a3980164d",
+      "phase": "completed",
+      "producer_exit_code": 0,
+      "producer_gate_state": "authorization_attempted",
+      "producer_identity": {
+        "creation_time_100ns": 134374503872003095,
+        "pid": 33756
+      },
+      "recovery_completed_monotonic_ns": null,
+      "recovery_completed_perf_counter_ns": null,
+      "recovery_id": null,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "completed",
+      "target_generation": "c5de99857cf0563c3bedf615b009181121a68e4dfe9dbb4abecd7c6b4e04bf56",
+      "task_success": null,
+      "uncertainty": null
+    },
+    "metadata": {
+      "program_id": "compiled-9b2b1155f4824040bc3866bf118f20ba",
+      "source": "interface_dispatch"
+    },
+    "operation_id": "b75fbb5f639044c4a81f398a3980164d",
+    "producer_timing": {
+      "child_ready_monotonic_ns": 668091451398800,
+      "clock": "time.monotonic_ns",
+      "factory_requested_monotonic_ns": 668090887510000,
+      "factory_returned_monotonic_ns": 668090887893900,
+      "identity_verified_monotonic_ns": 668090910053000,
+      "process_start_called_monotonic_ns": 668090887911000,
+      "process_start_returned_monotonic_ns": 668090909996400,
+      "start_gate_authorized_monotonic_ns": 668090910297200
+    },
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "emissions": 6,
+        "ended_ns": 668091464438600,
+        "observations": [],
+        "releases": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 668091464437000,
+            "state_query_witnesses": {
+              "17": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 46795386,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 4860,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 38624
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 46795386,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 4860,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 38624
+                }
+              ],
+              "83": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 46795386,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 4860,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 38624
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 46795386,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 4860,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 38624
+                }
+              ]
+            },
+            "verified": true
+          }
+        ],
+        "started_ns": 668091451906700
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "status": "completed",
+    "target_generation": "c5de99857cf0563c3bedf615b009181121a68e4dfe9dbb4abecd7c6b4e04bf56",
+    "task_success": null
+  },
+  "call_id": "c2515ba4c4d74f3785d83f12065d30bc",
+  "cancellation": null,
+  "input_dispatched": false,
+  "operation_invoked": false,
+  "replay_allowed": false,
+  "standard_program": {
+    "authority": {
+      "expires_at_ns": 668100063409700,
+      "lease_id": "compiled-b2de17c4987f4ab2a22fdcb92611308c"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "compiled-9b2b1155f4824040bc3866bf118f20ba",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 2,
+      "target_generations": {
+        "fixture": "c5de99857cf0563c3bedf615b009181121a68e4dfe9dbb4abecd7c6b4e04bf56"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "task_effect": {
+    "receipt": {
+      "call_id": "c2515ba4c4d74f3785d83f12065d30bc",
+      "evidence_ref": "fixture-effect:sha256:5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+      "observed_monotonic_ns": 668091563571100,
+      "operation_id": "b75fbb5f639044c4a81f398a3980164d",
+      "oracle_id": "b672f249bd5f403b8ed3ea1a8c0805b6",
+      "outcome": "success",
+      "target_generation": "c5de99857cf0563c3bedf615b009181121a68e4dfe9dbb4abecd7c6b4e04bf56"
+    },
+    "receipt_received_monotonic_ns": 668091563676300,
+    "requested_monotonic_ns": 668091563383000,
+    "status": "verified",
+    "task_success": true
+  },
+  "task_success": true
+}

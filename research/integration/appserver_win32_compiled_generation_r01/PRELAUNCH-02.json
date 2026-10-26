@@ -1,0 +1,11 @@
+{
+  "attempt_id": "awcg-r01",
+  "classification": "HARNESS_BOOTSTRAP_FAILURE_BEFORE_TRIAL",
+  "failure": "ModuleNotFoundError: No module named 'codex_app_server_client_v2'",
+  "phase": "module import before run() and before fixture launch/provider call/input",
+  "cause": "research/live_control was outside the worktree sparse checkout",
+  "repair": "Expand research/live_control from the same immutable source commit; module is present at research/live_control/codex_app_server_client_v2.py.",
+  "effect_on_trial": "no trial input or provider request occurred; conditions remain unchanged",
+  "wslc_used": false,
+  "docker_used": false
+}

@@ -1,0 +1,1016 @@
+{
+  "appserver_closed": true,
+  "appserver_latency_ns": 7073219300,
+  "arm": "direct",
+  "arm_action_receipts": [
+    {
+      "call_id": "ff74103c39584992a3cf7839454d40e7",
+      "input_dispatched": true,
+      "kind": "dispatch",
+      "label": "direct-enter-text",
+      "operation_id": "cf0909f275a84c4792d4ccde6e53b1e0",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668512261455800,
+          "lease_id": "r12-016cc7663b25409393dbafc1f871bd63"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 120,
+            "y": 90
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 100
+          },
+          {
+            "op": "text",
+            "text": "office"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "r12-direct-enter-text-0f704a69823c4ba3a1ece054b5fb5311",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668493022418600,
+      "started_monotonic_ns": 668492261488900,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+      "input_dispatched": true,
+      "kind": "dispatch",
+      "label": "direct-save",
+      "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668515440544700,
+          "lease_id": "r12-4033f51d29194694932834b179eea2b0"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "r12-direct-save-21bbb722806c4d48862af2af22b6b352",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668496078302600,
+      "started_monotonic_ns": 668495440568200,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    }
+  ],
+  "cell_id": "pair1-direct",
+  "checks": {
+    "appserver_generation_continuity": true,
+    "exact_task_effect_and_events": true,
+    "fresh_post_dispatch_observation": true,
+    "independent_task_oracle_exact_binding": true,
+    "model_usage_fields_reconciled_to_protocol": true,
+    "native_neutral_readback": true,
+    "two_actions_confirmed_release": true
+  },
+  "cleanup": {
+    "appserver_closed": true,
+    "fixture_exit_code": 0,
+    "foreground_after_restore": 10486926,
+    "foreground_before": 10486926,
+    "foreground_before_restore": 10486926
+  },
+  "direct_second_model_decision": {
+    "save": true
+  },
+  "docker_used": false,
+  "effect": {
+    "clicked": true,
+    "saved": true,
+    "text": "office"
+  },
+  "elapsed_ns": 8589198300,
+  "events": [
+    {
+      "hwnd": 334432388,
+      "kind": "ready"
+    },
+    {
+      "kind": "click"
+    },
+    {
+      "code": 111,
+      "kind": "char"
+    },
+    {
+      "code": 102,
+      "kind": "char"
+    },
+    {
+      "code": 102,
+      "kind": "char"
+    },
+    {
+      "code": 105,
+      "kind": "char"
+    },
+    {
+      "code": 99,
+      "kind": "char"
+    },
+    {
+      "code": 101,
+      "kind": "char"
+    },
+    {
+      "clicked": true,
+      "kind": "save",
+      "saved": true,
+      "text": "office"
+    }
+  ],
+  "finished_monotonic_ns": 668496262029000,
+  "first_stage_observation": {
+    "call_id": "4f67999ba33843c8a518abfed5963417",
+    "capture_started_ns": 668493030475100,
+    "image_dimensions": [
+      400,
+      180
+    ],
+    "image_path": "observations/direct-post-entry.png",
+    "image_sha256": "3825f8339e1404d85b5344b5f271d3d747633011ee62845b11b864991d2f8253",
+    "kind": "observation",
+    "note": "direct-post-entry",
+    "returned_monotonic_ns": 668493046410100,
+    "sequence": 3,
+    "started_monotonic_ns": 668493028199500,
+    "status": "returned",
+    "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+  },
+  "fixture_pid": 19676,
+  "grounding_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d",
+  "hwnd": 334432388,
+  "model_coordinate": {
+    "x": 120,
+    "y": 90
+  },
+  "native_after": {
+    "observed_monotonic_ns": 668496102087500,
+    "state_query_witnesses": {
+      "CTRL": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ],
+      "S": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ],
+      "SHIFT": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ],
+      "left_button": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ]
+    },
+    "states": {
+      "CTRL": false,
+      "S": false,
+      "SHIFT": false,
+      "left_button": false
+    },
+    "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+  },
+  "native_preflight": {
+    "observed_monotonic_ns": 668485081561900,
+    "state_query_witnesses": {
+      "CTRL": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ],
+      "S": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ],
+      "SHIFT": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ],
+      "left_button": [
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        },
+        {
+          "desktop_hookcontrol_opened": true,
+          "hwnd": 334432388,
+          "input_desktop": "Default",
+          "input_desktop_active": true,
+          "pid": 19676,
+          "probe_integrity_rid": 8192,
+          "target": "fixture",
+          "target_integrity_rid": 8192,
+          "thread_id": 10860
+        }
+      ]
+    },
+    "states": {
+      "CTRL": false,
+      "S": false,
+      "SHIFT": false,
+      "left_button": false
+    },
+    "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+  },
+  "pair": 1,
+  "post_action_observation": {
+    "call_id": "164f60b845b14865b703e90fb9d3d077",
+    "capture_started_ns": 668496082484400,
+    "kind": "observation",
+    "note": "direct-post-save",
+    "returned_monotonic_ns": 668496097890000,
+    "sequence": 5,
+    "started_monotonic_ns": 668496080293800,
+    "status": "returned",
+    "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+  },
+  "provider_turn_count": 2,
+  "provider_turns": [
+    {
+      "answer": {
+        "x": 120,
+        "y": 90
+      },
+      "backend_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10252,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0
+      },
+      "contract": "win32-r12-pair1-direct-turn1-coordinate",
+      "latency_ns": 4702326200,
+      "requested_effort": "low",
+      "requested_model": "gpt-6.1-sol",
+      "returned_monotonic_ns": 668492240859500,
+      "started_monotonic_ns": 668487538533300,
+      "status": "completed",
+      "thread_id": "01a175c4-a41d-7661-a615-5d2ce8a024cd",
+      "turn_id": "01a175c4-a464-7f60-872d-4f8edfceb0db",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10252,
+        "output_tokens": 19,
+        "reasoning_output_tokens": 0,
+        "status": "reported"
+      },
+      "usage_matches_journal_fields": true
+    },
+    {
+      "answer": {
+        "save": true
+      },
+      "backend_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10485,
+        "output_tokens": 15,
+        "reasoning_output_tokens": 0
+      },
+      "contract": "win32-r12-pair1-direct-turn2-save-decision",
+      "latency_ns": 2370893100,
+      "requested_effort": "low",
+      "requested_model": "gpt-6.1-sol",
+      "returned_monotonic_ns": 668495420440800,
+      "started_monotonic_ns": 668493049547700,
+      "status": "completed",
+      "thread_id": "01a175c4-a41d-7661-a615-5d2ce8a024cd",
+      "turn_id": "01a175c4-b9ea-7213-937d-54616ab5e1c0",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 10485,
+        "output_tokens": 15,
+        "reasoning_output_tokens": 0,
+        "status": "reported"
+      },
+      "usage_matches_journal_fields": true
+    }
+  ],
+  "public_call_counts": {
+    "dispatch": 2,
+    "observation": 5,
+    "oracle": 1,
+    "results": 2
+  },
+  "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "reported_tokens": {
+    "input_tokens": 20737,
+    "output_tokens": 34,
+    "reasoning_output_tokens": 0
+  },
+  "server_close": {
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_appserver_matched_efficiency_20261026_r12f\\run\\cells\\pair1-direct\\server\\4901a9186cf74ad3998389ccaee2bd9a",
+    "call_id": "4901a9186cf74ad3998389ccaee2bd9a",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "session": {
+      "call_count": 2,
+      "mode": "supervised-win32",
+      "session_id": "03fc5b72837642b8adff63501993f568",
+      "state": "closed",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "closed",
+    "task_success": null
+  },
+  "standard_tool_calls": [
+    {
+      "call_id": "9f5553b42a044b12b7ba766b126a23cd",
+      "capture_started_ns": 668487514327000,
+      "image_dimensions": [
+        400,
+        180
+      ],
+      "image_path": "observations/initial-grounding.png",
+      "image_sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+      "kind": "observation",
+      "note": "initial-grounding",
+      "returned_monotonic_ns": 668487530600000,
+      "sequence": 1,
+      "started_monotonic_ns": 668487511090100,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "kind": "provider",
+      "latency_ns": 4702326200,
+      "returned_monotonic_ns": 668492240859500,
+      "started_monotonic_ns": 668487538533300,
+      "turn": "turn1-coordinate"
+    },
+    {
+      "call_id": "076a3a6e1b8c4627ad1305823af2d735",
+      "capture_started_ns": 668492244780600,
+      "kind": "observation",
+      "note": "direct-pre-stage1",
+      "returned_monotonic_ns": 668492260754500,
+      "sequence": 2,
+      "started_monotonic_ns": 668492242390900,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "call_id": "ff74103c39584992a3cf7839454d40e7",
+      "input_dispatched": true,
+      "kind": "dispatch",
+      "label": "direct-enter-text",
+      "operation_id": "cf0909f275a84c4792d4ccde6e53b1e0",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668512261455800,
+          "lease_id": "r12-016cc7663b25409393dbafc1f871bd63"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 120,
+            "y": 90
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 100
+          },
+          {
+            "op": "text",
+            "text": "office"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "r12-direct-enter-text-0f704a69823c4ba3a1ece054b5fb5311",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668493022418600,
+      "started_monotonic_ns": 668492261488900,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "call_id": "ff74103c39584992a3cf7839454d40e7",
+      "kind": "results",
+      "label": "direct-enter-text",
+      "returned_monotonic_ns": 668493023612700
+    },
+    {
+      "call_id": "4f67999ba33843c8a518abfed5963417",
+      "capture_started_ns": 668493030475100,
+      "image_dimensions": [
+        400,
+        180
+      ],
+      "image_path": "observations/direct-post-entry.png",
+      "image_sha256": "3825f8339e1404d85b5344b5f271d3d747633011ee62845b11b864991d2f8253",
+      "kind": "observation",
+      "note": "direct-post-entry",
+      "returned_monotonic_ns": 668493046410100,
+      "sequence": 3,
+      "started_monotonic_ns": 668493028199500,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "kind": "provider",
+      "latency_ns": 2370893100,
+      "returned_monotonic_ns": 668495420440800,
+      "started_monotonic_ns": 668493049547700,
+      "turn": "turn2-save-decision"
+    },
+    {
+      "call_id": "be65d708916b4ec898ad836404cb7ac9",
+      "capture_started_ns": 668495424212300,
+      "kind": "observation",
+      "note": "direct-pre-save",
+      "returned_monotonic_ns": 668495439901000,
+      "sequence": 4,
+      "started_monotonic_ns": 668495421770300,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+      "input_dispatched": true,
+      "kind": "dispatch",
+      "label": "direct-save",
+      "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+      "program": {
+        "authority": {
+          "expires_at_ns": 668515440544700,
+          "lease_id": "r12-4033f51d29194694932834b179eea2b0"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "r12-direct-save-21bbb722806c4d48862af2af22b6b352",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "release_confirmed": true,
+      "returned_monotonic_ns": 668496078302600,
+      "started_monotonic_ns": 668495440568200,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+      "kind": "results",
+      "label": "direct-save",
+      "returned_monotonic_ns": 668496079570700
+    },
+    {
+      "call_id": "164f60b845b14865b703e90fb9d3d077",
+      "capture_started_ns": 668496082484400,
+      "kind": "observation",
+      "note": "direct-post-save",
+      "returned_monotonic_ns": 668496097890000,
+      "sequence": 5,
+      "started_monotonic_ns": 668496080293800,
+      "status": "returned",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+    },
+    {
+      "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+      "kind": "oracle",
+      "returned_monotonic_ns": 668496100288400,
+      "started_monotonic_ns": 668496099571400
+    }
+  ],
+  "status": "PASS",
+  "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d",
+  "task_oracle": {
+    "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "supervised_win32",
+    "status": "verified",
+    "task_effect": {
+      "receipt": {
+        "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+        "evidence_ref": "fixture-effect:sha256:5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+        "observed_monotonic_ns": 668496100011600,
+        "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+        "oracle_id": "7d27c0c74f314f998eaeb34420fd862f",
+        "outcome": "success",
+        "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+      },
+      "receipt_received_monotonic_ns": 668496100129700,
+      "requested_monotonic_ns": 668496099791100,
+      "status": "verified",
+      "task_success": true
+    },
+    "task_success": true
+  },
+  "terminal_call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+  "terminal_retained_result": {
+    "action": {
+      "completion_custody": {
+        "cleanup_deadline_ns": null,
+        "cleanup_latency_ns": null,
+        "cleanup_latency_perf_counter_ns": null,
+        "cleanup_requested_monotonic_ns": null,
+        "cleanup_requested_perf_counter_ns": null,
+        "completion_readback": {
+          "neutral": true,
+          "observed_monotonic_ns": 668496075939200,
+          "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+          "producer_exit_confirmed_ns": 668496069685000,
+          "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+        },
+        "completion_readback_attempt": null,
+        "completion_readback_outcome": "verified",
+        "completion_release_receipt": {
+          "buttons_down": [],
+          "buttons_unknown": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "monotonic_ns": 668496019272800,
+          "state_query_witnesses": {
+            "17": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 334432388,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 19676,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 10860
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 334432388,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 19676,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 10860
+              }
+            ],
+            "83": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 334432388,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 19676,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 10860
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 334432388,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 19676,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 10860
+              }
+            ]
+          },
+          "verified": true
+        },
+        "deadline_ns": 668515440544700,
+        "obligations": [
+          "key:fixture:CTRL",
+          "key:fixture:S"
+        ],
+        "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+        "phase": "completed",
+        "producer_exit_code": 0,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134374507917546250,
+          "pid": 37268
+        },
+        "recovery_completed_monotonic_ns": null,
+        "recovery_completed_perf_counter_ns": null,
+        "recovery_id": null,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "status": "completed",
+        "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "metadata": {
+        "program_id": "r12-direct-save-21bbb722806c4d48862af2af22b6b352",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+      "producer_timing": {
+        "child_ready_monotonic_ns": 668496005774700,
+        "clock": "time.monotonic_ns",
+        "factory_requested_monotonic_ns": 668495442737400,
+        "factory_returned_monotonic_ns": 668495443029600,
+        "identity_verified_monotonic_ns": 668495455712000,
+        "process_start_called_monotonic_ns": 668495443046900,
+        "process_start_returned_monotonic_ns": 668495455644400,
+        "start_gate_authorized_monotonic_ns": 668495456214900
+      },
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "emissions": 6,
+          "ended_ns": 668496019274400,
+          "observations": [],
+          "releases": [
+            {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 668496019272800,
+              "state_query_witnesses": {
+                "17": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 334432388,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 19676,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 10860
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 334432388,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 19676,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 10860
+                  }
+                ],
+                "83": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 334432388,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 19676,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 10860
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 334432388,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 19676,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 10860
+                  }
+                ]
+              },
+              "verified": true
+            }
+          ],
+          "started_ns": 668496006308500
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "status": "completed",
+      "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d",
+      "task_success": null
+    },
+    "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 668515440544700,
+        "lease_id": "r12-4033f51d29194694932834b179eea2b0"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "S"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "r12-direct-save-21bbb722806c4d48862af2af22b6b352",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": {
+      "receipt": {
+        "call_id": "80c8cbf6d4744ab0b48cdabe65dcb801",
+        "evidence_ref": "fixture-effect:sha256:5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+        "observed_monotonic_ns": 668496100011600,
+        "operation_id": "08bab931f55440e9a0cd915b2bd1c706",
+        "oracle_id": "7d27c0c74f314f998eaeb34420fd862f",
+        "outcome": "success",
+        "target_generation": "390203ed74be702b71f2447f8aa4bcf914e4ee554a055f8365d26fc959a1b68d"
+      },
+      "receipt_received_monotonic_ns": 668496100129700,
+      "requested_monotonic_ns": 668496099791100,
+      "status": "verified",
+      "task_success": true
+    },
+    "task_success": true
+  },
+  "wslc_used": false
+}

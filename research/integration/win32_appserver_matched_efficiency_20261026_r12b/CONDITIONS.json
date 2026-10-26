@@ -1,0 +1,69 @@
+{
+  "study_id": "win32-appserver-matched-efficiency-r12b-20261026",
+  "source_commit": "cc42df79f4c6dbef2e9457d3dae31663e7368f31",
+  "host": "user-authorized Windows workstation; owned disposable Win32 fixture only",
+  "python": "3.13.14",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "repeats": 2,
+  "pair_order": [
+    {
+      "pair": 1,
+      "cells": [
+        "direct",
+        "compiled"
+      ]
+    },
+    {
+      "pair": 2,
+      "cells": [
+        "compiled",
+        "direct"
+      ]
+    }
+  ],
+  "task": {
+    "initial_model_prompt": "From the supplied screenshot of the owned fixture window, select one point inside the fixture client area, x=24..300 and y=24..150, to click before entering the harmless word office. Return only integer x and y.",
+    "direct_second_model_prompt": "The screenshot is from the same owned fixture immediately after the click and text-entry action. Return {\"save\":true} only if the visible fixture text is exactly Agent Interface Win32 fixture: office. Otherwise return {\"save\":false}.",
+    "effect": {
+      "saved": true,
+      "text": "office",
+      "clicked": true
+    },
+    "coordinate_bounds": {
+      "x": [
+        24,
+        300
+      ],
+      "y": [
+        24,
+        150
+      ]
+    },
+    "public_region": [
+      0,
+      0,
+      400,
+      180
+    ],
+    "oracle_ids": [
+      "701c048fc8bc4aa2962169bc68e58101",
+      "ad0645248efb4b14ae68526074411750",
+      "12b035de27bc4ae6a20a6250b9f3870b",
+      "7c806dfca44d4dd4ad6b25fcce475369"
+    ]
+  },
+  "arms": {
+    "direct": "AppServer model selects a click point; standard public caller clicks and types office; after a fresh screenshot the model decides whether to save; standard caller saves.",
+    "compiled": "AppServer model selects the same click point; run_public_compiled uses local task predicates over public observations to perform click-and-type then save as two graph transitions, with no second AppServer turn."
+  },
+  "measures": [
+    "provider turn count and AppServer reported input/output/reasoning tokens",
+    "AppServer model latency and total observation-to-independent-oracle latency",
+    "standard public observation, dispatch, result and oracle call counts",
+    "exact task effect, action release, independent all-up state, fresh observation and cleanup"
+  ],
+  "interpretation": "Two counterbalanced pairs (n=2 per arm) are descriptive only. AppServer protocol usage is not independent upstream billing evidence; image-token accounting is unavailable. No causal or reliability claim is permitted.",
+  "wslc_used": false,
+  "docker_used": false
+}

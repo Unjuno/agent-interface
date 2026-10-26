@@ -1,0 +1,194 @@
+{
+  "completed_transitions": 2,
+  "critical_events": [
+    {
+      "action": "enter_text",
+      "event": "branch_selected",
+      "evidence_ref": "00e1a9b61e6c48bc9932f9318835b186",
+      "matched_conditions": {
+        "clicked": false,
+        "ready": true,
+        "typed": false
+      },
+      "outcome": "action",
+      "state": "before"
+    },
+    {
+      "action": "enter_text",
+      "action_id": "70305d642b2c4f6bae6251339d9c7c5e",
+      "event": "action_terminal",
+      "execution_accepted_ns": 668082384111400,
+      "execution_started_ns": 668081608640200,
+      "input_dispatched": true,
+      "release_verified": true,
+      "status": "completed"
+    },
+    {
+      "action": "enter_text",
+      "action_id": "70305d642b2c4f6bae6251339d9c7c5e",
+      "effect_observation_accepted_ns": 668082407556000,
+      "effect_observation_captured_ns": 668082386959400,
+      "effect_verification_accepted_ns": 668082408320800,
+      "effect_verification_started_ns": 668082407573500,
+      "event": "effect_checked",
+      "evidence_ref": "ee23ee9c3b9a7ecf806f15a0ea35e828a08bbea162ad8f985b404736eeb5c112",
+      "execution_accepted_ns": 668082384111400,
+      "status": "succeeded"
+    },
+    {
+      "action": "save",
+      "event": "branch_selected",
+      "evidence_ref": "1d1fbcdec03b4f1da3d0d07488173c38",
+      "matched_conditions": {
+        "clicked": true,
+        "saved": false,
+        "typed": true
+      },
+      "outcome": "action",
+      "state": "after_entry"
+    },
+    {
+      "action": "save",
+      "action_id": "ddf2c1c856fa446aa707a341c55edcbd",
+      "event": "action_terminal",
+      "execution_accepted_ns": 668083051396300,
+      "execution_started_ns": 668082408389700,
+      "input_dispatched": true,
+      "release_verified": true,
+      "status": "completed"
+    },
+    {
+      "action": "save",
+      "action_id": "ddf2c1c856fa446aa707a341c55edcbd",
+      "effect_observation_accepted_ns": 668083075132200,
+      "effect_observation_captured_ns": 668083053693200,
+      "effect_verification_accepted_ns": 668083075895500,
+      "effect_verification_started_ns": 668083075147100,
+      "event": "effect_checked",
+      "evidence_ref": "5d299e2a8b715688998c41d1bb9502e42abd9c4e536955d5fa8afc9fe9677389",
+      "execution_accepted_ns": 668083051396300,
+      "status": "succeeded"
+    },
+    {
+      "action": null,
+      "event": "branch_selected",
+      "evidence_ref": "85e405b4d1a24767988f7c1c49bf2ddd",
+      "matched_conditions": {
+        "saved": true
+      },
+      "outcome": "complete",
+      "state": "after_save"
+    },
+    {
+      "completed_transitions": 2,
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete"
+    }
+  ],
+  "elapsed_ns": 1490394200,
+  "ended_ns": 668083075921000,
+  "format": "compiled-gui-runtime-receipt-v1",
+  "frontier_model_resumptions": 0,
+  "input_authority": "admission_per_action_only",
+  "interface_id": "win32-r12-two-stage-save",
+  "latest_evidence_ref": "85e405b4d1a24767988f7c1c49bf2ddd",
+  "method": "model-grounded-two-stage-save",
+  "method_version": "1",
+  "observations": [
+    {
+      "captured_ns": 668081588472000,
+      "evidence_digest": "d5651df4c242dc24bf440d2ecde156c8b1e318ed9be368d5bbecd0e07cc8f57e",
+      "evidence_ref": "00e1a9b61e6c48bc9932f9318835b186",
+      "observation_accepted_ns": 668081608574100,
+      "observation_started_ns": 668081585529800,
+      "predicates": {
+        "clicked": false,
+        "ready": true,
+        "saved": false,
+        "typed": false
+      },
+      "sequence": 1
+    },
+    {
+      "captured_ns": 668082386959400,
+      "evidence_digest": "c5649e977143b8f9370a964c675fde3e706e9cd9f3d77f77bbd95ff0a5b169cb",
+      "evidence_ref": "1d1fbcdec03b4f1da3d0d07488173c38",
+      "observation_accepted_ns": 668082407556000,
+      "observation_started_ns": 668082384130000,
+      "predicates": {
+        "clicked": true,
+        "ready": true,
+        "saved": false,
+        "typed": true
+      },
+      "sequence": 2
+    },
+    {
+      "captured_ns": 668083053693200,
+      "evidence_digest": "8239fc5aa91ec6db1df9b9a826d679c4fdf63b1256affd8206af6b3b66c26eb5",
+      "evidence_ref": "85e405b4d1a24767988f7c1c49bf2ddd",
+      "observation_accepted_ns": 668083075132200,
+      "observation_started_ns": 668083051414500,
+      "predicates": {
+        "clicked": true,
+        "ready": true,
+        "saved": true,
+        "typed": true
+      },
+      "sequence": 3
+    }
+  ],
+  "outcome": "TASK_SUCCEEDED",
+  "pending_effect": null,
+  "raw_evidence_retention": "adapter_responsibility_unverified",
+  "reason": "method_complete",
+  "session_scope": "one-owned-fixture-process",
+  "standard_action_call_ids": [
+    "3346a63abfa64fee929661a196578cf3",
+    "eba3817c9cfd4a38bf4f2a14920f40d6"
+  ],
+  "standard_observation_call_ids": [
+    "5f9bd2038f2e4fe08382dc869f7b239b",
+    "d8fa4abf20b9460482a8a8f628d462ce",
+    "4c7bd82813e346169130e2e5c5b8bf18"
+  ],
+  "started_ns": 668081585526800,
+  "task_success": null,
+  "transitions": [
+    {
+      "action": "enter_text",
+      "action_id": "70305d642b2c4f6bae6251339d9c7c5e",
+      "effect_ref": "standard-win32-enter_text",
+      "evidence_ref": "00e1a9b61e6c48bc9932f9318835b186",
+      "execution_accepted_ns": 668082384111400,
+      "execution_started_ns": 668081608640200,
+      "from_state": "before",
+      "matched_conditions": {
+        "clicked": false,
+        "ready": true,
+        "typed": false
+      },
+      "observation_sequence": 1,
+      "release_verified": true,
+      "to_state": "after_entry"
+    },
+    {
+      "action": "save",
+      "action_id": "ddf2c1c856fa446aa707a341c55edcbd",
+      "effect_ref": "standard-win32-save",
+      "evidence_ref": "1d1fbcdec03b4f1da3d0d07488173c38",
+      "execution_accepted_ns": 668083051396300,
+      "execution_started_ns": 668082408389700,
+      "from_state": "after_entry",
+      "matched_conditions": {
+        "clicked": true,
+        "saved": false,
+        "typed": true
+      },
+      "observation_sequence": 2,
+      "release_verified": true,
+      "to_state": "after_save"
+    }
+  ]
+}

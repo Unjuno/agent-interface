@@ -1,0 +1,277 @@
+{
+  "attempt_id": "win32-native-sendinput-r05-20261026",
+  "classification": "FAIL_OR_UNKNOWN_FIRST_OUTCOME_RETAINED",
+  "cleanup": {
+    "finished_monotonic_ns": 666096037173900,
+    "fixture_exit_code": 0,
+    "foreground_after_restore": 10486926,
+    "foreground_before": 10486926,
+    "foreground_before_restore": 10486926
+  },
+  "close": {
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\server\\c05168dc1f434d0686bb726ac9cec012",
+    "call_id": "c05168dc1f434d0686bb726ac9cec012",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "session": {
+      "call_count": 0,
+      "mode": "supervised-win32",
+      "session_id": "e632ee671fd941288fef0c577af1a72b",
+      "state": "closed",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "closed",
+    "task_success": null
+  },
+  "docker_used": false,
+  "elapsed_ns": 1324048600,
+  "error": "public observation generation did not match native preflight",
+  "error_type": "RuntimeError",
+  "fixture_command": [
+    "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+    "-m",
+    "runtime.backends.win32_v1.fixture_app",
+    "--meta",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\fixture\\meta.json",
+    "--effect",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\fixture\\effect.json",
+    "--events",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\fixture\\events.jsonl"
+  ],
+  "fixture_pid": 16132,
+  "preflight": {
+    "observed_monotonic_ns": 666094865762800,
+    "shift_down": false,
+    "state_query_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 26871904,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 16132,
+        "probe_integrity_rid": 8192,
+        "target": "r05-owned-fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 16456
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 26871904,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 16132,
+        "probe_integrity_rid": 8192,
+        "target": "r05-owned-fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 16456
+      }
+    ],
+    "target_generation": "f59e1f0f9d3d3e46117b7198b1a6c748808e30f49d7dff47b18b7fa5805e89df"
+  },
+  "public_observation": {
+    "authority": "none",
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\server\\4cb78e50bc61418a9ba93a08033f59e6",
+    "call_id": "4cb78e50bc61418a9ba93a08033f59e6",
+    "image_reference": {
+      "authority": "none",
+      "capture_ns": 666095903383600,
+      "freshness": "historical referenced capture; no new observation",
+      "observation_id": "d9fd062604914912a4b5f046115bfbb0",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\server\\4cb78e50bc61418a9ba93a08033f59e6\\images\\6ce742a12efd479ab9ac5e69f5c963d7.png",
+      "recorded_capture": {
+        "capture_ended_ns": 666095904430900,
+        "capture_started_ns": 666095903383600,
+        "frame": "window_client",
+        "height": 180,
+        "native_window_id": 26871904,
+        "region": [
+          0,
+          0,
+          400,
+          180
+        ],
+        "target": "r05-owned-fixture",
+        "width": 400
+      },
+      "relative_path": "images\\6ce742a12efd479ab9ac5e69f5c963d7.png",
+      "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+      "status": "image"
+    },
+    "image_status": "image",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": null,
+      "failure_phase": null,
+      "reported_status": "returned"
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "report": {
+        "input_dispatched": false,
+        "observation": {
+          "artifact": {
+            "bytes": 1195,
+            "height": 180,
+            "mime_type": "image/png",
+            "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\server\\4cb78e50bc61418a9ba93a08033f59e6\\images\\6ce742a12efd479ab9ac5e69f5c963d7.png",
+            "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+            "source_raw_sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+            "timing_ns": {
+              "converted": 666095914563200,
+              "encoded": 666095915260400,
+              "started": 666095904897500,
+              "written": 666095915821600
+            },
+            "width": 400
+          },
+          "bytes": 288000,
+          "capture_ended_ns": 666095904430900,
+          "capture_started_ns": 666095903383600,
+          "frame": "window_client",
+          "height": 180,
+          "native_window_id": 26871904,
+          "region": [
+            0,
+            0,
+            400,
+            180
+          ],
+          "sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+          "target": "r05-owned-fixture",
+          "width": 400
+        },
+        "observation_id": "d9fd062604914912a4b5f046115bfbb0",
+        "schema": "agent-interface/runtime-observation-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "e632ee671fd941288fef0c577af1a72b",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "side_effect_authority": false,
+        "status": "returned",
+        "target_generation": "f59e1f0f9d3d3e46117b7198b1a6c748808e30f49d7dff47b18b7fa5805e89df",
+        "target_generation_consistency": "matched"
+      },
+      "schema": "agent-interface/receipt-view-v1",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 1479,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1195,
+              "height": 180,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_native_sendinput_recovery_20261026_r05\\run\\server\\4cb78e50bc61418a9ba93a08033f59e6\\images\\6ce742a12efd479ab9ac5e69f5c963d7.png",
+              "sha256": "27d8569661efd96cfc15d4e5c0dec5ffea25db8604b2ef5cc5eb1165099ad3ea",
+              "source_raw_sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+              "timing_ns": {
+                "converted": 666095914563200,
+                "encoded": 666095915260400,
+                "started": 666095904897500,
+                "written": 666095915821600
+              },
+              "width": 400
+            },
+            "bytes": 288000,
+            "capture_ended_ns": 666095904430900,
+            "capture_started_ns": 666095903383600,
+            "frame": "window_client",
+            "height": 180,
+            "native_window_id": 26871904,
+            "region": [
+              0,
+              0,
+              400,
+              180
+            ],
+            "sha256": "e417135e823f7238a6b24f3d47ee33b9b1f1230134dbe87f8cd947940817c023",
+            "target": "r05-owned-fixture",
+            "width": 400
+          },
+          "observation_id": "d9fd062604914912a4b5f046115bfbb0",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "e632ee671fd941288fef0c577af1a72b",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "f59e1f0f9d3d3e46117b7198b1a6c748808e30f49d7dff47b18b7fa5805e89df",
+          "target_generation_consistency": "matched"
+        },
+        "sha256": "6f00ea70ddf75f6cd6f1ed6882a7439419ba0944d6d5f9307ca6b5382b028026"
+      }
+    },
+    "schema": "agent-interface/review-v1",
+    "session": {
+      "call_count": 0,
+      "mode": "supervised-win32",
+      "session_id": "e632ee671fd941288fef0c577af1a72b",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    }
+  },
+  "source_commit": "f2f7dbb2e043919e0773655e5fab543cc3682fcd",
+  "state_before_fallback_cleanup": {
+    "observed_monotonic_ns": 666096010833000,
+    "shift_down": false,
+    "state_query_witness": [
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 26871904,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 16132,
+        "probe_integrity_rid": 8192,
+        "target": "r05-owned-fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 16456
+      },
+      {
+        "desktop_hookcontrol_opened": true,
+        "hwnd": 26871904,
+        "input_desktop": "Default",
+        "input_desktop_active": true,
+        "pid": 16132,
+        "probe_integrity_rid": 8192,
+        "target": "r05-owned-fixture",
+        "target_integrity_rid": 8192,
+        "thread_id": 16456
+      }
+    ],
+    "target_generation": "f59e1f0f9d3d3e46117b7198b1a6c748808e30f49d7dff47b18b7fa5805e89df"
+  },
+  "target_hwnd": 26871904,
+  "window_preflight": {
+    "enabled": true,
+    "fixture_pid": 16132,
+    "foreground_hwnd": 26871904,
+    "hwnd": 26871904,
+    "is_window": true,
+    "observed_monotonic_ns": 666094865804900,
+    "visible": true
+  },
+  "wslc_used": false
+}

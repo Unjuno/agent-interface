@@ -1,0 +1,1194 @@
+{
+  "body": {
+    "authority": "none",
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\compiled-win32-integration\\research\\integration\\win32_appserver_matched_efficiency_20261026_r12f\\run\\cells\\pair1-compiled\\server\\e4ce128ac5704946807ca760e78beadc",
+    "call_id": "e4ce128ac5704946807ca760e78beadc",
+    "image_status": "no_observation",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": null,
+      "execution_detail": null,
+      "execution_error": null,
+      "execution_status": "completed",
+      "failed_operation_effect": null,
+      "failed_operation_index": null,
+      "failed_source_operation": null,
+      "failure_detail": null,
+      "failure_phase": null,
+      "input_release_verified": true,
+      "recovery_required": false,
+      "reported_status": "returned",
+      "validation_operation_index": null,
+      "validation_source_operation": null
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "report": {
+        "call_id": "e4ce128ac5704946807ca760e78beadc",
+        "compilation": null,
+        "input_dispatched": true,
+        "normalization": null,
+        "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+        "operation_invoked": true,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "emissions": 16,
+            "ended_ns": 668504455803900,
+            "observations": [],
+            "releases": [
+              {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 668504455801700,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 87100270,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 36076,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 53056
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 87100270,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 36076,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 53056
+                    }
+                  ]
+                },
+                "verified": true
+              }
+            ],
+            "started_ns": 668504322366400
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "display.geometry",
+            "event.feedback",
+            "input.pointer",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "session": {
+          "call_count": 1,
+          "mode": "supervised-win32",
+          "session_id": "4d035ed90d004723899065e779746bba",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "status": "returned",
+        "supervision": {
+          "action": {
+            "completion_custody": {
+              "cleanup_deadline_ns": null,
+              "cleanup_latency_ns": null,
+              "cleanup_latency_perf_counter_ns": null,
+              "cleanup_requested_monotonic_ns": null,
+              "cleanup_requested_perf_counter_ns": null,
+              "completion_readback": {
+                "neutral": true,
+                "observed_monotonic_ns": 668504512892400,
+                "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+                "producer_exit_confirmed_ns": 668504506399000,
+                "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+              },
+              "completion_readback_attempt": null,
+              "completion_readback_outcome": "verified",
+              "completion_release_receipt": {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 668504455801700,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 87100270,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 36076,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 53056
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 87100270,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 36076,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 53056
+                    }
+                  ]
+                },
+                "verified": true
+              },
+              "deadline_ns": 668513704318400,
+              "obligations": [
+                "button:fixture:left",
+                "unicode:0063",
+                "unicode:0065",
+                "unicode:0066",
+                "unicode:0069",
+                "unicode:006F"
+              ],
+              "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+              "phase": "completed",
+              "producer_exit_code": 0,
+              "producer_gate_state": "authorization_attempted",
+              "producer_identity": {
+                "creation_time_100ns": 134374508000412106,
+                "pid": 56608
+              },
+              "recovery_completed_monotonic_ns": null,
+              "recovery_completed_perf_counter_ns": null,
+              "recovery_id": null,
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "status": "completed",
+              "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+              "task_success": null,
+              "uncertainty": null
+            },
+            "metadata": {
+              "program_id": "compiled-7abd004f97db488b89636109665fece2",
+              "source": "interface_dispatch"
+            },
+            "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+            "producer_timing": {
+              "child_ready_monotonic_ns": 668504321393100,
+              "clock": "time.monotonic_ns",
+              "factory_requested_monotonic_ns": 668503729580100,
+              "factory_returned_monotonic_ns": 668503729904300,
+              "identity_verified_monotonic_ns": 668503742458500,
+              "process_start_called_monotonic_ns": 668503729922500,
+              "process_start_returned_monotonic_ns": 668503742398900,
+              "start_gate_authorized_monotonic_ns": 668503742693600
+            },
+            "release_confirmed": true,
+            "replay_allowed": false,
+            "result": {
+              "admission": "accepted",
+              "execution": {
+                "emissions": 16,
+                "ended_ns": 668504455803900,
+                "observations": [],
+                "releases": [
+                  {
+                    "buttons_down": [],
+                    "buttons_unknown": [],
+                    "keys_down": [],
+                    "keys_unknown": [],
+                    "monotonic_ns": 668504455801700,
+                    "state_query_witnesses": {
+                      "1": [
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 87100270,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 36076,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 53056
+                        },
+                        {
+                          "desktop_hookcontrol_opened": true,
+                          "hwnd": 87100270,
+                          "input_desktop": "Default",
+                          "input_desktop_active": true,
+                          "pid": 36076,
+                          "probe_integrity_rid": 8192,
+                          "target": "fixture",
+                          "target_integrity_rid": 8192,
+                          "thread_id": 53056
+                        }
+                      ]
+                    },
+                    "verified": true
+                  }
+                ],
+                "started_ns": 668504322366400
+              },
+              "recovery_required": false,
+              "required_capabilities": [
+                "clock.monotonic",
+                "display.geometry",
+                "event.feedback",
+                "input.pointer",
+                "input.release_all",
+                "input.text",
+                "window.focus"
+              ],
+              "status": "completed"
+            },
+            "status": "completed",
+            "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+            "task_success": null
+          },
+          "call_id": "e4ce128ac5704946807ca760e78beadc",
+          "cancellation": null,
+          "standard_program": {
+            "authority": {
+              "expires_at_ns": 668513704318400,
+              "lease_id": "compiled-686f286ab34a496ea818dd35ac944e3e"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "fixture"
+              },
+              {
+                "frame": "window_client",
+                "op": "pointer_move",
+                "x": 150,
+                "y": 100
+              },
+              {
+                "button": "left",
+                "down": true,
+                "op": "pointer_button"
+              },
+              {
+                "button": "left",
+                "down": false,
+                "op": "pointer_button"
+              },
+              {
+                "op": "wait_update",
+                "timeout_ms": 100
+              },
+              {
+                "op": "text",
+                "text": "office"
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "compiled-7abd004f97db488b89636109665fece2",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1,
+              "target_generations": {
+                "fixture": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+              }
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          },
+          "task_effect": null
+        },
+        "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+        "task_success": null
+      },
+      "schema": "agent-interface/receipt-view-v1",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 6135,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "call_id": "e4ce128ac5704946807ca760e78beadc",
+          "compilation": null,
+          "input_dispatched": true,
+          "normalization": null,
+          "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+          "operation_invoked": true,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "emissions": 16,
+              "ended_ns": 668504455803900,
+              "observations": [],
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 668504455801700,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 87100270,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 36076,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 53056
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 87100270,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 36076,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 53056
+                      }
+                    ]
+                  },
+                  "verified": true
+                }
+              ],
+              "started_ns": 668504322366400
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "4d035ed90d004723899065e779746bba",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "returned",
+          "supervision": {
+            "action": {
+              "completion_custody": {
+                "cleanup_deadline_ns": null,
+                "cleanup_latency_ns": null,
+                "cleanup_latency_perf_counter_ns": null,
+                "cleanup_requested_monotonic_ns": null,
+                "cleanup_requested_perf_counter_ns": null,
+                "completion_readback": {
+                  "neutral": true,
+                  "observed_monotonic_ns": 668504512892400,
+                  "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+                  "producer_exit_confirmed_ns": 668504506399000,
+                  "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+                },
+                "completion_readback_attempt": null,
+                "completion_readback_outcome": "verified",
+                "completion_release_receipt": {
+                  "buttons_down": [],
+                  "buttons_unknown": [],
+                  "keys_down": [],
+                  "keys_unknown": [],
+                  "monotonic_ns": 668504455801700,
+                  "state_query_witnesses": {
+                    "1": [
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 87100270,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 36076,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 53056
+                      },
+                      {
+                        "desktop_hookcontrol_opened": true,
+                        "hwnd": 87100270,
+                        "input_desktop": "Default",
+                        "input_desktop_active": true,
+                        "pid": 36076,
+                        "probe_integrity_rid": 8192,
+                        "target": "fixture",
+                        "target_integrity_rid": 8192,
+                        "thread_id": 53056
+                      }
+                    ]
+                  },
+                  "verified": true
+                },
+                "deadline_ns": 668513704318400,
+                "obligations": [
+                  "button:fixture:left",
+                  "unicode:0063",
+                  "unicode:0065",
+                  "unicode:0066",
+                  "unicode:0069",
+                  "unicode:006F"
+                ],
+                "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+                "phase": "completed",
+                "producer_exit_code": 0,
+                "producer_gate_state": "authorization_attempted",
+                "producer_identity": {
+                  "creation_time_100ns": 134374508000412106,
+                  "pid": 56608
+                },
+                "recovery_completed_monotonic_ns": null,
+                "recovery_completed_perf_counter_ns": null,
+                "recovery_id": null,
+                "release_confirmed": true,
+                "replay_allowed": false,
+                "status": "completed",
+                "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+                "task_success": null,
+                "uncertainty": null
+              },
+              "metadata": {
+                "program_id": "compiled-7abd004f97db488b89636109665fece2",
+                "source": "interface_dispatch"
+              },
+              "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+              "producer_timing": {
+                "child_ready_monotonic_ns": 668504321393100,
+                "clock": "time.monotonic_ns",
+                "factory_requested_monotonic_ns": 668503729580100,
+                "factory_returned_monotonic_ns": 668503729904300,
+                "identity_verified_monotonic_ns": 668503742458500,
+                "process_start_called_monotonic_ns": 668503729922500,
+                "process_start_returned_monotonic_ns": 668503742398900,
+                "start_gate_authorized_monotonic_ns": 668503742693600
+              },
+              "release_confirmed": true,
+              "replay_allowed": false,
+              "result": {
+                "admission": "accepted",
+                "execution": {
+                  "emissions": 16,
+                  "ended_ns": 668504455803900,
+                  "observations": [],
+                  "releases": [
+                    {
+                      "buttons_down": [],
+                      "buttons_unknown": [],
+                      "keys_down": [],
+                      "keys_unknown": [],
+                      "monotonic_ns": 668504455801700,
+                      "state_query_witnesses": {
+                        "1": [
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 87100270,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 36076,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 53056
+                          },
+                          {
+                            "desktop_hookcontrol_opened": true,
+                            "hwnd": 87100270,
+                            "input_desktop": "Default",
+                            "input_desktop_active": true,
+                            "pid": 36076,
+                            "probe_integrity_rid": 8192,
+                            "target": "fixture",
+                            "target_integrity_rid": 8192,
+                            "thread_id": 53056
+                          }
+                        ]
+                      },
+                      "verified": true
+                    }
+                  ],
+                  "started_ns": 668504322366400
+                },
+                "recovery_required": false,
+                "required_capabilities": [
+                  "clock.monotonic",
+                  "display.geometry",
+                  "event.feedback",
+                  "input.pointer",
+                  "input.release_all",
+                  "input.text",
+                  "window.focus"
+                ],
+                "status": "completed"
+              },
+              "status": "completed",
+              "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+              "task_success": null
+            },
+            "call_id": "e4ce128ac5704946807ca760e78beadc",
+            "cancellation": null,
+            "standard_program": {
+              "authority": {
+                "expires_at_ns": 668513704318400,
+                "lease_id": "compiled-686f286ab34a496ea818dd35ac944e3e"
+              },
+              "ops": [
+                {
+                  "op": "focus",
+                  "target": "fixture"
+                },
+                {
+                  "frame": "window_client",
+                  "op": "pointer_move",
+                  "x": 150,
+                  "y": 100
+                },
+                {
+                  "button": "left",
+                  "down": true,
+                  "op": "pointer_button"
+                },
+                {
+                  "button": "left",
+                  "down": false,
+                  "op": "pointer_button"
+                },
+                {
+                  "op": "wait_update",
+                  "timeout_ms": 100
+                },
+                {
+                  "op": "text",
+                  "text": "office"
+                },
+                {
+                  "op": "release_all"
+                }
+              ],
+              "program_id": "compiled-7abd004f97db488b89636109665fece2",
+              "schema": "agent-interface/program-v1",
+              "source": {
+                "binding_revision": 1,
+                "observation_seq": 1,
+                "target_generations": {
+                  "fixture": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+                }
+              },
+              "terminal": {
+                "release_all_required": true
+              }
+            },
+            "task_effect": null
+          },
+          "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+          "task_success": null
+        },
+        "sha256": "be6abb45f1cd2945c2ae5c7d7d90fa76aef4d5d1235d10e74fc2606a083cc861"
+      }
+    },
+    "schema": "agent-interface/review-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "4d035ed90d004723899065e779746bba",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    }
+  },
+  "raw_report": {
+    "call_id": "e4ce128ac5704946807ca760e78beadc",
+    "compilation": null,
+    "input_dispatched": true,
+    "normalization": null,
+    "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+    "operation_invoked": true,
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "emissions": 16,
+        "ended_ns": 668504455803900,
+        "observations": [],
+        "releases": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 668504455801700,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 87100270,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 36076,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53056
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 87100270,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 36076,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53056
+                }
+              ]
+            },
+            "verified": true
+          }
+        ],
+        "started_ns": 668504322366400
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "session": {
+      "call_count": 1,
+      "mode": "supervised-win32",
+      "session_id": "4d035ed90d004723899065e779746bba",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "returned",
+    "supervision": {
+      "action": {
+        "completion_custody": {
+          "cleanup_deadline_ns": null,
+          "cleanup_latency_ns": null,
+          "cleanup_latency_perf_counter_ns": null,
+          "cleanup_requested_monotonic_ns": null,
+          "cleanup_requested_perf_counter_ns": null,
+          "completion_readback": {
+            "neutral": true,
+            "observed_monotonic_ns": 668504512892400,
+            "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+            "producer_exit_confirmed_ns": 668504506399000,
+            "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+          },
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "verified",
+          "completion_release_receipt": {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 668504455801700,
+            "state_query_witnesses": {
+              "1": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 87100270,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 36076,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53056
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 87100270,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 36076,
+                  "probe_integrity_rid": 8192,
+                  "target": "fixture",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 53056
+                }
+              ]
+            },
+            "verified": true
+          },
+          "deadline_ns": 668513704318400,
+          "obligations": [
+            "button:fixture:left",
+            "unicode:0063",
+            "unicode:0065",
+            "unicode:0066",
+            "unicode:0069",
+            "unicode:006F"
+          ],
+          "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+          "phase": "completed",
+          "producer_exit_code": 0,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134374508000412106,
+            "pid": 56608
+          },
+          "recovery_completed_monotonic_ns": null,
+          "recovery_completed_perf_counter_ns": null,
+          "recovery_id": null,
+          "release_confirmed": true,
+          "replay_allowed": false,
+          "status": "completed",
+          "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "metadata": {
+          "program_id": "compiled-7abd004f97db488b89636109665fece2",
+          "source": "interface_dispatch"
+        },
+        "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+        "producer_timing": {
+          "child_ready_monotonic_ns": 668504321393100,
+          "clock": "time.monotonic_ns",
+          "factory_requested_monotonic_ns": 668503729580100,
+          "factory_returned_monotonic_ns": 668503729904300,
+          "identity_verified_monotonic_ns": 668503742458500,
+          "process_start_called_monotonic_ns": 668503729922500,
+          "process_start_returned_monotonic_ns": 668503742398900,
+          "start_gate_authorized_monotonic_ns": 668503742693600
+        },
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "emissions": 16,
+            "ended_ns": 668504455803900,
+            "observations": [],
+            "releases": [
+              {
+                "buttons_down": [],
+                "buttons_unknown": [],
+                "keys_down": [],
+                "keys_unknown": [],
+                "monotonic_ns": 668504455801700,
+                "state_query_witnesses": {
+                  "1": [
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 87100270,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 36076,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 53056
+                    },
+                    {
+                      "desktop_hookcontrol_opened": true,
+                      "hwnd": 87100270,
+                      "input_desktop": "Default",
+                      "input_desktop_active": true,
+                      "pid": 36076,
+                      "probe_integrity_rid": 8192,
+                      "target": "fixture",
+                      "target_integrity_rid": 8192,
+                      "thread_id": 53056
+                    }
+                  ]
+                },
+                "verified": true
+              }
+            ],
+            "started_ns": 668504322366400
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "display.geometry",
+            "event.feedback",
+            "input.pointer",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "status": "completed",
+        "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+        "task_success": null
+      },
+      "call_id": "e4ce128ac5704946807ca760e78beadc",
+      "cancellation": null,
+      "standard_program": {
+        "authority": {
+          "expires_at_ns": 668513704318400,
+          "lease_id": "compiled-686f286ab34a496ea818dd35ac944e3e"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 150,
+            "y": 100
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 100
+          },
+          {
+            "op": "text",
+            "text": "office"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "compiled-7abd004f97db488b89636109665fece2",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1,
+          "target_generations": {
+            "fixture": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+          }
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "task_effect": null
+    },
+    "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+    "task_success": null
+  },
+  "receipt": {
+    "call_id": "e4ce128ac5704946807ca760e78beadc",
+    "kind": "dispatch",
+    "label": "compiled-enter-text",
+    "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+    "program": {
+      "authority": {
+        "expires_at_ns": 668513704318400,
+        "lease_id": "compiled-686f286ab34a496ea818dd35ac944e3e"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 150,
+          "y": 100
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "office"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "compiled-7abd004f97db488b89636109665fece2",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "release_confirmed": true,
+    "returned_monotonic_ns": 668504515059100,
+    "started_monotonic_ns": 668503727362700,
+    "status": "returned",
+    "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+  },
+  "retained_result": {
+    "action": {
+      "completion_custody": {
+        "cleanup_deadline_ns": null,
+        "cleanup_latency_ns": null,
+        "cleanup_latency_perf_counter_ns": null,
+        "cleanup_requested_monotonic_ns": null,
+        "cleanup_requested_perf_counter_ns": null,
+        "completion_readback": {
+          "neutral": true,
+          "observed_monotonic_ns": 668504512892400,
+          "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+          "producer_exit_confirmed_ns": 668504506399000,
+          "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+        },
+        "completion_readback_attempt": null,
+        "completion_readback_outcome": "verified",
+        "completion_release_receipt": {
+          "buttons_down": [],
+          "buttons_unknown": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "monotonic_ns": 668504455801700,
+          "state_query_witnesses": {
+            "1": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 87100270,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 36076,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 53056
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 87100270,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 36076,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 53056
+              }
+            ]
+          },
+          "verified": true
+        },
+        "deadline_ns": 668513704318400,
+        "obligations": [
+          "button:fixture:left",
+          "unicode:0063",
+          "unicode:0065",
+          "unicode:0066",
+          "unicode:0069",
+          "unicode:006F"
+        ],
+        "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+        "phase": "completed",
+        "producer_exit_code": 0,
+        "producer_gate_state": "authorization_attempted",
+        "producer_identity": {
+          "creation_time_100ns": 134374508000412106,
+          "pid": 56608
+        },
+        "recovery_completed_monotonic_ns": null,
+        "recovery_completed_perf_counter_ns": null,
+        "recovery_id": null,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "status": "completed",
+        "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+        "task_success": null,
+        "uncertainty": null
+      },
+      "metadata": {
+        "program_id": "compiled-7abd004f97db488b89636109665fece2",
+        "source": "interface_dispatch"
+      },
+      "operation_id": "c99ff40789a04b2a8cf00d3926f06b61",
+      "producer_timing": {
+        "child_ready_monotonic_ns": 668504321393100,
+        "clock": "time.monotonic_ns",
+        "factory_requested_monotonic_ns": 668503729580100,
+        "factory_returned_monotonic_ns": 668503729904300,
+        "identity_verified_monotonic_ns": 668503742458500,
+        "process_start_called_monotonic_ns": 668503729922500,
+        "process_start_returned_monotonic_ns": 668503742398900,
+        "start_gate_authorized_monotonic_ns": 668503742693600
+      },
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "emissions": 16,
+          "ended_ns": 668504455803900,
+          "observations": [],
+          "releases": [
+            {
+              "buttons_down": [],
+              "buttons_unknown": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "monotonic_ns": 668504455801700,
+              "state_query_witnesses": {
+                "1": [
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 87100270,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 36076,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 53056
+                  },
+                  {
+                    "desktop_hookcontrol_opened": true,
+                    "hwnd": 87100270,
+                    "input_desktop": "Default",
+                    "input_desktop_active": true,
+                    "pid": 36076,
+                    "probe_integrity_rid": 8192,
+                    "target": "fixture",
+                    "target_integrity_rid": 8192,
+                    "thread_id": 53056
+                  }
+                ]
+              },
+              "verified": true
+            }
+          ],
+          "started_ns": 668504322366400
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "status": "completed",
+      "target_generation": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6",
+      "task_success": null
+    },
+    "call_id": "e4ce128ac5704946807ca760e78beadc",
+    "cancellation": null,
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "standard_program": {
+      "authority": {
+        "expires_at_ns": 668513704318400,
+        "lease_id": "compiled-686f286ab34a496ea818dd35ac944e3e"
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "frame": "window_client",
+          "op": "pointer_move",
+          "x": 150,
+          "y": 100
+        },
+        {
+          "button": "left",
+          "down": true,
+          "op": "pointer_button"
+        },
+        {
+          "button": "left",
+          "down": false,
+          "op": "pointer_button"
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "office"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "program_id": "compiled-7abd004f97db488b89636109665fece2",
+      "schema": "agent-interface/program-v1",
+      "source": {
+        "binding_revision": 1,
+        "observation_seq": 1,
+        "target_generations": {
+          "fixture": "68bd0f64a242b51fc8e0f5633b6708aef3184f944b169a2900f0df89d6c4b5a6"
+        }
+      },
+      "terminal": {
+        "release_all_required": true
+      }
+    },
+    "task_effect": null,
+    "task_success": null
+  }
+}
