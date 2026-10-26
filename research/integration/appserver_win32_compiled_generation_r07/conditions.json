@@ -1,0 +1,32 @@
+{
+  "attempt_id": "awcg-r07",
+  "host_scope": "current authorized Windows workstation; one repository-owned disposable Win32 fixture process",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "source_commit": "41ac34a227d316c842999143c629ddeeedf51ce8",
+  "task": {
+    "instruction": "From the supplied screenshot of the owned fixture window, choose one point inside the fixture client area, within x=24..300 and y=24..150, that safely marks the fixture as clicked. Return only integer x and y. The caller will type the fixed harmless word office and save only inside the fixture process.",
+    "independent_effect": {"saved": true, "text": "office", "clicked": true},
+    "oracle_id": "55f67b863a2e41bbaa0c459b5a2a0061"
+  },
+  "protocol": {
+    "fresh_grounding_observation": true,
+    "bind_grounding_target_generation_across_provider_wait": true,
+    "adapter": "run_public_compiled through interface_observe and interface_dispatch",
+    "max_compiled_transitions": 1,
+    "dispatch_calls": 1,
+    "replay": false,
+    "task_oracle": "interface_verify_task, one call, bound to exact dispatch call and target generation",
+    "region": [0, 0, 400, 180],
+    "allowed_model_coordinate": {"x": [24, 300], "y": [24, 150]},
+    "fixed_actions_after_click": ["type office", "Ctrl+S", "release_all"],
+    "provider_timeout_seconds": 90,
+    "overall_timeout_seconds": 180,
+    "wslc_used": false,
+    "docker_used": false
+  },
+  "scoring": {
+    "pass_requires": ["provider turn completed with reconciled usage", "model coordinate within frozen bounds", "grounding generation matched at first compiled observation", "exactly one standard dispatch call", "verified release with no outstanding keys/buttons", "post-dispatch fresh observation", "compiled effect predicate succeeded", "independent fixture effect file exactly matched", "independent server task oracle verified exact call id and target generation", "all raw evidence hashes reconciled"],
+    "efficiency_claim": "none from this single trial"
+  }
+}

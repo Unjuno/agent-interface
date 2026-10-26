@@ -1,0 +1,10 @@
+{
+  "attempt_id": "awcg-r01",
+  "classification": "HARNESS_BOOTSTRAP_FAILURE_BEFORE_TRIAL",
+  "failure": "ModuleNotFoundError: No module named 'research.live_control'",
+  "phase": "module import before run() and before fixture launch/provider call/input",
+  "effect_on_trial": "no trial input or provider request occurred; conditions remain unchanged",
+  "repair": "Use the already-added research/live_control directory on sys.path and import the two modules by their local module names.",
+  "wslc_used": false,
+  "docker_used": false
+}
