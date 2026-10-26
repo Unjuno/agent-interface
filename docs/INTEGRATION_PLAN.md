@@ -18,6 +18,7 @@ the actual supported caller. Versioned research clients are not interchangeable.
 
 ## Latest scoped result
 
+- [Native Win32 public-caller blocked-boundary R05/R06](../research/integration/win32_native_sendinput_recovery_20261026_r06/RESULT.md): one current-main public supervised-Win32 trial passed the scoped held-SHIFT recovery gate. Real SHIFT-down was observed while a producer-local Python substitute stalled at the SHIFT-up `SendInput` entry; public cancel returned pending in 0.460 ms, retained recovery completed in 17.215 ms, and an independent same-generation native readback found SHIFT-up. The fixture had no task effect and task success remains null. R05's no-input receipt-wrapper parsing failure remains separately retained. The injected callable stopped before native `SendInput`; this is not evidence of an OS/kernel hang or arbitrary blocked-I/O bound. No WSLc allocation, model, MAP01, efficiency, or reliability result follows.
 - [P06 App Server visual-grounding outcome](../research/integration/current_main_appserver_public_mcp_visual_grounding_20261025_p06/RESULT.md): the real model selected the correct green-target point from the exact public Fake X observation, but the frozen runner failed before mint because the public observation has no `window_generation` field. Raw is retained and the outcome is corrected additively. This does not pass target-generation mint, task effect, release, recovery, live transfer or efficiency; P06 was not retried.
 - [P07 App Server visual-grounding outcome](../research/integration/current_main_appserver_public_mcp_visual_grounding_20261025_p07/RESULT.md): one real model turn selected and clicked the green target through standard public MCP on Fake X; mint sequence, exact-one-click owner evidence, effect pixel, and release receipts independently pass. The frozen runner's scorer missed owner files because it searched at the wrong directory depth; the raw failure label is retained and corrected additively. This does not qualify WSLc/live transfer, MAP01, blocked-I/O recovery, matched efficiency, or reliability.
 - [P08 real-provider stale-generation outcome](../research/integration/current_main_appserver_public_mcp_generation_refusal_20261025_p08/RESULT.md): after one real model response and before mint/action, the child-owned Fake X process generation changed. The standard compiled public caller refused the old generation with `SAFE_YIELD / association_changed`, zero transitions/input/effect, and a verified neutral close. Frozen audit and usage receipts are retained; runtime `task_success` stays null. This qualifies only one synthetic refusal sample, not WSLc/live transfer, blocked-I/O release, matched efficiency or reliability.
@@ -31,6 +32,13 @@ Offline composition, reference mapping and evidence checks can proceed while a
 specific live resource is unavailable. A narrow blocked operation does not stop
 all independent work. Do not substitute repeated construction for the eventual
 live task and matched comparison.
+
+The 2026-10-26 native Win32 R06 sample closes only the narrow public-caller
+recovery gap for a deterministic producer-local `SendInput` entry hold. The
+next live integration step is to join that recovered state to a fresh target
+generation and an independently verified task effect through the compiled
+caller. WSLc stays STOP/HOLD until an exact allocation is verified unused; do
+not query or start unrelated allocations.
 
 ## Current source-bound findings
 

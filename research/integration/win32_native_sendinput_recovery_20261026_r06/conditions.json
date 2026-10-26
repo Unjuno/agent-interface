@@ -1,0 +1,36 @@
+{
+  "attempt_id": "win32-native-sendinput-r06-20261026",
+  "source_commit": "f2f7dbb2e043919e0773655e5fab543cc3682fcd",
+  "host_scope": "user-authorized Windows workstation; one fresh repository-owned disposable Win32 fixture process",
+  "question": "Does the current supervised Win32 public MCP caller recover a real held SHIFT key within its cleanup deadline when its producer is deterministically held at the SendInput entry for SHIFT-up?",
+  "correction_from_r05": "Extract target_generation from receipt.source.raw_report in the public receipt-view wrapper. R05 is retained as a no-input harness setup failure.",
+  "fault": "Only a producer-local Python wrapper around user32.SendInput for SHIFT-up blocks before calling the native function. SHIFT-down and supervisor recovery are real Win32 input operations.",
+  "frozen": {
+    "target": "one freshly spawned runtime.backends.win32_v1.fixture_app process",
+    "input": "SHIFT down, then SHIFT up intercepted at producer-local SendInput entry",
+    "public_tools": ["interface_observe", "interface_dispatch", "interface_cancel", "interface_results"],
+    "cancel_once": true,
+    "cleanup_deadline_ms": 3000,
+    "independent_readback": "Win32Backend key-state query bound to the same target generation",
+    "task_effect": "none expected; effect file and text/click/save events must remain absent",
+    "wslc_used": false,
+    "docker_used": false
+  },
+  "pass_requires": [
+    "fresh fixture process identity and target generation retained",
+    "preflight confirms foreground fixture and SHIFT-up",
+    "public observation raw-report generation matches native preflight",
+    "SHIFT-down observed while producer is held at intercepted SHIFT-up SendInput entry",
+    "one cancellation request returned",
+    "producer process retired and supervised recovery reports recovered/release_confirmed",
+    "cleanup latency is below the frozen 3000 ms deadline",
+    "same-generation independent Win32 readback confirms SHIFT-up without emergency release",
+    "fixture effect file absent and only the ready event recorded",
+    "fixture process exits and prior foreground window restoration is recorded",
+    "all raw outputs are hashed after cleanup"
+  ],
+  "limits": [
+    "The injected callable stalls before entering native SendInput; this is not an OS/kernel API hang.",
+    "One recovery-only sample does not establish a hard real-time guarantee, reliability rate, MAP01, WSLc, AppServer/provider integration, or task success."
+  ]
+}
