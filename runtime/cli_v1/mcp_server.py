@@ -600,6 +600,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     report = close_owner()
                 elif operation == 'recover_input':
                     report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
+                elif supervised_win32 and operation == 'recover_orphaned_input':
+                    report = owner.recover_orphaned_input(**kwargs)
                 elif operation == 'guarded_compiled':
                     report = owner.run_compiled_profile(
                         kwargs['interface'], kwargs['bindings'],
@@ -764,7 +766,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
         nonlocal shutting_down
-        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled')
+        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled','recover_orphaned_input')
                 and not (supervised_win32 and operation == 'dispatch')
                 or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
             return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
@@ -1376,6 +1378,30 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             result.update(operation_invoked=False, input_dispatched=False,
                 task_success=None, replay_allowed=False, scope='supervised_win32')
             return content(result)
+
+        @server.tool()
+        async def interface_recover_orphaned_input(
+                source_operation_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')],
+                source_target_generation: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{64}$')],
+                obligations: list[StrictStr],
+                source_custody_record: dict[str, object]
+                ) -> CallToolResult:
+            """Attempt one bounded native release for an audited prior-server custody record.
+
+            Requires a fresh supervised-Win32 session with no admitted action,
+            the exact source target generation, frozen obligations, and the
+            retained UNKNOWN custody record. The server checks those fields and
+            hashes the canonical record into its receipt; this is a trace digest,
+            not an authenticity signature. A successful recovery
+            proves only release/readback. The source action remains UNKNOWN,
+            replay stays denied, and any next action requires a fresh generation.
+            """
+            return await submit('recover_orphaned_input', {
+                'source_operation_id': source_operation_id,
+                'source_target_generation': source_target_generation,
+                'obligations': obligations,
+                'source_custody_record': source_custody_record},
+                False, False, wait_for_result_ms=6000)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,

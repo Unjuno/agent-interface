@@ -194,6 +194,51 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 {"op": "key_chord", "keys": ["CTRL", "S"]},
                 {"op": "release_all"}]}
 
+    async def test_public_orphan_recovery_tool_is_bounded_and_keeps_source_unknown(self):
+        owner, producer, supervisor = self.make_components()
+        requests = []
+        def recover(operation_id, generation, recovery_id, deadline_ns,
+                    obligations):
+            requests.append((operation_id, generation, recovery_id,
+                             deadline_ns, obligations))
+            return {"status": "recovered", "release_confirmed": True,
+                "operation_id": operation_id, "target_generation": generation,
+                "recovery_id": recovery_id,
+                "readback": {"neutral": True}}
+        supervisor.recover_orphaned_input = recover
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                tools = await server.list_tools()
+                self.assertIn("interface_recover_orphaned_input",
+                              {tool.name for tool in tools})
+                row = self.row(await server.call_tool(
+                    "interface_recover_orphaned_input", {
+                        "source_operation_id": "2" * 32,
+                        "source_target_generation": GENERATION,
+                        "obligations": ["key:fixture:W"],
+                        "source_custody_record": {
+                            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+                            "operation_id": "2" * 32,
+                            "target_generation": GENERATION,
+                            "obligations": ["key:fixture:W"],
+                            "do_not_replay": True,
+                            "dispatch": {"input_dispatched": None,
+                                "release_confirmed": False,
+                                "task_success": None,
+                                "replay_allowed": False}}}))
+                row = row.get("raw_result", row)
+                self.assertEqual(row.get("recovery_status"), "recovered", row)
+                self.assertEqual(row["source_action_status"], "unknown")
+                self.assertTrue(row["release_confirmed"])
+                self.assertIsNone(row["task_success"])
+                self.assertFalse(row["replay_allowed"])
+                self.assertEqual(len(requests), 1)
+                self.assertEqual(requests[0][0], "2" * 32)
+                self.assertEqual(requests[0][4], ["key:fixture:W"])
+                self.assertLessEqual(requests[0][3] - time.monotonic_ns(),
+                                     5_000_000_000)
+
     @staticmethod
     def row(reply):
         row = json.loads(reply.content[0].text)

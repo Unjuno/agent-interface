@@ -26,6 +26,7 @@ class FakeBackend:
         self.release_calls = 0
         self.release_snapshot = None
         self.closed = False
+        self.events = []
 
     def target_generation(self, target):
         if target not in self.targets:
@@ -33,6 +34,7 @@ class FakeBackend:
         return self.generation
 
     def release_all(self):
+        self.events.append("release")
         self.release_calls += 1
         self.release_snapshot = (dict(self.held_keys), set(self.held_buttons),
                                  set(self.pending_unicode_ups))
@@ -44,6 +46,9 @@ class FakeBackend:
         return {"verified": self.release_verified,
                 "keys_down": [], "buttons_down": [],
                 "keys_unknown": [], "buttons_unknown": []}
+
+    def focus(self, target):
+        self.events.append(("focus", target))
 
     def _key_down_state(self, vk, target):
         return self.states.get((vk, target), False)
@@ -67,6 +72,64 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(result, {"keys": [("fixture", "CTRL")],
             "buttons": [("fixture", "left")], "unicode": [0x41]})
 
+    def test_orphan_recovery_requires_matching_release_and_independent_readback(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = lambda: 10
+        recovery_id = "3" * 32
+        requests = []
+        def exchange(role, request, deadline):
+            requests.append((role, request, deadline))
+            row = {"operation_id": OPERATION,
+                "target_generation": GENERATION,
+                "recovery_id": recovery_id}
+            if role == "recovery":
+                row["release_accepted"] = True
+            else:
+                row["neutral"] = True
+            return row
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: self.fail(
+            "valid exact recovery must not retire a helper")
+
+        result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+            recovery_id, 100, ["key:fixture:W"])
+
+        self.assertEqual(result["status"], "recovered")
+        self.assertTrue(result["release_confirmed"])
+        self.assertEqual(result["operation_id"], OPERATION)
+        self.assertEqual(result["target_generation"], GENERATION)
+        self.assertEqual(result["recovery_id"], recovery_id)
+        self.assertEqual([row[0] for row in requests], ["recovery", "observer"])
+        self.assertEqual(requests[0][1]["obligations"], ["key:fixture:W"])
+        self.assertEqual(requests[0][1]["request_id"], recovery_id)
+        self.assertTrue(requests[0][1]["focus_target_before_release"])
+        self.assertEqual(requests[1][1]["request_id"], recovery_id)
+
+    def test_orphan_recovery_does_not_claim_release_without_neutral_observer(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = lambda: 10
+        recovery_id = "3" * 32
+        roles = []
+        def exchange(role, request, deadline):
+            roles.append(role)
+            row = {"operation_id": OPERATION,
+                "target_generation": GENERATION,
+                "recovery_id": recovery_id}
+            if role == "recovery":
+                row["release_accepted"] = True
+            else:
+                row["neutral"] = False
+            return row
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: None
+
+        result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+            recovery_id, 100, ["key:fixture:W"])
+
+        self.assertEqual(result["status"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(roles, ["recovery", "observer"])
+
     def test_recovery_releases_only_frozen_obligations_after_generation_check(self):
         instances = []
         def factory(targets):
@@ -80,8 +143,17 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(result["operation_id"], "1" * 32)
         self.assertEqual(instances[0].release_snapshot,
             ({"CTRL": 0x11}, {"left"}, {0x41}))
-        self.assertEqual(instances[0].release_calls, 1)
-        self.assertTrue(instances[0].closed)
+
+    def test_orphan_recovery_focuses_exact_target_before_global_key_up(self):
+        backend = FakeBackend({"fixture": 44})
+        result = _recover(self.request(obligations=["key:fixture:W"],
+                focus_target_before_release=True),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(backend.events, [("focus", "fixture"), "release"])
+        self.assertEqual(backend.release_calls, 1)
+        self.assertTrue(backend.closed)
 
     def test_recovery_generation_mismatch_sends_no_up(self):
         instances = []

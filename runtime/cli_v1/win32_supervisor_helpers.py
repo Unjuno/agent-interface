@@ -63,6 +63,20 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
     try:
         if not _generation_matches(backend, targets, request["target_generation"]):
             raise RuntimeError("TARGET_GENERATION_CHANGED")
+        focus_required = request.get("focus_target_before_release", False)
+        if type(focus_required) is not bool:
+            raise ValueError("focus requirement must be boolean")
+        if focus_required:
+            if len(targets) != 1:
+                raise ValueError("orphan recovery requires one attributable target")
+            focus = getattr(backend, "focus", None)
+            if not callable(focus):
+                raise RuntimeError("FOREGROUND_FOCUS_UNAVAILABLE")
+            focus(next(iter(targets)))
+            if clock_ns() >= request["deadline_ns"]:
+                raise TimeoutError("recovery deadline expired after target focus")
+            if not _generation_matches(backend, targets, request["target_generation"]):
+                raise RuntimeError("TARGET_GENERATION_CHANGED")
         for target, key in parsed["keys"]:
             from runtime.backends.win32_v1.backend import virtual_key
             backend.held_keys[key] = virtual_key(key)
