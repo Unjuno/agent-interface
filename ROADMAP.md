@@ -18,6 +18,14 @@ stable over the same nominal interval. This supports input-associated delayed
 application/game response but does not prove causality or qualify continuous
 stop timing, blocked-I/O release, recovery, standard-caller integration, or task
 success.
+The subsequent [R04 held-callback cancellation run](research/integration/win32_freedoom_blocked_cancel_map01_20261026_r04/RESULT.md)
+passed one live standard-caller cancellation/recovery trial: the hook callback
+returned after cancellation released it, recovery completed within its runtime
+deadline, release was confirmed, replay was denied, and a generation-bound MAP01
+effect passed an independent oracle. R01–R03 remain retained observation misses.
+This is one scoped result, not a reliability rate, MAP01 clear, or efficiency
+comparison; the full raw packet remains local and its manifest hash is published
+with the sanitized derivative.
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) tracks real-time
 control. Neither this roadmap nor an unchecked item grants a new allocation or
 changes a retained result.
