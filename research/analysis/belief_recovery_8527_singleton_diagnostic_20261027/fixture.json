@@ -1,0 +1,462 @@
+{
+  "cases": [
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": true,
+      "id": "fully-observed",
+      "initial_belief": [
+        "S"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "M": "m",
+        "S": "s"
+      },
+      "states": [
+        "S",
+        "M"
+      ],
+      "transitions": {
+        "M": {},
+        "S": {
+          "GO": [
+            "M"
+          ]
+        }
+      },
+      "unsafe": []
+    },
+    {
+      "authorized_actions": [
+        "LEFT",
+        "RIGHT"
+      ],
+      "generation_current": true,
+      "id": "aliased-opposite-actions",
+      "initial_belief": [
+        "L",
+        "R"
+      ],
+      "marker": [
+        "ML",
+        "MR"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "BAD": "bad",
+        "L": "same",
+        "ML": "left-done",
+        "MR": "right-done",
+        "R": "same"
+      },
+      "singleton_controls": [
+        [
+          "L"
+        ],
+        [
+          "R"
+        ]
+      ],
+      "states": [
+        "L",
+        "R",
+        "ML",
+        "MR",
+        "BAD"
+      ],
+      "transitions": {
+        "BAD": {},
+        "L": {
+          "LEFT": [
+            "ML"
+          ],
+          "RIGHT": [
+            "BAD"
+          ]
+        },
+        "ML": {},
+        "MR": {},
+        "R": {
+          "LEFT": [
+            "BAD"
+          ],
+          "RIGHT": [
+            "MR"
+          ]
+        }
+      },
+      "unsafe": [
+        "BAD"
+      ]
+    },
+    {
+      "authorized_actions": [
+        "LEFT",
+        "RIGHT",
+        "SCAN"
+      ],
+      "generation_current": true,
+      "id": "safe-information-gathering",
+      "initial_belief": [
+        "L",
+        "R"
+      ],
+      "marker": [
+        "ML",
+        "MR"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "BAD": "bad",
+        "L": "same",
+        "L1": "left-cue",
+        "ML": "left-done",
+        "MR": "right-done",
+        "R": "same",
+        "R1": "right-cue"
+      },
+      "states": [
+        "L",
+        "R",
+        "L1",
+        "R1",
+        "ML",
+        "MR",
+        "BAD"
+      ],
+      "transitions": {
+        "BAD": {},
+        "L": {
+          "SCAN": [
+            "L1"
+          ]
+        },
+        "L1": {
+          "LEFT": [
+            "ML"
+          ],
+          "RIGHT": [
+            "BAD"
+          ]
+        },
+        "ML": {},
+        "MR": {},
+        "R": {
+          "SCAN": [
+            "R1"
+          ]
+        },
+        "R1": {
+          "LEFT": [
+            "BAD"
+          ],
+          "RIGHT": [
+            "MR"
+          ]
+        }
+      },
+      "unsafe": [
+        "BAD"
+      ]
+    },
+    {
+      "authorized_actions": [
+        "LEFT",
+        "RIGHT",
+        "SCAN"
+      ],
+      "budget_cap": 1,
+      "generation_current": true,
+      "id": "late-cue",
+      "initial_belief": [
+        "L",
+        "R"
+      ],
+      "marker": [
+        "ML",
+        "MR"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "BAD": "bad",
+        "L": "same",
+        "L1": "left-cue",
+        "ML": "left-done",
+        "MR": "right-done",
+        "R": "same",
+        "R1": "right-cue"
+      },
+      "states": [
+        "L",
+        "R",
+        "L1",
+        "R1",
+        "ML",
+        "MR",
+        "BAD"
+      ],
+      "transitions": {
+        "BAD": {},
+        "L": {
+          "SCAN": [
+            "L1"
+          ]
+        },
+        "L1": {
+          "LEFT": [
+            "ML"
+          ],
+          "RIGHT": [
+            "BAD"
+          ]
+        },
+        "ML": {},
+        "MR": {},
+        "R": {
+          "SCAN": [
+            "R1"
+          ]
+        },
+        "R1": {
+          "LEFT": [
+            "BAD"
+          ],
+          "RIGHT": [
+            "MR"
+          ]
+        }
+      },
+      "unsafe": [
+        "BAD"
+      ]
+    },
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": true,
+      "id": "uncontrollable-destroys-recovery",
+      "initial_belief": [
+        "S"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "BAD": "bad",
+        "M": "m",
+        "S": "s"
+      },
+      "states": [
+        "S",
+        "M",
+        "BAD"
+      ],
+      "transitions": {
+        "BAD": {},
+        "M": {},
+        "S": {
+          "GO": [
+            "M",
+            "BAD"
+          ]
+        }
+      },
+      "uncontrollable_edges": [
+        [
+          "S",
+          "BAD"
+        ]
+      ],
+      "unsafe": [
+        "BAD"
+      ]
+    },
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": true,
+      "id": "exact-horizon-alternate-path",
+      "initial_belief": [
+        "S0"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "BAD": "bad",
+        "M": "m",
+        "S0": "s0",
+        "S1": "s1"
+      },
+      "states": [
+        "S0",
+        "S1",
+        "M",
+        "BAD"
+      ],
+      "transitions": {
+        "BAD": {},
+        "M": {},
+        "S0": {
+          "GO": [
+            "S1"
+          ]
+        },
+        "S1": {
+          "GO": [
+            "M"
+          ]
+        }
+      },
+      "unsafe": [
+        "BAD"
+      ]
+    },
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": true,
+      "id": "omitted-transition-mass",
+      "initial_belief": [
+        "S"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": true,
+      "model_complete": false,
+      "observations": {
+        "M": "m",
+        "S": "s"
+      },
+      "states": [
+        "S",
+        "M"
+      ],
+      "transitions": {
+        "M": {},
+        "S": {
+          "GO": [
+            "M"
+          ]
+        }
+      },
+      "unsafe": []
+    },
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": false,
+      "id": "stale-observation-generation",
+      "initial_belief": [
+        "S"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "M": "m",
+        "S": "s"
+      },
+      "states": [
+        "S",
+        "M"
+      ],
+      "transitions": {
+        "M": {},
+        "S": {
+          "GO": [
+            "M"
+          ]
+        }
+      },
+      "unsafe": []
+    },
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": true,
+      "id": "unverified-marker",
+      "initial_belief": [
+        "S"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": false,
+      "model_complete": true,
+      "observations": {
+        "M": "m",
+        "S": "s"
+      },
+      "states": [
+        "S",
+        "M"
+      ],
+      "transitions": {
+        "M": {},
+        "S": {
+          "GO": [
+            "M"
+          ]
+        }
+      },
+      "unsafe": []
+    },
+    {
+      "authorized_actions": [
+        "GO"
+      ],
+      "generation_current": true,
+      "id": "missing-transition",
+      "initial_belief": [
+        "S"
+      ],
+      "marker": [
+        "M"
+      ],
+      "marker_verified": true,
+      "model_complete": true,
+      "observations": {
+        "M": "m",
+        "S": "s"
+      },
+      "states": [
+        "S",
+        "M"
+      ],
+      "transition_map_complete": false,
+      "transitions": {
+        "M": {},
+        "S": {}
+      },
+      "unsafe": []
+    }
+  ],
+  "horizons": [
+    0,
+    1,
+    2,
+    3
+  ]
+}
