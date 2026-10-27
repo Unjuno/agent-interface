@@ -7,6 +7,7 @@ from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
 class SupervisedWin32CompiledCallerTests(unittest.TestCase):
     def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
         generation = "c" * 64
+        def call_id(number): return f"{number:032x}"
         observation_calls = []
         dispatch_calls = []
         effect_checks = []
@@ -46,9 +47,9 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
 
         def observe(target, frame, region):
             index = len(observation_calls) + 1
-            call_id = f"observe-call-{index}"
-            observation_calls.append((target, frame, region, call_id))
-            return {"status": "returned", "call_id": call_id,
+            observation_call_id = call_id(index)
+            observation_calls.append((target, frame, region, observation_call_id))
+            return {"status": "returned", "call_id": observation_call_id,
                 "target": target, "target_generation": generation,
                 "target_generation_consistency": "matched",
                 "observation": {"target": target,
@@ -58,9 +59,11 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         def dispatch(sent_program, sequence, binding_revision):
             nonlocal dispatch_completed_ns
             dispatch_completed_ns = time.monotonic_ns()
+            action_index = len(dispatch_calls) + 1
             dispatch_calls.append((sent_program, sequence, binding_revision))
-            return {"status": "completed", "call_id": "dispatch-call-1",
-                "action_id": "action-1", "effect_ref": "effect-1",
+            return {"status": "completed", "call_id": call_id(100 + action_index),
+                "action_id": f"action-{action_index}",
+                "effect_ref": f"effect-{action_index}",
                 "input_dispatched": True,
                 "release": {"verified": True, "keys_down": [],
                     "buttons_down": []}}
@@ -73,15 +76,32 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             target="fixture", current_binding_revision=7,
             region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
             perceive=lambda _row, reply: {"ready": True,
-                "saved": reply["call_id"] == "observe-call-2"},
+                "saved": int(reply["call_id"], 16) % 2 == 0},
             verify_effect=verify_effect, cancelled=lambda: False)
 
         self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED", receipt)
         self.assertEqual(receipt["completed_transitions"], 1)
         self.assertIsNone(receipt["task_success"])
         self.assertEqual(receipt["standard_observation_call_ids"],
-            ["observe-call-1", "observe-call-2"])
-        self.assertEqual(receipt["standard_action_call_ids"], ["dispatch-call-1"])
+            [call_id(1), call_id(2)])
+        self.assertEqual(receipt["standard_action_call_ids"], [call_id(101)])
+        evidence = receipt["standard_target_evidence"]
+        self.assertEqual([row["kind"] for row in evidence],
+            ["observation", "dispatch", "observation"])
+        self.assertEqual([row["call_id"] for row in evidence],
+            [call_id(1), call_id(101), call_id(2)])
+        self.assertTrue(all(row["target_generation"] == generation
+            for row in evidence))
+        self.assertEqual(receipt["bound_target_generation"], generation)
+        self.assertEqual(evidence[0]["target_generation_consistency"], "matched")
+        self.assertEqual(evidence[2]["observation_id"], "observation-2")
+        self.assertTrue(evidence[0]["compiled_observation_accepted"])
+        self.assertTrue(evidence[2]["compiled_observation_accepted"])
+        self.assertEqual(evidence[2]["observation_sequence"], 2)
+        self.assertEqual(evidence[1]["observation_sequence"], 1)
+        self.assertEqual(evidence[1]["binding_revision"], 7)
+        self.assertEqual(evidence[1]["action_id"], "action-1")
+        self.assertTrue(evidence[1]["release_verified"])
         self.assertEqual(len(observation_calls), 2)
         self.assertEqual(len(dispatch_calls), 1)
         sent_program, sequence, binding_revision = dispatch_calls[0]
@@ -95,7 +115,209 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertGreaterEqual(request["observation"]["captured_ns"],
             dispatch_completed_ns)
         self.assertEqual(effect_report["observation_id"], "observation-2")
-        self.assertEqual(effect_reply["call_id"], "observe-call-2")
+        self.assertEqual(effect_reply["call_id"], call_id(2))
+
+        def task_oracle(call_id, verdict=True, echoed_call_id=None,
+                        echoed_generation=None, without_receipt=False):
+            task_calls.append(call_id)
+            status = "unknown" if verdict is None else "verified"
+            requested_ns = time.monotonic_ns() - 1_000_000
+            observed_ns = requested_ns + 1000
+            received_ns = time.monotonic_ns()
+            outcome = ("success" if verdict is True else
+                "failure" if verdict is False else "unknown")
+            oracle_receipt = {"call_id": call_id, "operation_id": "e" * 32,
+                "target_generation": echoed_generation or generation,
+                "oracle_id": "d" * 32,
+                "outcome": outcome, "observed_monotonic_ns": observed_ns,
+                "evidence_ref": "oracle-effect-proof"}
+            effect = {"status": status, "task_success": verdict,
+                "receipt": None if without_receipt else oracle_receipt,
+                "requested_monotonic_ns": requested_ns}
+            if not without_receipt:
+                effect["receipt_received_monotonic_ns"] = received_ns
+            else:
+                effect["uncertainty"] = "independent_task_oracle_response_timeout"
+            return {"status": status,
+                "call_id": echoed_call_id or call_id,
+                "task_effect": effect,
+                "task_success": verdict, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32"}
+
+        task_calls = []
+        passed = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True), cancelled=lambda: False)
+        self.assertEqual(passed["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(passed["task_verification"]["valid"])
+        self.assertIs(passed["task_success"], True)
+        self.assertEqual(passed["task_verification"]["action_call_id"],
+            call_id(102))
+        self.assertEqual(passed["task_verification"]["target_generation"], generation)
+        task_timing = passed["task_verification"]
+        self.assertLessEqual(task_timing["oracle_requested_ns"],
+            task_timing["oracle_observed_ns"])
+        self.assertLessEqual(task_timing["oracle_observed_ns"],
+            task_timing["oracle_receipt_accepted_ns"])
+        self.assertEqual(task_timing["oracle_outcome"], "success")
+        self.assertEqual(task_timing["effect_evidence_ref"], "oracle-effect-proof")
+
+        failed = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, False), cancelled=lambda: False)
+        self.assertEqual(failed["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(failed["task_verification"]["valid"])
+        self.assertIs(failed["task_success"], False)
+
+        unknown = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, None), cancelled=lambda: False)
+        self.assertTrue(unknown["task_verification"]["valid"])
+        self.assertEqual(unknown["task_verification"]["status"], "unknown")
+        self.assertIsNone(unknown["task_success"])
+
+        timed_out = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, None, without_receipt=True),
+            cancelled=lambda: False)
+        self.assertTrue(timed_out["task_verification"]["valid"])
+        self.assertEqual(timed_out["task_verification"]["status"], "unknown")
+        self.assertIsNone(timed_out["task_verification"]["oracle_observed_ns"])
+        self.assertIsNone(timed_out["task_success"])
+
+        mismatched = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, "wrong-call-id"), cancelled=lambda: False)
+        self.assertFalse(mismatched["task_verification"]["valid"])
+        self.assertIsNone(mismatched["task_success"])
+
+        generation_mismatch = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, echoed_generation="f" * 64),
+            cancelled=lambda: False)
+        self.assertFalse(generation_mismatch["task_verification"]["valid"])
+        self.assertIsNone(generation_mismatch["task_success"])
+        self.assertEqual(task_calls, [call_id(102), call_id(103), call_id(104),
+            call_id(105), call_id(106), call_id(107)])
+
+    def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
+        generation = "a" * 64
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "final-dispatch-oracle-identity",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready", "saved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"save": {"target_symbol": "fixture",
+                "operation": "save", "expected_effect": {"saved": True}}},
+            "method": {"name": "save-twice", "version": "1",
+                "initial_state": "before", "max_transitions": 2,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True,
+                        "saved": False}, "outcome": "action", "action": "save",
+                        "next_state": "middle", "reason": None}]},
+                    "middle": {"branches": [{"when": {"ready": True,
+                        "saved": True}, "outcome": "action", "action": "save",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"saved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "two-dispatch-template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "two-dispatch-lease",
+                "expires_at_ns": time.monotonic_ns() + 10_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+                {"op": "release_all"}]}
+        observations = 0
+        dispatches = []
+        oracle_calls = []
+
+        def observe(target, frame, region):
+            nonlocal observations
+            observations += 1
+            call_id = f"{observations:032x}"
+            return {"status": "returned", "call_id": call_id,
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observation-{observations}"}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            dispatches.append(len(dispatches) + 1)
+            reply = {"status": "completed",
+                "action_id": f"action-{dispatches[-1]}",
+                "effect_ref": f"effect-{dispatches[-1]}",
+                "input_dispatched": True,
+                "release": {"verified": True, "keys_down": [],
+                    "buttons_down": []}}
+            if dispatches[-1] == 1:
+                reply["call_id"] = "b" * 32
+            return reply
+
+        def verify_task(call_id):
+            oracle_calls.append(call_id)
+            now = time.monotonic_ns()
+            receipt = {"call_id": call_id, "operation_id": "c" * 32,
+                "target_generation": generation, "oracle_id": "d" * 32,
+                "outcome": "success", "observed_monotonic_ns": now,
+                "evidence_ref": "prior-action-effect"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": receipt, "requested_monotonic_ns": now - 1,
+                    "receipt_received_monotonic_ns": now + 1}}
+
+        receipt = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _report, _reply: {"ready": True,
+                "saved": observations >= 2},
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "succeeded", "evidence_ref": "effect"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED", receipt)
+        self.assertEqual(receipt["completed_transitions"], 2)
+        self.assertEqual(dispatches, [1, 2])
+        self.assertIsNone(receipt["task_success"])
+        self.assertIsNone(receipt["task_verification"])
+        self.assertEqual(oracle_calls, [])
 
     def test_generation_change_from_standard_observation_stops_compiled_suffix(self):
         generation = "a" * 64
@@ -169,12 +391,15 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(after_model_wait["reason"], "association_changed")
         self.assertEqual(after_model_wait["completed_transitions"], 0)
         self.assertEqual(after_model_wait["observations"], [])
+        self.assertIsNone(after_model_wait["bound_target_generation"])
+        self.assertEqual(after_model_wait["standard_target_evidence"], [])
         self.assertEqual(observations, 1)
         self.assertEqual(dispatches, [])
 
         observations = 0
         generation = grounded_generation
         forced_generation = None
+        task_oracle_calls = []
         receipt = run_public_compiled(interface, {"save": program},
             target="fixture", current_binding_revision=7,
             region=[0, 0, 1, 1],
@@ -183,11 +408,18 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                 "saved": observations > 1},
             verify_effect=lambda _request, _row, _reply: {
                 "status": "succeeded", "evidence_ref": "effect-observation"},
+            verify_task=lambda call_id: task_oracle_calls.append(call_id),
             cancelled=lambda: False)
 
         self.assertEqual(receipt["outcome"], "SAFE_YIELD", receipt)
         self.assertEqual(receipt["reason"], "association_changed")
+        self.assertEqual(task_oracle_calls, [])
         self.assertEqual(len(dispatches), 1)
+        self.assertEqual(receipt["bound_target_generation"], "a" * 64)
+        self.assertEqual([row["kind"] for row in receipt["standard_target_evidence"]],
+            ["observation", "dispatch"])
+        self.assertTrue(all(row["target_generation"] == "a" * 64
+            for row in receipt["standard_target_evidence"]))
         sent_program, sequence, binding_revision = dispatches[0]
         self.assertEqual(sent_program["source"]["target_generations"],
             {"fixture": "a" * 64})

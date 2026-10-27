@@ -21,6 +21,7 @@ from runtime.core_v1.contract import validate_program
 
 
 _GENERATION = re.compile(r"^[0-9a-f]{64}$")
+_IDENTIFIER = re.compile(r"^[0-9a-f]{32}$")
 
 
 def _content_object(reply):
@@ -117,10 +118,83 @@ def _terminal(reply, action_name):
     return terminal
 
 
+def _task_oracle_evidence(reply, expected_call_id, expected_generation):
+    """Accept only the standard server's exact-call task-oracle receipt."""
+    row = _content_object(reply)
+    effect = row.get("task_effect")
+    status = row.get("status")
+    verdict = row.get("task_success")
+    oracle_receipt = effect.get("receipt") if type(effect) is dict else None
+    requested_ns = effect.get("requested_monotonic_ns") if type(effect) is dict else None
+    received_ns = (effect.get("receipt_received_monotonic_ns")
+        if type(effect) is dict else None)
+    verdict_shape_valid = (
+        (status == "verified" and type(verdict) is bool)
+        or (status == "unknown" and verdict is None)
+    )
+    timing = {"oracle_requested_ns": requested_ns
+        if type(requested_ns) is int and requested_ns > 0 else None,
+        "oracle_observed_ns": None, "oracle_receipt_accepted_ns": None,
+        "oracle_id": None, "oracle_outcome": None,
+        "oracle_task_operation_id": None, "effect_evidence_ref": None}
+    oracle_receipt_valid = status == "unknown" and oracle_receipt is None
+    if type(oracle_receipt) is dict:
+        outcome = oracle_receipt.get("outcome")
+        observed_ns = oracle_receipt.get("observed_monotonic_ns")
+        oracle_receipt_valid = (
+            set(oracle_receipt) == {"call_id", "operation_id", "target_generation",
+                "oracle_id", "outcome", "observed_monotonic_ns", "evidence_ref"}
+            and oracle_receipt.get("call_id") == expected_call_id
+            and oracle_receipt.get("target_generation") == expected_generation
+            and type(oracle_receipt.get("operation_id")) is str
+            and _IDENTIFIER.fullmatch(oracle_receipt.get("operation_id")) is not None
+            and type(oracle_receipt.get("oracle_id")) is str
+            and _IDENTIFIER.fullmatch(oracle_receipt.get("oracle_id")) is not None
+            and outcome in {"success", "failure", "unknown"}
+            and type(observed_ns) is int and observed_ns > 0
+            and type(requested_ns) is int and requested_ns > 0
+            and type(received_ns) is int and received_ns > 0
+            and requested_ns <= observed_ns <= received_ns
+            and type(oracle_receipt.get("evidence_ref")) is str
+            and bool(oracle_receipt.get("evidence_ref"))
+            and ((outcome == "success" and status == "verified" and verdict is True)
+                or (outcome == "failure" and status == "verified" and verdict is False)
+                or (outcome == "unknown" and status == "unknown" and verdict is None))
+        )
+        timing.update(oracle_observed_ns=observed_ns,
+            oracle_receipt_accepted_ns=received_ns,
+            oracle_id=oracle_receipt.get("oracle_id"),
+            oracle_outcome=outcome,
+            oracle_task_operation_id=oracle_receipt.get("operation_id"),
+            effect_evidence_ref=oracle_receipt.get("evidence_ref"))
+    elif status == "unknown" and oracle_receipt is None:
+        oracle_receipt_valid = type(requested_ns) is int and requested_ns > 0
+    valid = (
+        _IDENTIFIER.fullmatch(expected_call_id) is not None
+        and row.get("call_id") == expected_call_id
+        and row.get("scope") == "supervised_win32"
+        and row.get("operation_invoked") is False
+        and row.get("input_dispatched") is False
+        and row.get("replay_allowed") is False
+        and type(effect) is dict
+        and effect.get("status") == status
+        and effect.get("task_success") is verdict
+        and verdict_shape_valid
+        and oracle_receipt_valid
+    )
+    digest = hashlib.sha256(json.dumps(row, sort_keys=True,
+        separators=(",", ":"), allow_nan=False).encode("utf-8")).hexdigest()
+    return {"status": status if type(status) is str else "invalid",
+        "action_call_id": expected_call_id,
+        "task_success": verdict if valid and type(verdict) is bool else None,
+        "valid": valid, "evidence_digest": digest, **timing}
+
+
 def run_public_compiled(interface, program_templates, *, target,
         current_binding_revision, region, observe, dispatch, perceive, verify_effect,
         expected_generation=None,
-        cancelled=lambda: False, clock=time.monotonic_ns, journal=None):
+        verify_task=None, cancelled=lambda: False, clock=time.monotonic_ns,
+        journal=None):
     """Run one compiled graph using standard supervised Win32 MCP calls.
 
     ``observe(target, frame, region)`` calls ``interface_observe`` and returns
@@ -130,10 +204,10 @@ def run_public_compiled(interface, program_templates, *, target,
     adapter supplies a fresh observation sequence, binding revision, target
     generation and one-use program/lease IDs before each standard dispatch.
 
-    This adapter does not provide an application oracle. Pixel/perception
-    predicates and effect verdicts are caller-owned, and ``TASK_SUCCEEDED`` is
-    only the compiled method's verdict. Independently verify the task through
-    the configured standard task oracle when one exists.
+    Pixel/perception predicates and effect verdicts are caller-owned. The
+    optional ``verify_task(call_id)`` must call the configured standard public
+    task oracle; its receipt is accepted only when bound to the exact final
+    dispatch call ID and its supervised-Win32 non-action fields validate.
     """
     spec = validate(interface)
     if (type(target) is not str or not target
@@ -159,6 +233,8 @@ def run_public_compiled(interface, program_templates, *, target,
     if not all(callable(fn) for fn in (observe, dispatch, perceive,
                                        verify_effect, cancelled, clock)):
         raise ValueError("standard tools and caller verifiers must be callable")
+    if verify_task is not None and not callable(verify_task):
+        raise ValueError("verify_task must call the configured standard task oracle")
     if journal is not None and not callable(journal):
         raise ValueError("journal must be callable")
 
@@ -184,6 +260,7 @@ def run_public_compiled(interface, program_templates, *, target,
     authorizations = {}
     observation_call_ids = []
     action_call_ids = []
+    target_evidence = []
 
     def observe_adapter(_request):
         nonlocal generation, sequence, latest_report, latest_reply
@@ -232,6 +309,19 @@ def run_public_compiled(interface, program_templates, *, target,
         evidence_ref = report.get("observation_id")
         if type(evidence_ref) is not str or not evidence_ref:
             evidence_ref = "win32-observation-" + raw_digest[:24]
+        target_evidence.append({
+            "kind": "observation",
+            "call_id": observe_call_id if type(observe_call_id) is str else None,
+            "target": target,
+            "target_generation": observed_generation,
+            "target_generation_consistency": "matched",
+            "observation_id": (report.get("observation_id")
+                if type(report.get("observation_id")) is str else None),
+            "observation_sequence": sequence,
+            "evidence_ref": evidence_ref[:64],
+            "evidence_digest": raw_digest,
+            "captured_ns": captured_ns,
+        })
         return {"sequence": sequence, "captured_ns": captured_ns,
             "surface": spec["surface"], "predicates": predicates,
             "evidence_ref": evidence_ref[:64], "evidence_digest": raw_digest}
@@ -283,7 +373,24 @@ def run_public_compiled(interface, program_templates, *, target,
         call_id = reply_row.get("call_id") or _content_object(reply).get("call_id")
         if type(call_id) is str and call_id:
             action_call_ids.append(call_id)
-        return _terminal(reply, request["action"])
+        terminal = _terminal(reply, request["action"])
+        target_evidence.append({
+            "kind": "dispatch",
+            "call_id": call_id if type(call_id) is str and call_id else None,
+            "target": target,
+            "target_generation": granted["generation"],
+            "program_id": program["program_id"],
+            "observation_sequence": granted["sequence"],
+            "binding_revision": current_binding_revision,
+            "action_id": terminal["action_id"],
+            "effect_ref": terminal["effect_ref"],
+            "status": terminal["status"],
+            "input_dispatched": terminal.get("input_dispatched"),
+            "release_verified": (terminal.get("release", {}).get("verified") is True
+                and terminal.get("release", {}).get("keys_down") == []
+                and terminal.get("release", {}).get("buttons_down") == []),
+        })
+        return terminal
 
     def verify_adapter(request):
         return verify_effect(request, deepcopy(latest_report), latest_reply)
@@ -294,7 +401,43 @@ def run_public_compiled(interface, program_templates, *, target,
     if journal is not None:
         adapters["journal"] = journal
     receipt = run_graph(spec, adapters, clock=clock)
+    accepted_observations = {(row["sequence"], row["evidence_ref"])
+        for row in receipt["observations"]}
+    for row in target_evidence:
+        if row["kind"] == "observation":
+            row["compiled_observation_accepted"] = (
+                (row["observation_sequence"], row["evidence_ref"])
+                in accepted_observations)
     receipt["standard_observation_call_ids"] = list(observation_call_ids)
     receipt["standard_action_call_ids"] = list(action_call_ids)
+    receipt["standard_target_evidence"] = deepcopy(target_evidence)
+    receipt["bound_target_generation"] = generation
     receipt["task_success"] = None
+    receipt["task_verification"] = None
+    final_transition = (receipt["transitions"][-1]
+        if receipt["transitions"] else None)
+    final_dispatch = (next((row for row in reversed(target_evidence)
+        if row["kind"] == "dispatch"
+        and final_transition is not None
+        and row["action_id"] == final_transition["action_id"]), None))
+    final_call_id = (final_dispatch.get("call_id")
+        if final_dispatch is not None else None)
+    if (verify_task is not None and receipt.get("outcome") == "TASK_SUCCEEDED"
+            and type(final_call_id) is str
+            and _IDENTIFIER.fullmatch(final_call_id) is not None):
+        try:
+            task_evidence = _task_oracle_evidence(
+                verify_task(final_call_id), final_call_id,
+                final_dispatch["target_generation"])
+            task_evidence["target_generation"] = final_dispatch["target_generation"]
+            receipt["task_verification"] = task_evidence
+            if task_evidence["valid"]:
+                receipt["task_success"] = task_evidence["task_success"]
+        except Exception as error:
+            receipt["task_verification"] = {
+                "status": "unavailable", "action_call_id": final_call_id,
+                "target_generation": final_dispatch["target_generation"],
+                "task_success": None, "valid": False,
+                "error_type": type(error).__name__,
+                "evidence_digest": None}
     return receipt
