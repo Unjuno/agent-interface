@@ -241,6 +241,7 @@ def _task_oracle_evidence(reply, expected_call_id, expected_generation):
 
 def run_public_compiled(interface, program_templates, *, target,
         current_binding_revision, region, observe, dispatch, perceive, verify_effect,
+        capture_frame="window_client",
         expected_generation=None,
         verify_task=None, resolve_pending=None, cancelled=lambda: False,
         clock=time.monotonic_ns,
@@ -258,6 +259,12 @@ def run_public_compiled(interface, program_templates, *, target,
     optional ``verify_task(call_id)`` must call the configured standard public
     task oracle; its receipt is accepted only when bound to the exact final
     dispatch call ID and its supervised-Win32 non-action fields validate.
+
+    ``capture_frame`` selects the standard Win32 observation frame. Use
+    ``screen_physical_px`` with an explicitly grounded screen-coordinate region
+    when the target client-area capture cannot render its surface (for example,
+    some GPU-backed applications); the pixels still require caller perception
+    and target-generation association.
     """
     spec = validate(interface)
     if (type(target) is not str or not target
@@ -274,6 +281,8 @@ def run_public_compiled(interface, program_templates, *, target,
             or not 1 <= region[2] <= 8192 or not 1 <= region[3] <= 8192
             or region[2] * region[3] > 16_777_216):
         raise ValueError("bounded explicit [x,y,width,height] region required")
+    if capture_frame not in ("window_client", "screen_physical_px"):
+        raise ValueError("capture_frame must be a supported Win32 observation frame")
     if any(symbol["target_reference"] != target
            for symbol in spec["symbols"].values()):
         raise ValueError("compiled target references must name the configured Win32 target")
@@ -316,7 +325,7 @@ def run_public_compiled(interface, program_templates, *, target,
 
     def observe_adapter(_request):
         nonlocal generation, sequence, latest_report, latest_reply
-        reply = observe(target, "window_client", deepcopy(region))
+        reply = observe(target, capture_frame, deepcopy(region))
         report = _raw_report(reply)
         observe_call_id = report.get("call_id") or _content_object(reply).get("call_id")
         if type(observe_call_id) is str and observe_call_id:
