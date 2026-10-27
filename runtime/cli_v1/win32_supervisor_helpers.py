@@ -98,7 +98,11 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
         return {"operation_id": request["operation_id"],
                 "target_generation": request["target_generation"],
                 "recovery_id": request["recovery_id"],
-                "release_accepted": (release.get("verified") is True
+                "release_accepted": (type(release) is dict
+                    and release.get("verified") is True
+                    and all(type(release.get(field)) is list and release[field] == []
+                            for field in ("keys_down", "buttons_down",
+                                          "keys_unknown", "buttons_unknown"))
                     and not backend.pending_unicode_ups),
                 "release_receipt": release,
                 "pending_unicode_ups": sorted(backend.pending_unicode_ups)}
