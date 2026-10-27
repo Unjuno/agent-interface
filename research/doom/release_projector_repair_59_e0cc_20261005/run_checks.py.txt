@@ -1,0 +1,47 @@
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import subprocess
+import sys
+
+repo, label, *tests = sys.argv[1:]
+repo = Path(repo).resolve()
+out = Path(__file__).resolve().parent / label
+out.mkdir(exist_ok=False)
+paths = ["research/doom/project_v39_release_measurement_v1.py",
+         "research/doom/test_project_v39_release_measurement_v1.py",
+         "research/doom/test_project_v39_release_measurement_composition.py",
+         "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+         "research/live_control/input_owner_v12.py",
+         "research/live_control/input_owner_v10.py",
+         "research/live_control/input_transition_owner_v3.py",
+         "research/live_control/input_transition_owner_v4.py",
+         "research/live_control/test_input_owner_v12_explicit_up_cancel.py",
+         "research/live_control/executor_v3.py", "research/live_control/lease.py"]
+manifest = {}
+for name in paths:
+    data = (repo / name).read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    target = out / "source" / (name + ".txt")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(data)
+    manifest[name] = digest
+(out / "sources.json").write_text(json.dumps(manifest, indent=2) + "\n")
+command = [sys.executable, "-m", "unittest", "-v", *tests]
+env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1",
+           PYTHONPATH=os.pathsep.join(str(repo / p) for p in ("research/doom", "research/live_control")))
+started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+with (out / "stdout.txt").open("wb") as stdout, (out / "stderr.txt").open("wb") as stderr:
+    result = subprocess.run(command, cwd=repo, env=env, stdout=stdout, stderr=stderr, timeout=45)
+receipt = {"label": label, "command": command, "cwd": str(repo), "started_utc": started,
+           "finished_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+           "exit_code": result.returncode, "python": sys.version,
+           "platform": platform.platform(), "formal_allocation": False,
+           "real_x11_game_model_container": False}
+(out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
+print(json.dumps(receipt))
+print((out / "stderr.txt").read_text()[-14000:])
+sys.exit(result.returncode)

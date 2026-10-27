@@ -1,0 +1,52 @@
+"""Counterexample probe for projector duplicate-release coverage; stdlib only."""
+import copy
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+from test_project_v39_release_measurement_v1 import valid_pair
+from project_v39_release_measurement_v1 import project
+
+root = Path(__file__).resolve().parent
+admission_a, release_a = valid_pair()
+admission_b = copy.deepcopy(admission_a)
+admission_b.update(key="w", admitted_ns=101)
+release_a0 = copy.deepcopy(release_a)
+release_a1 = copy.deepcopy(release_a)
+for row in (release_a0, release_a1):
+    row.update(release_batch_size=2)
+release_a0["release_batch_position"] = 0
+release_a1["release_batch_position"] = 1
+
+positive = project(valid_pair())
+forged = project([admission_a, admission_b, release_a0, release_a1])
+source_hashes = {
+    name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+    for name in ("project_v39_release_measurement_v1.py",
+                 "test_project_v39_release_measurement_v1.py")
+}
+result = {
+    "schema": "v39-projector-duplicate-release-counterexample-v1",
+    "scope": "single pure-projector unit fixture; no V39/V15 session, owner, X, controller, or game execution",
+    "source_commit": "3ceac8ba779b7b8a43c7a29f135e040dc637b1f8",
+    "source_sha256": source_hashes,
+    "positive_control": {
+        "measurement_ready": positive.get("measurement_ready"),
+        "projected_keys": [row.get("key") for row in positive.get("rows", [])],
+    },
+    "forged_case": {
+        "admissions": [admission_a, admission_b],
+        "releases": [release_a0, release_a1],
+        "measurement_ready": forged.get("measurement_ready"),
+        "projected_keys": [row.get("key") for row in forged.get("rows", [])],
+        "expected_measurement_ready": False,
+    },
+    "finding": ("FAIL: two distinct admissions (A and B) with two valid-looking releases for A "
+                "produce measurement_ready=true and two projected A rows; B is unconsumed."),
+}
+print(json.dumps(result, indent=2, sort_keys=True))
+if positive.get("measurement_ready") is not True or forged.get("measurement_ready") is not True:
+    print("unexpected behavior relative to reviewed source", file=sys.stderr)
+    raise SystemExit(2)
+raise SystemExit(0)
