@@ -127,4 +127,25 @@ class AdmissionLinkTest(unittest.TestCase):
                 self.assertIs(release["owner_transition_verified"], expected)
 
 
+
+    def test_split_step_preserves_each_release_and_rejects_cross_step_projection(self):
+        backend, emitted = self.make_backend()
+        parent = type(backend).__mro__[1]
+        def execute(instance, step, cancel, identifier, index):
+            instance._input_event_context = (identifier, index)
+            for key, down in step:
+                instance.raw(key, down)
+        with patch.object(parent, "execute", execute, create=True):
+            backend.execute([("w", True), ("a", True), ("w", False)], None, "program", 0)
+            self.assertFalse(any(row.get("event") == "input_release_transition"
+                                 for row in emitted))
+            backend.execute([("a", False)], None, "program", 1)
+        releases = [row for row in emitted if row.get("event") == "input_release_transition"]
+        self.assertEqual([(row["key"], row["step"]) for row in releases],
+                         [("w", 0), ("a", 1)])
+        self.assertTrue(all(row["admission_receipt_valid"] for row in releases))
+        from project_v39_release_measurement_v1 import project
+        self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+
+
 if __name__=="__main__":unittest.main()
