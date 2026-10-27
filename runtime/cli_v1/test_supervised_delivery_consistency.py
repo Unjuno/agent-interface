@@ -27,6 +27,28 @@ class SupervisedDeliveryConsistencyTests(unittest.TestCase):
                 self.assertNotIn("input_dispatched", result)
                 self.assertTrue(result["release"]["verified"])
 
+    def test_outer_and_raw_delivery_disagreement_is_uncertain(self):
+        fixture = fixtures.SupervisedIdentityTests()
+        for value in (False, "bad"):
+            raw = fixture.row()
+            raw["input_dispatched"] = value
+            envelope = {"input_dispatched": True,
+                "receipt": {"source": {"raw_report": raw}}}
+            with self.subTest(raw=value):
+                result = fixture.terminal(envelope)
+                self.assertEqual(result["status"], "uncertain")
+                self.assertNotIn("input_dispatched", result)
+                self.assertTrue(result["release"]["verified"])
+
+    def test_raw_result_disagreement_is_uncertain(self):
+        fixture = fixtures.SupervisedIdentityTests()
+        row = fixture.row()
+        row["result"]["input_dispatched"] = False
+        result = fixture.terminal(row)
+        self.assertEqual(result["status"], "uncertain")
+        self.assertNotIn("input_dispatched", result)
+        self.assertTrue(result["release"]["verified"])
+
     def test_consistent_delivery_completes(self):
         fixture = fixtures.SupervisedIdentityTests()
         row = fixture.row()
