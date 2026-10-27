@@ -61,6 +61,59 @@ def fixture():
 
 
 class OwnerIdentityTests(unittest.TestCase):
+    def test_reply_completed_after_wait_timeout_before_owner_stop_check(self):
+        for ok in (True, False):
+            with self.subTest(reply_ok=ok):
+                owner = object.__new__(InputOwner)
+                owner.closed = False
+                owner.error = None
+                owner.stopped = threading.Event()
+                owner.stop_requested = threading.Event()
+                requests = []
+                owner.requests = SimpleNamespace(put=requests.append)
+                outcome = 'close-result' if ok else ValueError('close failed')
+
+                class TimeoutThenReply:
+                    completed = False
+                    def wait(self, _timeout):
+                        # Model the worker replying and stopping after wait
+                        # times out, before the caller checks stopped.
+                        requests[0][4].append((ok, outcome))
+                        self.completed = True
+                        owner.stopped.set()
+                        return False
+                    def is_set(self):
+                        return self.completed
+
+                done = TimeoutThenReply()
+                with patch.dict(InputOwner.call.__globals__,
+                                {'threading': SimpleNamespace(Event=lambda: done)}):
+                    if ok:
+                        self.assertEqual(owner.call('close'), 'close-result')
+                    else:
+                        with self.assertRaisesRegex(ValueError, 'close failed'):
+                            owner.call('close')
+
+    def test_stopped_owner_without_reply_still_fails_closed(self):
+        owner = object.__new__(InputOwner)
+        owner.closed = False
+        owner.error = None
+        owner.stopped = threading.Event()
+        owner.stop_requested = threading.Event()
+        owner.requests = SimpleNamespace(put=lambda _request: None)
+
+        class TimeoutWithoutReply:
+            def wait(self, _timeout):
+                owner.stopped.set()
+                return False
+            def is_set(self):
+                return False
+
+        with patch.dict(InputOwner.call.__globals__,
+                        {'threading': SimpleNamespace(Event=TimeoutWithoutReply)}):
+            with self.assertRaisesRegex(RuntimeError, 'stopped before reply'):
+                owner.call('close')
+
     def test_first_focus_wait_cancel_discards_late_reply_without_press(self):
         with fixture() as (owner, lease, display, reader, events):
             entered, resume = threading.Event(), threading.Event()
