@@ -3,7 +3,7 @@ import unittest
 from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
 
 class DispatchCompositionTests(unittest.TestCase):
-    def run_conflicting_delivery_case(self, immediate=False):
+    def run_conflicting_delivery_case(self, immediate=False, no_input=False):
         generation = "b" * 64
         dispatch_id = "a" * 32
         operation_id = "c" * 32
@@ -64,7 +64,7 @@ class DispatchCompositionTests(unittest.TestCase):
             if immediate:
                 return {"status": "returned", "call_id": dispatch_id,
                     "operation_id": operation_id, "target_generation": generation,
-                    "operation_invoked": True, "input_dispatched": True,
+                    "operation_invoked": True, "input_dispatched": not no_input,
                     "result": {"status": "completed"},
                     "supervision": {"call_id": dispatch_id, "action": {
                         "operation_id": operation_id, "target_generation": generation,
@@ -81,7 +81,7 @@ class DispatchCompositionTests(unittest.TestCase):
             return {"call_id": call_id,
                 "action": {"operation_id": operation_id,
                     "target_generation": generation, "status": "completed",
-                    "input_dispatched": True, "release_confirmed": True,
+                    "input_dispatched": not no_input, "release_confirmed": True,
                     "completion_custody": {"release_confirmed": True,
                         "completion_readback_outcome": "verified"},
                     "result": {"status": "completed",
@@ -131,3 +131,9 @@ class DispatchCompositionTests(unittest.TestCase):
 
     def test_direct_conflict_stops_before_effect_oracle(self):
         self.run_conflicting_delivery_case(immediate=True)
+
+    def test_retrieved_no_input_completion_stops_before_effect_oracle(self):
+        self.run_conflicting_delivery_case(no_input=True)
+
+    def test_direct_no_input_completion_stops_before_effect_oracle(self):
+        self.run_conflicting_delivery_case(immediate=True, no_input=True)
