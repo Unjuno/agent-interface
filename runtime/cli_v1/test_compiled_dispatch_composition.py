@@ -3,7 +3,7 @@ import unittest
 from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
 
 class DispatchCompositionTests(unittest.TestCase):
-    def test_conflicting_delivery_stops_before_effect_oracle(self):
+    def run_conflicting_delivery_case(self, immediate=False):
         generation = "b" * 64
         dispatch_id = "a" * 32
         operation_id = "c" * 32
@@ -61,6 +61,17 @@ class DispatchCompositionTests(unittest.TestCase):
 
         def dispatch(_program, _sequence, _binding_revision):
             dispatches.append(True)
+            if immediate:
+                return {"status": "returned", "call_id": dispatch_id,
+                    "operation_id": operation_id, "target_generation": generation,
+                    "operation_invoked": True, "input_dispatched": True,
+                    "result": {"status": "completed"},
+                    "supervision": {"call_id": dispatch_id, "action": {
+                        "operation_id": operation_id, "target_generation": generation,
+                        "status": "completed", "input_dispatched": False,
+                        "release_confirmed": True,
+                        "completion_custody": {"release_confirmed": True,
+                            "completion_readback_outcome": "verified"}}}}
             return {"status": "pending", "call_id": dispatch_id,
                 "operation_invoked": True, "input_dispatched": None,
                 "release_confirmed": False, "replay_allowed": False}
@@ -105,7 +116,7 @@ class DispatchCompositionTests(unittest.TestCase):
 
         self.assertEqual(result["outcome"], "SAFE_YIELD", result)
         self.assertEqual(dispatches, [True])
-        self.assertEqual(resolutions, [(dispatch_id, "pending")])
+        self.assertEqual(resolutions, [] if immediate else [(dispatch_id, "pending")])
         self.assertEqual(len(observations), 1)
         self.assertEqual(task_calls, [])
         self.assertIsNone(result["task_success"])
@@ -114,3 +125,9 @@ class DispatchCompositionTests(unittest.TestCase):
         self.assertEqual(dispatch_evidence["status"], "uncertain")
         self.assertIsNone(dispatch_evidence["input_dispatched"])
         self.assertTrue(dispatch_evidence["release_verified"])
+
+    def test_retrieved_conflict_stops_before_effect_oracle(self):
+        self.run_conflicting_delivery_case()
+
+    def test_direct_conflict_stops_before_effect_oracle(self):
+        self.run_conflicting_delivery_case(immediate=True)
