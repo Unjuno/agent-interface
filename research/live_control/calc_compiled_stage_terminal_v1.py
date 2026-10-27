@@ -23,10 +23,19 @@ def make_stage_executor(run_stage, retain_receipt):
     if not callable(run_stage) or not callable(retain_receipt):
         raise ValueError('stage runner and receipt sink must be callable')
 
+    snapshot = None
+
     def execute(payload):
+        nonlocal snapshot
+        snapshot = None
         receipt = run_stage(copy.deepcopy(payload))
         terminal, projection = to_core_terminal(receipt)
-        retain_receipt(copy.deepcopy({'receipt': receipt, 'projection': projection}))
+        snapshot = copy.deepcopy({'receipt': receipt, 'projection': projection})
+        retain_receipt(copy.deepcopy(snapshot))
         return terminal
 
+    def read_snapshot():
+        return copy.deepcopy(snapshot)
+
+    execute.snapshot = read_snapshot
     return execute

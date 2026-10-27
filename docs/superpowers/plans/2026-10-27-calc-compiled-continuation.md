@@ -44,3 +44,7 @@ A fail-closed terminal bridge and one composed interruption test now join the sa
 ## Task 2 receipt sink and stale-target check (2026-10-27)
 
 A composed stage wrapper calls the supplied runner once, then sends a detached original receipt and projection to a supplied sink before returning a fail-closed core terminal. A stale admission prevents the stage call; a sink exception is propagated without retry and the caller returns CALLER_FAILED with uncertain delivery. The failure path has no returned core receipt and a failed sink does not prove durability; a stronger recovery/persistence design remains needed. Twenty synthetic caller/core/bridge tests pass normally and with `-O`. This is still an inert graph, not a Calc live adapter, fresh UI observation, or independent workbook score.
+
+## Task 2 sink-failure snapshot (2026-10-27)
+
+The stage executor now retains a detached in-memory snapshot of the returned stage receipt and projection before calling the sink. The actual caller/core sink-failure fixture can inspect it after CALLER_FAILED while delivery remains uncertain and no retry occurs. The snapshot is per executor, reset at the next invocation, and not durable across process loss. Exceptions before projection/snapshot creation and evidence storage/retrieval remain unresolved. Twenty-one synthetic tests pass normally and under optimized Python; this is not live evidence.
