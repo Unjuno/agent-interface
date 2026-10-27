@@ -1,0 +1,271 @@
+{
+  "buttons_down_after_run": [],
+  "captured_at_utc": "2026-10-27T18:14:57.251117+00:00",
+  "compiled_core_receipt": {
+    "completed_transitions": 0,
+    "critical_events": [
+      {
+        "action": "enter_token",
+        "event": "branch_selected",
+        "evidence_ref": "observation-2",
+        "matched_conditions": {
+          "field_target_present": true,
+          "field_value_matches_task": false
+        },
+        "outcome": "action",
+        "state": "empty"
+      },
+      {
+        "action": "enter_token",
+        "action_id": "action-8e82087821434aa88cb842f2e2b0de8a",
+        "event": "action_terminal",
+        "execution_accepted_ns": 816197742123700,
+        "execution_started_ns": 816197739215700,
+        "release_verified": false,
+        "status": "execution_failed"
+      },
+      {
+        "completed_transitions": 0,
+        "event": "runtime_finished",
+        "outcome": "RUNTIME_FAILED",
+        "reason": "execution_failed"
+      }
+    ],
+    "elapsed_ns": 4993500,
+    "ended_ns": 816197742226500,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "dependency-test",
+    "latest_evidence_ref": "observation-2",
+    "method": "enter_verify_exact_value_then_submit",
+    "method_version": "2",
+    "observations": [
+      {
+        "captured_ns": 816197737583000,
+        "evidence_digest": "8db90b90091a6ca4c94ae8c8e4359910c61d21e91a27faf743365ce4afe7cd0b",
+        "evidence_ref": "observation-2",
+        "observation_accepted_ns": 816197738520500,
+        "observation_started_ns": 816197737235500,
+        "predicates": {
+          "field_pixels_changed": true,
+          "field_target_present": true,
+          "field_value_matches_task": false,
+          "submission_pixels_changed": false,
+          "submit_target_present": true
+        },
+        "sequence": 2
+      }
+    ],
+    "outcome": "RUNTIME_FAILED",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "execution_failed",
+    "session_scope": "native-x11:227d11e1d3fd42c09f33f37119ac2a1c",
+    "started_ns": 816197737233000,
+    "transitions": []
+  },
+  "conditions": {
+    "environment": "Fake X server; actual compiled core, guarded X11 adapter, NativeHandleBridge and X11RuntimeSession",
+    "fault_injection": "expire native lease after CTRL press; make first cleanup readback report CTRL still down once, then allow real empty readback",
+    "interaction": "keyboard CTRL+a chord in enter_token branch",
+    "recovery_policy": "no program replay; invoke explicit bridge.recover_input on the current binding revision; cleanup only"
+  },
+  "explicit_recovery_result": {
+    "authority_granted": false,
+    "binding_revision": 1,
+    "note": "One release-only attempt. Review this window and mint fresh aliases before new input; retired workers stay retired. Prior task effects remain unknown. No replay or lease issued.",
+    "previous_binding_revision": 0,
+    "recovery_required": false,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 816197742499800,
+      "verified": true
+    },
+    "release_attempted": true,
+    "replay_allowed": false,
+    "review_required": true,
+    "status": "input_recovered",
+    "task_effect_status": "unknown",
+    "task_success": null
+  },
+  "format": "compiled-expiry-recovery-fake-x02",
+  "input_events": [
+    [
+      2,
+      1,
+      {}
+    ],
+    [
+      3,
+      1,
+      {}
+    ],
+    [
+      3,
+      1,
+      {}
+    ]
+  ],
+  "keyboard_down_after_run": [],
+  "result_classification": {
+    "expired_suffix_blocked": true,
+    "explicit_release_only_recovery_succeeded": true,
+    "initial_cleanup_unverified": true,
+    "live_application_test": false,
+    "new_binding_revision": 1,
+    "program_replayed": false,
+    "task_effect_verified": false,
+    "window_review_still_required": true
+  },
+  "source_commit": "ee5c38a62c65e66dae17a9b61b89b5dc1bf228ca",
+  "stored_execution_record": {
+    "action_id": "action-8e82087821434aa88cb842f2e2b0de8a",
+    "request": {
+      "action": "enter_token",
+      "authorization": "3c87a3a09ad44f0a9e82ea1ae42024b5",
+      "expected_sequence": 2,
+      "operation": "enter_exact_token",
+      "valid_until_ns": 816199237583000
+    },
+    "result": {
+      "additional_input_checks": [
+        {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "eligible": true,
+          "ended_ns": 816197740148700,
+          "observation_sequence": 3,
+          "scope": "native-x11:227d11e1d3fd42c09f33f37119ac2a1c",
+          "stage": "before_admission",
+          "started_ns": 816197739909600
+        },
+        {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "eligible": true,
+          "ended_ns": 816197741307000,
+          "observation_sequence": 4,
+          "scope": "native-x11:227d11e1d3fd42c09f33f37119ac2a1c",
+          "stage": "before_key_press:CTRL",
+          "started_ns": 816197741092100
+        }
+      ],
+      "admission": "accepted",
+      "error": "BACKEND_EXECUTION_FAILED",
+      "execution": {
+        "activations": [],
+        "completed_ops": [
+          0
+        ],
+        "emissions": 2,
+        "ended_ns": 816197741375800,
+        "error": "X11BackendError('native target guard lease expired')",
+        "failed_op": 1,
+        "failed_op_effect": "unknown; may have emitted partial input",
+        "observations": [],
+        "program_emissions": 2,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [
+              "CTRL"
+            ],
+            "monotonic_ns": 816197741375000,
+            "verified": false
+          }
+        ],
+        "started_ns": 816197740400000,
+        "waits": []
+      },
+      "guard_checks": [
+        {
+          "authority": "resolution only; ordinary admission remains required",
+          "binding_translation": [
+            0,
+            0
+          ],
+          "eligible": true,
+          "handle": "field",
+          "local_translation": [
+            0,
+            0
+          ],
+          "name": "field",
+          "observation_sequence": 3,
+          "observed_box": [
+            2,
+            2,
+            12,
+            12
+          ],
+          "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+          "point": [
+            8,
+            8
+          ],
+          "private_registry_id_exposed": false,
+          "reason": "exact_region_match",
+          "reference_kind": "session_alias",
+          "sequence": 3,
+          "stage": "before_admission",
+          "status": "VALID",
+          "valid_until_ns": 816199239535000
+        },
+        {
+          "authority": "resolution only; ordinary admission remains required",
+          "binding_translation": [
+            0,
+            0
+          ],
+          "eligible": true,
+          "handle": "field",
+          "local_translation": [
+            0,
+            0
+          ],
+          "name": "field",
+          "observation_sequence": 4,
+          "observed_box": [
+            2,
+            2,
+            12,
+            12
+          ],
+          "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+          "point": [
+            8,
+            8
+          ],
+          "private_registry_id_exposed": false,
+          "reason": "exact_region_match",
+          "reference_kind": "session_alias",
+          "sequence": 4,
+          "stage": "before_key_press:CTRL",
+          "status": "VALID",
+          "valid_until_ns": 816199240702900
+        }
+      ],
+      "recovery_required": true,
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "status": "execution_failed"
+    }
+  },
+  "stored_terminal_record": {
+    "action_id": "action-8e82087821434aa88cb842f2e2b0de8a",
+    "effect_ref": "compiled-d09bd04fe9694558ac2995ef642ddfdf-9-execution",
+    "release": {
+      "buttons_down": [],
+      "keys_down": [
+        "CTRL"
+      ],
+      "verified": false
+    },
+    "status": "execution_failed"
+  }
+}

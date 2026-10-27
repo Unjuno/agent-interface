@@ -29,12 +29,22 @@ class CompiledNativeDependencyTests(unittest.TestCase):
 
     def cell(self, interaction='keyboard', change='false'):
         fake=FakeX(self);pointer=[0,0];buttons=set();events=[];reads=[]
+        keymap_reads=[0]
         def marker(value):
             image=Image.frombytes('RGB',(32,32),fake.raw,'raw','BGRX')
             image.putpixel((31,31),(value,0,0));fake.raw=image.tobytes('raw','BGRX')
         marker(1)
         fake.backend.root.query_pointer=lambda:SimpleNamespace(root_x=pointer[0],root_y=pointer[1],
             mask=X.Button1Mask if buttons else 0)
+        if change=='expired_held_recovery':
+            actual_keymap=fake.keymap
+            def keymap_with_one_unverified_release():
+                keymap_reads[0]+=1
+                bitmap=actual_keymap()
+                if keymap_reads[0]==1:
+                    bitmap[0] |= 1 << 1
+                return bitmap
+            fake.backend.d.query_keymap=keymap_with_one_unverified_release
         original_emit=fake.emit
         bridge_ref={}
         def emit(display,kind,code=0,**kwargs):
@@ -47,7 +57,7 @@ class CompiledNativeDependencyTests(unittest.TestCase):
             else:
                 original_emit(display,kind,code)
                 if kind==X.KeyPress and code==1 and change=='held':marker(0)
-                if kind==X.KeyPress and code==1 and change=='expired_while_held':
+                if kind==X.KeyPress and code==1 and change in ('expired_while_held','expired_held_recovery'):
                     bridge_ref['bridge'].deadline=time.monotonic_ns()-1
         with tempfile.TemporaryDirectory(prefix='compiled-dependency-') as td,patch(
                 'runtime.backends.x11_v1.backend.xtest.fake_input',side_effect=emit):
@@ -72,9 +82,12 @@ class CompiledNativeDependencyTests(unittest.TestCase):
                     for a,alias in [('enter_token','field'),('submit_form','submit')]}
                 adapter=_Adapter(bridge,interface,bindings,perceive,
                     lambda *a:{'status':'unavailable','evidence_ref':'synthetic'},lambda:False)
-                if change=='expired_while_held':
+                recovery=None
+                if change in ('expired_while_held','expired_held_recovery'):
                     marker(0)
                     result=adapter.execute_method()
+                    if change=='expired_held_recovery':
+                        recovery=bridge.recover_input(bridge.binding_revision)
                 else:
                     observation=adapter.observe({})
                     admission=adapter.admit(dict(interface_id=interface['interface_id'],session_scope=bridge.scope,
@@ -87,7 +100,7 @@ class CompiledNativeDependencyTests(unittest.TestCase):
                     result=adapter.execute(dict(action='submit_form',operation='activate_submit',
                         authorization=admission['authorization'],expected_sequence=observation['sequence'],
                         valid_until_ns=admission['valid_until_ns']))
-                row=dict(interaction=interaction,change=change,result=result,events=events,
+                row=dict(interaction=interaction,change=change,result=result,recovery=recovery,events=events,
                     down=sorted(fake.down),buttons=sorted(buttons),reads=reads,
                     guard_restored=bridge._input_guard is None,pending_authorizations=len(adapter.authorizations),
                     files_hex={p.relative_to(td).as_posix():p.read_bytes().hex()
@@ -167,6 +180,26 @@ class CompiledNativeDependencyTests(unittest.TestCase):
         self.assertEqual(releases[0]['buttons_down'],[])
         self.assertFalse(execution['recovery_required'])
         self.assertEqual(row['down'],[]);self.assertEqual(row['buttons'],[])
+
+    def test_failed_cleanup_requires_explicit_release_only_recovery_without_replay(self):
+        row=self.cell('keyboard','expired_held_recovery')
+        self.assertEqual([event[:2] for event in row['events']],
+            [[X.KeyPress,1],[X.KeyRelease,1],[X.KeyRelease,1]])
+        self.assertEqual((row['result']['outcome'],row['result']['reason']),
+            ('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(row['result']['completed_transitions'],0)
+        self.assertFalse(row['result']['critical_events'][-2]['release_verified'])
+        recovery=row['recovery']
+        self.assertEqual(recovery['status'],'input_recovered')
+        self.assertTrue(recovery['release_attempted'])
+        self.assertTrue(recovery['release']['verified'])
+        self.assertEqual(recovery['release']['keys_down'],[])
+        self.assertEqual(recovery['release']['buttons_down'],[])
+        self.assertIsNone(recovery['task_success'])
+        self.assertFalse(recovery['replay_allowed'])
+        self.assertTrue(recovery['review_required'])
+        self.assertGreater(recovery['binding_revision'],recovery['previous_binding_revision'])
+        self.assertFalse(row['down']);self.assertFalse(row['buttons'])
 
 
 if __name__=='__main__':unittest.main()
