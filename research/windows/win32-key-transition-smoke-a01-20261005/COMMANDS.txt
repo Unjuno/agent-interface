@@ -1,0 +1,11 @@
+First launch (stopped before candidate input):
+python research/windows/win32-key-transition-smoke-a01-20261005/probe.py
+
+One-shot native candidate run (after adding repository root to sys.path):
+python research/windows/win32-key-transition-smoke-a01-20261005/probe.py
+
+Independent result audit (read-only):
+python research/windows/win32-key-transition-smoke-a01-20261005/audit.py
+
+Relevant fake-API regression suite:
+python -m unittest runtime.backends.win32_v1.test_explicit_up_ledger runtime.backends.win32_v1.test_release_ledger runtime.backends.win32_v1.test_integration -v

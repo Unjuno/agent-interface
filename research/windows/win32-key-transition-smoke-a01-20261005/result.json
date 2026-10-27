@@ -1,0 +1,116 @@
+{
+  "input_key": "SHIFT",
+  "outcome": "PASS_SCOPED",
+  "platform": "win32",
+  "preconditions": {
+    "prior_foreground_hwnd": 1509326,
+    "probe_hwnd": 27856700,
+    "probe_hwnd_foreground": true,
+    "shift_initially_down": false
+  },
+  "release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 174210468000000,
+    "verified": true
+  },
+  "schema": "win32-key-transition-host-smoke-a01-v1",
+  "transitions": [
+    {
+      "admitted_ns": 174210453000000,
+      "application_delivery_proven": false,
+      "backend_instance_id": "826a2f1ce0fc443c8c8c323aee00c445",
+      "cleanup": false,
+      "event": "input_transition_receipt",
+      "hold_id": "826a2f1ce0fc443c8c8c323aee00c445:key-hold:1",
+      "key": "SHIFT",
+      "operation": "down",
+      "operation_index": 0,
+      "os_key_state_classification": "OS_KEY_STATE_DOWN_CONFIRMED",
+      "os_state_change_window_ns": [
+        174210453000000,
+        174210453000000
+      ],
+      "physical_keyboard_state_proven": false,
+      "program_id": "win32-key-transition-smoke-a01",
+      "requested_ns": 174210453000000,
+      "schema": "win32-key-transition-v1",
+      "sendinput_acknowledged_ns": 174210453000000,
+      "state_after": {
+        "available": true,
+        "down": true,
+        "finished_ns": 174210453000000,
+        "started_ns": 174210453000000
+      },
+      "state_before": {
+        "available": true,
+        "down": false,
+        "finished_ns": 174210453000000,
+        "started_ns": 174210453000000
+      }
+    },
+    {
+      "admitted_ns": 174210453000000,
+      "application_delivery_proven": false,
+      "backend_instance_id": "826a2f1ce0fc443c8c8c323aee00c445",
+      "cleanup": false,
+      "event": "input_transition_receipt",
+      "hold_id": "826a2f1ce0fc443c8c8c323aee00c445:key-hold:1",
+      "key": "SHIFT",
+      "operation": "up",
+      "operation_index": 1,
+      "os_key_state_classification": "OS_KEY_STATE_UP_CONFIRMED",
+      "os_state_change_window_ns": [
+        174210453000000,
+        174210453000000
+      ],
+      "physical_keyboard_state_proven": false,
+      "program_id": "win32-key-transition-smoke-a01",
+      "requested_ns": 174210453000000,
+      "schema": "win32-key-transition-v1",
+      "sendinput_acknowledged_ns": 174210453000000,
+      "state_after": {
+        "available": true,
+        "down": false,
+        "finished_ns": 174210453000000,
+        "started_ns": 174210453000000
+      },
+      "state_before": {
+        "available": true,
+        "down": true,
+        "finished_ns": 174210453000000,
+        "started_ns": 174210453000000
+      }
+    },
+    {
+      "admitted_ns": 174210453000000,
+      "application_delivery_proven": false,
+      "backend_instance_id": "826a2f1ce0fc443c8c8c323aee00c445",
+      "cleanup": true,
+      "event": "input_transition_receipt",
+      "hold_id": "826a2f1ce0fc443c8c8c323aee00c445:key-hold:1",
+      "key": "SHIFT",
+      "operation": "up",
+      "operation_index": 1,
+      "os_key_state_classification": "OS_KEY_STATE_ALREADY_UP",
+      "os_state_change_window_ns": null,
+      "physical_keyboard_state_proven": false,
+      "program_id": "win32-key-transition-smoke-a01",
+      "requested_ns": 174210453000000,
+      "schema": "win32-key-transition-v1",
+      "sendinput_acknowledged_ns": 174210453000000,
+      "state_after": {
+        "available": true,
+        "down": false,
+        "finished_ns": 174210468000000,
+        "started_ns": 174210468000000
+      },
+      "state_before": {
+        "available": true,
+        "down": false,
+        "finished_ns": 174210453000000,
+        "started_ns": 174210453000000
+      }
+    }
+  ]
+}
