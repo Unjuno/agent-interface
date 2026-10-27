@@ -68,3 +68,20 @@ class G10FreshAdmissionTests(unittest.TestCase):
   with self.assertRaises(ValueError):
    run_with_fresh_proposal(bridge,graph,bindings(),perceive=perceive,verify_effect=verify,proposal_provider=lambda *_:None)
   self.assertEqual(bridge.inputs,[]);self.assertEqual(bridge.mints,[])
+ def test_bounded_proposal_timeout_stops_before_second_input(self):
+  import threading
+  from research.live_control.calc_bounded_proposal_v1 import BoundedProposal
+  bridge=MintingBridge();entered=threading.Event();release=threading.Event()
+  def slow(native,image):
+   entered.set();release.wait(2)
+   return {'alias':'a1_second','source_sequence':native['sequence'],
+    'source_sha256':native['native']['artifact']['sha256'],'point':[8,8],'region_size':[4,4]}
+  provider=BoundedProposal(slow,timeout_ms=30,cancelled=lambda:False)
+  try:
+   result=run_with_fresh_proposal(bridge,interface(),bindings(),perceive=perceive,verify_effect=verify,proposal_provider=provider)
+   self.assertTrue(entered.is_set());self.assertEqual(result['outcome'],'SAFE_YIELD')
+   self.assertEqual(result['completed_transitions'],1);self.assertEqual(len(bridge.inputs),1)
+   self.assertEqual(bridge.mints,[]);self.assertTrue(provider.snapshot()['retired'])
+  finally:
+   release.set()
+   if provider.thread is not None:provider.thread.join(1)
