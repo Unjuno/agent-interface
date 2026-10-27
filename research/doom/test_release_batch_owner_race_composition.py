@@ -25,7 +25,9 @@ class Lease:
         self.interruptions = []
 
     def check(self):
-        pass
+        if time.perf_counter_ns() >= self.deadline:
+            from lease import Expired
+            raise Expired()
 
     def record_interruption(self, row):
         self.interruptions.append(row)
@@ -218,7 +220,8 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
 
             if expire:
                 self.assertEqual(len(execution_error), 1)
-                self.assertIs(type(execution_error[0]), ValueError)
+                from lease import Expired
+                self.assertIs(type(execution_error[0]), Expired)
                 self.assertEqual(lease.interruptions[-1]["reason"], "expired")
                 self.assertIs(lease.interruptions[-1]["verified"], True)
                 self.assertEqual(display.down, set())
