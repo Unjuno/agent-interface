@@ -236,14 +236,23 @@ class CompiledCallerHandoffTests(unittest.TestCase):
                 self.assertEqual(r['compiled_receipt_publication_error']['type'], 'OSError')
                 self.assertEqual(row['state']['verify'], 0)
 
-    def test_unreturned_core_receipt_stays_uncertain_without_prefix_invention(self):
+    def test_returned_core_failure_receipt_stays_uncertain_without_prefix_invention(self):
         row = cell('execute_throws'); r = row['result']
-        self.assertEqual(r['outcome'], 'CALLER_FAILED')
+        self.assertEqual(r['outcome'], 'EXECUTION_INCOMPLETE')
         self.assertEqual(r['delivery'], 'delivery_uncertain')
-        self.assertIsNone(r['execution_progress'])
-        self.assertIsNone(r['compiled_execution_receipt'])
+        self.assertEqual(r['execution_progress'], {
+            'status': 'safe_yield', 'reason': 'execution_failed',
+            'completed_actions': 1, 'input_dispatched': True})
+        receipt = r['compiled_execution_receipt']
+        self.assertEqual(receipt, row['raw'][0])
+        self.assertEqual(receipt['outcome'], 'RUNTIME_FAILED')
+        self.assertEqual(receipt['completed_transitions'], 1)
+        self.assertEqual(receipt['unresolved_execution'], {
+            'action': 'submit_form', 'reason': 'execution_callback_failed',
+            'release_verified': False, 'input_dispatched': None,
+            'action_id': None, 'effect_ref': None, 'error_type': 'OSError'})
         self.assertEqual(len(row['state']['execute']), 2)
-        self.assertEqual(row['state']['sink'], 0)
+        self.assertEqual(row['state']['sink'], 1)
         self.assertEqual(row['state']['verify'], 0)
 
     def test_non_exception_sink_stop_propagates_original(self):
