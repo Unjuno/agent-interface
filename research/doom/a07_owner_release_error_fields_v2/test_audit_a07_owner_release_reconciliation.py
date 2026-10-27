@@ -15,6 +15,8 @@ def fixture():
                 "sync_returned_ns": 25,
                 "keyrelease_error": None,
                 "sync_error": None,
+                "keymap_before_error": None,
+                "keymap_after_error": None,
             }]},
         },
     }

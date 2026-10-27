@@ -17,7 +17,9 @@ def _valid_keyup(attempt):
             attempt.get("server_key_down_after") is False and
             type(attempt.get("sync_returned_ns")) is int and
             "keyrelease_error" in attempt and attempt.get("keyrelease_error") is None and
-            "sync_error" in attempt and attempt.get("sync_error") is None)
+            "sync_error" in attempt and attempt.get("sync_error") is None and
+            "keymap_before_error" in attempt and attempt.get("keymap_before_error") is None and
+            "keymap_after_error" in attempt and attempt.get("keymap_after_error") is None)
 
 
 def audit(events, owner_events):
