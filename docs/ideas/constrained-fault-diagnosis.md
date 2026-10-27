@@ -1,6 +1,6 @@
 # Constrained interaction-fault diagnosis
 
-## Four distinct endpoints
+## Distinct endpoints
 
 ### Detection sensitivity — #5330
 
@@ -12,11 +12,11 @@ Merged [PR #5351](https://github.com/Unjuno/agent-interface/pull/5351) retains `
 
 ### Adaptive versus fixed plans — #8895
 
-**Status:** Open, unverified successor to #8894. Compare an outcome-dependent decision tree with the best fixed suite/order for the same finite fault grammar and constraints. The fixed suite may stop early when its observed prefix uniquely identifies a fault set; compare against an exhaustively searched best-fixed baseline, not an arbitrary suite. Report executed configurations, adaptive sequential rounds, fixed-suite makespan under a preregistered worker cap, and test/reset/communication costs. If those costs cannot be supported, show a tests-versus-rounds/parallelism Pareto frontier and do not call fewer tests “faster.” See [Issue #8895](https://github.com/Unjuno/agent-interface/issues/8895).
+**Status:** Unverified proposal tracked under #8894; [Issue #8895](https://github.com/Unjuno/agent-interface/issues/8895) retains the original proposal and comments. Compare an outcome-dependent decision tree with the best fixed suite/order for the same finite fault grammar and constraints. The fixed suite may stop early when its observed prefix uniquely identifies a fault set; compare against an exhaustively searched best-fixed baseline, not an arbitrary suite. Report executed configurations, adaptive sequential rounds, fixed-suite makespan under a preregistered worker cap, and test/reset/communication costs. If those costs cannot be supported, show a tests-versus-rounds/parallelism Pareto frontier and do not call fewer tests “faster.”
 
 ### Outcome-signature corruption robustness — #8898
 
-The already indexed #8898 successor asks whether signatures remain diagnosable after a bounded number of corrupted outcomes. It is a robustness layer over declared signatures, not a substitute for establishing that the underlying fault sets are distinguishable. Keep ambiguity when corruption exceeds separability.
+**Status:** Unverified proposal tracked under #8894; [Issue #8898](https://github.com/Unjuno/agent-interface/issues/8898) and the [bounded-error note](bounded-error-diagnosability.md) retain its details and literature boundary. It asks whether signatures remain diagnosable after a bounded number of corrupted outcomes. This robustness layer does not establish that the underlying fault sets are distinguishable. Keep ambiguity when corruption exceeds separability.
 
 ### Fixed-budget diversity for early causal-hypothesis search — #8901
 
@@ -29,3 +29,5 @@ This is upstream of #5430's diagnosis over extracted conflict sets and #8894's t
 ## Scope boundary
 
 Constrained locating arrays, adaptive fault localization, and corruption-tolerant codes are established methods in their source domains. These Issues propose finite repository-specific comparisons; they do not estimate real fault prevalence, prove product fault localization, or authorize runtime interventions. Safe-probe constraints from adjacent #6147 remain separate and must not be weakened.
+
+The open parent #8894 carries the three separate unverified questions above. Consolidation is an issue-routing decision, not a research result: retain the original Issues and comments, the distinct comparisons and decision criteria, and #5330's scoped detection result. The first bounded step is to recover the exact #5330 fixture definitions, or explicitly freeze a separate small synthetic catalog if they cannot be verified; do not rerun its consumed allocation.

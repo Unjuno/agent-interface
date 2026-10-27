@@ -1,6 +1,6 @@
 # Bounded-error diagnosability — #8898
 
-- **Status:** Unverified method-transfer proposal; no experiment or result is recorded.
+- **Status:** Unverified method-transfer proposal tracked under [parent Issue #8894](https://github.com/Unjuno/agent-interface/issues/8894); no experiment or result is recorded. The original Issue and its comments remain available as the source.
 - **Source:** Open [Issue #8898](https://github.com/Unjuno/agent-interface/issues/8898), including its [literature-boundary addendum](https://github.com/Unjuno/agent-interface/issues/8898#issuecomment-6123331962).
 - **Idea:** Test whether a constrained fault-locating suite can tolerate a preregistered number of corrupted test-outcome bits without producing a false unique diagnosis. If the code-distance guarantee is insufficient, the decoder must return ambiguity or `UNKNOWN`.
 - **Relation to prior work:** #8894 owns noiseless constrained fault-set diagnosability; #8895 covers adaptive versus fixed plans; #5330/PR #5351 covers detection sensitivity on a retained planted model; #8152 reduces flaky traces. ELA/ECLA are direct mathematical prior art: #8898 claims only a repository-scoped utility test for bounded outcome corruption at matched row budget, not a new construction or calibrated noise rate.
