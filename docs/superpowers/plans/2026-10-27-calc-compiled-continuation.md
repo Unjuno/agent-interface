@@ -72,3 +72,7 @@ The Calc graph factory now builds from the caller-provided final target mapping.
 ## Existing G10 route correction (2026-10-27)
 
 The earlier search missed the preserved #3311 G10 compiled/OCR live construction. Before new live adapter work, evaluate whether that qualified fixed-layout path can be integrated into the same-model comparison and reconcile its pinned implementation with current main. Do not replace its already retained evidence with the newer two-cell synthetic graph, or infer a token/latency result from G10. See `research/integration/calc_g10_current_main_crosswalk_20261027.md`; a same-model comparison and any current-main compatibility verification remain open.
+
+## Shared guarded-adapter dependency correction (2026-10-27)
+
+The actual `runtime.guarded_x11_v1.compiled` adapter requires every symbol dependency to be boolean true. The earlier Calc graph put `dialog_present` in sheet/save dependencies while requiring it false in branches, so the adapter refused the initial action. The graph now declares `dialog_absent`, requires it true as the admission dependency, and still checks `dialog_present` false in the branch. Perception is trusted and must establish these predicates consistently. A fake-bridge test exercises the actual shared compiled adapter: three synthetic actions complete; if the dialog appears at the pre-input guard, no input is emitted. The original graph failed the positive test before correction. Forty selected offline tests pass normally and under `-O`. No real X11 display, Calc, native input or live task-effect was used.

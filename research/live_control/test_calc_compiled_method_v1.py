@@ -11,7 +11,7 @@ class CalcMethodTests(unittest.TestCase):
    count['observations']+=1;n=count['inputs']
    return {'sequence':count['observations'],'captured_ns':time.perf_counter_ns(),'surface':'calc',
     'predicates':{'cells_match':n>=1,'sheet_target_present':True,'save_target_present':True,
-     'dialog_present':'unknown' if unknown and n==0 else n==2,'confirm_target_present':True,'saved_indication':n>=3},
+     'dialog_present':'unknown' if unknown and n==0 else n==2,'dialog_absent':'unknown' if unknown and n==0 else n!=2,'confirm_target_present':True,'saved_indication':n>=3},
     'evidence_ref':'frame-'+str(n),'evidence_digest':'digest-'+str(n)}
   def admit(payload):
    target=payload['symbol']['target_reference'];count['admissions'].append(target)
