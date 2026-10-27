@@ -1,0 +1,45 @@
+{
+  "allocation_id": "8665-T0-A01-20261009",
+  "auditor": {
+    "audit_sha256": "5256e34e811df9611a25177ecad80a68d6ce45c8dae5d7082587ad8d8007e2d9",
+    "command": "python3 -B audit.py --raw results/first-outcome/RAW.jsonl --output results/first-outcome/AUDIT.json",
+    "errors": 0,
+    "exit_code": 0,
+    "invocations": 1,
+    "mutations_rejected": {
+      "altered_queue_timing": true,
+      "decision_before_receipt": true,
+      "dropped_attempt": true,
+      "factor_label_swap": true,
+      "forged_effect": true
+    },
+    "status": "PASS_METHOD_SCOPED"
+  },
+  "candidate": {
+    "command": "python3 -B candidate.py --output results/first-outcome/RAW.jsonl",
+    "ended_utc": "2026-10-08T19:12:19Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "raw_bytes": 589330,
+    "raw_sha256": "57abf1d05c8fd8c0772bfec3394dc306f6a17c2dc96354606d81aa852f38d2a8",
+    "rows": 256,
+    "started_utc": "2026-10-08T19:12:19Z"
+  },
+  "freeze_commit": "ad0866478d531fbdd4a76cde518568baf941372b",
+  "runtime": {
+    "gui": false,
+    "model": false,
+    "network": false,
+    "os_input": false,
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "schema": "issue8665-t0-run-record-v1",
+  "source_main_sha": "23d1807ffad8359e0f89421ee2b9bf5783c9d5f4",
+  "source_sha256": {
+    "PREREGISTRATION.json": "9932f44874f4a14256bda55a7001bd560f6aa6cf924de8b4554218ff895708d1",
+    "README.md": "e7a260ec32228d95d43cea564867b612c8628a89bd2e0d9cb6d5a0102958cdad",
+    "audit.py": "6864057c22adcc3b587dd1620e074678d6afe6e240a3cd25208b9859cb5ae85f",
+    "candidate.py": "a691f30c5893d00f0ac646889d8199a31270c56dc6f2eb3921df64eff24ccf34"
+  }
+}

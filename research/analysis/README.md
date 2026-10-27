@@ -380,6 +380,8 @@ The table below summarizes major analytical chains and representative retained o
 
 - [singleflight_cancel_order_6501_boundary_20261003/repair_v2/README.md](singleflight_cancel_order_6501_boundary_20261003/repair_v2/README.md) — #6501 finite cancellation/delivery boundary: unchanged192 assignments/384 decisions,48 strict-clock wrong admissions,48 conservative wrong refusals,0 explicit-order discrepancies; frozen v1 audit accepted six typed/schema corruptions, separately retained v2 audit rejects all14 effective controls. Original source/raw/first results preserved; no formal replay or runtime promotion.
 
+The retained #8665 A01 record has a [simultaneous-order qualification](observation_load_cue_information_8665_t0_a01_20261009/ORDERING_QUALIFICATION.md).
+
 ## Complete retained result directory index
 
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
@@ -888,6 +890,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_intervention_6526_a02_orbstack_20261003/`](observation_intervention_6526_a02_orbstack_20261003/)
 - [`observation_intervention_6526_a03_deadline_audit_only_20261003/`](observation_intervention_6526_a03_deadline_audit_only_20261003/)
 - [`observation_intervention_6526_t0_20261002/`](observation_intervention_6526_t0_20261002/)
+- [`observation_load_cue_information_8665_t0_a01_20261009/`](observation_load_cue_information_8665_t0_a01_20261009/)
 - [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
 - [`observation_manipulate_support_union_v1/`](observation_manipulate_support_union_v1/)
