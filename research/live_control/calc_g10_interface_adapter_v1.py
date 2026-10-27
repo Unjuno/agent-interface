@@ -81,4 +81,3 @@ def adapt_retained_g10_graph_v1(interface, *, session_scope, surface,
     graph["symbols"][second_symbol] = second_anchor
     graph["actions"]["second"]["target_symbol"] = second_symbol
     return validate(graph)
-
