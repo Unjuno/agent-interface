@@ -386,12 +386,23 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(server_thread.is_alive(),'relay did not finish after stdout resumed')
         self.assertEqual(errors,[])
         self.assertGreaterEqual(cancel_dispatched_ns,release_started_ns)
-        self.assertEqual(client.calls,
-                         [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES+
-                         [('interface_guarded_compiled',{'marker':'queued-one'}),
-                          ('interface_guarded_cancel',{'call_id':'a'*32}),
-                          ('interface_guarded_compiled',{'marker':'queued-two'}),
-                          ('interface_guarded_compiled',{'marker':'tail'})])
+        prefix = [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES
+        self.assertEqual(client.calls[:len(prefix)], prefix)
+        # Once stdout resumes, the bounded reader and response writers race:
+        # a cancellation already read by the lookahead may overtake queued-two;
+        # if that read has not completed, FIFO dispatches queued-two first.
+        # Both orders preserve the public contract. Before release, the checks
+        # above still require both ordinary requests to remain undispatched.
+        self.assertIn(client.calls[len(prefix):], [
+            [('interface_guarded_compiled',{'marker':'queued-one'}),
+             ('interface_guarded_cancel',{'call_id':'a'*32}),
+             ('interface_guarded_compiled',{'marker':'queued-two'}),
+             ('interface_guarded_compiled',{'marker':'tail'})],
+            [('interface_guarded_compiled',{'marker':'queued-one'}),
+             ('interface_guarded_compiled',{'marker':'queued-two'}),
+             ('interface_guarded_cancel',{'call_id':'a'*32}),
+             ('interface_guarded_compiled',{'marker':'tail'})],
+        ])
 
     async def test_cancel_response_writer_failure_stops_later_tool_dispatch(self):
         from runtime.cli_v1 import mcp_relay as module

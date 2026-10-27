@@ -1,0 +1,10 @@
+Repository revision=0088c96d17df8ef31c25ad1cba5f2ac883f72f28
+Platform=WSL Ubuntu; exact distro release not captured
+Python=CPython 3.12.3
+MCP=mcp==1.30.0
+Pre-fix source=detached worktree at repository revision above
+Post-fix source=working branch research/native-mcp-queue-order-20261028
+Target test repetitions=20 before, 20 after
+Relay module=22 available tests after; legacy parity test excluded because research/live_control/native_mcp_relay_v1.py is absent from sparse checkout
+Native full runner=not a valid pass; sparse checkout omits multiple protocol modules and runtime/backends/win32_v1
+Docker/GUI/model/network allocation=not used
