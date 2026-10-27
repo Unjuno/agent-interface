@@ -167,7 +167,8 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     return terminal
 
 
-def _task_oracle_evidence(reply, expected_call_id, expected_generation):
+def _task_oracle_evidence(reply, expected_call_id, expected_generation,
+                          expected_operation_id):
     """Accept only the standard server's exact-call task-oracle receipt."""
     row = _content_object(reply)
     effect = row.get("task_effect")
@@ -197,6 +198,7 @@ def _task_oracle_evidence(reply, expected_call_id, expected_generation):
             and oracle_receipt.get("target_generation") == expected_generation
             and type(oracle_receipt.get("operation_id")) is str
             and _IDENTIFIER.fullmatch(oracle_receipt.get("operation_id")) is not None
+            and oracle_receipt.get("operation_id") == expected_operation_id
             and type(oracle_receipt.get("oracle_id")) is str
             and _IDENTIFIER.fullmatch(oracle_receipt.get("oracle_id")) is not None
             and outcome in {"success", "failure", "unknown"}
@@ -220,6 +222,8 @@ def _task_oracle_evidence(reply, expected_call_id, expected_generation):
         oracle_receipt_valid = type(requested_ns) is int and requested_ns > 0
     valid = (
         _IDENTIFIER.fullmatch(expected_call_id) is not None
+        and type(expected_operation_id) is str
+        and _IDENTIFIER.fullmatch(expected_operation_id) is not None
         and row.get("call_id") == expected_call_id
         and row.get("scope") == "supervised_win32"
         and row.get("operation_invoked") is False
@@ -524,7 +528,7 @@ def run_public_compiled(interface, program_templates, *, target,
         try:
             task_evidence = _task_oracle_evidence(
                 verify_task(final_call_id), final_call_id,
-                final_dispatch["target_generation"])
+                final_dispatch["target_generation"], final_dispatch["action_id"])
             task_evidence["target_generation"] = final_dispatch["target_generation"]
             receipt["task_verification"] = task_evidence
             if task_evidence["valid"]:

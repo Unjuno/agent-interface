@@ -136,7 +136,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             requested = time.monotonic_ns() - 2_000_000
             observed = requested + 1_000_000
             accepted = observed + 1_000_000
-            receipt = {"call_id": call_id, "operation_id": "d" * 32,
+            receipt = {"call_id": call_id, "operation_id": operation_id,
                 "target_generation": generation, "oracle_id": "e" * 32,
                 "outcome": "success", "observed_monotonic_ns": observed,
                 "evidence_ref": "pixel-proof"}
@@ -162,6 +162,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(resolutions, [(dispatch_id, "pending")])
         self.assertEqual(result["standard_action_call_ids"], [dispatch_id])
         self.assertEqual(result["task_verification"]["action_call_id"], dispatch_id)
+        self.assertTrue(result["task_verification"]["valid"])
+        self.assertIs(result["task_success"], True)
         self.assertEqual(task_calls, [dispatch_id])
         dispatch_evidence = result["standard_target_evidence"][1]
         self.assertEqual(dispatch_evidence["call_id"], dispatch_id)
@@ -225,7 +227,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             action_index = len(dispatch_calls) + 1
             dispatch_calls.append((sent_program, sequence, binding_revision))
             return {"status": "completed", "call_id": call_id(100 + action_index),
-                "action_id": f"action-{action_index}",
+                "action_id": f"{action_index:032x}",
                 "effect_ref": f"effect-{action_index}",
                 "input_dispatched": True,
                 "release": {"verified": True, "keys_down": [],
@@ -266,7 +268,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(evidence[2]["observation_sequence"], 2)
         self.assertEqual(evidence[1]["observation_sequence"], 1)
         self.assertEqual(evidence[1]["binding_revision"], 7)
-        self.assertEqual(evidence[1]["action_id"], "action-1")
+        self.assertEqual(evidence[1]["action_id"], f"{1:032x}")
         self.assertTrue(evidence[1]["release_verified"])
         self.assertEqual(len(observation_calls), 2)
         self.assertEqual(len(dispatch_calls), 1)
@@ -284,7 +286,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(effect_reply["call_id"], call_id(2))
 
         def task_oracle(call_id, verdict=True, echoed_call_id=None,
-                        echoed_generation=None, without_receipt=False):
+                        echoed_generation=None, without_receipt=False,
+                        echoed_operation_id=None):
             task_calls.append(call_id)
             status = "unknown" if verdict is None else "verified"
             requested_ns = time.monotonic_ns() - 1_000_000
@@ -292,7 +295,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             received_ns = time.monotonic_ns()
             outcome = ("success" if verdict is True else
                 "failure" if verdict is False else "unknown")
-            oracle_receipt = {"call_id": call_id, "operation_id": "e" * 32,
+            oracle_receipt = {"call_id": call_id,
+                "operation_id": echoed_operation_id or f"{len(dispatch_calls):032x}",
                 "target_generation": echoed_generation or generation,
                 "oracle_id": "d" * 32,
                 "outcome": outcome, "observed_monotonic_ns": observed_ns,
@@ -388,8 +392,19 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             cancelled=lambda: False)
         self.assertFalse(generation_mismatch["task_verification"]["valid"])
         self.assertIsNone(generation_mismatch["task_success"])
+
+        operation_mismatch = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, echoed_operation_id="f" * 32),
+            cancelled=lambda: False)
+        self.assertFalse(operation_mismatch["task_verification"]["valid"])
+        self.assertIsNone(operation_mismatch["task_success"])
         self.assertEqual(task_calls, [call_id(102), call_id(103), call_id(104),
-            call_id(105), call_id(106), call_id(107)])
+            call_id(105), call_id(106), call_id(107), call_id(108)])
 
     def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
         generation = "a" * 64
