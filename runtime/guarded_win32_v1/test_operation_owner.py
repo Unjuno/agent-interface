@@ -52,6 +52,31 @@ class OperationOwnerTests(unittest.TestCase):
                                     process_identity=PRODUCER)
         return self.owner.request_cancel("op-1", GEN_A, cleanup_deadline_ns=900)
 
+    def test_admission_rechecks_deadline_after_lock_wait(self):
+        checked = threading.Event()
+        clock_value = [100]
+        def clock():
+            checked.set()
+            return clock_value[0]
+        owner = OperationOwner(clock_ns=clock, process_identity_reader=lambda _: None)
+        results = []
+        def attempt():
+            try:
+                owner.admit("op-expired", GEN_A, 200, ["key:a"])
+                results.append("accepted")
+            except OwnerRefused:
+                results.append("refused")
+        with owner._lock:
+            thread = threading.Thread(target=attempt)
+            thread.start()
+            self.assertTrue(checked.wait(2))
+            clock_value[0] = 200
+        thread.join(2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(results, ["refused"])
+        with self.assertRaises(OwnerRefused):
+            owner.result("op-expired")
+
     def test_gate_callback_that_opens_then_raises_cannot_claim_gate_remained_closed(self):
         self.owner.admit("op-gate-error", GEN_A, 1_000, ["key:a"], start_gate_required=True)
         process = FakeProcess(PRODUCER)

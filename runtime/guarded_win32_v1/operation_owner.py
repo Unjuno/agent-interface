@@ -59,6 +59,9 @@ class OperationOwner:
                 or len(set(obligations)) != len(obligations)):
             raise OwnerRefused("unique frozen input obligations required")
         with self._lock:
+            # Lock contention may consume the remaining admission window.
+            if deadline_ns <= self._clock_ns():
+                raise OwnerRefused("operation deadline must be in the future")
             if operation_id in self._records:
                 raise OwnerRefused("operation ID already used")
             prior = (self._records.get(self._active_operation_id)
