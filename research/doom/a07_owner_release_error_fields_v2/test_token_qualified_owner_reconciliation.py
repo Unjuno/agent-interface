@@ -29,6 +29,17 @@ class TokenQualifiedTests(unittest.TestCase):
         events, owner = fixture()
         self.assertEqual(audit(events, owner)["status"], "HOLD_OWNER_RELEASE_IDENTITY")
 
+    def test_missing_equal_or_malformed_times_are_unverified(self):
+        for admission, cancel in ((None, 30), (10, None), (30, 30), (31, 30), (True, 30)):
+            with self.subTest(admission=admission, cancel=cancel):
+                events, owner = fixture()
+                events[6]["owner_release"]["intent_token"] = "intent-1"
+                events[1]["admitted_ns"] = admission
+                events[0]["requested_ns"] = cancel
+                result = audit(events, owner)
+                self.assertNotEqual(result["status"], "PASS_CUSTODY_RECONCILED_SCOPED")
+                self.assertFalse(result["formal_pass"])
+
     def test_unique_token_retains_scoped_terminal_cleanup(self):
         events, owner = fixture()
         events[6]["owner_release"]["intent_token"] = "intent-1"

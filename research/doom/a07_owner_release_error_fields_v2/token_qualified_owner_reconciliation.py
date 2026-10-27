@@ -23,6 +23,12 @@ def audit(events, owner_events):
         admissions = [row for row in events if row.get("event") == "input_admission" and row.get("id") == ident]
         if not admissions:
             continue
+        cancel_ns = cancel.get("requested_ns")
+        if (type(cancel_ns) is not int or any(
+                type(row.get("admitted_ns")) is not int or row["admitted_ns"] >= cancel_ns
+                for row in admissions)):
+            return {"schema": "a07-token-qualified-owner-reconciliation-v1",
+                    "status": "HOLD_ADMISSION_ORDER", "formal_pass": False}
         releases = [row for row in events if row.get("event") == "input_released" and row.get("id") == ident]
         if len(releases) != 1:
             return {"schema": "a07-token-qualified-owner-reconciliation-v1",
