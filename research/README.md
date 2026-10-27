@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8663: [predicate-aware DPOR evidence](gui_query_dpor_8663_a01_20261009/CUSTODY.md) — synthetic results with retained STOP, FAIL and corrected audit; the preregistered auditor limit was exceeded. No live GUI claim.
+
 - Win32 Freedoom MAP01 R07–R13: [live standard supervised-Win32 public-caller trials](integration/win32_freedoom_supervised_public_mcp_20261026/RESULT.md) — R12 has a generation-bound action, verified release/readback, and an accepted independent visual task-effect certificate. R13 confirms the #9574 late-recovery action status fix on live MAP01 and records task-effect failure separately from verified release. R11's accepted evidence path is stale; R07–R10 preserve setup, pending, lease-expiry, and receipt-schema failures. Native Windows only; no WSLc or Docker.
 - Win32 Freedoom MAP01 R01–R06: [six direct Win32 probes with a same-condition replicate and zero-input control](integration/win32_freedoom_map01_live_20261026/README.md) — R03/R06 both showed large view change from about +1 s to +2 s after release; R05's no-input control remained stable over that interval. This supports input-associated delayed response but does not prove causality. Private raw packets are hash-manifested. No blocked-I/O, bounded recovery, efficiency, WSLc, or reliability claim.
 
