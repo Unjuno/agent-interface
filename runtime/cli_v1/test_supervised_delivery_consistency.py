@@ -49,6 +49,26 @@ class SupervisedDeliveryConsistencyTests(unittest.TestCase):
         self.assertNotIn("input_dispatched", result)
         self.assertTrue(result["release"]["verified"])
 
+    def test_completed_no_input_cannot_claim_completion(self):
+        fixture = fixtures.SupervisedIdentityTests()
+        row = fixture.row()
+        row["input_dispatched"] = False
+        row["supervision"]["action"]["input_dispatched"] = False
+        result = fixture.terminal(row)
+        self.assertEqual(result["status"], "uncertain")
+        self.assertNotIn("input_dispatched", result)
+        self.assertTrue(result["release"]["verified"])
+
+    def test_no_input_refusal_cannot_override_completed_supervision(self):
+        fixture = fixtures.SupervisedIdentityTests()
+        row = fixture.row()
+        row["input_dispatched"] = False
+        row["operation_invoked"] = False
+        result = fixture.terminal(row)
+        self.assertEqual(result["status"], "uncertain")
+        self.assertNotIn("input_dispatched", result)
+        self.assertTrue(result["release"]["verified"])
+
     def test_consistent_delivery_completes(self):
         fixture = fixtures.SupervisedIdentityTests()
         row = fixture.row()

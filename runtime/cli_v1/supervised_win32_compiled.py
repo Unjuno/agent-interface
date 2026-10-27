@@ -132,7 +132,9 @@ def _terminal(reply, action_name, *, expected_call_id=None,
                 for value in (outer_delivery, inner_delivery))
             or (type(outer_delivery) is bool and type(inner_delivery) is bool
                 and outer_delivery is not inner_delivery))
-        terminal = {"status": ("uncertain" if delivery_conflict
+        no_input_completion = (False in (outer_delivery, inner_delivery)
+            and completed)
+        terminal = {"status": ("uncertain" if delivery_conflict or no_input_completion
                 else "completed" if verified_release and completed
                 else "delivery_uncertain" if verified_release and recovered
                 else "uncertain"),
@@ -145,7 +147,8 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         input_dispatched = retrieved_action.get("input_dispatched")
         if type(input_dispatched) is not bool:
             input_dispatched = action_result.get("input_dispatched")
-        if type(input_dispatched) is bool and not delivery_conflict:
+        if (type(input_dispatched) is bool and not delivery_conflict
+                and input_dispatched is not False):
             terminal["input_dispatched"] = input_dispatched
         return terminal
     supervision = row.get("supervision")
@@ -197,7 +200,9 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     action_id = row.get("operation_id") or row.get("call_id")
     if type(action_id) is not str or not action_id:
         action_id = "compiled-" + uuid.uuid4().hex
-    terminal = {"status": ("uncertain" if delivery_conflict
+    no_input_nonrefusal = (input_dispatched is False and
+        (not refused_before_input or (confirmed and action.get("status") == "completed")))
+    terminal = {"status": ("uncertain" if delivery_conflict or no_input_nonrefusal
             else "completed" if status in ("returned", "completed") and confirmed
             and action.get("status") == "completed"
             else "refused" if refused_before_input else "uncertain"),
@@ -206,7 +211,7 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         "release": {"verified": confirmed,
             "keys_down": [] if confirmed else ["unknown"],
             "buttons_down": [] if confirmed else ["unknown"]}}
-    if input_dispatched is not None and not delivery_conflict:
+    if input_dispatched is not None and not delivery_conflict and not no_input_nonrefusal:
         terminal["input_dispatched"] = input_dispatched
     return terminal
 
