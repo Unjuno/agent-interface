@@ -172,6 +172,10 @@ def project(records):
                 or next(iter(sizes)) != len(batch_rows)):
             return {"measurement_ready": False, "rows": []}
         ordered_rows = sorted(batch_rows, key=lambda row: row["release_batch_position"])
+        expected_key_order = [row["key"] for row in ordered_rows]
+        if any(row["owner_thread_keyup_receipt"]["release_batch_key_order"] != expected_key_order
+               for row in ordered_rows):
+            return {"measurement_ready": False, "rows": []}
         previous_initial_sync = None
         for row in ordered_rows:
             first_attempt = row["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]
