@@ -86,6 +86,12 @@ class BaseBackend:
 
 class ReleaseBatchOwnerRaceTests(unittest.TestCase):
     def test_cleanup_winning_inside_up_batch_is_joined_through_backend(self):
+        self._exercise_owner_race(expire=False)
+
+    def test_expiry_winning_inside_up_batch_remains_unverified(self):
+        self._exercise_owner_race(expire=True)
+
+    def _exercise_owner_race(self, *, expire):
         xlib_names = (
             "Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
             "Xlib.ext", "Xlib.ext.xtest",
@@ -167,7 +173,10 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
                         raced.append(request[0])
                         race_clock["enqueued_ns"] = time.perf_counter_ns()
                         queued_before_cancel.set()
-                        lease.cancel.set()
+                        if expire:
+                            lease.deadline = time.perf_counter_ns() - 1
+                        else:
+                            lease.cancel.set()
                         race_clock["cancel_requested_ns"] = time.perf_counter_ns()
                         cancel_after_enqueue.set()
 
@@ -206,6 +215,23 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
             worker.join(2)
             self.assertFalse(worker.is_alive(), "backend execution did not finish")
+
+            if expire:
+                self.assertEqual(len(execution_error), 1)
+                self.assertIs(type(execution_error[0]), ValueError)
+                self.assertEqual(lease.interruptions[-1]["reason"], "expired")
+                self.assertIs(lease.interruptions[-1]["verified"], True)
+                self.assertEqual(display.down, set())
+                rows = [row for row in emitted
+                        if row.get("event") == "input_release_transition"]
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]["release_batch_disposition"], "step_exception")
+                self.assertIs(rows[0]["owner_transition_verified"], False)
+                self.assertIs(rows[0]["physical_verification_authoritative"], False)
+                self.assertEqual(rows[0]["release_batch_call_outcome"], "unknown_no_retry")
+                from project_v39_release_measurement_v1 import project
+                self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+                return
 
             self.assertFalse(execution_error, execution_error)
 
