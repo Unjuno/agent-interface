@@ -1,0 +1,153 @@
+{
+  "horizons": [0, 1, 2, 3],
+  "cases": [
+    {
+      "id": "fully-observed",
+      "states": ["S", "M"],
+      "initial_belief": ["S"],
+      "observations": {"S": "s", "M": "m"},
+      "transitions": {"S": {"GO": ["M"]}, "M": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": [],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": true
+    },
+    {
+      "id": "aliased-opposite-actions",
+      "states": ["L", "R", "ML", "MR", "BAD"],
+      "initial_belief": ["L", "R"],
+      "observations": {"L": "same", "R": "same", "ML": "left-done", "MR": "right-done", "BAD": "bad"},
+      "transitions": {
+        "L": {"LEFT": ["ML"], "RIGHT": ["BAD"]},
+        "R": {"LEFT": ["BAD"], "RIGHT": ["MR"]},
+        "ML": {}, "MR": {}, "BAD": {}
+      },
+      "authorized_actions": ["LEFT", "RIGHT"],
+      "marker": ["ML", "MR"],
+      "unsafe": ["BAD"],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": true,
+      "singleton_controls": [["L"], ["R"]]
+    },
+    {
+      "id": "safe-information-gathering",
+      "states": ["L", "R", "L1", "R1", "ML", "MR", "BAD"],
+      "initial_belief": ["L", "R"],
+      "observations": {"L": "same", "R": "same", "L1": "left-cue", "R1": "right-cue", "ML": "left-done", "MR": "right-done", "BAD": "bad"},
+      "transitions": {
+        "L": {"SCAN": ["L1"]}, "R": {"SCAN": ["R1"]},
+        "L1": {"LEFT": ["ML"], "RIGHT": ["BAD"]},
+        "R1": {"LEFT": ["BAD"], "RIGHT": ["MR"]},
+        "ML": {}, "MR": {}, "BAD": {}
+      },
+      "authorized_actions": ["LEFT", "RIGHT", "SCAN"],
+      "marker": ["ML", "MR"],
+      "unsafe": ["BAD"],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": true
+    },
+    {
+      "id": "late-cue",
+      "states": ["L", "R", "L1", "R1", "ML", "MR", "BAD"],
+      "initial_belief": ["L", "R"],
+      "observations": {"L": "same", "R": "same", "L1": "left-cue", "R1": "right-cue", "ML": "left-done", "MR": "right-done", "BAD": "bad"},
+      "transitions": {
+        "L": {"SCAN": ["L1"]}, "R": {"SCAN": ["R1"]},
+        "L1": {"LEFT": ["ML"], "RIGHT": ["BAD"]},
+        "R1": {"LEFT": ["BAD"], "RIGHT": ["MR"]},
+        "ML": {}, "MR": {}, "BAD": {}
+      },
+      "authorized_actions": ["LEFT", "RIGHT", "SCAN"],
+      "marker": ["ML", "MR"],
+      "unsafe": ["BAD"],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": true,
+      "budget_cap": 1
+    },
+    {
+      "id": "uncontrollable-destroys-recovery",
+      "states": ["S", "M", "BAD"],
+      "initial_belief": ["S"],
+      "observations": {"S": "s", "M": "m", "BAD": "bad"},
+      "transitions": {"S": {"GO": ["M", "BAD"]}, "M": {}, "BAD": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": ["BAD"],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": true,
+      "uncontrollable_edges": [["S", "BAD"]]
+    },
+    {
+      "id": "exact-horizon-alternate-path",
+      "states": ["S0", "S1", "M", "BAD"],
+      "initial_belief": ["S0"],
+      "observations": {"S0": "s0", "S1": "s1", "M": "m", "BAD": "bad"},
+      "transitions": {"S0": {"GO": ["S1"]}, "S1": {"GO": ["M"]}, "M": {}, "BAD": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": ["BAD"],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": true
+    },
+    {
+      "id": "omitted-transition-mass",
+      "states": ["S", "M"],
+      "initial_belief": ["S"],
+      "observations": {"S": "s", "M": "m"},
+      "transitions": {"S": {"GO": ["M"]}, "M": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": [],
+      "model_complete": false,
+      "generation_current": true,
+      "marker_verified": true
+    },
+    {
+      "id": "stale-observation-generation",
+      "states": ["S", "M"],
+      "initial_belief": ["S"],
+      "observations": {"S": "s", "M": "m"},
+      "transitions": {"S": {"GO": ["M"]}, "M": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": [],
+      "model_complete": true,
+      "generation_current": false,
+      "marker_verified": true
+    },
+    {
+      "id": "unverified-marker",
+      "states": ["S", "M"],
+      "initial_belief": ["S"],
+      "observations": {"S": "s", "M": "m"},
+      "transitions": {"S": {"GO": ["M"]}, "M": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": [],
+      "model_complete": true,
+      "generation_current": true,
+      "marker_verified": false
+    },
+    {
+      "id": "missing-transition",
+      "states": ["S", "M"],
+      "initial_belief": ["S"],
+      "observations": {"S": "s", "M": "m"},
+      "transitions": {"S": {}, "M": {}},
+      "authorized_actions": ["GO"],
+      "marker": ["M"],
+      "unsafe": [],
+      "model_complete": true,
+      "transition_map_complete": false,
+      "generation_current": true,
+      "marker_verified": true
+    }
+  ]
+}

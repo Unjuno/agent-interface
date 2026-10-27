@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8527 T0 A02 belief-space recovery construction](belief_recovery_margin_8527_t0_a02_20261008/README.md) — construction tests pass; formal candidate and auditor remain 0/0. This is not a scientific PASS or live recovery result; original frozen execution conditions remain historical.
+
 - [Issue #8630 T0 A01 failed policy-selection gate](joint_opportunity_budget_8630_t0_a01_20261009/REPORT.md) — `FAIL_METHOD`: weak-signal observation plus recovery scored 0.755 versus 0.750 without observation; one candidate and one auditor invocation, no retries. Synthetic only; preserve raw outputs rather than overwriting them with the historical commands.
 
 - [Issue #8630 reserve-binding construction diagnostic](joint_opportunity_budget_8630_reserve_diagnostic_20261009/REPORT.md) — `PASS_DIAGNOSTIC` for an authored exact-arithmetic construction only; A01 remains `FAIL_METHOD`. Preserve existing `run-01` outputs; do not overwrite them when reproducing.
