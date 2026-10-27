@@ -90,7 +90,10 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
     def test_expiry_winning_inside_up_batch_remains_unverified(self):
         self._exercise_owner_race(expire=True)
 
-    def _exercise_owner_race(self, *, expire):
+    def test_executor_terminal_retains_expiry_and_unverified_release(self):
+        self._exercise_owner_race(expire=True, via_executor=True)
+
+    def _exercise_owner_race(self, *, expire, via_executor=False):
         xlib_names = (
             "Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
             "Xlib.ext", "Xlib.ext.xtest",
@@ -200,13 +203,23 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             gate_owner_dequeue.set()
             execution_error = []
 
+            executor = None
+            if via_executor:
+                from executor_v12 import Executor
+                executor = Executor(backend, emitted.append)
+
             def run_execute():
                 try:
-                    backend.execute({}, lease.cancel, "program-race", 0)
+                    if via_executor:
+                        executor._run("program-race", [{"op": "synthetic"}], lease)
+                    else:
+                        backend.execute({}, lease.cancel, "program-race", 0)
                 except BaseException as exc:
                     execution_error.append(exc)
 
             worker = threading.Thread(target=run_execute)
+            if via_executor:
+                executor.active = ("program-race", lease, worker)
             worker.start()
             self.assertTrue(queued_before_cancel.wait(1), "up_batch was not enqueued")
             self.assertTrue(owner_waiting_before_dequeue.wait(1),
@@ -214,6 +227,25 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
             worker.join(2)
             self.assertFalse(worker.is_alive(), "backend execution did not finish")
+
+            if via_executor:
+                self.assertEqual(execution_error, [])
+                rows = [e for e in emitted if e.get("event") == "input_release_transition"]
+                terminals = [e for e in emitted if e.get("event") == "terminal"]
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(len(terminals), 1)
+                self.assertEqual(rows[0]["release_batch_call_outcome"], "unknown_no_retry")
+                self.assertIs(rows[0]["owner_transition_verified"], False)
+                self.assertEqual(terminals[0]["status"], "expired")
+                self.assertEqual(terminals[0]["steps_completed"], 0)
+                self.assertEqual(terminals[0]["interruption"]["record"]["reason"], "expired")
+                self.assertIs(terminals[0]["release"]["verified"], True)
+                self.assertLess(emitted.index(rows[0]), emitted.index(terminals[0]))
+                self.assertEqual(display.keyrelease_attempts, 1)
+                self.assertEqual(display.down, set())
+                from project_v39_release_measurement_v1 import project
+                self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+                return
 
             if expire:
                 self.assertEqual(len(execution_error), 1)
