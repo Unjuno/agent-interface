@@ -184,7 +184,11 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     action_result = action.get("result") if type(action) is dict else None
     nested_delivery = (action_result.get("input_dispatched")
         if type(action_result) is dict else None)
-    deliveries = (input_dispatched, action_delivery, nested_delivery)
+    # Preserve every explicit delivery claim before choosing a fallback; a
+    # malformed raw value must not be hidden by a valid outer envelope.
+    result_delivery = result.get("input_dispatched") if type(result) is dict else None
+    deliveries = (row.get("input_dispatched"), outer.get("input_dispatched"),
+        result_delivery, action_delivery, nested_delivery)
     known_deliveries = [value for value in deliveries if type(value) is bool]
     delivery_conflict = (any(value is not None and type(value) is not bool
         for value in deliveries) or len(set(known_deliveries)) > 1)
