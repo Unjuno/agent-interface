@@ -268,6 +268,35 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                     clock_ns=lambda: 10, configured_targets={"fixture": 44})
                 self.assertFalse(result["release_accepted"])
 
+    def test_contradictory_native_release_stops_supervisor_before_readback(self):
+        class Owner:
+            def __init__(self): self.unknown = []; self.completed = []
+            def mark_unknown(self, op, generation, reason): self.unknown.append(reason)
+            def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
+        class ContradictoryBackend(FakeBackend):
+            def release_all(self):
+                receipt = super().release_all()
+                receipt["keys_unknown"] = ["CTRL"]
+                return receipt
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner; supervisor._clock_ns = lambda: 10
+        invalidated = []; supervisor._invalidate_helper = lambda role, deadline: invalidated.append(role)
+        roles = []
+        def exchange(role, request, deadline):
+            roles.append(role)
+            if role != "recovery": self.fail("observer must not run after invalid release")
+            return _recover(request,
+                backend_factory=lambda targets: ContradictoryBackend(targets),
+                clock_ns=lambda: 10, configured_targets={"fixture": 44})
+        supervisor._exchange_helper = exchange
+        request = self.request()
+        supervisor._run_recovery(request["operation_id"], request["target_generation"], request)
+        self.assertEqual(roles, ["recovery"])
+        self.assertEqual(owner.completed, [])
+        self.assertEqual(owner.unknown, ["recovery_receipt_invalid_or_late"])
+        self.assertEqual(invalidated, ["recovery"])
+
     def test_orphan_recovery_focuses_exact_target_before_global_key_up(self):
         backend = FakeBackend({"fixture": 44})
         result = _recover(self.request(obligations=["key:fixture:W"],
