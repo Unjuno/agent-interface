@@ -509,6 +509,75 @@ class ProcessCancellationTests(unittest.TestCase):
                 producer.join(2)
             producer.close()
 
+    def test_late_producer_after_action_deadline_recovers_with_cleanup_window(self):
+        context = multiprocessing.get_context("spawn")
+        down = context.Event()
+        producer_started = context.Event()
+        neutral = context.Event()
+        producer = context.Process(target=_blocked_fake_producer,
+                                   args=(down, producer_started))
+        producer.start()
+        supervisor = None
+        child_handles = []
+        try:
+            self.assertTrue(producer_started.wait(5))
+            owner = OperationOwner(clock_ns=time.monotonic_ns,
+                                   process_identity_reader=_identity)
+
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_fake_recovery, (down, neutral), child_handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_fake_observation, (neutral,), child_handles)
+
+            supervisor = OperationCancellationSupervisor(owner,
+                recovery_process_factory=recovery_factory,
+                observer_process_factory=observer_factory,
+                process_identity_reader=_identity)
+            action_deadline = time.monotonic_ns() + 300_000_000
+            owner.admit("operation-late-deadline", GENERATION, action_deadline, ["key:a"])
+            deadline_ns = time.monotonic_ns() + 3_000_000_000
+            response = supervisor.cancel("operation-late-deadline", GENERATION,
+                                          cleanup_deadline_ns=deadline_ns)
+            self.assertEqual(response["status"], "pending")
+            while time.monotonic_ns() < action_deadline:
+                time.sleep(0.002)
+            self.assertFalse(supervisor.producer_started("operation-late-deadline",
+                GENERATION, producer, process_identity=_identity(producer)))
+            limit = time.monotonic() + 3
+            result = owner.result("operation-late-deadline")
+            while result["status"] not in ("recovered", "unknown") and time.monotonic() < limit:
+                time.sleep(0.01)
+                result = owner.result("operation-late-deadline")
+            self.assertEqual(result["status"], "recovered", result)
+            self.assertFalse(producer.is_alive())
+            self.assertFalse(down.is_set())
+            self.assertTrue(result["release_confirmed"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+        finally:
+            if supervisor is not None:
+                supervisor.close()
+            for process, receive, send in child_handles:
+                try:
+                    if process.is_alive():
+                        process.terminate()
+                        process.join(2)
+                except ValueError:
+                    pass
+                for connection in (receive, send):
+                    try:
+                        connection.close()
+                    except OSError:
+                        pass
+                try:
+                    process.close()
+                except ValueError:
+                    pass
+            if producer.is_alive():
+                producer.terminate()
+                producer.join(2)
+            producer.close()
+
     def test_cancel_while_blocked_before_fake_acceptance_keeps_result_conservative(self):
         context = multiprocessing.get_context("spawn")
         producer_started = context.Event()
