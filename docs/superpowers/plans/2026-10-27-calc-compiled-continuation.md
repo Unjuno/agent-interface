@@ -48,3 +48,7 @@ A composed stage wrapper calls the supplied runner once, then sends a detached o
 ## Task 2 sink-failure snapshot (2026-10-27)
 
 The stage executor now retains a detached in-memory snapshot of the returned stage receipt and projection before calling the sink. The actual caller/core sink-failure fixture can inspect it after CALLER_FAILED while delivery remains uncertain and no retry occurs. The snapshot is per executor, reset at the next invocation, and not durable across process loss. Exceptions before projection/snapshot creation and evidence storage/retrieval remain unresolved. Twenty-one synthetic tests pass normally and under optimized Python; this is not live evidence.
+
+## Independent workbook-score seam (2026-10-27)
+
+A pure offline helper scores a supplied workbook byte snapshot against a pinned digest, explicit sheet name and literal integer values in A1/A2. Missing/corrupt/wrong-digest data returns unavailable; a readable mismatch returns failed. The outer actual caller/core test uses the retained historical workbook and verifies matching and mismatching independent effects after an inert two-action core run. Twenty-five selected tests pass normally and with `-O` using bundled openpyxl. This verifies only those two cells, not collateral effects, capture freshness, retrievability, or live Calc behavior. Supplying a digest or evidence reference does not prove those properties.
