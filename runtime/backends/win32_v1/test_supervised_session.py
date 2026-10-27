@@ -22,6 +22,11 @@ class FakeUser32:
         self.role = role
         self.entered = entered
         self.accept_before_block = accept_before_block
+        self.foreground = 1
+
+    def IsWindow(self, hwnd): return True
+    def GetForegroundWindow(self): return self.foreground
+    def GetAncestor(self, hwnd, flags): return hwnd
 
     def GetAsyncKeyState(self, vk):
         return 0x8000 if self.state.get(vk, False) else 1
@@ -53,6 +58,8 @@ def _producer_session(start_gate, state, events, entered, accept_before_block):
     backend = Win32Backend.__new__(Win32Backend)
     backend.user32 = FakeUser32(state, events, "producer", entered,
                                 accept_before_block)
+    backend.targets = {"fixture": 1}
+    backend.focus = lambda target: setattr(backend, "focused_target", target)
     backend.held_keys = {}
     backend.held_buttons = set()
     backend.pending_unicode_ups = set()
@@ -68,6 +75,7 @@ def _producer_session(start_gate, state, events, entered, accept_before_block):
                       "expires_at_ns": time.monotonic_ns() + 15_000_000_000},
         "terminal": {"release_all_required": True},
         "ops": [
+            {"op": "focus", "target": "fixture"},
             {"op": "key_state", "key": "CTRL", "down": True},
             {"op": "release_all"},
         ],

@@ -47,13 +47,18 @@ class BlockingSendInput:
         if count != 1 or inputs[0].type != INPUT_KEYBOARD:
             raise AssertionError("expected one keyboard input")
 
+    def IsWindow(self, hwnd): return True
+    def GetForegroundWindow(self): return 1
+    def GetAncestor(self, hwnd, flags): return 1
+
     def GetAsyncKeyState(self, vk):
         return 0x8000 if vk in self.down else 1
 
 
 def make_session(api):
     backend = Win32Backend.__new__(Win32Backend)
-    backend.targets = {}
+    backend.targets = {"fixture": 1}
+    backend.focus = lambda target: setattr(backend, "focused_target", target)
     backend.held_keys = {}
     backend.held_key_targets = {}
     backend.held_buttons = set()
@@ -74,6 +79,7 @@ def make_session(api):
                       "expires_at_ns": time.monotonic_ns() + 10_000_000_000},
         "terminal": {"release_all_required": True},
         "ops": [
+            {"op": "focus", "target": "fixture"},
             {"op": "key_state", "key": "CTRL", "down": True},
             {"op": "release_all"},
         ],

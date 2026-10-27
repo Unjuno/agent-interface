@@ -77,6 +77,7 @@ def _supervised_backend_producer(action, start_gate, state, events, entered,
     backend.targets = {"fixture": 123}
     backend.user32 = FakeUser32(state, events, "producer", entered,
                                 accept_before_block)
+    backend.user32.foreground = 123
     backend.held_keys = {}
     backend.held_key_targets = {}
     backend.held_buttons = set()

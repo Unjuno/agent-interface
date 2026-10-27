@@ -905,6 +905,9 @@ class Win32Backend:
         current_target: str | None = bound_target
         for op in program["ops"]:
             kind = op["op"]
+            if current_target is None and (kind in {"key_chord", "text", "scroll"} or
+                    (kind in {"key_state", "pointer_button"} and op.get("down") is True)):
+                raise Win32BackendError(f"{kind} requires focused target")
             if kind == "focus":
                 self._target(op["target"])
                 current_target = op["target"]
