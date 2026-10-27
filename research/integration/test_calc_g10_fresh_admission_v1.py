@@ -1,7 +1,8 @@
-import hashlib,json,time,unittest
+import copy,hashlib,json,time,unittest
 from pathlib import Path
 from runtime.guarded_x11_v1.test_compiled import Bridge
 from research.live_control.calc_g10_fresh_admission_v1 import run_with_fresh_proposal
+from research.live_control.calc_g10_interface_adapter_v1 import adapt_retained_g10_graph_v1
 ROOT=Path(__file__).parent/'calc_current_shared_3311_4d74_20261004'/'calc-compiled-ocrlive-4d74'/'runs'/'compiled_ocrlive10'
 class MintingBridge(Bridge):
  def __init__(self):super().__init__();self.aliases={'a1_primary'};self.mints=[]
@@ -19,14 +20,42 @@ class MintingBridge(Bridge):
 def interface():
  data=(ROOT/'raw.json').read_bytes()
  if hashlib.sha256(data).hexdigest()!='890c68f13e5fa8598bcbb2f456b8ee5319c584249c19492744a7c96f170014bf':raise ValueError('retained G10 bytes differ')
- graph=json.loads(data)['interface'];graph['session_scope']='private';graph['surface']='x11-window-20'
- second=dict(graph['symbols']['anchor']);second['target_reference']='a1_second'
- graph['symbols']['second_anchor']=second;graph['actions']['second']['target_symbol']='second_anchor'
- return graph
-
+ return adapt_retained_g10_graph_v1(json.loads(data)['interface'],
+     session_scope='private',surface='x11-window-20',second_reference='a1_second')
 def perceive(_,image):return {'ready':True,'row_visible':'unknown' if image.getpixel((0,0))[0]==0 else True}
 def verify(p,n,i):return {'status':'succeeded','evidence_ref':p['observation']['evidence_ref']}
 def bindings():return {name:{'interaction':'click','offset':[2,2],'tail':[]} for name in ('first','second')}
+class G10InterfaceAdapterTests(unittest.TestCase):
+ def retained_graph(self):
+  data=(ROOT/'raw.json').read_bytes()
+  self.assertEqual(hashlib.sha256(data).hexdigest(),'890c68f13e5fa8598bcbb2f456b8ee5319c584249c19492744a7c96f170014bf')
+  return json.loads(data)['interface']
+ def test_retained_graph_is_adapted_without_changing_task_or_source(self):
+  original=self.retained_graph();before=copy.deepcopy(original)
+  adapted=adapt_retained_g10_graph_v1(original,session_scope='private',surface='x11-window-20',second_reference='a1_second')
+  expected=copy.deepcopy(original);expected['session_scope']='private';expected['surface']='x11-window-20'
+  expected['symbols']['second_anchor']=copy.deepcopy(expected['symbols']['anchor'])
+  expected['symbols']['second_anchor']['target_reference']='a1_second'
+  expected['actions']['second']['target_symbol']='second_anchor'
+  self.assertEqual(original,before)
+  self.assertEqual(adapted,expected)
+  self.assertEqual(adapted['symbols']['anchor']['target_reference'],'a1_primary')
+  self.assertEqual(adapted['symbols']['second_anchor']['target_reference'],'a1_second')
+  self.assertEqual(adapted['method'],original['method'])
+  self.assertEqual(adapted['predicates'],original['predicates'])
+ def test_same_alias_is_rejected(self):
+  original=self.retained_graph();before=copy.deepcopy(original)
+  with self.assertRaises(ValueError):
+   adapt_retained_g10_graph_v1(original,session_scope='private',surface='x11-window-20',second_reference='a1_primary')
+  self.assertEqual(original,before)
+ def test_unrecognized_effect_contract_is_rejected(self):
+  original=self.retained_graph();original['actions']['second']['expected_effect']={'ready':True}
+  with self.assertRaises(ValueError):
+   adapt_retained_g10_graph_v1(original,session_scope='private',surface='x11-window-20')
+ def test_extra_transition_is_rejected(self):
+  original=self.retained_graph();original['method']['max_transitions']=3
+  with self.assertRaises(ValueError):
+   adapt_retained_g10_graph_v1(original,session_scope='private',surface='x11-window-20')
 class G10FreshAdmissionTests(unittest.TestCase):
  def test_fresh_proposal_is_minted_then_guarded_for_second_action(self):
   bridge=MintingBridge();seen=[]
