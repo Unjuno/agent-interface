@@ -243,5 +243,31 @@ class StrictProjectionTests(unittest.TestCase):
                             for row in result["rows"]))
 
 
+    def test_rejects_conflicting_batch_key_order_across_receipts(self):
+        pairs = [valid_pair(), valid_pair()]
+        for position, (pair, key, start, sync) in enumerate(
+                zip(pairs, ("W", "A"), (150, 170), (160, 180))):
+            admission, release = pair
+            admission.update(key=key, input_ack_ns=120)
+            release.update(key=key, release_batch_position=position,
+                release_batch_size=2, release_call_started_ns=140,
+                release_call_returned_ns=190, owner_sample_after_started_ns=200,
+                owner_sample_after_finished_ns=205)
+            receipt = release["owner_thread_keyup_receipt"]
+            receipt.update(key=key, release_batch_initial_up_count=2,
+                release_batch_key_order=["W", "A"], owner_keyrelease_started_ns=start,
+                owner_sync_returned_ns=sync, owner_keymap_sampled_ns=185)
+            receipt["server_keyup_attempts"][0].update(
+                keyrelease_started_ns=start, sync_returned_ns=sync, keymap_sampled_ns=185)
+        rows = pairs[0] + pairs[1]
+        self.assertTrue(project(rows)["measurement_ready"])
+        for release_index, conflicting in ((1, ["W", "OTHER"]), (3, ["OTHER", "A"])):
+            with self.subTest(release_index=release_index):
+                bad = copy.deepcopy(rows)
+                bad[release_index]["owner_thread_keyup_receipt"]["release_batch_key_order"] = conflicting
+                self.assertEqual(project(bad), {"measurement_ready": False, "rows": []})
+
+
+
 if __name__ == "__main__":
     unittest.main()
