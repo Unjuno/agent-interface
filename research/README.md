@@ -420,3 +420,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - Issue #57 pre-live gate: [integrated-path verification crosswalk at current main](integration/issue57_requirement_test_matrix_currentmain_20261024.md) — maps #52–#55, runtime safety, independent effect/evidence and comparison integrity to exact tests/receipts; synthetic composition passes but WSLc live and matched efficiency remain HOLD under #7924.
 
 - Issue #8500 T0 A02: [equal-check analogy-rejection method](analysis/analogy_rejection_8500_t0_a02_20261009/REPORT.md) — scoped deterministic fixture; 72 rows, 5/5 mutations rejected. No human, model, real-agent or product claim.
+
+- Issue #8544 T0 A02: [target-flanker endpoint method](analysis/crowding_target_flanker_8544_t0_a02_20261009/REPORT.md) — scoped planted scorer, 5,632 cases and 7/7 mutations rejected. No model, GUI or human-vision result.

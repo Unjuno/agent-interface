@@ -1,0 +1,53 @@
+{
+  "allocation": "UNJUNO-8544-CROWDING-T0-A02-20261009",
+  "base_branch": "main",
+  "base_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "branch": "research/8544-crowding-method-t0-a02-20261009",
+  "formal_commands": {
+    "auditor": "sh run_auditor_once.sh",
+    "auditor_gate": "Run only if candidate exit receipt is 0 and candidate raw output exists",
+    "candidate": "sh run_candidate_once.sh",
+    "invocation_limit": "one candidate and one raw-only auditor; retries 0"
+  },
+  "formal_evidence": false,
+  "frozen_method": {
+    "authority": "NONE",
+    "development_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "endpoint_classes": 8,
+    "factor_strata": 128,
+    "fixture_rows": 5632,
+    "global_control_count": 4,
+    "held_out_seeds": [
+      6,
+      7
+    ],
+    "mutation_controls": 7
+  },
+  "issue": 8544,
+  "package_path": "research/analysis/crowding_target_flanker_8544_t0_a02_20261009/",
+  "preformal_construction": {
+    "analysis_index_checker": "exit 0; sparse checkout warns unhydrated sibling directories, no write performed",
+    "formal_results_absent": true,
+    "tests": "8/8 PASS",
+    "workspace_git_tree_index": "PASS"
+  },
+  "preregistration_gate": "Do not run either formal command until this freeze commit and all listed hashes are posted to Issue #8544 and remotely read back; then verify main remains base_commit.",
+  "runtime": {
+    "container": "not required; no container semantics tested",
+    "dependencies": "Python standard library only",
+    "network": "not used",
+    "platform": "macOS 27.0 arm64",
+    "python": "CPython 3.14.5"
+  },
+  "schema": "issue-8544-crowding-t0-a02-freeze-v1",
+  "scope": "No-model planted-endpoint scorer and factorial-custody method test only; no crowding transfer, human, VLM, GUI, or runtime evidence",
+  "source_hash_manifest": "SHA256SUMS.json",
+  "source_hash_manifest_sha256": "4e69e9f5256cb1dafb0880a4b51423d1660da62f8459ee7a43dd5bf9405968a1"
+}
