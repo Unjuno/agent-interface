@@ -68,7 +68,8 @@ def _capture_ns(report):
     raise ValueError("standard observation has no monotonic capture start")
 
 
-def _terminal(reply, action_name):
+def _terminal(reply, action_name, *, expected_call_id=None,
+              expected_generation=None):
     row = _raw_report(reply)
     if (type(row.get("status")) is str
             and type(row.get("action_id")) is str
@@ -82,6 +83,49 @@ def _terminal(reply, action_name):
             ("status", "action_id", "effect_ref", "release")}
         if "input_dispatched" in row:
             terminal["input_dispatched"] = deepcopy(row["input_dispatched"])
+        return terminal
+    # interface_results is a read-only retrieval envelope, so its outer
+    # input_dispatched=false describes the query. Only the nested action and
+    # its completion custody may establish the original dispatch result.
+    retrieved_action = row.get("action")
+    if type(retrieved_action) is dict:
+        action_result = retrieved_action.get("result")
+        action_result = action_result if type(action_result) is dict else {}
+        custody = retrieved_action.get("completion_custody")
+        call_id = row.get("call_id")
+        operation_id = retrieved_action.get("operation_id")
+        generation = retrieved_action.get("target_generation")
+        same_call = (type(expected_call_id) is str
+            and call_id == expected_call_id)
+        same_generation = (type(expected_generation) is str
+            and generation == expected_generation)
+        custody_verified = (type(custody) is dict
+            and custody.get("release_confirmed") is True
+            and custody.get("completion_readback_outcome") == "verified"
+            and retrieved_action.get("release_confirmed") is True
+            and action_result.get("release_confirmed") is True)
+        completed = (retrieved_action.get("status") == "completed"
+            and action_result.get("status") == "completed")
+        recovered = (retrieved_action.get("status") == "recovered"
+            and action_result.get("status") == "recovered")
+        identity_valid = (same_call and same_generation
+            and type(operation_id) is str
+            and _IDENTIFIER.fullmatch(operation_id) is not None)
+        verified_release = identity_valid and custody_verified
+        terminal = {"status": ("completed" if verified_release and completed
+                else "delivery_uncertain" if verified_release and recovered
+                else "uncertain"),
+            "action_id": (operation_id if identity_valid
+                else "unverified-interface-result"),
+            "effect_ref": "standard-win32-" + action_name,
+            "release": {"verified": verified_release,
+                "keys_down": [] if verified_release else ["unknown"],
+                "buttons_down": [] if verified_release else ["unknown"]}}
+        input_dispatched = retrieved_action.get("input_dispatched")
+        if type(input_dispatched) is not bool:
+            input_dispatched = action_result.get("input_dispatched")
+        if type(input_dispatched) is bool:
+            terminal["input_dispatched"] = input_dispatched
         return terminal
     supervision = row.get("supervision")
     action = supervision.get("action") if type(supervision) is dict else None
@@ -193,7 +237,8 @@ def _task_oracle_evidence(reply, expected_call_id, expected_generation):
 def run_public_compiled(interface, program_templates, *, target,
         current_binding_revision, region, observe, dispatch, perceive, verify_effect,
         expected_generation=None,
-        verify_task=None, cancelled=lambda: False, clock=time.monotonic_ns,
+        verify_task=None, resolve_pending=None, cancelled=lambda: False,
+        clock=time.monotonic_ns,
         journal=None):
     """Run one compiled graph using standard supervised Win32 MCP calls.
 
@@ -235,6 +280,8 @@ def run_public_compiled(interface, program_templates, *, target,
         raise ValueError("standard tools and caller verifiers must be callable")
     if verify_task is not None and not callable(verify_task):
         raise ValueError("verify_task must call the configured standard task oracle")
+    if resolve_pending is not None and not callable(resolve_pending):
+        raise ValueError("resolve_pending must retrieve the exact pending public dispatch")
     if journal is not None and not callable(journal):
         raise ValueError("journal must be callable")
 
@@ -371,9 +418,43 @@ def run_public_compiled(interface, program_templates, *, target,
         reply = dispatch(program, granted["sequence"], current_binding_revision)
         reply_row = _raw_report(reply)
         call_id = reply_row.get("call_id") or _content_object(reply).get("call_id")
+        pending_result_resolution = "not_pending"
+        result_row = reply_row.get("result")
+        result_status = (result_row.get("status")
+            if type(result_row) is dict else None)
+        if (resolve_pending is not None
+                and (reply_row.get("status") in {"pending", "running", "cancel_pending"}
+                    or result_status in {"pending", "running", "cancel_pending"})
+                and type(call_id) is str
+                and _IDENTIFIER.fullmatch(call_id) is not None):
+            pending_result_resolution = "unresolved"
+            try:
+                resolved_reply = resolve_pending(call_id, deepcopy(reply))
+                resolved_row = _raw_report(resolved_reply)
+                resolved_supervision = resolved_row.get("supervision")
+                resolved_supervision = (resolved_supervision
+                    if type(resolved_supervision) is dict else {})
+                resolved_action = resolved_row.get("action")
+                if type(resolved_action) is not dict:
+                    resolved_action = resolved_supervision.get("action")
+                resolved_action = (resolved_action
+                    if type(resolved_action) is dict else {})
+                resolved_generation = (resolved_row.get("target_generation")
+                    or resolved_action.get("target_generation"))
+                if resolved_row.get("call_id") != call_id:
+                    pending_result_resolution = "call_id_mismatch"
+                elif resolved_generation != granted["generation"]:
+                    pending_result_resolution = "generation_mismatch"
+                else:
+                    reply = resolved_reply
+                    reply_row = resolved_row
+                    pending_result_resolution = "same_call_id"
+            except Exception as error:
+                pending_result_resolution = "error:" + type(error).__name__
         if type(call_id) is str and call_id:
             action_call_ids.append(call_id)
-        terminal = _terminal(reply, request["action"])
+        terminal = _terminal(reply, request["action"],
+            expected_call_id=call_id, expected_generation=granted["generation"])
         target_evidence.append({
             "kind": "dispatch",
             "call_id": call_id if type(call_id) is str and call_id else None,
@@ -385,6 +466,7 @@ def run_public_compiled(interface, program_templates, *, target,
             "action_id": terminal["action_id"],
             "effect_ref": terminal["effect_ref"],
             "status": terminal["status"],
+            "pending_result_resolution": pending_result_resolution,
             "input_dispatched": terminal.get("input_dispatched"),
             "release_verified": (terminal.get("release", {}).get("verified") is True
                 and terminal.get("release", {}).get("keys_down") == []
