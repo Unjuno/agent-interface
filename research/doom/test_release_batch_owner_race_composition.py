@@ -93,7 +93,10 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
     def test_executor_terminal_retains_expiry_and_unverified_release(self):
         self._exercise_owner_race(expire=True, via_executor=True)
 
-    def _exercise_owner_race(self, *, expire, via_executor=False):
+    def test_submitted_executor_expiry_retains_release_uncertainty(self):
+        self._exercise_owner_race(expire=True, via_submit=True)
+
+    def _exercise_owner_race(self, *, expire, via_executor=False, via_submit=False):
         xlib_names = (
             "Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
             "Xlib.ext", "Xlib.ext.xtest",
@@ -170,6 +173,9 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
 
             class RequestGate:
                 def put(self, request):
+                    nonlocal lease
+                    if via_submit:
+                        lease = backend.lease
                     original_requests.put(request)
                     if request[0] == "up_batch":
                         raced.append(request[0])
@@ -204,7 +210,7 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             execution_error = []
 
             executor = None
-            if via_executor:
+            if via_executor or via_submit:
                 from executor_v12 import Executor
                 executor = Executor(backend, emitted.append)
 
@@ -217,23 +223,43 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
                 except BaseException as exc:
                     execution_error.append(exc)
 
-            worker = threading.Thread(target=run_execute)
-            if via_executor:
-                executor.active = ("program-race", lease, worker)
-            worker.start()
+            if via_submit:
+                backend.sequence = 1
+                backend.validate = lambda _steps: None
+                def bind_source(active_lease, _sequence):
+                    active_lease.expected_focus = 41
+                    active_lease.focus_invalid = False
+                backend.bind_lease_source = bind_source
+                executor.submit("program-race", [{"op": "synthetic"}], 1,
+                                time.perf_counter_ns() + 5_000_000_000)
+                lease = backend.lease
+                worker = executor.active[2]
+            else:
+                worker = threading.Thread(target=run_execute)
+                if via_executor:
+                    executor.active = ("program-race", lease, worker)
+                worker.start()
             self.assertTrue(queued_before_cancel.wait(1), "up_batch was not enqueued")
             self.assertTrue(owner_waiting_before_dequeue.wait(1),
                             "owner did not reach the controlled dequeue boundary")
-            self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
+            if via_submit:
+                self.assertIsNotNone(lease.wait_interruption(1))
+            else:
+                self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
             worker.join(2)
             self.assertFalse(worker.is_alive(), "backend execution did not finish")
 
-            if via_executor:
+            if via_executor or via_submit:
                 self.assertEqual(execution_error, [])
                 rows = [e for e in emitted if e.get("event") == "input_release_transition"]
                 terminals = [e for e in emitted if e.get("event") == "terminal"]
                 self.assertEqual(len(rows), 1)
                 self.assertEqual(len(terminals), 1)
+                if via_submit:
+                    accepted = [e for e in emitted if e.get("event") == "accepted"]
+                    self.assertEqual(len(accepted), 1)
+                    self.assertEqual(accepted[0]["intent_token"], lease.intent_token)
+                    self.assertLess(emitted.index(accepted[0]), emitted.index(rows[0]))
                 self.assertEqual(rows[0]["release_batch_call_outcome"], "unknown_no_retry")
                 self.assertIs(rows[0]["owner_transition_verified"], False)
                 self.assertEqual(terminals[0]["status"], "expired")
