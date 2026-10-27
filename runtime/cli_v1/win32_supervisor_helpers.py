@@ -182,7 +182,8 @@ def _helper_main(kind, targets, connection):
 
 
 def create_native_win32_components(targets, output_directory, *, context=None,
-                                   process_identity_reader=None):
+                                   process_identity_reader=None,
+                                   late_input_horizon_ns=0):
     """Construct the opt-in native owner, supervisor helpers and producer."""
     import os
     if os.name != "nt":
@@ -198,6 +199,9 @@ def create_native_win32_components(targets, output_directory, *, context=None,
             or any(type(name) is not str or not name or type(hwnd) is not int or hwnd <= 0
                    for name, hwnd in targets.items())):
         raise ValueError("one explicit target name and HWND are required")
+    if (type(late_input_horizon_ns) is not int
+            or late_input_horizon_ns < 0):
+        raise ValueError("late input horizon must be a nonnegative integer")
     process_identity_reader = process_identity_reader or Win32ProcessIdentityReader()
     operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
         process_identity_reader=process_identity_reader)
@@ -205,7 +209,8 @@ def create_native_win32_components(targets, output_directory, *, context=None,
     supervisor = OperationCancellationSupervisor(operation_owner,
         recovery_process_factory=lambda: helper_factory("recovery"),
         observer_process_factory=lambda: helper_factory("observer"),
-        process_identity_reader=process_identity_reader)
+        process_identity_reader=process_identity_reader,
+        late_input_horizon_ns=late_input_horizon_ns)
     owner = OwnedWin32SessionOwner(operation_owner, supervisor,
                                    synthetic_only=False)
 

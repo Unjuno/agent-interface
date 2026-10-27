@@ -1,0 +1,89 @@
+{
+  "arms": {
+    "persistent": {
+      "cumulative_input_tokens_including_preflight": 26563,
+      "preflight_input_tokens": 7965,
+      "reported_total_elapsed_ns": 44131281228,
+      "task_elapsed_ns": [
+        11024952714,
+        3928656439,
+        4303159860,
+        12341465157,
+        5737587039,
+        6795460019
+      ]
+    },
+    "plain": {
+      "cumulative_input_tokens_including_preflight": 63128,
+      "preflight_input_tokens": 7868,
+      "reported_total_elapsed_ns": 56412291157,
+      "task_elapsed_ns": [
+        9410429011,
+        9026306868,
+        8903676705,
+        9127145957,
+        10500222246,
+        9444510370
+      ]
+    }
+  },
+  "interpretation": [
+    "The reported elapsed advantage is concentrated in reuse phases, not cold acquisition or invalidation repair.",
+    "The source is one fixed six-task sequence per arm; these are descriptive per-phase sums, not a population speed estimate.",
+    "Input counts shown per phase exclude each arm's schema preflight; cumulative totals include the charged preflight.",
+    "Cached input tokens remain a subset of input tokens and are not added to totals.",
+    "This recount checks internal report arithmetic and gates; it does not independently re-audit raw model events or replay the experiment."
+  ],
+  "phase_comparison": {
+    "cold_acquisition": {
+      "elapsed_reduction_fraction": -0.17156749188721976,
+      "persistent_elapsed_ns": 11024952714,
+      "persistent_task_input_tokens_excluding_preflight": 9299,
+      "plain_elapsed_ns": 9410429011,
+      "plain_minus_persistent_elapsed_ns": -1614523703,
+      "plain_task_input_tokens_excluding_preflight": 9210,
+      "task_ids": [
+        "task-1"
+      ]
+    },
+    "invalidation_repair": {
+      "elapsed_reduction_fraction": -0.3521713375838808,
+      "persistent_elapsed_ns": 12341465157,
+      "persistent_task_input_tokens_excluding_preflight": 9299,
+      "plain_elapsed_ns": 9127145957,
+      "plain_minus_persistent_elapsed_ns": -3214319200,
+      "plain_task_input_tokens_excluding_preflight": 9210,
+      "task_ids": [
+        "task-4"
+      ]
+    },
+    "warm_after_repair": {
+      "elapsed_reduction_fraction": 0.37161117678029043,
+      "persistent_elapsed_ns": 12533047058,
+      "persistent_task_input_tokens_excluding_preflight": 0,
+      "plain_elapsed_ns": 19944732616,
+      "plain_minus_persistent_elapsed_ns": 7411685558,
+      "plain_task_input_tokens_excluding_preflight": 18420,
+      "task_ids": [
+        "task-5",
+        "task-6"
+      ]
+    },
+    "warm_layout_a": {
+      "elapsed_reduction_fraction": 0.5408910295157245,
+      "persistent_elapsed_ns": 8231816299,
+      "persistent_task_input_tokens_excluding_preflight": 0,
+      "plain_elapsed_ns": 17929983573,
+      "plain_minus_persistent_elapsed_ns": 9698167274,
+      "plain_task_input_tokens_excluding_preflight": 18420,
+      "task_ids": [
+        "task-2",
+        "task-3"
+      ]
+    }
+  },
+  "schema": "integrated-efficiency-live-phase-recount-v1",
+  "source_commit": "52df8e2d934bd8b20d4d36da8a7f17a524c49210",
+  "source_report": "research/live_control/results/integrated-efficiency-live-01/report.json",
+  "source_report_sha256": "84672ef551b97764c73ccdf4070b82db043d4e56bc509137e69c057c11aaa7da"
+}

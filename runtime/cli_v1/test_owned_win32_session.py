@@ -177,6 +177,19 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(final["action"]["result"], terminal_action)
         self.assertEqual(final["cancellation"], pending["cancellation"])
 
+    def test_cancel_deadline_includes_configured_late_input_horizon(self):
+        self.start_action()
+        self.supervisor.late_input_horizon_ns = 250_000_000
+        before = time.monotonic_ns()
+        requested_deadline = before + 3_000_000_000
+        self.session.cancel_guarded(CALL_ID,
+            cancellation_operation_id="9" * 32,
+            cleanup_deadline_ns=requested_deadline)
+        self.assertEqual(len(self.supervisor.calls), 1)
+        actual_deadline = self.supervisor.calls[0][2]
+        self.assertGreaterEqual(actual_deadline,
+            before + 3_000_000_000 + 250_000_000)
+
     def test_unknown_operation_cannot_be_replaced_by_new_action_in_same_session(self):
         self.start_action()
         self.session.cancel_guarded(CALL_ID, cancellation_operation_id="3" * 32,

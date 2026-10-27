@@ -17,6 +17,7 @@ import uuid
 
 
 _ORPHAN_RECOVERY_TRANSACTION_NS = 5_000_000_000
+MAX_LATE_INPUT_HORIZON_NS = 60_000_000_000
 
 
 def _consistent_neutral_observation(readback, obligations):
@@ -43,7 +44,8 @@ class OperationCancellationSupervisor:
                  observer_process_factory, process_identity_reader,
                  clock_ns=time.monotonic_ns, terminate_grace_s=0.1,
                  kill_grace_s=0.1, poll_interval_s=0.005,
-                 startup_timeout_s=2.0):
+                 startup_timeout_s=2.0, late_input_horizon_ns=0,
+                 late_input_sample_interval_s=0.025):
         required = (
             "request_cancel", "producer_handle_for_retirement", "producer_retired",
             "claim_recovery", "recovery_completed", "result", "mark_unknown",
@@ -63,6 +65,12 @@ class OperationCancellationSupervisor:
             if (type(value) not in (int, float) or value < 0
                     or (not allow_zero and value == 0)):
                 raise ValueError(name + " must be positive or nonnegative")
+        if (type(late_input_horizon_ns) is not int
+                or not 0 <= late_input_horizon_ns <= MAX_LATE_INPUT_HORIZON_NS):
+            raise ValueError("late_input_horizon_ns must be between zero and 60 seconds")
+        if (type(late_input_sample_interval_s) not in (int, float)
+                or late_input_sample_interval_s <= 0):
+            raise ValueError("late_input_sample_interval_s must be positive")
         self._owner = owner
         self._recovery_process_factory = recovery_process_factory
         self._observer_process_factory = observer_process_factory
@@ -71,6 +79,8 @@ class OperationCancellationSupervisor:
         self._terminate_grace_s = float(terminate_grace_s)
         self._kill_grace_s = float(kill_grace_s)
         self._poll_interval_s = float(poll_interval_s)
+        self.late_input_horizon_ns = late_input_horizon_ns
+        self._late_input_sample_interval_s = float(late_input_sample_interval_s)
         # One in-flight command, at most one queued command, and room for the
         # shutdown sentinel even when the helper is occupied.
         self._queue = queue.Queue(maxsize=2)
@@ -412,8 +422,25 @@ class OperationCancellationSupervisor:
         readback = self._run_observer(operation_id, generation, request, release_received_ns)
         if readback is None:
             return
+        horizon_observations = [readback]
+        horizon_end_ns = release_received_ns + self.late_input_horizon_ns
+        while self._clock_ns() < horizon_end_ns:
+            remaining_s = (horizon_end_ns - self._clock_ns()) / 1_000_000_000
+            time.sleep(min(self._late_input_sample_interval_s, remaining_s))
+            readback = self._run_observer(operation_id, generation, request,
+                horizon_observations[-1]["observed_monotonic_ns"])
+            if readback is None:
+                return
+            horizon_observations.append(readback)
         self._owner.recovery_completed(operation_id, generation,
-            request["recovery_id"], release_accepted=True, readback=readback)
+            request["recovery_id"], release_accepted=True, readback=readback,
+            release_received_ns=release_received_ns,
+            late_input_horizon_ns=self.late_input_horizon_ns,
+            late_input_max_sample_gap_ns=(
+                max(25_000_000,
+                    int(self._late_input_sample_interval_s * 4 * 1_000_000_000))
+                if self.late_input_horizon_ns else None),
+            horizon_observations=horizon_observations)
 
     def recover_orphaned_input(self, operation_id, generation, recovery_id,
                                deadline_ns, obligations):
@@ -516,7 +543,7 @@ class OperationCancellationSupervisor:
 
     def _run_observer(self, operation_id, generation, request, not_before_ns):
         observation_request = dict(request)
-        observation_request["request_id"] = request["recovery_id"]
+        observation_request["request_id"] = uuid.uuid4().hex
         try:
             readback = self._exchange_helper("observer", observation_request,
                                              request["deadline_ns"])

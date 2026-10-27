@@ -186,7 +186,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     def emit(event):
         nonlocal journal_failure_type
         row = copy.deepcopy(event)
-        if row["event"] in {"branch_selected", "admission_refused",
+        if row["event"] in {"branch_selected", "admission_refused", "admission_failed",
                             "action_terminal", "effect_checked",
                             "cancellation_check_failed", "effect_verification_failed",
                             "runtime_finished"}:
@@ -392,14 +392,21 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         action_name = branch["action"]
         action = interface["actions"][action_name]
         symbol = interface["symbols"][action["target_symbol"]]
-        admission = adapters["admit"]({
-            "interface_id": interface["interface_id"],
-            "session_scope": interface["session_scope"],
-            "action": action_name,
-            "operation": action["operation"],
-            "symbol": copy.deepcopy(symbol),
-            "observation": copy.deepcopy(observation),
-        })
+        try:
+            admission = adapters["admit"]({
+                "interface_id": interface["interface_id"],
+                "session_scope": interface["session_scope"],
+                "action": action_name,
+                "operation": action["operation"],
+                "symbol": copy.deepcopy(symbol),
+                "observation": copy.deepcopy(observation),
+            })
+        except Exception as error:
+            # Admission is before the action callback. Preserve the verified
+            # prefix and stop without guessing that authority or input occurred.
+            emit({"event": "admission_failed", "action": action_name,
+                  "error_type": type(error).__name__})
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         _exact(admission, {"eligible", "status", "authorization",
@@ -430,13 +437,32 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "budget_exhausted")
         execution_attempted = True
         execution_started_ns = clock()
-        terminal = adapters["execute"]({
-            "action": action_name,
-            "operation": action["operation"],
-            "authorization": admission["authorization"],
-            "expected_sequence": admission["expected_sequence"],
-            "valid_until_ns": min(admission["valid_until_ns"], deadline),
-        })
+        try:
+            terminal = adapters["execute"]({
+                "action": action_name,
+                "operation": action["operation"],
+                "authorization": admission["authorization"],
+                "expected_sequence": admission["expected_sequence"],
+                "valid_until_ns": min(admission["valid_until_ns"], deadline),
+            })
+        except Exception as error:
+            # The callback may have delivered input before raising. Record no
+            # fabricated terminal/release facts; preserve the completed prefix
+            # and classify this exact action as unresolved, with no replay path.
+            unresolved_execution = {
+                "action": action_name,
+                "reason": "execution_callback_failed",
+                "release_verified": False,
+                "input_dispatched": None,
+                "action_id": None,
+                "effect_ref": None,
+                "error_type": type(error).__name__,
+            }
+            emit({"event": "action_terminal", "action": action_name,
+                  "status": "delivery_uncertain", "action_id": None,
+                  "release_verified": False,
+                  "execution_started_ns": execution_started_ns})
+            return finish("RUNTIME_FAILED", "execution_failed")
         terminal_fields = {"status", "action_id", "effect_ref", "release"}
         delivery = {}
         if type(terminal) is dict and "input_dispatched" in terminal:

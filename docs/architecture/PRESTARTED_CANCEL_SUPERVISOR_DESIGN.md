@@ -378,3 +378,46 @@ The actual Win32 operation-custody question remains unqualified: no late-DOWN
 horizon, live target/app effect, MAP01, exclusive input allocation, hard
 release bound, matched efficiency, or repeated reliability result exists.
 WSLc #7924 remains STOP/HOLD; this work used no WSLc or Docker allocation.
+
+## Win32 delayed-input horizon checkpoint (2026-10-28)
+
+Current-main recheck at `52df8e2d934bd8b20d4d36da8a7f17a524c49210` ran the
+public supervised-Win32 backend composition, supervised-Win32 caller,
+operation-owner, and process-cancellation suites locally on Windows CPython
+3.11.9: 61/61 passed normally and 61/61 under `-O`. The composed test starts
+the actual `Win32RuntimeSession` and `Win32Backend` against a process-shared
+fake API, blocks after a CTRL-down, cancels through the public MCP caller,
+confirms producer exit before the recovery UP, and independently reads neutral
+fake state. This remains fake-API evidence; it does not exercise real
+`SendInput` or its input-stream queue.
+
+The remaining requirement is narrower than the tests' current meaning of
+"recovered": after the recovery UP and neutral readback, an already accepted
+old DOWN may still be pending at the target. Existing local tests stop at the
+immediate neutral observation, while the X11 public-caller path deliberately
+keeps `UNKNOWN` and replay denied through its delayed-request horizon. Thus the
+Win32 fake composition proves ordered cleanup for its modeled API state, but
+does not justify clearing a late-native-input uncertainty or promoting the
+old action to safe completion. A source-pinned counterexample now drives the
+current owner through successful point-in-time recovery, injects a delayed
+fake DOWN, and records that a distinct generation is admitted while that fake
+input remains down ([packet](../../research/integration/win32_delayed_input_quarantine_20261028/README.md)).
+This demonstrates the missing quarantine in the current-main synthetic state
+contract; it is not a real Windows delivery trace. A branch candidate now
+adds an explicit `supervised_win32_late_input_horizon_ns` setting. While the
+configured horizon is sampled, the operation remains pending and blocks new
+admission; a delayed fake DOWN makes it UNKNOWN, while a clear 100 ms fake
+window completes recovery after repeated neutral observations. The public
+route verifies that the requested horizon was actually installed, and the
+cleanup deadline includes the horizon plus its recovery budget. Normal and
+optimized focused suites each pass 135 tests; exact commands, output, and
+source hashes are in the [retained candidate packet](../../research/integration/win32_late_input_horizon_20261028/README.md).
+The setting defaults to zero and has not been qualified against native Windows
+input. Sampled neutrality does not prove continuous neutrality between
+samples; no finite horizon is supported yet by independent Windows evidence.
+Do not change the default route or claim MAP01/physical release from this
+checkpoint.
+
+This local recheck neither repaired/restarted Docker nor used WSLc. Docker
+Desktop's daemon still reports `Docker Desktop is unable to start`; WSLc remains
+on the separate STOP/HOLD gate in Issue #7924.

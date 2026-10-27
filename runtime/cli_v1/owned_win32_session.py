@@ -471,6 +471,13 @@ class OwnedWin32SessionOwner:
             cleanup_deadline_ns = time.monotonic_ns() + _CANCEL_TRANSACTION_NS
         if type(cleanup_deadline_ns) is not int:
             raise ValueError("cleanup_deadline_ns must be an integer")
+        late_input_horizon_ns = getattr(
+            self._supervisor, "late_input_horizon_ns", 0)
+        now_ns = time.monotonic_ns()
+        if (type(late_input_horizon_ns) is int and late_input_horizon_ns > 0
+                and cleanup_deadline_ns > now_ns):
+            cleanup_deadline_ns = max(cleanup_deadline_ns,
+                now_ns + _CANCEL_TRANSACTION_NS + late_input_horizon_ns)
         with self._lock:
             record = self._calls.get(call_id)
             if record is None:

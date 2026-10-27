@@ -32,8 +32,13 @@ class CalcHandoffTests(unittest.TestCase):
   result=run_compiled_interface_in_caller(spec,caller,lambda _:interface,adapters)
   if sink_fail:
    self.assertEqual(state['inputs'],1);self.assertEqual(state['outer_verify'],0)
-   self.assertEqual(result['outcome'],'CALLER_FAILED');self.assertIsNone(result['compiled_execution_receipt'])
+   self.assertEqual(result['outcome'],'EXECUTION_INCOMPLETE')
    self.assertEqual(result['delivery'],'delivery_uncertain')
+   runtime_receipt=result['compiled_execution_receipt']
+   self.assertEqual(runtime_receipt['outcome'],'RUNTIME_FAILED')
+   self.assertEqual(runtime_receipt['completed_transitions'],0)
+   self.assertEqual(runtime_receipt['unresolved_execution']['action'],'enter_token')
+   self.assertIsNone(runtime_receipt['unresolved_execution']['input_dispatched'])
    held=execute.snapshot();self.assertEqual(held['receipt'],source)
    self.assertEqual(held['projection']['delivery'],'unknown')
    return
@@ -59,3 +64,43 @@ class CalcHandoffTests(unittest.TestCase):
   self.assertEqual(projection['disposition'],'completed_unverified')
   self.assertEqual(terminal['status'],'delivery_uncertain')
   self.assertNotIn('input_dispatched',terminal);self.assertIsNone(terminal['effect_ref'])
+ def test_core_execution_exception_retains_prefix_in_outer_caller(self):
+  interface=compile_form_method(interface_id='calc-exception',session_scope='scope',surface='calc',field_handle='cell',submit_handle='save',method_contract=EXPECTED_METHOD_CONTRACT)
+  state={'observations':0,'inputs':0,'inner_verify':0,'outer_verify':0}
+  def observe(_):
+   state['observations']+=1;seq=state['observations']
+   predicates={'field_pixels_changed':False,'field_value_matches_task':seq>1,
+    'field_target_present':True,'submit_target_present':True,'submission_pixels_changed':False}
+   return {'sequence':seq,'captured_ns':time.monotonic_ns(),'surface':'calc','predicates':predicates,
+    'evidence_ref':f'frame{seq}','evidence_digest':f'digest{seq}'}
+  def admit(payload):
+   return {'eligible':True,'status':'revalidated','authorization':f'auth{payload["observation"]["sequence"]}',
+    'expected_sequence':payload['observation']['sequence'],'valid_until_ns':time.monotonic_ns()+1_000_000_000}
+  def execute(_):
+   state['inputs']+=1
+   if state['inputs']==2:
+    raise TimeoutError('input may have occurred before terminal receipt')
+   return {'status':'completed','action_id':'first-action','effect_ref':'first-effect',
+    'release':{'verified':True,'keys_down':[],'buttons_down':[]},'input_dispatched':True}
+  def inner_verify(request):
+   state['inner_verify']+=1
+   return {'status':'succeeded','evidence_ref':request['observation']['evidence_ref']}
+  def outer_verify(_):
+   state['outer_verify']+=1
+   return {'status':'succeeded','evidence_ref':'independent'}
+  spec={'target':'calc-exception','route':'reuse','coarse_origin':'caller_provided','provided_coarse':None,
+   'cached_target':{'id':'calc-exception'},'repair_on':[],'local_repair_on':[],'session_id':'inert'}
+  caller={'reuse_revalidate':lambda _: {'status':'revalidated'},'final_revalidate':lambda _: {'status':'revalidated'},
+   'verify_effect':outer_verify,'journal':lambda _:None}
+  adapters={'observe':observe,'admit':admit,'execute':execute,'verify_effect':inner_verify,'cancelled':lambda:False}
+  result=run_compiled_interface_in_caller(spec,caller,lambda _:interface,adapters)
+  self.assertEqual(state['inputs'],2)
+  self.assertEqual(state['inner_verify'],1)
+  self.assertEqual(state['outer_verify'],0)
+  self.assertEqual(result['outcome'],'EXECUTION_INCOMPLETE')
+  self.assertEqual(result['delivery'],'delivery_uncertain')
+  receipt=result['compiled_execution_receipt']
+  self.assertIsNotNone(receipt)
+  self.assertEqual(receipt['completed_transitions'],1)
+  self.assertEqual(receipt['unresolved_execution']['action'],'submit_form')
+  self.assertIsNone(receipt['unresolved_execution']['input_dispatched'])

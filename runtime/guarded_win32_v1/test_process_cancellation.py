@@ -198,8 +198,41 @@ def _handle_fake_recovery(request, response, down, neutral):
     _fake_recovery_worker(down, neutral, _OpenStartGate(), response, request)
 
 
+def _handle_fake_recovery_with_timing(request, response, down, neutral,
+                                      event_counter, event_order):
+    _fake_recovery_worker(down, neutral, _OpenStartGate(), response, request)
+    with event_counter.get_lock():
+        event_counter.value += 1
+        event_order[0] = event_counter.value
+
+
 def _handle_fake_observation(request, response, neutral):
     _fake_readback_worker(neutral, request, response)
+
+
+def _handle_delayed_down_observation(request, response, neutral, down,
+                                    observer_calls, delayed_down_seen,
+                                    neutral_readback_seen, event_counter,
+                                    event_order):
+    with observer_calls.get_lock():
+        observer_calls.value += 1
+        call_number = observer_calls.value
+    _fake_readback_worker(neutral, request, response)
+    if call_number == 1:
+        neutral_readback_seen.set()
+        with event_counter.get_lock():
+            event_counter.value += 1
+            event_order[1] = event_counter.value
+        def deliver_old_down():
+            down.set()
+            neutral.clear()
+            with event_counter.get_lock():
+                event_counter.value += 1
+                event_order[2] = event_counter.value
+            delayed_down_seen.set()
+        timer = threading.Timer(0.01, deliver_old_down)
+        timer.daemon = True
+        timer.start()
 
 
 def _handle_blocked_recovery(_request, response, started):
@@ -261,6 +294,105 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_late_input_horizon_has_a_hard_finite_configuration_limit(self):
+        owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=_identity)
+        with self.assertRaisesRegex(ValueError, "between zero and 60 seconds"):
+            OperationCancellationSupervisor(owner,
+                recovery_process_factory=lambda: None,
+                observer_process_factory=lambda: None,
+                process_identity_reader=_identity,
+                late_input_horizon_ns=60_000_000_001)
+
+    def test_delayed_down_during_recovery_horizon_keeps_owner_fenced(self):
+        context = multiprocessing.get_context("spawn")
+        down = context.Event()
+        producer_started = context.Event()
+        neutral = context.Event()
+        delayed_down_seen = context.Event()
+        neutral_readback_seen = context.Event()
+        event_counter = context.Value("i", 0)
+        event_order = context.Array("q", [0, 0, 0])
+        observer_calls = context.Value("i", 0)
+        producer = context.Process(target=_blocked_fake_producer,
+                                   args=(down, producer_started))
+        producer.start()
+        supervisor = None
+        recovery_handles, observer_handles = [], []
+        try:
+            self.assertTrue(producer_started.wait(5))
+            identity = _identity(producer)
+            owner = OperationOwner(clock_ns=time.monotonic_ns,
+                process_identity_reader=_identity)
+            owner.admit("operation-delayed", GENERATION,
+                time.monotonic_ns() + 5_000_000_000, ["key:a"])
+            self.assertTrue(owner.producer_started("operation-delayed",
+                GENERATION, producer, process_identity=identity))
+
+            recovery_factory = _persistent_helper_factory(context, "recovery",
+                _handle_fake_recovery_with_timing,
+                (down, neutral, event_counter, event_order), recovery_handles)
+            observer_factory = _persistent_helper_factory(context, "observer",
+                _handle_delayed_down_observation,
+                (neutral, down, observer_calls, delayed_down_seen,
+                 neutral_readback_seen, event_counter, event_order), observer_handles)
+            supervisor = OperationCancellationSupervisor(owner,
+                recovery_process_factory=recovery_factory,
+                observer_process_factory=observer_factory,
+                process_identity_reader=_identity,
+                late_input_horizon_ns=250_000_000,
+                late_input_sample_interval_s=0.02)
+
+            deadline = time.monotonic_ns() + 3_500_000_000
+            supervisor.cancel("operation-delayed", GENERATION,
+                              cleanup_deadline_ns=deadline)
+            self.assertTrue(neutral_readback_seen.wait(2),
+                            "initial neutral readback was not observed")
+            with self.assertRaises(OwnerRefused):
+                owner.admit("operation-next", "b" * 64,
+                    time.monotonic_ns() + 5_000_000_000, ["key:b"])
+            self.assertTrue(delayed_down_seen.wait(2),
+                            "delayed old DOWN was not injected")
+            terminal_deadline = time.monotonic() + 2
+            while time.monotonic() < terminal_deadline:
+                result = owner.result("operation-delayed")
+                if result["phase"] == "unknown":
+                    break
+                time.sleep(0.01)
+            self.assertEqual(result["phase"], "unknown", result)
+            self.assertFalse(result["release_confirmed"], result)
+            self.assertIsNone(result["task_success"], result)
+            self.assertFalse(result["replay_allowed"], result)
+            self.assertTrue(down.is_set())
+            self.assertTrue(all(event_order))
+            self.assertLess(event_order[0], event_order[1])
+            self.assertLess(event_order[1], event_order[2])
+            with self.assertRaises(OwnerRefused):
+                owner.admit("operation-next", "b" * 64,
+                    time.monotonic_ns() + 5_000_000_000, ["key:b"])
+            self.assertGreaterEqual(observer_calls.value, 2)
+        finally:
+            if supervisor is not None:
+                supervisor.close()
+            down.clear()
+            neutral.set()
+            if producer.is_alive():
+                producer.terminate()
+            producer.join(2)
+            if producer.is_alive() is False:
+                producer.close()
+            for process, receive, send in recovery_handles + observer_handles:
+                try:
+                    receive.close()
+                    send.close()
+                    if process.is_alive():
+                        process.terminate()
+                    process.join(1)
+                    if process.is_alive() is False:
+                        process.close()
+                except (OSError, ValueError):
+                    pass
+
     def test_busy_helper_invalidation_is_bounded_and_closes_readmission(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         supervisor._clock_ns = time.monotonic_ns
@@ -422,7 +554,7 @@ class ProcessCancellationTests(unittest.TestCase):
             OperationCancellationSupervisor(owner,
                 recovery_process_factory=good_factory,
                 observer_process_factory=bad_ready_factory,
-                process_identity_reader=_identity, startup_timeout_s=0.2,
+                process_identity_reader=_identity, startup_timeout_s=2.0,
                 terminate_grace_s=0.05, kill_grace_s=0.05)
         self._dispose_children(handles)
 
@@ -509,7 +641,9 @@ class ProcessCancellationTests(unittest.TestCase):
             supervisor = OperationCancellationSupervisor(
                 owner, recovery_process_factory=recovery_process_factory,
                 observer_process_factory=observer_process_factory,
-                process_identity_reader=_identity)
+                process_identity_reader=_identity,
+                late_input_horizon_ns=100_000_000,
+                late_input_sample_interval_s=0.02)
             self.assertEqual(len(recovery_handles), 1)
             self.assertEqual(len(observer_handles), 1)
             deadline_ns = time.monotonic_ns() + 3_000_000_000
@@ -539,6 +673,13 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertTrue(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
+            self.assertEqual(result["late_input_horizon_ns"], 100_000_000)
+            self.assertGreaterEqual(result["late_input_observation_count"], 2)
+            self.assertGreaterEqual(
+                result["late_input_observation_end_ns"]
+                - result["late_input_release_received_ns"], 100_000_000)
+            self.assertLessEqual(result["late_input_max_observed_gap_ns"],
+                                 result["late_input_max_sample_gap_ns"])
         finally:
             if supervisor is not None:
                 supervisor.close()
