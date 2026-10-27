@@ -4,7 +4,7 @@
 
 T0 A01 reports `PASS_RELATIONAL_REIDENTIFICATION_SCOPED` for a finite synthetic corpus. The candidate correctly re-identified 100/300 held-out positive cases (33.3%), 33.3 percentage points above both exact ID/path and exact role-label-actionability baselines. It observed zero false rebinds among 500 negatives (one-sided 95% upper bound 0.5974%). All 200 automorphism, 150 semantic-change, and 150 removed-target controls abstained. Recovery was limited to sibling reorder (100/100); all inserted-duplicate-target and transparent-wrapper cases abstained.
 
-The method used exhaustive injective assignment with Gibbs-softened costs; it is not a canonical entropic Gromov-Wasserstein solver. The result grants no live target handle, freshness, action authority, task effect, or product behavior. Evidence is retained in open [PR #8708](https://github.com/Unjuno/agent-interface/pull/8708) and [Issue #8675](https://github.com/Unjuno/agent-interface/issues/8675).
+The method used exhaustive injective assignment with Gibbs-softened costs; it is not a canonical entropic Gromov-Wasserstein solver. The result grants no live target handle, freshness, action authority, task effect, or product behavior. Evidence is preserved in the [A01 artifact](../../research/analysis/cross_revision_target_transport_8675_t0_20261009/REPORT.md), originally proposed in [PR #8708](https://github.com/Unjuno/agent-interface/pull/8708), and [Issue #8675](https://github.com/Unjuno/agent-interface/issues/8675).
 
 ## Successor proposal: #8868
 
