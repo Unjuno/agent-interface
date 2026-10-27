@@ -4,7 +4,8 @@ from tempfile import TemporaryDirectory
 
 from runtime.cli_v1.win32_supervisor_helpers import (
     _helper_main, _observe, _parse_obligations, _recover)
-from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
+from runtime.guarded_win32_v1.process_cancellation import (
+    OperationCancellationSupervisor, _consistent_neutral_observation)
 
 
 GENERATION = "a" * 64
@@ -89,7 +90,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                     row = {"operation_id": OPERATION, "target_generation": GENERATION,
                            "recovery_id": recovery_id}
                     if role == "recovery": row["release_accepted"] = True
-                    else: row.update(neutral=True, observed_monotonic_ns=observed)
+                    else: row.update(neutral=True, observed_monotonic_ns=observed,
+                        key_button_states=[False for item in request["obligations"] if item.startswith(("key:", "button:"))],
+                        unicode_event_units=sum(item.startswith("unicode:") for item in request["obligations"]))
                     return row
                 supervisor._exchange_helper = exchange
                 supervisor._run_recovery(OPERATION, GENERATION,
@@ -97,6 +100,31 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                      "recovery_id": recovery_id, "deadline_ns": 100, "obligations": []})
                 self.assertEqual(owner.completed, [])
                 self.assertEqual(owner.unknown, ["independent_readback_time_invalid"])
+
+    def test_cancel_recovery_rejects_contradictory_neutral_state(self):
+        class Owner:
+            def __init__(self): self.unknown = []; self.completed = []
+            def mark_unknown(self, op, generation, reason): self.unknown.append(reason)
+            def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner; supervisor._clock_ns = lambda: 10
+        supervisor._invalidate_helper = lambda *_: None
+        recovery_id = "3" * 32
+        def exchange(role, request, deadline):
+            row = {"operation_id": OPERATION, "target_generation": GENERATION,
+                   "recovery_id": recovery_id}
+            if role == "recovery": row["release_accepted"] = True
+            else: row.update(neutral=True, observed_monotonic_ns=10,
+                key_button_states=[True], unicode_event_units=0)
+            return row
+        supervisor._exchange_helper = exchange
+        supervisor._run_recovery(OPERATION, GENERATION,
+            {"operation_id": OPERATION, "target_generation": GENERATION,
+             "recovery_id": recovery_id, "deadline_ns": 100,
+             "obligations": ["key:fixture:W"]})
+        self.assertEqual(owner.completed, [])
+        self.assertEqual(owner.unknown, ["independent_readback_state_invalid"])
 
     def test_orphan_recovery_requires_matching_release_and_independent_readback(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
@@ -113,6 +141,8 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             else:
                 row["neutral"] = True
                 row["observed_monotonic_ns"] = 10
+                row["key_button_states"] = [False for item in request["obligations"] if item.startswith(("key:", "button:"))]
+                row["unicode_event_units"] = sum(item.startswith("unicode:") for item in request["obligations"])
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: self.fail(
@@ -146,7 +176,10 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
-            if role == "observer": row["observed_monotonic_ns"] = 10
+            if role == "observer":
+                row["observed_monotonic_ns"] = 10
+                row["key_button_states"] = [False for item in request["obligations"] if item.startswith(("key:", "button:"))]
+                row["unicode_event_units"] = sum(item.startswith("unicode:") for item in request["obligations"])
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: self.fail("unexpected invalidation")
@@ -166,7 +199,10 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
-            if role == "observer": row["observed_monotonic_ns"] = 10
+            if role == "observer":
+                row["observed_monotonic_ns"] = 10
+                row["key_button_states"] = [False for item in request["obligations"] if item.startswith(("key:", "button:"))]
+                row["unicode_event_units"] = sum(item.startswith("unicode:") for item in request["obligations"])
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: self.fail("unexpected invalidation")
@@ -184,7 +220,10 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
-            if role == "observer": row["observed_monotonic_ns"] = 10
+            if role == "observer":
+                row["observed_monotonic_ns"] = 10
+                row["key_button_states"] = [False for item in request["obligations"] if item.startswith(("key:", "button:"))]
+                row["unicode_event_units"] = sum(item.startswith("unicode:") for item in request["obligations"])
             return row
         supervisor._exchange_helper = exchange
         invalidated = []
@@ -205,7 +244,41 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                     row = {"operation_id": OPERATION, "target_generation": GENERATION,
                            "recovery_id": recovery_id}
                     if role == "recovery": row["release_accepted"] = True
-                    else: row.update(neutral=True, observed_monotonic_ns=observed)
+                    else: row.update(neutral=True, observed_monotonic_ns=observed,
+                        key_button_states=[False for item in request["obligations"] if item.startswith(("key:", "button:"))],
+                        unicode_event_units=sum(item.startswith("unicode:") for item in request["obligations"]))
+                    return row
+                supervisor._exchange_helper = exchange
+                supervisor._invalidate_helper = lambda *_: None
+                result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+                    recovery_id, 100, ["key:fixture:W"])
+                self.assertEqual(result["status"], "unknown")
+                self.assertFalse(result["release_confirmed"])
+
+    def test_observer_state_coverage_includes_unicode_units(self):
+        obligations = ["key:fixture:W", "button:fixture:left", "unicode:0041"]
+        row = {"neutral": True, "key_button_states": [False, False],
+               "unicode_event_units": 1}
+        self.assertTrue(_consistent_neutral_observation(row, obligations))
+        self.assertFalse(_consistent_neutral_observation(
+            dict(row, unicode_event_units=0), obligations))
+        self.assertTrue(_consistent_neutral_observation(
+            {"neutral": False, "key_button_states": [None, False],
+             "unicode_event_units": 1}, obligations))
+
+    def test_orphan_recovery_rejects_inconsistent_observer_states(self):
+        for states, unicode_units in (([True], 0), ([], 0), ([0], 0),
+                                      ([False], 1), (None, 0)):
+            with self.subTest(states=states, unicode_units=unicode_units):
+                supervisor = object.__new__(OperationCancellationSupervisor)
+                supervisor._clock_ns = lambda: 10
+                recovery_id = "3" * 32
+                def exchange(role, request, deadline):
+                    row = {"operation_id": OPERATION, "target_generation": GENERATION,
+                           "recovery_id": recovery_id}
+                    if role == "recovery": row["release_accepted"] = True
+                    else: row.update(neutral=True, observed_monotonic_ns=10,
+                        key_button_states=states, unicode_event_units=unicode_units)
                     return row
                 supervisor._exchange_helper = exchange
                 supervisor._invalidate_helper = lambda *_: None
@@ -228,6 +301,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 row["release_accepted"] = True
             else:
                 row["neutral"] = False
+                row["observed_monotonic_ns"] = 10
+                row["key_button_states"] = [True]
+                row["unicode_event_units"] = 0
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: None
