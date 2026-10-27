@@ -51,6 +51,8 @@ class InputOwner:
         deadline = time.monotonic() + 2
         while not done.wait(.01):
             if self.stopped.is_set():
+                # A reply may complete immediately after the wait times out.
+                if done.is_set(): break
                 raise RuntimeError('input owner stopped before reply') from self.error
             if time.monotonic() >= deadline:
                 if lease is not None: lease.cancel.set()
