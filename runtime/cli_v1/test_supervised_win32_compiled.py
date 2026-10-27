@@ -1,10 +1,161 @@
 import time
 import unittest
 
-from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
+from runtime.cli_v1.supervised_win32_compiled import (
+    _terminal, run_public_compiled)
 
 
 class SupervisedWin32CompiledCallerTests(unittest.TestCase):
+    def test_retrieved_dispatch_requires_exact_call_and_generation(self):
+        call_id = "a" * 32
+        generation = "b" * 64
+        retrieved = {"call_id": call_id,
+            # interface_results describes its own read as no input; the
+            # nested action retains the original dispatch's delivery state.
+            "input_dispatched": False,
+            "action": {"operation_id": "c" * 32,
+                "target_generation": generation, "status": "completed",
+                "input_dispatched": True, "release_confirmed": True,
+                "completion_custody": {"release_confirmed": True,
+                    "completion_readback_outcome": "verified"},
+                "result": {"status": "completed",
+                    "input_dispatched": True, "release_confirmed": True}}}
+
+        accepted = _terminal(retrieved, "move", expected_call_id=call_id,
+            expected_generation=generation)
+        self.assertEqual(accepted["status"], "completed")
+        self.assertIs(accepted["release"]["verified"], True)
+        self.assertIs(accepted["input_dispatched"], True)
+
+        wrong_call = _terminal(retrieved, "move",
+            expected_call_id="d" * 32, expected_generation=generation)
+        self.assertEqual(wrong_call["status"], "uncertain")
+        self.assertIs(wrong_call["release"]["verified"], False)
+
+        wrong_generation = _terminal(retrieved, "move",
+            expected_call_id=call_id, expected_generation="e" * 64)
+        self.assertEqual(wrong_generation["status"], "uncertain")
+        self.assertIs(wrong_generation["release"]["verified"], False)
+
+        recovered = {**retrieved, "action": {**retrieved["action"],
+            "status": "recovered", "result": {"status": "recovered",
+                "input_dispatched": True, "release_confirmed": True}}}
+        recovered_terminal = _terminal(recovered, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(recovered_terminal["status"], "delivery_uncertain")
+        self.assertIs(recovered_terminal["release"]["verified"], True)
+
+    def test_pending_dispatch_joins_same_call_id_readback_before_task_verification(self):
+        generation = "b" * 64
+        dispatch_id = "a" * 32
+        operation_id = "c" * 32
+        observations = []
+        dispatches = []
+        resolutions = []
+        task_calls = []
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "pending-public-win32-dispatch",
+            "session_scope": "test-session",
+            "surface": "fixture-window",
+            "predicates": ["ready", "moved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"moved": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True},
+                        "outcome": "action", "action": "move",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"moved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"},
+                {"op": "release_all"}]}
+
+        def observe(target, frame, region):
+            observations.append((target, frame, region))
+            index = len(observations)
+            return {"status": "returned", "call_id": f"{index:032x}",
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": f"observation-{index}",
+                "predicates": {"ready": True,
+                    "moved": index > 1}}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            dispatches.append(True)
+            return {"status": "pending", "call_id": dispatch_id,
+                "operation_invoked": True, "input_dispatched": None,
+                "release_confirmed": False, "replay_allowed": False}
+
+        def resolve_pending(call_id, pending_reply):
+            resolutions.append((call_id, pending_reply["status"]))
+            return {"call_id": call_id,
+                "action": {"operation_id": operation_id,
+                    "target_generation": generation, "status": "completed",
+                    "input_dispatched": True, "release_confirmed": True,
+                    "completion_custody": {"release_confirmed": True,
+                        "completion_readback_outcome": "verified"},
+                    "result": {"status": "completed",
+                        "input_dispatched": True,
+                        "release_confirmed": True}}}
+
+        def verify_task(call_id):
+            task_calls.append(call_id)
+            requested = time.monotonic_ns() - 2_000_000
+            observed = requested + 1_000_000
+            accepted = observed + 1_000_000
+            receipt = {"call_id": call_id, "operation_id": "d" * 32,
+                "target_generation": generation, "oracle_id": "e" * 32,
+                "outcome": "success", "observed_monotonic_ns": observed,
+                "evidence_ref": "pixel-proof"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": receipt, "requested_monotonic_ns": requested,
+                    "receipt_received_monotonic_ns": accepted}}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "succeeded", "evidence_ref": "pixel-proof"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(result["outcome"], "TASK_SUCCEEDED", result)
+        self.assertEqual(dispatches, [True])
+        self.assertEqual(resolutions, [(dispatch_id, "pending")])
+        self.assertEqual(result["standard_action_call_ids"], [dispatch_id])
+        self.assertEqual(result["task_verification"]["action_call_id"], dispatch_id)
+        self.assertEqual(task_calls, [dispatch_id])
+        dispatch_evidence = result["standard_target_evidence"][1]
+        self.assertEqual(dispatch_evidence["call_id"], dispatch_id)
+        self.assertEqual(dispatch_evidence["action_id"], operation_id)
+        self.assertTrue(dispatch_evidence["release_verified"])
+
     def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
         generation = "c" * 64
         def call_id(number): return f"{number:032x}"
