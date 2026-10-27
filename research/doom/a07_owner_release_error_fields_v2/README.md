@@ -7,3 +7,5 @@ Run `python -B -m unittest test_audit_a07_owner_release_reconciliation test_miss
 A second synthetic regression establishes that a failed attempt followed by a clean attempt must not be promoted by filtering out the failure. This conservative gate requires all attempts in the terminal cleanup evidence to satisfy the frozen checks. It may hold cases that later evidence could disambiguate. Seven tests pass normally and under optimized Python.
 
 The keymap-before and keymap-after error fields must also both be present and null: synthetic error and missing-field mutations fail closed. This uses the current owner receipt schema; legacy records without these fields are not promoted. Eight tests pass normally and under optimized Python. No saved A07 audit was rerun.
+
+The successor writes output to a temporary sibling and atomically replaces the destination. A synthetic hardlink test verifies an external output hardlink cannot truncate the raw events file. The path guard still rejects outputs inside the raw directory. Nine synthetic tests pass normally and under optimized Python. Historical A07 files were not opened or changed.
