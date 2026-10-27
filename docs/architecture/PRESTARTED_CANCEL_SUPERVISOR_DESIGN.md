@@ -52,6 +52,12 @@ The Windows CPython 3.11.9 relay plus composition suites pass 25/25 in normal an
 On current-main parent `bf113b8945456a96bfbd785f48e7de1c1a0f38e3`, the public relay regression holds the first of 16 ordinary response writes, queues one additional ordinary request followed by cancellation, and confirms that the cancellation reaches the MCP caller before stdout resumes. The deferred ordinary request retains its ID and is dispatched after the cancellation response write succeeds. A second cancellation does not consume another reserved slot while the first cancellation response is pending. A separate injected cancellation-response write failure terminates the relay before a later tool is dispatched. The relay and standard-caller composition suites pass 26/26 in normal and optimized Windows CPython 3.11.
 
 This is Fake stream and Fake MCP-client evidence. It verifies relay admission and fail-closed transport behavior, not native input release, independent X state, task success, or a hard bound with multiple ordinary requests already queued ahead of cancellation. More than one queued request may still delay cancellation until a response slot opens. Keep the X11/Win32 release qualification gaps above unchanged.
+
+## Two queued ordinary requests before cancellation (2026-10-28)
+
+The new Fake-stream discriminator fills all 16 ordinary stdout response slots, blocks the first stdout write, queues two ordinary requests and then `interface_guarded_cancel`. During a 100 ms blocked-output observation window, neither the ordinary requests nor the cancellation reach the Fake MCP client. After stdout resumes, the first queued ordinary request is dispatched before cancellation; cancellation then overtakes the second queued ordinary request. The relay suite passes 23/23 in normal and optimized Windows CPython 3.11.9. Raw outputs and failed fixture-construction/assertion attempts are retained in [the two-queued cancellation packet](../../research/integration/relay_two_queued_cancel_20261028/README.md).
+
+This confirms the bounded one-line lookahead boundary: the relay cannot reach cancellation while the response sink is fully blocked and two ordinary requests already precede it; when a response slot opens, one ordinary call may be dispatched before cancellation. The test uses Fake streams and a Fake MCP client, so it proves request admission order only. It does not show physical input from the first ordinary call, key/button release, native delivery, task effect, or a hard release deadline. Keep the relay input lookahead finite and preserve this remaining delay in safety claims.
 ## Additive shutdown-grace result (2026-10-22)
 
 PR [#9329](https://github.com/Unjuno/agent-interface/pull/9329) is merged at `d0f392e55db5f53c17592ae08360cc5e45940b25`. It raises the retired release worker's clean-exit grace from 100 ms to 250 ms while keeping unclean exit and helper failure fail-closed as `UNKNOWN`. The new delayed-shutdown Fake X regression fails at the old grace and passes at 250 ms. Local Windows Python normal and optimized runs passed `test_mcp_owned_process` 45/45 and `test_xres_client_fence` 20/20.
@@ -421,3 +427,23 @@ checkpoint.
 This local recheck neither repaired/restarted Docker nor used WSLc. Docker
 Desktop's daemon still reports `Docker Desktop is unable to start`; WSLc remains
 on the separate STOP/HOLD gate in Issue #7924.
+
+## Public MCP delayed-input quarantine composition (2026-10-28)
+
+The new `SupervisedBackendCompositionTests.test_public_cancel_keeps_old_generation_quarantined_after_delayed_down`
+connects the actual public MCP `create_server` route, `OwnedWin32SessionOwner`,
+`OperationCancellationSupervisor`, spawned producer, `Win32RuntimeSession`,
+`Win32Backend`, and prestarted recovery/observer processes. The route installs a
+100 ms opt-in horizon. After the observer returns its first neutral sample, its
+second request injects a delayed old CTRL-down. The public result becomes
+`UNKNOWN`, reports `release_confirmed=false`, retains `task_success=null`, and
+denies replay; `OperationOwner` refuses a new generation. The trace confirms
+producer exit precedes recovery UP and that the delayed DOWN follows a completed
+neutral observation cycle. The same test module passes 4/4 normally and under
+`-O`; the focused composed case passes 1/1 in both modes ([packet](../../research/integration/mcp_public_delayed_down_quarantine_20261028/README.md)).
+
+This closes a gap between the standalone horizon state-machine tests and the
+public MCP integration route for the modeled late-DOWN schedule. `FakeUser32`
+still supplies the input state, so this is not a Windows `SendInput` delivery
+trace, a native release bound, a live application effect, or MAP01 evidence. The
+default horizon remains zero, and no Docker or WSLc runtime was used.

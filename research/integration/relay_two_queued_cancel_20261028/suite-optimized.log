@@ -1,0 +1,29 @@
+test_bad_envelopes_and_native_tools_never_dispatch (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_bad_envelopes_and_native_tools_never_dispatch) ... ok
+test_bytes_require_utf8_before_dispatch_and_id_consumption (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_bytes_require_utf8_before_dispatch_and_id_consumption) ... ok
+test_cancel_is_dispatched_while_prior_stdout_write_is_blocked (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_cancel_is_dispatched_while_prior_stdout_write_is_blocked) ... ok
+test_cancel_response_writer_failure_stops_later_tool_dispatch (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_cancel_response_writer_failure_stops_later_tool_dispatch) ... ok
+test_decoded_literal_surrogates_are_also_refused_before_sdk (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_decoded_literal_surrogates_are_also_refused_before_sdk) ... ok
+test_decoder_recursion_after_acceptance_preserves_current_id (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_decoder_recursion_after_acceptance_preserves_current_id) ... ok
+test_duplicate_json_keys_refuse_before_dispatch_and_id_consumption (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_duplicate_json_keys_refuse_before_dispatch_and_id_consumption) ... ok
+test_equal_keys_in_distinct_objects_and_distinct_case_remain_valid (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_equal_keys_in_distinct_objects_and_distinct_case_remain_valid) ... ok
+test_exact_content_duplicate_and_ambiguous_failure (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_exact_content_duplicate_and_ambiguous_failure) ... ok
+test_excessive_json_nesting_refuses_without_dispatch_or_id_consumption (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_excessive_json_nesting_refuses_without_dispatch_or_id_consumption) ... ok
+test_finite_json_numbers_and_number_strings_remain_unchanged (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_finite_json_numbers_and_number_strings_remain_unchanged) ... ok
+test_guarded_recovery_is_an_explicitly_forwardable_public_tool (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_guarded_recovery_is_an_explicitly_forwardable_public_tool) ... ok
+test_legacy_public_protocol_parity_without_changing_research (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_legacy_public_protocol_parity_without_changing_research) ... ok
+test_moderately_nested_json_preserves_forwarded_values (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_moderately_nested_json_preserves_forwarded_values) ... ok
+test_overflowing_json_numbers_refuse_before_consuming_id (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_overflowing_json_numbers_refuse_before_consuming_id) ... ok
+test_pending_stdout_limit_reads_past_one_queued_ordinary_for_cancel (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_pending_stdout_limit_reads_past_one_queued_ordinary_for_cancel) ... ok
+test_portable_relay_outside_checkout_lists_validates_and_closes (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_portable_relay_outside_checkout_lists_validates_and_closes) ... Executing <Task pending name='Task-171' coro=<PublicRelayTests.test_portable_relay_outside_checkout_lists_validates_and_closes() running at D:\CodexData\Temp\agent-interface-calc-error-receipt-r01\runtime\cli_v1\test_mcp_relay.py:632> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 4.875 seconds
+ok
+test_serve_keeps_already_decoded_text_stream_compatibility (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_serve_keeps_already_decoded_text_stream_compatibility) ... ok
+test_serve_preserves_utf8_wire_despite_text_stream_encoding (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_serve_preserves_utf8_wire_despite_text_stream_encoding) ... ok
+test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes) ... ok
+test_unicode_bytes_keep_sdk_uncertainty_and_never_replay (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_unicode_bytes_keep_sdk_uncertainty_and_never_replay) ... ok
+test_unicode_scalars_pairs_and_literal_escape_text_keep_exact_meaning (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_unicode_scalars_pairs_and_literal_escape_text_keep_exact_meaning) ... ok
+test_unpaired_surrogates_refuse_before_sdk_and_keep_same_id (runtime.cli_v1.test_mcp_relay.PublicRelayTests.test_unpaired_surrogates_refuse_before_sdk_and_keep_same_id) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 7.998s
+
+OK
