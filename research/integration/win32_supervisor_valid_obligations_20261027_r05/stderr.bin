@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "D:\CodexData\Temp\win32-supervisor-r05-src\probe.py", line 110, in <module>
+    if len(sys.argv)==3 and sys.argv[1]=="worker":raise SystemExit(worker(Path(sys.argv[2])))
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CodexData\Temp\win32-supervisor-r05-src\probe.py", line 36, in worker
+    contract=load_source("contract_source", "contract_source.py")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CodexData\Temp\win32-supervisor-r05-src\probe.py", line 35, in load_source
+    source_module=importlib.util.module_from_spec(source_spec);source_spec.loader.exec_module(source_module);return source_module
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\CodexData\Temp\win32-supervisor-r05-src\contract_source.py", line 95, in <module>
+    @dataclass(frozen=True, slots=True)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\dataclasses.py", line 1222, in wrap
+    return _process_class(cls, init, repr, eq, order, unsafe_hash,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\dataclasses.py", line 947, in _process_class
+    and _is_type(type, cls, dataclasses, dataclasses.KW_ONLY,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\dataclasses.py", line 712, in _is_type
+    ns = sys.modules.get(cls.__module__).__dict__
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute '__dict__'. Did you mean: '__dir__'?
