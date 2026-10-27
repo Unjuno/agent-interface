@@ -25,3 +25,7 @@ Seven G10 packet files (`compiled_ocr.py`, `effect_predicate.py`, `ocr_reader.py
 ## Next integration decision
 
 Compare the archived G10 guarded bridge, semantic recognizer and source-capture clock contract against current-main interfaces and the chosen task, including stale/unknown, releases and bounded recovery. Select and test a reproducible adapter based on existing qualified code when applicable. Then prospectively freeze the matched same-model cold/warm/invalidation/repair comparison, its all-attempt model/OCR/native costs and independent effects. A fixed offline method graph and an archived positive do not alone satisfy that comparison. No existing allocation or historical auditor is rerun by this crosswalk.
+
+## Current-core offline construction check
+
+A read-only fixture consumes the hash-pinned G10 raw interface, compact observations and terminal summaries and runs the current compiled core with inert admission, execute and effect callbacks. The unmodified recorded predicates reach two core transitions; mutations making the first effect unknown or stale stop before a second action. The fixture uses a deterministic simulated clock and reconstructed release fields; it does not run OCR, the original actor/auditor, X11, or the native bridge and cannot verify actual release, observation acquisition, or current-main live compatibility. Thirty-eight selected offline tests passed normally and with `-O`.
