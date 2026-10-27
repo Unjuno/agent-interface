@@ -1,6 +1,7 @@
 """Verify V10's successful release record matches the cleanup audit schema."""
 import importlib.util
 import sys
+import threading
 import types
 import unittest
 from pathlib import Path
@@ -46,6 +47,59 @@ def load_input_owner_v10_without_x11():
 
 
 class InputOwnerV10ReleaseSchemaTests(unittest.TestCase):
+    def test_completed_reply_survives_stop_after_wait_timeout(self):
+        owner_type = load_input_owner_v10_without_x11()
+        for ok in (True, False):
+            with self.subTest(reply_ok=ok):
+                owner = object.__new__(owner_type)
+                owner.closed = False
+                owner.error = None
+                owner.stopped = threading.Event()
+                owner.stop_requested = threading.Event()
+                requests = []
+                owner.requests = types.SimpleNamespace(put=requests.append)
+                outcome = 'closed' if ok else ValueError('close failed')
+
+                class TimeoutThenReply:
+                    completed = False
+                    def wait(self, _timeout):
+                        requests[0][4].append((ok, outcome))
+                        self.completed = True
+                        owner.stopped.set()
+                        return False
+                    def is_set(self):
+                        return self.completed
+
+                done = TimeoutThenReply()
+                with patch.dict(owner_type.call.__globals__,
+                                {'threading': types.SimpleNamespace(Event=lambda: done)}):
+                    if ok:
+                        self.assertEqual(owner.call('close'), 'closed')
+                    else:
+                        with self.assertRaisesRegex(ValueError, 'close failed'):
+                            owner.call('close')
+
+    def test_owner_stopped_without_reply_still_fails(self):
+        owner_type = load_input_owner_v10_without_x11()
+        owner = object.__new__(owner_type)
+        owner.closed = False
+        owner.error = None
+        owner.stopped = threading.Event()
+        owner.stop_requested = threading.Event()
+        owner.requests = types.SimpleNamespace(put=lambda _request: None)
+
+        class TimeoutWithoutReply:
+            def wait(self, _timeout):
+                owner.stopped.set()
+                return False
+            def is_set(self):
+                return False
+
+        with patch.dict(owner_type.call.__globals__,
+                        {'threading': types.SimpleNamespace(Event=TimeoutWithoutReply)}):
+            with self.assertRaisesRegex(RuntimeError, 'stopped before reply'):
+                owner.call('close')
+
     def test_successful_release_records_known_empty_key_state(self):
         owner_type = load_input_owner_v10_without_x11()
         owner = owner_type("fake-display")
