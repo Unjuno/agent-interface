@@ -349,13 +349,20 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
             raw_result = _require_callable(adapters, name)(copy.deepcopy(payload))
             result = _model_result(raw_result)
         except Exception as error:
-            ended = clock()
-            attempt.update(status="failed", completed_ns=ended,
-                           call_id=None,
-                           error=_error_text(error))
+            # Finalize the known failure before consulting another callback.
+            attempt.update(status="failed", completed_ns=None,
+                           call_id=None, error=_error_text(error))
             stages[name] = {"status": "failed", "reason": _error_text(error)}
-            phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
-                           "elapsed_ns": ended-started})
+            completion_clock_error = None
+            try:
+                ended = clock()
+                elapsed = ended - started
+            except Exception as timing_error:
+                completion_clock_error = timing_error
+            else:
+                attempt["completed_ns"] = ended
+                phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
+                               "elapsed_ns": elapsed})
             metadata_error = None
             try:
                 for field in ("call_id", "thread_id", "requested_model",
@@ -381,6 +388,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                             metadata_error = invalid_metadata
             finally:
                 emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            if completion_clock_error is not None:
+                raise completion_clock_error from error
             if metadata_error is not None:
                 raise ValueError("invalid model failure accounting") from error
             raise
