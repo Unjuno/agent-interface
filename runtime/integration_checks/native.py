@@ -22,7 +22,8 @@ SUITES = {
 SUITES['protocol'].append('research.doom.test_v39_queue_wait_budget_currentmain')
 SUITES['win32'].extend(['runtime.backends.win32_v1.test_focus_guard_inert', 'runtime.backends.win32_v1.test_focus_drift_current'])
 SUITES['win32'].append('runtime.backends.win32_v1.test_unbound_input_policy')
-SUITES['win32'].append('runtime.cli_v1.test_mcp_supervised_backend_composition')
+if sys.platform == 'win32':
+    SUITES['win32'].append('runtime.cli_v1.test_mcp_supervised_backend_composition')
 
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_appserver_utf8_2d0b')
