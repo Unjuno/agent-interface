@@ -59,8 +59,11 @@ def audit(events, owner_events):
         for key, count in missing.items():
             keycode = keycodes.get(key)
             entry = attempts.get(keycode, {}) if keycode else {}
-            valid_attempts = [row for row in entry.get("attempts", [])
-                              if _valid_keyup(row)]
+            attempts_for_key = entry.get("attempts", [])
+            valid_attempts = ([row for row in attempts_for_key if _valid_keyup(row)]
+                              if isinstance(attempts_for_key, list) and
+                              all(_valid_keyup(row) for row in attempts_for_key)
+                              else [])
             terminal_matches[key] = {
                 "missing_explicit_transition_count": count,
                 "keycode": keycode,
