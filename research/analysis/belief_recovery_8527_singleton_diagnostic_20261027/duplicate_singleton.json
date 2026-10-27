@@ -1,0 +1,529 @@
+{
+  "rows": [
+    {
+      "case_id": "fully-observed",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "fully-observed",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": 0,
+      "minimum_steps": 1,
+      "policy": {
+        "action": "GO",
+        "branches": {
+          "m": {
+            "terminal": "VERIFIED_MARKER"
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "fully-observed",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": 1,
+      "minimum_steps": 1,
+      "policy": {
+        "action": "GO",
+        "branches": {
+          "m": {
+            "terminal": "VERIFIED_MARKER"
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "fully-observed",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": 2,
+      "minimum_steps": 1,
+      "policy": {
+        "action": "GO",
+        "branches": {
+          "m": {
+            "terminal": "VERIFIED_MARKER"
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "aliased-opposite-actions",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "aliased-opposite-actions",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "aliased-opposite-actions",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "aliased-opposite-actions",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "safe-information-gathering",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "safe-information-gathering",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "safe-information-gathering",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": 0,
+      "minimum_steps": 2,
+      "policy": {
+        "action": "SCAN",
+        "branches": {
+          "left-cue": {
+            "action": "LEFT",
+            "branches": {
+              "left-done": {
+                "terminal": "VERIFIED_MARKER"
+              }
+            }
+          },
+          "right-cue": {
+            "action": "RIGHT",
+            "branches": {
+              "right-done": {
+                "terminal": "VERIFIED_MARKER"
+              }
+            }
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "safe-information-gathering",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": 1,
+      "minimum_steps": 2,
+      "policy": {
+        "action": "SCAN",
+        "branches": {
+          "left-cue": {
+            "action": "LEFT",
+            "branches": {
+              "left-done": {
+                "terminal": "VERIFIED_MARKER"
+              }
+            }
+          },
+          "right-cue": {
+            "action": "RIGHT",
+            "branches": {
+              "right-done": {
+                "terminal": "VERIFIED_MARKER"
+              }
+            }
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "late-cue",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "late-cue",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "late-cue",
+      "effective_budget": 1,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "late-cue",
+      "effective_budget": 1,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "uncontrollable-destroys-recovery",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "uncontrollable-destroys-recovery",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "uncontrollable-destroys-recovery",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "uncontrollable-destroys-recovery",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "exact-horizon-alternate-path",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "exact-horizon-alternate-path",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "NO_COMMON_SAFE_POLICY_WITHIN_BUDGET",
+      "status": "NOT_RECOVERABLE"
+    },
+    {
+      "case_id": "exact-horizon-alternate-path",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": 0,
+      "minimum_steps": 2,
+      "policy": {
+        "action": "GO",
+        "branches": {
+          "s1": {
+            "action": "GO",
+            "branches": {
+              "m": {
+                "terminal": "VERIFIED_MARKER"
+              }
+            }
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "exact-horizon-alternate-path",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": 1,
+      "minimum_steps": 2,
+      "policy": {
+        "action": "GO",
+        "branches": {
+          "s1": {
+            "action": "GO",
+            "branches": {
+              "m": {
+                "terminal": "VERIFIED_MARKER"
+              }
+            }
+          }
+        }
+      },
+      "reason": null,
+      "status": "RECOVERABLE"
+    },
+    {
+      "case_id": "omitted-transition-mass",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "omitted-transition-mass",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "omitted-transition-mass",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "omitted-transition-mass",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "stale-observation-generation",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "stale-observation-generation",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "stale-observation-generation",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "stale-observation-generation",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "unverified-marker",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "unverified-marker",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "unverified-marker",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "unverified-marker",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "missing-transition",
+      "effective_budget": 0,
+      "horizon": 0,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "missing-transition",
+      "effective_budget": 1,
+      "horizon": 1,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "missing-transition",
+      "effective_budget": 2,
+      "horizon": 2,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    },
+    {
+      "case_id": "missing-transition",
+      "effective_budget": 3,
+      "horizon": 3,
+      "margin": null,
+      "minimum_steps": null,
+      "policy": null,
+      "reason": "INCOMPLETE_OR_STALE_OR_UNVERIFIED",
+      "status": "UNKNOWN"
+    }
+  ],
+  "singleton_controls": [
+    {
+      "belief": [
+        "L"
+      ],
+      "result": {
+        "margin": 1,
+        "minimum_steps": 1,
+        "policy": {
+          "action": "LEFT",
+          "branches": {
+            "left-done": {
+              "terminal": "VERIFIED_MARKER"
+            }
+          }
+        },
+        "reason": null,
+        "status": "RECOVERABLE"
+      }
+    },
+    {
+      "belief": [
+        "L"
+      ],
+      "result": {
+        "margin": 1,
+        "minimum_steps": 1,
+        "policy": {
+          "action": "LEFT",
+          "branches": {
+            "left-done": {
+              "terminal": "VERIFIED_MARKER"
+            }
+          }
+        },
+        "reason": null,
+        "status": "RECOVERABLE"
+      }
+    }
+  ]
+}

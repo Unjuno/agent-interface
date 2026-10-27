@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8527 singleton-control construction audit gap](belief_recovery_8527_singleton_diagnostic_20261027/REPORT.md) — post-result diagnostic: duplicated singleton control was accepted, so distinct-control coverage was not established; A02 formal candidate/auditor remain 0/0.
+
 - [Issue #8527 T0 A02 belief-space recovery construction](belief_recovery_margin_8527_t0_a02_20261008/README.md) — construction tests pass; formal candidate and auditor remain 0/0. This is not a scientific PASS or live recovery result; original frozen execution conditions remain historical.
 
 - [Issue #8630 T0 A01 failed policy-selection gate](joint_opportunity_budget_8630_t0_a01_20261009/REPORT.md) — `FAIL_METHOD`: weak-signal observation plus recovery scored 0.755 versus 0.750 without observation; one candidate and one auditor invocation, no retries. Synthetic only; preserve raw outputs rather than overwriting them with the historical commands.
@@ -469,6 +471,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_external_drift_5368_t0_20261003/`](belief_external_drift_5368_t0_20261003/)
 - [`belief_external_drift_wslc_portability_20261003/`](belief_external_drift_wslc_portability_20261003/)
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
+- [`belief_recovery_8527_singleton_diagnostic_20261027/`](belief_recovery_8527_singleton_diagnostic_20261027/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
 - [`benefit_threshold_7411_t0_20261005/`](benefit_threshold_7411_t0_20261005/)

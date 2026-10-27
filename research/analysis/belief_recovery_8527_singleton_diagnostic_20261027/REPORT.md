@@ -1,0 +1,9 @@
+# A02 singleton-control coverage diagnostic — #8527
+
+**Disposition: `CONFIRMED_CONSTRUCTION_AUDIT_GAP`.** This post-result, in-memory diagnostic used the frozen A02 construction package preserved by #9658 on main `4c11642618a4ff424c08d1bc5fc2af081835d85c`. It did not run the formal candidate or auditor CLI, use WSLc/Docker, or modify the original package. It is not a preregistered scientific result.
+
+The construction produced singleton controls `[["L"], ["R"]]`. Replacing the second row with a copy of the first yielded `[["L"], ["L"]]`; the A02 auditor nevertheless returned `PASS_BELIEF_RECOVERY_MARGIN_SCOPED` and `aliased_singletons_recoverable_joint_not=true`. Its check verifies each row belongs to the set of allowed controls and checks their count, but does not establish that each distinct required control occurs exactly once. The resulting claim is unsupported for this corrupted raw output; the diagnostic does not show that the unmodified construction output is wrong.
+
+Original source Git blob IDs: candidate `2f50a3bf49c07ce45cba40a8ca74e68a0417c2d8`; audit `1f99bb63a13cd6a0f4da58cb1637f027edeb544d`. `fixture.json`, `original_construction.json`, `duplicate_singleton.json`, and `audit_output.json` are the first saved diagnostic records; `manifest.json` binds their SHA-256 hashes. They contain the synthetic fixture only. The original A02 formal candidate/auditor remain 0/0. No live GUI, input, task effect, calibrated probability, or runtime safety claim follows.
+
+Before any future formal audit, require unique, complete singleton-control identity coverage and independently test duplicate, omitted and substituted controls; freeze a new audit/version as appropriate. This observation complements #8553's separate branch-binding gap and does not change that historical outcome.
