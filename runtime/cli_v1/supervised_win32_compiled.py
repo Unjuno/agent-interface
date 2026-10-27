@@ -103,7 +103,12 @@ def _terminal(reply, action_name, *, expected_call_id=None,
             and custody.get("release_confirmed") is True
             and custody.get("completion_readback_outcome") == "verified"
             and retrieved_action.get("release_confirmed") is True
-            and action_result.get("release_confirmed") is True)
+            # Public interface_results preserves the canonical release flag
+            # on the action/custody row. Some runtime result shapes include
+            # a duplicate boolean, while others carry the release receipt
+            # only; reject an explicit contradiction but do not require the
+            # redundant field to be present.
+            and action_result.get("release_confirmed") is not False)
         completed = (retrieved_action.get("status") == "completed"
             and action_result.get("status") == "completed")
         recovered = (retrieved_action.get("status") == "recovered"
