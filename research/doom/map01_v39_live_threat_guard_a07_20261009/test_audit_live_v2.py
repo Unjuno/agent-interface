@@ -166,6 +166,19 @@ class AuditLiveV2Tests(unittest.TestCase):
         audit, _ = self.run_audit(events, decisions, scorer)
         self.assertEqual(audit["status"], "FAIL")
 
+    def test_unhashable_identity_fields_fail_closed_with_audit_result(self):
+        for field, malformed in (("key", []), ("step", []), ("intent_token", {})):
+            with self.subTest(field=field):
+                events, decisions, scorer = self.valid_case(admitted=True)
+                admission = next(row for row in events if row["event"] == "input_admission")
+                transition = next(row for row in events if row["event"] == "input_release_transition")
+                admission[field] = malformed
+                transition[field] = malformed
+                audit, _ = self.run_audit(events, decisions, scorer)
+                self.assertEqual(audit["status"], "FAIL")
+                self.assertFalse(audit["formal_pass"])
+                self.assertFalse(audit["checks"]["all_matched_cancellations_closed_empty"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
