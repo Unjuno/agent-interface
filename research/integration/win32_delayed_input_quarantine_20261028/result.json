@@ -1,0 +1,25 @@
+{
+  "environment": "Windows fake process/state only; no Win32 API or SendInput",
+  "events": [
+    "generation-A producer admitted and authorized",
+    "generation-A producer retirement confirmed",
+    "recovery UP accepted and point-in-time neutral readback confirmed",
+    "simulated old DOWN appears after that readback",
+    "generation-B operation admitted while simulated CTRL remains down"
+  ],
+  "interpretation": "The owner accepts a different target generation after a neutral snapshot; it has no late-event quarantine or post-readback horizon. The delayed DOWN is deliberately injected fake state and does not establish native Windows timing.",
+  "observations": {
+    "external_ctrl_down_after_delayed_event": true,
+    "neutral_at_recovery_readback": true,
+    "new_generation_admitted": true,
+    "new_generation_phase": "admitted",
+    "old_owner_phase_after_delayed_event": "recovered",
+    "old_owner_release_confirmed": true,
+    "old_owner_replay_allowed": false,
+    "old_owner_task_success": null
+  },
+  "schema": "win32-delayed-input-quarantine-counterexample-v1",
+  "source_commit": "52df8e2d934bd8b20d4d36da8a7f17a524c49210",
+  "source_path": "runtime/guarded_win32_v1/operation_owner.py",
+  "source_sha256": "f6ce2e9fa5bab634495b2a4361a45dd8a06ab480aa0dd445cd96ad2fee10938a"
+}
