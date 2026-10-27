@@ -1,0 +1,34 @@
+{
+  "schema": "map01-v39-live-threat-guard-a10-cancellation-audit-v2",
+  "allocation": "map01-v39-live-threat-guard-a10-20261009",
+  "status": "STOP",
+  "original_audit_status_preserved": "FAIL",
+  "custody": {
+    "matched_cancel_count": 13,
+    "accounted_cancel_count": 13,
+    "no_active_lease_count": 10,
+    "active_lease_count": 3,
+    "all_cancellations_custodied": true
+  },
+  "controller_cleanup_receipt_reported_empty": false,
+  "hard_health_guard_exposures": 0,
+  "useful_events_during_pending_model": 0,
+  "score": {
+    "map_exit": false,
+    "episode_finished": true,
+    "player_dead": true,
+    "death_count": 1,
+    "kill_count": 1
+  },
+  "primary_runtime_error": {
+    "type": "SourceRefreshRefused",
+    "stage": "source_refresh"
+  },
+  "interpretation": "Original audit is preserved. A cancelled request with no input admission or interruption lease is accounted for by its verified-empty terminal receipt. Any cancellation with an admitted lease requires a matching token-bound owner release. The episode stopped at death before the full live gate.",
+  "omissions": [
+    "per-cancellation identifiers",
+    "intent tokens",
+    "owner key identities",
+    "host-local paths"
+  ]
+}
