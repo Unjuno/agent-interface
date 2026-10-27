@@ -1,0 +1,158 @@
+{
+  "active": {
+    "attempt": 3,
+    "operation_id": "op-save-9"
+  },
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A05-20261009",
+  "base_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "cases": [
+    {
+      "id": "queued_cancel_positive_control",
+      "view": {
+        "neutral_release": false,
+        "observed_phase": "QUEUED",
+        "receipts": [
+          {
+            "arrival_order": 1,
+            "attempt": 3,
+            "kind": "CANCEL_ACK",
+            "operation_id": "op-save-9",
+            "receipt_id": "ack-queued-cancel",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "requests": [
+          {
+            "attempt": 3,
+            "kind": "CANCEL_REQUEST",
+            "operation_id": "op-save-9",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "retry_requested": true
+      }
+    },
+    {
+      "id": "emitted_ack_effect_absent",
+      "view": {
+        "neutral_release": false,
+        "observed_phase": "EMITTED",
+        "receipts": [
+          {
+            "arrival_order": 1,
+            "attempt": 3,
+            "kind": "CANCEL_ACK",
+            "operation_id": "op-save-9",
+            "receipt_id": "ack-emitted-cancel",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "requests": [
+          {
+            "attempt": 3,
+            "kind": "CANCEL_REQUEST",
+            "operation_id": "op-save-9",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "retry_requested": true
+      }
+    },
+    {
+      "id": "emitted_ack_effect_committed",
+      "view": {
+        "neutral_release": false,
+        "observed_phase": "EMITTED",
+        "receipts": [
+          {
+            "arrival_order": 1,
+            "attempt": 3,
+            "kind": "CANCEL_ACK",
+            "operation_id": "op-save-9",
+            "receipt_id": "ack-emitted-cancel",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "requests": [
+          {
+            "attempt": 3,
+            "kind": "CANCEL_REQUEST",
+            "operation_id": "op-save-9",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "retry_requested": true
+      }
+    },
+    {
+      "id": "emitted_neutral_release_no_ack",
+      "view": {
+        "neutral_release": true,
+        "observed_phase": "EMITTED",
+        "receipts": [],
+        "requests": [
+          {
+            "attempt": 3,
+            "kind": "CANCEL_REQUEST",
+            "operation_id": "op-save-9",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "retry_requested": true
+      }
+    },
+    {
+      "id": "consumed_effect_ack",
+      "view": {
+        "neutral_release": true,
+        "observed_phase": "CONSUMED",
+        "receipts": [
+          {
+            "arrival_order": 1,
+            "attempt": 3,
+            "kind": "EFFECT_ACK",
+            "operation_id": "op-save-9",
+            "receipt_id": "ack-save-effect",
+            "request_id": "effect-save-a3-e1"
+          }
+        ],
+        "requests": [
+          {
+            "attempt": 3,
+            "kind": "EFFECT_REQUEST",
+            "operation_id": "op-save-9",
+            "request_id": "effect-save-a3-e1"
+          }
+        ],
+        "retry_requested": false
+      }
+    },
+    {
+      "id": "queued_wrong_request_ack",
+      "view": {
+        "neutral_release": false,
+        "observed_phase": "QUEUED",
+        "receipts": [
+          {
+            "arrival_order": 1,
+            "attempt": 3,
+            "kind": "CANCEL_ACK",
+            "operation_id": "op-save-9",
+            "receipt_id": "ack-wrong-request",
+            "request_id": "cancel-save-a3-r2"
+          }
+        ],
+        "requests": [
+          {
+            "attempt": 3,
+            "kind": "CANCEL_REQUEST",
+            "operation_id": "op-save-9",
+            "request_id": "cancel-save-a3-r1"
+          }
+        ],
+        "retry_requested": true
+      }
+    }
+  ],
+  "schema": "8668-a05-input-v1"
+}

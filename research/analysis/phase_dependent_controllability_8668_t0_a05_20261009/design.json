@@ -1,0 +1,73 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A05-20261009",
+  "base_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "active": {"operation_id": "op-save-9", "attempt": 3},
+  "cases": [
+    {
+      "id": "queued_cancel_positive_control",
+      "view": {
+        "observed_phase": "QUEUED",
+        "requests": [{"request_id": "cancel-save-a3-r1", "kind": "CANCEL_REQUEST", "operation_id": "op-save-9", "attempt": 3}],
+        "receipts": [{"receipt_id": "ack-queued-cancel", "request_id": "cancel-save-a3-r1", "kind": "CANCEL_ACK", "operation_id": "op-save-9", "attempt": 3, "arrival_order": 1}],
+        "neutral_release": false,
+        "retry_requested": true
+      },
+      "actual_effect_committed": false
+    },
+    {
+      "id": "emitted_ack_effect_absent",
+      "view": {
+        "observed_phase": "EMITTED",
+        "requests": [{"request_id": "cancel-save-a3-r1", "kind": "CANCEL_REQUEST", "operation_id": "op-save-9", "attempt": 3}],
+        "receipts": [{"receipt_id": "ack-emitted-cancel", "request_id": "cancel-save-a3-r1", "kind": "CANCEL_ACK", "operation_id": "op-save-9", "attempt": 3, "arrival_order": 1}],
+        "neutral_release": false,
+        "retry_requested": true
+      },
+      "actual_effect_committed": false
+    },
+    {
+      "id": "emitted_ack_effect_committed",
+      "view": {
+        "observed_phase": "EMITTED",
+        "requests": [{"request_id": "cancel-save-a3-r1", "kind": "CANCEL_REQUEST", "operation_id": "op-save-9", "attempt": 3}],
+        "receipts": [{"receipt_id": "ack-emitted-cancel", "request_id": "cancel-save-a3-r1", "kind": "CANCEL_ACK", "operation_id": "op-save-9", "attempt": 3, "arrival_order": 1}],
+        "neutral_release": false,
+        "retry_requested": true
+      },
+      "actual_effect_committed": true
+    },
+    {
+      "id": "emitted_neutral_release_no_ack",
+      "view": {
+        "observed_phase": "EMITTED",
+        "requests": [{"request_id": "cancel-save-a3-r1", "kind": "CANCEL_REQUEST", "operation_id": "op-save-9", "attempt": 3}],
+        "receipts": [],
+        "neutral_release": true,
+        "retry_requested": true
+      },
+      "actual_effect_committed": true
+    },
+    {
+      "id": "consumed_effect_ack",
+      "view": {
+        "observed_phase": "CONSUMED",
+        "requests": [{"request_id": "effect-save-a3-e1", "kind": "EFFECT_REQUEST", "operation_id": "op-save-9", "attempt": 3}],
+        "receipts": [{"receipt_id": "ack-save-effect", "request_id": "effect-save-a3-e1", "kind": "EFFECT_ACK", "operation_id": "op-save-9", "attempt": 3, "arrival_order": 1}],
+        "neutral_release": true,
+        "retry_requested": false
+      },
+      "actual_effect_committed": true
+    },
+    {
+      "id": "queued_wrong_request_ack",
+      "view": {
+        "observed_phase": "QUEUED",
+        "requests": [{"request_id": "cancel-save-a3-r1", "kind": "CANCEL_REQUEST", "operation_id": "op-save-9", "attempt": 3}],
+        "receipts": [{"receipt_id": "ack-wrong-request", "request_id": "cancel-save-a3-r2", "kind": "CANCEL_ACK", "operation_id": "op-save-9", "attempt": 3, "arrival_order": 1}],
+        "neutral_release": false,
+        "retry_requested": true
+      },
+      "actual_effect_committed": false
+    }
+  ]
+}

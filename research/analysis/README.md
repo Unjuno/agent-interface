@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Issue #8668 A04 request-bound ACK transitions](phase_dependent_controllability_8668_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`, `SUPPORT_FOR_REQUEST_BOUND_ACK_TRANSITIONS_SCOPED`: 18/18 schedules, 8/8 mutations; host-only finite model, no real backend/GUI claim.
+- [Issue #8668 T0 A05 emitted-frontier hidden-effect boundary](phase_dependent_controllability_8668_t0_a05_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: six frozen schedules distinguish phase-refined `UNKNOWN`/no-retry from one phase-blind false-cancel/unsafe-retry witness; 3/3 mutations rejected. Host-only finite model; no GUI/backend claim.
+
 - [Issue #1998 A03 focused PNG payload — formal HOLD](focused_png_payload_size_1998_t0_a03_20261009/REPORT.md) — `HOLD_RUNNER_EXIT_UNCAPTURED`: one frozen candidate emitted 23 structurally parseable rows, but zsh failed after the subprocess while capturing its exit code; auditor invocation count 0, retries 0, no scientific result.
 
 - [Issue #1998 A02 focused payload byte comparison](focused_observation_payload_size_1998_t0_a02_20261009/REPORT.md) — `PASS_FOCUSED_PAYLOAD_REDUCTION_SCOPED`: 14/14 cases, 6/6 mutations, 22,933 serialized bytes saved across the frozen fixture; no token/latency/GUI claim.
@@ -945,6 +948,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`persistent_counterparty_8135_t0_a01_20261005/`](persistent_counterparty_8135_t0_a01_20261005/)
 - [`persistent_counterparty_8135_t0_a02_20261005/`](persistent_counterparty_8135_t0_a02_20261005/)
 - [`perspective_guided_review_8574_t0_a01_20261009/`](perspective_guided_review_8574_t0_a01_20261009/)
+- [`phase_dependent_controllability_8668_t0_a04_20261009/`](phase_dependent_controllability_8668_t0_a04_20261009/)
+- [`phase_dependent_controllability_8668_t0_a05_20261009/`](phase_dependent_controllability_8668_t0_a05_20261009/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
 - [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
