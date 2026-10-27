@@ -1,0 +1,7 @@
+# Owned Windows pipe close experiment R02
+
+This successor to the stopped R01 probe uses a separate watchdog parent and exactly one owned subprocess. The subprocess creates both ends of a `multiprocessing.Pipe` in the same process; a daemon thread attempts an 8 MiB send while no read occurs. It durably records each stage, then closes the read endpoint. The first saved run on Windows CPython 3.11.9 observed the send still pending before close, then `BrokenPipeError` and a finished sender after the close. The subprocess exited 0 without the five-second watchdog firing; a subsequent process inspection found no process with the saved PID or that PID as parent.
+
+The sender and read endpoint were in the same subprocess. This does not establish what happens when a separate peer process dies, whether supervisor helper IPC is bounded, whether delayed messages can act after timeout, or whether physical input is released. The stage timestamps are monotonic observations, not a hard deadline guarantee. No GUI, game, model, native keyboard/mouse input, WSLc or Docker was used.
+
+The source, result, append-only traces, empty stdout/stderr files, and SHA-256 manifest are retained. The watchdog can kill only the subprocess it created and records whether it exited; the script creates no other subprocesses. Running it needs a fresh output directory and is a new diagnostic run, not replacement of this result.
