@@ -20,3 +20,12 @@ class IdentityTests(unittest.TestCase):
  def test_duplicate_identity_fails(self):
   h,e,d,s=self.fixture(); admission=next(x for x in e if x['event']=='input_admission');transition=next(x for x in e if x['event']=='input_release_transition')
   e.insert(1,dict(admission));e.insert(-1,dict(transition));self.assertEqual(self.audit(h,e,d,s)['status'],'FAIL')
+ def test_malformed_event_ids_fail_closed_with_audit(self):
+  for event in ('cancel_requested','input_released','terminal','input_admission','input_release_transition'):
+   for bad in ([],{},None,''):
+    with self.subTest(event=event,bad=bad):
+     h,e,d,s=self.fixture();next(row for row in e if row['event']==event)['id']=bad
+     result=self.audit(h,e,d,s)
+     self.assertEqual(result['status'],'FAIL');self.assertFalse(result['formal_pass'])
+     self.assertFalse(result['checks']['all_relevant_event_ids_valid'])
+     self.assertEqual(result['counts']['malformed_event_id_rows'],1)
