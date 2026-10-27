@@ -1,0 +1,27 @@
+{
+  "schema": "v15-release-batch-mixed-schema-t5-freeze-v1",
+  "frozen_at": "2026-10-08",
+  "current_main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "current_backend_path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+  "current_backend_blob": "193c2bd231795e7ee57de64aedfd741c8b814013",
+  "origin_adapter_branch_head": "71cbd2cd00a8c4da77e959ad96394d7b86ef7d25",
+  "origin_adapter_blob": "056a3b46bde7bdf4da204963de866eb646742abf",
+  "hypothesis": "When a per-program stream contains both rows with the current release_batch_delivery_position and rows without it, the adapter must fail closed rather than independently interpreting the missing-field rows as legacy schema. Otherwise an incomplete stream can be promoted to a unique attribution.",
+  "red_green": "The mixed-schema regression first failed against the T4 prototype: trace_integrity SOURCE_ROWS_JOINED and attribution TEMPORALLY_UNIQUE. The T5 batch-mode consistency check changed that same fixture to HOLD_INCOMPLETE_RELEASE_BATCH and UNRESOLVED.",
+  "test_commands": [
+    "python -B -m unittest discover -s package -p test_*.py -v",
+    "python -B -O -m unittest discover -s package -p test_*.py -v"
+  ],
+  "decision_gate": {
+    "pass": "mixed legacy/current rows for one program batch identifier are HOLD/UNRESOLVED; all prior valid, malformed, incomplete, duplicate and gap cases retain expected dispositions.",
+    "fail": "mixed telemetry receives SOURCE_ROWS_JOINED or a unique attribution."
+  },
+  "limits": "Synthetic producer-shaped rows and adapter construction only. No current-main runtime execution, GUI, OS input, game, model, live lane, application effect, causal attribution, safety, recovery, latency or task completion claim.",
+  "environment": {
+    "python": "3.11.9",
+    "repo_worktree": "research/59-v39-feedback-data-sufficiency-20261004",
+    "repo_unchanged": true,
+    "C_drive_free_bytes": 0,
+    "bundle_path": "D:\\CodexResearchTmp\\computer-control-v15-batch-t5-mixed-schema-20261008"
+  }
+}
