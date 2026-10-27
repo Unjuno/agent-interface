@@ -334,6 +334,30 @@ class ProcessCancellationTests(unittest.TestCase):
         finally:
             lock.release()
 
+    def test_helper_result_after_cutoff_is_not_accepted(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        times = iter((10, 10, 70, 70, 79, 79, 81))
+        supervisor._clock_ns = lambda: next(times)
+        supervisor._terminate_grace_s = supervisor._kill_grace_s = 0.000000010
+        supervisor._poll_interval_s = 0.000000001
+        process = type("Process", (), {"is_alive": lambda self: True})()
+        helper = {"lock": threading.Lock(), "available": True,
+                  "process": process, "identity": "exact"}
+        class Connection:
+            def __init__(self): self.messages = iter(({"value": "result"},
+                {"control": "operation_complete", "request_id": "r"}))
+            def send(self, request): pass
+            def poll(self, timeout): return True
+            def recv(self): return next(self.messages)
+        helper["connection"] = Connection()
+        supervisor._helpers = {"observer": helper}
+        supervisor._process_identity_reader = lambda _: "exact"
+        retired = []; supervisor._retire_process = lambda *args: retired.append(args)
+        with self.assertRaises(TimeoutError):
+            supervisor._exchange_helper("observer", {"request_id": "r"}, 100)
+        self.assertFalse(helper["available"])
+        self.assertEqual(len(retired), 1)
+
     def test_busy_helper_lock_does_not_wait_past_transaction_cutoff(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         supervisor._clock_ns = time.monotonic_ns
