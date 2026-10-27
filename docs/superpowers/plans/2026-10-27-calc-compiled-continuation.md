@@ -36,3 +36,7 @@ Specify actual observation-to-predicate evidence, target revalidation, bounded t
 ## Task 1 implementation note (2026-10-27)
 
 The pure mapper and four tests are added. Historical save/confirm receipts are read by their exact SHA-256 and produce stop, unknown delivery and no replay. Ruling: missing `keys_unknown` does not establish an empty release, even when older receipts say verified; this is conservative and can hold otherwise recoverable work. Historical image references are explicitly not fresh and retrievability is unverified. Task 2 and all live readiness work remain outstanding.
+
+## Task 2 partial composition (2026-10-27)
+
+A fail-closed terminal bridge and one composed interruption test now join the saved Calc receipt projection to the actual caller/core using an inert form-shaped graph. A returned stage receipt alone never supplies core completion or input authority; the test retains its projection in memory and proves one attempted action, no second action, uncertain delivery, no outer verification, and no completed core transition. This is not a Calc graph, durable receipt sink, live adapter, or a fresh observation. Existing 14 caller/core tests plus two bridge tests pass normally and under optimized Python. Changed/unknown Calc target composition and independent persisted-workbook scoring remain open.
