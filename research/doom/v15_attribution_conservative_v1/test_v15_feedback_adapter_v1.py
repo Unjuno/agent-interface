@@ -1,4 +1,7 @@
 import copy
+import hashlib
+import json
+from pathlib import Path
 import unittest
 from v15_feedback_adapter_v1 import adapt_session_records
 def sample(ns, kills):
@@ -98,6 +101,32 @@ class ConservativeCompositionTests(unittest.TestCase):
         self.assertIsNone(result["intent_token"])
 
 
+    def test_separate_steps_do_not_merge_release_batches(self):
+        first = valid_pair()
+        second = copy.deepcopy(first)
+        second[0]["step"] = 3
+        second[1]["step"] = 3
+        second[1]["release_batch_step"] = 3
+        second[0]["key"] = "A"
+        second[1]["key"] = "A"
+        second[1]["owner_thread_keyup_receipt"]["key"] = "A"
+        second[1]["owner_thread_keyup_receipt"]["release_batch_key_order"] = ["A"]
+        rows = first + second
+        result = adapt_session_records([sample(130, 0), sample(150, 1)],
+                                       [event(150)], rows)
+        self.assertEqual(result["trace_integrity"], "SOURCE_ROWS_JOINED")
+        self.assertEqual(result["counts"]["key_release_receipts"], 2)
+        self.assertEqual(result["attributions"][0]["status"],
+                         "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertIsNone(result["attributions"][0]["intent_token"])
+
+        partial = copy.deepcopy(rows)
+        partial[3]["release_batch_size"] = 2
+        held = adapt_session_records([sample(130, 0), sample(150, 1)],
+                                     [event(150)], partial)
+        self.assertEqual(held["trace_integrity"], "HOLD_INCOMPLETE_RELEASE_BATCH")
+        self.assertEqual(held["attributions"][0]["status"], "UNRESOLVED")
+
     def test_missing_error_evidence_cannot_support_an_envelope(self):
         rows = valid_pair()
         del rows[1]["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]["sync_error"]
@@ -161,5 +190,32 @@ class ProducerCompositionTests(unittest.TestCase):
         self.assertEqual(row["status"], "UNRESOLVED")
         self.assertIsNone(row["intent_token"])
         self.assertEqual(row["causal_attribution"], "NOT_ESTABLISHED")
+
+
+class RetainedEvidenceTests(unittest.TestCase):
+    def test_a14_saved_batches_and_zero_scorer_events(self):
+        root = (Path(__file__).resolve().parent.parent
+                / "v39_live_recovery_exploratory_a14_20261008" / "raw" / "runtime")
+        expected = {
+            "events.jsonl": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a",
+            "scorer-samples.jsonl": "9d98c317a1a5d9d9324fe3ca75964374a7d74dccd08b83050e8e6334e2971b13",
+            "scorer-summary.json": "72c5752a0bf6a8d7e2a784c5ec39d8974f6a6b52169cbc6afc2b76b096570605",
+        }
+        blobs = {}
+        for name, digest in expected.items():
+            raw = (root / name).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), digest)
+            blobs[name] = raw
+        events = [json.loads(line) for line in blobs["events.jsonl"].splitlines() if line.strip()]
+        samples = [json.loads(line) for line in blobs["scorer-samples.jsonl"].splitlines() if line.strip()]
+        summary = json.loads(blobs["scorer-summary.json"])
+        self.assertEqual(len(samples), 1519)
+        self.assertEqual(summary["event_count"], 0)
+        result = adapt_session_records(samples, [], events)
+        self.assertEqual(result["trace_integrity"], "SOURCE_ROWS_JOINED")
+        self.assertEqual(result["counts"]["input_admissions"], 10)
+        self.assertEqual(result["counts"]["key_release_receipts"], 10)
+        self.assertEqual(result["counts"]["unverified_or_censored_key_intervals"], 0)
+        self.assertEqual(result["attributions"], [])
 
 if __name__ == "__main__": unittest.main()
