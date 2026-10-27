@@ -29,7 +29,9 @@ def valid_pair():
         "server_keyup_attempt_count": 1,
         "server_keyup_attempts": [{"attempt": 1, "keyrelease_started_ns": 150,
             "sync_returned_ns": 160, "keymap_sampled_ns": 165,
-            "server_key_down_before": True, "server_key_down_after": False}],
+            "server_key_down_before": True, "server_key_down_after": False,
+            "keyrelease_error": None, "sync_error": None,
+            "keymap_before_error": None, "keymap_after_error": None}],
     }
     release = {
         "event": "input_release_transition", "operation": "up", "key": "space",
@@ -129,6 +131,21 @@ class StrictProjectionTests(unittest.TestCase):
         self.assertTrue(project(records)["measurement_ready"])
         records[1]["owner_sample_after_batch_available"] = False
         self.assertFalse(project(records)["measurement_ready"])
+
+    def test_rejects_attempt_errors_and_missing_error_evidence(self):
+        fields = ("keyrelease_error", "sync_error", "keymap_before_error",
+                  "keymap_after_error")
+        self.assertTrue(project(valid_pair())["measurement_ready"])
+        for field in fields:
+            for missing in (False, True):
+                with self.subTest(field=field, missing=missing):
+                    records = valid_pair()
+                    attempt = records[1]["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]
+                    if missing:
+                        del attempt[field]
+                    else:
+                        attempt[field] = {"type": "OSError"}
+                    self.assertEqual(project(records), {"measurement_ready": False, "rows": []})
 
     def test_rejects_boolean_attempt_ordinal_in_ordinary_regression(self):
         records = valid_pair()
