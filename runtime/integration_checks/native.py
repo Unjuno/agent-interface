@@ -19,6 +19,7 @@ SUITES = {
     'win32': ['runtime.guarded_win32_v1.test_effect', 'runtime.guarded_win32_v1.test_effect_quarantine', 'runtime.guarded_win32_v1.test_fixture_cleanup', 'runtime.guarded_win32_v1.test_kill_failure', 'runtime.guarded_win32_v1.test_late_state', 'runtime.guarded_win32_v1.test_move', 'runtime.guarded_win32_v1.test_recovery', 'runtime.guarded_win32_v1.test_sparse_effect', 'runtime.guarded_win32_v1.test_unicode_neutral', 'runtime.guarded_win32_v1.test_verifier_pending', 'runtime.guarded_win32_v1.test_worker_effect', 'runtime.backends.win32_v1.test_integration'],
 }
 
+SUITES['protocol'].append('research.doom.test_v39_queue_wait_budget_currentmain')
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_appserver_utf8_2d0b')
 SUITES['protocol'].append('test_app_server_reply_id_5156')
