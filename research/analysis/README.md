@@ -389,6 +389,8 @@ The table below summarizes major analytical chains and representative retained o
 
 The retained #8665 A01 record has a [simultaneous-order qualification](observation_load_cue_information_8665_t0_a01_20261009/ORDERING_QUALIFICATION.md).
 
+The #8589 A02 audit has a [post-run execution deviation](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/EXECUTION_DEVIATION.md); its original one-shot record remains unchanged.
+
 ## Complete retained result directory index
 
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
@@ -1033,6 +1035,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
 - [`recovery_validity_effect_replay_8589_t0_a01_20261008/`](recovery_validity_effect_replay_8589_t0_a01_20261008/)
+- [`recovery_validity_effect_replay_8589_t0_a02_audit_20261009/`](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
