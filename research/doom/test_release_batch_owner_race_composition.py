@@ -14,22 +14,19 @@ LIVE = ROOT / "research" / "live_control"
 sys.path[:0] = [str(DOOM), str(LIVE)]
 
 
-class Lease:
+from lease_release_v1 import Lease as RuntimeLease
+
+
+class Lease(RuntimeLease):
     def __init__(self):
-        self.intent_token = "composition-test"
-        self.deadline = 2**62
-        self.cancel = threading.Event()
+        super().__init__(time.perf_counter_ns() + 5_000_000_000)
         self.expected_focus = 41
         self.focus_invalid = False
         self.interrupted = threading.Event()
         self.interruptions = []
 
-    def check(self):
-        if time.perf_counter_ns() >= self.deadline:
-            from lease import Expired
-            raise Expired()
-
     def record_interruption(self, row):
+        super().record_interruption(row)
         self.interruptions.append(row)
         self.interrupted.set()
 
@@ -223,6 +220,10 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
                 from lease import Expired
                 self.assertIs(type(execution_error[0]), Expired)
                 self.assertEqual(lease.interruptions[-1]["reason"], "expired")
+                snapshot = lease.interruption_snapshot()
+                self.assertEqual(snapshot["record"]["reason"], "expired")
+                self.assertEqual(snapshot["intent_token"], lease.intent_token)
+                self.assertEqual(display.keyrelease_attempts, 1)
                 self.assertIs(lease.interruptions[-1]["verified"], True)
                 self.assertEqual(display.down, set())
                 rows = [row for row in emitted
