@@ -1,0 +1,7 @@
+# Singleton-control coverage guard — construction only
+
+This additive construction addresses the duplicate-singleton counterexample in [#9659](https://github.com/Unjuno/agent-interface/pull/9659). It requires the frozen fixture's declared singleton identities to be unique and the raw output to contain each identity exactly once, independent of order. It rejects omitted, duplicate, extra, undeclared and malformed controls before invoking a supplied legacy auditor. The frozen A02 source, fixture, original diagnostic and historical formal-invocation record are unchanged.
+
+Five ordinary construction tests exercise the retained original and duplicate records, reorder, omission, extra/unknown/malformed identities and duplicated declarations. One test composes the guard with the original frozen A02 audit function on the retained in-memory construction output; this is a local test, not the frozen formal auditor CLI or a preregistered scientific result. The new wrapper is not wired into a runtime or a formal experiment. Source fixture and audit availability is required; sparse checkouts may need those exact files materialized.
+
+The A02 formal candidate/auditor remain 0/0. No GUI, input, WSLc, Docker, real recovery or safety claim follows. Before formal use, freeze the selected source and protocol anew and independently audit the complete result, including the separate policy-branch concerns recorded in #8527.
