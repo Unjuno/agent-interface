@@ -441,7 +441,9 @@ class OperationCancellationSupervisor:
             and readback.get("target_generation") == generation
             and readback.get("recovery_id") == recovery_id
             and readback.get("neutral") is True)
-        if not readback_matches or self._clock_ns() >= deadline_ns:
+        # Use the same instant for the deadline decision and its receipt.
+        completed_ns = self._clock_ns() if readback_matches else None
+        if not readback_matches or completed_ns >= deadline_ns:
             self._invalidate_helper("observer", deadline_ns)
             return {"status": "unknown", "reason": "neutral_readback_not_confirmed",
                     "operation_id": operation_id,
@@ -454,7 +456,7 @@ class OperationCancellationSupervisor:
                 "target_generation": generation, "recovery_id": recovery_id,
                 "release_confirmed": True, "release_receipt": release,
                 "readback": readback,
-                "recovery_completed_monotonic_ns": self._clock_ns()}
+                "recovery_completed_monotonic_ns": completed_ns}
 
     def _run_observer(self, operation_id, generation, request):
         observation_request = dict(request)
