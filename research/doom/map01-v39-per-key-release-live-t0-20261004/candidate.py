@@ -131,19 +131,6 @@ def main():
     freeze = json.loads((PACKAGE / "FREEZE.json").read_text(encoding="utf-8"))
     if out != (ROOT / freeze["output_root"]).resolve():
         raise RuntimeError("STOP_OUTPUT_ROOT_MISMATCH")
-    network_receipt = verify_frozen(freeze)
-    support = install_support(PACKAGE / "source-support.tar.gz",
-                              freeze["source_support_sha256"])
-    (out / "candidate_started.json").write_text(json.dumps({
-        "allocation_id": freeze["allocation_id"],
-        "started_ns": time.perf_counter_ns(),
-        "platform": platform.platform(), "python": sys.version,
-        "support_root": str(support), "model_calls": 0,
-        "execution_route": freeze["execution_route"],
-        "network_isolation": freeze["network_isolation"],
-        "scope": "current-v39 backend and executor on private Xvfb; no game/task",
-    }, indent=2) + "\n", encoding="utf-8")
-
     events = []
     observer_rows = []
     lock = threading.RLock()
@@ -192,12 +179,27 @@ def main():
         "allocation_id": freeze.get("allocation_id"),
         "candidate_completed": False,
         "model_calls": 0,
+        "runtime_environment_sha256": freeze.get("runtime_environment_sha256"),
         "trials": [],
         "cleanup": {},
         "issues": [],
     }
     exit_code = 2
     try:
+        network_receipt = verify_frozen(freeze)
+        if isinstance(network_receipt, dict):
+            candidate.update(network_receipt)
+        support = install_support(PACKAGE / "source-support.tar.gz",
+                                  freeze["source_support_sha256"])
+        (out / "candidate_started.json").write_text(json.dumps({
+            "allocation_id": freeze["allocation_id"],
+            "started_ns": time.perf_counter_ns(),
+            "platform": platform.platform(), "python": sys.version,
+            "support_root": str(support), "model_calls": 0,
+            "execution_route": freeze["execution_route"],
+            "network_isolation": freeze["network_isolation"],
+            "scope": "current-v39 backend and executor on private Xvfb; no game/task",
+        }, indent=2) + "\n", encoding="utf-8")
         candidate = initial_candidate_record(freeze, network_receipt)
         import Xlib.display as xdisplay
         from Xlib import XK

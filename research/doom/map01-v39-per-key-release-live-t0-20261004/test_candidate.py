@@ -209,6 +209,83 @@ class CandidateNetworkReceiptTests(unittest.TestCase):
             self.assertTrue(any("synthetic missing Xlib" in item for item in row["issues"]))
             self.assertFalse((out / "x11-display.txt").exists())
 
+    def test_network_preflight_failure_is_retained_by_main(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "research/doom/map01-v39-per-key-release-live-t0-20261004"
+            package.mkdir(parents=True)
+            out = root / "out"
+            out.mkdir()
+            freeze = {
+                "allocation_id": "MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01",
+                "runtime_environment_sha256": "fixture-env-sha",
+                "source_support_sha256": "fixture-support-sha",
+                "output_root": "out",
+            }
+            (package / "FREEZE.json").write_text(json.dumps(freeze), encoding="utf-8")
+
+            with mock.patch.object(candidate, "ROOT", root), \
+                    mock.patch.object(candidate, "PACKAGE", package), \
+                    mock.patch.object(candidate, "verify_frozen",
+                                      side_effect=RuntimeError("STOP_NETWORK_NAMESPACE:fixture")), \
+                    mock.patch.object(sys, "argv", [str(HERE / "candidate.py"),
+                                                     "--out", str(out)]):
+                exit_code = candidate.main()
+
+            record_path = out / "candidate.json"
+            self.assertTrue(record_path.is_file(),
+                            "network preflight failure escaped the candidate finalizer")
+            row = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertEqual(exit_code, 2)
+            self.assertFalse(row["candidate_completed"])
+            self.assertTrue(any("STOP_NETWORK_NAMESPACE:fixture" in issue
+                                for issue in row["issues"]))
+            self.assertFalse((out / "candidate_started.json").exists())
+
+    def test_support_preflight_failure_is_retained_by_main(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "research/doom/map01-v39-per-key-release-live-t0-20261004"
+            package.mkdir(parents=True)
+            out = root / "out"
+            out.mkdir()
+            freeze = {
+                "allocation_id": "MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01",
+                "runtime_environment_sha256": "fixture-env-sha",
+                "source_support_sha256": "fixture-support-sha",
+                "output_root": "out",
+            }
+            (package / "FREEZE.json").write_text(json.dumps(freeze), encoding="utf-8")
+            receipt = {
+                "network_interfaces": ["ip6tnl0", "lo", "sit0", "tunl0"],
+                "network_link_states": {
+                    "ip6tnl0": "DOWN", "lo": "DOWN", "sit0": "DOWN", "tunl0": "DOWN",
+                },
+                "network_ipv4_routes": "",
+                "network_ipv6_routes": "",
+            }
+
+            with mock.patch.object(candidate, "ROOT", root), \
+                    mock.patch.object(candidate, "PACKAGE", package), \
+                    mock.patch.object(candidate, "verify_frozen", return_value=receipt), \
+                    mock.patch.object(candidate, "install_support",
+                                      side_effect=RuntimeError("STOP_SUPPORT_ARCHIVE_HASH:fixture")), \
+                    mock.patch.object(sys, "argv", [str(HERE / "candidate.py"),
+                                                     "--out", str(out)]):
+                exit_code = candidate.main()
+
+            record_path = out / "candidate.json"
+            self.assertTrue(record_path.is_file(),
+                            "support preflight failure escaped the candidate finalizer")
+            row = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertEqual(exit_code, 2)
+            self.assertFalse(row["candidate_completed"])
+            self.assertTrue(any("STOP_SUPPORT_ARCHIVE_HASH:fixture" in issue
+                                for issue in row["issues"]))
+            self.assertEqual(row["network_interfaces"],
+                             ["ip6tnl0", "lo", "sit0", "tunl0"])
+            self.assertFalse((out / "candidate_started.json").exists())
+
     def test_incomplete_network_receipt_is_retained_by_main(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()

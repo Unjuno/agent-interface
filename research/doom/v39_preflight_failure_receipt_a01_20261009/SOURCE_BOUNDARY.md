@@ -1,0 +1,5 @@
+# Source and allocation boundary
+
+This repair was transferred from PR #8712 head `3a00ae1dfe3cfabb8191237a8c9a8f4b95f94657`. The original invoked candidate remains at source-freeze commit `bab6295130c2cc96be89b61a4f8cd2717a70dad0`, SHA-256 `10d02fb73d6d8e33dad7e3cedce5021a8b3b3e02e4abe903221e7dc515278833`, as recorded in the retained STOP.json. Current main already carried the later repair SHA `663f5205d4118ee404d12e0cca078ab16d0a93f94045447c52cfb02c642a23f1` before this transfer; this PR updates that working candidate to `c2844c42d4789557305849fb2b83d710a050b283a2bb27fd97976a0f5d74bacc`. Neither post-repair source matches the consumed allocation freeze. Do not rerun that allocation or update its frozen hashes. A future experiment needs a separate prospective freeze and output.
+
+Local isolated mocked tests: 15 passed normally and with `-O`. No candidate allocation, GUI, container or model ran. The tests cover network and support preflight failures after a valid output/freeze path; output-path and freeze parsing failures remain outside this receipt boundary.
