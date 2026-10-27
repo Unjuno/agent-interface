@@ -33,12 +33,21 @@ specific live resource is unavailable. A narrow blocked operation does not stop
 all independent work. Do not substitute repeated construction for the eventual
 live task and matched comparison.
 
-The 2026-10-26 native Win32 R06 sample closes only the narrow public-caller
-recovery gap for a deterministic producer-local `SendInput` entry hold. The
-next live integration step is to join that recovered state to a fresh target
-generation and an independently verified task effect through the compiled
-caller. WSLc stays STOP/HOLD until an exact allocation is verified unused; do
-not query or start unrelated allocations.
+The 2026-10-26 native Win32 R06 sample covers a deterministic producer-local
+`SendInput` entry hold. The subsequent [R11](../research/integration/win32_appserver_recovery_task_20261026_r11/audit_followup.json)
+joined recovery to a fresh target generation, one App Server-grounded compiled
+action and independently verified fixture effect; its original conservative
+failure classification and additive audit remain separate. The later
+[R12e](../research/integration/win32_appserver_matched_efficiency_20261026_r12e/RESULT.md)
+and [R12f](../research/integration/win32_appserver_matched_efficiency_20261026_r12f/RESULT.md)
+blocks provide four counterbalanced matched pairs on one owned fixture: all
+cells passed their scoped gates, with reported usage but no independent billing
+or image-token breakdown. They do not measure the full acquisition, reuse,
+invalidation and repair workload or establish live-app/MAP01 transfer or broad
+reliability. Preserve those boundaries and select the next experiment to close
+a specific remaining gap; do not repeat R11 as if its composition were absent.
+WSLc stays STOP/HOLD until an exact allocation is verified unused; do not query
+or start unrelated allocations.
 
 ## Current source-bound findings
 
