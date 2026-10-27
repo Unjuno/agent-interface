@@ -7,3 +7,5 @@ This is not a complete operation-identity audit: the retained owner reconciliati
 Synthetic tests cover cross-cancellation token reuse, missing cleanup error fields and the existing unique-token terminal cleanup fixture. No GUI, input, game or model is used.
 
 The current input-owner v12 emits `intent_token` on the owner-release receipt. For a cancellation with admissions, the qualified callable requires exactly one owner-release receipt whose token matches the admissions; a missing or different token yields `HOLD_OWNER_RELEASE_IDENTITY`. Historical source/schema compatibility is unverified, so missing legacy fields are treated as insufficient evidence, not as an observed unsafe release.
+
+For cancellations with admissions, each integer `admitted_ns` must be strictly earlier than the integer `requested_ns`; missing, malformed, equal or later times produce `HOLD_ADMISSION_ORDER`. This compares recorded numbers only: a shared monotonic clock and truthful provenance require separate evidence. No-input cancellations do not need an admission-time comparison. Historical A07 raw was not examined.
