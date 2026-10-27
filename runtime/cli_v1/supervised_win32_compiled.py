@@ -126,7 +126,12 @@ def _terminal(reply, action_name, *, expected_call_id=None,
             and type(operation_id) is str
             and _IDENTIFIER.fullmatch(operation_id) is not None)
         verified_release = identity_valid and custody_verified
-        terminal = {"status": ("completed" if verified_release and completed
+        outer_delivery = retrieved_action.get("input_dispatched")
+        inner_delivery = action_result.get("input_dispatched")
+        delivery_conflict = (type(outer_delivery) is bool
+            and type(inner_delivery) is bool and outer_delivery is not inner_delivery)
+        terminal = {"status": ("uncertain" if delivery_conflict
+                else "completed" if verified_release and completed
                 else "delivery_uncertain" if verified_release and recovered
                 else "uncertain"),
             "action_id": (operation_id if identity_valid
@@ -138,7 +143,7 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         input_dispatched = retrieved_action.get("input_dispatched")
         if type(input_dispatched) is not bool:
             input_dispatched = action_result.get("input_dispatched")
-        if type(input_dispatched) is bool:
+        if type(input_dispatched) is bool and not delivery_conflict:
             terminal["input_dispatched"] = input_dispatched
         return terminal
     supervision = row.get("supervision")
