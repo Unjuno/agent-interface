@@ -323,7 +323,7 @@ class OperationCancellationSupervisor:
                         break
                 if (result is None or completion is None
                         or not helper["available"]
-                        or self._clock_ns() >= deadline_ns
+                        or self._clock_ns() >= cutoff_ns
                         or not process.is_alive()
                         or self._process_identity_reader(process) != helper["identity"]):
                     raise TimeoutError("helper result, completion or identity unconfirmed")
