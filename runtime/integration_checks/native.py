@@ -25,6 +25,7 @@ SUITES['win32'].append('runtime.backends.win32_v1.test_unbound_input_policy')
 SUITES['win32'].append('runtime.backends.win32_v1.test_preflight_cleanup_failure')
 SUITES['win32'].append('runtime.backends.win32_v1.test_recovery_unknown_receipt')
 SUITES['win32'].append('runtime.backends.win32_v1.test_recovery_concurrency')
+SUITES['win32'].append('runtime.guarded_win32_v1.test_win32_pipe_send')
 if sys.platform == 'win32':
     SUITES['win32'].append('runtime.cli_v1.test_mcp_supervised_backend_composition')
 

@@ -9,6 +9,7 @@ real-time bound.
 """
 from __future__ import annotations
 
+import os
 import queue
 import threading
 import time
@@ -301,6 +302,17 @@ class OperationCancellationSupervisor:
         except BaseException:
             return False
 
+    def _send_helper_request(self, connection, request, cutoff_ns):
+        # Only native Windows PipeConnection exposes the overlapped handle.
+        # Test doubles and non-Windows transports keep their existing path.
+        if os.name == "nt":
+            from multiprocessing.connection import PipeConnection
+            if isinstance(connection, PipeConnection):
+                from .win32_pipe_send import send_before
+                send_before(connection, request, cutoff_ns, clock_ns=self._clock_ns)
+                return
+        connection.send(request)
+
     def _exchange_helper(self, name, request, deadline_ns):
         helper = self._helpers[name]
         process = helper["process"]
@@ -320,7 +332,7 @@ class OperationCancellationSupervisor:
                 if (not helper["available"] or not process.is_alive()
                         or self._process_identity_reader(process) != helper["identity"]):
                     raise RuntimeError("prestarted helper is unavailable or identity changed")
-                connection.send(request)
+                self._send_helper_request(connection, request, cutoff_ns)
                 result = completion = None
                 while self._clock_ns() < cutoff_ns:
                     if not connection.poll(self._bounded_wait(cutoff_ns,
@@ -580,8 +592,10 @@ class OperationCancellationSupervisor:
             # A busy helper is retired instead of waiting for its lock.
             if process.is_alive() and helper["lock"].acquire(blocking=False):
                 try:
-                    connection.send(None)
-                    process.join(min(0.1, self._startup_timeout_s))
+                    shutdown_deadline = self._clock_ns() + int(
+                        min(0.1, self._startup_timeout_s) * 1_000_000_000)
+                    self._send_helper_request(connection, None, shutdown_deadline)
+                    process.join(self._bounded_wait(shutdown_deadline, 0.1))
                 except BaseException:
                     pass
                 finally:
