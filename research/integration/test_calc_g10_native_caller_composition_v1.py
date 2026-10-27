@@ -9,6 +9,7 @@ import json
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from PIL import Image
@@ -19,6 +20,7 @@ from runtime.guarded_x11_v1.bridge import NativeHandleBridge
 from research.integration.test_calc_g10_fresh_admission_v1 import (
     bindings as g10_bindings, interface as retained_g10_interface,
 )
+from research.live_control import calc_g10_fresh_admission_v1 as fresh_admission
 from research.live_control.calc_bounded_proposal_v1 import BoundedProposal
 from research.live_control.calc_g10_caller_v1 import run_g10_in_caller
 
@@ -126,11 +128,29 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
                     "verify_effect": outer_effect,
                     "journal": lambda _: None,
                 }
-                result = run_g10_in_caller(
-                    spec, caller_adapters, build_for_final_target, bridge, action_bindings,
-                    perceive=perceive, verify_effect=compiled_effect,
-                    proposal_worker=proposal_worker, cancelled=cancelled,
-                    on_receipt=lambda receipt: state["published"].append(copy.deepcopy(receipt)))
+                # The strict post-action capture gate compares monotonic
+                # timestamps. Advance the fixture clock between calls so the
+                # intended fresh-capture case is deterministic on hosts whose
+                # monotonic clock has a coarse tick.
+                clock_state = {"ns": time.monotonic_ns()}
+                def advance_clock():
+                    clock_state["ns"] += 1_000_000
+                    return clock_state["ns"]
+                original_mint = fresh_admission.mint_from_proposal
+                def record_freshness_gate(native_bridge, proposal, *, scope, after_ns):
+                    capture_ns = native_bridge.history[proposal["source_sequence"]][0]["capture_ns"]
+                    state["freshness_gate"] = {"action_return_ns": after_ns,
+                                                "capture_ns": capture_ns}
+                    return original_mint(native_bridge, proposal, scope=scope,
+                                         after_ns=after_ns)
+                with patch("time.monotonic_ns", side_effect=advance_clock), patch.object(
+                        fresh_admission, "mint_from_proposal",
+                        side_effect=record_freshness_gate):
+                    result = run_g10_in_caller(
+                        spec, caller_adapters, build_for_final_target, bridge, action_bindings,
+                        perceive=perceive, verify_effect=compiled_effect,
+                        proposal_worker=proposal_worker, cancelled=cancelled,
+                        on_receipt=lambda receipt: state["published"].append(copy.deepcopy(receipt)))
                 if proposal_worker.thread is not None:
                     proposal_worker.thread.join(1)
                 state["worker"] = proposal_worker.snapshot()
@@ -153,6 +173,8 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
         self.assertEqual(state["used_aliases"], ["a1_primary", "a1_second"])
         self.assertEqual(state["target_builds"], ["new"])
         self.assertEqual((state["clicks"], state["outer_score"], len(state["published"])), (2, 1, 1))
+        self.assertLess(state["freshness_gate"]["action_return_ns"],
+                        state["freshness_gate"]["capture_ns"], state["freshness_gate"])
         self.assertEqual(len(state["native_executions"]), 2)
         self.assertTrue(all(row["status"] == "completed" and row["admission"] == "accepted"
                             and row["execution"]["releases"]
