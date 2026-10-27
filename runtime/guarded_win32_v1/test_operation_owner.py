@@ -451,6 +451,20 @@ class OperationOwnerTests(unittest.TestCase):
             "op-1", GEN_A, self.process))
         self.assertIsNotNone(self.owner.claim_recovery("op-1", GEN_A))
 
+    def test_cancelled_startup_keeps_cleanup_window_after_operation_deadline(self):
+        self.owner.admit("op-late", GEN_A, 200, ["key:a"])
+        process = FakeProcess(PRODUCER)
+        self.owner.request_cancel("op-late", GEN_A, cleanup_deadline_ns=400)
+        self.clock.now = 250
+        self.assertFalse(self.owner.producer_started(
+            "op-late", GEN_A, process, process_identity=PRODUCER))
+        self.assertEqual(self.owner.result("op-late")["phase"], "cancel_pending")
+        self.assertIs(self.owner.producer_handle_for_retirement("op-late", GEN_A), process)
+        process.alive = False
+        process.exitcode = 0
+        self.assertTrue(self.owner.producer_retired("op-late", GEN_A, process))
+        self.assertIsNotNone(self.owner.claim_recovery("op-late", GEN_A))
+
     def test_admission_accepts_a_valid_empty_obligation_snapshot(self):
         admitted = self.owner.admit("op-empty", GEN_A, 1_000, [])
         self.assertEqual(admitted["status"], "admitted")

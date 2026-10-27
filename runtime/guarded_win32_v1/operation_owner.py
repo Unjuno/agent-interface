@@ -148,6 +148,10 @@ class OperationOwner:
             if current_identity != identity or alive is not True:
                 record["status"] = "unknown"
                 return False
+            # Once cancellation wins, its cleanup deadline governs retirement.
+            # Expiry of the original action window must not erase that state.
+            if record["status"] == "cancel_pending":
+                return False
             if self._clock_ns() >= record["deadline_ns"]:
                 record["status"] = "unknown"
                 return False
