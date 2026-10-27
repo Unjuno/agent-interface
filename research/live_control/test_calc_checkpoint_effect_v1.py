@@ -8,10 +8,10 @@ class CheckpointEffectTests(unittest.TestCase):
   digest=hashlib.sha256(raw).hexdigest()
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);(root/(digest+'.bin')).write_bytes(raw)
-   evidence={'status':'VERIFIED','observation_closed':True,'artifact_sha256':digest,'sampled_ns':201,'task_id':'task-1'}
+   evidence={'status':'VERIFIED','observation_closed':True,'artifact_sha256':digest,'sampled_ns':201,'source_sampled_ns':201,'archive_started_ns':201,'task_id':'task-1'}
    args=dict(archive_dir=root,evidence=evidence,task_id='task-1',terminal_ns=200,sheet_name='Sheet',expected_values=(816,345))
    self.assertEqual(score_checkpoint(**args)['status'],'succeeded')
-   for key,value in [('observation_closed',False),('sampled_ns',199),('task_id','other'),('artifact_sha256','0'*64)]:
+   for key,value in [('observation_closed',False),('sampled_ns',199),('source_sampled_ns',199),('archive_started_ns',199),('task_id','other'),('artifact_sha256','0'*64)]:
     with self.subTest(key=key):
      bad=dict(evidence);bad[key]=value
      self.assertEqual(score_checkpoint(**dict(args,evidence=bad))['status'],'unavailable')
@@ -32,5 +32,5 @@ class CheckpointEffectTests(unittest.TestCase):
    self.assertEqual(evidence['status'],'VERIFIED');self.assertFalse(evidence['observation_closed'])
    self.assertEqual(score_checkpoint(**args)['status'],'unavailable')
    closed=inspect_saved_cells(archive/(evidence['artifact_sha256']+'.bin'),action_id='inert',expected={'A1':816,'A2':345},observation_closed=True)
-   closed['task_id']='task-1'
+   closed['task_id']='task-1';closed['source_sampled_ns']=evidence['source_sampled_ns'];closed['archive_started_ns']=evidence['archive_started_ns']
    self.assertEqual(score_checkpoint(**dict(args,evidence=closed))['status'],'succeeded')
