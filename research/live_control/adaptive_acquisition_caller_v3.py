@@ -344,8 +344,10 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                    "wait_ns": None, "error": None}
         attempts.append(attempt); stages[name] = {"status": "started", "reason": None}
         emit({"event": "model_attempt_started", **copy.deepcopy(attempt)})
+        raw_result = None
         try:
-            result = _model_result(_require_callable(adapters, name)(copy.deepcopy(payload)))
+            raw_result = _require_callable(adapters, name)(copy.deepcopy(payload))
+            result = _model_result(raw_result)
         except Exception as error:
             ended = clock()
             attempt.update(status="failed", completed_ns=ended,
@@ -360,7 +362,11 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                               "requested_effort", "usage",
                               "visible_images_submitted", "wait_ns"):
                     try:
-                        value = getattr(error, field, None)
+                        # A returned but malformed envelope can still contain
+                        # individually valid accounting fields. Keep them on
+                        # the failed attempt without accepting its output.
+                        value = (raw_result.get(field) if type(raw_result) is dict
+                                 else getattr(error, field, None))
                         if field in ("call_id", "thread_id", "requested_model",
                                      "requested_effort") and value is not None:
                             attempt[field] = _optional_identity(value, field)
@@ -371,7 +377,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                             attempt[field] = (_usage(value) if field == "usage" else
                                           _optional_count(value, field))
                     except ValueError as invalid_metadata:
-                        metadata_error = invalid_metadata
+                        if type(raw_result) is not dict:
+                            metadata_error = invalid_metadata
             finally:
                 emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
             if metadata_error is not None:
