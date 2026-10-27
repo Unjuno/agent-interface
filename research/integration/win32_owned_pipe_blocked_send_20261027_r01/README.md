@@ -1,0 +1,5 @@
+# Owned Windows pipe probe: stopped without result
+
+This disposable-process exploratory probe attempted to test whether terminating an owned peer unblocks an 8 MiB `multiprocessing.Pipe` send. It was still running after at least 20 seconds and had produced no captured output. At inspection the owned Python parent had no remaining child; the parent was then force-terminated and a subsequent process check found neither parent nor children. The command exited nonzero after external termination. The exact blocked call and whether peer termination unblocked the sender are unknown: stdout may have remained buffered, and no internal stage trace was captured.
+
+This is a failed probe, not evidence of a successful bounded transport or a real input condition. No GUI, game, model, native keyboard/mouse input, WSLc or Docker was used. Preserve this first outcome; any successor needs a separate fresh probe, stage-by-stage durable trace, a supervising watchdog and explicit custody of all spawned processes. The original script is retained for diagnosis, not endorsed as a bounded runner.
