@@ -268,6 +268,31 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertEqual(self.owner.admit("op-next", GEN_A, 1_000, [])[
             "status"], "admitted")
 
+    def test_normal_completion_freezes_receipts_before_identity_callback(self):
+        process = FakeProcess(PRODUCER)
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        readback = {"operation_id": "op-snapshot", "target_generation": GEN_A,
+                    "producer_exit_confirmed_ns": 100, "observed_monotonic_ns": 100,
+                    "neutral": True}
+        def reader(candidate):
+            if not candidate.alive:
+                release["keys_down"].append("CTRL")
+                readback["neutral"] = False
+            return PRODUCER
+        owner = OperationOwner(clock_ns=self.clock, process_identity_reader=reader)
+        owner.admit("op-snapshot", GEN_A, 1000, ["CTRL"], start_gate_required=True)
+        self.assertTrue(owner.producer_started("op-snapshot", GEN_A, process, process_identity=PRODUCER))
+        self.assertTrue(owner.authorize_producer_start("op-snapshot", GEN_A, process, lambda: None))
+        process.alive = False; process.exitcode = 0
+        result = owner.producer_completed("op-snapshot", GEN_A, process,
+            release_receipt=release, readback=readback)
+        self.assertEqual(result["phase"], "completed")
+        self.assertEqual(result["completion_release_receipt"]["keys_down"], [])
+        self.assertIs(result["completion_readback"]["neutral"], True)
+        self.assertEqual(release["keys_down"], ["CTRL"])
+        self.assertIs(readback["neutral"], False)
+
     def test_normal_completion_with_unknown_release_keeps_admission_closed(self):
         self.owner.admit("op-unknown-complete", GEN_A, 1_000, ["CTRL"],
                          start_gate_required=True)

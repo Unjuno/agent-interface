@@ -269,6 +269,10 @@ class OperationOwner:
         input is up. The caller must also pass a generation-bound readback from
         the separately supervised observer after exact producer exit.
         """
+        # Evidence may be caller-owned and the identity query below may block.
+        # Validate and retain detached copies of the same observed values.
+        release_receipt = copy.deepcopy(release_receipt)
+        readback = copy.deepcopy(readback)
         now_ns = self._clock_ns()
         release_verified = (
             type(release_receipt) is dict
