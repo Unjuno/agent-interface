@@ -1,0 +1,52 @@
+{
+  "schema": "analogy-rejection-8500-a02-protocol-v1",
+  "allocation": "ANALOGY-REJECTION-8500-T0-A02-20261009",
+  "question": "Does counterexample-carrying rejection memory add value after every condition receives the same fresh target-specific relation and evidence checks?",
+  "prior_result": {
+    "allocation": "analogy-rejection-8500-t0-a01-20261008",
+    "disposition": "PASS_METHOD_SCOPED",
+    "confound": "Only the structured arm used the fresh relation_valid and boundary_matches results; controls did not consume identical fresh-check outputs."
+  },
+  "delta_from_a01": [
+    "New allocation, source freeze, target cards, mappings, rejection records, seed, output directory, and run identity.",
+    "All three arms receive and apply the same two fresh base checks before the arm-specific review slot.",
+    "The sole treatment contrast is whether retrieved prior rejection memory supplies an untyped prose reminder or a typed boundary question.",
+    "Auditor explicitly checks common-check equality across arms and a mutation granting one arm unique verifier access."
+  ],
+  "memory_parity": "Prose and structured arms retrieve the same record by exact relation-family key with one lookup. Only the representation changes: an untyped prose note versus a typed field/value question. No-memory uses the same lookup slot against an empty memory.",
+  "conditions": ["no_memory", "prose_memory", "structured_memory"],
+  "design": {
+    "targets": 6,
+    "candidates_per_target": 3,
+    "changed_envelope_controls": 6,
+    "conditions_per_candidate": 3,
+    "base_rows": 54,
+    "changed_control_rows": 18,
+    "total_rows": 72,
+    "fixed_candidate_order": ["R", "P", "F"],
+    "condition_schedule_seed": 850002,
+    "context_word_budget": 64,
+    "lookups_per_candidate": 1,
+    "review_slots_per_candidate": 1
+  },
+  "common_fresh_checks": [
+    "proposed relation equals the target's required relation and the mechanism edge is present",
+    "evidence is current for the named target version"
+  ],
+  "arm_specific_review_slot": {
+    "no_memory": "generic relation recheck; no rejection-memory content",
+    "prose_memory": "same relation-family retrieval as structured memory; an untyped note cannot be consumed as a typed boundary field/value question",
+    "structured_memory": "one relation-keyed retrieval; a typed field/value question can test the retained rejection boundary"
+  },
+  "decision_rule": {
+    "PASS_METHOD_SCOPED": "The common fresh checks and budgets are identical across arms; structured memory produces fewer invalid proposals than both controls on unchanged-envelope cases; it proposes every changed-envelope positive and its valid-candidate recall is no lower than either control; the independent auditor has zero errors and rejects all five mutations.",
+    "NO_INCREMENTAL_VALUE": "Common-check parity passes, but structured memory does not strictly reduce invalid proposals versus both controls, or its valid-candidate recall advantage is within the frozen no-difference outcome.",
+    "FAIL_NEGATIVE_SUPPRESSION": "Structured memory rejects or fails to propose any truth-valid changed-envelope control.",
+    "HOLD_VERIFIER_ACCESS_MISMATCH": "Any condition receives or consumes a different base check, exposure, lookup, review-slot, or word budget outside the frozen memory-derived question."
+  },
+  "limitations": [
+    "Hand-authored finite fixture and deterministic non-agent scorer only.",
+    "No human reviewer, model, literature search, GUI, network, or deployed memory.",
+    "No inference about real-world idea discovery, scientific validity, creativity, or product benefit."
+  ]
+}
