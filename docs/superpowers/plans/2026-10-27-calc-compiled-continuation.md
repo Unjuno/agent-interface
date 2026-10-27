@@ -32,3 +32,7 @@ Files: `research/live_control/test_calc_compiled_caller_handoff_v1.py` and any n
 ## Task 3: live readiness and comparison
 
 Specify actual observation-to-predicate evidence, target revalidation, bounded transport and terminal/release translation; implement and verify each before live use. Independently score persisted workbook contents and collateral effects. Freeze and run a separately permitted fresh three-arm cold/warm/invalidation/repair comparison only when the user-authorized environment and lane are available. Preserve all attempts, token/model metadata, time endpoints, raw evidence, failures, and scoped decision. Report missing accounting as unavailable.
+
+## Task 1 implementation note (2026-10-27)
+
+The pure mapper and four tests are added. Historical save/confirm receipts are read by their exact SHA-256 and produce stop, unknown delivery and no replay. Ruling: missing `keys_unknown` does not establish an empty release, even when older receipts say verified; this is conservative and can hold otherwise recoverable work. Historical image references are explicitly not fresh and retrievability is unverified. Task 2 and all live readiness work remain outstanding.
