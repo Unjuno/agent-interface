@@ -4,7 +4,7 @@ from runtime.core_v1.compiled_gui import run
 from research.live_control.integrated_efficiency_compiled_execution_v2 import run_compiled_interface_in_caller
 
 class CalcMethodTests(unittest.TestCase):
- def run_case(self,stale=False,modal_interrupt=False,outer=None,unknown=False):
+ def run_case(self,stale=False,modal_interrupt=False,outer=None,unknown=False,factory=None,promote=False):
   interface=compile_calc_method(interface_id='i',session_scope='s',surface='calc',sheet_handle='sheet',save_handle='save',confirm_handle='confirm')
   count={'inputs':0,'observations':0,'admissions':[]}
   def observe(_):
@@ -27,10 +27,10 @@ class CalcMethodTests(unittest.TestCase):
    'verify_effect':lambda _: {'status':'succeeded','evidence_ref':'synthetic'},'cancelled':lambda:False}
   if outer is None: return count,run(interface,adapters)
   spec={'target':'calc-inert','route':'reuse','coarse_origin':'caller_provided','provided_coarse':None,
-   'cached_target':{'id':'calc-inert'},'repair_on':[],'local_repair_on':[],'session_id':'inert'}
-  caller={'reuse_revalidate':lambda _: {'status':'revalidated'},'final_revalidate':lambda _: {'status':'revalidated'},
+   'cached_target':{'id':'calc-inert','sheet':'sheet','save':'save','confirm':'confirm'},'repair_on':[],'local_repair_on':[],'session_id':'inert'}
+  caller={'reuse_revalidate':lambda _: {'status':'revalidated'},'final_revalidate':lambda _: {'status':'revalidated', **({'target':{'id':'new','sheet':'new-sheet','save':'new-save','confirm':'new-confirm'}} if promote else {})},
    'verify_effect':lambda _: {'status':outer,'evidence_ref':'independent'},'journal':lambda _:None}
-  return count,run_compiled_interface_in_caller(spec,caller,lambda _:interface,adapters)
+  return count,run_compiled_interface_in_caller(spec,caller,factory or (lambda _:interface),adapters)
  def test_three_actions_require_intermediate_evidence(self):
   count,r=self.run_case();self.assertEqual(count['admissions'],['sheet','save','confirm'])
   self.assertEqual(r['outcome'],'TASK_SUCCEEDED');self.assertEqual(r['completed_transitions'],3)

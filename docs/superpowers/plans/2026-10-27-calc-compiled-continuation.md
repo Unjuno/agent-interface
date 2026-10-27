@@ -64,3 +64,7 @@ A composed caller/core test exposed that sampling an old archive after completio
 ## Calc-shaped compiled graph (2026-10-27)
 
 A bounded three-action graph now expresses enter, save-dialog and confirmation using target references and observed predicates; each admission remains external. Synthetic actual-core tests cover the positive graph, stale save target, unknown dialog, and interruption without a blind confirmation. The actual v3 caller test distinguishes independent outer-effect success, failure and unavailability after core completion. Thirty-three selected offline tests pass normally and under `-O`. This is not a live adapter: target discovery/final-target binding, actual observation predicates, bounded I/O, durable evidence and independent collateral scoring remain required. The fixture supplies targets and predicates directly and does not establish model-generated semantics or live token savings.
+
+## Final selected target binding (2026-10-27)
+
+The Calc graph factory now builds from the caller-provided final target mapping. An actual v3 caller/core synthetic test replaces the cached target during final revalidation and checks that the three new references reach the respective admissions; missing, malformed, and duplicate references are rejected. Thirty-five selected offline tests pass normally and under `-O`. This only carries selected references into core; a live adapter must independently establish scope, target identity, freshness and per-action authorization. It does not generate planner methods, observe Calc, or prove live task success.
