@@ -45,3 +45,7 @@ An experimental G10-shaped adapter now composes the shared guarded `_Adapter` wi
 ## Optional bounded proposal wait
 
 `BoundedProposal` provides a single-use wait around a trusted read-only proposal callback. It rejects late or cancelled replies and does not schedule a second attempt. An offline G10-shaped composition test verifies that timeout leaves one completed synthetic transition and no second input. Fifty-eight selected tests pass normally and with `-O`. This wrapper is opt-in: the G10-shaped adapter still accepts a bare callback, so users must explicitly supply it. A blocked Python worker may continue after timeout; callback side effects are not sandboxed, and copying inputs, cancellation callbacks, scheduling, native calls, physical release and process shutdown are not bounded by this mechanism. No live correctness or total deadline claim follows.
+
+## Explicit bounded-worker entry
+
+A separate `run_with_bounded_fresh_proposal` entry requires a fresh `BoundedProposal` and the same cancellation callback as the graph before any action. The caller retains the worker object to inspect a possibly still-running callback. Synthetic tests reject bare, reused or mismatched-cancellation workers before input, and exercise both a timely proposal and a timeout with no second input. Sixty-one selected offline tests pass normally and with `-O`. The older entry still permits bare callbacks; neither entry makes the callback a sandbox, stops a blocked Python thread, bounds native I/O, or proves live release/task success.

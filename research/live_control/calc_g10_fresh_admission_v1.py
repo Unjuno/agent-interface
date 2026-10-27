@@ -80,3 +80,21 @@ def run_with_fresh_proposal(bridge, interface, bindings, *, perceive, verify_eff
                             proposal_provider, cancelled=lambda: False):
     return _FreshSecondAdapter(bridge, interface, bindings, perceive, verify_effect,
                                cancelled, proposal_provider).execute_method()
+
+def run_with_bounded_fresh_proposal(bridge, interface, bindings, *, perceive,
+                                    verify_effect, proposal_worker, cancelled):
+    """Require one fresh bounded worker sharing the graph's cancellation check.
+
+    The caller retains the worker to inspect a possibly still-running callback.
+    This bounds only its wait, not Python scheduling, native calls or shutdown.
+    """
+    from research.live_control.calc_bounded_proposal_v1 import BoundedProposal
+    if (type(proposal_worker) is not BoundedProposal or not callable(cancelled) or
+            proposal_worker.cancelled is not cancelled):
+        raise ValueError('bounded worker with the same cancellation callback required')
+    state = proposal_worker.snapshot()
+    if state['used'] or state['retired']:
+        raise ValueError('fresh proposal worker required')
+    return run_with_fresh_proposal(bridge, interface, bindings, perceive=perceive,
+                                   verify_effect=verify_effect,
+                                   proposal_provider=proposal_worker, cancelled=cancelled)
