@@ -1,11 +1,16 @@
 """Current-main wait-budget boundary tests; no game, model, or process launch."""
 import ast
+import importlib.util
 from pathlib import Path
 import queue
 import unittest
-from doom_controller_failure_cleanup_v1 import reject_control_boundary_failure
 
 CONTROLLER_PATH = Path(__file__).with_name("map01_overlap_controller_v39.py")
+GUARD_PATH = Path(__file__).with_name("doom_controller_failure_cleanup_v1.py")
+spec = importlib.util.spec_from_file_location("v39_failure_cleanup", GUARD_PATH)
+guard = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(guard)
+reject_control_boundary_failure = guard.reject_control_boundary_failure
 
 
 class Clock:
