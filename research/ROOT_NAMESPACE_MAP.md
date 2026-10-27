@@ -40,6 +40,9 @@ New work should normally use a category directory. Existing direct-root paths re
 
 ## Retained direct-root research families
 
+- [`gui_query_dpor_8663_a01_20261009/`](gui_query_dpor_8663_a01_20261009/) -- retained GUI query concurrency study; consult its report and custody records for scope.
+- [`windows/`](windows/) -- retained Windows control research packets; each packet states its own evidence limits.
+
 - [`agreement_continuation_9004_v1/`](agreement_continuation_9004_v1/) — Issue #9004 finite synthetic agreement/lease T0; result is method-scoped and makes no live-control or timing claim.
 
 - [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
