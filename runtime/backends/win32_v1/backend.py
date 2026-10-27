@@ -12,9 +12,14 @@ import secrets
 import sys
 import time
 from ctypes import wintypes
+from contextvars import ContextVar
 from typing import Any
 
 from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate_backend_manifest
+
+
+_execution_target = ContextVar("win32_execution_target", default=None)
+_cleanup_active = ContextVar("win32_cleanup_active", default=False)
 
 
 class Win32BackendError(RuntimeError):
@@ -506,7 +511,24 @@ class Win32Backend:
             return g["x"] + x, g["y"] + y
         raise Win32BackendError(f"unsupported frame {frame}")
 
+    def _require_foreground(self, target: str) -> None:
+        hwnd = self._target(target)
+        try:
+            foreground = self._handle_value(self.user32.GetForegroundWindow())
+            root = (self._handle_value(self.user32.GetAncestor(foreground, GA_ROOT))
+                    if foreground and foreground != hwnd else 0)
+        except Exception as error:
+            raise Win32BackendError("foreground focus could not be verified") from error
+        if foreground != hwnd and root != hwnd:
+            raise Win32BackendError("foreground focus changed")
+
     def _send(self, item: INPUT) -> None:
+        target = _execution_target.get()
+        is_key_up = item.type == INPUT_KEYBOARD and bool(item.ki.dwFlags & KEYEVENTF_KEYUP)
+        is_mouse_up = (item.type == INPUT_MOUSE and item.mi.dwFlags in
+                       (MOUSEEVENTF_LEFTUP, MOUSEEVENTF_RIGHTUP, MOUSEEVENTF_MIDDLEUP))
+        if target is not None and not _cleanup_active.get() and not (is_key_up or is_mouse_up):
+            Win32Backend._require_foreground(self, target)
         array = (INPUT * 1)(item)
         sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
         if sent != 1:
@@ -723,6 +745,8 @@ class Win32Backend:
             self.pending_unicode_ups.remove(unit)
 
     def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
+        if not _cleanup_active.get():
+            Win32Backend._require_foreground(self, target)
         rx, ry = self._root_point(target, frame, x, y)
         if not self.user32.SetCursorPos(rx, ry):
             raise Win32BackendError("SetCursorPos failed")
@@ -920,6 +944,13 @@ class Win32Backend:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
     def release_all(self) -> dict[str, Any]:
+        token = _cleanup_active.set(True)
+        try:
+            return self._release_all_unchecked()
+        finally:
+            _cleanup_active.reset(token)
+
+    def _release_all_unchecked(self) -> dict[str, Any]:
         # Compensate unmatched Unicode delivery once; failure retains the unit.
         # This acknowledges UP insertion, not physical or application state.
         unicode_error = None
@@ -1021,6 +1052,7 @@ class Win32Backend:
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
         started = time.monotonic_ns()
+        execution_token = _execution_target.set(current_target)
         try:
             for op in program["ops"]:
                 kind = op["op"]
@@ -1031,6 +1063,7 @@ class Win32Backend:
                     check_target_generation(next_target)
                     self.focus(next_target)
                     current_target = next_target
+                    _execution_target.set(current_target)
                     # Focus is a visible side effect; pin the same HWND owner
                     # again before any later input can reach the foreground.
                     check_target_generation(current_target)
@@ -1093,6 +1126,8 @@ class Win32Backend:
             if isinstance(error, Win32BackendError):
                 raise Win32ExecutionError(error, release, None) from error
             raise
+        finally:
+            _execution_target.reset(execution_token)
         return {"started_ns": started, "ended_ns": time.monotonic_ns(),
                 "emissions": self.emissions, "observations": observations,
                 "releases": releases}
