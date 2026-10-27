@@ -44,6 +44,8 @@ class ProducerProjectionTests(unittest.TestCase):
                     self.fake.drop_keyreleases -= 1
                 else:
                     self.fake.down.discard(code)
+                    if getattr(self.fake, "fail_after_keyup", False):
+                        raise OSError("synthetic input delivery uncertainty")
 
         xtest.fake_input = fake_input
         ext.xtest = xtest
@@ -124,6 +126,18 @@ class ProducerProjectionTests(unittest.TestCase):
                 self.assertEqual(project(changed),
                                  {"measurement_ready": False, "rows": []})
         self.assertTrue(project(self.events)["measurement_ready"])
+
+    def test_failed_input_call_with_up_state_is_not_a_measurement(self):
+        self.fake.fail_after_keyup = True
+        result = self.run_batch()
+        self.assertEqual(result, {"measurement_ready": False, "rows": []})
+        releases = [event for event in self.events
+                    if event.get("event") == "input_release_transition"]
+        self.assertEqual(len(releases), 2)
+        for row in releases:
+            attempt = row["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]
+            self.assertIs(attempt["server_key_down_after"], False)
+            self.assertEqual(attempt["keyrelease_error"]["type"], "OSError")
 
     def test_actual_retry_projects_both_keys(self):
         result = self.run_batch(retry=True)
