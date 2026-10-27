@@ -54,8 +54,11 @@ class OperationOwner:
             raise OwnerRefused("start gate requirement must be boolean")
         if type(deadline_ns) is not int or deadline_ns <= self._clock_ns():
             raise OwnerRefused("operation deadline must be in the future")
-        if (not isinstance(obligations, (list, tuple))
-                or any(type(item) is not str or not item for item in obligations)
+        if not isinstance(obligations, (list, tuple)):
+            raise OwnerRefused("unique frozen input obligations required")
+        # Validate and store the same snapshot even if the caller mutates its list.
+        obligations = tuple(obligations)
+        if (any(type(item) is not str or not item for item in obligations)
                 or len(set(obligations)) != len(obligations)):
             raise OwnerRefused("unique frozen input obligations required")
         with self._lock:
