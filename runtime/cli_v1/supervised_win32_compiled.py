@@ -180,12 +180,21 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     operation_invoked = row.get("operation_invoked")
     if type(operation_invoked) is not bool:
         operation_invoked = outer.get("operation_invoked")
+    action_delivery = action.get("input_dispatched") if type(action) is dict else None
+    action_result = action.get("result") if type(action) is dict else None
+    nested_delivery = (action_result.get("input_dispatched")
+        if type(action_result) is dict else None)
+    deliveries = (input_dispatched, action_delivery, nested_delivery)
+    known_deliveries = [value for value in deliveries if type(value) is bool]
+    delivery_conflict = (any(value is not None and type(value) is not bool
+        for value in deliveries) or len(set(known_deliveries)) > 1)
     refused_before_input = (input_dispatched is False
-        and operation_invoked is False)
+        and operation_invoked is False and not delivery_conflict)
     action_id = row.get("operation_id") or row.get("call_id")
     if type(action_id) is not str or not action_id:
         action_id = "compiled-" + uuid.uuid4().hex
-    terminal = {"status": ("completed" if status in ("returned", "completed") and confirmed
+    terminal = {"status": ("uncertain" if delivery_conflict
+            else "completed" if status in ("returned", "completed") and confirmed
             and action.get("status") == "completed"
             else "refused" if refused_before_input else "uncertain"),
         "action_id": action_id,
@@ -193,7 +202,7 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         "release": {"verified": confirmed,
             "keys_down": [] if confirmed else ["unknown"],
             "buttons_down": [] if confirmed else ["unknown"]}}
-    if input_dispatched is not None:
+    if input_dispatched is not None and not delivery_conflict:
         terminal["input_dispatched"] = input_dispatched
     return terminal
 
