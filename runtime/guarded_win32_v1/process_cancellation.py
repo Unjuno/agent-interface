@@ -18,6 +18,25 @@ import uuid
 _ORPHAN_RECOVERY_TRANSACTION_NS = 5_000_000_000
 
 
+def _consistent_neutral_observation(readback, obligations):
+    """Validate sampled-state coverage and its reported neutral verdict."""
+    if (type(readback) is not dict or type(obligations) not in (list, tuple)
+            or any(type(item) is not str for item in obligations)):
+        return False
+    keys_buttons = sum(item.startswith(("key:", "button:")) for item in obligations)
+    unicode_units = sum(item.startswith("unicode:") for item in obligations)
+    if keys_buttons + unicode_units != len(obligations):
+        return False
+    states = readback.get("key_button_states")
+    reported_unicode = readback.get("unicode_event_units")
+    neutral = readback.get("neutral")
+    return (type(states) is list and len(states) == keys_buttons
+            and all(state is None or type(state) is bool for state in states)
+            and type(reported_unicode) is int and reported_unicode == unicode_units
+            and type(neutral) is bool
+            and neutral == all(state is False for state in states))
+
+
 class OperationCancellationSupervisor:
     def __init__(self, owner, *, recovery_process_factory,
                  observer_process_factory, process_identity_reader,
@@ -462,6 +481,7 @@ class OperationCancellationSupervisor:
             and readback.get("target_generation") == generation
             and readback.get("recovery_id") == recovery_id
             and readback.get("neutral") is True
+            and _consistent_neutral_observation(readback, obligations)
             and type(readback.get("observed_monotonic_ns")) is int
             and readback["observed_monotonic_ns"] >= release_received_ns)
         # Use the same instant for the deadline decision and its receipt.
@@ -511,6 +531,11 @@ class OperationCancellationSupervisor:
             self._invalidate_helper("observer", request["deadline_ns"])
             self._owner.mark_unknown(operation_id, generation,
                 "independent_readback_time_invalid")
+            return None
+        if not _consistent_neutral_observation(readback, request["obligations"]):
+            self._invalidate_helper("observer", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_state_invalid")
             return None
         return readback
 

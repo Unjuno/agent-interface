@@ -102,6 +102,9 @@ def _recovery_observer_server(connection, role, state, events):
                 "target_generation": request["target_generation"],
                 "recovery_id": request["recovery_id"],
                 "neutral": not state.get(VK_CONTROL, False),
+                "key_button_states": [state.get(VK_CONTROL, False) for item in request["obligations"]
+                                      if item.startswith(("key:", "button:"))],
+                "unicode_event_units": sum(item.startswith("unicode:") for item in request["obligations"]),
                 "observed_monotonic_ns": time.monotonic_ns(),
             }
         connection.send(receipt)

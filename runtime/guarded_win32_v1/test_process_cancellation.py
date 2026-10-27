@@ -89,6 +89,9 @@ def _fake_readback_worker(neutral, request, result_send):
         "target_generation": request["target_generation"],
         "recovery_id": request["recovery_id"],
         "neutral": neutral.is_set(),
+        "key_button_states": [not neutral.is_set() for item in request["obligations"]
+                              if item.startswith(("key:", "button:"))],
+        "unicode_event_units": sum(item.startswith("unicode:") for item in request["obligations"]),
         "observed_monotonic_ns": time.monotonic_ns(),
     })
     result_send.close()
