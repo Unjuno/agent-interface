@@ -27,6 +27,18 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIs(accepted["release"]["verified"], True)
         self.assertIs(accepted["input_dispatched"], True)
 
+        # The public interface_results action keeps the canonical release
+        # confirmation on the action/custody row. Its nested runtime result
+        # records the verified release receipt but omits a redundant boolean.
+        public_result_shape = {**retrieved, "action": {
+            **retrieved["action"], "result": {"status": "completed",
+                "execution": {"releases": [{"verified": True,
+                    "keys_down": [], "buttons_down": []}]}}}}
+        public_result_terminal = _terminal(public_result_shape, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(public_result_terminal["status"], "completed")
+        self.assertIs(public_result_terminal["release"]["verified"], True)
+
         wrong_call = _terminal(retrieved, "move",
             expected_call_id="d" * 32, expected_generation=generation)
         self.assertEqual(wrong_call["status"], "uncertain")
