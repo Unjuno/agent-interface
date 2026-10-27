@@ -53,3 +53,7 @@ A separate `run_with_bounded_fresh_proposal` entry requires a fresh `BoundedProp
 ## Retained OCR input reconstruction
 
 A read-only test pins the G10 raw JSON and OCR-attempt log hashes, verifies three original PNG digests and ROI RGB digests, reconstructs the seven retained OCR crop images at pixel level, and checks the attempts group by source frame as 1/3/3 with recorded outputs and timing. It was checked with Pillow 12.3.0; image resampling implementations may affect portability. Sixty-two selected offline tests pass normally and under `-O`. This neither reruns Tesseract nor independently establishes that its outputs are semantically correct, transferable, current, or associated with a new live action. No original allocation or auditor was rerun.
+
+## Retained tri-state predicate in current guarded composition
+
+An offline fixture pins the G10 raw bytes and archived pure `effect_predicate.py`, then supplies the recorded decoded values to that function in the current bounded-proposal/shared-guarded graph with a fake bridge. The recorded matching decode permits two synthetic transitions; an unavailable decode stops as `effect_unavailable` and a mismatched decode as `effect_failed`, before any second proposal or input. The 64 selected offline tests passed normally and under `-O`; the focused two tests were rerun after adding the source hash guard. No Tesseract process, original actor/auditor, real X11 input or Calc effect was executed. The fixture does not qualify OCR on new images, prove semantic target identity or establish live task success.
