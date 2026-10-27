@@ -353,12 +353,13 @@ class OperationCancellationSupervisor:
             and receipt.get("target_generation") == generation
             and receipt.get("recovery_id") == request["recovery_id"]
             and receipt.get("release_accepted") is True)
-        if not valid or self._clock_ns() >= request["deadline_ns"]:
+        release_received_ns = self._clock_ns() if valid else None
+        if not valid or release_received_ns >= request["deadline_ns"]:
             self._invalidate_helper("recovery", request["deadline_ns"])
             self._owner.mark_unknown(operation_id, generation,
                 "recovery_receipt_invalid_or_late")
             return
-        readback = self._run_observer(operation_id, generation, request)
+        readback = self._run_observer(operation_id, generation, request, release_received_ns)
         if readback is None:
             return
         self._owner.recovery_completed(operation_id, generation,
@@ -462,7 +463,7 @@ class OperationCancellationSupervisor:
                 "readback": readback,
                 "recovery_completed_monotonic_ns": completed_ns}
 
-    def _run_observer(self, operation_id, generation, request):
+    def _run_observer(self, operation_id, generation, request, not_before_ns):
         observation_request = dict(request)
         observation_request["request_id"] = request["recovery_id"]
         try:
@@ -483,6 +484,14 @@ class OperationCancellationSupervisor:
             self._invalidate_helper("observer", request["deadline_ns"])
             self._owner.mark_unknown(operation_id, generation,
                 "independent_readback_identity_mismatch")
+            return None
+        observed_ns = readback.get("observed_monotonic_ns")
+        completed_ns = self._clock_ns()
+        if (type(observed_ns) is not int or observed_ns < not_before_ns
+                or observed_ns > completed_ns or completed_ns >= request["deadline_ns"]):
+            self._invalidate_helper("observer", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_time_invalid")
             return None
         return readback
 
