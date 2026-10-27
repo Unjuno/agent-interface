@@ -1372,3 +1372,5 @@ The checker compares the generated block against every child directory with a re
 
 - [Issue #8636 A02 first outcome](relative_view_rotation_features_8636_t0_a02_20261009/README.md) — synthetic candidate and original failed auditor; HOLD_UNCERTAIN.
 - [Issue #8636 A02 audit-only follow-up](relative_view_rotation_features_8636_t0_a02_audit_20261009/README.md) — first audit mismatch; original hold unchanged.
+
+- [Issue #8636 A01 first-outcome custody](relative_view_rotation_features_8636_t0_a01_20261009/CUSTODY.md) — scoped HOLD; 13 original blobs retained, three files excluded with hashes and custody notes.
