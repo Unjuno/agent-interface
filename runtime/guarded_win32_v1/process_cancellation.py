@@ -417,7 +417,8 @@ class OperationCancellationSupervisor:
             and release.get("target_generation") == generation
             and release.get("recovery_id") == recovery_id
             and release.get("release_accepted") is True)
-        if not release_matches or self._clock_ns() >= deadline_ns:
+        release_received_ns = self._clock_ns() if release_matches else None
+        if not release_matches or release_received_ns >= deadline_ns:
             self._invalidate_helper("recovery", deadline_ns)
             return {"status": "unknown", "reason": "release_receipt_unconfirmed",
                     "operation_id": operation_id,
@@ -440,10 +441,13 @@ class OperationCancellationSupervisor:
             and readback.get("operation_id") == operation_id
             and readback.get("target_generation") == generation
             and readback.get("recovery_id") == recovery_id
-            and readback.get("neutral") is True)
+            and readback.get("neutral") is True
+            and type(readback.get("observed_monotonic_ns")) is int
+            and readback["observed_monotonic_ns"] >= release_received_ns)
         # Use the same instant for the deadline decision and its receipt.
         completed_ns = self._clock_ns() if readback_matches else None
-        if not readback_matches or completed_ns >= deadline_ns:
+        if (not readback_matches or completed_ns >= deadline_ns
+                or readback["observed_monotonic_ns"] > completed_ns):
             self._invalidate_helper("observer", deadline_ns)
             return {"status": "unknown", "reason": "neutral_readback_not_confirmed",
                     "operation_id": operation_id,

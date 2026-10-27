@@ -86,6 +86,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 row["release_accepted"] = True
             else:
                 row["neutral"] = True
+                row["observed_monotonic_ns"] = 10
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: self.fail(
@@ -119,6 +120,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
+            if role == "observer": row["observed_monotonic_ns"] = 10
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: self.fail("unexpected invalidation")
@@ -138,6 +140,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
+            if role == "observer": row["observed_monotonic_ns"] = 10
             return row
         supervisor._exchange_helper = exchange
         supervisor._invalidate_helper = lambda *_: self.fail("unexpected invalidation")
@@ -155,6 +158,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
+            if role == "observer": row["observed_monotonic_ns"] = 10
             return row
         supervisor._exchange_helper = exchange
         invalidated = []
@@ -164,6 +168,25 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(result["status"], "unknown")
         self.assertFalse(result["release_confirmed"])
         self.assertEqual(invalidated, ["observer"])
+
+    def test_orphan_recovery_rejects_pre_release_or_invalid_readback_time(self):
+        for observed in (9, 101, None, True):
+            with self.subTest(observed=observed):
+                supervisor = object.__new__(OperationCancellationSupervisor)
+                supervisor._clock_ns = lambda: 10
+                recovery_id = "3" * 32
+                def exchange(role, request, deadline):
+                    row = {"operation_id": OPERATION, "target_generation": GENERATION,
+                           "recovery_id": recovery_id}
+                    if role == "recovery": row["release_accepted"] = True
+                    else: row.update(neutral=True, observed_monotonic_ns=observed)
+                    return row
+                supervisor._exchange_helper = exchange
+                supervisor._invalidate_helper = lambda *_: None
+                result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+                    recovery_id, 100, ["key:fixture:W"])
+                self.assertEqual(result["status"], "unknown")
+                self.assertFalse(result["release_confirmed"])
 
     def test_orphan_recovery_does_not_claim_release_without_neutral_observer(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
