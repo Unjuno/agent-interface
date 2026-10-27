@@ -105,6 +105,30 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertTrue(requests[0][1]["focus_target_before_release"])
         self.assertEqual(requests[1][1]["request_id"], recovery_id)
 
+    def test_orphan_recovery_uses_validated_obligation_snapshot(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        obligations = ["key:fixture:W"]
+        calls = []
+        def clock():
+            obligations[:] = ["key:fixture:CTRL"]
+            return 10
+        supervisor._clock_ns = clock
+        recovery_id = "3" * 32
+        def exchange(role, request, deadline):
+            calls.append((role, list(request["obligations"])))
+            row = {"operation_id": OPERATION, "target_generation": GENERATION,
+                   "recovery_id": recovery_id}
+            row["release_accepted" if role == "recovery" else "neutral"] = True
+            return row
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: self.fail("unexpected invalidation")
+        result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+            recovery_id, 100, obligations)
+        self.assertEqual(result["status"], "recovered")
+        self.assertEqual(calls, [("recovery", ["key:fixture:W"]),
+                                 ("observer", ["key:fixture:W"])])
+        self.assertEqual(obligations, ["key:fixture:CTRL"])
+
     def test_orphan_recovery_does_not_claim_release_without_neutral_observer(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         supervisor._clock_ns = lambda: 10
