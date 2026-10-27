@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8630 reserve-binding construction diagnostic](joint_opportunity_budget_8630_reserve_diagnostic_20261009/REPORT.md) — `PASS_DIAGNOSTIC` for an authored exact-arithmetic construction only; A01 remains `FAIL_METHOD`. Preserve existing `run-01` outputs; do not overwrite them when reproducing.
+
 - [Issue #8668 A04 request-bound ACK transitions](phase_dependent_controllability_8668_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`, `SUPPORT_FOR_REQUEST_BOUND_ACK_TRANSITIONS_SCOPED`: 18/18 schedules, 8/8 mutations; host-only finite model, no real backend/GUI claim.
 - [Issue #8668 T0 A05 emitted-frontier hidden-effect boundary](phase_dependent_controllability_8668_t0_a05_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: six frozen schedules distinguish phase-refined `UNKNOWN`/no-retry from one phase-blind false-cancel/unsafe-retry witness; 3/3 mutations rejected. Host-only finite model; no GUI/backend claim.
 
@@ -785,6 +787,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
 - [`issue_8909_cover_diagnosability_a01_20261012/`](issue_8909_cover_diagnosability_a01_20261012/)
 - [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
+- [`joint_opportunity_budget_8630_reserve_diagnostic_20261009/`](joint_opportunity_budget_8630_reserve_diagnostic_20261009/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
