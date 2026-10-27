@@ -14,7 +14,12 @@ def score_checkpoint(*, archive_dir, evidence, task_id, terminal_ns, sheet_name,
             type(terminal_ns) is not int or terminal_ns < 0 or
             evidence.get('task_id') != task_id or evidence.get('status') != 'VERIFIED' or
             evidence.get('observation_closed') is not True or
-            type(evidence.get('sampled_ns')) is not int or evidence['sampled_ns'] <= terminal_ns):
+            type(evidence.get('sampled_ns')) is not int or
+            type(evidence.get('source_sampled_ns')) is not int or
+            type(evidence.get('archive_started_ns')) is not int or
+            evidence['archive_started_ns'] <= terminal_ns or
+            evidence['source_sampled_ns'] < evidence['archive_started_ns'] or
+            evidence['sampled_ns'] < evidence['source_sampled_ns']):
         return unavailable
     digest = evidence.get('artifact_sha256')
     if type(digest) is not str or not re.fullmatch(r'[0-9a-f]{64}', digest):
