@@ -1,0 +1,1 @@
+Transcription of the first harness construction failure (not a raw redirected log): the focused test stopped at line 378 with `NameError: name 'time' is not defined` while recording stdout-resume timing. It ran 1 test in 0.153s and reported `FAILED (errors=1)`. The missing import was added before interpreting relay behavior.
