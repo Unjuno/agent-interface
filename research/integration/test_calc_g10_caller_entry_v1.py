@@ -7,12 +7,19 @@ from research.integration.test_calc_g10_fresh_admission_v1 import MintingBridge,
 from research.integration.test_calc_g10_caller_score_v1 import predicate,oracle,ROOT
 
 class G10CallerEntryTests(unittest.TestCase):
- def run_case(self,unknown=False,wrong=False,sink_fail=False):
+ def run_case(self,unknown=False,wrong=False,sink_fail=False,execution_raises=False):
   raw=(ROOT/'runs'/'compiled_ocrlive10'/'raw.json').read_bytes()
   self.assertEqual(hashlib.sha256(raw).hexdigest(),'890c68f13e5fa8598bcbb2f456b8ee5319c584249c19492744a7c96f170014bf')
   checks=json.loads(raw)['pixel_checks'];blob=(ROOT/'runs'/'compiled_ocrlive10'/'second.fods').read_bytes()
   self.assertEqual(hashlib.sha256(blob).hexdigest(),'9c0efd47b8f145229dd77f3b6380b2f604707c6f4e776045c98b8a19b3a2a2df')
   bridge=MintingBridge();state={'verify':0,'sink':0,'bound':[]};cancel=lambda:False
+  if execution_raises:
+   click=bridge.click
+   def uncertain_click(*args,**kwargs):
+    result=click(*args,**kwargs)
+    if len(bridge.inputs)==2:raise TimeoutError('second input may have reached the application')
+    return result
+   bridge.click=uncertain_click
   def perceive(_,image):
    phase=image.getpixel((0,0))[0];row=checks[phase]
    return {'ready':True,'row_visible':predicate.visible_row_predicate(None if unknown and phase==1 else row['decoded_values'],row['expected_values'])}
@@ -49,4 +56,14 @@ class G10CallerEntryTests(unittest.TestCase):
  def test_sink_failure_retains_completed_receipt_without_replay(self):
   bridge,state,result=self.run_case(sink_fail=True)
   self.assertEqual(result['outcome'],'CALLER_FAILED');self.assertEqual(result['compiled_execution_receipt']['completed_transitions'],2)
+  self.assertEqual((len(bridge.inputs),state['sink'],state['verify']),(2,1,0))
+ def test_post_dispatch_exception_returns_partial_compiled_receipt_without_outer_score(self):
+  bridge,state,result=self.run_case(execution_raises=True)
+  self.assertEqual(result['outcome'],'EXECUTION_INCOMPLETE')
+  self.assertEqual(result['delivery'],'delivery_uncertain')
+  receipt=result['compiled_execution_receipt']
+  self.assertEqual((receipt['outcome'],receipt['reason'],receipt['completed_transitions']),
+   ('RUNTIME_FAILED','execution_failed',1))
+  self.assertEqual(receipt['unresolved_execution']['action'],'second')
+  self.assertIsNone(receipt['unresolved_execution']['input_dispatched'])
   self.assertEqual((len(bridge.inputs),state['sink'],state['verify']),(2,1,0))
