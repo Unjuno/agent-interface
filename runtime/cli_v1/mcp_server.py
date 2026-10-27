@@ -20,7 +20,6 @@ import anyio
 from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
-from runtime.guarded_win32_v1.process_cancellation import MAX_LATE_INPUT_HORIZON_NS
 from .api import dispatch
 from .mcp_session import MCPSessionOwner
 from .attempt import _write_json
@@ -341,10 +340,13 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     guarded_win32 = session_mode == 'guarded-win32'
     supervised_win32 = session_mode == 'supervised-win32'
     if (type(supervised_win32_late_input_horizon_ns) is not int
-            or not (0 <= supervised_win32_late_input_horizon_ns
-                    <= MAX_LATE_INPUT_HORIZON_NS)
+            or supervised_win32_late_input_horizon_ns < 0
             or (supervised_win32_late_input_horizon_ns and not supervised_win32)):
         raise ValueError('late-input horizon must be a nonnegative integer for supervised-win32')
+    if supervised_win32:
+        from runtime.guarded_win32_v1.process_cancellation import MAX_LATE_INPUT_HORIZON_NS
+        if supervised_win32_late_input_horizon_ns > MAX_LATE_INPUT_HORIZON_NS:
+            raise ValueError('late-input horizon exceeds the supervisor maximum')
     if (_supervised_win32_task_oracle is not None
             and supervised_win32_task_oracle is not None):
         raise ValueError('configure only one supervised Win32 task oracle')
