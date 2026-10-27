@@ -1,0 +1,55 @@
+{
+  "candidate_raw_sha256": "c1a343c9713daa9581b0b6902c601c96aedfc82f4b0cef161e42dc3ef7fb6517",
+  "errors": [],
+  "metrics": {
+    "invalid_proposals_unchanged_envelope": {
+      "no_memory": 6,
+      "prose_memory": 6,
+      "structured_memory": 0
+    },
+    "structured_changed_controls": {
+      "eligible": 6,
+      "proposed": 6
+    },
+    "valid_candidate_recall": {
+      "no_memory": {
+        "eligible": 12,
+        "proposed": 12
+      },
+      "prose_memory": {
+        "eligible": 12,
+        "proposed": 12
+      },
+      "structured_memory": {
+        "eligible": 12,
+        "proposed": 12
+      }
+    }
+  },
+  "mutation_controls": [
+    {
+      "mutation": "drop_row",
+      "rejected": true
+    },
+    {
+      "mutation": "arm_specific_verifier_access",
+      "rejected": true
+    },
+    {
+      "mutation": "changed_envelope_false_reject",
+      "rejected": true
+    },
+    {
+      "mutation": "duplicate_row",
+      "rejected": true
+    },
+    {
+      "mutation": "arm_label_leak",
+      "rejected": true
+    }
+  ],
+  "mutations_rejected": 5,
+  "reconstructed_rows": 72,
+  "scope": "finite authored scorer; no human or open-literature inference",
+  "status": "PASS_METHOD_SCOPED"
+}

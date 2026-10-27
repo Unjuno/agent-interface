@@ -418,3 +418,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - Issue #57: [compiled graph to supervised Win32 caller, current-main R02](integration/compiled_supervised_win32_composition_20261024_r01/current-main-e6d4203-r02/README.md) — the PR #9502 focused ten-module suite passes 124/124 under normal and optimized Python at current main `e6d4203c`; synthetic composition only, with no WSLc/live GUI/MAP01 or matched-efficiency claim.
 
 - Issue #57 pre-live gate: [integrated-path verification crosswalk at current main](integration/issue57_requirement_test_matrix_currentmain_20261024.md) — maps #52–#55, runtime safety, independent effect/evidence and comparison integrity to exact tests/receipts; synthetic composition passes but WSLc live and matched efficiency remain HOLD under #7924.
+
+- Issue #8500 T0 A02: [equal-check analogy-rejection method](analysis/analogy_rejection_8500_t0_a02_20261009/REPORT.md) — scoped deterministic fixture; 72 rows, 5/5 mutations rejected. No human, model, real-agent or product claim.
