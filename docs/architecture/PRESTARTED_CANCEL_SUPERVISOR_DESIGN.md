@@ -378,3 +378,34 @@ The actual Win32 operation-custody question remains unqualified: no late-DOWN
 horizon, live target/app effect, MAP01, exclusive input allocation, hard
 release bound, matched efficiency, or repeated reliability result exists.
 WSLc #7924 remains STOP/HOLD; this work used no WSLc or Docker allocation.
+
+## Win32 delayed-input horizon checkpoint (2026-10-28)
+
+Current-main recheck at `52df8e2d934bd8b20d4d36da8a7f17a524c49210` ran the
+public supervised-Win32 backend composition, supervised-Win32 caller,
+operation-owner, and process-cancellation suites locally on Windows CPython
+3.11.9: 61/61 passed normally and 61/61 under `-O`. The composed test starts
+the actual `Win32RuntimeSession` and `Win32Backend` against a process-shared
+fake API, blocks after a CTRL-down, cancels through the public MCP caller,
+confirms producer exit before the recovery UP, and independently reads neutral
+fake state. This remains fake-API evidence; it does not exercise real
+`SendInput` or its input-stream queue.
+
+The remaining requirement is narrower than the tests' current meaning of
+"recovered": after the recovery UP and neutral readback, an already accepted
+old DOWN may still be pending at the target. Existing local tests stop at the
+immediate neutral observation, while the X11 public-caller path deliberately
+keeps `UNKNOWN` and replay denied through its delayed-request horizon. Thus the
+Win32 fake composition proves ordered cleanup for its modeled API state, but
+does not justify clearing a late-native-input uncertainty or promoting the
+old action to safe completion. A follow-up must inject a delayed DOWN after
+recovery readback, preserve the original action as UNKNOWN with task success
+unset and replay denied while that event is possible, and exercise a distinct
+fresh target as a separate attempt. Any finite horizon must be declared and
+independently sampled before it can support a bounded claim; a fake clock or
+immediate observer cannot establish a native Windows horizon. Do not change
+the default route or claim MAP01/physical release from this checkpoint.
+
+This local recheck neither repaired/restarted Docker nor used WSLc. Docker
+Desktop's daemon still reports `Docker Desktop is unable to start`; WSLc remains
+on the separate STOP/HOLD gate in Issue #7924.
