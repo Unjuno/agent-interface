@@ -152,7 +152,21 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     action = supervision.get("action") if type(supervision) is dict else None
     custody = (action.get("completion_custody")
         if type(action) is dict else None)
-    confirmed = (type(custody) is dict
+    confirmed = (type(supervision) is dict and type(action) is dict
+        and type(expected_call_id) is str
+        and _IDENTIFIER.fullmatch(expected_call_id) is not None
+        and row.get("call_id") == expected_call_id
+        and supervision.get("call_id") == expected_call_id
+        and type(expected_generation) is str
+        and _GENERATION.fullmatch(expected_generation) is not None
+        and row.get("target_generation") == expected_generation
+        and action.get("target_generation") == expected_generation
+        and type(row.get("operation_id")) is str
+        and _IDENTIFIER.fullmatch(row["operation_id"]) is not None
+        and action.get("operation_id") == row["operation_id"]
+        and action.get("status") in ("completed", "recovered")
+        and action.get("release_confirmed") is True
+        and type(custody) is dict
         and custody.get("release_confirmed") is True
         and custody.get("completion_readback_outcome") == "verified")
     status = row.get("status")
@@ -172,6 +186,7 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     if type(action_id) is not str or not action_id:
         action_id = "compiled-" + uuid.uuid4().hex
     terminal = {"status": ("completed" if status in ("returned", "completed") and confirmed
+            and action.get("status") == "completed"
             else "refused" if refused_before_input else "uncertain"),
         "action_id": action_id,
         "effect_ref": "standard-win32-" + action_name,
