@@ -460,6 +460,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             backend._executor_custody_lock = threading.RLock()
             backend._executor_custody_owner = None
             backend._executor_release_obligation = None
+            backend._admission_receipts = {}
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
@@ -606,6 +607,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             backend._executor_custody_lock = threading.RLock()
             backend._executor_custody_owner = None
             backend._executor_release_obligation = None
+            backend._admission_receipts = {}
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
@@ -753,6 +755,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             backend._executor_custody_lock = threading.RLock()
             backend._executor_custody_owner = None
             backend._executor_release_obligation = None
+            backend._admission_receipts = {}
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
