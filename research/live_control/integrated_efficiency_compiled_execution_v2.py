@@ -11,10 +11,10 @@ from research.live_control.adaptive_acquisition_caller_v3 import (
 from runtime.core_v1.compiled_gui import run as run_compiled
 
 
-def execute_compiled_interface(interface, adapters):
-    receipt = run_compiled(interface, adapters)
+def project_compiled_receipt(receipt):
+    """Map returned core progress into the caller's execution decision."""
     if receipt['outcome'] == 'TASK_SUCCEEDED':
-        return {'status': 'completed'}, receipt
+        return {'status': 'completed'}
 
     decision = {'status': 'safe_yield',
         'reason': receipt['reason'] if receipt['outcome'] == 'SAFE_YIELD' else 'execution_failed',
@@ -27,7 +27,12 @@ def execute_compiled_interface(interface, adapters):
         # No returned input terminal means execution was never reached. An
         # explicit pre-input refusal is also distinct from unknown delivery.
         decision['input_dispatched'] = False
-    return decision, receipt
+    return decision
+
+
+def execute_compiled_interface(interface, adapters):
+    receipt = run_compiled(interface, adapters)
+    return project_compiled_receipt(receipt), receipt
 
 
 def run_compiled_interface_in_caller(spec, caller_adapters, interface_for_target,
