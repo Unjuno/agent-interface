@@ -36,6 +36,10 @@ class BoundedProposal:
             if self.cancelled() is not False:
                 return None
             native_copy, image_copy = copy.deepcopy(native), image.copy()
+            # Snapshot copying can consume the whole lease or race cancellation.
+            # Never start a proposal worker after either boundary has expired.
+            if self.cancelled() is not False or time.monotonic_ns() >= deadline:
+                return None
             def work():
                 try:
                     result['value'] = self.provider(native_copy, image_copy)

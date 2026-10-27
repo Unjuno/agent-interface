@@ -7,6 +7,7 @@ effect are simulated. It is not live Calc or an independent effect result.
 import copy
 import json
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -26,7 +27,7 @@ from research.live_control.calc_g10_caller_v1 import run_g10_in_caller
 
 
 class G10NativeCallerCompositionTests(unittest.TestCase):
-    def run_case(self, *, unknown_first_effect=False):
+    def run_case(self, *, unknown_first_effect=False, delay_proposal=False):
         fake = FakeX(self)
         buttons, pointer = set(), [0, 0]
         fake.backend.root.query_pointer = lambda: type("Pointer", (), {
@@ -49,6 +50,8 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
         x11_backend.xtest.fake_input.side_effect = emit
         state = {"clicks": 0, "old_alias_status": None, "outer_score": 0,
                  "published": [], "target_builds": []}
+        proposal_entered, release_proposal, proposal_completed = (
+            threading.Event(), threading.Event(), threading.Event())
         cancelled = lambda: False
 
         def set_frame(marker, *, invalidate=False):
@@ -88,12 +91,17 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
                         "a1_primary", [6, 6], native, image, time.monotonic_ns(),
                         session_scope=bridge.scope)
                     state["old_alias_status"] = stale["status"]
-                    return {"alias": "a1_second", "source_sequence": native["sequence"],
-                            "source_sha256": native["native"]["artifact"]["sha256"],
-                            "point": [8, 8], "region_size": [12, 12]}
+                    candidate = {"alias": "a1_second", "source_sequence": native["sequence"],
+                                 "source_sha256": native["native"]["artifact"]["sha256"],
+                                 "point": [8, 8], "region_size": [12, 12]}
+                    if delay_proposal:
+                        proposal_entered.set()
+                        release_proposal.wait(1)
+                        proposal_completed.set()
+                    return candidate
 
                 proposal_worker = BoundedProposal(
-                    proposal, timeout_ms=500, cancelled=cancelled)
+                    proposal, timeout_ms=30 if delay_proposal else 500, cancelled=cancelled)
                 graph = retained_g10_interface()
                 graph["session_scope"] = bridge.scope
                 graph["surface"] = "x11-window-20"
@@ -151,9 +159,14 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
                         perceive=perceive, verify_effect=compiled_effect,
                         proposal_worker=proposal_worker, cancelled=cancelled,
                         on_receipt=lambda receipt: state["published"].append(copy.deepcopy(receipt)))
-                if proposal_worker.thread is not None:
+                if proposal_worker.thread is not None and not delay_proposal:
                     proposal_worker.thread.join(1)
                 state["worker"] = proposal_worker.snapshot()
+                if delay_proposal:
+                    state["proposal_entered"] = proposal_entered
+                    state["release_proposal"] = release_proposal
+                    state["proposal_completed"] = proposal_completed
+                    state["proposal_worker"] = proposal_worker
                 state["native_executions"] = [
                     json.loads(path.read_text(encoding="utf-8"))
                     for path in Path(tmp, "bridge").glob("result-*.json")
@@ -202,6 +215,42 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
         self.assertEqual(len(state["native_executions"]), 1)
         self.assertTrue(state["native_executions"][0]["execution"]["releases"][-1]["verified"])
         self.assertEqual(state["worker"]["used"], False)
+
+
+    def test_late_proposal_after_deadline_keeps_release_and_never_dispatches_second_input(self):
+        bridge, state, result = self.run_case(delay_proposal=True)
+        release = state["release_proposal"]
+        worker = state["proposal_worker"]
+        try:
+            self.assertTrue(state["proposal_entered"].is_set())
+            self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+            receipt = result["compiled_execution_receipt"]
+            self.assertEqual(receipt["completed_transitions"], 1)
+            self.assertEqual(state["old_alias_status"], "MISSING")
+            self.assertEqual(state["clicks"], 1)
+            self.assertEqual(state["outer_score"], 0)
+            self.assertEqual(len(state["published"]), 1)
+            self.assertEqual(len(state["native_executions"]), 1)
+            first = state["native_executions"][0]
+            self.assertEqual(first["status"], "completed")
+            self.assertTrue(first["execution"]["releases"][-1]["verified"])
+            self.assertEqual(first["execution"]["releases"][-1]["keys_down"], [])
+            self.assertEqual(first["execution"]["releases"][-1]["buttons_down"], [])
+            self.assertEqual(state["physical_down"], [])
+            self.assertEqual(state["used_aliases"], ["a1_primary"])
+            self.assertTrue(state["worker"]["retired"])
+            self.assertTrue(state["worker"]["thread_alive"])
+            release.set()
+            worker.thread.join(1)
+            self.assertTrue(state["proposal_completed"].is_set())
+            self.assertFalse(worker.thread.is_alive())
+            self.assertEqual(state["clicks"], 1)
+            self.assertEqual(state["used_aliases"], ["a1_primary"])
+            self.assertEqual(len(state["native_executions"]), 1)
+        finally:
+            release.set()
+            if worker.thread is not None:
+                worker.thread.join(1)
 
 
 if __name__ == "__main__":
