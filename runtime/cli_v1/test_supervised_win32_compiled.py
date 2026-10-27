@@ -237,7 +237,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
 
         receipt = run_public_compiled(interface, {"save": program},
             target="fixture", current_binding_revision=7,
-            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            region=[0, 0, 1, 1], capture_frame="screen_physical_px",
+            observe=observe, dispatch=dispatch,
             perceive=lambda _row, reply: {"ready": True,
                 "saved": int(reply["call_id"], 16) % 2 == 0},
             verify_effect=verify_effect, cancelled=lambda: False)
@@ -247,6 +248,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIsNone(receipt["task_success"])
         self.assertEqual(receipt["standard_observation_call_ids"],
             [call_id(1), call_id(2)])
+        self.assertEqual([row[1] for row in observation_calls],
+            ["screen_physical_px", "screen_physical_px"])
         self.assertEqual(receipt["standard_action_call_ids"], [call_id(101)])
         evidence = receipt["standard_target_evidence"]
         self.assertEqual([row["kind"] for row in evidence],
