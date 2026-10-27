@@ -2,6 +2,8 @@
 import argparse
 from collections import Counter
 import json
+import os
+import tempfile
 from pathlib import Path
 
 
@@ -150,7 +152,20 @@ def main():
     owner_events = json.loads((raw / "episode/runtime/owner-events.json").read_text())
     result = audit(events, owner_events)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    temp_name = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=output.parent,
+                                         prefix=".a07-audit-", delete=False) as handle:
+            temp_name = handle.name
+            handle.write(json.dumps(result, indent=2) + "\n")
+        os.replace(temp_name, output)
+        temp_name = None
+    finally:
+        if temp_name is not None:
+            try:
+                os.unlink(temp_name)
+            except FileNotFoundError:
+                pass
     print(json.dumps({"status": result["status"], "formal_pass": False,
                       "counts": result["counts"], "output": str(output)}, indent=2))
     return 0 if result["status"] == "PASS_CUSTODY_RECONCILED_SCOPED" else 1
