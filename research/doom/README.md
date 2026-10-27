@@ -534,3 +534,7 @@ This dated corpus is preserved as exact evidence snapshots; it does not promote 
 - [A01 visual-context staleness](v39_visual_context_staleness_a01_20261013/REPORT.md).
 
 The A27/A28/A29 results concern virtual X11 state and do not establish physical release, production monitor scheduling, real-game effect, MAP01 completion, or reliability. No candidate was rerun during preservation.
+
+## V39 candidate preflight failure receipt
+
+- [Startup-failure receipt regression](v39_preflight_failure_receipt_a01_20261009/SOURCE_BOUNDARY.md) preserves the original freeze identity and documents the post-experiment repair. Mocked network and support preflight failures retain incomplete records; output-path and freeze-parsing failures remain outside the boundary. No live input or recovery result follows.
