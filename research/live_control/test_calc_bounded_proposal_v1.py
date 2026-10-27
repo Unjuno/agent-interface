@@ -27,6 +27,20 @@ class BoundedProposalTests(unittest.TestCase):
   called=[];worker=BoundedProposal(lambda n,i:called.append(True),timeout_ms=30,cancelled=lambda:True)
   self.assertIsNone(worker({},Image.new('RGB',(4,4))))
   self.assertEqual(called,[]);self.assertIsNone(worker.thread);self.assertTrue(worker.snapshot()['retired'])
+ def test_deadline_expiring_during_snapshot_copy_does_not_start_worker(self):
+  calls=[]
+  class SlowImage:
+   def copy(self):time.sleep(.04);return object()
+  worker=BoundedProposal(lambda n,i:calls.append(True),timeout_ms=10,cancelled=lambda:False)
+  self.assertIsNone(worker({},SlowImage()))
+  self.assertEqual(calls,[]);self.assertIsNone(worker.thread);self.assertTrue(worker.snapshot()['retired'])
+ def test_cancellation_during_snapshot_copy_does_not_start_worker(self):
+  cancel=threading.Event();calls=[]
+  class CancelOnCopy:
+   def copy(self):cancel.set();return object()
+  worker=BoundedProposal(lambda n,i:calls.append(True),timeout_ms=500,cancelled=cancel.is_set)
+  self.assertIsNone(worker({},CancelOnCopy()))
+  self.assertEqual(calls,[]);self.assertIsNone(worker.thread);self.assertTrue(worker.snapshot()['retired'])
  def test_callback_failure_is_unavailable_without_retry(self):
   def fail(_,__):raise ValueError('inert')
   worker=BoundedProposal(fail,timeout_ms=300,cancelled=lambda:False)
