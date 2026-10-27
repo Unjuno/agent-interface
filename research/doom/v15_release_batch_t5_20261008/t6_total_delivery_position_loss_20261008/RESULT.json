@@ -1,0 +1,101 @@
+{
+  "schema": "v15-t6-schema-loss-identifiability-v1",
+  "comparison": {
+    "current_rows_have_positions": true,
+    "legacy_rows_omit_positions": true,
+    "positions_deleted_current_equals_legacy": true,
+    "current": {
+      "schema": "v15-scorer-input-attribution-adapter-v1",
+      "trace_integrity": "SOURCE_ROWS_JOINED",
+      "counts": {
+        "scorer_samples": 2,
+        "scorer_events": 1,
+        "input_admissions": 2,
+        "key_release_receipts": 2,
+        "candidate_key_intervals": 2,
+        "unverified_or_censored_key_intervals": 0,
+        "integrity_flags": []
+      },
+      "attributions": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            300
+          ],
+          "status": "TEMPORALLY_UNIQUE",
+          "reason": "one_verified_intent_covers_full_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": "intent-a",
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    "total_loss": {
+      "schema": "v15-scorer-input-attribution-adapter-v1",
+      "trace_integrity": "SOURCE_ROWS_JOINED",
+      "counts": {
+        "scorer_samples": 2,
+        "scorer_events": 1,
+        "input_admissions": 2,
+        "key_release_receipts": 2,
+        "candidate_key_intervals": 2,
+        "unverified_or_censored_key_intervals": 0,
+        "integrity_flags": []
+      },
+      "attributions": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            300
+          ],
+          "status": "TEMPORALLY_UNIQUE",
+          "reason": "one_verified_intent_covers_full_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": "intent-a",
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    "legacy": {
+      "schema": "v15-scorer-input-attribution-adapter-v1",
+      "trace_integrity": "SOURCE_ROWS_JOINED",
+      "counts": {
+        "scorer_samples": 2,
+        "scorer_events": 1,
+        "input_admissions": 2,
+        "key_release_receipts": 2,
+        "candidate_key_intervals": 2,
+        "unverified_or_censored_key_intervals": 0,
+        "integrity_flags": []
+      },
+      "attributions": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            300
+          ],
+          "status": "TEMPORALLY_UNIQUE",
+          "reason": "one_verified_intent_covers_full_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": "intent-a",
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    }
+  },
+  "decision": "UNIDENTIFIABLE_WITH_ROW_FIELDS_ONLY",
+  "limits": "Synthetic producer-shaped adapter construction; no runtime, GUI, OS input, game, model, causal attribution, safety, recovery, latency or task completion."
+}
+
