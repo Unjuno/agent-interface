@@ -258,6 +258,53 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_busy_helper_invalidation_is_bounded_and_closes_readmission(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = time.monotonic_ns
+        lock = threading.Lock(); lock.acquire()
+        helper = {"lock": lock, "available": True, "process": object()}
+        supervisor._helpers = {"observer": helper}
+        retired = []
+        supervisor._retire_process = lambda *args: retired.append(args)
+        finished = threading.Event()
+        def invalidate():
+            try:
+                supervisor._invalidate_helper("observer", time.monotonic_ns() + 50_000_000)
+            finally:
+                finished.set()
+        thread = threading.Thread(target=invalidate); thread.start()
+        try:
+            self.assertTrue(finished.wait(1), "invalidation ignored its deadline")
+            self.assertFalse(helper["available"])
+            self.assertEqual(retired, [])
+        finally:
+            lock.release(); thread.join(2)
+        self.assertFalse(thread.is_alive())
+
+    def test_invalidation_during_helper_exchange_rejects_result(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = time.monotonic_ns
+        supervisor._terminate_grace_s = 0.0; supervisor._kill_grace_s = 0.0
+        supervisor._poll_interval_s = 0.005
+        process = type("Process", (), {"is_alive": lambda self: True})()
+        helper = {"lock": threading.Lock(), "available": True,
+                  "process": process, "identity": "exact"}
+        class Connection:
+            def __init__(self): self.messages = iter(({"value": "result"},
+                {"control": "operation_complete", "request_id": "r"}))
+            def send(self, request): helper["available"] = False
+            def poll(self, timeout): return True
+            def recv(self): return next(self.messages)
+        helper["connection"] = Connection()
+        supervisor._helpers = {"observer": helper}
+        supervisor._process_identity_reader = lambda _: "exact"
+        retired = []; supervisor._retire_process = lambda *args: retired.append(args)
+        with self.assertRaises(TimeoutError):
+            supervisor._exchange_helper("observer", {"request_id": "r"},
+                time.monotonic_ns() + 1_000_000_000)
+        self.assertEqual(len(retired), 1)
+        self.assertFalse(helper["available"])
+
     def test_busy_helper_lock_does_not_wait_past_transaction_cutoff(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         supervisor._clock_ns = time.monotonic_ns

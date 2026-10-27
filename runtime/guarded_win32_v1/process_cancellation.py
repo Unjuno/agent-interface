@@ -322,6 +322,7 @@ class OperationCancellationSupervisor:
                     if result is not None and completion is not None:
                         break
                 if (result is None or completion is None
+                        or not helper["available"]
                         or self._clock_ns() >= deadline_ns
                         or not process.is_alive()
                         or self._process_identity_reader(process) != helper["identity"]):
@@ -336,9 +337,18 @@ class OperationCancellationSupervisor:
 
     def _invalidate_helper(self, name, deadline_ns):
         helper = self._helpers[name]
-        with helper["lock"]:
-            helper["available"] = False
-            self._retire_process(helper["process"], deadline_ns)
+        # Close new admission immediately, even if an in-flight request owns
+        # the helper lock. Never wait beyond this cleanup deadline.
+        helper["available"] = False
+        remaining_s = min((deadline_ns - self._clock_ns()) / 1_000_000_000,
+                          threading.TIMEOUT_MAX)
+        if remaining_s <= 0 or not helper["lock"].acquire(timeout=remaining_s):
+            return
+        try:
+            if self._clock_ns() < deadline_ns:
+                self._retire_process(helper["process"], deadline_ns)
+        finally:
+            helper["lock"].release()
 
     def _run_recovery(self, operation_id, generation, request):
         if self._clock_ns() >= request["deadline_ns"]:
