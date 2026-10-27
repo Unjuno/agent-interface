@@ -218,4 +218,33 @@ class RetainedEvidenceTests(unittest.TestCase):
         self.assertEqual(result["counts"]["unverified_or_censored_key_intervals"], 0)
         self.assertEqual(result["attributions"], [])
 
+    def test_retained_a02_positive_event_remains_unresolved(self):
+        root = (Path(__file__).resolve().parent.parent
+                / "map01_v39_live_threat_guard_a02_20261009" / "raw_traces")
+        expected = {
+            "episode__runtime__events.jsonl": "a81b41c724d73a89ae2f3cbcc1eda2e1f9254e7fcaabb696013d3bedd941c03f",
+            "episode__runtime__scorer-samples.jsonl": "b392a376b662a9c0d401092c90c12a8a8d0dcaaa9c460d086850914a8d94c171",
+            "episode__runtime__scorer-events.jsonl": "99f7d8a9b9cf2730c7d59a342e75a528fd77444acb0c6f82ec7211d8750a8771",
+        }
+        rows = {}
+        for name, digest in expected.items():
+            raw = (root / name).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), digest)
+            rows[name] = [json.loads(line) for line in raw.splitlines() if line.strip()]
+        events = rows["episode__runtime__events.jsonl"]
+        samples = rows["episode__runtime__scorer-samples.jsonl"]
+        scorer = rows["episode__runtime__scorer-events.jsonl"]
+        self.assertEqual((len(events), len(samples), len(scorer)), (406, 618, 1))
+        self.assertEqual(scorer[0]["kind"], "KILL_COUNT_INCREASE")
+        result = adapt_session_records(samples, scorer, events)
+        self.assertEqual(result["trace_integrity"], "HOLD_INCOMPLETE_RELEASE_BATCH")
+        self.assertEqual(result["counts"]["input_admissions"], 24)
+        self.assertEqual(result["counts"]["key_release_receipts"], 24)
+        self.assertEqual(result["counts"]["unverified_or_censored_key_intervals"], 24)
+        self.assertEqual(len(result["attributions"]), 1)
+        attribution = result["attributions"][0]
+        self.assertEqual(attribution["status"], "UNRESOLVED")
+        self.assertEqual(attribution["causal_attribution"], "NOT_ESTABLISHED")
+        self.assertIsNone(attribution["intent_token"])
+
 if __name__ == "__main__": unittest.main()
