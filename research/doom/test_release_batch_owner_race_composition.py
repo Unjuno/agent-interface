@@ -235,6 +235,11 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             self.assertTrue(row["owner_cleanup_intervened"])
             self.assertFalse(row["owner_thread_keyup_verified"])
             self.assertFalse(row["ordinary_release_candidate"])
+            self.assertFalse(row["owner_transition_verified"])
+            self.assertFalse(row["physical_verification_authoritative"])
+            from project_v39_release_measurement_v1 import project
+            self.assertEqual(project(emitted), {"measurement_ready": False, "rows": []})
+
             self.assertFalse(row["grants_input_authority"])
             cleanup_verified_ns = row["owner_cleanup_record"]["verified_ns"]
             self.assertLess(race_clock["enqueued_ns"], race_clock["cancel_requested_ns"])
