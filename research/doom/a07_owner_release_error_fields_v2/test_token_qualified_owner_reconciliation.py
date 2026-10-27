@@ -14,11 +14,24 @@ class TokenQualifiedTests(unittest.TestCase):
 
     def test_missing_owner_error_is_not_promoted(self):
         events, owner = fixture()
+        events[6]["owner_release"]["intent_token"] = "intent-1"
         del events[6]["owner_release"]["key_release_attempts"]["40"]["attempts"][0]["sync_error"]
         self.assertEqual(audit(events, owner)["status"], "FAIL")
 
+    def test_mismatched_owner_release_token_is_unverified(self):
+        events, owner = fixture()
+        events[6]["owner_release"]["intent_token"] = "different-operation"
+        result = audit(events, owner)
+        self.assertNotEqual(result["status"], "PASS_CUSTODY_RECONCILED_SCOPED")
+        self.assertFalse(result["formal_pass"])
+
+    def test_missing_owner_release_token_is_unverified(self):
+        events, owner = fixture()
+        self.assertEqual(audit(events, owner)["status"], "HOLD_OWNER_RELEASE_IDENTITY")
+
     def test_unique_token_retains_scoped_terminal_cleanup(self):
         events, owner = fixture()
+        events[6]["owner_release"]["intent_token"] = "intent-1"
         result = audit(events, owner)
         self.assertEqual(result["status"], "PASS_CUSTODY_RECONCILED_SCOPED")
         self.assertFalse(result["formal_pass"])

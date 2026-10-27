@@ -18,6 +18,19 @@ def audit(events, owner_events):
     if precheck["status"] != "READY_FOR_FURTHER_CHECKS":
         return {"schema": "a07-token-qualified-owner-reconciliation-v1",
                 "status": "HOLD_AMBIGUOUS_TOKEN", "formal_pass": False}
+    for cancel in (row for row in events if row.get("event") == "cancel_requested"):
+        ident = cancel["id"]
+        admissions = [row for row in events if row.get("event") == "input_admission" and row.get("id") == ident]
+        if not admissions:
+            continue
+        releases = [row for row in events if row.get("event") == "input_released" and row.get("id") == ident]
+        if len(releases) != 1:
+            return {"schema": "a07-token-qualified-owner-reconciliation-v1",
+                    "status": "HOLD_OWNER_RELEASE_IDENTITY", "formal_pass": False}
+        owner_release = releases[0].get("owner_release")
+        if type(owner_release) is not dict or owner_release.get("intent_token") != admissions[0]["intent_token"]:
+            return {"schema": "a07-token-qualified-owner-reconciliation-v1",
+                    "status": "HOLD_OWNER_RELEASE_IDENTITY", "formal_pass": False}
     result = legacy_audit(events, owner_events)
     result["schema"] = "a07-token-qualified-owner-reconciliation-v1"
     result["token_ownership_unambiguous"] = True
