@@ -8,6 +8,11 @@ class DispatchContradictionTests(unittest.TestCase):
             with self.subTest(outer=outer,inner=inner):
                 result=_terminal(self.row(outer,inner),'move',expected_call_id='a'*32,expected_generation='b'*64)
                 self.assertEqual(result['status'],'uncertain');self.assertNotIn('input_dispatched',result);self.assertTrue(result['release']['verified'])
+    def test_completed_no_input_does_not_violate_terminal_contract(self):
+        result = _terminal(self.row(False, False), "move", expected_call_id="a"*32, expected_generation="b"*64)
+        self.assertEqual(result["status"], "uncertain")
+        self.assertNotIn("input_dispatched", result)
+        self.assertTrue(result["release"]["verified"])
     def test_consistent_delivery_remains_supported(self):
         result=_terminal(self.row(True,True),'move',expected_call_id='a'*32,expected_generation='b'*64)
         self.assertEqual(result['status'],'completed');self.assertIs(result['input_dispatched'],True)
