@@ -71,10 +71,9 @@ def _capture_ns(report):
 def _terminal(reply, action_name, *, expected_call_id=None,
               expected_generation=None):
     row = _raw_report(reply)
-    if ("action" in row
+    if (("action" in row or "supervision" in row)
             and all(key in row for key in ("status", "action_id", "effect_ref", "release"))):
-        # Ambiguous envelopes must not let a direct terminal bypass the
-        # exact-call and generation checks on a retrieved action.
+        # A direct terminal must not hide retrieved or supervised custody.
         return {"status": "uncertain", "action_id": "ambiguous-interface-result",
             "effect_ref": "standard-win32-" + action_name,
             "release": {"verified": False, "keys_down": ["unknown"],
