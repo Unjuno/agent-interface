@@ -398,7 +398,13 @@ immediate neutral observation, while the X11 public-caller path deliberately
 keeps `UNKNOWN` and replay denied through its delayed-request horizon. Thus the
 Win32 fake composition proves ordered cleanup for its modeled API state, but
 does not justify clearing a late-native-input uncertainty or promoting the
-old action to safe completion. A follow-up must inject a delayed DOWN after
+old action to safe completion. A source-pinned counterexample now drives the
+current owner through successful point-in-time recovery, injects a delayed
+fake DOWN, and records that a distinct generation is admitted while that fake
+input remains down ([packet](../../research/integration/win32_delayed_input_quarantine_20261028/README.md)).
+This demonstrates the missing quarantine in the current synthetic state
+contract; it is not a real Windows delivery trace. A follow-up must inject a
+delayed DOWN after
 recovery readback, preserve the original action as UNKNOWN with task success
 unset and replay denied while that event is possible, and exercise a distinct
 fresh target as a separate attempt. Any finite horizon must be declared and
