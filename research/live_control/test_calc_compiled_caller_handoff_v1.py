@@ -34,6 +34,8 @@ class CalcHandoffTests(unittest.TestCase):
    self.assertEqual(state['inputs'],1);self.assertEqual(state['outer_verify'],0)
    self.assertEqual(result['outcome'],'CALLER_FAILED');self.assertIsNone(result['compiled_execution_receipt'])
    self.assertEqual(result['delivery'],'delivery_uncertain')
+   held=execute.snapshot();self.assertEqual(held['receipt'],source)
+   self.assertEqual(held['projection']['delivery'],'unknown')
    return
   if refuse:
    self.assertEqual(state['inputs'],0);self.assertEqual(state['outer_verify'],0)

@@ -20,3 +20,15 @@ class StageExecutorTests(unittest.TestCase):
   def sink(_):calls.append('sink');raise OSError('sink unavailable')
   with self.assertRaises(OSError):make_stage_executor(run,sink)({})
   self.assertEqual(calls,['run','sink'])
+ def test_sink_failure_keeps_detached_receipt_available(self):
+  receipt={'format':'decision-receipt-v4','reported_state':'terminal','program_write_may_have_been_attempted':True,
+   'terminals':[{'record':{'event':'terminal','status':'needs_decision','steps_completed':0,
+    'release':{'verified':True,'keys_down':[],'buttons_down':[],'keys_unknown':[]}}}]}
+  def sink(value):value['receipt'].clear();raise OSError('inert failure')
+  execute=make_stage_executor(lambda _:receipt,sink)
+  with self.assertRaises(OSError):execute({})
+  held=execute.snapshot()
+  self.assertEqual(held['receipt']['format'],'decision-receipt-v4')
+  self.assertEqual(held['projection']['delivery'],'unknown')
+  held['receipt'].clear()
+  self.assertEqual(execute.snapshot()['receipt']['format'],'decision-receipt-v4')
