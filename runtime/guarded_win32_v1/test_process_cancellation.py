@@ -305,6 +305,35 @@ class ProcessCancellationTests(unittest.TestCase):
         self.assertEqual(len(retired), 1)
         self.assertFalse(helper["available"])
 
+    def test_shutdown_never_sends_on_a_busy_helper_connection(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = time.monotonic_ns
+        supervisor._terminate_grace_s = supervisor._kill_grace_s = 0.0
+        supervisor._startup_timeout_s = 0.1
+        class Process:
+            alive = True
+            def is_alive(self): return self.alive
+            def join(self, timeout): pass
+            def close(self): pass
+        class Connection:
+            def __init__(self): self.sent = []; self.closed = False
+            def send(self, value): self.sent.append(value)
+            def close(self): self.closed = True
+        process = Process(); connection = Connection(); lock = threading.Lock()
+        lock.acquire()
+        helper = {"lock": lock, "available": True, "process": process, "connection": connection}
+        supervisor._helpers = {"observer": helper}
+        def retire(child, deadline): child.alive = False; return True
+        supervisor._retire_process = retire
+        try:
+            supervisor._close_helpers()
+            self.assertFalse(helper["available"])
+            self.assertEqual(connection.sent, [])
+            self.assertTrue(connection.closed)
+            self.assertFalse(process.alive)
+        finally:
+            lock.release()
+
     def test_busy_helper_lock_does_not_wait_past_transaction_cutoff(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         supervisor._clock_ns = time.monotonic_ns

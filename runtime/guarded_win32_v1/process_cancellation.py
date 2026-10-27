@@ -551,12 +551,16 @@ class OperationCancellationSupervisor:
             process = helper["process"]
             connection = helper["connection"]
             helper["available"] = False
-            if process.is_alive():
+            # Never interleave a shutdown message with an active exchange.
+            # A busy helper is retired instead of waiting for its lock.
+            if process.is_alive() and helper["lock"].acquire(blocking=False):
                 try:
                     connection.send(None)
                     process.join(min(0.1, self._startup_timeout_s))
                 except BaseException:
                     pass
+                finally:
+                    helper["lock"].release()
             if process.is_alive():
                 deadline_ns = self._clock_ns() + int(
                     (self._terminate_grace_s + self._kill_grace_s + 0.1)
