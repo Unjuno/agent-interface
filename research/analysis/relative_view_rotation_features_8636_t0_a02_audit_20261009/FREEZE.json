@@ -1,0 +1,47 @@
+{
+  "schema": "issue-8636-a02-retained-raw-audit-v1",
+  "allocation": "UNJUNO-8636-A02-RAW-AUDIT-A01-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8636",
+  "base_main_sha": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "input_source_allocation": "UNJUNO-8636-ROTATION-FEATURES-T0-A02-20261009",
+  "input_result_commit": "a4067280b371fc54d75b0c4fb2b25092eb8ab637",
+  "input_archive": "inputs/a02-first-outcome.tar.gz",
+  "input_archive_sha256": "a9004e4e84dadcdd6595dd738bec77e69de84e5b51767985129f968649ddeeb9",
+  "input_archive_bytes": 423004,
+  "input_file_count": 2216,
+  "input_uncompressed_bytes": 63085782,
+  "prior_failed_auditor_sha256": "5b21fbb8eb8e0fe1041fe8c3dd2a2cac0c55699632fbd6198e50fd3fcecbb968",
+  "auditor": "audit.py",
+  "auditor_sha256": "d26ec1adb066b43427c0e5c83e11dbbd0c993fb07c75bc94fc3670abe308fb71",
+  "construction_test": "test_construction.py",
+  "construction_test_sha256": "49a60b0d03059cf253efb316b491d6ca1ef4e80f9a531c2178e016920a3f16be",
+  "construction_tests": "3/3 PASS under CPython 3.12.13",
+  "interpreter": "CPython 3.12.13 (/run/current-system/sw/bin/python3.12)",
+  "execution": "local CPU-only read-only archive audit; no candidate/model/GUI/runtime invocation",
+  "commands": [
+    "python3.12 -B audit.py --archive inputs/a02-first-outcome.tar.gz --result results/a03-audit.json"
+  ],
+  "invocation_limits": {
+    "candidate": 0,
+    "candidate_max": 0,
+    "auditor": 1,
+    "auditor_max": 1,
+    "retry": 0
+  },
+  "source_sha256": {
+    "source/FREEZE.json": "7476bf6c617df96edeb3515014a57dfe5f88c414123b342a9f53b3e5e171e0c2",
+    "source/FREEZE_AMENDMENT.md": "8a576b87551d3cb6efa3487fa681bd32556f0e1bd91037731cc3aa19c1016c9a",
+    "source/PROTOCOL.md": "bd18257bdc0b188ebff8d06ac9d410ff3f701b417707e8749db993f08b06cc27",
+    "source/README.md": "ea3689fd6bd02b5c8cacaebe55f5d5c008e699aeca16bba5ab2157b1dfb18624",
+    "source/runner.py": "71a6a68d0d0035a694aa7256389e9d753d41ba95405c708ae6e63bb04d837cfd",
+    "source/candidate.py": "e058cdc69700b5cb08bbda13cb90c83caca36e238edcddbd9fde5cfced76d1a4",
+    "source/ENVIRONMENT.md": "44358ebf40a84043d8f020f95c0b0a25a994222f1a5dc014bf587629abec015d"
+  },
+  "decision": {
+    "pass": "PASS_AUDIT_ONLY_SCOPED only when all frozen archive records reconstruct and every mutation control rejects",
+    "fail": "FAIL_AUDIT_ONLY_MISMATCH on any raw/status/feature/action/terminal inconsistency",
+    "stop": "STOP_PROVENANCE on input/source/process failure",
+    "preserve": "A02 remains HOLD_UNCERTAIN regardless of audit-only outcome"
+  },
+  "known_original_environment_mismatch": "A02 formal command used CPython 3.14.5 while its metadata records CPython 3.12.13; this audit cannot repair that discrepancy"
+}

@@ -1369,3 +1369,6 @@ The checker compares the generated block against every child directory with a re
 # Issue #57 — Firecrawl compiled release-boundary evidence
 
 - [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
+
+- [Issue #8636 A02 first outcome](relative_view_rotation_features_8636_t0_a02_20261009/README.md) — synthetic candidate and original failed auditor; HOLD_UNCERTAIN.
+- [Issue #8636 A02 audit-only follow-up](relative_view_rotation_features_8636_t0_a02_audit_20261009/README.md) — first audit mismatch; original hold unchanged.
