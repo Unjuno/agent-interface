@@ -1,0 +1,13 @@
+import datetime,hashlib,json,pathlib,sqlite3,subprocess,sys,_sqlite3
+ROOT=pathlib.Path(__file__).resolve().parent;BASE=ROOT/'sqlite-interrupt-7772-c01'
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(p):b=p.read_bytes();return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+BASE.mkdir(exist_ok=False)
+freeze={'id':'6526-SQLITE-INTERRUPT-PENDING-WRITE-7772-C01','claim':5969168458,'frozen_utc':utc(),'source':pin(ROOT/'sqlite_interrupt_7772.py'),'runner':pin(pathlib.Path(__file__)),'python':pin(pathlib.Path(sys.executable)),'python_version':sys.version,'sqlite_version':sqlite3.sqlite_version,'sqlite_module':pin(pathlib.Path(_sqlite3.__file__)),'ordered_cases':['READ_INTERRUPT','WRITE_INTERRUPT','HEALTHY_WRITE'],'D':'read9/active1/COMMITsuccess/end1;write9/inactive0/COMMIT_SQLITE_ERROR/end0;healthyactive2/COMMITsuccess/end2; all three fresh endpoints0 and complete raw/capsules. Otherwise first FAIL, never replay to get PASS.','scope':'known returned local errors/invented DBs; not COMMIT_BUSY or lost response or cancellation-to-commit authority; no statement resend'}
+with (BASE/'FREEZE.json').open('x',encoding='utf-8') as f:json.dump(freeze,f,indent=2)
+start=utc()
+with (BASE/'producer.stdout.txt').open('xb') as out,(BASE/'producer.stderr.txt').open('xb') as err:
+    p=subprocess.Popen([sys.executable,str(ROOT/'sqlite_interrupt_7772.py')],stdout=out,stderr=err);code=p.wait(timeout=30)
+receipt={'pid':p.pid,'start_utc':start,'end_utc':utc(),'exit':code,'stdout':pin(BASE/'producer.stdout.txt'),'stderr':pin(BASE/'producer.stderr.txt'),'source_unchanged':pin(ROOT/'sqlite_interrupt_7772.py')==freeze['source']}
+with (BASE/'PRODUCER_RECEIPT.json').open('x',encoding='utf-8') as f:json.dump(receipt,f,indent=2)
+print(json.dumps(receipt));sys.exit(code)
