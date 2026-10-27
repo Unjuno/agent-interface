@@ -253,6 +253,21 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(instances[0].release_snapshot,
             ({"CTRL": 0x11}, {"left"}, {0x41}))
 
+    def test_recovery_rejects_contradictory_or_incomplete_release_receipts(self):
+        for field, value in (("keys_down", ["CTRL"]), ("buttons_down", ["left"]),
+                             ("keys_unknown", ["CTRL"]), ("buttons_unknown", ["left"]),
+                             ("keys_unknown", None), ("buttons_unknown", None)):
+            with self.subTest(field=field, value=value):
+                class ContradictoryBackend(FakeBackend):
+                    def release_all(self):
+                        receipt = super().release_all()
+                        receipt[field] = value
+                        return receipt
+                result = _recover(self.request(),
+                    backend_factory=lambda targets: ContradictoryBackend(targets),
+                    clock_ns=lambda: 10, configured_targets={"fixture": 44})
+                self.assertFalse(result["release_accepted"])
+
     def test_orphan_recovery_focuses_exact_target_before_global_key_up(self):
         backend = FakeBackend({"fixture": 44})
         result = _recover(self.request(obligations=["key:fixture:W"],
