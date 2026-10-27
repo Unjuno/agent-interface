@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8630 T0 A01 failed policy-selection gate](joint_opportunity_budget_8630_t0_a01_20261009/REPORT.md) — `FAIL_METHOD`: weak-signal observation plus recovery scored 0.755 versus 0.750 without observation; one candidate and one auditor invocation, no retries. Synthetic only; preserve raw outputs rather than overwriting them with the historical commands.
+
 - [Issue #8630 reserve-binding construction diagnostic](joint_opportunity_budget_8630_reserve_diagnostic_20261009/REPORT.md) — `PASS_DIAGNOSTIC` for an authored exact-arithmetic construction only; A01 remains `FAIL_METHOD`. Preserve existing `run-01` outputs; do not overwrite them when reproducing.
 
 - [Issue #8668 A04 request-bound ACK transitions](phase_dependent_controllability_8668_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`, `SUPPORT_FOR_REQUEST_BOUND_ACK_TRANSITIONS_SCOPED`: 18/18 schedules, 8/8 mutations; host-only finite model, no real backend/GUI claim.
@@ -788,6 +790,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue_8909_cover_diagnosability_a01_20261012/`](issue_8909_cover_diagnosability_a01_20261012/)
 - [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
 - [`joint_opportunity_budget_8630_reserve_diagnostic_20261009/`](joint_opportunity_budget_8630_reserve_diagnostic_20261009/)
+- [`joint_opportunity_budget_8630_t0_a01_20261009/`](joint_opportunity_budget_8630_t0_a01_20261009/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
