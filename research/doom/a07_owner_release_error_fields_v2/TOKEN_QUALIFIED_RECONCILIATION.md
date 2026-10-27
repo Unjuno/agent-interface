@@ -5,3 +5,5 @@ This callable composes the retained error-field-aware owner-release audit with t
 This is not a complete operation-identity audit: the retained owner reconciliation matches by token and key count, not by admission step; terminal cleanup attempts lack independently verified per-admission identity. The precheck considers all admissions and can conservatively hold when unrelated admissions exist. Neither a scoped PASS nor HOLD establishes physical release, task effect, provenance or MAP01 completion. Historical raw and results were not inspected or modified.
 
 Synthetic tests cover cross-cancellation token reuse, missing cleanup error fields and the existing unique-token terminal cleanup fixture. No GUI, input, game or model is used.
+
+The current input-owner v12 emits `intent_token` on the owner-release receipt. For a cancellation with admissions, the qualified callable requires exactly one owner-release receipt whose token matches the admissions; a missing or different token yields `HOLD_OWNER_RELEASE_IDENTITY`. Historical source/schema compatibility is unverified, so missing legacy fields are treated as insufficient evidence, not as an observed unsafe release.
