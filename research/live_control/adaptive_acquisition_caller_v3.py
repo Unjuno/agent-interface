@@ -384,8 +384,9 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
             if metadata_error is not None:
                 raise ValueError("invalid model failure accounting") from error
             raise
-        ended = clock()
-        attempt.update(status="completed", completed_ns=ended,
+        # Preserve the returned call and its accounting before another clock
+        # or journal callback can fail. Missing timing remains explicitly None.
+        attempt.update(status="completed",
                        call_id=result["call_id"], usage=result["usage"],
                        requested_model=result["requested_model"],
                        requested_effort=result["requested_effort"],
@@ -395,6 +396,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
             attempt["thread_id"] = result["thread_id"]
         stages[name] = {"status": "completed", "reason": None}
         model_calls.append({"attempt_id": attempt_id, "stage": name, **result})
+        ended = clock()
+        attempt["completed_ns"] = ended
         phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                        "elapsed_ns": ended-started})
         emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
