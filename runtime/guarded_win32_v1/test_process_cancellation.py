@@ -1,3 +1,4 @@
+import threading
 """Process-level cancellation composition with inert fake input state."""
 import multiprocessing
 import os
@@ -257,6 +258,38 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_busy_helper_lock_does_not_wait_past_transaction_cutoff(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = time.monotonic_ns
+        supervisor._terminate_grace_s = 0.0
+        supervisor._kill_grace_s = 0.0
+        supervisor._poll_interval_s = 0.005
+        lock = threading.Lock()
+        lock.acquire()
+        helper = {"lock": lock, "available": True, "process": None, "connection": None}
+        supervisor._helpers = {"recovery": helper}
+        finished = threading.Event()
+        errors = []
+        def call():
+            try:
+                supervisor._exchange_helper("recovery", {"request_id": "r"},
+                    time.monotonic_ns() + 50_000_000)
+            except BaseException as error:
+                errors.append(error)
+            finally:
+                finished.set()
+        thread = threading.Thread(target=call)
+        thread.start()
+        try:
+            self.assertTrue(finished.wait(1), "helper lock ignored transaction cutoff")
+            self.assertEqual(len(errors), 1)
+            self.assertIsInstance(errors[0], TimeoutError)
+            self.assertTrue(helper["available"])
+        finally:
+            lock.release()
+            thread.join(2)
+        self.assertFalse(thread.is_alive())
+
     def test_helper_startup_and_readiness_failures_prevent_supervisor(self):
         context = multiprocessing.get_context("spawn")
         owner = OperationOwner(clock_ns=time.monotonic_ns,

@@ -289,7 +289,14 @@ class OperationCancellationSupervisor:
         request_id = request["request_id"]
         cutoff_ns = deadline_ns - int(
             (self._terminate_grace_s + self._kill_grace_s) * 1_000_000_000)
-        with helper["lock"]:
+        # Waiting for another request must not consume the cleanup reserve.
+        remaining_s = min((cutoff_ns - self._clock_ns()) / 1_000_000_000,
+                          threading.TIMEOUT_MAX)
+        if remaining_s <= 0 or not helper["lock"].acquire(timeout=remaining_s):
+            raise TimeoutError("helper lock unavailable before cutoff")
+        try:
+            if self._clock_ns() >= cutoff_ns:
+                raise TimeoutError("helper lock acquired after cutoff")
             try:
                 if (not helper["available"] or not process.is_alive()
                         or self._process_identity_reader(process) != helper["identity"]):
@@ -324,6 +331,8 @@ class OperationCancellationSupervisor:
                 helper["available"] = False
                 self._retire_process(process, deadline_ns)
                 raise
+        finally:
+            helper["lock"].release()
 
     def _invalidate_helper(self, name, deadline_ns):
         helper = self._helpers[name]
