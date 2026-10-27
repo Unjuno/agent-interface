@@ -128,8 +128,11 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         verified_release = identity_valid and custody_verified
         outer_delivery = retrieved_action.get("input_dispatched")
         inner_delivery = action_result.get("input_dispatched")
-        delivery_conflict = (type(outer_delivery) is bool
-            and type(inner_delivery) is bool and outer_delivery is not inner_delivery)
+        delivery_conflict = (
+            any(value is not None and type(value) is not bool
+                for value in (outer_delivery, inner_delivery))
+            or (type(outer_delivery) is bool and type(inner_delivery) is bool
+                and outer_delivery is not inner_delivery))
         terminal = {"status": ("uncertain" if delivery_conflict
                 else "completed" if verified_release and completed
                 else "delivery_uncertain" if verified_release and recovered
