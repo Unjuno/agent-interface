@@ -40,3 +40,7 @@ The pure mapper and four tests are added. Historical save/confirm receipts are r
 ## Task 2 partial composition (2026-10-27)
 
 A fail-closed terminal bridge and one composed interruption test now join the saved Calc receipt projection to the actual caller/core using an inert form-shaped graph. A returned stage receipt alone never supplies core completion or input authority; the test retains its projection in memory and proves one attempted action, no second action, uncertain delivery, no outer verification, and no completed core transition. This is not a Calc graph, durable receipt sink, live adapter, or a fresh observation. Existing 14 caller/core tests plus two bridge tests pass normally and under optimized Python. Changed/unknown Calc target composition and independent persisted-workbook scoring remain open.
+
+## Task 2 receipt sink and stale-target check (2026-10-27)
+
+A composed stage wrapper calls the supplied runner once, then sends a detached original receipt and projection to a supplied sink before returning a fail-closed core terminal. A stale admission prevents the stage call; a sink exception is propagated without retry and the caller returns CALLER_FAILED with uncertain delivery. The failure path has no returned core receipt and a failed sink does not prove durability; a stronger recovery/persistence design remains needed. Twenty synthetic caller/core/bridge tests pass normally and with `-O`. This is still an inert graph, not a Calc live adapter, fresh UI observation, or independent workbook score.
