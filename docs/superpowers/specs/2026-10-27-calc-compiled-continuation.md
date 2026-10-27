@@ -20,3 +20,7 @@ Build and test a pure mapping of a **single completed socket stage receipt** int
 - `research/live_control/results/calc-table-live-01/{save,confirm}/receipt.json` record the two focus-change cases above. These are immutable historical inputs, not fresh allocations.
 - `runtime/core_v1/compiled_gui.py` validates and executes a bounded graph with fresh admission and effect checks; `research/live_control/integrated_efficiency_compiled_execution_v2.py` joins it to caller v3.
 - #57 retains one Chromium sequence per arm and identifies a plan/preregistration decision-rule mismatch. Do not call a synthetic Calc fixture a second-domain live comparison, a token result, or proof of release.
+
+## Correction: existing #3311 live compiled path
+
+The initial evidence search missed the [G01–G10 archive](../../../research/integration/calc_current_shared_3311_4d74_20261004/README.md). G10 retains a positive fixed-geometry/font Calc/OCR compiled path with guarded input and independently scored saved XML; G08 retains a held-out recognition failure. These are not matched economic comparisons. The modal two-cell seam in this spec is a separate offline workflow and does not replace that path. See the [G10 crosswalk](../../../research/integration/calc_g10_current_main_crosswalk_20261027.md) before adding or selecting a live adapter.

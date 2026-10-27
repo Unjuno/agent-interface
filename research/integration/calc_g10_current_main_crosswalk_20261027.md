@@ -1,0 +1,27 @@
+# Calc G10 and current-main integration crosswalk (2026-10-27)
+
+The earlier #57 search and two-cell/modal integration plan overlooked the archived #3311 Calc G01–G10 constructions. Current main contains the [literal-copy evidence package](calc_current_shared_3311_4d74_20261004/README.md). Historical statements inside individual reports that delivery was pending describe the time of those reports; their files are now present on main. Preserve those original statements.
+
+## Existing evidence and distinct scopes
+
+- [G03](calc_current_shared_3311_4d74_20261004/calc-guarded-integration-4d74/REPORT.md) records guarded input, stale pixel-reference refusal before emission, explicit repair and later reuse. One construction sequence; primary context/token usage unknown.
+- [G08](calc_current_shared_3311_4d74_20261004/calc-compiled-digits-4d74/REPORT.md) records a held-out digit-recognition failure and censored second action. Do not retrain on or relabel that first outcome.
+- [G10](calc_current_shared_3311_4d74_20261004/calc-compiled-ocrlive-4d74/REPORT.md) records two guarded Calc saves, three capture-time-bound graph observations, OCR of two rows and independent saved-XML scoring, under fixed geometry and font. Primary usage remains unknown; no same-model matched economic comparison follows. Source labels include inherited G09 wording, as its report explains.
+- The newer `calc_compiled_method_v1.py` graph represents a different two-cell and modal-save workflow; its tests use supplied synthetic observations and targets. It neither replaces G10 nor proves an integrated live adapter.
+
+## Pinned implementation versus current main
+
+At current main as of this crosswalk, SHA-256 of the archived G10 source blob and current path was compared directly, without executing either or touching a live runtime:
+
+| Source | Archived SHA-256 | Current SHA-256 | Match |
+|---|---|---|---|
+| `runtime/core_v1/compiled_gui.py` | `d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014` | `a00ca311ce80a9cc691f25b24569f95715f6051991b59578861f8d5b9b48d68f` | no |
+| `runtime/guarded_x11_v1/bridge.py` | `0a0675709f2f2e7210ba92fb657c61e860ac1fef2126ef4006bf88699d556e71` | `153a65bd450b4903449f882bf1821f36c23578536db50e6c87c9aed87cfc4910` | no |
+| `runtime/guarded_x11_v1/handles.py` | `b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7` | `b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7` | yes |
+| `runtime/backends/x11_v1/backend.py` | `6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db` | `7218eb2a2f80b7a09fcf355b718d97fb2c31b372346f014a334e948f132cac11` | no |
+
+Seven G10 packet files (`compiled_ocr.py`, `effect_predicate.py`, `ocr_reader.py`, `saved_oracle.py`, `AUDIT.json`, `PLAN.json`, `REPORT.md`) match the sizes and hashes in `FILES.json`; this is not a complete package or raw-frame audit.
+
+## Next integration decision
+
+Compare the archived G10 guarded bridge, semantic recognizer and source-capture clock contract against current-main interfaces and the chosen task, including stale/unknown, releases and bounded recovery. Select and test a reproducible adapter based on existing qualified code when applicable. Then prospectively freeze the matched same-model cold/warm/invalidation/repair comparison, its all-attempt model/OCR/native costs and independent effects. A fixed offline method graph and an archived positive do not alone satisfy that comparison. No existing allocation or historical auditor is rerun by this crosswalk.
