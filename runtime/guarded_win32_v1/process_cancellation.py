@@ -371,13 +371,17 @@ class OperationCancellationSupervisor:
         This transaction is deliberately separate from the source action owner:
         a successful release does not rewrite that action's UNKNOWN result.
         """
+        if type(obligations) not in (list, tuple):
+            raise ValueError("orphan recovery request schema mismatch")
+        # Validate and dispatch the same immutable caller-supplied snapshot.
+        obligations = tuple(obligations)
         if (type(operation_id) is not str or len(operation_id) != 32
                 or any(char not in "0123456789abcdef" for char in operation_id)
                 or type(generation) is not str or len(generation) != 64
                 or any(char not in "0123456789abcdef" for char in generation)
                 or type(recovery_id) is not str or len(recovery_id) != 32
                 or any(char not in "0123456789abcdef" for char in recovery_id)
-                or type(deadline_ns) is not int or type(obligations) not in (list, tuple)
+                or type(deadline_ns) is not int
                 or not obligations
                 or any(type(item) is not str or not item for item in obligations)
                 or len(set(obligations)) != len(obligations)):
