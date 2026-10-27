@@ -57,6 +57,9 @@ class InputState:
     def WindowFromPoint(self, point):
         return 200
 
+    def GetForegroundWindow(self):
+        return 1
+
     def GetAncestor(self, hwnd, flags):
         return 1
 

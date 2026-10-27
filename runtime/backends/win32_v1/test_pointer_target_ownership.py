@@ -26,6 +26,9 @@ class CursorOwnerAPI:
         self.window_from_point_calls.append((point.x, point.y))
         return 999
 
+    def GetForegroundWindow(self):
+        return 100
+
     def GetAncestor(self, hwnd, flags):
         return self.root_hwnd
 
