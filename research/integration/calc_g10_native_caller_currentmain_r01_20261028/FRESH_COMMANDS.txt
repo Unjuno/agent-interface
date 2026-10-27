@@ -1,0 +1,5 @@
+$env:TEMP='D:\CodexData\Temp\agent-interface-test-tmp-r01'
+$env:TMP='D:\CodexData\Temp\agent-interface-test-tmp-r01'
+$env:PYTHONDONTWRITEBYTECODE='1'
+python -m unittest research.integration.test_calc_g10_native_caller_composition_v1
+python -O -m unittest research.integration.test_calc_g10_native_caller_composition_v1
