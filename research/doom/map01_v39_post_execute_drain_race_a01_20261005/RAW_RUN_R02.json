@@ -1,0 +1,79 @@
+{
+  "records_at_bridge_drain": 0,
+  "release_rows_at_bridge_drain": 0,
+  "bridge_held_at_drain": [
+    "F8"
+  ],
+  "state_seen_by_release_all": {
+    "owner_id": "f00b32744589407395b902f59e7d58ab",
+    "revision": 2,
+    "sample_started_ns": 163729857140348,
+    "sample_finished_ns": 163729857142598,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "physical_pointer_mask": 0,
+    "pointer": [
+      0,
+      0
+    ],
+    "focus": 42,
+    "active_lease_deadline_ns": null,
+    "active_lease_time_valid": false,
+    "cancel_requested": false
+  },
+  "held_seen_by_release_all": [
+    "F8"
+  ],
+  "owner_ops_before_release_all_state": [
+    "down",
+    "input_state"
+  ],
+  "event_names": [
+    "accepted",
+    "step_started",
+    "input_admission",
+    "terminal"
+  ],
+  "terminal_event": {
+    "event": "terminal",
+    "id": "execute-exit-race",
+    "status": "expired",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "verified": true
+    },
+    "terminal_ns": 163729857178849,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "release_rows_published": 0,
+  "terminal_status": "expired",
+  "terminal_release_verified": true,
+  "owner_cleanup_reasons": [
+    "expired"
+  ],
+  "owner_cleanup_release_rows": 1,
+  "owner_keys_after_terminal": [],
+  "state_after_terminal": {
+    "owner_id": "f00b32744589407395b902f59e7d58ab",
+    "revision": 2,
+    "sample_started_ns": 163729857268766,
+    "sample_finished_ns": 163729857272974,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "physical_pointer_mask": 0,
+    "pointer": [
+      0,
+      0
+    ],
+    "focus": 42,
+    "active_lease_deadline_ns": null,
+    "active_lease_time_valid": false,
+    "cancel_requested": false
+  },
+  "fake_physical_keys_after_terminal": [],
+  "bridge_held_after_terminal": [
+    "F8"
+  ],
+  "cleanup_record_cursor": 0
+}
