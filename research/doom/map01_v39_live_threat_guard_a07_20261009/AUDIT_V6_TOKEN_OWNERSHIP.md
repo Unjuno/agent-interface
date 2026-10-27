@@ -1,0 +1,5 @@
+# A07 v6 token ownership reconciliation
+
+V6 retains the v5 explicit-transition and strict-timestamp checks and adds the token ownership precheck. If its token ownership is ambiguous, an otherwise passing reconciliation becomes HOLD; an independently failed custody check remains FAIL. `formal_pass` remains false. Missing token ownership is insufficient evidence, not proof of unsafe input.
+
+Use only an explicit copied evidence directory; v6 writes a new `AUDIT_V6.json` exclusively and does not replace earlier results. The precheck examines all admission events, including events without a matching cancellation, and conservatively holds on those. Like v5, this auditor requires explicit matching release transitions; it does not reconcile the separate terminal owner-cleanup path. No historical raw data or live GUI, model, game, or input was used to construct this successor. PASS is limited to these synthetic scoped checks and cannot establish physical release, provenance, task effect or MAP01 completion.
