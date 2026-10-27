@@ -105,7 +105,8 @@ class ExplicitUpLedgerTests(unittest.TestCase):
                           'emissions': obj.emissions}, sort_keys=True))
 
     def dispatch(self, obj, case, ops):
-        if any(op.get('op') == 'pointer_button' and op.get('down') is True
+        if any((op.get('op') in {'key_chord', 'text', 'scroll'} or
+                (op.get('op') in {'pointer_button', 'key_state'} and op.get('down') is True))
                for op in ops):
             obj.targets = {'fixture': 1}
             obj.focus = lambda target: setattr(obj, 'focused_target', target)
@@ -191,6 +192,10 @@ class ExplicitUpLedgerTests(unittest.TestCase):
         session = Win32RuntimeSession(obj)
 
         def dispatch(pid, ops):
+            if any(op.get('op') in {'key_state', 'key_chord', 'text'} for op in ops):
+                obj.targets = {'fixture': 1}
+                obj.focus = lambda target: setattr(obj, 'focused_target', target)
+                ops = [{'op': 'focus', 'target': 'fixture'}, *ops]
             program = {'schema': SCHEMA_PROGRAM, 'program_id': pid,
                        'source': {'observation_seq': 7, 'binding_revision': 3},
                        'authority': {'lease_id': 'ordinary-explicit-up', 'expires_at_ns': 100},

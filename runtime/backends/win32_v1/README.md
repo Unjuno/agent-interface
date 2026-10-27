@@ -29,3 +29,7 @@ not establish a physical release-time bound or global input neutrality. The low
 bit is unreliable, so its absence is not an availability witness. See the
 [Microsoft API contract](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getasynckeystate)
 and [current-main consolidation controls](../../../research/integration/win32_custody_convergence_20261016/README.md).
+
+## Target requirement for new input
+
+Win32 preflight requires a prior `focus` operation or an explicitly bound target before key-down, chord, text, scroll, or pointer-button down. Programs that previously relied on whichever window happened to be foreground must name a target. Explicit UP and `release_all` remain available without a target for recovery. Foreground checks and OS input insertion are not atomic; this rule does not prove application delivery or physical release.
