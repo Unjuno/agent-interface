@@ -1,0 +1,11 @@
+Harness-development stop 01 (not a scientific result)
+
+Command:
+  python -m py_compile research/doom/v39_preacceptance_stale_replan_a01_20261008/run.py research/doom/v39_preacceptance_stale_replan_a01_20261008/verify.py
+  python research/doom/v39_preacceptance_stale_replan_a01_20261008/run.py
+
+The syntax compile succeeded. The runner stopped while importing the exact `doom_typed_observation_v1.py` source because the partial checkout had not materialized its `action_validity_admission_v1.py` dependency:
+
+  ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+No candidate case completed. The missing current-main dependency was added to the sparse checkout; no production source was edited.

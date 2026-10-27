@@ -1,0 +1,7 @@
+# PR #8501 stale-replan evidence: A02 name collision
+
+PR #8501 (`f5e480d5ecb2d3282a4cfc85461aafd5898fbde5`) contains two source-bound synthetic candidate-composition records. They are preserved, byte for byte, at `v39_preacceptance_stale_replan_pr8501_a01_20261008/` and `v39_preacceptance_stale_replan_pr8501_a02_20261008/`. The original PR used paths without `pr8501_`; those paths in historical README commands refer to the original branch and must not be used to overwrite or reinterpret the current main package.
+
+The existing main directory `v39_preacceptance_stale_replan_a02_20261008/` is a separate A02: its freeze identifies main `437db9f8c8e77e3ad38a61c2e6a42f5cdb06fcb2` and production `execute_segment` rejection analysis. The PR #8501 A02 freezes main `2a9052efdd155b8cdc173d216a969ea5f64a1ce9` and covers a typed-observation-then-full-frame producer schedule. Their shared old directory label is not evidence they are the same experiment. Preserve both results and their source identities.
+
+All 10 A01 and 12 A02 original PR files match their original Git blobs; their original SHA-256 manifests verify 9/9 and 11/11 entries respectively. The scripts were not rerun. Relocation retains the original bytes, including reproduction instructions that name the original branch paths; those instructions are historical and are not validated for these archive paths. Neither result is a production fix, live recovery, physical release or task-effect evidence.
