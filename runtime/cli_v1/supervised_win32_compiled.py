@@ -71,6 +71,14 @@ def _capture_ns(report):
 def _terminal(reply, action_name, *, expected_call_id=None,
               expected_generation=None):
     row = _raw_report(reply)
+    if ("action" in row
+            and all(key in row for key in ("status", "action_id", "effect_ref", "release"))):
+        # Ambiguous envelopes must not let a direct terminal bypass the
+        # exact-call and generation checks on a retrieved action.
+        return {"status": "uncertain", "action_id": "ambiguous-interface-result",
+            "effect_ref": "standard-win32-" + action_name,
+            "release": {"verified": False, "keys_down": ["unknown"],
+                "buttons_down": ["unknown"]}}
     if (type(row.get("status")) is str
             and type(row.get("action_id")) is str
             and type(row.get("effect_ref")) is str
