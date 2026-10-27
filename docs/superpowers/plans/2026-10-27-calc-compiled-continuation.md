@@ -68,3 +68,7 @@ A bounded three-action graph now expresses enter, save-dialog and confirmation u
 ## Final selected target binding (2026-10-27)
 
 The Calc graph factory now builds from the caller-provided final target mapping. An actual v3 caller/core synthetic test replaces the cached target during final revalidation and checks that the three new references reach the respective admissions; missing, malformed, and duplicate references are rejected. Thirty-five selected offline tests pass normally and under `-O`. This only carries selected references into core; a live adapter must independently establish scope, target identity, freshness and per-action authorization. It does not generate planner methods, observe Calc, or prove live task success.
+
+## Existing G10 route correction (2026-10-27)
+
+The earlier search missed the preserved #3311 G10 compiled/OCR live construction. Before new live adapter work, evaluate whether that qualified fixed-layout path can be integrated into the same-model comparison and reconcile its pinned implementation with current main. Do not replace its already retained evidence with the newer two-cell synthetic graph, or infer a token/latency result from G10. See `research/integration/calc_g10_current_main_crosswalk_20261027.md`; a same-model comparison and any current-main compatibility verification remain open.
