@@ -14,6 +14,7 @@ class Win32RuntimeSession:
         self.recovery_required = False
         self._state_lock = threading.Lock()
         self._dispatch_inflight = False
+        self._recovery_inflight = False
         self._recovery_requested_during_dispatch = False
 
     def _record_release(self, releases):
@@ -39,30 +40,35 @@ class Win32RuntimeSession:
             if self._dispatch_inflight:
                 self.recovery_required = True
                 self._recovery_requested_during_dispatch = True
-                return {
-                    "status": "pending",
-                    "error": "INPUT_PRODUCER_UNRESOLVED",
-                    "release_attempted": False,
-                    "recovery_required": True,
-                    "task_success": None,
-                    "replay_allowed": False,
-                }
-            recovery_required = self.recovery_required
-        if not recovery_required:
-            return {"status": "refused", "error": "INPUT_RECOVERY_NOT_REQUIRED",
-                    "release_attempted": False, "recovery_required": False}
+                return {"status": "pending", "error": "INPUT_PRODUCER_UNRESOLVED",
+                        "release_attempted": False, "recovery_required": True,
+                        "task_success": None, "replay_allowed": False}
+            if self._recovery_inflight:
+                return {"status": "pending", "error": "INPUT_RECOVERY_IN_PROGRESS",
+                        "release_attempted": False, "recovery_required": True,
+                        "task_success": None, "replay_allowed": False}
+            if not self.recovery_required:
+                return {"status": "refused", "error": "INPUT_RECOVERY_NOT_REQUIRED",
+                        "release_attempted": False, "recovery_required": False}
+            self._recovery_inflight = True
         try:
-            release = self.backend.release_all()
-        except Exception as error:
-            return {"status": "recovery_failed", "error": repr(error),
-                    "release_attempted": True, "recovery_required": True}
-        verified = self._record_release([release])
-        if verified:
-            self.recovery_required = False
-        return {"status": "input_recovered" if verified else "recovery_failed",
-                "release_attempted": True, "release": release,
-                "recovery_required": self.recovery_required,
-                "task_success": None, "replay_allowed": False}
+            try:
+                release = self.backend.release_all()
+            except Exception as error:
+                return {"status": "recovery_failed", "error": repr(error),
+                        "release_attempted": True, "recovery_required": True}
+            verified = self._record_release([release])
+            with self._state_lock:
+                if verified:
+                    self.recovery_required = False
+                required = self.recovery_required
+            return {"status": "input_recovered" if verified else "recovery_failed",
+                    "release_attempted": True, "release": release,
+                    "recovery_required": required,
+                    "task_success": None, "replay_allowed": False}
+        finally:
+            with self._state_lock:
+                self._recovery_inflight = False
 
     def dispatch(
         self,
@@ -73,6 +79,11 @@ class Win32RuntimeSession:
         now_ns: int | None = None,
     ) -> dict[str, Any]:
         with self._state_lock:
+            if self._recovery_inflight:
+                return {"status": "pending", "error": "INPUT_RECOVERY_IN_PROGRESS",
+                        "release_attempted": False, "input_dispatched": False,
+                        "recovery_required": True, "task_success": None,
+                        "replay_allowed": False}
             if self._dispatch_inflight:
                 self.recovery_required = True
                 self._recovery_requested_during_dispatch = True
