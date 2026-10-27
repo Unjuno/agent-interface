@@ -210,7 +210,7 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
             or row.get("release_batch_complete") is not True):
             integrity.append("incomplete_release_batch")
             continue
-        release_batches[(identity[0],identity[1],identity[2],batch_id)].append((size,position))
+        release_batches[(identity[0],identity[1],identity[2],batch_id,batch_step)].append((size,position))
     for members in release_batches.values():
         sizes={size for size,_ in members}
         positions=[position for _,position in members]
