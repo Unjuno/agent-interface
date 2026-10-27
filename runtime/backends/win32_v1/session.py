@@ -20,6 +20,7 @@ class Win32RuntimeSession:
         verified = isinstance(releases, list) and bool(releases) and all(
             isinstance(row, dict) and row.get("verified") is True
             and row.get("keys_down") == [] and row.get("buttons_down") == []
+            and row.get("keys_unknown") == [] and row.get("buttons_unknown") == []
             for row in releases
         )
         with self._state_lock:

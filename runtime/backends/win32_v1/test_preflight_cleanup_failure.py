@@ -28,7 +28,7 @@ class PreflightCleanupFailureTests(unittest.TestCase):
         again=session.dispatch(program,current_observation_seq=1,current_binding_revision=1,now_ns=1)
         self.assertEqual(again["error"],"INPUT_RECOVERY_REQUIRED")
         self.assertFalse(again["input_dispatched"])
-        b.release_all=lambda: {"verified":True,"keys_down":[],"buttons_down":[]}
+        b.release_all=lambda: {"verified":True,"keys_down":[],"buttons_down":[],"keys_unknown":[],"buttons_unknown":[]}
         recovered=session.recover_input()
         self.assertEqual(recovered["status"],"input_recovered")
         self.assertFalse(recovered["replay_allowed"])

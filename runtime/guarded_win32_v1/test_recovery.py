@@ -12,7 +12,7 @@ class Cases(unittest.TestCase):
   calls=[];s=self.fixture(lambda:calls.append('release'));r=s.recover_input();self.assertEqual(r['error'],'INPUT_RECOVERY_NOT_REQUIRED');self.assertEqual(calls,[])
  def test_verified_once_invalidates_pending(self):
   calls=[]
-  def release():calls.append('release');return {'verified':True,'keys_down':[],'buttons_down':[]}
+  def release():calls.append('release');return {'verified':True,'keys_down':[],'buttons_down':[],'keys_unknown':[],'buttons_unknown':[]}
   s=self.fixture(release);s.session.recovery_required=True;s.permits['old']={'unused':True};r=s.recover_input()
   self.assertEqual(calls,['release']);self.assertEqual(r['status'],'input_recovered');self.assertIsNone(r['task_success']);self.assertFalse(r['replay_allowed']);self.assertFalse(s.session.recovery_required);self.assertEqual(s.execute('old')['error'],'AUTHORIZATION_CONSUMED_OR_UNKNOWN')
  def test_unverified_stays_quarantined(self):
@@ -28,7 +28,7 @@ class Cases(unittest.TestCase):
   def release():
    calls.append('release');entered.set()
    if not finish.wait(5):raise RuntimeError('test release barrier expired')
-   return {'verified':True,'keys_down':[],'buttons_down':[]}
+   return {'verified':True,'keys_down':[],'buttons_down':[],'keys_unknown':[],'buttons_unknown':[]}
   s=self.fixture(release);s.session.recovery_required=True
   worker=threading.Thread(target=lambda:results.append(s.recover_input()))
   worker.start()

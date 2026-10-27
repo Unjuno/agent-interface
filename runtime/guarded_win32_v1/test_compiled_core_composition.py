@@ -60,7 +60,7 @@ class CompiledCoreCompositionTests(unittest.TestCase):
 
         def release():
             events.append(['release'])
-            return {'verified': True, 'keys_down': [], 'buttons_down': []}
+            return {'verified': True, 'keys_down': [], 'buttons_down': [], 'keys_unknown': [], 'buttons_unknown': []}
 
         backend.release_all = release
         self.image_dir = tempfile.TemporaryDirectory()

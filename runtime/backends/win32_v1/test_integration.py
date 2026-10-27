@@ -456,7 +456,7 @@ class Win32SessionRecoveryTests(unittest.TestCase):
     def test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch(self):
         backend = self.backend()
         session = Win32RuntimeSession(backend)
-        receipt = {"verified": True, "keys_down": [], "buttons_down": []}
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}
 
         def fail_after_verified_cleanup(program):
             raise Win32ExecutionError(Win32BackendError("injected operation failure"), receipt, None)
@@ -492,7 +492,7 @@ class Win32SessionRecoveryTests(unittest.TestCase):
         self.assertFalse(refused["recovery_required"])
         self.assertFalse(session.recovery_required)
 
-        receipt = {"verified": True, "keys_down": [], "buttons_down": []}
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}
         backend.preflight = lambda program: None
         backend.execute = lambda program: {"releases": [receipt]}
         self.assertEqual(self.dispatch(session, "dispatch-after-preflight-refusal")["status"], "completed")
