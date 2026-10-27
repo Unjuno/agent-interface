@@ -402,15 +402,21 @@ old action to safe completion. A source-pinned counterexample now drives the
 current owner through successful point-in-time recovery, injects a delayed
 fake DOWN, and records that a distinct generation is admitted while that fake
 input remains down ([packet](../../research/integration/win32_delayed_input_quarantine_20261028/README.md)).
-This demonstrates the missing quarantine in the current synthetic state
-contract; it is not a real Windows delivery trace. A follow-up must inject a
-delayed DOWN after
-recovery readback, preserve the original action as UNKNOWN with task success
-unset and replay denied while that event is possible, and exercise a distinct
-fresh target as a separate attempt. Any finite horizon must be declared and
-independently sampled before it can support a bounded claim; a fake clock or
-immediate observer cannot establish a native Windows horizon. Do not change
-the default route or claim MAP01/physical release from this checkpoint.
+This demonstrates the missing quarantine in the current-main synthetic state
+contract; it is not a real Windows delivery trace. A branch candidate now
+adds an explicit `supervised_win32_late_input_horizon_ns` setting. While the
+configured horizon is sampled, the operation remains pending and blocks new
+admission; a delayed fake DOWN makes it UNKNOWN, while a clear 100 ms fake
+window completes recovery after repeated neutral observations. The public
+route verifies that the requested horizon was actually installed, and the
+cleanup deadline includes the horizon plus its recovery budget. Normal and
+optimized focused suites each pass 135 tests; exact commands, output, and
+source hashes are in the [retained candidate packet](../../research/integration/win32_late_input_horizon_20261028/README.md).
+The setting defaults to zero and has not been qualified against native Windows
+input. Sampled neutrality does not prove continuous neutrality between
+samples; no finite horizon is supported yet by independent Windows evidence.
+Do not change the default route or claim MAP01/physical release from this
+checkpoint.
 
 This local recheck neither repaired/restarted Docker nor used WSLc. Docker
 Desktop's daemon still reports `Docker Desktop is unable to start`; WSLc remains

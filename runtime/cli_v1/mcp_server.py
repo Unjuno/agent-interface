@@ -20,6 +20,7 @@ import anyio
 from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
+from runtime.guarded_win32_v1.process_cancellation import MAX_LATE_INPUT_HORIZON_NS
 from .api import dispatch
 from .mcp_session import MCPSessionOwner
 from .attempt import _write_json
@@ -332,12 +333,18 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _supervised_win32_owner_factory=None,
                   _supervised_win32_producer_factory=None,
                   _supervised_win32_task_oracle=None,
-                  supervised_win32_task_oracle=None):
+                  supervised_win32_task_oracle=None,
+                  supervised_win32_late_input_horizon_ns=0):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11",
                             "guarded-win32", "supervised-win32"):
         raise ValueError("unknown session mode")
     guarded_win32 = session_mode == 'guarded-win32'
     supervised_win32 = session_mode == 'supervised-win32'
+    if (type(supervised_win32_late_input_horizon_ns) is not int
+            or not (0 <= supervised_win32_late_input_horizon_ns
+                    <= MAX_LATE_INPUT_HORIZON_NS)
+            or (supervised_win32_late_input_horizon_ns and not supervised_win32)):
+        raise ValueError('late-input horizon must be a nonnegative integer for supervised-win32')
     if (_supervised_win32_task_oracle is not None
             and supervised_win32_task_oracle is not None):
         raise ValueError('configure only one supervised Win32 task oracle')
@@ -461,7 +468,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         else:
             from .win32_supervisor_helpers import create_native_win32_components
             owner, supervised_win32_producer_factory = create_native_win32_components(
-                deepcopy(targets), producer_root)
+                deepcopy(targets), producer_root,
+                late_input_horizon_ns=supervised_win32_late_input_horizon_ns)
+        if supervised_win32_late_input_horizon_ns:
+            supervisor = getattr(owner, '_supervisor', None)
+            if getattr(supervisor, 'late_input_horizon_ns', None) != supervised_win32_late_input_horizon_ns:
+                raise ValueError('supervised Win32 owner did not install the requested late-input horizon')
         required = ('bind_target_generation', 'admit_standard_action',
                     'start_producer', 'complete_exited_action', 'cancel_guarded',
                     'interface_result', 'list_results', 'close')

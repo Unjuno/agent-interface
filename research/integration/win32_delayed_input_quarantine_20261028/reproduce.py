@@ -7,10 +7,10 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+import types
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
-from runtime.guarded_win32_v1.operation_owner import OperationOwner
 
 
 SOURCE_COMMIT = "52df8e2d934bd8b20d4d36da8a7f17a524c49210"
@@ -38,6 +38,9 @@ def main() -> None:
     source_sha = hashlib.sha256(source).hexdigest()
     if source_sha != EXPECTED_SOURCE_SHA256:
         raise RuntimeError("pinned current-main operation-owner source changed")
+    pinned_module = types.ModuleType("pinned_current_main_operation_owner")
+    exec(compile(source, SOURCE_PATH, "exec"), pinned_module.__dict__)
+    OperationOwner = pinned_module.OperationOwner
 
     process = FakeProcess()
     identity = {"pid": process.pid, "creation_time_100ns": 91301}

@@ -97,6 +97,14 @@ class OperationOwner:
                 "recovery_completed_perf_counter_ns": None,
                 "cleanup_latency_perf_counter_ns": None,
                 "recovery_id": None,
+                "late_input_horizon_ns": 0,
+                "late_input_max_sample_gap_ns": None,
+                "late_input_observation_count": 0,
+                "late_input_release_received_ns": None,
+                "late_input_observation_start_ns": None,
+                "late_input_observation_end_ns": None,
+                "late_input_max_observed_gap_ns": None,
+                "late_input_validation_error": None,
                 "release_confirmed": False,
                 "completion_release_receipt": None,
                 "completion_readback": None,
@@ -424,7 +432,17 @@ class OperationOwner:
             }
 
     def recovery_completed(self, operation_id, target_generation, recovery_id,
-                           *, release_accepted, readback):
+                           *, release_accepted, readback,
+                           release_received_ns=None, late_input_horizon_ns=0,
+                           late_input_max_sample_gap_ns=None,
+                           horizon_observations=None):
+        if (type(late_input_horizon_ns) is not int
+                or late_input_horizon_ns < 0):
+            raise OwnerRefused("late input horizon must be a nonnegative integer")
+        if horizon_observations is None:
+            horizon_observations = [readback]
+        if type(horizon_observations) not in (list, tuple):
+            raise OwnerRefused("late input horizon observations must be a sequence")
         with self._lock:
             record = self._matching(operation_id, target_generation)
             if (record["status"] != "recovery_pending"
@@ -437,15 +455,67 @@ class OperationOwner:
                 and readback.get("recovery_id") == recovery_id
                 and readback.get("neutral") is True
             )
+            observation_ns = []
+            gaps = []
+            valid_horizon = True
+            horizon_error = None
+            if late_input_horizon_ns:
+                for observation in horizon_observations:
+                    if (type(observation) is not dict
+                            or observation.get("operation_id") != operation_id
+                            or observation.get("target_generation") != target_generation
+                            or observation.get("recovery_id") != recovery_id
+                            or observation.get("neutral") is not True
+                            or type(observation.get("observed_monotonic_ns")) is not int):
+                        valid_horizon = False
+                        horizon_error = "observation_identity_or_state_invalid"
+                        break
+                    observation_ns.append(observation["observed_monotonic_ns"])
+                gaps = [right - left for left, right
+                        in zip(observation_ns, observation_ns[1:])]
+                if horizon_error is None and not observation_ns:
+                    horizon_error = "no_horizon_observations"
+                elif horizon_error is None and len(observation_ns) < 2:
+                    horizon_error = "insufficient_horizon_observations"
+                elif horizon_error is None and any(right < left for left, right
+                                                   in zip(observation_ns, observation_ns[1:])):
+                    horizon_error = "observation_times_not_monotonic"
+                elif (horizon_error is None
+                        and (type(late_input_max_sample_gap_ns) is not int
+                             or late_input_max_sample_gap_ns <= 0)):
+                    horizon_error = "invalid_max_sample_gap"
+                elif (horizon_error is None
+                        and any(gap > late_input_max_sample_gap_ns for gap in gaps)):
+                    horizon_error = "observation_gap_exceeded"
+                elif horizon_error is None and readback != horizon_observations[-1]:
+                    horizon_error = "terminal_readback_not_last_horizon_sample"
+                elif (horizon_error is None
+                        and (type(release_received_ns) is not int
+                             or observation_ns[0] < release_received_ns)):
+                    horizon_error = "observation_before_release_receipt"
+                elif (horizon_error is None
+                        and observation_ns[-1] - release_received_ns < late_input_horizon_ns):
+                    horizon_error = "horizon_duration_not_covered"
+                if horizon_error is not None:
+                    valid_horizon = False
             completed_ns = self._clock_ns()
             completed_perf_ns = self._perf_counter_ns()
             confirmed = (
                 release_accepted is True
                 and valid_readback
+                and valid_horizon
                 and completed_ns < record["cleanup_deadline_ns"]
             )
             record["status"] = "recovered" if confirmed else "unknown"
             record["release_confirmed"] = bool(confirmed)
+            record["late_input_horizon_ns"] = late_input_horizon_ns
+            record["late_input_max_sample_gap_ns"] = late_input_max_sample_gap_ns
+            record["late_input_observation_count"] = len(observation_ns)
+            record["late_input_release_received_ns"] = release_received_ns
+            record["late_input_observation_start_ns"] = observation_ns[0] if observation_ns else None
+            record["late_input_observation_end_ns"] = observation_ns[-1] if observation_ns else None
+            record["late_input_max_observed_gap_ns"] = max(gaps) if gaps else None
+            record["late_input_validation_error"] = horizon_error
             if confirmed:
                 record["recovery_completed_monotonic_ns"] = completed_ns
                 record["cleanup_latency_ns"] = (
@@ -455,7 +525,14 @@ class OperationOwner:
                     completed_perf_ns
                     - record["cleanup_requested_perf_counter_ns"])
             else:
-                record["uncertainty"] = "recovery_or_neutral_readback_unconfirmed"
+                if release_accepted is not True:
+                    record["uncertainty"] = "recovery_release_unconfirmed"
+                elif not valid_readback:
+                    record["uncertainty"] = "recovery_neutral_readback_unconfirmed"
+                elif not valid_horizon:
+                    record["uncertainty"] = "late_input_horizon_unconfirmed"
+                else:
+                    record["uncertainty"] = "recovery_deadline_expired"
             return bool(confirmed)
 
     def result(self, operation_id):

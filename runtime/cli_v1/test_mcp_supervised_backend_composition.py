@@ -69,6 +69,30 @@ class BlockedProducerFactory:
         raise AssertionError("cancelled producer must not yield a completion receipt")
 
 
+class ConfiguredSupervisorStub:
+    def __init__(self, late_input_horizon_ns):
+        self.late_input_horizon_ns = late_input_horizon_ns
+        self.closed = False
+
+    def producer_started(self, *_args, **_kwargs):
+        return True
+
+    def cancel(self, *_args, **_kwargs):
+        return {"status": "unknown", "release_confirmed": False,
+                "task_success": None, "replay_allowed": False}
+
+    def close(self):
+        self.closed = True
+
+
+class UnusedProducerFactory:
+    def __call__(self, *_args, **_kwargs):
+        raise AssertionError("configuration test must not start a producer")
+
+    def read_result(self, _process):
+        raise AssertionError("configuration test has no producer result")
+
+
 def _supervised_backend_producer(action, start_gate, state, events, entered,
                                 accept_before_block):
     if not start_gate.wait(5):
@@ -99,6 +123,32 @@ def _supervised_backend_producer(action, start_gate, state, events, entered,
 
 
 class SupervisedBackendCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_public_route_rejects_unbounded_late_input_horizon(self):
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaisesRegex(ValueError, "nonnegative integer"):
+                create_server({"fixture": 123}, root,
+                    session_mode="one-shot",
+                    supervised_win32_late_input_horizon_ns=60_000_000_001)
+
+    async def test_public_route_binds_requested_late_input_horizon(self):
+        horizon_ns = 250_000_000
+        supervisor = ConfiguredSupervisorStub(horizon_ns)
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda _handle: None)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+                                       synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer_factory = UnusedProducerFactory()
+        with tempfile.TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer_factory,
+                supervised_win32_late_input_horizon_ns=horizon_ns)
+            closed = await server.call_tool("interface_close", {})
+            self.assertEqual(json.loads(closed.content[0].text)["status"], "closed")
+            self.assertTrue(supervisor.closed)
+
     async def test_public_cancel_recovers_after_actual_session_is_blocked_in_sendinput(self):
         context = multiprocessing.get_context("spawn")
         with context.Manager() as manager, tempfile.TemporaryDirectory() as root:
