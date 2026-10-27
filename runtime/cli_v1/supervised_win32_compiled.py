@@ -217,7 +217,7 @@ def _terminal(reply, action_name, *, expected_call_id=None,
 
 
 def _task_oracle_evidence(reply, expected_call_id, expected_generation,
-                          expected_operation_id, not_before_ns):
+                          expected_operation_id, not_before_ns, not_after_ns):
     """Accept only the standard server's exact-call task-oracle receipt."""
     row = _content_object(reply)
     effect = row.get("task_effect")
@@ -283,7 +283,10 @@ def _task_oracle_evidence(reply, expected_call_id, expected_generation,
         and effect.get("task_success") is verdict
         and verdict_shape_valid
         and type(not_before_ns) is int and not_before_ns > 0
-        and type(requested_ns) is int and requested_ns >= not_before_ns
+        and type(not_after_ns) is int and not_after_ns >= not_before_ns
+        and type(requested_ns) is int and not_before_ns <= requested_ns <= not_after_ns
+        and (oracle_receipt is None or
+             (type(received_ns) is int and received_ns <= not_after_ns))
         and oracle_receipt_valid
     )
     digest = hashlib.sha256(json.dumps(row, sort_keys=True,
@@ -577,10 +580,12 @@ def run_public_compiled(interface, program_templates, *, target,
             and type(final_call_id) is str
             and _IDENTIFIER.fullmatch(final_call_id) is not None):
         try:
+            oracle_reply = verify_task(final_call_id)
+            caller_received_ns = clock()
             task_evidence = _task_oracle_evidence(
-                verify_task(final_call_id), final_call_id,
+                oracle_reply, final_call_id,
                 final_dispatch["target_generation"], final_dispatch["action_id"],
-                final_transition["execution_accepted_ns"])
+                final_transition["execution_accepted_ns"], caller_received_ns)
             task_evidence["target_generation"] = final_dispatch["target_generation"]
             receipt["task_verification"] = task_evidence
             if task_evidence["valid"]:

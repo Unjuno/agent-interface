@@ -134,8 +134,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         def verify_task(call_id):
             task_calls.append(call_id)
             requested = time.monotonic_ns()
-            observed = requested + 1_000
-            accepted = observed + 1_000
+            observed = time.monotonic_ns()
+            accepted = time.monotonic_ns()
             receipt = {"call_id": call_id, "operation_id": operation_id,
                 "target_generation": generation, "oracle_id": "e" * 32,
                 "outcome": "success", "observed_monotonic_ns": observed,
@@ -287,14 +287,18 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
 
         def task_oracle(call_id, verdict=True, echoed_call_id=None,
                         echoed_generation=None, without_receipt=False,
-                        echoed_operation_id=None, stale=False):
+                        echoed_operation_id=None, stale=False, future=False):
             task_calls.append(call_id)
             status = "unknown" if verdict is None else "verified"
             requested_ns = time.monotonic_ns()
-            observed_ns = requested_ns + 1000
-            received_ns = requested_ns + 2000
+            observed_ns = time.monotonic_ns()
+            received_ns = time.monotonic_ns()
             if stale:
                 requested_ns, observed_ns, received_ns = 1, 2, 3
+            if future:
+                requested_ns += 10**12
+                observed_ns += 10**12
+                received_ns += 10**12
             outcome = ("success" if verdict is True else
                 "failure" if verdict is False else "unknown")
             oracle_receipt = {"call_id": call_id,
@@ -348,6 +352,16 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                 task_oracle(call_id, True, stale=True), cancelled=lambda: False)
         self.assertFalse(stale["task_verification"]["valid"])
         self.assertIsNone(stale["task_success"])
+
+        future = run_public_compiled(interface, {"save": program},
+            target="fixture", current_binding_revision=7,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            perceive=lambda _row, reply: {"ready": True,
+                "saved": int(reply["call_id"], 16) % 2 == 0},
+            verify_effect=verify_effect, verify_task=lambda call_id:
+                task_oracle(call_id, True, future=True), cancelled=lambda: False)
+        self.assertFalse(future["task_verification"]["valid"])
+        self.assertIsNone(future["task_success"])
 
         failed = run_public_compiled(interface, {"save": program},
             target="fixture", current_binding_revision=7,
@@ -416,7 +430,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertFalse(operation_mismatch["task_verification"]["valid"])
         self.assertIsNone(operation_mismatch["task_success"])
         self.assertEqual(task_calls, [call_id(102), call_id(103), call_id(104),
-            call_id(105), call_id(106), call_id(107), call_id(108), call_id(109)])
+            call_id(105), call_id(106), call_id(107), call_id(108), call_id(109),
+            call_id(110)])
 
     def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
         generation = "a" * 64
