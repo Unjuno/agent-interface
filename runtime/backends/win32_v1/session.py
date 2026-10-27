@@ -138,9 +138,22 @@ class Win32RuntimeSession:
         except Win32BackendError as error:
             try:
                 release = self.backend.release_all()
-            except Exception:
+            except Exception as cleanup_error:
                 self.recovery_required = True
-                raise
+                return {
+                    "status": "execution_failed",
+                    "error": "BACKEND_CLEANUP",
+                    "preflight_error": str(error),
+                    "cleanup_error": {"type": type(cleanup_error).__name__,
+                                      "detail": str(cleanup_error)},
+                    "required_capabilities": list(admission.required_capabilities),
+                    "backend_emissions": self.backend.emissions,
+                    "release": {"verified": False},
+                    "input_dispatched": False,
+                    "recovery_required": True,
+                    "task_success": None,
+                    "replay_allowed": False,
+                }
             self._record_release([release])
             return {
                 "status": "refused",
