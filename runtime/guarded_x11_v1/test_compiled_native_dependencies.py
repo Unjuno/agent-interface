@@ -1,5 +1,6 @@
 """Fresh compiled dependencies through the actual bridge, Fake X transport only."""
 import copy
+import json
 from pathlib import Path
 import tempfile
 import time
@@ -35,6 +36,7 @@ class CompiledNativeDependencyTests(unittest.TestCase):
         fake.backend.root.query_pointer=lambda:SimpleNamespace(root_x=pointer[0],root_y=pointer[1],
             mask=X.Button1Mask if buttons else 0)
         original_emit=fake.emit
+        bridge_ref={}
         def emit(display,kind,code=0,**kwargs):
             events.append([kind,code,copy.deepcopy(kwargs)])
             if kind==X.MotionNotify:
@@ -45,9 +47,12 @@ class CompiledNativeDependencyTests(unittest.TestCase):
             else:
                 original_emit(display,kind,code)
                 if kind==X.KeyPress and code==1 and change=='held':marker(0)
+                if kind==X.KeyPress and code==1 and change=='expired_while_held':
+                    bridge_ref['bridge'].deadline=time.monotonic_ns()-1
         with tempfile.TemporaryDirectory(prefix='compiled-dependency-') as td,patch(
                 'runtime.backends.x11_v1.backend.xtest.fake_input',side_effect=emit):
             bridge=NativeHandleBridge(None,{'app':20},'app',Path(td)/'bridge',process_identity=True)
+            bridge_ref['bridge']=bridge
             try:
                 source=bridge.observe()
                 offsets={a:bridge.mint(a,source['sequence'],p,region_size=[12,12])
@@ -67,17 +72,21 @@ class CompiledNativeDependencyTests(unittest.TestCase):
                     for a,alias in [('enter_token','field'),('submit_form','submit')]}
                 adapter=_Adapter(bridge,interface,bindings,perceive,
                     lambda *a:{'status':'unavailable','evidence_ref':'synthetic'},lambda:False)
-                observation=adapter.observe({})
-                admission=adapter.admit(dict(interface_id=interface['interface_id'],session_scope=bridge.scope,
-                    action='submit_form',operation='activate_submit',symbol=interface['symbols']['submit_control'],
-                    observation=observation))
-                self.assertTrue(admission['eligible'])
-                if change in ('false','unknown','exception','missing'):
-                    marker({'false':0,'unknown':3,'exception':4,'missing':5}[change])
-                if change=='expired':admission['valid_until_ns']=time.monotonic_ns()-1
-                result=adapter.execute(dict(action='submit_form',operation='activate_submit',
-                    authorization=admission['authorization'],expected_sequence=observation['sequence'],
-                    valid_until_ns=admission['valid_until_ns']))
+                if change=='expired_while_held':
+                    marker(0)
+                    result=adapter.execute_method()
+                else:
+                    observation=adapter.observe({})
+                    admission=adapter.admit(dict(interface_id=interface['interface_id'],session_scope=bridge.scope,
+                        action='submit_form',operation='activate_submit',symbol=interface['symbols']['submit_control'],
+                        observation=observation))
+                    self.assertTrue(admission['eligible'])
+                    if change in ('false','unknown','exception','missing'):
+                        marker({'false':0,'unknown':3,'exception':4,'missing':5}[change])
+                    if change=='expired':admission['valid_until_ns']=time.monotonic_ns()-1
+                    result=adapter.execute(dict(action='submit_form',operation='activate_submit',
+                        authorization=admission['authorization'],expected_sequence=observation['sequence'],
+                        valid_until_ns=admission['valid_until_ns']))
                 row=dict(interaction=interaction,change=change,result=result,events=events,
                     down=sorted(fake.down),buttons=sorted(buttons),reads=reads,
                     guard_restored=bridge._input_guard is None,pending_authorizations=len(adapter.authorizations),
@@ -133,6 +142,31 @@ class CompiledNativeDependencyTests(unittest.TestCase):
         row=self.cell('keyboard','expired')
         self.assertEqual(row['events'],[]);self.assertEqual(len(row['reads']),1)
         self.assertIs(row['result']['input_dispatched'],False)
+
+    def test_expiry_after_modifier_press_blocks_suffix_and_releases_input(self):
+        row=self.cell('keyboard','expired_while_held')
+        self.assertEqual([event[:2] for event in row['events']],
+            [[X.KeyPress,1],[X.KeyRelease,1]])
+        self.assertEqual((row['result']['outcome'],row['result']['reason']),
+            ('SAFE_YIELD','execution_failed'))
+        self.assertEqual(row['result']['completed_transitions'],0)
+        terminal=[event for event in row['result']['critical_events']
+            if event['event']=='action_terminal'][-1]
+        self.assertEqual(terminal['action'],'enter_token')
+        self.assertEqual(terminal['release_verified'],True)
+        self.assertNotIn('input_dispatched',terminal)
+        execution=next(json.loads(bytes.fromhex(payload).decode())['result']
+            for name,payload in row['files_hex'].items() if name.endswith('-execution.json'))
+        self.assertIn('native target guard lease expired',execution['execution']['error'])
+        self.assertEqual(execution['execution']['failed_op'],1)
+        self.assertEqual(execution['execution']['completed_ops'],[0])
+        releases=execution['execution']['releases']
+        self.assertEqual(len(releases),1)
+        self.assertTrue(releases[0]['verified'])
+        self.assertEqual(releases[0]['keys_down'],[])
+        self.assertEqual(releases[0]['buttons_down'],[])
+        self.assertFalse(execution['recovery_required'])
+        self.assertEqual(row['down'],[]);self.assertEqual(row['buttons'],[])
 
 
 if __name__=='__main__':unittest.main()

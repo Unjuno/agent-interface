@@ -211,4 +211,41 @@ class CompiledBoundaryTests(unittest.TestCase):
     def execute(p):
      r=base(p);r['input_dispatched']=flag;r['release']['keys_down']=keys;return r
     d.execute=execute;r=d.run();self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+ def test_admission_callback_exception_returns_completed_prefix(self):
+  d=Driver();base=d.admit
+  def admit(payload):
+   if len(d.calls['admit'])==1:
+    d.record('admit',payload)
+    raise TimeoutError('admission timeout')
+   return base(payload)
+  d.admit=admit
+  receipt=d.run()
+  self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+  self.assertEqual(receipt['completed_transitions'],1)
+  self.assertEqual(len(d.calls['execute']),1)
+  self.assertEqual(len(d.calls['admit']),2)
+  self.assertEqual(receipt['critical_events'][-2]['event'],'admission_failed')
+
+ def test_execution_callback_exception_preserves_prefix_and_unknown_delivery(self):
+  d=Driver();base=d.execute
+  def execute(payload):
+   result=base(payload)
+   if len(d.calls['execute'])==2:
+    raise TimeoutError('execution receipt lost after possible input')
+   return result
+  d.execute=execute
+  receipt=d.run()
+  self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+  self.assertEqual(receipt['completed_transitions'],1)
+  self.assertEqual(len(d.calls['execute']),2)
+  self.assertEqual(len(d.calls['observe']),2)
+  self.assertEqual(len(d.calls['verify_effect']),1)
+  unresolved=receipt['unresolved_execution']
+  self.assertEqual(unresolved['action'],'save')
+  self.assertIsNone(unresolved['input_dispatched'])
+  self.assertFalse(unresolved['release_verified'])
+  terminals=[event for event in receipt['critical_events'] if event['event']=='action_terminal']
+  terminal=terminals[-1]
+  self.assertNotIn('input_dispatched',terminal)
+  self.assertFalse(terminal['release_verified'])
 if __name__=='__main__':unittest.main()
