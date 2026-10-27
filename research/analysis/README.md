@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #1998 A02 focused payload byte comparison](focused_observation_payload_size_1998_t0_a02_20261009/REPORT.md) — `PASS_FOCUSED_PAYLOAD_REDUCTION_SCOPED`: 14/14 cases, 6/6 mutations, 22,933 serialized bytes saved across the frozen fixture; no token/latency/GUI claim.
+
 - [Issue #8675 T0 A01 cross-revision target correspondence](cross_revision_target_transport_8675_t0_20261009/REPORT.md) — `PASS_RELATIONAL_REIDENTIFICATION_SCOPED`: relational soft assignment recovered 100/300 held-out positives (+33.3 pp over both exact baselines), with 0/500 false rebinds and 0.5974% one-sided 95% upper bound; all automorphism/semantic-change controls abstained. Recovery was limited to sibling reorder; duplicate-target and wrapper cases abstained. Synthetic assignment-space proxy only, not a canonical entropic FGW or live GUI result.
 
 - [Issue #8620 T0 A01 execution-information frontier](execution_information_8620_t0_a01_20261009/README.md) — 12 finite histories; `HOLD_FORMAL_FREEZE_INCOMPLETE`; original auditor FAIL retained, post-result diagnostic only, no rerun.
@@ -677,6 +679,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
 - [`feedback_necessity_5927_output_custody_a01_20261004/`](feedback_necessity_5927_output_custody_a01_20261004/)
+- [`focused_observation_payload_size_1998_t0_a02_20261009/`](focused_observation_payload_size_1998_t0_a02_20261009/)
 - [`focused_observation_request_1998_t0_a07_20261009/`](focused_observation_request_1998_t0_a07_20261009/)
 - [`focused_observation_request_1998_t0_a08_20261009/`](focused_observation_request_1998_t0_a08_20261009/)
 - [`focused_observation_request_container_successor_2046_v1/`](focused_observation_request_container_successor_2046_v1/)
