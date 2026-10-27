@@ -101,4 +101,30 @@ class AdmissionLinkTest(unittest.TestCase):
         self.assertIs(result["verified"],True)
         self.assertEqual(backend._admission_receipts,{})
 
+
+    def test_cleanup_timestamp_is_checked_against_release_bracket(self):
+        for timestamp, expected in ((29, True), (30, False), (35, False),
+                                    (40, False), (41, True), (True, False)):
+            with self.subTest(timestamp=timestamp):
+                backend, emitted = self.make_backend()
+                original_call = backend.owner.call
+                def call(operation, lease=None, value=None):
+                    result = original_call(operation, lease, value)
+                    if operation == "up_batch":
+                        backend.owner.records.append({
+                            "event": "owner_release", "verified": True,
+                            "verified_ns": timestamp, "keys_down": [],
+                            "buttons_down": [], "reason": "cancelled",
+                        })
+                    return result
+                backend.owner.call = call
+                backend.raw("w", True)
+                backend._release_batch.context = {
+                    "rows": [], "identifier": "probe", "step": 0, "pending_ups": []}
+                backend.raw("w", False)
+                release = next(row for row in emitted
+                               if row.get("event") == "input_release_transition")
+                self.assertIs(release["owner_transition_verified"], expected)
+
+
 if __name__=="__main__":unittest.main()
