@@ -28,6 +28,64 @@ def reject_duplicate_json_members(pairs):
     return result
 
 
+def owner_event_verified(row):
+    if type(row) is not dict:
+        return False
+    event=row.get('event')
+    if event=='owner_release':
+        return row.get('verified') is True
+    if event!='owner_explicit_keyup':
+        return False
+    attempts=row.get('server_keyup_attempts')
+    attempt_count=row.get('server_keyup_attempt_count')
+    owner_started=row.get('owner_keyrelease_started_ns')
+    owner_returned=row.get('owner_sync_returned_ns')
+    sampled=row.get('owner_keymap_sampled_ns')
+    attempts_valid=(
+        type(attempts) is list and type(attempt_count) is int
+        and len(attempts)==attempt_count and 1<=attempt_count<=3
+        and type(attempts[0]) is dict and type(attempts[-1]) is dict
+        and attempts[0].get('keyrelease_started_ns')==owner_started
+        and attempts[-1].get('sync_returned_ns')==owner_returned
+        and attempts[-1].get('keymap_sampled_ns')==sampled
+        and all(
+            type(attempt) is dict and attempt.get('attempt')==index
+            and type(attempt.get('keyrelease_started_ns')) is int
+            and type(attempt.get('sync_returned_ns')) is int
+            and type(attempt.get('keymap_sampled_ns')) is int
+            and attempt['keyrelease_started_ns']<=attempt['sync_returned_ns']
+            <=attempt['keymap_sampled_ns']
+            and type(attempt.get('server_key_down_before')) is bool
+            and type(attempt.get('server_key_down_after')) is bool
+            for index,attempt in enumerate(attempts,1))
+        and all(
+            prior['keymap_sampled_ns']<=current['keyrelease_started_ns']
+            and prior['server_key_down_after'] is current['server_key_down_before']
+            for prior,current in zip(attempts,attempts[1:]))
+        and attempts[-1].get('server_key_down_after') is False)
+    key_order=row.get('release_batch_key_order')
+    return bool(
+        row.get('operation')=='up'
+        and type(row.get('owner_id')) is str and bool(row.get('owner_id'))
+        and type(row.get('key')) is str and bool(row.get('key'))
+        and type(row.get('keycode')) is int and row.get('keycode')>0
+        and type(row.get('intent_token')) is str and bool(row.get('intent_token'))
+        and type(row.get('valid_until_ns')) is int
+        and row.get('server_sync_completed') is True
+        and row.get('server_keyup_verified') is True
+        and row.get('server_key_down_after_keyup') is False
+        and row.get('key_state_source')=='x11_query_keymap'
+        and type(owner_started) is int and type(owner_returned) is int
+        and type(sampled) is int and owner_started<=owner_returned<=sampled
+        and row.get('physical_verification_authoritative') is False
+        and type(row.get('cancel_requested_after_sync')) is bool
+        and type(row.get('release_batch_initial_up_count')) is int
+        and type(key_order) is list and bool(key_order)
+        and row.get('release_batch_initial_up_count')==len(key_order)
+        and all(type(key) is str and bool(key) for key in key_order)
+        and row.get('key') in key_order and attempts_valid)
+
+
 MAX_CHILD_STDERR_BYTES=1_048_576
 
 def capture_child_stderr(stream,path,max_bytes=MAX_CHILD_STDERR_BYTES):
@@ -316,9 +374,10 @@ class ControllerFailureCleanup:
                 owner_rows=json.loads(owner_path.read_text(encoding='utf-8'))
                 receipt['owner_events_closed']=(
                     type(owner_rows) is list and bool(owner_rows) and
+                    type(owner_rows[-1]) is dict and
+                    owner_rows[-1].get('event')=='owner_release' and
                     owner_rows[-1].get('reason')=='close' and
-                    all(type(row) is dict and row.get('verified') is True
-                        for row in owner_rows))
+                    all(owner_event_verified(row) for row in owner_rows))
             except BaseException as secondary:
                 receipt['stages'].append({'stage':'owner_events_read','status':'failed',
                                           'error_type':type(secondary).__name__})

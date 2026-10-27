@@ -127,7 +127,25 @@ class Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
             (runtime/'score.json').write_text('{"event":"post_control_score"}\n')
-            (runtime/'owner-events.json').write_text('[{"reason":"close","verified":true}]\n')
+            owner_rows=[
+                {'event':'owner_explicit_keyup','operation':'up','owner_id':'owner-1',
+                 'key':'a','keycode':38,'intent_token':'token-1','valid_until_ns':100,
+                 'owner_keyrelease_started_ns':10,'owner_sync_returned_ns':20,
+                 'owner_keymap_sampled_ns':30,'server_keyup_verified':True,
+                 'server_keyup_attempt_count':1,'server_keyup_attempts':[
+                     {'attempt':1,'keyrelease_started_ns':10,'sync_returned_ns':20,
+                      'keymap_sampled_ns':30,'server_key_down_before':True,
+                      'server_key_down_after':False,'keymap_before_error':None,
+                      'keymap_after_error':None,'keyrelease_error':None,
+                      'sync_error':None}],
+                 'server_key_down_after_keyup':False,
+                 'key_state_source':'x11_query_keymap','cancel_requested_after_sync':False,
+                 'server_sync_completed':True,'physical_verification_authoritative':False,
+                 'release_batch_initial_up_count':1,'release_batch_key_order':['a']},
+                {'event':'owner_release','reason':'close','verified':True,
+                 'buttons_down':[],'keys_down':[],'keys_unknown':[],
+                 'key_state_errors':[]}]
+            (runtime/'owner-events.json').write_text(json.dumps(owner_rows)+'\n')
             events=[{'event':'accepted','id':'passive-1'}]
             reader=DelayedReader(events,[
                 {'event':'terminal','id':'passive-1','status':'completed',
@@ -158,6 +176,34 @@ class Tests(unittest.TestCase):
             self.assertTrue(receipt['scorer_terminal_observed'])
             self.assertTrue(receipt['owner_events_closed'])
             self.assertTrue(receipt['cleanup_complete'])
+
+    def test_owner_events_close_rejects_unverified_explicit_keyup(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
+            (runtime/'score.json').write_text('{"event":"post_control_score"}\n')
+            owner_rows=[
+                {'event':'owner_explicit_keyup','verified':True,
+                 'server_keyup_verified':False,'server_sync_completed':False},
+                {'event':'owner_release','reason':'close','verified':True,
+                 'buttons_down':[],'keys_down':[],'keys_unknown':[],
+                 'key_state_errors':[]}]
+            (runtime/'owner-events.json').write_text(json.dumps(owner_rows)+'\n')
+            events=[{'event':'accepted','id':'passive-1'}]
+            reader=DelayedReader(events,[
+                {'event':'terminal','id':'passive-1','status':'completed',
+                 'release':{'verified':True,'keys_down':[],'buttons_down':[],
+                            'keys_unknown':[],'key_state_errors':[]}},
+                {'event':'post_control_score'}])
+            event_wait=lambda predicate,timeout:{'event':'post_control_score'}
+            with self.assertRaises(ValueError):
+                with ControllerFailureCleanup(Planner(),out) as scope:
+                    scope.track(Child())
+                    scope.set_stage('source_refresh')
+                    scope.observe_output(events,reader,event_wait,runtime)
+                    raise ValueError('primary')
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertFalse(receipt['owner_events_closed'])
+            self.assertFalse(receipt['cleanup_complete'])
 
     def test_reader_timeout_fails_closed_on_event_set_completeness(self):
         with tempfile.TemporaryDirectory() as tmp:
