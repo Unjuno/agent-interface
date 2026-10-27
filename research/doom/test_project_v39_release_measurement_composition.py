@@ -110,6 +110,21 @@ class ProducerProjectionTests(unittest.TestCase):
         self.assertEqual([row["key"] for row in result["rows"]], ["A", "W"])
         self.assertTrue(all(row["application_consumption"] == "unobserved" for row in result["rows"]))
 
+    def test_conflicting_key_order_in_actual_batch_is_rejected(self):
+        self.assertTrue(self.run_batch()["measurement_ready"])
+        releases = [index for index, event in enumerate(self.events)
+                    if event.get("event") == "input_release_transition"]
+        self.assertEqual(len(releases), 2)
+        for index in releases:
+            with self.subTest(release=index):
+                changed = copy.deepcopy(self.events)
+                receipt = changed[index]["owner_thread_keyup_receipt"]
+                position = changed[index]["release_batch_position"]
+                receipt["release_batch_key_order"][1 - position] = "OTHER"
+                self.assertEqual(project(changed),
+                                 {"measurement_ready": False, "rows": []})
+        self.assertTrue(project(self.events)["measurement_ready"])
+
     def test_actual_retry_projects_both_keys(self):
         result = self.run_batch(retry=True)
         self.assertEqual(self.events[2]["owner_thread_keyup_receipt"]["server_keyup_attempt_count"], 2)
