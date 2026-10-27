@@ -49,3 +49,7 @@ An experimental G10-shaped adapter now composes the shared guarded `_Adapter` wi
 ## Explicit bounded-worker entry
 
 A separate `run_with_bounded_fresh_proposal` entry requires a fresh `BoundedProposal` and the same cancellation callback as the graph before any action. The caller retains the worker object to inspect a possibly still-running callback. Synthetic tests reject bare, reused or mismatched-cancellation workers before input, and exercise both a timely proposal and a timeout with no second input. Sixty-one selected offline tests pass normally and with `-O`. The older entry still permits bare callbacks; neither entry makes the callback a sandbox, stops a blocked Python thread, bounds native I/O, or proves live release/task success.
+
+## Retained OCR input reconstruction
+
+A read-only test pins the G10 raw JSON and OCR-attempt log hashes, verifies three original PNG digests and ROI RGB digests, reconstructs the seven retained OCR crop images at pixel level, and checks the attempts group by source frame as 1/3/3 with recorded outputs and timing. It was checked with Pillow 12.3.0; image resampling implementations may affect portability. Sixty-two selected offline tests pass normally and under `-O`. This neither reruns Tesseract nor independently establishes that its outputs are semantically correct, transferable, current, or associated with a new live action. No original allocation or auditor was rerun.
