@@ -1,0 +1,21 @@
+{
+  "host": "macOS Darwin 27.0.0 arm64",
+  "python": "CPython 3.14.5",
+  "dependency_policy": "standard library only; no install",
+  "preflight": {
+    "container_cli_context": "orbstack",
+    "command": "docker --context orbstack images --format '{{.Repository}}:{{.Tag}} {{.ID}}'",
+    "exit_class": "read-only inventory failed before any image was listed",
+    "stderr": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a: operation not supported",
+    "container_started": false,
+    "fallback": "host-only finite CPU method under sandbox-exec network deny; no container or backend claim"
+  },
+  "sandbox": {
+    "command_profile": "(version 1) (deny network*) (allow default)",
+    "smoke_test": "passed",
+    "formal_candidate_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > results/candidate_raw.json 2> results/candidate.stderr",
+    "formal_auditor_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py > results/audit.json 2> results/auditor.stderr"
+  },
+  "available_disk_bytes_approx": 202937204736,
+  "formal_invocations_at_freeze": {"candidate": 0, "auditor": 0, "retries": 0}
+}

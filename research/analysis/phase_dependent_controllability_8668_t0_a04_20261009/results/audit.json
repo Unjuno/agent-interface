@@ -1,0 +1,70 @@
+{
+  "accepted_safe_retries": 4,
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A04-20261009",
+  "binding_witnesses": [
+    "prior_operation_cancel",
+    "same_id_prior_attempt_cancel",
+    "wrong_request_cancel",
+    "no_request_cancel_ack",
+    "late_cancel_after_effect"
+  ],
+  "decision": "SUPPORT_FOR_REQUEST_BOUND_ACK_TRANSITIONS_SCOPED",
+  "errors": [],
+  "invocations": {
+    "auditor": 1,
+    "candidate": 1,
+    "retries": 0
+  },
+  "mutation_controls": {
+    "rejected": 8,
+    "results": [
+      {
+        "applicable": true,
+        "name": "request_event_removed",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "ack_request_id_changed",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "ack_attempt_changed",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "effect_fact_changed",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "arrival_order_changed",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "bound_retry_flipped",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "neutral_release_claim_flipped",
+        "rejected": true
+      },
+      {
+        "applicable": true,
+        "name": "receipt_deleted",
+        "rejected": true
+      }
+    ],
+    "total": 8
+  },
+  "policy_differences": 12,
+  "schedule_count": 18,
+  "schema": "8668-a04-audit-v1",
+  "scope": "Finite authored event schedules; no action dispatch or GUI/backend claim.",
+  "status": "PASS_METHOD_SCOPED",
+  "unsafe_bound_classifications": 0
+}
