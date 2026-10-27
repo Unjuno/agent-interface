@@ -77,6 +77,32 @@ class OperationOwnerTests(unittest.TestCase):
         with self.assertRaises(OwnerRefused):
             owner.result("op-expired")
 
+    def test_admission_freezes_validated_obligations_before_lock_wait(self):
+        entered = threading.Event()
+        lock = threading.Lock()
+        class SignallingLock:
+            def __enter__(self):
+                entered.set()
+                lock.acquire()
+            def __exit__(self, *_):
+                lock.release()
+        self.owner._lock = SignallingLock()
+        obligations = ["key:a"]
+        accepted = []
+        lock.acquire()
+        thread = threading.Thread(target=lambda: accepted.append(
+            self.owner.admit("op-obligations", GEN_A, 1000, obligations)))
+        thread.start()
+        try:
+            self.assertTrue(entered.wait(2))
+            obligations[:] = ["key:b"]
+        finally:
+            lock.release()
+            thread.join(2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(accepted[0]["obligations"], ["key:a"])
+        self.assertEqual(self.owner.result("op-obligations")["obligations"], ["key:a"])
+
     def test_gate_callback_that_opens_then_raises_cannot_claim_gate_remained_closed(self):
         self.owner.admit("op-gate-error", GEN_A, 1_000, ["key:a"], start_gate_required=True)
         process = FakeProcess(PRODUCER)
