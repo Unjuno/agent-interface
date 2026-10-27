@@ -72,6 +72,32 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(result, {"keys": [("fixture", "CTRL")],
             "buttons": [("fixture", "left")], "unicode": [0x41]})
 
+    def test_cancel_recovery_rejects_stale_or_invalid_readback_time(self):
+        for observed in (9, 11, None, True):
+            with self.subTest(observed=observed):
+                class Owner:
+                    def __init__(self): self.unknown = []; self.completed = []
+                    def mark_unknown(self, operation_id, generation, reason): self.unknown.append(reason)
+                    def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
+                owner = Owner()
+                supervisor = object.__new__(OperationCancellationSupervisor)
+                supervisor._owner = owner
+                supervisor._clock_ns = lambda: 10
+                supervisor._invalidate_helper = lambda *_: None
+                recovery_id = "3" * 32
+                def exchange(role, request, deadline):
+                    row = {"operation_id": OPERATION, "target_generation": GENERATION,
+                           "recovery_id": recovery_id}
+                    if role == "recovery": row["release_accepted"] = True
+                    else: row.update(neutral=True, observed_monotonic_ns=observed)
+                    return row
+                supervisor._exchange_helper = exchange
+                supervisor._run_recovery(OPERATION, GENERATION,
+                    {"operation_id": OPERATION, "target_generation": GENERATION,
+                     "recovery_id": recovery_id, "deadline_ns": 100, "obligations": []})
+                self.assertEqual(owner.completed, [])
+                self.assertEqual(owner.unknown, ["independent_readback_time_invalid"])
+
     def test_orphan_recovery_requires_matching_release_and_independent_readback(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         supervisor._clock_ns = lambda: 10

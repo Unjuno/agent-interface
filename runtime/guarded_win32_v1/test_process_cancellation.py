@@ -88,6 +88,7 @@ def _fake_readback_worker(neutral, request, result_send):
         "target_generation": request["target_generation"],
         "recovery_id": request["recovery_id"],
         "neutral": neutral.is_set(),
+        "observed_monotonic_ns": time.monotonic_ns(),
     })
     result_send.close()
 

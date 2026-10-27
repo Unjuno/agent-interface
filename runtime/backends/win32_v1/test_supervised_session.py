@@ -102,6 +102,7 @@ def _recovery_observer_server(connection, role, state, events):
                 "target_generation": request["target_generation"],
                 "recovery_id": request["recovery_id"],
                 "neutral": not state.get(VK_CONTROL, False),
+                "observed_monotonic_ns": time.monotonic_ns(),
             }
         connection.send(receipt)
         connection.send({"control": "operation_complete",
