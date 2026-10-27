@@ -1,0 +1,31 @@
+{
+  "schema": "map01-v39-post-execute-drain-race-result-v1",
+  "disposition": "REPRODUCED_SCOPED_GAP",
+  "source_commit": "15d56feea35bc6d7c4b499bbaa63e3bb0762ae6c",
+  "current_main": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "records_at_bridge_drain": 0,
+  "release_rows_at_bridge_drain": 0,
+  "bridge_held_at_drain": ["F8"],
+  "state_seen_by_release_all": {
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "physical_pointer_mask": 0,
+    "focus": 42,
+    "active_lease_time_valid": false,
+    "cancel_requested": false
+  },
+  "held_seen_by_release_all": ["F8"],
+  "owner_ops_before_release_all_state": ["down", "input_state"],
+  "event_names": ["accepted", "step_started", "input_admission", "terminal"],
+  "terminal_status": "expired",
+  "terminal_release_verified": true,
+  "release_rows_published": 0,
+  "owner_cleanup_reasons": ["expired"],
+  "owner_cleanup_release_rows": 1,
+  "owner_keys_after_terminal": [],
+  "fake_physical_keys_after_terminal": [],
+  "bridge_held_after_terminal": ["F8"],
+  "cleanup_record_cursor": 0,
+  "exit_code": 0,
+  "limitations": ["fake display only", "forced deterministic thread schedule", "no real X11 or OS input", "no gameplay, task effect, useful feedback, recovery, latency, or live allocation evidence"]
+}
