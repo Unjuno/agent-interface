@@ -34,9 +34,10 @@ recovery and effect-reference compatibility remain unproven. See the
 [R04 profile](../research/integration/docker_vizdoom_x11_efficiency_profile_r04_20261028/README.md)
 and [R05 storage study](../research/integration/docker_vizdoom_efficiency_storage_microbench_r05/README.md).
 R06's hash-linked store was 46.2% slower on combined writes/readback. The R07
-persistent-handle prototype then measured 14.998 ms median combined append and
-verified readback against 54.224 ms for pretty files (3.62x faster) on the same
-19 receipts, with 12/12 tests in normal and optimized Python. It remains
+persistent-handle prototype then measured 14.998–16.145 ms median combined
+append and verified readback against 54.224–68.739 ms for pretty files (3.36–
+3.62x faster) in two independent runs on the same 19 receipts, with 12/12 tests
+in normal and optimized Python. It remains
 research-only: no fsync, no production `*-effect.json` API, no interrupted-write
 custody proof. The integrated compiled-vs-direct result remains 5–6% slower for
 compiled control. See the [R06 record](../research/integration/docker_vizdoom_receipt_journal_r06/README.md)
