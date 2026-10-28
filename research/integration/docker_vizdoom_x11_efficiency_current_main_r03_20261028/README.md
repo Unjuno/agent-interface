@@ -42,3 +42,31 @@ the first shell wrapper was written with CRLF line endings and its final `exit`
 argument was parsed as nonnumeric. The runner's own result and receipts were
 saved before that wrapper error. No arm was retried; the wrapper defect remains
 in the raw record.
+
+## Timing decomposition from retained arm receipts
+
+The raw direct action result and compiled bridge execution receipt expose
+`execution.started_ns` and `execution.ended_ns`. Comparing those intervals with
+the same arm's outer `caller_path_elapsed_ns` gives this descriptive split:
+
+| Route | Mean full route | Mean bridge execution interval | Mean route time outside that interval |
+|---|---:|---:|---:|
+| Direct | 868.504 ms | 693.836 ms | 174.668 ms |
+| Compiled | 914.705 ms | 695.346 ms | 219.360 ms |
+
+The bridge execution interval differed by only 1.510 ms on average, while the
+outside-interval residual differed by 44.692 ms. Both routes ended at bridge
+sequence 7 in every pair, so the observed gap is not explained by a higher
+sequence count in the compiled route. Each compiled bridge directory retained
+37 JSON files versus 18 for direct (19 additional files), reflecting the
+compiled plan, graph events, reference/admission, dependency, effect and
+terminal receipts. Across the full arm directories, compiled retained about
+16.3 KB more per trial on average.
+
+This does not establish that file writes alone caused the latency gap. The
+outside-interval residual also includes observations, callbacks, graph
+transitions, input-guard work and route bookkeeping; no in-process profiler was
+present in R03. A useful next measurement is to instrument these existing
+stages separately before changing or batching any custody record. Evidence
+records are part of the current safety contract, so performance work must
+preserve their failure and replay semantics.
