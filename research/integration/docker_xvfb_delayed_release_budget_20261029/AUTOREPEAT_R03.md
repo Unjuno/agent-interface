@@ -7,3 +7,7 @@ Combined with the separate enabled-auto-repeat calibration (global mode 1, two p
 r01 and r02 of this disabled-control setup stopped before any key event or pidfd pause because of setup mistakes; their logs/conditions are retained separately. r03 was preregistered as a distinct one-shot before execution. The raw result's internal schema string says `...r01` because the script was copied from the first calibration; packet identity is established by its conditions and invocation metadata. The raw is unchanged.
 
 Limits: one synthetic Linux Xvfb calibration per enabled/disabled setting; not MCP cancellation or recovery, native Windows input, WSLc, MAP01, reliability, nor an efficiency score.
+
+## Later full-caller controls
+
+The isolated calibration above did not prove the source of the R02 events. Standard-caller attempts then found that a short-lived OFF setter had exited before the test; a passive monitor read mode 1. A persistent controller kept the setting connection open and observed mode 0 in 1,039 samples; one old-task oracle then passed at exact effect count 1. The monitor had a 4,002.561 ms gap during the Xvfb stop. See [the full R01–R03 caller-control comparison](AUTOREPEAT_PERSISTENT_OFF_CALLER.md). This supports active global Xvfb repeat as a contributor, but does not establish exact historical R02 causation.
