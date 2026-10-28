@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-28, after PR #9797 and Docker/Xvfb R04
+## Current work-map pointer — 2026-10-28, after PR #9798 and Docker/Xvfb R06
 
-**Last verified `origin/main` (2026-10-28):** `1988916cd0904b29e0a294dea24ec09ca0563ba3`
-(PR #9797). This pointer verifies the merged guarded-X11 keyboard-tail change,
-the direct/compiled MAP01 comparison note, and the current computer-control
+**Last verified `origin/main` (2026-10-28):** `17d1afe4be90d0fd70df51c0425a16891c9c952f`
+(PR #9798). This pointer verifies the merged guarded-X11 keyboard-tail change,
+the direct/compiled MAP01 comparison note, and the current Docker/Xvfb blocked-release
 evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
 at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
@@ -25,14 +25,15 @@ Docker/Xvfb R10/R12/R14 adds six descriptive direct/compiled pairs with 12/12
 task-effect and release gates; compiled was 5.58% slower by median paired
 latency. See the [retained raw and summary packet](../research/integration/docker_vizdoom_x11_caller_efficiency_20261028/README.md).
 This does not establish Windows/WSLc transfer or broad reliability.
-The current-main Docker/Xvfb R04/R05 standard-caller samples retained initial
+The current-main Docker/Xvfb R04–R06 standard-caller samples retained initial
 effects, prestarted-supervisor release attempts, independent neutral readbacks,
 8.5 s delayed-input horizons and separate fresh-generation task-oracle passes.
-Both canceled old calls remain UNKNOWN and replay-denied across 1 s and 0 s
-child-ack-hold conditions. R03's test body passed without a structured report;
-R02's lower-level direct-XTEST case passed internally but its outer shell
-wrapper returned 2. See the
-[R02–R05 scope note](../research/integration/docker_xvfb_standard_caller_blocked_release_20261028/README.md).
+R06 also paused the exact private Xvfb process for 1 s by pidfd and verified
+timer resume. All canceled old calls remain UNKNOWN and replay-denied. R04/R05
+vary child ack hold; R06 varies server availability. R03's test body passed
+without a structured report; R02's lower-level direct-XTEST case passed
+internally but its outer shell wrapper returned 2. See the
+[R02–R06 scope note](../research/integration/docker_xvfb_standard_caller_blocked_release_20261028/README.md).
 All are synthetic Xvfb evidence, not native Win32, WSLc, MAP01 completion,
 general reliability or efficiency.
 

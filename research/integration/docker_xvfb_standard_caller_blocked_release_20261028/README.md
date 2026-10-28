@@ -70,6 +70,27 @@ made Docker's outer exit code 2. The inner test exit was 0; both are retained
 in `private-packets/docker_xvfb_held_key_disconnect_currentmain_20261028_r02/`.
 This direct XTEST result is not a standard MCP caller result.
 
+## R06 — pause the exact private Xvfb during cancellation
+
+R06 ran the same standard-caller integration on current main
+`17d1afe4be90d0fd70df51c0425a16891c9c952f`, with a 1 s Xvfb pause, no child
+ack hold, and the prestarted cancellation supervisor. The test passed 1/1 in
+9.501 s; Docker exited 0. It verified `/usr/bin/Xvfb :88 -screen 0
+1024x768x24 -ac`, stopped that exact process through a retained pidfd, and
+resumed it without error after 1,000.326 ms. Public cancel returned
+`cancel_requested` in 310.247 ms. After Xvfb resumed, supervisor release
+readback and a separate A/B all-up readback passed. No delayed B press was
+observed through 8,504.485 ms, and a distinct fresh-session C task oracle
+passed. Final A/B/C readback was neutral. Structured report and image are
+retained in
+`private-packets/docker_xvfb_server_pause_cancel_currentmain_20261028_r06/`.
+
+The old call remains `runtime_failed`/`EOFError()`,
+`release_confirmed=false`, `cleanup_status=UNKNOWN`, `task_success=null`, and
+replay denied. As in R04/R05, neutral input and the fresh task do not clear the
+old late-request uncertainty. R06 pauses a synthetic Xvfb process; it is not
+a blocked OS pipe, an X-server kernel hang, or a native Windows sample.
+
 ## Limits and next discriminator
 
 These are synthetic Linux/Xvfb samples. They do not establish a blocked X
