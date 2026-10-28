@@ -1460,17 +1460,36 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     'operation_invoked': False}, error=True)
             row = owner.interface_result(call_id)
             if row is None:
-                return content({'status': 'unknown_call', 'operation_invoked': False,
-                    'replay_allowed': False}, error=True)
-            row = deepcopy(row)
-            row['operation_invoked'] = False
-            row['input_dispatched'] = False
-            effect = row.get('task_effect')
-            row['task_success'] = (effect.get('task_success')
-                if isinstance(effect, dict) and effect.get('status') == 'verified'
-                else None)
-            row['replay_allowed'] = False
-            return content(row)
+                # A response-waiting dispatch is registered in the MCP call
+                # ledger before its worker admits the operation to the native
+                # owner. During that interval the exact call is valid but the
+                # owner has no action receipt yet. Preserve the pending state
+                # instead of misclassifying it as an unknown call.
+                with calls_lock:
+                    pending_record = deepcopy(calls.get(call_id))
+                if pending_record is not None and pending_record.get('state') != 'finished':
+                    if pending_record.get('cancellation_archived') is True:
+                        pending_record['cancellation'] = await load_cancellation_record(
+                            call_id, pending_record)
+                    pending_record.pop('cancellation_archived', None)
+                    pending_record.pop('cancellation_operation_id', None)
+                    return content({'status': 'pending', 'call': pending_record,
+                        'cancellation': deepcopy(pending_record.get('cancellation')),
+                        'operation_invoked': False})
+                # A finished MCP call can still have a durable report even if
+                # the owner has no action row (for example, pre-admission
+                # rejection). Let the ordinary exact-call receipt path below
+                # resolve it before declaring the ID unknown.
+            else:
+                row = deepcopy(row)
+                row['operation_invoked'] = False
+                row['input_dispatched'] = False
+                effect = row.get('task_effect')
+                row['task_success'] = (effect.get('task_success')
+                    if isinstance(effect, dict) and effect.get('status') == 'verified'
+                    else None)
+                row['replay_allowed'] = False
+                return content(row)
         with calls_lock:
             if call_id is None:
                 # Most recent calls first, bounded; request details are available by ID.
