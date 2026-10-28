@@ -1270,13 +1270,15 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             argv = ['server','--targets',str(targets),'--output-directory',str(output),
                     '--session-mode','guarded-x11','--guarded-process-identity',
                     '--guarded-query-worker','--guarded-owned-process',
-                    '--guarded-prestarted-cancel-supervisor']
+                    '--guarded-prestarted-cancel-supervisor',
+                    '--guarded-retention-mode','journal']
             with patch('sys.argv', argv), patch(
                     'runtime.cli_v1.mcp_server.create_server') as create:
                 main()
             create.assert_called_once_with({'app':20}, output, display_name=None,
                 session_mode='guarded-x11', guarded_process_identity=True,
                 guarded_query_worker=True, guarded_owned_process=True,
+                guarded_retention_mode='journal',
                 guarded_prestarted_cancel_supervisor=True)
             create.return_value.run.assert_called_once_with(transport='stdio')
 
@@ -1340,11 +1342,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             root=Path(td);(root/'compiled-profile-mode').write_text('enabled')
             server=create_server({'app':20},root,session_mode='guarded-x11',
                 guarded_process_identity=True,guarded_query_worker=True,
-                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+                guarded_owned_process=True,guarded_retention_mode='journal',
+                _guarded_owner_factory=_fake_owner_factory)
             try:
                 observed=metadata(await server.call_tool('interface_guarded_observe',{}))
                 self.assertEqual(observed['source']['pointer_binding']['process_generation'],'a'*64)
                 self.assertTrue(observed['session']['compiled_scope'])
+                self.assertEqual(observed['session']['retention_mode'],'journal')
                 minted=metadata(await server.call_tool('interface_guarded_mint',dict(
                     alias='field',source_sequence=observed['source']['sequence'],
                     point=[8,8],region_size=[12,12])))
@@ -1361,6 +1365,24 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 lookup=metadata(await server.call_tool('interface_results',{'call_id':result['call_id']}))
                 self.assertEqual(lookup['method_receipt'],result['method_receipt'])
                 self.assertIsNone(lookup['task_success'])
+                closed=metadata(await server.call_tool('interface_close',{}))
+                if closed.get('status') == 'busy':
+                    await asyncio.sleep(0.01)
+                    closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertEqual(closed['status'],'closed',closed)
+                from runtime.guarded_x11_v1.receipt_journal import ReceiptJournal
+                journal_path=(root/('guarded-session-'+observed['session']['session_id'])
+                              /'retention.jsonl')
+                with ReceiptJournal(journal_path) as journal:
+                    refs=journal.references()
+                    execution_refs=[ref for ref in refs if ref.endswith('-execution')]
+                    self.assertEqual(len(execution_refs),1,refs)
+                    execution=journal.lookup(execution_refs[0])
+                    self.assertTrue(execution['action_id'])
+                    self.assertTrue(execution['result']['execution']['releases'][-1]['verified'])
+                    self.assertIn('session-close',refs)
+                    close_report=journal.lookup('session-close')
+                    self.assertTrue(close_report['release']['verified'])
             finally:
                 await server.call_tool('interface_close',{})
                 _preserve_fake_x_run(
@@ -1403,7 +1425,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             server = create_server(
                 {'app':20}, root, session_mode='guarded-x11',
                 guarded_process_identity=True, guarded_query_worker=True,
-                guarded_owned_process=True,
+                guarded_owned_process=True, guarded_retention_mode='journal',
                 _guarded_owner_factory=_fake_owner_factory)
             try:
                 observed = metadata(await server.call_tool('interface_guarded_observe', {}))
@@ -1434,7 +1456,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             server = create_server(
                 {'app':20}, root, session_mode='guarded-x11',
                 guarded_process_identity=True, guarded_query_worker=True,
-                guarded_owned_process=True,
+                guarded_owned_process=True, guarded_retention_mode='journal',
                 _guarded_owner_factory=_fake_owner_factory)
             try:
                 observed = metadata(await server.call_tool('interface_guarded_observe', {}))
@@ -1504,6 +1526,15 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(terminal['task_success'])
                 self.assertFalse(terminal['replay_allowed'])
                 self.assertEqual(json.loads((root/'owner-io-entered.json').read_text()), [1])
+                from runtime.guarded_x11_v1.receipt_journal import ReceiptJournal
+                journal_path=(root/('guarded-session-'+observed['session']['session_id'])
+                              /'retention.jsonl')
+                with ReceiptJournal(journal_path) as journal:
+                    refs=journal.references()
+                    self.assertTrue(any(ref.startswith('observation-') for ref in refs), refs)
+                    self.assertIn('mint-field', refs)
+                    self.assertFalse(any(ref.endswith('-execution') for ref in refs), refs)
+                    self.assertNotIn('session-close', refs)
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})

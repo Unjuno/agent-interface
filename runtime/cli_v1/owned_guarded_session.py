@@ -300,6 +300,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     def __init__(self, targets, directory, display_name=None, *,
                  process_identity=False, query_worker=False,
                  observation_worker=False, window_lifecycle=False,
+                 retention_mode='files',
                  prestarted_cancel_supervisor=False,
                  _cleanup_supervisor_target=None,
                  _owner_factory=None):
@@ -307,7 +308,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                          process_identity=process_identity,
                          query_worker=query_worker,
                          observation_worker=observation_worker,
-                         window_lifecycle=window_lifecycle)
+                         window_lifecycle=window_lifecycle,
+                         retention_mode=retention_mode)
         self._owner_root = Path(directory)
         self._owner_factory = _owner_factory
         if type(prestarted_cancel_supervisor) is not bool:
@@ -387,7 +389,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                   {'process_identity':self.process_identity,
                    'query_worker':self.query_worker,
                    'observation_worker':self.observation_worker,
-                   'window_lifecycle':self.window_lifecycle},
+                   'window_lifecycle':self.window_lifecycle,
+                   'retention_mode':self.retention_mode},
                   self._owner_factory, input_obligations_state),
             name='guarded-x11-owner-' + self.session_id[:8])
         self.state = 'opening'

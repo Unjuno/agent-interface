@@ -14,6 +14,35 @@ from runtime.cli_v1.mcp_server import create_server, main
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_journal_retention_requires_guarded_x11_and_is_forwarded_to_owned_process(self):
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaisesRegex(ValueError, 'requires guarded-x11'):
+                create_server({'app':1}, td, guarded_retention_mode='journal')
+            with patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner') as owner:
+                create_server({'app':1}, td, session_mode='guarded-x11',
+                    guarded_process_identity=True, guarded_query_worker=True,
+                    guarded_owned_process=True, guarded_retention_mode='journal')
+        self.assertEqual(owner.call_args.kwargs['retention_mode'], 'journal')
+
+    async def test_owned_process_receives_default_retention_option_for_child(self):
+        with tempfile.TemporaryDirectory() as td, \
+             patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner') as owner:
+            create_server({'app':1}, td, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True)
+
+        options = owner.call_args.kwargs
+        self.assertEqual(options['retention_mode'], 'files')
+        self.assertTrue(options['prestarted_cancel_supervisor'] is False)
+
+    async def test_non_owned_process_receives_selected_retention_mode(self):
+        with tempfile.TemporaryDirectory() as td, \
+             patch('runtime.cli_v1.mcp_guarded.GuardedSessionOwner') as owner:
+            create_server({'app':1}, td, session_mode='guarded-x11',
+                guarded_retention_mode='journal')
+
+        self.assertEqual(owner.call_args.kwargs['retention_mode'], 'journal')
+
     def test_cli_exposes_supervised_win32_standard_session(self):
         with tempfile.TemporaryDirectory() as td:
             targets = Path(td) / 'targets.json'

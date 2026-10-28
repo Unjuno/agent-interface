@@ -321,6 +321,7 @@ class _WorkerAdmission:
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
                   guarded_process_identity=False, guarded_query_worker=False, guarded_observation_worker=False,
                   guarded_window_lifecycle=False, guarded_owned_process=False,
+                  guarded_retention_mode='files',
                   guarded_prestarted_cancel_supervisor=False,
                   _guarded_cancel_supervisor_target=None,
                   _guarded_cancel_transaction_timeout_s=(
@@ -384,6 +385,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if (type(guarded_window_lifecycle) is not bool
             or (guarded_window_lifecycle and not guarded_query_worker)):
         raise ValueError('window lifecycle requires explicit guarded query worker')
+    if guarded_retention_mode not in ('files', 'journal'):
+        raise ValueError("guarded_retention_mode must be 'files' or 'journal'")
+    if guarded_retention_mode != 'files' and session_mode != 'guarded-x11':
+        raise ValueError('journal retention requires guarded-x11 mode')
     if (not isinstance(targets, dict) or not targets or
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
                 for k, v in targets.items())):
@@ -491,7 +496,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         owner_options = dict(process_identity=guarded_process_identity,
                              query_worker=guarded_query_worker,
                              observation_worker=guarded_observation_worker,
-                             window_lifecycle=guarded_window_lifecycle)
+                             window_lifecycle=guarded_window_lifecycle,
+                             retention_mode=guarded_retention_mode)
         if guarded_owned_process:
             from .owned_guarded_session import OwnedGuardedSessionOwner
             owner = OwnedGuardedSessionOwner(targets, root, display_name,
@@ -1576,6 +1582,8 @@ def main():
                         help='isolate active visual checks; requires guarded query worker and qualified same local X server')
     parser.add_argument('--guarded-window-lifecycle',action='store_true',
                         help='require direct target lifecycle evidence; requires guarded query worker')
+    parser.add_argument('--guarded-retention-mode', choices=('files', 'journal'), default='files',
+                        help='guarded-x11 receipt storage; journal is opt-in and fsyncs each record')
     parser.add_argument('--guarded-owned-process',action='store_true',
                         help='run the complete guarded-X11 session in one spawned owner process; requires process identity and query worker')
     parser.add_argument('--guarded-prestarted-cancel-supervisor',action='store_true',
@@ -1592,12 +1600,16 @@ def main():
     if args.guarded_owned_process and (args.session_mode != 'guarded-x11'
             or not args.guarded_process_identity or not args.guarded_query_worker):
         parser.error('--guarded-owned-process requires guarded-x11, --guarded-process-identity and --guarded-query-worker')
+    if args.guarded_retention_mode == 'journal' and args.session_mode != 'guarded-x11':
+        parser.error('--guarded-retention-mode journal requires --session-mode guarded-x11')
     if args.guarded_prestarted_cancel_supervisor and not args.guarded_owned_process:
         parser.error('--guarded-prestarted-cancel-supervisor requires --guarded-owned-process')
     options = {'guarded_process_identity':args.guarded_process_identity}
     if args.guarded_query_worker: options['guarded_query_worker'] = True
     if args.guarded_observation_worker: options['guarded_observation_worker'] = True
     if args.guarded_window_lifecycle: options['guarded_window_lifecycle'] = True
+    if args.guarded_retention_mode != 'files':
+        options['guarded_retention_mode'] = args.guarded_retention_mode
     if args.guarded_owned_process: options['guarded_owned_process'] = True
     if args.guarded_prestarted_cancel_supervisor:
         options['guarded_prestarted_cancel_supervisor'] = True

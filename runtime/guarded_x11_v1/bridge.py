@@ -19,6 +19,7 @@ from .history import ObservationHistory
 from .process_identity import read_linux_x11_process_identity
 from .target_queries import TargetQueryWorker, focus_within_target
 from .observation_worker import CaptureBindingChanged, acquire_observation
+from .receipt_journal import ReceiptJournal
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
@@ -124,7 +125,7 @@ class _GuardedBackend(X11Backend):
 
 
 class NativeHandleBridge:
-    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False):
+    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False, retention_mode='files'):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
         if type(query_worker) is not bool or (query_worker and not process_identity):
@@ -133,6 +134,8 @@ class NativeHandleBridge:
             raise ValueError('observation_worker requires explicit query_worker=True')
         if type(window_lifecycle) is not bool or (window_lifecycle and not query_worker):
             raise ValueError('window_lifecycle requires explicit query_worker=True')
+        if retention_mode not in ('files', 'journal'):
+            raise ValueError("retention_mode must be 'files' or 'journal'")
         self._window_lifecycle_guard = window_lifecycle
         self._active_window_identity = None
         self._target_queries = None
@@ -145,6 +148,10 @@ class NativeHandleBridge:
         self._active_process_identity = None
         self.out = Path(out)
         self.out.mkdir(parents=True, exist_ok=False)
+        self.retention_mode = retention_mode
+        self._receipt_journal = None
+        if retention_mode == 'journal':
+            self._receipt_journal = ReceiptJournal(self.out / 'retention.jsonl')
         self.target = target
         self.scope = "native-x11:" + uuid.uuid4().hex
         self.store = TargetHandleStore(self.scope)
@@ -174,11 +181,20 @@ class NativeHandleBridge:
                     self._observations = TargetQueryWorker(lambda:observations.X11ObservationReader(
                         resolved_display,pinned_targets,target,self.out/'isolated-observations'))
         except Exception:
-            self.backend.close()
+            try:
+                self.backend.close()
+            finally:
+                if self._receipt_journal is not None:
+                    self._receipt_journal.close()
             raise
 
     def close(self):
-        if self._consume_close(): self.backend.close()
+        if self._consume_close():
+            try:
+                self.backend.close()
+            finally:
+                if self._receipt_journal is not None:
+                    self._receipt_journal.close()
 
     def _consume_close(self):
         if getattr(self,'_closed',False): return False
@@ -272,7 +288,31 @@ class NativeHandleBridge:
             raise X11BackendError('target query unavailable; close this session and review a fresh source') from error
 
     def _save(self, name, value):
+        if getattr(self, 'retention_mode', 'files') == 'journal':
+            reference = Path(name).name
+            if reference.endswith('.json'):
+                reference = reference[:-5]
+            if not reference or reference in ('.', '..') or any(c in reference for c in '/\\'):
+                raise ValueError('invalid retained receipt name')
+            kind = ('public-dispatch' if reference.startswith('public-dispatch-') else
+                    'public-observation' if reference.startswith('public-observation-') else
+                    reference.split('-', 1)[0])[:64] or 'receipt'
+            journal = getattr(self, '_receipt_journal', None)
+            if journal is None:
+                journal = ReceiptJournal(self.out / 'retention.jsonl')
+                self._receipt_journal = journal
+            return journal.append(reference, kind, value)
         (self.out / name).write_text(json.dumps(value, indent=2) + "\n")
+
+    def read_retained(self, reference):
+        if type(reference) is not str or not reference or reference in ('.', '..') or any(c in reference for c in '/\\'):
+            raise ValueError('invalid retained receipt reference')
+        if getattr(self, 'retention_mode', 'files') == 'journal':
+            journal = getattr(self, '_receipt_journal', None)
+            if journal is not None:
+                return journal.lookup(reference)
+            return ReceiptJournal.read(self.out / 'retention.jsonl', reference)
+        return json.loads((self.out / (reference + '.json')).read_text(encoding='utf-8'))
 
     def _binding(self):
         if self._isolated_observation_active():

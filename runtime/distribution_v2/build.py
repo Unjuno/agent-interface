@@ -24,6 +24,7 @@ SOURCE_FILES = (
     "runtime/guarded_x11_v1/process_identity.py",
     "runtime/guarded_x11_v1/target_queries.py",
     "runtime/guarded_x11_v1/observation_worker.py",
+    "runtime/guarded_x11_v1/receipt_journal.py",
     "runtime/guarded_x11_v1/history.py",
     "runtime/guarded_x11_v1/form.py",
     "runtime/guarded_x11_v1/compiled.py",
