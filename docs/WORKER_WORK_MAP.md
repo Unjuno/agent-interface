@@ -25,13 +25,14 @@ Docker/Xvfb R10/R12/R14 adds six descriptive direct/compiled pairs with 12/12
 task-effect and release gates; compiled was 5.58% slower by median paired
 latency. See the [retained raw and summary packet](../research/integration/docker_vizdoom_x11_caller_efficiency_20261028/README.md).
 This does not establish Windows/WSLc transfer or broad reliability.
-The new current-main Docker/Xvfb R04 standard-caller sample separately retained
-an initial task effect, prestarted-supervisor release attempt, independent
-neutral readback, 8.5 s delayed-input horizon and a fresh-generation task
-oracle pass. The canceled old call remains UNKNOWN and replay-denied. R03's
-test body passed without a structured report; R02's lower-level direct-XTEST
-case passed internally but its outer shell wrapper returned 2. See the
-[R02–R04 scope note](../research/integration/docker_xvfb_standard_caller_blocked_release_20261028/README.md).
+The current-main Docker/Xvfb R04/R05 standard-caller samples retained initial
+effects, prestarted-supervisor release attempts, independent neutral readbacks,
+8.5 s delayed-input horizons and separate fresh-generation task-oracle passes.
+Both canceled old calls remain UNKNOWN and replay-denied across 1 s and 0 s
+child-ack-hold conditions. R03's test body passed without a structured report;
+R02's lower-level direct-XTEST case passed internally but its outer shell
+wrapper returned 2. See the
+[R02–R05 scope note](../research/integration/docker_xvfb_standard_caller_blocked_release_20261028/README.md).
 All are synthetic Xvfb evidence, not native Win32, WSLc, MAP01 completion,
 general reliability or efficiency.
 

@@ -33,6 +33,24 @@ The initial A effect preceded cancellation. The fresh C task result belongs to
 a separate session and target generation. The independent neutral readback
 and supervisor release receipt therefore do not certify the old operation.
 
+## R05 — no withheld child acknowledgement
+
+R05 used a fresh Xvfb and the same image/source/test with
+`cancel_ack_withheld_s=0`. The test passed 1/1 in 9.528 s; Docker exited 0.
+The public cancel returned `cancel_requested` in 117.409 ms. The child owner
+retired, XRes confirmed disconnect, the prestarted supervisor's release
+attempt was `readback_verified`, a separate X client read A/B up, and no
+delayed B press appeared through 8,503.222 ms after cancel started. The
+fresh-session C task oracle passed and final A/B/C readback was neutral.
+
+The old call still ended `runtime_failed` with `EOFError()`,
+`release_confirmed=false`, `cleanup_status=UNKNOWN`, `task_success=null`, and
+replay denied. R04 with a 1 s child acknowledgement hold likewise retained
+UNKNOWN, with a 256.883 ms cancel response classified `cancel_unconfirmed`.
+This pair is descriptive only; one run per condition cannot establish a
+causal timing effect. R05's structured report and image are retained in
+`private-packets/docker_xvfb_standard_caller_cancel_ack0_currentmain_20261028_r05/`.
+
 ## R03 — report-path defect
 
 The same test body passed 1/1 and Docker exited 0, but the runner set
