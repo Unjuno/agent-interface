@@ -1,0 +1,5 @@
+# Q18 conventional staging candidate qualification
+
+Q16 staged exclusive custody and Q17 endpoint fixture-order repair integrated in an isolated candidate with a conventional7-method staging test module. New module appears once in native protocol catalog; received tests no longer use dynamic candidate source loading. All40 selected tests pass normal/-O macOSPython3.14 and dedicatedDebianPython3.11. Guest hashes verified before execution, effectiveCPU25%/memory128MiB/pids32, VM stopped. Only selected suite executed; whole native harness not executed.
+
+Candidate has4 active path changes versus fixedV5 plus pending inert evidence packaging. Runtime client bytes unchanged from Q16; Q17 first failure retained. PR7196 head remains fixedV5, no main writes, no old approvals transferred. Content publication remains unattempted after secondary403. Before adoption preserve all new source/first failures/qualified logs, fix content identity and obtain actual nonauthor content agreement plus current-main combination check. Hard-link compatibility, no directory fsync/crash/two-file atomicity, no physical/native/task guarantees remain.
