@@ -1,4 +1,5 @@
 import json
+import os
 import time
 from pathlib import Path
 
@@ -6,7 +7,7 @@ from receipt_journal import ReceiptJournal
 
 
 PAYLOADS = Path("/payloads")
-OUT = Path("/output")
+OUT = Path(os.environ.get("R07_OUTPUT", "/output"))
 FILES = sorted(PAYLOADS.glob("compiled-*.json"))
 VALUES = [(path.name, json.loads(path.read_text(encoding="utf-8")))
           for path in FILES]
