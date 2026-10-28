@@ -1,8 +1,8 @@
 # Repository cleanup plan
 
-## Current execution pointer after PR #9791 (2026-10-28)
+## Last verified main after PR #9792 (2026-10-28)
 
-Current `origin/main` is `145c3af7727dde16d6ab9010cbfb8e01bb8e6eda`. A
+Last verified `origin/main` is `d8dc65ce0dc6b38dcd4e3e8b882d1c33c9b089ac` (PR #9792). A
 GraphQL count read, bracketed by this same main SHA, reports 1,643 open Issues
 and 404 open PRs. This is count-only, not a paginated membership or semantic
 review. The latest complete membership receipt is [r151](maintenance/repository-inventory-recheck-20261022-r151.md),
@@ -16,9 +16,9 @@ Live status: #17 is OPEN (last updated 2026-10-26); #57 is CLOSED as completed
 offline validation gap by rejecting recovery when the first neutral readback
 starts beyond the configured post-release observation gap. Its focused
 owner/process/effect/MCP tests and reported PR checks passed, but it does not
-test native delayed input or the #17 blocked data-plane hypothesis. PR #9791
-is MERGED as this pointer's current main `145c3af...` and records that
-integration. No issue membership, allocation ownership, or worktree custody
+test native delayed input or the #17 blocked data-plane hypothesis. PR #9792
+is MERGED at the verified main SHA and refreshed these navigation pointers.
+No issue membership, allocation ownership, or worktree custody
 was inferred from these reads.
 
 The current execution order remains the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md):
