@@ -117,6 +117,12 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def close(self):
+        stop_workers = getattr(self.bridge, 'stop_target_queries', None)
+        if callable(stop_workers):
+            # Retire both idle read-only workers before the session closes its
+            # backend connection. Session.close() owns input cleanup, while the
+            # bridge owns these independent worker queues.
+            stop_workers()
         if self.bridge is not None and getattr(self.bridge, '_closed', False):
             report = super().close()
             journal = getattr(self.bridge, '_receipt_journal', None)
