@@ -535,13 +535,19 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 ordinary = [json.dumps({
                     "id": index, "tool": "interface_clock", "arguments": {}}).encode()+b"\n"
                     for index in range(1, relay_module.MAX_PENDING_STDOUT_RESPONSES + 1)]
+                queued_ordinary = [json.dumps({
+                    "id": index, "tool": "interface_clock", "arguments": {}}).encode()+b"\n"
+                    for index in range(relay_module.MAX_PENDING_STDOUT_RESPONSES + 1,
+                                       relay_module.MAX_PENDING_STDOUT_RESPONSES + 3)]
                 cancel_line = json.dumps({
-                    "id": len(ordinary) + 1, "tool": "interface_guarded_cancel",
+                    "id": len(ordinary) + len(queued_ordinary) + 1,
+                    "tool": "interface_guarded_cancel",
                     "arguments": {"call_id": pending["call_id"]}}).encode()+b"\n"
 
                 class TrackingInput:
                     def __init__(self):
-                        self.stream = io.BytesIO(b"".join(ordinary) + cancel_line)
+                        self.stream = io.BytesIO(
+                            b"".join(ordinary) + b"".join(queued_ordinary) + cancel_line)
                     def readline(self): return self.stream.readline()
                     @property
                     def buffer(self): return self
@@ -577,9 +583,11 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 cancel_finished = threading.Event()
                 cancel_result = []
                 call_times = {}
+                server_call_log = []
                 class Client:
                     async def initialize(self): pass
                     async def call_tool(self, name, arguments):
+                        server_call_log.append((name, arguments))
                         if name == "interface_guarded_cancel":
                             call_times["cancel_admission_ns"] = time.monotonic_ns()
                         result = await server.call_tool(name, arguments)
@@ -624,6 +632,10 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                                         "no earlier response reached blocked stdout")
                         self.assertTrue(await asyncio.to_thread(cancel_finished.wait, 2),
                                         "saturated relay did not dispatch cancellation to the MCP caller")
+                        self.assertEqual(
+                            sum(name == "interface_clock" for name, _ in server_call_log),
+                            relay_module.MAX_PENDING_STDOUT_RESPONSES,
+                            "ordinary requests queued after stdout saturation must remain deferred")
                         self.assertEqual(release_state["down"], [],
                                          "independent Fake X release did not run before stdout recovered")
                         self.assertEqual(len(cancel_result), 1)
@@ -642,7 +654,18 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                     finally:
                         release_output.set()
                         await asyncio.wait_for(relay_task, timeout=3)
-                self.assertEqual(len(stdout.rows), relay_module.MAX_PENDING_STDOUT_RESPONSES + 1)
+                self.assertEqual(len(stdout.rows),
+                                 relay_module.MAX_PENDING_STDOUT_RESPONSES +
+                                 len(queued_ordinary) + 1)
+                self.assertEqual(
+                    sum(name == "interface_clock" for name, _ in server_call_log),
+                    relay_module.MAX_PENDING_STDOUT_RESPONSES + len(queued_ordinary))
+                response_ids = [json.loads(row)["id"] for row in stdout.rows]
+                self.assertEqual(
+                    sorted(response_ids),
+                    list(range(1, relay_module.MAX_PENDING_STDOUT_RESPONSES +
+                         len(queued_ordinary) + 2)),
+                    "prioritized cancellation must preserve every response correlation ID")
                 self.assertLess(stdout.first_write_started_ns, stdout.first_write_resumed_ns)
                 self.assertGreaterEqual(stdout.cancel_row_written_ns, stdout.first_write_resumed_ns)
 
@@ -653,7 +676,11 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                     receipt = {
                         "disposition": "PASS_FAKE_X_RELAY_COMPOSITION_ONLY",
                         "source": "standard_mcp_caller_and_public_relay_with_synthetic_fake_x",
-                        "ordinary_requests_before_cancel": relay_module.MAX_PENDING_STDOUT_RESPONSES,
+                        "ordinary_requests_before_cancel": (
+                            relay_module.MAX_PENDING_STDOUT_RESPONSES + len(queued_ordinary)),
+                        "ordinary_responses_saturated_before_cancel": (
+                            relay_module.MAX_PENDING_STDOUT_RESPONSES),
+                        "ordinary_requests_queued_ahead_of_cancel": len(queued_ordinary),
                         "cancel_dispatched_while_stdout_blocked": True,
                         "cancel_response_written_after_stdout_resumed": True,
                         "fake_key_down_before_release": ["a"],

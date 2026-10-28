@@ -299,26 +299,26 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
                           ('interface_guarded_compiled',{'marker':'tail'})])
         self.assertTrue(tail_dispatched.is_set())
 
-    async def test_two_queued_ordinary_requests_delay_cancel_until_stdout_resumes(self):
+    async def test_cancel_waits_when_ordinary_queue_exceeds_bounded_lookahead(self):
         from runtime.cli_v1 import mcp_relay as module
 
         output_entered=threading.Event();release_output=threading.Event()
         cancel_dispatched=threading.Event();first_queued_dispatched=threading.Event()
-        second_queued_dispatched=threading.Event();read_lock=threading.Lock()
+        read_lock=threading.Lock()
         ordinary=[json.dumps({'id':i,'tool':'interface_guarded_compiled','arguments':{}}).encode()+b'\n'
                   for i in range(1,module.MAX_PENDING_STDOUT_RESPONSES+1)]
-        queued_one=(json.dumps({'id':len(ordinary)+1,'tool':'interface_guarded_compiled',
-                                'arguments':{'marker':'queued-one'}}).encode()+b'\n')
-        queued_two=(json.dumps({'id':len(ordinary)+2,'tool':'interface_guarded_compiled',
-                                'arguments':{'marker':'queued-two'}}).encode()+b'\n')
-        cancel=(json.dumps({'id':len(ordinary)+3,'tool':'interface_guarded_cancel',
+        queued = [(json.dumps({'id':len(ordinary)+index+1,
+                               'tool':'interface_guarded_compiled',
+                               'arguments':{'marker':f'queued-{index+1}'}}).encode()+b'\n')
+                  for index in range(module.MAX_CANCEL_READAHEAD_LINES+1)]
+        cancel=(json.dumps({'id':len(ordinary)+len(queued)+1,'tool':'interface_guarded_cancel',
                             'arguments':{'call_id':'a'*32}}).encode()+b'\n')
-        tail=(json.dumps({'id':len(ordinary)+4,'tool':'interface_guarded_compiled',
+        tail=(json.dumps({'id':len(ordinary)+len(queued)+2,'tool':'interface_guarded_compiled',
                           'arguments':{'marker':'tail'}}).encode()+b'\n')
 
         class TrackingInput:
             def __init__(self):
-                self.stream=io.BytesIO(b''.join(ordinary)+queued_one+queued_two+cancel+tail)
+                self.stream=io.BytesIO(b''.join(ordinary)+b''.join(queued)+cancel+tail)
                 self.read_count=0
             def readline(self):
                 row=self.stream.readline()
@@ -347,8 +347,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
             async def call_tool(self,name,arguments):
                 self.calls.append((name,arguments))
                 if name=='interface_guarded_cancel':cancel_dispatched.set()
-                if arguments.get('marker')=='queued-one':first_queued_dispatched.set()
-                if arguments.get('marker')=='queued-two':second_queued_dispatched.set()
+                if arguments.get('marker')=='queued-1':first_queued_dispatched.set()
                 return CallToolResult(content=[TextContent(type='text',text=name)])
 
         client=Client();stdin=TrackingInput();stdout=BlockingOutput();errors=[]
@@ -365,16 +364,16 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(await asyncio.to_thread(output_entered.wait,2),
                                 'first response never reached the blocked stdout writer')
                 deadline=asyncio.get_running_loop().time()+2
-                expected_reads=module.MAX_PENDING_STDOUT_RESPONSES+2
+                expected_reads=(module.MAX_PENDING_STDOUT_RESPONSES+
+                                module.MAX_CANCEL_READAHEAD_LINES+1)
                 while stdin.read_count<expected_reads and asyncio.get_running_loop().time()<deadline:
                     await asyncio.sleep(0.005)
                 self.assertEqual(stdin.read_count,expected_reads,
-                                 'relay did not stop after its one-line lookahead was occupied')
+                                 'relay did not stop after its bounded lookahead was occupied')
                 await asyncio.sleep(0.1)
                 self.assertFalse(cancel_dispatched.is_set(),
-                                 'cancel unexpectedly bypassed two queued ordinary requests')
+                                 'cancel unexpectedly bypassed requests beyond the bounded lookahead')
                 self.assertFalse(first_queued_dispatched.is_set())
-                self.assertFalse(second_queued_dispatched.is_set())
                 release_started_ns=time.perf_counter_ns()
                 release_output.set()
                 self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,2),
@@ -388,21 +387,14 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertGreaterEqual(cancel_dispatched_ns,release_started_ns)
         prefix = [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES
         self.assertEqual(client.calls[:len(prefix)], prefix)
-        # Once stdout resumes, the bounded reader and response writers race:
-        # a cancellation already read by the lookahead may overtake queued-two;
-        # if that read has not completed, FIFO dispatches queued-two first.
-        # Both orders preserve the public contract. Before release, the checks
-        # above still require both ordinary requests to remain undispatched.
-        self.assertIn(client.calls[len(prefix):], [
-            [('interface_guarded_compiled',{'marker':'queued-one'}),
-             ('interface_guarded_cancel',{'call_id':'a'*32}),
-             ('interface_guarded_compiled',{'marker':'queued-two'}),
-             ('interface_guarded_compiled',{'marker':'tail'})],
-            [('interface_guarded_compiled',{'marker':'queued-one'}),
-             ('interface_guarded_compiled',{'marker':'queued-two'}),
-             ('interface_guarded_cancel',{'call_id':'a'*32}),
-             ('interface_guarded_compiled',{'marker':'tail'})],
-        ])
+        post_prefix=client.calls[len(prefix):]
+        self.assertEqual([arguments['marker'] for name,arguments in post_prefix
+                          if name=='interface_guarded_compiled' and 'marker' in arguments],
+                         [f'queued-{index}'
+                          for index in range(1,module.MAX_CANCEL_READAHEAD_LINES+2)]+
+                         ['tail'])
+        cancel_index=post_prefix.index(('interface_guarded_cancel',{'call_id':'a'*32}))
+        self.assertGreater(cancel_index,0)
 
     async def test_cancel_response_writer_failure_stops_later_tool_dispatch(self):
         from runtime.cli_v1 import mcp_relay as module
