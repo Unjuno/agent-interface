@@ -2,12 +2,12 @@
 
 ## Current work-map pointer — 2026-10-28
 
-**Current source:** `main` `145c3af7727dde16d6ab9010cbfb8e01bb8e6eda`. A GraphQL
-read bracketed by that SHA reports 1,643 open Issues and 404 open PRs; this is
-count-only. The latest complete membership receipt is [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
+**Last verified `origin/main` (2026-10-28):** `d8dc65ce0dc6b38dcd4e3e8b882d1c33c9b089ac`
+(PR #9792). The count-only GraphQL read at this SHA reports 1,643 open Issues
+and 404 open PRs; it is not a membership or ownership inventory. The latest complete membership receipt is [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
 at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
 PRs). It is a historical membership snapshot, not current ownership, review,
-or cleanup authorization. See the [current cleanup pointer](REPOSITORY_CLEANUP_PLAN.md#current-execution-pointer-after-pr-9791-2026-10-28)
+or cleanup authorization. See the [latest cleanup pointer](REPOSITORY_CLEANUP_PLAN.md#last-verified-main-after-pr-9792-2026-10-28)
 and [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md).
 
 Current touched-family status: #17 remains OPEN; its last update is 2026-10-26
