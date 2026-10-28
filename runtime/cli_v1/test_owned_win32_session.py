@@ -770,6 +770,47 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(duplicate["reason"], "source_recovery_already_attempted")
         supervisor.recover_orphaned_input.assert_called_once()
 
+        same_generation = session.bind_target_generation()
+        with self.assertRaisesRegex(ValueError,
+                                    "FRESH_TARGET_GENERATION_REQUIRED"):
+            session.admit_action_from_binding("4" * 32, "5" * 32,
+                same_generation["target_binding_id"],
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+
+        session.bind_target_generation_reader(lambda: GEN_B)
+        fresh_generation = session.bind_target_generation()
+        admitted = session.admit_action_from_binding("6" * 32, "7" * 32,
+            fresh_generation["target_binding_id"],
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            obligations=["key:map01:W"])
+        self.assertEqual(admitted["action"]["status"], "admitted")
+
+    def test_unknown_orphan_recovery_blocks_new_generation_admission(self):
+        supervisor = FakeCancellationSupervisor(self.owner)
+        supervisor.recover_orphaned_input = Mock(return_value={
+            "status": "unknown", "release_confirmed": False,
+            "operation_id": ACTION_ID, "target_generation": GEN_A,
+            "recovery_id": "3" * 32})
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        generation = [GEN_A]
+        session.bind_target_generation_reader(lambda: generation[0])
+        result = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"],
+            source_custody_record=orphan_custody_record())
+        self.assertEqual(result["recovery_status"], "unknown")
+
+        generation[0] = GEN_B
+        binding = session.bind_target_generation()
+        with self.assertRaisesRegex(ValueError, "ORPHAN_RECOVERY_UNRESOLVED"):
+            session.admit_action_from_binding("4" * 32, "5" * 32,
+                binding["target_binding_id"],
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+
     def test_orphan_recovery_accepts_known_dispatch_but_rejects_known_no_dispatch(self):
         for dispatched, expected in ((True, "recovered"), (False, "refused")):
             with self.subTest(input_dispatched=dispatched):
