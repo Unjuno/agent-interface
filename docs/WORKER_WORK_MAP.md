@@ -1,11 +1,11 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-28, after PR #9803 and Docker/Xvfb R06
+## Current work-map pointer — 2026-10-28, after PR #9803 and Docker/Xvfb R07
 
 **Last verified `origin/main` (2026-10-28):** `799e894b17cd7cb30e68ff01a42665a11cf244f9`
-(PR #9803). This pointer verifies the merged guarded-X11 keyboard-tail change,
+(PR #9803). Local current-main has since advanced to `703c327b1ea5599bd36b28f4b349f2626fce2e9b` for a research-only R07 storage study; this pointer verifies the merged guarded-X11 keyboard-tail change,
 the direct/compiled MAP01 comparison note, current-main R03/R04 efficiency
-records, R05 storage study, R06 journal prototype result and current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
+records, R05/R06/R07 storage studies and current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
 at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
 PRs), a historical snapshot rather than current ownership or cleanup
@@ -33,9 +33,14 @@ JSONL per-record flush at 4.91x faster than separate files; indexing, torn-tail
 recovery and effect-reference compatibility remain unproven. See the
 [R04 profile](../research/integration/docker_vizdoom_x11_efficiency_profile_r04_20261028/README.md)
 and [R05 storage study](../research/integration/docker_vizdoom_efficiency_storage_microbench_r05/README.md).
-R06's hash-linked store passed its corruption and reference tests but was 46.2%
-slower on combined writes/readback; the next step is a persistent locked writer
-profile, not runtime adoption. See the [R06 prototype record](../research/integration/docker_vizdoom_receipt_journal_r06/README.md).
+R06's hash-linked store was 46.2% slower on combined writes/readback. The R07
+persistent-handle prototype then measured 14.998 ms median combined append and
+verified readback against 54.224 ms for pretty files (3.62x faster) on the same
+19 receipts, with 12/12 tests in normal and optimized Python. It remains
+research-only: no fsync, no production `*-effect.json` API, no interrupted-write
+custody proof. The integrated compiled-vs-direct result remains 5–6% slower for
+compiled control. See the [R06 record](../research/integration/docker_vizdoom_receipt_journal_r06/README.md)
+and [R07 profile](../research/integration/docker_vizdoom_receipt_journal_r07/README.md).
 These synthetic Xvfb results do not establish Windows/WSLc transfer or broad reliability.
 The current-main Docker/Xvfb R04–R06 standard-caller samples retained initial
 effects, prestarted-supervisor release attempts, independent neutral readbacks,
