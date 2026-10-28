@@ -999,6 +999,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             pending = self.row(await dispatch_task)
             self.assertEqual(pending["status"], "pending")
             self.assertTrue(entered.wait(1))
+            with patch.object(owner, "interface_result", return_value=None):
+                during_admission = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+            self.assertEqual(during_admission["status"], "pending", during_admission)
+            self.assertEqual(during_admission["call"]["call_id"], pending["call_id"])
             cancelled = self.row(await server.call_tool("interface_cancel", {
                 "call_id": pending["call_id"]}))
             self.assertEqual(cancelled["status"], "cancel_pending")
