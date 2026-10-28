@@ -239,6 +239,19 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(requests[0][4], ["key:fixture:W"])
                 self.assertLessEqual(requests[0][3] - time.monotonic_ns(),
                                      5_000_000_000)
+                refused = self.row(await server.call_tool(
+                    "interface_dispatch", {
+                        "program": self.valid_program(),
+                        "current_observation_seq": 1,
+                        "current_binding_revision": 1,
+                        "wait_for_result_ms": 5000}))
+                self.assertEqual(refused.get("status"), "invalid_request",
+                                 refused)
+                self.assertEqual(refused.get("error"),
+                                 "FRESH_TARGET_GENERATION_REQUIRED")
+                self.assertFalse(refused.get("operation_invoked"))
+                self.assertFalse(refused.get("input_dispatched"))
+                self.assertEqual(producer.started, 0)
 
     @staticmethod
     def row(reply):

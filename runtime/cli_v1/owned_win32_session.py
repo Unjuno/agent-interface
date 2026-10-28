@@ -77,6 +77,8 @@ class OwnedWin32SessionOwner:
         self._target_bindings = {}
         self._used_authority_leases = set()
         self._orphan_recovery_sources = set()
+        self._orphan_recovery_fenced_generations = set()
+        self._orphan_recovery_unresolved = False
 
     def bind_target_generation_reader(self, reader):
         """Bind a host-supplied identity query; this adapter never opens Win32 APIs."""
@@ -243,6 +245,11 @@ class OwnedWin32SessionOwner:
         with self._lock:
             if self.state != "open":
                 raise RuntimeError("Win32 session is not open")
+            if self._orphan_recovery_unresolved:
+                raise ValueError("ORPHAN_RECOVERY_UNRESOLVED")
+            if (type(target_generation) is str
+                    and target_generation in self._orphan_recovery_fenced_generations):
+                raise ValueError("FRESH_TARGET_GENERATION_REQUIRED")
             if (authority_lease is not None
                     and authority_lease in self._used_authority_leases):
                 raise ValueError("authority lease ID already used")
@@ -818,6 +825,9 @@ class OwnedWin32SessionOwner:
             if self.state != "open" or self._calls:
                 return self._orphan_recovery_refusal(
                     "fresh_empty_session_required")
+            if self._orphan_recovery_unresolved:
+                return self._orphan_recovery_refusal(
+                    "orphan_recovery_unresolved")
             if source_operation_id in self._orphan_recovery_sources:
                 return self._orphan_recovery_refusal(
                     "source_recovery_already_attempted")
@@ -832,6 +842,9 @@ class OwnedWin32SessionOwner:
                     "target_generation_mismatch")
             recovery_id = uuid.uuid4().hex
             deadline_ns = time.monotonic_ns() + _ORPHAN_RECOVERY_WINDOW_NS
+            # Once a valid orphan recovery reaches the native supervisor, no
+            # action may be admitted until its terminal custody is known.
+            self._orphan_recovery_unresolved = True
             try:
                 receipt = recover(source_operation_id, source_target_generation,
                     recovery_id, deadline_ns, list(obligations))
@@ -844,6 +857,10 @@ class OwnedWin32SessionOwner:
                 and receipt.get("target_generation") == source_target_generation
                 and receipt.get("recovery_id") == recovery_id
                 and receipt.get("release_confirmed") is True)
+            if confirmed:
+                self._orphan_recovery_fenced_generations.add(
+                    source_target_generation)
+                self._orphan_recovery_unresolved = False
             return {
                 "recovery_status": "recovered" if confirmed else "unknown",
                 "source_operation_id": source_operation_id,
