@@ -494,6 +494,10 @@ class OperationOwner:
                              or observation_ns[0] < release_received_ns)):
                     horizon_error = "observation_before_release_receipt"
                 elif (horizon_error is None
+                        and observation_ns[0] - release_received_ns
+                        > late_input_max_sample_gap_ns):
+                    horizon_error = "initial_observation_gap_exceeded"
+                elif (horizon_error is None
                         and observation_ns[-1] - release_received_ns < late_input_horizon_ns):
                     horizon_error = "horizon_duration_not_covered"
                 if horizon_error is not None:
