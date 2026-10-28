@@ -1,11 +1,11 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-28, after PR #9799 and Docker/Xvfb R03
+## Current work-map pointer — 2026-10-28, after PR #9801 and Docker/Xvfb R04
 
-**Last verified `origin/main` (2026-10-28):** `c7701e08ce13290a9c71aeacaf0af578521f85bb`
-(PR #9799). This pointer verifies the merged guarded-X11 keyboard-tail change,
-the direct/compiled MAP01 comparison note, the current-main R03 efficiency
-record, and the current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
+**Last verified `origin/main` (2026-10-28):** `a7989ff00925608011077c9bf144d997b07b3307`
+(PR #9801). This pointer verifies the merged guarded-X11 keyboard-tail change,
+the direct/compiled MAP01 comparison note, current-main R03 efficiency and R04
+profile records, and the current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
 at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
 PRs), a historical snapshot rather than current ownership or cleanup
@@ -26,6 +26,10 @@ task-effect and release gates; compiled was 5.58% slower by median paired
 latency. The separate current-main R03 adds four pairs, all 8/8 arm gates
 passed; compiled mean latency was 5.32% slower. See the [current-main R03
 record](../research/integration/docker_vizdoom_x11_efficiency_current_main_r03_20261028/README.md).
+An instrumented R04 profile found +54.034 ms mean compiled latency; 19 extra
+receipt saves averaged 49.535 ms per arm, identifying evidence persistence as
+the next profiling lead. The preregistration prose defect is disclosed in the
+[R04 record](../research/integration/docker_vizdoom_x11_efficiency_profile_r04_20261028/README.md).
 These synthetic Xvfb results do not establish Windows/WSLc transfer or broad reliability.
 The current-main Docker/Xvfb R04–R06 standard-caller samples retained initial
 effects, prestarted-supervisor release attempts, independent neutral readbacks,
