@@ -1,9 +1,9 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-28, after PR #9803 and Docker/Xvfb R07
+## Current work-map pointer — 2026-10-29, after PR #9806 and Docker/Xvfb R01–R02
 
-**Last verified `origin/main` (2026-10-28):** `799e894b17cd7cb30e68ff01a42665a11cf244f9`
-(PR #9803). Local current-main has since advanced to `703c327b1ea5599bd36b28f4b349f2626fce2e9b` for a research-only R07 storage study; this pointer verifies the merged guarded-X11 keyboard-tail change,
+**Last verified `origin/main` (2026-10-29):** `a3bf4ae96ec49b7c0359e9985a05a9a3beac79cf`
+(PR #9806). This pointer verifies the merged guarded-X11 keyboard-tail change,
 the direct/compiled MAP01 comparison note, current-main R03/R04 efficiency
 records, R05/R06/R07 storage studies and current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
@@ -12,15 +12,24 @@ PRs), a historical snapshot rather than current ownership or cleanup
 authorization. See the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md)
 and [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md).
 
-Current touched-family status: #17 remains OPEN; its last update is 2026-10-26
-and its latest recorded result is R40, a scoped in-process blocked-stdout
-recovery sample. PR #9790 is merged and adds an offline fail-closed check for
+Current touched-family status: #17 is CLOSED as completed since 2026-10-28; this
+does not close the separate end-to-end computer-control goal. Its latest scoped
+OS-pipe recovery samples R44/R45 did not establish their gate. PR #9790 is merged and adds an offline fail-closed check for
 an unobserved initial late-input horizon gap; it does not establish native
-release or #17's blocked OS-pipe/journal/telemetry hypothesis. #57 is CLOSED
+release or the broader blocked OS-pipe/journal/telemetry hypothesis in #17. #57 is CLOSED
 as completed on 2026-10-27, but that state is not project-wide completion.
 #7924 remains OPEN with its migration STOP; it grants no WSLc allocation.
 Current-main GZDoom R71/R73 movement and R72 idle-control records are linked
 from [`CURRENT_GOAL.md`](CURRENT_GOAL.md); they do not prove MAP01 completion.
+Docker/Xvfb R01–R02 then tested a 4 s server pause with an 8 s delayed request.
+The default 4 s cancellation transaction expired before recovery evidence; a
+12 s test-only window let the supervisor verify release and a separate C task
+pass, but the old task recorded two extra A effects after cancel and failed its
+exact count oracle. Runtime custody stayed UNKNOWN and replay-denied. Preserve
+both first outcomes; the next mechanism question is suppressing/auditing those
+post-cancel repeated effects without weakening bounded recovery or task oracles.
+See the [R01–R02 packet note](../research/integration/docker_xvfb_delayed_release_budget_20261029/README.md)
+and local raw packets.
 Docker/Xvfb R10/R12/R14 adds six descriptive direct/compiled pairs with 12/12
 task-effect and release gates; compiled was 5.58% slower by median paired
 latency. The separate current-main R03 adds four pairs, all 8/8 arm gates
