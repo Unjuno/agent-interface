@@ -35,6 +35,10 @@ choices. Existing source capture, scope, texture, exact-pixel matching, bounded
 window translation and fresh guards remain unchanged. Missing/stale/changed
 references refuse input; they never trigger automatic grounding or replay.
 `keyboard(alias, offset, tail=...)` guards keyboard continuation without clicking.
+Keyboard tails may include bounded `key_state` presses and releases as well as
+text and chords; the bridge appends its mandatory `release_all`, and the caller
+must inspect the terminal native release receipt before treating input as
+neutral. Pointer and move tails continue to reject key-state operations.
 `review_window(window_id)` explicitly revokes all old aliases even when review
 fails; successful review does not infer semantic equivalence of windows.
 Call `close()` in a finally block. It closes this connection, not the application.
