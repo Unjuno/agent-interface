@@ -70,6 +70,15 @@ completed/uncertain input before choosing a new action. Failures outside the
 observation boundary propagate after retention. There is no automatic retry or
 release claim when an execution supplies no actual release evidence.
 
+If saving the final graph receipt itself fails, `run` returns an in-memory
+`RUNTIME_FAILED / execution_failed` receipt, marks
+`raw_evidence_retention=failed`, records the retention failure stage and error
+type, and sets `replay_allowed=false`. A prior `TASK_SUCCEEDED` verdict is
+downgraded; the returned critical-event tail identifies the failed runtime
+receipt write. This makes the outcome available to the caller but does not make
+that final receipt durable. Inspect any retained native execution/release
+evidence and independently observe the target before deciding what to do next.
+
 When the first graph observation carries `process_generation` or
 `window_generation`, the adapter pins those values for the invocation. A later
 change or missing value yields `SAFE_YIELD / association_changed`; the adapter

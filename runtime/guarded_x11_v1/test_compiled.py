@@ -375,4 +375,50 @@ class CompiledX11Tests(unittest.TestCase):
           'execution':{'program_emissions':1,'releases':[]}}
         r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
         self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+
+    def test_action_terminal_retention_failure_returns_typed_receipt_when_final_save_also_fails(self):
+        b=Bridge();failures=[]
+        def failing_save(name,value):
+            if name.endswith('-event.json') and value.get('event')=='action_terminal':
+                failures.append('action_terminal')
+                raise OSError('journal append failed after release')
+            if name.endswith('-receipt.json'):
+                failures.append('runtime_receipt')
+                raise OSError('journal is uncertain or closed')
+            b.saved.append((name,copy.deepcopy(value)))
+        b._save=failing_save
+        receipt=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(failures,['action_terminal','runtime_receipt'])
+        self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(receipt['completed_transitions'],1)
+        self.assertTrue(receipt['transitions'][0]['release_verified'])
+        self.assertEqual(receipt['pending_effect']['action'],'enter')
+        self.assertEqual(len(b.inputs),1)
+        self.assertEqual(receipt['raw_evidence_retention'],'failed')
+        self.assertFalse(receipt['retention_failure']['replay_allowed'])
+        self.assertEqual(receipt['retention_failure']['stage'],'runtime_receipt')
+        self.assertEqual(receipt['critical_events'][-1]['event'],'runtime_finished')
+        self.assertEqual(receipt['critical_events'][-1]['outcome'],'RUNTIME_FAILED')
+        self.assertTrue(any(event.get('event')=='journal_write_failed' and
+                            event.get('stage')=='runtime_receipt'
+                            for event in receipt['critical_events']))
+
+
+
+    def test_final_receipt_retention_failure_downgrades_graph_success(self):
+        b=Bridge()
+        def failing_save(name,value):
+            if name.endswith('-receipt.json'):
+                raise OSError('receipt storage unavailable')
+            b.saved.append((name,copy.deepcopy(value)))
+        b._save=failing_save
+        receipt=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((receipt['outcome'],receipt['reason']),('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(receipt['completed_transitions'],2)
+        self.assertEqual(len(b.inputs),2)
+        self.assertEqual(receipt['critical_events'][-1]['outcome'],'RUNTIME_FAILED')
+        self.assertEqual(receipt['raw_evidence_retention'],'failed')
+        self.assertFalse(receipt['retention_failure']['replay_allowed'])
+
+
 if __name__=='__main__': unittest.main()
