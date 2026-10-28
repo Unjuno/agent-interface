@@ -735,6 +735,66 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
 
 
 class PublicCompiledOwnerTests(unittest.TestCase):
+    def test_owner_close_retains_real_release_report_in_journal(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        from runtime.guarded_x11_v1.receipt_journal import ReceiptJournal
+        with tempfile.TemporaryDirectory() as td:
+            owner=GuardedSessionOwner({'app':7},td,retention_mode='journal')
+            journal=ReceiptJournal(Path(td)/'retention.jsonl')
+            backend=SimpleNamespace(
+                release_all=Mock(return_value={'verified':True,'keys_down':[],'buttons_down':[]}),
+                close=Mock(return_value={'status':'closed'}))
+            owner.bridge=SimpleNamespace(_closed=False,_receipt_journal=journal)
+            owner.session=SimpleNamespace(backend=backend)
+            owner.dispatch_attempted=True
+            report=owner.close()
+            retained=ReceiptJournal.read(Path(td)/'retention.jsonl','session-close')
+            self.assertEqual(report['release'],{'verified':True,'keys_down':[],'buttons_down':[]})
+            self.assertEqual(retained['release'],report['release'])
+            self.assertEqual(retained['backend_close'],{'status':'closed'})
+            self.assertEqual(report['receipt_journal']['status'],'close_receipt_recorded')
+
+    def test_owner_close_appends_close_report_and_releases_journal(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            owner = GuardedSessionOwner({'app':7}, td, retention_mode='journal')
+            owner.bridge = SimpleNamespace(_closed=False, _receipt_journal=None)
+            class Journal:
+                def __init__(self): self.rows=[]; self.closed=False
+                def append(self, reference, kind, payload):
+                    self.rows.append((reference,kind,payload)); return reference
+                def close(self): self.closed=True
+            journal=Journal();owner.bridge._receipt_journal=journal
+            report={'status':'closed','release_attempted':True}
+            with patch('runtime.cli_v1.mcp_guarded.MCPSessionOwner.close', return_value=report):
+                returned=owner.close()
+            self.assertEqual(journal.rows[0][:2],('session-close','session-close'))
+            self.assertEqual(journal.rows[0][2],report)
+            self.assertTrue(journal.closed)
+            self.assertEqual(returned['receipt_journal']['status'],'close_receipt_recorded')
+
+    def test_owner_close_after_bridge_close_still_releases_journal(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            owner=GuardedSessionOwner({'app':7},td,retention_mode='journal')
+            class Journal:
+                closed=False
+                def close(self): self.closed=True
+            journal=Journal()
+            owner.bridge=SimpleNamespace(_closed=True,_receipt_journal=journal)
+            with patch('runtime.cli_v1.mcp_guarded.MCPSessionOwner.close',return_value={'status':'closed'}):
+                owner.close()
+            self.assertTrue(journal.closed)
+
+    def test_retention_mode_is_explicit_and_reported(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaises(ValueError):
+                GuardedSessionOwner({'app':7}, td, retention_mode='unknown')
+            owner = GuardedSessionOwner({'app':7}, td, retention_mode='journal')
+            self.assertEqual(owner.snapshot()['retention_mode'], 'journal')
+            self.assertEqual(owner.snapshot()['target'], 'app')
+
     def owner(self, root):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
         owner = GuardedSessionOwner({'app':7}, root, ':fixture')

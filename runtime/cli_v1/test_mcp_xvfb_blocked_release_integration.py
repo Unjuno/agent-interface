@@ -54,6 +54,7 @@ _TRACE_OWNER_PROCESS_METHODS = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS', '1') == '1')
 _PRESTARTED_CANCEL_SUPERVISOR = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR', '0') == '1')
+_RETENTION_MODE = os.environ.get('AGENT_INTERFACE_MCP_XVFB_RETENTION_MODE', 'files')
 _SERVER_PAUSE_MS = int(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS', '0'))
 _TRANSACTION_TIMEOUT_S = float(os.environ.get(
@@ -66,6 +67,8 @@ if not 0 <= _SERVER_PAUSE_MS <= 5000:
     raise ValueError('Xvfb pause must be between 0 and 5000 ms')
 if not math.isfinite(_TRANSACTION_TIMEOUT_S) or not 0 < _TRANSACTION_TIMEOUT_S <= 30:
     raise ValueError('cancellation transaction timeout must be in (0, 30] seconds')
+if _RETENTION_MODE not in ('files', 'journal'):
+    raise ValueError('retention mode must be files or journal')
 
 
 def _metadata(response):
@@ -537,6 +540,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     {'app':window.id}, owner_output_root, session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
                     guarded_window_lifecycle=True, guarded_owned_process=True,
+                    guarded_retention_mode=_RETENTION_MODE,
                     guarded_prestarted_cancel_supervisor=(
                         _PRESTARTED_CANCEL_SUPERVISOR),
                     _guarded_cancel_transaction_timeout_s=(
@@ -941,7 +945,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     {'app':fresh_window.id}, fresh_output_root,
                     session_mode='guarded-x11', guarded_process_identity=True,
                     guarded_query_worker=True, guarded_window_lifecycle=True,
-                    guarded_owned_process=True)
+                    guarded_owned_process=True,
+                    guarded_retention_mode=_RETENTION_MODE)
                 fresh_observed = _metadata(await fresh_server.call_tool(
                     'interface_guarded_observe', {}))
                 fresh_minted = _metadata(await fresh_server.call_tool(
@@ -1238,6 +1243,28 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(terminal.get('cleanup_status'), 'UNKNOWN', terminal)
                 self.assertIsNone(terminal.get('task_success'), terminal)
                 self.assertFalse(terminal.get('replay_allowed'), terminal)
+
+                if _RETENTION_MODE == 'journal':
+                    from runtime.guarded_x11_v1.receipt_journal import ReceiptJournal
+                    old_session_id = observed['session']['session_id']
+                    journal_path = (owner_output_root
+                                    / ('guarded-session-' + old_session_id)
+                                    / 'retention.jsonl')
+                    with ReceiptJournal(journal_path) as journal:
+                        refs = journal.references()
+                        self.assertTrue(any(ref.startswith('observation-') for ref in refs), refs)
+                        self.assertTrue(any(ref.startswith('mint-') for ref in refs), refs)
+                        self.assertFalse(any(ref.endswith('-execution') for ref in refs), refs)
+                        self.assertNotIn('session-close', refs)
+                    report['retired_owner_journal'] = {
+                        'status':'reopened_and_verified', 'references':refs,
+                        'execution_result_present':False, 'session_close_present':False,
+                        'terminal_status':terminal['status'],
+                        'cleanup_status':terminal['cleanup_status'],
+                        'release_confirmed':terminal['release_confirmed'],
+                        'task_success':terminal['task_success'],
+                        'replay_allowed':terminal['replay_allowed'],
+                    }
 
                 report['status'] = (
                     'OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN')

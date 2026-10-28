@@ -34,17 +34,19 @@ class InputFeedback(BaseModel):
         return self
 
 
-def open_bridge(display_name, targets, target, directory, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False):
+def open_bridge(display_name, targets, target, directory, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False, retention_mode='files'):
     # Optional Pillow/Xlib dependencies are loaded only for this explicit mode.
     from runtime.guarded_x11_v1.bridge import NativeHandleBridge
     options = dict(process_identity=process_identity,query_worker=query_worker)
     if observation_worker: options['observation_worker'] = True
     if window_lifecycle: options['window_lifecycle'] = True
+    if retention_mode != 'files':
+        options['retention_mode'] = retention_mode
     return NativeHandleBridge(display_name, targets, target, directory,**options)
 
 
 class GuardedSessionOwner(MCPSessionOwner):
-    def __init__(self, targets, directory, display_name=None, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False):
+    def __init__(self, targets, directory, display_name=None, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False, retention_mode='files'):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
         if type(query_worker) is not bool or (query_worker and not process_identity):
@@ -53,6 +55,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise ValueError('observation_worker requires explicit query_worker=True')
         if type(window_lifecycle) is not bool or (window_lifecycle and not query_worker):
             raise ValueError('window_lifecycle requires explicit query_worker=True')
+        if retention_mode not in ('files', 'journal'):
+            raise ValueError("retention_mode must be 'files' or 'journal'")
         if len(targets) != 1:
             raise ValueError('guarded-x11 requires exactly one explicitly configured target')
         super().__init__(targets, display_name)
@@ -64,6 +68,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         self.query_worker = query_worker
         self.observation_worker = observation_worker
         self.window_lifecycle = window_lifecycle
+        self.retention_mode = retention_mode
 
     def get(self):
         if self.state == 'open':
@@ -76,6 +81,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             if self.query_worker: options['query_worker'] = True
             if self.observation_worker: options['observation_worker'] = True
             if self.window_lifecycle: options['window_lifecycle'] = True
+            if self.retention_mode != 'files':
+                options['retention_mode'] = self.retention_mode
             self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory, **options)
             self.session = self.bridge.session
             self.state = 'open'
@@ -92,6 +99,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         row['query_worker'] = self.query_worker
         row['observation_worker'] = self.observation_worker
         row['window_lifecycle'] = self.window_lifecycle
+        row['retention_mode'] = self.retention_mode
         compiled_scope = getattr(self.bridge, 'scope', None)
         if isinstance(compiled_scope, str) and compiled_scope:
             from runtime.guarded_x11_v1.compiled import surface
@@ -109,11 +117,33 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def close(self):
-        if self.bridge is not None:
-            consume_close = getattr(self.bridge,'_consume_close',None)
-            if callable(consume_close): consume_close()
-            elif self.query_worker: self.bridge.stop_target_queries()
-        return super().close()
+        if self.bridge is not None and getattr(self.bridge, '_closed', False):
+            report = super().close()
+            journal = getattr(self.bridge, '_receipt_journal', None)
+            if journal is not None:
+                try:
+                    journal.close()
+                except Exception as error:
+                    report.update(status='cleanup_failed', receipt_journal={
+                        'status':'close_failed', 'error_type':type(error).__name__})
+                self.close_report = deepcopy(report)
+            return report
+        report = super().close()
+        journal = getattr(self.bridge, '_receipt_journal', None)
+        if journal is not None:
+            try:
+                journal.append('session-close', 'session-close', report)
+                report['receipt_journal'] = {'status':'close_receipt_recorded'}
+            except Exception as error:
+                report.update(status='cleanup_failed', receipt_journal={
+                    'status':'close_receipt_failed', 'error_type':type(error).__name__})
+            try:
+                journal.close()
+            except Exception as error:
+                report.update(status='cleanup_failed', receipt_journal={
+                    'status':'close_failed', 'error_type':type(error).__name__})
+            self.close_report = deepcopy(report)
+        return report
 
     def cancel_guarded(self, token):
         if self.state != 'open' or self.bridge is None or not self.query_worker:
