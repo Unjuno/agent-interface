@@ -1,12 +1,12 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-29, after PR #9808 and persistent repeat-control R03
+## Current work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
 
 
-Docker/Xvfb repeat control is summarized in [the persistent OFF caller report](../research/integration/docker_xvfb_delayed_release_budget_20261029/AUTOREPEAT_PERSISTENT_OFF_CALLER.md): the short-lived setter trial is invalid as a sustained OFF condition; a passive monitor saw mode 1 and duplicate effects. Keeping the setter client connected held mode 0 across 1,039 samples (with a 4.003 s server-pause gap), and one old-task oracle passed at exact effect count 1. This is one scoped comparison, not a reliability claim or exact attribution of the overwritten R02 raw. The old runtime contract still reports release/cleanup UNKNOWN and replay denied.
+Docker/Xvfb repeat control has a matched preregistered A-B-B-A standard-caller comparison: repeat ON failed the old effect-count oracle 2/2; persistent OFF passed it 2/2. See [the comparison report](../research/integration/docker_xvfb_autorepeat_matched_caller_20261029/README.md). This is n=2 per condition, with a 4 s sampling gap during server pause and no production/global-desktop policy change. Old API receipts remain conservative UNKNOWN and replay-denied.
 
-**Last verified `origin/main` (2026-10-29):** `f8e40fc4b76ae21971a059e9219f942ccef2b9c7`
-(PR #9808). This pointer verifies the merged guarded-X11 keyboard-tail change,
+**Last verified `origin/main` (2026-10-29):** `068af21d65bacac389ba5b87d186d35b43c895a3`
+(PR #9809). This pointer verifies the merged guarded-X11 keyboard-tail change,
 the direct/compiled MAP01 comparison note, current-main R03/R04 efficiency
 records, R05/R06/R07 storage studies and current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
