@@ -259,7 +259,38 @@ class _Adapter:
             raise
         finally:
             self.authorizations.clear()
-        self.retain('receipt',result)
+        try:
+            self.retain('receipt',result)
+        except Exception as error:
+            # Do not let a second persistence failure hide the graph's already
+            # classified in-memory result or turn a completed action into an
+            # uncaught callback exception. A failed final save can never leave
+            # TASK_SUCCEEDED visible to the caller.
+            result = copy.deepcopy(result)
+            result['outcome'] = 'RUNTIME_FAILED'
+            result['reason'] = 'execution_failed'
+            result['raw_evidence_retention'] = 'failed'
+            error_type = type(error).__name__
+            result['retention_failure'] = {
+                'stage':'runtime_receipt',
+                'error_type':error_type,
+                'replay_allowed':False,
+            }
+            critical = result.get('critical_events')
+            if type(critical) is list:
+                if critical and type(critical[-1]) is dict and critical[-1].get('event') == 'runtime_finished':
+                    critical[-1]['outcome'] = 'RUNTIME_FAILED'
+                    critical[-1]['reason'] = 'execution_failed'
+                else:
+                    critical.append({'event':'runtime_finished','outcome':'RUNTIME_FAILED',
+                                     'reason':'execution_failed',
+                                     'completed_transitions':result.get('completed_transitions',0)})
+                critical.insert(max(0,len(critical)-1), {
+                    'event':'journal_write_failed',
+                    'stage':'runtime_receipt',
+                    'error_type':error_type,
+                })
+            return result
         return result
 
 
