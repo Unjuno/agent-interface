@@ -1,13 +1,14 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-28
+## Current work-map pointer — 2026-10-28, after PR #9796
 
-**Last verified `origin/main` (2026-10-28):** `d8dc65ce0dc6b38dcd4e3e8b882d1c33c9b089ac`
-(PR #9792). The count-only GraphQL read at this SHA reports 1,643 open Issues
-and 404 open PRs; it is not a membership or ownership inventory. The latest complete membership receipt is [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
+**Last verified `origin/main` (2026-10-28):** `65edb4a7685bc9a6104965c294d612d4b34502c0`
+(PR #9796). This pointer verifies the merged guarded-X11 keyboard-tail change
+and the current computer-control evidence note; it is not a full Issue/PR
+membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
 at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
-PRs). It is a historical membership snapshot, not current ownership, review,
-or cleanup authorization. See the [latest cleanup pointer](REPOSITORY_CLEANUP_PLAN.md#last-verified-main-after-pr-9792-2026-10-28)
+PRs), a historical snapshot rather than current ownership or cleanup
+authorization. See the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md)
 and [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md).
 
 Current touched-family status: #17 remains OPEN; its last update is 2026-10-26
@@ -18,8 +19,11 @@ release or #17's blocked OS-pipe/journal/telemetry hypothesis. #57 is CLOSED
 as completed on 2026-10-27, but that state is not project-wide completion.
 #7924 remains OPEN with its migration STOP; it grants no WSLc allocation.
 Current-main GZDoom R71/R73 movement and R72 idle-control records are linked
-from [`CURRENT_GOAL.md`](CURRENT_GOAL.md); they do not prove MAP01 completion,
-reliability, or matched efficiency.
+from [`CURRENT_GOAL.md`](CURRENT_GOAL.md); they do not prove MAP01 completion.
+Docker/Xvfb R10/R12/R14 adds six descriptive direct/compiled pairs with 12/12
+task-effect and release gates; compiled was 5.58% slower by median paired
+latency. See the [retained raw and summary packet](../research/integration/docker_vizdoom_x11_caller_efficiency_20261028/README.md).
+This does not establish Windows/WSLc transfer or broad reliability.
 
 Next finite computer-control work: run a fresh native Win32 delayed-action
 and release trial against the isolated GZDoom target, with exact task-effect
@@ -415,4 +419,3 @@ After PRs #9057 and #9060 merged, the r21 check at main `baec61784825f2fa841a63b
 **#17 private-Xvfb stop and post-resume cleanup (PR #9220 run [39373461786](https://github.com/Unjuno/agent-interface/actions/runs/39373461786); PR #9225 head `52448ba`, run [39375915867](https://github.com/Unjuno/agent-interface/actions/runs/39375915867)):** Preserve the distinct [r01](../research/integration/standard_caller_xvfb_server_stop_20261020/r01/README.md) and [r02](../research/integration/standard_caller_xvfb_server_stop_20261020/r02/README.md) packets. r01 showed cancel return inside the 3 s bound but release `UNKNOWN`, followed by a key still down at the horizon and a failed task oracle. r02 repeats that outage-time outcome, then records an explicit post-resume close in 0.647 s that confirms client disconnect and independent key-up readback; the key was still down at the task horizon, so task success remains false. The API keeps release/cleanup `UNKNOWN`, `task_success=null`, and replay denied. The old terminal owner snapshot is a retained report snapshot, not a live status read, and has no capture timestamp. This is one bounded synthetic post-resume recovery sample, not an outage-time release guarantee, physical-input result, MAP01 success, reliability, or efficiency evidence. Keep #17 open; next qualify repeated bounded-recovery outcomes and connect recovery to a fresh target observation and independent task oracle.
 
 **#17 local public-MCP cancellation-operation integration (2026-10-21):** Merged PR #9313 adds an operation ID and separate pending/terminal cancellation receipt, runs owned-process cancellation on one warmed worker thread, and retains the terminal receipt in `cancellation.json` after the cleanup call returns. The [local Fake X packet](../research/integration/public_mcp_cancel_operation_registry_20261021/README.md) passes the public blocked-release case under a 450 ms response threshold with a sub-100 ms event-loop heartbeat gap, one operation ID/one release attempt for duplicate cancellation, and preservation when the requesting coroutine is cancelled. Focused caller/guarded suites pass 77/77 in normal and optimized Python. This does not implement the prestarted cancellation supervisor or a whole-transaction deadline; the fixtures do not establish real X-server behavior, physical release, independent task success, bounded recovery, MAP01, efficiency, or reliability. Issues #17 and #57 remain open. Next is the prestarted-process absolute-deadline and stale/late-effect gate through the public caller, still Fake X-only until it passes.
-

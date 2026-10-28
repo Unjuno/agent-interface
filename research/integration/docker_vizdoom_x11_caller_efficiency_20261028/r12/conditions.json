@@ -1,0 +1,38 @@
+{
+  "schema": "agent-interface/docker-vizdoom-x11-caller-efficiency-r12",
+  "base_commit": "a47987a2aeaa1ecf798f59807f91c4cf0e6f1700",
+  "source_branch": "codex/guarded-x11-key-state-tail",
+  "source_mount": "read-only",
+  "docker_image": "sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84|linux|amd64",
+  "interpreter": "/usr/bin/python3",
+  "display": ":91",
+  "xvfb": "1280x1024x24 -cc 4 -nolisten tcp",
+  "action": "W down 600ms, explicit W up, terminal release_all",
+  "oracle": "ViZDoom POSITION_X/POSITION_Y after one post-release spectator tick; threshold 0.1",
+  "arms": [
+    {
+      "order": [
+        "direct",
+        "compiled"
+      ],
+      "seed": 2026102915,
+      "pair": 5
+    },
+    {
+      "order": [
+        "compiled",
+        "direct"
+      ],
+      "seed": 2026102916,
+      "pair": 6
+    }
+  ],
+  "no_retries": true,
+  "limits": [
+    "Docker Desktop Linux Engine/Xvfb only",
+    "not Windows or WSLc",
+    "not MAP01 clear",
+    "not broad reliability",
+    "no model/provider/token/billing accounting"
+  ]
+}

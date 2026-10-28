@@ -1,0 +1,38 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-c3ebdd26e7364f5f92be8af0e4abb7b5",
+  "source": {
+    "observation_seq": 4,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-498ebcb72aa54f8a9d1c797e36a97db3",
+    "expires_at_ns": 3099941498930
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "doom"
+    },
+    {
+      "op": "key_state",
+      "key": "w",
+      "down": true
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 600
+    },
+    {
+      "op": "key_state",
+      "key": "w",
+      "down": false
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "base_commit": "30e83bbbc093e573cbb2e79ee45b93dc85b54130",
+  "limits": [
+    "Docker Desktop Linux Engine/Xvfb only",
+    "not Windows/WSLc",
+    "not MAP01 clear",
+    "not broad reliability",
+    "no model/provider/token accounting",
+    "candidate dirty source patch not yet integrated main"
+  ],
+  "action": {
+    "key": "w",
+    "hold_ms": 600,
+    "terminal_release_all": "bridge appends exactly one",
+    "explicit_key_up": true
+  },
+  "oracle": "ViZDoom POSITION_X/POSITION_Y after exactly one post-release spectator tick; threshold 0.1",
+  "setup_tick": "one tick before baseline",
+  "schema": "agent-interface/docker-vizdoom-x11-caller-efficiency-r10",
+  "candidate_patch_sha256": "91C59F77DEA05C5A667908701DB7DF269246D72EA3A132C38D4C9A3FB613C78D",
+  "arms": [
+    {
+      "pair": 1,
+      "arm": "direct",
+      "seed": 2026102911,
+      "order": 1
+    },
+    {
+      "pair": 1,
+      "arm": "compiled",
+      "seed": 2026102911,
+      "order": 2
+    },
+    {
+      "pair": 2,
+      "arm": "compiled",
+      "seed": 2026102912,
+      "order": 1
+    },
+    {
+      "pair": 2,
+      "arm": "direct",
+      "seed": 2026102912,
+      "order": 2
+    }
+  ],
+  "xvfb": "Xvfb :91 -screen 0 1280x1024x24 -cc 4 -nolisten tcp",
+  "prior": "R4-R8 omitted synchronized post-action position read; R9 verified position moves 127.54 units after a post-release tick but stale callback returned false. R9 diagnostic is excluded from comparison.",
+  "timing": "first fresh in-path observation through typed effect verification; tick is inside effect callback and timing",
+  "docker_image": "sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84|linux|amd64",
+  "analysis": "two paired differences descriptive only"
+}

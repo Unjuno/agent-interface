@@ -1,0 +1,94 @@
+{
+  "interface": {
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "map01-forward-efficiency-r1",
+    "session_scope": "native-x11:02bfa39dccbc4c68b187e480063ac296",
+    "surface": "x11-window-2097168",
+    "predicates": [
+      "ready",
+      "moved"
+    ],
+    "symbols": {
+      "game": {
+        "kind": "target_reference",
+        "target_reference": "forward_target",
+        "identity_predicate": "ready",
+        "dependencies": [
+          "ready"
+        ]
+      }
+    },
+    "actions": {
+      "forward": {
+        "target_symbol": "game",
+        "operation": "move_forward_600ms",
+        "expected_effect": {
+          "moved": true
+        }
+      }
+    },
+    "method": {
+      "name": "one-forward-action",
+      "version": "1",
+      "initial_state": "waiting",
+      "max_transitions": 1,
+      "max_runtime_ms": 9000,
+      "states": {
+        "waiting": {
+          "branches": [
+            {
+              "when": {
+                "ready": true,
+                "moved": false
+              },
+              "outcome": "action",
+              "action": "forward",
+              "next_state": "done",
+              "reason": null
+            }
+          ]
+        },
+        "done": {
+          "branches": [
+            {
+              "when": {
+                "ready": true,
+                "moved": true
+              },
+              "outcome": "complete",
+              "action": null,
+              "next_state": null,
+              "reason": null
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bindings": {
+    "forward": {
+      "interaction": "keyboard",
+      "offset": [
+        12,
+        19
+      ],
+      "tail": [
+        {
+          "op": "key_state",
+          "key": "w",
+          "down": true
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 600
+        },
+        {
+          "op": "key_state",
+          "key": "w",
+          "down": false
+        }
+      ]
+    }
+  },
+  "scope": "trusted caller-owned read-only perception/effect callbacks; not independent task scoring"
+}
