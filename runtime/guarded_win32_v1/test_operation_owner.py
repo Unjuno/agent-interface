@@ -193,6 +193,36 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertEqual(recovered["recovery_completed_monotonic_ns"], 250)
         self.assertEqual(recovered["cleanup_latency_ns"], 150)
 
+    def test_late_input_horizon_rejects_unobserved_initial_gap(self):
+        self.start_cancelled_operation()
+        self.process.alive = False
+        self.process.exitcode = 17
+        self.assertTrue(self.owner.producer_retired("op-1", GEN_A, self.process))
+        recovery = self.owner.claim_recovery("op-1", GEN_A)
+        horizon_observations = [
+            {"operation_id": "op-1", "target_generation": GEN_A,
+             "recovery_id": recovery["recovery_id"], "neutral": True,
+             "observed_monotonic_ns": 300},
+            {"operation_id": "op-1", "target_generation": GEN_A,
+             "recovery_id": recovery["recovery_id"], "neutral": True,
+             "observed_monotonic_ns": 350},
+        ]
+        self.clock.now = 350
+
+        self.assertFalse(self.owner.recovery_completed(
+            "op-1", GEN_A, recovery["recovery_id"], release_accepted=True,
+            readback=horizon_observations[-1], release_received_ns=200,
+            late_input_horizon_ns=100,
+            late_input_max_sample_gap_ns=50,
+            horizon_observations=horizon_observations))
+        result = self.owner.result("op-1")
+        self.assertEqual(result["phase"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["late_input_validation_error"],
+                         "initial_observation_gap_exceeded")
+        with self.assertRaises(OwnerRefused):
+            self.owner.admit("op-next", GEN_B, 1_000, ["key:b"])
+
     def test_recovered_result_records_high_resolution_cleanup_latency(self):
         measure_clock = FakeClock()
         measure_clock.now = 1_000
