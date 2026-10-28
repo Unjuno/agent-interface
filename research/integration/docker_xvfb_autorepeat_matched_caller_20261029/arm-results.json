@@ -1,0 +1,24 @@
+{
+  "schema": "agent-interface/docker-xvfb-repeat-matched-family-results-v1",
+  "attempts": [
+    {"arm":"A1_on","mode":1,"samples":1111,"effect_count":4,"expected_effect_count":1,"post_cancel_a_keypresses":3,"post_cancel_ms":[3947.438,3989.212,4028.903],"nearest_mode_sample_abs_ms_max":5.879,"old_task_oracle":"fail","fresh_task_oracle":"pass","docker_exit":0,"unittest_exit":0},
+    {"arm":"B1_off","mode":0,"samples":1046,"effect_count":1,"expected_effect_count":1,"post_cancel_a_keypresses":0,"old_task_oracle":"pass","fresh_task_oracle":"pass","docker_exit":0,"unittest_exit":0},
+    {"arm":"B2_off","mode":0,"samples":1056,"effect_count":1,"expected_effect_count":1,"post_cancel_a_keypresses":0,"old_task_oracle":"pass","fresh_task_oracle":"pass","docker_exit":0,"unittest_exit":0},
+    {"arm":"A2_on","mode":1,"samples":1063,"effect_count":4,"expected_effect_count":1,"post_cancel_a_keypresses":3,"post_cancel_ms":[3946.836,3988.636,4028.353],"nearest_mode_sample_abs_ms_max":5.879,"old_task_oracle":"fail","fresh_task_oracle":"pass","docker_exit":0,"unittest_exit":0}
+  ],
+  "all_arms": {
+    "owner_retired": true,
+    "disconnect_observed": true,
+    "supervisor_release_readback": "readback_verified",
+    "independent_release_keys_up": true,
+    "delayed_b_seen_by_horizon": false,
+    "horizon_ms": [8503.153,8502.435,8502.896,8501.823],
+    "fresh_generation_oracle": "pass",
+    "runtime_release_confirmed": false,
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_task_success": null,
+    "replay_allowed": false,
+    "runtime_terminal": "runtime_failed"
+  },
+  "limits": ["n=2 per repeat mode", "fixed A-B-B-A order", "about 4 s monitor gap during Xvfb pause", "synthetic Docker/Xvfb only", "historical R02 full raw unavailable"]
+}

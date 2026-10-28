@@ -1,0 +1,40 @@
+{
+  "schema": "agent-interface/docker-xvfb-repeat-matched-family-conditions-v1",
+  "source_commit": "068af21d65bacac389ba5b87d186d35b43c895a3",
+  "image": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "docker_engine": "29.8.1",
+  "network": "none",
+  "rootfs": "read-only",
+  "xvfb": ":88 -screen 0 1024x768x24 -ac",
+  "server_pause_ms": 4000,
+  "delayed_b_ms": 8000,
+  "transaction_timeout_s": 12,
+  "prestarted_supervisor": true,
+  "ack_hold_s": 0,
+  "passive_sampler_ms": 5,
+  "fixed_arm_order": [
+    "A1:on",
+    "B1:off",
+    "B2:off",
+    "A2:on"
+  ],
+  "source_hashes": [
+    {
+      "path": "mcp_server.py",
+      "sha256": "be7b9357acb79899fa5be6c3dd8fd5117ed198dd17ccb49b27d317c09f0096c3"
+    },
+    {
+      "path": "owned_guarded_session.py",
+      "sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786"
+    },
+    {
+      "path": "test_mcp_xvfb_blocked_release_integration.py",
+      "sha256": "50f1460c33c2d7ad9ba363969cd610191893ade5d46f2e401082ca1b0117f72e"
+    },
+    {
+      "path": "test_mcp_xvfb_server_stop_integration.py",
+      "sha256": "ca1c619caaaae06158357474299ca995b869e19cbc1281b731a2636e2f8edbca"
+    }
+  ],
+  "repeat_controller_sha256": "bded4491fb46bf186621697188eea43d3f102bf2ddd0255e8a3002bc9c09bd1d"
+}
