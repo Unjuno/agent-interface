@@ -1,0 +1,3 @@
+# First standard-caller repeat-control attempt (R01)
+
+The run read global repeat OFF immediately before the public MCP test, but the setting process exited before the test and no in-run mode sampler was used. A later passive-monitor run with the same setter lifecycle observed repeat=1 in all 1,147 samples; R01's mode during its six extra A effects is unknown. Its old-task effect count was 7 vs expected 1, so its oracle failed; its release/readback, fresh-task and runtime UNKNOWN evidence remain valid. Do not call this a sustained OFF experiment or use it to reject auto-repeat. See [the R01–R03 persistent-setting comparison](AUTOREPEAT_PERSISTENT_OFF_CALLER.md) and the local packet.
