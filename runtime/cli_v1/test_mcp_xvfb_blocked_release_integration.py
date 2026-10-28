@@ -19,6 +19,7 @@ from copy import deepcopy
 import hashlib
 import io
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -55,12 +56,16 @@ _PRESTARTED_CANCEL_SUPERVISOR = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR', '0') == '1')
 _SERVER_PAUSE_MS = int(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS', '0'))
+_TRANSACTION_TIMEOUT_S = float(os.environ.get(
+    'AGENT_INTERFACE_MCP_XVFB_TRANSACTION_TIMEOUT_S', '4.0'))
 _TERMINAL_BOUND_MS = 5000
 
 if not 0 <= _CANCEL_ACK_WITHHOLD_S <= 2:
     raise ValueError('cancel acknowledgement hold must be between 0 and 2 seconds')
 if not 0 <= _SERVER_PAUSE_MS <= 5000:
     raise ValueError('Xvfb pause must be between 0 and 5000 ms')
+if not math.isfinite(_TRANSACTION_TIMEOUT_S) or not 0 < _TRANSACTION_TIMEOUT_S <= 30:
+    raise ValueError('cancellation transaction timeout must be in (0, 30] seconds')
 
 
 def _metadata(response):
@@ -350,6 +355,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'fresh_task_key':'c',
                 'fresh_task_expected_effect':[3],
                 'xvfb_server_pause_ms':_SERVER_PAUSE_MS,
+                'cancellation_transaction_timeout_s':_TRANSACTION_TIMEOUT_S,
                 'effect_multiplicity_evidence':'per-handler CARDINAL count; separate X-client readback',
             },
             'xvfb':_xvfb_provenance(),
@@ -533,6 +539,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     guarded_window_lifecycle=True, guarded_owned_process=True,
                     guarded_prestarted_cancel_supervisor=(
                         _PRESTARTED_CANCEL_SUPERVISOR),
+                    _guarded_cancel_transaction_timeout_s=(
+                        _TRANSACTION_TIMEOUT_S),
                     _guarded_owner_factory=_xvfb_blocking_owner_factory)
 
                 report['timing_ns']['observe_started'] = time.monotonic_ns()
