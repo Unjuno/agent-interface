@@ -1,9 +1,9 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-29, after PR #9806 and Docker/Xvfb R01–R02
+## Current work-map pointer — 2026-10-29, after PR #9807 and Docker/Xvfb R01–R03
 
-**Last verified `origin/main` (2026-10-29):** `a3bf4ae96ec49b7c0359e9985a05a9a3beac79cf`
-(PR #9806). This pointer verifies the merged guarded-X11 keyboard-tail change,
+**Last verified `origin/main` (2026-10-29):** `d3143a3d488d48475608725d6e132ecd051e45b6`
+(PR #9807). This pointer verifies the merged guarded-X11 keyboard-tail change,
 the direct/compiled MAP01 comparison note, current-main R03/R04 efficiency
 records, R05/R06/R07 storage studies and current Docker/Xvfb blocked-release evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
@@ -52,6 +52,7 @@ custody proof. The integrated compiled-vs-direct result remains 5–6% slower fo
 compiled control. See the [R06 record](../research/integration/docker_vizdoom_receipt_journal_r06/README.md)
 and [R07 profile](../research/integration/docker_vizdoom_receipt_journal_r07/README.md).
 These synthetic Xvfb results do not establish Windows/WSLc transfer or broad reliability.
+Docker/Xvfb delayed-input follow-up adds disabled-auto-repeat calibration r03: with repeat OFF (readback 0), the same 4 s private-Xvfb pidfd pause produced no repeated A keypress, then neutral keymap after release. Enabled calibration produced two repeats 39.879 ms apart, close to R02's 39.872 ms extra-effect spacing; repeat is a strong compatible mechanism, not proven runtime cause. R02's old-task oracle still fails and runtime custody stays UNKNOWN. A Windows case-insensitive filename collision overwrote its original full raw report with a summary; packet custody correction records this limitation. See [the Docker/Xvfb delayed-input packet note](../research/integration/docker_xvfb_delayed_release_budget_20261029/README.md).
 The current-main Docker/Xvfb R04–R06 standard-caller samples retained initial
 effects, prestarted-supervisor release attempts, independent neutral readbacks,
 8.5 s delayed-input horizons and separate fresh-generation task-oracle passes.
