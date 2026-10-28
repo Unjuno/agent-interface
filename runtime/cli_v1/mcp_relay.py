@@ -1,6 +1,7 @@
 """Sequential JSON-lines public MCP client; no research allocation, action policy or replay."""
 import argparse
 import asyncio
+from collections import deque
 import json
 import math
 import os
@@ -21,7 +22,9 @@ PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interfac
 
 MAX_PENDING_STDOUT_RESPONSES = 16
 MAX_PENDING_CANCEL_RESPONSES = 1
-MAX_CANCEL_READAHEAD_LINES = 1
+# A cancellation may pass four valid queued requests; one extra ordinary line
+# can be retained as the bounded probe that determines whether a cancel follows.
+MAX_CANCEL_READAHEAD_LINES = 4
 CANCELLATION_TOOLS = ('interface_cancel', 'interface_guarded_cancel')
 
 
@@ -61,7 +64,7 @@ class Relay:
         self.next_id = 1
         self._priority_cancel_id = None
 
-    def _parse_request(self, line, *, allow_priority_cancel=False):
+    def _parse_request(self, line, *, expected_id=None, priority_cancel_id=None):
         try:
             if isinstance(line, (bytes, bytearray)):
                 line = line.decode('utf-8')
@@ -70,16 +73,18 @@ class Relay:
             _unicode_scalars(request)
             if not isinstance(request, dict) or set(request) != {'id', 'tool', 'arguments'}:
                 raise ValueError('exact id/tool/arguments envelope required')
-            expected_id = (type(request['id']) is int
-                and request['id'] == self.next_id)
-            priority_cancel_id = (allow_priority_cancel
+            expected_sequence_id = self.next_id if expected_id is None else expected_id
+            expected_id_match = (type(request['id']) is int
+                and request['id'] == expected_sequence_id)
+            priority_cancel = (priority_cancel_id is not None
                 and request.get('tool') in CANCELLATION_TOOLS
                 and type(request.get('id')) is int
-                and request['id'] == self.next_id + 1
+                and request['id'] == priority_cancel_id
+                and priority_cancel_id > self.next_id
                 and self._priority_cancel_id is None)
             if type(request['id']) is not int or not (
-                    expected_id or priority_cancel_id):
-                raise ValueError(f'next id must be {self.next_id}; never resend an accepted id')
+                    expected_id_match or priority_cancel):
+                raise ValueError(f'next id must be {expected_sequence_id}; never resend an accepted id')
             if request['tool'] not in self.tools:
                 raise ValueError('unknown relay tool for selected server kind')
             if not isinstance(request['arguments'], dict):
@@ -90,23 +95,24 @@ class Relay:
         except (ValueError, TypeError, RecursionError) as error:
             raise ValueError(str(error)) from error
 
-    def is_cancellation_request(self, line):
+    def is_cancellation_request(self, line, *, expected_id=None, priority_cancel_id=None):
         try:
             return self._parse_request(
-                line, allow_priority_cancel=True)['tool'] in CANCELLATION_TOOLS
+                line, expected_id=expected_id,
+                priority_cancel_id=priority_cancel_id)['tool'] in CANCELLATION_TOOLS
         except ValueError:
             return False
 
-    def is_expected_request(self, line):
+    def is_expected_request(self, line, *, expected_id=None):
         try:
-            self._parse_request(line)
+            self._parse_request(line, expected_id=expected_id)
             return True
         except ValueError:
             return False
 
-    async def request(self, line):
+    async def request(self, line, *, priority_cancel_id=None):
         try:
-            request = self._parse_request(line, allow_priority_cancel=True)
+            request = self._parse_request(line, priority_cancel_id=priority_cancel_id)
         except ValueError as error:
             return {'status':'refused', 'dispatched':False, 'next_id':self.next_id, 'error':str(error)}
         if request['id'] == self.next_id:
@@ -147,9 +153,7 @@ async def serve(server_args):
             output_lock = asyncio.Lock()
             pending_writes = set()
             pending_cancel_writes = set()
-            deferred_line = None
-            read_ahead_line = None
-            read_ahead_count = 0
+            deferred_lines = deque()
             input_eof = False
             stream = getattr(sys.stdin, 'buffer', sys.stdin)
             input_task = None
@@ -198,45 +202,25 @@ async def serve(server_args):
                     continue
 
                 line = None
+                line_is_cancel = None
+                priority_cancel_id = None
                 pending_full = len(pending_writes) >= MAX_PENDING_STDOUT_RESPONSES
                 cancel_slot_available = (
                     len(pending_cancel_writes) < MAX_PENDING_CANCEL_RESPONSES)
-                deferred_cancel = (deferred_line is not None
-                    and relay.is_cancellation_request(deferred_line))
-                read_ahead_cancel = (read_ahead_line is not None
-                    and relay.is_cancellation_request(read_ahead_line))
-
-                if deferred_line is not None and not pending_full:
-                    if read_ahead_cancel and cancel_slot_available:
-                        line, read_ahead_line = read_ahead_line, None
-                        read_ahead_count = MAX_CANCEL_READAHEAD_LINES
-                    elif deferred_cancel and cancel_slot_available:
-                        line = deferred_line
-                        deferred_line = read_ahead_line
-                        read_ahead_line = None
-                        read_ahead_count = 0
-                    else:
-                        line = deferred_line
-                        deferred_line = read_ahead_line
-                        read_ahead_line = None
-                        read_ahead_count = 0
-                elif read_ahead_line is not None and not pending_full:
-                    line, read_ahead_line = read_ahead_line, None
-                    read_ahead_count = 0
-                elif pending_full and deferred_line is not None:
-                    if read_ahead_cancel and cancel_slot_available:
-                        line, read_ahead_line = read_ahead_line, None
-                        read_ahead_count = MAX_CANCEL_READAHEAD_LINES
-                    elif deferred_cancel and cancel_slot_available:
-                        line = deferred_line
-                        deferred_line = read_ahead_line
-                        read_ahead_line = None
-                        read_ahead_count = 0
-                    elif (read_ahead_line is None
-                          and read_ahead_count < MAX_CANCEL_READAHEAD_LINES
-                          and cancel_slot_available
-                          and not deferred_cancel
-                          and relay.is_expected_request(deferred_line)):
+                if deferred_lines and not pending_full:
+                    line = deferred_lines.popleft()
+                elif pending_full and deferred_lines:
+                    deferred_prefix_is_ordinary = all(
+                        relay.is_expected_request(request_line,
+                            expected_id=relay.next_id + index)
+                        and not relay.is_cancellation_request(request_line,
+                            expected_id=relay.next_id + index)
+                        for index, request_line in enumerate(deferred_lines))
+                    if (cancel_slot_available
+                            and relay._priority_cancel_id is None
+                            and len(deferred_lines) <= MAX_CANCEL_READAHEAD_LINES
+                            and deferred_prefix_is_ordinary
+                            and not input_eof):
                         if input_task is None:
                             input_task = asyncio.create_task(
                                 asyncio.to_thread(stream.readline))
@@ -251,15 +235,20 @@ async def serve(server_args):
                         if input_task in done:
                             candidate = await input_task
                             input_task = None
-                            read_ahead_count += 1
                             if not candidate:
                                 input_eof = True
-                            elif (relay.is_cancellation_request(candidate)
-                                  and len(pending_cancel_writes)
-                                      < MAX_PENDING_CANCEL_RESPONSES):
-                                line = candidate
                             else:
-                                read_ahead_line = candidate
+                                candidate_id = relay.next_id + len(deferred_lines)
+                                candidate_priority_id = (candidate_id
+                                    if deferred_lines else None)
+                                if relay.is_cancellation_request(candidate,
+                                        expected_id=candidate_id,
+                                        priority_cancel_id=candidate_priority_id):
+                                    line = candidate
+                                    line_is_cancel = True
+                                    priority_cancel_id = candidate_priority_id
+                                else:
+                                    deferred_lines.append(candidate)
                         if line is None:
                             continue
                     else:
@@ -290,25 +279,19 @@ async def serve(server_args):
                     line = await input_task
                     input_task = None
                 if not line:
-                    if deferred_line is not None or read_ahead_line is not None:
+                    if deferred_lines:
                         input_eof = True
                         continue
                     break
 
-                is_cancel = relay.is_cancellation_request(line)
+                is_cancel = (line_is_cancel if line_is_cancel is not None
+                             else relay.is_cancellation_request(line))
                 if len(pending_writes) >= MAX_PENDING_STDOUT_RESPONSES and (
                         not is_cancel or len(pending_cancel_writes) >= MAX_PENDING_CANCEL_RESPONSES):
-                    if deferred_line is None:
-                        deferred_line = line
-                        read_ahead_count = 0
-                    elif read_ahead_line is None:
-                        read_ahead_line = line
-                        read_ahead_count = MAX_CANCEL_READAHEAD_LINES
-                    else:
-                        raise RuntimeError('bounded relay deferred-input capacity exceeded')
+                    deferred_lines.append(line)
                     continue
 
-                response = await relay.request(line)
+                response = await relay.request(line, priority_cancel_id=priority_cancel_id)
                 write_task = asyncio.create_task(write_response(response))
                 pending_writes.add(write_task)
                 if is_cancel:
