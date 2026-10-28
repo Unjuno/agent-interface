@@ -1,10 +1,11 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-28, after PR #9796
+## Current work-map pointer — 2026-10-28, after PR #9797 and Docker/Xvfb R04
 
-**Last verified `origin/main` (2026-10-28):** `65edb4a7685bc9a6104965c294d612d4b34502c0`
-(PR #9796). This pointer verifies the merged guarded-X11 keyboard-tail change
-and the current computer-control evidence note; it is not a full Issue/PR
+**Last verified `origin/main` (2026-10-28):** `1988916cd0904b29e0a294dea24ec09ca0563ba3`
+(PR #9797). This pointer verifies the merged guarded-X11 keyboard-tail change,
+the direct/compiled MAP01 comparison note, and the current computer-control
+evidence note; it is not a full Issue/PR
 membership census. The latest complete membership receipt remains [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
 at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
 PRs), a historical snapshot rather than current ownership or cleanup
@@ -24,6 +25,15 @@ Docker/Xvfb R10/R12/R14 adds six descriptive direct/compiled pairs with 12/12
 task-effect and release gates; compiled was 5.58% slower by median paired
 latency. See the [retained raw and summary packet](../research/integration/docker_vizdoom_x11_caller_efficiency_20261028/README.md).
 This does not establish Windows/WSLc transfer or broad reliability.
+The new current-main Docker/Xvfb R04 standard-caller sample separately retained
+an initial task effect, prestarted-supervisor release attempt, independent
+neutral readback, 8.5 s delayed-input horizon and a fresh-generation task
+oracle pass. The canceled old call remains UNKNOWN and replay-denied. R03's
+test body passed without a structured report; R02's lower-level direct-XTEST
+case passed internally but its outer shell wrapper returned 2. See the
+[R02–R04 scope note](../research/integration/docker_xvfb_standard_caller_blocked_release_20261028/README.md).
+All are synthetic Xvfb evidence, not native Win32, WSLc, MAP01 completion,
+general reliability or efficiency.
 
 Next finite computer-control work: run a fresh native Win32 delayed-action
 and release trial against the isolated GZDoom target, with exact task-effect
