@@ -1,0 +1,179 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 3103907488049,
+    "ended_ns": 3104606721714,
+    "emissions": 2,
+    "program_emissions": 2,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 3104606720067
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 2,
+        "requested_ms": 600,
+        "started_ns": 3104005628850,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 3104605720459
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 4,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "forward_target",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "forward_target",
+      "point": [
+        364,
+        730
+      ],
+      "observed_box": [
+        352,
+        711,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 4,
+      "valid_until_ns": 3105355634231,
+      "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 5,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "forward_target",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "forward_target",
+      "point": [
+        364,
+        730
+      ],
+      "observed_box": [
+        352,
+        711,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 5,
+      "valid_until_ns": 3105407698516,
+      "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:w",
+      "observation_sequence": 6,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "forward_target",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "forward_target",
+      "point": [
+        364,
+        730
+      ],
+      "observed_box": [
+        352,
+        711,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 6,
+      "valid_until_ns": 3105456858315,
+      "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ],
+  "additional_input_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 4,
+      "scope": "native-x11:7667011177dd43028eab794c9c20dfd3",
+      "binding_revision": 0,
+      "started_ns": 3103903186147,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 3103904298633
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 5,
+      "scope": "native-x11:7667011177dd43028eab794c9c20dfd3",
+      "binding_revision": 0,
+      "started_ns": 3103955107192,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 3103956330014
+    },
+    {
+      "stage": "before_key_press:w",
+      "observation_sequence": 6,
+      "scope": "native-x11:7667011177dd43028eab794c9c20dfd3",
+      "binding_revision": 0,
+      "started_ns": 3104004588070,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 3104005475016
+    }
+  ]
+}

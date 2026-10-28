@@ -1,0 +1,631 @@
+{
+  "action_result": {
+    "additional_input_checks": [
+      {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "eligible": true,
+        "ended_ns": 2986901077770,
+        "observation_sequence": 4,
+        "scope": "native-x11:d61c05bbe0ed4c5bbe67889b44cc6c10",
+        "stage": "before_admission",
+        "started_ns": 2986899865955
+      },
+      {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "eligible": true,
+        "ended_ns": 2986953497795,
+        "observation_sequence": 5,
+        "scope": "native-x11:d61c05bbe0ed4c5bbe67889b44cc6c10",
+        "stage": "before_focus",
+        "started_ns": 2986952502782
+      },
+      {
+        "authority_granted": false,
+        "binding_revision": 0,
+        "eligible": true,
+        "ended_ns": 2986999855626,
+        "observation_sequence": 6,
+        "scope": "native-x11:d61c05bbe0ed4c5bbe67889b44cc6c10",
+        "stage": "before_key_press:w",
+        "started_ns": 2986998997765
+      }
+    ],
+    "admission": "accepted",
+    "execution": {
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "emissions": 2,
+      "ended_ns": 2987601323376,
+      "observations": [],
+      "program_emissions": 2,
+      "releases": [
+        {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 2987601321471,
+          "verified": true
+        }
+      ],
+      "started_ns": 2986904774558,
+      "waits": [
+        {
+          "completed": true,
+          "ended_ns": 2987600109650,
+          "kind": "fixed_delay",
+          "operation_index": 2,
+          "requested_ms": 600,
+          "started_ns": 2987000024395,
+          "update_observed": null
+        }
+      ]
+    },
+    "guard_checks": [
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "binding_translation": [
+          0,
+          0
+        ],
+        "eligible": true,
+        "handle": "forward_target",
+        "local_translation": [
+          0,
+          0
+        ],
+        "name": "forward_target",
+        "observation_sequence": 4,
+        "observed_box": [
+          352,
+          711,
+          24,
+          38
+        ],
+        "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+        "point": [
+          364,
+          730
+        ],
+        "private_registry_id_exposed": false,
+        "reason": "exact_region_match",
+        "reference_kind": "session_alias",
+        "sequence": 4,
+        "stage": "before_admission",
+        "status": "VALID",
+        "valid_until_ns": 2988354636048
+      },
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "binding_translation": [
+          0,
+          0
+        ],
+        "eligible": true,
+        "handle": "forward_target",
+        "local_translation": [
+          0,
+          0
+        ],
+        "name": "forward_target",
+        "observation_sequence": 5,
+        "observed_box": [
+          352,
+          711,
+          24,
+          38
+        ],
+        "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+        "point": [
+          364,
+          730
+        ],
+        "private_registry_id_exposed": false,
+        "reason": "exact_region_match",
+        "reference_kind": "session_alias",
+        "sequence": 5,
+        "stage": "before_focus",
+        "status": "VALID",
+        "valid_until_ns": 2988404971883
+      },
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "binding_translation": [
+          0,
+          0
+        ],
+        "eligible": true,
+        "handle": "forward_target",
+        "local_translation": [
+          0,
+          0
+        ],
+        "name": "forward_target",
+        "observation_sequence": 6,
+        "observed_box": [
+          352,
+          711,
+          24,
+          38
+        ],
+        "patch_sha256": "699c9a85d3379513f7f0be6b759901b00b8779d7077b0fd324acb5568193b7c6",
+        "point": [
+          364,
+          730
+        ],
+        "private_registry_id_exposed": false,
+        "reason": "exact_region_match",
+        "reference_kind": "session_alias",
+        "sequence": 6,
+        "stage": "before_key_press:w",
+        "status": "VALID",
+        "valid_until_ns": 2988453939145
+      }
+    ],
+    "recovery_required": false,
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "status": "completed"
+  },
+  "alias_preflight": {
+    "eligible": true,
+    "status": "VALID",
+    "valid_until_ns": 2988253300362
+  },
+  "arm": "direct",
+  "bridge_terminal": {
+    "backend_held_buttons": [],
+    "backend_held_keys": {},
+    "recovery_required": false,
+    "sequence": 7
+  },
+  "caller_path_elapsed_ns": 881690569,
+  "direct_initial_predicates": {
+    "moved": false,
+    "ready": true
+  },
+  "direct_post_predicates": {
+    "moved": true,
+    "ready": true
+  },
+  "dispatch_elapsed_ms": 881.691,
+  "during_call_keymap_samples": [
+    {
+      "monotonic_ns": 2986799663179,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986809978565,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986820239104,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986830542758,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986840805385,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986851200680,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986861430897,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986871641914,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986881875041,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986892121055,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986902352352,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986912554703,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986922859044,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986933191771,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986943439477,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986953690208,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986963911880,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986974283467,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986984466895,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2986994641520,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987004813909,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987015025363,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987025236865,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987035419699,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987045646595,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987055851900,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987066046391,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987076282432,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987086503281,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987096689800,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987106919384,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987117226975,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987127476026,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987137832337,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987148146155,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987158452428,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987168775622,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987179053057,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987189390006,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987199732565,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987210044077,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987220550084,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987231007276,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987241308829,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987251665564,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987262349220,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987272711230,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987283118568,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987293363052,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987303599278,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987313809270,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987324053387,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987334353094,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987344781871,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987355105084,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987365388122,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987375590965,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987385827878,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987396117825,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987406364133,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987416578774,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987426833149,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987437015739,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987447276472,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987457550845,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987467764758,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987478000969,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987488267565,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987498502060,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987508698582,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987518921525,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987529157983,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987539444970,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987549685768,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987559968114,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987570179694,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987580490515,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987590783125,
+      "w_down": true
+    },
+    {
+      "monotonic_ns": 2987601036016,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987611393517,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987621787289,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987632436887,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987642670315,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987652946039,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987663221747,
+      "w_down": false
+    },
+    {
+      "monotonic_ns": 2987673534062,
+      "w_down": false
+    }
+  ],
+  "effect_observation_sequence": 7,
+  "effect_oracle_sync_tick": "one game.advance_action(1, True) after key release and before post-action position readback",
+  "error": null,
+  "gates": {
+    "effect_receipt_succeeded": true,
+    "independent_w_neutral": true,
+    "position_changed": true,
+    "release_verified": true,
+    "route_completed": true,
+    "w_observed_down": true
+  },
+  "hold_ms": 600,
+  "independent_w_down_after": false,
+  "minted_reference": {
+    "lifetime": {
+      "authority_granted": false,
+      "capture_freshness_ms": 1500,
+      "clock": "time.monotonic_ns",
+      "expires_ns": 3286649076388,
+      "minted_ns": 2986649076388,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "offset": [
+      12,
+      19
+    ]
+  },
+  "no_model_provider_calls": true,
+  "oracle_at_verification": {
+    "delta": {
+      "x": 122.62849426269531,
+      "y": 0.0
+    },
+    "evidence_ref": "direct-position-readback",
+    "passed": true,
+    "position": {
+      "x": -69.37150573730469,
+      "y": -192.0
+    }
+  },
+  "outcome": "PASS_SCOPED_ARM",
+  "pair": 6,
+  "passed": true,
+  "position_after": {
+    "x": -69.37150573730469,
+    "y": -192.0
+  },
+  "position_before": {
+    "x": -192.0,
+    "y": -192.0
+  },
+  "position_delta": {
+    "x": 122.62849426269531,
+    "y": 0.0
+  },
+  "preflight_source_sequence": 1,
+  "release_receipt": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 2987601321471,
+    "verified": true
+  },
+  "route_outcome": "TASK_SUCCEEDED",
+  "runtime": "Docker Desktop Linux Engine + Xvfb -cc 4",
+  "seed": 2026102916,
+  "source_route": "direct",
+  "target": {
+    "display": ":91",
+    "height": 480,
+    "title": "VIZDOOM 1.3.0 (ZDOOM 2.8.1+)",
+    "width": 640,
+    "window_id": 2097168
+  },
+  "timed_end_ns": 2987681292818,
+  "timed_start_ns": 2986799602249,
+  "w_keycode": 25,
+  "window_geometry": {
+    "height": 480,
+    "width": 640,
+    "x": 320,
+    "y": 272
+  }
+}

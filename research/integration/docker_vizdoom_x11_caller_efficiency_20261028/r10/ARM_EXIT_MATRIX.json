@@ -1,0 +1,38 @@
+{
+  "retry_performed": false,
+  "schema": "agent-interface/docker-vizdoom-x11-caller-efficiency-r10-exit-matrix",
+  "arms": [
+    {
+      "arm": "compiled",
+      "all_gates_passed": true,
+      "reason": "Bash cleanup fragment received malformed dollar escaping from PowerShell; python wrote result.json and exited, then bash kill/wait/exit cleanup emitted an error.",
+      "docker_cli_exit": 2,
+      "pair": 1,
+      "python_result": "TASK_SUCCEEDED"
+    },
+    {
+      "arm": "direct",
+      "all_gates_passed": true,
+      "reason": "Bash cleanup fragment received malformed dollar escaping from PowerShell; python wrote result.json and exited, then bash kill/wait/exit cleanup emitted an error.",
+      "docker_cli_exit": 2,
+      "pair": 1,
+      "python_result": "TASK_SUCCEEDED"
+    },
+    {
+      "arm": "compiled",
+      "all_gates_passed": true,
+      "reason": "Bash cleanup fragment received malformed dollar escaping from PowerShell; python wrote result.json and exited, then bash kill/wait/exit cleanup emitted an error.",
+      "docker_cli_exit": 2,
+      "pair": 2,
+      "python_result": "TASK_SUCCEEDED"
+    },
+    {
+      "arm": "direct",
+      "all_gates_passed": true,
+      "reason": "Bash cleanup fragment received malformed dollar escaping from PowerShell; python wrote result.json and exited, then bash kill/wait/exit cleanup emitted an error.",
+      "docker_cli_exit": 2,
+      "pair": 2,
+      "python_result": "TASK_SUCCEEDED"
+    }
+  ]
+}
