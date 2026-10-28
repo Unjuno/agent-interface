@@ -1,6 +1,37 @@
 # Repository cleanup plan
 
-## Current execution pointer after PR #9362 — 2026-10-22
+## Current execution pointer after PR #9791 (2026-10-28)
+
+Current `origin/main` is `145c3af7727dde16d6ab9010cbfb8e01bb8e6eda`. A
+GraphQL count read, bracketed by this same main SHA, reports 1,643 open Issues
+and 404 open PRs. This is count-only, not a paginated membership or semantic
+review. The latest complete membership receipt is [r151](maintenance/repository-inventory-recheck-20261022-r151.md),
+captured at older main `08064035460187ba5c8c5cbb2f4e9732ca622ada` with 1,654
+Issues and 452 PRs; do not use those IDs/counts as current or infer custody.
+
+Live status: #17 is OPEN (last updated 2026-10-26); #57 is CLOSED as completed
+(2026-10-27); #7924 remains OPEN with its migration STOP (last updated
+2026-10-25). The #57 state does not establish project-wide completion. PR
+#9790 is MERGED as `acf5af971f3c366c9de04840e81b30160e690051`; it closes an
+offline validation gap by rejecting recovery when the first neutral readback
+starts beyond the configured post-release observation gap. Its focused
+owner/process/effect/MCP tests and reported PR checks passed, but it does not
+test native delayed input or the #17 blocked data-plane hypothesis. PR #9791
+is MERGED as this pointer's current main `145c3af...` and records that
+integration. No issue membership, allocation ownership, or worktree custody
+was inferred from these reads.
+
+The current execution order remains the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md):
+idea-family meaning, exact-head PR disposition, evidence/worktree custody,
+and documentation/navigation. Continue bounded batches and refresh exact live
+records before state changes. The next computer-control discriminator is a
+fresh native Win32 delayed-action/release trial; #17 separately still needs
+the declared blocked OS-pipe/journal/telemetry path, independent task effect,
+and repeated bounded recovery evidence. Do not treat the scoped GZDoom
+movement runs as MAP01 completion, efficiency, or reliability. WSLc remains
+under #7924 STOP; no allocation is implied here.
+
+## Historical execution pointer after PR #9362 — 2026-10-22
 
 Current `origin/main` is `df2b41e4a4e0ff03a3a7a139416003bd5599b16` (PR #9362).
 The latest complete membership receipt is still r138, captured before this

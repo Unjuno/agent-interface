@@ -1,12 +1,35 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-21
+## Current work-map pointer — 2026-10-28
 
-**Current source:** main `f3cb822ecdc08e5425de55cbe712203e11b1293e` after cleanup-plan PR #9310. The latest complete membership snapshot is [r128](maintenance/repository-inventory-recheck-20261021-r128.md), with 1,655 open Issues / 463 open PRs at a stable before/after main SHA; both ID sets match r126. This is membership only; use the live cleanup plan and refresh exact records before any state change.
+**Current source:** `main` `145c3af7727dde16d6ab9010cbfb8e01bb8e6eda`. A GraphQL
+read bracketed by that SHA reports 1,643 open Issues and 404 open PRs; this is
+count-only. The latest complete membership receipt is [r151](maintenance/repository-inventory-recheck-20261022-r151.md)
+at old main `08064035460187ba5c8c5cbb2f4e9732ca622ada` (1,654 Issues / 452
+PRs). It is a historical membership snapshot, not current ownership, review,
+or cleanup authorization. See the [current cleanup pointer](REPOSITORY_CLEANUP_PLAN.md#current-execution-pointer-after-pr-9791-2026-10-28)
+and [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md).
 
-The [current cleanup objective and execution order](REPOSITORY_CLEANUP_PLAN.md#live-execution-pointer-after-pr-9309) organizes work into four independent lanes: idea-family semantics, exact-head PR dispositions, workspace/evidence custody, and documentation/navigation. The r119 missing-index queue's D01–D11 receipts route 265 candidates (17 individually closed, 248 retained open); another 223 exact-URL idea routes remain semantically unreviewed. PR #9307–#9309 add indexed caller evidence and a Fake X-only cancellation characterization; neither implies production supervisor completion or releases the separate WSLc/HOLD boundary. The [integration map](../research/integration/README.md) records those evidence limits.
+Current touched-family status: #17 remains OPEN; its last update is 2026-10-26
+and its latest recorded result is R40, a scoped in-process blocked-stdout
+recovery sample. PR #9790 is merged and adds an offline fail-closed check for
+an unobserved initial late-input horizon gap; it does not establish native
+release or #17's blocked OS-pipe/journal/telemetry hypothesis. #57 is CLOSED
+as completed on 2026-10-27, but that state is not project-wide completion.
+#7924 remains OPEN with its migration STOP; it grants no WSLc allocation.
+Current-main GZDoom R71/R73 movement and R72 idle-control records are linked
+from [`CURRENT_GOAL.md`](CURRENT_GOAL.md); they do not prove MAP01 completion,
+reliability, or matched efficiency.
 
-Choose a finite item from one lane, record its private output and exact read-only source refs, then recheck the live Issue/PR and ownership before editing. Keep all source hypotheses and first outcomes; close only individually completed/superseded records with a verified catalog trail. The map is not an assignment or resource grant. Shared indexes are integrated serially; no fixed reviewer quota applies.
+Next finite computer-control work: run a fresh native Win32 delayed-action
+and release trial against the isolated GZDoom target, with exact task-effect
+oracle, same-generation neutral readback, bounded recovery, and preserved raw.
+Keep #17's data-plane outage tests as a separate family gate. The map is
+navigation only, not an assignment or resource grant; refresh touched live
+records before changing state. Integrate shared indexes serially and do not
+close or delete records from count-only data.
+
+## Historical work-map checkpoint — 2026-10-21
 
 **Completed semantic packet:** [#8641 family record](ideas/uncertainty-intervention-decomposition.md) captures its scoped synthetic H failure, comparator split, and the candidate no-retry deviation. PR #9293 integrated 27 exact evidence blobs; #8733 was closed as superseded after all 17 manifest entries and source blob IDs matched on main. Issue #8641 was one of the separate D11 missing-family candidates, not one of the 223 exact-URL routes. It remains open. The broader semantic backlog, remaining exact-head PR review, and custody checks continue.
 
