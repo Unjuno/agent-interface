@@ -799,9 +799,15 @@ class NativeHandleBridge:
         tail = expand_text_gaps(tail, max_ops={'click':123, 'move':125, 'keyboard':126}[interaction])[0]
         if interaction == 'move' and any(op.get('op') not in {'wait_update', 'observe'} for op in tail):
             raise ValueError('guarded move tail permits only wait_update and observe')
-        if any(op.get("op") not in {"text", "key_chord", "wait_update", "observe"} for op in tail):
+        allowed_tail_ops = {"text", "key_chord", "wait_update", "observe"}
+        if interaction == 'keyboard':
+            allowed_tail_ops.add('key_state')
+        if any(op.get("op") not in allowed_tail_ops for op in tail):
             raise ValueError("unsupported guarded-click tail")
-        if interaction == 'keyboard' and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
+        if interaction == 'keyboard' and not any(
+                op.get('op') in {'text', 'key_chord'} or
+                (op.get('op') == 'key_state' and op.get('down') is True)
+                for op in tail):
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
         self._active_process_identity = None
