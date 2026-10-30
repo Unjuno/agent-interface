@@ -27,3 +27,5 @@ docker run --rm --pull=never --network none --read-only --tmpfs /tmp:rw,nosuid,n
 ```
 
 Read `/tmp/owned-target-regression-new/result.json` and inspect the individual checks and cleanup. The runner creates private Xvfb and disposable child processes inside the isolated container. Startup, timing and scheduling vary by host. It is not a matched performance comparison and a later run does not replace the frozen historical results. The `raw/.gitattributes` rule preserves the exact bytes covered by the recorded checksums.
+
+The source manifest hashes the bytes actually mounted during R116. Eight tracked baseline/overlay Python files were checked out with CRLF line endings on the Windows host; their Git blobs use LF and therefore hash differently. Converting the corresponding Git blob LF line endings to CRLF reproduces each of those eight manifest hashes. The two newly added Python source files in the manifest match their Git blobs directly. The preserved runner hash is checked against `raw/r116/pilot.py`. This reproduction command exercises the same code with the checkout's line endings; it is not a byte-identical replay unless the listed hashes are matched first.
