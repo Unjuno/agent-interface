@@ -1,0 +1,34 @@
+{
+  "request": {
+    "interface_id": "calc_one_row",
+    "session_scope": "native-x11:60925049cd2e4459b74550870078a868",
+    "action": "enter",
+    "operation": "enter_row",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "cell",
+      "identity_predicate": "ready",
+      "dependencies": [
+        "ready"
+      ]
+    },
+    "observation": {
+      "sequence": 2,
+      "captured_ns": 72791080038,
+      "surface": "x11-window-6292258",
+      "predicates": {
+        "ready": true,
+        "row_visible": "unknown"
+      },
+      "evidence_ref": "observation-2",
+      "evidence_digest": "28dd65c2c0d839638014baddf650ca3060eb3d86a2c1d9a97523c9cc81575f58"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "ad6b0ef35c2c41d788cb13e9cafe7568",
+    "expected_sequence": 2,
+    "valid_until_ns": 74291080038
+  }
+}
