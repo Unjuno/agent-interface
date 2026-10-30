@@ -708,7 +708,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
         owner._request_locked.assert_not_called()
         owner._cleanup_after_owner_retirement.assert_called_once_with(
-            owner._retirement)
+            owner._retirement, disconnect_timeout_s=0.75,
+            retry_after_resume=True)
         self.assertEqual(first, second)
         self.assertEqual(first['owner_client_disconnect']['status'], 'disconnected')
         self.assertEqual(first['owner_release_attempt']['status'], 'readback_verified')
