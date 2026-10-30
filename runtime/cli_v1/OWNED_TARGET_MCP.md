@@ -64,5 +64,20 @@ intervene before the syscall, and final handle close is not deadline-bounded.
 If closing the pidfd reports an error, the receipt records it and the numeric
 descriptor is not retried, since it might already have been released and reused;
 whether a descriptor leaked remains unknown.
-Server shutdown can retire the control owner before the later target-cleanup
-path runs. These unresolved boundaries keep this integration experimental.
+On shutdown with a pending worker, explicit control-owner retirement also
+attempts target retirement before the remaining worker drain. A short target
+deadline reserves time for escalation from TERM to KILL, but neither deadline
+nor process exit guarantees the X server has released held keys. Cleanup keeps
+the prestarted supervisor alive until the close attempt ends. If the display
+is unavailable beyond that attempt, release may remain UNKNOWN.
+
+A real ViZDoom/Xvfb shutdown experiment with a second window focused during
+server suspension observed a W press delivered to that window after the bound
+target exited and before release. A single repeat-off/on comparison supports
+autorepeat as a contributing factor, but does not establish that disabling it
+is sufficient or safe. See [shutdown experiment evidence](../../research/integration/vizdoom_mcp_shutdown_r18_r20_20261030/README.md).
+An isolated disposable X server must therefore remain under exclusive custody
+until cleanup and any required recovery are verified. This code does not
+create or enforce that isolation; callers must not interpret target retirement
+or a successful key readback as proof that no other client received input.
+These unresolved boundaries keep this integration experimental.

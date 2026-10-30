@@ -15,10 +15,10 @@ If identity is missing, ownership is closed, signaling fails, or the deadline
 expires, it returns refusal/UNKNOWN without adopting another process. Closing
 the ownership handle while the child is still running is refused.
 
-This primitive is not yet connected to `create_server` or the public cancel
-receipt. The opt-in private-Xvfb integration test binds a real XRes window to
-the launched child, stops that exact X server, and confirms pidfd retirement
-of the child before resuming the server. It does not queue delayed input or
-measure task effects, and it does not establish public-MCP recovery. See the
-current [integration plan](../../docs/INTEGRATION_PLAN.md) for the required
-composition and evidence gates.
+An experimental opt-in `create_server` integration binds this handle to one
+owned guarded session and attaches retirement evidence to cleanup receipts; see
+[owned-target MCP](../cli_v1/OWNED_TARGET_MCP.md). It is not an X11 input
+isolation boundary: even a confirmed target exit cannot prevent already held
+keys or queued events from reaching other windows on the same display. The
+integration's real-app shutdown evidence includes such a counterexample. Task
+effects and general recovery remain unproven.
