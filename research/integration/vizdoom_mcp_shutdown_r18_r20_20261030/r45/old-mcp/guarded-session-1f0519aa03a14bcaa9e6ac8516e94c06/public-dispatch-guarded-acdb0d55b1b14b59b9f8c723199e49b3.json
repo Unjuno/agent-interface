@@ -1,0 +1,37 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 3369988122048,
+      "ended_ns": 3370055075338,
+      "emissions": 2,
+      "program_emissions": 2,
+      "observations": [],
+      "releases": [
+        {
+          "verified": false,
+          "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+          "monotonic_ns": 3370055073822
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0
+      ],
+      "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+      "failed_op": 1,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": true
+  }
+}
