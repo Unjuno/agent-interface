@@ -73,6 +73,44 @@ class OwnedTargetSessionTests(unittest.TestCase):
         self.assertGreaterEqual(timeout, 0)
         self.assertLessEqual(timeout, .15)
 
+    def test_short_budget_cancel_uses_bounded_wait_and_preserves_ready_response(self):
+        for ready in (False, True):
+            with self.subTest(ready=ready):
+                owner = object.__new__(OwnedTargetGuardedSessionOwner)
+                owner._process = Mock()
+                owner._process.is_alive.return_value = True
+                owner._control = Mock()
+                owner._control.poll.return_value = ready
+                owner._control.recv.return_value = {'ok':True, 'snapshot':{},
+                    'result':{'status':'cancel_requested',
+                              'owner_input_obligations':{'keys':{}, 'buttons':[]},
+                              'late_server_request_possible':False}}
+                owner._control_lock = threading.Lock()
+                owner._rpc_lock = Mock()
+                owner._rpc_lock.acquire.return_value = True
+                owner._target_cancel_guard = threading.Lock()
+                owner._target_cancel_context = threading.local()
+                owner._target_retirement_lock = threading.RLock()
+                owner._owned_target_retirement = None
+                owner._owned_target_binding = None
+                owner._apply_snapshot = Mock()
+                owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+                owner._cleanup_after_owner_retirement = Mock(return_value=(
+                    {'status':'unknown'}, {'status':'unknown'}))
+                owner._owner_input_obligations_result_fields = Mock(return_value={})
+                with patch('runtime.cli_v1.owned_target_session.time.monotonic_ns',
+                           return_value=1_000_000_000):
+                    result = owner.cancel_guarded('token', deadline_monotonic_ns=1_450_000_000)
+                self.assertLessEqual(owner._control.poll.call_args.args[0], .15)
+                if ready:
+                    self.assertEqual(result['status'], 'cancel_requested')
+                    owner._retire.assert_not_called()
+                    self.assertLessEqual(owner._rpc_lock.acquire.call_args.kwargs['timeout'], .15)
+                else:
+                    self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+                    self.assertFalse(result['replay_allowed'])
+                    owner._retire.assert_called_once()
+
     def test_explicit_close_preserves_prestarted_unknown_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None
