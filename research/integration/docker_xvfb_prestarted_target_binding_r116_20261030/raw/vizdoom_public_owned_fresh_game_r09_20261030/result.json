@@ -1,0 +1,6516 @@
+{
+  "status": "FAIL",
+  "task_success": null,
+  "no_model_calls": true,
+  "times": {
+    "stop_requested": 2101896209849,
+    "stopped": 2101896287220,
+    "cancel_returned": 2102148415047,
+    "target_exit_observed": 2102263353437,
+    "resume": 2102546924687,
+    "fresh_ready": 2102813670980,
+    "fresh_horizon_start": 2107070298911,
+    "fresh_horizon_end": 2115576088040
+  },
+  "checks": {
+    "observed_owned_binding": true,
+    "w_down_before_stop": true,
+    "target_exit_before_resume": true,
+    "target_exit_verified": true,
+    "original_unknown_no_replay": true,
+    "close_release_readback": true,
+    "w_b_up_after_close": true,
+    "stop_at_least_650ms": true,
+    "fresh_distinct_process_and_window": false,
+    "fresh_before_old_delayed_deadline": true,
+    "fresh_horizon_elapsed": true,
+    "fresh_action_completed": true,
+    "fresh_release_verified": true,
+    "fresh_scene_changed": true,
+    "b_not_observed_down": true,
+    "fresh_keys_up_after_horizon": true
+  },
+  "target_pid": 11,
+  "xid": 4194320,
+  "observe": {
+    "operation": "guarded_observe",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "observed",
+    "input_dispatched": false,
+    "source": {
+      "sequence": 1,
+      "observation_id": "8b87c0148ab2422b8180a8d6e3c91e06",
+      "binding_revision": 0,
+      "capture_ns": 2101673889896,
+      "image_source": "exact_capture_rgb_handoff",
+      "pointer_binding": {
+        "focus": 4194320,
+        "surface": 4194320,
+        "geometry": [
+          320,
+          272,
+          640,
+          480
+        ],
+        "process_generation": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+        "window_generation": "077b297b4e8b02af55b8d57a23f899d1957e2cd2c1ce0d4ae50c197d880da6fc"
+      },
+      "native": {
+        "bytes": 5242880,
+        "sha256": "9225db954e12566ecea53f101ec4f53868bc0d890bd2a9c8d9e9fccfcb63e625",
+        "width": 1280,
+        "height": 1024,
+        "target": "app",
+        "native_window_id": 4194320,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          1024
+        ],
+        "capture_started_ns": 2101673889896,
+        "capture_ended_ns": 2101678748256,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/evidence/mcp/12e13865093b45eebba9988207c790d9/images/e33781336044462d96e09ae1b97fca20.png",
+          "sha256": "e9921cec421e8ea3ba4899c9e9accd31cce2366a3b2c6cb3f3595f0ab57cfa7c",
+          "bytes": 82330,
+          "width": 1280,
+          "height": 1024,
+          "source_raw_sha256": "9225db954e12566ecea53f101ec4f53868bc0d890bd2a9c8d9e9fccfcb63e625",
+          "timing_ns": {
+            "started": 2101680952920,
+            "converted": 2101682841309,
+            "encoded": 2101710260894,
+            "written": 2101713396543,
+            "hashed": 2101715589072
+          }
+        }
+      },
+      "timing_ns": {
+        "started": 2101673079587,
+        "public_returned": 2101715842820,
+        "binding_checked": 2101719949203,
+        "artifact_verified": 2101722832732,
+        "decoded": 2101722840035
+      }
+    },
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "status": "returned",
+      "observation_id": "8b87c0148ab2422b8180a8d6e3c91e06",
+      "observation": {
+        "bytes": 5242880,
+        "sha256": "9225db954e12566ecea53f101ec4f53868bc0d890bd2a9c8d9e9fccfcb63e625",
+        "width": 1280,
+        "height": 1024,
+        "target": "app",
+        "native_window_id": 4194320,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          1024
+        ],
+        "capture_started_ns": 2101673889896,
+        "capture_ended_ns": 2101678748256,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/evidence/mcp/12e13865093b45eebba9988207c790d9/images/e33781336044462d96e09ae1b97fca20.png",
+          "sha256": "e9921cec421e8ea3ba4899c9e9accd31cce2366a3b2c6cb3f3595f0ab57cfa7c",
+          "bytes": 82330,
+          "width": 1280,
+          "height": 1024,
+          "source_raw_sha256": "9225db954e12566ecea53f101ec4f53868bc0d890bd2a9c8d9e9fccfcb63e625",
+          "timing_ns": {
+            "started": 2101680952920,
+            "converted": 2101682841309,
+            "encoded": 2101710260894,
+            "written": 2101713396543,
+            "hashed": 2101715589072
+          }
+        }
+      },
+      "side_effect_authority": false,
+      "input_dispatched": false
+    },
+    "session": {
+      "session_id": "365ca20134354bcea748238662e95bc8",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:c48aadee484c443e8b81c181b8a02bce",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": false,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 602,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 602,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 2101740160517,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "image_status": "image",
+    "call_directory": "/evidence/mcp/12e13865093b45eebba9988207c790d9",
+    "call_id": "12e13865093b45eebba9988207c790d9"
+  },
+  "mint": {
+    "operation": "guarded_mint",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "minted",
+    "alias": "field",
+    "offset": [
+      12,
+      19
+    ],
+    "lifetime": {
+      "clock": "time.monotonic_ns",
+      "minted_ns": 2101751670197,
+      "expires_ns": 2401751670197,
+      "capture_freshness_ms": 1500,
+      "authority_granted": false,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "source_sequence": 1,
+    "input_dispatched": false,
+    "session": {
+      "session_id": "365ca20134354bcea748238662e95bc8",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:c48aadee484c443e8b81c181b8a02bce",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": false,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 602,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 602,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 2101758685386,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "call_directory": "/evidence/mcp/78fcbb547b454fa7a80021cb9ad5cf27",
+    "call_id": "78fcbb547b454fa7a80021cb9ad5cf27"
+  },
+  "action": {
+    "status": "pending",
+    "call_id": "dc5c27eded694b94b1427d870b4482ab",
+    "call": {
+      "call_id": "dc5c27eded694b94b1427d870b4482ab",
+      "operation": "guarded_input",
+      "state": "queued",
+      "arguments": {
+        "alias": "field",
+        "offset": [
+          12,
+          19
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "w"
+            ]
+          }
+        ],
+        "interaction": "keyboard",
+        "observe_after": false
+      },
+      "backend_attempted": false,
+      "persistence_failure": null,
+      "response_wait_ms": 0
+    },
+    "scope": "current_server",
+    "result_available": false,
+    "release_confirmed": false,
+    "effect_status": "unknown",
+    "task_success": null,
+    "replay_allowed": false,
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay."
+  },
+  "marker": {
+    "blocked_boundary": "real python-xlib Display.sync response wait",
+    "delay_ms": 8000,
+    "delayed_event": "KeyPress",
+    "delayed_keycode": 56,
+    "flushed_ns": 2101873888525,
+    "immediate_event": "KeyPress",
+    "immediate_keycode": 25,
+    "owner_pid": 602,
+    "resource_base": 6291456
+  },
+  "sync_marker": {
+    "call": "python-xlib Display.sync",
+    "entered_ns": 2101890170521,
+    "owner_pid": 602,
+    "resource_base": 6291456
+  },
+  "w_down_before_stop": true,
+  "cancel": {
+    "status": "pending",
+    "call_id": "dc5c27eded694b94b1427d870b4482ab",
+    "operation_id": "c5360fdc02684e81bf33b91f46e4595d",
+    "cancellation": {
+      "operation_id": "c5360fdc02684e81bf33b91f46e4595d",
+      "status": "pending",
+      "admitted_monotonic_ns": 2101896551575,
+      "caller_response_deadline_monotonic_ns": 2102196551575,
+      "transaction_deadline_monotonic_ns": 2105896551575,
+      "owner_generation": {
+        "session_id": "365ca20134354bcea748238662e95bc8",
+        "child_pid": 602,
+        "x_resource_base": 6291456,
+        "binding_revision": 0
+      },
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false
+    },
+    "result_available": true,
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "note": "The response wait ended; this cancellation operation retains custody. Retrieve it through interface_results. Pending permits no replay."
+  },
+  "target_exit_before_resume": -9,
+  "cancel_terminal": {
+    "status": "cancel_requested",
+    "already_requested": false,
+    "input_dispatched": false,
+    "release_confirmed": false,
+    "review_required": true,
+    "replay_allowed": false,
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "reason": "owner_pid_absent",
+      "owner_process_retired": true,
+      "owner_process_exitcode": -15,
+      "expected_pid": 602,
+      "observed_pid": null,
+      "observer_pid": 751,
+      "supervisor_pid": 751,
+      "resource_base": 6291456,
+      "started_monotonic_ns": 2102558403052,
+      "observed_monotonic_ns": 2102558580432
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "w": 25
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "release_started_monotonic_ns": 2102600568663,
+        "release_requests": [
+          {
+            "kind": "KeyRelease",
+            "code": 25,
+            "requested_monotonic_ns": 2102600584650
+          }
+        ],
+        "sync_started_monotonic_ns": 2102600585272,
+        "sync_completed_monotonic_ns": 2102600641615,
+        "readback_monotonic_ns": 2102600752245
+      },
+      "readback_source": "prestarted_supervisor_x11"
+    },
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "late_server_request_possible": true,
+    "owned_target_retirement": {
+      "status": "retired",
+      "exitcode": -9,
+      "signal_attempts": [
+        {
+          "signal": 15,
+          "status": "sent"
+        },
+        {
+          "signal": 9,
+          "status": "sent"
+        }
+      ],
+      "target_identity_verified": true,
+      "target_xid": 4194320,
+      "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+      "process_exit_verified": true
+    },
+    "owned_target_binding": {
+      "status": "bound",
+      "xid": 4194320,
+      "pid": 11,
+      "start_ticks": 209758,
+      "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+      "identity_query": {
+        "status": "observed",
+        "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+        "operation_id": "2715d7f0bd504971a2e89bc15d558641",
+        "session_id": "365ca20134354bcea748238662e95bc8",
+        "worker_retired": true,
+        "worker_exitcode": 0,
+        "completed_monotonic_ns": 2101619022701
+      }
+    },
+    "call_id": "dc5c27eded694b94b1427d870b4482ab",
+    "operation_id": "c5360fdc02684e81bf33b91f46e4595d",
+    "cancellation": {
+      "operation_id": "c5360fdc02684e81bf33b91f46e4595d",
+      "status": "completed",
+      "admitted_monotonic_ns": 2101896551575,
+      "caller_response_deadline_monotonic_ns": 2102196551575,
+      "transaction_deadline_monotonic_ns": 2105896551575,
+      "owner_generation": {
+        "session_id": "365ca20134354bcea748238662e95bc8",
+        "child_pid": 602,
+        "x_resource_base": 6291456,
+        "binding_revision": 0
+      },
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "status": "cancel_requested",
+        "already_requested": false,
+        "input_dispatched": false,
+        "release_confirmed": false,
+        "review_required": true,
+        "replay_allowed": false,
+        "owner_process_retired": true,
+        "owner_process_exitcode": -15,
+        "owner_client_disconnect": {
+          "status": "disconnected",
+          "reason": "owner_pid_absent",
+          "owner_process_retired": true,
+          "owner_process_exitcode": -15,
+          "expected_pid": 602,
+          "observed_pid": null,
+          "observer_pid": 751,
+          "supervisor_pid": 751,
+          "resource_base": 6291456,
+          "started_monotonic_ns": 2102558403052,
+          "observed_monotonic_ns": 2102558580432
+        },
+        "owner_input_obligations": {
+          "keys": {
+            "w": 25
+          },
+          "buttons": []
+        },
+        "owner_input_obligations_source": "retired_child_shared_state",
+        "owner_input_obligations_live_read": {
+          "status": "snapshot",
+          "obligations": {
+            "keys": {
+              "w": 25
+            },
+            "buttons": []
+          }
+        },
+        "owner_release_attempt": {
+          "status": "readback_verified",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": [],
+            "release_started_monotonic_ns": 2102600568663,
+            "release_requests": [
+              {
+                "kind": "KeyRelease",
+                "code": 25,
+                "requested_monotonic_ns": 2102600584650
+              }
+            ],
+            "sync_started_monotonic_ns": 2102600585272,
+            "sync_completed_monotonic_ns": 2102600641615,
+            "readback_monotonic_ns": 2102600752245
+          },
+          "readback_source": "prestarted_supervisor_x11"
+        },
+        "cleanup_status": "UNKNOWN",
+        "task_success": null,
+        "late_server_request_possible": true,
+        "owned_target_retirement": {
+          "status": "retired",
+          "exitcode": -9,
+          "signal_attempts": [
+            {
+              "signal": 15,
+              "status": "sent"
+            },
+            {
+              "signal": 9,
+              "status": "sent"
+            }
+          ],
+          "target_identity_verified": true,
+          "target_xid": 4194320,
+          "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+          "process_exit_verified": true
+        },
+        "owned_target_binding": {
+          "status": "bound",
+          "xid": 4194320,
+          "pid": 11,
+          "start_ticks": 209758,
+          "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+          "identity_query": {
+            "status": "observed",
+            "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+            "operation_id": "2715d7f0bd504971a2e89bc15d558641",
+            "session_id": "365ca20134354bcea748238662e95bc8",
+            "worker_retired": true,
+            "worker_exitcode": 0,
+            "completed_monotonic_ns": 2101619022701
+          }
+        }
+      },
+      "completed_monotonic_ns": 2102642170875
+    }
+  },
+  "old_terminal": {
+    "status": "runtime_failed",
+    "error": "EOFError()",
+    "operation": "guarded_input",
+    "operation_invoked": false,
+    "effect_status": "unknown",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "cleanup_status": "UNKNOWN",
+    "owner_process": {
+      "pid": 602,
+      "alive": true,
+      "liveness_observed_monotonic_ns": 2102004312808,
+      "exitcode": null,
+      "retired": false,
+      "release_confirmed": null,
+      "x_client_resource_base": 6291456
+    },
+    "late_server_request_possible": true,
+    "session": {
+      "session_id": "365ca20134354bcea748238662e95bc8",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:c48aadee484c443e8b81c181b8a02bce",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": true,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      },
+      "owner_process_pid": 602,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 602,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 2102004412419,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "call_id": "dc5c27eded694b94b1427d870b4482ab",
+    "call_directory": "/evidence/mcp/dc5c27eded694b94b1427d870b4482ab",
+    "retained_call": {
+      "call_id": "dc5c27eded694b94b1427d870b4482ab",
+      "operation": "guarded_input",
+      "state": "finished",
+      "arguments": {
+        "alias": "field",
+        "offset": [
+          12,
+          19
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "w"
+            ]
+          }
+        ],
+        "interaction": "keyboard",
+        "observe_after": false
+      },
+      "backend_attempted": true,
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "cancellation": {
+        "operation_id": "c5360fdc02684e81bf33b91f46e4595d",
+        "status": "completed",
+        "admitted_monotonic_ns": 2101896551575,
+        "caller_response_deadline_monotonic_ns": 2102196551575,
+        "transaction_deadline_monotonic_ns": 2105896551575,
+        "owner_generation": {
+          "session_id": "365ca20134354bcea748238662e95bc8",
+          "child_pid": 602,
+          "x_resource_base": 6291456,
+          "binding_revision": 0
+        },
+        "release_confirmed": false,
+        "task_success": null,
+        "replay_allowed": false,
+        "result": {
+          "status": "cancel_requested",
+          "already_requested": false,
+          "input_dispatched": false,
+          "release_confirmed": false,
+          "review_required": true,
+          "replay_allowed": false,
+          "owner_process_retired": true,
+          "owner_process_exitcode": -15,
+          "owner_client_disconnect": {
+            "status": "disconnected",
+            "reason": "owner_pid_absent",
+            "owner_process_retired": true,
+            "owner_process_exitcode": -15,
+            "expected_pid": 602,
+            "observed_pid": null,
+            "observer_pid": 751,
+            "supervisor_pid": 751,
+            "resource_base": 6291456,
+            "started_monotonic_ns": 2102558403052,
+            "observed_monotonic_ns": 2102558580432
+          },
+          "owner_input_obligations": {
+            "keys": {
+              "w": 25
+            },
+            "buttons": []
+          },
+          "owner_input_obligations_source": "retired_child_shared_state",
+          "owner_input_obligations_live_read": {
+            "status": "snapshot",
+            "obligations": {
+              "keys": {
+                "w": 25
+              },
+              "buttons": []
+            }
+          },
+          "owner_release_attempt": {
+            "status": "readback_verified",
+            "release": {
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": [],
+              "release_started_monotonic_ns": 2102600568663,
+              "release_requests": [
+                {
+                  "kind": "KeyRelease",
+                  "code": 25,
+                  "requested_monotonic_ns": 2102600584650
+                }
+              ],
+              "sync_started_monotonic_ns": 2102600585272,
+              "sync_completed_monotonic_ns": 2102600641615,
+              "readback_monotonic_ns": 2102600752245
+            },
+            "readback_source": "prestarted_supervisor_x11"
+          },
+          "cleanup_status": "UNKNOWN",
+          "task_success": null,
+          "late_server_request_possible": true,
+          "owned_target_retirement": {
+            "status": "retired",
+            "exitcode": -9,
+            "signal_attempts": [
+              {
+                "signal": 15,
+                "status": "sent"
+              },
+              {
+                "signal": 9,
+                "status": "sent"
+              }
+            ],
+            "target_identity_verified": true,
+            "target_xid": 4194320,
+            "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+            "process_exit_verified": true
+          },
+          "owned_target_binding": {
+            "status": "bound",
+            "xid": 4194320,
+            "pid": 11,
+            "start_ticks": 209758,
+            "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+            "identity_query": {
+              "status": "observed",
+              "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+              "operation_id": "2715d7f0bd504971a2e89bc15d558641",
+              "session_id": "365ca20134354bcea748238662e95bc8",
+              "worker_retired": true,
+              "worker_exitcode": 0,
+              "completed_monotonic_ns": 2101619022701
+            }
+          }
+        },
+        "completed_monotonic_ns": 2102642170875
+      }
+    },
+    "cancellation": {
+      "operation_id": "c5360fdc02684e81bf33b91f46e4595d",
+      "status": "completed",
+      "admitted_monotonic_ns": 2101896551575,
+      "caller_response_deadline_monotonic_ns": 2102196551575,
+      "transaction_deadline_monotonic_ns": 2105896551575,
+      "owner_generation": {
+        "session_id": "365ca20134354bcea748238662e95bc8",
+        "child_pid": 602,
+        "x_resource_base": 6291456,
+        "binding_revision": 0
+      },
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "status": "cancel_requested",
+        "already_requested": false,
+        "input_dispatched": false,
+        "release_confirmed": false,
+        "review_required": true,
+        "replay_allowed": false,
+        "owner_process_retired": true,
+        "owner_process_exitcode": -15,
+        "owner_client_disconnect": {
+          "status": "disconnected",
+          "reason": "owner_pid_absent",
+          "owner_process_retired": true,
+          "owner_process_exitcode": -15,
+          "expected_pid": 602,
+          "observed_pid": null,
+          "observer_pid": 751,
+          "supervisor_pid": 751,
+          "resource_base": 6291456,
+          "started_monotonic_ns": 2102558403052,
+          "observed_monotonic_ns": 2102558580432
+        },
+        "owner_input_obligations": {
+          "keys": {
+            "w": 25
+          },
+          "buttons": []
+        },
+        "owner_input_obligations_source": "retired_child_shared_state",
+        "owner_input_obligations_live_read": {
+          "status": "snapshot",
+          "obligations": {
+            "keys": {
+              "w": 25
+            },
+            "buttons": []
+          }
+        },
+        "owner_release_attempt": {
+          "status": "readback_verified",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": [],
+            "release_started_monotonic_ns": 2102600568663,
+            "release_requests": [
+              {
+                "kind": "KeyRelease",
+                "code": 25,
+                "requested_monotonic_ns": 2102600584650
+              }
+            ],
+            "sync_started_monotonic_ns": 2102600585272,
+            "sync_completed_monotonic_ns": 2102600641615,
+            "readback_monotonic_ns": 2102600752245
+          },
+          "readback_source": "prestarted_supervisor_x11"
+        },
+        "cleanup_status": "UNKNOWN",
+        "task_success": null,
+        "late_server_request_possible": true,
+        "owned_target_retirement": {
+          "status": "retired",
+          "exitcode": -9,
+          "signal_attempts": [
+            {
+              "signal": 15,
+              "status": "sent"
+            },
+            {
+              "signal": 9,
+              "status": "sent"
+            }
+          ],
+          "target_identity_verified": true,
+          "target_xid": 4194320,
+          "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+          "process_exit_verified": true
+        },
+        "owned_target_binding": {
+          "status": "bound",
+          "xid": 4194320,
+          "pid": 11,
+          "start_ticks": 209758,
+          "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+          "identity_query": {
+            "status": "observed",
+            "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+            "operation_id": "2715d7f0bd504971a2e89bc15d558641",
+            "session_id": "365ca20134354bcea748238662e95bc8",
+            "worker_retired": true,
+            "worker_exitcode": 0,
+            "completed_monotonic_ns": 2101619022701
+          }
+        }
+      },
+      "completed_monotonic_ns": 2102642170875
+    }
+  },
+  "close": {
+    "status": "cleanup_failed",
+    "session_id": "365ca20134354bcea748238662e95bc8",
+    "release_attempted": true,
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "verified": false,
+    "connection_close_attempted": false,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "reason": "owner_pid_absent",
+      "owner_process_retired": true,
+      "owner_process_exitcode": -15,
+      "expected_pid": 602,
+      "observed_pid": null,
+      "observer_pid": 751,
+      "supervisor_pid": 751,
+      "resource_base": 6291456,
+      "started_monotonic_ns": 2102558403052,
+      "observed_monotonic_ns": 2102558580432
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "w": 25
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "release_started_monotonic_ns": 2102600568663,
+        "release_requests": [
+          {
+            "kind": "KeyRelease",
+            "code": 25,
+            "requested_monotonic_ns": 2102600584650
+          }
+        ],
+        "sync_started_monotonic_ns": 2102600585272,
+        "sync_completed_monotonic_ns": 2102600641615,
+        "readback_monotonic_ns": 2102600752245
+      },
+      "readback_source": "prestarted_supervisor_x11"
+    },
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "late_server_request_possible": true,
+    "retirement_reason": "cancel left input or server-request obligation",
+    "error": "cancel left input or server-request obligation",
+    "owned_target_retirement": {
+      "status": "retired",
+      "exitcode": -9,
+      "signal_attempts": [
+        {
+          "signal": 15,
+          "status": "sent"
+        },
+        {
+          "signal": 9,
+          "status": "sent"
+        }
+      ],
+      "target_identity_verified": true,
+      "target_xid": 4194320,
+      "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+      "process_exit_verified": true
+    },
+    "owned_target_binding": {
+      "status": "bound",
+      "xid": 4194320,
+      "pid": 11,
+      "start_ticks": 209758,
+      "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+      "identity_query": {
+        "status": "observed",
+        "identity_digest": "f4e55feca19d65086ea7f27fe91f0f4652a9a4e499fce91780568efa2f0c5ad4",
+        "operation_id": "2715d7f0bd504971a2e89bc15d558641",
+        "session_id": "365ca20134354bcea748238662e95bc8",
+        "worker_retired": true,
+        "worker_exitcode": 0,
+        "completed_monotonic_ns": 2101619022701
+      }
+    },
+    "session": {
+      "session_id": "365ca20134354bcea748238662e95bc8",
+      "mode": "guarded-x11-owned-process",
+      "state": "failed",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": "cancel left input or server-request obligation",
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:c48aadee484c443e8b81c181b8a02bce",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": true,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      },
+      "owner_process_pid": 602,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 602,
+        "alive": false,
+        "liveness_observed_monotonic_ns": 2102669910782,
+        "exitcode": -15,
+        "retired": true,
+        "release_confirmed": false,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": {
+        "status": "disconnected",
+        "reason": "owner_pid_absent",
+        "owner_process_retired": true,
+        "owner_process_exitcode": -15,
+        "expected_pid": 602,
+        "observed_pid": null,
+        "observer_pid": 751,
+        "supervisor_pid": 751,
+        "resource_base": 6291456,
+        "started_monotonic_ns": 2102558403052,
+        "observed_monotonic_ns": 2102558580432
+      },
+      "owner_input_obligations_source": "retired_child_shared_state",
+      "owner_input_obligations_live_read": {
+        "status": "snapshot",
+        "obligations": {
+          "keys": {
+            "w": 25
+          },
+          "buttons": []
+        }
+      },
+      "owner_release_attempt": {
+        "status": "readback_verified",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": [],
+          "release_started_monotonic_ns": 2102600568663,
+          "release_requests": [
+            {
+              "kind": "KeyRelease",
+              "code": 25,
+              "requested_monotonic_ns": 2102600584650
+            }
+          ],
+          "sync_started_monotonic_ns": 2102600585272,
+          "sync_completed_monotonic_ns": 2102600641615,
+          "readback_monotonic_ns": 2102600752245
+        },
+        "readback_source": "prestarted_supervisor_x11"
+      },
+      "cleanup_status": "UNKNOWN"
+    },
+    "call_directory": "/evidence/mcp/77bb71eb9890429d8f21b1bbe41b20e5",
+    "call_id": "77bb71eb9890429d8f21b1bbe41b20e5"
+  },
+  "keys_after_close": {
+    "w": false,
+    "b": false
+  },
+  "fresh": {
+    "pid": 996,
+    "xid": 4194320,
+    "observe": {
+      "operation": "guarded_observe",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "observed",
+      "input_dispatched": false,
+      "source": {
+        "sequence": 1,
+        "observation_id": "8b8908794d864df599b76dc5c4d392cb",
+        "binding_revision": 0,
+        "capture_ns": 2106193217477,
+        "image_source": "exact_capture_rgb_handoff",
+        "pointer_binding": {
+          "focus": 4194320,
+          "surface": 4194320,
+          "geometry": [
+            320,
+            272,
+            640,
+            480
+          ],
+          "process_generation": "eebdad77ac1bafba18b109ad5da78ba5a65d20b0e28d4e093a0c2cda16137779",
+          "window_generation": "fcfe56bc88783e3c9cb488f6f38222fad67ae00c699b6a1c82e849b2924bcf7c"
+        },
+        "native": {
+          "bytes": 5242880,
+          "sha256": "97734555fbb14cad47c22ee8a4fb0e6f086f22f25ab4903933112937b9d901f1",
+          "width": 1280,
+          "height": 1024,
+          "target": "app",
+          "native_window_id": 4194320,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            1024
+          ],
+          "capture_started_ns": 2106193217477,
+          "capture_ended_ns": 2106208940368,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/evidence/fresh-mcp/ace5edf33e2a40fd8eaeb659902a336f/images/a286b6cb53084baba2ab8f4fb2ae0d1c.png",
+            "sha256": "ddf8783601db2d979d020643862fc327db12f1301fd279421ffcce5b94e8e86b",
+            "bytes": 82327,
+            "width": 1280,
+            "height": 1024,
+            "source_raw_sha256": "97734555fbb14cad47c22ee8a4fb0e6f086f22f25ab4903933112937b9d901f1",
+            "timing_ns": {
+              "started": 2106211141487,
+              "converted": 2106212888255,
+              "encoded": 2106239851594,
+              "written": 2106242730205,
+              "hashed": 2106244964314
+            }
+          }
+        },
+        "timing_ns": {
+          "started": 2106192398391,
+          "public_returned": 2106245170954,
+          "binding_checked": 2106248364561,
+          "artifact_verified": 2106250342527,
+          "decoded": 2106250350371
+        }
+      },
+      "observation_report": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "status": "returned",
+        "observation_id": "8b8908794d864df599b76dc5c4d392cb",
+        "observation": {
+          "bytes": 5242880,
+          "sha256": "97734555fbb14cad47c22ee8a4fb0e6f086f22f25ab4903933112937b9d901f1",
+          "width": 1280,
+          "height": 1024,
+          "target": "app",
+          "native_window_id": 4194320,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            1024
+          ],
+          "capture_started_ns": 2106193217477,
+          "capture_ended_ns": 2106208940368,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/evidence/fresh-mcp/ace5edf33e2a40fd8eaeb659902a336f/images/a286b6cb53084baba2ab8f4fb2ae0d1c.png",
+            "sha256": "ddf8783601db2d979d020643862fc327db12f1301fd279421ffcce5b94e8e86b",
+            "bytes": 82327,
+            "width": 1280,
+            "height": 1024,
+            "source_raw_sha256": "97734555fbb14cad47c22ee8a4fb0e6f086f22f25ab4903933112937b9d901f1",
+            "timing_ns": {
+              "started": 2106211141487,
+              "converted": 2106212888255,
+              "encoded": 2106239851594,
+              "written": 2106242730205,
+              "hashed": 2106244964314
+            }
+          }
+        },
+        "side_effect_authority": false,
+        "input_dispatched": false
+      },
+      "session": {
+        "session_id": "cfbc3cf8a4a24e3fa8385a44366c815b",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:fb0696f5953f4f55a71e15a4c22f64a6",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 1,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1470,
+        "owner_x_client_resource_base": 8388608,
+        "owner_process": {
+          "pid": 1470,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 2106268620947,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 8388608
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "image_status": "image",
+      "call_directory": "/evidence/fresh-mcp/ace5edf33e2a40fd8eaeb659902a336f",
+      "call_id": "ace5edf33e2a40fd8eaeb659902a336f"
+    },
+    "mint": {
+      "operation": "guarded_mint",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "minted",
+      "alias": "fresh",
+      "offset": [
+        12,
+        19
+      ],
+      "lifetime": {
+        "clock": "time.monotonic_ns",
+        "minted_ns": 2106301786663,
+        "expires_ns": 2406301786663,
+        "capture_freshness_ms": 1500,
+        "authority_granted": false,
+        "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+      },
+      "source_sequence": 1,
+      "input_dispatched": false,
+      "session": {
+        "session_id": "cfbc3cf8a4a24e3fa8385a44366c815b",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:fb0696f5953f4f55a71e15a4c22f64a6",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 1,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1470,
+        "owner_x_client_resource_base": 8388608,
+        "owner_process": {
+          "pid": 1470,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 2106308648086,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 8388608
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "call_directory": "/evidence/fresh-mcp/0d789c6502dc426c9a205bba0963279e",
+      "call_id": "0d789c6502dc426c9a205bba0963279e"
+    },
+    "action": {
+      "operation": "guarded_input",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "completed",
+      "result": {
+        "status": "completed",
+        "admission": "accepted",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ],
+        "execution": {
+          "started_ns": 2106366382455,
+          "ended_ns": 2107012813239,
+          "emissions": 2,
+          "program_emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [],
+              "buttons_down": [],
+              "verified": true,
+              "monotonic_ns": 2107012811357
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 2,
+              "requested_ms": 600,
+              "started_ns": 2106412105707,
+              "completed": true,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 2107012194664
+            }
+          ],
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "recovery_required": false,
+        "guard_checks": [
+          {
+            "stage": "before_admission",
+            "observation_sequence": 2,
+            "eligible": true,
+            "status": "VALID",
+            "handle": "fresh",
+            "authority": "resolution only; ordinary admission remains required",
+            "reason": "exact_region_match",
+            "name": "fresh",
+            "point": [
+              364,
+              698
+            ],
+            "observed_box": [
+              352,
+              679,
+              24,
+              38
+            ],
+            "binding_translation": [
+              0,
+              0
+            ],
+            "local_translation": [
+              0,
+              0
+            ],
+            "sequence": 2,
+            "valid_until_ns": 2107818993146,
+            "patch_sha256": "a573e8f61775fe3c7c071809d427ecfed17e18d26b1476c30cd1baf8ecac09af",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false
+          },
+          {
+            "stage": "before_focus",
+            "observation_sequence": 3,
+            "eligible": true,
+            "status": "VALID",
+            "handle": "fresh",
+            "authority": "resolution only; ordinary admission remains required",
+            "reason": "exact_region_match",
+            "name": "fresh",
+            "point": [
+              364,
+              698
+            ],
+            "observed_box": [
+              352,
+              679,
+              24,
+              38
+            ],
+            "binding_translation": [
+              0,
+              0
+            ],
+            "local_translation": [
+              0,
+              0
+            ],
+            "sequence": 3,
+            "valid_until_ns": 2107867161514,
+            "patch_sha256": "a573e8f61775fe3c7c071809d427ecfed17e18d26b1476c30cd1baf8ecac09af",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false
+          }
+        ]
+      },
+      "feedback_status": "not_requested",
+      "session": {
+        "session_id": "cfbc3cf8a4a24e3fa8385a44366c815b",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:fb0696f5953f4f55a71e15a4c22f64a6",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 3,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1470,
+        "owner_x_client_resource_base": 8388608,
+        "owner_process": {
+          "pid": 1470,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 2107023186225,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 8388608
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "call_directory": "/evidence/fresh-mcp/7f25b7e156d44bb9abf7be79fc9f4831",
+      "call_id": "7f25b7e156d44bb9abf7be79fc9f4831"
+    },
+    "visual_changed_fraction": 0.76923046875,
+    "b_samples": [
+      {
+        "ns": 2102816521986,
+        "b": false
+      },
+      {
+        "ns": 2102826664097,
+        "b": false
+      },
+      {
+        "ns": 2102836855851,
+        "b": false
+      },
+      {
+        "ns": 2102847039682,
+        "b": false
+      },
+      {
+        "ns": 2102857204085,
+        "b": false
+      },
+      {
+        "ns": 2102867403732,
+        "b": false
+      },
+      {
+        "ns": 2102877584409,
+        "b": false
+      },
+      {
+        "ns": 2102887781792,
+        "b": false
+      },
+      {
+        "ns": 2102897990138,
+        "b": false
+      },
+      {
+        "ns": 2102908179294,
+        "b": false
+      },
+      {
+        "ns": 2102918369465,
+        "b": false
+      },
+      {
+        "ns": 2102928547687,
+        "b": false
+      },
+      {
+        "ns": 2102938731076,
+        "b": false
+      },
+      {
+        "ns": 2102948934327,
+        "b": false
+      },
+      {
+        "ns": 2102959169296,
+        "b": false
+      },
+      {
+        "ns": 2102969362802,
+        "b": false
+      },
+      {
+        "ns": 2102979542750,
+        "b": false
+      },
+      {
+        "ns": 2102989727588,
+        "b": false
+      },
+      {
+        "ns": 2102999947331,
+        "b": false
+      },
+      {
+        "ns": 2103010155370,
+        "b": false
+      },
+      {
+        "ns": 2103020403486,
+        "b": false
+      },
+      {
+        "ns": 2103030747488,
+        "b": false
+      },
+      {
+        "ns": 2103041015129,
+        "b": false
+      },
+      {
+        "ns": 2103051180663,
+        "b": false
+      },
+      {
+        "ns": 2103061346882,
+        "b": false
+      },
+      {
+        "ns": 2103071522251,
+        "b": false
+      },
+      {
+        "ns": 2103081681105,
+        "b": false
+      },
+      {
+        "ns": 2103091856098,
+        "b": false
+      },
+      {
+        "ns": 2103102022487,
+        "b": false
+      },
+      {
+        "ns": 2103112203070,
+        "b": false
+      },
+      {
+        "ns": 2103122387810,
+        "b": false
+      },
+      {
+        "ns": 2103132592517,
+        "b": false
+      },
+      {
+        "ns": 2103142778038,
+        "b": false
+      },
+      {
+        "ns": 2103152967389,
+        "b": false
+      },
+      {
+        "ns": 2103163193617,
+        "b": false
+      },
+      {
+        "ns": 2103173388089,
+        "b": false
+      },
+      {
+        "ns": 2103183596314,
+        "b": false
+      },
+      {
+        "ns": 2103193786188,
+        "b": false
+      },
+      {
+        "ns": 2103204123066,
+        "b": false
+      },
+      {
+        "ns": 2103214739639,
+        "b": false
+      },
+      {
+        "ns": 2103225130063,
+        "b": false
+      },
+      {
+        "ns": 2103235547991,
+        "b": false
+      },
+      {
+        "ns": 2103245936186,
+        "b": false
+      },
+      {
+        "ns": 2103256244211,
+        "b": false
+      },
+      {
+        "ns": 2103266569207,
+        "b": false
+      },
+      {
+        "ns": 2103276860405,
+        "b": false
+      },
+      {
+        "ns": 2103287139149,
+        "b": false
+      },
+      {
+        "ns": 2103297403406,
+        "b": false
+      },
+      {
+        "ns": 2103307778778,
+        "b": false
+      },
+      {
+        "ns": 2103318034797,
+        "b": false
+      },
+      {
+        "ns": 2103328260967,
+        "b": false
+      },
+      {
+        "ns": 2103338469044,
+        "b": false
+      },
+      {
+        "ns": 2103348659579,
+        "b": false
+      },
+      {
+        "ns": 2103358843225,
+        "b": false
+      },
+      {
+        "ns": 2103369083180,
+        "b": false
+      },
+      {
+        "ns": 2103379532153,
+        "b": false
+      },
+      {
+        "ns": 2103389727974,
+        "b": false
+      },
+      {
+        "ns": 2103399954450,
+        "b": false
+      },
+      {
+        "ns": 2103410188088,
+        "b": false
+      },
+      {
+        "ns": 2103420356280,
+        "b": false
+      },
+      {
+        "ns": 2103430568310,
+        "b": false
+      },
+      {
+        "ns": 2103440902683,
+        "b": false
+      },
+      {
+        "ns": 2103451113420,
+        "b": false
+      },
+      {
+        "ns": 2103461338725,
+        "b": false
+      },
+      {
+        "ns": 2103471540545,
+        "b": false
+      },
+      {
+        "ns": 2103481744786,
+        "b": false
+      },
+      {
+        "ns": 2103491925392,
+        "b": false
+      },
+      {
+        "ns": 2103502134125,
+        "b": false
+      },
+      {
+        "ns": 2103512335650,
+        "b": false
+      },
+      {
+        "ns": 2103522520599,
+        "b": false
+      },
+      {
+        "ns": 2103532708243,
+        "b": false
+      },
+      {
+        "ns": 2103542912753,
+        "b": false
+      },
+      {
+        "ns": 2103553098918,
+        "b": false
+      },
+      {
+        "ns": 2103563268329,
+        "b": false
+      },
+      {
+        "ns": 2103573444226,
+        "b": false
+      },
+      {
+        "ns": 2103583623318,
+        "b": false
+      },
+      {
+        "ns": 2103593838677,
+        "b": false
+      },
+      {
+        "ns": 2103604058910,
+        "b": false
+      },
+      {
+        "ns": 2103614262924,
+        "b": false
+      },
+      {
+        "ns": 2103624509404,
+        "b": false
+      },
+      {
+        "ns": 2103634713638,
+        "b": false
+      },
+      {
+        "ns": 2103644921225,
+        "b": false
+      },
+      {
+        "ns": 2103655134418,
+        "b": false
+      },
+      {
+        "ns": 2103665314530,
+        "b": false
+      },
+      {
+        "ns": 2103675500906,
+        "b": false
+      },
+      {
+        "ns": 2103685709905,
+        "b": false
+      },
+      {
+        "ns": 2103695960723,
+        "b": false
+      },
+      {
+        "ns": 2103706219020,
+        "b": false
+      },
+      {
+        "ns": 2103716434805,
+        "b": false
+      },
+      {
+        "ns": 2103726674290,
+        "b": false
+      },
+      {
+        "ns": 2103736879515,
+        "b": false
+      },
+      {
+        "ns": 2103747061091,
+        "b": false
+      },
+      {
+        "ns": 2103757218138,
+        "b": false
+      },
+      {
+        "ns": 2103767395619,
+        "b": false
+      },
+      {
+        "ns": 2103777581209,
+        "b": false
+      },
+      {
+        "ns": 2103787777377,
+        "b": false
+      },
+      {
+        "ns": 2103797973140,
+        "b": false
+      },
+      {
+        "ns": 2103808146363,
+        "b": false
+      },
+      {
+        "ns": 2103818329750,
+        "b": false
+      },
+      {
+        "ns": 2103828524916,
+        "b": false
+      },
+      {
+        "ns": 2103838711213,
+        "b": false
+      },
+      {
+        "ns": 2103848893932,
+        "b": false
+      },
+      {
+        "ns": 2103859081418,
+        "b": false
+      },
+      {
+        "ns": 2103869281959,
+        "b": false
+      },
+      {
+        "ns": 2103879454470,
+        "b": false
+      },
+      {
+        "ns": 2103889649145,
+        "b": false
+      },
+      {
+        "ns": 2103899839977,
+        "b": false
+      },
+      {
+        "ns": 2103910035097,
+        "b": false
+      },
+      {
+        "ns": 2103920213126,
+        "b": false
+      },
+      {
+        "ns": 2103930432383,
+        "b": false
+      },
+      {
+        "ns": 2103940630149,
+        "b": false
+      },
+      {
+        "ns": 2103950968026,
+        "b": false
+      },
+      {
+        "ns": 2103961177372,
+        "b": false
+      },
+      {
+        "ns": 2103971351615,
+        "b": false
+      },
+      {
+        "ns": 2103981550118,
+        "b": false
+      },
+      {
+        "ns": 2103991749301,
+        "b": false
+      },
+      {
+        "ns": 2104001941806,
+        "b": false
+      },
+      {
+        "ns": 2104012135622,
+        "b": false
+      },
+      {
+        "ns": 2104022315473,
+        "b": false
+      },
+      {
+        "ns": 2104032505109,
+        "b": false
+      },
+      {
+        "ns": 2104042683282,
+        "b": false
+      },
+      {
+        "ns": 2104052855109,
+        "b": false
+      },
+      {
+        "ns": 2104063037221,
+        "b": false
+      },
+      {
+        "ns": 2104073239138,
+        "b": false
+      },
+      {
+        "ns": 2104083432403,
+        "b": false
+      },
+      {
+        "ns": 2104093621872,
+        "b": false
+      },
+      {
+        "ns": 2104103821199,
+        "b": false
+      },
+      {
+        "ns": 2104114014870,
+        "b": false
+      },
+      {
+        "ns": 2104124195883,
+        "b": false
+      },
+      {
+        "ns": 2104134391956,
+        "b": false
+      },
+      {
+        "ns": 2104144601701,
+        "b": false
+      },
+      {
+        "ns": 2104154809113,
+        "b": false
+      },
+      {
+        "ns": 2104165027622,
+        "b": false
+      },
+      {
+        "ns": 2104175259142,
+        "b": false
+      },
+      {
+        "ns": 2104185482796,
+        "b": false
+      },
+      {
+        "ns": 2104195712348,
+        "b": false
+      },
+      {
+        "ns": 2104205937259,
+        "b": false
+      },
+      {
+        "ns": 2104216227178,
+        "b": false
+      },
+      {
+        "ns": 2104226457180,
+        "b": false
+      },
+      {
+        "ns": 2104236674483,
+        "b": false
+      },
+      {
+        "ns": 2104246874713,
+        "b": false
+      },
+      {
+        "ns": 2104257076688,
+        "b": false
+      },
+      {
+        "ns": 2104267265350,
+        "b": false
+      },
+      {
+        "ns": 2104277450771,
+        "b": false
+      },
+      {
+        "ns": 2104287637690,
+        "b": false
+      },
+      {
+        "ns": 2104297833332,
+        "b": false
+      },
+      {
+        "ns": 2104308056404,
+        "b": false
+      },
+      {
+        "ns": 2104318238191,
+        "b": false
+      },
+      {
+        "ns": 2104328441936,
+        "b": false
+      },
+      {
+        "ns": 2104338615259,
+        "b": false
+      },
+      {
+        "ns": 2104348804382,
+        "b": false
+      },
+      {
+        "ns": 2104359025045,
+        "b": false
+      },
+      {
+        "ns": 2104369219376,
+        "b": false
+      },
+      {
+        "ns": 2104379396674,
+        "b": false
+      },
+      {
+        "ns": 2104389574832,
+        "b": false
+      },
+      {
+        "ns": 2104399769507,
+        "b": false
+      },
+      {
+        "ns": 2104409978750,
+        "b": false
+      },
+      {
+        "ns": 2104420180661,
+        "b": false
+      },
+      {
+        "ns": 2104430378266,
+        "b": false
+      },
+      {
+        "ns": 2104440566253,
+        "b": false
+      },
+      {
+        "ns": 2104450838909,
+        "b": false
+      },
+      {
+        "ns": 2104461168943,
+        "b": false
+      },
+      {
+        "ns": 2104471421502,
+        "b": false
+      },
+      {
+        "ns": 2104481641861,
+        "b": false
+      },
+      {
+        "ns": 2104491843147,
+        "b": false
+      },
+      {
+        "ns": 2104502057877,
+        "b": false
+      },
+      {
+        "ns": 2104512289841,
+        "b": false
+      },
+      {
+        "ns": 2104522517693,
+        "b": false
+      },
+      {
+        "ns": 2104532741449,
+        "b": false
+      },
+      {
+        "ns": 2104542934376,
+        "b": false
+      },
+      {
+        "ns": 2104553141001,
+        "b": false
+      },
+      {
+        "ns": 2104563359263,
+        "b": false
+      },
+      {
+        "ns": 2104573557534,
+        "b": false
+      },
+      {
+        "ns": 2104583744825,
+        "b": false
+      },
+      {
+        "ns": 2104593929074,
+        "b": false
+      },
+      {
+        "ns": 2104604103551,
+        "b": false
+      },
+      {
+        "ns": 2104614322698,
+        "b": false
+      },
+      {
+        "ns": 2104624516366,
+        "b": false
+      },
+      {
+        "ns": 2104634753558,
+        "b": false
+      },
+      {
+        "ns": 2104644971251,
+        "b": false
+      },
+      {
+        "ns": 2104655165758,
+        "b": false
+      },
+      {
+        "ns": 2104665370453,
+        "b": false
+      },
+      {
+        "ns": 2104675576487,
+        "b": false
+      },
+      {
+        "ns": 2104685930409,
+        "b": false
+      },
+      {
+        "ns": 2104696261176,
+        "b": false
+      },
+      {
+        "ns": 2104706506832,
+        "b": false
+      },
+      {
+        "ns": 2104716715196,
+        "b": false
+      },
+      {
+        "ns": 2104726904236,
+        "b": false
+      },
+      {
+        "ns": 2104737093037,
+        "b": false
+      },
+      {
+        "ns": 2104747295766,
+        "b": false
+      },
+      {
+        "ns": 2104757460904,
+        "b": false
+      },
+      {
+        "ns": 2104767653150,
+        "b": false
+      },
+      {
+        "ns": 2104777832032,
+        "b": false
+      },
+      {
+        "ns": 2104788095795,
+        "b": false
+      },
+      {
+        "ns": 2104798283232,
+        "b": false
+      },
+      {
+        "ns": 2104808453037,
+        "b": false
+      },
+      {
+        "ns": 2104819001149,
+        "b": false
+      },
+      {
+        "ns": 2104829191282,
+        "b": false
+      },
+      {
+        "ns": 2104839372216,
+        "b": false
+      },
+      {
+        "ns": 2104849612323,
+        "b": false
+      },
+      {
+        "ns": 2104859798490,
+        "b": false
+      },
+      {
+        "ns": 2104869999667,
+        "b": false
+      },
+      {
+        "ns": 2104880193982,
+        "b": false
+      },
+      {
+        "ns": 2104890398535,
+        "b": false
+      },
+      {
+        "ns": 2104900604440,
+        "b": false
+      },
+      {
+        "ns": 2104910801955,
+        "b": false
+      },
+      {
+        "ns": 2104921025855,
+        "b": false
+      },
+      {
+        "ns": 2104931240681,
+        "b": false
+      },
+      {
+        "ns": 2104941466500,
+        "b": false
+      },
+      {
+        "ns": 2104951740530,
+        "b": false
+      },
+      {
+        "ns": 2104961936638,
+        "b": false
+      },
+      {
+        "ns": 2104972130959,
+        "b": false
+      },
+      {
+        "ns": 2104982316273,
+        "b": false
+      },
+      {
+        "ns": 2104992496740,
+        "b": false
+      },
+      {
+        "ns": 2105002685281,
+        "b": false
+      },
+      {
+        "ns": 2105012871318,
+        "b": false
+      },
+      {
+        "ns": 2105023056715,
+        "b": false
+      },
+      {
+        "ns": 2105033250940,
+        "b": false
+      },
+      {
+        "ns": 2105043431027,
+        "b": false
+      },
+      {
+        "ns": 2105053610650,
+        "b": false
+      },
+      {
+        "ns": 2105063843055,
+        "b": false
+      },
+      {
+        "ns": 2105074019553,
+        "b": false
+      },
+      {
+        "ns": 2105084200388,
+        "b": false
+      },
+      {
+        "ns": 2105094407848,
+        "b": false
+      },
+      {
+        "ns": 2105104595771,
+        "b": false
+      },
+      {
+        "ns": 2105114843828,
+        "b": false
+      },
+      {
+        "ns": 2105125074105,
+        "b": false
+      },
+      {
+        "ns": 2105135291792,
+        "b": false
+      },
+      {
+        "ns": 2105145481262,
+        "b": false
+      },
+      {
+        "ns": 2105155779585,
+        "b": false
+      },
+      {
+        "ns": 2105166000366,
+        "b": false
+      },
+      {
+        "ns": 2105176167986,
+        "b": false
+      },
+      {
+        "ns": 2105186343290,
+        "b": false
+      },
+      {
+        "ns": 2105196540517,
+        "b": false
+      },
+      {
+        "ns": 2105206743982,
+        "b": false
+      },
+      {
+        "ns": 2105216965398,
+        "b": false
+      },
+      {
+        "ns": 2105227164288,
+        "b": false
+      },
+      {
+        "ns": 2105237388677,
+        "b": false
+      },
+      {
+        "ns": 2105247612978,
+        "b": false
+      },
+      {
+        "ns": 2105257808635,
+        "b": false
+      },
+      {
+        "ns": 2105268029165,
+        "b": false
+      },
+      {
+        "ns": 2105278235707,
+        "b": false
+      },
+      {
+        "ns": 2105288410406,
+        "b": false
+      },
+      {
+        "ns": 2105298603010,
+        "b": false
+      },
+      {
+        "ns": 2105308801340,
+        "b": false
+      },
+      {
+        "ns": 2105319040202,
+        "b": false
+      },
+      {
+        "ns": 2105329255028,
+        "b": false
+      },
+      {
+        "ns": 2105339466588,
+        "b": false
+      },
+      {
+        "ns": 2105349683140,
+        "b": false
+      },
+      {
+        "ns": 2105359867059,
+        "b": false
+      },
+      {
+        "ns": 2105370092961,
+        "b": false
+      },
+      {
+        "ns": 2105380313904,
+        "b": false
+      },
+      {
+        "ns": 2105390724767,
+        "b": false
+      },
+      {
+        "ns": 2105400919198,
+        "b": false
+      },
+      {
+        "ns": 2105411130529,
+        "b": false
+      },
+      {
+        "ns": 2105421308024,
+        "b": false
+      },
+      {
+        "ns": 2105431520911,
+        "b": false
+      },
+      {
+        "ns": 2105441728367,
+        "b": false
+      },
+      {
+        "ns": 2105451924398,
+        "b": false
+      },
+      {
+        "ns": 2105462166436,
+        "b": false
+      },
+      {
+        "ns": 2105472348231,
+        "b": false
+      },
+      {
+        "ns": 2105482536375,
+        "b": false
+      },
+      {
+        "ns": 2105492737155,
+        "b": false
+      },
+      {
+        "ns": 2105502944534,
+        "b": false
+      },
+      {
+        "ns": 2105513152579,
+        "b": false
+      },
+      {
+        "ns": 2105523334990,
+        "b": false
+      },
+      {
+        "ns": 2105533556210,
+        "b": false
+      },
+      {
+        "ns": 2105543748146,
+        "b": false
+      },
+      {
+        "ns": 2105553943274,
+        "b": false
+      },
+      {
+        "ns": 2105564167310,
+        "b": false
+      },
+      {
+        "ns": 2105574349799,
+        "b": false
+      },
+      {
+        "ns": 2105584537040,
+        "b": false
+      },
+      {
+        "ns": 2105594751112,
+        "b": false
+      },
+      {
+        "ns": 2105604958963,
+        "b": false
+      },
+      {
+        "ns": 2105615185410,
+        "b": false
+      },
+      {
+        "ns": 2105625378694,
+        "b": false
+      },
+      {
+        "ns": 2105635588258,
+        "b": false
+      },
+      {
+        "ns": 2105645866865,
+        "b": false
+      },
+      {
+        "ns": 2105656050140,
+        "b": false
+      },
+      {
+        "ns": 2105666257237,
+        "b": false
+      },
+      {
+        "ns": 2105676438599,
+        "b": false
+      },
+      {
+        "ns": 2105686669930,
+        "b": false
+      },
+      {
+        "ns": 2105696911757,
+        "b": false
+      },
+      {
+        "ns": 2105707146684,
+        "b": false
+      },
+      {
+        "ns": 2105717371510,
+        "b": false
+      },
+      {
+        "ns": 2105727565495,
+        "b": false
+      },
+      {
+        "ns": 2105737779577,
+        "b": false
+      },
+      {
+        "ns": 2105748025862,
+        "b": false
+      },
+      {
+        "ns": 2105758226674,
+        "b": false
+      },
+      {
+        "ns": 2105768424490,
+        "b": false
+      },
+      {
+        "ns": 2105778604092,
+        "b": false
+      },
+      {
+        "ns": 2105788768407,
+        "b": false
+      },
+      {
+        "ns": 2105798969501,
+        "b": false
+      },
+      {
+        "ns": 2105809158751,
+        "b": false
+      },
+      {
+        "ns": 2105819361610,
+        "b": false
+      },
+      {
+        "ns": 2105829556998,
+        "b": false
+      },
+      {
+        "ns": 2105839755025,
+        "b": false
+      },
+      {
+        "ns": 2105849953842,
+        "b": false
+      },
+      {
+        "ns": 2105860158332,
+        "b": false
+      },
+      {
+        "ns": 2105870353165,
+        "b": false
+      },
+      {
+        "ns": 2105880561028,
+        "b": false
+      },
+      {
+        "ns": 2105890853615,
+        "b": false
+      },
+      {
+        "ns": 2105901162090,
+        "b": false
+      },
+      {
+        "ns": 2105911335631,
+        "b": false
+      },
+      {
+        "ns": 2105921518446,
+        "b": false
+      },
+      {
+        "ns": 2105931707887,
+        "b": false
+      },
+      {
+        "ns": 2105941914094,
+        "b": false
+      },
+      {
+        "ns": 2105952138728,
+        "b": false
+      },
+      {
+        "ns": 2105962332919,
+        "b": false
+      },
+      {
+        "ns": 2105972534371,
+        "b": false
+      },
+      {
+        "ns": 2105982728951,
+        "b": false
+      },
+      {
+        "ns": 2105992913076,
+        "b": false
+      },
+      {
+        "ns": 2106003103208,
+        "b": false
+      },
+      {
+        "ns": 2106013287553,
+        "b": false
+      },
+      {
+        "ns": 2106023485740,
+        "b": false
+      },
+      {
+        "ns": 2106033687881,
+        "b": false
+      },
+      {
+        "ns": 2106043873532,
+        "b": false
+      },
+      {
+        "ns": 2106054163518,
+        "b": false
+      },
+      {
+        "ns": 2106064398243,
+        "b": false
+      },
+      {
+        "ns": 2106074582972,
+        "b": false
+      },
+      {
+        "ns": 2106084772299,
+        "b": false
+      },
+      {
+        "ns": 2106094993502,
+        "b": false
+      },
+      {
+        "ns": 2106105199696,
+        "b": false
+      },
+      {
+        "ns": 2106115398078,
+        "b": false
+      },
+      {
+        "ns": 2106125715379,
+        "b": false
+      },
+      {
+        "ns": 2106135936363,
+        "b": false
+      },
+      {
+        "ns": 2106146222821,
+        "b": false
+      },
+      {
+        "ns": 2106156453177,
+        "b": false
+      },
+      {
+        "ns": 2106166676713,
+        "b": false
+      },
+      {
+        "ns": 2106176893467,
+        "b": false
+      },
+      {
+        "ns": 2106187112936,
+        "b": false
+      },
+      {
+        "ns": 2106197318666,
+        "b": false
+      },
+      {
+        "ns": 2106207521633,
+        "b": false
+      },
+      {
+        "ns": 2106217721425,
+        "b": false
+      },
+      {
+        "ns": 2106227919324,
+        "b": false
+      },
+      {
+        "ns": 2106238172607,
+        "b": false
+      },
+      {
+        "ns": 2106248400154,
+        "b": false
+      },
+      {
+        "ns": 2106258615858,
+        "b": false
+      },
+      {
+        "ns": 2106268988178,
+        "b": false
+      },
+      {
+        "ns": 2106279155574,
+        "b": false
+      },
+      {
+        "ns": 2106289338586,
+        "b": false
+      },
+      {
+        "ns": 2106299539354,
+        "b": false
+      },
+      {
+        "ns": 2106309741557,
+        "b": false
+      },
+      {
+        "ns": 2106319985246,
+        "b": false
+      },
+      {
+        "ns": 2106330414801,
+        "b": false
+      },
+      {
+        "ns": 2106340769088,
+        "b": false
+      },
+      {
+        "ns": 2106351051563,
+        "b": false
+      },
+      {
+        "ns": 2106361222135,
+        "b": false
+      },
+      {
+        "ns": 2106371426736,
+        "b": false
+      },
+      {
+        "ns": 2106381684860,
+        "b": false
+      },
+      {
+        "ns": 2106391873074,
+        "b": false
+      },
+      {
+        "ns": 2106402063033,
+        "b": false
+      },
+      {
+        "ns": 2106412292809,
+        "b": false
+      },
+      {
+        "ns": 2106422477164,
+        "b": false
+      },
+      {
+        "ns": 2106432693750,
+        "b": false
+      },
+      {
+        "ns": 2106442884640,
+        "b": false
+      },
+      {
+        "ns": 2106453080738,
+        "b": false
+      },
+      {
+        "ns": 2106463336953,
+        "b": false
+      },
+      {
+        "ns": 2106473521808,
+        "b": false
+      },
+      {
+        "ns": 2106483690214,
+        "b": false
+      },
+      {
+        "ns": 2106493865366,
+        "b": false
+      },
+      {
+        "ns": 2106504046437,
+        "b": false
+      },
+      {
+        "ns": 2106514285642,
+        "b": false
+      },
+      {
+        "ns": 2106524486202,
+        "b": false
+      },
+      {
+        "ns": 2106534718174,
+        "b": false
+      },
+      {
+        "ns": 2106544900621,
+        "b": false
+      },
+      {
+        "ns": 2106555099347,
+        "b": false
+      },
+      {
+        "ns": 2106565291159,
+        "b": false
+      },
+      {
+        "ns": 2106575477426,
+        "b": false
+      },
+      {
+        "ns": 2106585678058,
+        "b": false
+      },
+      {
+        "ns": 2106596050748,
+        "b": false
+      },
+      {
+        "ns": 2106606254551,
+        "b": false
+      },
+      {
+        "ns": 2106616444831,
+        "b": false
+      },
+      {
+        "ns": 2106626620627,
+        "b": false
+      },
+      {
+        "ns": 2106636850791,
+        "b": false
+      },
+      {
+        "ns": 2106647085181,
+        "b": false
+      },
+      {
+        "ns": 2106657336008,
+        "b": false
+      },
+      {
+        "ns": 2106667562554,
+        "b": false
+      },
+      {
+        "ns": 2106677778362,
+        "b": false
+      },
+      {
+        "ns": 2106688034147,
+        "b": false
+      },
+      {
+        "ns": 2106698303401,
+        "b": false
+      },
+      {
+        "ns": 2106708521360,
+        "b": false
+      },
+      {
+        "ns": 2106718747142,
+        "b": false
+      },
+      {
+        "ns": 2106728959909,
+        "b": false
+      },
+      {
+        "ns": 2106739177055,
+        "b": false
+      },
+      {
+        "ns": 2106749407950,
+        "b": false
+      },
+      {
+        "ns": 2106759594234,
+        "b": false
+      },
+      {
+        "ns": 2106769781559,
+        "b": false
+      },
+      {
+        "ns": 2106779962543,
+        "b": false
+      },
+      {
+        "ns": 2106790165929,
+        "b": false
+      },
+      {
+        "ns": 2106800356960,
+        "b": false
+      },
+      {
+        "ns": 2106810564407,
+        "b": false
+      },
+      {
+        "ns": 2106820774433,
+        "b": false
+      },
+      {
+        "ns": 2106831019665,
+        "b": false
+      },
+      {
+        "ns": 2106841240786,
+        "b": false
+      },
+      {
+        "ns": 2106851539526,
+        "b": false
+      },
+      {
+        "ns": 2106861723471,
+        "b": false
+      },
+      {
+        "ns": 2106871912975,
+        "b": false
+      },
+      {
+        "ns": 2106882124228,
+        "b": false
+      },
+      {
+        "ns": 2106892316449,
+        "b": false
+      },
+      {
+        "ns": 2106902503512,
+        "b": false
+      },
+      {
+        "ns": 2106912700910,
+        "b": false
+      },
+      {
+        "ns": 2106922968244,
+        "b": false
+      },
+      {
+        "ns": 2106933153194,
+        "b": false
+      },
+      {
+        "ns": 2106943362675,
+        "b": false
+      },
+      {
+        "ns": 2106953542662,
+        "b": false
+      },
+      {
+        "ns": 2106963752192,
+        "b": false
+      },
+      {
+        "ns": 2106973953849,
+        "b": false
+      },
+      {
+        "ns": 2106984145983,
+        "b": false
+      },
+      {
+        "ns": 2106994342684,
+        "b": false
+      },
+      {
+        "ns": 2107004568168,
+        "b": false
+      },
+      {
+        "ns": 2107014807079,
+        "b": false
+      },
+      {
+        "ns": 2107025066380,
+        "b": false
+      },
+      {
+        "ns": 2107035318742,
+        "b": false
+      },
+      {
+        "ns": 2107045585325,
+        "b": false
+      },
+      {
+        "ns": 2107061030296,
+        "b": false
+      },
+      {
+        "ns": 2107076479543,
+        "b": false
+      },
+      {
+        "ns": 2107086686722,
+        "b": false
+      },
+      {
+        "ns": 2107096880186,
+        "b": false
+      },
+      {
+        "ns": 2107107049647,
+        "b": false
+      },
+      {
+        "ns": 2107117220983,
+        "b": false
+      },
+      {
+        "ns": 2107127404948,
+        "b": false
+      },
+      {
+        "ns": 2107137630864,
+        "b": false
+      },
+      {
+        "ns": 2107147902160,
+        "b": false
+      },
+      {
+        "ns": 2107158195563,
+        "b": false
+      },
+      {
+        "ns": 2107168434576,
+        "b": false
+      },
+      {
+        "ns": 2107178639954,
+        "b": false
+      },
+      {
+        "ns": 2107188856065,
+        "b": false
+      },
+      {
+        "ns": 2107199085028,
+        "b": false
+      },
+      {
+        "ns": 2107209307063,
+        "b": false
+      },
+      {
+        "ns": 2107219556584,
+        "b": false
+      },
+      {
+        "ns": 2107229806865,
+        "b": false
+      },
+      {
+        "ns": 2107240057089,
+        "b": false
+      },
+      {
+        "ns": 2107250295468,
+        "b": false
+      },
+      {
+        "ns": 2107260477807,
+        "b": false
+      },
+      {
+        "ns": 2107270832930,
+        "b": false
+      },
+      {
+        "ns": 2107281063458,
+        "b": false
+      },
+      {
+        "ns": 2107291227742,
+        "b": false
+      },
+      {
+        "ns": 2107301402101,
+        "b": false
+      },
+      {
+        "ns": 2107311595369,
+        "b": false
+      },
+      {
+        "ns": 2107321782323,
+        "b": false
+      },
+      {
+        "ns": 2107331997583,
+        "b": false
+      },
+      {
+        "ns": 2107342219805,
+        "b": false
+      },
+      {
+        "ns": 2107352401073,
+        "b": false
+      },
+      {
+        "ns": 2107362567715,
+        "b": false
+      },
+      {
+        "ns": 2107372746647,
+        "b": false
+      },
+      {
+        "ns": 2107382922403,
+        "b": false
+      },
+      {
+        "ns": 2107393109222,
+        "b": false
+      },
+      {
+        "ns": 2107403304134,
+        "b": false
+      },
+      {
+        "ns": 2107413485136,
+        "b": false
+      },
+      {
+        "ns": 2107423661830,
+        "b": false
+      },
+      {
+        "ns": 2107433880048,
+        "b": false
+      },
+      {
+        "ns": 2107444037671,
+        "b": false
+      },
+      {
+        "ns": 2107454266153,
+        "b": false
+      },
+      {
+        "ns": 2107464473876,
+        "b": false
+      },
+      {
+        "ns": 2107474679644,
+        "b": false
+      },
+      {
+        "ns": 2107484885561,
+        "b": false
+      },
+      {
+        "ns": 2107495077902,
+        "b": false
+      },
+      {
+        "ns": 2107505269137,
+        "b": false
+      },
+      {
+        "ns": 2107515483769,
+        "b": false
+      },
+      {
+        "ns": 2107525717367,
+        "b": false
+      },
+      {
+        "ns": 2107536063192,
+        "b": false
+      },
+      {
+        "ns": 2107546264780,
+        "b": false
+      },
+      {
+        "ns": 2107556451705,
+        "b": false
+      },
+      {
+        "ns": 2107566653700,
+        "b": false
+      },
+      {
+        "ns": 2107576836886,
+        "b": false
+      },
+      {
+        "ns": 2107587041263,
+        "b": false
+      },
+      {
+        "ns": 2107597232841,
+        "b": false
+      },
+      {
+        "ns": 2107607424511,
+        "b": false
+      },
+      {
+        "ns": 2107617595127,
+        "b": false
+      },
+      {
+        "ns": 2107627805694,
+        "b": false
+      },
+      {
+        "ns": 2107637988698,
+        "b": false
+      },
+      {
+        "ns": 2107648201373,
+        "b": false
+      },
+      {
+        "ns": 2107658384610,
+        "b": false
+      },
+      {
+        "ns": 2107668573231,
+        "b": false
+      },
+      {
+        "ns": 2107678839997,
+        "b": false
+      },
+      {
+        "ns": 2107689034769,
+        "b": false
+      },
+      {
+        "ns": 2107699270111,
+        "b": false
+      },
+      {
+        "ns": 2107709487988,
+        "b": false
+      },
+      {
+        "ns": 2107719770613,
+        "b": false
+      },
+      {
+        "ns": 2107729990473,
+        "b": false
+      },
+      {
+        "ns": 2107740209093,
+        "b": false
+      },
+      {
+        "ns": 2107750403790,
+        "b": false
+      },
+      {
+        "ns": 2107760705466,
+        "b": false
+      },
+      {
+        "ns": 2107770897172,
+        "b": false
+      },
+      {
+        "ns": 2107781051391,
+        "b": false
+      },
+      {
+        "ns": 2107791229060,
+        "b": false
+      },
+      {
+        "ns": 2107801404639,
+        "b": false
+      },
+      {
+        "ns": 2107811571401,
+        "b": false
+      },
+      {
+        "ns": 2107821765742,
+        "b": false
+      },
+      {
+        "ns": 2107831955118,
+        "b": false
+      },
+      {
+        "ns": 2107842180050,
+        "b": false
+      },
+      {
+        "ns": 2107852347382,
+        "b": false
+      },
+      {
+        "ns": 2107862529210,
+        "b": false
+      },
+      {
+        "ns": 2107872710852,
+        "b": false
+      },
+      {
+        "ns": 2107882900560,
+        "b": false
+      },
+      {
+        "ns": 2107893095520,
+        "b": false
+      },
+      {
+        "ns": 2107903271405,
+        "b": false
+      },
+      {
+        "ns": 2107913438479,
+        "b": false
+      },
+      {
+        "ns": 2107923630063,
+        "b": false
+      },
+      {
+        "ns": 2107933827639,
+        "b": false
+      },
+      {
+        "ns": 2107943998707,
+        "b": false
+      },
+      {
+        "ns": 2107954217866,
+        "b": false
+      },
+      {
+        "ns": 2107964400458,
+        "b": false
+      },
+      {
+        "ns": 2107974626164,
+        "b": false
+      },
+      {
+        "ns": 2107984833348,
+        "b": false
+      },
+      {
+        "ns": 2107995053097,
+        "b": false
+      },
+      {
+        "ns": 2108005245704,
+        "b": false
+      },
+      {
+        "ns": 2108015449134,
+        "b": false
+      },
+      {
+        "ns": 2108025661035,
+        "b": false
+      },
+      {
+        "ns": 2108036071134,
+        "b": false
+      },
+      {
+        "ns": 2108046278341,
+        "b": false
+      },
+      {
+        "ns": 2108056484775,
+        "b": false
+      },
+      {
+        "ns": 2108066673465,
+        "b": false
+      },
+      {
+        "ns": 2108076886477,
+        "b": false
+      },
+      {
+        "ns": 2108087071319,
+        "b": false
+      },
+      {
+        "ns": 2108097288395,
+        "b": false
+      },
+      {
+        "ns": 2108107465953,
+        "b": false
+      },
+      {
+        "ns": 2108117651885,
+        "b": false
+      },
+      {
+        "ns": 2108127835350,
+        "b": false
+      },
+      {
+        "ns": 2108138030655,
+        "b": false
+      },
+      {
+        "ns": 2108148240757,
+        "b": false
+      },
+      {
+        "ns": 2108158456314,
+        "b": false
+      },
+      {
+        "ns": 2108168641005,
+        "b": false
+      },
+      {
+        "ns": 2108178869922,
+        "b": false
+      },
+      {
+        "ns": 2108189096026,
+        "b": false
+      },
+      {
+        "ns": 2108199386740,
+        "b": false
+      },
+      {
+        "ns": 2108209606128,
+        "b": false
+      },
+      {
+        "ns": 2108219817743,
+        "b": false
+      },
+      {
+        "ns": 2108230053140,
+        "b": false
+      },
+      {
+        "ns": 2108240270889,
+        "b": false
+      },
+      {
+        "ns": 2108250480317,
+        "b": false
+      },
+      {
+        "ns": 2108260703082,
+        "b": false
+      },
+      {
+        "ns": 2108271000070,
+        "b": false
+      },
+      {
+        "ns": 2108281164602,
+        "b": false
+      },
+      {
+        "ns": 2108291329449,
+        "b": false
+      },
+      {
+        "ns": 2108301498900,
+        "b": false
+      },
+      {
+        "ns": 2108311656405,
+        "b": false
+      },
+      {
+        "ns": 2108321825304,
+        "b": false
+      },
+      {
+        "ns": 2108332047492,
+        "b": false
+      },
+      {
+        "ns": 2108342221054,
+        "b": false
+      },
+      {
+        "ns": 2108352390022,
+        "b": false
+      },
+      {
+        "ns": 2108362573460,
+        "b": false
+      },
+      {
+        "ns": 2108372759479,
+        "b": false
+      },
+      {
+        "ns": 2108382950049,
+        "b": false
+      },
+      {
+        "ns": 2108393132153,
+        "b": false
+      },
+      {
+        "ns": 2108403309306,
+        "b": false
+      },
+      {
+        "ns": 2108413507930,
+        "b": false
+      },
+      {
+        "ns": 2108423714649,
+        "b": false
+      },
+      {
+        "ns": 2108433905269,
+        "b": false
+      },
+      {
+        "ns": 2108444123782,
+        "b": false
+      },
+      {
+        "ns": 2108454316897,
+        "b": false
+      },
+      {
+        "ns": 2108464512579,
+        "b": false
+      },
+      {
+        "ns": 2108474692853,
+        "b": false
+      },
+      {
+        "ns": 2108484870338,
+        "b": false
+      },
+      {
+        "ns": 2108495051800,
+        "b": false
+      },
+      {
+        "ns": 2108505231608,
+        "b": false
+      },
+      {
+        "ns": 2108515434926,
+        "b": false
+      },
+      {
+        "ns": 2108525757223,
+        "b": false
+      },
+      {
+        "ns": 2108535965076,
+        "b": false
+      },
+      {
+        "ns": 2108546205747,
+        "b": false
+      },
+      {
+        "ns": 2108556381900,
+        "b": false
+      },
+      {
+        "ns": 2108566585743,
+        "b": false
+      },
+      {
+        "ns": 2108576759444,
+        "b": false
+      },
+      {
+        "ns": 2108586935616,
+        "b": false
+      },
+      {
+        "ns": 2108597125862,
+        "b": false
+      },
+      {
+        "ns": 2108607318002,
+        "b": false
+      },
+      {
+        "ns": 2108617513455,
+        "b": false
+      },
+      {
+        "ns": 2108627680925,
+        "b": false
+      },
+      {
+        "ns": 2108637870024,
+        "b": false
+      },
+      {
+        "ns": 2108648060028,
+        "b": false
+      },
+      {
+        "ns": 2108658253085,
+        "b": false
+      },
+      {
+        "ns": 2108668439798,
+        "b": false
+      },
+      {
+        "ns": 2108678626341,
+        "b": false
+      },
+      {
+        "ns": 2108688889867,
+        "b": false
+      },
+      {
+        "ns": 2108699217168,
+        "b": false
+      },
+      {
+        "ns": 2108709572113,
+        "b": false
+      },
+      {
+        "ns": 2108719863879,
+        "b": false
+      },
+      {
+        "ns": 2108730219733,
+        "b": false
+      },
+      {
+        "ns": 2108740451148,
+        "b": false
+      },
+      {
+        "ns": 2108750705051,
+        "b": false
+      },
+      {
+        "ns": 2108761011161,
+        "b": false
+      },
+      {
+        "ns": 2108771253220,
+        "b": false
+      },
+      {
+        "ns": 2108781473385,
+        "b": false
+      },
+      {
+        "ns": 2108791644563,
+        "b": false
+      },
+      {
+        "ns": 2108801818156,
+        "b": false
+      },
+      {
+        "ns": 2108812054192,
+        "b": false
+      },
+      {
+        "ns": 2108822285315,
+        "b": false
+      },
+      {
+        "ns": 2108832485865,
+        "b": false
+      },
+      {
+        "ns": 2108842664518,
+        "b": false
+      },
+      {
+        "ns": 2108852865896,
+        "b": false
+      },
+      {
+        "ns": 2108863067230,
+        "b": false
+      },
+      {
+        "ns": 2108873265229,
+        "b": false
+      },
+      {
+        "ns": 2108883444372,
+        "b": false
+      },
+      {
+        "ns": 2108893624204,
+        "b": false
+      },
+      {
+        "ns": 2108903858950,
+        "b": false
+      },
+      {
+        "ns": 2108914164012,
+        "b": false
+      },
+      {
+        "ns": 2108924356295,
+        "b": false
+      },
+      {
+        "ns": 2108934587119,
+        "b": false
+      },
+      {
+        "ns": 2108944789996,
+        "b": false
+      },
+      {
+        "ns": 2108955036993,
+        "b": false
+      },
+      {
+        "ns": 2108965310050,
+        "b": false
+      },
+      {
+        "ns": 2108975560074,
+        "b": false
+      },
+      {
+        "ns": 2108985790360,
+        "b": false
+      },
+      {
+        "ns": 2108996060053,
+        "b": false
+      },
+      {
+        "ns": 2109006248867,
+        "b": false
+      },
+      {
+        "ns": 2109016436844,
+        "b": false
+      },
+      {
+        "ns": 2109026627397,
+        "b": false
+      },
+      {
+        "ns": 2109036837415,
+        "b": false
+      },
+      {
+        "ns": 2109047022519,
+        "b": false
+      },
+      {
+        "ns": 2109057211729,
+        "b": false
+      },
+      {
+        "ns": 2109067412922,
+        "b": false
+      },
+      {
+        "ns": 2109077635343,
+        "b": false
+      },
+      {
+        "ns": 2109087812435,
+        "b": false
+      },
+      {
+        "ns": 2109097991615,
+        "b": false
+      },
+      {
+        "ns": 2109108161795,
+        "b": false
+      },
+      {
+        "ns": 2109118336236,
+        "b": false
+      },
+      {
+        "ns": 2109128503767,
+        "b": false
+      },
+      {
+        "ns": 2109138678454,
+        "b": false
+      },
+      {
+        "ns": 2109148865310,
+        "b": false
+      },
+      {
+        "ns": 2109159045160,
+        "b": false
+      },
+      {
+        "ns": 2109169250446,
+        "b": false
+      },
+      {
+        "ns": 2109179524659,
+        "b": false
+      },
+      {
+        "ns": 2109189771332,
+        "b": false
+      },
+      {
+        "ns": 2109200122161,
+        "b": false
+      },
+      {
+        "ns": 2109210403699,
+        "b": false
+      },
+      {
+        "ns": 2109220873570,
+        "b": false
+      },
+      {
+        "ns": 2109231162899,
+        "b": false
+      },
+      {
+        "ns": 2109241375141,
+        "b": false
+      },
+      {
+        "ns": 2109251568838,
+        "b": false
+      },
+      {
+        "ns": 2109261763537,
+        "b": false
+      },
+      {
+        "ns": 2109272055057,
+        "b": false
+      },
+      {
+        "ns": 2109282245084,
+        "b": false
+      },
+      {
+        "ns": 2109292434628,
+        "b": false
+      },
+      {
+        "ns": 2109302629428,
+        "b": false
+      },
+      {
+        "ns": 2109312830982,
+        "b": false
+      },
+      {
+        "ns": 2109323032688,
+        "b": false
+      },
+      {
+        "ns": 2109333232362,
+        "b": false
+      },
+      {
+        "ns": 2109343405020,
+        "b": false
+      },
+      {
+        "ns": 2109353587617,
+        "b": false
+      },
+      {
+        "ns": 2109363789385,
+        "b": false
+      },
+      {
+        "ns": 2109374020285,
+        "b": false
+      },
+      {
+        "ns": 2109384374337,
+        "b": false
+      },
+      {
+        "ns": 2109394627363,
+        "b": false
+      },
+      {
+        "ns": 2109404842194,
+        "b": false
+      },
+      {
+        "ns": 2109415069931,
+        "b": false
+      },
+      {
+        "ns": 2109425250677,
+        "b": false
+      },
+      {
+        "ns": 2109435442262,
+        "b": false
+      },
+      {
+        "ns": 2109445684984,
+        "b": false
+      },
+      {
+        "ns": 2109455899741,
+        "b": false
+      },
+      {
+        "ns": 2109466126669,
+        "b": false
+      },
+      {
+        "ns": 2109476312934,
+        "b": false
+      },
+      {
+        "ns": 2109486558011,
+        "b": false
+      },
+      {
+        "ns": 2109496731414,
+        "b": false
+      },
+      {
+        "ns": 2109506921396,
+        "b": false
+      },
+      {
+        "ns": 2109517163887,
+        "b": false
+      },
+      {
+        "ns": 2109527381496,
+        "b": false
+      },
+      {
+        "ns": 2109537613288,
+        "b": false
+      },
+      {
+        "ns": 2109547845145,
+        "b": false
+      },
+      {
+        "ns": 2109558069075,
+        "b": false
+      },
+      {
+        "ns": 2109568309388,
+        "b": false
+      },
+      {
+        "ns": 2109578519880,
+        "b": false
+      },
+      {
+        "ns": 2109588747795,
+        "b": false
+      },
+      {
+        "ns": 2109598969519,
+        "b": false
+      },
+      {
+        "ns": 2109609179632,
+        "b": false
+      },
+      {
+        "ns": 2109619374538,
+        "b": false
+      },
+      {
+        "ns": 2109629555692,
+        "b": false
+      },
+      {
+        "ns": 2109639747571,
+        "b": false
+      },
+      {
+        "ns": 2109649935979,
+        "b": false
+      },
+      {
+        "ns": 2109660138221,
+        "b": false
+      },
+      {
+        "ns": 2109670360410,
+        "b": false
+      },
+      {
+        "ns": 2109680536168,
+        "b": false
+      },
+      {
+        "ns": 2109690868333,
+        "b": false
+      },
+      {
+        "ns": 2109701084166,
+        "b": false
+      },
+      {
+        "ns": 2109711295071,
+        "b": false
+      },
+      {
+        "ns": 2109721501045,
+        "b": false
+      },
+      {
+        "ns": 2109731718116,
+        "b": false
+      },
+      {
+        "ns": 2109741952122,
+        "b": false
+      },
+      {
+        "ns": 2109752166162,
+        "b": false
+      },
+      {
+        "ns": 2109762344207,
+        "b": false
+      },
+      {
+        "ns": 2109772546904,
+        "b": false
+      },
+      {
+        "ns": 2109782732038,
+        "b": false
+      },
+      {
+        "ns": 2109792924329,
+        "b": false
+      },
+      {
+        "ns": 2109803110929,
+        "b": false
+      },
+      {
+        "ns": 2109813279912,
+        "b": false
+      },
+      {
+        "ns": 2109823480421,
+        "b": false
+      },
+      {
+        "ns": 2109833690416,
+        "b": false
+      },
+      {
+        "ns": 2109843868244,
+        "b": false
+      },
+      {
+        "ns": 2109854049888,
+        "b": false
+      },
+      {
+        "ns": 2109864268910,
+        "b": false
+      },
+      {
+        "ns": 2109874478688,
+        "b": false
+      },
+      {
+        "ns": 2109884737167,
+        "b": false
+      },
+      {
+        "ns": 2109894943563,
+        "b": false
+      },
+      {
+        "ns": 2109905118207,
+        "b": false
+      },
+      {
+        "ns": 2109915302158,
+        "b": false
+      },
+      {
+        "ns": 2109925501832,
+        "b": false
+      },
+      {
+        "ns": 2109935819788,
+        "b": false
+      },
+      {
+        "ns": 2109946065472,
+        "b": false
+      },
+      {
+        "ns": 2109956273040,
+        "b": false
+      },
+      {
+        "ns": 2109966462914,
+        "b": false
+      },
+      {
+        "ns": 2109976650306,
+        "b": false
+      },
+      {
+        "ns": 2109986833184,
+        "b": false
+      },
+      {
+        "ns": 2109996994132,
+        "b": false
+      },
+      {
+        "ns": 2110007174145,
+        "b": false
+      },
+      {
+        "ns": 2110017385829,
+        "b": false
+      },
+      {
+        "ns": 2110027576591,
+        "b": false
+      },
+      {
+        "ns": 2110037791626,
+        "b": false
+      },
+      {
+        "ns": 2110047990103,
+        "b": false
+      },
+      {
+        "ns": 2110058233110,
+        "b": false
+      },
+      {
+        "ns": 2110068426599,
+        "b": false
+      },
+      {
+        "ns": 2110078633883,
+        "b": false
+      },
+      {
+        "ns": 2110088828561,
+        "b": false
+      },
+      {
+        "ns": 2110099026268,
+        "b": false
+      },
+      {
+        "ns": 2110109203654,
+        "b": false
+      },
+      {
+        "ns": 2110119387912,
+        "b": false
+      },
+      {
+        "ns": 2110129578170,
+        "b": false
+      },
+      {
+        "ns": 2110139859609,
+        "b": false
+      },
+      {
+        "ns": 2110150137546,
+        "b": false
+      },
+      {
+        "ns": 2110160350494,
+        "b": false
+      },
+      {
+        "ns": 2110170687028,
+        "b": false
+      },
+      {
+        "ns": 2110180906686,
+        "b": false
+      },
+      {
+        "ns": 2110191120766,
+        "b": false
+      },
+      {
+        "ns": 2110201309232,
+        "b": false
+      },
+      {
+        "ns": 2110211509225,
+        "b": false
+      },
+      {
+        "ns": 2110221723531,
+        "b": false
+      },
+      {
+        "ns": 2110231959066,
+        "b": false
+      },
+      {
+        "ns": 2110242247369,
+        "b": false
+      },
+      {
+        "ns": 2110252465930,
+        "b": false
+      },
+      {
+        "ns": 2110262664756,
+        "b": false
+      },
+      {
+        "ns": 2110272853364,
+        "b": false
+      },
+      {
+        "ns": 2110283050579,
+        "b": false
+      },
+      {
+        "ns": 2110293246286,
+        "b": false
+      },
+      {
+        "ns": 2110303485070,
+        "b": false
+      },
+      {
+        "ns": 2110313674782,
+        "b": false
+      },
+      {
+        "ns": 2110323871146,
+        "b": false
+      },
+      {
+        "ns": 2110334069759,
+        "b": false
+      },
+      {
+        "ns": 2110344256228,
+        "b": false
+      },
+      {
+        "ns": 2110354459816,
+        "b": false
+      },
+      {
+        "ns": 2110364676132,
+        "b": false
+      },
+      {
+        "ns": 2110374885699,
+        "b": false
+      },
+      {
+        "ns": 2110385080846,
+        "b": false
+      },
+      {
+        "ns": 2110395253060,
+        "b": false
+      },
+      {
+        "ns": 2110405432699,
+        "b": false
+      },
+      {
+        "ns": 2110415600674,
+        "b": false
+      },
+      {
+        "ns": 2110425951793,
+        "b": false
+      },
+      {
+        "ns": 2110436183971,
+        "b": false
+      },
+      {
+        "ns": 2110446364006,
+        "b": false
+      },
+      {
+        "ns": 2110456558703,
+        "b": false
+      },
+      {
+        "ns": 2110466775696,
+        "b": false
+      },
+      {
+        "ns": 2110476960157,
+        "b": false
+      },
+      {
+        "ns": 2110487143703,
+        "b": false
+      },
+      {
+        "ns": 2110497365623,
+        "b": false
+      },
+      {
+        "ns": 2110507567260,
+        "b": false
+      },
+      {
+        "ns": 2110517766576,
+        "b": false
+      },
+      {
+        "ns": 2110527940951,
+        "b": false
+      },
+      {
+        "ns": 2110538175806,
+        "b": false
+      },
+      {
+        "ns": 2110548469676,
+        "b": false
+      },
+      {
+        "ns": 2110558687327,
+        "b": false
+      },
+      {
+        "ns": 2110568879786,
+        "b": false
+      },
+      {
+        "ns": 2110579061758,
+        "b": false
+      },
+      {
+        "ns": 2110589258533,
+        "b": false
+      },
+      {
+        "ns": 2110599440292,
+        "b": false
+      },
+      {
+        "ns": 2110609613862,
+        "b": false
+      },
+      {
+        "ns": 2110619812506,
+        "b": false
+      },
+      {
+        "ns": 2110630040851,
+        "b": false
+      },
+      {
+        "ns": 2110640220057,
+        "b": false
+      },
+      {
+        "ns": 2110650415934,
+        "b": false
+      },
+      {
+        "ns": 2110660686664,
+        "b": false
+      },
+      {
+        "ns": 2110670880973,
+        "b": false
+      },
+      {
+        "ns": 2110681093272,
+        "b": false
+      },
+      {
+        "ns": 2110691326373,
+        "b": false
+      },
+      {
+        "ns": 2110701579437,
+        "b": false
+      },
+      {
+        "ns": 2110711825438,
+        "b": false
+      },
+      {
+        "ns": 2110722045208,
+        "b": false
+      },
+      {
+        "ns": 2110732261533,
+        "b": false
+      },
+      {
+        "ns": 2110742428503,
+        "b": false
+      },
+      {
+        "ns": 2110752640328,
+        "b": false
+      },
+      {
+        "ns": 2110762816389,
+        "b": false
+      },
+      {
+        "ns": 2110772995951,
+        "b": false
+      },
+      {
+        "ns": 2110783190390,
+        "b": false
+      },
+      {
+        "ns": 2110793372455,
+        "b": false
+      },
+      {
+        "ns": 2110803561950,
+        "b": false
+      },
+      {
+        "ns": 2110813766184,
+        "b": false
+      },
+      {
+        "ns": 2110823953022,
+        "b": false
+      },
+      {
+        "ns": 2110834188953,
+        "b": false
+      },
+      {
+        "ns": 2110844379767,
+        "b": false
+      },
+      {
+        "ns": 2110854590334,
+        "b": false
+      },
+      {
+        "ns": 2110864826648,
+        "b": false
+      },
+      {
+        "ns": 2110875046419,
+        "b": false
+      },
+      {
+        "ns": 2110885248258,
+        "b": false
+      },
+      {
+        "ns": 2110895451610,
+        "b": false
+      },
+      {
+        "ns": 2110905706192,
+        "b": false
+      },
+      {
+        "ns": 2110915988088,
+        "b": false
+      },
+      {
+        "ns": 2110926192578,
+        "b": false
+      },
+      {
+        "ns": 2110936383800,
+        "b": false
+      },
+      {
+        "ns": 2110946545579,
+        "b": false
+      },
+      {
+        "ns": 2110956712217,
+        "b": false
+      },
+      {
+        "ns": 2110966890433,
+        "b": false
+      },
+      {
+        "ns": 2110977071472,
+        "b": false
+      },
+      {
+        "ns": 2110987261470,
+        "b": false
+      },
+      {
+        "ns": 2110997464425,
+        "b": false
+      },
+      {
+        "ns": 2111007653290,
+        "b": false
+      },
+      {
+        "ns": 2111017856877,
+        "b": false
+      },
+      {
+        "ns": 2111028035279,
+        "b": false
+      },
+      {
+        "ns": 2111038227227,
+        "b": false
+      },
+      {
+        "ns": 2111048423514,
+        "b": false
+      },
+      {
+        "ns": 2111058615814,
+        "b": false
+      },
+      {
+        "ns": 2111068798239,
+        "b": false
+      },
+      {
+        "ns": 2111078984551,
+        "b": false
+      },
+      {
+        "ns": 2111089166843,
+        "b": false
+      },
+      {
+        "ns": 2111099346955,
+        "b": false
+      },
+      {
+        "ns": 2111109510346,
+        "b": false
+      },
+      {
+        "ns": 2111119687882,
+        "b": false
+      },
+      {
+        "ns": 2111129865135,
+        "b": false
+      },
+      {
+        "ns": 2111140038046,
+        "b": false
+      },
+      {
+        "ns": 2111150251969,
+        "b": false
+      },
+      {
+        "ns": 2111160427836,
+        "b": false
+      },
+      {
+        "ns": 2111170643678,
+        "b": false
+      },
+      {
+        "ns": 2111180851587,
+        "b": false
+      },
+      {
+        "ns": 2111191056081,
+        "b": false
+      },
+      {
+        "ns": 2111201218941,
+        "b": false
+      },
+      {
+        "ns": 2111211414045,
+        "b": false
+      },
+      {
+        "ns": 2111221635788,
+        "b": false
+      },
+      {
+        "ns": 2111231828118,
+        "b": false
+      },
+      {
+        "ns": 2111242029314,
+        "b": false
+      },
+      {
+        "ns": 2111252272105,
+        "b": false
+      },
+      {
+        "ns": 2111262469998,
+        "b": false
+      },
+      {
+        "ns": 2111272655362,
+        "b": false
+      },
+      {
+        "ns": 2111282838742,
+        "b": false
+      },
+      {
+        "ns": 2111293015104,
+        "b": false
+      },
+      {
+        "ns": 2111303205009,
+        "b": false
+      },
+      {
+        "ns": 2111313393919,
+        "b": false
+      },
+      {
+        "ns": 2111323584292,
+        "b": false
+      },
+      {
+        "ns": 2111333809569,
+        "b": false
+      },
+      {
+        "ns": 2111344030876,
+        "b": false
+      },
+      {
+        "ns": 2111354263822,
+        "b": false
+      },
+      {
+        "ns": 2111364526369,
+        "b": false
+      },
+      {
+        "ns": 2111374710217,
+        "b": false
+      },
+      {
+        "ns": 2111384894185,
+        "b": false
+      },
+      {
+        "ns": 2111395087907,
+        "b": false
+      },
+      {
+        "ns": 2111405265530,
+        "b": false
+      },
+      {
+        "ns": 2111415449105,
+        "b": false
+      },
+      {
+        "ns": 2111425622224,
+        "b": false
+      },
+      {
+        "ns": 2111436052064,
+        "b": false
+      },
+      {
+        "ns": 2111446279913,
+        "b": false
+      },
+      {
+        "ns": 2111456579947,
+        "b": false
+      },
+      {
+        "ns": 2111466770560,
+        "b": false
+      },
+      {
+        "ns": 2111476950713,
+        "b": false
+      },
+      {
+        "ns": 2111487156848,
+        "b": false
+      },
+      {
+        "ns": 2111497332684,
+        "b": false
+      },
+      {
+        "ns": 2111507512895,
+        "b": false
+      },
+      {
+        "ns": 2111517718486,
+        "b": false
+      },
+      {
+        "ns": 2111527880105,
+        "b": false
+      },
+      {
+        "ns": 2111538066728,
+        "b": false
+      },
+      {
+        "ns": 2111548251042,
+        "b": false
+      },
+      {
+        "ns": 2111558435394,
+        "b": false
+      },
+      {
+        "ns": 2111568612661,
+        "b": false
+      },
+      {
+        "ns": 2111578812183,
+        "b": false
+      },
+      {
+        "ns": 2111589001768,
+        "b": false
+      },
+      {
+        "ns": 2111599184127,
+        "b": false
+      },
+      {
+        "ns": 2111609357461,
+        "b": false
+      },
+      {
+        "ns": 2111619552238,
+        "b": false
+      },
+      {
+        "ns": 2111629741750,
+        "b": false
+      },
+      {
+        "ns": 2111639918409,
+        "b": false
+      },
+      {
+        "ns": 2111650146684,
+        "b": false
+      },
+      {
+        "ns": 2111660340689,
+        "b": false
+      },
+      {
+        "ns": 2111670553616,
+        "b": false
+      },
+      {
+        "ns": 2111680833642,
+        "b": false
+      },
+      {
+        "ns": 2111691054792,
+        "b": false
+      },
+      {
+        "ns": 2111701269963,
+        "b": false
+      },
+      {
+        "ns": 2111711469676,
+        "b": false
+      },
+      {
+        "ns": 2111721681642,
+        "b": false
+      },
+      {
+        "ns": 2111731891901,
+        "b": false
+      },
+      {
+        "ns": 2111742106018,
+        "b": false
+      },
+      {
+        "ns": 2111752306164,
+        "b": false
+      },
+      {
+        "ns": 2111762484688,
+        "b": false
+      },
+      {
+        "ns": 2111772652188,
+        "b": false
+      },
+      {
+        "ns": 2111782841653,
+        "b": false
+      },
+      {
+        "ns": 2111793025339,
+        "b": false
+      },
+      {
+        "ns": 2111803203722,
+        "b": false
+      },
+      {
+        "ns": 2111813393002,
+        "b": false
+      },
+      {
+        "ns": 2111823595860,
+        "b": false
+      },
+      {
+        "ns": 2111833791781,
+        "b": false
+      },
+      {
+        "ns": 2111843997777,
+        "b": false
+      },
+      {
+        "ns": 2111854239712,
+        "b": false
+      },
+      {
+        "ns": 2111864417640,
+        "b": false
+      },
+      {
+        "ns": 2111874597517,
+        "b": false
+      },
+      {
+        "ns": 2111884804060,
+        "b": false
+      },
+      {
+        "ns": 2111894972308,
+        "b": false
+      },
+      {
+        "ns": 2111905155488,
+        "b": false
+      },
+      {
+        "ns": 2111915344637,
+        "b": false
+      },
+      {
+        "ns": 2111925562169,
+        "b": false
+      },
+      {
+        "ns": 2111935860240,
+        "b": false
+      },
+      {
+        "ns": 2111946048904,
+        "b": false
+      },
+      {
+        "ns": 2111956229274,
+        "b": false
+      },
+      {
+        "ns": 2111966398335,
+        "b": false
+      },
+      {
+        "ns": 2111976572945,
+        "b": false
+      },
+      {
+        "ns": 2111986774842,
+        "b": false
+      },
+      {
+        "ns": 2111996953832,
+        "b": false
+      },
+      {
+        "ns": 2112007144568,
+        "b": false
+      },
+      {
+        "ns": 2112017345370,
+        "b": false
+      },
+      {
+        "ns": 2112027534846,
+        "b": false
+      },
+      {
+        "ns": 2112037741641,
+        "b": false
+      },
+      {
+        "ns": 2112047928879,
+        "b": false
+      },
+      {
+        "ns": 2112058184092,
+        "b": false
+      },
+      {
+        "ns": 2112068362544,
+        "b": false
+      },
+      {
+        "ns": 2112078548295,
+        "b": false
+      },
+      {
+        "ns": 2112088744911,
+        "b": false
+      },
+      {
+        "ns": 2112098934625,
+        "b": false
+      },
+      {
+        "ns": 2112109132490,
+        "b": false
+      },
+      {
+        "ns": 2112119335777,
+        "b": false
+      },
+      {
+        "ns": 2112129509694,
+        "b": false
+      },
+      {
+        "ns": 2112139690408,
+        "b": false
+      },
+      {
+        "ns": 2112149873761,
+        "b": false
+      },
+      {
+        "ns": 2112160097434,
+        "b": false
+      },
+      {
+        "ns": 2112170290617,
+        "b": false
+      },
+      {
+        "ns": 2112180484004,
+        "b": false
+      },
+      {
+        "ns": 2112190804144,
+        "b": false
+      },
+      {
+        "ns": 2112201025629,
+        "b": false
+      },
+      {
+        "ns": 2112211224507,
+        "b": false
+      },
+      {
+        "ns": 2112221425201,
+        "b": false
+      },
+      {
+        "ns": 2112231639177,
+        "b": false
+      },
+      {
+        "ns": 2112241827073,
+        "b": false
+      },
+      {
+        "ns": 2112252044241,
+        "b": false
+      },
+      {
+        "ns": 2112262217426,
+        "b": false
+      },
+      {
+        "ns": 2112272410564,
+        "b": false
+      },
+      {
+        "ns": 2112282586096,
+        "b": false
+      },
+      {
+        "ns": 2112292777045,
+        "b": false
+      },
+      {
+        "ns": 2112302960450,
+        "b": false
+      },
+      {
+        "ns": 2112313142610,
+        "b": false
+      },
+      {
+        "ns": 2112323320314,
+        "b": false
+      },
+      {
+        "ns": 2112333519681,
+        "b": false
+      },
+      {
+        "ns": 2112343702196,
+        "b": false
+      },
+      {
+        "ns": 2112353898327,
+        "b": false
+      },
+      {
+        "ns": 2112364179331,
+        "b": false
+      },
+      {
+        "ns": 2112374362912,
+        "b": false
+      },
+      {
+        "ns": 2112384556238,
+        "b": false
+      },
+      {
+        "ns": 2112394764907,
+        "b": false
+      },
+      {
+        "ns": 2112404988568,
+        "b": false
+      },
+      {
+        "ns": 2112415160514,
+        "b": false
+      },
+      {
+        "ns": 2112425350276,
+        "b": false
+      },
+      {
+        "ns": 2112435556815,
+        "b": false
+      },
+      {
+        "ns": 2112445887550,
+        "b": false
+      },
+      {
+        "ns": 2112456130484,
+        "b": false
+      },
+      {
+        "ns": 2112466357749,
+        "b": false
+      },
+      {
+        "ns": 2112476581699,
+        "b": false
+      },
+      {
+        "ns": 2112486775911,
+        "b": false
+      },
+      {
+        "ns": 2112496947885,
+        "b": false
+      },
+      {
+        "ns": 2112507138694,
+        "b": false
+      },
+      {
+        "ns": 2112517325442,
+        "b": false
+      },
+      {
+        "ns": 2112527511592,
+        "b": false
+      },
+      {
+        "ns": 2112537703793,
+        "b": false
+      },
+      {
+        "ns": 2112547910609,
+        "b": false
+      },
+      {
+        "ns": 2112558159181,
+        "b": false
+      },
+      {
+        "ns": 2112568350641,
+        "b": false
+      },
+      {
+        "ns": 2112578521062,
+        "b": false
+      },
+      {
+        "ns": 2112588733767,
+        "b": false
+      },
+      {
+        "ns": 2112598932787,
+        "b": false
+      },
+      {
+        "ns": 2112609105997,
+        "b": false
+      },
+      {
+        "ns": 2112619292354,
+        "b": false
+      },
+      {
+        "ns": 2112629478325,
+        "b": false
+      },
+      {
+        "ns": 2112639667000,
+        "b": false
+      },
+      {
+        "ns": 2112649857114,
+        "b": false
+      },
+      {
+        "ns": 2112660019248,
+        "b": false
+      },
+      {
+        "ns": 2112670225978,
+        "b": false
+      },
+      {
+        "ns": 2112680451463,
+        "b": false
+      },
+      {
+        "ns": 2112690723029,
+        "b": false
+      },
+      {
+        "ns": 2112700918014,
+        "b": false
+      },
+      {
+        "ns": 2112711142473,
+        "b": false
+      },
+      {
+        "ns": 2112721348862,
+        "b": false
+      },
+      {
+        "ns": 2112731580473,
+        "b": false
+      },
+      {
+        "ns": 2112741779283,
+        "b": false
+      },
+      {
+        "ns": 2112751971499,
+        "b": false
+      },
+      {
+        "ns": 2112762181634,
+        "b": false
+      },
+      {
+        "ns": 2112772367806,
+        "b": false
+      },
+      {
+        "ns": 2112782527979,
+        "b": false
+      },
+      {
+        "ns": 2112792739026,
+        "b": false
+      },
+      {
+        "ns": 2112802940611,
+        "b": false
+      },
+      {
+        "ns": 2112813196808,
+        "b": false
+      },
+      {
+        "ns": 2112823378057,
+        "b": false
+      },
+      {
+        "ns": 2112833549706,
+        "b": false
+      },
+      {
+        "ns": 2112843725490,
+        "b": false
+      },
+      {
+        "ns": 2112853909939,
+        "b": false
+      },
+      {
+        "ns": 2112864033101,
+        "b": false
+      },
+      {
+        "ns": 2112874234454,
+        "b": false
+      },
+      {
+        "ns": 2112884413222,
+        "b": false
+      },
+      {
+        "ns": 2112894609882,
+        "b": false
+      },
+      {
+        "ns": 2112904801153,
+        "b": false
+      },
+      {
+        "ns": 2112914994382,
+        "b": false
+      },
+      {
+        "ns": 2112925171064,
+        "b": false
+      },
+      {
+        "ns": 2112935360228,
+        "b": false
+      },
+      {
+        "ns": 2112945545802,
+        "b": false
+      },
+      {
+        "ns": 2112955837918,
+        "b": false
+      },
+      {
+        "ns": 2112966154984,
+        "b": false
+      },
+      {
+        "ns": 2112976339490,
+        "b": false
+      },
+      {
+        "ns": 2112986555831,
+        "b": false
+      },
+      {
+        "ns": 2112996756985,
+        "b": false
+      },
+      {
+        "ns": 2113006954434,
+        "b": false
+      },
+      {
+        "ns": 2113017159238,
+        "b": false
+      },
+      {
+        "ns": 2113027348922,
+        "b": false
+      },
+      {
+        "ns": 2113037562056,
+        "b": false
+      },
+      {
+        "ns": 2113047758313,
+        "b": false
+      },
+      {
+        "ns": 2113057944277,
+        "b": false
+      },
+      {
+        "ns": 2113068134844,
+        "b": false
+      },
+      {
+        "ns": 2113078331257,
+        "b": false
+      },
+      {
+        "ns": 2113088554564,
+        "b": false
+      },
+      {
+        "ns": 2113098757349,
+        "b": false
+      },
+      {
+        "ns": 2113108938547,
+        "b": false
+      },
+      {
+        "ns": 2113119166811,
+        "b": false
+      },
+      {
+        "ns": 2113129368018,
+        "b": false
+      },
+      {
+        "ns": 2113139544009,
+        "b": false
+      },
+      {
+        "ns": 2113149734676,
+        "b": false
+      },
+      {
+        "ns": 2113159919047,
+        "b": false
+      },
+      {
+        "ns": 2113170133092,
+        "b": false
+      },
+      {
+        "ns": 2113180317190,
+        "b": false
+      },
+      {
+        "ns": 2113190679612,
+        "b": false
+      },
+      {
+        "ns": 2113200887690,
+        "b": false
+      },
+      {
+        "ns": 2113211114142,
+        "b": false
+      },
+      {
+        "ns": 2113221329366,
+        "b": false
+      },
+      {
+        "ns": 2113231564749,
+        "b": false
+      },
+      {
+        "ns": 2113241760040,
+        "b": false
+      },
+      {
+        "ns": 2113251963217,
+        "b": false
+      },
+      {
+        "ns": 2113262176569,
+        "b": false
+      },
+      {
+        "ns": 2113272348709,
+        "b": false
+      },
+      {
+        "ns": 2113282521727,
+        "b": false
+      },
+      {
+        "ns": 2113292710622,
+        "b": false
+      },
+      {
+        "ns": 2113302894342,
+        "b": false
+      },
+      {
+        "ns": 2113313110377,
+        "b": false
+      },
+      {
+        "ns": 2113323321213,
+        "b": false
+      },
+      {
+        "ns": 2113333527099,
+        "b": false
+      },
+      {
+        "ns": 2113343724476,
+        "b": false
+      },
+      {
+        "ns": 2113353929866,
+        "b": false
+      },
+      {
+        "ns": 2113364180108,
+        "b": false
+      },
+      {
+        "ns": 2113374383509,
+        "b": false
+      },
+      {
+        "ns": 2113384629460,
+        "b": false
+      },
+      {
+        "ns": 2113394845990,
+        "b": false
+      },
+      {
+        "ns": 2113405063158,
+        "b": false
+      },
+      {
+        "ns": 2113415245606,
+        "b": false
+      },
+      {
+        "ns": 2113425435709,
+        "b": false
+      },
+      {
+        "ns": 2113435645466,
+        "b": false
+      },
+      {
+        "ns": 2113445953933,
+        "b": false
+      },
+      {
+        "ns": 2113456141487,
+        "b": false
+      },
+      {
+        "ns": 2113466333052,
+        "b": false
+      },
+      {
+        "ns": 2113476544853,
+        "b": false
+      },
+      {
+        "ns": 2113486754897,
+        "b": false
+      },
+      {
+        "ns": 2113496955868,
+        "b": false
+      },
+      {
+        "ns": 2113507169383,
+        "b": false
+      },
+      {
+        "ns": 2113517401759,
+        "b": false
+      },
+      {
+        "ns": 2113527608227,
+        "b": false
+      },
+      {
+        "ns": 2113537807900,
+        "b": false
+      },
+      {
+        "ns": 2113548047587,
+        "b": false
+      },
+      {
+        "ns": 2113558244170,
+        "b": false
+      },
+      {
+        "ns": 2113568436877,
+        "b": false
+      },
+      {
+        "ns": 2113578640768,
+        "b": false
+      },
+      {
+        "ns": 2113588842948,
+        "b": false
+      },
+      {
+        "ns": 2113599043612,
+        "b": false
+      },
+      {
+        "ns": 2113609222663,
+        "b": false
+      },
+      {
+        "ns": 2113619401436,
+        "b": false
+      },
+      {
+        "ns": 2113629588436,
+        "b": false
+      },
+      {
+        "ns": 2113639785369,
+        "b": false
+      },
+      {
+        "ns": 2113649981519,
+        "b": false
+      },
+      {
+        "ns": 2113660185771,
+        "b": false
+      },
+      {
+        "ns": 2113670402541,
+        "b": false
+      },
+      {
+        "ns": 2113680675399,
+        "b": false
+      },
+      {
+        "ns": 2113690952833,
+        "b": false
+      },
+      {
+        "ns": 2113701169957,
+        "b": false
+      },
+      {
+        "ns": 2113711370299,
+        "b": false
+      },
+      {
+        "ns": 2113721596743,
+        "b": false
+      },
+      {
+        "ns": 2113731823573,
+        "b": false
+      },
+      {
+        "ns": 2113742061872,
+        "b": false
+      },
+      {
+        "ns": 2113752287391,
+        "b": false
+      },
+      {
+        "ns": 2113762535787,
+        "b": false
+      },
+      {
+        "ns": 2113772771360,
+        "b": false
+      },
+      {
+        "ns": 2113783018224,
+        "b": false
+      },
+      {
+        "ns": 2113793225246,
+        "b": false
+      },
+      {
+        "ns": 2113803426806,
+        "b": false
+      },
+      {
+        "ns": 2113813597283,
+        "b": false
+      },
+      {
+        "ns": 2113823774424,
+        "b": false
+      },
+      {
+        "ns": 2113833974291,
+        "b": false
+      },
+      {
+        "ns": 2113844175456,
+        "b": false
+      },
+      {
+        "ns": 2113854373684,
+        "b": false
+      },
+      {
+        "ns": 2113864583166,
+        "b": false
+      },
+      {
+        "ns": 2113874766626,
+        "b": false
+      },
+      {
+        "ns": 2113884942531,
+        "b": false
+      },
+      {
+        "ns": 2113895145693,
+        "b": false
+      },
+      {
+        "ns": 2113905347239,
+        "b": false
+      },
+      {
+        "ns": 2113915553819,
+        "b": false
+      },
+      {
+        "ns": 2113925918663,
+        "b": false
+      },
+      {
+        "ns": 2113936119324,
+        "b": false
+      },
+      {
+        "ns": 2113946342836,
+        "b": false
+      },
+      {
+        "ns": 2113956619227,
+        "b": false
+      },
+      {
+        "ns": 2113966790429,
+        "b": false
+      },
+      {
+        "ns": 2113976961192,
+        "b": false
+      },
+      {
+        "ns": 2113987155232,
+        "b": false
+      },
+      {
+        "ns": 2113997342693,
+        "b": false
+      },
+      {
+        "ns": 2114007539959,
+        "b": false
+      },
+      {
+        "ns": 2114017731246,
+        "b": false
+      },
+      {
+        "ns": 2114027942504,
+        "b": false
+      },
+      {
+        "ns": 2114038188181,
+        "b": false
+      },
+      {
+        "ns": 2114048376608,
+        "b": false
+      },
+      {
+        "ns": 2114058552022,
+        "b": false
+      },
+      {
+        "ns": 2114068725950,
+        "b": false
+      },
+      {
+        "ns": 2114078953024,
+        "b": false
+      },
+      {
+        "ns": 2114089145391,
+        "b": false
+      },
+      {
+        "ns": 2114099358928,
+        "b": false
+      },
+      {
+        "ns": 2114109546487,
+        "b": false
+      },
+      {
+        "ns": 2114119734150,
+        "b": false
+      },
+      {
+        "ns": 2114129934005,
+        "b": false
+      },
+      {
+        "ns": 2114140141740,
+        "b": false
+      },
+      {
+        "ns": 2114150335347,
+        "b": false
+      },
+      {
+        "ns": 2114160537374,
+        "b": false
+      },
+      {
+        "ns": 2114170875424,
+        "b": false
+      },
+      {
+        "ns": 2114181100814,
+        "b": false
+      },
+      {
+        "ns": 2114191293938,
+        "b": false
+      },
+      {
+        "ns": 2114201489028,
+        "b": false
+      },
+      {
+        "ns": 2114211718147,
+        "b": false
+      },
+      {
+        "ns": 2114221939862,
+        "b": false
+      },
+      {
+        "ns": 2114232163980,
+        "b": false
+      },
+      {
+        "ns": 2114242384759,
+        "b": false
+      },
+      {
+        "ns": 2114252568719,
+        "b": false
+      },
+      {
+        "ns": 2114262756379,
+        "b": false
+      },
+      {
+        "ns": 2114272957986,
+        "b": false
+      },
+      {
+        "ns": 2114283148682,
+        "b": false
+      },
+      {
+        "ns": 2114293351314,
+        "b": false
+      },
+      {
+        "ns": 2114303558622,
+        "b": false
+      },
+      {
+        "ns": 2114313765792,
+        "b": false
+      },
+      {
+        "ns": 2114323977250,
+        "b": false
+      },
+      {
+        "ns": 2114334241486,
+        "b": false
+      },
+      {
+        "ns": 2114344452540,
+        "b": false
+      },
+      {
+        "ns": 2114354702021,
+        "b": false
+      },
+      {
+        "ns": 2114364951558,
+        "b": false
+      },
+      {
+        "ns": 2114375163691,
+        "b": false
+      },
+      {
+        "ns": 2114385366519,
+        "b": false
+      },
+      {
+        "ns": 2114395684740,
+        "b": false
+      },
+      {
+        "ns": 2114405991511,
+        "b": false
+      },
+      {
+        "ns": 2114416181085,
+        "b": false
+      },
+      {
+        "ns": 2114426371547,
+        "b": false
+      },
+      {
+        "ns": 2114436551722,
+        "b": false
+      },
+      {
+        "ns": 2114446741609,
+        "b": false
+      },
+      {
+        "ns": 2114456920050,
+        "b": false
+      },
+      {
+        "ns": 2114467105765,
+        "b": false
+      },
+      {
+        "ns": 2114477300373,
+        "b": false
+      },
+      {
+        "ns": 2114487586588,
+        "b": false
+      },
+      {
+        "ns": 2114497822918,
+        "b": false
+      },
+      {
+        "ns": 2114508057008,
+        "b": false
+      },
+      {
+        "ns": 2114518298832,
+        "b": false
+      },
+      {
+        "ns": 2114528499987,
+        "b": false
+      },
+      {
+        "ns": 2114538739729,
+        "b": false
+      },
+      {
+        "ns": 2114548954926,
+        "b": false
+      },
+      {
+        "ns": 2114559185547,
+        "b": false
+      },
+      {
+        "ns": 2114569414263,
+        "b": false
+      },
+      {
+        "ns": 2114579608634,
+        "b": false
+      },
+      {
+        "ns": 2114589809863,
+        "b": false
+      },
+      {
+        "ns": 2114600022273,
+        "b": false
+      },
+      {
+        "ns": 2114610210389,
+        "b": false
+      },
+      {
+        "ns": 2114620397270,
+        "b": false
+      },
+      {
+        "ns": 2114630604200,
+        "b": false
+      },
+      {
+        "ns": 2114641103757,
+        "b": false
+      },
+      {
+        "ns": 2114651331523,
+        "b": false
+      },
+      {
+        "ns": 2114661526385,
+        "b": false
+      },
+      {
+        "ns": 2114671728394,
+        "b": false
+      },
+      {
+        "ns": 2114681950668,
+        "b": false
+      },
+      {
+        "ns": 2114692181571,
+        "b": false
+      },
+      {
+        "ns": 2114702375231,
+        "b": false
+      },
+      {
+        "ns": 2114712585063,
+        "b": false
+      },
+      {
+        "ns": 2114722828308,
+        "b": false
+      },
+      {
+        "ns": 2114733031294,
+        "b": false
+      },
+      {
+        "ns": 2114743204835,
+        "b": false
+      },
+      {
+        "ns": 2114753386740,
+        "b": false
+      },
+      {
+        "ns": 2114763569410,
+        "b": false
+      },
+      {
+        "ns": 2114773742662,
+        "b": false
+      },
+      {
+        "ns": 2114783929518,
+        "b": false
+      },
+      {
+        "ns": 2114794138396,
+        "b": false
+      },
+      {
+        "ns": 2114804320420,
+        "b": false
+      },
+      {
+        "ns": 2114814511940,
+        "b": false
+      },
+      {
+        "ns": 2114824708082,
+        "b": false
+      },
+      {
+        "ns": 2114834908763,
+        "b": false
+      },
+      {
+        "ns": 2114845087892,
+        "b": false
+      },
+      {
+        "ns": 2114855296618,
+        "b": false
+      },
+      {
+        "ns": 2114865498251,
+        "b": false
+      },
+      {
+        "ns": 2114875828178,
+        "b": false
+      },
+      {
+        "ns": 2114886137694,
+        "b": false
+      },
+      {
+        "ns": 2114896396432,
+        "b": false
+      },
+      {
+        "ns": 2114906656615,
+        "b": false
+      },
+      {
+        "ns": 2114916826549,
+        "b": false
+      },
+      {
+        "ns": 2114927016630,
+        "b": false
+      },
+      {
+        "ns": 2114937206187,
+        "b": false
+      },
+      {
+        "ns": 2114947390401,
+        "b": false
+      },
+      {
+        "ns": 2114957568928,
+        "b": false
+      },
+      {
+        "ns": 2114967765413,
+        "b": false
+      },
+      {
+        "ns": 2114978001496,
+        "b": false
+      },
+      {
+        "ns": 2114988198209,
+        "b": false
+      },
+      {
+        "ns": 2114998404976,
+        "b": false
+      },
+      {
+        "ns": 2115008576854,
+        "b": false
+      },
+      {
+        "ns": 2115018751294,
+        "b": false
+      },
+      {
+        "ns": 2115028946364,
+        "b": false
+      },
+      {
+        "ns": 2115039139870,
+        "b": false
+      },
+      {
+        "ns": 2115049319377,
+        "b": false
+      },
+      {
+        "ns": 2115059508700,
+        "b": false
+      },
+      {
+        "ns": 2115069684715,
+        "b": false
+      },
+      {
+        "ns": 2115079868303,
+        "b": false
+      },
+      {
+        "ns": 2115090062472,
+        "b": false
+      },
+      {
+        "ns": 2115100245929,
+        "b": false
+      },
+      {
+        "ns": 2115110440103,
+        "b": false
+      },
+      {
+        "ns": 2115120685070,
+        "b": false
+      },
+      {
+        "ns": 2115130869694,
+        "b": false
+      },
+      {
+        "ns": 2115141057808,
+        "b": false
+      },
+      {
+        "ns": 2115151229217,
+        "b": false
+      },
+      {
+        "ns": 2115161442093,
+        "b": false
+      },
+      {
+        "ns": 2115171627915,
+        "b": false
+      },
+      {
+        "ns": 2115181825055,
+        "b": false
+      },
+      {
+        "ns": 2115192032347,
+        "b": false
+      },
+      {
+        "ns": 2115202215647,
+        "b": false
+      },
+      {
+        "ns": 2115212442827,
+        "b": false
+      },
+      {
+        "ns": 2115222692658,
+        "b": false
+      },
+      {
+        "ns": 2115232916484,
+        "b": false
+      },
+      {
+        "ns": 2115243145074,
+        "b": false
+      },
+      {
+        "ns": 2115253345122,
+        "b": false
+      },
+      {
+        "ns": 2115263528012,
+        "b": false
+      },
+      {
+        "ns": 2115273696418,
+        "b": false
+      },
+      {
+        "ns": 2115283865001,
+        "b": false
+      },
+      {
+        "ns": 2115294045375,
+        "b": false
+      },
+      {
+        "ns": 2115304238744,
+        "b": false
+      },
+      {
+        "ns": 2115314457626,
+        "b": false
+      },
+      {
+        "ns": 2115324650618,
+        "b": false
+      },
+      {
+        "ns": 2115334827902,
+        "b": false
+      },
+      {
+        "ns": 2115345026001,
+        "b": false
+      },
+      {
+        "ns": 2115355319424,
+        "b": false
+      },
+      {
+        "ns": 2115365674590,
+        "b": false
+      },
+      {
+        "ns": 2115375964723,
+        "b": false
+      },
+      {
+        "ns": 2115386197284,
+        "b": false
+      },
+      {
+        "ns": 2115396393046,
+        "b": false
+      },
+      {
+        "ns": 2115406608790,
+        "b": false
+      },
+      {
+        "ns": 2115416784616,
+        "b": false
+      },
+      {
+        "ns": 2115426976757,
+        "b": false
+      },
+      {
+        "ns": 2115437153804,
+        "b": false
+      },
+      {
+        "ns": 2115447349706,
+        "b": false
+      },
+      {
+        "ns": 2115457524192,
+        "b": false
+      },
+      {
+        "ns": 2115467712454,
+        "b": false
+      },
+      {
+        "ns": 2115477915049,
+        "b": false
+      },
+      {
+        "ns": 2115488142751,
+        "b": false
+      },
+      {
+        "ns": 2115498361991,
+        "b": false
+      },
+      {
+        "ns": 2115508550118,
+        "b": false
+      },
+      {
+        "ns": 2115518767019,
+        "b": false
+      },
+      {
+        "ns": 2115528977572,
+        "b": false
+      },
+      {
+        "ns": 2115539168885,
+        "b": false
+      },
+      {
+        "ns": 2115549364613,
+        "b": false
+      },
+      {
+        "ns": 2115559584666,
+        "b": false
+      },
+      {
+        "ns": 2115569777284,
+        "b": false
+      }
+    ],
+    "sampler_alive": false,
+    "max_sample_gap_ms": 15.449247,
+    "keys_after_horizon": {
+      "w": false,
+      "b": false
+    }
+  },
+  "xvfb_exitcode": 0
+}
