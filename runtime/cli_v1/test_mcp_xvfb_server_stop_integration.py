@@ -31,7 +31,8 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 )
 
 
-_SERVER_STOP_SAFETY_S = 4.0
+_WAIT_CANCEL_WHILE_STOPPED = os.environ.get('AGENT_INTERFACE_MCP_XVFB_WAIT_CANCEL_WHILE_STOPPED') == '1'
+_SERVER_STOP_SAFETY_S = 12.0 if _WAIT_CANCEL_WHILE_STOPPED else 4.0
 _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
 _RECOVERY_BOUND_S = 5.0
@@ -403,8 +404,31 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                               - report['timing_ns']['cancel_started']) / 1_000_000_000)
                 report['cancel_elapsed_s'] = elapsed_s
                 report['cancel'] = cancel
-                # Resume as soon as the bounded call returns; the safety timer
-                # handles a broken bound without blocking final cleanup forever.
+                # Long-stop discriminator: wait for asynchronous cancellation
+                # to finish while the server is still stopped, before resuming.
+                if _WAIT_CANCEL_WHILE_STOPPED:
+                    end = time.monotonic() + 8.0
+                    cancellation = {}
+                    while time.monotonic() < end:
+                        remaining = end - time.monotonic()
+                        if remaining <= 0:
+                            break
+                        stopped_terminal = _metadata(await asyncio.wait_for(
+                            server.call_tool('interface_results', {
+                                'call_id':call_id, 'include_image':False}),
+                            timeout=remaining))
+                        cancellation = stopped_terminal.get('cancellation') or {}
+                        if cancellation.get('status') in ('completed', 'unknown'):
+                            report['stopped_terminal'] = stopped_terminal
+                            break
+                        await asyncio.sleep(0.02)
+                    if cancellation.get('status') not in ('completed', 'unknown'):
+                        self.fail('cancellation did not finish while Xvfb stopped')
+                    self.assertIn(_private_xvfb_record()['state'], ('T', 't'))
+                    stopped_result = cancellation.get('result') or {}
+                    self.assertEqual(stopped_result.get('cleanup_status'), 'UNKNOWN')
+                    self.assertEqual(stopped_result.get('owner_release_attempt', {}).get('status'),
+                                     'not_attempted')
                 report['server_resume'] = resume_exact_server()
                 safety_timer.cancel()
 
@@ -496,9 +520,19 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(terminal.get('task_success'), terminal)
                 self.assertFalse(terminal.get('replay_allowed'), terminal)
 
-                # The first cancellation result remains UNKNOWN. A separate,
-                # explicit close after the server resumes may recheck owner
-                # disconnection and perform one release-only cleanup attempt.
+                # Model a later client taking the same shared key. Focus a
+                # separate window so this control does not change the app oracle.
+                other = observer.screen().root.create_window(
+                    1, 1, 30, 30, 0, X.CopyFromParent, X.InputOutput,
+                    X.CopyFromParent)
+                other.map()
+                other.set_input_focus(X.RevertToParent, X.CurrentTime)
+                xtest.fake_input(observer, X.KeyRelease, detail=keycodes['a'])
+                xtest.fake_input(observer, X.KeyPress, detail=keycodes['a'])
+                observer.sync()
+                self.assertTrue(_key_down(observer, keycodes['a']))
+                # The first cancellation result stays UNKNOWN; later close must
+                # retain it without releasing this new client's held key.
                 close_started_ns = time.monotonic_ns()
                 post_resume_close = _metadata(await server.call_tool(
                     'interface_close', {}))
@@ -519,9 +553,8 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                 post_resume_close)
                 self.assertTrue(post_resume_close.get('owner_process_retired'),
                                 post_resume_close)
-                self.assertEqual(
-                    post_resume_close.get('owner_release_attempt', {}).get('status'),
-                    'readback_verified', post_resume_close)
+                self.assertIsInstance(post_resume_close.get('owner_release_attempt'),
+                                      dict, post_resume_close)
                 self.assertFalse(post_resume_close.get('release_confirmed'),
                                  post_resume_close)
                 self.assertEqual(post_resume_close.get('cleanup_status'),
@@ -530,10 +563,17 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                   post_resume_close)
                 self.assertFalse(post_resume_close.get('replay_allowed'),
                                  post_resume_close)
-                self.assertEqual(report['independent_readback_after_close']['keys_down'],
-                                 {'a':False, 'b':False})
+                self.assertTrue(
+                    report['independent_readback_after_close']['keys_down']['a'])
+                if _WAIT_CANCEL_WHILE_STOPPED:
+                    self.assertEqual(post_resume_close['owner_release_attempt'],
+                                     stopped_result['owner_release_attempt'])
                 self.assertEqual(report['independent_readback_after_close']['effect'],
                                  [1])
+                xtest.fake_input(observer, X.KeyRelease, detail=keycodes['a'])
+                other.destroy()
+                observer.sync()
+                self.assertFalse(_key_down(observer, keycodes['a']))
                 if _PRESTARTED_CANCEL_SUPERVISOR:
                     self.assertEqual(
                         report['synthetic_task_oracle']['status'], 'pass', report)
