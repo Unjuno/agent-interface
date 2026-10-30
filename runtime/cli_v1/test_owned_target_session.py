@@ -10,6 +10,30 @@ from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess, _ide
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    def test_transient_pidfd_error_gets_one_immediate_same_handle_retry(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._owned_target_process = Mock()
+        failed = {'status':'unknown', 'reason':'pidfd_signal_failed',
+                  'target_identity_verified':True, 'process_exit_verified':False}
+        owner._owned_target_process.retire_bound_target.side_effect = [
+            failed, {'status':'retired', 'process_exit_verified':True}]
+        owner._attempt_target_retirement()
+        self.assertEqual(owner._owned_target_process.retire_bound_target.call_count, 2)
+        self.assertTrue(owner._owned_target_retirement['process_exit_verified'])
+        self.assertEqual(owner._owned_target_retirement['immediate_previous_attempt'], failed)
+        owner._owned_target_process.close.assert_called_once_with()
+
+    def test_repeated_pidfd_error_is_bounded_and_remains_unknown(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._owned_target_process = Mock()
+        failed = {'status':'unknown', 'reason':'pidfd_signal_failed',
+                  'target_identity_verified':True, 'process_exit_verified':False}
+        owner._owned_target_process.retire_bound_target.return_value = failed
+        owner._attempt_target_retirement()
+        self.assertEqual(owner._owned_target_process.retire_bound_target.call_count, 2)
+        self.assertEqual(owner._owned_target_retirement['status'], 'unknown')
+        owner._owned_target_process.close.assert_not_called()
+
     @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
     def test_close_retries_exact_live_child_after_pidfd_signal_error(self):
         target = OwnedTargetProcess.launch(

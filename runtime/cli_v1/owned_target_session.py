@@ -65,14 +65,22 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         return super()._cleanup_after_owner_retirement(retirement, **kwargs)
 
     def _attempt_target_retirement(self):
+        first = None
         try:
             result = self._owned_target_process.retire_bound_target()
+            if (result.get('status') == 'unknown'
+                    and result.get('reason') == 'pidfd_signal_failed'
+                    and result.get('target_identity_verified') is True):
+                first = deepcopy(result)
+                result = self._owned_target_process.retire_bound_target()
         except Exception as error:
             result = {'status':'unknown', 'reason':'target_retirement_exception',
                       'error_type':type(error).__name__,
                       'target_identity_verified':False,
                       'process_exit_verified':False}
         self._owned_target_retirement = deepcopy(result)
+        if first is not None:
+            self._owned_target_retirement['immediate_previous_attempt'] = first
         if result.get('process_exit_verified') is True:
             try:
                 self._owned_target_process.close()

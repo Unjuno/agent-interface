@@ -25,7 +25,10 @@ target through its pidfd. It then runs the existing independent release and
 readback cleanup. The cancellation receipt includes the target binding and
 retirement outcome. The canceled task remains UNKNOWN, task success remains
 null, and replay remains denied. A failed target retirement is reported as
-unknown; it does not turn the original request into success.
+unknown; it does not turn the original request into success. If a pidfd
+signal fails after identity was verified, one immediate further bounded
+retirement attempt uses the same handle and retains the first attempt. A
+second failure remains UNKNOWN.
 
 This does not adopt arbitrary PIDs or terminate a user-owned application. The
 caller retains responsibility for the target handle during normal operation
