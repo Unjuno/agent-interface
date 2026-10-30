@@ -34,3 +34,10 @@ if closing the control owner fails and it is retired, its cleanup may retire
 the bound disposable target. The API is
 single-target and Linux/pidfd-specific. It does not yet provide automatic
 fresh-process creation or fresh-generation admission.
+
+Target retirement confirms the bound process exited; it does not drain the
+X server's input queue or fence input from every other window. X11 input and
+focus are shared, so already queued events may be delivered elsewhere after
+the server resumes. Use a disposable, isolated display and do not admit a
+fresh target solely on the strength of this receipt. The primitive tracks one
+process, not a descendant tree or a whole application session.

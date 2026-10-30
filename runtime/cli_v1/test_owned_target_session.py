@@ -6,6 +6,22 @@ from runtime.cli_v1.owned_target_session import OwnedTargetGuardedSessionOwner
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    def test_failed_identity_binding_refuses_before_owner_rpc_dispatch(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._owned_target_binding = None
+        owner._target_identity_supervisor = None
+        owner._owned_target_xid = 77
+        owner.display_name = ':99'
+        owner._rpc = Mock()
+        owner._owned_target_process = Mock()
+        owner._owned_target_process.bind_x11_target_supervised.return_value = {
+            'status':'refused', 'reason':'target_process_identity_mismatch'}
+        with patch.object(OwnedGuardedSessionOwner, '_ensure_started'):
+            with self.assertRaisesRegex(RuntimeError, 'target_process_identity_mismatch'):
+                owner._request_locked('guarded_input', {'alias':'field'})
+        owner._rpc.send.assert_not_called()
+        owner._owned_target_process.retire_bound_target.assert_not_called()
+
     def test_prestarted_identity_accepts_child_session_after_startup(self):
         target = Mock(spec=__import__('runtime.guarded_x11_v1.owned_target_process',
                                       fromlist=['OwnedTargetProcess']).OwnedTargetProcess)
