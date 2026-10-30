@@ -85,8 +85,13 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
                 0, (deadline - time.monotonic_ns()) / 1e9))
             if acquired:
                 try:
-                    if self._owned_target_retirement is None:
+                    previous = deepcopy(self._owned_target_retirement)
+                    if (previous is None or (previous.get('status') == 'unknown'
+                            and previous.get('process_exit_verified') is not True)):
                         self._attempt_target_retirement(deadline_monotonic_ns=deadline)
+                        if previous is not None:
+                            previous.pop('previous_attempt', None)
+                            self._owned_target_retirement['previous_attempt'] = previous
                 finally:
                     self._target_retirement_lock.release()
             else:

@@ -549,6 +549,24 @@ class OwnedTargetSessionTests(unittest.TestCase):
                 self.assertEqual(owner._owned_target_process.retire_bound_target.call_count,
                                  int(retired))
 
+    def test_explicit_retire_retries_prior_unverified_target_attempt(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._target_retirement_deferred = threading.Event()
+        owner._owned_target_process = Mock()
+        owner._owned_target_retirement = {
+            'status': 'unknown', 'reason': 'pidfd_signal_failed',
+            'process_exit_verified': False}
+        owner._owned_target_process.retire_bound_target.return_value = {
+            'status': 'retired', 'process_exit_verified': True}
+        with patch.object(OwnedGuardedSessionOwner, 'retire',
+                          return_value={'retired': True}):
+            owner.retire('shutdown')
+        owner._owned_target_process.retire_bound_target.assert_called_once()
+        self.assertTrue(owner._owned_target_retirement['process_exit_verified'])
+        self.assertEqual(owner._owned_target_retirement['previous_attempt']['reason'],
+                         'pidfd_signal_failed')
+
     def test_retire_target_precedes_existing_release_cleanup_and_is_cached(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
         owner._target_retirement_lock = threading.RLock()
