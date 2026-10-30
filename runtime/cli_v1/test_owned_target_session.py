@@ -1,16 +1,124 @@
 import signal
 import subprocess
 import sys
+import tempfile
 import threading
 import unittest
 from unittest.mock import Mock, patch
 
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.cli_v1.owned_target_session import OwnedTargetGuardedSessionOwner
+from runtime.cli_v1.mcp_server import create_server
 from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess, _identity_digest
 
 
+class ExclusiveServerCustodyTests(unittest.IsolatedAsyncioTestCase):
+    async def test_two_servers_cannot_share_target_and_clean_close_allows_new_owner(self):
+        target = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
+        first = None
+        second = None
+        try:
+            with tempfile.TemporaryDirectory() as root:
+                options = dict(session_mode='guarded-x11', guarded_process_identity=True,
+                               guarded_query_worker=True, guarded_owned_process=True,
+                               _guarded_owned_target_process=target)
+                first = create_server({'app':77}, root + '/first', **options)
+                with self.assertRaisesRegex(RuntimeError, 'already claimed'):
+                    create_server({'app':77}, root + '/conflict', **options)
+                await first.call_tool('interface_close', {})
+                second = create_server({'app':77}, root + '/second', **options)
+                await second.call_tool('interface_close', {})
+        finally:
+            if first is not None:
+                try: await first.call_tool('interface_close', {})
+                except Exception: pass
+            if second is not None:
+                try: await second.call_tool('interface_close', {})
+                except Exception: pass
+            if target.running:
+                signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                target._process.wait(timeout=1)
+            target.close()
+
+
 class OwnedTargetSessionTests(unittest.TestCase):
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+    def test_closed_old_owner_cannot_retire_new_custodian_target(self):
+        target = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
+        new_token = None
+        try:
+            with tempfile.TemporaryDirectory() as root:
+                owner = OwnedTargetGuardedSessionOwner({'app':77}, root,
+                    owned_target_process=target)
+                self.assertTrue(owner.close()['verified'])
+                digest = _identity_digest(77, target.pid, target.start_ticks)
+                with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                           return_value=digest):
+                    self.assertEqual(target.bind_x11_target(object(), 77)['status'], 'bound')
+                owner._attempt_target_retirement()
+                self.assertEqual(owner._owned_target_retirement['status'], 'unknown')
+                self.assertEqual(owner._owned_target_retirement['error_type'], 'PermissionError')
+                self.assertTrue(target.running)
+                new_token = target.claim_session()
+                owner._attempt_target_retirement()
+                self.assertEqual(owner._owned_target_retirement['status'], 'unknown')
+                self.assertEqual(owner._owned_target_retirement['error_type'], 'PermissionError')
+                self.assertTrue(target.running)
+        finally:
+            if new_token is not None:
+                target.release_session(new_token)
+            if target.running:
+                signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                target._process.wait(timeout=1)
+            target.close()
+
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+    def test_unconfirmed_close_retains_custody(self):
+        target = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
+        owner = None
+        try:
+            with tempfile.TemporaryDirectory() as root:
+                owner = OwnedTargetGuardedSessionOwner({'app':77}, root,
+                    owned_target_process=target)
+                with patch.object(OwnedGuardedSessionOwner, 'close', return_value={
+                        'status':'cleanup_failed', 'cleanup_status':'UNKNOWN',
+                        'verified':False}):
+                    result = owner.close()
+                self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+                with self.assertRaisesRegex(RuntimeError, 'already claimed'):
+                    target.claim_session()
+        finally:
+            if owner is not None and owner._target_custody is not None:
+                # This test never started a control process or dispatched input.
+                target.release_session(owner._target_custody)
+                owner._target_custody = None
+            if target.running:
+                signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                target._process.wait(timeout=1)
+            target.close()
+
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+    def test_failed_prestarted_worker_construction_releases_unstarted_claim(self):
+        target = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
+        try:
+            with tempfile.TemporaryDirectory() as root:
+                with patch('runtime.cli_v1.owned_target_session.PrestartedCancellationSupervisor',
+                           side_effect=RuntimeError('startup failed')):
+                    with self.assertRaisesRegex(RuntimeError, 'startup failed'):
+                        OwnedTargetGuardedSessionOwner({'app':77}, root,
+                            owned_target_process=target, prestarted_target_identity=True)
+                token = target.claim_session()
+                target.release_session(token)
+        finally:
+            if target.running:
+                signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                target._process.wait(timeout=1)
+            target.close()
+
     def test_concurrent_retirement_cleanup_attempts_target_only_once(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
         owner._target_retirement_lock = threading.RLock()
@@ -158,6 +266,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
     def test_failed_identity_binding_refuses_before_owner_rpc_dispatch(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
         owner._target_retirement_lock = threading.RLock()
+        owner._target_custody = None
         owner._owned_target_binding = None
         owner._target_identity_supervisor = None
         owner._owned_target_xid = 77
@@ -181,7 +290,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
             owner.display_name = ':99'
         def start(owner):
             owner.session_id = 'child-session'
-        def bind(supervisor, session_id, display, xid):
+        def bind(supervisor, session_id, display, xid, **kwargs):
             self.assertIn(supervisor._expected_session_id, (None, session_id))
             return {'status':'bound'}
         target.bind_x11_target_prestarted.side_effect = bind

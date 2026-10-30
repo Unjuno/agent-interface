@@ -45,9 +45,16 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         self._owned_target_binding = None
         self._owned_target_retirement = None
         self._target_retirement_lock = threading.RLock()
-        self._target_identity_supervisor = (PrestartedCancellationSupervisor(
-            _prestarted_target_identity_worker)
-            if prestarted_target_identity else None)
+        self._target_custody = owned_target_process.claim_session()
+        self._target_custody_released = False
+        try:
+            self._target_identity_supervisor = (PrestartedCancellationSupervisor(
+                _prestarted_target_identity_worker)
+                if prestarted_target_identity else None)
+        except BaseException:
+            owned_target_process.release_session(self._target_custody)
+            self._target_custody = None
+            raise
 
     def _ensure_started(self):
         super()._ensure_started()
@@ -55,11 +62,11 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
             return
         if self._target_identity_supervisor is None:
             binding = self._owned_target_process.bind_x11_target_supervised(
-                self.display_name, self._owned_target_xid)
+                self.display_name, self._owned_target_xid, _custody=self._target_custody)
         else:
             binding = self._owned_target_process.bind_x11_target_prestarted(
                 self._target_identity_supervisor, self.session_id,
-                self.display_name, self._owned_target_xid)
+                self.display_name, self._owned_target_xid, _custody=self._target_custody)
         if binding.get('status') != 'bound':
             raise RuntimeError('owned target binding refused: ' + str(
                 binding.get('reason', 'unknown')))
@@ -74,13 +81,15 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
     @_with_retirement_lock
     def _attempt_target_retirement(self):
         first = None
+        custody = getattr(self, '_target_custody', None)
+        kwargs = {'_custody':custody} if custody is not None else {}
         try:
-            result = self._owned_target_process.retire_bound_target()
+            result = self._owned_target_process.retire_bound_target(**kwargs)
             if (result.get('status') == 'unknown'
                     and result.get('reason') == 'pidfd_signal_failed'
                     and result.get('target_identity_verified') is True):
                 first = deepcopy(result)
-                result = self._owned_target_process.retire_bound_target()
+                result = self._owned_target_process.retire_bound_target(**kwargs)
         except Exception as error:
             result = {'status':'unknown', 'reason':'target_retirement_exception',
                       'error_type':type(error).__name__,
@@ -91,7 +100,7 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
             self._owned_target_retirement['immediate_previous_attempt'] = first
         if result.get('process_exit_verified') is True:
             try:
-                self._owned_target_process.close()
+                self._owned_target_process.close(**kwargs)
             except Exception as error:
                 self._owned_target_retirement['handle_close_error'] = type(error).__name__
 
@@ -130,6 +139,16 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
                     self._attempt_target_retirement()
                     previous.pop('previous_attempt', None)
                     self._owned_target_retirement['previous_attempt'] = previous
+                custody = getattr(self, '_target_custody', None)
+                process = getattr(self, '_process', None)
+                if (custody is not None and report.get('verified') is True
+                        and not getattr(self, '_target_custody_released', False)
+                        and report.get('status') == 'closed'
+                        and getattr(self, 'state', None) == 'closed'
+                        and not getattr(self, '_execution_unknown', False)
+                        and (process is None or not process.is_alive())):
+                    self._owned_target_process.release_session(custody)
+                    self._target_custody_released = True
             return self._with_target_receipts(report)
         finally:
             supervisor = getattr(self, '_target_identity_supervisor', None)

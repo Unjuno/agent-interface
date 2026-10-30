@@ -27,6 +27,53 @@ class _FakeProcess:
 
 @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
 class OwnedTargetProcessTests(unittest.TestCase):
+    def test_exclusive_custody_revokes_old_token_and_requires_new_binding(self):
+        owner = self.launch()
+        first = owner.claim_session()
+        with self.assertRaisesRegex(RuntimeError, 'already claimed'):
+            owner.claim_session()
+        with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                   return_value=_identity_digest(100, self.process.pid, 991)):
+            self.assertEqual(owner.bind_x11_target(object(), 100, _custody=first)['status'], 'bound')
+        with self.assertRaises(PermissionError):
+            owner.retire_bound_target()
+        self.send_signal_mock.assert_not_called()
+        owner.release_session(first)
+        second = owner.claim_session()
+        with self.assertRaises(PermissionError):
+            owner.retire_bound_target(_custody=first)
+        with self.assertRaises(PermissionError):
+            owner._bind_supervised_observation(100, {
+                'status':'observed', 'worker_retired':True, 'worker_exitcode':0,
+                'identity_digest':_identity_digest(100, self.process.pid, 991)},
+                _custody=first)
+        self.assertEqual(owner.retire_bound_target(_custody=second)['reason'],
+                         'target_binding_unavailable')
+        self.send_signal_mock.assert_not_called()
+        owner.release_session(second)
+        self.process.returncode = 0
+        owner.close()
+
+    def test_concurrent_claim_has_exactly_one_winner(self):
+        owner = self.launch()
+        barrier = threading.Barrier(3)
+        tokens, errors = [], []
+        def claim():
+            barrier.wait()
+            try:
+                tokens.append(owner.claim_session())
+            except RuntimeError as error:
+                errors.append(str(error))
+        threads = [threading.Thread(target=claim) for _ in range(2)]
+        for thread in threads: thread.start()
+        barrier.wait()
+        for thread in threads: thread.join(timeout=2)
+        self.assertEqual(len(tokens), 1)
+        self.assertEqual(len(errors), 1)
+        owner.release_session(tokens[0])
+        self.process.returncode = 0
+        owner.close()
+
     def test_stalled_identity_query_does_not_block_close_or_bind_after_close(self):
         owner = self.launch()
         entered, release, close_done = threading.Event(), threading.Event(), threading.Event()

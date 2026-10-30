@@ -48,9 +48,13 @@ the server resumes. Use a disposable, isolated display and do not admit a
 fresh target solely on the strength of this receipt. The primitive tracks one
 process, not a descendant tree or a whole application session.
 
-The ownership handle is not yet an exclusive server lease. Do not share one
-handle between concurrent server instances; cancellation in either can
-retire the common target. Target retirement is not yet budgeted against the
+The handle admits at most one session claim at a time. A verified normal
+close, with the control process exited and no execution uncertainty, releases
+the claim and clears the old XRes binding; a new owner must bind again. An
+UNKNOWN close retains custody, and old session tokens cannot operate after a
+release. This is a process-local custody protocol, not an isolation boundary
+against code with access to the process or the operating system. Target
+retirement is not yet budgeted against the
 public cancellation transaction deadline and can consume time otherwise
 available for independent input release. Server shutdown can retire the
 control owner before the later target-cleanup path runs. These unresolved
