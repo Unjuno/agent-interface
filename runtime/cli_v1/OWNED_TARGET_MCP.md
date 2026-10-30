@@ -31,7 +31,10 @@ This does not adopt arbitrary PIDs or terminate a user-owned application. The
 caller retains responsibility for the target handle during normal operation
 and shutdown. A successful ordinary close does not terminate the application;
 if closing the control owner fails and it is retired, its cleanup may retire
-the bound disposable target. The API is
+the bound disposable target. If an earlier target retirement was UNKNOWN,
+an explicit later close makes one further bounded attempt through the same
+owned handle only after the control owner has been confirmed retired. The
+receipt retains the previous attempt and the old task remains UNKNOWN. The API is
 single-target and Linux/pidfd-specific. It does not yet provide automatic
 fresh-process creation or fresh-generation admission.
 

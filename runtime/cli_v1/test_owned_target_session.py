@@ -6,6 +6,41 @@ from runtime.cli_v1.owned_target_session import OwnedTargetGuardedSessionOwner
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    def test_close_rechecks_unconfirmed_target_exit_after_verified_release(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._owned_target_binding = {'status':'bound'}
+        owner._owned_target_retirement = {'status':'unknown',
+                                          'process_exit_verified':False}
+        owner._owned_target_process = Mock()
+        owner._owned_target_process.retire_bound_target.return_value = {
+            'status':'already_exited', 'process_exit_verified':True}
+        owner._retirement = {'retired':True}
+        owner._target_identity_supervisor = None
+        with patch.object(OwnedGuardedSessionOwner, 'close', return_value={
+                'status':'cleanup_failed', 'cleanup_status':'UNKNOWN',
+                'owner_release_attempt':{'status':'readback_verified'},
+                'replay_allowed':False}):
+            result = owner.close()
+        owner._owned_target_process.retire_bound_target.assert_called_once_with()
+        self.assertTrue(result['owned_target_retirement']['process_exit_verified'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(result['replay_allowed'])
+        self.assertEqual(result['owned_target_retirement']['previous_attempt']['status'], 'unknown')
+
+    def test_close_does_not_recheck_target_without_retired_owner(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._owned_target_binding = {'status':'bound'}
+        owner._owned_target_retirement = {'status':'unknown',
+                                          'process_exit_verified':False}
+        owner._owned_target_process = Mock()
+        owner._retirement = {'retired':False}
+        owner._target_identity_supervisor = None
+        with patch.object(OwnedGuardedSessionOwner, 'close', return_value={
+                'status':'cleanup_failed', 'cleanup_status':'UNKNOWN'}):
+            result = owner.close()
+        owner._owned_target_process.retire_bound_target.assert_not_called()
+        self.assertEqual(result['owned_target_retirement']['status'], 'unknown')
+
     def test_failed_identity_binding_refuses_before_owner_rpc_dispatch(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
         owner._owned_target_binding = None

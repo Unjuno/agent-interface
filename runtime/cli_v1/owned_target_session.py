@@ -57,25 +57,27 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
     def _cleanup_after_owner_retirement(self, retirement, **kwargs):
         if self._owned_target_retirement is None:
             if retirement.get('retired') is True:
-                try:
-                    result = self._owned_target_process.retire_bound_target()
-                except Exception as error:
-                    result = {'status':'unknown', 'reason':'target_retirement_exception',
-                              'error_type':type(error).__name__,
-                              'target_identity_verified':False,
-                              'process_exit_verified':False}
-                self._owned_target_retirement = deepcopy(result)
-                if result.get('process_exit_verified') is True:
-                    try:
-                        self._owned_target_process.close()
-                    except Exception as error:
-                        self._owned_target_retirement['handle_close_error'] = (
-                            type(error).__name__)
+                self._attempt_target_retirement()
             else:
                 # Do not cache a non-attempt: a later close can observe that
                 # the exact control owner has exited and then retire the target.
                 pass
         return super()._cleanup_after_owner_retirement(retirement, **kwargs)
+
+    def _attempt_target_retirement(self):
+        try:
+            result = self._owned_target_process.retire_bound_target()
+        except Exception as error:
+            result = {'status':'unknown', 'reason':'target_retirement_exception',
+                      'error_type':type(error).__name__,
+                      'target_identity_verified':False,
+                      'process_exit_verified':False}
+        self._owned_target_retirement = deepcopy(result)
+        if result.get('process_exit_verified') is True:
+            try:
+                self._owned_target_process.close()
+            except Exception as error:
+                self._owned_target_retirement['handle_close_error'] = type(error).__name__
 
     def cancel_guarded(self, token, *, operation_id=None,
                        deadline_monotonic_ns=None):
@@ -98,8 +100,17 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
             super()._retirement_cleanup_result_fields(retirement))
 
     def close(self):
+        previous = deepcopy(getattr(self, '_owned_target_retirement', None))
         try:
-            return self._with_target_receipts(super().close())
+            report = super().close()
+            retirement = getattr(self, '_retirement', None) or {}
+            if (previous is not None and previous.get('status') == 'unknown'
+                    and previous.get('process_exit_verified') is not True
+                    and retirement.get('retired') is True):
+                self._attempt_target_retirement()
+                previous.pop('previous_attempt', None)
+                self._owned_target_retirement['previous_attempt'] = previous
+            return self._with_target_receipts(report)
         finally:
             supervisor = getattr(self, '_target_identity_supervisor', None)
             if supervisor is not None:
