@@ -15,7 +15,7 @@ def surface(bridge):
 
 
 class _Adapter:
-    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled):
+    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None):
         self.interface = validate(interface)
         # Symbol labels belong to the graph language; target references name
         # the existing native registry and must obey its actual alias contract.
@@ -26,6 +26,8 @@ class _Adapter:
             raise ValueError('interface must name this bridge scope and X11 surface')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit perception, effect verifier and cancellation callbacks required')
+        if guard_perceive is not None and not callable(guard_perceive):
+            raise ValueError('guard_perceive must be callable when supplied')
         if not callable(getattr(bridge,'input_guard',None)):
             raise ValueError('bridge input guard capability required')
         if type(bindings) is not dict or set(bindings) != set(self.interface['actions']):
@@ -45,6 +47,7 @@ class _Adapter:
         self.scope, self.revision, self.surface = bridge.scope, bridge.binding_revision, surface(bridge)
         self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
+        self.guard_perceive = perceive if guard_perceive is None else guard_perceive
         self.run_id = 'compiled-' + uuid.uuid4().hex
         self.event_index = 0
         self.latest = self.native = self.image = None
@@ -176,7 +179,7 @@ class _Adapter:
                     if not self.associated(native):
                         row['status'] = 'association_changed'
                         return False
-                    predicates = self.perceive(copy.deepcopy(native),image.copy())
+                    predicates = self.guard_perceive(copy.deepcopy(native),image.copy())
                     if type(predicates) is not dict:
                         raise ValueError('perception must return declared predicate values')
                     row['predicates'] = copy.deepcopy(predicates)
@@ -294,15 +297,19 @@ class _Adapter:
         return result
 
 
-def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False):
+def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False,
+        guard_perceive=None):
     """Run the existing graph once against freshly grounded bridge aliases.
 
     Symbols name existing aliases; bindings specify each guarded interaction,
     offset and tail. Callbacks receive copies of this capture and its exact RGB.
-    Boolean symbol dependencies must all be True. Callbacks are trusted caller
+    An optional guard_perceive receives fresh input-check captures; if omitted,
+    perceive is used. Boolean symbol dependencies must all be True for either
+    callback. Callbacks are trusted caller
     code, not sandboxed or independently certified. Changed pixels do not verify
     text or durable effects. Caller must independently score the task afterward.
     Raw captures, resolutions, input receipts and graph events are retained in
     the bridge output directory. No automatic replay/repair or scope renewal.
     """
-    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled,
+                    guard_perceive=guard_perceive).execute_method()

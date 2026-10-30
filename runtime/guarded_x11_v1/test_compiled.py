@@ -80,6 +80,37 @@ def verify(payload,native,image): return {'status':'succeeded','evidence_ref':pa
 
 class CompiledX11Tests(unittest.TestCase):
 
+    def test_explicit_guard_perception_is_used_only_for_input_dependencies(self):
+        b=Bridge(); seen={'observation':0,'guard':0}
+        def observation(native,image):
+            seen['observation']+=1
+            return perceive(native,image)
+        def guard(native,image):
+            seen['guard']+=1
+            return {'present':True}
+        result=run(b,spec(),bindings(),perceive=observation,
+                   guard_perceive=guard,verify_effect=verify)
+        self.assertEqual(result['outcome'],'TASK_SUCCEEDED')
+        self.assertEqual(seen['guard'],2)
+        self.assertEqual(seen['observation'],3)
+        self.assertEqual(len(b.inputs),2)
+
+    def test_explicit_guard_perception_missing_or_false_refuses_before_input(self):
+        for value in ({}, {'present':False}, {'present':'unknown'}):
+            with self.subTest(value=value):
+                b=Bridge()
+                result=run(b,spec(),bindings(),perceive=perceive,
+                           guard_perceive=lambda native,image: value,
+                           verify_effect=verify)
+                self.assertEqual(result['outcome'],'SAFE_YIELD')
+                self.assertEqual(result['reason'],'execution_refused')
+                self.assertEqual(b.inputs,[])
+
+    def test_guard_perception_must_be_callable_if_supplied(self):
+        with self.assertRaises(ValueError):
+            run(Bridge(),spec(),bindings(),perceive=perceive,
+                guard_perceive=False,verify_effect=verify)
+
     def test_capture_binding_change_returns_retained_prefix_without_fabricating_observation(self):
         from runtime.guarded_x11_v1 import bridge as native_bridge
         from runtime.backends.x11_v1.backend import X11BackendError
