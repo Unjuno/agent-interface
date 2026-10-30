@@ -424,7 +424,22 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                         await asyncio.sleep(0.02)
                     if cancellation.get('status') not in ('completed', 'unknown'):
                         self.fail('cancellation did not finish while Xvfb stopped')
-                    self.assertIn(_private_xvfb_record()['state'], ('T', 't'))
+                    # Serialize observation against our own safety timer so
+                    # it cannot resume the server during this measurement.
+                    with resume_lock:
+                        observed_before = time.monotonic_ns()
+                        observed_process = _private_xvfb_record()
+                        observed_after = time.monotonic_ns()
+                        self.assertFalse(resumed['value'])
+                        self.assertIn(observed_process['state'], ('T', 't'))
+                        for field in ('pid', 'executable', 'command', 'start_ticks'):
+                            self.assertEqual(observed_process[field], frozen_identity[field])
+                        report['stopped_terminal_observation'] = {
+                            'before_process_read_ns':observed_before,
+                            'after_process_read_ns':observed_after,
+                            'process':observed_process,
+                            'cancellation_status':cancellation['status'],
+                        }
                     stopped_result = cancellation.get('result') or {}
                     self.assertEqual(stopped_result.get('cleanup_status'), 'UNKNOWN')
                     self.assertEqual(stopped_result.get('owner_release_attempt', {}).get('status'),
