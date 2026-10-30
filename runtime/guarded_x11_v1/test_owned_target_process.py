@@ -1,0 +1,265 @@
+"""Tests for explicitly owned X11 target-process retirement."""
+import signal
+import subprocess
+import sys
+import unittest
+from unittest.mock import Mock, patch
+
+from runtime.guarded_x11_v1.owned_target_process import (
+    OwnedTargetProcess, _identity_digest)
+
+
+class _FakeProcess:
+    pid = 4242
+    returncode = None
+
+    def __init__(self):
+        self.kill = Mock()
+        self.wait = Mock(side_effect=self._wait)
+
+    def poll(self):
+        return self.returncode
+
+    def _wait(self, timeout=None):
+        return self.returncode
+
+
+@unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+class OwnedTargetProcessTests(unittest.TestCase):
+    def setUp(self):
+        self.process = _FakeProcess()
+        self.popen = patch(
+            'runtime.guarded_x11_v1.owned_target_process.subprocess.Popen',
+            return_value=self.process)
+        self.popen_mock = self.popen.start()
+        self.addCleanup(self.popen.stop)
+        self.pidfd_open = patch(
+            'runtime.guarded_x11_v1.owned_target_process.os.pidfd_open',
+            return_value=73)
+        self.pidfd_open.start()
+        self.addCleanup(self.pidfd_open.stop)
+        self.start_ticks = patch(
+            'runtime.guarded_x11_v1.owned_target_process._linux_process_start_ticks',
+            return_value=991)
+        self.start_ticks.start()
+        self.addCleanup(self.start_ticks.stop)
+        self.send_signal = patch(
+            'runtime.guarded_x11_v1.owned_target_process.signal.pidfd_send_signal')
+        self.send_signal_mock = self.send_signal.start()
+        self.addCleanup(self.send_signal.stop)
+        self.close_fd = patch(
+            'runtime.guarded_x11_v1.owned_target_process.os.close')
+        self.close_fd_mock = self.close_fd.start()
+        self.addCleanup(self.close_fd.stop)
+
+    def launch(self):
+        return OwnedTargetProcess.launch(
+            ['/opt/disposable-target'], disposable=True)
+
+    def connection_with_identity(self, xid=100):
+        connection = object()
+        identity = _identity_digest(xid, self.process.pid, 991)
+        patcher = patch(
+            'runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+            return_value=identity)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        return connection
+
+    def test_requires_explicit_disposable_target_before_launch(self):
+        with self.assertRaises(PermissionError):
+            OwnedTargetProcess.launch(['/opt/target'], disposable=False)
+
+    def test_supervised_binding_refuses_unknown_and_mismatched_identity(self):
+        owner = self.launch()
+        with patch('runtime.guarded_x11_v1.owned_target_process.supervise_xres_worker',
+                   return_value={'status':'unknown','reason':'supervision_timeout'}):
+            result = owner.bind_x11_target_supervised(':91', 100, timeout_s=0.2)
+        self.assertEqual(result['reason'], 'target_identity_unavailable')
+        with patch('runtime.guarded_x11_v1.owned_target_process.supervise_xres_worker',
+                   return_value={'status':'observed','identity_digest':'wrong',
+                                 'worker_retired':True,'worker_exitcode':0}):
+            result = owner.bind_x11_target_supervised(':91', 100, timeout_s=0.2)
+        self.assertEqual(result['reason'], 'target_process_identity_mismatch')
+        self.assertEqual(owner.retire_bound_target()['reason'], 'target_binding_unavailable')
+        self.send_signal_mock.assert_not_called()
+        self.process.returncode = 0
+        owner.close()
+
+    def test_prestarted_binding_requires_clean_worker_and_matching_identity(self):
+        owner = self.launch()
+        digest = _identity_digest(100, self.process.pid, 991)
+        supervisor = Mock()
+        supervisor.run.return_value = {'status':'observed','identity_digest':digest,
+                                       'worker_retired':False,'worker_exitcode':None}
+        refused = owner.bind_x11_target_prestarted(supervisor, 'session', ':91', 100)
+        self.assertEqual(refused['reason'], 'target_identity_unavailable')
+        self.assertEqual(owner.retire_bound_target()['reason'], 'target_binding_unavailable')
+        supervisor.run.return_value.update(worker_retired=True, worker_exitcode=0)
+        binding = owner.bind_x11_target_prestarted(supervisor, 'session', ':91', 100)
+        self.assertEqual(binding['status'], 'bound')
+        request = supervisor.run.call_args.args[0]
+        self.assertEqual(request['session_id'], 'session')
+        self.assertEqual(request['xid'], 100)
+        self.process.returncode = 0
+        owner.close()
+
+    def test_rejects_shell_string_and_malformed_argv(self):
+        for argv in ('/opt/target', [], ['ok', '\0bad']):
+            with self.subTest(argv=argv), self.assertRaises(ValueError):
+                OwnedTargetProcess.launch(argv, disposable=True)
+        self.popen_mock.assert_not_called()
+
+    def test_identity_mismatch_refuses_without_signaling_any_process(self):
+        owner = self.launch()
+        patcher = patch(
+            'runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+            return_value=_identity_digest(100, self.process.pid, 992))
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        result = owner.retire_x11_target(object(), 100)
+
+        self.assertEqual(result['status'], 'refused')
+        self.assertEqual(result['reason'], 'target_process_identity_mismatch')
+        self.assertEqual(result['signal_attempts'], [])
+        self.send_signal_mock.assert_not_called()
+        self.process.kill.assert_not_called()
+        self.process.returncode = 0
+        owner.close()
+
+    def test_matching_target_uses_retained_pidfd_and_confirms_term_exit(self):
+        owner = self.launch()
+        connection = self.connection_with_identity()
+
+        def wait(timeout):
+            self.process.returncode = 0
+            return True
+
+        with patch.object(owner, '_wait_for_exit', side_effect=wait) as wait_exit:
+            result = owner.retire_x11_target(connection, 100)
+
+        self.assertEqual(result['status'], 'retired')
+        self.assertTrue(result['target_identity_verified'])
+        self.assertTrue(result['process_exit_verified'])
+        self.assertEqual(result['signal_attempts'], [
+            {'signal':signal.SIGTERM, 'status':'sent'}])
+        self.send_signal_mock.assert_called_once_with(73, signal.SIGTERM)
+        wait_exit.assert_called_once_with(0.25)
+        owner.close()
+
+    def test_timeout_escalates_only_through_same_pidfd(self):
+        owner = self.launch()
+        connection = self.connection_with_identity()
+        outcomes = iter((False, True))
+
+        def wait(timeout):
+            if next(outcomes):
+                self.process.returncode = -signal.SIGKILL
+                return True
+            return False
+
+        with patch.object(owner, '_wait_for_exit', side_effect=wait):
+            result = owner.retire_x11_target(
+                connection, 100, term_timeout_s=0.1, kill_timeout_s=0.2)
+
+        self.assertEqual(result['status'], 'retired')
+        self.assertEqual([row['signal'] for row in result['signal_attempts']],
+                         [signal.SIGTERM, signal.SIGKILL])
+        self.assertEqual([call.args for call in self.send_signal_mock.call_args_list],
+                         [(73, signal.SIGTERM), (73, signal.SIGKILL)])
+        owner.close()
+
+    def test_invalid_wait_bound_is_rejected_before_signaling(self):
+        owner = self.launch()
+        with self.assertRaises(ValueError):
+            owner.retire_x11_target(
+                self.connection_with_identity(), 100, term_timeout_s=float('inf'))
+        self.send_signal_mock.assert_not_called()
+        self.process.returncode = 0
+        owner.close()
+
+    def test_pidfd_open_failure_cleans_only_the_spawned_popen_child(self):
+        self.pidfd_open.stop()
+        with patch(
+                'runtime.guarded_x11_v1.owned_target_process.os.pidfd_open',
+                side_effect=OSError('unavailable')):
+            with self.assertRaises(OSError):
+                OwnedTargetProcess.launch(
+                    ['/opt/disposable-target'], disposable=True)
+        self.process.kill.assert_called_once_with()
+        self.process.wait.assert_called_once_with(timeout=1.0)
+        self.send_signal_mock.assert_not_called()
+
+    def test_close_is_idempotent_and_closed_handle_cannot_retire(self):
+        owner = self.launch()
+        self.process.returncode = 0
+        owner.close()
+        owner.close()
+
+        result = owner.retire_x11_target(self.connection_with_identity(), 100)
+
+        self.assertEqual(result['status'], 'refused')
+        self.assertEqual(result['reason'], 'ownership_handle_closed')
+        self.send_signal_mock.assert_not_called()
+        self.close_fd_mock.assert_called_once_with(73)
+
+    def test_prebound_target_can_be_retired_without_reconnecting_to_x_server(self):
+        owner = self.launch()
+        identity = _identity_digest(100, self.process.pid, 991)
+        with patch(
+                'runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                return_value=identity) as read_identity:
+            binding = owner.bind_x11_target(object(), 100)
+            read_identity.reset_mock()
+
+            def wait(timeout):
+                self.process.returncode = 0
+                return True
+
+            with patch.object(owner, '_wait_for_exit', side_effect=wait):
+                result = owner.retire_bound_target()
+
+            read_identity.assert_not_called()
+        self.assertEqual(binding['status'], 'bound')
+        self.assertEqual(result['status'], 'retired')
+        self.assertEqual(result['target_xid'], 100)
+        self.process.returncode = 0
+        owner.close()
+
+    def test_cannot_drop_the_only_identity_handle_while_target_is_running(self):
+        owner = self.launch()
+        with self.assertRaisesRegex(RuntimeError, 'target is running'):
+            owner.close()
+        self.close_fd_mock.assert_not_called()
+        self.process.returncode = 0
+        owner.close()
+
+
+@unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+class OwnedTargetProcessLinuxIntegrationTests(unittest.TestCase):
+    def test_matching_identity_retires_the_actual_launched_child(self):
+        owner = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'],
+            disposable=True)
+        try:
+            self.assertTrue(owner.running)
+            identity = _identity_digest(100, owner.pid, owner.start_ticks)
+            with patch(
+                    'runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                    return_value=identity):
+                result = owner.retire_x11_target(object(), 100)
+            self.assertEqual(result['status'], 'retired')
+            self.assertEqual(result['exitcode'], -signal.SIGTERM)
+            self.assertTrue(result['target_identity_verified'])
+            self.assertTrue(result['process_exit_verified'])
+            self.assertFalse(owner.running)
+        finally:
+            if owner.running:
+                signal.pidfd_send_signal(owner._pidfd, signal.SIGKILL)
+                owner._process.wait(timeout=1.0)
+            owner.close()
+
+
+if __name__ == '__main__':
+    unittest.main()
