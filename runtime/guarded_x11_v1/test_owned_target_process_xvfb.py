@@ -36,6 +36,71 @@ def _proc_state(pid):
     'requires opt-in private Xvfb and disposable target processes',
 )
 class OwnedTargetProcessXvfbTests(unittest.TestCase):
+    def test_explicit_retire_ends_bound_child_during_x_server_stop(self):
+        xvfb = subprocess.Popen(['Xvfb', ':92', '-screen', '0', '800x600x24',
+                                 '-nolisten', 'tcp'], stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL)
+        target = None
+        xvfb_pidfd = os.pidfd_open(xvfb.pid, 0)
+        try:
+            with tempfile.TemporaryDirectory(prefix='shutdown-target-') as directory:
+                root = Path(directory)
+                script = root/'target.py'
+                xid_file = root/'xid'
+                script.write_text(
+                    'import os, sys, time\n'
+                    'from Xlib import X, display\n'
+                    'd=display.Display(os.environ["DISPLAY"])\n'
+                    'w=d.screen().root.create_window(10,10,80,60,0, '
+                    'd.screen().root_depth,X.InputOutput,X.CopyFromParent)\n'
+                    'w.map(); d.sync()\n'
+                    'open(sys.argv[1],"w").write(str(w.id))\n'
+                    'time.sleep(30)\n', encoding='utf-8')
+                end = time.monotonic() + 3
+                while time.monotonic() < end and not Path('/tmp/.X11-unix/X92').exists():
+                    self.assertIsNone(xvfb.poll())
+                    time.sleep(.01)
+                self.assertTrue(Path('/tmp/.X11-unix/X92').exists())
+                target = OwnedTargetProcess.launch(
+                    [sys.executable, str(script), str(xid_file)], disposable=True,
+                    env=dict(os.environ, DISPLAY=':92'))
+                end = time.monotonic() + 3
+                while time.monotonic() < end and not xid_file.exists():
+                    self.assertTrue(target.running)
+                    time.sleep(.01)
+                self.assertTrue(xid_file.exists())
+                binding = target.bind_x11_target_supervised(':92', int(xid_file.read_text()))
+                self.assertEqual(binding['status'], 'bound', binding)
+                session = object.__new__(OwnedTargetGuardedSessionOwner)
+                session._target_retirement_lock = threading.RLock()
+                session._target_retirement_deferred = threading.Event()
+                session._owned_target_process = target
+                session._owned_target_retirement = None
+                signal.pidfd_send_signal(xvfb_pidfd, signal.SIGSTOP)
+                end = time.monotonic() + 1
+                while time.monotonic() < end and _proc_state(xvfb.pid) not in ('T', 't'):
+                    time.sleep(.005)
+                self.assertIn(_proc_state(xvfb.pid), ('T', 't'))
+                with patch.object(OwnedGuardedSessionOwner, 'retire',
+                                  return_value={'retired':True}):
+                    session.retire('server shutdown')
+                self.assertTrue(session._owned_target_retirement['process_exit_verified'],
+                                session._owned_target_retirement)
+                self.assertFalse(target.running)
+                self.assertIn(_proc_state(xvfb.pid), ('T', 't'))
+        finally:
+            if xvfb.poll() is None:
+                signal.pidfd_send_signal(xvfb_pidfd, signal.SIGCONT)
+            if target is not None:
+                if target.running:
+                    signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                    target._process.wait(timeout=1)
+                target.close()
+            if xvfb.poll() is None:
+                xvfb.terminate()
+                xvfb.wait(timeout=1)
+            os.close(xvfb_pidfd)
+
     def test_xres_binding_allows_exact_child_retirement_while_x_server_is_stopped(self):
         display_name = ':91'
         xvfb = subprocess.Popen(
