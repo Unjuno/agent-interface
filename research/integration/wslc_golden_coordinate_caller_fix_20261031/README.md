@@ -1,0 +1,7 @@
+# WSLc caller coordinate fix
+
+The integrated comparison caller subtracted the window origin from full-screen model coordinates before passing them to session_v33, which crops the full observation directly. At geometry [10,10,1050,780] this moved the input click above the field and selected page text. The caller now validates the point and geometry but passes the original observation coordinates. The `window_content` frame still controls translation when the bound window moves; it does not make the initial crop window-relative.
+
+The new nonzero-origin unit regression failed before the change and passed after it, in normal and optimized Python. One fresh no-model WSLc run used the original fixed coordinates without the prior +10 workaround: each of the three arms independently recorded six exact submissions and all 18 task release records verified; persistent followed cold/reuse/reuse/repair/reuse/reuse. All 2029 frozen source hashes matched, and the exact container was absent after exit. The compressed raw archive passed ZIP verification.
+
+This is a single synthetic workflow, with fabricated model usage and an explicit Chromium path for the run. It does not establish general coordinate correctness, movement handling in a live GUI, provider cost, recovery after failed cold acquisition, or an efficiency comparison. The preceding A01 failure and A02 offset counterfactual remain in wslc_golden_coordinate_counterfactual_20261031.

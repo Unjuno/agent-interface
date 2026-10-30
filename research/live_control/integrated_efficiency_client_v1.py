@@ -109,11 +109,14 @@ class RuntimeClient:
         geometry = source.get("pointer_binding", {}).get("geometry")
         for kind in ("field", "submit"):
             source_point = grounding[kind + "_point"]
-            content_point = to_window_content(source_point, geometry)
+            # Validate the binding and point, but retain full-observation pixels:
+            # session_v33 crops the retained full-screen image at this point.
+            # The frame declares how a later window move translates the patch.
+            to_window_content(source_point, geometry)
             row = self.submit("mint-" + aliases[kind], [{
                 "op": "target_handle_mint_from_point", "name": aliases[kind],
                 "coordinate_frame": "window_content", "source_sequence": source["sequence"],
-                "point": content_point,
+                "point": source_point,
                 "region_size": [24, 38] if kind == "field" else [24, 14],
                 "ttl_ms": 300000, "freshness_ms": 1500, "search_radius": 0,
                 "allowed_transformations": ["window_translation"],
