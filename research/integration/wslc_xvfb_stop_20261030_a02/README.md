@@ -6,4 +6,5 @@ All five tests passed. The retained receipt records cancellation completed while
 
 This is one synthetic schedule; fresh target admission here does not establish display-generation isolation. The old operation remains UNKNOWN. This does not establish WSLc general reliability, MAP01 completion, model/provider behavior, or comparative speed. The receipt is a test-produced record, not an independent external event stream.
 
-`python independent_audit.py` independently recomputes 11 checks from the retained receipt and cleanup output, including event ordering, failed old terminal, stale-alias refusal, the fresh effect oracle and final key readback. All 11 passed. This re-evaluates the same test-produced evidence; it is not a separate recorder or an independent live run.
+`python independent_audit.py` independently recomputes 11 checks from the retained receipt and cleanup output, including cancel-call return ordering, failed old terminal, stale-alias refusal, the fresh effect oracle and final key readback. All 11 passed. This re-evaluates the same test-produced evidence; it is not a separate recorder or an independent live run.
+The receipt has no timestamp for the stopped-terminal observation itself. Completion while stopped is supported by the test code and its successful run, rather than independently established by receipt timestamps.
