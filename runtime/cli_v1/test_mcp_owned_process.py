@@ -375,6 +375,29 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_close_does_not_replay_uncertain_release_without_display_fence(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._process.exitcode = -15
+        owner._retirement = {'reason':'cancel unconfirmed', 'retired':True, 'exitcode':-15}
+        owner._owner_client_disconnect = {'status':'unknown', 'reason':'deadline'}
+        owner._owner_release_attempt = {'status':'unknown', 'reason':'deadline'}
+        owner._cleanup_after_owner_retirement = Mock(return_value=({}, {}))
+        owner._owner_input_obligations = {'keys':{'w':25}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'stale-release-without-display-fence'
+        owner.error = 'cancel unconfirmed'
+        owner._execution_unknown = True
+        owner.review_required = True
+        report = owner.close()
+        owner._cleanup_after_owner_retirement.assert_not_called()
+        self.assertEqual(report['owner_release_attempt']['reason'], 'deadline')
+        self.assertEqual(report['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(report['replay_allowed'])
+
     def test_process_liveness_snapshot_records_its_observation_time(self):
         class LiveProcess:
             pid = 12345
@@ -674,7 +697,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
 
-    def test_close_after_cancel_retirement_retries_unconfirmed_release_once(self):
+    def test_close_after_cancel_retirement_preserves_unconfirmed_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None
         owner._process = Mock()
@@ -707,12 +730,11 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         second = owner.close()
 
         owner._request_locked.assert_not_called()
-        owner._cleanup_after_owner_retirement.assert_called_once_with(
-            owner._retirement)
+        owner._cleanup_after_owner_retirement.assert_not_called()
         self.assertEqual(first, second)
-        self.assertEqual(first['owner_client_disconnect']['status'], 'disconnected')
-        self.assertEqual(first['owner_release_attempt']['status'], 'readback_verified')
-        self.assertTrue(first['release_attempted'])
+        self.assertEqual(first['owner_client_disconnect']['status'], 'unknown')
+        self.assertEqual(first['owner_release_attempt']['status'], 'not_attempted')
+        self.assertFalse(first['release_attempted'])
         self.assertFalse(first['release_confirmed'])
         self.assertEqual(first['cleanup_status'], 'UNKNOWN')
         self.assertIsNone(first['task_success'])
