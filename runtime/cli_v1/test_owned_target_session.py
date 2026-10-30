@@ -1,11 +1,57 @@
+import signal
+import subprocess
+import sys
 import unittest
 from unittest.mock import Mock, patch
 
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.cli_v1.owned_target_session import OwnedTargetGuardedSessionOwner
+from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess, _identity_digest
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+    def test_close_retries_exact_live_child_after_pidfd_signal_error(self):
+        target = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
+        witness = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(30)'])
+        try:
+            digest = _identity_digest(77, target.pid, target.start_ticks)
+            with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                       return_value=digest):
+                self.assertEqual(target.bind_x11_target(object(), 77)['status'], 'bound')
+            owner = object.__new__(OwnedTargetGuardedSessionOwner)
+            owner._owned_target_process = target
+            owner._owned_target_binding = {'status':'bound'}
+            owner._owned_target_retirement = None
+            owner._retirement = {'retired':True}
+            owner._target_identity_supervisor = None
+            with patch('runtime.guarded_x11_v1.owned_target_process.signal.pidfd_send_signal',
+                       side_effect=PermissionError('injected')):
+                owner._attempt_target_retirement()
+            self.assertEqual(owner._owned_target_retirement['reason'], 'pidfd_signal_failed')
+            self.assertTrue(target.running)
+            with patch.object(OwnedGuardedSessionOwner, 'close', return_value={
+                    'status':'cleanup_failed', 'cleanup_status':'UNKNOWN',
+                    'replay_allowed':False}):
+                report = owner.close()
+            self.assertEqual(report['owned_target_retirement']['status'], 'retired')
+            self.assertTrue(report['owned_target_retirement']['process_exit_verified'])
+            self.assertEqual(report['owned_target_retirement']['previous_attempt']['reason'],
+                             'pidfd_signal_failed')
+            self.assertFalse(target.running)
+            self.assertIsNone(witness.poll())
+            self.assertEqual(report['cleanup_status'], 'UNKNOWN')
+            self.assertFalse(report['replay_allowed'])
+        finally:
+            if target.running:
+                signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                target._process.wait(timeout=1)
+            target.close()
+            if witness.poll() is None:
+                witness.terminate()
+            witness.wait(timeout=1)
+
     def test_close_rechecks_unconfirmed_target_exit_after_verified_release(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
         owner._owned_target_binding = {'status':'bound'}

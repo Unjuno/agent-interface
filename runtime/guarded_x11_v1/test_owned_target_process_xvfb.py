@@ -13,12 +13,15 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 
 from Xlib import display
 
 from runtime.guarded_x11_v1.owned_target_process import (
     OwnedTargetProcess, _prestarted_target_identity_worker)
 from runtime.guarded_x11_v1.cancel_supervisor import PrestartedCancellationSupervisor
+from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
+from runtime.cli_v1.owned_target_session import OwnedTargetGuardedSessionOwner
 
 
 def _proc_state(pid):
@@ -130,14 +133,31 @@ class OwnedTargetProcessXvfbTests(unittest.TestCase):
                 self.assertTrue(blocked_binding['identity_query']['worker_retired'])
                 self.assertLess(time.monotonic() - query_started, 1.0)
                 self.assertIn(_proc_state(xvfb.pid), ('T', 't'))
+                session = object.__new__(OwnedTargetGuardedSessionOwner)
+                session._owned_target_process = owner
+                session._owned_target_binding = binding
+                session._owned_target_retirement = None
+                session._retirement = {'retired':True}
+                session._target_identity_supervisor = None
+                with patch('runtime.guarded_x11_v1.owned_target_process.signal.pidfd_send_signal',
+                           side_effect=PermissionError('injected')):
+                    session._attempt_target_retirement()
+                self.assertEqual(session._owned_target_retirement['reason'], 'pidfd_signal_failed')
+                self.assertTrue(owner.running)
                 started = time.monotonic()
-                retirement = owner.retire_bound_target(
-                    term_timeout_s=0.25, kill_timeout_s=0.25)
+                with patch.object(OwnedGuardedSessionOwner, 'close', return_value={
+                        'status':'cleanup_failed', 'cleanup_status':'UNKNOWN',
+                        'replay_allowed':False}):
+                    close_report = session.close()
+                retirement = close_report['owned_target_retirement']
                 elapsed = time.monotonic() - started
                 resume_exact_xvfb()
                 self.assertEqual(retirement['status'], 'retired', retirement)
                 self.assertTrue(retirement['process_exit_verified'], retirement)
                 self.assertEqual(retirement['target_xid'], xid)
+                self.assertEqual(retirement['previous_attempt']['reason'], 'pidfd_signal_failed')
+                self.assertEqual(close_report['cleanup_status'], 'UNKNOWN')
+                self.assertFalse(close_report['replay_allowed'])
                 self.assertLess(elapsed, 1.0)
                 self.assertFalse(owner.running)
         finally:
