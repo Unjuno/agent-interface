@@ -1,0 +1,51 @@
+{
+  "normal": {
+    "exit": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,exec,nosuid,size=256m",
+      "-v",
+      "<study>:/study:ro",
+      "-w",
+      "/study",
+      "--entrypoint",
+      "python3",
+      "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+      "-B",
+      "-m",
+      "unittest",
+      "test_pair_saved_oracle"
+    ]
+  },
+  "optimized": {
+    "exit": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,exec,nosuid,size=256m",
+      "-v",
+      "<study>:/study:ro",
+      "-w",
+      "/study",
+      "--entrypoint",
+      "python3",
+      "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+      "-B",
+      "-O",
+      "-m",
+      "unittest",
+      "test_pair_saved_oracle"
+    ]
+  }
+}
