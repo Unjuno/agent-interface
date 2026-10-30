@@ -1,0 +1,418 @@
+{
+  "conclusion": {
+    "bounded_v1_claim": "historical finite three-arm RETAIN remains scoped to its frozen six-task allocation",
+    "causal_efficiency_claim": "not established",
+    "next_step": "reconcile why the retained v3 232-entry manifest differs from 21 current files and recover or explicitly supersede the three preregistered runtime blobs before any new same-model comparison",
+    "promotion_status": "HOLD for fresh integrated comparison/promotion until source lineage and present artifact discrepancies are reconciled",
+    "v3_claim": "one persistent app-server sequence passed its retained task oracle; it is not a three-arm replicate"
+  },
+  "head": "d534b4cd5f5293c7360a1b5f0e037abc5fc66ab7",
+  "schema": "agent-interface/integrated-efficiency-current-main-audit-v1",
+  "scope": "offline read-only reconciliation; no model, GUI, Docker, or WSLc invocation",
+  "v1_finite_three_arm": {
+    "audit_passed": true,
+    "finite_disposition": "RETAIN as historically recorded",
+    "model_visible_images": 2,
+    "planner_generations": 3,
+    "route": "plain/ephemeral/persistent; see retained full report and audit reconciliation",
+    "separate_unresolved_summary_arithmetic": true,
+    "six_task_elapsed_ms": 47460.087449,
+    "tasks_exact": 6,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 4864,
+      "input_tokens": 26531,
+      "output_tokens": 480,
+      "reasoning_output_tokens": 135
+    }
+  },
+  "v1_to_v3_descriptive_delta": {
+    "comparison_limit": "one sequential run each; not randomized; transport/runner/source differs; descriptive only",
+    "six_task_elapsed_ms": {
+      "absolute": -9745.217718,
+      "percent": -20.533501394138995
+    },
+    "usage": {
+      "cached_input_tokens": {
+        "absolute": 3072,
+        "percent": 63.1578947368421,
+        "v1": 4864,
+        "v3": 7936
+      },
+      "input_tokens": {
+        "absolute": 1361,
+        "percent": 5.129848102220045,
+        "v1": 26531,
+        "v3": 27892
+      },
+      "output_tokens": {
+        "absolute": -3,
+        "percent": -0.625,
+        "v1": 480,
+        "v3": 477
+      },
+      "reasoning_output_tokens": {
+        "absolute": -3,
+        "percent": -2.2222222222222223,
+        "v1": 135,
+        "v3": 132
+      }
+    },
+    "whole_command_elapsed_ms": {
+      "absolute": -6698.061918000007,
+      "percent": -11.376013967548047
+    }
+  },
+  "v2_app_server": {
+    "audit_passed": true,
+    "disposition": "RETAINED_PINNED_ENVIRONMENT_DEPENDENCY_FAILURE",
+    "gui_ready": false,
+    "task_or_comparison_claim": false
+  },
+  "v3_app_server_persistent": {
+    "all_releases_verified": true,
+    "audit_passed": true,
+    "cost": "unavailable",
+    "disposition": "RETAINED_SINGLE_SUCCESS",
+    "model_visible_images": 2,
+    "old_target_pointer_admissions": 0,
+    "planner_generations": 3,
+    "preflight_and_grounding_calls": 3,
+    "six_task_elapsed_ms": 37714.869731,
+    "tasks_exact": 6,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 7936,
+      "input_tokens": 27892,
+      "output_tokens": 477,
+      "reasoning_output_tokens": 132
+    },
+    "whole_command_elapsed_ms": 52180.750442
+  },
+  "v3_current_artifact_integrity": {
+    "listed": 232,
+    "mismatch_count": 21,
+    "mismatches": [
+      {
+        "actual_bytes": 9314699,
+        "actual_sha256": "77a057abede71876c7f4d373e6d8ddf1e474128a5fb34b19f5040b084440edd1",
+        "expected_bytes": 9314470,
+        "expected_sha256": "18519c4a357d3289806d60a3fba0c621984adcd6a0c2172727ba6d4634ca5ced",
+        "path": "arms/persistent/journal.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 349691,
+        "actual_sha256": "eb44b477ed4e77203866458524634e39bcdbb24a9c343e6b1a0790e9ecca8d8f",
+        "expected_bytes": 348710,
+        "expected_sha256": "9c77dd17269e8ddeefec38a967bfe4e80d066ff313996e07e94f6c5246224d93",
+        "path": "arms/persistent/runtime/delivered.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 349691,
+        "actual_sha256": "eb44b477ed4e77203866458524634e39bcdbb24a9c343e6b1a0790e9ecca8d8f",
+        "expected_bytes": 348710,
+        "expected_sha256": "9c77dd17269e8ddeefec38a967bfe4e80d066ff313996e07e94f6c5246224d93",
+        "path": "arms/persistent/runtime/events.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 11899,
+        "actual_sha256": "2d8ad3f83733e6a3125c7d84e7948783421f633d9aa20936991fd35c11787c0d",
+        "expected_bytes": 11375,
+        "expected_sha256": "ead5815a52d93e233347e015cc1527d6c87754b92fdfd5b273c07b16e9c76237",
+        "path": "arms/persistent/runtime/owner-events.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 108,
+        "actual_sha256": "82c6aba234fea37da385a9ddf0c839ea0417dfd0fa8f1c834f88c327a94323d6",
+        "expected_bytes": 106,
+        "expected_sha256": "5a09827e68891928c92f705e172b67d47e7c1cd3e7103a28cdf442657aa17fa9",
+        "path": "arms/persistent/runtime/setup-diagnostics.txt",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 4197,
+        "actual_sha256": "08f799b5e6c61eba427cf7c16662ad86cbe0725b363db597ec93b8f7af9cb52a",
+        "expected_bytes": 4155,
+        "expected_sha256": "8f285b0cf3efefd9d48785c44154a36b953fb844be21b3e3ee0a889bfb0ee1d8",
+        "path": "arms/persistent/runtime/sources.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1194,
+        "actual_sha256": "623100bab2be82c849b830628fb31f4eccd2367a62690d5cc8d7e8de5ca264ef",
+        "expected_bytes": 1188,
+        "expected_sha256": "e5657e815742277328996859a63dfb2db0629d51d1f61ea064f28f274b85ead7",
+        "path": "arms/persistent/runtime/submission-history.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 53072,
+        "actual_sha256": "86372d86860efef098aff1351253d65a32c2d643f2cb241a7d220fd1a00df5a5",
+        "expected_bytes": 51173,
+        "expected_sha256": "8d535c2bbd2463ca923d4d53d4522e067c6e48d9ea03d99cad13ede284e6d7d7",
+        "path": "arms/persistent/task-details.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 813,
+        "actual_sha256": "c92ea561726dda3f47c98000d1fff5174486bcf2866f35a345bd0743f092549f",
+        "expected_bytes": 789,
+        "expected_sha256": "bcfa8c7ac844076fbba26898e160da265a20e020c4c79fc610dc8b889f92fbf4",
+        "path": "audit.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 2087,
+        "actual_sha256": "81d5f1a4340282b399b561198b6d3cc18b2a641f7a60dc092ac559873ff84d93",
+        "expected_bytes": 2000,
+        "expected_sha256": "8176c53fc67a09956bd5eb0e40e46d0653aaf0e726764824495f277502daf0d2",
+        "path": "doctor.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 9804,
+        "actual_sha256": "64685e375644ab9fb6b5b6f9287b27f0d687b1f2d246fdf701231b22af34db84",
+        "expected_bytes": 9452,
+        "expected_sha256": "ea71c2370afeabfab6d39b058bb628d0ea78412f702d2f87982b6c64f579761c",
+        "path": "golden-report.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1610,
+        "actual_sha256": "443668a437bf0eb4625e525770265db7075aadae44219f1b6263dc1f59999ff3",
+        "expected_bytes": 1551,
+        "expected_sha256": "dc33fd815814497440202e6b3bd09a69d679bc4185fcf630e0067b71ee80758a",
+        "path": "model-calls/persistent/task-1/anchor/result.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1614,
+        "actual_sha256": "2ee04e74d265859b8fe15b366ab321d8114231c4fd7a944111a1f0b14089bd22",
+        "expected_bytes": 1555,
+        "expected_sha256": "3e6966d26413a4453d85b5f74ea979fbbf7092dae5e1c288beb527aec4fed5e7",
+        "path": "model-calls/persistent/task-4/repair/result.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 89569,
+        "actual_sha256": "7df5382148b3da934e0f0a83b76d6134bb49d7553257cf81dc1b63e0078c4ad0",
+        "expected_bytes": 89323,
+        "expected_sha256": "b265701729c697027bbec4d96845743ea3db65d7562300aa65d466f8a38ab529",
+        "path": "persistent-grounding-app-server/protocol.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1408,
+        "actual_sha256": "eac15bf46f15b46d8f21a3751528492e3947ef80c22b505b54f54feb3f6f0b30",
+        "expected_bytes": 1376,
+        "expected_sha256": "1d8b5de2e7948a074158e29ae3c2d1b8710ddb37241108cb0041b24be7a0c7ec",
+        "path": "preflight/persistent/fresh-cache/49fddcd9004c3884bec4de0c9e58f6c637ec15a41df228c19b2bd042fe45f601.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 542,
+        "actual_sha256": "2e0f169b3fd0401b203658caff8339eae5c09f1af7c19983927a1bdcf35d4098",
+        "expected_bytes": 538,
+        "expected_sha256": "bc919cfe93225ec0ea549e22ceb674b77cd71d8eaa9a9ab070492ba0a5a310a8",
+        "path": "preflight/persistent/gate/compiled-form-grounding/model-call/arrivals.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 884,
+        "actual_sha256": "7fc169660c6b6719996f67cd28b6f389f41e91684244a64b524178a478b755f2",
+        "expected_bytes": 880,
+        "expected_sha256": "ba86d7bcb328d9c582762699942cbef74979e0e6d7e8c0585647cac6acdf63b0",
+        "path": "preflight/persistent/gate/compiled-form-grounding/model-call/events.jsonl",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1712,
+        "actual_sha256": "6aaa0a3de1fc2a1a4311a9136dbf678473d37d451e4c8b3286e65cf79d7099cc",
+        "expected_bytes": 1664,
+        "expected_sha256": "89ff57f09edc4886c0e109cf326eaf9755c2eb25df70e52b39dac40d3f3a8cad",
+        "path": "preflight/persistent/gate/compiled-form-grounding/model-call/plan.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 269,
+        "actual_sha256": "a6bbff14f339c74a5f0690881e32ae4b92b36bf38c42ae1c7d05ac0254d6b511",
+        "expected_bytes": 258,
+        "expected_sha256": "f1f404b4272609beaa8796973eee77df2a81ce55e1df2ce3876746312dd27821",
+        "path": "preflight/persistent/gate/compiled-form-grounding/model-call/process.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1361,
+        "actual_sha256": "128bcf99696f70fb8e94b7865c9cc725b09a5238d76d6c8b7d0b3870ffff593d",
+        "expected_bytes": 1330,
+        "expected_sha256": "5726c67700468824b7028267450b2baaf6cf0ba3b96afbb2696e2bfb9b34f5c4",
+        "path": "preflight/persistent/gate/compiled-form-grounding/preflight-result.json",
+        "status": "mismatch"
+      },
+      {
+        "actual_bytes": 1790,
+        "actual_sha256": "3834895e7d548ea29f2d0aa0555efcc849e92a807dc8bf3441e289049b46ee84",
+        "expected_bytes": 1748,
+        "expected_sha256": "6264234ac37f8e5c177b1c861f6907efe3edaeea3ae5c044e705386e936ef34d",
+        "path": "preflight/persistent/gate/gate-report.json",
+        "status": "mismatch"
+      }
+    ]
+  },
+  "v3_preregistered_sources": {
+    "count": 16,
+    "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+    "parent_matches": 13,
+    "rows": [
+      {
+        "current_matches": false,
+        "current_worktree": "06b42aa43517d72c595b793ea523c330a7eadc0be55957401cf9a3952bf43a12",
+        "expected": "e921432d0f98695bb2586c1b66a1a88c3f2bca81dc8241a57a1830c2d72a39a8",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "06b42aa43517d72c595b793ea523c330a7eadc0be55957401cf9a3952bf43a12",
+        "parent_matches": false,
+        "path": "runtime/golden_desktop_demo_v3.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": "365759a226ace60a917e792c86c11e13c65b8b2a47a167fc9fddc05c25c0a3f5",
+        "expected": "9b0acdf1fbc0c5c9db47de60e3558d68844c1e4ecc9eab5909ed1537a49b4688",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "365759a226ace60a917e792c86c11e13c65b8b2a47a167fc9fddc05c25c0a3f5",
+        "parent_matches": false,
+        "path": "runtime/golden_desktop_demo_v2.py"
+      },
+      {
+        "current_matches": true,
+        "current_worktree": "9b3fd4e88498394b36128d42a716ed12646734ea0090bf2472d51239656dcd44",
+        "expected": "9b3fd4e88498394b36128d42a716ed12646734ea0090bf2472d51239656dcd44",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "9b3fd4e88498394b36128d42a716ed12646734ea0090bf2472d51239656dcd44",
+        "parent_matches": true,
+        "path": "runtime/golden_desktop_demo.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": "467048bddcb8b695bc64be1d38fca80c62fe49a2225cff4fbd5b993f78d84aee",
+        "expected": "762168fad75867392bfe04b9543dc7e1df87887003c1acd35e9c23a63cc7bfcd",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "467048bddcb8b695bc64be1d38fca80c62fe49a2225cff4fbd5b993f78d84aee",
+        "parent_matches": false,
+        "path": "runtime/requirements-golden.txt"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "5eccfcaab099f4f9e9ba35bcc264d2079e6aa994b499b38e0f83a836bdf1c69f",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "5eccfcaab099f4f9e9ba35bcc264d2079e6aa994b499b38e0f83a836bdf1c69f",
+        "parent_matches": true,
+        "path": "research/live_control/integrated_efficiency_app_server_model_v1.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "a1202081bd637201b0ab9f735e842a123d03ae3c1af8ce5bb74610342662d02e",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "a1202081bd637201b0ab9f735e842a123d03ae3c1af8ce5bb74610342662d02e",
+        "parent_matches": true,
+        "path": "research/live_control/codex_app_server_command_v1.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e",
+        "parent_matches": true,
+        "path": "research/live_control/persistent_planner_adapter_v2.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+        "parent_matches": true,
+        "path": "research/live_control/codex_app_server_client_v2.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "630972a0402d2c6a1cd6a57237165d5b402cf8fc364ceddb36ac998c143a7410",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "630972a0402d2c6a1cd6a57237165d5b402cf8fc364ceddb36ac998c143a7410",
+        "parent_matches": true,
+        "path": "research/live_control/run_integrated_efficiency_live_v1.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "b418b8769078f3406fef2fda3130b8cd6018f61cefbe0b04a0fa94134beb2eb0",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "b418b8769078f3406fef2fda3130b8cd6018f61cefbe0b04a0fa94134beb2eb0",
+        "parent_matches": true,
+        "path": "research/live_control/adaptive_acquisition_caller_v2.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "1a32d27ba3edeaa79384f185ad32bd74aa08fd16dacc90cf5c194e1cfbce9532",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "1a32d27ba3edeaa79384f185ad32bd74aa08fd16dacc90cf5c194e1cfbce9532",
+        "parent_matches": true,
+        "path": "research/live_control/integrated_efficiency_client_v1.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+        "parent_matches": true,
+        "path": "research/live_control/compiled_form_grounding_v1.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f",
+        "parent_matches": true,
+        "path": "research/live_control/compiled_form_grounding_schema_v1.json"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "d641719d3cdac5e9a036c4bf7306ec1f91414aa4910da670a24d3edb20f9401d",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "d641719d3cdac5e9a036c4bf7306ec1f91414aa4910da670a24d3edb20f9401d",
+        "parent_matches": true,
+        "path": "research/live_control/compiled_form_grounding_responder_v1.txt"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "798a0967a65208afb90b7c71aac144a91822bcace69deede3f71c92e9a9fcb9b",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "798a0967a65208afb90b7c71aac144a91822bcace69deede3f71c92e9a9fcb9b",
+        "parent_matches": true,
+        "path": "research/live_control/schema_preflight_v1.py"
+      },
+      {
+        "current_matches": false,
+        "current_worktree": null,
+        "expected": "4fb369d3f0b7b4d551b3326b9dfc3df8152e1bc7a8fd27d8b5445b191abebae7",
+        "parent_commit": "c6451f14fbd26787ff87217b414d8cf75f1255f4",
+        "parent_hash": "4fb369d3f0b7b4d551b3326b9dfc3df8152e1bc7a8fd27d8b5445b191abebae7",
+        "parent_matches": true,
+        "path": "research/live_control/schema_preflight_gate_v1.py"
+      }
+    ],
+    "worktree_matches": 1
+  }
+}
