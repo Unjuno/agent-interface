@@ -986,6 +986,21 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertIs(run.call_args.kwargs['guard_perceive'],guard)
             self.assertEqual(run.call_args.kwargs['post_release_settle_ms'],25)
 
+    def test_invalid_trusted_options_are_rejected_before_dispatch(self):
+        invalid=({'guard_perceive':42}, {'post_release_settle_ms':-1},
+                 {'post_release_settle_ms':1001}, {'post_release_settle_ms':True})
+        for options in invalid:
+            with self.subTest(options=options), tempfile.TemporaryDirectory() as td:
+                root=Path(td); owner=self.owner(root)
+                with patch('runtime.guarded_x11_v1.compiled.run') as run:
+                    with self.assertRaises(ValueError):
+                        owner.run_compiled({}, {}, call_root=root/'method',
+                                           **self.callbacks(), **options)
+                run.assert_not_called()
+                self.assertFalse(owner.dispatch_attempted)
+                self.assertFalse(owner.bridge.review_required)
+                self.assertFalse((root/'method').exists())
+
     def test_unopened_owner_is_not_implicitly_allocated(self):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
         with tempfile.TemporaryDirectory() as td:

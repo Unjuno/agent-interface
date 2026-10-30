@@ -199,6 +199,10 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise RuntimeError('compiled method requires reviewed, recovered owner')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit callable perception, effect and cancellation required')
+        if guard_perceive is not None and not callable(guard_perceive):
+            raise ValueError('guard_perceive must be callable when supplied')
+        if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
+            raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         from runtime.guarded_x11_v1 import compiled
         from .review import present_result
         from .attempt import _write_json
