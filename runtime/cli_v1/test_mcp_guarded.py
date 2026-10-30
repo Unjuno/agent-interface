@@ -956,6 +956,17 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertIsNone(row['task_success'])
             self.assertFalse(row['replay_allowed'])
 
+    def test_trusted_owner_forwards_guard_and_post_release_settle(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); owner=self.owner(root)
+            guard=lambda native,image: {'present':True}
+            with patch('runtime.guarded_x11_v1.compiled.run',
+                       return_value={'outcome':'SAFE_YIELD','observations':[]}) as run:
+                owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks(),
+                                   guard_perceive=guard, post_release_settle_ms=25)
+            self.assertIs(run.call_args.kwargs['guard_perceive'],guard)
+            self.assertEqual(run.call_args.kwargs['post_release_settle_ms'],25)
+
     def test_unopened_owner_is_not_implicitly_allocated(self):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
         with tempfile.TemporaryDirectory() as td:
