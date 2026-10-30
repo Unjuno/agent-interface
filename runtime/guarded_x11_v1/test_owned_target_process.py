@@ -81,6 +81,24 @@ class OwnedTargetProcessTests(unittest.TestCase):
         self.process.returncode = 0
         owner.close()
 
+    def test_short_deadline_reserves_time_for_kill_escalation(self):
+        owner = self.launch()
+        self.assertEqual(owner.bind_x11_target(self.connection_with_identity(), 100)['status'], 'bound')
+        clock = [1_000_000_000]
+        def wait(timeout):
+            clock[0] += int(timeout * 1_000_000_000)
+            if len(self.send_signal_mock.call_args_list) == 2:
+                self.process.returncode = -signal.SIGKILL
+                return True
+            return False
+        with patch('runtime.guarded_x11_v1.owned_target_process.time.monotonic_ns',
+                   side_effect=lambda: clock[0]), patch.object(owner, '_wait_for_exit', side_effect=wait):
+            result = owner.retire_bound_target(deadline_monotonic_ns=1_200_000_000)
+        self.assertTrue(result['process_exit_verified'], result)
+        self.assertEqual([call.args for call in self.send_signal_mock.call_args_list],
+                         [(73, signal.SIGTERM), (73, signal.SIGKILL)])
+        owner.close()
+
     def test_retirement_does_not_escalate_after_deadline(self):
         owner = self.launch()
         self.assertEqual(owner.bind_x11_target(self.connection_with_identity(), 100)['status'], 'bound')

@@ -413,7 +413,9 @@ class OwnedTargetProcess:
                         'target_xid':xid, 'identity_digest':identity_digest,
                         'process_exit_verified':False}
             if deadline_monotonic_ns is not None:
-                grace = min(grace, max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9)
+                remaining = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+                # Leave part of a short budget for the identity-bound KILL.
+                grace = min(grace, remaining / 2 if signum == signal.SIGTERM else remaining)
             if self._wait_for_exit(grace):
                 return {'status':'retired', 'exitcode':self._process.wait(timeout=0),
                         'signal_attempts':attempts,
