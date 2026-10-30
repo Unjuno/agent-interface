@@ -1,0 +1,7 @@
+# Calc two-cell exact-pixel live attempt A04
+
+One exploratory no-model WSLc Calc run, fixed geometry and known task, with a manually reviewed prefilled reference image. The compiled two-action graph observed an initially blank sheet, entered values, observed exact RGB equality to the known task reference, and proceeded to guarded Save. Both actions reported completed and verified input release. The graph returned `SAFE_YIELD / effect_unavailable`, with the Save effect still pending; it did not establish durable task success.
+
+After the owner closed, the separate saved-FODS scorer reported exactly A1=731 and A2=864 and no other populated cells. A separate read-only XML audit of the retained file found one sheet and the same values, no formulas or additional populated cells. This confirms the scoped saved-file effect, not general GUI correctness. The close receipt reported verified neutral input, the external X key/button observation was neutral, and the exact container ID was absent. Input hashes and raw receipts are retained.
+
+Reference pixels came from a previously observed, prepopulated known-task screen; they are not an independent saved-file oracle. The A1 name-box and toolbar anchor were manually fixed, so this is not general semantic target identification. No model, matched baseline, cost/latency comparison, cancellation, cross-generation recovery, public MCP route or MAP01 was tested. A01–A03 failed earlier and remain separately retained; do not reinterpret them as successful. Host mount paths in the public command record are placeholders.
