@@ -546,6 +546,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 xtest.fake_input(observer, X.KeyRelease, detail=keycodes['a'])
                 other.destroy()
                 observer.sync()
+                self.assertFalse(_key_down(observer, keycodes['a']))
                 if _PRESTARTED_CANCEL_SUPERVISOR:
                     self.assertEqual(
                         report['synthetic_task_oracle']['status'], 'pass', report)
