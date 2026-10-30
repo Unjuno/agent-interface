@@ -1,0 +1,137 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 4530983394,
+      "ended_ns": 5793760488,
+      "emissions": 42,
+      "program_emissions": 42,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 5793755502
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 4,
+          "requested_ms": 20,
+          "started_ns": 4698235890,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 4718312212
+        },
+        {
+          "operation_index": 8,
+          "requested_ms": 20,
+          "started_ns": 4809871923,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 4829948764
+        },
+        {
+          "operation_index": 12,
+          "requested_ms": 20,
+          "started_ns": 4918017088,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 4938098066
+        },
+        {
+          "operation_index": 14,
+          "requested_ms": 20,
+          "started_ns": 4997522884,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5017600010
+        },
+        {
+          "operation_index": 16,
+          "requested_ms": 20,
+          "started_ns": 5049063766,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5069140120
+        },
+        {
+          "operation_index": 18,
+          "requested_ms": 20,
+          "started_ns": 5134296151,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5154380411
+        },
+        {
+          "operation_index": 20,
+          "requested_ms": 20,
+          "started_ns": 5217384387,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5237458607
+        },
+        {
+          "operation_index": 24,
+          "requested_ms": 500,
+          "started_ns": 5366679972,
+          "completed": false,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5791973595
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "error": "X11BackendError('native target guard lease expired during wait')",
+      "failed_op": 24,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": false
+  }
+}

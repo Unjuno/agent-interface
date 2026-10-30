@@ -27,8 +27,8 @@ class CompiledNativeDependencyTests(unittest.TestCase):
             _Adapter(bridge,fixture.spec(),fixture.bindings(),fixture.perceive,fixture.verify,lambda:False)
         self.assertEqual(bridge.sequence,0);self.assertEqual(bridge.inputs,[])
 
-    def cell(self, interaction='keyboard', change='false'):
-        fake=FakeX(self);pointer=[0,0];buttons=set();events=[];reads=[]
+    def cell(self, interaction='keyboard', change='false', distinct_guard=False):
+        fake=FakeX(self);pointer=[0,0];buttons=set();events=[];reads=[];guard_reads=[]
         keymap_reads=[0]
         def marker(value):
             image=Image.frombytes('RGB',(32,32),fake.raw,'raw','BGRX')
@@ -56,7 +56,8 @@ class CompiledNativeDependencyTests(unittest.TestCase):
             elif kind==X.ButtonRelease:buttons.discard(code)
             else:
                 original_emit(display,kind,code)
-                if kind==X.KeyPress and code==1 and change=='held':marker(0)
+                if kind==X.KeyPress and code==1 and change in ('held','held_guard_false'):marker(0)
+                if kind==X.KeyPress and code==1 and change=='held_guard_exception':marker(4)
                 if kind==X.KeyPress and code==1 and change in ('expired_while_held','expired_held_recovery'):
                     bridge_ref['bridge'].deadline=time.monotonic_ns()-1
         with tempfile.TemporaryDirectory(prefix='compiled-dependency-') as td,patch(
@@ -80,8 +81,12 @@ class CompiledNativeDependencyTests(unittest.TestCase):
                 bindings={a:dict(interaction=interaction,offset=offsets[alias],tail=
                     [{'op':'key_chord','keys':['CTRL','a']}] if interaction=='keyboard' else [])
                     for a,alias in [('enter_token','field'),('submit_form','submit')]}
+                def guard_perceive(native,image):
+                    guard_reads.append(native['sequence'])
+                    return perceive(native,image)
                 adapter=_Adapter(bridge,interface,bindings,perceive,
-                    lambda *a:{'status':'unavailable','evidence_ref':'synthetic'},lambda:False)
+                    lambda *a:{'status':'unavailable','evidence_ref':'synthetic'},lambda:False,
+                    guard_perceive=guard_perceive if distinct_guard else None)
                 recovery=None
                 if change in ('expired_while_held','expired_held_recovery'):
                     marker(0)
@@ -101,7 +106,7 @@ class CompiledNativeDependencyTests(unittest.TestCase):
                         authorization=admission['authorization'],expected_sequence=observation['sequence'],
                         valid_until_ns=admission['valid_until_ns']))
                 row=dict(interaction=interaction,change=change,result=result,recovery=recovery,events=events,
-                    down=sorted(fake.down),buttons=sorted(buttons),reads=reads,
+                    down=sorted(fake.down),buttons=sorted(buttons),reads=reads,guard_reads=guard_reads,
                     guard_restored=bridge._input_guard is None,pending_authorizations=len(adapter.authorizations),
                     files_hex={p.relative_to(td).as_posix():p.read_bytes().hex()
                         for p in Path(td).rglob('*') if p.is_file()})
@@ -144,6 +149,18 @@ class CompiledNativeDependencyTests(unittest.TestCase):
         self.assertEqual([e[:2] for e in row['events']],[[X.KeyPress,1],[X.KeyRelease,1]])
         self.assertTrue(row['result']['release']['verified'])
         self.assertNotEqual(row['result']['status'],'completed')
+
+    def test_distinct_guard_failure_while_modifier_held_releases_and_stops_suffix(self):
+        for change in ('held_guard_false', 'held_guard_exception'):
+            with self.subTest(change=change):
+                row=self.cell('keyboard', change, distinct_guard=True)
+                self.assertEqual([e[:2] for e in row['events']],
+                                 [[X.KeyPress,1],[X.KeyRelease,1]])
+                self.assertTrue(row['guard_reads'])
+                self.assertTrue(row['result']['release']['verified'])
+                self.assertNotEqual(row['result']['status'],'completed')
+                self.assertEqual(row['down'],[])
+                self.assertEqual(row['buttons'],[])
 
     def test_hover_change_stops_button_press_and_releases(self):
         row=self.cell('click','after_motion')
