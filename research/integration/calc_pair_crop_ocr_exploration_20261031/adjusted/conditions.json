@@ -1,0 +1,42 @@
+{
+  "scope": "offline exploratory successor on same retained image, not independent replication",
+  "difference": "suppress blue selection pixels, 4x Lanczos and 16px white border",
+  "source_sha256": "445cd3e86009c2b659d837f643eda3cc2899df7254d5bebee05cdbc9ad29c73f",
+  "runner_sha256": "0db5c449e990a75e8373752a2134de09fe07224e30e5e424c29a465c0b494fbf",
+  "expected": {
+    "A1": "731",
+    "A2": "864"
+  },
+  "pass": "one exact token per crop with tesseract confidence at least 90",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "name": "calc-crop-blue-a3e2700d74744617b533c708ff1abba4",
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "calc-crop-blue-a3e2700d74744617b533c708ff1abba4",
+    "--cidfile",
+    "<experiment-directory>\\cid.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "-v",
+    "<experiment-directory>:/in:ro",
+    "-v",
+    "<experiment-directory>\\output:/out:rw",
+    "--entrypoint",
+    "timeout",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "--signal=TERM",
+    "--kill-after=3s",
+    "30s",
+    "python3",
+    "-B",
+    "/in/runner.py"
+  ],
+  "stop": "one pass retain result"
+}
