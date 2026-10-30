@@ -1,0 +1,83 @@
+FE.....EE...........................................
+======================================================================
+ERROR: test_both_routes_request_save_without_claiming_persistence (test_composition.CompositionTests.test_both_routes_request_save_without_claiming_persistence) (route='ordinary')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_composition.py", line 62, in test_both_routes_request_save_without_claiming_persistence
+    owner,b,c,inputs,keys,result=self.case(route)
+                                 ^^^^^^^^^^^^^^^^
+  File "/study/test_composition.py", line 56, in case
+    with patch('runtime.cli_v1.review.present_result',return_value={'image_status':'image','image':None,'fixture_only':True}):result=composition.run(route)
+                                                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/composition.py", line 77, in run
+    elif route=='ordinary':result=self.ordinary()
+                                  ^^^^^^^^^^^^^^^
+  File "/study/composition.py", line 103, in ordinary
+    result=(b.click if action=='enter' else b.keyboard)(self.refs[name+'_alias'],args['offset'],tail=copy.deepcopy(args['tail']),expires_at_ns=min(self.deadline,resolution['valid_until_ns']))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/save_guard.py", line 81, in keyboard
+    return old_keyboard(alias,offset,tail=tail,expires_at_ns=expires_at_ns)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/test_composition.py", line 37, in save
+    b.check('before_admission');b.check('before_focus')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/save_guard.py", line 55, in check
+    outcome=old_check(stage)  # Retain every original capture/alias/lease check.
+            ^^^^^^^^^^^^^^^^
+  File "/src/runtime/guarded_x11_v1/bridge.py", line 792, in check
+    self._check_additional_input(stage, observation)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Bridge' object has no attribute '_check_additional_input'
+
+======================================================================
+ERROR: test_existing_native_check_capture_is_used_for_cell_guard (test_save_guard.SaveGuardTests.test_existing_native_check_capture_is_used_for_cell_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_save_guard.py", line 99, in test_existing_native_check_capture_is_used_for_cell_guard
+    with self.guard.installed_guard():self.b.backend.key_state('CTRL',True)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/save_guard.py", line 62, in key_state
+    b.check('before_save_key_press:'+str(key))
+  File "/study/save_guard.py", line 55, in check
+    outcome=old_check(stage)  # Retain every original capture/alias/lease check.
+            ^^^^^^^^^^^^^^^^
+  File "/src/runtime/guarded_x11_v1/bridge.py", line 792, in check
+    self._check_additional_input(stage, observation)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute '_check_additional_input'
+
+======================================================================
+ERROR: test_existing_native_focus_check_blocks_changed_cells (test_save_guard.SaveGuardTests.test_existing_native_focus_check_blocks_changed_cells)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_save_guard.py", line 105, in test_existing_native_focus_check_blocks_changed_cells
+    with self.assertRaisesRegex(X11BackendError,'pixels changed'):self.b.check('before_focus')
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/save_guard.py", line 55, in check
+    outcome=old_check(stage)  # Retain every original capture/alias/lease check.
+            ^^^^^^^^^^^^^^^^
+  File "/src/runtime/guarded_x11_v1/bridge.py", line 792, in check
+    self._check_additional_input(stage, observation)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute '_check_additional_input'
+
+======================================================================
+FAIL: test_both_routes_request_save_without_claiming_persistence (test_composition.CompositionTests.test_both_routes_request_save_without_claiming_persistence) (route='compiled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_composition.py", line 63, in test_both_routes_request_save_without_claiming_persistence
+    self.assertEqual([a for a,k in inputs],['enter','save']);self.assertEqual(keys,['CTRL','s'])
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['CTRL', 's']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'CTRL'
+
+- []
++ ['CTRL', 's']
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.925s
+
+FAILED (failures=1, errors=3)
