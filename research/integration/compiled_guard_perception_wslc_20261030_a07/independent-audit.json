@@ -1,0 +1,118 @@
+{
+  "status": "FAIL",
+  "graph_outcome": "SAFE_YIELD",
+  "graph_reason": "execution_failed",
+  "completed_transitions": 0,
+  "saved_sha256_matches": true,
+  "independent_saved_score": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "29",
+        "29",
+        null
+      ],
+      [
+        1,
+        1,
+        "31",
+        "31",
+        null
+      ],
+      [
+        1,
+        2,
+        "899",
+        "899",
+        "of:=[.A2]*[.B2]"
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "29",
+        "29",
+        null
+      ],
+      [
+        1,
+        1,
+        "31",
+        "31",
+        null
+      ],
+      [
+        1,
+        2,
+        "899",
+        "899",
+        "of:=[.A2]*[.B2]"
+      ]
+    ]
+  },
+  "ocr_attempts": 1,
+  "ocr_outputs": [
+    ""
+  ],
+  "guard_checks": 23,
+  "guard_checks_all_valid": true,
+  "emissions": 42,
+  "execution_error": "X11BackendError('native target guard lease expired during wait')",
+  "failed_op": 24,
+  "releases": [
+    {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 5793755502
+    }
+  ],
+  "keys_up": true,
+  "buttons_up": true,
+  "container_absent": true
+}
