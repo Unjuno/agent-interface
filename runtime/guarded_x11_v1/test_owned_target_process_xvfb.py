@@ -101,6 +101,86 @@ class OwnedTargetProcessXvfbTests(unittest.TestCase):
                 xvfb.wait(timeout=1)
             os.close(xvfb_pidfd)
 
+    def test_mcp_shutdown_retires_real_bound_x11_target(self):
+        xvfb = subprocess.Popen(['Xvfb', ':92', '-screen', '0', '800x600x24',
+                                 '-nolisten', 'tcp'], stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL)
+        target = None
+        xvfb_pidfd = os.pidfd_open(xvfb.pid, 0)
+        try:
+            with tempfile.TemporaryDirectory(prefix='shutdown-target-') as directory:
+                root = Path(directory)
+                script = root/'target.py'
+                xid_file = root/'xid'
+                script.write_text(
+                    'import os, sys, time\n'
+                    'from Xlib import X, display\n'
+                    'd=display.Display(os.environ["DISPLAY"])\n'
+                    'w=d.screen().root.create_window(10,10,80,60,0, '
+                    'd.screen().root_depth,X.InputOutput,X.CopyFromParent)\n'
+                    'w.map(); d.sync()\n'
+                    'open(sys.argv[1],"w").write(str(w.id))\n'
+                    'time.sleep(30)\n', encoding='utf-8')
+                end = time.monotonic() + 3
+                while time.monotonic() < end and not Path('/tmp/.X11-unix/X92').exists():
+                    self.assertIsNone(xvfb.poll())
+                    time.sleep(.01)
+                self.assertTrue(Path('/tmp/.X11-unix/X92').exists())
+                target = OwnedTargetProcess.launch(
+                    [sys.executable, str(script), str(xid_file)], disposable=True,
+                    env=dict(os.environ, DISPLAY=':92'))
+                end = time.monotonic() + 3
+                while time.monotonic() < end and not xid_file.exists():
+                    self.assertTrue(target.running)
+                    time.sleep(.01)
+                self.assertTrue(xid_file.exists())
+                binding = target.bind_x11_target_supervised(':92', int(xid_file.read_text()))
+                self.assertEqual(binding['status'], 'bound', binding)
+                import asyncio
+                from runtime.cli_v1.mcp_server import create_server
+                from runtime.cli_v1.test_mcp_owned_process import _fake_owner_factory, metadata
+
+                async def exercise():
+                    server = create_server(
+                        {'app': int(xid_file.read_text())}, root/'mcp',
+                        display_name=':92', session_mode='guarded-x11',
+                        guarded_process_identity=True, guarded_query_worker=True,
+                        guarded_owned_process=True, _guarded_owned_target_process=target,
+                        _guarded_owner_factory=_fake_owner_factory)
+                    async with server.settings.lifespan(server):
+                        observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                        minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                            alias='field', source_sequence=observed['source']['sequence'],
+                            point=[8,8], region_size=[12,12])))
+                        (root/'mcp'/'block-owner-io').write_text('block')
+                        action = metadata(await server.call_tool('interface_guarded_input', dict(
+                            alias='field', offset=minted['offset'], interaction='keyboard',
+                            observe_after=False, wait_for_result_ms=0,
+                            tail=[{'op':'key_chord','keys':['CTRL','a']}])))
+                        self.assertEqual(action['status'], 'pending', action)
+                        deadline = time.monotonic() + 3
+                        marker = root/'mcp'/'owner-io-entered.json'
+                        while not marker.exists() and time.monotonic() < deadline:
+                            await asyncio.sleep(.005)
+                        self.assertTrue(marker.exists())
+                    self.assertFalse(target.running)
+                    result = metadata(await server.call_tool('interface_results', {
+                        'call_id':action['call_id'], 'include_image':False}))
+                    self.assertNotEqual(result.get('status'), 'completed', result)
+                asyncio.run(exercise())
+        finally:
+            if xvfb.poll() is None:
+                signal.pidfd_send_signal(xvfb_pidfd, signal.SIGCONT)
+            if target is not None:
+                if target.running:
+                    signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                    target._process.wait(timeout=1)
+                target.close()
+            if xvfb.poll() is None:
+                xvfb.terminate()
+                xvfb.wait(timeout=1)
+            os.close(xvfb_pidfd)
+
     def test_xres_binding_allows_exact_child_retirement_while_x_server_is_stopped(self):
         display_name = ':91'
         xvfb = subprocess.Popen(
