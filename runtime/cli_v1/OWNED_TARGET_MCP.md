@@ -53,9 +53,16 @@ close, with the control process exited and no execution uncertainty, releases
 the claim and clears the old XRes binding; a new owner must bind again. An
 UNKNOWN close retains custody, and old session tokens cannot operate after a
 release. This is a process-local custody protocol, not an isolation boundary
-against code with access to the process or the operating system. Target
-retirement is not yet budgeted against the
-public cancellation transaction deadline and can consume time otherwise
-available for independent input release. Server shutdown can retire the
-control owner before the later target-cleanup path runs. These unresolved
-boundaries keep this integration experimental.
+against code with access to the process or the operating system. During a
+cancel transaction, target retirement and its lock wait use a deadline 250 ms
+before the transaction deadline, leaving time for the inherited release path.
+This reserve does not guarantee release or a hard real-time deadline: earlier
+control-owner retirement, operating-system scheduling and X11 I/O can consume
+or exceed it. An expired or unavailable target retirement remains UNKNOWN.
+The time check immediately before a signal is best effort: scheduling can
+intervene before the syscall, and final handle close is not deadline-bounded.
+If closing the pidfd reports an error, the receipt records it and the numeric
+descriptor is not retried, since it might already have been released and reused;
+whether a descriptor leaked remains unknown.
+Server shutdown can retire the control owner before the later target-cleanup
+path runs. These unresolved boundaries keep this integration experimental.

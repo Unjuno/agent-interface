@@ -312,20 +312,36 @@ class OwnedTargetProcess:
                 'start_ticks':self.start_ticks, 'identity_digest':digest,
                 'identity_query':observed}
 
-    @_with_handle_lock
     def retire_bound_target(self, *, term_timeout_s: float = 0.25,
-                            kill_timeout_s: float = 0.25, _custody=None) -> dict:
+                            kill_timeout_s: float = 0.25,
+                            deadline_monotonic_ns=None, _custody=None) -> dict:
         """Retire only the child bound while X11 identity queries were healthy."""
-        self._require_custody(_custody)
-        if self._closed:
-            return {'status':'refused', 'reason':'ownership_handle_closed',
-                    'signal_attempts':[], 'target_identity_verified':False}
-        if self._bound_xid is None or self._bound_identity_digest is None:
-            return {'status':'refused', 'reason':'target_binding_unavailable',
-                    'signal_attempts':[], 'target_identity_verified':False}
-        return self._retire_bound_target(
-            xid=self._bound_xid, identity_digest=self._bound_identity_digest,
-            term_timeout_s=term_timeout_s, kill_timeout_s=kill_timeout_s)
+        if (deadline_monotonic_ns is not None and
+                (type(deadline_monotonic_ns) is not int or deadline_monotonic_ns <= 0)):
+            raise ValueError('deadline_monotonic_ns must be a positive integer')
+        if deadline_monotonic_ns is None:
+            acquired = self._handle_lock.acquire()
+        else:
+            acquired = self._handle_lock.acquire(timeout=max(
+                0, (deadline_monotonic_ns - time.monotonic_ns()) / 1e9))
+        if not acquired:
+            return {'status':'unknown', 'reason':'target_retirement_lock_unavailable',
+                    'signal_attempts':[], 'target_identity_verified':False,
+                    'process_exit_verified':False}
+        try:
+            self._require_custody(_custody)
+            if self._closed:
+                return {'status':'refused', 'reason':'ownership_handle_closed',
+                        'signal_attempts':[], 'target_identity_verified':False}
+            if self._bound_xid is None or self._bound_identity_digest is None:
+                return {'status':'refused', 'reason':'target_binding_unavailable',
+                        'signal_attempts':[], 'target_identity_verified':False}
+            return self._retire_bound_target(
+                xid=self._bound_xid, identity_digest=self._bound_identity_digest,
+                term_timeout_s=term_timeout_s, kill_timeout_s=kill_timeout_s,
+                deadline_monotonic_ns=deadline_monotonic_ns)
+        finally:
+            self._handle_lock.release()
 
     def retire_x11_target(self, connection, xid: int, *,
                           term_timeout_s: float = 0.25,
@@ -356,9 +372,12 @@ class OwnedTargetProcess:
 
     def _retire_bound_target(self, *, xid: int, identity_digest: str,
                              term_timeout_s: float,
-                             kill_timeout_s: float) -> dict:
+                             kill_timeout_s: float, deadline_monotonic_ns=None) -> dict:
         term_timeout_s = _bounded_timeout(term_timeout_s, 'term_timeout_s')
         kill_timeout_s = _bounded_timeout(kill_timeout_s, 'kill_timeout_s')
+        if (deadline_monotonic_ns is not None and
+                (type(deadline_monotonic_ns) is not int or deadline_monotonic_ns <= 0)):
+            raise ValueError('deadline_monotonic_ns must be a positive integer')
         if self._process.poll() is not None:
             return {'status':'already_exited', 'exitcode':self._process.returncode,
                     'signal_attempts':[], 'target_identity_verified':True,
@@ -374,6 +393,12 @@ class OwnedTargetProcess:
                         'target_identity_verified':True,
                         'target_xid':xid, 'identity_digest':identity_digest,
                         'process_exit_verified':True}
+            if (deadline_monotonic_ns is not None
+                    and time.monotonic_ns() >= deadline_monotonic_ns):
+                return {'status':'unknown', 'reason':'target_retirement_deadline',
+                        'signal_attempts':attempts, 'target_identity_verified':True,
+                        'target_xid':xid, 'identity_digest':identity_digest,
+                        'process_exit_verified':False}
             try:
                 signal.pidfd_send_signal(self._pidfd, signum)
                 attempts.append({'signal':signum, 'status':'sent'})
@@ -387,6 +412,8 @@ class OwnedTargetProcess:
                         'target_identity_verified':True,
                         'target_xid':xid, 'identity_digest':identity_digest,
                         'process_exit_verified':False}
+            if deadline_monotonic_ns is not None:
+                grace = min(grace, max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9)
             if self._wait_for_exit(grace):
                 return {'status':'retired', 'exitcode':self._process.wait(timeout=0),
                         'signal_attempts':attempts,
@@ -405,8 +432,12 @@ class OwnedTargetProcess:
         self._require_custody(_custody)
         if self._process.poll() is None:
             raise RuntimeError('cannot close ownership handle while target is running')
-        os.close(self._pidfd)
-        self._closed = True
+        try:
+            os.close(self._pidfd)
+        finally:
+            # A failed close may already have released the fd. Never retry the
+            # numeric descriptor, which could have been reused for another fd.
+            self._closed = True
 
     def __enter__(self) -> 'OwnedTargetProcess':
         if self._closed:

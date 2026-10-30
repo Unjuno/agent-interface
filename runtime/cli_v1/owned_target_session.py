@@ -4,12 +4,14 @@ from __future__ import annotations
 from copy import deepcopy
 from functools import wraps
 import threading
+import time
 
-from .owned_guarded_session import OwnedGuardedSessionOwner
+from .owned_guarded_session import OwnedGuardedSessionOwner, _CANCEL_TRANSACTION_DEADLINE_S
 from ..guarded_x11_v1.owned_target_process import (
     OwnedTargetProcess, _prestarted_target_identity_worker)
 from ..guarded_x11_v1.cancel_supervisor import PrestartedCancellationSupervisor
 
+_TARGET_RELEASE_RESERVE_NS = 250_000_000
 
 def _with_retirement_lock(method):
     @wraps(method)
@@ -45,6 +47,9 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         self._owned_target_binding = None
         self._owned_target_retirement = None
         self._target_retirement_lock = threading.RLock()
+        self._target_retirement_deferred = threading.Event()
+        self._target_cancel_context = threading.local()
+        self._target_cancel_guard = threading.Lock()
         self._target_custody = owned_target_process.claim_session()
         self._target_custody_released = False
         try:
@@ -73,16 +78,36 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         self._owned_target_binding = deepcopy(binding)
 
     def _cleanup_after_owner_retirement(self, retirement, **kwargs):
-        with self._target_retirement_lock:
-            if self._owned_target_retirement is None and retirement.get('retired') is True:
-                self._attempt_target_retirement()
+        context = getattr(self, '_target_cancel_context', None)
+        deadline = getattr(context, 'deadline_ns', None)
+        target_deadline = (max(1, deadline - _TARGET_RELEASE_RESERVE_NS)
+            if getattr(context, 'active', False) and type(deadline) is int
+            else None)
+        if target_deadline is None:
+            acquired = self._target_retirement_lock.acquire()
+        else:
+            acquired = self._target_retirement_lock.acquire(timeout=max(
+                0, (target_deadline - time.monotonic_ns()) / 1e9))
+        try:
+            if not acquired:
+                context.target_attempt_skipped = True
+                deferred = getattr(self, '_target_retirement_deferred', None)
+                if deferred is not None:
+                    deferred.set()
+            elif self._owned_target_retirement is None and retirement.get('retired') is True:
+                self._attempt_target_retirement(deadline_monotonic_ns=target_deadline)
+        finally:
+            if acquired:
+                self._target_retirement_lock.release()
         return super()._cleanup_after_owner_retirement(retirement, **kwargs)
 
     @_with_retirement_lock
-    def _attempt_target_retirement(self):
+    def _attempt_target_retirement(self, *, deadline_monotonic_ns=None):
         first = None
         custody = getattr(self, '_target_custody', None)
         kwargs = {'_custody':custody} if custody is not None else {}
+        if deadline_monotonic_ns is not None:
+            kwargs['deadline_monotonic_ns'] = deadline_monotonic_ns
         try:
             result = self._owned_target_process.retire_bound_target(**kwargs)
             if (result.get('status') == 'unknown'
@@ -96,30 +121,70 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
                       'target_identity_verified':False,
                       'process_exit_verified':False}
         self._owned_target_retirement = deepcopy(result)
+        deferred = getattr(self, '_target_retirement_deferred', None)
+        if deferred is not None:
+            deferred.clear()
         if first is not None:
             self._owned_target_retirement['immediate_previous_attempt'] = first
         if result.get('process_exit_verified') is True:
             try:
-                self._owned_target_process.close(**kwargs)
+                close_kwargs = {'_custody':custody} if custody is not None else {}
+                self._owned_target_process.close(**close_kwargs)
             except Exception as error:
                 self._owned_target_retirement['handle_close_error'] = type(error).__name__
 
     def cancel_guarded(self, token, *, operation_id=None,
                        deadline_monotonic_ns=None):
-        result = super().cancel_guarded(
-            token, operation_id=operation_id,
-            deadline_monotonic_ns=deadline_monotonic_ns)
-        return self._with_target_receipts(result)
+        if not self._target_cancel_guard.acquire(blocking=False):
+            return {'status':'cancel_unconfirmed',
+                    'reason':'concurrent_cancel_in_progress',
+                    'cleanup_status':'UNKNOWN', 'release_confirmed':False,
+                    'task_success':None, 'replay_allowed':False}
+        context = self._target_cancel_context
+        try:
+            if deadline_monotonic_ns is None:
+                deadline_monotonic_ns = time.monotonic_ns() + int(
+                    _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
+            context.active = True
+            context.deadline_ns = deadline_monotonic_ns
+            context.target_attempt_skipped = False
+            result = super().cancel_guarded(
+                token, operation_id=operation_id,
+                deadline_monotonic_ns=deadline_monotonic_ns)
+            return self._with_target_receipts(result)
+        finally:
+            context.active = False
+            context.target_attempt_skipped = False
+            context.deadline_ns = None
+            self._target_cancel_guard.release()
 
-    @_with_retirement_lock
     def _with_target_receipts(self, result):
-        if self._owned_target_retirement is not None:
-            result = dict(result, owned_target_retirement=deepcopy(
-                self._owned_target_retirement))
-        if self._owned_target_binding is not None:
-            result = dict(result, owned_target_binding=deepcopy(
-                self._owned_target_binding))
-        return result
+        context = getattr(self, '_target_cancel_context', None)
+        deadline = getattr(context, 'deadline_ns', None)
+        if getattr(context, 'active', False) and type(deadline) is int:
+            target_deadline = max(1, deadline - _TARGET_RELEASE_RESERVE_NS)
+            acquired = self._target_retirement_lock.acquire(timeout=max(
+                0, (target_deadline - time.monotonic_ns()) / 1e9))
+        else:
+            acquired = self._target_retirement_lock.acquire()
+        if not acquired:
+            return dict(result, owned_target_retirement={
+                'status':'unknown', 'reason':'target_retirement_lock_unavailable',
+                'process_exit_verified':False})
+        try:
+            if self._owned_target_retirement is not None:
+                result = dict(result, owned_target_retirement=deepcopy(
+                    self._owned_target_retirement))
+            elif getattr(context, 'target_attempt_skipped', False):
+                result = dict(result, owned_target_retirement={
+                    'status':'unknown', 'reason':'target_retirement_lock_unavailable',
+                    'process_exit_verified':False})
+            if self._owned_target_binding is not None:
+                result = dict(result, owned_target_binding=deepcopy(
+                    self._owned_target_binding))
+            return result
+        finally:
+            self._target_retirement_lock.release()
 
     def _retirement_cleanup_result_fields(self, retirement):
         return self._with_target_receipts(
@@ -128,6 +193,8 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
     def close(self):
         with self._target_retirement_lock:
             previous = deepcopy(getattr(self, '_owned_target_retirement', None))
+            deferred = getattr(self, '_target_retirement_deferred', None)
+            was_deferred = previous is None and deferred is not None and deferred.is_set()
         try:
             report = super().close()
             retirement = getattr(self, '_retirement', None) or {}
@@ -139,6 +206,12 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
                     self._attempt_target_retirement()
                     previous.pop('previous_attempt', None)
                     self._owned_target_retirement['previous_attempt'] = previous
+                elif (was_deferred and self._owned_target_retirement is None
+                      and retirement.get('retired') is True):
+                    self._attempt_target_retirement()
+                    self._owned_target_retirement['previous_attempt'] = {
+                        'status':'unknown', 'reason':'target_retirement_lock_unavailable',
+                        'process_exit_verified':False}
                 custody = getattr(self, '_target_custody', None)
                 process = getattr(self, '_process', None)
                 if (custody is not None and report.get('verified') is True

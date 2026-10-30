@@ -3,6 +3,7 @@ import signal
 import subprocess
 import sys
 import threading
+import time
 import unittest
 from unittest.mock import Mock, patch
 
@@ -27,6 +28,76 @@ class _FakeProcess:
 
 @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
 class OwnedTargetProcessTests(unittest.TestCase):
+    def test_close_error_does_not_retry_ambiguous_descriptor(self):
+        owner = self.launch()
+        self.process.returncode = 0
+        self.close_fd_mock.side_effect = OSError('injected close error')
+        with self.assertRaises(OSError):
+            owner.close()
+        owner.close()
+        self.close_fd_mock.assert_called_once_with(73)
+        self.send_signal_mock.assert_not_called()
+
+    def test_retirement_deadline_bounds_handle_lock_wait(self):
+        owner = self.launch()
+        self.assertEqual(owner.bind_x11_target(self.connection_with_identity(), 100)['status'], 'bound')
+        held, release = threading.Event(), threading.Event()
+        def hold_lock():
+            with owner._handle_lock:
+                held.set()
+                release.wait(2)
+        holder = threading.Thread(target=hold_lock)
+        holder.start()
+        try:
+            self.assertTrue(held.wait(1))
+            timer = threading.Timer(.5, release.set)
+            timer.start()
+            try:
+                started = time.monotonic()
+                result = owner.retire_bound_target(
+                    deadline_monotonic_ns=time.monotonic_ns() + 100_000_000)
+                elapsed = time.monotonic() - started
+            finally:
+                timer.cancel()
+            self.assertLess(elapsed, .3)
+            self.assertEqual(result['status'], 'unknown')
+            self.assertEqual(result['reason'], 'target_retirement_lock_unavailable')
+            self.send_signal_mock.assert_not_called()
+        finally:
+            release.set()
+            holder.join(timeout=2)
+        self.process.returncode = 0
+        owner.close()
+
+    def test_expired_retirement_deadline_refuses_before_signal(self):
+        owner = self.launch()
+        self.assertEqual(owner.bind_x11_target(self.connection_with_identity(), 100)['status'], 'bound')
+        with patch('runtime.guarded_x11_v1.owned_target_process.time.monotonic_ns',
+                   return_value=200):
+            result = owner.retire_bound_target(deadline_monotonic_ns=100)
+        self.assertEqual(result['status'], 'unknown')
+        self.assertEqual(result['reason'], 'target_retirement_deadline')
+        self.send_signal_mock.assert_not_called()
+        self.process.returncode = 0
+        owner.close()
+
+    def test_retirement_does_not_escalate_after_deadline(self):
+        owner = self.launch()
+        self.assertEqual(owner.bind_x11_target(self.connection_with_identity(), 100)['status'], 'bound')
+        clock = [100]
+        def wait(_timeout):
+            clock[0] = 200
+            return False
+        with patch('runtime.guarded_x11_v1.owned_target_process.time.monotonic_ns',
+                   side_effect=lambda: clock[0]), patch.object(owner, '_wait_for_exit', side_effect=wait):
+            result = owner.retire_bound_target(deadline_monotonic_ns=150)
+        self.assertEqual(result['status'], 'unknown')
+        self.assertEqual(result['reason'], 'target_retirement_deadline')
+        self.assertEqual([call.args for call in self.send_signal_mock.call_args_list],
+                         [(73, signal.SIGTERM)])
+        self.process.returncode = 0
+        owner.close()
+
     def test_direct_retire_rejects_intervening_custody_after_bind(self):
         owner = self.launch()
         entered, release = threading.Event(), threading.Event()

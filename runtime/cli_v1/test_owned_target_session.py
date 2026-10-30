@@ -66,6 +66,174 @@ class ExclusiveServerCustodyTests(unittest.IsolatedAsyncioTestCase):
 
 class OwnedTargetSessionTests(unittest.TestCase):
     @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
+    def test_deadline_retirement_closes_real_owned_handle(self):
+        target = OwnedTargetProcess.launch(
+            [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
+        token = target.claim_session()
+        try:
+            digest = _identity_digest(77, target.pid, target.start_ticks)
+            with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                       return_value=digest):
+                self.assertEqual(target.bind_x11_target(object(), 77, _custody=token)['status'], 'bound')
+            owner = object.__new__(OwnedTargetGuardedSessionOwner)
+            owner._target_retirement_lock = threading.RLock()
+            owner._target_custody = token
+            owner._owned_target_process = target
+            owner._attempt_target_retirement(deadline_monotonic_ns=time.monotonic_ns()+2_000_000_000)
+            self.assertTrue(owner._owned_target_retirement['process_exit_verified'])
+            self.assertNotIn('handle_close_error', owner._owned_target_retirement)
+            self.assertTrue(target._closed)
+        finally:
+            if target.running:
+                signal.pidfd_send_signal(target._pidfd, signal.SIGKILL)
+                target._process.wait(timeout=1)
+            target.close(_custody=token)
+
+    def test_concurrent_direct_cancel_cannot_overwrite_active_deadline(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._target_cancel_guard = threading.Lock()
+        owner._target_cancel_context = threading.local()
+        owner._owned_target_retirement = None
+        owner._owned_target_binding = None
+        entered, release = threading.Event(), threading.Event()
+        results = []
+        def base(*args, **kwargs):
+            entered.set()
+            release.wait(2)
+            return {'status':'cancel_requested', 'cleanup_status':'UNKNOWN',
+                    'replay_allowed':False}
+        def invoke(token):
+            results.append(owner.cancel_guarded(token, deadline_monotonic_ns=10**18))
+        with patch.object(OwnedGuardedSessionOwner, 'cancel_guarded', side_effect=base) as mocked:
+            first = threading.Thread(target=invoke, args=('first',))
+            second = threading.Thread(target=invoke, args=('second',))
+            first.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                second.start()
+                second.join(timeout=.2)
+                self.assertFalse(second.is_alive(), 'second cancellation was not rejected promptly')
+                self.assertEqual(mocked.call_count, 1)
+            finally:
+                release.set()
+                first.join(timeout=2)
+                if second.ident is not None:
+                    second.join(timeout=2)
+        self.assertTrue(any(row.get('reason') == 'concurrent_cancel_in_progress'
+                            and row.get('replay_allowed') is False for row in results))
+
+    def test_later_close_retries_retirement_skipped_for_lock_contention(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._target_retirement_deferred = threading.Event()
+        owner._target_cancel_context = threading.local()
+        owner._active_cancel_deadline_ns = time.monotonic_ns() + 350_000_000
+        owner._owned_target_retirement = None
+        owner._owned_target_binding = {'status':'bound'}
+        owner._owned_target_process = Mock()
+        owner._owned_target_process.retire_bound_target.return_value = {
+            'status':'retired', 'process_exit_verified':True}
+        owner._retirement = {'retired':True}
+        owner._target_identity_supervisor = None
+        entered = threading.Event()
+        def base(*args, **kwargs):
+            entered.set()
+            return {}, {'status':'readback_verified'}
+        def run():
+            owner._target_cancel_context.active = True
+            owner._target_cancel_context.deadline_ns = owner._active_cancel_deadline_ns
+            owner._cleanup_after_owner_retirement({'retired':True})
+        with patch.object(OwnedGuardedSessionOwner, '_cleanup_after_owner_retirement', base):
+            owner._target_retirement_lock.acquire()
+            thread = threading.Thread(target=run)
+            thread.start()
+            try:
+                self.assertTrue(entered.wait(.3))
+            finally:
+                owner._target_retirement_lock.release()
+                thread.join(timeout=2)
+        owner._owned_target_process.retire_bound_target.assert_not_called()
+        with patch.object(OwnedGuardedSessionOwner, 'close', return_value={
+                'status':'cleanup_failed', 'cleanup_status':'UNKNOWN',
+                'owner_release_attempt':{'status':'readback_verified'},
+                'replay_allowed':False}):
+            result = owner.close()
+        owner._owned_target_process.retire_bound_target.assert_called_once_with()
+        self.assertTrue(result['owned_target_retirement']['process_exit_verified'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+
+    def test_cancel_lock_contention_does_not_consume_release_reserve(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._target_cancel_context = threading.local()
+        owner._active_cancel_deadline_ns = time.monotonic_ns() + 350_000_000
+        owner._owned_target_retirement = None
+        owner._owned_target_binding = None
+        owner._owned_target_process = Mock()
+        base_entered = threading.Event()
+        completed = threading.Event()
+        receipts = []
+        def base(*args, **kwargs):
+            base_entered.set()
+            return {}, {}
+        def run():
+            owner._target_cancel_context.active = True
+            owner._target_cancel_context.deadline_ns = owner._active_cancel_deadline_ns
+            owner._cleanup_after_owner_retirement({'retired':True})
+            receipts.append(owner._with_target_receipts({'status':'cancel_requested'}))
+            completed.set()
+        with patch.object(OwnedGuardedSessionOwner, '_cleanup_after_owner_retirement', base):
+            owner._target_retirement_lock.acquire()
+            thread = threading.Thread(target=run)
+            thread.start()
+            try:
+                self.assertTrue(base_entered.wait(.3), 'target lock blocked independent release')
+                self.assertTrue(completed.wait(.1), 'receipt blocked after release')
+            finally:
+                owner._target_retirement_lock.release()
+                thread.join(timeout=2)
+        self.assertFalse(thread.is_alive())
+        owner._owned_target_process.retire_bound_target.assert_not_called()
+        self.assertEqual(receipts[0]['owned_target_retirement']['status'], 'unknown')
+
+    def test_cancel_target_attempt_reserves_time_for_release(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._target_cancel_context = threading.local()
+        owner._target_cancel_context.active = True
+        owner._target_cancel_context.deadline_ns = 2_000_000_000
+        owner._active_cancel_deadline_ns = 9_000_000_000
+        owner._owned_target_retirement = None
+        owner._owned_target_process = Mock()
+        owner._owned_target_process.retire_bound_target.return_value = {
+            'status':'unknown', 'reason':'target_retirement_deadline',
+            'process_exit_verified':False}
+        with patch.object(OwnedGuardedSessionOwner, '_cleanup_after_owner_retirement',
+                          return_value=({}, {})) as cleanup, \
+             patch('runtime.cli_v1.owned_target_session.time.monotonic_ns',
+                   return_value=1_000_000_000):
+            owner._cleanup_after_owner_retirement({'retired':True})
+        owner._owned_target_process.retire_bound_target.assert_called_once_with(
+            deadline_monotonic_ns=1_750_000_000)
+        cleanup.assert_called_once()
+
+    def test_cancel_context_does_not_apply_to_later_explicit_close(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._target_cancel_context = threading.local()
+        owner._active_cancel_deadline_ns = 2_000_000_000
+        owner._owned_target_retirement = None
+        owner._owned_target_process = Mock()
+        owner._owned_target_process.retire_bound_target.return_value = {
+            'status':'unknown', 'reason':'target_retirement_deadline',
+            'process_exit_verified':False}
+        with patch.object(OwnedGuardedSessionOwner, '_cleanup_after_owner_retirement',
+                          return_value=({}, {})):
+            owner._cleanup_after_owner_retirement({'retired':True})
+        owner._owned_target_process.retire_bound_target.assert_called_once_with()
+
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
     def test_closed_old_owner_cannot_retire_new_custodian_target(self):
         target = OwnedTargetProcess.launch(
             [sys.executable, '-c', 'import time; time.sleep(30)'], disposable=True)
@@ -399,6 +567,8 @@ class OwnedTargetSessionTests(unittest.TestCase):
     def test_cancel_preserves_unknown_and_attaches_target_receipt(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
         owner._target_retirement_lock = threading.RLock()
+        owner._target_cancel_context = threading.local()
+        owner._target_cancel_guard = threading.Lock()
         owner._owned_target_binding = {'status':'bound', 'xid':77}
         owner._owned_target_retirement = {'status':'retired',
                                           'process_exit_verified':True}
