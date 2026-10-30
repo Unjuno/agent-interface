@@ -638,6 +638,30 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['exitcode'], -15)
         self.assertEqual(process.terminate_calls, 1)
 
+    def test_close_retirement_cleanup_precedes_supervisor_shutdown(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._rpc_lock = threading.Lock()
+        owner._rpc_lock.acquire()
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        owner._cleanup_supervisor = Mock()
+        owner._owner_input_obligations = {'keys':{'w':25}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'close-supervisor-order'
+        def cleanup(retirement):
+            owner._cleanup_supervisor.close.assert_not_called()
+            return ({'status':'disconnected'}, {'status':'readback_verified'})
+        owner._cleanup_after_owner_retirement = Mock(side_effect=cleanup)
+        with patch('runtime.cli_v1.owned_guarded_session._CLOSE_TIMEOUT_S', 0):
+            result = owner.close()
+        owner._cleanup_supervisor.close.assert_called_once()
+        self.assertEqual(result['owner_release_attempt']['status'], 'readback_verified')
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(result['replay_allowed'])
+
     def test_close_timeout_runs_disconnect_gated_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None

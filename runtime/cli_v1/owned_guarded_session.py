@@ -892,9 +892,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
-        cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
-        if cleanup_supervisor is not None:
-            cleanup_supervisor.close()
+        try:
+            return self._close_impl()
+        finally:
+            cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
+            if cleanup_supervisor is not None:
+                cleanup_supervisor.close()
+
+    def _close_impl(self):
         if self.close_report is not None:
             return deepcopy(self.close_report)
         if self._process is None:
