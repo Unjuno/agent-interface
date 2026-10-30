@@ -1,0 +1,26 @@
+{
+  "name": "agent-interface-calc-capability-902c805469804191850cd68b5efdfe7d",
+  "image_id": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "scope": "new image capability probe; no GUI/model",
+  "timeout_s": 30,
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "agent-interface-calc-capability-902c805469804191850cd68b5efdfe7d",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-capabilities-20261030-a03\\container-id.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--entrypoint",
+    "python3",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "-c",
+    "import importlib.util,json,shutil,hashlib,pathlib; print(json.dumps({'executables':{k: bool(shutil.which(k)) for k in ['libreoffice','soffice','tesseract','Xvfb','openbox']},'modules':{k: importlib.util.find_spec(k) is not None for k in ['Xlib','PIL','mcp']},'package_inventory_sha256':hashlib.sha256(pathlib.Path('/opt/calc-ocr-packages.tsv').read_bytes()).hexdigest(),'tesseract_version':pathlib.Path('/opt/tesseract-version.txt').read_text().splitlines()[0]}))"
+  ]
+}

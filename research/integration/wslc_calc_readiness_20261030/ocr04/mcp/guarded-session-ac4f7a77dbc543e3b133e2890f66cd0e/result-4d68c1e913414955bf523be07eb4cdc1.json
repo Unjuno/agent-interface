@@ -1,0 +1,199 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 30952886086,
+    "ended_ns": 31647171448,
+    "emissions": 42,
+    "program_emissions": 42,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 31647169773
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 4,
+        "requested_ms": 20,
+        "started_ns": 30988690236,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31008767115
+      },
+      {
+        "operation_index": 8,
+        "requested_ms": 20,
+        "started_ns": 31011352607,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31031428263
+      },
+      {
+        "operation_index": 12,
+        "requested_ms": 20,
+        "started_ns": 31033412327,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31053500460
+      },
+      {
+        "operation_index": 14,
+        "requested_ms": 20,
+        "started_ns": 31055397256,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31075491646
+      },
+      {
+        "operation_index": 16,
+        "requested_ms": 20,
+        "started_ns": 31076740279,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31096881097
+      },
+      {
+        "operation_index": 18,
+        "requested_ms": 20,
+        "started_ns": 31100380890,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31120490222
+      },
+      {
+        "operation_index": 20,
+        "requested_ms": 20,
+        "started_ns": 31122347771,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31142442058
+      },
+      {
+        "operation_index": 24,
+        "requested_ms": 500,
+        "started_ns": 31146656631,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 31646785239
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 2,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "cell",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "cell",
+      "point": [
+        200,
+        219
+      ],
+      "observed_box": [
+        188,
+        207,
+        24,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 2,
+      "valid_until_ns": 32418931077,
+      "patch_sha256": "8bbb642da9242b572d4c12ef395ee44d8343c8fecd261376468776889f7bcada",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "cell",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "cell",
+      "point": [
+        200,
+        219
+      ],
+      "observed_box": [
+        188,
+        207,
+        24,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 32454057344,
+      "patch_sha256": "8bbb642da9242b572d4c12ef395ee44d8343c8fecd261376468776889f7bcada",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

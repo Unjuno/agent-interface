@@ -1,0 +1,26 @@
+{
+  "name": "agent-interface-calc-capability-1105ea70bfbc4c8e8e402a074268deb7",
+  "image_id": "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+  "scope": "capability-only successor correcting A01 shell quoting; no GUI/model or install",
+  "timeout_s": 30,
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "agent-interface-calc-capability-1105ea70bfbc4c8e8e402a074268deb7",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-capabilities-20261030-a02\\container-id.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--entrypoint",
+    "python3",
+    "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+    "-c",
+    "import importlib.util,json,shutil; print(json.dumps({'executables':{k: bool(shutil.which(k)) for k in ['libreoffice','soffice','tesseract','Xvfb','xdotool']},'modules':{k: importlib.util.find_spec(k) is not None for k in ['Xlib','PIL','mcp','vizdoom']}}))"
+  ]
+}
