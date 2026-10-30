@@ -634,9 +634,9 @@ class OwnedTargetSessionTests(unittest.TestCase):
         with patch.object(OwnedGuardedSessionOwner,
                           '_cleanup_after_owner_retirement', base_cleanup):
             first = owner._cleanup_after_owner_retirement(
-                {'retired':True}, retry_after_resume=True)
+                {'retired':True})
             second = owner._cleanup_after_owner_retirement(
-                {'retired':True}, retry_after_resume=True)
+                {'retired':True})
 
         self.assertEqual(order[0], ('target_retire',))
         self.assertEqual(order[1][0], 'base_cleanup')

@@ -375,6 +375,12 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_retirement_cleanup_rejects_unfenced_post_resume_retry(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        with self.assertRaises(TypeError):
+            owner._cleanup_after_owner_retirement(
+                {'retired':True}, retry_after_resume=True)
+
     def test_process_liveness_snapshot_records_its_observation_time(self):
         class LiveProcess:
             pid = 12345

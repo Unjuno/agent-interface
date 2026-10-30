@@ -37,7 +37,6 @@ _RETIRE_KILL_SETTLE_GRACE_S = 0.01
 _JOIN_TIMEOUT_S = 1.0
 _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
-_POST_RESUME_DISCONNECT_RECHECK_TIMEOUT_S = 0.75
 # The spawned fresh client must import, connect, emit exact releases, sync, and
 # read back. This caps its post-start response wait; process creation remains
 # outside that worker budget. Timeout still means UNKNOWN, never release.
@@ -493,7 +492,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    authority_granted=False, restart_allowed=False)
         return row
 
-    def _observe_owner_client_disconnect(self, *, timeout_s=_XRES_DISCONNECT_TIMEOUT_S):
+    def _observe_owner_client_disconnect(self):
         resource_base = self._snapshot_cache.get('owner_x_client_resource_base')
         if type(resource_base) is not int or not 0 < resource_base < 2**32:
             return {'status':'unknown', 'reason':'resource_base_unavailable',
@@ -505,7 +504,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         try:
             result = wait_for_client_disconnect_supervised(
                 self.display_name, resource_base, expected_pid=expected_pid,
-                timeout_s=timeout_s,
+                timeout_s=_XRES_DISCONNECT_TIMEOUT_S,
                 terminate_grace_s=_XRES_DISCONNECT_TERMINATE_GRACE_S)
         except Exception as error:
             return {'status':'unknown', 'reason':'supervisor_failed',
@@ -564,11 +563,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 receipt[field] = result[field]
         return receipt
 
-    def _cleanup_after_owner_retirement(self, retirement, *,
-                                        disconnect_timeout_s=_XRES_DISCONNECT_TIMEOUT_S,
-                                        retry_after_resume=False):
-        if (getattr(self, '_prestarted_cancel_enabled', False)
-                and not retry_after_resume):
+    def _cleanup_after_owner_retirement(self, retirement):
+        if getattr(self, '_prestarted_cancel_enabled', False):
             if self._prestarted_cleanup_result is not None:
                 client_disconnect, release_attempt = self._prestarted_cleanup_result
                 return deepcopy(client_disconnect), deepcopy(release_attempt)
@@ -655,11 +651,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             if live_read.get('status') == 'snapshot':
                 self._owner_input_obligations = deepcopy(live_read['obligations'])
                 self._owner_input_obligations_source = 'retired_child_shared_state'
-            if disconnect_timeout_s == _XRES_DISCONNECT_TIMEOUT_S:
-                client_disconnect = self._observe_owner_client_disconnect()
-            else:
-                client_disconnect = self._observe_owner_client_disconnect(
-                    timeout_s=disconnect_timeout_s)
+            client_disconnect = self._observe_owner_client_disconnect()
         else:
             self._owner_input_obligations_live_read = {
                 'status':'not_read', 'reason':'owner_not_retired'}
