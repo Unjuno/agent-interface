@@ -85,6 +85,9 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
                      - _CONTROL_RETIRE_RESERVE_NS - time.monotonic_ns())
         return min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, max(0, remaining / 1e9))
 
+    def _cancel_drain_wait_seconds(self, deadline_monotonic_ns):
+        return self._cancel_control_wait_seconds(deadline_monotonic_ns)
+
     def retire(self, reason='explicit owner retirement'):
         retirement = super().retire(reason)
         if retirement.get('retired') is True:

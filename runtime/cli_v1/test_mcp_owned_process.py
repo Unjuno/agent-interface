@@ -1125,6 +1125,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
 
+    def test_existing_owner_drain_wait_preserves_one_second_grace(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        with patch('runtime.cli_v1.owned_guarded_session.time.monotonic_ns',
+                   return_value=1_000_000_000):
+            timeout = owner._cancel_drain_wait_seconds(4_000_000_000)
+        self.assertEqual(timeout, 1.0)
+
     def test_unconfirmed_cancel_wait_is_capped_by_cancel_response_budget(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner._process = Mock()
