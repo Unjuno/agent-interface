@@ -1,0 +1,7 @@
+# WSLc ViZDoom startup failure and diagnostics
+
+A01 was one predeclared WSLc successor of the Docker R46 owned-target retirement cell at experimental PR #9814 head f212e1610cbafd719dece36fbd0d07a63f17274b, not current-main production code. It failed with `old game window unavailable` before any measured cancellation, isolation or task-effect gates. Output and failure remain unchanged. WSLc image ID differs from the Docker source image despite matching rootfs layer lists; details are in A01 conditions and the WSLc evidence merged in PR #9817.
+
+A02 started the same game executable under a private unauthenticated Xvfb, held it for four seconds and captured output; it remained alive until the diagnostic ended it. A03 repeated startup with the failed runner's Xvfb authentication and listen options; it too remained alive. A04 used those options and observed a mapped ViZDoom window after two seconds. These startup diagnostics launch the game directly with subprocess, not OwnedTargetProcess or MCP, and differ from A01 in startup sequence and observation. Therefore they do not establish the cause of A01 or validate recovery. No input was injected and no live attempt was rerun.
+
+All four exact-container-ID cleanup queries returned exit 0 and no match. The four conditions, output, failure, cleanup records and hashes are preserved. This is not a MAP01 completion, WSLc task-control success, performance comparison, or reliability estimate.
