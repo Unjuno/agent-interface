@@ -1,0 +1,47 @@
+{
+  "purpose": "offline exploratory binary preprocessing on three retained images; no GUI action",
+  "difference": "blue removal then fixed grayscale threshold 160, nearest 4x and white padding; PSM7",
+  "expected": {
+    "positive": "filled",
+    "blank": "unknown",
+    "wrong": "wrong"
+  },
+  "rule": "one digit token per crop with confidence >=90; otherwise unknown",
+  "inputs_sha256": {
+    "runner.py": "882640588b9ad171af12f68198b01aebbd9bb1a7a30409a4fa2fec081725078b",
+    "positive.png": "6c43db103fd8a9a72a7ab80ff098597849b1a112284fa056d790828b3d87b71b",
+    "blank.png": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+    "wrong.png": "e6c5a7f806cf9a367bc75a0598a92361657a9ad9e9129ddd7278f342de9f834c"
+  },
+  "name": "calc-ocr-binary-16e501018cca40bb9b8d9156d3b2f7cb",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "calc-ocr-binary-16e501018cca40bb9b8d9156d3b2f7cb",
+    "--cidfile",
+    "<experiment-directory>\\cid.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "-v",
+    "<experiment-directory>:/in:ro",
+    "-v",
+    "<experiment-directory>\\output:/out:rw",
+    "--entrypoint",
+    "timeout",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "--signal=TERM",
+    "--kill-after=3s",
+    "40s",
+    "python3",
+    "-B",
+    "/in/runner.py"
+  ],
+  "stop": "one pass across all cases, retain all outputs; no accuracy claim"
+}

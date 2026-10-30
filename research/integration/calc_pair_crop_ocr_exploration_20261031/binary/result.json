@@ -1,0 +1,49 @@
+{
+  "exit": 0,
+  "cases": {
+    "positive": {
+      "classified": "unknown",
+      "expected": "filled",
+      "values": [
+        [
+          {
+            "text": "731",
+            "conf": "45.167000"
+          }
+        ],
+        [
+          {
+            "text": "64",
+            "conf": "0.000000"
+          }
+        ]
+      ]
+    },
+    "blank": {
+      "classified": "unknown",
+      "expected": "unknown",
+      "values": [
+        [],
+        []
+      ]
+    },
+    "wrong": {
+      "classified": "unknown",
+      "expected": "wrong",
+      "values": [
+        [
+          {
+            "text": "731",
+            "conf": "45.167000"
+          }
+        ],
+        [
+          {
+            "text": "63",
+            "conf": "0.000000"
+          }
+        ]
+      ]
+    }
+  }
+}
