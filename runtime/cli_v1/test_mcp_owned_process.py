@@ -2448,6 +2448,43 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
 
+    async def test_shutdown_retires_owned_target_with_pending_worker(self):
+        from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess
+        from unittest.mock import Mock
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            target = Mock(spec=OwnedTargetProcess)
+            target.running = True
+            target.claim_session.return_value = object()
+            target.bind_x11_target_supervised.return_value = {'status':'bound'}
+            target.retire_bound_target.return_value = {
+                'status':'retired', 'process_exit_verified':True}
+            server = create_server(
+                {'app':20}, root, display_name=':fake', session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True, _guarded_owned_target_process=target,
+                _guarded_owner_factory=_fake_owner_factory)
+            async with server.settings.lifespan(server):
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=observed['source']['sequence'],
+                    point=[8,8], region_size=[12,12])))
+                (root/'block-owner-io').write_text('block', encoding='utf-8')
+                action = metadata(await server.call_tool('interface_guarded_input', dict(
+                    alias='field', offset=minted['offset'], interaction='keyboard',
+                    observe_after=False, wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                self.assertEqual(action['status'], 'pending', action)
+                deadline = time.monotonic() + 3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+            target.retire_bound_target.assert_called_once()
+            target.close.assert_called_once()
+            result = metadata(await server.call_tool('interface_results', {
+                'call_id':action['call_id'], 'include_image':False}))
+            self.assertNotEqual(result.get('status'), 'completed', result)
+
     async def test_server_lifespan_shutdown_keeps_pending_cancel_custody(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
