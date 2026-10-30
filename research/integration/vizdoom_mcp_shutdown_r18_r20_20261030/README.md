@@ -1,3 +1,5 @@
 # ViZDoom MCP shutdown, R18–R20
 
 R18 failed before startup because PYTHONPATH was absent. R19 failed before input because ViZDoom tried to create ./_vizdoom in read-only /src; a separate startup diagnostic reported the read-only filesystem. R20 used /tmp as working directory and ran the preregistered single cell. It FAILED: W remained down after shutdown and Xvfb resumed. The process exit was verified before resume, the old operation was not completed, and the close receipt reported UNKNOWN and supervisor_unavailable. B was up. Raw preregistration, runner, logs, receipts, screenshots and SHA256SUMS are retained per cell. This establishes neither real-time task completion nor MAP01/WSLc success. Source was PR head fdfa4b5743b065a55167e7ce86a2364638cd3005; no model calls; image was pinned; network disabled.
+
+R21 uses source 6824d6c813708ae849141ba46850b2edc72d7e04 and keeps supervisor alive during close. One preregistered run FAILED: W remained down; owner disconnect and release were unknown due to transaction_deadline. Target exit before Xvfb resume and other gates passed. This does not establish recovery.
