@@ -31,8 +31,8 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 )
 
 
-_LONG_STOP = os.environ.get('AGENT_INTERFACE_TEST_LONG_STOP') == '1'
-_SERVER_STOP_SAFETY_S = 12.0 if _LONG_STOP else 4.0
+_WAIT_CANCEL_WHILE_STOPPED = os.environ.get('AGENT_INTERFACE_MCP_XVFB_WAIT_CANCEL_WHILE_STOPPED') == '1'
+_SERVER_STOP_SAFETY_S = 12.0 if _WAIT_CANCEL_WHILE_STOPPED else 4.0
 _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
 _RECOVERY_BOUND_S = 5.0
@@ -406,7 +406,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 report['cancel'] = cancel
                 # Long-stop discriminator: wait for asynchronous cancellation
                 # to finish while the server is still stopped, before resuming.
-                if _LONG_STOP:
+                if _WAIT_CANCEL_WHILE_STOPPED:
                     end = time.monotonic() + 8.0
                     while time.monotonic() < end:
                         stopped_terminal = _metadata(await server.call_tool(
@@ -559,7 +559,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                  post_resume_close)
                 self.assertTrue(
                     report['independent_readback_after_close']['keys_down']['a'])
-                if _LONG_STOP:
+                if _WAIT_CANCEL_WHILE_STOPPED:
                     self.assertEqual(post_resume_close['owner_release_attempt'],
                                      stopped_result['owner_release_attempt'])
                 self.assertEqual(report['independent_readback_after_close']['effect'],
