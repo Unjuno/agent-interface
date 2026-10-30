@@ -1,0 +1,61 @@
+{
+  "name": "agent-interface-calc-compiled-e3718263894e41e7810abac773573459",
+  "source_candidate": "1b806a086951c6beca6725771fd6c1066d47b9a3",
+  "main_base": "15f57e7f0e4ebb56b90e9c8ce9c047eb4db4ac68",
+  "image_id": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "input_sha256": {
+    "runner.py": "90769c7fe17d30d3465c8715da817eb731f9a7ef91565962437e27f3e3817461",
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "ocr_reader.py": "b98eacb96a6d3e711c12f27f7d6aa7f42a679fd9c7807ebc4d0d1b26eb178125",
+    "effect_predicate.py": "44473bbb30194486ccdceb998a6714f28c59db0fac4ed51cee88202275d54eba"
+  },
+  "scope": "one predeclared exploratory no-model successor to A08; test-only private adapter waits 500ms after verified action release, then captures fresh effect; no MCP or matched comparison",
+  "gates": [
+    "compiled graph TASK_SUCCEEDED one transition",
+    "independent saved XML score",
+    "post-action OCR sees intended row",
+    "physical input neutral",
+    "exact-ID container absent"
+  ],
+  "caveats": [
+    "fixed sleep not an event-based update or hard scheduling bound",
+    "no cancellation polling during test-only sleep",
+    "caller-supplied ready predicate"
+  ],
+  "network": "none",
+  "source": "read-only",
+  "timeout_s": 90,
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "agent-interface-calc-compiled-e3718263894e41e7810abac773573459",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-compiled-20261030-a09\\container-id.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--volume",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\compiled-guard-perception-20261030:/src:ro",
+    "--volume",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-compiled-20261030-a09:/out:rw",
+    "--workdir",
+    "/src",
+    "--env",
+    "PYTHONPATH=/src:/out",
+    "--entrypoint",
+    "timeout",
+    "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+    "--signal=TERM",
+    "--kill-after=3s",
+    "75s",
+    "python3",
+    "-B",
+    "/out/runner.py"
+  ]
+}
