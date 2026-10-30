@@ -4,7 +4,7 @@ from contextlib import contextmanager
 import hashlib
 import time
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 import unittest
 from PIL import Image
 from runtime.core_v1.test_compiled_gui import interface
@@ -79,6 +79,127 @@ def perceive(native,image): return {'phase':image.getpixel((0,0))[0],'present':T
 def verify(payload,native,image): return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
 
 class CompiledX11Tests(unittest.TestCase):
+
+    def test_post_release_settle_waits_before_effect_observation(self):
+        b=Bridge(); times=[]
+        def observe(native,image):
+            times.append(time.monotonic_ns())
+            return perceive(native,image)
+        result=run(b,spec(),bindings(),perceive=observe,guard_perceive=perceive,
+                   verify_effect=verify,post_release_settle_ms=20)
+        self.assertEqual(result['outcome'],'TASK_SUCCEEDED')
+        self.assertEqual(len(b.inputs),2)
+        self.assertGreaterEqual(times[1]-times[0],15_000_000)
+
+    def test_post_release_settle_honors_cancellation_before_next_observation(self):
+        b=Bridge(); state={'cancelled':False}; click=b.click
+        def first_click(*args,**kwargs):
+            terminal=click(*args,**kwargs)
+            state['cancelled']=True
+            return terminal
+        b.click=first_click
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                   cancelled=lambda:state['cancelled'],post_release_settle_ms=500)
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','cancelled'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+
+    def test_post_release_settle_cancellation_after_wait_starts(self):
+        b=Bridge(); state={'cancelled':False, 'sleep_called':False}
+        def interrupt_sleep(seconds):
+            state['sleep_called']=True
+            state['cancelled']=True
+        with patch('runtime.guarded_x11_v1.compiled.time.sleep', side_effect=interrupt_sleep):
+            result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                       cancelled=lambda:state['cancelled'],post_release_settle_ms=500)
+        self.assertTrue(state['sleep_called'])
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','cancelled'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+        settle=next(value for name,value in b.saved if name.endswith('-post-release-settle.json'))
+        self.assertEqual(settle['status'],'cancelled')
+
+    def test_post_release_settle_latches_transient_cancellation(self):
+        b=Bridge(); state={'after_action':False,'sent':False}; click=b.click
+        def first_click(*args,**kwargs):
+            terminal=click(*args,**kwargs)
+            state['after_action']=True
+            return terminal
+        def cancelled():
+            if state['after_action'] and not state['sent']:
+                state['sent']=True
+                return True
+            return False
+        b.click=first_click
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                   cancelled=cancelled,post_release_settle_ms=100)
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','cancelled'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+
+    def test_post_release_settle_cancellation_error_is_not_success(self):
+        b=Bridge(); state={'after_action':False}; click=b.click
+        def first_click(*args,**kwargs):
+            terminal=click(*args,**kwargs)
+            state['after_action']=True
+            return terminal
+        def cancelled():
+            if state['after_action']:
+                raise RuntimeError('cancellation unavailable')
+            return False
+        b.click=first_click
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                   cancelled=cancelled,post_release_settle_ms=100)
+        self.assertEqual((result['outcome'],result['reason']),('RUNTIME_FAILED','execution_failed'))
+        self.assertEqual(len(b.inputs),1)
+        self.assertEqual(result['unresolved_execution']['reason'],'execution_callback_failed')
+
+    def test_post_release_settle_uses_core_budget_start_after_plan_persistence(self):
+        b=Bridge(); saved=b._save
+        def slow_plan(name,value):
+            if name.endswith('-plan.json'):
+                time.sleep(.25)
+            return saved(name,value)
+        b._save=slow_plan
+        interface=spec();interface['actions'].pop('save')
+        interface['method']['max_transitions']=1
+        interface['method']['max_runtime_ms']=300
+        interface['method']['states'].pop('done')
+        interface['method']['states']['filled']={'branches':[{
+            'when':{'phase':1},'outcome':'complete','action':None,
+            'next_state':None,'reason':None}]}
+        result=run(b,interface,{'enter':bindings()['enter']},perceive=perceive,
+                   verify_effect=verify,post_release_settle_ms=100)
+        self.assertEqual(result['outcome'],'TASK_SUCCEEDED')
+        settle=next(value for name,value in b.saved if name.endswith('-post-release-settle.json'))
+        self.assertEqual(settle['status'],'settled')
+        self.assertGreaterEqual(settle['ended_ns']-settle['started_ns'],80_000_000)
+
+    def test_post_release_settle_cannot_extend_method_budget(self):
+        b=Bridge(); interface=spec();interface['method']['max_runtime_ms']=200
+        result=run(b,interface,bindings(),perceive=perceive,verify_effect=verify,
+                   post_release_settle_ms=500)
+        self.assertEqual((result['outcome'],result['reason']),('SAFE_YIELD','budget_exhausted'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertIsNotNone(result['pending_effect'])
+
+    def test_post_release_settle_does_not_wait_after_unverified_release(self):
+        b=Bridge();b.release=False
+        with patch('runtime.guarded_x11_v1.compiled.time.sleep') as sleep:
+            result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify,
+                       post_release_settle_ms=100)
+        self.assertEqual(result['outcome'],'RUNTIME_FAILED')
+        sleep.assert_not_called()
+
+    def test_post_release_settle_rejects_invalid_values(self):
+        for value in (-1,1001,True,1.5,'50'):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                run(Bridge(),spec(),bindings(),perceive=perceive,verify_effect=verify,
+                    post_release_settle_ms=value)
 
     def test_explicit_guard_perception_is_used_only_for_input_dependencies(self):
         b=Bridge(); seen={'observation':0,'guard':0}

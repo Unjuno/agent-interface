@@ -15,7 +15,7 @@ def surface(bridge):
 
 
 class _Adapter:
-    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None):
+    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, post_release_settle_ms=0):
         self.interface = validate(interface)
         # Symbol labels belong to the graph language; target references name
         # the existing native registry and must obey its actual alias contract.
@@ -26,6 +26,8 @@ class _Adapter:
             raise ValueError('interface must name this bridge scope and X11 surface')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit perception, effect verifier and cancellation callbacks required')
+        if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
+            raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         if guard_perceive is not None and not callable(guard_perceive):
             raise ValueError('guard_perceive must be callable when supplied')
         if not callable(getattr(bridge,'input_guard',None)):
@@ -48,6 +50,9 @@ class _Adapter:
         self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
         self.guard_perceive = perceive if guard_perceive is None else guard_perceive
+        self.post_release_settle_ms = post_release_settle_ms
+        self._method_deadline_ns = None
+        self._settle_cancelled = False
         self.run_id = 'compiled-' + uuid.uuid4().hex
         self.event_index = 0
         self.latest = self.native = self.image = None
@@ -224,7 +229,42 @@ class _Adapter:
             if not (raw['input_dispatched'] is False and unresolved):
                 terminal['input_dispatched'] = raw['input_dispatched']
         self.retain('terminal',terminal)
+        if terminal['status'] == 'completed' and neutral and self.post_release_settle_ms:
+            self._settle_after_release()
         return terminal
+
+    def _cancellation_state(self):
+        if self._settle_cancelled:
+            return True
+        return self.cancelled()
+
+    def _settle_after_release(self):
+        # The deadline is established by the core's first clock sample.
+        # No waiting is permitted outside execute_method.
+        if self._method_deadline_ns is None:
+            return
+        start = time.monotonic_ns()
+        end = min(start + self.post_release_settle_ms * 1_000_000,
+                  self._method_deadline_ns)
+        status = 'settled'
+        while True:
+            cancelled = self._cancellation_state()
+            if type(cancelled) is not bool:
+                raise TypeError('cancellation-state callback must return bool')
+            if cancelled:
+                self._settle_cancelled = True
+                status = 'cancelled'
+                break
+            remaining = end - time.monotonic_ns()
+            if remaining <= 0:
+                if end == self._method_deadline_ns:
+                    status = 'budget_limited'
+                break
+            time.sleep(min(0.025, remaining / 1_000_000_000))
+        self.retain('post-release-settle', {
+            'status':status, 'requested_ms':self.post_release_settle_ms,
+            'started_ns':start, 'ended_ns':time.monotonic_ns(),
+        })
 
     def verify_effect(self, request):
         if (not self.associated() or self.latest != request['observation'] or
@@ -250,12 +290,18 @@ class _Adapter:
         return result
 
     def execute_method(self):
+        self._method_deadline_ns = None
+        def graph_clock():
+            now = time.monotonic_ns()
+            if self._method_deadline_ns is None:
+                self._method_deadline_ns = now + self.interface['method']['max_runtime_ms'] * 1_000_000
+            return now
         self.retain('plan', {'interface':self.interface,'bindings':self.bindings,
             'scope':'trusted caller-owned read-only perception/effect callbacks; not independent task scoring'})
         try:
             result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
-                'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self.cancelled,
-                'journal':lambda event:self.retain('event',event)}, clock=time.monotonic_ns)
+                'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self._cancellation_state,
+                'journal':lambda event:self.retain('event',event)}, clock=graph_clock)
         except Exception as error:
             self.retain('exception', {'error':repr(error),'replay_allowed':False,
                 'effect_status':'unknown; inspect retained bridge receipts before any new action'})
@@ -298,18 +344,20 @@ class _Adapter:
 
 
 def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False,
-        guard_perceive=None):
+        guard_perceive=None, post_release_settle_ms=0):
     """Run the existing graph once against freshly grounded bridge aliases.
 
     Symbols name existing aliases; bindings specify each guarded interaction,
     offset and tail. Callbacks receive copies of this capture and its exact RGB.
     An optional guard_perceive receives fresh input-check captures; if omitted,
     perceive is used. Boolean symbol dependencies must all be True for either
-    callback. Callbacks are trusted caller
+    callback. An optional bounded post-release delay runs outside the input
+    guard and polls cancellation; it does not prove the effect. Callbacks are trusted caller
     code, not sandboxed or independently certified. Changed pixels do not verify
     text or durable effects. Caller must independently score the task afterward.
     Raw captures, resolutions, input receipts and graph events are retained in
     the bridge output directory. No automatic replay/repair or scope renewal.
     """
     return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled,
-                    guard_perceive=guard_perceive).execute_method()
+                    guard_perceive=guard_perceive,
+                    post_release_settle_ms=post_release_settle_ms).execute_method()
