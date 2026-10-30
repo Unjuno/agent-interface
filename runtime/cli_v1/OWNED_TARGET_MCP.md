@@ -69,7 +69,12 @@ attempts target retirement before the remaining worker drain. A short target
 deadline reserves time for escalation from TERM to KILL, but neither deadline
 nor process exit guarantees the X server has released held keys. Cleanup keeps
 the prestarted supervisor alive until the close attempt ends. If the display
-is unavailable beyond that attempt, release may remain UNKNOWN.
+is unavailable beyond that attempt, release may remain UNKNOWN. An explicit
+later close does not automatically repeat an unconfirmed input release: the
+old client's disconnection cannot prove that another client has not since
+pressed the same key. R34 demonstrates that such a retry can release the newer
+client's hold. There is currently no fenced public post-resume recovery API;
+retain the original UNKNOWN receipt and keep the display isolated.
 
 A real ViZDoom/Xvfb shutdown experiment with a second window focused during
 server suspension observed a W press delivered to that window after the bound

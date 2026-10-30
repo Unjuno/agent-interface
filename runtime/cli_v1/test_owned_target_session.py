@@ -65,7 +65,7 @@ class ExclusiveServerCustodyTests(unittest.IsolatedAsyncioTestCase):
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
-    def test_explicit_close_rechecks_prestarted_unknown_release(self):
+    def test_explicit_close_preserves_prestarted_unknown_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None
         owner._process = Mock()
@@ -94,10 +94,9 @@ class OwnedTargetSessionTests(unittest.TestCase):
                    return_value={'status':'snapshot',
                                  'obligations':{'keys':{'w':25}, 'buttons':[]}}):
             result = owner.close()
-        owner._observe_owner_client_disconnect.assert_called_once()
-        owner._release_retired_owner_inputs.assert_called_once_with(
-            {'keys':{'w':25}, 'buttons':[]})
-        self.assertEqual(result['owner_release_attempt']['status'], 'readback_verified')
+        owner._observe_owner_client_disconnect.assert_not_called()
+        owner._release_retired_owner_inputs.assert_not_called()
+        self.assertEqual(result['owner_release_attempt']['status'], 'unknown')
         self.assertEqual(result['cleanup_status'], 'UNKNOWN')
         self.assertFalse(result['replay_allowed'])
         self.assertIsNone(result['task_success'])
