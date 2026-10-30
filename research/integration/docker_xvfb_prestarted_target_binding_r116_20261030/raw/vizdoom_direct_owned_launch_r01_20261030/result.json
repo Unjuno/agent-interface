@@ -1,0 +1,28 @@
+{
+  "status": "FAIL",
+  "input_sent": false,
+  "launched_pid": 12,
+  "window": {
+    "xid": 4194320,
+    "title": "VIZDOOM 1.3.0 (ZDOOM 2.8.1+)"
+  },
+  "binding": {
+    "status": "refused",
+    "reason": "target_identity_unavailable",
+    "identity_query": {
+      "status": "unknown",
+      "reason": "worker_exited_without_result",
+      "worker_retired": true,
+      "worker_exitcode": 1,
+      "elapsed_ms": 129.02739400010432,
+      "worker_result_status": null,
+      "worker_result_received_monotonic_ns": null,
+      "worker_exit_observed_monotonic_ns": 1480148590687,
+      "worker_shutdown_wait_ms": null
+    }
+  },
+  "error_type": "RuntimeError",
+  "error": "XRes binding refused: {'status': 'refused', 'reason': 'target_identity_unavailable', 'identity_query': {'status': 'unknown', 'reason': 'worker_exited_without_result', 'worker_retired': True, 'worker_exitcode': 1, 'elapsed_ms': 129.02739400010432, 'worker_result_status': None, 'worker_result_received_monotonic_ns': None, 'worker_exit_observed_monotonic_ns': 1480148590687, 'worker_shutdown_wait_ms': None}}",
+  "traceback": "Traceback (most recent call last):\n  File \"/evidence/diagnostic.py\", line 28, in <module>\n    if result['binding'].get('status')!='bound':raise RuntimeError('XRes binding refused: '+str(result['binding']))\n                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: XRes binding refused: {'status': 'refused', 'reason': 'target_identity_unavailable', 'identity_query': {'status': 'unknown', 'reason': 'worker_exited_without_result', 'worker_retired': True, 'worker_exitcode': 1, 'elapsed_ms': 129.02739400010432, 'worker_result_status': None, 'worker_result_received_monotonic_ns': None, 'worker_exit_observed_monotonic_ns': 1480148590687, 'worker_shutdown_wait_ms': None}}\n",
+  "xvfb_exitcode": 0
+}
