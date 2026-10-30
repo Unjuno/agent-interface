@@ -115,6 +115,7 @@ class OwnedTargetProcess:
         self._bound_identity_digest = None
         self._handle_lock = threading.RLock()
         self._session_custody = None
+        self._custody_epoch = 0
 
     def _require_custody(self, token):
         if token is not self._session_custody:
@@ -128,6 +129,7 @@ class OwnedTargetProcess:
             raise RuntimeError('target already claimed by a session')
         token = object()
         self._session_custody = token
+        self._custody_epoch += 1
         self._bound_xid = None
         self._bound_identity_digest = None
         return token
@@ -138,6 +140,7 @@ class OwnedTargetProcess:
         if token is None:
             raise PermissionError('a session custody token is required')
         self._session_custody = None
+        self._custody_epoch += 1
         self._bound_xid = None
         self._bound_identity_digest = None
 
@@ -228,6 +231,7 @@ class OwnedTargetProcess:
         """Retain a pre-outage proof that this X resource belongs to this child."""
         with self._handle_lock:
             self._require_custody(_custody)
+            custody_epoch = self._custody_epoch
             if self._closed:
                 return {'status':'refused', 'reason':'ownership_handle_closed'}
         if not self.matches_x11_target(connection, xid):
@@ -235,6 +239,8 @@ class OwnedTargetProcess:
                     'pid':self.pid, 'start_ticks':self.start_ticks}
         with self._handle_lock:
             self._require_custody(_custody)
+            if custody_epoch != self._custody_epoch:
+                return {'status':'refused', 'reason':'custody_generation_changed'}
             if self._closed or self._process.poll() is not None:
                 return {'status':'refused', 'reason':'target_unavailable'}
             digest = _identity_digest(xid, self.pid, self.start_ticks)
@@ -256,13 +262,15 @@ class OwnedTargetProcess:
             raise ValueError('timeout_s must be positive')
         with self._handle_lock:
             self._require_custody(_custody)
+            custody_epoch = self._custody_epoch
         if (self._closed or type(xid) is not int or not 1 < xid < 2**32
                 or self._process.poll() is not None):
             return {'status':'refused', 'reason':'target_unavailable'}
         observed = supervise_xres_worker(
             _target_identity_worker, (display_name, xid), timeout_s=timeout_s,
             accepted_statuses=('observed', 'unknown'))
-        return self._bind_supervised_observation(xid, observed, _custody=_custody)
+        return self._bind_supervised_observation(xid, observed, _custody=_custody,
+                                                 _expected_epoch=custody_epoch)
 
     def bind_x11_target_prestarted(self, supervisor, session_id, display_name, xid: int,
                                    *, timeout_s=1.0, _custody=None) -> dict:
@@ -271,6 +279,7 @@ class OwnedTargetProcess:
             raise ValueError('timeout_s must be positive')
         with self._handle_lock:
             self._require_custody(_custody)
+            custody_epoch = self._custody_epoch
         if (self._closed or type(xid) is not int or not 1 < xid < 2**32
                 or self._process.poll() is not None):
             return {'status':'refused', 'reason':'target_unavailable'}
@@ -278,11 +287,15 @@ class OwnedTargetProcess:
                    'display_name':display_name, 'xid':xid}
         observed = supervisor.run(
             request, deadline_monotonic_ns=time.monotonic_ns() + int(timeout_s * 1e9))
-        return self._bind_supervised_observation(xid, observed, _custody=_custody)
+        return self._bind_supervised_observation(xid, observed, _custody=_custody,
+                                                 _expected_epoch=custody_epoch)
 
     @_with_handle_lock
-    def _bind_supervised_observation(self, xid, observed, *, _custody=None):
+    def _bind_supervised_observation(self, xid, observed, *, _custody=None,
+                                     _expected_epoch=None):
         self._require_custody(_custody)
+        if _expected_epoch is not None and _expected_epoch != self._custody_epoch:
+            return {'status':'refused', 'reason':'custody_generation_changed'}
         if (observed.get('status') != 'observed'
                 or observed.get('worker_retired') is not True
                 or observed.get('worker_exitcode') != 0):
@@ -319,6 +332,9 @@ class OwnedTargetProcess:
                           kill_timeout_s: float = 0.25, _custody=None) -> dict:
         term_timeout_s = _bounded_timeout(term_timeout_s, 'term_timeout_s')
         kill_timeout_s = _bounded_timeout(kill_timeout_s, 'kill_timeout_s')
+        with self._handle_lock:
+            self._require_custody(_custody)
+            custody_epoch = self._custody_epoch
         if self._closed:
             return {'status':'refused', 'reason':'ownership_handle_closed',
                     'signal_attempts':[], 'target_identity_verified':False}
@@ -330,8 +346,13 @@ class OwnedTargetProcess:
         if binding.get('status') != 'bound':
             return {'status':'refused', 'reason':binding.get('reason', 'target_unavailable'),
                     'signal_attempts':[], 'target_identity_verified':False}
-        return self.retire_bound_target(term_timeout_s=term_timeout_s,
-                                        kill_timeout_s=kill_timeout_s, _custody=_custody)
+        with self._handle_lock:
+            self._require_custody(_custody)
+            if custody_epoch != self._custody_epoch:
+                return {'status':'refused', 'reason':'custody_generation_changed',
+                        'signal_attempts':[], 'target_identity_verified':False}
+            return self.retire_bound_target(term_timeout_s=term_timeout_s,
+                                            kill_timeout_s=kill_timeout_s, _custody=_custody)
 
     def _retire_bound_target(self, *, xid: int, identity_digest: str,
                              term_timeout_s: float,

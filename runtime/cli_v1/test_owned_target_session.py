@@ -1,8 +1,10 @@
+import asyncio
 import signal
 import subprocess
 import sys
 import tempfile
 import threading
+import time
 import unittest
 from unittest.mock import Mock, patch
 
@@ -24,8 +26,28 @@ class ExclusiveServerCustodyTests(unittest.IsolatedAsyncioTestCase):
                                guarded_query_worker=True, guarded_owned_process=True,
                                _guarded_owned_target_process=target)
                 first = create_server({'app':77}, root + '/first', **options)
-                with self.assertRaisesRegex(RuntimeError, 'already claimed'):
-                    create_server({'app':77}, root + '/conflict', **options)
+                with patch('runtime.cli_v1.mcp_server.ThreadPoolExecutor') as executor:
+                    with self.assertRaisesRegex(RuntimeError, 'already claimed'):
+                        create_server({'app':77}, root + '/conflict', **options)
+                    executor.return_value.shutdown.assert_called_once_with(
+                        wait=False, cancel_futures=True)
+                before = sum(t.name.startswith('guarded-cancel')
+                             for t in threading.enumerate())
+                retained_errors = []
+                for index in range(3):
+                    try:
+                        create_server({'app':77}, root + '/conflict-' + str(index), **options)
+                    except RuntimeError as error:
+                        retained_errors.append(error)
+                self.assertEqual(len(retained_errors), 3)
+                deadline = time.monotonic() + 2
+                while time.monotonic() < deadline:
+                    current = sum(t.name.startswith('guarded-cancel')
+                                  for t in threading.enumerate())
+                    if current <= before:
+                        break
+                    await asyncio.sleep(.01)
+                self.assertLessEqual(current, before)
                 await first.call_tool('interface_close', {})
                 second = create_server({'app':77}, root + '/second', **options)
                 await second.call_tool('interface_close', {})

@@ -516,23 +516,28 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                              window_lifecycle=guarded_window_lifecycle,
                              retention_mode=guarded_retention_mode)
         if guarded_owned_process:
-            if _guarded_owned_target_process is not None:
-                from .owned_target_session import OwnedTargetGuardedSessionOwner
-                owner = OwnedTargetGuardedSessionOwner(
-                    targets, root, display_name,
-                    owned_target_process=_guarded_owned_target_process,
-                    prestarted_target_identity=_guarded_prestarted_target_identity,
-                    **owner_options,
-                    prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
-                    _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
-                    _owner_factory=_guarded_owner_factory)
-            else:
-                from .owned_guarded_session import OwnedGuardedSessionOwner
-                owner = OwnedGuardedSessionOwner(targets, root, display_name,
-                    **owner_options,
-                    prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
-                    _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
-                    _owner_factory=_guarded_owner_factory)
+            try:
+                if _guarded_owned_target_process is not None:
+                    from .owned_target_session import OwnedTargetGuardedSessionOwner
+                    owner = OwnedTargetGuardedSessionOwner(
+                        targets, root, display_name,
+                        owned_target_process=_guarded_owned_target_process,
+                        prestarted_target_identity=_guarded_prestarted_target_identity,
+                        **owner_options,
+                        prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                        _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                        _owner_factory=_guarded_owner_factory)
+                else:
+                    from .owned_guarded_session import OwnedGuardedSessionOwner
+                    owner = OwnedGuardedSessionOwner(targets, root, display_name,
+                        **owner_options,
+                        prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                        _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                        _owner_factory=_guarded_owner_factory)
+            except BaseException:
+                if cancellation_executor is not None:
+                    cancellation_executor.shutdown(wait=False, cancel_futures=True)
+                raise
         else:
             owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False

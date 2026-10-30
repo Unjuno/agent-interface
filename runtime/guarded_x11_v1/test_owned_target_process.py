@@ -27,6 +27,64 @@ class _FakeProcess:
 
 @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
 class OwnedTargetProcessTests(unittest.TestCase):
+    def test_direct_retire_rejects_intervening_custody_after_bind(self):
+        owner = self.launch()
+        entered, release = threading.Event(), threading.Event()
+        result = []
+        original = owner.bind_x11_target
+        def paused_bind(*args, **kwargs):
+            binding = original(*args, **kwargs)
+            entered.set()
+            if not release.wait(2):
+                raise RuntimeError('test did not release bind')
+            return binding
+        with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                   return_value=_identity_digest(100, self.process.pid, 991)), \
+             patch.object(owner, 'bind_x11_target', side_effect=paused_bind):
+            thread = threading.Thread(target=lambda: result.append(
+                owner.retire_x11_target(object(), 100)))
+            thread.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                token = owner.claim_session()
+                owner.release_session(token)
+                self.assertEqual(original(object(), 100)['status'], 'bound')
+            finally:
+                release.set()
+                thread.join(timeout=2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(result[0]['reason'], 'custody_generation_changed')
+        self.send_signal_mock.assert_not_called()
+        self.process.returncode = 0
+        owner.close()
+
+    def test_unclaimed_binding_rejects_intervening_claim_release_aba(self):
+        owner = self.launch()
+        entered, release = threading.Event(), threading.Event()
+        result = []
+        def query(*args):
+            entered.set()
+            if not release.wait(2):
+                raise RuntimeError('test did not release query')
+            return _identity_digest(100, self.process.pid, 991)
+        with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                   side_effect=query):
+            thread = threading.Thread(target=lambda: result.append(
+                owner.bind_x11_target(object(), 100)))
+            thread.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                token = owner.claim_session()
+                owner.release_session(token)
+            finally:
+                release.set()
+                thread.join(timeout=2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(result[0]['status'], 'refused')
+        self.assertEqual(result[0]['reason'], 'custody_generation_changed')
+        self.process.returncode = 0
+        owner.close()
+
     def test_exclusive_custody_revokes_old_token_and_requires_new_binding(self):
         owner = self.launch()
         first = owner.claim_session()
