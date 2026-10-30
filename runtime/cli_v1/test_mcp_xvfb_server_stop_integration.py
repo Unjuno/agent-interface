@@ -408,15 +408,21 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 # to finish while the server is still stopped, before resuming.
                 if _WAIT_CANCEL_WHILE_STOPPED:
                     end = time.monotonic() + 8.0
+                    cancellation = {}
                     while time.monotonic() < end:
-                        stopped_terminal = _metadata(await server.call_tool(
-                            'interface_results', {'call_id':call_id, 'include_image':False}))
+                        remaining = end - time.monotonic()
+                        if remaining <= 0:
+                            break
+                        stopped_terminal = _metadata(await asyncio.wait_for(
+                            server.call_tool('interface_results', {
+                                'call_id':call_id, 'include_image':False}),
+                            timeout=remaining))
                         cancellation = stopped_terminal.get('cancellation') or {}
                         if cancellation.get('status') in ('completed', 'unknown'):
                             report['stopped_terminal'] = stopped_terminal
                             break
                         await asyncio.sleep(0.02)
-                    else:
+                    if cancellation.get('status') not in ('completed', 'unknown'):
                         self.fail('cancellation did not finish while Xvfb stopped')
                     self.assertIn(_private_xvfb_record()['state'], ('T', 't'))
                     stopped_result = cancellation.get('result') or {}
