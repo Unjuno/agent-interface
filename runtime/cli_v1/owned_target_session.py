@@ -77,6 +77,22 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
                 binding.get('reason', 'unknown')))
         self._owned_target_binding = deepcopy(binding)
 
+    def retire(self, reason='explicit owner retirement'):
+        retirement = super().retire(reason)
+        if retirement.get('retired') is True:
+            deadline = time.monotonic_ns() + _TARGET_RELEASE_RESERVE_NS
+            acquired = self._target_retirement_lock.acquire(timeout=max(
+                0, (deadline - time.monotonic_ns()) / 1e9))
+            if acquired:
+                try:
+                    if self._owned_target_retirement is None:
+                        self._attempt_target_retirement(deadline_monotonic_ns=deadline)
+                finally:
+                    self._target_retirement_lock.release()
+            else:
+                self._target_retirement_deferred.set()
+        return retirement
+
     def _cleanup_after_owner_retirement(self, retirement, **kwargs):
         context = getattr(self, '_target_cancel_context', None)
         deadline = getattr(context, 'deadline_ns', None)

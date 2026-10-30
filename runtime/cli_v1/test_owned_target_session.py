@@ -65,6 +65,43 @@ class ExclusiveServerCustodyTests(unittest.IsolatedAsyncioTestCase):
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    def test_explicit_close_rechecks_prestarted_unknown_release(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._process.exitcode = -15
+        owner._process.pid = 1234
+        owner._retirement = {'reason':'cancel timeout', 'retired':True, 'exitcode':-15}
+        owner._owner_client_disconnect = {'status':'unknown', 'reason':'transaction_deadline'}
+        owner._owner_release_attempt = {'status':'unknown', 'reason':'transaction_deadline'}
+        owner._prestarted_cancel_enabled = True
+        owner._prestarted_cleanup_result = (owner._owner_client_disconnect,
+                                            owner._owner_release_attempt)
+        owner._owner_input_obligations_state = object()
+        owner._owner_input_obligations = {'keys':{'w':25}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner._observe_owner_client_disconnect = Mock(return_value={'status':'disconnected'})
+        owner._release_retired_owner_inputs = Mock(return_value={
+            'status':'readback_verified', 'release':{'verified':True,
+                                                     'keys_down':[], 'buttons_down':[]}})
+        owner.session_id = 'close-recheck'
+        owner.error = 'cancel timeout'
+        owner._execution_unknown = True
+        owner.review_required = True
+        with patch('runtime.cli_v1.owned_guarded_session._read_owner_input_obligations',
+                   return_value={'status':'snapshot',
+                                 'obligations':{'keys':{'w':25}, 'buttons':[]}}):
+            result = owner.close()
+        owner._observe_owner_client_disconnect.assert_called_once()
+        owner._release_retired_owner_inputs.assert_called_once_with(
+            {'keys':{'w':25}, 'buttons':[]})
+        self.assertEqual(result['owner_release_attempt']['status'], 'readback_verified')
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(result['replay_allowed'])
+        self.assertIsNone(result['task_success'])
+
     @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
     def test_deadline_retirement_closes_real_owned_handle(self):
         target = OwnedTargetProcess.launch(
@@ -494,6 +531,23 @@ class OwnedTargetSessionTests(unittest.TestCase):
                 prestarted_target_identity=True)
             owner._ensure_started()
         self.assertEqual(owner._owned_target_binding['status'], 'bound')
+
+    def test_explicit_retire_stops_bound_target_only_after_control_exit(self):
+        for retired in (False, True):
+            with self.subTest(control_retired=retired):
+                owner = object.__new__(OwnedTargetGuardedSessionOwner)
+                owner._target_retirement_lock = threading.RLock()
+                owner._owned_target_process = Mock()
+                owner._owned_target_retirement = None
+                owner._owned_target_process.retire_bound_target.return_value = {
+                    'status': 'retired', 'process_exit_verified': True}
+                with patch.object(OwnedGuardedSessionOwner, 'retire',
+                                  return_value={'retired': retired}) as parent:
+                    result = owner.retire('shutdown')
+                parent.assert_called_once_with('shutdown')
+                self.assertEqual(result, {'retired': retired})
+                self.assertEqual(owner._owned_target_process.retire_bound_target.call_count,
+                                 int(retired))
 
     def test_retire_target_precedes_existing_release_cleanup_and_is_cached(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
