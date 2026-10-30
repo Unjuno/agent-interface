@@ -1,0 +1,69 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 4372248829,
+      "ended_ns": 5646865047,
+      "emissions": 16,
+      "program_emissions": 16,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 5646863787
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 4,
+          "requested_ms": 20,
+          "started_ns": 4943853720,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 4963933755
+        },
+        {
+          "operation_index": 8,
+          "requested_ms": 20,
+          "started_ns": 5414365700,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5434452220
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "error": "X11BackendError('native target guard lease expired during capture')",
+      "failed_op": 10,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": false
+  }
+}
