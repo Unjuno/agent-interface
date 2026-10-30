@@ -6,12 +6,14 @@ from functools import wraps
 import threading
 import time
 
-from .owned_guarded_session import OwnedGuardedSessionOwner, _CANCEL_TRANSACTION_DEADLINE_S
+from .owned_guarded_session import (OwnedGuardedSessionOwner,
+    _CANCEL_TRANSACTION_DEADLINE_S, _CANCEL_CONTROL_RESPONSE_TIMEOUT_S)
 from ..guarded_x11_v1.owned_target_process import (
     OwnedTargetProcess, _prestarted_target_identity_worker)
 from ..guarded_x11_v1.cancel_supervisor import PrestartedCancellationSupervisor
 
 _TARGET_RELEASE_RESERVE_NS = 250_000_000
+_CONTROL_RETIRE_RESERVE_NS = 50_000_000
 
 def _with_retirement_lock(method):
     @wraps(method)
@@ -76,6 +78,12 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
             raise RuntimeError('owned target binding refused: ' + str(
                 binding.get('reason', 'unknown')))
         self._owned_target_binding = deepcopy(binding)
+
+    def _cancel_control_wait_seconds(self, deadline_monotonic_ns):
+        # Reserve best-effort time for control retirement and target signaling.
+        remaining = (deadline_monotonic_ns - _TARGET_RELEASE_RESERVE_NS
+                     - _CONTROL_RETIRE_RESERVE_NS - time.monotonic_ns())
+        return min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, max(0, remaining / 1e9))
 
     def retire(self, reason='explicit owner retirement'):
         retirement = super().retire(reason)

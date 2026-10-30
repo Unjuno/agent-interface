@@ -65,6 +65,14 @@ class ExclusiveServerCustodyTests(unittest.IsolatedAsyncioTestCase):
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    def test_short_cancel_budget_reserves_time_for_owned_target_retirement(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        with patch('runtime.cli_v1.owned_target_session.time.monotonic_ns',
+                   return_value=1_000_000_000):
+            timeout = owner._cancel_control_wait_seconds(1_450_000_000)
+        self.assertGreaterEqual(timeout, 0)
+        self.assertLessEqual(timeout, .15)
+
     def test_explicit_close_preserves_prestarted_unknown_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None

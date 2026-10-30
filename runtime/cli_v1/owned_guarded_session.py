@@ -762,6 +762,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return True
         return bool(keys) or bool(buttons)
 
+    def _cancel_control_wait_seconds(self, deadline_monotonic_ns):
+        return min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, max(
+            0, (deadline_monotonic_ns - time.monotonic_ns()) / 1e9))
+
     def cancel_guarded(self, token, *, operation_id=None,
                        deadline_monotonic_ns=None):
         if deadline_monotonic_ns is None:
@@ -777,7 +781,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         with self._control_lock:
             try:
                 self._control.send({'operation':'cancel_guarded', 'token':token})
-                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
+                if not self._control.poll(self._cancel_control_wait_seconds(deadline_monotonic_ns)):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')
@@ -831,7 +835,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return result
         requires_retirement = self._cancel_requires_owner_retirement(result)
         if (not requires_retirement
-                and self._rpc_lock.acquire(timeout=_CANCEL_RETIRE_GRACE_S)):
+                and self._rpc_lock.acquire(timeout=min(_CANCEL_RETIRE_GRACE_S,
+                    self._cancel_control_wait_seconds(deadline_monotonic_ns)))):
             self._rpc_lock.release()
             return result
         retirement_reason = ('cancel left input or server-request obligation'
