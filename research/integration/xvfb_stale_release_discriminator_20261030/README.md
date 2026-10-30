@@ -1,0 +1,7 @@
+# Xvfb stale release discriminator (exploratory)
+
+Base c1f65c83b91e41c205abbbf0a17546a84af4181d; candidate production code ffe0a7420407b80fa6c680863147a7f0a3951da3. Pinned Docker image sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425, network disabled, private Xvfb :88; normal (non-prestarted) cancellation. Fresh containers, fixed order candidate then base. This was exploratory and not preregistered; no statistical reliability claim.
+
+The test waited for cancellation completion while Xvfb was still stopped, then resumed it. A separate X client replaced the old A hold with its own hold before close. `fixed.json`: cleanup UNKNOWN, old release not_attempted, A remained down after close, overall test passed. `original.json`: cleanup UNKNOWN and old release not_attempted before resume, later close reported readback_verified and A was up; the held-key assertion failed. `fixed-assertions.json` is a separate subsequent candidate run with added explicit checks for the stopped-server precondition and preserved receipt; it passed. The earlier pair ran before those two assertions were added; their raw receipts independently expose the preconditions.
+
+This is one fixed-order pair plus one follow-up, using a synthetic app and manual client conflict. It does not prove task success of the old operation, safe recovery, WSLc, MAP01 completion, or general reliability. The original failure and raw receipts are retained.

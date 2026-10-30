@@ -31,7 +31,8 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 )
 
 
-_SERVER_STOP_SAFETY_S = 4.0
+_LONG_STOP = os.environ.get('AGENT_INTERFACE_TEST_LONG_STOP') == '1'
+_SERVER_STOP_SAFETY_S = 12.0 if _LONG_STOP else 4.0
 _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
 _RECOVERY_BOUND_S = 5.0
@@ -403,8 +404,25 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                               - report['timing_ns']['cancel_started']) / 1_000_000_000)
                 report['cancel_elapsed_s'] = elapsed_s
                 report['cancel'] = cancel
-                # Resume as soon as the bounded call returns; the safety timer
-                # handles a broken bound without blocking final cleanup forever.
+                # Long-stop discriminator: wait for asynchronous cancellation
+                # to finish while the server is still stopped, before resuming.
+                if _LONG_STOP:
+                    end = time.monotonic() + 8.0
+                    while time.monotonic() < end:
+                        stopped_terminal = _metadata(await server.call_tool(
+                            'interface_results', {'call_id':call_id, 'include_image':False}))
+                        cancellation = stopped_terminal.get('cancellation') or {}
+                        if cancellation.get('status') in ('completed', 'unknown'):
+                            report['stopped_terminal'] = stopped_terminal
+                            break
+                        await asyncio.sleep(0.02)
+                    else:
+                        self.fail('cancellation did not finish while Xvfb stopped')
+                    self.assertIn(_private_xvfb_record()['state'], ('T', 't'))
+                    stopped_result = cancellation.get('result') or {}
+                    self.assertEqual(stopped_result.get('cleanup_status'), 'UNKNOWN')
+                    self.assertEqual(stopped_result.get('owner_release_attempt', {}).get('status'),
+                                     'not_attempted')
                 report['server_resume'] = resume_exact_server()
                 safety_timer.cancel()
 
@@ -541,6 +559,9 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                  post_resume_close)
                 self.assertTrue(
                     report['independent_readback_after_close']['keys_down']['a'])
+                if _LONG_STOP:
+                    self.assertEqual(post_resume_close['owner_release_attempt'],
+                                     stopped_result['owner_release_attempt'])
                 self.assertEqual(report['independent_readback_after_close']['effect'],
                                  [1])
                 xtest.fake_input(observer, X.KeyRelease, detail=keycodes['a'])
