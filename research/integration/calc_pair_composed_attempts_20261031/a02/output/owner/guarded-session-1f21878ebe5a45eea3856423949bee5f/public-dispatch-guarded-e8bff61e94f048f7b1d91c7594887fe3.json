@@ -1,0 +1,69 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 4854395439,
+      "ended_ns": 5060139925,
+      "emissions": 7,
+      "program_emissions": 7,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 5060138436
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 5,
+          "requested_ms": 1,
+          "started_ns": 4994664495,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 4995739834
+        },
+        {
+          "operation_index": 7,
+          "requested_ms": 1,
+          "started_ns": 5030394096,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 5031474280
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "error": "X11BackendError('native target guard refused: MISSING')",
+      "failed_op": 8,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": false
+  }
+}
