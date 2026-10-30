@@ -1,0 +1,7 @@
+# WSLc Calc/OCR environment readiness
+
+The archived G10 image `sha256:86edd8e13599b0e4e035b5865e4fee340740d349308a2a24a1304aa1cb41dde2` and its named base were not found by exact-name inspection in local WSLc or Docker. No old allocation was executed. The existing WSLc Xvfb/ViZDoom image lacks Calc and Tesseract. Capability A01 partially reported absence but exited 1 because of a shell-quoting error; A02 corrected the probe and retained both outputs.
+
+Build01 failed when WSLc build interpreted a `sha256:` FROM as a registry reference. Build02 uses the already-loaded named base and installs Calc, Openbox, Liberation fonts, Tesseract and English data with network access. It produced new WSLc image `sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25`. Packages were resolved at build time, not pinned; the package inventory and raw build log are retained. This image is not the historical G10 image. A03 checked relevant executable/module presence; A04 retained the package inventory with SHA256 `41271c5cf2de8a04b95287355ae29679481586eab3fde27808f17af12b8ee2d2`.
+
+In separate isolated WSLc containers with no network, startup05 failed to observe a mapped Calc window after 15 s with `--nodefault`; startup06 removed that option and observed `Untitled 1 - LibreOffice Calc` mapped. These are startup diagnostics without input, saved-workbook scoring, OCR, model calls or benchmark comparison. The tests do not prove the option was the sole cause, general reliability or economic speedup. Exact-ID cleanup queries and raw files are retained.

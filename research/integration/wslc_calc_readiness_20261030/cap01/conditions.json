@@ -1,0 +1,26 @@
+{
+  "name": "agent-interface-calc-capability-597492d82eae485db516fde0dcd7752c",
+  "image_id": "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+  "scope": "capability-only probe; no GUI/model, no package installation",
+  "timeout_s": 30,
+  "command": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--name",
+    "agent-interface-calc-capability-597492d82eae485db516fde0dcd7752c",
+    "--cidfile",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\wslc-calc-capabilities-20261030-a01\\container-id.txt",
+    "--network",
+    "none",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--entrypoint",
+    "/bin/sh",
+    "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+    "-c",
+    "for x in libreoffice soffice tesseract Xvfb xdotool; do if command -v \"$x\" >/dev/null 2>&1; then printf \"%s=present\\n\" \"$x\"; else printf \"%s=absent\\n\" \"$x\"; fi; done; python3 -c \"import importlib.util,json; print(json.dumps({k: importlib.util.find_spec(k) is not None for k in [\"Xlib\",\"PIL\",\"mcp\",\"vizdoom\"]}))\""
+  ]
+}
