@@ -2,11 +2,21 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from functools import wraps
+import threading
 
 from .owned_guarded_session import OwnedGuardedSessionOwner
 from ..guarded_x11_v1.owned_target_process import (
     OwnedTargetProcess, _prestarted_target_identity_worker)
 from ..guarded_x11_v1.cancel_supervisor import PrestartedCancellationSupervisor
+
+
+def _with_retirement_lock(method):
+    @wraps(method)
+    def locked(self, *args, **kwargs):
+        with self._target_retirement_lock:
+            return method(self, *args, **kwargs)
+    return locked
 
 
 class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
@@ -34,6 +44,7 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         self._owned_target_xid = next(iter(targets.values()))
         self._owned_target_binding = None
         self._owned_target_retirement = None
+        self._target_retirement_lock = threading.RLock()
         self._target_identity_supervisor = (PrestartedCancellationSupervisor(
             _prestarted_target_identity_worker)
             if prestarted_target_identity else None)
@@ -55,15 +66,12 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         self._owned_target_binding = deepcopy(binding)
 
     def _cleanup_after_owner_retirement(self, retirement, **kwargs):
-        if self._owned_target_retirement is None:
-            if retirement.get('retired') is True:
+        with self._target_retirement_lock:
+            if self._owned_target_retirement is None and retirement.get('retired') is True:
                 self._attempt_target_retirement()
-            else:
-                # Do not cache a non-attempt: a later close can observe that
-                # the exact control owner has exited and then retire the target.
-                pass
         return super()._cleanup_after_owner_retirement(retirement, **kwargs)
 
+    @_with_retirement_lock
     def _attempt_target_retirement(self):
         first = None
         try:
@@ -94,6 +102,7 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
             deadline_monotonic_ns=deadline_monotonic_ns)
         return self._with_target_receipts(result)
 
+    @_with_retirement_lock
     def _with_target_receipts(self, result):
         if self._owned_target_retirement is not None:
             result = dict(result, owned_target_retirement=deepcopy(
@@ -108,16 +117,19 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
             super()._retirement_cleanup_result_fields(retirement))
 
     def close(self):
-        previous = deepcopy(getattr(self, '_owned_target_retirement', None))
+        with self._target_retirement_lock:
+            previous = deepcopy(getattr(self, '_owned_target_retirement', None))
         try:
             report = super().close()
             retirement = getattr(self, '_retirement', None) or {}
-            if (previous is not None and previous.get('status') == 'unknown'
-                    and previous.get('process_exit_verified') is not True
-                    and retirement.get('retired') is True):
-                self._attempt_target_retirement()
-                previous.pop('previous_attempt', None)
-                self._owned_target_retirement['previous_attempt'] = previous
+            with self._target_retirement_lock:
+                if (previous is not None and previous.get('status') == 'unknown'
+                        and previous.get('process_exit_verified') is not True
+                        and retirement.get('retired') is True
+                        and self._owned_target_retirement == previous):
+                    self._attempt_target_retirement()
+                    previous.pop('previous_attempt', None)
+                    self._owned_target_retirement['previous_attempt'] = previous
             return self._with_target_receipts(report)
         finally:
             supervisor = getattr(self, '_target_identity_supervisor', None)

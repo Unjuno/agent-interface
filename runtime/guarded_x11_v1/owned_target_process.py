@@ -14,8 +14,10 @@ import select
 import signal
 import subprocess
 import sys
+import threading
 import time
 import uuid
+from functools import wraps
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -25,6 +27,14 @@ from .xres_client_fence import supervise_xres_worker
 
 _MAX_RETIRE_WAIT_S = 10.0
 _LAUNCH_RECEIPT = object()
+
+
+def _with_handle_lock(method):
+    @wraps(method)
+    def locked(self, *args, **kwargs):
+        with self._handle_lock:
+            return method(self, *args, **kwargs)
+    return locked
 
 
 def _target_identity_worker(send_connection, display_name, xid):
@@ -103,6 +113,7 @@ class OwnedTargetProcess:
         self._closed = False
         self._bound_xid = None
         self._bound_identity_digest = None
+        self._handle_lock = threading.RLock()
 
     @classmethod
     def launch(cls, argv: Sequence[str], *, disposable: bool,
@@ -163,6 +174,7 @@ class OwnedTargetProcess:
                    _launch_receipt=_LAUNCH_RECEIPT)
 
     @property
+    @_with_handle_lock
     def running(self) -> bool:
         return not self._closed and self._process.poll() is None
 
@@ -193,16 +205,19 @@ class OwnedTargetProcess:
         if not self.matches_x11_target(connection, xid):
             return {'status':'refused', 'reason':'target_process_identity_mismatch',
                     'pid':self.pid, 'start_ticks':self.start_ticks}
-        digest = _identity_digest(xid, self.pid, self.start_ticks)
-        if self._bound_xid is not None and (
-                self._bound_xid != xid or self._bound_identity_digest != digest):
-            return {'status':'refused', 'reason':'target_binding_already_frozen',
-                    'bound_xid':self._bound_xid, 'requested_xid':xid}
-        self._bound_xid = xid
-        self._bound_identity_digest = digest
-        return {'status':'bound', 'xid':xid, 'pid':self.pid,
-                'start_ticks':self.start_ticks,
-                'identity_digest':digest}
+        with self._handle_lock:
+            if self._closed or self._process.poll() is not None:
+                return {'status':'refused', 'reason':'target_unavailable'}
+            digest = _identity_digest(xid, self.pid, self.start_ticks)
+            if self._bound_xid is not None and (
+                    self._bound_xid != xid or self._bound_identity_digest != digest):
+                return {'status':'refused', 'reason':'target_binding_already_frozen',
+                        'bound_xid':self._bound_xid, 'requested_xid':xid}
+            self._bound_xid = xid
+            self._bound_identity_digest = digest
+            return {'status':'bound', 'xid':xid, 'pid':self.pid,
+                    'start_ticks':self.start_ticks,
+                    'identity_digest':digest}
 
     def bind_x11_target_supervised(self, display_name, xid: int, *, timeout_s=1.0) -> dict:
         """Bind with a killable XRes worker; process startup is outside its deadline."""
@@ -231,6 +246,7 @@ class OwnedTargetProcess:
             request, deadline_monotonic_ns=time.monotonic_ns() + int(timeout_s * 1e9))
         return self._bind_supervised_observation(xid, observed)
 
+    @_with_handle_lock
     def _bind_supervised_observation(self, xid, observed):
         if (observed.get('status') != 'observed'
                 or observed.get('worker_retired') is not True
@@ -238,7 +254,7 @@ class OwnedTargetProcess:
             return {'status':'refused', 'reason':'target_identity_unavailable',
                     'identity_query':observed}
         digest = _identity_digest(xid, self.pid, self.start_ticks)
-        if self._process.poll() is not None or observed.get('identity_digest') != digest:
+        if self._closed or self._process.poll() is not None or observed.get('identity_digest') != digest:
             return {'status':'refused', 'reason':'target_process_identity_mismatch'}
         if self._bound_xid is not None and (
                 self._bound_xid != xid or self._bound_identity_digest != digest):
@@ -248,6 +264,7 @@ class OwnedTargetProcess:
                 'start_ticks':self.start_ticks, 'identity_digest':digest,
                 'identity_query':observed}
 
+    @_with_handle_lock
     def retire_bound_target(self, *, term_timeout_s: float = 0.25,
                             kill_timeout_s: float = 0.25) -> dict:
         """Retire only the child bound while X11 identity queries were healthy."""
@@ -273,19 +290,12 @@ class OwnedTargetProcess:
             return {'status':'already_exited', 'exitcode':self._process.returncode,
                     'signal_attempts':[], 'target_identity_verified':False,
                     'process_exit_verified':True}
-        if not self.matches_x11_target(connection, xid):
-            return {'status':'refused', 'reason':'target_process_identity_mismatch',
+        binding = self.bind_x11_target(connection, xid)
+        if binding.get('status') != 'bound':
+            return {'status':'refused', 'reason':binding.get('reason', 'target_unavailable'),
                     'signal_attempts':[], 'target_identity_verified':False}
-        digest = _identity_digest(xid, self.pid, self.start_ticks)
-        if self._bound_xid is not None and (
-                self._bound_xid != xid or self._bound_identity_digest != digest):
-            return {'status':'refused', 'reason':'target_binding_already_frozen',
-                    'signal_attempts':[], 'target_identity_verified':False}
-        self._bound_xid = xid
-        self._bound_identity_digest = digest
-        return self._retire_bound_target(
-            xid=xid, identity_digest=digest,
-            term_timeout_s=term_timeout_s, kill_timeout_s=kill_timeout_s)
+        return self.retire_bound_target(term_timeout_s=term_timeout_s,
+                                        kill_timeout_s=kill_timeout_s)
 
     def _retire_bound_target(self, *, xid: int, identity_digest: str,
                              term_timeout_s: float,
@@ -331,6 +341,7 @@ class OwnedTargetProcess:
                 'target_xid':xid, 'identity_digest':identity_digest,
                 'process_exit_verified':False}
 
+    @_with_handle_lock
     def close(self) -> None:
         if self._closed:
             return

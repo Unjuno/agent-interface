@@ -1,6 +1,7 @@
 import signal
 import subprocess
 import sys
+import threading
 import unittest
 from unittest.mock import Mock, patch
 
@@ -10,8 +11,47 @@ from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess, _ide
 
 
 class OwnedTargetSessionTests(unittest.TestCase):
+    def test_concurrent_retirement_cleanup_attempts_target_only_once(self):
+        owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
+        owner._owned_target_retirement = None
+        owner._owned_target_process = Mock()
+        entered = threading.Event()
+        release = threading.Event()
+        second_entered = threading.Event()
+        count = []
+        def retire():
+            count.append(1)
+            if len(count) == 1:
+                entered.set()
+                if not release.wait(2):
+                    raise RuntimeError('test did not release retirement')
+            else:
+                second_entered.set()
+            return {'status':'retired', 'process_exit_verified':True}
+        owner._owned_target_process.retire_bound_target.side_effect = retire
+        def cleanup():
+            owner._cleanup_after_owner_retirement({'retired':True})
+        with patch.object(OwnedGuardedSessionOwner, '_cleanup_after_owner_retirement',
+                          return_value=({}, {})):
+            first = threading.Thread(target=cleanup)
+            second = threading.Thread(target=cleanup)
+            first.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                second.start()
+                self.assertFalse(second_entered.wait(.1), 'duplicate target retirement')
+            finally:
+                release.set()
+                first.join(timeout=2)
+                if second.ident is not None:
+                    second.join(timeout=2)
+        self.assertEqual(len(count), 1)
+        owner._owned_target_process.close.assert_called_once_with()
+
     def test_transient_pidfd_error_gets_one_immediate_same_handle_retry(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_process = Mock()
         failed = {'status':'unknown', 'reason':'pidfd_signal_failed',
                   'target_identity_verified':True, 'process_exit_verified':False}
@@ -25,6 +65,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_repeated_pidfd_error_is_bounded_and_remains_unknown(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_process = Mock()
         failed = {'status':'unknown', 'reason':'pidfd_signal_failed',
                   'target_identity_verified':True, 'process_exit_verified':False}
@@ -45,6 +86,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
                        return_value=digest):
                 self.assertEqual(target.bind_x11_target(object(), 77)['status'], 'bound')
             owner = object.__new__(OwnedTargetGuardedSessionOwner)
+            owner._target_retirement_lock = threading.RLock()
             owner._owned_target_process = target
             owner._owned_target_binding = {'status':'bound'}
             owner._owned_target_retirement = None
@@ -78,6 +120,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_close_rechecks_unconfirmed_target_exit_after_verified_release(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_binding = {'status':'bound'}
         owner._owned_target_retirement = {'status':'unknown',
                                           'process_exit_verified':False}
@@ -99,6 +142,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_close_does_not_recheck_target_without_retired_owner(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_binding = {'status':'bound'}
         owner._owned_target_retirement = {'status':'unknown',
                                           'process_exit_verified':False}
@@ -113,6 +157,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_failed_identity_binding_refuses_before_owner_rpc_dispatch(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_binding = None
         owner._target_identity_supervisor = None
         owner._owned_target_xid = 77
@@ -153,6 +198,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_retire_target_precedes_existing_release_cleanup_and_is_cached(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         target = Mock()
         target.retire_bound_target.return_value = {
             'status':'retired', 'target_identity_verified':True,
@@ -187,6 +233,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_failed_control_owner_retirement_does_not_signal_target(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         target = Mock()
         owner._owned_target_process = target
         owner._owned_target_retirement = None
@@ -206,6 +253,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_target_retirement_exception_does_not_skip_release_cleanup(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_process = Mock()
         owner._owned_target_process.retire_bound_target.side_effect = OSError('failed')
         owner._owned_target_retirement = None
@@ -219,6 +267,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_cancel_preserves_unknown_and_attaches_target_receipt(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_binding = {'status':'bound', 'xid':77}
         owner._owned_target_retirement = {'status':'retired',
                                           'process_exit_verified':True}
@@ -236,6 +285,7 @@ class OwnedTargetSessionTests(unittest.TestCase):
 
     def test_close_includes_target_receipt_without_upgrading_unknown(self):
         owner = object.__new__(OwnedTargetGuardedSessionOwner)
+        owner._target_retirement_lock = threading.RLock()
         owner._owned_target_binding = {'status':'bound', 'xid':77}
         owner._owned_target_retirement = {'status':'unknown',
                                           'process_exit_verified':False}

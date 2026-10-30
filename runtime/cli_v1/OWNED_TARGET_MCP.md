@@ -47,3 +47,11 @@ focus are shared, so already queued events may be delivered elsewhere after
 the server resumes. Use a disposable, isolated display and do not admit a
 fresh target solely on the strength of this receipt. The primitive tracks one
 process, not a descendant tree or a whole application session.
+
+The ownership handle is not yet an exclusive server lease. Do not share one
+handle between concurrent server instances; cancellation in either can
+retire the common target. Target retirement is not yet budgeted against the
+public cancellation transaction deadline and can consume time otherwise
+available for independent input release. Server shutdown can retire the
+control owner before the later target-cleanup path runs. These unresolved
+boundaries keep this integration experimental.

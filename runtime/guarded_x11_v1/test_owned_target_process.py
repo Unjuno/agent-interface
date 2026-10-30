@@ -2,6 +2,7 @@
 import signal
 import subprocess
 import sys
+import threading
 import unittest
 from unittest.mock import Mock, patch
 
@@ -26,6 +27,79 @@ class _FakeProcess:
 
 @unittest.skipUnless(sys.platform.startswith('linux'), 'Linux pidfd contract')
 class OwnedTargetProcessTests(unittest.TestCase):
+    def test_stalled_identity_query_does_not_block_close_or_bind_after_close(self):
+        owner = self.launch()
+        entered, release, close_done = threading.Event(), threading.Event(), threading.Event()
+        result = []
+        def query(*args):
+            entered.set()
+            if not release.wait(2):
+                raise RuntimeError('test did not release identity query')
+            return _identity_digest(100, self.process.pid, 991)
+        def bind():
+            result.append(owner.bind_x11_target(object(), 100))
+        def close():
+            owner.close()
+            close_done.set()
+        with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                   side_effect=query):
+            binding = threading.Thread(target=bind)
+            closing = threading.Thread(target=close)
+            binding.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                self.process.returncode = 0
+                closing.start()
+                self.assertTrue(close_done.wait(.2), 'close blocked on identity query')
+            finally:
+                release.set()
+                binding.join(timeout=2)
+                if closing.ident is not None:
+                    closing.join(timeout=2)
+        self.assertFalse(binding.is_alive())
+        self.assertFalse(closing.is_alive())
+        self.assertNotEqual(result[0]['status'], 'bound')
+
+    def test_close_cannot_release_pidfd_during_inflight_signal(self):
+        owner = self.launch()
+        with patch('runtime.guarded_x11_v1.owned_target_process.read_linux_x11_process_identity',
+                   return_value=_identity_digest(100, self.process.pid, 991)):
+            self.assertEqual(owner.bind_x11_target(object(), 100)['status'], 'bound')
+        signal_entered = threading.Event()
+        signal_continue = threading.Event()
+        close_done = threading.Event()
+        outcomes = []
+        def delayed_signal(fd, sig):
+            signal_entered.set()
+            if not signal_continue.wait(2):
+                raise RuntimeError('test failed to release signal')
+            outcomes.append(('signal_after_close', self.close_fd_mock.called))
+        self.send_signal_mock.side_effect = delayed_signal
+        def retire():
+            outcomes.append(('retire', owner.retire_bound_target()))
+        def close():
+            try:
+                owner.close()
+            finally:
+                close_done.set()
+        retiring = threading.Thread(target=retire)
+        closing = threading.Thread(target=close)
+        retiring.start()
+        try:
+            self.assertTrue(signal_entered.wait(1))
+            self.process.returncode = 0
+            closing.start()
+            self.assertFalse(close_done.wait(.1), 'pidfd closed while signal was in flight')
+        finally:
+            signal_continue.set()
+            retiring.join(timeout=2)
+            if closing.ident is not None:
+                closing.join(timeout=2)
+        self.assertFalse(retiring.is_alive())
+        self.assertFalse(closing.is_alive())
+        self.assertIn(('signal_after_close', False), outcomes)
+        self.close_fd_mock.assert_called_once_with(73)
+
     def setUp(self):
         self.process = _FakeProcess()
         self.popen = patch(

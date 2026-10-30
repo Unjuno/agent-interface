@@ -134,6 +134,7 @@ class OwnedTargetProcessXvfbTests(unittest.TestCase):
                 self.assertLess(time.monotonic() - query_started, 1.0)
                 self.assertIn(_proc_state(xvfb.pid), ('T', 't'))
                 session = object.__new__(OwnedTargetGuardedSessionOwner)
+                session._target_retirement_lock = threading.RLock()
                 session._owned_target_process = owner
                 session._owned_target_binding = binding
                 session._owned_target_retirement = None
