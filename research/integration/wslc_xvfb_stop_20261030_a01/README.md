@@ -1,0 +1,7 @@
+# WSLc private Xvfb stopped-server integration A01
+
+Exploratory single run, no preregistration. WSLc 3.0.3.0, current-main runtime at bab9391daeae9f6df6452634fd4c21fc6790de78, network disabled, source read-only, CPU requested 1, no pull. The Docker image was saved and loaded into WSLc; Docker ID was bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425 and WSLc ID was 4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7. RootFS layer lists, OS and architecture matched; Config fields ArgsEscaped, StopSignal, User and WorkingDir differed. The test explicitly set entrypoint and workdir, but the images are not asserted identical.
+
+Five tests passed, including the private Xvfb stop/cancel and newer-client key-hold discriminator; the exact-ID cleanup query returned exit 0 and empty output. Raw unittest output, container ID and conditions are preserved. The integration test's optional detailed JSON receipt was not configured, so only its test log and exit status are available; no timing or per-event raw trace can be independently reconstructed. This synthetic app test is not MAP01 completion, model performance, a general reliability claim or a Docker/WSLc comparison.
+
+The container command was `Xvfb :88 -screen 0 1024x768x24 -nolisten tcp`, with its PID exported as `AGENT_INTERFACE_XVFB_PID`, the Xvfb test, server-stop and wait-for-cancellation flags enabled, and `python3 -B -m unittest -v runtime.cli_v1.test_mcp_xvfb_server_stop_integration`. The shell traps exit to terminate its own Xvfb.
