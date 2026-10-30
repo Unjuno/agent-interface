@@ -179,7 +179,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             yield
 
     def run_compiled(self, interface, bindings, *, call_root, perceive,
-                     verify_effect, cancelled=lambda: False):
+                     verify_effect, cancelled=lambda: False,
+                     guard_perceive=None, post_release_settle_ms=0):
         """Run one explicit graph on this already-open Python owner.
 
         Ground references first. Callbacks are trusted read-only caller code,
@@ -198,6 +199,10 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise RuntimeError('compiled method requires reviewed, recovered owner')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit callable perception, effect and cancellation required')
+        if guard_perceive is not None and not callable(guard_perceive):
+            raise ValueError('guard_perceive must be callable when supplied')
+        if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
+            raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         from runtime.guarded_x11_v1 import compiled
         from .review import present_result
         from .attempt import _write_json
@@ -231,7 +236,9 @@ class GuardedSessionOwner(MCPSessionOwner):
         try:
             bridge.backend.configure_capture_artifacts(root/'images', retain_rgb=True)
             receipt = compiled.run(bridge, interface, bindings, perceive=perceive,
-                                   verify_effect=verify_effect, cancelled=cancelled)
+                                   verify_effect=verify_effect, cancelled=cancelled,
+                                   guard_perceive=guard_perceive,
+                                   post_release_settle_ms=post_release_settle_ms)
         except BaseException as error:
             bridge.review_required = True
             self.error = repr(error)

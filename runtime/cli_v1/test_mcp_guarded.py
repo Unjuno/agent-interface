@@ -808,6 +808,12 @@ class PublicCompiledOwnerTests(unittest.TestCase):
         return {'perceive':lambda native,rgb:{}, 'verify_effect':lambda req,native,rgb:{}}
 
     def test_actual_graph_runs_through_owner_and_keeps_action_effect_timing(self):
+        self._actual_graph_guard_case(refuse_second=False)
+
+    def test_actual_graph_owner_stops_after_second_guard_refusal(self):
+        self._actual_graph_guard_case(refuse_second=True)
+
+    def _actual_graph_guard_case(self, refuse_second):
         """Compose the real graph, X11 adapter and public Python owner on Fake X."""
         import hashlib
         import time
@@ -896,11 +902,16 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             spec['method']['max_runtime_ms']=1000
             bindings={name:{'interaction':'click','offset':[2,2],'tail':[]}
                       for name in ('enter','save')}
-            verified=[]
+            verified=[]; guard_calls=[]
             clock=[time.monotonic_ns()]
 
             def perceive(native, image):
                 return {'phase':image.getpixel((0,0))[0], 'present':True}
+
+            def guard_perceive(native, image):
+                guard_calls.append(native['sequence'])
+                return {'phase':image.getpixel((0,0))[0],
+                        'present':not (refuse_second and len(guard_calls)==2)}
 
             def verify_effect(request, native, image):
                 if not verified:
@@ -913,8 +924,16 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                         side_effect=lambda:clock[0]),
                   patch('time.monotonic_ns',side_effect=lambda:clock[0])):
                 row=owner.run_compiled(spec,bindings,call_root=root/'method',
-                    perceive=perceive,verify_effect=verify_effect)
+                    perceive=perceive,verify_effect=verify_effect,
+                    guard_perceive=guard_perceive)
+            self.assertEqual(len(guard_calls),2)
             receipt=row['method_receipt']
+            if refuse_second:
+                self.assertNotEqual(receipt['outcome'],'TASK_SUCCEEDED')
+                self.assertEqual(receipt['completed_transitions'],1)
+                self.assertEqual(len(bridge.inputs),1)
+                self.assertEqual([action for action,_ in verified],['enter'])
+                return
             transitions=receipt['transitions']
             effects=[event for event in receipt['critical_events']
                      if event['event']=='effect_checked']
@@ -955,6 +974,32 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                                      event['effect_verification_accepted_ns'])
             self.assertIsNone(row['task_success'])
             self.assertFalse(row['replay_allowed'])
+
+    def test_trusted_owner_forwards_guard_and_post_release_settle(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); owner=self.owner(root)
+            guard=lambda native,image: {'present':True}
+            with patch('runtime.guarded_x11_v1.compiled.run',
+                       return_value={'outcome':'SAFE_YIELD','observations':[]}) as run:
+                owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks(),
+                                   guard_perceive=guard, post_release_settle_ms=25)
+            self.assertIs(run.call_args.kwargs['guard_perceive'],guard)
+            self.assertEqual(run.call_args.kwargs['post_release_settle_ms'],25)
+
+    def test_invalid_trusted_options_are_rejected_before_dispatch(self):
+        invalid=({'guard_perceive':42}, {'post_release_settle_ms':-1},
+                 {'post_release_settle_ms':1001}, {'post_release_settle_ms':True})
+        for options in invalid:
+            with self.subTest(options=options), tempfile.TemporaryDirectory() as td:
+                root=Path(td); owner=self.owner(root)
+                with patch('runtime.guarded_x11_v1.compiled.run') as run:
+                    with self.assertRaises(ValueError):
+                        owner.run_compiled({}, {}, call_root=root/'method',
+                                           **self.callbacks(), **options)
+                run.assert_not_called()
+                self.assertFalse(owner.dispatch_attempted)
+                self.assertFalse(owner.bridge.review_required)
+                self.assertFalse((root/'method').exists())
 
     def test_unopened_owner_is_not_implicitly_allocated(self):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
