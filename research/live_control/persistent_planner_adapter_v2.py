@@ -49,6 +49,7 @@ class PersistentPlannerAdapter:
         self._interrupt_requested = False
         self._interrupt_response = None
         self._transport_aborted = False
+        self._transport_abort_completed = False
 
     @property
     def thread_id(self):
@@ -81,6 +82,7 @@ class PersistentPlannerAdapter:
             self._interrupt_requested = False
             self._interrupt_response = None
             self._transport_aborted = False
+            self._transport_abort_completed = False
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
@@ -110,6 +112,7 @@ class PersistentPlannerAdapter:
             self._interrupt_requested = False
             self._interrupt_response = None
             self._transport_aborted = False
+            self._transport_abort_completed = False
             self._output_schema = output_schema
         return handle
 
@@ -128,6 +131,7 @@ class PersistentPlannerAdapter:
             already_requested = self._interrupt_requested
             interrupt_response = self._interrupt_response
             transport_aborted = self._transport_aborted
+            abort_completed = self._transport_abort_completed
             should_request = terminal_status is None and not already_requested and not transport_aborted
             if should_request:
                 self._interrupt_requested = True
@@ -148,7 +152,7 @@ class PersistentPlannerAdapter:
         if terminal_status is not None:
             result = {"outcome": "already_terminal", "status": terminal_status}
         elif transport_aborted:
-            result = {"outcome": "already_aborted"}
+            result = {"outcome": "already_aborted" if abort_completed else "abort_unverified"}
         elif already_requested:
             result = {"outcome": "already_requested", "response": interrupt_response}
         else:
@@ -174,9 +178,14 @@ class PersistentPlannerAdapter:
                 return {"outcome": "already_terminal", "status": self._terminal_status}
             self._cancellation_requested = True
             if self._transport_aborted:
-                return {"outcome": "already_aborted"}
+                return {"outcome": "already_aborted" if self._transport_abort_completed
+                        else "abort_unverified"}
             self._transport_aborted = True
+            active_at_abort = self._active
         self.client.close(timeout=5)
+        with self._lock:
+            if self._active == active_at_abort:
+                self._transport_abort_completed = True
         return {"outcome": "aborted"}
 
     def await_turn(self, handle, timeout=120):
