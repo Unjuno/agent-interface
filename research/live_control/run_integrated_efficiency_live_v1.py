@@ -231,6 +231,10 @@ def run_arm(arm, seed, workspace, model_call=call_model):
             # later fail-closed reuse validation must not erase the prior
             # task's adaptive outcome or evidence.
             dump(OUT / "arms" / arm / "task-details.partial.json", details)
+            # Do not navigate or reacquire after an incomplete operation: its
+            # external effect may be unknown and replay is not authorized.
+            if row["typed_outcome"] != "completed":
+                break
         independent = client.finish("finish-integrated-live-01-" + arm)
         final_history = records(client.runtime / "submission-history.jsonl")
         for row, detail in zip(rows, details):
@@ -258,6 +262,17 @@ def main():
     for arm in ARMS:
         arms[arm], independent[arm] = run_arm(
             arm, plan["seed"], OUT / "workspaces" / arm)
+        if (len(arms[arm]) != 6
+                or any(row["typed_outcome"] != "completed" for row in arms[arm])
+                or independent[arm].get("success") is not True):
+            dump(OUT / "incomplete-report.json", {
+                "schema": "integrated_efficiency_incomplete_v1",
+                "failed_arm": arm, "arms": arms,
+                "independent_evaluations": independent,
+                "preflight_calls": preflights,
+                "reason": "arm_incomplete_or_independent_effect_failed",
+            })
+            raise RuntimeError("integrated arm incomplete; retained partial report")
     trace = {"schema": "integrated_efficiency_trace_v1", "arms": arms,
              "preflight_calls": preflights,
              "integration_discoveries": json.loads(
