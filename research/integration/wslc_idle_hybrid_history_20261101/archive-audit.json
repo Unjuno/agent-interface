@@ -1,0 +1,85 @@
+{
+  "status": "audited",
+  "cost_rows": [
+    {
+      "allocation": "hybrid-r91-a01",
+      "size": 1000,
+      "medians_ns": {
+        "baseline_stage": 3487,
+        "hybrid_stage": 3554,
+        "baseline_random": 31225,
+        "hybrid_random": 287926
+      },
+      "fallback_median_ns": 16467
+    },
+    {
+      "allocation": "hybrid-r91-a01",
+      "size": 10000,
+      "medians_ns": {
+        "baseline_stage": 19144,
+        "hybrid_stage": 3098,
+        "baseline_random": 36531,
+        "hybrid_random": 339127
+      },
+      "fallback_median_ns": 225230
+    },
+    {
+      "allocation": "hybrid-r91-a01",
+      "size": 100000,
+      "medians_ns": {
+        "baseline_stage": 403851,
+        "hybrid_stage": 12343,
+        "baseline_random": 80152,
+        "hybrid_random": 507484
+      },
+      "fallback_median_ns": 1772767
+    },
+    {
+      "allocation": "hybrid-r91-a02",
+      "size": 100000,
+      "medians_ns": {
+        "baseline_stage": 409340,
+        "hybrid_stage": 13211,
+        "baseline_random": 78415,
+        "hybrid_random": 503292
+      },
+      "fallback_median_ns": 1807319
+    },
+    {
+      "allocation": "hybrid-r91-a02",
+      "size": 10000,
+      "medians_ns": {
+        "baseline_stage": 18743,
+        "hybrid_stage": 3234,
+        "baseline_random": 34221,
+        "hybrid_random": 334623
+      },
+      "fallback_median_ns": 142527
+    },
+    {
+      "allocation": "hybrid-r91-a02",
+      "size": 1000,
+      "medians_ns": {
+        "baseline_stage": 3271,
+        "hybrid_stage": 2704,
+        "baseline_random": 31222,
+        "hybrid_random": 290890
+      },
+      "fallback_median_ns": 15851
+    }
+  ],
+  "iterator_probe": {
+    "baseline": {
+      "first": 1,
+      "remaining": null,
+      "error": "RuntimeError"
+    },
+    "hybrid": {
+      "first": 1,
+      "remaining": [
+        2
+      ],
+      "error": null
+    }
+  }
+}
