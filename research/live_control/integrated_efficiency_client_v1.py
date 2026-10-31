@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -29,6 +30,9 @@ class RuntimeClient:
     def __init__(self, root: Path, seed: int):
         self.root = Path(root)
         self.seed = seed
+        self.chromium = os.environ.get("AGENT_INTERFACE_CHROMIUM")
+        if self.chromium is not None and not self.chromium.strip():
+            raise ValueError("AGENT_INTERFACE_CHROMIUM must not be empty")
         self.runtime = self.root / "runtime"
         self.errors = None
         self.process = None
@@ -39,14 +43,21 @@ class RuntimeClient:
         self.programs = []
         self.durable_calls = 0
 
-    def start(self):
-        self.root.mkdir(parents=True, exist_ok=False)
-        self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
-        self.process = subprocess.Popen([
+    def _runtime_command(self):
+        command = [
             sys.executable, "-u", str(HERE / "integrated_efficiency_socket_v1.py"),
             "integrated-efficiency-chromium-v1", "serve", "--", "--app", "chromium",
             "--seed", str(self.seed), "--out", str(self.runtime),
-        ], stdout=subprocess.PIPE, stderr=self.errors, text=True)
+        ]
+        if self.chromium is not None:
+            command.extend(["--chromium", self.chromium])
+        return command
+
+    def start(self):
+        self.root.mkdir(parents=True, exist_ok=False)
+        self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
+        self.process = subprocess.Popen(self._runtime_command(), stdout=subprocess.PIPE,
+                                        stderr=self.errors, text=True)
         self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
         self.journal = Path(self.temporary.name) / "journal.jsonl"
         self.endpoint = json.loads(self.process.stdout.readline())

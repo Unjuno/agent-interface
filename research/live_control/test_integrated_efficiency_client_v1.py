@@ -1,6 +1,29 @@
+import os
 import unittest
+from unittest.mock import patch
 
 from source_pixel_transform_v1 import to_window_content
+
+
+class ChromiumConfigurationTests(unittest.TestCase):
+    def test_configured_executable_is_forwarded_without_shell(self):
+        from integrated_efficiency_client_v1 import RuntimeClient
+        with patch.dict(os.environ, {"AGENT_INTERFACE_CHROMIUM": "/usr/bin/chromium"}):
+            command = RuntimeClient("out", 7)._runtime_command()
+        self.assertEqual(command[-2:], ["--chromium", "/usr/bin/chromium"])
+        self.assertIn("--app", command)
+
+    def test_unset_override_preserves_existing_default(self):
+        from integrated_efficiency_client_v1 import RuntimeClient
+        with patch.dict(os.environ, {}, clear=True):
+            command = RuntimeClient("out", 7)._runtime_command()
+        self.assertNotIn("--chromium", command)
+
+    def test_empty_override_is_rejected(self):
+        from integrated_efficiency_client_v1 import RuntimeClient
+        with patch.dict(os.environ, {"AGENT_INTERFACE_CHROMIUM": ""}):
+            with self.assertRaises(ValueError):
+                RuntimeClient("out", 7)
 
 
 class MintPointTransformTests(unittest.TestCase):
