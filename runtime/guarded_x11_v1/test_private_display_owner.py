@@ -11,6 +11,62 @@ import unittest
 from unittest.mock import patch
 
 class PrivateDisplayOwnerTests(unittest.TestCase):
+    def test_retire_during_start_does_not_publish_dead_display(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner');entered=threading.Event();resume=threading.Event();observed={};calls=[]
+            original=owner._auth_add
+            def gated_auth(*args):
+                calls.append(1)
+                if len(calls)==2:
+                    entered.set()
+                    if not resume.wait(3):raise RuntimeError('fixture timeout')
+                return original(*args)
+            owner._auth_add=gated_auth
+            def launch():
+                try:observed['session']=owner.start(timeout_s=5)
+                except Exception as e:observed['error']=type(e).__name__
+            worker=threading.Thread(target=launch);worker.start()
+            try:
+                self.assertTrue(entered.wait(3));result=owner.retire(timeout_s=3)
+                resume.set();worker.join(5)
+                self.assertFalse(worker.is_alive());self.assertNotIn('session',observed)
+                self.assertIn('error',observed);self.assertIn(result['status'],('pending','retired'))
+                self.assertIsNotNone(owner._process.poll())
+            finally:
+                resume.set();worker.join(5);owner.close()
+
+    def test_simultaneous_closes_do_not_double_close_pidfd(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner');owner.start(timeout_s=5)
+            target_fd=owner._pidfd;first_entered=threading.Event();second_entered=threading.Event();release=threading.Event()
+            original_close=os.close;counter=[];errors=[];results=[]
+            def gated_close(fd):
+                if fd==target_fd:
+                    counter.append(1)
+                    if len(counter)==1:
+                        first_entered.set()
+                        if not release.wait(3):raise RuntimeError('fixture timeout')
+                    else:second_entered.set()
+                return original_close(fd)
+            def close():
+                try:results.append(owner.close())
+                except Exception as e:errors.append(repr(e))
+            first=threading.Thread(target=close);second=threading.Thread(target=close)
+            try:
+                with patch('os.close',side_effect=gated_close):
+                    first.start();self.assertTrue(first_entered.wait(3));second.start()
+                    second_entered.wait(.3);release.set();first.join(3);second.join(3)
+                self.assertFalse(first.is_alive());self.assertFalse(second.is_alive())
+                self.assertFalse(second_entered.is_set(),'same pidfd closed twice')
+                self.assertEqual(errors,[]);self.assertEqual(results,[{'status':'retired'},{'status':'retired'}])
+            finally:
+                release.set();first.join(3)
+                if second.ident is not None:second.join(3)
+                if owner._pidfd==target_fd and counter:owner._pidfd=None
+                owner.close()
+
     def test_pidfd_open_failure_retains_child_for_later_reap(self):
         from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
         with tempfile.TemporaryDirectory() as directory:

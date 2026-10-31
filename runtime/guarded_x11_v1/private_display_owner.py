@@ -26,6 +26,7 @@ class PrivateDisplayOwner:
         self._session=None
         self._retired=False
         self._lock=threading.Lock()
+        self._cleanup_lock=threading.RLock()
         self._closed=False
         self._starting=False
         self._kill_requested=False
@@ -101,6 +102,17 @@ class PrivateDisplayOwner:
             if write_fd is not None:os.close(write_fd)
 
     def retire(self, *, timeout_s):
+        with self._cleanup_lock:
+            with self._lock:
+                if self._starting:
+                    self._closed=True
+                    if self._pidfd is not None:
+                        try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
+                        except ProcessLookupError:pass
+                    return {'status':'pending'}
+            return self._retire_locked(timeout_s=timeout_s)
+
+    def _retire_locked(self, *, timeout_s):
         if self._retired:return {'status':'retired'}
         if self._process is None:raise RuntimeError('no owned display')
         if self._pidfd is None:
@@ -117,6 +129,10 @@ class PrivateDisplayOwner:
         return {'status':'retired'}
 
     def close(self):
+        with self._cleanup_lock:
+            return self._close_locked()
+
+    def _close_locked(self):
         with self._lock:
             self._closed=True
             if self._starting:
