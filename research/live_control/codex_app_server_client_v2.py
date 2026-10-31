@@ -387,30 +387,36 @@ class CodexAppServerClient:
             self._closing = True
             self._condition.notify_all()
         deadline = None if timeout is None else time.monotonic() + max(0, timeout)
+        def remaining():
+            return None if deadline is None else max(0, deadline - time.monotonic())
+        def partial_budget():
+            # Reserve time for forced termination and reader/stream retirement.
+            available = remaining()
+            return None if available is None else available / 2
         owns_process_group = getattr(self, "_owns_process_group", False)
         if owns_process_group:
             # The leader may have exited while descendants still own its pipes.
             self._signal_owned_group(signal.SIGTERM)
             if self.process.poll() is None:
                 try:
-                    self.process.wait(timeout=timeout)
+                    self.process.wait(timeout=partial_budget())
                 except subprocess.TimeoutExpired:
                     self._signal_owned_group(signal.SIGKILL)
-                    self.process.wait(timeout=timeout)
-            if not self._wait_owned_group(timeout):
+                    self.process.wait(timeout=partial_budget())
+            if not self._wait_owned_group(partial_budget()):
                 self._signal_owned_group(signal.SIGKILL)
         elif self.process.poll() is None:
             self.process.terminate()
             try:
-                self.process.wait(timeout=timeout)
+                self.process.wait(timeout=partial_budget())
             except subprocess.TimeoutExpired:
                 self.process.kill()
-                self.process.wait(timeout=timeout)
-        self._reader.join(timeout=timeout)
+                self.process.wait(timeout=partial_budget())
+        self._reader.join(timeout=remaining())
         if self._reader.is_alive():
             if owns_process_group:
                 self._signal_owned_group(signal.SIGKILL)
-                self._reader.join(timeout=timeout)
+                self._reader.join(timeout=remaining())
             if self._reader.is_alive():
                 raise TimeoutError("app-server reader close timed out")
         # Custom process factories own their stream wrappers and may provide
@@ -419,8 +425,8 @@ class CodexAppServerClient:
             # Terminate first so a backpressured writer can finish. Never close
             # or recycle its raw descriptor while that writer still owns it.
             write_lock = self._write_lock
-            remaining = -1 if deadline is None else max(0, deadline - time.monotonic())
-            if not write_lock.acquire(timeout=remaining):
+            write_timeout = remaining()
+            if not write_lock.acquire(timeout=-1 if write_timeout is None else write_timeout):
                 raise TimeoutError("app-server writer close timed out")
             try:
                 for stream_name in ("stdin", "stdout", "stderr"):
@@ -431,7 +437,8 @@ class CodexAppServerClient:
             finally:
                 write_lock.release()
         if self._journal is not None and not self._journal.closed:
-            if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
+            journal_timeout = remaining()
+            if not self._journal_lock.acquire(timeout=-1 if journal_timeout is None else journal_timeout):
                 raise TimeoutError("app-server journal close timed out")
             try:
                 self._journal.close()
