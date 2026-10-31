@@ -1,0 +1,8 @@
+Audit code base: current main commit 74fc81e0a447ad05e4a2220b16d7949979635fb9
+Allocation source commit: 4fb44827372c1fe4872a1add532c12544a5a9f81
+Raw allocation: the unchanged local A07 output directory containing SHA256SUMS.json (not copied into this repository)
+
+python3 research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/audit_raw.py "$RAW_ROOT" --output research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/RESULT.json
+shasum -a 256 -c research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/SHA256SUMS.txt
+
+The auditor checks 2,358 manifest entries, the pinned manifest and event-stream hashes, exact cancellation-to-admission identities, per-key release receipts or cleanup keymap attempts, verified empty terminal releases, the hard-health guard count, scorer-positive count, and three negative mutation controls. It writes only to the specified output path.
