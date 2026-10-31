@@ -1,0 +1,50 @@
+{
+  "status": "audited",
+  "runs": [
+    {
+      "arm": "ephemeral",
+      "allocation": "as01",
+      "lifecycle_seconds": 47.4341482,
+      "preflight_to_ready_seconds": 6.6315159,
+      "container_phase_seconds": 40.7937453,
+      "task_seconds_sum": 36.2289024,
+      "task_calls": 6,
+      "preflight_calls": 1,
+      "input_tokens": 105435,
+      "cached_input_tokens_subset": 75136,
+      "output_tokens": 848,
+      "exact_tasks": 6,
+      "verified_terminals": 48
+    },
+    {
+      "arm": "persistent",
+      "allocation": "as02",
+      "lifecycle_seconds": 34.3313548,
+      "preflight_to_ready_seconds": 7.3422226,
+      "container_phase_seconds": 26.9792212,
+      "task_seconds_sum": 23.263179514,
+      "task_calls": 2,
+      "preflight_calls": 1,
+      "input_tokens": 36859,
+      "cached_input_tokens_subset": 12288,
+      "output_tokens": 393,
+      "exact_tasks": 6,
+      "verified_terminals": 57
+    },
+    {
+      "arm": "plain",
+      "allocation": "as03",
+      "lifecycle_seconds": 42.6029426,
+      "preflight_to_ready_seconds": 5.3157148,
+      "container_phase_seconds": 37.2800587,
+      "task_seconds_sum": 33.712414561,
+      "task_calls": 6,
+      "preflight_calls": 1,
+      "input_tokens": 104025,
+      "cached_input_tokens_subset": 74112,
+      "output_tokens": 457,
+      "exact_tasks": 6,
+      "verified_terminals": 18
+    }
+  ]
+}
