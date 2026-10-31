@@ -69,4 +69,71 @@ class RetirementCompositionTests(unittest.TestCase):
                         if blocker.ident is not None: blocker.join(1)
                         client._condition.wait = original_wait
 
+    def test_owned_jsonl_peer_retires_after_fence_retry(self):
+        peer = """import json,sys
+for line in sys.stdin:
+ row=json.loads(line)
+ method=row.get('method')
+ if method=='thread/start': result={'thread':{'id':'local-thread'}}
+ elif method=='turn/start': result={'turn':{'id':'local-turn'}}
+ else: result={}
+ if 'id' in row: print(json.dumps({'id':row['id'],'result':result}),flush=True)
+"""
+        waiting, held, release = (threading.Event() for _ in range(3))
+        events = []
+        client = client_module.CodexAppServerClient([sys.executable, "-u", "-c", peer])
+        planner = controller.PersistentPlannerAdapter(client, model="fixture", effort="low", cwd=".", base_instructions="")
+        original_wait, original_close = client._condition.wait, client.close
+        blocker = None
+        def wait_marker(timeout=None):
+            waiting.set()
+            return original_wait(timeout)
+        def bounded_close(timeout=5):
+            events.append("close_attempt")
+            try:
+                return original_close(timeout=.05 if len(events) == 1 else 1)
+            except client_module.AppServerConditionFenceTimeout:
+                events.append("fence_timeout")
+                release.set()
+                blocker.join(1)
+                raise
+        try:
+            planner.start_session()
+            handle = planner.begin_turn("observe", output_schema={"type":"object"})
+            client._condition.wait = wait_marker
+            def holder():
+                with client._condition:
+                    held.set()
+                    release.wait(2)
+            blocker = threading.Thread(target=holder)
+            with patch.object(client, "close", side_effect=bounded_close), tempfile.TemporaryDirectory() as root:
+                with ThreadPoolExecutor(max_workers=1) as pool:
+                    future = pool.submit(planner.await_turn, handle, 2)
+                    try:
+                        self.assertTrue(waiting.wait(1))
+                        blocker.start()
+                        self.assertTrue(held.wait(1))
+                        terminal = {"event":"terminal", "status":"completed", "id":"cover-0",
+                                    "release":{"event":"owner_release", "verified":True,
+                                               "keys_down":[], "buttons_down":[],
+                                               "keys_unknown":[], "key_state_errors":[]}}
+                        error = RuntimeError("renewal rejected")
+                        controller.retire_failed_cover(planner, handle, future, terminal, error, root)
+                        with self.assertRaises(client_module.AppServerError):
+                            future.result(timeout=1)
+                        self.assertEqual(events, ["close_attempt", "fence_timeout", "close_attempt"])
+                        self.assertIsNotNone(client.process.poll())
+                        self.assertFalse(client._reader.is_alive())
+                        self.assertTrue(planner._cancellation_requested)
+                        self.assertIn("pending planner turn transport aborted", error.__notes__)
+                        self.assertFalse(error.fatal_cover_receipt["grants_input_authority"])
+                    finally:
+                        release.set()
+                        if blocker.ident is not None: blocker.join(1)
+        finally:
+            release.set()
+            if blocker is not None and blocker.ident is not None: blocker.join(1)
+            client._condition.wait = original_wait
+            original_close(timeout=2)
+
 if __name__ == "__main__": unittest.main()
