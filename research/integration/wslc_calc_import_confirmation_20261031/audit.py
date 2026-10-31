@@ -48,7 +48,7 @@ with ZipFile(p) as z:
  c0=j('f19/conditions.json');c1=j('f20/conditions.json');assert c0['candidate']==c1['candidate'] and c0['order']==c1['order']==['f19:blocked','f20:match']
  for n,h in c0['candidate'].items():assert hashlib.sha256(z.read('candidate/'+n)).hexdigest()==h,n
  assert hashlib.sha256(z.read('candidate/modal-reference.png')).hexdigest()=='809756275baaefdf78e0da879abb6cb150a707765b4209d1f282712488b8585e'
- for name in ('calc_ocr_graph_perception_v1.py','calc_ocr_pair_cue_v1.py','reviewed_modal_guard_v1.py','reviewed_preview_gate_v1.py','calc_import_confirmation_v1.py','test_calc_import_confirmation_v1.py'):assert z.read('candidate/research/live_control/'+name).replace(b'\r\n',b'\n')==(Path(__file__).resolve().parents[2]/'live_control'/name).read_bytes().replace(b'\r\n',b'\n')
+ for name in ('calc_ocr_graph_perception_v1.py','calc_ocr_pair_cue_v1.py','reviewed_modal_guard_v1.py','reviewed_preview_gate_v1.py'):assert z.read('candidate/research/live_control/'+name).replace(b'\r\n',b'\n')==(Path(__file__).resolve().parents[2]/'live_control'/name).read_bytes().replace(b'\r\n',b'\n')
  reference=Image.open(BytesIO(z.read('candidate/modal-reference.png'))).convert('RGB');rows=[]
  def artifact(tag,native):
   a=native['native']['artifact'];payload=z.read(tag+'/output/'+a['path'].removeprefix('/out/'));assert len(payload)==a['bytes'] and hashlib.sha256(payload).hexdigest()==a['sha256'];return Image.open(BytesIO(payload)).convert('RGB')

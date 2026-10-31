@@ -107,9 +107,11 @@ class ImportConfirmation:
                                                interaction='click'):
                 action = self.owner.bridge.click(self.alias, offset, tail=[], expires_at_ns=self.gate.deadline_ns)
             result['action'] = copy.deepcopy(action)
-            if type(action) is dict and action.get('status') == 'refused' and action.get('input_dispatched') is False:
+            recovery_clear = (type(action) is dict and action.get('recovery_required') is False and
+                              getattr(getattr(self.bridge, 'session', None), 'recovery_required', None) is False)
+            if recovery_clear and action.get('status') == 'refused' and action.get('input_dispatched') is False:
                 result['status'] = 'refused'
-            elif type(action) is dict and action.get('status') == 'completed' and action.get('recovery_required') is False:
+            elif recovery_clear and action.get('status') == 'completed':
                 execution = action.get('execution')
                 releases = execution.get('releases') if type(execution) is dict else None
                 if type(releases) is list and releases and all(_neutral(row) for row in releases):

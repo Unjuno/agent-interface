@@ -22,7 +22,7 @@ class ModalBridge(Bridge):
   image=self.img.copy()
   if self.change:image.putpixel((3,3),(0,0,0))
   n=self.capture(image)
-  if not self.check('before_press',n,image):return {'status':'refused','input_dispatched':False}
+  if not self.check('before_press',n,image):return {'status':'refused','input_dispatched':False,'recovery_required':False}
   self.clicks.append(alias);return {'status':'completed','recovery_required':False,'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}}
 class ImportConfirmationTests(unittest.TestCase):
  def setUp(self):
@@ -65,6 +65,25 @@ class ImportConfirmationTests(unittest.TestCase):
   def recover(*args,**kwargs):
    result=click(*args,**kwargs);result['recovery_required']=True;return result
   self.b.click=recover;r=attempt.run(n,self.img);self.assertEqual(r['status'],'uncertain')
+ def test_refusal_with_pending_recovery_is_uncertain(self):
+  attempt,n=self.candidate()
+  self.b.click=lambda *args,**kwargs: {'status':'refused','input_dispatched':False,'recovery_required':True}
+  result=attempt.run(n,self.img);self.assertEqual(result['status'],'uncertain');self.assertTrue(self.owner.dispatch_attempted)
+ def test_refusal_without_recovery_evidence_is_uncertain(self):
+  attempt,n=self.candidate()
+  self.b.click=lambda *args,**kwargs: {'status':'refused','input_dispatched':False}
+  result=attempt.run(n,self.img);self.assertEqual(result['status'],'uncertain')
+ def test_refusal_with_session_recovery_is_uncertain(self):
+  attempt,n=self.candidate()
+  def refused(*args,**kwargs):
+   self.b.session.recovery_required=True
+   return {'status':'refused','input_dispatched':False,'recovery_required':False}
+  self.b.click=refused;result=attempt.run(n,self.img);self.assertEqual(result['status'],'uncertain')
+ def test_completed_with_session_recovery_is_uncertain(self):
+  attempt,n=self.candidate();click=self.b.click
+  def completed(*args,**kwargs):
+   result=click(*args,**kwargs);self.b.session.recovery_required=True;return result
+  self.b.click=completed;result=attempt.run(n,self.img);self.assertEqual(result['status'],'uncertain')
  def test_outside_modal_target_blocks_before_gate(self):
   gate=ReviewedPreviewGate(self.b,reference=self.img,static_regions=((0,0,1,1),),preview_regions=((2,2,8,8),(10,10,14,14)),title='Text Import',expected=('641','283'),deadline_ns=2000,max_age_ns=100,clock=lambda:1010,runner=self.runner)
   a=ImportConfirmation(self.owner,gate,prior_receipt=self.prior,prior_close=self.close,prior_scope='prior',prior_session_id='old',alias='import_ok',point=[99,99],region_size=(4,4));n=self.b.capture(self.img);r=a.run(n,self.img);self.assertEqual(r['status'],'rejected');self.assertEqual(self.count,0);self.assertEqual(self.b.mints,[])

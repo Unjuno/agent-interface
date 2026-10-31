@@ -7,3 +7,5 @@ The one-shot confirmation combines a reviewed preview gate with a guarded click 
 Run `python research/integration/wslc_calc_import_confirmation_20261031/audit.py` with Pillow to verify archive hashes, screenshots, OCR, guard receipts, independent FODS parsing and outcomes. Source and candidate hashes were rechecked after the trials. Related tests passed locally under normal Python and `python -O` (76 each). The private launcher command retains host paths outside the public archive.
 
 The 1280x800 display, reviewed static reference, fixed crops, known values and isolated Xvfb/Calc limit generality. Target discovery and save orchestration remain harness code. MAP01, provider/model usage, production concurrency, comparative latency and overall computer-control completion remain unverified. Issue 57 remains open.
+
+The archive pins the exact historical confirmation code and tests in its manifest and archive hash. The auditor does not require the evolving current confirmation files to remain byte-identical to those historical candidates.
