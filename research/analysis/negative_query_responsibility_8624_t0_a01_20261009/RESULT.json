@@ -1,0 +1,49 @@
+{
+  "allocation_id": "NEGATIVE-QUERY-RESPONSIBILITY-8624-T0-A01-20261009",
+  "audit_checks": {
+    "failures": [],
+    "passed": 123,
+    "total": 123
+  },
+  "audit_sha256": "16889eade9107090b6bfbb211d05f73e5fab427f8bc287d6454e6466ea00f4bd",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "cases": 9,
+  "construction_checks": {
+    "effective_mutation_families": 5,
+    "normal": "8/8 PASS",
+    "optimized": "8/8 PASS"
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "independent_world_evaluations": 1312,
+  "issue": 8624,
+  "key_discriminators": {
+    "contingency_only_exception_cause": {
+      "contingencies": [
+        [
+          "prereq_a",
+          "prereq_b"
+        ]
+      ],
+      "literal": true,
+      "minimum_contingency": 2,
+      "responsibility": 0.3333333333333333
+    },
+    "paired_equal_positive_eligibility_different_negation": true,
+    "robustness_radius_versus_designated_contingency": {
+      "exception_minimum_contingency": 2,
+      "robustness_radius": 1
+    }
+  },
+  "raw_sha256": "df7fe7998270818055d742aabc662af6d19a6e728322d54e539b8e6c124d5d41",
+  "schema": "negative-query-responsibility-result-v1",
+  "scope": "finite stratified Boolean query fixtures only; no GUI, model, network, user data, runtime, or action authority",
+  "statuses": {
+    "READY": 7,
+    "UNKNOWN_INCOMPLETE": 1,
+    "UNKNOWN_TOO_LARGE": 1
+  }
+}
