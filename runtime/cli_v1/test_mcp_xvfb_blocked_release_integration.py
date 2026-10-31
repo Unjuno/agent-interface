@@ -195,10 +195,15 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
         return result
 
     owner.cancel_guarded = cancel_with_delayed_ack
+    instrumented_backend = {'value':None}
 
     def get_with_delayed_request():
         session = original_get()
         backend = session.backend
+        if instrumented_backend['value'] is backend:
+            return session
+        if instrumented_backend['value'] is not None:
+            raise RuntimeError('fixture backend changed after instrumentation')
         original_fake_input = xtest.fake_input
         original_sync = backend.d.sync
         injected = {'value':False}
@@ -269,6 +274,7 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
         # queueing UP is not a server-side release acknowledgement.
         xtest.fake_input = fake_input
         backend.d.sync = sync_with_boundary_receipt
+        instrumented_backend['value'] = backend
         return session
 
     owner.get = get_with_delayed_request
