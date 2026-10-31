@@ -1,0 +1,68 @@
+[
+  {
+    "id": "point-near-reversal",
+    "point_prior_good": "9/10",
+    "plausible_priors_good": ["22/25", "9/10", "47/50"],
+    "false_completion_loss": "10",
+    "check_cost": "1",
+    "check_reveals_state": true,
+    "check_feasible_by_deadline": true,
+    "mandatory_checks_complete": true,
+    "confidence_margin": "1/5"
+  },
+  {
+    "id": "robust-stop",
+    "point_prior_good": "24/25",
+    "plausible_priors_good": ["47/50", "24/25", "49/50"],
+    "false_completion_loss": "10",
+    "check_cost": "1",
+    "check_reveals_state": true,
+    "check_feasible_by_deadline": true,
+    "mandatory_checks_complete": true,
+    "confidence_margin": "1/5"
+  },
+  {
+    "id": "robust-continue",
+    "point_prior_good": "3/5",
+    "plausible_priors_good": ["1/2", "3/5", "4/5"],
+    "false_completion_loss": "10",
+    "check_cost": "1",
+    "check_reveals_state": true,
+    "check_feasible_by_deadline": true,
+    "mandatory_checks_complete": true,
+    "confidence_margin": "1/5"
+  },
+  {
+    "id": "correlated-duplicate",
+    "point_prior_good": "3/4",
+    "plausible_priors_good": ["1/2", "3/4", "99/100"],
+    "false_completion_loss": "10",
+    "check_cost": "1",
+    "check_reveals_state": false,
+    "check_feasible_by_deadline": true,
+    "mandatory_checks_complete": true,
+    "confidence_margin": "1/5"
+  },
+  {
+    "id": "deadline-infeasible",
+    "point_prior_good": "1/2",
+    "plausible_priors_good": ["1/2", "3/4"],
+    "false_completion_loss": "10",
+    "check_cost": "1/10",
+    "check_reveals_state": true,
+    "check_feasible_by_deadline": false,
+    "mandatory_checks_complete": true,
+    "confidence_margin": "1/5"
+  },
+  {
+    "id": "mandatory-gate-incomplete",
+    "point_prior_good": "99/100",
+    "plausible_priors_good": ["49/50", "99/100"],
+    "false_completion_loss": "10",
+    "check_cost": "1/100",
+    "check_reveals_state": true,
+    "check_feasible_by_deadline": true,
+    "mandatory_checks_complete": false,
+    "confidence_margin": "1/5"
+  }
+]
