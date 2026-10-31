@@ -1,0 +1,98 @@
+{
+  "schema": "v39-retained-guard-outcome-replay-v1",
+  "classification": "POSTHOC_REPLAY_NOT_NEW_LIVE_ALLOCATION",
+  "current_main_commit": "6ea1269defb6d48a607f13b08f1aa2d223ba06e9",
+  "runtime_guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "input_sha256": {
+    "report.json": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+    "events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "delivered.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "RESULT.json": "c5c8afd5035eeb99385a2ba9ecb04c8fe5f8f9438a86ee7b22ecb2bb5664d99b"
+  },
+  "decision_count": 3,
+  "decisions": [
+    {
+      "decision": 1,
+      "source_sequence": 36,
+      "source_health": 97,
+      "hard_minimum": 85,
+      "observations_replayed": 34,
+      "status_counts": {
+        "SOFT_CHANGED": 34
+      },
+      "floor_equal_sequences": [
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "hard_events": [],
+      "unknown_events": []
+    },
+    {
+      "decision": 4,
+      "source_sequence": 115,
+      "source_health": 65,
+      "hard_minimum": 55,
+      "observations_replayed": 44,
+      "status_counts": {
+        "SOFT_CHANGED": 16,
+        "UNCHANGED": 28
+      },
+      "floor_equal_sequences": [],
+      "hard_events": [],
+      "unknown_events": []
+    },
+    {
+      "decision": 5,
+      "source_sequence": 166,
+      "source_health": 61,
+      "hard_minimum": 51,
+      "observations_replayed": 52,
+      "status_counts": {
+        "HARD_INVALIDATED": 1,
+        "SOFT_CHANGED": 51
+      },
+      "floor_equal_sequences": [
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217
+      ],
+      "hard_events": [
+        {
+          "sequence": 218,
+          "health": 48,
+          "reason": "below_hard_minimum",
+          "grants_input_authority": false
+        }
+      ],
+      "unknown_events": []
+    }
+  ],
+  "recorded_policy_invalidations": 1,
+  "limitations": [
+    "Historical HUD-template signals are not independent game-state ground truth.",
+    "The replay classifies guard outcomes only; it does not prove live scheduling, recovery, causality, or task effect.",
+    "No game, model, controller, GUI, or OS input was run."
+  ]
+}
