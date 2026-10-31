@@ -1,5 +1,7 @@
 # Overlapping guarded X11 owners and cleanup
 
+> **Fixture correction (2026-11-01):** These historical trials used a fixture that could install input and sync wrappers repeatedly. The delayed-request count and a single eight-second delay are not established; the recorded marker could have been overwritten. Keymaps and target events remain the observed data, but absence of a `b` event by the recorded horizon is not a general queue-drain result. See [fixture correction](../wslc_retired_owner_recovery_generation_20261101/FIXTURE_CORRECTION.md).
+
 Three single-attempt private WSLc/Xvfb experiments use the exact local runtime candidate archived in the adjacent `wslc_retired_owner_recovery_generation_20261101/runtime-source.zip`. Frozen manifests, test scripts, conditions, raw receipts and target events are retained. `python -B verify.py` checks source and script hashes and principal results. Local absolute-path command records are omitted; each frozen runner documents its command template. These are direct owned-guarded-session API experiments, not two MCP transports or production desktops.
 
 * r144 interposes a simulated new X client just before the normal cancellation release method. The old automatic release clears the newer same-key hold. That ordering is forced.
