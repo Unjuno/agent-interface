@@ -73,7 +73,42 @@ class BoundedIdleOwnerExperiment(unittest.TestCase):
  def test_owner_cancel_blocked_capture_discards_late_frame(self):self.exercise(True)
 
 class BoundedIdleOwnedProcessExperiment(unittest.TestCase):
- def test_characterize_parent_accepts_late_owned_response(self):
+ def test_cancel_after_timeout_cannot_restore_quarantined_owner(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   try:
+    owner.get()
+    with self.assertRaisesRegex(RuntimeError,'deadline expired'):
+     owner.observe_idle_until(deadline_ns=time.monotonic_ns()+300_000_000,cancel_token='late-cancel')
+    self.assertTrue((root/'owner-return-entered').exists())
+    owner.cancel_guarded('late-cancel')
+    self.assertEqual(owner.state,'failed');self.assertTrue(owner.review_required)
+    with self.assertRaisesRegex(RuntimeError,'quarantined'):
+     owner.observe_idle_until(deadline_ns=time.monotonic_ns()+1_000_000_000,cancel_token='new-read')
+   finally:
+    (root/'resume-owner-return').write_text('resume');owner.close()
+
+ def test_quarantined_close_does_not_issue_unfenced_late_release(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   try:
+    owner.get()
+    with self.assertRaisesRegex(RuntimeError,'deadline expired'):
+     owner.observe_idle_until(deadline_ns=time.monotonic_ns()+300_000_000,cancel_token='close-after-timeout')
+    self.assertTrue((root/'owner-return-entered').exists())
+    with patch.object(owner,'_retirement_cleanup_result_fields',side_effect=AssertionError('unfenced release')):
+     report=owner.close()
+    self.assertFalse(report['release_confirmed']);self.assertEqual(report['cleanup_status'],'UNKNOWN')
+    self.assertFalse(report['release_attempted'])
+   finally:
+    (root/'resume-owner-return').write_text('resume')
+    owner.close()
+
+ def test_late_owned_response_does_not_restore_quarantined_owner(self):
   with tempfile.TemporaryDirectory() as td:
    root=Path(td);(root/'block-owner-return').write_text('block')
    owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
@@ -88,10 +123,13 @@ class BoundedIdleOwnedProcessExperiment(unittest.TestCase):
     while not (root/'owner-return-entered').exists() and time.monotonic()<end:time.sleep(.005)
     self.assertTrue((root/'owner-return-entered').exists())
     while time.monotonic_ns()<=deadline:time.sleep(.005)
-    self.assertTrue(worker.is_alive())
-    (root/'resume-owner-return').write_text('resume');worker.join(2)
-    self.assertFalse(worker.is_alive());self.assertEqual(errors,[])
-    self.assertEqual(results[0]['status'],'observed');self.assertEqual(results[0]['source']['sequence'],1)
+    worker.join(1)
+    self.assertFalse(worker.is_alive());self.assertEqual(results,[]);self.assertEqual(len(errors),1)
+    self.assertEqual(owner.state,'failed');self.assertTrue(owner.review_required)
+    (root/'resume-owner-return').write_text('resume');time.sleep(.1)
+    self.assertEqual(owner.state,'failed');self.assertTrue(owner.review_required)
+    with self.assertRaisesRegex(RuntimeError,'quarantined'):
+     owner.observe_idle_until(deadline_ns=time.monotonic_ns()+1_000_000_000,cancel_token='after-timeout')
     self.assertGreater(time.monotonic_ns(),deadline)
    finally:
     (root/'resume-owner-return').write_text('resume')
@@ -127,7 +165,7 @@ class BoundedIdleOwnedProcessExperiment(unittest.TestCase):
                                   observation_worker=True,_owner_factory=fake_process_owner)
    try:
     owner.get();start=time.monotonic_ns()
-    with self.assertRaisesRegex(RuntimeError,'idle observation unavailable'):
+    with self.assertRaisesRegex(RuntimeError,'deadline expired|idle observation unavailable'):
      owner.observe_idle_until(deadline_ns=start+300_000_000,cancel_token='owned-expiry')
     self.assertTrue((root/'capture-entered').exists())
     self.assertEqual(owner.snapshot()['observation_sequence'],0);self.assertTrue(owner.review_required)
