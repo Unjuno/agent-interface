@@ -10,6 +10,38 @@ import time
 import unittest
 
 class PrivateDisplayOwnerTests(unittest.TestCase):
+    def test_start_failure_unconfirmed_reap_is_not_reported_retired(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner');entered=threading.Event();resume=threading.Event();observed={};calls=[]
+            original_auth=owner._auth_add
+            def blocked_auth(*args):
+                calls.append(1)
+                if len(calls)==2:
+                    entered.set()
+                    if not resume.wait(3):raise RuntimeError('fixture timeout')
+                return original_auth(*args)
+            owner._auth_add=blocked_auth
+            def launch():
+                try:owner.start(timeout_s=5)
+                except Exception as e:observed['error']=str(e)
+            worker=threading.Thread(target=launch);worker.start();original_wait=None;timeouts=[]
+            try:
+                self.assertTrue(entered.wait(3));original_wait=owner._process.wait
+                def timeout_wait(timeout=None):
+                    timeouts.append(timeout)
+                    if timeout is None:raise AssertionError('unbounded wait')
+                    raise subprocess.TimeoutExpired('Xvfb',timeout)
+                owner._process.wait=timeout_wait
+                self.assertEqual(owner.close(),{'status':'pending'});resume.set();worker.join(5)
+                self.assertFalse(worker.is_alive());self.assertTrue(timeouts);self.assertIsNotNone(timeouts[0])
+                self.assertIn('cleanup unconfirmed',observed.get('error',''))
+                self.assertFalse(owner._retired)
+            finally:
+                resume.set();worker.join(5)
+                if original_wait is not None:owner._process.wait=original_wait
+                owner.close()
+
     def test_expired_startup_does_not_publish_display(self):
         from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
         with tempfile.TemporaryDirectory() as directory:
@@ -41,7 +73,7 @@ class PrivateDisplayOwnerTests(unittest.TestCase):
                 except Exception as e:observed['error']=type(e).__name__
             worker=threading.Thread(target=launch);worker.start()
             try:
-                self.assertTrue(entered.wait(2));owner.close();resume.set();worker.join(5)
+                self.assertTrue(entered.wait(2));self.assertEqual(owner.close(),{'status':'pending'});resume.set();worker.join(5)
                 self.assertFalse(worker.is_alive())
                 self.assertNotIn('session',observed)
                 self.assertIn('error',observed)
@@ -68,9 +100,10 @@ class PrivateDisplayOwnerTests(unittest.TestCase):
             worker=threading.Thread(target=launch);worker.start()
             try:
                 self.assertTrue(entered.wait(3));self.assertIsNotNone(owner._process)
-                owner.close();resume.set();worker.join(5)
+                self.assertEqual(owner.close(),{'status':'pending'});resume.set();worker.join(5)
                 self.assertFalse(worker.is_alive());self.assertNotIn('session',observed)
                 self.assertIn('error',observed);self.assertIsNotNone(owner._process.poll())
+                self.assertEqual(owner.close(),{'status':'retired'})
             finally:
                 resume.set();worker.join(5);owner.close()
 

@@ -74,7 +74,7 @@ class PrivateDisplayOwner:
                 self._session=PrivateDisplay(display,authority)
                 self._starting=False
                 return self._session
-        except BaseException:
+        except BaseException as startup_error:
             if self._process is not None:
                 if self._pidfd is not None:
                     try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
@@ -82,7 +82,9 @@ class PrivateDisplayOwner:
                 elif self._process.poll() is None:
                     # The unreaped direct child cannot have had its PID reused.
                     self._process.kill()
-                self._process.wait()
+                try:self._process.wait(timeout=0.25)
+                except subprocess.TimeoutExpired:
+                    raise RuntimeError('display startup failed; cleanup unconfirmed') from startup_error
                 self._retired=True
             raise
         finally:
@@ -110,8 +112,9 @@ class PrivateDisplayOwner:
                 if self._pidfd is not None:
                     try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
                     except ProcessLookupError:pass
-                return
+                return {'status':'pending'}
         if self._process is not None and not self._retired:
             result=self.retire(timeout_s=3)
             if result['status']!='retired':raise RuntimeError('display retirement unconfirmed')
         if self._pidfd is not None:os.close(self._pidfd);self._pidfd=None
+        return {'status':'retired' if self._retired else 'closed_no_process'}
