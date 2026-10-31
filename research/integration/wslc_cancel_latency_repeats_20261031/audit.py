@@ -44,4 +44,3 @@ for i in range(1,9):
             print(f'b{i:02} cancel request_to_execution_end_ms={a:.3f} request_to_client_terminal_ms={b:.3f}')
 for name,items in [('control_wait_ms',wait_ms),('cancel_request_to_execution_end_ms',cancel_end),('cancel_request_to_client_terminal_ms',cancel_observed)]:
     print(name,'n=',len(items),'min=',round(min(items),3),'median=',round(statistics.median(items),3),'max=',round(max(items),3))
-
