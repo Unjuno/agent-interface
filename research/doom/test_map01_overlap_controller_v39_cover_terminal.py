@@ -36,7 +36,8 @@ class CoverTerminalTests(unittest.TestCase):
                  abort_failure=False, abort_terminal_race=False,
                  interrupt_blocks=False,
                  invalidation_failure=False, fatal_receipt_collision=False,
-                 planner_wait_cap=2, reject_renewal=False):
+                 planner_wait_cap=2, reject_renewal=False,
+                 abort_fails_without_wakeup=False):
         trace = {"case": name, "commands": [], "events": [], "timeline": []}
         started = threading.Event()
         complete = threading.Event()
@@ -157,6 +158,8 @@ class CoverTerminalTests(unittest.TestCase):
                 receipt_path = Path(temp) / "out" / "fatal-cover-terminal.json"
                 trace["fatal_receipt_at_abort"] = (
                     json.loads(receipt_path.read_text()) if receipt_path.exists() else None)
+                if abort_fails_without_wakeup:
+                    raise OSError("synthetic close fault without waiter wakeup")
                 complete.set()
                 if abort_failure:
                     raise OSError("synthetic close fault after waiter wakeup")
@@ -589,6 +592,19 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertTrue(any("planner transport abort failed" in note for note in trace["error_notes"]))
         self.assertNotIn("final_admission", trace["timeline"])
         self.assertTrue(trace["all_futures_done"])
+
+    def test_rejected_renewal_abort_failure_without_wakeup_still_waits_for_future(self):
+        trace = self.exercise("rejected-renewal-abort-no-wakeup", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True,
+                              abort_fails_without_wakeup=True, planner_wait_cap=.3)
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertIn("abort_transport", trace["timeline"])
+        self.assertIn("planner_wait_expired", trace["timeline"])
+        self.assertLess(trace["timeline"].index("abort_transport"),
+                        trace["timeline"].index("planner_wait_expired"))
+        self.assertTrue(any("planner transport abort failed" in note for note in trace["error_notes"]))
+        self.assertNotIn("final_admission", trace["timeline"])
+        self.assertFalse(trace["fatal_receipt"]["grants_input_authority"])
 
     def test_rejected_renewal_retirement_follows_local_invalidation_failure(self):
         trace = self.exercise("rejected-renewal-invalidation-fault", "completed", NEUTRAL,
