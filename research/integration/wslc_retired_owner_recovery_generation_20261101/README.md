@@ -1,5 +1,7 @@
 # Retired X11 owner: cleanup, normal cancellation and generation interference
 
+> **Fixture correction (2026-11-01):** These historical trials used a fixture that could install input and sync wrappers repeatedly. The delayed-request count and a single eight-second delay are not established; the recorded marker could have been overwritten. Keymaps and target events remain the observed data, but absence of a `b` event by the recorded horizon is not a general queue-drain result. See [fixture correction](../wslc_retired_owner_recovery_generation_20261101/FIXTURE_CORRECTION.md).
+
 These are four finite local-candidate WSLc/private-Xvfb records, not evidence of main, physical desktop, MAP01, or overall recovery. The exact runtime files used by all four are preserved in `runtime-source.zip`; the four frozen manifests contain SHA-256 of every source and trial script. `python -B verify.py` checks the archive, scripts and key recorded outcomes. The pinned image, limits, allocation IDs and protocols are in each arm's conditions. `private-command.json` files are omitted because their bind mounts contain local absolute paths; the frozen `run.py` gives the command template. Raw target events, receipts, logs and launcher results remain in the arm directories.
 
 * r137: on an injected prior-retirement race, manual fixture release control passed, while direct helper failed after disconnect supervision timed out. The helper arm remained held and did not run its horizon.
