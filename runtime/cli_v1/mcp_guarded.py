@@ -469,8 +469,11 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             """Request cancellation of a running guarded input or compiled method.
 
             Get the call ID from interface_results. This publishes retained local
-            state only; no input or cleanup is injected here. Acknowledgement is
-            not release confirmation. Inspect the original result/cleanup; never
+            state only; no input is injected by this request path. A cancellation
+            signal's input_dispatched=false does not describe the original call:
+            that call may already have sent input. Owned-process cancellation may
+            separately attempt cleanup. Acknowledgement is not release
+            confirmation. Inspect the original result and cleanup receipts; never
             replay uncertain input. Old/unknown call IDs cannot cancel a new call.
             """
             result = cancel(call_id)

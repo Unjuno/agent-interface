@@ -22,9 +22,20 @@ guarded_query_worker=True)`. These flags are operator policy, not tool arguments
 In this mode `interface_guarded_cancel(call_id=...)` is available outside the
 ordinary busy slot. Obtain a running guarded-input ID from `interface_results`;
 only that active input context can receive the request. Cancellation makes no
-X call, acquires no input authority and performs no filesystem persistence.
-Its acknowledgement is not a durable cancellation receipt or input terminal.
-Read the original call's result; never replay uncertain input.
+X call in the bridge's cancellation-signal acknowledgement, acquires no input
+authority and performs no filesystem persistence on that acknowledgement path.
+For that acknowledgement, `input_dispatched=false` describes the cancellation
+signal itself; it says nothing about input already sent by the original call.
+The original action may already have affected the application or still be in
+flight. An acknowledgement is not a durable cancellation receipt, an input
+terminal, or proof of release. Read the original call's result and cleanup
+receipts; never replay uncertain input.
+
+In owned-process mode the surrounding cancellation transaction can retire the
+owner and may separately attempt cleanup of recorded input obligations. Its
+cleanup and release receipts describe that separate work; do not infer that
+the whole transaction performed no X calls from the acknowledgement field. A
+missing or unconfirmed receipt is not evidence that input was released.
 
 During an active guarded input, focus-ancestry and process-incarnation queries
 use one separate read-only X connection, opened/read/closed on its own thread.
