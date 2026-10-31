@@ -1,0 +1,16 @@
+# MAP01 cancelled input and ammunition observation
+
+This four-allocation WSLc Freedoom2 MAP01 exploratory series extends PR #9888. All runs follow the same development route, model-selected attack, injected patch change during observed key hold, local cancellation, release, review, old-alias refusal, third model decision, at-most-one bounded aim proposal, and fourth model decision. The planned final conditions were withhold/fire/fire/withhold; when the fourth decision was not eligible, neither condition sent a final shot. An eligible withhold waits for the selected duration without input. Game-engine selected-weapon ammunition, health, kills, position and labels are evaluation-only; they are not supplied to the model or action selector.
+
+| Run | Planned final condition | Initial cancellation | Final decision | Ammo: before initial attack → after cancellation → after final interval | Kill delta | Health delta |
+| --- | --- | --- | --- | --- | ---: | ---: |
+| o01 | withhold | verified release | fourth target failed gate | 50 → 49 → 49 | 0 | -2 |
+| o02 | fire | verified release | fourth target failed gate | 50 → 49 → 49 | 0 | -3 |
+| o03 | fire | verified release | fired, verified release | 50 → 49 → 47 | 0 | -7 |
+| o04 | withhold | verified release | eligible shot withheld | 50 → 49 → 49 | 0 | -3 |
+
+All four began the second pending model interval at 50 ammunition, then the first game sample taken after the cancelled attack and second model response reported 49. Thus the game registered ammunition consumption following the already-emitted attack despite verified key release. Sampling does not determine the exact engine-consumption time or establish a hit; the action receipt correctly preserves its partially emitted effect as unknown. This is evidence against interpreting cancellation as undo, not a reason to overwrite the receipt with a complete effect claim.
+
+The final comparison is incomplete: o03 fired after its fourth model decision and ammo fell from 49 to 47; o04 withheld and ammo remained 49. Their model decisions and aim actions differed (o03 did not nudge, o04 did), the order and seed were fixed, and only one eligible example per condition occurred. Therefore no reliable causal performance, aiming or damage comparison follows. Neither produced a kill, and health declined in every run. The other two cases stopped at the final geometric/visual gate and remain in the result. A test-injected overlay, development-tuned image threshold, non-atomic screenshot/input boundary, and engine-reported telemetry limit scope; this is not v39 qualification, reliable recovery or MAP01 completion.
+
+Each run uses main runtime `cd8ab5877045bb90a3bf82b2572e4e1c145743b5`, pinned image, private Xvfb, seed 991031, skill 1, one CPU, no container network, and four real `gpt-6.1-sol` low image turns in a prestarted host session. Raw scripts, prompts, images, model usage, game samples and input/review receipts are retained; private model protocol journals remain local with hashes and sizes. `python audit.py` verifies all four, including actual source and image hashes, model associations, cancellation/release/review ordering, old-alias refusal, gates, ammo timeline, final input or withholding, and observed health/kill values. Every attempt is preserved.
