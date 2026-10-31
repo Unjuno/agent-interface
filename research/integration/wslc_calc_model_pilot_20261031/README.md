@@ -1,0 +1,12 @@
+# WSLc Calc model-validated known-task pilot
+
+Four separately frozen attempts used a blank LibreOffice Calc FODS, a previously reviewed pixel reference, and main runtime `76e9f8818adbe762d48b4577bf3d5c0b3a6a7073`. Each ran in a fresh network-isolated WSLc container; the host used one `gpt-6.1-sol` low model call at most per attempt, with credentials remaining on the host. Model task: identify A1 and the Save toolbar icon. The model points were checked against fixed reviewed bounds and a fresh observation.
+
+- A01 stopped before model or input: an incorrect check compared 4-byte native raw pixels to 3-byte RGB bytes. The waiting host was interrupted; no model request was made.
+- A02 verified PNG/source association and model points [81,151] and [83,51], but the 8x8 A1 patch was flat and mint was refused before input.
+- A03 used a 30x20 model-centered patch. It minted, but changed during typing; a native guard refused MISSING after partial emissions. The graph reported SAFE_YIELD/execution_failed with zero completed transitions. The saved file remained blank; the in-memory action had partial effect and was not replayed.
+- A04 used a fresh blank document. After verifying the model points, it used the pre-reviewed stable neutral anchor for keyboard input and CTRL+S. Enter and save each completed with verified release. The graph returned SAFE_YIELD/effect_unavailable with Save pending; it did not itself establish durable success. A separate post-close FODS scorer and XML audit found exactly A1=731 and A2=864, one sheet, no extra populated cells or formulas. The close release was verified and X keys/buttons were neutral.
+
+A02/A03/A04 each used one model call: 12,192 input tokens each, with 62/78/62 output tokens and 5.215/5.465/5.141 seconds grounding time. This is not a matched comparison or cost estimate. A04 model image digest matched; A04 input, 305 runtime and 2033 host-source hashes matched; exact container IDs were absent. Archives retain inputs, raw outcomes, partial effects and independent audit; ZIP integrity was verified. Host protocol journals contain local paths and remain locally retained, with hashes recorded.
+
+This is one successful known-task saved effect with a model-assisted visual check, not a general semantic target adapter: the model-selected points were validated but were not clicked, and the fixed neutral anchor and reviewed reference remain essential. It does not establish second-domain matched efficiency, arbitrary spreadsheets, autonomous recovery or MAP01 completion.
