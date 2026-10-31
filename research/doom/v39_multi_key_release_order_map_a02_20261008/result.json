@@ -1,0 +1,788 @@
+{
+  "schema": "issue59-pr7692-release-order-map-a02-v1",
+  "kind": "offline_source_pinned_candidate_construction",
+  "source": {
+    "pr": 7692,
+    "head": "7ec4e3ef405919bf5f1bfd9eeddbe630f3a5b32e",
+    "path": "research/doom/session_map01_v19.py",
+    "sha256": "2c5304bd246118f8124d5f7b50b81f869fb35ea3ee76887f4682748fdf95618a"
+  },
+  "identity_fields": [
+    "id",
+    "step",
+    "owner_id",
+    "intent_token",
+    "key",
+    "actuation_id"
+  ],
+  "hypothesis": "A per-actuation identity map can retain the DOWN corresponding to the final UP, independent of admission and release order, while still requiring exact identity and an empty final held set.",
+  "cases": [
+    {
+      "key_count": 1,
+      "schedule_count": 1,
+      "matched": 1,
+      "censored": 0,
+      "match_rate": 1.0,
+      "schedules": [
+        {
+          "admission_order": [
+            "A"
+          ],
+          "release_order": [
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        }
+      ]
+    },
+    {
+      "key_count": 2,
+      "schedule_count": 4,
+      "matched": 4,
+      "censored": 0,
+      "match_rate": 1.0,
+      "schedules": [
+        {
+          "admission_order": [
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        }
+      ]
+    },
+    {
+      "key_count": 3,
+      "schedule_count": 36,
+      "matched": 36,
+      "censored": 0,
+      "match_rate": 1.0,
+      "schedules": [
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "matched": true,
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "matched": true,
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "matched": true,
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "held_after": [],
+          "pending_admissions": 0,
+          "ambiguous": false
+        }
+      ]
+    }
+  ],
+  "mutation_checks": {
+    "missing_id": true,
+    "missing_step": true,
+    "missing_owner_id": true,
+    "missing_intent_token": true,
+    "missing_key": true,
+    "missing_actuation_id": true,
+    "bool_step_rejected": true,
+    "duplicate_admission_marks_ambiguous": true,
+    "ambiguous_identity_has_no_candidate": true,
+    "mismatched_release_has_no_candidate": true
+  },
+  "limits": "Synthetic unique per-key events only. No V39 compiler, scorer tail, physical input, live frequency, GUI, model, or task effect was run.",
+  "decision": "PASS_CANDIDATE if all 41 schedules match exact final DOWN/UP identity with empty held state and every malformed, duplicate, or mismatched identity mutation is rejected."
+}
