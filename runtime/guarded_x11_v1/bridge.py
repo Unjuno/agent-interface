@@ -113,6 +113,11 @@ class _GuardedBackend(X11Backend):
 
     def pointer_move(self, target, frame, x, y):
         point = self.owner.check("before_move")["point"]
+        # Additional observation checks can consume the lease. Motion is an
+        # externally visible input too, including when it only triggers hover.
+        self.owner._check_cancelled()
+        if self.owner.deadline is None or time.monotonic_ns() >= self.owner.deadline:
+            raise X11BackendError('native target guard lease expired before pointer motion')
         super().pointer_move(target, "screen_physical_px", *point)
         self.owner.moved_point = point
 
