@@ -36,14 +36,27 @@ with zipfile.ZipFile(io.BytesIO(prior)) as prev,zipfile.ZipFile(archive) as z:
   for i in (1,2):
    req=j(f'{arm}/exchange/request-{i}.json'); done=j(f'{arm}/exchange/done-{i}.json')
    assert done['fixture'] and done['ok'] and req['id']==done['id'] and H(z.read(f'{arm}/exchange/image-{i}.png'))==req['image_sha256']==done['image_sha256']
+  gate=j(f'{arm}/output/policy-gate.json'); assert gate==r['policy_gate'] and gate['eligible'] and gate['binding_equal']
+  images=[rgb(z.read(f'{arm}/exchange/image-{i}.png')) for i in (1,2)]
+  old,current=[im.crop((632,522,640,530)).tobytes() for im in images]
+  difference=lambda a,b:sum(abs(x-y) for x,y in zip(a,b))/len(a)
+  assert H(old)==gate['old_patch_sha256'] and H(current)==gate['current_patch_sha256']
+  assert abs(difference(old,current)-gate['patch_mean_abs_difference'])<1e-9 and difference(old,current)<=32
   original=j(f'{arm}/output/action-fire.json'); release=original['execution']['releases'][-1]
   assert original['status']=='execution_failed' and original['execution']['failed_op_effect'].startswith('unknown') and release['verified'] and not release['keys_down'] and not release['buttons_down']
-  assert r['monitor']['status']=='change_detected' and r['monitor']['cancel']['status']=='cancel_requested'
+  monitor=r['monitor']; assert monitor['status']=='change_detected' and monitor['cancel']['status']=='cancel_requested' and not monitor['cancel']['release_confirmed']
+  assert monitor['cancel_started_ns']<=release['monotonic_ns']
+  for i,row in enumerate(monitor['samples']):
+   pixels=rgb(z.read(f"{arm}/output/"+row['artifact']['image'])).tobytes()
+   assert H(pixels)==row['artifact']['patch_sha256'] and abs(difference(pixels,current)-row['difference'])<1e-9
+   assert row['difference']>32 if i==len(monitor['samples'])-1 else row['difference']<=32
   assert post==r['post_watch'] and post['original_effect']=='unknown' and post['replay'] is False and post['review']['status']=='reviewed'
   assert post['old_alias']['status']=='refused' and post['old_alias']['input_dispatched'] is False
   if mode=='withhold': assert post['status']=='control_withheld' and 'action' not in post
   else:
    assert post['status']=='completed' and post['action']['status']=='completed'
+   assert [q['stage'] for q in post['checks']]==['before_admission','before_focus','before_key_press:f']
+   assert all(q['eligible'] and q['binding_equal'] for q in post['checks'])
    assert all(x['verified'] and not x['keys_down'] and not x['buttons_down'] for x in post['action']['execution']['releases'])
   v=j(f'{arm}/output/post-effect-visual.json');assert v==r['post_effect_visual'] and not v['input_dispatched']
   assert v['deadline_ns']-v['started_ns']==600_000_000 and v['template49_sha256']==h49 and v['template48_sha256']==h48
@@ -60,5 +73,9 @@ with zipfile.ZipFile(io.BytesIO(prior)) as prev,zipfile.ZipFile(archive) as z:
   else: assert v['ended_ns']>=v['deadline_ns'] and all(q['crop_sha256']==h49 for q in v['observations'])
   samples=[json.loads(x) for x in z.read(f'{arm}/output/samples.jsonl').splitlines()];assert samples==r['samples']
   selected={s['label']:s['ammo'] for s in samples if s['label'] in ('second-model-done','after-post-watch','after-effect-review')}
+  assert selected['second-model-done']==49 and selected['after-effect-review']==(48 if mode=='fire' else 49)
+  assert selected['after-post-watch']==({'ey01':48,'ey02':49,'ey03':49,'ey04':49}[arm])
+  final=rgb(z.read(f'{arm}/output/scene-end.png')).crop((32,408,90,450)).tobytes()
+  assert H(final)==(h48 if mode=='fire' else h49)
   summaries.append({'arm':arm,'flag':flag,'mode':mode,'status':v['status'],'frames':len(v['observations']),'elapsed_ms':(v['ended_ns']-v['started_ns'])/1e6,'ammo':selected})
  print(json.dumps(summaries,indent=2))
