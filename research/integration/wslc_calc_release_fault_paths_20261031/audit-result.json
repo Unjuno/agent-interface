@@ -1,0 +1,46 @@
+{
+  "status": "audited",
+  "setup_failure": "an01",
+  "runs": [
+    {
+      "arm": "ao01",
+      "route": "fresh",
+      "outcome": "fresh entry failed",
+      "actual_release_verified": true,
+      "delivered_release_present": false,
+      "input_programs": 2,
+      "post_fault_keyboard_calls": 1,
+      "saved_document": "blank",
+      "keys_down": [],
+      "buttons_down": [],
+      "model_usage": {
+        "input_tokens": 12203,
+        "cached_input_tokens": 8192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "model_seconds": 5.0399056
+    },
+    {
+      "arm": "ao02",
+      "route": "compiled",
+      "outcome": "RUNTIME_FAILED / execution_failed",
+      "actual_release_verified": true,
+      "delivered_release_present": false,
+      "input_programs": 2,
+      "post_fault_keyboard_calls": 1,
+      "saved_document": "blank",
+      "keys_down": [],
+      "buttons_down": [],
+      "model_usage": {
+        "input_tokens": 12203,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "model_seconds": 5.1990185
+    }
+  ]
+}

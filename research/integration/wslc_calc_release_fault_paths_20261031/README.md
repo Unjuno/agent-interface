@@ -1,0 +1,16 @@
+# Calc: missing delivered release receipt through both live paths
+
+Two predeclared WSLc allocations ran a real Calc document and one live model grounding each, then clicked A1 and executed the entry input program. At the **caller receipt boundary**, test code copied the completed entry result and removed the release receipt only from the copy delivered to the route. The original backend result, including verified neutral release, was retained. This simulates missing evidence after an input returned; it is not an actual backend failure to release input.
+
+| Allocation | Route | Result after injected missing receipt | Save program | Saved FODS |
+| --- | --- | --- | --- | --- |
+| ao01 | corrected fresh-grounding | stopped: `fresh entry failed` | not dispatched | exact blank fixture |
+| ao02 | compiled composition | `RUNTIME_FAILED / execution_failed` | not dispatched | exact blank fixture |
+
+Both routes emitted exactly two recorded programs: initial click and entry. Each original entry receipt reported verified neutral release; after owner close, the independently queried tested keys and buttons were neutral. The compiled receipt records the entry terminal as `completed` with `release_verified=false`, zero completed transitions and `task_success=null`; it explicitly disallows replay. Zero completed transitions is **not** evidence that no input effect occurred. The input program ran before the synthetic receipt loss, so its effect in the open document must not be treated as undone. The unchanged saved bytes establish only that the saved file remained blank in this finite observation.
+
+An earlier allocation an01 failed before any model attempt or input because the isolated host adapter lacked its responder instruction file. It is retained as a setup failure, not a successful or discarded fault trial; `setup-failure.json` and local hashes record it. A successor with the missing schema and instructions included and verified before freezing used new IDs ao01/ao02. No prior allocation was rerun.
+
+The runs cover one injected missing-receipt point per route and fixed order, not delayed native release, process death, an actually held key, save-result ambiguity, generic equivalence, cost, or task success. The correction is the research successor from `calc_fresh_release_contract_20261031`; the frozen runtime snapshot is not asserted identical to the recorded main reference. The hosted model service and host software dependencies were not frozen. No broad reliability or MAP01 conclusion follows.
+
+`public.zip` retains the frozen runtime/study/adapter/runner and manifests, GUI observations, image/model-response associations, actual and altered receipts, input programs, owner cleanup and saved FODS. The local launcher and model protocol/call artifacts contain local information and remain private with SHA-256 hashes; the failed setup's original files are likewise hash-indexed. Run `python audit.py` without optimization to validate the frozen source, precisely scoped mutation, one model request, program sequence, absence of Save, file bytes and release/terminal evidence. The check of setup failure's lack of input is based on its local retained files, not independently reconstructed from the public summary.
