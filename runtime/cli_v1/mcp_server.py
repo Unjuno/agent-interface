@@ -1,7 +1,7 @@
 """Optional stdio MCP transport; one-shot by default, with explicit owned-session modes."""
 import argparse
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 import contextvars
 from copy import deepcopy
 from contextlib import asynccontextmanager
@@ -31,21 +31,27 @@ from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
 _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S = 4.0
+_GUARDED_CLOSE_CANCEL_DRAIN_TIMEOUT_S = 5.0
 _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 
 
-def _close_owner_after_cancel_drain(owner, cancellation_executor):
-    """Retry a busy owner close after already-committed cancellations finish."""
-    try:
-        report = owner.close()
-    finally:
-        if cancellation_executor is not None:
-            cancellation_executor.shutdown(wait=True, cancel_futures=False)
-    if (isinstance(report, dict) and report.get('status') == 'busy'
-            and cancellation_executor is not None):
-        report = owner.close()
-    return report
+def _close_owner_after_cancel_drain(owner, cancellation_executor, futures=(), *,
+                                    drain_timeout_s=_GUARDED_CLOSE_CANCEL_DRAIN_TIMEOUT_S):
+    """Stop submissions; close only after tracked cancellations have finished."""
+    if (type(drain_timeout_s) not in (int, float) or not math.isfinite(drain_timeout_s)
+            or drain_timeout_s < 0):
+        raise ValueError('drain timeout must be finite and nonnegative')
+    if cancellation_executor is not None:
+        cancellation_executor.shutdown(wait=False, cancel_futures=False)
+    if futures:
+        _, pending = wait(futures, timeout=drain_timeout_s)
+        if pending:
+            return {'status':'busy', 'reason':'cancellation_drain_timeout',
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False, 'verified':False,
+                    'pending_cancellations':len(pending)}
+    return owner.close()
 
 
 def _normalize_supervised_win32_program(program):
@@ -535,7 +541,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 shutting_down = False
 
     def close_owner():
-        report = _close_owner_after_cancel_drain(owner, cancellation_executor)
+        with calls_lock:
+            futures = tuple(cancellation_futures.values())
+        report = _close_owner_after_cancel_drain(owner, cancellation_executor, futures)
         _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
         return report
 

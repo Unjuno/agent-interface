@@ -1,5 +1,9 @@
 # MCP close retry after cancellation executor drain
 
+The later [bounded-drain experiment](../wslc_mcp_bounded_cancel_drain_20261101/README.md)
+replaces the indefinite executor wait described here; this document records
+the earlier candidate and its results.
+
 The prior experimental owner close returns `busy` while a cancellation owns
 the transaction lock. The MCP shutdown helper formerly wrote that `busy` result
 and then waited for the cancellation executor without trying close again. The
