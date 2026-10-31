@@ -1,6 +1,9 @@
 import threading,time,unittest
+import tempfile
+from pathlib import Path
 from unittest.mock import Mock
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
+from runtime.cli_v1.test_bounded_idle_owner_experiment import fake_process_owner
 
 def make_owner():
  owner=OwnedGuardedSessionOwner.__new__(OwnedGuardedSessionOwner)
@@ -30,5 +33,31 @@ class Exclusivity(unittest.TestCase):
   owner=make_owner();owner._idle_rpc_inflight=True;owner._request_locked=Mock()
   with self.assertRaisesRegex(RuntimeError,'idle.*in.flight'):owner._call('invoke_guarded')
   owner._request_locked.assert_not_called()
+
+class OwnedProcessExclusivity(unittest.TestCase):
+ def test_real_owned_process_refuses_rpc_while_idle_capture_is_blocked(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-capture').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   results=[];errors=[];worker=None
+   def observe():
+    try:results.append(owner.observe_idle_until(deadline_ns=time.monotonic_ns()+3_000_000_000,cancel_token='idle-overlap'))
+    except BaseException as error:errors.append(error)
+   try:
+    owner.get();worker=threading.Thread(target=observe);worker.start();deadline=time.monotonic()+2
+    while not (root/'capture-entered').exists() and time.monotonic()<deadline:time.sleep(.005)
+    self.assertTrue((root/'capture-entered').exists())
+    with self.assertRaisesRegex(RuntimeError,'idle observation in flight'):
+     owner.invoke_guarded('guarded_observe',{},root/'rejected')
+    self.assertFalse((root/'rejected').exists())
+    (root/'resume-capture').write_text('resume');worker.join(2)
+    self.assertFalse(worker.is_alive());self.assertEqual(errors,[])
+    self.assertEqual(results[0]['status'],'observed')
+    self.assertEqual(owner.close()['status'],'closed')
+   finally:
+    (root/'resume-capture').write_text('resume')
+    if worker is not None:worker.join(3)
+    owner.close()
 
 if __name__=='__main__':unittest.main()
