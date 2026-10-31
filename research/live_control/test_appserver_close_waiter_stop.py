@@ -8,6 +8,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 
 from research.live_control.codex_app_server_client_v2 import AppServerError, CodexAppServerClient
 from research.live_control.persistent_planner_adapter_v2 import PersistentPlannerAdapter
@@ -117,6 +118,56 @@ class CloseWaiterTests(unittest.TestCase):
                 finally:
                     if held: client._journal_lock.release()
                     worker.join(1)
+
+    def test_planner_can_retry_close_after_condition_fence_timeout(self):
+        with owned_client() as (client, read_fd):
+            waiting, held, release = (threading.Event() for _ in range(3))
+            errors = []
+            planner = PersistentPlannerAdapter(client, model="mock", effort="low", cwd=".", base_instructions="")
+            original_wait = client._condition.wait
+            original_close = client.close
+            def observe_wait(timeout=None):
+                waiting.set()
+                return original_wait(timeout)
+            def short_close(timeout=5):
+                return original_close(timeout=.05)
+            with patch.object(client, "start_thread", return_value={"thread":{"id":"fixture-thread"}}), \
+                 patch.object(client, "start_turn", return_value={"turn":{"id":"fixture-turn"}}), \
+                 patch.object(client, "close", side_effect=short_close):
+                planner.start_session()
+                handle = planner.begin_turn("observe", output_schema={"type":"object"})
+                client._condition.wait = observe_wait
+                def waiter():
+                    try: planner.await_turn(handle, timeout=2)
+                    except BaseException as error: errors.append(error)
+                worker = threading.Thread(target=waiter)
+                def holder():
+                    with client._condition:
+                        held.set()
+                        release.wait(2)
+                blocker = threading.Thread(target=holder)
+                worker.start()
+                try:
+                    self.assertTrue(waiting.wait(1))
+                    blocker.start()
+                    self.assertTrue(held.wait(1))
+                    with self.assertRaisesRegex(TimeoutError, "condition fence timed out"):
+                        planner.abort_pending_turn()
+                    self.assertFalse(client._closing)
+                    self.assertTrue(worker.is_alive())
+                    release.set()
+                    blocker.join(1)
+                    self.assertEqual(planner.abort_pending_turn()["outcome"], "aborted")
+                    worker.join(1)
+                    self.assertFalse(worker.is_alive())
+                    self.assertEqual(len(errors), 1)
+                    self.assertIsInstance(errors[0], AppServerError)
+                    self.assertTrue(planner._cancellation_requested)
+                finally:
+                    release.set()
+                    if blocker.ident is not None: blocker.join(1)
+                    worker.join(1)
+                    client._condition.wait = original_wait
 
     def test_explicit_close_refuses_retained_notification_without_consuming_it(self):
         with owned_client() as (client, read_fd):

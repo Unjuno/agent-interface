@@ -50,6 +50,7 @@ class PersistentPlannerAdapter:
         self._interrupt_response = None
         self._transport_aborted = False
         self._transport_abort_completed = False
+        self._transport_abort_inflight = False
 
     @property
     def thread_id(self):
@@ -83,6 +84,7 @@ class PersistentPlannerAdapter:
             self._interrupt_response = None
             self._transport_aborted = False
             self._transport_abort_completed = False
+            self._transport_abort_inflight = False
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
@@ -113,6 +115,7 @@ class PersistentPlannerAdapter:
             self._interrupt_response = None
             self._transport_aborted = False
             self._transport_abort_completed = False
+            self._transport_abort_inflight = False
             self._output_schema = output_schema
         return handle
 
@@ -177,15 +180,24 @@ class PersistentPlannerAdapter:
             if self._active is None or self._terminal_status is not None:
                 return {"outcome": "already_terminal", "status": self._terminal_status}
             self._cancellation_requested = True
-            if self._transport_aborted:
-                return {"outcome": "already_aborted" if self._transport_abort_completed
-                        else "abort_unverified"}
+            if self._transport_abort_completed:
+                return {"outcome": "already_aborted"}
+            if self._transport_abort_inflight:
+                return {"outcome": "abort_unverified"}
             self._transport_aborted = True
+            self._transport_abort_inflight = True
             active_at_abort = self._active
-        self.client.close(timeout=5)
+        try:
+            self.client.close(timeout=5)
+        except BaseException:
+            with self._lock:
+                if self._active == active_at_abort:
+                    self._transport_abort_inflight = False
+            raise
         with self._lock:
             if self._active == active_at_abort:
                 self._transport_abort_completed = True
+                self._transport_abort_inflight = False
         return {"outcome": "aborted"}
 
     def await_turn(self, handle, timeout=120):

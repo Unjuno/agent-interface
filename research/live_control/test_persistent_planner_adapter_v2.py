@@ -118,9 +118,29 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         handle = planner.begin_turn("observe", output_schema=SCHEMA)
         with self.assertRaisesRegex(OSError, "close failed"):
             planner.abort_pending_turn()
-        self.assertEqual(planner.abort_pending_turn()["outcome"], "abort_unverified")
         self.assertEqual(planner.interrupt(handle)["outcome"], "abort_unverified")
-        self.assertEqual(client.close_calls, [5])
+        with self.assertRaisesRegex(OSError, "close failed"):
+            planner.abort_pending_turn()
+        self.assertEqual(planner.interrupt(handle)["outcome"], "abort_unverified")
+        self.assertEqual(client.close_calls, [5, 5])
+        self.assertFalse(planner.await_turn(handle).answer_eligible)
+
+    def test_failed_abort_can_be_retried_after_attempt_finishes(self):
+        class RecoveringCloseClient(FakeClient):
+            def close(self, timeout=5):
+                self.close_calls.append(timeout)
+                if len(self.close_calls) == 1:
+                    raise TimeoutError("condition fence unavailable")
+                self.release_completion.set()
+        client = RecoveringCloseClient([completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        with self.assertRaisesRegex(TimeoutError, "condition fence unavailable"):
+            planner.abort_pending_turn()
+        self.assertEqual(planner.interrupt(handle)["outcome"], "abort_unverified")
+        self.assertEqual(planner.abort_pending_turn()["outcome"], "aborted")
+        self.assertEqual(planner.abort_pending_turn()["outcome"], "already_aborted")
+        self.assertEqual(client.close_calls, [5, 5])
         self.assertFalse(planner.await_turn(handle).answer_eligible)
 
     def test_in_progress_abort_is_not_reported_as_completed(self):
