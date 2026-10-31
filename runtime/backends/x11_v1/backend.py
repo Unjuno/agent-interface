@@ -201,6 +201,9 @@ class X11Backend:
         Releases never invoke this fence.
         """
 
+    def _before_input_emission(self) -> None:
+        """Optional final fence after the cleanup obligation is published."""
+
     def _track_key_press(self, key: str, code: int) -> None:
         """Record the cleanup obligation immediately before emitting a press."""
         self.held_keycodes[key] = code
@@ -217,6 +220,7 @@ class X11Backend:
             self._before_input_press()
             self._track_button_press(button)
             self._publish_input_obligations()
+            self._before_input_emission()
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
@@ -251,6 +255,7 @@ class X11Backend:
             self._before_input_press()
             self._track_key_press(key, code)
             self._publish_input_obligations()
+            self._before_input_emission()
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         if getattr(self, '_tap_defer_sync', False):

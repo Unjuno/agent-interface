@@ -37,6 +37,14 @@ def read_window_title(connection, window):
     return window.get_wm_name()
 
 class _GuardedBackend(X11Backend):
+    def _before_input_emission(self):
+        # Publishing custody may block after the earlier press fence. Preserve
+        # the prearmed obligation if this fence refuses so cleanup can run.
+        self.owner._check_cancelled()
+        if (self.owner.active is not None and self.owner.deadline is not None
+                and time.monotonic_ns() >= self.owner.deadline):
+            raise X11BackendError('native target guard lease expired after custody publication')
+
     def _before_activation_request(self,target,window_id):
         self.owner._check_activation_context(target,window_id)
         self._before_input_press()
