@@ -1,0 +1,18 @@
+# Calc: bounded OCR-based reconciliation after a yielded entry
+
+This research-only continuation replaces the correct-value pixel reference used by PR #9983's recovery with two bounded OCR reads from a **fresh native capture**. The values expected by the task, 329 and 517, remain known to the classifier; no pre-rendered correct-value reference image is supplied to the live recovery. A stale 731/864 reference is still used initially to produce the original `SAFE_YIELD / effect_unavailable`. That original receipt remains `task_success=null` and replay forbidden; the entry is not replayed.
+
+First, e01 ran the existing crop OCR on three retained screenshots, without GUI input or a model: known 329/517 classified `filled`, known 731/864 `wrong`, and blank `unknown`. It made six recorded OCR attempts. Then two separately allocated, fixed-order live WSLc/Calc trials used identical frozen scripts and inputs; only the recovery-case environment changed:
+
+| Trial | Recovery observation | OCR cue | New Save | Saved FODS |
+|---|---|---|---|---|
+| e02 | black overlay obscures the cell crops | unknown | none | byte-identical original blank |
+| e03 | cells unobscured | filled (329 / 517) | one new guarded Ctrl+S | exactly A1=329, A2=517 |
+
+Both original methods executed one entry transition and yielded without replay. Recovery took a later capture and applied at most one Save under a three-second caller deadline. The blocked control minted no Save reference and retained no Save execution record. The clear case minted one fresh Save reference, recorded VALID input guards and verified release; an independent FODS XML audit checked all populated direct cells. Both sessions closed with verified empty release, independent key/button readback was neutral and the named containers exited. Neither result establishes rollback of the unsaved entry in the blocked case.
+
+The e03 OCR section took 122 ms and the measured recovery interval from its initial recovery timestamp through completion of the guarded Save took 399 ms. This excludes the earlier model call, application startup, source preparation, later saved-file scoring and shutdown; it is one observation, not a latency guarantee. Each live arm made one `gpt-6.1-sol` low call (12,197 input and 78 output tokens, cached input 0); e01 used no model. No model schema preflight or provider price is included. The fixed geometry, task-specific expected values and one synthetic obstruction do not establish general OCR accuracy, arbitrary-app recovery, safe shared-display behavior or MAP01 completion. This remains an experimental caller in the retained runner, not a production recovery API; issue 57 remains open.
+
+**Recording discrepancy:** the copied historical cue's `command` field retains its default `--psm 11` string even in crop mode. Its crop-mode source constructs `--psm 7`; the retained two TSV outputs, crop hashes and source permit this scoped audit, but the command field alone is inaccurate and no independent process-level command trace was captured. The discrepancy is preserved rather than rewriting the original records.
+
+`public.zip` contains the frozen scripts/conditions, offline and live OCR TSVs and stderr, screenshot/capture records, original and recovery receipts, saved FODS, model usage, input releases and cleanup summary. Private host protocol journals are hash-indexed. `python audit.py` independently parses OCR words/confidence, reconstructs the live cropped PNG bytes from the capture and checks their hashes, validates fresh associations and bounded attempts, parses the saved FODS, and checks the negative control and neutral release. Full source/image bytes and provider internals remain outside the packet.
