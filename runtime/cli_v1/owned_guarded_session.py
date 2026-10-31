@@ -468,6 +468,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 raise RuntimeError('owned idle observation response quarantined')
             if self._idle_closing:
                 raise RuntimeError('owned idle observation owner closing')
+            if self._idle_rpc_inflight:
+                raise RuntimeError('idle observation in flight; owned RPC refused')
             if self._cancel_calls_inflight:
                 raise RuntimeError('cancel is in flight; owned RPC refused')
         with self._rpc_lock:
@@ -476,6 +478,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     raise RuntimeError('owned idle observation response quarantined')
                 if self._idle_closing:
                     raise RuntimeError('owned idle observation owner closing')
+                if self._idle_rpc_inflight:
+                    raise RuntimeError('idle observation in flight; owned RPC refused')
                 if self._cancel_calls_inflight:
                     raise RuntimeError('cancel is in flight; owned RPC refused')
             return self._request_locked(method, arguments)
@@ -777,8 +781,13 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 raise RuntimeError('cancel is in flight; idle observation refused')
             if self._idle_rpc_inflight:
                 raise RuntimeError('owned idle observation already in flight')
-            self._idle_rpc_inflight = True
-            self._idle_observation_used = True
+            if not self._rpc_lock.acquire(blocking=False):
+                raise RuntimeError('owned RPC in flight; idle observation refused')
+            try:
+                self._idle_rpc_inflight = True
+                self._idle_observation_used = True
+            finally:
+                self._rpc_lock.release()
         try:
             return self._observe_idle_until_registered(deadline_ns=deadline_ns, cancel_token=cancel_token)
         finally:
