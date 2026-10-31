@@ -1,0 +1,330 @@
+{
+  "distinct_separation": 12,
+  "mad_max": 32,
+  "margin_min": 4,
+  "method": "posthoc RGB MAD, spatial stride 3, offsets step 2; thresholds illustrative",
+  "results": [
+    {
+      "cases": {
+        "blank": {
+          "center_patch_mad": 66.02083333333333,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 0.0,
+            "offset": [
+              -96,
+              -64
+            ],
+            "reasons": [
+              "search_boundary",
+              "ambiguous",
+              "poor_match"
+            ],
+            "review": "refuse",
+            "score": 53.382161458333336,
+            "second_distinct_score": 53.382161458333336
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 0.0,
+            "offset": [
+              -96,
+              -64
+            ],
+            "reasons": [
+              "search_boundary",
+              "ambiguous",
+              "poor_match"
+            ],
+            "review": "refuse",
+            "score": 40.8076370944588,
+            "second_distinct_score": 40.8076370944588
+          }
+        },
+        "fresh": {
+          "center_patch_mad": 42.052083333333336,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 1.787109375,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [
+              "ambiguous"
+            ],
+            "review": "refuse",
+            "score": 30.7890625,
+            "second_distinct_score": 32.576171875
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 8.462245190927362,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 19.683318977892622,
+            "second_distinct_score": 28.145564168819984
+          }
+        },
+        "same": {
+          "center_patch_mad": 0.0,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 29.138020833333332,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 29.138020833333332
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 27.491817398794144,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 27.491817398794144
+          }
+        },
+        "shift_6_minus4": {
+          "center_patch_mad": 41.333333333333336,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 29.138020833333332,
+            "offset": [
+              6,
+              -4
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 29.138020833333332
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 27.491817398794144,
+            "offset": [
+              6,
+              -4
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 27.491817398794144
+          }
+        },
+        "synthetic_occlusion": {
+          "center_patch_mad": 149.9375,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 26.425130208333332,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 2.712890625,
+            "second_distinct_score": 29.138020833333332
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 26.679299454493254,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.8125179443008901,
+            "second_distinct_score": 27.491817398794144
+          }
+        }
+      },
+      "fresh_sha256": "071944227d109917fa26c39cf076b1ca5b591af37c18dc2c15d3aec745c110ef",
+      "point": [
+        655,
+        501
+      ],
+      "run": "z01",
+      "source_sha256": "29982d3b08d1b74dea27f5523e7e1a66de551fb0cd0cd761f49fa11f68e478c7"
+    },
+    {
+      "cases": {
+        "blank": {
+          "center_patch_mad": 11.791666666666666,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 0.0,
+            "offset": [
+              -96,
+              -64
+            ],
+            "reasons": [
+              "search_boundary",
+              "ambiguous"
+            ],
+            "review": "refuse",
+            "score": 27.729166666666668,
+            "second_distinct_score": 27.729166666666668
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 0.0,
+            "offset": [
+              -96,
+              -64
+            ],
+            "reasons": [
+              "search_boundary",
+              "ambiguous"
+            ],
+            "review": "refuse",
+            "score": 30.87022681596325,
+            "second_distinct_score": 30.87022681596325
+          }
+        },
+        "fresh": {
+          "center_patch_mad": 32.083333333333336,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 1.12890625,
+            "offset": [
+              64,
+              -64
+            ],
+            "reasons": [
+              "search_boundary",
+              "ambiguous"
+            ],
+            "review": "refuse",
+            "score": 23.700520833333332,
+            "second_distinct_score": 24.829427083333332
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 0.6485788113695072,
+            "offset": [
+              96,
+              -64
+            ],
+            "reasons": [
+              "search_boundary",
+              "ambiguous"
+            ],
+            "review": "refuse",
+            "score": 27.34998564455929,
+            "second_distinct_score": 27.998564455928797
+          }
+        },
+        "same": {
+          "center_patch_mad": 0.0,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 19.004557291666668,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 19.004557291666668
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 20.00861326442722,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 20.00861326442722
+          }
+        },
+        "shift_6_minus4": {
+          "center_patch_mad": 10.729166666666666,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 19.004557291666668,
+            "offset": [
+              6,
+              -4
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 19.004557291666668
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 20.00861326442722,
+            "offset": [
+              6,
+              -4
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.0,
+            "second_distinct_score": 20.00861326442722
+          }
+        },
+        "synthetic_occlusion": {
+          "center_patch_mad": 166.66666666666666,
+          "window_48x96": {
+            "candidate_count": 6305,
+            "margin": 16.076171875,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 2.9283854166666665,
+            "second_distinct_score": 19.004557291666668
+          },
+          "window_80x128": {
+            "candidate_count": 6305,
+            "margin": 19.150157909847835,
+            "offset": [
+              0,
+              0
+            ],
+            "reasons": [],
+            "review": "candidate_only",
+            "score": 0.8584553545793856,
+            "second_distinct_score": 20.00861326442722
+          }
+        }
+      },
+      "fresh_sha256": "db431e72da7ef3723fc8f36ce84436dd962743fe68cb2f9024a65284d615e47f",
+      "point": [
+        653,
+        511
+      ],
+      "run": "z02",
+      "source_sha256": "133a20bbf0914a89565ec3529a680cddac69b068dee9e94bce5fe79e2b4b1c41"
+    }
+  ],
+  "search_dx": [
+    -96,
+    96
+  ],
+  "search_dy": [
+    -64,
+    64
+  ]
+}
