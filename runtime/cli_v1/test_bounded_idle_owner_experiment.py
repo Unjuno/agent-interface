@@ -22,6 +22,13 @@ def fake_process_owner(targets,directory,display_name,options):
                  ('runtime.guarded_x11_v1.observation_worker.read_linux_x11_process_identity',{'return_value':fake.generation})]:
   p=patch(name,**kw);p.start();cleanup.addCleanup(p.stop)
  owner=GuardedSessionOwner(targets,directory,display_name,**options);owner._owned_process_test_cleanup=cleanup
+ if (root/'block-owner-return').exists():
+  original=owner.observe_idle_until
+  def blocked_return(**kwargs):
+   result=original(**kwargs);(root/'owner-return-entered').write_text('entered')
+   while not (root/'resume-owner-return').exists():time.sleep(.005)
+   return result
+  owner.observe_idle_until=blocked_return
  return owner
 
 
@@ -66,6 +73,53 @@ class BoundedIdleOwnerExperiment(unittest.TestCase):
  def test_owner_cancel_blocked_capture_discards_late_frame(self):self.exercise(True)
 
 class BoundedIdleOwnedProcessExperiment(unittest.TestCase):
+ def test_characterize_parent_accepts_late_owned_response(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   results=[];errors=[];worker=None
+   try:
+    owner.get();deadline=time.monotonic_ns()+300_000_000
+    def invoke():
+     try:results.append(owner.observe_idle_until(deadline_ns=deadline,cancel_token='owned-late'))
+     except Exception as error:errors.append(error)
+    worker=threading.Thread(target=invoke);worker.start();end=time.monotonic()+2
+    while not (root/'owner-return-entered').exists() and time.monotonic()<end:time.sleep(.005)
+    self.assertTrue((root/'owner-return-entered').exists())
+    while time.monotonic_ns()<=deadline:time.sleep(.005)
+    self.assertTrue(worker.is_alive())
+    (root/'resume-owner-return').write_text('resume');worker.join(2)
+    self.assertFalse(worker.is_alive());self.assertEqual(errors,[])
+    self.assertEqual(results[0]['status'],'observed');self.assertEqual(results[0]['source']['sequence'],1)
+    self.assertGreater(time.monotonic_ns(),deadline)
+   finally:
+    (root/'resume-owner-return').write_text('resume')
+    if worker is not None:worker.join(2)
+    owner.close()
+
+ def test_parent_discards_response_delayed_past_observation_deadline(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   results=[];errors=[];worker=None
+   try:
+    owner.get();deadline=time.monotonic_ns()+300_000_000
+    def invoke():
+     try:results.append(owner.observe_idle_until(deadline_ns=deadline,cancel_token='owned-return'))
+     except Exception as error:errors.append(error)
+    worker=threading.Thread(target=invoke);worker.start();end=time.monotonic()+2
+    while not (root/'owner-return-entered').exists() and time.monotonic()<end:time.sleep(.005)
+    self.assertTrue((root/'owner-return-entered').exists())
+    worker.join(.7)
+    self.assertFalse(worker.is_alive(),'parent RPC still blocks after the observation deadline')
+    self.assertEqual(results,[]);self.assertEqual(len(errors),1)
+   finally:
+    (root/'resume-owner-return').write_text('resume')
+    if worker is not None:worker.join(2)
+    owner.close()
+
  def test_spawned_owner_deadline_discards_late_capture(self):
   with tempfile.TemporaryDirectory() as td:
    root=Path(td);(root/'block-capture').write_text('block')
