@@ -197,13 +197,15 @@ class CompiledBoundaryTests(unittest.TestCase):
    with self.subTest(status=status):
     d=Driver(terminal=status,released=False);base=d.execute
     d.execute=lambda p:dict(base(p),input_dispatched=False)
-    with self.assertRaises(ValueError):d.run()
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'))
+    self.assertIsNone(r['unresolved_execution']['input_dispatched'])
  def test_input_dispatched_requires_strict_boolean(self):
   for value in (0,1,None,'false'):
    with self.subTest(value=value):
     d=Driver(terminal='refused',released=False);base=d.execute
     d.execute=lambda p:dict(base(p),input_dispatched=value)
-    with self.assertRaises(ValueError):d.run()
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'))
+    self.assertIsNone(r['unresolved_execution']['input_dispatched'])
  def test_dispatch_or_held_input_cannot_be_downgraded_to_abstention(self):
   for flag,keys in ((True,[]),(False,['CTRL'])):
    with self.subTest(flag=flag,keys=keys):

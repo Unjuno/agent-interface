@@ -65,6 +65,8 @@ def cell(case='healthy', effect='succeeded', mutate_sink=False, journal_fault=No
                 keys_down=['inert-held'] if unknown else [], buttons_down=[]))
         if case != 'unknown_delivery':
             terminal['input_dispatched'] = not refused
+        if case == 'invalid_delivery_second' and n == 2:
+            terminal['input_dispatched'] = 0
         return terminal
 
     def sink(receipt):
@@ -201,6 +203,19 @@ class CompiledCallerHandoffTests(unittest.TestCase):
                 self.assertEqual(unresolved['action_id'], 'inert-action-' + str(prefix + 1))
                 self.assertEqual(unresolved['effect_ref'], 'inert-effect-' + str(prefix + 1))
                 self.assertIs(unresolved['input_dispatched'], True)
+
+    def test_invalid_delivery_after_prefix_retains_unresolved_effect(self):
+        row = cell('invalid_delivery_second'); result = row['result']
+        self.assertEqual(result['outcome'], 'EXECUTION_INCOMPLETE')
+        self.assertEqual(result['delivery'], 'delivery_uncertain')
+        self.assertEqual(result['execution_progress']['completed_actions'], 1)
+        receipt = result['compiled_execution_receipt']
+        self.assertEqual(receipt['transitions'][0]['action'], 'enter_token')
+        self.assertEqual(receipt['unresolved_execution']['action'], 'submit_form')
+        self.assertEqual(receipt['unresolved_execution']['effect_ref'], 'inert-effect-2')
+        self.assertIsNone(receipt['unresolved_execution']['input_dispatched'])
+        self.assertEqual(len(row['state']['execute']), 2)
+        self.assertEqual(row['state']['verify'], 0)
 
     def test_sink_cannot_mutate_retained_receipt_or_decision(self):
         row = cell(mutate_sink=True); r = row['result']

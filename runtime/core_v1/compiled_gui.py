@@ -467,11 +467,28 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         delivery = {}
         if type(terminal) is dict and "input_dispatched" in terminal:
             terminal_fields.add("input_dispatched")
-            if type(terminal["input_dispatched"]) is not bool:
-                raise ValueError("strict boolean input_dispatched required")
-            if terminal["input_dispatched"] is False and terminal.get("status") != "refused":
-                raise ValueError("no-input terminal must be an explicit refusal")
-            delivery["input_dispatched"] = terminal["input_dispatched"]
+            flag = terminal["input_dispatched"]
+            status = terminal.get("status")
+            if (type(flag) is not bool or
+                    (flag is False and (type(status) is not str or status != "refused"))):
+                # Execute already returned; an invalid or contradictory flag is
+                # not evidence that input was absent. Preserve a bounded prefix.
+                unresolved_execution = {
+                    "action": action_name,
+                    "reason": "invalid_delivery_attestation",
+                    "release_verified": False,
+                    "input_dispatched": None,
+                }
+                for key in ("action_id", "effect_ref"):
+                    value = terminal.get(key)
+                    unresolved_execution[key] = (
+                        value if type(value) is str and 0 < len(value) <= 64 else None)
+                emit({"event": "action_terminal", "action": action_name,
+                      "status": "invalid_delivery_attestation",
+                      "action_id": unresolved_execution["action_id"],
+                      "release_verified": False})
+                return finish("RUNTIME_FAILED", "execution_failed")
+            delivery["input_dispatched"] = flag
         _exact(terminal, terminal_fields, "execution terminal")
         terminal = terminal.copy()
         release = terminal["release"]

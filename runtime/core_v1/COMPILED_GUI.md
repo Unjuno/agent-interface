@@ -167,6 +167,13 @@ built-in-list returns that fail verified neutrality also retain an
 `unresolved_execution` entry with reason `release_unverified`, the action,
 strict delivery flag or null, and bounded exact-string action/effect references
 or null. An explicitly attested pre-input refusal keeps its existing behavior.
+If a returned `input_dispatched` value is not a strict boolean, or falsely
+claims no input for a non-refusal status, the core instead returns
+`RUNTIME_FAILED/execution_failed` with `unresolved_execution` reason
+`invalid_delivery_attestation`. The delivery flag is unknown, bounded
+references and any verified prior transitions are retained, and no later
+operation is dispatched. Other malformed terminal fields retain their
+existing validation behavior.
 This metadata preserves declarations for reconciliation; it does not establish
 whether input was delivered, prove release, or authorize replay. Verified
 neutral returns retain their prior receipt shape and behavior.
