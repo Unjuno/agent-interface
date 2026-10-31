@@ -8,8 +8,27 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 
 class PrivateDisplayOwnerTests(unittest.TestCase):
+    def test_pidfd_open_failure_retains_child_for_later_reap(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner');original_wait=subprocess.Popen.wait
+            def timeout_xvfb(process,timeout=None):
+                if process.args[0]=='Xvfb':raise subprocess.TimeoutExpired('Xvfb',timeout)
+                return original_wait(process,timeout=timeout)
+            try:
+                with patch('os.pidfd_open',side_effect=OSError('injected pidfd failure')), patch.object(subprocess.Popen,'wait',timeout_xvfb):
+                    with self.assertRaisesRegex(RuntimeError,'cleanup unconfirmed'):owner.start(timeout_s=5)
+                self.assertIsNotNone(owner._process);self.assertIsNone(owner._pidfd);self.assertFalse(owner._retired)
+                try:result=owner.close()
+                except RuntimeError as e:self.fail('owned child could not be reaped: '+str(e))
+                self.assertEqual(result,{'status':'retired'})
+            finally:
+                if owner._process is not None and owner._process.poll() is None:
+                    owner._process.kill();owner._process.wait(timeout=3)
+
     def test_start_failure_unconfirmed_reap_is_not_reported_retired(self):
         from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
         with tempfile.TemporaryDirectory() as directory:

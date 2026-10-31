@@ -28,6 +28,7 @@ class PrivateDisplayOwner:
         self._lock=threading.Lock()
         self._closed=False
         self._starting=False
+        self._kill_requested=False
 
     def _auth_add(self, display, cookie, timeout):
         subprocess.run(['xauth','-f',str(self.directory/'authority'),'-'],
@@ -79,9 +80,13 @@ class PrivateDisplayOwner:
                 if self._pidfd is not None:
                     try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
                     except ProcessLookupError:pass
+                    self._kill_requested=True
                 elif self._process.poll() is None:
                     # The unreaped direct child cannot have had its PID reused.
                     self._process.kill()
+                    self._kill_requested=True
+                else:
+                    self._kill_requested=True
                 try:self._process.wait(timeout=0.25)
                 except subprocess.TimeoutExpired:
                     raise RuntimeError('display startup failed; cleanup unconfirmed') from startup_error
@@ -97,9 +102,15 @@ class PrivateDisplayOwner:
 
     def retire(self, *, timeout_s):
         if self._retired:return {'status':'retired'}
-        if self._process is None or self._pidfd is None:raise RuntimeError('no owned display')
-        try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
-        except ProcessLookupError:pass
+        if self._process is None:raise RuntimeError('no owned display')
+        if self._pidfd is None:
+            if not self._kill_requested:raise RuntimeError('no owned display')
+            # After a pidfd-open failure, only wait for the direct child already
+            # signalled during startup cleanup; never issue a PID-based retry.
+        else:
+            try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
+            except ProcessLookupError:pass
+            self._kill_requested=True
         try:self._process.wait(timeout=timeout_s)
         except subprocess.TimeoutExpired:return {'status':'unknown'}
         self._retired=True
