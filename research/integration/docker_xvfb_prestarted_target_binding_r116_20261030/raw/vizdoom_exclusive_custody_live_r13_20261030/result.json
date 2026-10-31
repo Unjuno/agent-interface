@@ -1,0 +1,6639 @@
+{
+  "status": "PASS",
+  "task_success": null,
+  "no_model_calls": true,
+  "times": {
+    "stop_requested": 3321532249839,
+    "stopped": 3321532327564,
+    "cancel_returned": 3321783484631,
+    "target_exit_observed": 3321896714059,
+    "resume": 3322184345628,
+    "fresh_ready": 3322452084165,
+    "recorder_ready": 3322457000808,
+    "fresh_action_started": 3326017726353,
+    "fresh_horizon_start": 3326774471750,
+    "fresh_horizon_end": 3335280070681,
+    "recorder_stopped": 3335280317028
+  },
+  "checks": {
+    "observed_owned_binding": true,
+    "w_down_before_stop": true,
+    "target_exit_before_resume": true,
+    "target_exit_verified": true,
+    "original_unknown_no_replay": true,
+    "close_release_readback": true,
+    "w_b_up_after_close": true,
+    "stop_at_least_650ms": true,
+    "fresh_distinct_process": true,
+    "xid_reused": true,
+    "process_generation_distinct": true,
+    "stale_alias_refused_before_dispatch": true,
+    "fresh_before_old_delayed_deadline": true,
+    "fresh_horizon_elapsed": true,
+    "fresh_action_completed": true,
+    "fresh_release_verified": true,
+    "fresh_scene_changed": true,
+    "b_not_observed_down": true,
+    "fresh_keys_up_after_horizon": true,
+    "recorder_covers_delayed_deadline": true,
+    "recorded_fresh_w_press_and_release": true,
+    "no_recorded_b_press": true,
+    "recorder_exited_without_error": true
+  },
+  "target_pid": 11,
+  "xid": 4194320,
+  "observe": {
+    "operation": "guarded_observe",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "observed",
+    "input_dispatched": false,
+    "source": {
+      "sequence": 1,
+      "observation_id": "c4aab765ff3347d39f3e3dc4254e6715",
+      "binding_revision": 0,
+      "capture_ns": 3321312961477,
+      "image_source": "exact_capture_rgb_handoff",
+      "pointer_binding": {
+        "focus": 4194320,
+        "surface": 4194320,
+        "geometry": [
+          320,
+          272,
+          640,
+          480
+        ],
+        "process_generation": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+        "window_generation": "a926af224146eba656f39df1bd15e7e1391170b5b3dd8485bbdc957a5057cb1d"
+      },
+      "native": {
+        "bytes": 5242880,
+        "sha256": "177a61e6c955b1868ed3e89a9315c28a52cc21ce6c5e7609b458b22c20a4fdc5",
+        "width": 1280,
+        "height": 1024,
+        "target": "app",
+        "native_window_id": 4194320,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          1024
+        ],
+        "capture_started_ns": 3321312961477,
+        "capture_ended_ns": 3321324330037,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/evidence/mcp/7057b626b2bc4ac89e3cab7f63efd1ea/images/2830e398111b4b2a85d186225d106ff6.png",
+          "sha256": "9b6844e1088ccab1cd1a749832e4bb3f338f9ed8d9bcddf640a410f3ce09fbef",
+          "bytes": 82347,
+          "width": 1280,
+          "height": 1024,
+          "source_raw_sha256": "177a61e6c955b1868ed3e89a9315c28a52cc21ce6c5e7609b458b22c20a4fdc5",
+          "timing_ns": {
+            "started": 3321326663260,
+            "converted": 3321328597850,
+            "encoded": 3321355297269,
+            "written": 3321358026172,
+            "hashed": 3321360303242
+          }
+        }
+      },
+      "timing_ns": {
+        "started": 3321311678981,
+        "public_returned": 3321360454482,
+        "binding_checked": 3321363825905,
+        "artifact_verified": 3321366048371,
+        "decoded": 3321366054362
+      }
+    },
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "status": "returned",
+      "observation_id": "c4aab765ff3347d39f3e3dc4254e6715",
+      "observation": {
+        "bytes": 5242880,
+        "sha256": "177a61e6c955b1868ed3e89a9315c28a52cc21ce6c5e7609b458b22c20a4fdc5",
+        "width": 1280,
+        "height": 1024,
+        "target": "app",
+        "native_window_id": 4194320,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          1024
+        ],
+        "capture_started_ns": 3321312961477,
+        "capture_ended_ns": 3321324330037,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/evidence/mcp/7057b626b2bc4ac89e3cab7f63efd1ea/images/2830e398111b4b2a85d186225d106ff6.png",
+          "sha256": "9b6844e1088ccab1cd1a749832e4bb3f338f9ed8d9bcddf640a410f3ce09fbef",
+          "bytes": 82347,
+          "width": 1280,
+          "height": 1024,
+          "source_raw_sha256": "177a61e6c955b1868ed3e89a9315c28a52cc21ce6c5e7609b458b22c20a4fdc5",
+          "timing_ns": {
+            "started": 3321326663260,
+            "converted": 3321328597850,
+            "encoded": 3321355297269,
+            "written": 3321358026172,
+            "hashed": 3321360303242
+          }
+        }
+      },
+      "side_effect_authority": false,
+      "input_dispatched": false
+    },
+    "session": {
+      "session_id": "4bcf1af8f775419a9091548820b77013",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:42a8f373e29a4a1090d21e1ae85a9644",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": false,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 618,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 618,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 3321384472438,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "image_status": "image",
+    "call_directory": "/evidence/mcp/7057b626b2bc4ac89e3cab7f63efd1ea",
+    "call_id": "7057b626b2bc4ac89e3cab7f63efd1ea"
+  },
+  "mint": {
+    "operation": "guarded_mint",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "minted",
+    "alias": "field",
+    "offset": [
+      12,
+      19
+    ],
+    "lifetime": {
+      "clock": "time.monotonic_ns",
+      "minted_ns": 3321395325003,
+      "expires_ns": 3621395325003,
+      "capture_freshness_ms": 1500,
+      "authority_granted": false,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "source_sequence": 1,
+    "input_dispatched": false,
+    "session": {
+      "session_id": "4bcf1af8f775419a9091548820b77013",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:42a8f373e29a4a1090d21e1ae85a9644",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": false,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 618,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 618,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 3321401796891,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "call_directory": "/evidence/mcp/86f08237010148a983394e958275786d",
+    "call_id": "86f08237010148a983394e958275786d"
+  },
+  "action": {
+    "status": "pending",
+    "call_id": "a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+    "call": {
+      "call_id": "a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+      "operation": "guarded_input",
+      "state": "queued",
+      "arguments": {
+        "alias": "field",
+        "offset": [
+          12,
+          19
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "w"
+            ]
+          }
+        ],
+        "interaction": "keyboard",
+        "observe_after": false
+      },
+      "backend_attempted": false,
+      "persistence_failure": null,
+      "response_wait_ms": 0
+    },
+    "scope": "current_server",
+    "result_available": false,
+    "release_confirmed": false,
+    "effect_status": "unknown",
+    "task_success": null,
+    "replay_allowed": false,
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay."
+  },
+  "marker": {
+    "blocked_boundary": "real python-xlib Display.sync response wait",
+    "delay_ms": 8000,
+    "delayed_event": "KeyPress",
+    "delayed_keycode": 56,
+    "flushed_ns": 3321511951740,
+    "immediate_event": "KeyPress",
+    "immediate_keycode": 25,
+    "owner_pid": 618,
+    "resource_base": 6291456
+  },
+  "sync_marker": {
+    "call": "python-xlib Display.sync",
+    "entered_ns": 3321526337092,
+    "owner_pid": 618,
+    "resource_base": 6291456
+  },
+  "w_down_before_stop": true,
+  "cancel": {
+    "status": "pending",
+    "call_id": "a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+    "operation_id": "3ae9e6e105df4eb2805d27e04ba2cbda",
+    "cancellation": {
+      "operation_id": "3ae9e6e105df4eb2805d27e04ba2cbda",
+      "status": "pending",
+      "admitted_monotonic_ns": 3321532594345,
+      "caller_response_deadline_monotonic_ns": 3321832594345,
+      "transaction_deadline_monotonic_ns": 3325532594345,
+      "owner_generation": {
+        "session_id": "4bcf1af8f775419a9091548820b77013",
+        "child_pid": 618,
+        "x_resource_base": 6291456,
+        "binding_revision": 0
+      },
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false
+    },
+    "result_available": true,
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "note": "The response wait ended; this cancellation operation retains custody. Retrieve it through interface_results. Pending permits no replay."
+  },
+  "target_exit_before_resume": -9,
+  "cancel_terminal": {
+    "status": "cancel_requested",
+    "already_requested": false,
+    "input_dispatched": false,
+    "release_confirmed": false,
+    "review_required": true,
+    "replay_allowed": false,
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "reason": "owner_pid_absent",
+      "owner_process_retired": true,
+      "owner_process_exitcode": -15,
+      "expected_pid": 618,
+      "observed_pid": null,
+      "observer_pid": 768,
+      "supervisor_pid": 768,
+      "resource_base": 6291456,
+      "started_monotonic_ns": 3322193722399,
+      "observed_monotonic_ns": 3322193911467
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "w": 25
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "release_started_monotonic_ns": 3322235396728,
+        "release_requests": [
+          {
+            "kind": "KeyRelease",
+            "code": 25,
+            "requested_monotonic_ns": 3322235416769
+          }
+        ],
+        "sync_started_monotonic_ns": 3322235417622,
+        "sync_completed_monotonic_ns": 3322235493212,
+        "readback_monotonic_ns": 3322235613544
+      },
+      "readback_source": "prestarted_supervisor_x11"
+    },
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "late_server_request_possible": true,
+    "owned_target_retirement": {
+      "status": "retired",
+      "exitcode": -9,
+      "signal_attempts": [
+        {
+          "signal": 15,
+          "status": "sent"
+        },
+        {
+          "signal": 9,
+          "status": "sent"
+        }
+      ],
+      "target_identity_verified": true,
+      "target_xid": 4194320,
+      "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+      "process_exit_verified": true
+    },
+    "owned_target_binding": {
+      "status": "bound",
+      "xid": 4194320,
+      "pid": 11,
+      "start_ticks": 331709,
+      "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+      "identity_query": {
+        "status": "observed",
+        "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+        "operation_id": "7b2b41eea3b644f3aebf6131c5fb3b6e",
+        "session_id": "4bcf1af8f775419a9091548820b77013",
+        "worker_retired": true,
+        "worker_exitcode": 0,
+        "completed_monotonic_ns": 3321257750151
+      }
+    },
+    "call_id": "a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+    "operation_id": "3ae9e6e105df4eb2805d27e04ba2cbda",
+    "cancellation": {
+      "operation_id": "3ae9e6e105df4eb2805d27e04ba2cbda",
+      "status": "completed",
+      "admitted_monotonic_ns": 3321532594345,
+      "caller_response_deadline_monotonic_ns": 3321832594345,
+      "transaction_deadline_monotonic_ns": 3325532594345,
+      "owner_generation": {
+        "session_id": "4bcf1af8f775419a9091548820b77013",
+        "child_pid": 618,
+        "x_resource_base": 6291456,
+        "binding_revision": 0
+      },
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "status": "cancel_requested",
+        "already_requested": false,
+        "input_dispatched": false,
+        "release_confirmed": false,
+        "review_required": true,
+        "replay_allowed": false,
+        "owner_process_retired": true,
+        "owner_process_exitcode": -15,
+        "owner_client_disconnect": {
+          "status": "disconnected",
+          "reason": "owner_pid_absent",
+          "owner_process_retired": true,
+          "owner_process_exitcode": -15,
+          "expected_pid": 618,
+          "observed_pid": null,
+          "observer_pid": 768,
+          "supervisor_pid": 768,
+          "resource_base": 6291456,
+          "started_monotonic_ns": 3322193722399,
+          "observed_monotonic_ns": 3322193911467
+        },
+        "owner_input_obligations": {
+          "keys": {
+            "w": 25
+          },
+          "buttons": []
+        },
+        "owner_input_obligations_source": "retired_child_shared_state",
+        "owner_input_obligations_live_read": {
+          "status": "snapshot",
+          "obligations": {
+            "keys": {
+              "w": 25
+            },
+            "buttons": []
+          }
+        },
+        "owner_release_attempt": {
+          "status": "readback_verified",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": [],
+            "release_started_monotonic_ns": 3322235396728,
+            "release_requests": [
+              {
+                "kind": "KeyRelease",
+                "code": 25,
+                "requested_monotonic_ns": 3322235416769
+              }
+            ],
+            "sync_started_monotonic_ns": 3322235417622,
+            "sync_completed_monotonic_ns": 3322235493212,
+            "readback_monotonic_ns": 3322235613544
+          },
+          "readback_source": "prestarted_supervisor_x11"
+        },
+        "cleanup_status": "UNKNOWN",
+        "task_success": null,
+        "late_server_request_possible": true,
+        "owned_target_retirement": {
+          "status": "retired",
+          "exitcode": -9,
+          "signal_attempts": [
+            {
+              "signal": 15,
+              "status": "sent"
+            },
+            {
+              "signal": 9,
+              "status": "sent"
+            }
+          ],
+          "target_identity_verified": true,
+          "target_xid": 4194320,
+          "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+          "process_exit_verified": true
+        },
+        "owned_target_binding": {
+          "status": "bound",
+          "xid": 4194320,
+          "pid": 11,
+          "start_ticks": 331709,
+          "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+          "identity_query": {
+            "status": "observed",
+            "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+            "operation_id": "7b2b41eea3b644f3aebf6131c5fb3b6e",
+            "session_id": "4bcf1af8f775419a9091548820b77013",
+            "worker_retired": true,
+            "worker_exitcode": 0,
+            "completed_monotonic_ns": 3321257750151
+          }
+        }
+      },
+      "completed_monotonic_ns": 3322275935301
+    }
+  },
+  "old_terminal": {
+    "status": "runtime_failed",
+    "error": "EOFError()",
+    "operation": "guarded_input",
+    "operation_invoked": false,
+    "effect_status": "unknown",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "cleanup_status": "UNKNOWN",
+    "owner_process": {
+      "pid": 618,
+      "alive": true,
+      "liveness_observed_monotonic_ns": 3321640341035,
+      "exitcode": null,
+      "retired": false,
+      "release_confirmed": null,
+      "x_client_resource_base": 6291456
+    },
+    "late_server_request_possible": true,
+    "session": {
+      "session_id": "4bcf1af8f775419a9091548820b77013",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:42a8f373e29a4a1090d21e1ae85a9644",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": true,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      },
+      "owner_process_pid": 618,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 618,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 3321640416549,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "call_id": "a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+    "call_directory": "/evidence/mcp/a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+    "retained_call": {
+      "call_id": "a5a1bdd378fb4f8e9ce63b737f4cb4b3",
+      "operation": "guarded_input",
+      "state": "finished",
+      "arguments": {
+        "alias": "field",
+        "offset": [
+          12,
+          19
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "w"
+            ]
+          }
+        ],
+        "interaction": "keyboard",
+        "observe_after": false
+      },
+      "backend_attempted": true,
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "cancellation": {
+        "operation_id": "3ae9e6e105df4eb2805d27e04ba2cbda",
+        "status": "completed",
+        "admitted_monotonic_ns": 3321532594345,
+        "caller_response_deadline_monotonic_ns": 3321832594345,
+        "transaction_deadline_monotonic_ns": 3325532594345,
+        "owner_generation": {
+          "session_id": "4bcf1af8f775419a9091548820b77013",
+          "child_pid": 618,
+          "x_resource_base": 6291456,
+          "binding_revision": 0
+        },
+        "release_confirmed": false,
+        "task_success": null,
+        "replay_allowed": false,
+        "result": {
+          "status": "cancel_requested",
+          "already_requested": false,
+          "input_dispatched": false,
+          "release_confirmed": false,
+          "review_required": true,
+          "replay_allowed": false,
+          "owner_process_retired": true,
+          "owner_process_exitcode": -15,
+          "owner_client_disconnect": {
+            "status": "disconnected",
+            "reason": "owner_pid_absent",
+            "owner_process_retired": true,
+            "owner_process_exitcode": -15,
+            "expected_pid": 618,
+            "observed_pid": null,
+            "observer_pid": 768,
+            "supervisor_pid": 768,
+            "resource_base": 6291456,
+            "started_monotonic_ns": 3322193722399,
+            "observed_monotonic_ns": 3322193911467
+          },
+          "owner_input_obligations": {
+            "keys": {
+              "w": 25
+            },
+            "buttons": []
+          },
+          "owner_input_obligations_source": "retired_child_shared_state",
+          "owner_input_obligations_live_read": {
+            "status": "snapshot",
+            "obligations": {
+              "keys": {
+                "w": 25
+              },
+              "buttons": []
+            }
+          },
+          "owner_release_attempt": {
+            "status": "readback_verified",
+            "release": {
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": [],
+              "release_started_monotonic_ns": 3322235396728,
+              "release_requests": [
+                {
+                  "kind": "KeyRelease",
+                  "code": 25,
+                  "requested_monotonic_ns": 3322235416769
+                }
+              ],
+              "sync_started_monotonic_ns": 3322235417622,
+              "sync_completed_monotonic_ns": 3322235493212,
+              "readback_monotonic_ns": 3322235613544
+            },
+            "readback_source": "prestarted_supervisor_x11"
+          },
+          "cleanup_status": "UNKNOWN",
+          "task_success": null,
+          "late_server_request_possible": true,
+          "owned_target_retirement": {
+            "status": "retired",
+            "exitcode": -9,
+            "signal_attempts": [
+              {
+                "signal": 15,
+                "status": "sent"
+              },
+              {
+                "signal": 9,
+                "status": "sent"
+              }
+            ],
+            "target_identity_verified": true,
+            "target_xid": 4194320,
+            "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+            "process_exit_verified": true
+          },
+          "owned_target_binding": {
+            "status": "bound",
+            "xid": 4194320,
+            "pid": 11,
+            "start_ticks": 331709,
+            "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+            "identity_query": {
+              "status": "observed",
+              "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+              "operation_id": "7b2b41eea3b644f3aebf6131c5fb3b6e",
+              "session_id": "4bcf1af8f775419a9091548820b77013",
+              "worker_retired": true,
+              "worker_exitcode": 0,
+              "completed_monotonic_ns": 3321257750151
+            }
+          }
+        },
+        "completed_monotonic_ns": 3322275935301
+      }
+    },
+    "cancellation": {
+      "operation_id": "3ae9e6e105df4eb2805d27e04ba2cbda",
+      "status": "completed",
+      "admitted_monotonic_ns": 3321532594345,
+      "caller_response_deadline_monotonic_ns": 3321832594345,
+      "transaction_deadline_monotonic_ns": 3325532594345,
+      "owner_generation": {
+        "session_id": "4bcf1af8f775419a9091548820b77013",
+        "child_pid": 618,
+        "x_resource_base": 6291456,
+        "binding_revision": 0
+      },
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "status": "cancel_requested",
+        "already_requested": false,
+        "input_dispatched": false,
+        "release_confirmed": false,
+        "review_required": true,
+        "replay_allowed": false,
+        "owner_process_retired": true,
+        "owner_process_exitcode": -15,
+        "owner_client_disconnect": {
+          "status": "disconnected",
+          "reason": "owner_pid_absent",
+          "owner_process_retired": true,
+          "owner_process_exitcode": -15,
+          "expected_pid": 618,
+          "observed_pid": null,
+          "observer_pid": 768,
+          "supervisor_pid": 768,
+          "resource_base": 6291456,
+          "started_monotonic_ns": 3322193722399,
+          "observed_monotonic_ns": 3322193911467
+        },
+        "owner_input_obligations": {
+          "keys": {
+            "w": 25
+          },
+          "buttons": []
+        },
+        "owner_input_obligations_source": "retired_child_shared_state",
+        "owner_input_obligations_live_read": {
+          "status": "snapshot",
+          "obligations": {
+            "keys": {
+              "w": 25
+            },
+            "buttons": []
+          }
+        },
+        "owner_release_attempt": {
+          "status": "readback_verified",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": [],
+            "release_started_monotonic_ns": 3322235396728,
+            "release_requests": [
+              {
+                "kind": "KeyRelease",
+                "code": 25,
+                "requested_monotonic_ns": 3322235416769
+              }
+            ],
+            "sync_started_monotonic_ns": 3322235417622,
+            "sync_completed_monotonic_ns": 3322235493212,
+            "readback_monotonic_ns": 3322235613544
+          },
+          "readback_source": "prestarted_supervisor_x11"
+        },
+        "cleanup_status": "UNKNOWN",
+        "task_success": null,
+        "late_server_request_possible": true,
+        "owned_target_retirement": {
+          "status": "retired",
+          "exitcode": -9,
+          "signal_attempts": [
+            {
+              "signal": 15,
+              "status": "sent"
+            },
+            {
+              "signal": 9,
+              "status": "sent"
+            }
+          ],
+          "target_identity_verified": true,
+          "target_xid": 4194320,
+          "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+          "process_exit_verified": true
+        },
+        "owned_target_binding": {
+          "status": "bound",
+          "xid": 4194320,
+          "pid": 11,
+          "start_ticks": 331709,
+          "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+          "identity_query": {
+            "status": "observed",
+            "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+            "operation_id": "7b2b41eea3b644f3aebf6131c5fb3b6e",
+            "session_id": "4bcf1af8f775419a9091548820b77013",
+            "worker_retired": true,
+            "worker_exitcode": 0,
+            "completed_monotonic_ns": 3321257750151
+          }
+        }
+      },
+      "completed_monotonic_ns": 3322275935301
+    }
+  },
+  "close": {
+    "status": "cleanup_failed",
+    "session_id": "4bcf1af8f775419a9091548820b77013",
+    "release_attempted": true,
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "verified": false,
+    "connection_close_attempted": false,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "reason": "owner_pid_absent",
+      "owner_process_retired": true,
+      "owner_process_exitcode": -15,
+      "expected_pid": 618,
+      "observed_pid": null,
+      "observer_pid": 768,
+      "supervisor_pid": 768,
+      "resource_base": 6291456,
+      "started_monotonic_ns": 3322193722399,
+      "observed_monotonic_ns": 3322193911467
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "w": 25
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "release_started_monotonic_ns": 3322235396728,
+        "release_requests": [
+          {
+            "kind": "KeyRelease",
+            "code": 25,
+            "requested_monotonic_ns": 3322235416769
+          }
+        ],
+        "sync_started_monotonic_ns": 3322235417622,
+        "sync_completed_monotonic_ns": 3322235493212,
+        "readback_monotonic_ns": 3322235613544
+      },
+      "readback_source": "prestarted_supervisor_x11"
+    },
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "late_server_request_possible": true,
+    "retirement_reason": "cancel left input or server-request obligation",
+    "error": "cancel left input or server-request obligation",
+    "owned_target_retirement": {
+      "status": "retired",
+      "exitcode": -9,
+      "signal_attempts": [
+        {
+          "signal": 15,
+          "status": "sent"
+        },
+        {
+          "signal": 9,
+          "status": "sent"
+        }
+      ],
+      "target_identity_verified": true,
+      "target_xid": 4194320,
+      "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+      "process_exit_verified": true
+    },
+    "owned_target_binding": {
+      "status": "bound",
+      "xid": 4194320,
+      "pid": 11,
+      "start_ticks": 331709,
+      "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+      "identity_query": {
+        "status": "observed",
+        "identity_digest": "2b21d2e6a4bbc96d1e9e12bd4bb25599bebf106b7188484b2724914b08a783ae",
+        "operation_id": "7b2b41eea3b644f3aebf6131c5fb3b6e",
+        "session_id": "4bcf1af8f775419a9091548820b77013",
+        "worker_retired": true,
+        "worker_exitcode": 0,
+        "completed_monotonic_ns": 3321257750151
+      }
+    },
+    "session": {
+      "session_id": "4bcf1af8f775419a9091548820b77013",
+      "mode": "guarded-x11-owned-process",
+      "state": "failed",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": "cancel left input or server-request obligation",
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:42a8f373e29a4a1090d21e1ae85a9644",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": true,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      },
+      "owner_process_pid": 618,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 618,
+        "alive": false,
+        "liveness_observed_monotonic_ns": 3322308823644,
+        "exitcode": -15,
+        "retired": true,
+        "release_confirmed": false,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": {
+        "status": "disconnected",
+        "reason": "owner_pid_absent",
+        "owner_process_retired": true,
+        "owner_process_exitcode": -15,
+        "expected_pid": 618,
+        "observed_pid": null,
+        "observer_pid": 768,
+        "supervisor_pid": 768,
+        "resource_base": 6291456,
+        "started_monotonic_ns": 3322193722399,
+        "observed_monotonic_ns": 3322193911467
+      },
+      "owner_input_obligations_source": "retired_child_shared_state",
+      "owner_input_obligations_live_read": {
+        "status": "snapshot",
+        "obligations": {
+          "keys": {
+            "w": 25
+          },
+          "buttons": []
+        }
+      },
+      "owner_release_attempt": {
+        "status": "readback_verified",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": [],
+          "release_started_monotonic_ns": 3322235396728,
+          "release_requests": [
+            {
+              "kind": "KeyRelease",
+              "code": 25,
+              "requested_monotonic_ns": 3322235416769
+            }
+          ],
+          "sync_started_monotonic_ns": 3322235417622,
+          "sync_completed_monotonic_ns": 3322235493212,
+          "readback_monotonic_ns": 3322235613544
+        },
+        "readback_source": "prestarted_supervisor_x11"
+      },
+      "cleanup_status": "UNKNOWN"
+    },
+    "call_directory": "/evidence/mcp/dd813a0b65ce42f7ab0762414c18b143",
+    "call_id": "dd813a0b65ce42f7ab0762414c18b143"
+  },
+  "keys_after_close": {
+    "w": false,
+    "b": false
+  },
+  "fresh": {
+    "pid": 1016,
+    "xid": 4194320,
+    "observe": {
+      "operation": "guarded_observe",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "observed",
+      "input_dispatched": false,
+      "source": {
+        "sequence": 1,
+        "observation_id": "ca7ca92fd8994dd5ba831c61611fb226",
+        "binding_revision": 0,
+        "capture_ns": 3325852290227,
+        "image_source": "exact_capture_rgb_handoff",
+        "pointer_binding": {
+          "focus": 4194320,
+          "surface": 4194320,
+          "geometry": [
+            320,
+            272,
+            640,
+            480
+          ],
+          "process_generation": "a73b60b81bf95d569229e24bd35c77f87a2c402259d34dc92f2f986c4ef19691",
+          "window_generation": "c9cce2b83c7fa8d78f75360335e6b22516225184836e8a959dd930a1d7a93c5f"
+        },
+        "native": {
+          "bytes": 5242880,
+          "sha256": "2543bf3f799034b733d69d6a0bcb7929c7d4737dfae374d04f932c0ba7116c7f",
+          "width": 1280,
+          "height": 1024,
+          "target": "app",
+          "native_window_id": 4194320,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            1024
+          ],
+          "capture_started_ns": 3325852290227,
+          "capture_ended_ns": 3325859466005,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/evidence/fresh-mcp/3ea6552ae2714b5a9e2aa0e05da98d5a/images/c451b2738d6b46f3bb1b05d99e971bc6.png",
+            "sha256": "e86c43ccd6369abceeb5ff8b2ce7280b48f36478e8c0307ae5f05e7c587043c4",
+            "bytes": 82322,
+            "width": 1280,
+            "height": 1024,
+            "source_raw_sha256": "2543bf3f799034b733d69d6a0bcb7929c7d4737dfae374d04f932c0ba7116c7f",
+            "timing_ns": {
+              "started": 3325861740229,
+              "converted": 3325863694985,
+              "encoded": 3325890501882,
+              "written": 3325893351217,
+              "hashed": 3325895545950
+            }
+          }
+        },
+        "timing_ns": {
+          "started": 3325851474865,
+          "public_returned": 3325895706909,
+          "binding_checked": 3325898976491,
+          "artifact_verified": 3325901103519,
+          "decoded": 3325901109224
+        }
+      },
+      "observation_report": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "status": "returned",
+        "observation_id": "ca7ca92fd8994dd5ba831c61611fb226",
+        "observation": {
+          "bytes": 5242880,
+          "sha256": "2543bf3f799034b733d69d6a0bcb7929c7d4737dfae374d04f932c0ba7116c7f",
+          "width": 1280,
+          "height": 1024,
+          "target": "app",
+          "native_window_id": 4194320,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            1024
+          ],
+          "capture_started_ns": 3325852290227,
+          "capture_ended_ns": 3325859466005,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/evidence/fresh-mcp/3ea6552ae2714b5a9e2aa0e05da98d5a/images/c451b2738d6b46f3bb1b05d99e971bc6.png",
+            "sha256": "e86c43ccd6369abceeb5ff8b2ce7280b48f36478e8c0307ae5f05e7c587043c4",
+            "bytes": 82322,
+            "width": 1280,
+            "height": 1024,
+            "source_raw_sha256": "2543bf3f799034b733d69d6a0bcb7929c7d4737dfae374d04f932c0ba7116c7f",
+            "timing_ns": {
+              "started": 3325861740229,
+              "converted": 3325863694985,
+              "encoded": 3325890501882,
+              "written": 3325893351217,
+              "hashed": 3325895545950
+            }
+          }
+        },
+        "side_effect_authority": false,
+        "input_dispatched": false
+      },
+      "session": {
+        "session_id": "e6c682924d83480fbfb13f69e0787695",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:1a2daa552d21462c806a31ce54bec2bc",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 1,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1492,
+        "owner_x_client_resource_base": 12582912,
+        "owner_process": {
+          "pid": 1492,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 3325917344995,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 12582912
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "image_status": "image",
+      "call_directory": "/evidence/fresh-mcp/3ea6552ae2714b5a9e2aa0e05da98d5a",
+      "call_id": "3ea6552ae2714b5a9e2aa0e05da98d5a"
+    },
+    "stale_attempt": {
+      "operation": "guarded_input",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "refused",
+      "result": {
+        "status": "refused",
+        "error": "X11BackendError('native target guard refused: MISSING')",
+        "input_dispatched": false,
+        "guard_checks": [
+          {
+            "stage": "before_admission",
+            "observation_sequence": 2,
+            "eligible": false,
+            "status": "MISSING",
+            "handle": "field",
+            "authority": "resolution only; ordinary admission remains required",
+            "reason": "unknown_session_alias",
+            "reference_kind": "session_alias"
+          }
+        ]
+      },
+      "feedback_status": "not_requested",
+      "session": {
+        "session_id": "e6c682924d83480fbfb13f69e0787695",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:1a2daa552d21462c806a31ce54bec2bc",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 2,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1492,
+        "owner_x_client_resource_base": 12582912,
+        "owner_process": {
+          "pid": 1492,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 3325977841358,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 12582912
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "call_directory": "/evidence/fresh-mcp/57a2e0658ff24e6a99424f710d990d31",
+      "call_id": "57a2e0658ff24e6a99424f710d990d31"
+    },
+    "mint": {
+      "operation": "guarded_mint",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "minted",
+      "alias": "fresh",
+      "offset": [
+        12,
+        19
+      ],
+      "lifetime": {
+        "clock": "time.monotonic_ns",
+        "minted_ns": 3326010818435,
+        "expires_ns": 3626010818435,
+        "capture_freshness_ms": 1500,
+        "authority_granted": false,
+        "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+      },
+      "source_sequence": 1,
+      "input_dispatched": false,
+      "session": {
+        "session_id": "e6c682924d83480fbfb13f69e0787695",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:1a2daa552d21462c806a31ce54bec2bc",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 2,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1492,
+        "owner_x_client_resource_base": 12582912,
+        "owner_process": {
+          "pid": 1492,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 3326017448053,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 12582912
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "call_directory": "/evidence/fresh-mcp/ae762e97435d4c14ac8606fd74364238",
+      "call_id": "ae762e97435d4c14ac8606fd74364238"
+    },
+    "action": {
+      "operation": "guarded_input",
+      "task_success": null,
+      "replay_allowed": false,
+      "status": "completed",
+      "result": {
+        "status": "completed",
+        "admission": "accepted",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ],
+        "execution": {
+          "started_ns": 3326076396232,
+          "ended_ns": 3326722405916,
+          "emissions": 2,
+          "program_emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [],
+              "buttons_down": [],
+              "verified": true,
+              "monotonic_ns": 3326722404371
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 2,
+              "requested_ms": 600,
+              "started_ns": 3326121789946,
+              "completed": true,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 3326721867879
+            }
+          ],
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "recovery_required": false,
+        "guard_checks": [
+          {
+            "stage": "before_admission",
+            "observation_sequence": 3,
+            "eligible": true,
+            "status": "VALID",
+            "handle": "fresh",
+            "authority": "resolution only; ordinary admission remains required",
+            "reason": "exact_region_match",
+            "name": "fresh",
+            "point": [
+              364,
+              698
+            ],
+            "observed_box": [
+              352,
+              679,
+              24,
+              38
+            ],
+            "binding_translation": [
+              0,
+              0
+            ],
+            "local_translation": [
+              0,
+              0
+            ],
+            "sequence": 3,
+            "valid_until_ns": 3327527943764,
+            "patch_sha256": "a573e8f61775fe3c7c071809d427ecfed17e18d26b1476c30cd1baf8ecac09af",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false
+          },
+          {
+            "stage": "before_focus",
+            "observation_sequence": 4,
+            "eligible": true,
+            "status": "VALID",
+            "handle": "fresh",
+            "authority": "resolution only; ordinary admission remains required",
+            "reason": "exact_region_match",
+            "name": "fresh",
+            "point": [
+              364,
+              698
+            ],
+            "observed_box": [
+              352,
+              679,
+              24,
+              38
+            ],
+            "binding_translation": [
+              0,
+              0
+            ],
+            "local_translation": [
+              0,
+              0
+            ],
+            "sequence": 4,
+            "valid_until_ns": 3327577183146,
+            "patch_sha256": "a573e8f61775fe3c7c071809d427ecfed17e18d26b1476c30cd1baf8ecac09af",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false
+          }
+        ]
+      },
+      "feedback_status": "not_requested",
+      "session": {
+        "session_id": "e6c682924d83480fbfb13f69e0787695",
+        "mode": "guarded-x11-owned-process",
+        "state": "open",
+        "binding_revision": 0,
+        "targets": {
+          "app": 4194320
+        },
+        "recovery_required": false,
+        "error": null,
+        "authority_granted": false,
+        "restart_allowed": false,
+        "process_identity": true,
+        "query_worker": true,
+        "observation_worker": false,
+        "window_lifecycle": true,
+        "retention_mode": "files",
+        "compiled_scope": "native-x11:1a2daa552d21462c806a31ce54bec2bc",
+        "compiled_surface": "x11-window-4194320",
+        "observations": null,
+        "target_queries": {
+          "retired": false,
+          "pending": false,
+          "thread_alive": true,
+          "close_error": null
+        },
+        "target": "app",
+        "observation_sequence": 4,
+        "review_required": false,
+        "interrupted_execution": null,
+        "owner_input_obligations": {
+          "keys": {},
+          "buttons": []
+        },
+        "owner_process_pid": 1492,
+        "owner_x_client_resource_base": 12582912,
+        "owner_process": {
+          "pid": 1492,
+          "alive": true,
+          "liveness_observed_monotonic_ns": 3326731297844,
+          "exitcode": null,
+          "retired": false,
+          "release_confirmed": null,
+          "x_client_resource_base": 12582912
+        },
+        "owner_client_disconnect": null,
+        "owner_input_obligations_source": "child_rpc_snapshot",
+        "owner_input_obligations_live_read": {
+          "status": "not_read"
+        },
+        "owner_release_attempt": null,
+        "cleanup_status": null
+      },
+      "call_directory": "/evidence/fresh-mcp/6784bac3f05f4d09b694229afbadc6fc",
+      "call_id": "6784bac3f05f4d09b694229afbadc6fc"
+    },
+    "visual_changed_fraction": 0.7732890625,
+    "xrecord_events": [
+      {
+        "type": 2,
+        "detail": 25,
+        "ns": 3326121844320
+      },
+      {
+        "type": 3,
+        "detail": 25,
+        "ns": 3326722102566
+      }
+    ],
+    "xrecord_errors": [],
+    "xrecord_thread_alive": false,
+    "b_samples": [
+      {
+        "ns": 3322459289202,
+        "b": false
+      },
+      {
+        "ns": 3322469418423,
+        "b": false
+      },
+      {
+        "ns": 3322479586396,
+        "b": false
+      },
+      {
+        "ns": 3322489754663,
+        "b": false
+      },
+      {
+        "ns": 3322500087240,
+        "b": false
+      },
+      {
+        "ns": 3322510300606,
+        "b": false
+      },
+      {
+        "ns": 3322520505125,
+        "b": false
+      },
+      {
+        "ns": 3322530696983,
+        "b": false
+      },
+      {
+        "ns": 3322540877649,
+        "b": false
+      },
+      {
+        "ns": 3322551055609,
+        "b": false
+      },
+      {
+        "ns": 3322561234080,
+        "b": false
+      },
+      {
+        "ns": 3322571443354,
+        "b": false
+      },
+      {
+        "ns": 3322581639985,
+        "b": false
+      },
+      {
+        "ns": 3322591851751,
+        "b": false
+      },
+      {
+        "ns": 3322602094328,
+        "b": false
+      },
+      {
+        "ns": 3322612282805,
+        "b": false
+      },
+      {
+        "ns": 3322622478034,
+        "b": false
+      },
+      {
+        "ns": 3322632688330,
+        "b": false
+      },
+      {
+        "ns": 3322642911743,
+        "b": false
+      },
+      {
+        "ns": 3322653098349,
+        "b": false
+      },
+      {
+        "ns": 3322663343454,
+        "b": false
+      },
+      {
+        "ns": 3322673740346,
+        "b": false
+      },
+      {
+        "ns": 3322683950083,
+        "b": false
+      },
+      {
+        "ns": 3322694269044,
+        "b": false
+      },
+      {
+        "ns": 3322704462450,
+        "b": false
+      },
+      {
+        "ns": 3322714633776,
+        "b": false
+      },
+      {
+        "ns": 3322724815329,
+        "b": false
+      },
+      {
+        "ns": 3322735044888,
+        "b": false
+      },
+      {
+        "ns": 3322745225187,
+        "b": false
+      },
+      {
+        "ns": 3322755419086,
+        "b": false
+      },
+      {
+        "ns": 3322765606935,
+        "b": false
+      },
+      {
+        "ns": 3322775796536,
+        "b": false
+      },
+      {
+        "ns": 3322786019904,
+        "b": false
+      },
+      {
+        "ns": 3322796244719,
+        "b": false
+      },
+      {
+        "ns": 3322806431771,
+        "b": false
+      },
+      {
+        "ns": 3322816615412,
+        "b": false
+      },
+      {
+        "ns": 3322826783307,
+        "b": false
+      },
+      {
+        "ns": 3322836983666,
+        "b": false
+      },
+      {
+        "ns": 3322847211703,
+        "b": false
+      },
+      {
+        "ns": 3322857617285,
+        "b": false
+      },
+      {
+        "ns": 3322868058979,
+        "b": false
+      },
+      {
+        "ns": 3322878274532,
+        "b": false
+      },
+      {
+        "ns": 3322888460908,
+        "b": false
+      },
+      {
+        "ns": 3322898760561,
+        "b": false
+      },
+      {
+        "ns": 3322908952637,
+        "b": false
+      },
+      {
+        "ns": 3322919196924,
+        "b": false
+      },
+      {
+        "ns": 3322929455135,
+        "b": false
+      },
+      {
+        "ns": 3322939682190,
+        "b": false
+      },
+      {
+        "ns": 3322949906085,
+        "b": false
+      },
+      {
+        "ns": 3322960050214,
+        "b": false
+      },
+      {
+        "ns": 3322970235608,
+        "b": false
+      },
+      {
+        "ns": 3322980469969,
+        "b": false
+      },
+      {
+        "ns": 3322990729559,
+        "b": false
+      },
+      {
+        "ns": 3323000955334,
+        "b": false
+      },
+      {
+        "ns": 3323011150222,
+        "b": false
+      },
+      {
+        "ns": 3323021398802,
+        "b": false
+      },
+      {
+        "ns": 3323031639053,
+        "b": false
+      },
+      {
+        "ns": 3323041848122,
+        "b": false
+      },
+      {
+        "ns": 3323052042422,
+        "b": false
+      },
+      {
+        "ns": 3323062335307,
+        "b": false
+      },
+      {
+        "ns": 3323072526184,
+        "b": false
+      },
+      {
+        "ns": 3323082711461,
+        "b": false
+      },
+      {
+        "ns": 3323092899628,
+        "b": false
+      },
+      {
+        "ns": 3323103127197,
+        "b": false
+      },
+      {
+        "ns": 3323113342835,
+        "b": false
+      },
+      {
+        "ns": 3323123561600,
+        "b": false
+      },
+      {
+        "ns": 3323133785620,
+        "b": false
+      },
+      {
+        "ns": 3323143972913,
+        "b": false
+      },
+      {
+        "ns": 3323154171556,
+        "b": false
+      },
+      {
+        "ns": 3323164360974,
+        "b": false
+      },
+      {
+        "ns": 3323174559328,
+        "b": false
+      },
+      {
+        "ns": 3323184743868,
+        "b": false
+      },
+      {
+        "ns": 3323194944754,
+        "b": false
+      },
+      {
+        "ns": 3323205135353,
+        "b": false
+      },
+      {
+        "ns": 3323215330978,
+        "b": false
+      },
+      {
+        "ns": 3323225521653,
+        "b": false
+      },
+      {
+        "ns": 3323235774776,
+        "b": false
+      },
+      {
+        "ns": 3323246005155,
+        "b": false
+      },
+      {
+        "ns": 3323256220776,
+        "b": false
+      },
+      {
+        "ns": 3323266452177,
+        "b": false
+      },
+      {
+        "ns": 3323276646334,
+        "b": false
+      },
+      {
+        "ns": 3323286824651,
+        "b": false
+      },
+      {
+        "ns": 3323297014798,
+        "b": false
+      },
+      {
+        "ns": 3323307221849,
+        "b": false
+      },
+      {
+        "ns": 3323317439464,
+        "b": false
+      },
+      {
+        "ns": 3323327625001,
+        "b": false
+      },
+      {
+        "ns": 3323337834228,
+        "b": false
+      },
+      {
+        "ns": 3323348055584,
+        "b": false
+      },
+      {
+        "ns": 3323358273114,
+        "b": false
+      },
+      {
+        "ns": 3323368501065,
+        "b": false
+      },
+      {
+        "ns": 3323378833500,
+        "b": false
+      },
+      {
+        "ns": 3323389041030,
+        "b": false
+      },
+      {
+        "ns": 3323399296513,
+        "b": false
+      },
+      {
+        "ns": 3323409519357,
+        "b": false
+      },
+      {
+        "ns": 3323419722423,
+        "b": false
+      },
+      {
+        "ns": 3323429961671,
+        "b": false
+      },
+      {
+        "ns": 3323440174564,
+        "b": false
+      },
+      {
+        "ns": 3323450346519,
+        "b": false
+      },
+      {
+        "ns": 3323460525133,
+        "b": false
+      },
+      {
+        "ns": 3323470707009,
+        "b": false
+      },
+      {
+        "ns": 3323480887640,
+        "b": false
+      },
+      {
+        "ns": 3323491091754,
+        "b": false
+      },
+      {
+        "ns": 3323501291986,
+        "b": false
+      },
+      {
+        "ns": 3323511488634,
+        "b": false
+      },
+      {
+        "ns": 3323521670435,
+        "b": false
+      },
+      {
+        "ns": 3323531859471,
+        "b": false
+      },
+      {
+        "ns": 3323542048963,
+        "b": false
+      },
+      {
+        "ns": 3323552242614,
+        "b": false
+      },
+      {
+        "ns": 3323562445957,
+        "b": false
+      },
+      {
+        "ns": 3323572648649,
+        "b": false
+      },
+      {
+        "ns": 3323582863530,
+        "b": false
+      },
+      {
+        "ns": 3323593048705,
+        "b": false
+      },
+      {
+        "ns": 3323603243609,
+        "b": false
+      },
+      {
+        "ns": 3323613456002,
+        "b": false
+      },
+      {
+        "ns": 3323623738944,
+        "b": false
+      },
+      {
+        "ns": 3323634038017,
+        "b": false
+      },
+      {
+        "ns": 3323644240917,
+        "b": false
+      },
+      {
+        "ns": 3323654439799,
+        "b": false
+      },
+      {
+        "ns": 3323664631275,
+        "b": false
+      },
+      {
+        "ns": 3323674837262,
+        "b": false
+      },
+      {
+        "ns": 3323685032597,
+        "b": false
+      },
+      {
+        "ns": 3323695222905,
+        "b": false
+      },
+      {
+        "ns": 3323705412197,
+        "b": false
+      },
+      {
+        "ns": 3323715633532,
+        "b": false
+      },
+      {
+        "ns": 3323725828497,
+        "b": false
+      },
+      {
+        "ns": 3323736056296,
+        "b": false
+      },
+      {
+        "ns": 3323746289122,
+        "b": false
+      },
+      {
+        "ns": 3323756483763,
+        "b": false
+      },
+      {
+        "ns": 3323766661454,
+        "b": false
+      },
+      {
+        "ns": 3323776841438,
+        "b": false
+      },
+      {
+        "ns": 3323787031891,
+        "b": false
+      },
+      {
+        "ns": 3323797232133,
+        "b": false
+      },
+      {
+        "ns": 3323807421180,
+        "b": false
+      },
+      {
+        "ns": 3323817620985,
+        "b": false
+      },
+      {
+        "ns": 3323827807494,
+        "b": false
+      },
+      {
+        "ns": 3323838009557,
+        "b": false
+      },
+      {
+        "ns": 3323848203517,
+        "b": false
+      },
+      {
+        "ns": 3323858414915,
+        "b": false
+      },
+      {
+        "ns": 3323868650852,
+        "b": false
+      },
+      {
+        "ns": 3323878891939,
+        "b": false
+      },
+      {
+        "ns": 3323889093676,
+        "b": false
+      },
+      {
+        "ns": 3323899402358,
+        "b": false
+      },
+      {
+        "ns": 3323909599724,
+        "b": false
+      },
+      {
+        "ns": 3323919789273,
+        "b": false
+      },
+      {
+        "ns": 3323929988275,
+        "b": false
+      },
+      {
+        "ns": 3323940189341,
+        "b": false
+      },
+      {
+        "ns": 3323950390211,
+        "b": false
+      },
+      {
+        "ns": 3323960580027,
+        "b": false
+      },
+      {
+        "ns": 3323970779750,
+        "b": false
+      },
+      {
+        "ns": 3323980979550,
+        "b": false
+      },
+      {
+        "ns": 3323991166817,
+        "b": false
+      },
+      {
+        "ns": 3324001361767,
+        "b": false
+      },
+      {
+        "ns": 3324011566046,
+        "b": false
+      },
+      {
+        "ns": 3324021755079,
+        "b": false
+      },
+      {
+        "ns": 3324031959944,
+        "b": false
+      },
+      {
+        "ns": 3324042165295,
+        "b": false
+      },
+      {
+        "ns": 3324052360302,
+        "b": false
+      },
+      {
+        "ns": 3324062538485,
+        "b": false
+      },
+      {
+        "ns": 3324072735977,
+        "b": false
+      },
+      {
+        "ns": 3324082963589,
+        "b": false
+      },
+      {
+        "ns": 3324093155274,
+        "b": false
+      },
+      {
+        "ns": 3324103368477,
+        "b": false
+      },
+      {
+        "ns": 3324113600083,
+        "b": false
+      },
+      {
+        "ns": 3324123796331,
+        "b": false
+      },
+      {
+        "ns": 3324134022390,
+        "b": false
+      },
+      {
+        "ns": 3324144295306,
+        "b": false
+      },
+      {
+        "ns": 3324154472210,
+        "b": false
+      },
+      {
+        "ns": 3324164658267,
+        "b": false
+      },
+      {
+        "ns": 3324174842918,
+        "b": false
+      },
+      {
+        "ns": 3324185071197,
+        "b": false
+      },
+      {
+        "ns": 3324195282245,
+        "b": false
+      },
+      {
+        "ns": 3324205506781,
+        "b": false
+      },
+      {
+        "ns": 3324215741482,
+        "b": false
+      },
+      {
+        "ns": 3324225968360,
+        "b": false
+      },
+      {
+        "ns": 3324236217893,
+        "b": false
+      },
+      {
+        "ns": 3324246426355,
+        "b": false
+      },
+      {
+        "ns": 3324256632068,
+        "b": false
+      },
+      {
+        "ns": 3324266825170,
+        "b": false
+      },
+      {
+        "ns": 3324277006726,
+        "b": false
+      },
+      {
+        "ns": 3324287194704,
+        "b": false
+      },
+      {
+        "ns": 3324297378976,
+        "b": false
+      },
+      {
+        "ns": 3324307623211,
+        "b": false
+      },
+      {
+        "ns": 3324317887486,
+        "b": false
+      },
+      {
+        "ns": 3324328079922,
+        "b": false
+      },
+      {
+        "ns": 3324338288068,
+        "b": false
+      },
+      {
+        "ns": 3324348659591,
+        "b": false
+      },
+      {
+        "ns": 3324358837199,
+        "b": false
+      },
+      {
+        "ns": 3324369182916,
+        "b": false
+      },
+      {
+        "ns": 3324379408560,
+        "b": false
+      },
+      {
+        "ns": 3324389595450,
+        "b": false
+      },
+      {
+        "ns": 3324399822475,
+        "b": false
+      },
+      {
+        "ns": 3324410060529,
+        "b": false
+      },
+      {
+        "ns": 3324420278782,
+        "b": false
+      },
+      {
+        "ns": 3324430463783,
+        "b": false
+      },
+      {
+        "ns": 3324440647724,
+        "b": false
+      },
+      {
+        "ns": 3324450829967,
+        "b": false
+      },
+      {
+        "ns": 3324461868881,
+        "b": false
+      },
+      {
+        "ns": 3324472064625,
+        "b": false
+      },
+      {
+        "ns": 3324482246087,
+        "b": false
+      },
+      {
+        "ns": 3324492442293,
+        "b": false
+      },
+      {
+        "ns": 3324502629971,
+        "b": false
+      },
+      {
+        "ns": 3324512813860,
+        "b": false
+      },
+      {
+        "ns": 3324523009218,
+        "b": false
+      },
+      {
+        "ns": 3324533204596,
+        "b": false
+      },
+      {
+        "ns": 3324543453386,
+        "b": false
+      },
+      {
+        "ns": 3324553793490,
+        "b": false
+      },
+      {
+        "ns": 3324564027159,
+        "b": false
+      },
+      {
+        "ns": 3324574226858,
+        "b": false
+      },
+      {
+        "ns": 3324584439598,
+        "b": false
+      },
+      {
+        "ns": 3324594651285,
+        "b": false
+      },
+      {
+        "ns": 3324604868236,
+        "b": false
+      },
+      {
+        "ns": 3324615089544,
+        "b": false
+      },
+      {
+        "ns": 3324625314696,
+        "b": false
+      },
+      {
+        "ns": 3324635536327,
+        "b": false
+      },
+      {
+        "ns": 3324645769351,
+        "b": false
+      },
+      {
+        "ns": 3324655992613,
+        "b": false
+      },
+      {
+        "ns": 3324666263270,
+        "b": false
+      },
+      {
+        "ns": 3324676475547,
+        "b": false
+      },
+      {
+        "ns": 3324686676442,
+        "b": false
+      },
+      {
+        "ns": 3324696859333,
+        "b": false
+      },
+      {
+        "ns": 3324707045431,
+        "b": false
+      },
+      {
+        "ns": 3324717238435,
+        "b": false
+      },
+      {
+        "ns": 3324727430501,
+        "b": false
+      },
+      {
+        "ns": 3324737647635,
+        "b": false
+      },
+      {
+        "ns": 3324747859305,
+        "b": false
+      },
+      {
+        "ns": 3324758056612,
+        "b": false
+      },
+      {
+        "ns": 3324768298945,
+        "b": false
+      },
+      {
+        "ns": 3324778666367,
+        "b": false
+      },
+      {
+        "ns": 3324788872556,
+        "b": false
+      },
+      {
+        "ns": 3324799090857,
+        "b": false
+      },
+      {
+        "ns": 3324809281385,
+        "b": false
+      },
+      {
+        "ns": 3324819482031,
+        "b": false
+      },
+      {
+        "ns": 3324829677764,
+        "b": false
+      },
+      {
+        "ns": 3324839876163,
+        "b": false
+      },
+      {
+        "ns": 3324850101927,
+        "b": false
+      },
+      {
+        "ns": 3324860289581,
+        "b": false
+      },
+      {
+        "ns": 3324870497783,
+        "b": false
+      },
+      {
+        "ns": 3324880689420,
+        "b": false
+      },
+      {
+        "ns": 3324890892831,
+        "b": false
+      },
+      {
+        "ns": 3324901156871,
+        "b": false
+      },
+      {
+        "ns": 3324911409099,
+        "b": false
+      },
+      {
+        "ns": 3324921622619,
+        "b": false
+      },
+      {
+        "ns": 3324931825438,
+        "b": false
+      },
+      {
+        "ns": 3324942027554,
+        "b": false
+      },
+      {
+        "ns": 3324952212704,
+        "b": false
+      },
+      {
+        "ns": 3324962403556,
+        "b": false
+      },
+      {
+        "ns": 3324972600691,
+        "b": false
+      },
+      {
+        "ns": 3324982803005,
+        "b": false
+      },
+      {
+        "ns": 3324992989608,
+        "b": false
+      },
+      {
+        "ns": 3325003197155,
+        "b": false
+      },
+      {
+        "ns": 3325013385788,
+        "b": false
+      },
+      {
+        "ns": 3325023754449,
+        "b": false
+      },
+      {
+        "ns": 3325033973736,
+        "b": false
+      },
+      {
+        "ns": 3325044178112,
+        "b": false
+      },
+      {
+        "ns": 3325054369344,
+        "b": false
+      },
+      {
+        "ns": 3325064562586,
+        "b": false
+      },
+      {
+        "ns": 3325074749422,
+        "b": false
+      },
+      {
+        "ns": 3325084966615,
+        "b": false
+      },
+      {
+        "ns": 3325095153416,
+        "b": false
+      },
+      {
+        "ns": 3325105341208,
+        "b": false
+      },
+      {
+        "ns": 3325115512498,
+        "b": false
+      },
+      {
+        "ns": 3325125705372,
+        "b": false
+      },
+      {
+        "ns": 3325135906852,
+        "b": false
+      },
+      {
+        "ns": 3325146124022,
+        "b": false
+      },
+      {
+        "ns": 3325156340862,
+        "b": false
+      },
+      {
+        "ns": 3325166550734,
+        "b": false
+      },
+      {
+        "ns": 3325176733035,
+        "b": false
+      },
+      {
+        "ns": 3325186918260,
+        "b": false
+      },
+      {
+        "ns": 3325197101819,
+        "b": false
+      },
+      {
+        "ns": 3325207328752,
+        "b": false
+      },
+      {
+        "ns": 3325217547622,
+        "b": false
+      },
+      {
+        "ns": 3325227741448,
+        "b": false
+      },
+      {
+        "ns": 3325237946086,
+        "b": false
+      },
+      {
+        "ns": 3325248174958,
+        "b": false
+      },
+      {
+        "ns": 3325258423668,
+        "b": false
+      },
+      {
+        "ns": 3325268768801,
+        "b": false
+      },
+      {
+        "ns": 3325278965083,
+        "b": false
+      },
+      {
+        "ns": 3325289151174,
+        "b": false
+      },
+      {
+        "ns": 3325299410642,
+        "b": false
+      },
+      {
+        "ns": 3325309596390,
+        "b": false
+      },
+      {
+        "ns": 3325319810297,
+        "b": false
+      },
+      {
+        "ns": 3325329978927,
+        "b": false
+      },
+      {
+        "ns": 3325340164314,
+        "b": false
+      },
+      {
+        "ns": 3325350354760,
+        "b": false
+      },
+      {
+        "ns": 3325360549182,
+        "b": false
+      },
+      {
+        "ns": 3325370759131,
+        "b": false
+      },
+      {
+        "ns": 3325380963474,
+        "b": false
+      },
+      {
+        "ns": 3325391188971,
+        "b": false
+      },
+      {
+        "ns": 3325401417797,
+        "b": false
+      },
+      {
+        "ns": 3325411608124,
+        "b": false
+      },
+      {
+        "ns": 3325421830187,
+        "b": false
+      },
+      {
+        "ns": 3325432052808,
+        "b": false
+      },
+      {
+        "ns": 3325442265199,
+        "b": false
+      },
+      {
+        "ns": 3325452454468,
+        "b": false
+      },
+      {
+        "ns": 3325462647600,
+        "b": false
+      },
+      {
+        "ns": 3325472942200,
+        "b": false
+      },
+      {
+        "ns": 3325483166898,
+        "b": false
+      },
+      {
+        "ns": 3325493366442,
+        "b": false
+      },
+      {
+        "ns": 3325503720855,
+        "b": false
+      },
+      {
+        "ns": 3325513951496,
+        "b": false
+      },
+      {
+        "ns": 3325524141939,
+        "b": false
+      },
+      {
+        "ns": 3325534422533,
+        "b": false
+      },
+      {
+        "ns": 3325544592131,
+        "b": false
+      },
+      {
+        "ns": 3325554787682,
+        "b": false
+      },
+      {
+        "ns": 3325564979236,
+        "b": false
+      },
+      {
+        "ns": 3325575173290,
+        "b": false
+      },
+      {
+        "ns": 3325585353923,
+        "b": false
+      },
+      {
+        "ns": 3325595544702,
+        "b": false
+      },
+      {
+        "ns": 3325605757253,
+        "b": false
+      },
+      {
+        "ns": 3325615953516,
+        "b": false
+      },
+      {
+        "ns": 3325626183517,
+        "b": false
+      },
+      {
+        "ns": 3325636383658,
+        "b": false
+      },
+      {
+        "ns": 3325646581654,
+        "b": false
+      },
+      {
+        "ns": 3325656776541,
+        "b": false
+      },
+      {
+        "ns": 3325666973962,
+        "b": false
+      },
+      {
+        "ns": 3325677163689,
+        "b": false
+      },
+      {
+        "ns": 3325687338069,
+        "b": false
+      },
+      {
+        "ns": 3325697524981,
+        "b": false
+      },
+      {
+        "ns": 3325707734570,
+        "b": false
+      },
+      {
+        "ns": 3325717989630,
+        "b": false
+      },
+      {
+        "ns": 3325728185457,
+        "b": false
+      },
+      {
+        "ns": 3325738404472,
+        "b": false
+      },
+      {
+        "ns": 3325748690628,
+        "b": false
+      },
+      {
+        "ns": 3325758868815,
+        "b": false
+      },
+      {
+        "ns": 3325769072742,
+        "b": false
+      },
+      {
+        "ns": 3325779248176,
+        "b": false
+      },
+      {
+        "ns": 3325789424899,
+        "b": false
+      },
+      {
+        "ns": 3325799633952,
+        "b": false
+      },
+      {
+        "ns": 3325809838362,
+        "b": false
+      },
+      {
+        "ns": 3325820051989,
+        "b": false
+      },
+      {
+        "ns": 3325830310033,
+        "b": false
+      },
+      {
+        "ns": 3325840540271,
+        "b": false
+      },
+      {
+        "ns": 3325850771601,
+        "b": false
+      },
+      {
+        "ns": 3325860944561,
+        "b": false
+      },
+      {
+        "ns": 3325871164742,
+        "b": false
+      },
+      {
+        "ns": 3325881348152,
+        "b": false
+      },
+      {
+        "ns": 3325891527156,
+        "b": false
+      },
+      {
+        "ns": 3325901728591,
+        "b": false
+      },
+      {
+        "ns": 3325911907868,
+        "b": false
+      },
+      {
+        "ns": 3325922119606,
+        "b": false
+      },
+      {
+        "ns": 3325932325732,
+        "b": false
+      },
+      {
+        "ns": 3325942525318,
+        "b": false
+      },
+      {
+        "ns": 3325952730226,
+        "b": false
+      },
+      {
+        "ns": 3325962936472,
+        "b": false
+      },
+      {
+        "ns": 3325973134347,
+        "b": false
+      },
+      {
+        "ns": 3325983320350,
+        "b": false
+      },
+      {
+        "ns": 3325993622593,
+        "b": false
+      },
+      {
+        "ns": 3326003928552,
+        "b": false
+      },
+      {
+        "ns": 3326014143230,
+        "b": false
+      },
+      {
+        "ns": 3326024335480,
+        "b": false
+      },
+      {
+        "ns": 3326034579119,
+        "b": false
+      },
+      {
+        "ns": 3326044789011,
+        "b": false
+      },
+      {
+        "ns": 3326054996351,
+        "b": false
+      },
+      {
+        "ns": 3326065182327,
+        "b": false
+      },
+      {
+        "ns": 3326075416847,
+        "b": false
+      },
+      {
+        "ns": 3326085626045,
+        "b": false
+      },
+      {
+        "ns": 3326095833065,
+        "b": false
+      },
+      {
+        "ns": 3326106034293,
+        "b": false
+      },
+      {
+        "ns": 3326116226316,
+        "b": false
+      },
+      {
+        "ns": 3326126452523,
+        "b": false
+      },
+      {
+        "ns": 3326136687388,
+        "b": false
+      },
+      {
+        "ns": 3326146946110,
+        "b": false
+      },
+      {
+        "ns": 3326157185884,
+        "b": false
+      },
+      {
+        "ns": 3326167445593,
+        "b": false
+      },
+      {
+        "ns": 3326177680203,
+        "b": false
+      },
+      {
+        "ns": 3326187966912,
+        "b": false
+      },
+      {
+        "ns": 3326198223940,
+        "b": false
+      },
+      {
+        "ns": 3326208448553,
+        "b": false
+      },
+      {
+        "ns": 3326218774736,
+        "b": false
+      },
+      {
+        "ns": 3326229070552,
+        "b": false
+      },
+      {
+        "ns": 3326239301264,
+        "b": false
+      },
+      {
+        "ns": 3326249507357,
+        "b": false
+      },
+      {
+        "ns": 3326259740320,
+        "b": false
+      },
+      {
+        "ns": 3326269948397,
+        "b": false
+      },
+      {
+        "ns": 3326280132609,
+        "b": false
+      },
+      {
+        "ns": 3326290317940,
+        "b": false
+      },
+      {
+        "ns": 3326300507830,
+        "b": false
+      },
+      {
+        "ns": 3326310690235,
+        "b": false
+      },
+      {
+        "ns": 3326320881588,
+        "b": false
+      },
+      {
+        "ns": 3326331081881,
+        "b": false
+      },
+      {
+        "ns": 3326341309119,
+        "b": false
+      },
+      {
+        "ns": 3326351483324,
+        "b": false
+      },
+      {
+        "ns": 3326361653634,
+        "b": false
+      },
+      {
+        "ns": 3326371855649,
+        "b": false
+      },
+      {
+        "ns": 3326382049992,
+        "b": false
+      },
+      {
+        "ns": 3326392269789,
+        "b": false
+      },
+      {
+        "ns": 3326402502531,
+        "b": false
+      },
+      {
+        "ns": 3326412726836,
+        "b": false
+      },
+      {
+        "ns": 3326422958096,
+        "b": false
+      },
+      {
+        "ns": 3326433186028,
+        "b": false
+      },
+      {
+        "ns": 3326443388347,
+        "b": false
+      },
+      {
+        "ns": 3326453680625,
+        "b": false
+      },
+      {
+        "ns": 3326463849322,
+        "b": false
+      },
+      {
+        "ns": 3326474042480,
+        "b": false
+      },
+      {
+        "ns": 3326484268283,
+        "b": false
+      },
+      {
+        "ns": 3326494565086,
+        "b": false
+      },
+      {
+        "ns": 3326504832954,
+        "b": false
+      },
+      {
+        "ns": 3326515067288,
+        "b": false
+      },
+      {
+        "ns": 3326525253951,
+        "b": false
+      },
+      {
+        "ns": 3326535501665,
+        "b": false
+      },
+      {
+        "ns": 3326545721955,
+        "b": false
+      },
+      {
+        "ns": 3326555931521,
+        "b": false
+      },
+      {
+        "ns": 3326566185002,
+        "b": false
+      },
+      {
+        "ns": 3326576374991,
+        "b": false
+      },
+      {
+        "ns": 3326586555786,
+        "b": false
+      },
+      {
+        "ns": 3326596746496,
+        "b": false
+      },
+      {
+        "ns": 3326606942560,
+        "b": false
+      },
+      {
+        "ns": 3326617134759,
+        "b": false
+      },
+      {
+        "ns": 3326627341030,
+        "b": false
+      },
+      {
+        "ns": 3326637556623,
+        "b": false
+      },
+      {
+        "ns": 3326647762679,
+        "b": false
+      },
+      {
+        "ns": 3326657984451,
+        "b": false
+      },
+      {
+        "ns": 3326668241165,
+        "b": false
+      },
+      {
+        "ns": 3326678431077,
+        "b": false
+      },
+      {
+        "ns": 3326688783842,
+        "b": false
+      },
+      {
+        "ns": 3326699096794,
+        "b": false
+      },
+      {
+        "ns": 3326709302024,
+        "b": false
+      },
+      {
+        "ns": 3326719493639,
+        "b": false
+      },
+      {
+        "ns": 3326729668216,
+        "b": false
+      },
+      {
+        "ns": 3326739880770,
+        "b": false
+      },
+      {
+        "ns": 3326750099968,
+        "b": false
+      },
+      {
+        "ns": 3326765364733,
+        "b": false
+      },
+      {
+        "ns": 3326780679031,
+        "b": false
+      },
+      {
+        "ns": 3326790904865,
+        "b": false
+      },
+      {
+        "ns": 3326801129051,
+        "b": false
+      },
+      {
+        "ns": 3326811366195,
+        "b": false
+      },
+      {
+        "ns": 3326821586099,
+        "b": false
+      },
+      {
+        "ns": 3326831816973,
+        "b": false
+      },
+      {
+        "ns": 3326842016736,
+        "b": false
+      },
+      {
+        "ns": 3326852182973,
+        "b": false
+      },
+      {
+        "ns": 3326862359835,
+        "b": false
+      },
+      {
+        "ns": 3326872563033,
+        "b": false
+      },
+      {
+        "ns": 3326882751788,
+        "b": false
+      },
+      {
+        "ns": 3326892959303,
+        "b": false
+      },
+      {
+        "ns": 3326903151838,
+        "b": false
+      },
+      {
+        "ns": 3326913331200,
+        "b": false
+      },
+      {
+        "ns": 3326923529856,
+        "b": false
+      },
+      {
+        "ns": 3326933834229,
+        "b": false
+      },
+      {
+        "ns": 3326944030919,
+        "b": false
+      },
+      {
+        "ns": 3326954225988,
+        "b": false
+      },
+      {
+        "ns": 3326964404802,
+        "b": false
+      },
+      {
+        "ns": 3326974589130,
+        "b": false
+      },
+      {
+        "ns": 3326984761001,
+        "b": false
+      },
+      {
+        "ns": 3326994936511,
+        "b": false
+      },
+      {
+        "ns": 3327005128168,
+        "b": false
+      },
+      {
+        "ns": 3327015310855,
+        "b": false
+      },
+      {
+        "ns": 3327025509613,
+        "b": false
+      },
+      {
+        "ns": 3327035730037,
+        "b": false
+      },
+      {
+        "ns": 3327045914791,
+        "b": false
+      },
+      {
+        "ns": 3327056046304,
+        "b": false
+      },
+      {
+        "ns": 3327066291116,
+        "b": false
+      },
+      {
+        "ns": 3327076480077,
+        "b": false
+      },
+      {
+        "ns": 3327086664318,
+        "b": false
+      },
+      {
+        "ns": 3327096844052,
+        "b": false
+      },
+      {
+        "ns": 3327107026100,
+        "b": false
+      },
+      {
+        "ns": 3327117197964,
+        "b": false
+      },
+      {
+        "ns": 3327127378185,
+        "b": false
+      },
+      {
+        "ns": 3327137602806,
+        "b": false
+      },
+      {
+        "ns": 3327147796832,
+        "b": false
+      },
+      {
+        "ns": 3327158001746,
+        "b": false
+      },
+      {
+        "ns": 3327168198976,
+        "b": false
+      },
+      {
+        "ns": 3327178381132,
+        "b": false
+      },
+      {
+        "ns": 3327188699703,
+        "b": false
+      },
+      {
+        "ns": 3327198900718,
+        "b": false
+      },
+      {
+        "ns": 3327209103328,
+        "b": false
+      },
+      {
+        "ns": 3327219288627,
+        "b": false
+      },
+      {
+        "ns": 3327229511403,
+        "b": false
+      },
+      {
+        "ns": 3327239738935,
+        "b": false
+      },
+      {
+        "ns": 3327249976605,
+        "b": false
+      },
+      {
+        "ns": 3327260177370,
+        "b": false
+      },
+      {
+        "ns": 3327270378542,
+        "b": false
+      },
+      {
+        "ns": 3327280553189,
+        "b": false
+      },
+      {
+        "ns": 3327290757285,
+        "b": false
+      },
+      {
+        "ns": 3327300973466,
+        "b": false
+      },
+      {
+        "ns": 3327311146003,
+        "b": false
+      },
+      {
+        "ns": 3327321373709,
+        "b": false
+      },
+      {
+        "ns": 3327331549222,
+        "b": false
+      },
+      {
+        "ns": 3327341747707,
+        "b": false
+      },
+      {
+        "ns": 3327351934940,
+        "b": false
+      },
+      {
+        "ns": 3327362130895,
+        "b": false
+      },
+      {
+        "ns": 3327372332602,
+        "b": false
+      },
+      {
+        "ns": 3327382529526,
+        "b": false
+      },
+      {
+        "ns": 3327392759932,
+        "b": false
+      },
+      {
+        "ns": 3327403011098,
+        "b": false
+      },
+      {
+        "ns": 3327413258170,
+        "b": false
+      },
+      {
+        "ns": 3327423459083,
+        "b": false
+      },
+      {
+        "ns": 3327433763657,
+        "b": false
+      },
+      {
+        "ns": 3327443988367,
+        "b": false
+      },
+      {
+        "ns": 3327454180580,
+        "b": false
+      },
+      {
+        "ns": 3327464347155,
+        "b": false
+      },
+      {
+        "ns": 3327474540141,
+        "b": false
+      },
+      {
+        "ns": 3327484748360,
+        "b": false
+      },
+      {
+        "ns": 3327494916661,
+        "b": false
+      },
+      {
+        "ns": 3327505090461,
+        "b": false
+      },
+      {
+        "ns": 3327515272927,
+        "b": false
+      },
+      {
+        "ns": 3327525463122,
+        "b": false
+      },
+      {
+        "ns": 3327535684369,
+        "b": false
+      },
+      {
+        "ns": 3327545880137,
+        "b": false
+      },
+      {
+        "ns": 3327556125271,
+        "b": false
+      },
+      {
+        "ns": 3327566313119,
+        "b": false
+      },
+      {
+        "ns": 3327576498047,
+        "b": false
+      },
+      {
+        "ns": 3327586697350,
+        "b": false
+      },
+      {
+        "ns": 3327596875128,
+        "b": false
+      },
+      {
+        "ns": 3327607083911,
+        "b": false
+      },
+      {
+        "ns": 3327617288182,
+        "b": false
+      },
+      {
+        "ns": 3327627503048,
+        "b": false
+      },
+      {
+        "ns": 3327637731557,
+        "b": false
+      },
+      {
+        "ns": 3327647978307,
+        "b": false
+      },
+      {
+        "ns": 3327658233950,
+        "b": false
+      },
+      {
+        "ns": 3327668475300,
+        "b": false
+      },
+      {
+        "ns": 3327678803808,
+        "b": false
+      },
+      {
+        "ns": 3327689011385,
+        "b": false
+      },
+      {
+        "ns": 3327699224130,
+        "b": false
+      },
+      {
+        "ns": 3327709423747,
+        "b": false
+      },
+      {
+        "ns": 3327719630729,
+        "b": false
+      },
+      {
+        "ns": 3327729847725,
+        "b": false
+      },
+      {
+        "ns": 3327740058157,
+        "b": false
+      },
+      {
+        "ns": 3327750282535,
+        "b": false
+      },
+      {
+        "ns": 3327760477509,
+        "b": false
+      },
+      {
+        "ns": 3327770665732,
+        "b": false
+      },
+      {
+        "ns": 3327780847829,
+        "b": false
+      },
+      {
+        "ns": 3327791039340,
+        "b": false
+      },
+      {
+        "ns": 3327801284371,
+        "b": false
+      },
+      {
+        "ns": 3327811467119,
+        "b": false
+      },
+      {
+        "ns": 3327821665187,
+        "b": false
+      },
+      {
+        "ns": 3327831858137,
+        "b": false
+      },
+      {
+        "ns": 3327842069805,
+        "b": false
+      },
+      {
+        "ns": 3327852259332,
+        "b": false
+      },
+      {
+        "ns": 3327862445587,
+        "b": false
+      },
+      {
+        "ns": 3327872673975,
+        "b": false
+      },
+      {
+        "ns": 3327882875244,
+        "b": false
+      },
+      {
+        "ns": 3327893058773,
+        "b": false
+      },
+      {
+        "ns": 3327903262017,
+        "b": false
+      },
+      {
+        "ns": 3327913471945,
+        "b": false
+      },
+      {
+        "ns": 3327923838405,
+        "b": false
+      },
+      {
+        "ns": 3327934060935,
+        "b": false
+      },
+      {
+        "ns": 3327944254868,
+        "b": false
+      },
+      {
+        "ns": 3327954440026,
+        "b": false
+      },
+      {
+        "ns": 3327964647551,
+        "b": false
+      },
+      {
+        "ns": 3327974850105,
+        "b": false
+      },
+      {
+        "ns": 3327985062186,
+        "b": false
+      },
+      {
+        "ns": 3327995270652,
+        "b": false
+      },
+      {
+        "ns": 3328005451022,
+        "b": false
+      },
+      {
+        "ns": 3328015630009,
+        "b": false
+      },
+      {
+        "ns": 3328025851610,
+        "b": false
+      },
+      {
+        "ns": 3328036048283,
+        "b": false
+      },
+      {
+        "ns": 3328046242004,
+        "b": false
+      },
+      {
+        "ns": 3328056432906,
+        "b": false
+      },
+      {
+        "ns": 3328066618200,
+        "b": false
+      },
+      {
+        "ns": 3328076821959,
+        "b": false
+      },
+      {
+        "ns": 3328087034467,
+        "b": false
+      },
+      {
+        "ns": 3328097253411,
+        "b": false
+      },
+      {
+        "ns": 3328107466946,
+        "b": false
+      },
+      {
+        "ns": 3328117659893,
+        "b": false
+      },
+      {
+        "ns": 3328127856734,
+        "b": false
+      },
+      {
+        "ns": 3328138069645,
+        "b": false
+      },
+      {
+        "ns": 3328148258057,
+        "b": false
+      },
+      {
+        "ns": 3328158463448,
+        "b": false
+      },
+      {
+        "ns": 3328168828705,
+        "b": false
+      },
+      {
+        "ns": 3328179022429,
+        "b": false
+      },
+      {
+        "ns": 3328189193105,
+        "b": false
+      },
+      {
+        "ns": 3328199369864,
+        "b": false
+      },
+      {
+        "ns": 3328209554927,
+        "b": false
+      },
+      {
+        "ns": 3328219763109,
+        "b": false
+      },
+      {
+        "ns": 3328229983873,
+        "b": false
+      },
+      {
+        "ns": 3328240192882,
+        "b": false
+      },
+      {
+        "ns": 3328250420879,
+        "b": false
+      },
+      {
+        "ns": 3328260669438,
+        "b": false
+      },
+      {
+        "ns": 3328270877564,
+        "b": false
+      },
+      {
+        "ns": 3328281056750,
+        "b": false
+      },
+      {
+        "ns": 3328291290644,
+        "b": false
+      },
+      {
+        "ns": 3328301475280,
+        "b": false
+      },
+      {
+        "ns": 3328311673049,
+        "b": false
+      },
+      {
+        "ns": 3328321897173,
+        "b": false
+      },
+      {
+        "ns": 3328332054123,
+        "b": false
+      },
+      {
+        "ns": 3328342315520,
+        "b": false
+      },
+      {
+        "ns": 3328352563403,
+        "b": false
+      },
+      {
+        "ns": 3328362802296,
+        "b": false
+      },
+      {
+        "ns": 3328373017637,
+        "b": false
+      },
+      {
+        "ns": 3328383203151,
+        "b": false
+      },
+      {
+        "ns": 3328393432976,
+        "b": false
+      },
+      {
+        "ns": 3328403723920,
+        "b": false
+      },
+      {
+        "ns": 3328413929282,
+        "b": false
+      },
+      {
+        "ns": 3328424143760,
+        "b": false
+      },
+      {
+        "ns": 3328434364985,
+        "b": false
+      },
+      {
+        "ns": 3328444581650,
+        "b": false
+      },
+      {
+        "ns": 3328454785808,
+        "b": false
+      },
+      {
+        "ns": 3328464963651,
+        "b": false
+      },
+      {
+        "ns": 3328475151861,
+        "b": false
+      },
+      {
+        "ns": 3328485343219,
+        "b": false
+      },
+      {
+        "ns": 3328495509993,
+        "b": false
+      },
+      {
+        "ns": 3328505693965,
+        "b": false
+      },
+      {
+        "ns": 3328515880156,
+        "b": false
+      },
+      {
+        "ns": 3328526137114,
+        "b": false
+      },
+      {
+        "ns": 3328536342726,
+        "b": false
+      },
+      {
+        "ns": 3328546540861,
+        "b": false
+      },
+      {
+        "ns": 3328556762983,
+        "b": false
+      },
+      {
+        "ns": 3328566948644,
+        "b": false
+      },
+      {
+        "ns": 3328577144028,
+        "b": false
+      },
+      {
+        "ns": 3328587344811,
+        "b": false
+      },
+      {
+        "ns": 3328597521232,
+        "b": false
+      },
+      {
+        "ns": 3328607704489,
+        "b": false
+      },
+      {
+        "ns": 3328617883401,
+        "b": false
+      },
+      {
+        "ns": 3328628083632,
+        "b": false
+      },
+      {
+        "ns": 3328638364563,
+        "b": false
+      },
+      {
+        "ns": 3328648622977,
+        "b": false
+      },
+      {
+        "ns": 3328658947304,
+        "b": false
+      },
+      {
+        "ns": 3328669184523,
+        "b": false
+      },
+      {
+        "ns": 3328679420858,
+        "b": false
+      },
+      {
+        "ns": 3328689656693,
+        "b": false
+      },
+      {
+        "ns": 3328699900832,
+        "b": false
+      },
+      {
+        "ns": 3328710136554,
+        "b": false
+      },
+      {
+        "ns": 3328720345839,
+        "b": false
+      },
+      {
+        "ns": 3328730541660,
+        "b": false
+      },
+      {
+        "ns": 3328740767982,
+        "b": false
+      },
+      {
+        "ns": 3328750984942,
+        "b": false
+      },
+      {
+        "ns": 3328761189677,
+        "b": false
+      },
+      {
+        "ns": 3328771421591,
+        "b": false
+      },
+      {
+        "ns": 3328781611138,
+        "b": false
+      },
+      {
+        "ns": 3328791827159,
+        "b": false
+      },
+      {
+        "ns": 3328802252251,
+        "b": false
+      },
+      {
+        "ns": 3328812458637,
+        "b": false
+      },
+      {
+        "ns": 3328822671126,
+        "b": false
+      },
+      {
+        "ns": 3328832882347,
+        "b": false
+      },
+      {
+        "ns": 3328843158090,
+        "b": false
+      },
+      {
+        "ns": 3328853417368,
+        "b": false
+      },
+      {
+        "ns": 3328863655454,
+        "b": false
+      },
+      {
+        "ns": 3328873993587,
+        "b": false
+      },
+      {
+        "ns": 3328884198978,
+        "b": false
+      },
+      {
+        "ns": 3328894420803,
+        "b": false
+      },
+      {
+        "ns": 3328904633897,
+        "b": false
+      },
+      {
+        "ns": 3328914815520,
+        "b": false
+      },
+      {
+        "ns": 3328925005953,
+        "b": false
+      },
+      {
+        "ns": 3328935205989,
+        "b": false
+      },
+      {
+        "ns": 3328945385521,
+        "b": false
+      },
+      {
+        "ns": 3328955586443,
+        "b": false
+      },
+      {
+        "ns": 3328965759509,
+        "b": false
+      },
+      {
+        "ns": 3328975964500,
+        "b": false
+      },
+      {
+        "ns": 3328986277605,
+        "b": false
+      },
+      {
+        "ns": 3328996466344,
+        "b": false
+      },
+      {
+        "ns": 3329006679890,
+        "b": false
+      },
+      {
+        "ns": 3329016865774,
+        "b": false
+      },
+      {
+        "ns": 3329027077659,
+        "b": false
+      },
+      {
+        "ns": 3329037279691,
+        "b": false
+      },
+      {
+        "ns": 3329047472680,
+        "b": false
+      },
+      {
+        "ns": 3329057694173,
+        "b": false
+      },
+      {
+        "ns": 3329067983151,
+        "b": false
+      },
+      {
+        "ns": 3329078196982,
+        "b": false
+      },
+      {
+        "ns": 3329088417418,
+        "b": false
+      },
+      {
+        "ns": 3329098636121,
+        "b": false
+      },
+      {
+        "ns": 3329108961652,
+        "b": false
+      },
+      {
+        "ns": 3329119237837,
+        "b": false
+      },
+      {
+        "ns": 3329129456265,
+        "b": false
+      },
+      {
+        "ns": 3329139652634,
+        "b": false
+      },
+      {
+        "ns": 3329149839086,
+        "b": false
+      },
+      {
+        "ns": 3329160037248,
+        "b": false
+      },
+      {
+        "ns": 3329170233888,
+        "b": false
+      },
+      {
+        "ns": 3329180432393,
+        "b": false
+      },
+      {
+        "ns": 3329190623876,
+        "b": false
+      },
+      {
+        "ns": 3329200810842,
+        "b": false
+      },
+      {
+        "ns": 3329210996961,
+        "b": false
+      },
+      {
+        "ns": 3329221225147,
+        "b": false
+      },
+      {
+        "ns": 3329231421077,
+        "b": false
+      },
+      {
+        "ns": 3329241607852,
+        "b": false
+      },
+      {
+        "ns": 3329251793779,
+        "b": false
+      },
+      {
+        "ns": 3329262000039,
+        "b": false
+      },
+      {
+        "ns": 3329272201553,
+        "b": false
+      },
+      {
+        "ns": 3329282387890,
+        "b": false
+      },
+      {
+        "ns": 3329292577800,
+        "b": false
+      },
+      {
+        "ns": 3329302811145,
+        "b": false
+      },
+      {
+        "ns": 3329313039958,
+        "b": false
+      },
+      {
+        "ns": 3329323226682,
+        "b": false
+      },
+      {
+        "ns": 3329333426415,
+        "b": false
+      },
+      {
+        "ns": 3329343817764,
+        "b": false
+      },
+      {
+        "ns": 3329354048109,
+        "b": false
+      },
+      {
+        "ns": 3329364252833,
+        "b": false
+      },
+      {
+        "ns": 3329374466587,
+        "b": false
+      },
+      {
+        "ns": 3329384658689,
+        "b": false
+      },
+      {
+        "ns": 3329394855234,
+        "b": false
+      },
+      {
+        "ns": 3329405048655,
+        "b": false
+      },
+      {
+        "ns": 3329415264238,
+        "b": false
+      },
+      {
+        "ns": 3329425483527,
+        "b": false
+      },
+      {
+        "ns": 3329435672357,
+        "b": false
+      },
+      {
+        "ns": 3329445852435,
+        "b": false
+      },
+      {
+        "ns": 3329456030968,
+        "b": false
+      },
+      {
+        "ns": 3329466217897,
+        "b": false
+      },
+      {
+        "ns": 3329476405943,
+        "b": false
+      },
+      {
+        "ns": 3329486593162,
+        "b": false
+      },
+      {
+        "ns": 3329496830185,
+        "b": false
+      },
+      {
+        "ns": 3329507019087,
+        "b": false
+      },
+      {
+        "ns": 3329517194690,
+        "b": false
+      },
+      {
+        "ns": 3329527390664,
+        "b": false
+      },
+      {
+        "ns": 3329537568570,
+        "b": false
+      },
+      {
+        "ns": 3329547744914,
+        "b": false
+      },
+      {
+        "ns": 3329557966661,
+        "b": false
+      },
+      {
+        "ns": 3329568163976,
+        "b": false
+      },
+      {
+        "ns": 3329578368962,
+        "b": false
+      },
+      {
+        "ns": 3329588644360,
+        "b": false
+      },
+      {
+        "ns": 3329598959432,
+        "b": false
+      },
+      {
+        "ns": 3329609184543,
+        "b": false
+      },
+      {
+        "ns": 3329619413757,
+        "b": false
+      },
+      {
+        "ns": 3329629643010,
+        "b": false
+      },
+      {
+        "ns": 3329639902166,
+        "b": false
+      },
+      {
+        "ns": 3329650180355,
+        "b": false
+      },
+      {
+        "ns": 3329660435641,
+        "b": false
+      },
+      {
+        "ns": 3329670677013,
+        "b": false
+      },
+      {
+        "ns": 3329680865274,
+        "b": false
+      },
+      {
+        "ns": 3329691047627,
+        "b": false
+      },
+      {
+        "ns": 3329701226107,
+        "b": false
+      },
+      {
+        "ns": 3329711398160,
+        "b": false
+      },
+      {
+        "ns": 3329721576301,
+        "b": false
+      },
+      {
+        "ns": 3329731747898,
+        "b": false
+      },
+      {
+        "ns": 3329741969481,
+        "b": false
+      },
+      {
+        "ns": 3329752161030,
+        "b": false
+      },
+      {
+        "ns": 3329762377390,
+        "b": false
+      },
+      {
+        "ns": 3329772581789,
+        "b": false
+      },
+      {
+        "ns": 3329782757528,
+        "b": false
+      },
+      {
+        "ns": 3329792946843,
+        "b": false
+      },
+      {
+        "ns": 3329803146212,
+        "b": false
+      },
+      {
+        "ns": 3329813325221,
+        "b": false
+      },
+      {
+        "ns": 3329823565469,
+        "b": false
+      },
+      {
+        "ns": 3329833752489,
+        "b": false
+      },
+      {
+        "ns": 3329843985650,
+        "b": false
+      },
+      {
+        "ns": 3329854222314,
+        "b": false
+      },
+      {
+        "ns": 3329864412602,
+        "b": false
+      },
+      {
+        "ns": 3329874610247,
+        "b": false
+      },
+      {
+        "ns": 3329884789588,
+        "b": false
+      },
+      {
+        "ns": 3329894951536,
+        "b": false
+      },
+      {
+        "ns": 3329905114718,
+        "b": false
+      },
+      {
+        "ns": 3329915305694,
+        "b": false
+      },
+      {
+        "ns": 3329925507330,
+        "b": false
+      },
+      {
+        "ns": 3329935712379,
+        "b": false
+      },
+      {
+        "ns": 3329945899363,
+        "b": false
+      },
+      {
+        "ns": 3329956056814,
+        "b": false
+      },
+      {
+        "ns": 3329966275853,
+        "b": false
+      },
+      {
+        "ns": 3329976472837,
+        "b": false
+      },
+      {
+        "ns": 3329986663671,
+        "b": false
+      },
+      {
+        "ns": 3329996850866,
+        "b": false
+      },
+      {
+        "ns": 3330007134594,
+        "b": false
+      },
+      {
+        "ns": 3330017318850,
+        "b": false
+      },
+      {
+        "ns": 3330027548252,
+        "b": false
+      },
+      {
+        "ns": 3330037751316,
+        "b": false
+      },
+      {
+        "ns": 3330047939545,
+        "b": false
+      },
+      {
+        "ns": 3330058172725,
+        "b": false
+      },
+      {
+        "ns": 3330068381786,
+        "b": false
+      },
+      {
+        "ns": 3330078705500,
+        "b": false
+      },
+      {
+        "ns": 3330088900565,
+        "b": false
+      },
+      {
+        "ns": 3330099120643,
+        "b": false
+      },
+      {
+        "ns": 3330109303919,
+        "b": false
+      },
+      {
+        "ns": 3330119503107,
+        "b": false
+      },
+      {
+        "ns": 3330129709210,
+        "b": false
+      },
+      {
+        "ns": 3330139892068,
+        "b": false
+      },
+      {
+        "ns": 3330150122288,
+        "b": false
+      },
+      {
+        "ns": 3330160306941,
+        "b": false
+      },
+      {
+        "ns": 3330170508342,
+        "b": false
+      },
+      {
+        "ns": 3330180682117,
+        "b": false
+      },
+      {
+        "ns": 3330190883644,
+        "b": false
+      },
+      {
+        "ns": 3330201062275,
+        "b": false
+      },
+      {
+        "ns": 3330211228985,
+        "b": false
+      },
+      {
+        "ns": 3330221418315,
+        "b": false
+      },
+      {
+        "ns": 3330231650105,
+        "b": false
+      },
+      {
+        "ns": 3330241857783,
+        "b": false
+      },
+      {
+        "ns": 3330252045296,
+        "b": false
+      },
+      {
+        "ns": 3330262284021,
+        "b": false
+      },
+      {
+        "ns": 3330272498484,
+        "b": false
+      },
+      {
+        "ns": 3330282689064,
+        "b": false
+      },
+      {
+        "ns": 3330292866032,
+        "b": false
+      },
+      {
+        "ns": 3330303068559,
+        "b": false
+      },
+      {
+        "ns": 3330313257827,
+        "b": false
+      },
+      {
+        "ns": 3330323558320,
+        "b": false
+      },
+      {
+        "ns": 3330333745559,
+        "b": false
+      },
+      {
+        "ns": 3330343932755,
+        "b": false
+      },
+      {
+        "ns": 3330354143067,
+        "b": false
+      },
+      {
+        "ns": 3330364337926,
+        "b": false
+      },
+      {
+        "ns": 3330374649659,
+        "b": false
+      },
+      {
+        "ns": 3330384909576,
+        "b": false
+      },
+      {
+        "ns": 3330395139943,
+        "b": false
+      },
+      {
+        "ns": 3330405359881,
+        "b": false
+      },
+      {
+        "ns": 3330415597753,
+        "b": false
+      },
+      {
+        "ns": 3330425839031,
+        "b": false
+      },
+      {
+        "ns": 3330436175085,
+        "b": false
+      },
+      {
+        "ns": 3330446415784,
+        "b": false
+      },
+      {
+        "ns": 3330456650112,
+        "b": false
+      },
+      {
+        "ns": 3330466878668,
+        "b": false
+      },
+      {
+        "ns": 3330477114725,
+        "b": false
+      },
+      {
+        "ns": 3330487389047,
+        "b": false
+      },
+      {
+        "ns": 3330497600428,
+        "b": false
+      },
+      {
+        "ns": 3330507821911,
+        "b": false
+      },
+      {
+        "ns": 3330518140630,
+        "b": false
+      },
+      {
+        "ns": 3330528400593,
+        "b": false
+      },
+      {
+        "ns": 3330538641950,
+        "b": false
+      },
+      {
+        "ns": 3330548974692,
+        "b": false
+      },
+      {
+        "ns": 3330559198027,
+        "b": false
+      },
+      {
+        "ns": 3330569433111,
+        "b": false
+      },
+      {
+        "ns": 3330579661719,
+        "b": false
+      },
+      {
+        "ns": 3330589869093,
+        "b": false
+      },
+      {
+        "ns": 3330600031578,
+        "b": false
+      },
+      {
+        "ns": 3330610260378,
+        "b": false
+      },
+      {
+        "ns": 3330620971973,
+        "b": false
+      },
+      {
+        "ns": 3330631192234,
+        "b": false
+      },
+      {
+        "ns": 3330641417910,
+        "b": false
+      },
+      {
+        "ns": 3330651657234,
+        "b": false
+      },
+      {
+        "ns": 3330661903048,
+        "b": false
+      },
+      {
+        "ns": 3330672154480,
+        "b": false
+      },
+      {
+        "ns": 3330682387024,
+        "b": false
+      },
+      {
+        "ns": 3330692621051,
+        "b": false
+      },
+      {
+        "ns": 3330702859720,
+        "b": false
+      },
+      {
+        "ns": 3330713108900,
+        "b": false
+      },
+      {
+        "ns": 3330723322100,
+        "b": false
+      },
+      {
+        "ns": 3330733569902,
+        "b": false
+      },
+      {
+        "ns": 3330743886813,
+        "b": false
+      },
+      {
+        "ns": 3330754281087,
+        "b": false
+      },
+      {
+        "ns": 3330764499866,
+        "b": false
+      },
+      {
+        "ns": 3330774726091,
+        "b": false
+      },
+      {
+        "ns": 3330784960079,
+        "b": false
+      },
+      {
+        "ns": 3330795184974,
+        "b": false
+      },
+      {
+        "ns": 3330805412036,
+        "b": false
+      },
+      {
+        "ns": 3330815634032,
+        "b": false
+      },
+      {
+        "ns": 3330825854215,
+        "b": false
+      },
+      {
+        "ns": 3330836067651,
+        "b": false
+      },
+      {
+        "ns": 3330846300304,
+        "b": false
+      },
+      {
+        "ns": 3330856540114,
+        "b": false
+      },
+      {
+        "ns": 3330866769278,
+        "b": false
+      },
+      {
+        "ns": 3330877013449,
+        "b": false
+      },
+      {
+        "ns": 3330887275081,
+        "b": false
+      },
+      {
+        "ns": 3330897511477,
+        "b": false
+      },
+      {
+        "ns": 3330907791342,
+        "b": false
+      },
+      {
+        "ns": 3330918038184,
+        "b": false
+      },
+      {
+        "ns": 3330928362179,
+        "b": false
+      },
+      {
+        "ns": 3330938606489,
+        "b": false
+      },
+      {
+        "ns": 3330948928540,
+        "b": false
+      },
+      {
+        "ns": 3330959133724,
+        "b": false
+      },
+      {
+        "ns": 3330969345605,
+        "b": false
+      },
+      {
+        "ns": 3330979606839,
+        "b": false
+      },
+      {
+        "ns": 3330989839012,
+        "b": false
+      },
+      {
+        "ns": 3331000045980,
+        "b": false
+      },
+      {
+        "ns": 3331010290509,
+        "b": false
+      },
+      {
+        "ns": 3331020491203,
+        "b": false
+      },
+      {
+        "ns": 3331030700713,
+        "b": false
+      },
+      {
+        "ns": 3331040920965,
+        "b": false
+      },
+      {
+        "ns": 3331051164711,
+        "b": false
+      },
+      {
+        "ns": 3331061393568,
+        "b": false
+      },
+      {
+        "ns": 3331071628640,
+        "b": false
+      },
+      {
+        "ns": 3331081859017,
+        "b": false
+      },
+      {
+        "ns": 3331092063787,
+        "b": false
+      },
+      {
+        "ns": 3331102312607,
+        "b": false
+      },
+      {
+        "ns": 3331112538943,
+        "b": false
+      },
+      {
+        "ns": 3331122765727,
+        "b": false
+      },
+      {
+        "ns": 3331133001111,
+        "b": false
+      },
+      {
+        "ns": 3331143308958,
+        "b": false
+      },
+      {
+        "ns": 3331153594180,
+        "b": false
+      },
+      {
+        "ns": 3331163945805,
+        "b": false
+      },
+      {
+        "ns": 3331174188712,
+        "b": false
+      },
+      {
+        "ns": 3331184397553,
+        "b": false
+      },
+      {
+        "ns": 3331194650731,
+        "b": false
+      },
+      {
+        "ns": 3331204863842,
+        "b": false
+      },
+      {
+        "ns": 3331215112895,
+        "b": false
+      },
+      {
+        "ns": 3331225436010,
+        "b": false
+      },
+      {
+        "ns": 3331235687726,
+        "b": false
+      },
+      {
+        "ns": 3331245965078,
+        "b": false
+      },
+      {
+        "ns": 3331256260314,
+        "b": false
+      },
+      {
+        "ns": 3331266497266,
+        "b": false
+      },
+      {
+        "ns": 3331276742684,
+        "b": false
+      },
+      {
+        "ns": 3331286982835,
+        "b": false
+      },
+      {
+        "ns": 3331297212294,
+        "b": false
+      },
+      {
+        "ns": 3331307446724,
+        "b": false
+      },
+      {
+        "ns": 3331317697422,
+        "b": false
+      },
+      {
+        "ns": 3331328037057,
+        "b": false
+      },
+      {
+        "ns": 3331338336417,
+        "b": false
+      },
+      {
+        "ns": 3331348670871,
+        "b": false
+      },
+      {
+        "ns": 3331358922720,
+        "b": false
+      },
+      {
+        "ns": 3331369256677,
+        "b": false
+      },
+      {
+        "ns": 3331379497795,
+        "b": false
+      },
+      {
+        "ns": 3331389756850,
+        "b": false
+      },
+      {
+        "ns": 3331399992036,
+        "b": false
+      },
+      {
+        "ns": 3331410269035,
+        "b": false
+      },
+      {
+        "ns": 3331420512787,
+        "b": false
+      },
+      {
+        "ns": 3331430782737,
+        "b": false
+      },
+      {
+        "ns": 3331441019777,
+        "b": false
+      },
+      {
+        "ns": 3331451292473,
+        "b": false
+      },
+      {
+        "ns": 3331461541805,
+        "b": false
+      },
+      {
+        "ns": 3331471773045,
+        "b": false
+      },
+      {
+        "ns": 3331482021707,
+        "b": false
+      },
+      {
+        "ns": 3331492327278,
+        "b": false
+      },
+      {
+        "ns": 3331502576058,
+        "b": false
+      },
+      {
+        "ns": 3331512798498,
+        "b": false
+      },
+      {
+        "ns": 3331523074844,
+        "b": false
+      },
+      {
+        "ns": 3331533282414,
+        "b": false
+      },
+      {
+        "ns": 3331543535551,
+        "b": false
+      },
+      {
+        "ns": 3331553873902,
+        "b": false
+      },
+      {
+        "ns": 3331564113963,
+        "b": false
+      },
+      {
+        "ns": 3331574343768,
+        "b": false
+      },
+      {
+        "ns": 3331584552970,
+        "b": false
+      },
+      {
+        "ns": 3331594775891,
+        "b": false
+      },
+      {
+        "ns": 3331605006443,
+        "b": false
+      },
+      {
+        "ns": 3331615228911,
+        "b": false
+      },
+      {
+        "ns": 3331625484245,
+        "b": false
+      },
+      {
+        "ns": 3331635766910,
+        "b": false
+      },
+      {
+        "ns": 3331645985517,
+        "b": false
+      },
+      {
+        "ns": 3331656227487,
+        "b": false
+      },
+      {
+        "ns": 3331666491518,
+        "b": false
+      },
+      {
+        "ns": 3331676738084,
+        "b": false
+      },
+      {
+        "ns": 3331686975046,
+        "b": false
+      },
+      {
+        "ns": 3331697199626,
+        "b": false
+      },
+      {
+        "ns": 3331707414149,
+        "b": false
+      },
+      {
+        "ns": 3331717632961,
+        "b": false
+      },
+      {
+        "ns": 3331727870645,
+        "b": false
+      },
+      {
+        "ns": 3331738151101,
+        "b": false
+      },
+      {
+        "ns": 3331748375098,
+        "b": false
+      },
+      {
+        "ns": 3331758733653,
+        "b": false
+      },
+      {
+        "ns": 3331768990630,
+        "b": false
+      },
+      {
+        "ns": 3331779300416,
+        "b": false
+      },
+      {
+        "ns": 3331789562641,
+        "b": false
+      },
+      {
+        "ns": 3331799778614,
+        "b": false
+      },
+      {
+        "ns": 3331810029199,
+        "b": false
+      },
+      {
+        "ns": 3331820283295,
+        "b": false
+      },
+      {
+        "ns": 3331830538264,
+        "b": false
+      },
+      {
+        "ns": 3331840773921,
+        "b": false
+      },
+      {
+        "ns": 3331850993171,
+        "b": false
+      },
+      {
+        "ns": 3331861294695,
+        "b": false
+      },
+      {
+        "ns": 3331871645506,
+        "b": false
+      },
+      {
+        "ns": 3331881878533,
+        "b": false
+      },
+      {
+        "ns": 3331892120444,
+        "b": false
+      },
+      {
+        "ns": 3331902386927,
+        "b": false
+      },
+      {
+        "ns": 3331912664114,
+        "b": false
+      },
+      {
+        "ns": 3331922947054,
+        "b": false
+      },
+      {
+        "ns": 3331933177125,
+        "b": false
+      },
+      {
+        "ns": 3331943411470,
+        "b": false
+      },
+      {
+        "ns": 3331953686934,
+        "b": false
+      },
+      {
+        "ns": 3331963961880,
+        "b": false
+      },
+      {
+        "ns": 3331974224210,
+        "b": false
+      },
+      {
+        "ns": 3331984453136,
+        "b": false
+      },
+      {
+        "ns": 3331994676359,
+        "b": false
+      },
+      {
+        "ns": 3332004888768,
+        "b": false
+      },
+      {
+        "ns": 3332015094557,
+        "b": false
+      },
+      {
+        "ns": 3332025291737,
+        "b": false
+      },
+      {
+        "ns": 3332035536030,
+        "b": false
+      },
+      {
+        "ns": 3332045710264,
+        "b": false
+      },
+      {
+        "ns": 3332055880448,
+        "b": false
+      },
+      {
+        "ns": 3332066065421,
+        "b": false
+      },
+      {
+        "ns": 3332076245533,
+        "b": false
+      },
+      {
+        "ns": 3332086427818,
+        "b": false
+      },
+      {
+        "ns": 3332096623966,
+        "b": false
+      },
+      {
+        "ns": 3332106807625,
+        "b": false
+      },
+      {
+        "ns": 3332116989304,
+        "b": false
+      },
+      {
+        "ns": 3332127234547,
+        "b": false
+      },
+      {
+        "ns": 3332137424262,
+        "b": false
+      },
+      {
+        "ns": 3332147612846,
+        "b": false
+      },
+      {
+        "ns": 3332157816742,
+        "b": false
+      },
+      {
+        "ns": 3332168031493,
+        "b": false
+      },
+      {
+        "ns": 3332178233844,
+        "b": false
+      },
+      {
+        "ns": 3332188459162,
+        "b": false
+      },
+      {
+        "ns": 3332198838317,
+        "b": false
+      },
+      {
+        "ns": 3332209126166,
+        "b": false
+      },
+      {
+        "ns": 3332219328652,
+        "b": false
+      },
+      {
+        "ns": 3332229541500,
+        "b": false
+      },
+      {
+        "ns": 3332239766790,
+        "b": false
+      },
+      {
+        "ns": 3332249961447,
+        "b": false
+      },
+      {
+        "ns": 3332260145289,
+        "b": false
+      },
+      {
+        "ns": 3332270331432,
+        "b": false
+      },
+      {
+        "ns": 3332280528250,
+        "b": false
+      },
+      {
+        "ns": 3332290740192,
+        "b": false
+      },
+      {
+        "ns": 3332300931784,
+        "b": false
+      },
+      {
+        "ns": 3332311145252,
+        "b": false
+      },
+      {
+        "ns": 3332321341509,
+        "b": false
+      },
+      {
+        "ns": 3332331545015,
+        "b": false
+      },
+      {
+        "ns": 3332341730337,
+        "b": false
+      },
+      {
+        "ns": 3332351912602,
+        "b": false
+      },
+      {
+        "ns": 3332362102753,
+        "b": false
+      },
+      {
+        "ns": 3332372305604,
+        "b": false
+      },
+      {
+        "ns": 3332382550698,
+        "b": false
+      },
+      {
+        "ns": 3332392781206,
+        "b": false
+      },
+      {
+        "ns": 3332403011999,
+        "b": false
+      },
+      {
+        "ns": 3332413218549,
+        "b": false
+      },
+      {
+        "ns": 3332423510792,
+        "b": false
+      },
+      {
+        "ns": 3332433676786,
+        "b": false
+      },
+      {
+        "ns": 3332443876199,
+        "b": false
+      },
+      {
+        "ns": 3332454044166,
+        "b": false
+      },
+      {
+        "ns": 3332464224433,
+        "b": false
+      },
+      {
+        "ns": 3332474407192,
+        "b": false
+      },
+      {
+        "ns": 3332484603492,
+        "b": false
+      },
+      {
+        "ns": 3332494806547,
+        "b": false
+      },
+      {
+        "ns": 3332504998327,
+        "b": false
+      },
+      {
+        "ns": 3332515185454,
+        "b": false
+      },
+      {
+        "ns": 3332525393483,
+        "b": false
+      },
+      {
+        "ns": 3332535580979,
+        "b": false
+      },
+      {
+        "ns": 3332545765082,
+        "b": false
+      },
+      {
+        "ns": 3332555943528,
+        "b": false
+      },
+      {
+        "ns": 3332566138905,
+        "b": false
+      },
+      {
+        "ns": 3332576309721,
+        "b": false
+      },
+      {
+        "ns": 3332586485485,
+        "b": false
+      },
+      {
+        "ns": 3332596680189,
+        "b": false
+      },
+      {
+        "ns": 3332606857295,
+        "b": false
+      },
+      {
+        "ns": 3332617037692,
+        "b": false
+      },
+      {
+        "ns": 3332627265202,
+        "b": false
+      },
+      {
+        "ns": 3332637461577,
+        "b": false
+      },
+      {
+        "ns": 3332647695451,
+        "b": false
+      },
+      {
+        "ns": 3332657923507,
+        "b": false
+      },
+      {
+        "ns": 3332668140551,
+        "b": false
+      },
+      {
+        "ns": 3332678385272,
+        "b": false
+      },
+      {
+        "ns": 3332688776727,
+        "b": false
+      },
+      {
+        "ns": 3332699016699,
+        "b": false
+      },
+      {
+        "ns": 3332709199559,
+        "b": false
+      },
+      {
+        "ns": 3332719385594,
+        "b": false
+      },
+      {
+        "ns": 3332729579054,
+        "b": false
+      },
+      {
+        "ns": 3332739794126,
+        "b": false
+      },
+      {
+        "ns": 3332749985089,
+        "b": false
+      },
+      {
+        "ns": 3332760167165,
+        "b": false
+      },
+      {
+        "ns": 3332770346793,
+        "b": false
+      },
+      {
+        "ns": 3332780510934,
+        "b": false
+      },
+      {
+        "ns": 3332790724823,
+        "b": false
+      },
+      {
+        "ns": 3332800913795,
+        "b": false
+      },
+      {
+        "ns": 3332811088886,
+        "b": false
+      },
+      {
+        "ns": 3332821268316,
+        "b": false
+      },
+      {
+        "ns": 3332831446516,
+        "b": false
+      },
+      {
+        "ns": 3332841658375,
+        "b": false
+      },
+      {
+        "ns": 3332851897963,
+        "b": false
+      },
+      {
+        "ns": 3332862169669,
+        "b": false
+      },
+      {
+        "ns": 3332872366717,
+        "b": false
+      },
+      {
+        "ns": 3332882644547,
+        "b": false
+      },
+      {
+        "ns": 3332892863360,
+        "b": false
+      },
+      {
+        "ns": 3332903071522,
+        "b": false
+      },
+      {
+        "ns": 3332913256888,
+        "b": false
+      },
+      {
+        "ns": 3332923593169,
+        "b": false
+      },
+      {
+        "ns": 3332933789296,
+        "b": false
+      },
+      {
+        "ns": 3332943984229,
+        "b": false
+      },
+      {
+        "ns": 3332954253405,
+        "b": false
+      },
+      {
+        "ns": 3332964463825,
+        "b": false
+      },
+      {
+        "ns": 3332974696278,
+        "b": false
+      },
+      {
+        "ns": 3332984948439,
+        "b": false
+      },
+      {
+        "ns": 3332995170159,
+        "b": false
+      },
+      {
+        "ns": 3333005353268,
+        "b": false
+      },
+      {
+        "ns": 3333015548579,
+        "b": false
+      },
+      {
+        "ns": 3333025772977,
+        "b": false
+      },
+      {
+        "ns": 3333036041214,
+        "b": false
+      },
+      {
+        "ns": 3333046228357,
+        "b": false
+      },
+      {
+        "ns": 3333056404859,
+        "b": false
+      },
+      {
+        "ns": 3333066593569,
+        "b": false
+      },
+      {
+        "ns": 3333076784348,
+        "b": false
+      },
+      {
+        "ns": 3333087045074,
+        "b": false
+      },
+      {
+        "ns": 3333097269874,
+        "b": false
+      },
+      {
+        "ns": 3333107471629,
+        "b": false
+      },
+      {
+        "ns": 3333117651187,
+        "b": false
+      },
+      {
+        "ns": 3333127830913,
+        "b": false
+      },
+      {
+        "ns": 3333138018673,
+        "b": false
+      },
+      {
+        "ns": 3333148228481,
+        "b": false
+      },
+      {
+        "ns": 3333158563630,
+        "b": false
+      },
+      {
+        "ns": 3333168833979,
+        "b": false
+      },
+      {
+        "ns": 3333179113297,
+        "b": false
+      },
+      {
+        "ns": 3333189302796,
+        "b": false
+      },
+      {
+        "ns": 3333199505446,
+        "b": false
+      },
+      {
+        "ns": 3333209700947,
+        "b": false
+      },
+      {
+        "ns": 3333219916777,
+        "b": false
+      },
+      {
+        "ns": 3333230162950,
+        "b": false
+      },
+      {
+        "ns": 3333240361182,
+        "b": false
+      },
+      {
+        "ns": 3333250546109,
+        "b": false
+      },
+      {
+        "ns": 3333260726302,
+        "b": false
+      },
+      {
+        "ns": 3333270914815,
+        "b": false
+      },
+      {
+        "ns": 3333281079960,
+        "b": false
+      },
+      {
+        "ns": 3333291286883,
+        "b": false
+      },
+      {
+        "ns": 3333301501189,
+        "b": false
+      },
+      {
+        "ns": 3333311720167,
+        "b": false
+      },
+      {
+        "ns": 3333321923860,
+        "b": false
+      },
+      {
+        "ns": 3333332071029,
+        "b": false
+      },
+      {
+        "ns": 3333342314939,
+        "b": false
+      },
+      {
+        "ns": 3333352525455,
+        "b": false
+      },
+      {
+        "ns": 3333362776398,
+        "b": false
+      },
+      {
+        "ns": 3333373073956,
+        "b": false
+      },
+      {
+        "ns": 3333383347763,
+        "b": false
+      },
+      {
+        "ns": 3333393705825,
+        "b": false
+      },
+      {
+        "ns": 3333404074963,
+        "b": false
+      },
+      {
+        "ns": 3333414304581,
+        "b": false
+      },
+      {
+        "ns": 3333424562657,
+        "b": false
+      },
+      {
+        "ns": 3333434758486,
+        "b": false
+      },
+      {
+        "ns": 3333444949208,
+        "b": false
+      },
+      {
+        "ns": 3333455134454,
+        "b": false
+      },
+      {
+        "ns": 3333465309913,
+        "b": false
+      },
+      {
+        "ns": 3333475495054,
+        "b": false
+      },
+      {
+        "ns": 3333485686281,
+        "b": false
+      },
+      {
+        "ns": 3333495894347,
+        "b": false
+      },
+      {
+        "ns": 3333506137358,
+        "b": false
+      },
+      {
+        "ns": 3333516329131,
+        "b": false
+      },
+      {
+        "ns": 3333526517870,
+        "b": false
+      },
+      {
+        "ns": 3333536712608,
+        "b": false
+      },
+      {
+        "ns": 3333546901475,
+        "b": false
+      },
+      {
+        "ns": 3333557075949,
+        "b": false
+      },
+      {
+        "ns": 3333567275968,
+        "b": false
+      },
+      {
+        "ns": 3333577532900,
+        "b": false
+      },
+      {
+        "ns": 3333587726797,
+        "b": false
+      },
+      {
+        "ns": 3333597978392,
+        "b": false
+      },
+      {
+        "ns": 3333608176770,
+        "b": false
+      },
+      {
+        "ns": 3333618382071,
+        "b": false
+      },
+      {
+        "ns": 3333628724502,
+        "b": false
+      },
+      {
+        "ns": 3333639008018,
+        "b": false
+      },
+      {
+        "ns": 3333649208903,
+        "b": false
+      },
+      {
+        "ns": 3333659428502,
+        "b": false
+      },
+      {
+        "ns": 3333669629181,
+        "b": false
+      },
+      {
+        "ns": 3333679823551,
+        "b": false
+      },
+      {
+        "ns": 3333690012983,
+        "b": false
+      },
+      {
+        "ns": 3333700229357,
+        "b": false
+      },
+      {
+        "ns": 3333710416575,
+        "b": false
+      },
+      {
+        "ns": 3333720592221,
+        "b": false
+      },
+      {
+        "ns": 3333730767061,
+        "b": false
+      },
+      {
+        "ns": 3333740944398,
+        "b": false
+      },
+      {
+        "ns": 3333751155260,
+        "b": false
+      },
+      {
+        "ns": 3333761342580,
+        "b": false
+      },
+      {
+        "ns": 3333771557328,
+        "b": false
+      },
+      {
+        "ns": 3333781765036,
+        "b": false
+      },
+      {
+        "ns": 3333792025935,
+        "b": false
+      },
+      {
+        "ns": 3333802250169,
+        "b": false
+      },
+      {
+        "ns": 3333812453112,
+        "b": false
+      },
+      {
+        "ns": 3333822674736,
+        "b": false
+      },
+      {
+        "ns": 3333832885948,
+        "b": false
+      },
+      {
+        "ns": 3333843116713,
+        "b": false
+      },
+      {
+        "ns": 3333853343036,
+        "b": false
+      },
+      {
+        "ns": 3333863732368,
+        "b": false
+      },
+      {
+        "ns": 3333873943081,
+        "b": false
+      },
+      {
+        "ns": 3333884217965,
+        "b": false
+      },
+      {
+        "ns": 3333894408233,
+        "b": false
+      },
+      {
+        "ns": 3333904589641,
+        "b": false
+      },
+      {
+        "ns": 3333914811936,
+        "b": false
+      },
+      {
+        "ns": 3333925033677,
+        "b": false
+      },
+      {
+        "ns": 3333935365246,
+        "b": false
+      },
+      {
+        "ns": 3333945558860,
+        "b": false
+      },
+      {
+        "ns": 3333955747578,
+        "b": false
+      },
+      {
+        "ns": 3333965936465,
+        "b": false
+      },
+      {
+        "ns": 3333976138016,
+        "b": false
+      },
+      {
+        "ns": 3333986355366,
+        "b": false
+      },
+      {
+        "ns": 3333996541939,
+        "b": false
+      },
+      {
+        "ns": 3334006736048,
+        "b": false
+      },
+      {
+        "ns": 3334016943646,
+        "b": false
+      },
+      {
+        "ns": 3334027141444,
+        "b": false
+      },
+      {
+        "ns": 3334037334187,
+        "b": false
+      },
+      {
+        "ns": 3334047535347,
+        "b": false
+      },
+      {
+        "ns": 3334057720559,
+        "b": false
+      },
+      {
+        "ns": 3334067941773,
+        "b": false
+      },
+      {
+        "ns": 3334078169368,
+        "b": false
+      },
+      {
+        "ns": 3334088353595,
+        "b": false
+      },
+      {
+        "ns": 3334098650059,
+        "b": false
+      },
+      {
+        "ns": 3334108915447,
+        "b": false
+      },
+      {
+        "ns": 3334119159910,
+        "b": false
+      },
+      {
+        "ns": 3334129357535,
+        "b": false
+      },
+      {
+        "ns": 3334139546638,
+        "b": false
+      },
+      {
+        "ns": 3334149749466,
+        "b": false
+      },
+      {
+        "ns": 3334159959801,
+        "b": false
+      },
+      {
+        "ns": 3334170230561,
+        "b": false
+      },
+      {
+        "ns": 3334180439235,
+        "b": false
+      },
+      {
+        "ns": 3334190635711,
+        "b": false
+      },
+      {
+        "ns": 3334200832270,
+        "b": false
+      },
+      {
+        "ns": 3334211094215,
+        "b": false
+      },
+      {
+        "ns": 3334221373745,
+        "b": false
+      },
+      {
+        "ns": 3334231591975,
+        "b": false
+      },
+      {
+        "ns": 3334241827056,
+        "b": false
+      },
+      {
+        "ns": 3334252055753,
+        "b": false
+      },
+      {
+        "ns": 3334262276312,
+        "b": false
+      },
+      {
+        "ns": 3334272458336,
+        "b": false
+      },
+      {
+        "ns": 3334282637820,
+        "b": false
+      },
+      {
+        "ns": 3334292820601,
+        "b": false
+      },
+      {
+        "ns": 3334303006830,
+        "b": false
+      },
+      {
+        "ns": 3334313244825,
+        "b": false
+      },
+      {
+        "ns": 3334323573575,
+        "b": false
+      },
+      {
+        "ns": 3334333774356,
+        "b": false
+      },
+      {
+        "ns": 3334344041490,
+        "b": false
+      },
+      {
+        "ns": 3334354209311,
+        "b": false
+      },
+      {
+        "ns": 3334364401029,
+        "b": false
+      },
+      {
+        "ns": 3334374680685,
+        "b": false
+      },
+      {
+        "ns": 3334384867248,
+        "b": false
+      },
+      {
+        "ns": 3334395080466,
+        "b": false
+      },
+      {
+        "ns": 3334405325172,
+        "b": false
+      },
+      {
+        "ns": 3334415541108,
+        "b": false
+      },
+      {
+        "ns": 3334425745619,
+        "b": false
+      },
+      {
+        "ns": 3334435934440,
+        "b": false
+      },
+      {
+        "ns": 3334446144019,
+        "b": false
+      },
+      {
+        "ns": 3334456339692,
+        "b": false
+      },
+      {
+        "ns": 3334466544828,
+        "b": false
+      },
+      {
+        "ns": 3334476745930,
+        "b": false
+      },
+      {
+        "ns": 3334486931985,
+        "b": false
+      },
+      {
+        "ns": 3334497124472,
+        "b": false
+      },
+      {
+        "ns": 3334507374483,
+        "b": false
+      },
+      {
+        "ns": 3334517582836,
+        "b": false
+      },
+      {
+        "ns": 3334527791455,
+        "b": false
+      },
+      {
+        "ns": 3334537985824,
+        "b": false
+      },
+      {
+        "ns": 3334548178520,
+        "b": false
+      },
+      {
+        "ns": 3334558371933,
+        "b": false
+      },
+      {
+        "ns": 3334568601661,
+        "b": false
+      },
+      {
+        "ns": 3334578840542,
+        "b": false
+      },
+      {
+        "ns": 3334589134040,
+        "b": false
+      },
+      {
+        "ns": 3334599347258,
+        "b": false
+      },
+      {
+        "ns": 3334609578951,
+        "b": false
+      },
+      {
+        "ns": 3334619788009,
+        "b": false
+      },
+      {
+        "ns": 3334630004186,
+        "b": false
+      },
+      {
+        "ns": 3334640203872,
+        "b": false
+      },
+      {
+        "ns": 3334650415485,
+        "b": false
+      },
+      {
+        "ns": 3334660645133,
+        "b": false
+      },
+      {
+        "ns": 3334670857213,
+        "b": false
+      },
+      {
+        "ns": 3334681050490,
+        "b": false
+      },
+      {
+        "ns": 3334691229407,
+        "b": false
+      },
+      {
+        "ns": 3334701411591,
+        "b": false
+      },
+      {
+        "ns": 3334711605070,
+        "b": false
+      },
+      {
+        "ns": 3334721777955,
+        "b": false
+      },
+      {
+        "ns": 3334731984241,
+        "b": false
+      },
+      {
+        "ns": 3334742243413,
+        "b": false
+      },
+      {
+        "ns": 3334752440566,
+        "b": false
+      },
+      {
+        "ns": 3334762656819,
+        "b": false
+      },
+      {
+        "ns": 3334772862646,
+        "b": false
+      },
+      {
+        "ns": 3334783064634,
+        "b": false
+      },
+      {
+        "ns": 3334793280256,
+        "b": false
+      },
+      {
+        "ns": 3334803496503,
+        "b": false
+      },
+      {
+        "ns": 3334813920893,
+        "b": false
+      },
+      {
+        "ns": 3334824239522,
+        "b": false
+      },
+      {
+        "ns": 3334834443291,
+        "b": false
+      },
+      {
+        "ns": 3334844645023,
+        "b": false
+      },
+      {
+        "ns": 3334854860717,
+        "b": false
+      },
+      {
+        "ns": 3334865066743,
+        "b": false
+      },
+      {
+        "ns": 3334875291014,
+        "b": false
+      },
+      {
+        "ns": 3334885493559,
+        "b": false
+      },
+      {
+        "ns": 3334895682500,
+        "b": false
+      },
+      {
+        "ns": 3334905853116,
+        "b": false
+      },
+      {
+        "ns": 3334916062432,
+        "b": false
+      },
+      {
+        "ns": 3334926275476,
+        "b": false
+      },
+      {
+        "ns": 3334936481584,
+        "b": false
+      },
+      {
+        "ns": 3334946667439,
+        "b": false
+      },
+      {
+        "ns": 3334956868421,
+        "b": false
+      },
+      {
+        "ns": 3334967090563,
+        "b": false
+      },
+      {
+        "ns": 3334977270186,
+        "b": false
+      },
+      {
+        "ns": 3334987498641,
+        "b": false
+      },
+      {
+        "ns": 3334997681960,
+        "b": false
+      },
+      {
+        "ns": 3335007874949,
+        "b": false
+      },
+      {
+        "ns": 3335018068565,
+        "b": false
+      },
+      {
+        "ns": 3335028275486,
+        "b": false
+      },
+      {
+        "ns": 3335038496471,
+        "b": false
+      },
+      {
+        "ns": 3335048771330,
+        "b": false
+      },
+      {
+        "ns": 3335059082899,
+        "b": false
+      },
+      {
+        "ns": 3335069304935,
+        "b": false
+      },
+      {
+        "ns": 3335079511426,
+        "b": false
+      },
+      {
+        "ns": 3335089726162,
+        "b": false
+      },
+      {
+        "ns": 3335099940058,
+        "b": false
+      },
+      {
+        "ns": 3335110158312,
+        "b": false
+      },
+      {
+        "ns": 3335120343195,
+        "b": false
+      },
+      {
+        "ns": 3335130525839,
+        "b": false
+      },
+      {
+        "ns": 3335140729408,
+        "b": false
+      },
+      {
+        "ns": 3335150936352,
+        "b": false
+      },
+      {
+        "ns": 3335161137678,
+        "b": false
+      },
+      {
+        "ns": 3335171337449,
+        "b": false
+      },
+      {
+        "ns": 3335181552876,
+        "b": false
+      },
+      {
+        "ns": 3335191784919,
+        "b": false
+      },
+      {
+        "ns": 3335201989873,
+        "b": false
+      },
+      {
+        "ns": 3335212171634,
+        "b": false
+      },
+      {
+        "ns": 3335222380750,
+        "b": false
+      },
+      {
+        "ns": 3335232649031,
+        "b": false
+      },
+      {
+        "ns": 3335242920568,
+        "b": false
+      },
+      {
+        "ns": 3335253151892,
+        "b": false
+      },
+      {
+        "ns": 3335263374437,
+        "b": false
+      },
+      {
+        "ns": 3335273727484,
+        "b": false
+      }
+    ],
+    "sampler_alive": false,
+    "max_sample_gap_ms": 15.314298,
+    "keys_after_horizon": {
+      "w": false,
+      "b": false
+    }
+  },
+  "xvfb_exitcode": 0
+}

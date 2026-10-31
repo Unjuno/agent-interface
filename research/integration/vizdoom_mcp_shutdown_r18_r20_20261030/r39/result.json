@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "checks": {
+    "new_connection_refused": true,
+    "existing_connection_sends_w": true,
+    "existing_connection_releases_w": true
+  },
+  "new_probe": {
+    "status": "error",
+    "type": "DisplayConnectionError",
+    "denial_marker": true
+  },
+  "old_connection_action": "W press/release",
+  "scope": "pre-existing authorized X11 connection after client authority file removed; no server-side revocation attempted"
+}

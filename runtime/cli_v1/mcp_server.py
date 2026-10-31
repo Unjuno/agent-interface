@@ -321,6 +321,8 @@ class _WorkerAdmission:
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
                   guarded_process_identity=False, guarded_query_worker=False, guarded_observation_worker=False,
                   guarded_window_lifecycle=False, guarded_owned_process=False,
+                  _guarded_owned_target_process=None,
+                  _guarded_prestarted_target_identity=False,
                   guarded_retention_mode='files',
                   guarded_prestarted_cancel_supervisor=False,
                   _guarded_cancel_supervisor_target=None,
@@ -406,6 +408,21 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded_owned_process and (session_mode != 'guarded-x11'
             or not guarded_process_identity or not guarded_query_worker):
         raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
+    if _guarded_owned_target_process is not None and (
+            session_mode != 'guarded-x11' or not guarded_owned_process
+            or not guarded_process_identity or not guarded_query_worker):
+        raise ValueError('owned target retirement requires guarded owned-process X11 mode')
+    if (type(_guarded_prestarted_target_identity) is not bool
+            or (_guarded_prestarted_target_identity and _guarded_owned_target_process is None)):
+        raise ValueError('prestarted target identity requires an owned target process')
+    if _guarded_owned_target_process is not None:
+        from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess
+        if not isinstance(_guarded_owned_target_process, OwnedTargetProcess):
+            raise TypeError('_guarded_owned_target_process must be an OwnedTargetProcess')
+        if not _guarded_owned_target_process.running:
+            raise ValueError('owned target process must still be running')
+        if len(targets) != 1:
+            raise ValueError('owned target retirement currently requires exactly one target')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -499,12 +516,28 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                              window_lifecycle=guarded_window_lifecycle,
                              retention_mode=guarded_retention_mode)
         if guarded_owned_process:
-            from .owned_guarded_session import OwnedGuardedSessionOwner
-            owner = OwnedGuardedSessionOwner(targets, root, display_name,
-                **owner_options,
-                prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
-                _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
-                _owner_factory=_guarded_owner_factory)
+            try:
+                if _guarded_owned_target_process is not None:
+                    from .owned_target_session import OwnedTargetGuardedSessionOwner
+                    owner = OwnedTargetGuardedSessionOwner(
+                        targets, root, display_name,
+                        owned_target_process=_guarded_owned_target_process,
+                        prestarted_target_identity=_guarded_prestarted_target_identity,
+                        **owner_options,
+                        prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                        _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                        _owner_factory=_guarded_owner_factory)
+                else:
+                    from .owned_guarded_session import OwnedGuardedSessionOwner
+                    owner = OwnedGuardedSessionOwner(targets, root, display_name,
+                        **owner_options,
+                        prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                        _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                        _owner_factory=_guarded_owner_factory)
+            except BaseException:
+                if cancellation_executor is not None:
+                    cancellation_executor.shutdown(wait=False, cancel_futures=True)
+                raise
         else:
             owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False

@@ -1,0 +1,611 @@
+{
+  "status": "FAIL",
+  "task_success": null,
+  "no_model_calls": true,
+  "times": {
+    "recorder_ready": 1026623416552,
+    "stop_requested": 1026811232646,
+    "stopped": 1026811317479,
+    "witness_focus_queued": 1026811555075,
+    "target_exit_observed": 1031952913769,
+    "resume": 1031953040984,
+    "horizon_end": 1035793673108,
+    "positive_control_sent": 1035794067076
+  },
+  "checks": {
+    "repeat_readback_matches": true,
+    "w_down_before_stop": true,
+    "xvfb_stopped_until_target_exit": true,
+    "target_exit_before_resume": true,
+    "old_not_success": true,
+    "w_b_up_after_shutdown": true,
+    "close_report_present": true,
+    "recorder_alive_until_horizon": true,
+    "no_b_press_before_horizon": true,
+    "positive_b_recorded": true,
+    "witness_no_w_or_b_before_horizon": false,
+    "witness_positive_w": true
+  },
+  "repeat_mode": "on",
+  "repeat_readback": 1,
+  "target_pid": 12,
+  "xid": 4194320,
+  "observe": {
+    "operation": "guarded_observe",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "observed",
+    "input_dispatched": false,
+    "source": {
+      "sequence": 1,
+      "observation_id": "44564c7edf5a4458b966170d5a1e7262",
+      "binding_revision": 0,
+      "capture_ns": 1026540681175,
+      "image_source": "exact_capture_rgb_handoff",
+      "pointer_binding": {
+        "focus": 4194320,
+        "surface": 4194320,
+        "geometry": [
+          320,
+          272,
+          640,
+          480
+        ],
+        "process_generation": "e335683357d830927cbe494ecb29c4ec8556f6f5ec512290c93e8484f51e0d41",
+        "window_generation": "3d9b02c5d0be260b242e5ece20b94fd007c010c9b146665f3c80ce841630be4b"
+      },
+      "native": {
+        "bytes": 5242880,
+        "sha256": "1916092d214fab37c7c9f629cd446c2333f9a94a4ec4be1e26129aaa37c1b1a1",
+        "width": 1280,
+        "height": 1024,
+        "target": "app",
+        "native_window_id": 4194320,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          1024
+        ],
+        "capture_started_ns": 1026540681175,
+        "capture_ended_ns": 1026545417945,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/evidence/mcp/27e551334c4243d48260a6e7ec24db56/images/7e74f49387c143339f8c1d82e096ed70.png",
+          "sha256": "2225f1741fc301a327fe0c43926e03eb1b87ec074a96cd728c4a1e86457ce00c",
+          "bytes": 82271,
+          "width": 1280,
+          "height": 1024,
+          "source_raw_sha256": "1916092d214fab37c7c9f629cd446c2333f9a94a4ec4be1e26129aaa37c1b1a1",
+          "timing_ns": {
+            "started": 1026547623221,
+            "converted": 1026549487835,
+            "encoded": 1026576244433,
+            "written": 1026578644634,
+            "hashed": 1026581161498
+          }
+        }
+      },
+      "timing_ns": {
+        "started": 1026539765586,
+        "public_returned": 1026581349936,
+        "binding_checked": 1026584476504,
+        "artifact_verified": 1026586304244,
+        "decoded": 1026586310464
+      }
+    },
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "status": "returned",
+      "observation_id": "44564c7edf5a4458b966170d5a1e7262",
+      "observation": {
+        "bytes": 5242880,
+        "sha256": "1916092d214fab37c7c9f629cd446c2333f9a94a4ec4be1e26129aaa37c1b1a1",
+        "width": 1280,
+        "height": 1024,
+        "target": "app",
+        "native_window_id": 4194320,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          1024
+        ],
+        "capture_started_ns": 1026540681175,
+        "capture_ended_ns": 1026545417945,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/evidence/mcp/27e551334c4243d48260a6e7ec24db56/images/7e74f49387c143339f8c1d82e096ed70.png",
+          "sha256": "2225f1741fc301a327fe0c43926e03eb1b87ec074a96cd728c4a1e86457ce00c",
+          "bytes": 82271,
+          "width": 1280,
+          "height": 1024,
+          "source_raw_sha256": "1916092d214fab37c7c9f629cd446c2333f9a94a4ec4be1e26129aaa37c1b1a1",
+          "timing_ns": {
+            "started": 1026547623221,
+            "converted": 1026549487835,
+            "encoded": 1026576244433,
+            "written": 1026578644634,
+            "hashed": 1026581161498
+          }
+        }
+      },
+      "side_effect_authority": false,
+      "input_dispatched": false
+    },
+    "session": {
+      "session_id": "03c9daf0a83d4d6c9d0fad284f8697cf",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:6b3d35cc6fdf45f3a6b4b17d75a32c72",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": false,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 586,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 586,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 1026602315395,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "image_status": "image",
+    "call_directory": "/evidence/mcp/27e551334c4243d48260a6e7ec24db56",
+    "call_id": "27e551334c4243d48260a6e7ec24db56"
+  },
+  "mint": {
+    "operation": "guarded_mint",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "minted",
+    "alias": "field",
+    "offset": [
+      12,
+      19
+    ],
+    "lifetime": {
+      "clock": "time.monotonic_ns",
+      "minted_ns": 1026611677132,
+      "expires_ns": 1326611677132,
+      "capture_freshness_ms": 1500,
+      "authority_granted": false,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "source_sequence": 1,
+    "input_dispatched": false,
+    "session": {
+      "session_id": "03c9daf0a83d4d6c9d0fad284f8697cf",
+      "mode": "guarded-x11-owned-process",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:6b3d35cc6fdf45f3a6b4b17d75a32c72",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": false,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 586,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 586,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 1026617599155,
+        "exitcode": null,
+        "retired": false,
+        "release_confirmed": null,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": null
+    },
+    "call_directory": "/evidence/mcp/b72abbcf0358455fad3b380e9fce4db5",
+    "call_id": "b72abbcf0358455fad3b380e9fce4db5"
+  },
+  "action": {
+    "status": "pending",
+    "call_id": "597ade397a3942e6bea1771448b858db",
+    "call": {
+      "call_id": "597ade397a3942e6bea1771448b858db",
+      "operation": "guarded_input",
+      "state": "queued",
+      "arguments": {
+        "alias": "field",
+        "offset": [
+          12,
+          19
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "w"
+            ]
+          }
+        ],
+        "interaction": "keyboard",
+        "observe_after": false
+      },
+      "backend_attempted": false,
+      "persistence_failure": null,
+      "response_wait_ms": 0
+    },
+    "scope": "current_server",
+    "result_available": false,
+    "release_confirmed": false,
+    "effect_status": "unknown",
+    "task_success": null,
+    "replay_allowed": false,
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay."
+  },
+  "marker": {
+    "blocked_boundary": "real python-xlib Display.sync response wait",
+    "delay_ms": 8000,
+    "delayed_event": "KeyPress",
+    "delayed_keycode": 56,
+    "flushed_ns": 1026789742839,
+    "immediate_event": "KeyPress",
+    "immediate_keycode": 25,
+    "owner_pid": 586,
+    "resource_base": 6291456
+  },
+  "sync_marker": {
+    "call": "python-xlib Display.sync",
+    "entered_ns": 1026804843648,
+    "owner_pid": 586,
+    "resource_base": 6291456
+  },
+  "w_down_before_stop": true,
+  "target_exit_before_resume": -9,
+  "xvfb_state_before_resume": "T",
+  "old_terminal": {
+    "status": "runtime_failed",
+    "error": "EOFError()",
+    "operation": "guarded_input",
+    "operation_invoked": false,
+    "effect_status": "unknown",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "cleanup_status": "UNKNOWN",
+    "owner_process": {
+      "pid": 586,
+      "alive": true,
+      "liveness_observed_monotonic_ns": 1031821391076,
+      "exitcode": null,
+      "retired": false,
+      "release_confirmed": null,
+      "x_client_resource_base": 6291456
+    },
+    "late_server_request_possible": true,
+    "session": {
+      "session_id": "03c9daf0a83d4d6c9d0fad284f8697cf",
+      "mode": "guarded-x11-owned-process",
+      "state": "failed",
+      "binding_revision": 0,
+      "targets": {
+        "app": 4194320
+      },
+      "recovery_required": false,
+      "error": "server shutdown exceeded guarded worker drain bound",
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": false,
+      "window_lifecycle": true,
+      "retention_mode": "files",
+      "compiled_scope": "native-x11:6b3d35cc6fdf45f3a6b4b17d75a32c72",
+      "compiled_surface": "x11-window-4194320",
+      "observations": null,
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 1,
+      "review_required": true,
+      "interrupted_execution": null,
+      "owner_input_obligations": {
+        "keys": {},
+        "buttons": []
+      },
+      "owner_process_pid": 586,
+      "owner_x_client_resource_base": 6291456,
+      "owner_process": {
+        "pid": 586,
+        "alive": true,
+        "liveness_observed_monotonic_ns": 1031821444067,
+        "exitcode": null,
+        "retired": true,
+        "release_confirmed": false,
+        "x_client_resource_base": 6291456
+      },
+      "owner_client_disconnect": null,
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_release_attempt": null,
+      "cleanup_status": "UNKNOWN"
+    },
+    "call_id": "597ade397a3942e6bea1771448b858db",
+    "call_directory": "/evidence/mcp/597ade397a3942e6bea1771448b858db",
+    "retained_call": {
+      "call_id": "597ade397a3942e6bea1771448b858db",
+      "operation": "guarded_input",
+      "state": "finished",
+      "arguments": {
+        "alias": "field",
+        "offset": [
+          12,
+          19
+        ],
+        "tail": [
+          {
+            "op": "key_chord",
+            "keys": [
+              "w"
+            ]
+          }
+        ],
+        "interaction": "keyboard",
+        "observe_after": false
+      },
+      "backend_attempted": true,
+      "persistence_failure": null,
+      "response_wait_ms": 0
+    }
+  },
+  "close": {
+    "status": "cleanup_failed",
+    "error": "RuntimeError('owned guarded session unavailable: failed')",
+    "release_attempted": true,
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "verified": false,
+    "owner_client_disconnect": {
+      "status": "disconnected",
+      "reason": "owner_pid_absent",
+      "owner_process_retired": true,
+      "owner_process_exitcode": -15,
+      "expected_pid": 586,
+      "observed_pid": null,
+      "observer_pid": 709,
+      "supervisor_pid": 709,
+      "resource_base": 6291456,
+      "started_monotonic_ns": 1031960947467,
+      "observed_monotonic_ns": 1031961103766
+    },
+    "owner_input_obligations": {
+      "keys": {
+        "w": 25
+      },
+      "buttons": []
+    },
+    "owner_input_obligations_source": "retired_child_shared_state",
+    "owner_input_obligations_live_read": {
+      "status": "snapshot",
+      "obligations": {
+        "keys": {
+          "w": 25
+        },
+        "buttons": []
+      }
+    },
+    "owner_release_attempt": {
+      "status": "readback_verified",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "release_started_monotonic_ns": 1031996593628,
+        "release_requests": [
+          {
+            "kind": "KeyRelease",
+            "code": 25,
+            "requested_monotonic_ns": 1031996613285
+          }
+        ],
+        "sync_started_monotonic_ns": 1031996614265,
+        "sync_completed_monotonic_ns": 1031996695130,
+        "readback_monotonic_ns": 1031996824940
+      },
+      "readback_source": "prestarted_supervisor_x11"
+    },
+    "owned_target_retirement": {
+      "status": "retired",
+      "exitcode": -9,
+      "signal_attempts": [
+        {
+          "signal": 15,
+          "status": "sent"
+        },
+        {
+          "signal": 9,
+          "status": "sent"
+        }
+      ],
+      "target_identity_verified": true,
+      "target_xid": 4194320,
+      "identity_digest": "e335683357d830927cbe494ecb29c4ec8556f6f5ec512290c93e8484f51e0d41",
+      "process_exit_verified": true
+    },
+    "owned_target_binding": {
+      "status": "bound",
+      "xid": 4194320,
+      "pid": 12,
+      "start_ticks": 102275,
+      "identity_digest": "e335683357d830927cbe494ecb29c4ec8556f6f5ec512290c93e8484f51e0d41",
+      "identity_query": {
+        "status": "observed",
+        "identity_digest": "e335683357d830927cbe494ecb29c4ec8556f6f5ec512290c93e8484f51e0d41",
+        "operation_id": "2a86d9c507d54de18e742ce518f21a11",
+        "session_id": "03c9daf0a83d4d6c9d0fad284f8697cf",
+        "worker_retired": true,
+        "worker_exitcode": 0,
+        "completed_monotonic_ns": 1026486002898
+      }
+    },
+    "owner_process_retired": true,
+    "owner_process_exitcode": -15,
+    "late_server_request_possible": true
+  },
+  "keys_after_shutdown": {
+    "w": false,
+    "b": false
+  },
+  "witness_events": [
+    {
+      "type": 3,
+      "detail": 25,
+      "ns": 1031994381108
+    },
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 1031999632775
+    },
+    {
+      "type": 3,
+      "detail": 25,
+      "ns": 1032004915244
+    },
+    {
+      "type": 2,
+      "detail": 56,
+      "ns": 1035794791411
+    },
+    {
+      "type": 3,
+      "detail": 56,
+      "ns": 1035800391690
+    },
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 1035804858157
+    },
+    {
+      "type": 3,
+      "detail": 25,
+      "ns": 1035809769739
+    }
+  ],
+  "events": [
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 1026786859586
+    },
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 1031953419121
+    },
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 1031993384465
+    },
+    {
+      "type": 3,
+      "detail": 25,
+      "ns": 1031996757409
+    },
+    {
+      "type": 2,
+      "detail": 56,
+      "ns": 1035793974801
+    },
+    {
+      "type": 3,
+      "detail": 56,
+      "ns": 1035794001050
+    },
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 1035794209144
+    },
+    {
+      "type": 3,
+      "detail": 25,
+      "ns": 1035794229841
+    }
+  ],
+  "recorder_errors": [],
+  "recorder_thread_alive": false,
+  "b_keycode": 56,
+  "xvfb_exitcode": 0
+}

@@ -1,0 +1,101 @@
+{
+  "status": "execution_failed",
+  "admission": "accepted",
+  "error": "BACKEND_EXECUTION_FAILED",
+  "required_capabilities": [
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 4114564408502,
+    "ended_ns": 4114648824599,
+    "emissions": 2,
+    "program_emissions": 2,
+    "observations": [],
+    "releases": [
+      {
+        "verified": false,
+        "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+        "monotonic_ns": 4114648822337
+      }
+    ],
+    "waits": [],
+    "activations": [],
+    "completed_ops": [
+      0
+    ],
+    "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+    "failed_op": 1,
+    "failed_op_effect": "unknown; may have emitted partial input"
+  },
+  "recovery_required": true,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 2,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "field",
+      "point": [
+        364,
+        698
+      ],
+      "observed_box": [
+        352,
+        679,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 2,
+      "valid_until_ns": 4116015600998,
+      "patch_sha256": "a573e8f61775fe3c7c071809d427ecfed17e18d26b1476c30cd1baf8ecac09af",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "field",
+      "point": [
+        364,
+        698
+      ],
+      "observed_box": [
+        352,
+        679,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 4116065187045,
+      "patch_sha256": "a573e8f61775fe3c7c071809d427ecfed17e18d26b1476c30cd1baf8ecac09af",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

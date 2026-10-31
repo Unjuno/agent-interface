@@ -375,28 +375,11 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
-    def test_close_does_not_replay_uncertain_release_without_display_fence(self):
+    def test_retirement_cleanup_rejects_unfenced_post_resume_retry(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
-        owner.close_report = None
-        owner._process = Mock()
-        owner._process.is_alive.return_value = False
-        owner._process.exitcode = -15
-        owner._retirement = {'reason':'cancel unconfirmed', 'retired':True, 'exitcode':-15}
-        owner._owner_client_disconnect = {'status':'unknown', 'reason':'deadline'}
-        owner._owner_release_attempt = {'status':'unknown', 'reason':'deadline'}
-        owner._cleanup_after_owner_retirement = Mock(return_value=({}, {}))
-        owner._owner_input_obligations = {'keys':{'w':25}, 'buttons':[]}
-        owner._owner_input_obligations_source = 'retired_child_shared_state'
-        owner._owner_input_obligations_live_read = {'status':'snapshot'}
-        owner.session_id = 'stale-release-without-display-fence'
-        owner.error = 'cancel unconfirmed'
-        owner._execution_unknown = True
-        owner.review_required = True
-        report = owner.close()
-        owner._cleanup_after_owner_retirement.assert_not_called()
-        self.assertEqual(report['owner_release_attempt']['reason'], 'deadline')
-        self.assertEqual(report['cleanup_status'], 'UNKNOWN')
-        self.assertFalse(report['replay_allowed'])
+        with self.assertRaises(TypeError):
+            owner._cleanup_after_owner_retirement(
+                {'retired':True}, retry_after_resume=True)
 
     def test_process_liveness_snapshot_records_its_observation_time(self):
         class LiveProcess:
@@ -661,6 +644,30 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['exitcode'], -15)
         self.assertEqual(process.terminate_calls, 1)
 
+    def test_close_retirement_cleanup_precedes_supervisor_shutdown(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._rpc_lock = threading.Lock()
+        owner._rpc_lock.acquire()
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        owner._cleanup_supervisor = Mock()
+        owner._owner_input_obligations = {'keys':{'w':25}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'close-supervisor-order'
+        def cleanup(retirement):
+            owner._cleanup_supervisor.close.assert_not_called()
+            return ({'status':'disconnected'}, {'status':'readback_verified'})
+        owner._cleanup_after_owner_retirement = Mock(side_effect=cleanup)
+        with patch('runtime.cli_v1.owned_guarded_session._CLOSE_TIMEOUT_S', 0):
+            result = owner.close()
+        owner._cleanup_supervisor.close.assert_called_once()
+        self.assertEqual(result['owner_release_attempt']['status'], 'readback_verified')
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(result['replay_allowed'])
+
     def test_close_timeout_runs_disconnect_gated_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None
@@ -696,6 +703,29 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(result['task_success'])
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
+
+    def test_close_does_not_replay_uncertain_release_without_display_fence(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._process.exitcode = -15
+        owner._retirement = {'reason':'cancel unconfirmed', 'retired':True, 'exitcode':-15}
+        owner._owner_client_disconnect = {'status':'unknown', 'reason':'deadline'}
+        owner._owner_release_attempt = {'status':'unknown', 'reason':'deadline'}
+        owner._cleanup_after_owner_retirement = Mock(return_value=({}, {}))
+        owner._owner_input_obligations = {'keys':{'w':25}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'stale-release-without-display-fence'
+        owner.error = 'cancel unconfirmed'
+        owner._execution_unknown = True
+        owner.review_required = True
+        report = owner.close()
+        owner._cleanup_after_owner_retirement.assert_not_called()
+        self.assertEqual(report['owner_release_attempt']['reason'], 'deadline')
+        self.assertEqual(report['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(report['replay_allowed'])
 
     def test_close_after_cancel_retirement_preserves_unconfirmed_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
@@ -1100,6 +1130,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(result['task_success'])
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
+
+    def test_existing_owner_drain_wait_preserves_one_second_grace(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        with patch('runtime.cli_v1.owned_guarded_session.time.monotonic_ns',
+                   return_value=1_000_000_000):
+            timeout = owner._cancel_drain_wait_seconds(4_000_000_000)
+        self.assertEqual(timeout, 1.0)
 
     def test_unconfirmed_cancel_wait_is_capped_by_cancel_response_budget(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
@@ -2468,6 +2505,43 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 (root/'continue-cleanup-supervisor').write_text('continue', encoding='utf-8')
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
+
+    async def test_shutdown_retires_owned_target_with_pending_worker(self):
+        from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess
+        from unittest.mock import Mock
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            target = Mock(spec=OwnedTargetProcess)
+            target.running = True
+            target.claim_session.return_value = object()
+            target.bind_x11_target_supervised.return_value = {'status':'bound'}
+            target.retire_bound_target.return_value = {
+                'status':'retired', 'process_exit_verified':True}
+            server = create_server(
+                {'app':20}, root, display_name=':fake', session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True, _guarded_owned_target_process=target,
+                _guarded_owner_factory=_fake_owner_factory)
+            async with server.settings.lifespan(server):
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=observed['source']['sequence'],
+                    point=[8,8], region_size=[12,12])))
+                (root/'block-owner-io').write_text('block', encoding='utf-8')
+                action = metadata(await server.call_tool('interface_guarded_input', dict(
+                    alias='field', offset=minted['offset'], interaction='keyboard',
+                    observe_after=False, wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                self.assertEqual(action['status'], 'pending', action)
+                deadline = time.monotonic() + 3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+            target.retire_bound_target.assert_called_once()
+            target.close.assert_called_once()
+            result = metadata(await server.call_tool('interface_results', {
+                'call_id':action['call_id'], 'include_image':False}))
+            self.assertNotEqual(result.get('status'), 'completed', result)
 
     async def test_server_lifespan_shutdown_keeps_pending_cancel_custody(self):
         with tempfile.TemporaryDirectory() as td:
