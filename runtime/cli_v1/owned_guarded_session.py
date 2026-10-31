@@ -9,6 +9,7 @@ from copy import deepcopy
 import hashlib
 import json
 import multiprocessing
+import os
 from pathlib import Path
 import threading
 import time
@@ -204,12 +205,14 @@ def _control_loop(connection, stop, owner, pid):
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                                  directory, display_name, options, owner_factory,
-                                 input_obligations_state):
+                                 input_obligations_state, xauthority=None):
     owner = None
     control_stop = threading.Event()
     control_thread = None
     ready_sent = False
     try:
+        if xauthority is not None:
+            os.environ['XAUTHORITY'] = xauthority
         owner = (owner_factory(targets, directory, display_name, options)
                  if owner_factory is not None else
                  GuardedSessionOwner(targets, directory, display_name, **options))
@@ -303,7 +306,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                  retention_mode='files',
                  prestarted_cancel_supervisor=False,
                  _cleanup_supervisor_target=None,
-                 _owner_factory=None):
+                 _owner_factory=None, xauthority=None):
         super().__init__(targets, directory, display_name,
                          process_identity=process_identity,
                          query_worker=query_worker,
@@ -314,6 +317,12 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._owner_factory = _owner_factory
         if type(prestarted_cancel_supervisor) is not bool:
             raise ValueError('prestarted_cancel_supervisor must be a boolean')
+        if xauthority is not None:
+            if type(xauthority) is not str or not xauthority or '\x00' in xauthority:
+                raise ValueError('xauthority must be a nonempty path string')
+            if not prestarted_cancel_supervisor:
+                raise ValueError('explicit xauthority requires prestarted cancellation supervisor')
+        self._xauthority = xauthority
         if _cleanup_supervisor_target is not None and not callable(_cleanup_supervisor_target):
             raise TypeError('_cleanup_supervisor_target must be callable')
         self._prestarted_cancel_enabled = prestarted_cancel_supervisor
@@ -391,7 +400,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'observation_worker':self.observation_worker,
                    'window_lifecycle':self.window_lifecycle,
                    'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
+                  self._owner_factory, input_obligations_state, self._xauthority),
             name='guarded-x11-owner-' + self.session_id[:8])
         self.state = 'opening'
         try:
@@ -413,7 +422,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             if self._prestarted_cancel_enabled:
                 self._cleanup_supervisor = PrestartedCancellationSupervisor(
                     self._cleanup_supervisor_target,
-                    expected_session_id=self.session_id)
+                    expected_session_id=self.session_id, xauthority=self._xauthority)
             self.state = 'open'
         except BaseException:
             try:

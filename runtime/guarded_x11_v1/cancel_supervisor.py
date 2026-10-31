@@ -15,7 +15,9 @@ import threading
 import time
 
 
-def _serve_one(command_receive, result_send, ready_send, worker_target):
+def _serve_one(command_receive, result_send, ready_send, worker_target, xauthority=None):
+    if xauthority is not None:
+        os.environ['XAUTHORITY'] = xauthority
     try:
         ready_send.send({'status': 'ready', 'pid': multiprocessing.current_process().pid})
     finally:
@@ -54,9 +56,11 @@ class PrestartedCancellationSupervisor:
 
     def __init__(self, worker_target, *, expected_session_id=None,
                  startup_timeout_s=5.0,
-                 terminate_grace_s=0.1):
+                 terminate_grace_s=0.1, xauthority=None):
         if not callable(worker_target):
             raise TypeError('worker_target must be callable')
+        if xauthority is not None and (type(xauthority) is not str or not xauthority or '\x00' in xauthority):
+            raise ValueError('xauthority must be a nonempty path string')
         if (type(startup_timeout_s) not in (int, float)
                 or startup_timeout_s <= 0):
             raise ValueError('startup_timeout_s must be positive')
@@ -80,7 +84,7 @@ class PrestartedCancellationSupervisor:
         ready_receive, ready_send = self._context.Pipe(duplex=False)
         process = self._context.Process(
             target=_serve_one,
-            args=(command_receive, result_send, ready_send, worker_target),
+            args=(command_receive, result_send, ready_send, worker_target, xauthority),
             name='guarded-cancel-supervisor')
         try:
             process.start()
