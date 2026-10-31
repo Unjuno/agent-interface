@@ -5,9 +5,75 @@ import signal
 import subprocess
 import sys
 import tempfile
+import threading
+import time
 import unittest
 
 class PrivateDisplayOwnerTests(unittest.TestCase):
+    def test_expired_startup_does_not_publish_display(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner');original=owner._auth_add;calls=[]
+            def slow_auth(*args):
+                calls.append(1)
+                if len(calls)==2:time.sleep(.6)
+                return original(*args)
+            owner._auth_add=slow_auth
+            try:
+                with self.assertRaises(TimeoutError):owner.start(timeout_s=.5)
+                self.assertIsNone(owner._session)
+                self.assertIsNotNone(owner._process.poll())
+            finally:owner.close()
+
+    def test_close_during_start_prevents_later_server_launch(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner')
+            entered=threading.Event();resume=threading.Event();observed={}
+            original=owner._auth_add
+            def blocked_auth(*args):
+                entered.set()
+                if not resume.wait(3):raise RuntimeError('fixture timeout')
+                return original(*args)
+            owner._auth_add=blocked_auth
+            def launch():
+                try:observed['session']=owner.start(timeout_s=5)
+                except Exception as e:observed['error']=type(e).__name__
+            worker=threading.Thread(target=launch);worker.start()
+            try:
+                self.assertTrue(entered.wait(2));owner.close();resume.set();worker.join(5)
+                self.assertFalse(worker.is_alive())
+                self.assertNotIn('session',observed)
+                self.assertIn('error',observed)
+                self.assertTrue(owner._process is None or owner._process.poll() is not None)
+            finally:
+                resume.set();worker.join(5);owner.close()
+
+    def test_close_after_spawn_prevents_publishing_and_reaps_server(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as directory:
+            owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner')
+            entered=threading.Event();resume=threading.Event();observed={};calls=[]
+            original=owner._auth_add
+            def blocked_auth(*args):
+                calls.append(1)
+                if len(calls)==2:
+                    entered.set()
+                    if not resume.wait(3):raise RuntimeError('fixture timeout')
+                return original(*args)
+            owner._auth_add=blocked_auth
+            def launch():
+                try:observed['session']=owner.start(timeout_s=5)
+                except Exception as e:observed['error']=type(e).__name__
+            worker=threading.Thread(target=launch);worker.start()
+            try:
+                self.assertTrue(entered.wait(3));self.assertIsNotNone(owner._process)
+                owner.close();resume.set();worker.join(5)
+                self.assertFalse(worker.is_alive());self.assertNotIn('session',observed)
+                self.assertIn('error',observed);self.assertIsNotNone(owner._process.poll())
+            finally:
+                resume.set();worker.join(5);owner.close()
+
     def test_launched_display_requires_cookie_and_retirement_closes_it(self):
         try:
             from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
