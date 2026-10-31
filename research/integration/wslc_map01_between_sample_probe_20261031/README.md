@@ -1,0 +1,14 @@
+# MAP01 between-sample transient probe
+
+This follow-up to the sampled-latch probe tests the gap between guard captures. In each isolated WSLc run, an 8x8 magenta overlay was mapped around 0.15 s and removed around 0.20 s, before guard captures planned for 0.30, 0.45 and 1.20 s. A separate direct X11 screenshot captured the overlay while it was mapped; the game was advanced once after its removal. The fixed screen-center patch is not a model-labeled target. There were no model calls and an attack could be sent for 100 ms only if the sampled latch and pre-press guard both passed.
+
+| Allocation | Difference at three guard captures | Actual decision |
+|---|---|---|
+| k04 | 53.042, 53.042, 53.042 | latch refused; no attack |
+| k05 | 37.646, 37.646, 37.646 | latch refused; no attack |
+
+The independent witness shows all 64 pixels magenta in both runs. It was captured after mapping and before removal; every guard image was captured after removal and contains no magenta pixels in that patch. Both guard image sequences nevertheless differed from the source above the existing threshold of 32, so the latch refused. **Neither run demonstrates that the guard missed the transient:** the visible difference that caused refusal cannot be attributed solely to the injected overlay. The exact reason for the differing game images remains unestablished. k05 was a separately frozen follow-up with a 0.5 s pre-source settling interval after k04; it did not eliminate the difference. Both observations are retained without retries.
+
+Both navigation actions and the final owner close had verified neutral releases; W/E/D/A/F keymap readback was empty. No attack was dispatched, health and kill deltas were zero, and the two specifically named stopped containers were removed. This is a two-run development probe, not a reliability estimate, a demonstration of continuous monitoring, a model-speed comparison, or MAP01 completion. The logical possibility of a transient entirely between observations remains; this game setup did not isolate its practical effect. A controlled stable scene with a genuine independently timed witness and a matched guard control is needed to distinguish a missed transient from unrelated game-image variation.
+
+The runs used private Xvfb, Freedoom2 MAP01 skill 1 seed 991031 and 35 tics/s, network-none WSLc, the pinned `sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25` image, one CPU and 1 GiB (host reported swap limit support unavailable). The source was the same read-only Python runtime subset checked in the prior fixed-patch probe; intervening main changes were research only. Each archive retains the runner, freeze conditions, images, timing and input receipts. Run `python audit.py` with Pillow and normal Python mode to verify the witness, post-removal capture ordering, PNG hashes, differences and neutral release.
