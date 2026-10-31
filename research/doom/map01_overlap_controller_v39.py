@@ -31,7 +31,7 @@ from doom_typed_observation_v1 import (
 from doom_action_validity_contract_v1 import (
     bindings_equal_exact, build_contract as build_action_contract)
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
-from codex_app_server_client_v2 import CodexAppServerClient
+from codex_app_server_client_v2 import CodexAppServerClient, AppServerConditionFenceTimeout
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 from final_action_admission_v2 import (
     decide_final_admission, record_controller_no_input,
@@ -513,13 +513,21 @@ def retire_failed_cover(planner, planner_handle, future, terminal, error, out):
     except BaseException as save_error:
         error.add_note("fatal cover receipt save failed: " + type(save_error).__name__)
     if not future.done():
-        try:
-            abort_result = planner.abort_pending_turn()
-        except BaseException as abort_error:
-            error.add_note("planner transport abort failed: " + type(abort_error).__name__)
-        else:
-            if isinstance(abort_result, dict) and abort_result.get("outcome") == "aborted":
-                error.add_note("pending planner turn transport aborted")
+        for attempt in range(2):
+            try:
+                abort_result = planner.abort_pending_turn()
+            except AppServerConditionFenceTimeout as abort_error:
+                error.add_note("planner condition fence timed out: " + type(abort_error).__name__)
+                if attempt == 0 and not future.done():
+                    continue
+                break
+            except BaseException as abort_error:
+                error.add_note("planner transport abort failed: " + type(abort_error).__name__)
+                break
+            else:
+                if isinstance(abort_result, dict) and abort_result.get("outcome") == "aborted":
+                    error.add_note("pending planner turn transport aborted")
+                break
 
 
 def validate_planner_cover_terminal(planner, planner_handle, future, terminal, out,

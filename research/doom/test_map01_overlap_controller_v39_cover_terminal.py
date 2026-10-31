@@ -37,7 +37,8 @@ class CoverTerminalTests(unittest.TestCase):
                  interrupt_blocks=False,
                  invalidation_failure=False, fatal_receipt_collision=False,
                  planner_wait_cap=2, reject_renewal=False,
-                 abort_fails_without_wakeup=False):
+                 abort_fails_without_wakeup=False, fence_failures=0,
+                 abort_other_timeout=False):
         trace = {"case": name, "commands": [], "events": [], "timeline": []}
         started = threading.Event()
         complete = threading.Event()
@@ -158,8 +159,13 @@ class CoverTerminalTests(unittest.TestCase):
                 receipt_path = Path(temp) / "out" / "fatal-cover-terminal.json"
                 trace["fatal_receipt_at_abort"] = (
                     json.loads(receipt_path.read_text()) if receipt_path.exists() else None)
+                if len([x for x in trace["timeline"] if x == "abort_transport"]) <= fence_failures:
+                    raise controller.AppServerConditionFenceTimeout("app-server condition fence timed out; retirement unverified")
                 if abort_fails_without_wakeup:
                     raise OSError("synthetic close fault without waiter wakeup")
+                if abort_other_timeout:
+                    complete.set()
+                    raise TimeoutError("reader close timed out")
                 complete.set()
                 if abort_failure:
                     raise OSError("synthetic close fault after waiter wakeup")
@@ -592,6 +598,35 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertTrue(any("planner transport abort failed" in note for note in trace["error_notes"]))
         self.assertNotIn("final_admission", trace["timeline"])
         self.assertTrue(trace["all_futures_done"])
+
+    def test_rejected_renewal_retries_one_pre_fence_timeout(self):
+        trace = self.exercise("renewal-fence-retry", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True,
+                              fence_failures=1, planner_wait_cap=.3)
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertEqual(trace["timeline"].count("abort_transport"), 2, trace)
+        self.assertNotIn("planner_wait_expired", trace["timeline"], trace)
+        self.assertNotIn("final_admission", trace["timeline"])
+        self.assertFalse(trace["fatal_receipt"]["grants_input_authority"])
+
+    def test_rejected_renewal_fence_retry_is_finite(self):
+        trace = self.exercise("renewal-fence-retry-exhausted", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True,
+                              fence_failures=5, planner_wait_cap=.3)
+        self.assertEqual(trace["timeline"].count("abort_transport"), 2, trace)
+        self.assertIn("planner_wait_expired", trace["timeline"])
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertNotIn("final_admission", trace["timeline"])
+        self.assertFalse(trace["fatal_receipt"]["grants_input_authority"])
+
+    def test_rejected_renewal_does_not_retry_other_close_timeout(self):
+        trace = self.exercise("renewal-other-close-timeout", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True,
+                              abort_other_timeout=True, planner_wait_cap=.3)
+        self.assertEqual(trace["timeline"].count("abort_transport"), 1, trace)
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertNotIn("final_admission", trace["timeline"])
+        self.assertTrue(any("planner transport abort failed" in n for n in trace["error_notes"]))
 
     def test_rejected_renewal_abort_failure_without_wakeup_still_waits_for_future(self):
         trace = self.exercise("rejected-renewal-abort-no-wakeup", "completed", NEUTRAL,

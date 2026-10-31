@@ -15,6 +15,10 @@ class AppServerError(RuntimeError):
     pass
 
 
+class AppServerConditionFenceTimeout(TimeoutError):
+    """Close could not acquire its condition; no closure fence was set."""
+
+
 class AppServerUnsupportedRuntime(AppServerError):
     """The interpreter cannot provide the required bounded pipe-send API."""
 
@@ -388,7 +392,7 @@ class CodexAppServerClient:
             return None if deadline is None else max(0, deadline - time.monotonic())
         condition_timeout = remaining()
         if not self._condition.acquire(timeout=-1 if condition_timeout is None else condition_timeout):
-            raise TimeoutError("app-server condition fence timed out; retirement unverified")
+            raise AppServerConditionFenceTimeout("app-server condition fence timed out; retirement unverified")
         try:
             self._closing = True
             self._condition.notify_all()
