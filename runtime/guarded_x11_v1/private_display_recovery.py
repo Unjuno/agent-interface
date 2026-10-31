@@ -58,6 +58,16 @@ class PrivateDisplayRecovery:
                 cancellation = {'status':'cancel_unconfirmed', 'cleanup_status':'UNKNOWN',
                                 'owner_process_retired':False,
                                 'reason':'malformed_cancellation_receipt'}
+            after_cancel_ns = time.monotonic_ns()
+            if after_cancel_ns >= deadline_monotonic_ns:
+                result = {'status':'unknown', 'reason':'deadline_after_cancel',
+                          'cancellation':deepcopy(cancellation),
+                          'fresh_display_allowed':False, 'replay_allowed':False,
+                          'release_confirmed':False, 'task_success':None,
+                          'cleanup_status':'UNKNOWN'}
+                self._result = deepcopy(result)
+                self._token = token
+                return result
             must_retire = (cancellation.get('status') not in ('cancel_requested', 'not_active')
                            or cancellation.get('cleanup_status') == 'UNKNOWN')
             result = {'status':'completed' if not must_retire else 'unknown',
@@ -66,7 +76,7 @@ class PrivateDisplayRecovery:
                       'release_confirmed':False, 'task_success':None,
                       'cleanup_status':'UNKNOWN' if must_retire else cancellation.get('cleanup_status')}
             if must_retire:
-                remaining = (deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+                remaining = (deadline_monotonic_ns - after_cancel_ns) / 1e9
                 if remaining <= 0:
                     retirement = {'status':'unknown', 'reason':'deadline_before_display_retire'}
                 else:
@@ -75,9 +85,14 @@ class PrivateDisplayRecovery:
                     except Exception as error:
                         retirement = {'status':'unknown', 'reason':'display_retire_exception',
                                       'error_type':type(error).__name__}
+                if not isinstance(retirement, dict):
+                    retirement = {'status':'unknown', 'reason':'malformed_display_retirement'}
                 result['display_retirement'] = retirement
+                if time.monotonic_ns() >= deadline_monotonic_ns:
+                    result['reason'] = 'deadline_after_display_retire'
                 result['fresh_display_allowed'] = (retirement.get('status') == 'retired'
-                    and cancellation.get('owner_process_retired') is True)
+                    and cancellation.get('owner_process_retired') is True
+                    and 'reason' not in result)
             self._result = deepcopy(result)
             self._token = token
             return result

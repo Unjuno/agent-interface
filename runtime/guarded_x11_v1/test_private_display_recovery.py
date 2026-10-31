@@ -2,7 +2,7 @@ import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
@@ -82,5 +82,25 @@ class PrivateDisplayRecoveryTests(unittest.TestCase):
         self.assertFalse(result['fresh_display_allowed'])
         self.assertEqual(result['reason'],'recovery_already_used')
         self.owner.cancel_guarded.assert_called_once()
+
+    def test_late_display_retirement_does_not_authorize_fresh_display(self):
+        recovery=PrivateDisplayRecovery(self.display,self.owner)
+        with patch('runtime.guarded_x11_v1.private_display_recovery.time.monotonic_ns',
+                   side_effect=[100,101,102,201]):
+            result=recovery.cancel_guarded('token',deadline_monotonic_ns=200)
+        self.assertFalse(result['fresh_display_allowed'])
+        self.assertEqual(result['reason'],'deadline_after_display_retire')
+        self.assertEqual(result['display_retirement']['status'],'retired')
+
+    def test_late_cancellation_is_not_reported_completed(self):
+        self.owner.cancel_guarded.return_value={'status':'cancel_requested'}
+        recovery=PrivateDisplayRecovery(self.display,self.owner)
+        with patch('runtime.guarded_x11_v1.private_display_recovery.time.monotonic_ns',
+                   side_effect=[100,101,201]):
+            result=recovery.cancel_guarded('token',deadline_monotonic_ns=200)
+        self.assertEqual(result['status'],'unknown')
+        self.assertEqual(result['reason'],'deadline_after_cancel')
+        self.assertFalse(result['fresh_display_allowed'])
+        self.display.retire.assert_not_called()
 
 if __name__=='__main__': unittest.main()
