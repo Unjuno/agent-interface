@@ -164,6 +164,17 @@ class GuardedSessionOwner(MCPSessionOwner):
             'side_effect_authority':False, 'input_dispatched':False}
         return row
 
+    def observe_idle_until(self, *, deadline_ns, cancel_token):
+        """Experimental single idle capture on this already-open serialized owner."""
+        if (self.state != 'open' or self.bridge is None or self.session is None
+                or not self.query_worker or not self.observation_worker):
+            raise RuntimeError('bounded idle observation requires an open isolated owner')
+        with self.bridge.cancellation_scope(cancel_token, cancel_when_idle=True,
+                                            single_idle_observation=True):
+            source = self.bridge.observe_idle_until(deadline_ns)
+        return self._with_observation({'status':'observed','task_success':None,
+                                       'replay_allowed':False}, source)
+
     @contextmanager
     def input_guard(self, alias, offset, *, tail, verify):
         """Opt-in synchronous dependency check for a frozen keyboard program.

@@ -224,7 +224,7 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
             name='guarded-owner-control', daemon=True)
         control_thread.start()
         allowed = {'snapshot', 'invoke_guarded', 'run_compiled_profile', 'recover_input', 'inspect_target',
-                   'review_target', 'dispatch', 'inspect_after_dispatch', 'observe', 'close'}
+                   'review_target', 'dispatch', 'inspect_after_dispatch', 'observe', 'observe_idle_until', 'close'}
         while True:
             request = rpc_connection.recv()
             operation = request.get('operation')
@@ -253,6 +253,8 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                     elif operation == 'observe':
                         from .observe import observe_in_session
                         result = observe_in_session(owner.get(), **arguments)
+                    elif operation == 'observe_idle_until':
+                        result = owner.observe_idle_until(**arguments)
                     else:
                         result = owner.close()
                     response = {'ok':True, 'result':result,
@@ -737,6 +739,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     def observe(self, *, target, frame, region, capture_directory=None):
         return self._call('observe', target=target, frame=frame, region=region,
                           capture_directory=capture_directory)
+
+    def observe_idle_until(self, *, deadline_ns, cancel_token):
+        return self._call('observe_idle_until', deadline_ns=deadline_ns,
+                          cancel_token=cancel_token)
 
     def _cancel_requires_owner_retirement(self, result):
         if result.get('owner_process_retired') is True:

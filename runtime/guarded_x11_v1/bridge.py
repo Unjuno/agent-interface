@@ -227,27 +227,34 @@ class NativeHandleBridge:
         return worker.close() if worker is not None else None
 
     @contextmanager
-    def cancellation_scope(self, token, *, cancel_when_idle=False):
+    def cancellation_scope(self, token, *, cancel_when_idle=False, single_idle_observation=False):
         if self._target_queries is None or type(token) is not str or not 1 <= len(token) <= 64:
             raise ValueError('explicit query-worker cancellation token required')
         if type(cancel_when_idle) is not bool:
             raise ValueError('cancel_when_idle must be an explicit boolean')
+        if type(single_idle_observation) is not bool or (single_idle_observation and not cancel_when_idle):
+            raise ValueError('single idle observation requires idle cancellation')
         with self._cancel_lock:
             if self._cancel_ticket is not None or token in self._used_cancel_tokens:
                 raise RuntimeError('cancellation token active or already consumed')
             ticket = (token,threading.Event(),cancel_when_idle)
             self._used_cancel_tokens.add(token)
             self._cancel_ticket = ticket
+            self._idle_capture_completed_ticket = None
+            self._idle_capture_single_ticket = ticket if single_idle_observation else None
         try:
             yield
         finally:
             with self._cancel_lock:
                 self._cancel_ticket = None
+                self._idle_capture_completed_ticket = None
+                self._idle_capture_single_ticket = None
 
     def request_cancel(self, token):
         with self._cancel_lock:
             ticket = self._cancel_ticket
             if (ticket is None or ticket[0] != token
+                    or getattr(self, '_idle_capture_completed_ticket', None) is ticket
                     or (self.active is None and not ticket[2])):
                 return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
             already = ticket[1].is_set()
@@ -412,6 +419,54 @@ class NativeHandleBridge:
             return self._target_query('focus',window_id) is True
         return focus_within_target(self.backend.d,window_id)
 
+    def observe_idle_until(self, deadline_ns):
+        """Experimental prototype: caller must serialize all bridge operations."""
+        if (type(deadline_ns) is not int or self._closed or self.active is not None
+                or self.deadline is not None or self.review_required
+                or self._observations is None or self._window_lifecycle_guard):
+            raise X11BackendError('idle observation unavailable')
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if ticket is not None and (getattr(self, '_idle_capture_single_ticket', None) is not ticket
+                    or getattr(self, '_idle_capture_completed_ticket', None) is ticket):
+                raise X11BackendError('idle observation requires a dedicated cancellation scope')
+        context = (self.scope, self.binding_revision,
+                   self.backend.targets[self.target].id, self.sequence)
+        try:
+            observation, image = self._observations.read(
+                'capture', {'window_id': context[2], 'payload': {
+                    'sequence': context[3] + 1, 'revision': context[1]}},
+                deadline_ns=deadline_ns, cancelled=self._cancel_requested)
+            if (context != (self.scope, self.binding_revision,
+                            self.backend.targets[self.target].id, self.sequence)
+                    or self._closed or self.active is not None
+                    or self.deadline is not None or self.review_required
+                    or self._cancel_requested() or time.monotonic_ns() >= deadline_ns
+                    or observation['sequence'] != context[3] + 1):
+                raise RuntimeError('idle observation context or deadline changed')
+            next_sequence = observation['sequence']
+            self.history[next_sequence] = (observation, image)
+            with self._cancel_lock:
+                ticket = self._cancel_ticket
+                invalid = (context != (self.scope, self.binding_revision,
+                                       self.backend.targets[self.target].id, self.sequence)
+                           or self._closed or self.active is not None
+                           or self.deadline is not None or self.review_required
+                           or (ticket is not None and ticket[1].is_set())
+                           or time.monotonic_ns() >= deadline_ns)
+                if not invalid:
+                    self.sequence = next_sequence
+                    if ticket is not None:
+                        self._idle_capture_completed_ticket = ticket
+            if invalid:
+                del self.history[next_sequence]
+                raise RuntimeError('idle observation invalidated during publication')
+            return observation
+        except Exception as error:
+            self._observations.close()
+            self.review_required = True
+            raise X11BackendError('idle observation unavailable; review fresh source') from error
+
     def observe(self):
         isolated = self._isolated_observation_active()
         lifecycle = getattr(self,'_window_lifecycle_guard',False)
@@ -502,6 +557,11 @@ class NativeHandleBridge:
         Uses ordinary admission and the caller's lease. No editing, automatic
         replay, alias renewal or successful-task assertion follows activation.
         """
+        with self._cancel_lock:
+            if (self._cancel_ticket is not None
+                    and getattr(self, '_idle_capture_single_ticket', None) is self._cancel_ticket):
+                return {'status':'refused', 'error':'SINGLE_IDLE_OBSERVATION_SCOPE',
+                        'input_dispatched':False, 'task_success':None, 'replay_allowed':False}
         if (getattr(self,'_closed',False) or self.active is not None or self.session.recovery_required or
                 type(window_id) is not int or window_id != self.backend.targets[self.target].id or
                 type(source_sequence) is not int or source_sequence < 1 or source_sequence != self.sequence or
@@ -821,6 +881,10 @@ class NativeHandleBridge:
         return self._run_guarded(alias, offset, tail=tail, interaction='keyboard', expires_at_ns=expires_at_ns)
 
     def _run_guarded(self, alias, offset, *, tail, interaction, expires_at_ns=None):
+        with self._cancel_lock:
+            if (self._cancel_ticket is not None
+                    and getattr(self, '_idle_capture_single_ticket', None) is self._cancel_ticket):
+                raise RuntimeError('single idle observation scope cannot dispatch input')
         if self.active is not None:
             raise RuntimeError("native bridge already executing")
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
