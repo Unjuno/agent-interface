@@ -442,8 +442,15 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                         }
                     stopped_result = cancellation.get('result') or {}
                     self.assertEqual(stopped_result.get('cleanup_status'), 'UNKNOWN')
-                    self.assertEqual(stopped_result.get('owner_release_attempt', {}).get('status'),
-                                     'not_attempted')
+                    release_attempt = stopped_result.get('owner_release_attempt', {})
+                    if _PRESTARTED_CANCEL_SUPERVISOR:
+                        # Its worker can time out while the X server is stopped;
+                        # UNKNOWN is not a verified release or permission to replay.
+                        self.assertEqual(release_attempt.get('status'), 'unknown')
+                        self.assertEqual(release_attempt.get('reason'), 'transaction_deadline')
+                        self.assertIs(release_attempt.get('worker_retired'), True)
+                    else:
+                        self.assertEqual(release_attempt.get('status'), 'not_attempted')
                 report['server_resume'] = resume_exact_server()
                 safety_timer.cancel()
 
