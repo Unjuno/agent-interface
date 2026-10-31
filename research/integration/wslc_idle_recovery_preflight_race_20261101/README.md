@@ -1,0 +1,15 @@
+# Preflight and stopped-observation recovery to a fresh synthetic task
+
+Three fresh WSLc allocations extend the [retained fixture failures](../wslc_idle_recovery_fixture_failures_20261101). They use a private Xvfb, a separate Python/Xlib target process, one CPU, 1 GiB and no container network. The idle-observation implementation is a frozen **unmerged prototype**, not current runtime or MCP. The target has a small visible contrast marker and records key events and a string value.
+
+| Cell | Result | Evidence |
+|---|---|---|
+| preflight | passed | A two-color crop passed the existing visual guard; a guarded `a` press/release updated the separate target's value to `a`; release was verified and final input was neutral. |
+| a06 | failed | The stopped-server observation timed out and a fresh session's guarded key action completed; the target's final file records `a` press/release and value `a`. The scorer read the file while it was being written and raised `JSONDecodeError`, so it did not record final neutral input. This remains a failed trial. |
+| a07 | passed | A fresh allocation used the identical preflighted runtime and target; only the scoring loop was changed to retry incomplete JSON reads within its original two-second window. The stopped observation returned unavailable, the old worker exited after resume without publishing its late frame, and a new session's guarded key action produced `a` in the separate target. The action recorded verified release and final input was neutral. |
+
+In a07 `/proc` showed the private Xvfb stopped and the old reader pending before the 500 ms deadline. The server remained stopped when the observation returned unavailable; after resume the old owner stayed at sequence 1 and required review. The new owner was created separately, and the input was not a replay of the failed observation. The target process recorded the press and release after server resume. Both target and Xvfb exited zero. The original old operation was a read-only capture, so this does **not** test recovery of a held key or a delayed input event.
+
+The preflight and both recovery runs use the same target and runtime source hashes; the auditor checks that the only a06-to-a07 runner change is the bounded retry on JSON decode. Target output is a separate process's record, but the orchestrator and target share the private host and filesystem. This is one fixed-order, synthetic task after several retained setup failures, not a reliability estimate, hard deadline, MAP01 success, model-driven run, production API qualification or general recovery guarantee. The successful a07 is not counted as retroactive success for a06.
+
+`preflight.zip`, `a06.zip` and `a07.zip` retain frozen candidate sources, conditions, images, independent target files, action receipts, logs and results. Run `python research/integration/wslc_idle_recovery_preflight_race_20261101/audit.py` without `-O` with Pillow to verify archive/source hashes, the exact runner change, event ordering, target output and release records. The WSLc memory limit excluded swap. The complete history remains visible; no runtime code was merged by this evidence packet.
