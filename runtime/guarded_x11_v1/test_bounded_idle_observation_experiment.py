@@ -9,11 +9,46 @@ from unittest.mock import patch
 from runtime.backends.x11_v1.backend import X11BackendError
 from runtime.guarded_x11_v1.bridge import NativeHandleBridge
 from runtime.guarded_x11_v1.target_queries import TargetQueryWorker
+from runtime.guarded_x11_v1.history import ObservationHistory
 from runtime.cli_v1.test_mcp_process_identity import FakeX
 from runtime.guarded_x11_v1.test_observation_worker import reader_backend
 
 
 class BoundedIdleObservationContract(unittest.TestCase):
+    def test_uncommitted_idle_capture_cannot_be_minted(self):
+        fake=FakeX(self);fake.backend.d.get_display_name=lambda:':fake-idle-stage'
+        fake.backend.d.create_resource_object=lambda kind,xid:SimpleNamespace(id=xid)
+        backend=reader_backend(fake,lambda *args:SimpleNamespace(data=fake.raw,depth=24,visual=1))
+        backend.d.create_resource_object=lambda kind,xid:SimpleNamespace(id=xid)
+        entered,resume=threading.Event(),threading.Event();errors=[]
+        original=ObservationHistory.__setitem__
+        def pause_after_staging(history,key,value):
+            original(history,key,value);entered.set()
+            if not resume.wait(2):raise RuntimeError('fixture timed out')
+        with tempfile.TemporaryDirectory() as td, \
+             patch('runtime.guarded_x11_v1.observation_worker.open_readonly_backend',return_value=backend), \
+             patch('runtime.guarded_x11_v1.observation_worker.read_linux_x11_process_identity',return_value=fake.generation), \
+             patch.object(ObservationHistory,'__setitem__',pause_after_staging):
+            bridge=NativeHandleBridge(':fake-idle-stage',{'app':20},'app',td+'/bridge',
+                process_identity=True,query_worker=True,observation_worker=True)
+            def capture():
+                try:bridge.observe_idle_until(time.monotonic_ns()+1_500_000_000)
+                except Exception as error:errors.append(error)
+            worker=threading.Thread(target=capture)
+            try:
+                with bridge.cancellation_scope('stage-only',cancel_when_idle=True,single_idle_observation=True):
+                    worker.start();self.assertTrue(entered.wait(1))
+                    self.assertEqual(bridge.sequence,0)
+                    self.assertNotIn(1,bridge.history)
+                    with self.assertRaises(KeyError):
+                        bridge.mint_reference('not_published',1,[8,8],region_size=(12,12))
+                    self.assertEqual(bridge.request_cancel('stage-only')['status'],'cancel_requested')
+                    resume.set();worker.join(2);self.assertFalse(worker.is_alive())
+                    self.assertEqual(len(errors),1);self.assertEqual(bridge.sequence,0)
+                    self.assertNotIn(1,bridge.history)
+            finally:
+                resume.set();worker.join(2);bridge.close()
+
     def test_dedicated_capture_scope_refuses_later_keyboard_input(self):
         fake = FakeX(self)
         fake.backend.d.get_display_name = lambda: ':fake-idle'

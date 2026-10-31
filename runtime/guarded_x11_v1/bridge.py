@@ -6,7 +6,7 @@ Shared by the native research callers and portable Python API; X11 only.
 from __future__ import annotations
 
 from contextlib import contextmanager
-from copy import deepcopy
+from copy import copy, deepcopy
 import json
 from pathlib import Path
 import time
@@ -445,21 +445,25 @@ class NativeHandleBridge:
                     or observation['sequence'] != context[3] + 1):
                 raise RuntimeError('idle observation context or deadline changed')
             next_sequence = observation['sequence']
-            self.history[next_sequence] = (observation, image)
+            previous_history = self.history
+            staged_history = (previous_history.fork() if isinstance(previous_history, ObservationHistory)
+                              else copy(previous_history))
+            staged_history[next_sequence] = (observation, image)
             with self._cancel_lock:
                 ticket = self._cancel_ticket
                 invalid = (context != (self.scope, self.binding_revision,
                                        self.backend.targets[self.target].id, self.sequence)
+                           or self.history is not previous_history
                            or self._closed or self.active is not None
                            or self.deadline is not None or self.review_required
                            or (ticket is not None and ticket[1].is_set())
                            or time.monotonic_ns() >= deadline_ns)
                 if not invalid:
+                    self.history = staged_history
                     self.sequence = next_sequence
                     if ticket is not None:
                         self._idle_capture_completed_ticket = ticket
             if invalid:
-                del self.history[next_sequence]
                 raise RuntimeError('idle observation invalidated during publication')
             return observation
         except Exception as error:
@@ -535,7 +539,11 @@ class NativeHandleBridge:
         if alias in getattr(self, 'used_aliases', set()):
             raise ValueError('target alias cannot be reused across window reviews')
         # The caller must name an exact previously delivered observation.
-        observation, image = self.history[source_sequence]
+        with self._cancel_lock:
+            if type(source_sequence) is not int or source_sequence > self.sequence:
+                raise KeyError(source_sequence)
+            published_history = self.history
+        observation, image = published_history[source_sequence]
         w, h = region_size
         box = [point[0] - w // 2, point[1] - h // 2, w, h]
         minted_ns = time.monotonic_ns()

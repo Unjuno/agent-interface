@@ -27,6 +27,13 @@ class ObservationHistory(MutableMapping):
     def __iter__(self):
         return iter(self._records)
 
+    def fork(self):
+        """Stage a history update without exposing it to existing readers."""
+        staged = ObservationHistory(self.capacity)
+        staged._records = self._records.copy()
+        staged._decoded = self._decoded.copy()
+        return staged
+
     def _cache(self, key, image):
         self._decoded[key] = image
         self._decoded.move_to_end(key)
