@@ -73,6 +73,150 @@ class BoundedIdleOwnerExperiment(unittest.TestCase):
  def test_owner_cancel_blocked_capture_discards_late_frame(self):self.exercise(True)
 
 class BoundedIdleOwnedProcessExperiment(unittest.TestCase):
+ def test_invalid_idle_cancel_reply_quarantines_without_cleanup(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-capture').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   original=None;reader=None;errors=[]
+   try:
+    owner.get();original=owner._control
+    class InvalidReply:
+     def send(self,request):pass
+     def poll(self,timeout):return True
+     def recv(self):return {'ok':False,'error':'invalid'}
+    owner._control=InvalidReply()
+    def observe():
+     try:owner.observe_idle_until(deadline_ns=time.monotonic_ns()+1_000_000_000,cancel_token='invalid-ack')
+     except Exception as e:errors.append(e)
+    reader=threading.Thread(target=observe);reader.start();end=time.monotonic()+2
+    while not (root/'capture-entered').exists() and time.monotonic()<end:time.sleep(.005)
+    self.assertTrue((root/'capture-entered').exists())
+    with patch.object(owner,'_cleanup_after_owner_retirement',side_effect=AssertionError('unfenced cleanup')):
+     result=owner.cancel_guarded('invalid-ack')
+    self.assertEqual(result['status'],'cancel_unconfirmed');self.assertFalse(result['release_attempted'])
+    self.assertEqual(owner.state,'failed');self.assertTrue(owner.review_required)
+    (root/'resume-capture').write_text('resume');reader.join(2)
+    self.assertFalse(reader.is_alive());self.assertEqual(len(errors),1)
+   finally:
+    (root/'resume-capture').write_text('resume')
+    if reader is not None:reader.join(2)
+    if original is not None:owner._control=original
+    owner.close()
+
+ def test_first_idle_observation_refused_while_owner_is_closing(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                               observation_worker=True,_owner_factory=fake_process_owner)
+   entered,resume=threading.Event(),threading.Event();worker=None
+   try:
+    owner.get();original=owner._request_locked
+    def delayed(method,arguments=None):
+     if method=='close':
+      entered.set()
+      if not resume.wait(2):raise RuntimeError('fixture timed out')
+     return original(method,arguments)
+    with patch.object(owner,'_request_locked',side_effect=delayed):
+     worker=threading.Thread(target=owner.close);worker.start();self.assertTrue(entered.wait(1))
+     with self.assertRaisesRegex(RuntimeError,'closing'):
+      owner.observe_idle_until(deadline_ns=time.monotonic_ns()+1_000_000_000,cancel_token='too-late')
+     self.assertFalse((root/'capture-entered').exists())
+   finally:
+    resume.set()
+    if worker is not None:worker.join(3)
+    owner.close()
+
+ def test_new_owner_rpc_refused_while_idle_cancel_reply_is_inflight(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-capture').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   sent,finish=threading.Event(),threading.Event();results=[];errors=[];reader=canceller=None;original=None
+   try:
+    owner.get();original=owner._control
+    class DelayedReply:
+     def send(self,request):sent.set()
+     def poll(self,timeout):finish.wait(2);return True
+     def recv(self):return {'ok':True,'result':{'status':'not_active'},'snapshot':{}}
+    owner._control=DelayedReply()
+    def observe():
+     try:results.append(owner.observe_idle_until(deadline_ns=time.monotonic_ns()+3_000_000_000,cancel_token='delayed-cancel'))
+     except Exception as e:errors.append(e)
+    reader=threading.Thread(target=observe);reader.start();end=time.monotonic()+2
+    while not (root/'capture-entered').exists() and time.monotonic()<end:time.sleep(.005)
+    self.assertTrue((root/'capture-entered').exists())
+    canceller=threading.Thread(target=lambda:owner.cancel_guarded('delayed-cancel'));canceller.start();self.assertTrue(sent.wait(1))
+    (root/'resume-capture').write_text('resume');reader.join(2)
+    self.assertFalse(reader.is_alive());self.assertEqual(errors,[]);self.assertEqual(results[0]['status'],'observed')
+    with self.assertRaisesRegex(RuntimeError,'cancel.*in.flight'):
+     owner.invoke_guarded('guarded_observe',{},root/'next-call')
+    close=owner.close()
+    self.assertEqual(close['status'],'cleanup_deferred')
+    self.assertFalse(close['release_attempted']);self.assertFalse(close['release_confirmed'])
+   finally:
+    finish.set();(root/'resume-capture').write_text('resume')
+    if reader is not None:reader.join(2)
+    if canceller is not None:canceller.join(2)
+    if original is not None:owner._control=original
+    owner.close()
+
+ def test_late_successful_idle_cancel_response_stays_quarantined(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   sent,finish=threading.Event(),threading.Event();results=[];errors=[];original=None;reader=canceller=None
+   try:
+    owner.get();original=owner._control
+    class DelayedReply:
+     def send(self,request):sent.set()
+     def poll(self,timeout):finish.wait(2);return True
+     def recv(self):return {'ok':True,'result':{'status':'cancel_requested'},'snapshot':{'state':'open','review_required':False}}
+    owner._control=DelayedReply()
+    def observe():
+     try:owner.observe_idle_until(deadline_ns=time.monotonic_ns()+400_000_000,cancel_token='late-ack')
+     except Exception as e:errors.append(e)
+    reader=threading.Thread(target=observe);reader.start();end=time.monotonic()+2
+    while not (root/'owner-return-entered').exists() and time.monotonic()<end:time.sleep(.005)
+    self.assertTrue((root/'owner-return-entered').exists())
+    with patch.object(owner,'_cleanup_after_owner_retirement',side_effect=AssertionError('unfenced cleanup')):
+     canceller=threading.Thread(target=lambda:results.append(owner.cancel_guarded('late-ack')));canceller.start()
+     self.assertTrue(sent.wait(1));reader.join(2);self.assertFalse(reader.is_alive())
+     finish.set();canceller.join(2);self.assertFalse(canceller.is_alive())
+    self.assertEqual(len(errors),1);self.assertEqual(results[0]['status'],'cancel_unconfirmed')
+    self.assertEqual(results[0]['cleanup_status'],'UNKNOWN');self.assertFalse(results[0]['release_attempted'])
+    self.assertEqual(owner.state,'failed');self.assertTrue(owner.review_required)
+   finally:
+    finish.set();(root/'resume-owner-return').write_text('resume')
+    if reader is not None:reader.join(2)
+    if canceller is not None:canceller.join(2)
+    if original is not None:owner._control=original
+    owner.close()
+
+ def test_idle_observe_refuses_while_ordinary_cancel_is_inflight(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);sent,finish=threading.Event(),threading.Event()
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   original=None;worker=None
+   try:
+    owner.get();original=owner._control
+    class DelayedControl:
+     def send(self,request):sent.set()
+     def poll(self,timeout):finish.wait(2);return False
+    owner._control=DelayedControl()
+    with patch.object(owner,'_cleanup_after_owner_retirement',return_value=({'status':'unknown'},{'status':'not_attempted'})):
+     worker=threading.Thread(target=lambda:owner.cancel_guarded('earlier-cancel'));worker.start();self.assertTrue(sent.wait(1))
+     with self.assertRaisesRegex(RuntimeError,'cancel.*in.flight'):
+      owner.observe_idle_until(deadline_ns=time.monotonic_ns()+1_000_000_000,cancel_token='idle-race')
+     self.assertFalse((root/'capture-entered').exists())
+     finish.set();worker.join(2);self.assertFalse(worker.is_alive())
+   finally:
+    finish.set()
+    if worker is not None:worker.join(2)
+    if original is not None:owner._control=original
+    owner.close()
+
  def test_inflight_cancel_must_not_release_after_idle_timeout(self):
   with tempfile.TemporaryDirectory() as td:
    root=Path(td);(root/'block-owner-return').write_text('block')
