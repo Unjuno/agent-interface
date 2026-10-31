@@ -1,0 +1,13 @@
+# WSLc MAP01: image change after accepted model turn
+
+This preregistered probe strengthens the ordering evidence from the [earlier overlay/replan experiment](../wslc_map01_stale_overlay_replan_20261031/). The same MAP01 skill-1 seed-991031 setup first performed guarded navigation, observed held-input cancellation, verified empty release, fresh review and old-alias refusal. A full X11 screenshot was submitted to a persistent host `gpt-6.1-sol` low-effort session.
+
+The host published an acknowledgement only after `turn/start` returned a turn ID. After receiving it, the WSLc runner mapped a 160×160 synthetic X11 overlay and acknowledged the mapping. The host then inspected its received notification queue under the client lock and recorded that no matching `turn/completed` notification had been observed at that point. The runner required the accepted, checked and returned IDs to match. This is client-observed ordering; a provider may have completed internally before its notification arrived, and the experiment does not expose provider internals.
+
+The first model proposal was fire for 500 ms. Its proposed 8×8 patch changed by mean absolute difference 164.307 against the threshold 32; the runner withheld it before dispatch. After removing the overlay and reviewing the window again, a second fresh model proposal passed the pixel/binding checks and all three input-stage checks. A guarded 500 ms F action completed with verified release. The game reported selected-weapon ammo 50 → 48; kills stayed 0 through eight passive samples (~1.37 s). Final tested keys were up and owner/host closures reported success.
+
+The first withholding is a local gate decision, not a native action refusal. The overlay is synthetic, ammo and kills are simulator-provided, and the earlier cancelled input may have had a partial effect. One run does not prove semantic safety, a hit, later effects, general reliability, V39 planner-fence recovery, efficiency gain or MAP01 completion.
+
+Call 1 reported 12,473 input / 57 output tokens, 8,192 cached input and 3.982 s adapter time; call 2 reported 14,193 input / 30 output, 12,416 cached and 3.475 s. These are different-context calls and include the handshake; they are not a controlled latency comparison.
+
+`public.zip` retains frozen code/conditions, turn-acknowledgement and pending-check records, screenshots, public responses/usage, game samples and guard/owner records. Private protocol/call files remain local and are hash-indexed by `private-hashes.json`. `python audit.py` with Pillow verifies hashes, marker identity, image patches and overlay/review order, input-stage checks, counters and release ordering. WSLc used private Xvfb, network none, one CPU, 1 GiB and a 180 s watchdog.
