@@ -1,0 +1,12 @@
+# MAP01 change after the last input guard check
+
+This controlled WSLc fault injection complements #9898. Following cancellation, verified release, visual 49 cue, fresh window review and old-alias refusal, the caller prepares an explicitly preplanned follow-up attack. In the two injection runs, the test-only guard callback pauses after recording a valid `before_key_press:f` screenshot and allows an independent X11 client to map an 8x8 magenta child window over the checked HUD crop before the callback returns. A separate X11 keymap query then observes `f` held; the overlay remains mapped until dispatch returns. Two normal controls use the same script without injection. The pause deliberately widens and fixes the race; it is not a frequency measurement.
+
+| Runs | Condition | Final guard | Follow-up | Evaluator ammo |
+| --- | --- | --- | --- | --- |
+| y01, y04 | no overlay | true | completed, release verified | 49 → 48 |
+| y02, y03 | overlay after final screenshot | true | key held observed, completed, release verified | 49 → 48 |
+
+Both injected runs show the final guard observation preceded overlay mapping, which preceded the action wait and independently observed held key, which preceded verified release and overlay removal. The retained root screenshot contains the overlay; it was captured after held was observed, but has no capture-end timestamp proving the image itself was taken before key release. This demonstrates that the checked image and input are not atomic in this deliberately synchronized setup. It does not establish how often a natural race occurs, a hit or task effect, or a production exploit. The original cancelled action still has unknown effect and the evaluator ammo is not control input.
+
+Each run used a fresh private Xvfb WSLc container, Freedoom2 MAP01 ASYNC_SPECTATOR at 35 tics/s, skill 1, seed 991031, one CPU, 1 GiB, no network and image sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25. The fixed order was fire/inject/inject/fire. Main was a7810dd071209b950a3a87b82e470903e57acbac; mounted Python runtime matches 6a9c787d2caf9740612de65bd2539846dd87cad4 as recorded in #9891 and subsequent main changes are research-only. Templates originated in #9893 and were fixed before this series. ZIPs retain input, full-screen guard images, screenshots, receipts, samples and conditions. `python audit.py` reconstructs the guard crops, verifies stale-alias refusal, timing, observed key hold, releases and all controls. No model or product code changed; MAP01 completion remains unproven.
