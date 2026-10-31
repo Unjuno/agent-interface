@@ -9,8 +9,22 @@ def release(row):
     return bool(items) and all(x['verified'] and not x['keys_down'] and not x['buttons_down'] for x in items)
 def vals(blob):
     sheets=ET.fromstring(blob).findall('.//'+T+'table'); assert len(sheets)==1
-    rows=sheets[0].findall(T+'table-row'); assert len(rows)>=2
-    return [r.find(T+'table-cell').get(O+'value') for r in rows[:2]]
+    sheet=sheets[0]; rows=sheet.findall(T+'table-row')
+    assert len(rows)==len(sheet.findall('.//'+T+'table-row'))
+    populated=[]; row_index=0
+    for row in rows:
+        repeat=int(row.get(T+'number-rows-repeated','1')); assert repeat>0
+        column=0
+        for cell in row:
+            if cell.tag not in (T+'table-cell',T+'covered-table-cell'): continue
+            count=int(cell.get(T+'number-columns-repeated','1')); assert count>0
+            kind=cell.get(O+'value-type'); value=cell.get(O+'value'); formula=cell.get(T+'formula'); text=''.join(cell.itertext()).strip()
+            if kind is not None or value is not None or formula is not None or text:
+                assert repeat==1 and count==1
+                populated.append((row_index,column,kind,value,text,formula))
+            column+=count
+        row_index+=repeat
+    return populated
 measurements={'compiled':[],'fresh':[]}; threads=set(); baseline=None
 for name,route,count in [('gg01','fresh',2),('gg02','compiled',1),('gg03','compiled',1),('gg04','fresh',2)]:
     with ZipFile(Path(__file__).with_name(name+'.zip')) as z:
@@ -23,7 +37,7 @@ for name,route,count in [('gg01','fresh',2),('gg02','compiled',1),('gg03','compi
         for f,h in hashes.items(): assert hashlib.sha256(z.read(f)).hexdigest()==h
         if baseline is None: baseline=hashes
         else: assert hashes==baseline
-        result=read(z,'output/result.json'); assert result['route']==route and result['saved_score']['pass_effect'] and vals(z.read('output/saved.fods'))==['731','864']
+        result=read(z,'output/result.json'); assert result['route']==route and result['saved_score']['pass_effect'] and vals(z.read('output/saved.fods'))==[(0,0,'float','731','731',None),(1,0,'float','864','864',None)]
         assert not result['keys_down'] and result['buttons']==0
         assert result['close']['status']=='closed' and result['close']['release_attempted'] and result['close']['release']['verified']
         assert not result['close']['release']['keys_down'] and not result['close']['release']['buttons_down']
