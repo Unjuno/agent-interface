@@ -54,18 +54,28 @@ class RuntimeClient:
         return command
 
     def start(self):
-        self.root.mkdir(parents=True, exist_ok=False)
-        self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
-        self.process = subprocess.Popen(self._runtime_command(), stdout=subprocess.PIPE,
-                                        stderr=self.errors, text=True)
-        self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
-        self.journal = Path(self.temporary.name) / "journal.jsonl"
-        self.endpoint = json.loads(self.process.stdout.readline())
-        initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
-                               {"events": ["observation"], "timeout": 30})
-        self.ready = first(initial["reply"]["records"], "ready")
-        initialize(self.journal, initial["continuation"])
-        return self
+        try:
+            self.root.mkdir(parents=True, exist_ok=False)
+            self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
+            self.process = subprocess.Popen(self._runtime_command(), stdout=subprocess.PIPE,
+                                            stderr=self.errors, text=True)
+            self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
+            self.journal = Path(self.temporary.name) / "journal.jsonl"
+            self.endpoint = json.loads(self.process.stdout.readline())
+            initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
+                                   {"events": ["observation"], "timeout": 30})
+            try:
+                self.ready = first(initial["reply"]["records"], "ready")
+            except StopIteration as error:
+                raise RuntimeError("runtime did not emit ready; inspect stderr.txt") from error
+            initialize(self.journal, initial["continuation"])
+            return self
+        except BaseException as error:
+            try:
+                self.close()
+            except Exception as cleanup_error:
+                error.add_note("startup cleanup failed: " + repr(cleanup_error))
+            raise
 
     def call(self, spec):
         started = time.perf_counter_ns()
@@ -204,14 +214,16 @@ class RuntimeClient:
         return evaluation
 
     def close(self):
-        if self.process is not None and self.process.poll() is None:
-            self.process.terminate()
-        if self.process is not None:
-            self.process.wait(timeout=10)
-        if self.errors is not None:
-            self.errors.close()
-        if self.temporary is not None:
-            self.temporary.cleanup()
+        try:
+            if self.process is not None and self.process.poll() is None:
+                self.process.terminate()
+            if self.process is not None:
+                self.process.wait(timeout=10)
+        finally:
+            if self.errors is not None:
+                self.errors.close()
+            if self.temporary is not None:
+                self.temporary.cleanup()
 
     def __enter__(self):
         return self.start()

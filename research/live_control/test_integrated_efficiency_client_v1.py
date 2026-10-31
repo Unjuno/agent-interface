@@ -1,6 +1,8 @@
 import os
+from pathlib import Path
+import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from source_pixel_transform_v1 import to_window_content
 
@@ -24,6 +26,58 @@ class ChromiumConfigurationTests(unittest.TestCase):
         with patch.dict(os.environ, {"AGENT_INTERFACE_CHROMIUM": ""}):
             with self.assertRaises(ValueError):
                 RuntimeClient("out", 7)
+
+
+class StartupCleanupTests(unittest.TestCase):
+    def test_missing_ready_reports_failure_and_cleans_owned_resources(self):
+        from integrated_efficiency_client_v1 import RuntimeClient
+        process = MagicMock()
+        process.stdout.readline.return_value = '{"socket":"/tmp/fake.sock"}\n'
+        process.poll.return_value = None
+        with tempfile.TemporaryDirectory() as directory:
+            client = RuntimeClient(Path(directory) / "call", 7)
+            with patch("integrated_efficiency_client_v1.subprocess.Popen", return_value=process), \
+                 patch("integrated_efficiency_client_v1.start", return_value={}), \
+                 patch("integrated_efficiency_client_v1.request_once", return_value={"reply":{"records":[]}}):
+                with self.assertRaisesRegex(RuntimeError, "runtime did not emit ready"):
+                    client.start()
+            process.terminate.assert_called_once_with()
+            process.wait.assert_called_once_with(timeout=10)
+            self.assertTrue(client.errors.closed)
+            self.assertFalse(Path(client.temporary.name).exists())
+
+    def test_cleanup_failure_does_not_mask_startup_error(self):
+        from integrated_efficiency_client_v1 import RuntimeClient
+        process = MagicMock()
+        process.stdout.readline.return_value = '{"socket":"/tmp/fake.sock"}\n'
+        process.poll.return_value = None
+        process.wait.side_effect = RuntimeError("wait failed")
+        with tempfile.TemporaryDirectory() as directory:
+            client = RuntimeClient(Path(directory) / "call", 7)
+            with patch("integrated_efficiency_client_v1.subprocess.Popen", return_value=process), \
+                 patch("integrated_efficiency_client_v1.start", return_value={}), \
+                 patch("integrated_efficiency_client_v1.request_once", side_effect=TimeoutError("handshake timed out")):
+                with self.assertRaisesRegex(TimeoutError, "handshake timed out") as caught:
+                    client.start()
+            self.assertTrue(any("wait failed" in note for note in caught.exception.__notes__))
+            self.assertTrue(client.errors.closed)
+            self.assertFalse(Path(client.temporary.name).exists())
+
+    def test_request_failure_is_preserved_and_cleans_resources(self):
+        from integrated_efficiency_client_v1 import RuntimeClient
+        process = MagicMock()
+        process.stdout.readline.return_value = '{"socket":"/tmp/fake.sock"}\n'
+        process.poll.return_value = None
+        with tempfile.TemporaryDirectory() as directory:
+            client = RuntimeClient(Path(directory) / "call", 7)
+            with patch("integrated_efficiency_client_v1.subprocess.Popen", return_value=process), \
+                 patch("integrated_efficiency_client_v1.start", return_value={}), \
+                 patch("integrated_efficiency_client_v1.request_once", side_effect=TimeoutError("handshake timed out")):
+                with self.assertRaisesRegex(TimeoutError, "handshake timed out"):
+                    client.start()
+            process.terminate.assert_called_once_with()
+            self.assertTrue(client.errors.closed)
+            self.assertFalse(Path(client.temporary.name).exists())
 
 
 class MintPointTransformTests(unittest.TestCase):
