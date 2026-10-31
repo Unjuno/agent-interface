@@ -1,0 +1,394 @@
+{
+  "status": "audited",
+  "metric": "same-container source capture to fixture server submission receipt; excludes independent verification and setup",
+  "runs": [
+    {
+      "run": "a03",
+      "raw_scope_text": "fixed-order exploratory 3-arm, no schema preflight",
+      "preflight_completed": true,
+      "capture_to_submission_median_seconds": {
+        "plain": 2.747783036,
+        "ephemeral": 4.947018874499999,
+        "persistent": 2.2539012945000003
+      },
+      "paired_deltas": [
+        {
+          "task": "task-1",
+          "persistent_route": "cold",
+          "plain_minus_persistent_seconds": -2.541767447
+        },
+        {
+          "task": "task-2",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 1.523457836
+        },
+        {
+          "task": "task-3",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 1.244460518
+        },
+        {
+          "task": "task-4",
+          "persistent_route": "repair",
+          "plain_minus_persistent_seconds": -1.59919661
+        },
+        {
+          "task": "task-5",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 0.7422277959999999
+        },
+        {
+          "task": "task-6",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 0.7757788319999999
+        }
+      ],
+      "arms": {
+        "plain": [
+          {
+            "task": "task-1",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.487404312,
+            "task_elapsed_seconds": 5.703516728,
+            "model_calls": 1
+          },
+          {
+            "task": "task-2",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 2.401754966,
+            "task_elapsed_seconds": 3.342268962,
+            "model_calls": 1
+          },
+          {
+            "task": "task-3",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 2.40742501,
+            "task_elapsed_seconds": 3.286087173,
+            "model_calls": 1
+          },
+          {
+            "task": "task-4",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 2.790930211,
+            "task_elapsed_seconds": 3.757366526,
+            "model_calls": 1
+          },
+          {
+            "task": "task-5",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 2.704635861,
+            "task_elapsed_seconds": 3.70439606,
+            "model_calls": 1
+          },
+          {
+            "task": "task-6",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.321173356,
+            "task_elapsed_seconds": 4.466741974,
+            "model_calls": 1
+          }
+        ],
+        "ephemeral": [
+          {
+            "task": "task-1",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 6.596368553,
+            "task_elapsed_seconds": 7.604500188,
+            "model_calls": 1
+          },
+          {
+            "task": "task-2",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.792099292,
+            "task_elapsed_seconds": 4.614544154,
+            "model_calls": 1
+          },
+          {
+            "task": "task-3",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.806241378,
+            "task_elapsed_seconds": 4.621561575,
+            "model_calls": 1
+          },
+          {
+            "task": "task-4",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.229989516,
+            "task_elapsed_seconds": 5.210409178,
+            "model_calls": 1
+          },
+          {
+            "task": "task-5",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 5.678231117,
+            "task_elapsed_seconds": 6.813469014,
+            "model_calls": 1
+          },
+          {
+            "task": "task-6",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 5.664048233,
+            "task_elapsed_seconds": 6.87367661,
+            "model_calls": 1
+          }
+        ],
+        "persistent": [
+          {
+            "task": "task-1",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 7.029171759,
+            "task_elapsed_seconds": 8.049562208,
+            "model_calls": 1
+          },
+          {
+            "task": "task-2",
+            "layout": "A",
+            "route": "reuse",
+            "capture_to_submission_seconds": 0.87829713,
+            "task_elapsed_seconds": 1.691829745,
+            "model_calls": 0
+          },
+          {
+            "task": "task-3",
+            "layout": "A",
+            "route": "reuse",
+            "capture_to_submission_seconds": 1.162964492,
+            "task_elapsed_seconds": 2.074792155,
+            "model_calls": 0
+          },
+          {
+            "task": "task-4",
+            "layout": "B",
+            "route": "repair",
+            "capture_to_submission_seconds": 4.390126821,
+            "task_elapsed_seconds": 5.411328969,
+            "model_calls": 1
+          },
+          {
+            "task": "task-5",
+            "layout": "B",
+            "route": "reuse",
+            "capture_to_submission_seconds": 1.962408065,
+            "task_elapsed_seconds": 3.022460828,
+            "model_calls": 0
+          },
+          {
+            "task": "task-6",
+            "layout": "B",
+            "route": "reuse",
+            "capture_to_submission_seconds": 2.545394524,
+            "task_elapsed_seconds": 3.897551125,
+            "model_calls": 0
+          }
+        ]
+      }
+    },
+    {
+      "run": "a04",
+      "raw_scope_text": "fixed-order exploratory 3-arm, no schema preflight",
+      "preflight_completed": true,
+      "capture_to_submission_median_seconds": {
+        "plain": 3.882704526,
+        "ephemeral": 4.315103577,
+        "persistent": 2.223965828
+      },
+      "paired_deltas": [
+        {
+          "task": "task-1",
+          "persistent_route": "cold",
+          "plain_minus_persistent_seconds": -0.724158224
+        },
+        {
+          "task": "task-2",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 2.782281318
+        },
+        {
+          "task": "task-3",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 1.9069756880000002
+        },
+        {
+          "task": "task-4",
+          "persistent_route": "repair",
+          "plain_minus_persistent_seconds": -1.007789135
+        },
+        {
+          "task": "task-5",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 2.257529754
+        },
+        {
+          "task": "task-6",
+          "persistent_route": "reuse",
+          "plain_minus_persistent_seconds": 1.5921211880000001
+        }
+      ],
+      "arms": {
+        "plain": [
+          {
+            "task": "task-1",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 5.655625505,
+            "task_elapsed_seconds": 6.805278825,
+            "model_calls": 1
+          },
+          {
+            "task": "task-2",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.661939274,
+            "task_elapsed_seconds": 4.502469882,
+            "model_calls": 1
+          },
+          {
+            "task": "task-3",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.072340628,
+            "task_elapsed_seconds": 3.968440067,
+            "model_calls": 1
+          },
+          {
+            "task": "task-4",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.378328972,
+            "task_elapsed_seconds": 4.259875874,
+            "model_calls": 1
+          },
+          {
+            "task": "task-5",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.19411282,
+            "task_elapsed_seconds": 5.173974385,
+            "model_calls": 1
+          },
+          {
+            "task": "task-6",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.103469778,
+            "task_elapsed_seconds": 5.206250236,
+            "model_calls": 1
+          }
+        ],
+        "ephemeral": [
+          {
+            "task": "task-1",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 6.498940657,
+            "task_elapsed_seconds": 7.655766182,
+            "model_calls": 1
+          },
+          {
+            "task": "task-2",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.967110417,
+            "task_elapsed_seconds": 4.894664669,
+            "model_calls": 1
+          },
+          {
+            "task": "task-3",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 3.752535531,
+            "task_elapsed_seconds": 4.763546159,
+            "model_calls": 1
+          },
+          {
+            "task": "task-4",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.302817786,
+            "task_elapsed_seconds": 5.359356817,
+            "model_calls": 1
+          },
+          {
+            "task": "task-5",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.327389368,
+            "task_elapsed_seconds": 5.471149884,
+            "model_calls": 1
+          },
+          {
+            "task": "task-6",
+            "layout": "B",
+            "route": "cold",
+            "capture_to_submission_seconds": 4.381673597,
+            "task_elapsed_seconds": 5.620680258,
+            "model_calls": 1
+          }
+        ],
+        "persistent": [
+          {
+            "task": "task-1",
+            "layout": "A",
+            "route": "cold",
+            "capture_to_submission_seconds": 6.379783729,
+            "task_elapsed_seconds": 7.410925275,
+            "model_calls": 1
+          },
+          {
+            "task": "task-2",
+            "layout": "A",
+            "route": "reuse",
+            "capture_to_submission_seconds": 0.879657956,
+            "task_elapsed_seconds": 1.719121094,
+            "model_calls": 0
+          },
+          {
+            "task": "task-3",
+            "layout": "A",
+            "route": "reuse",
+            "capture_to_submission_seconds": 1.16536494,
+            "task_elapsed_seconds": 2.038309209,
+            "model_calls": 0
+          },
+          {
+            "task": "task-4",
+            "layout": "B",
+            "route": "repair",
+            "capture_to_submission_seconds": 4.386118107,
+            "task_elapsed_seconds": 5.455759701,
+            "model_calls": 1
+          },
+          {
+            "task": "task-5",
+            "layout": "B",
+            "route": "reuse",
+            "capture_to_submission_seconds": 1.936583066,
+            "task_elapsed_seconds": 3.15872652,
+            "model_calls": 0
+          },
+          {
+            "task": "task-6",
+            "layout": "B",
+            "route": "reuse",
+            "capture_to_submission_seconds": 2.51134859,
+            "task_elapsed_seconds": 3.79052501,
+            "model_calls": 0
+          }
+        ]
+      }
+    }
+  ]
+}
