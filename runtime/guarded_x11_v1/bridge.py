@@ -93,9 +93,13 @@ class _GuardedBackend(X11Backend):
             now = time.monotonic_ns()
             if now >= deadline:
                 raise X11BackendError('native target guard lease expired during wait')
+            check_cancelled = getattr(self.owner, '_check_cancelled', None)
+            if check_cancelled is not None:
+                check_cancelled()
             if now >= end:
                 return
-            time.sleep((min(end, deadline) - now) / 1_000_000_000)
+            # Bound cancellation observation while retaining the guard deadline.
+            time.sleep((min(end, deadline, now + 10_000_000) - now) / 1_000_000_000)
 
     def focus(self, target):
         if self.owner.active is not None:

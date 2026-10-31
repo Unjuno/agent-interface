@@ -103,6 +103,25 @@ class DeadlineTests(unittest.TestCase):
         self.backend.release_all.assert_called_once()
         self.backend.text.assert_not_called()
 
+    def test_cancellation_interrupts_wait_and_releases_before_tail(self):
+        self.backend.owner.deadline = 1_000_000_000
+        def check_cancelled():
+            if self.now >= 21_000_000:
+                raise X11BackendError('guarded input cancellation requested; review required')
+        self.backend.owner._check_cancelled = check_cancelled
+        with self.assertRaises(X11ExecutionError) as caught:
+            self.backend.execute({'ops': [{'op': 'wait_update', 'timeout_ms': 200},
+                {'op': 'text', 'text': 'must-not-run'}, {'op': 'release_all'}]})
+        evidence = caught.exception.execution
+        self.assertIn('cancellation requested', evidence['error'])
+        self.assertLess(self.now, 201_000_000)
+        self.assertEqual(evidence['failed_op'], 0)
+        self.assertEqual(evidence['completed_ops'], [])
+        self.assertFalse(evidence['waits'][0]['completed'])
+        self.assertTrue(evidence['releases'][0]['verified'])
+        self.backend.text.assert_not_called()
+        self.backend.release_all.assert_called_once()
+
     def test_wait_expires_releases_and_never_starts_tail(self):
         with self.assertRaises(X11ExecutionError) as caught:
             self.backend.execute({'ops':[{'op':'wait_update','timeout_ms':25},
