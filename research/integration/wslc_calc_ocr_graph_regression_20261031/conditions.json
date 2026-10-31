@@ -1,0 +1,24 @@
+{
+  "allocation": "f01",
+  "purpose": "Linux WSLc unit and guarded compiled graph regression, fake bridge only; no model or GUI",
+  "base_main": "f687e4b9076d83ad6f116bd94eb50486e1f66fb1",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "source_manifest_sha256": "aaf36e0ed1494057a2f56ebcc66e84bdfc0d50962388f99266101132dcede438",
+  "candidate": {
+    "research/live_control/calc_ocr_graph_perception_v1.py": "495257e8f709cc23056f0e7e0863533e62a7e2a4dcb48762d540c7dfafb73bb6",
+    "research/live_control/test_calc_ocr_graph_perception_v1.py": "6f48600de29be60fc08dddee70d52be976ba5b141a7bbe7884ef46fc0e4cf2c4",
+    "research/live_control/calc_ocr_pair_cue_v1.py": "f7798cea259621f85369998b07212d12438532dd486c499a672a0788aaf1d0fa"
+  },
+  "tests": [
+    "research.live_control.test_calc_ocr_graph_perception_v1",
+    "research.live_control.test_calc_compiled_guarded_v1",
+    "runtime.guarded_x11_v1.test_compiled",
+    "runtime.guarded_x11_v1.test_compiled_native_dependencies"
+  ],
+  "normal_and_optimized": true,
+  "cpu": 1,
+  "memory": "1g",
+  "network": "none",
+  "stop": "one execution, preserve output, no retry",
+  "pass": "both suites exit zero; unique container absent after exit"
+}
