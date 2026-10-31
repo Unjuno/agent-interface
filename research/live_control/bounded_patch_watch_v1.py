@@ -48,8 +48,10 @@ class BoundedPatchWatch:
             nonlocal cancel_attempted
             if cancel_attempted:return
             cancel_attempted=True
+            result['cancel_started_ns']=time.monotonic_ns()
             try:result['cancel']=copy.deepcopy(self.cancel(self.token))
             except Exception as error:result['cancel_error_type']=type(error).__name__
+            finally:result['cancel_finished_ns']=time.monotonic_ns()
         try:
             probe=self.open_probe();end=time.monotonic()+self.deadline_s;seen=False
             while time.monotonic()<end:

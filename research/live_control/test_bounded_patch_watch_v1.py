@@ -40,6 +40,17 @@ class WatchTests(unittest.TestCase):
  def test_invalid_capture_requests_cancel(self):
   p=Probe([b'short']);calls=[];r=self.start(p,calls).join(1)
   self.assertEqual(r['status'],'monitor_error');self.assertEqual(r['error_type'],'ValueError');self.assertEqual(calls,['unique-1'])
+ def test_cancel_timestamp_brackets_callback_and_remains_distinct_from_release(self):
+  p=Probe([bytes([255])*192]);times=[]
+  def cancel(token):
+   times.append(time.monotonic_ns());return {'status':'cancel_requested','release_confirmed':False}
+  w=BoundedPatchWatch(open_probe=lambda:p,reference=bytes(192),token='time-token',cancel=cancel,interval_s=.001,deadline_s=.2,max_samples=10);w.start();r=w.join(1)
+  self.assertLessEqual(r['samples'][-1]['capture_ended_ns'],r['cancel_started_ns']);self.assertLessEqual(r['cancel_started_ns'],times[0]);self.assertLessEqual(times[0],r['cancel_finished_ns']);self.assertLessEqual(r['cancel_finished_ns'],r['finished_ns']);self.assertFalse(r['release_verified'])
+ def test_cancel_exception_still_retains_timestamps_and_unknown_release(self):
+  p=Probe([OSError('capture')])
+  def cancel(token):raise OSError('cancel')
+  w=BoundedPatchWatch(open_probe=lambda:p,reference=bytes(192),token='time-token',cancel=cancel,interval_s=.001,deadline_s=.2,max_samples=10);w.start();r=w.join(1)
+  self.assertEqual(r['status'],'monitor_error');self.assertEqual(r['cancel_error_type'],'OSError');self.assertLessEqual(r['cancel_started_ns'],r['cancel_finished_ns']);self.assertFalse(r['release_verified'])
  def test_duplicate_start_rejected(self):
   p=Probe([bytes(192)],held=[False,False]);calls=[];w=self.start(p,calls)
   with self.assertRaises(RuntimeError):w.start()

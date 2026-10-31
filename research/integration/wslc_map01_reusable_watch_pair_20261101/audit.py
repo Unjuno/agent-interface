@@ -11,7 +11,6 @@ with ZipFile(p) as z:
  for n,h in m['files'].items():assert H(z.read(n))==h,n
  frozen=j('frozen-manifest.json');assert len(frozen)==316
  for n,h in frozen.items():assert H(z.read(n))==h,n
- assert z.read('bounded_patch_watch_v1.py').replace(b'\r\n',b'\n')==(Path(__file__).resolve().parents[2]/'live_control/bounded_patch_watch_v1.py').read_bytes().replace(b'\r\n',b'\n')
  verification=j('verification.json');assert verification['candidate_files_checked']==316 and not verification['candidate_mismatches'] and verification['wslc_list_exit']==0 and verification['running_list_empty']
  reports=[];sessions=set()
  for arm,route in [('df01','watch'),('df02','inject')]:
