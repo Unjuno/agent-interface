@@ -2533,6 +2533,46 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(terminal.get('replay_allowed', False), terminal)
             self.assertEqual(_read_json(root/'supervisor-fake-x.json', {})['effects'], [])
 
+    async def test_shutdown_records_deferred_close_after_blocked_cancellation_archive(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);server,action=await self._start_prestarted_cancel_case(root)
+            from runtime.cli_v1.attempt import _write_json as write_json
+            from runtime.cli_v1.mcp_server import _close_owner_after_cancel_drain as close_helper
+            entered=threading.Event();resume=threading.Event()
+            def block_archive(path,value):
+                if Path(path).name=='cancellation.json':
+                    entered.set()
+                    if not resume.wait(8):raise RuntimeError('archive fixture timeout')
+                return write_json(path,value)
+            def short_drain(owner,executor,futures=()):
+                return close_helper(owner,executor,futures,drain_timeout_s=.05)
+            try:
+                with patch('runtime.cli_v1.mcp_server._write_json',side_effect=block_archive), \
+                     patch('runtime.cli_v1.mcp_server._close_owner_after_cancel_drain',side_effect=short_drain):
+                    async with server.settings.lifespan(server):
+                        cancel=metadata(await server.call_tool('interface_guarded_cancel',{'call_id':action['call_id']}))
+                        self.assertIn(cancel['status'],('pending','cancel_unconfirmed','cancel_requested'))
+                        self.assertTrue(await asyncio.to_thread(entered.wait,3))
+                    initial=list(root.glob('session-*-close.json'))
+                    self.assertEqual(len(initial),1)
+                    self.assertEqual(_read_json(initial[0],{})['reason'],'cancellation_drain_timeout')
+                    self.assertFalse(list(root.glob('session-*-deferred-close.json')))
+                    resume.set()
+                    deadline=time.monotonic()+4
+                    while not list(root.glob('session-*-deferred-close.json')) and time.monotonic()<deadline:
+                        await asyncio.sleep(.01)
+                    final=list(root.glob('session-*-deferred-close.json'))
+                    self.assertEqual(len(final),1)
+                    report=_read_json(final[0],{})
+                    self.assertTrue(report.get('deferred'))
+                    self.assertEqual(report.get('cleanup_status'),'UNKNOWN')
+                    self.assertFalse(report.get('replay_allowed'))
+                    self.assertNotEqual(report.get('status'),'busy')
+                    self.assertEqual(_read_json(initial[0],{})['reason'],'cancellation_drain_timeout')
+            finally:
+                resume.set()
+                (root/'resume-owner-io').write_text('resume',encoding='utf-8')
+
     async def test_prestarted_supervisor_keeps_unarchived_terminal_custody_on_write_failure(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

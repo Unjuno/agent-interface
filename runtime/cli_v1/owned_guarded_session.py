@@ -981,6 +981,28 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         finally:
             self._cancel_transaction_lock.release()
 
+    def close_after_cancel_if_retired(self):
+        """Close without a new release only after an earlier retirement receipt."""
+        if not self._cancel_transaction_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'cancel_transaction_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            retirement = getattr(self, '_retirement', None)
+            process = getattr(self, '_process', None)
+            if (not isinstance(retirement, dict) or retirement.get('retired') is not True
+                    or process is None or process.is_alive()
+                    or getattr(self, '_owner_client_disconnect', None) is None
+                    or getattr(self, '_owner_release_attempt', None) is None):
+                return {'status':'busy', 'reason':'retired_cleanup_evidence_unavailable',
+                        'session_id':self.session_id, 'release_confirmed':False,
+                        'cleanup_status':'UNKNOWN', 'task_success':None,
+                        'replay_allowed':False, 'verified':False}
+            return self._close_owned_transaction()
+        finally:
+            self._cancel_transaction_lock.release()
+
     def _close_owned_transaction(self):
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:

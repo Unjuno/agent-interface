@@ -36,6 +36,57 @@ _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 
 
+class _DeferredOwnerClose:
+    """Once all tracked cancellations finish, attempt one evidence-gated close."""
+    def __init__(self, owner, writer):
+        self._owner = owner
+        self._writer = writer
+        self._lock = threading.Lock()
+        self._armed = False
+        self._started = False
+        self._futures = ()
+        self.last_report = None
+
+    def arm(self, futures):
+        futures = tuple(futures)
+        if not futures:
+            return False
+        with self._lock:
+            if self._armed:
+                return False
+            self._armed = True
+            self._futures = futures
+        for future in futures:
+            future.add_done_callback(self._maybe_start)
+        self._maybe_start(None)
+        return True
+
+    def _maybe_start(self, _future):
+        with self._lock:
+            if self._started or not all(f.done() for f in self._futures):
+                return
+            self._started = True
+        threading.Thread(target=self._run, name='guarded-deferred-close',
+                         daemon=True).start()
+
+    def _run(self):
+        try:
+            report = self._owner.close_after_cancel_if_retired()
+            if not isinstance(report, dict):
+                raise TypeError('deferred close report must be a mapping')
+            report = dict(report, deferred=True)
+        except Exception as error:
+            report = {'status':'close_unconfirmed', 'error_type':type(error).__name__,
+                      'deferred':True, 'release_confirmed':False,
+                      'cleanup_status':'UNKNOWN', 'task_success':None,
+                      'replay_allowed':False, 'verified':False}
+        self.last_report = deepcopy(report)
+        try:
+            self._writer(report)
+        except Exception as error:
+            self.last_report = dict(report, persistence_failure=type(error).__name__)
+
+
 def _close_owner_after_cancel_drain(owner, cancellation_executor, futures=(), *,
                                     drain_timeout_s=_GUARDED_CLOSE_CANCEL_DRAIN_TIMEOUT_S):
     """Stop submissions; close only after tracked cancellations have finished."""
@@ -529,6 +580,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     shutting_down = False
     server_shutdown_started = False
     server_instance_id = uuid.uuid4().hex
+    deferred_owner_close = (_DeferredOwnerClose(owner, lambda report: _write_json(
+        root / ('session-' + owner.session_id + '-deferred-close.json'), report))
+        if guarded_owned_process else None)
 
     def rollback_unentered_close(operation, revoked):
         """Release a manual close reservation only if no worker entered it."""
@@ -544,7 +598,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         with calls_lock:
             futures = tuple(cancellation_futures.values())
         report = _close_owner_after_cancel_drain(owner, cancellation_executor, futures)
-        _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
+        try:
+            _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
+        finally:
+            if (deferred_owner_close is not None and report.get('status') == 'busy'
+                    and report.get('reason') == 'cancellation_drain_timeout'):
+                deferred_owner_close.arm(futures)
         return report
 
     @asynccontextmanager

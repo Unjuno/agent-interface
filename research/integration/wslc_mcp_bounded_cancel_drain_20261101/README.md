@@ -1,5 +1,9 @@
 # Bounded MCP cancellation-executor drain
 
+The later [deferred-close experiment](../wslc_mcp_deferred_owner_close_20261101/README.md)
+adds an evidence-gated one-shot close after tracked futures complete; this
+document describes the earlier candidate and its results.
+
 The previous MCP close helper called `ThreadPoolExecutor.shutdown(wait=True)`,
 which could wait indefinitely for a stuck cancellation. This candidate stops
 new executor submissions with `shutdown(wait=False)`, waits at most the
