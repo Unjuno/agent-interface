@@ -1,0 +1,18 @@
+# WSLc Calc: persistent-session re-grounding comparison (2026-10-31)
+
+This is a four-run exploratory comparison, not a general speed benchmark. Its question is whether the Calc continuation pilot's difference persists when the fresh-grounding baseline retains its model session between the two observations. The prior order-reversal pilot started a new session for the second call; its results should not be pooled with these runs.
+
+The same fixed Calc task enters 731 and 864 and saves a FODS file. Each arm starts a separate model session and receives the same initial image. The compiled arm continues through a two-transition local composition and one model call; the fresh arm makes a second image-grounding call in the same session before the scripted save. The fresh model's returned Save point is checked, while the save operation is a fixed Ctrl+S action. Both routes use local guards but have different paths, so equivalent failure handling has not been established. This comparison does not test adversarial changes, finite recovery, a full desktop task, or MAP01.
+
+| Allocation (execution order) | Route | Calls | Task interval (s) | Input tokens | Cached input (subset) | Output tokens | Saved file |
+|---|---|---:|---:|---:|---:|---:|---|
+| gg01 | fresh | 2 | 10.143 | 25,786 | 12,160 | 140 | pass |
+| gg02 | compiled | 1 | 6.609 | 12,200 | 0 | 62 | pass |
+| gg03 | compiled | 1 | 7.704 | 12,200 | 8,192 | 78 | pass |
+| gg04 | fresh | 2 | 10.555 | 25,770 | 12,160 | 124 | pass |
+
+The median measured task interval is 7.157 s compiled and 10.349 s fresh: 30.85% lower for compiled in this small fixed-order sample. Median input plus output is 12,270 versus 25,910 tokens; cached input is already included in input and must not be added again. Cache differs between runs, no billing rates are recorded, and these counts do not establish a cost comparison. The fixed fresh/compiled/compiled/fresh order reduces a simple one-direction order effect but is not randomization. Two trials per arm cannot characterize variability or establish a robust advantage.
+
+The measured interval starts before the first model request and ends after the owner session is closed and the saved FODS is scored. Application/container startup and initial image capture, and final cleanup, are outside it. The container was network-isolated with one CPU and 1 GiB memory; host model calls used `gpt-6.1-sol` at requested low effort. The image digest, recorded main SHA, arm order, stop rule and call limits are in each `conditions.json`. Source and fixture hashes are in `input-hashes.json`; all four match. Snapshot source is recorded as main d59134ac50becb608e4a89def426b714fe1e7155; this is not a claim that every runtime byte was independently reconstructed from that commit.
+
+Run `python audit.py` without optimization. It independently parses each saved FODS, checks the recorded release receipts and final empty input state, method/guard outcomes, image hashes, response/usage/call IDs, per-arm session continuity and distinct sessions, timing order, exit codes, and matching input hashes. All four passed locally. These checks verify the recorded outputs, not unobserved GUI behavior or the integrity of the external provider. Archives contain selected raw observations, prompts, results, runner, study source and fixture. Local model protocol journals, owner receipts, other unselected files and workspaces are excluded from publication; their paths, sizes and SHA-256 hashes are recorded in each archive's `omitted-private-receipts-sha256.json`, and remain in the local allocation directories. The audit does not verify omitted bytes. Do not interpret these results as a full live-control or project-completion claim.
