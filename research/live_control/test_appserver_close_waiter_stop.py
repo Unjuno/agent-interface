@@ -19,9 +19,14 @@ class CloseWaiterTests(unittest.TestCase):
         with owned_client() as (client, read_fd):
             predicate_entered, resume, close_lock_attempted = (threading.Event() for _ in range(3))
             class PublicationCondition(threading.Condition):
-                def __enter__(self):
-                    if threading.current_thread().name == 'fixture-closer': close_lock_attempted.set()
-                    return super().__enter__()
+                def __init__(self):
+                    super().__init__()
+                    acquire = self.acquire
+                    def observed_acquire(*args, **kwargs):
+                        if threading.current_thread().name == 'fixture-closer':
+                            close_lock_attempted.set()
+                        return acquire(*args, **kwargs)
+                    self.acquire = observed_acquire
             client._condition = PublicationCondition()
             row = {'method': 'fixture/queued'}
             with client._condition: client._notifications.append(row)

@@ -382,13 +382,18 @@ class CodexAppServerClient:
 
     def close(self, timeout=5):
         # Stop logical waiters even if process/reader/journal retirement fails.
-        # This is a terminal session fence, not a successful-close receipt.
-        with self._condition:
-            self._closing = True
-            self._condition.notify_all()
+        # A condition timeout leaves the session unfenced and cleanup unverified.
         deadline = None if timeout is None else time.monotonic() + max(0, timeout)
         def remaining():
             return None if deadline is None else max(0, deadline - time.monotonic())
+        condition_timeout = remaining()
+        if not self._condition.acquire(timeout=-1 if condition_timeout is None else condition_timeout):
+            raise TimeoutError("app-server condition fence timed out; retirement unverified")
+        try:
+            self._closing = True
+            self._condition.notify_all()
+        finally:
+            self._condition.release()
         def partial_budget():
             # Reserve time for forced termination and reader/stream retirement.
             available = remaining()

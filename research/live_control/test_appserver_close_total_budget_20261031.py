@@ -1,5 +1,6 @@
 """Total budget for bounded close stages; no process or provider is launched."""
 import threading
+import time
 import unittest
 from unittest.mock import patch
 from types import SimpleNamespace
@@ -26,6 +27,38 @@ class CloseBudgetTests(unittest.TestCase):
         with patch("research.live_control.codex_app_server_client_v2.time.monotonic", side_effect=lambda: now[0]):
             client.close(timeout=5)
         self.assertEqual(seen, [("process", 2.5), ("reader", 3.0)])
+
+    def test_condition_lock_timeout_preserves_unfenced_state(self):
+        client = CodexAppServerClient.__new__(CodexAppServerClient)
+        client._condition = threading.Condition()
+        client._closing = False
+        client.process = SimpleNamespace(poll=lambda: 0)
+        client._reader = SimpleNamespace(join=lambda timeout=None: None, is_alive=lambda: False)
+        client._journal = None
+        entered, release = threading.Event(), threading.Event()
+        def holder():
+            with client._condition:
+                entered.set()
+                release.wait(1)
+        thread = threading.Thread(target=holder)
+        thread.start()
+        timer = threading.Timer(.3, release.set)
+        timer.start()
+        try:
+            self.assertTrue(entered.wait(1))
+            started = time.monotonic()
+            with self.assertRaisesRegex(TimeoutError, "condition.*timed out"):
+                client.close(timeout=.05)
+            self.assertLess(time.monotonic() - started, .25)
+            self.assertFalse(client._closing)
+        finally:
+            release.set()
+            thread.join(1)
+            timer.cancel()
+            timer.join(1)
+        self.assertFalse(thread.is_alive())
+        client.close(timeout=.5)
+        self.assertTrue(client._closing)
 
     def test_journal_lock_receives_only_remaining_time(self):
         now = [200.0]
