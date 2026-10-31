@@ -776,8 +776,6 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
         if type(deadline_monotonic_ns) is not int:
             raise ValueError('deadline_monotonic_ns must be an integer')
-        self._active_cancel_deadline_ns = deadline_monotonic_ns
-        self._active_cancel_operation_id = operation_id or str(token)
         if self._process is not None and not self._process.is_alive() and self.state != 'closed':
             retirement = getattr(self, '_retirement', None)
             if retirement is None:
@@ -808,10 +806,30 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if self._process is None or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
                     'release_confirmed':False}
-        with self._control_lock:
+        remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if not self._control_lock.acquire(timeout=remaining_s):
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cancel_unconfirmed', 'reason':'control_lock_deadline',
+                    'input_dispatched':False, 'owner_process_retired':False,
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
+        try:
+            if time.monotonic_ns() >= deadline_monotonic_ns:
+                self._execution_unknown = True
+                self.review_required = True
+                return {'status':'cancel_unconfirmed', 'reason':'control_lock_deadline',
+                        'input_dispatched':False, 'owner_process_retired':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True, 'review_required':True}
+            self._active_cancel_deadline_ns = deadline_monotonic_ns
+            self._active_cancel_operation_id = operation_id or str(token)
             try:
                 self._control.send({'operation':'cancel_guarded', 'token':token})
-                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
+                remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+                if not self._control.poll(min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, remaining_s)):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')
@@ -843,6 +861,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                         'task_success':None, 'replay_allowed':False,
                         'late_server_request_possible':True}
+        finally:
+            self._control_lock.release()
         if response.get('ok') is not True:
             self._execution_unknown = True
             self.review_required = True
