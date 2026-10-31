@@ -1,0 +1,9 @@
+# One-shot Calc import confirmation (2026-10-31)
+
+The one-shot confirmation combines a reviewed preview gate with a guarded click after the original compiled entry yielded. The caller supplies the prior receipt, closed-session record, reviewed modal target and expected values; that custody binding is trusted. The module does not discover targets, replay entry, save, or establish the application effect. `input_completed` describes guarded input and release only. The caller closes the owner and independently checks the effect.
+
+`public.zip` preserves frozen conditions, candidate files, observations, OCR, receipts and saved FODS for fresh WSLc allocations f19 and f20. The earlier f17/f18 gate trials provide context. f19 expected 330/517 against the actual 329/517 preview and rejected without mint, click or save; the saved file remained blank. f20 expected 329/517 and completed one guarded confirmation input; a fresh observation led to a separate guarded save, and independent FODS parsing found exactly these values. Both original graphs remained SAFE_YIELD, session closes reported neutral input, and final X input was neutral. Two ordered fixed-layout trials do not establish reliability or speed against a baseline.
+
+Run `python research/integration/wslc_calc_import_confirmation_20261031/audit.py` with Pillow to verify archive hashes, screenshots, OCR, guard receipts, independent FODS parsing and outcomes. Source and candidate hashes were rechecked after the trials. Related tests passed locally under normal Python and `python -O` (76 each). The private launcher command retains host paths outside the public archive.
+
+The 1280x800 display, reviewed static reference, fixed crops, known values and isolated Xvfb/Calc limit generality. Target discovery and save orchestration remain harness code. MAP01, provider/model usage, production concurrency, comparative latency and overall computer-control completion remain unverified. Issue 57 remains open.
