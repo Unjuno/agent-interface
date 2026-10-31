@@ -1,0 +1,16 @@
+# MAP01: model steering, fresh re-observation, and attack control
+
+Two predeclared WSLc allocations use the same seed, isolated Xvfb, guarded movement, interrupted input and verified release, review, and stale-reference rejection. Each makes a live full-screen `gpt-6.1-sol low` decision; a bounded rule translates its horizontal target offset into one guarded 50 ms turn. After release and a 0.5 s coast, a new screenshot is sent to the same model session for a second decision. Both second proposals passed a fresh 8x8 pixel gate. The control waits 1,000 ms; the intervention performs one guarded 1,000 ms attack. Both sample eight passive observations and close. The 1,000 ms attack was fixed by the experiment; both model proposals requested 500 ms. Game labels, angle, ammunition and kill count are scorer-only and are not supplied to the model or controller.
+
+| Arm | Second proposal | Ammo before / immediately after / final | Kills before / immediately after / final | Final visible target label |
+| --- | --- | --- | --- | --- |
+| al01 wait | fire at (645, 526) | 50 / 50 / 50 | 0 / 0 / 0 | Zombieman |
+| al02 attack | fire at (645, 527) | 50 / 47 / 47 | 0 / 1 / 1 | DeadZombieman |
+
+Both arms proposed the first target at x=655, selected the right turn, and completed it with release confirmed. The attack action completed and verified release; both final keymaps were clear and both hosts closed. In the attack arm the immediate scorer labels include `Blood` and `DeadZombieman`; the kill counter remained 1 through the finite observation window. This is a simulator-reported task effect, not a physical shot oracle or completion of MAP01.
+
+The two calls took 3.34 and 2.12 s in the wait arm, and 4.18 and 4.12 s in the attack arm. Per-call token and cache counts are in `audit-result.json`. These independent calls and different cache states do not provide a comparison against a conventional computer-control baseline or an estimate of overall speedup.
+
+This one fixed-order pair supports a limited distinction between wait and attack in the observed runs. It does not isolate whether steering caused the kill, establish target identity across changes, prove general aiming/recovery reliability, or establish provider-internal reasoning. The patch and center gates are not semantic object checks. A cancelled earlier action might have had partial effect; its release does not prove it was undone. No randomized multi-seed or moving-target test was performed. The model did see the second image, but did not inspect a post-attack image.
+
+`public.zip` contains frozen runner, runtime snapshot, host, adapter, conditions, screenshots, decision outputs, X11 guard/release records and scorer traces. All manifest entries were hashed before execution and checked again afterward. The host model service, host Python dependencies and executable version were not pinned; the local source snapshot is not asserted identical to the main reference. Private model sessions/calls stay local, with hashes in `private-hashes.json`. Run `python audit.py` with Pillow to verify source hashes, response/image binding, pixel checks, cancellation, release, and game counters. Labels are accepted as simulator output, not independently inferred from pixels.
