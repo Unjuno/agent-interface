@@ -422,7 +422,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             if self._prestarted_cancel_enabled:
                 self._cleanup_supervisor = PrestartedCancellationSupervisor(
                     self._cleanup_supervisor_target,
-                    expected_session_id=self.session_id, xauthority=self._xauthority)
+                    expected_session_id=self.session_id, xauthority=self._xauthority,
+                    pinned_display_name=(self.display_name if self._xauthority is not None
+                        and self._cleanup_supervisor_target is x11_cancel_worker else None))
             self.state = 'open'
         except BaseException:
             try:
