@@ -80,6 +80,9 @@ class ReleaseRecoveryTests(unittest.TestCase):
             with self.subTest(expected=expected):
                 d, r = self.drive(bad)
                 self.assertEqual(r['outcome'], expected)
-                self.assertNotIn('unresolved_execution', r)
+                if bad:
+                    self.assertEqual(r['unresolved_execution']['reason'], 'release_unverified')
+                else:
+                    self.assertNotIn('unresolved_execution', r)
 
 if __name__ == '__main__': unittest.main()

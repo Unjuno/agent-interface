@@ -516,6 +516,18 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         if preinput_refusal:
             return finish("SAFE_YIELD", "execution_refused")
         if not released:
+            # Input may have taken effect despite an unverified release. Preserve
+            # bounded adapter-provided identity for reconciliation, not replay.
+            unresolved_execution = {
+                "action": action_name,
+                "reason": "release_unverified",
+                "release_verified": False,
+                "input_dispatched": delivery.get("input_dispatched"),
+            }
+            for key in ("action_id", "effect_ref"):
+                value = terminal[key]
+                unresolved_execution[key] = (
+                    value if type(value) is str and 0 < len(value) <= 64 else None)
             return finish("RUNTIME_FAILED", "execution_failed")
         if terminal["status"] != "completed":
             reason = ("delivery_uncertain" if terminal["status"] == "delivery_uncertain"

@@ -150,8 +150,8 @@ any other container stops with RUNTIME_FAILED/execution_failed without invoking
 its equality, length, iteration or copy hooks. Verified completed transitions
 are preserved; the malformed return does not become a completed transition or
 a pre-input refusal. An action_terminal event records invalid_release with
-release_verified=false. The receipt additionally carries unresolved_execution
-only for this rejection: action, malformed_release_container reason, false
+release_verified=false. For this rejection the receipt additionally carries
+unresolved_execution: action, malformed_release_container reason, false
 release_verified, the returned strict input_dispatched flag or null, and bounded
 exact-string action/effect references or null. Opaque references are omitted.
 
@@ -163,7 +163,13 @@ permission. This path does not clean up input, retry, resume or provide durable
 recovery. Existing pending_effect semantics are unchanged. Other malformed
 terminal fields retain their original validation behavior; arbitrary objects
 and concurrent callback mutation remain outside the qualified scope. Exact
-built-in-list paths keep their prior receipt shape and behavior.
+built-in-list returns that fail verified neutrality also retain an
+`unresolved_execution` entry with reason `release_unverified`, the action,
+strict delivery flag or null, and bounded exact-string action/effect references
+or null. An explicitly attested pre-input refusal keeps its existing behavior.
+This metadata preserves declarations for reconciliation; it does not establish
+whether input was delivered, prove release, or authorize replay. Verified
+neutral returns retain their prior receipt shape and behavior.
 
 The execution-finished clock sample occurs after local terminal validation and
 the retained release/pre-input-refusal decisions, before the journal callback.

@@ -196,6 +196,11 @@ class CompiledCallerHandoffTests(unittest.TestCase):
                 self.assertEqual(row['state']['verify'], 0)
                 self.assertEqual(len(row['state']['execute']), prefix + 1)
                 self.assertEqual(r['compiled_execution_receipt']['outcome'], 'RUNTIME_FAILED')
+                unresolved = r['compiled_execution_receipt']['unresolved_execution']
+                self.assertEqual(unresolved['reason'], 'release_unverified')
+                self.assertEqual(unresolved['action_id'], 'inert-action-' + str(prefix + 1))
+                self.assertEqual(unresolved['effect_ref'], 'inert-effect-' + str(prefix + 1))
+                self.assertIs(unresolved['input_dispatched'], True)
 
     def test_sink_cannot_mutate_retained_receipt_or_decision(self):
         row = cell(mutate_sink=True); r = row['result']
