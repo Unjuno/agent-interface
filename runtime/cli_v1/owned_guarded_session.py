@@ -814,14 +814,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         'deadline_ns':deadline_ns, 'cancel_token':cancel_token}})
                     response=self._rpc.recv()
                     with gate:
-                        if self._idle_rpc_quarantined or time.monotonic_ns() >= deadline_ns:
-                            raise RuntimeError('late owned idle observation response discarded')
-                        snapshot=response.get('snapshot')
-                        if isinstance(snapshot,dict):self._apply_snapshot(snapshot)
-                        if response.get('ok') is not True:
-                            self._execution_unknown=True;self.review_required=True
-                            raise RuntimeError(response.get('error_type','owned_call_failed')+': '+response.get('error',''))
-                        result['value']=response.get('result');done.set()
+                        with self._idle_quarantine_lock:
+                            if self._idle_rpc_quarantined or time.monotonic_ns() >= deadline_ns:
+                                raise RuntimeError('late owned idle observation response discarded')
+                            snapshot=response.get('snapshot')
+                            if isinstance(snapshot,dict):self._apply_snapshot(snapshot)
+                            if response.get('ok') is not True:
+                                self._execution_unknown=True;self.review_required=True
+                                raise RuntimeError(response.get('error_type','owned_call_failed')+': '+response.get('error',''))
+                            result['value']=response.get('result');done.set()
             except BaseException as error:
                 with gate:
                     if not self._idle_rpc_quarantined:
@@ -1003,6 +1004,11 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     late_server_request_possible=True)
 
     def _retire(self, reason):
+        # Prevent a buffered idle reply from restoring a retired owner's state.
+        # This lock also serializes retirement against idle response publication.
+        with self._idle_quarantine_lock:
+            if self._idle_rpc_inflight:
+                self._idle_rpc_quarantined = True
         process = self._process
         if process is None:
             return {'retired':False, 'exitcode':None, 'reason':reason}

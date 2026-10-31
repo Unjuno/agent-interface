@@ -60,4 +60,33 @@ class OwnedProcessExclusivity(unittest.TestCase):
     if worker is not None:worker.join(3)
     owner.close()
 
+class RetirementOverlap(unittest.TestCase):
+ def test_retired_owner_cannot_publish_late_idle_response(self):
+  class Process:
+   def __init__(self):self.alive=True;self.exitcode=None
+   def is_alive(self):return self.alive
+   def terminate(self):self.alive=False;self.exitcode=-15
+   def join(self,timeout):pass
+  class Rpc:
+   def __init__(self):self.entered=threading.Event();self.resume=threading.Event()
+   def send(self,request):pass
+   def recv(self):
+    self.entered.set()
+    if not self.resume.wait(2):raise RuntimeError('fixture timeout')
+    return {'ok':True,'snapshot':{'state':'open','review_required':False},'result':{'status':'observed'}}
+  with tempfile.TemporaryDirectory() as td:
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake',process_identity=True,query_worker=True,observation_worker=True)
+   owner._process=Process();owner._rpc=Rpc();owner.state='open';values=[];errors=[]
+   def observe():
+    try:values.append(owner.observe_idle_until(deadline_ns=time.monotonic_ns()+300_000_000,cancel_token='idle'))
+    except Exception as error:errors.append(error)
+   worker=threading.Thread(target=observe);worker.start()
+   try:
+    self.assertTrue(owner._rpc.entered.wait(1));self.assertTrue(owner.retire('fixture retirement')['retired'])
+    owner._rpc.resume.set();worker.join(2)
+    self.assertFalse(worker.is_alive());self.assertEqual(values,[]);self.assertEqual(len(errors),1)
+    self.assertEqual(owner.state,'failed');self.assertTrue(owner.review_required)
+    self.assertTrue(owner._idle_rpc_quarantined);self.assertFalse(owner._process.is_alive())
+   finally:owner._rpc.resume.set();worker.join(2)
+
 if __name__=='__main__':unittest.main()
