@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from research.live_control.codex_app_server_command_v1 import (
     DISABLED_FEATURES, command,
@@ -64,6 +65,19 @@ def usage(input_tokens, cached):
 
 
 class PersistentIntegratedModelTests(unittest.TestCase):
+    def test_direct_executable_starts_restricted_server(self):
+        class Client(FakeClient):
+            def initialize(self): pass
+        client=Client([],[])
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory); workspace=root/'workspace'; workspace.mkdir()
+            with patch('research.live_control.integrated_efficiency_app_server_model_v1.CodexAppServerClient',return_value=client) as factory:
+                PersistentGroundingModel(root/'session',workspace,node=None,cli=None,
+                                         executable='codex.exe',path_converter=str)
+            argv=factory.call_args.args[0]
+            self.assertEqual(argv[:3],['codex.exe','app-server','--stdio'])
+            self.assertTrue(all(x in argv for x in DISABLED_FEATURES))
+
     def test_minimal_command_disables_features_without_unknown_mcp_rows(self):
         with tempfile.TemporaryDirectory() as directory:
             value = command("node", "cli.js", codex_home=directory)

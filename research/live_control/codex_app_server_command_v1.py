@@ -39,8 +39,8 @@ def _toml_key(name):
     return json.dumps(name, ensure_ascii=False)
 
 
-def command(node, cli, *, codex_home=None):
-    result = [str(node), str(cli), "app-server", "--stdio"]
+def _restricted_command(prefix, codex_home):
+    result = list(prefix) + ["app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         result += ["--disable", feature]
     # Only override entries that exist. Adding `mcp_servers.foo.enabled=false`
@@ -49,3 +49,13 @@ def command(node, cli, *, codex_home=None):
     for name in configured_mcp_server_names(codex_home):
         result += ["-c", f"mcp_servers.{_toml_key(name)}.enabled=false"]
     return result
+
+
+def command(node, cli, *, codex_home=None):
+    return _restricted_command([str(node), str(cli)], codex_home)
+
+
+def direct_command(executable, *, codex_home=None):
+    if executable is None or not str(executable):
+        raise ValueError("nonempty Codex executable required")
+    return _restricted_command([str(executable)], codex_home)

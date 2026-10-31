@@ -10,12 +10,14 @@ import time
 try:
     from .codex_app_server_client_v2 import CodexAppServerClient
     from .codex_app_server_command_v1 import command as app_server_command
+    from .codex_app_server_command_v1 import direct_command as direct_app_server_command
     from .compiled_form_grounding_v1 import validate as validate_compiled
     from .plain_form_points_v1 import validate as validate_plain
     from .persistent_planner_adapter_v2 import PersistentPlannerAdapter
 except ImportError:  # Script-oriented research callers add this directory to sys.path.
     from codex_app_server_client_v2 import CodexAppServerClient
     from codex_app_server_command_v1 import command as app_server_command
+    from codex_app_server_command_v1 import direct_command as direct_app_server_command
     from compiled_form_grounding_v1 import validate as validate_compiled
     from plain_form_points_v1 import validate as validate_plain
     from persistent_planner_adapter_v2 import PersistentPlannerAdapter
@@ -84,8 +86,8 @@ class GroundingCallError(RuntimeError):
 class PersistentGroundingModel:
     """Keep one typed model thread across cold grounding and later repair."""
 
-    def __init__(self, session_root, workspace, *, node, cli,
-                 contract="compiled", model="gpt-5.6-luna", effort="low",
+    def __init__(self, session_root, workspace, *, node=None, cli=None,
+                 contract="compiled", model="gpt-5.6-luna", effort="low", executable=None,
                  client=None, path_converter=windows_path):
         if contract not in CONTRACTS:
             raise ValueError("contract must be plain or compiled")
@@ -97,9 +99,16 @@ class PersistentGroundingModel:
         self.path_converter = path_converter
         self.session_root.mkdir(parents=True, exist_ok=False)
         self._owns_client = client is None
-        self.client = client or CodexAppServerClient(
-            app_server_command(node, cli), cwd=self.workspace,
-            journal_path=self.session_root / "protocol.jsonl")
+        if client is not None:
+            self.client = client
+        else:
+            if executable is None and (node is None or cli is None):
+                raise ValueError("provide a direct executable or both node and cli")
+            argv = (direct_app_server_command(executable) if executable is not None
+                    else app_server_command(node, cli))
+            self.client = CodexAppServerClient(
+                argv, cwd=self.workspace,
+                journal_path=self.session_root / "protocol.jsonl")
         if self._owns_client:
             self.client.initialize()
         _schema, instructions, _validator = CONTRACTS[contract]

@@ -40,6 +40,14 @@ class AppServerCommandMcpIsolationTests(unittest.TestCase):
             with patch.dict(os.environ, {'CODEX_HOME': str(Path(temporary) / 'empty')}):
                 result = command('node', 'cli.js')
         self.assertFalse(any(value.startswith('mcp_servers.') for value in result))
+class DirectExecutableTests(unittest.TestCase):
+    def test_direct_command_uses_same_capability_restrictions(self):
+        from research.live_control.codex_app_server_command_v1 import direct_command
+        with tempfile.TemporaryDirectory() as directory:
+            old=command('node','codex.js',codex_home=directory)
+            direct=direct_command('codex.exe',codex_home=directory)
+        self.assertEqual(direct[:3],['codex.exe','app-server','--stdio'])
+        self.assertEqual(direct[3:],old[4:])
 
 
 if __name__ == '__main__':
