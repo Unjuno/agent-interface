@@ -1,0 +1,15 @@
+# Idle-capture cancellation and later held-key control
+
+These WSLc cells use the unmerged [#10074](https://github.com/Unjuno/agent-interface/pull/10074) draft `ade6624badddf0eb2d9941bd9918381b67725d9c`, a private Xvfb and a separate synthetic X target. Each observes a pending owner RPC while Xvfb is stopped, then sends an actual idle-capture cancellation before its two-second deadline. After server resume, a separate test client holds `a`; one arm closes the old owner during the hold, and the control waits until after the test client's explicit release to close it.
+
+| Cell | Outcome | Cancel start to capture return | Later key readbacks | Old close |
+|---|---|---:|---|---|
+| cancel-a01 | failed: incorrect close criterion | about 5.4 ms | down / down / up after fixture release | verified closed; release not attempted, confirmation null |
+| cancel-b01 | passed corrected criterion | 5.358 ms | down / down after 483.129 ms / up after fixture release | verified closed; release not attempted, confirmation null |
+| cancel-b02 | passed withheld-close control | 4.992 ms | down / down after 350.686 ms / up after fixture release | closed after fixture release; same receipt |
+
+The first trial's preregistered criterion incorrectly required a verified release from an owner that had never dispatched input. `MCPSessionOwner.close` intentionally attempts a release only after dispatch; a verified close with `release_attempted=false` and `release_confirmed=null` is the expected receipt for this read-only owner. The failed trial is retained, not reclassified. Before the two successor allocations, only that assertion and its stated criterion were corrected; the audit checks the exact runner change. The remaining initially frozen a02 arm was not run.
+
+In both successor cells cancellation was acknowledged and the read returned unavailable while the server was still stopped, before the original deadline. The separate target recorded one `a` press/release and value `a`, and the fixture observed key-up after its own release. These are sequential, fixed-order, one-sample cells on different servers with point-in-time key readback. They do **not** test an old owner holding a key through failure, a delayed/unresponsive cancellation-control response, the specific in-flight cancellation-versus-parent-timeout race, a hard deadline, MAP01, a model, or general reliability. Closing a read-only owner without release does not establish physical cleanup of prior held input. WSLc reported its 1 GiB limit excludes swap.
+
+`failure.zip` and `successor.zip` preserve frozen sources, conditions, captures, receipts and target events. With draft commit `ade6624badddf0eb2d9941bd9918381b67725d9c` available, run `python research/integration/wslc_idle_cancel_hold_control_20261101/audit.py` without `-O`. The audit checks archive hashes, exact assertion change, event ordering, readbacks and close receipts. Normalized archived source matches that draft except the unused `runtime/host_v1/test_primary_caller.mjs`; this pre-existing snapshot difference is explicitly checked.
