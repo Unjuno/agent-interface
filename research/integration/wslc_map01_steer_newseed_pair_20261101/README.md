@@ -1,0 +1,18 @@
+# MAP01 steer/re-observe/attack versus wait on a new seed
+
+This pair extends the earlier [single-seed fixed-order comparison](../wslc_map01_steer_reobserve_fire_20261031/README.md). The fixed route, runner, host adapter, model contract and runtime snapshot are byte-identical to that study except for the runner seed changed from 991031 to 991037; arm order is reversed. The copied runtime snapshot was not independently asserted identical to the recorded main. Each isolated WSLc arm uses Freedoom2 MAP01 skill 1, private Xvfb, network none, one CPU / 1 GiB and a 180-second watchdog. The host makes two full-screen gpt-6.1-sol low calls in a separate persistent session per arm.
+
+Both arms navigate, observe an A-key hold, cancel it, verify release, review the window and refuse the stale alias. Each then uses its first model proposal for one guarded 50 ms steering pulse, re-observes and obtains a second model proposal. Both second proposals passed the fixed 8x8/geometry guard. The first arm performs a predeclared 1000 ms attack; the second waits 1000 ms. The models each proposed a 500 ms attack; the executed pulse is fixed by the experiment, not the model duration. ViZDoom labels and counters are scorer-only and are not supplied to the model or guard.
+
+| Allocation and order | Final intervention | Ammo before / after / final | Kills before / after / final | Health before / after / final |
+|---|---|---|---|---|
+| ba01 first | attack | 50 / 47 / 47 | 0 / 0 / 0 | 100 / 100 / 100 |
+| ba02 second | wait | 50 / 50 / 50 | 0 / 0 / 0 | 100 / 100 / 100 |
+
+Both arms completed their observed guards and actions, recorded verified neutral releases, ended with tested keys up and closed the host session. The cancelled earlier action retains an unknown partial effect. In ba01 the simulator showed a `BulletPuff` immediately after attack and a Zombieman remained labeled in the final sample; this is not independent proof of a miss, hit or damage. Neither arm recorded a kill during the eight finite post-action samples. The game clock advanced across the model-wait and action intervals; this is not a fully characterized continuous-time cadence or terminal episode result.
+
+The two model calls took 3.176 and 2.473 s for ba01, and 3.090 and 2.973 s for ba02. Each arm reported 26,579 input and 60 output tokens; cached input was 20,224 and 12,032 respectively, already included in input. Costs were not recorded. These measurements are not a comparison against a conventional computer-control baseline or a general performance estimate. The earlier seed's attack arm had a recorded kill; the new pair does not isolate seed, order, model timing or trajectory effects.
+
+`public.zip` contains the frozen 315-file candidate manifest and bytes, runner, launcher, conditions, screenshots, model responses and usage, guarded input/release receipts and evaluator samples. Private model protocol/call/workspace files are retained locally and represented only by hashes and sizes; their bytes are not independently audited here. `audit.py`, run without Python optimization and with Pillow, verifies hashes, model-image binding, the two policy gates, cancellation/review/stale-refusal ordering, steering/attack guards and release, and the finite game counters. The host OS, external model service and executable version are not pinned.
+
+This is one pair under one new seed, with different provider/cache conditions and fixed scripted navigation. The checked model point is not a semantic identity proof and the game crosshair is not directly aimed at that point. A single short episode cannot establish reliable combat, meaningful latency advantage, bounded model-overlap policy safety or MAP01 completion. Issue 57 and Issue 59 remain open.
