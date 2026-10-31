@@ -1,0 +1,70 @@
+{
+  "persistent": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "model_calls": 2,
+    "input_tokens": 25895,
+    "cached_input_tokens_subset": 12288,
+    "output_tokens": 226,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 23783981255,
+    "model_call_ns": 8252931393,
+    "routes": [
+      "cold",
+      "reuse",
+      "reuse",
+      "repair",
+      "reuse",
+      "reuse"
+    ]
+  },
+  "ephemeral": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "model_calls": 6,
+    "input_tokens": 94365,
+    "cached_input_tokens_subset": 74752,
+    "output_tokens": 678,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 36234869828,
+    "model_call_ns": 22701263529,
+    "routes": [
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold"
+    ]
+  },
+  "plain": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "model_calls": 6,
+    "input_tokens": 93134,
+    "cached_input_tokens_subset": 81920,
+    "output_tokens": 388,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 29496019157,
+    "model_call_ns": 20112560395,
+    "routes": [
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold"
+    ]
+  },
+  "limits": {
+    "schema_preflight": "not run",
+    "arm_order": "fixed persistent, ephemeral, plain",
+    "sample": "one six-task sequence per arm",
+    "provider_cost": "unknown",
+    "ipc": "exploratory shared volume, not hardened",
+    "cached_input": "subset of input, not additive"
+  }
+}
