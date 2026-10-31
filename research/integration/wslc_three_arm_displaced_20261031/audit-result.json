@@ -1,0 +1,57 @@
+{
+  "status": "audited",
+  "runs": [
+    {
+      "arm": "ephemeral",
+      "allocation": "bc01",
+      "lifecycle_seconds": 52.748109,
+      "preflight_to_ready_seconds": 8.1942173,
+      "container_phase_seconds": 44.5308068,
+      "task_seconds_sum": 38.185759909,
+      "task_calls": 6,
+      "preflight_calls": 1,
+      "input_tokens": 105365,
+      "cached_input_tokens_subset": 58752,
+      "output_tokens": 851,
+      "exact_tasks": 6,
+      "verified_terminals": 48
+    },
+    {
+      "arm": "persistent",
+      "allocation": "bc02",
+      "lifecycle_seconds": 36.9462021,
+      "preflight_to_ready_seconds": 8.6554593,
+      "container_phase_seconds": 28.2796106,
+      "task_seconds_sum": 24.495117735,
+      "task_calls": 2,
+      "preflight_calls": 1,
+      "input_tokens": 36841,
+      "cached_input_tokens_subset": 20608,
+      "output_tokens": 390,
+      "exact_tasks": 6,
+      "verified_terminals": 57
+    },
+    {
+      "arm": "plain",
+      "allocation": "bc03",
+      "lifecycle_seconds": 39.2375061,
+      "preflight_to_ready_seconds": 6.3756176,
+      "container_phase_seconds": 32.8444959,
+      "task_seconds_sum": 29.351540383,
+      "task_calls": 6,
+      "preflight_calls": 1,
+      "input_tokens": 103955,
+      "cached_input_tokens_subset": 73728,
+      "output_tokens": 478,
+      "exact_tasks": 6,
+      "verified_terminals": 18
+    }
+  ],
+  "fixture": {
+    "changed_files": [
+      "source/research/live_control/integrated_efficiency_fixture_v1.py"
+    ],
+    "two_css_substitutions_only": true,
+    "seed": 991037
+  }
+}
