@@ -1,0 +1,12 @@
+# Guard-rechecked blank evidence on private Xvfb
+
+Two one-attempt WSLc controls exercised the opt-in Calc OCR graph through the actual X11 backend and an owned synthetic Xlib window. The independent blank evidence was a fixed screenshot patch compared with the initial blank patch; the OCR callback returned empty results and did not run Tesseract. The fixture did not render text or implement Calc.
+
+* f06 changed the sampled window patch after the branch capture but before the input guard. The fresh capture changed, `cells_blank` was false, the guard refused execution, and the Xlib fixture recorded zero key presses. The method returned `SAFE_YIELD` / `execution_refused` with zero completed transitions.
+* f07 left the patch unchanged. The guard remained eligible and the fixture recorded three X11 key presses and three releases, while the adapter recorded one completed transition. The method then returned `SAFE_YIELD` / `no_progress` because this synthetic window does not render or confirm the entered value.
+
+Both controls recorded an owner release receipt with empty key/button state and independently queried an empty X11 keymap/button mask. They exited cleanly; WSLc showed no running instance. The X event observation is made by the same test process owning the synthetic target, not an independent hardware monitor. This validates a narrow X11 delivery/guard boundary, not live Calc, OCR accuracy, saved effects, provider behavior, or general concurrency. Issue 57 remains open.
+
+Earlier f02 was retained as a failed setup: its flat target was refused before execution. f03 was not started. The f04 successor added texture and showed a guard refusal with no key events, but its harness failed with `KeyError` because owner cleanup did not request a release receipt; f05 was not started. The f06/f07 runner additionally marks dispatch as attempted before running, allowing owner close to request and verify release. Failures and unused controls are not counted as successful experiments.
+
+`python audit.py` with Pillow verifies the archive and input hashes, setup failures, unstarted controls, source check summary, retained screenshots and patch changes, native guard/execution receipts, Xlib event records, release and cleanup. `public.zip` retains frozen candidate scripts and raw outputs for all allocations. Source/image bytes are not completely reproduced; the recorded screen and event observations do not establish application-level task effects.
