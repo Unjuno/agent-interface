@@ -47,7 +47,7 @@
 
 - [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
 
-- [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
+- [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — 12 finite cases reconstructed; the recorded 6/6 mutation count was hardcoded, so A01 aggregate PASS is unsupported. [A02](resume_plan_suggestions_8576_t0_a02_20261009/REPORT.md) separately executed the six controls; synthetic method evidence only, no human-benefit claim.
 
 - [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — original `PASS_METHOD_SCOPED` retained, but its auditor did not enforce the frozen left-only decision gate; the overall pass is not established by that audit ([correction](https://github.com/Unjuno/agent-interface/issues/8589#issuecomment-6057995875)). The later [A02 audit](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/REPORT.md) checks only the left-only case and has a [post-run invocation deviation](recovery_validity_effect_replay_8589_t0_a02_audit_20261009/EXECUTION_DEVIATION.md). Synthetic DAG only; no GUI or replay-safety claim.
 - [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
@@ -436,6 +436,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`alert_actionability_5435_t4/`](alert_actionability_5435_t4/)
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`amendment_effect_6219_publication_recovery_20261003/`](amendment_effect_6219_publication_recovery_20261003/)
+- [`analogy_rejection_8500_t0_a02_20261009/`](analogy_rejection_8500_t0_a02_20261009/)
 - [`answer_surface_audit_6173_factored_axes_t0_20261002/`](answer_surface_audit_6173_factored_axes_t0_20261002/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`anytime_t5/`](anytime_t5/)
@@ -601,6 +602,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
 - [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
 - [`crosslingual_visual_injection_7650_t0_a02_20261008/`](crosslingual_visual_injection_7650_t0_a02_20261008/)
+- [`crowding_target_flanker_8544_t0_a02_20261009/`](crowding_target_flanker_8544_t0_a02_20261009/)
 - [`cue_reliability_8654_c06_20261009/`](cue_reliability_8654_c06_20261009/)
 - [`cue_reliability_8654_c07_20261009/`](cue_reliability_8654_c07_20261009/)
 - [`cue_triggered_intention_7162_t0_20261004/`](cue_triggered_intention_7162_t0_20261004/)
@@ -982,6 +984,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_order_audit_typehash_successor_r5_v1/`](predicate_order_audit_typehash_successor_r5_v1/)
 - [`predicate_order_drift_audit_integrity_4733_successor_v1/`](predicate_order_drift_audit_integrity_4733_successor_v1/)
 - [`predicate_order_drift_audit_integrity_4733_v1/`](predicate_order_drift_audit_integrity_4733_v1/)
+- [`predicate_phantom_8613_a01_20261008/`](predicate_phantom_8613_a01_20261008/)
 - [`predicate_readset_audit_revalidation_4766_v1/`](predicate_readset_audit_revalidation_4766_v1/)
 - [`predicate_readset_runtime_proxy_4233_v1/`](predicate_readset_runtime_proxy_4233_v1/)
 - [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
@@ -1051,6 +1054,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
+- [`relative_view_rotation_features_8636_t0_a01_20261009/`](relative_view_rotation_features_8636_t0_a01_20261009/)
+- [`relative_view_rotation_features_8636_t0_a02_20261009/`](relative_view_rotation_features_8636_t0_a02_20261009/)
+- [`relative_view_rotation_features_8636_t0_a02_audit_20261009/`](relative_view_rotation_features_8636_t0_a02_audit_20261009/)
 - [`relative_view_rotation_features_8636_t0_a03_20261012/`](relative_view_rotation_features_8636_t0_a03_20261012/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
@@ -1066,6 +1072,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`resume_plan_suggestions_8576_t0_a01_20261008/`](resume_plan_suggestions_8576_t0_a01_20261008/)
+- [`resume_plan_suggestions_8576_t0_a02_20261009/`](resume_plan_suggestions_8576_t0_a02_20261009/)
 - [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
@@ -1284,7 +1291,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
-
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
