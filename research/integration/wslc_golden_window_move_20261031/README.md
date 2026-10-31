@@ -1,0 +1,7 @@
+# WSLc Chromium window movement after mint
+
+Three sequential zero-model attempts on the same fixed known-task fixture. A01's windowmove failed without retaining its stderr. A02 retained BadWindow: xdotool was connected to the outer Xvfb rather than the runtime-owned display. A03 located the one private runtime Xvfb and its own authority, then moved the same browser surface after minting its field and submit aliases.
+
+A03 started at geometry [10,10,1050,780]; the checked field handle reported window translation [130,90] and resolved to [356,491]. The checked caller completed entry and submit, and the independent append-only history contained exactly one exact task-1 submission. All nine program releases reported verified with empty keys/buttons. The scorer correctly reported overall six-task success false because the other five tasks were not attempted. Source hash inventory matched all 2029 files after the run; all three exact container IDs were absent on inspect.
+
+This is one isolated WSLc/Xvfb Chromium task with known coordinates and a controlled move, no model, no speed comparison, no general reliability or MAP01 claim. Archives retain failures and the successful attempt with conditions, adapted runner, source inventory, logs, output and receipts; ZIP integrity was verified. The move command was out-of-band inside the dedicated disposable container; only the checked caller performed task input.
