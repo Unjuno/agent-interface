@@ -1,0 +1,17 @@
+# WSLc Chromium: three-arm lifecycle with bounded broker recovery
+
+This prospectively frozen three-arm block integrates the research broker's bounded `PermissionError` retry and host-failure marker from `wslc_exchange_permission_recovery_20261031` and `wslc_exchange_failure_signal_20261031`. Unlike those controlled fault-injection tests, this block injects no fault. The order is plain → ephemeral → persistent, so persistent is last; fixture seed 991032 differs from the preceding blocks. All arms use the same frozen harness and earlier source snapshot, image, CPU/memory, model setting and preflight-through-process-exit timer.
+
+| Arm | Lifecycle | Calls: preflight + tasks | Input tokens (cached subset) | Output tokens | Exact tasks | Neutral terminal events |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| plain | 39.307 s | 1 + 6 | 104,060 (82,304) | 457 | 6/6 | 18 |
+| ephemeral | 52.847 s | 1 + 6 | 105,470 (75,136) | 845 | 6/6 | 48 |
+| persistent | 38.063 s | 1 + 2 | 36,868 (20,608) | 396 | 6/6 | 57 |
+
+In this single block, persistent's measured lifecycle was 3.16% shorter and its input-token count was 64.57% lower than plain. Cached input is part of input, not additional; cost is unknown. All independently recorded fixture histories contained exactly the six expected submissions, and all 123 recorded terminal events reported neutral release. All three host/container processes returned successfully and the later WSLc listing found none of the uniquely named containers. No permission retry event or host-failure marker was recorded, so this successful block does not itself test the new recovery path.
+
+The lifecycle begins immediately before the model-host process starts and ends after both host and WSLc container return. It includes schema preflight, validation, container/app startup, tasks, fixture score, cleanup, orchestration polling and timing writes; it excludes launcher bootstrap, source preparation, image build/pull and later audit/archive. The held-out failure behavior, semantic correctness beyond this fixture, full current-main integration, provider billing and MAP01 completion remain unproved. The host-failure marker can itself be unavailable and the bounded retry does not preempt a blocked filesystem operation.
+
+Earlier two blocks had persistent second and measured 18.86%/19.42% shorter intervals; the next block put it first but changed seed and had an incomplete ephemeral arm, with a 5.33% plain/persistent difference. This block puts persistent last, changes both seed and broker behavior, and gives 3.16%. These are few fixed-order observations with different seeds, cache states and provider timing; they cannot isolate order, broker overhead or establish a general speedup or reliability rate. The prior failure remains retained and was not rerun.
+
+`public.zip` retains the frozen host/runner, source hash manifests, preflight outputs, model/image associations, timing events, runtime terminals, exact fixture histories and cleanup summary. Source trees and private host protocol/workspaces remain local, hash-indexed; local source manifests were checked before and after, but the omitted bytes cannot be re-read from this packet. The recorded main SHA is an integration reference, not a claim that the mounted snapshot equals current main. Hosted provider and all host dependencies are not frozen. Run `python audit.py` without optimization and with `jsonschema` to verify the retained packet, including absence of recorded retry and host-error markers.
