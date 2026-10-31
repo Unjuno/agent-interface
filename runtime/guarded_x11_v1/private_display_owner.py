@@ -5,6 +5,7 @@ The caller must treat every application on this display as disposable.
 """
 from dataclasses import dataclass
 import os
+import math
 from pathlib import Path
 import secrets
 import select
@@ -40,8 +41,9 @@ class PrivateDisplayOwner:
     def start(self, *, timeout_s):
         if not callable(getattr(os,'pidfd_open',None)) or not callable(getattr(signal,'pidfd_send_signal',None)):
             raise RuntimeError('pidfd support required')
-        if not isinstance(timeout_s,(int,float)) or isinstance(timeout_s,bool) or timeout_s<=0:
-            raise ValueError('positive timeout required')
+        if (not isinstance(timeout_s,(int,float)) or isinstance(timeout_s,bool)
+                or not math.isfinite(timeout_s) or timeout_s<=0):
+            raise ValueError('positive finite timeout required')
         with self._lock:
             if self._closed or self._starting or self._process is not None or self._retired:
                 raise RuntimeError('display owner is single use')
@@ -102,15 +104,31 @@ class PrivateDisplayOwner:
             if write_fd is not None:os.close(write_fd)
 
     def retire(self, *, timeout_s):
-        with self._cleanup_lock:
-            with self._lock:
+        deadline=self._cleanup_deadline(timeout_s)
+        if not self._cleanup_lock.acquire(timeout=max(0,deadline-time.monotonic())):
+            return {'status':'unknown'}
+        try:
+            if not self._lock.acquire(timeout=max(0,deadline-time.monotonic())):
+                return {'status':'unknown'}
+            try:
                 if self._starting:
                     self._closed=True
                     if self._pidfd is not None:
                         try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
                         except ProcessLookupError:pass
                     return {'status':'pending'}
-            return self._retire_locked(timeout_s=timeout_s)
+            finally:self._lock.release()
+            remaining=deadline-time.monotonic()
+            if remaining<=0:return {'status':'unknown'}
+            return self._retire_locked(timeout_s=remaining)
+        finally:self._cleanup_lock.release()
+
+    @staticmethod
+    def _cleanup_deadline(timeout_s):
+        if (not isinstance(timeout_s,(int,float)) or isinstance(timeout_s,bool)
+                or not math.isfinite(timeout_s) or timeout_s<=0):
+            raise ValueError('positive finite timeout required')
+        return time.monotonic()+timeout_s
 
     def _retire_locked(self, *, timeout_s):
         if self._retired:return {'status':'retired'}
@@ -128,20 +146,28 @@ class PrivateDisplayOwner:
         self._retired=True
         return {'status':'retired'}
 
-    def close(self):
-        with self._cleanup_lock:
-            return self._close_locked()
+    def close(self, *, timeout_s=3):
+        deadline=self._cleanup_deadline(timeout_s)
+        if not self._cleanup_lock.acquire(timeout=max(0,deadline-time.monotonic())):
+            return {'status':'unknown'}
+        try:return self._close_locked(deadline=deadline)
+        finally:self._cleanup_lock.release()
 
-    def _close_locked(self):
-        with self._lock:
+    def _close_locked(self, *, deadline):
+        if not self._lock.acquire(timeout=max(0,deadline-time.monotonic())):
+            return {'status':'unknown'}
+        try:
             self._closed=True
             if self._starting:
                 if self._pidfd is not None:
                     try:signal.pidfd_send_signal(self._pidfd,signal.SIGKILL)
                     except ProcessLookupError:pass
                 return {'status':'pending'}
+        finally:self._lock.release()
         if self._process is not None and not self._retired:
-            result=self.retire(timeout_s=3)
-            if result['status']!='retired':raise RuntimeError('display retirement unconfirmed')
+            remaining=deadline-time.monotonic()
+            if remaining<=0:return {'status':'unknown'}
+            result=self._retire_locked(timeout_s=remaining)
+            if result['status']!='retired':return {'status':'unknown'}
         if self._pidfd is not None:os.close(self._pidfd);self._pidfd=None
         return {'status':'retired' if self._retired else 'closed_no_process'}

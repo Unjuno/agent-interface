@@ -11,6 +11,34 @@ import unittest
 from unittest.mock import patch
 
 class PrivateDisplayOwnerTests(unittest.TestCase):
+    def test_invalid_timeouts_are_rejected_before_start_or_cleanup(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        for value in (0,-1,True,float('nan'),float('inf')):
+            with self.subTest(value=value),tempfile.TemporaryDirectory() as directory:
+                owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner')
+                for method in ('start','retire','close'):
+                    with self.assertRaises(ValueError):getattr(owner,method)(timeout_s=value)
+                self.assertIsNone(owner._process);self.assertFalse(owner.directory.exists())
+
+    def test_close_and_retire_report_unknown_when_locks_are_held(self):
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        for method in ('close','retire'):
+            for lock_name in ('_cleanup_lock','_lock'):
+                with self.subTest(method=method,lock=lock_name), tempfile.TemporaryDirectory() as directory:
+                    owner=PrivateDisplayOwner(pathlib.Path(directory)/'owner');owner.start(timeout_s=5)
+                    lock=getattr(owner,lock_name);lock.acquire();results=[];errors=[]
+                    def invoke():
+                        try:results.append(getattr(owner,method)(timeout_s=.1))
+                        except Exception as e:errors.append(repr(e))
+                    worker=threading.Thread(target=invoke);worker.start()
+                    try:
+                        worker.join(.8)
+                        self.assertFalse(worker.is_alive(),'operation did not honor lock wait budget')
+                        self.assertEqual(errors,[]);self.assertEqual(results,[{'status':'unknown'}])
+                        self.assertIsNone(owner._process.poll())
+                    finally:
+                        lock.release();worker.join(4);owner.close()
+
     def test_retire_during_start_does_not_publish_dead_display(self):
         from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
         with tempfile.TemporaryDirectory() as directory:
