@@ -1,0 +1,42 @@
+"""Audit successor owned-RPC cell and source correspondence; no -O."""
+import hashlib,io,json,subprocess,zipfile
+from pathlib import Path
+H=lambda b:hashlib.sha256(b).hexdigest()
+archive=Path(__file__).with_name('public.zip')
+assert H(archive.read_bytes())=='bdaefdcda88d57615d20ac138c068c8a0e578843d3ce51691151b790e88805ac'
+prior=subprocess.check_output(['git','show','f429fa73d5673c902c6939bac76a68a66ee48e27:research/integration/wslc_idle_owned_rpc_recovery_20261101/public.zip'])
+assert H(prior)=='414c424a2557463c81b51e53073d28985aef31a1d0da4eef5eef40133388ab11'
+tree=subprocess.check_output(['git','ls-tree','-r','--full-tree','ade6624badddf0eb2d9941bd9918381b67725d9c','runtime'],text=True).splitlines()
+blobs={r.split('\t',1)[1]:r.split()[2] for r in tree}
+def blob(b):return hashlib.sha1(b'blob '+str(len(b)).encode()+bytes([0])+b).hexdigest()
+with zipfile.ZipFile(io.BytesIO(prior)) as prev,zipfile.ZipFile(archive) as z:
+ j=lambda n:json.loads(z.read(n).decode('utf-8-sig'))
+ m=j('public-manifest.json');assert set(z.namelist())==set(m['files'])|{'public-manifest.json'}
+ for n,h in m['files'].items():assert H(z.read(n))==h,n
+ frozen=j('trial/manifest.json');c=j('trial/conditions.json')
+ assert H(z.read('trial/manifest.json'))==c['manifest_sha256'] and c['allocation']=='idle-owned-real-a02-20261101'
+ assert c['draft_head']=='ade6624badddf0eb2d9941bd9918381b67725d9c'
+ for n,h in frozen.items():assert H(z.read(n))==h,n
+ assert z.read('target.py')==prev.read('target.py') and z.read('real_x_trial.py')==prev.read('real_x_trial.py')
+ mismatches=[]
+ for n in frozen:
+  if n.startswith('src/'):
+   path=n.removeprefix('src/');data=z.read(n).replace(b'\r\n',b'\n')
+   if blob(data)!=blobs.get(path):mismatches.append(path)
+ assert mismatches==['runtime/host_v1/test_primary_caller.mjs']
+ r=j('trial/output/result.json');assert r==j('trial/stdout') and j('trial/launcher-result.json')['returncode']==0
+ assert r['status']=='passed' and r['initial_sequence']==1 and r['capture']['status']=='unavailable'
+ assert r['state_before_close']=='T' and r['owner_state_after_timeout']=='failed' and r['owner_review_after_timeout']
+ old=r['old_close'];assert old['owner_process_retired'] and old['cleanup_status']=='UNKNOWN' and not old['release_attempted'] and not old['release_confirmed']
+ assert r['old_pid']!=r['fresh_pid'] and r['mint']['status']=='minted'
+ a=r['action'];assert a['status']=='completed' and a['result']['execution']['releases'][-1]['verified']
+ assert not a['result']['execution']['releases'][-1]['keys_down'] and not a['result']['execution']['releases'][-1]['buttons_down']
+ target=j('trial/output/target-events.json');assert target==r['target_result'] and target['value']=='a'
+ assert [(x['type'],x['key']) for x in target['events']]==[('press','a'),('release','a')]
+ assert r['fresh_close']['verified'] and r['fresh_close']['release_confirmed'] and r['input_neutral_before_after']
+ assert r['target_exit']==r['server_exit']==0
+ e={x['name']:x['ns'] for x in r['events']};deadline=r['deadline_ns']
+ assert e['stop_sent']<=e['stop_observed']<=e['capture_started']<=e['rpc_pending_while_stopped']<deadline<=e['capture_returned']<=e['old_close_returned']<=e['resumed']<target['events'][0]['host_ns']<=target['events'][1]['host_ns']<=e['fresh_closed']
+ print(json.dumps({'status':'audited','deadline_overrun_ms':(e['capture_returned']-deadline)/1e6,
+  'old_close':'UNKNOWN, no automatic release','fresh_task':'target recorded a press/release and value a',
+  'nonmatching_source_files':mismatches},indent=2))
