@@ -585,8 +585,10 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                   post_resume_close)
                 self.assertFalse(post_resume_close.get('replay_allowed'),
                                  post_resume_close)
-                self.assertTrue(
-                    report['independent_readback_after_close']['keys_down']['a'])
+                # Closing a retired owner must not change either observed key.
+                self.assertEqual(
+                    report['independent_readback_after_close']['keys_down'],
+                    report['independent_readback_after_resume']['horizon_readback'])
                 if _WAIT_CANCEL_WHILE_STOPPED:
                     self.assertEqual(post_resume_close['owner_release_attempt'],
                                      stopped_result['owner_release_attempt'])
@@ -596,16 +598,6 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 other.destroy()
                 observer.sync()
                 self.assertFalse(_key_down(observer, keycodes['a']))
-                if _PRESTARTED_CANCEL_SUPERVISOR:
-                    self.assertEqual(
-                        report['synthetic_task_oracle']['status'], 'pass', report)
-                    self.assertTrue(
-                        report['synthetic_task_oracle']['task_success'], report)
-                else:
-                    self.assertEqual(
-                        report['synthetic_task_oracle']['status'], 'fail', report)
-                    self.assertFalse(
-                        report['synthetic_task_oracle']['task_success'], report)
 
                 # The outage-era action remains failed and UNKNOWN. Recovery
                 # starts a distinct caller against a newly created target; it
@@ -830,6 +822,17 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(recovery_oracle.get('status'), 'pass', report)
                 self.assertTrue(recovery_oracle.get('task_success'), report)
                 self.assertEqual(recovery_b_presses, 1, report)
+                if _PRESTARTED_CANCEL_SUPERVISOR:
+                    self.assertEqual(
+                        report['synthetic_task_oracle']['status'], 'pass', report)
+                    self.assertTrue(
+                        report['synthetic_task_oracle']['task_success'], report)
+                else:
+                    self.assertEqual(
+                        report['synthetic_task_oracle']['status'], 'fail', report)
+                    self.assertFalse(
+                        report['synthetic_task_oracle']['task_success'], report)
+
                 report['status'] = (
                     'CANCEL_UNKNOWN_DURING_PRIVATE_XVFB_STOP_THEN_FRESH_TARGET_RECOVERY_TASK_PASS')
             except BaseException as error:
