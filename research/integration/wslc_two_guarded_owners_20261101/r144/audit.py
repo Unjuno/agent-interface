@@ -1,0 +1,7 @@
+import hashlib,json,pathlib
+r=pathlib.Path(__file__).resolve().parent;p=r/'r144-race';m=json.loads((r/'manifest.json').read_text());c=json.loads((p/'conditions.json').read_text());d=json.loads((p/'output/result.json').read_text());l=json.loads((p/'launcher-result.json').read_text());prior=json.loads((r.parent/'idle-normal-cancel-r142'/'manifest.json').read_text());sha=lambda b:hashlib.sha256(b).hexdigest()
+assert all(sha((r/k).read_bytes())==v for k,v in m.items()) and c['manifest_sha256']==sha((r/'manifest.json').read_bytes()) and {k:v for k,v in m.items() if k.startswith('src/')}=={k:v for k,v in prior.items() if k.startswith('src/')}
+a=d['response'];assert l['returncode']==0 and d['status']=='passed' and d['before_cancel_keys']=={'a':True,'b':False} and d['fixture_after_old_release']=={'a':False,'b':False} and d['new_hold_before_runtime_release']=={'a':True,'b':False} and d['new_hold_after_runtime_release']=={'a':False,'b':False}
+assert a['owner_process_retired'] and a['owner_client_disconnect']['status']=='disconnected' and a['owner_release_attempt']['status']=='readback_verified' and a['cleanup_status']=='UNKNOWN' and a['replay_allowed'] is False and d['old_close']['cleanup_status']=='UNKNOWN'
+assert [(x['type'],x['key']) for x in d['target_result']['events']]==[('press','a'),('release','a'),('press','a'),('release','a')] and d['horizon_keys']=={'a':False,'b':False} and d['target_exit']==d['server_exit']==0
+print('PASS: actual normal cancellation with interposed new hold, preserved raw and unchanged runtime')
