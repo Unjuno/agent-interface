@@ -1,0 +1,9 @@
+# WSLc Calc split-click experiment (fixed point, no model)
+
+Two fresh, network-isolated WSLc containers used the pinned Calc image and runtime source equivalent to main ce2e6805ff26d1e9cab0da207d4a0e0d5c51ca46. Each allocation had one run, one CPU, 1 GiB memory and a 60-second timeout. The source files were mounted read-only, and output separately writable. No model call was made. The fixed A1 point [81,151] was taken from the earlier model-assisted pilot, not freshly inferred. The name-box exact pixel check before and after clicking is specific to the reviewed layout.
+
+- A01 exited 1 before input: the alias `click-cell` violated the identifier grammar. Raw failure retained; no click was dispatched.
+- A02 corrected only that alias. A separate guarded click completed with 3 emissions and verified release; after a fresh observation the reviewed A1 name-box matched. The compiled keyboard entry and Save request both completed with verified release. Its own method receipt stopped SAFE_YIELD / effect_unavailable, with Save pending: this does not certify persistence.
+- After close, the separate FODS scorer and XML audit verified exactly A1=731 and A2=864, one sheet, two direct rows and no formulas. Saved file SHA-256: f1f6cffd375243326086ba1b6ee5747f6b866121b824a0acfe8b1aaf79c33e77da. Close release was verified; keys and buttons were neutral.
+
+All frozen trial input digests matched after execution. Runtime 305 Python files matched the previously frozen hashes, and main changed only research files since that runtime was recorded. Both container IDs were absent after execution. Archives retain conditions, scripts, inputs, logs, all receipts and output, including the failed attempt and independent audit. This is a single known-layout, fixed-point feasibility check. It does not verify fresh model grounding, arbitrary cells, matched efficiency, recovery after partial input, or MAP01. No retry was performed within either allocation.
