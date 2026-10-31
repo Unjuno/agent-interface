@@ -16,13 +16,17 @@ import time
 
 
 def _serve_one(command_receive, result_send, ready_send, worker_target, xauthority=None,
-               pinned_display_name=None):
+               pinned_display_name=None, expected_owner=None):
     if xauthority is not None:
         os.environ['XAUTHORITY'] = xauthority
     pinned_backend = None
     if pinned_display_name is not None:
         from runtime.backends.x11_v1.backend import X11Backend
         pinned_backend = X11Backend(pinned_display_name, {})
+        from .xres_client_fence import client_pid_at_base
+        if client_pid_at_base(pinned_backend.d, expected_owner['resource_base']) != expected_owner['pid']:
+            pinned_backend.close()
+            raise RuntimeError('pinned display owner identity mismatch')
     try:
         ready_send.send({'status': 'ready', 'pid': multiprocessing.current_process().pid})
     finally:
@@ -74,7 +78,8 @@ class PrestartedCancellationSupervisor:
 
     def __init__(self, worker_target, *, expected_session_id=None,
                  startup_timeout_s=5.0,
-                 terminate_grace_s=0.1, xauthority=None, pinned_display_name=None):
+                 terminate_grace_s=0.1, xauthority=None, pinned_display_name=None,
+                 expected_owner=None):
         if not callable(worker_target):
             raise TypeError('worker_target must be callable')
         if xauthority is not None and (type(xauthority) is not str or not xauthority or '\x00' in xauthority):
@@ -82,6 +87,11 @@ class PrestartedCancellationSupervisor:
         if pinned_display_name is not None and (worker_target is not x11_cancel_worker
                 or type(pinned_display_name) is not str or not pinned_display_name):
             raise ValueError('pinned display requires the X11 cancellation worker and a display name')
+        if pinned_display_name is not None and (not isinstance(expected_owner, dict)
+                or type(expected_owner.get('pid')) is not int or expected_owner['pid'] <= 0
+                or type(expected_owner.get('resource_base')) is not int
+                or not 0 < expected_owner['resource_base'] < 2**32):
+            raise ValueError('pinned display requires an exact owner identity')
         if (type(startup_timeout_s) not in (int, float)
                 or startup_timeout_s <= 0):
             raise ValueError('startup_timeout_s must be positive')
@@ -106,7 +116,7 @@ class PrestartedCancellationSupervisor:
         process = self._context.Process(
             target=_serve_one,
             args=(command_receive, result_send, ready_send, worker_target, xauthority,
-                  pinned_display_name),
+                  pinned_display_name, expected_owner),
             name='guarded-cancel-supervisor')
         try:
             process.start()

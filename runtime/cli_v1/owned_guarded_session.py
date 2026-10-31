@@ -424,6 +424,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     self._cleanup_supervisor_target,
                     expected_session_id=self.session_id, xauthority=self._xauthority,
                     pinned_display_name=(self.display_name if self._xauthority is not None
+                        and self._cleanup_supervisor_target is x11_cancel_worker else None),
+                    expected_owner=({'pid':self._snapshot_cache.get('owner_process_pid'),
+                        'resource_base':self._snapshot_cache.get('owner_x_client_resource_base')}
+                        if self._xauthority is not None
                         and self._cleanup_supervisor_target is x11_cancel_worker else None))
             self.state = 'open'
         except BaseException:
