@@ -35,6 +35,19 @@ _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 
 
+def _close_owner_after_cancel_drain(owner, cancellation_executor):
+    """Retry a busy owner close after already-committed cancellations finish."""
+    try:
+        report = owner.close()
+    finally:
+        if cancellation_executor is not None:
+            cancellation_executor.shutdown(wait=True, cancel_futures=False)
+    if (isinstance(report, dict) and report.get('status') == 'busy'
+            and cancellation_executor is not None):
+        report = owner.close()
+    return report
+
+
 def _normalize_supervised_win32_program(program):
     """Apply the standard caller's bounded syntax expansion before admission."""
     if type(program) is not dict or type(program.get('ops')) is not list:
@@ -522,13 +535,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 shutting_down = False
 
     def close_owner():
-        try:
-            report = owner.close()
-            _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
-            return report
-        finally:
-            if cancellation_executor is not None:
-                cancellation_executor.shutdown(wait=True, cancel_futures=False)
+        report = _close_owner_after_cancel_drain(owner, cancellation_executor)
+        _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
+        return report
 
     @asynccontextmanager
     async def lifespan(_server):
