@@ -1,0 +1,838 @@
+{
+  "status": "audited",
+  "time_scope": "preflight duration plus summed task intervals; excludes startup/idle/cleanup and is not end-to-end",
+  "blocks": [
+    {
+      "block": "forward",
+      "seed": 991028,
+      "first_persistent_less_input_task": 2,
+      "sustained_persistent_less_input_task": 2,
+      "first_persistent_less_partial_time_task": 2,
+      "sustained_persistent_less_partial_time_task": 2,
+      "arms": {
+        "plain": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23015,
+              "known_input_lower_bound": 23015,
+              "cumulative_output_tokens": 181,
+              "preflight_plus_task_seconds": 14.068872315,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36549,
+              "known_input_lower_bound": 36549,
+              "cumulative_output_tokens": 243,
+              "preflight_plus_task_seconds": 20.001569924,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51425,
+              "known_input_lower_bound": 51425,
+              "cumulative_output_tokens": 305,
+              "preflight_plus_task_seconds": 24.013529271,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 67643,
+              "known_input_lower_bound": 67643,
+              "cumulative_output_tokens": 367,
+              "preflight_plus_task_seconds": 28.470747589,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 85203,
+              "known_input_lower_bound": 85203,
+              "cumulative_output_tokens": 429,
+              "preflight_plus_task_seconds": 32.242300315,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 104105,
+              "known_input_lower_bound": 104105,
+              "cumulative_output_tokens": 491,
+              "preflight_plus_task_seconds": 36.238486661,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 42.7312863,
+          "preflight_input_tokens": 10839
+        },
+        "persistent": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23201,
+              "known_input_lower_bound": 23201,
+              "cumulative_output_tokens": 282,
+              "preflight_plus_task_seconds": 14.413760285,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23201,
+              "known_input_lower_bound": 23201,
+              "cumulative_output_tokens": 282,
+              "preflight_plus_task_seconds": 16.196315615,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23201,
+              "known_input_lower_bound": 23201,
+              "cumulative_output_tokens": 282,
+              "preflight_plus_task_seconds": 18.255289921,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "repair",
+              "cumulative_input_tokens": 36859,
+              "known_input_lower_bound": 36859,
+              "cumulative_output_tokens": 395,
+              "preflight_plus_task_seconds": 23.770466989,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36859,
+              "known_input_lower_bound": 36859,
+              "cumulative_output_tokens": 395,
+              "preflight_plus_task_seconds": 26.880182734,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36859,
+              "known_input_lower_bound": 36859,
+              "cumulative_output_tokens": 395,
+              "preflight_plus_task_seconds": 30.707207644,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 34.671668,
+          "preflight_input_tokens": 10936
+        },
+        "ephemeral": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23205,
+              "known_input_lower_bound": 23205,
+              "cumulative_output_tokens": 308,
+              "preflight_plus_task_seconds": 14.371811671,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36893,
+              "known_input_lower_bound": 36893,
+              "cumulative_output_tokens": 421,
+              "preflight_plus_task_seconds": 18.650491189,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51974,
+              "known_input_lower_bound": 51974,
+              "cumulative_output_tokens": 534,
+              "preflight_plus_task_seconds": 23.737343152,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 68448,
+              "known_input_lower_bound": 68448,
+              "cumulative_output_tokens": 647,
+              "preflight_plus_task_seconds": 28.749295265,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 86315,
+              "known_input_lower_bound": 86315,
+              "cumulative_output_tokens": 760,
+              "preflight_plus_task_seconds": 33.948857755,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 105575,
+              "known_input_lower_bound": 105575,
+              "cumulative_output_tokens": 873,
+              "preflight_plus_task_seconds": 39.555594238,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 43.4081492,
+          "preflight_input_tokens": 10938
+        }
+      }
+    },
+    {
+      "block": "reverse",
+      "seed": 991028,
+      "first_persistent_less_input_task": 2,
+      "sustained_persistent_less_input_task": 2,
+      "first_persistent_less_partial_time_task": 2,
+      "sustained_persistent_less_partial_time_task": 2,
+      "arms": {
+        "ephemeral": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23205,
+              "known_input_lower_bound": 23205,
+              "cumulative_output_tokens": 283,
+              "preflight_plus_task_seconds": 14.899268014,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36865,
+              "known_input_lower_bound": 36865,
+              "cumulative_output_tokens": 396,
+              "preflight_plus_task_seconds": 19.200475243,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51918,
+              "known_input_lower_bound": 51918,
+              "cumulative_output_tokens": 509,
+              "preflight_plus_task_seconds": 24.514594855,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 68364,
+              "known_input_lower_bound": 68364,
+              "cumulative_output_tokens": 622,
+              "preflight_plus_task_seconds": 30.24705662,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 86203,
+              "known_input_lower_bound": 86203,
+              "cumulative_output_tokens": 735,
+              "preflight_plus_task_seconds": 35.713283074,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 105435,
+              "known_input_lower_bound": 105435,
+              "cumulative_output_tokens": 848,
+              "preflight_plus_task_seconds": 42.7334001,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 47.4341482,
+          "preflight_input_tokens": 10938
+        },
+        "persistent": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23201,
+              "known_input_lower_bound": 23201,
+              "cumulative_output_tokens": 280,
+              "preflight_plus_task_seconds": 14.308142934,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23201,
+              "known_input_lower_bound": 23201,
+              "cumulative_output_tokens": 280,
+              "preflight_plus_task_seconds": 16.075266972,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23201,
+              "known_input_lower_bound": 23201,
+              "cumulative_output_tokens": 280,
+              "preflight_plus_task_seconds": 18.11343147,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "repair",
+              "cumulative_input_tokens": 36859,
+              "known_input_lower_bound": 36859,
+              "cumulative_output_tokens": 393,
+              "preflight_plus_task_seconds": 23.516470437,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36859,
+              "known_input_lower_bound": 36859,
+              "cumulative_output_tokens": 393,
+              "preflight_plus_task_seconds": 26.627372637,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36859,
+              "known_input_lower_bound": 36859,
+              "cumulative_output_tokens": 393,
+              "preflight_plus_task_seconds": 30.466103414,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 34.3313548,
+          "preflight_input_tokens": 10936
+        },
+        "plain": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23015,
+              "known_input_lower_bound": 23015,
+              "cumulative_output_tokens": 147,
+              "preflight_plus_task_seconds": 12.873565403,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36533,
+              "known_input_lower_bound": 36533,
+              "cumulative_output_tokens": 209,
+              "preflight_plus_task_seconds": 19.059077862,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51393,
+              "known_input_lower_bound": 51393,
+              "cumulative_output_tokens": 271,
+              "preflight_plus_task_seconds": 23.177307561,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 67595,
+              "known_input_lower_bound": 67595,
+              "cumulative_output_tokens": 333,
+              "preflight_plus_task_seconds": 28.003001441,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 85139,
+              "known_input_lower_bound": 85139,
+              "cumulative_output_tokens": 395,
+              "preflight_plus_task_seconds": 33.538447854,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 104025,
+              "known_input_lower_bound": 104025,
+              "cumulative_output_tokens": 457,
+              "preflight_plus_task_seconds": 38.930692761,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 42.6029426,
+          "preflight_input_tokens": 10839
+        }
+      }
+    },
+    {
+      "block": "first-newseed",
+      "seed": 991029,
+      "first_persistent_less_input_task": 2,
+      "sustained_persistent_less_input_task": 2,
+      "first_persistent_less_partial_time_task": 1,
+      "sustained_persistent_less_partial_time_task": 1,
+      "arms": {
+        "persistent": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23206,
+              "known_input_lower_bound": 23206,
+              "cumulative_output_tokens": 308,
+              "preflight_plus_task_seconds": 14.634919743,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23206,
+              "known_input_lower_bound": 23206,
+              "cumulative_output_tokens": 308,
+              "preflight_plus_task_seconds": 16.483801007,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23206,
+              "known_input_lower_bound": 23206,
+              "cumulative_output_tokens": 308,
+              "preflight_plus_task_seconds": 18.492160801,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "repair",
+              "cumulative_input_tokens": 36896,
+              "known_input_lower_bound": 36896,
+              "cumulative_output_tokens": 421,
+              "preflight_plus_task_seconds": 25.91237247,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36896,
+              "known_input_lower_bound": 36896,
+              "cumulative_output_tokens": 421,
+              "preflight_plus_task_seconds": 28.933608664,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36896,
+              "known_input_lower_bound": 36896,
+              "cumulative_output_tokens": 421,
+              "preflight_plus_task_seconds": 32.863343548,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 37.5368832,
+          "preflight_input_tokens": 10938
+        },
+        "plain": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23020,
+              "known_input_lower_bound": 23020,
+              "cumulative_output_tokens": 180,
+              "preflight_plus_task_seconds": 15.384593512,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36558,
+              "known_input_lower_bound": 36558,
+              "cumulative_output_tokens": 242,
+              "preflight_plus_task_seconds": 19.304902174,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51439,
+              "known_input_lower_bound": 51439,
+              "cumulative_output_tokens": 304,
+              "preflight_plus_task_seconds": 23.483541354,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 67663,
+              "known_input_lower_bound": 67663,
+              "cumulative_output_tokens": 366,
+              "preflight_plus_task_seconds": 27.379399487,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 85230,
+              "known_input_lower_bound": 85230,
+              "cumulative_output_tokens": 428,
+              "preflight_plus_task_seconds": 31.321520299,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 104140,
+              "known_input_lower_bound": 104140,
+              "cumulative_output_tokens": 490,
+              "preflight_plus_task_seconds": 35.823102235,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 39.652245,
+          "preflight_input_tokens": 10841
+        },
+        "ephemeral": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23210,
+              "known_input_lower_bound": 23210,
+              "cumulative_output_tokens": 309,
+              "preflight_plus_task_seconds": 13.635321353,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36902,
+              "known_input_lower_bound": 36902,
+              "cumulative_output_tokens": 422,
+              "preflight_plus_task_seconds": 18.33245768,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51988,
+              "known_input_lower_bound": 51988,
+              "cumulative_output_tokens": 535,
+              "preflight_plus_task_seconds": 24.60505846,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 68468,
+              "known_input_lower_bound": 68468,
+              "cumulative_output_tokens": 648,
+              "preflight_plus_task_seconds": 30.587913248,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 86342,
+              "known_input_lower_bound": 86342,
+              "cumulative_output_tokens": 761,
+              "preflight_plus_task_seconds": 35.895136996,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "failed",
+              "route": "cold",
+              "cumulative_input_tokens": null,
+              "known_input_lower_bound": 86342,
+              "cumulative_output_tokens": null,
+              "preflight_plus_task_seconds": 157.05535414,
+              "usage_complete": false
+            }
+          ],
+          "lifecycle_seconds": null,
+          "preflight_input_tokens": 10940
+        }
+      }
+    },
+    {
+      "block": "resilient",
+      "seed": 991032,
+      "first_persistent_less_input_task": 2,
+      "sustained_persistent_less_input_task": 2,
+      "first_persistent_less_partial_time_task": 3,
+      "sustained_persistent_less_partial_time_task": 5,
+      "arms": {
+        "plain": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23020,
+              "known_input_lower_bound": 23020,
+              "cumulative_output_tokens": 147,
+              "preflight_plus_task_seconds": 12.876385716,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36542,
+              "known_input_lower_bound": 36542,
+              "cumulative_output_tokens": 209,
+              "preflight_plus_task_seconds": 16.776367234,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51407,
+              "known_input_lower_bound": 51407,
+              "cumulative_output_tokens": 271,
+              "preflight_plus_task_seconds": 20.964457058,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 67615,
+              "known_input_lower_bound": 67615,
+              "cumulative_output_tokens": 333,
+              "preflight_plus_task_seconds": 25.08178752,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 85166,
+              "known_input_lower_bound": 85166,
+              "cumulative_output_tokens": 395,
+              "preflight_plus_task_seconds": 29.690706725,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 104060,
+              "known_input_lower_bound": 104060,
+              "cumulative_output_tokens": 457,
+              "preflight_plus_task_seconds": 34.880447621,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 39.3069599,
+          "preflight_input_tokens": 10841
+        },
+        "ephemeral": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23210,
+              "known_input_lower_bound": 23210,
+              "cumulative_output_tokens": 280,
+              "preflight_plus_task_seconds": 18.65866205,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 36874,
+              "known_input_lower_bound": 36874,
+              "cumulative_output_tokens": 393,
+              "preflight_plus_task_seconds": 24.028703113,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 51932,
+              "known_input_lower_bound": 51932,
+              "cumulative_output_tokens": 506,
+              "preflight_plus_task_seconds": 29.388900472,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 68384,
+              "known_input_lower_bound": 68384,
+              "cumulative_output_tokens": 619,
+              "preflight_plus_task_seconds": 35.236245977,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 86230,
+              "known_input_lower_bound": 86230,
+              "cumulative_output_tokens": 732,
+              "preflight_plus_task_seconds": 40.940629988,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 105470,
+              "known_input_lower_bound": 105470,
+              "cumulative_output_tokens": 845,
+              "preflight_plus_task_seconds": 48.434082379,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 52.8465393,
+          "preflight_input_tokens": 10940
+        },
+        "persistent": {
+          "points": [
+            {
+              "task": 1,
+              "status": "completed",
+              "route": "cold",
+              "cumulative_input_tokens": 23206,
+              "known_input_lower_bound": 23206,
+              "cumulative_output_tokens": 283,
+              "preflight_plus_task_seconds": 15.599702679,
+              "usage_complete": true
+            },
+            {
+              "task": 2,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23206,
+              "known_input_lower_bound": 23206,
+              "cumulative_output_tokens": 283,
+              "preflight_plus_task_seconds": 18.108091407,
+              "usage_complete": true
+            },
+            {
+              "task": 3,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 23206,
+              "known_input_lower_bound": 23206,
+              "cumulative_output_tokens": 283,
+              "preflight_plus_task_seconds": 20.286089528,
+              "usage_complete": true
+            },
+            {
+              "task": 4,
+              "status": "completed",
+              "route": "repair",
+              "cumulative_input_tokens": 36868,
+              "known_input_lower_bound": 36868,
+              "cumulative_output_tokens": 396,
+              "preflight_plus_task_seconds": 25.949723415,
+              "usage_complete": true
+            },
+            {
+              "task": 5,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36868,
+              "known_input_lower_bound": 36868,
+              "cumulative_output_tokens": 396,
+              "preflight_plus_task_seconds": 29.171692936,
+              "usage_complete": true
+            },
+            {
+              "task": 6,
+              "status": "completed",
+              "route": "reuse",
+              "cumulative_input_tokens": 36868,
+              "known_input_lower_bound": 36868,
+              "cumulative_output_tokens": 396,
+              "preflight_plus_task_seconds": 33.332423927,
+              "usage_complete": true
+            }
+          ],
+          "lifecycle_seconds": 38.0633049,
+          "preflight_input_tokens": 10938
+        }
+      }
+    }
+  ]
+}
