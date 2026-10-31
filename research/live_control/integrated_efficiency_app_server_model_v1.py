@@ -58,6 +58,8 @@ def per_turn_usage(value):
     result = {target: last[source] for source, target in USAGE_MAP.items()}
     if any(type(amount) is not int or amount < 0 for amount in result.values()):
         raise ValueError("usage values must be nonnegative integers")
+    if result["cached_input_tokens"] > result["input_tokens"]:
+        raise ValueError("cached input exceeds total input")
     return result
 
 
