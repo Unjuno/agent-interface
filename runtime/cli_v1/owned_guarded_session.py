@@ -337,6 +337,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._process = None
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
+        self._cancel_transaction_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
         self._retirement = None
@@ -776,6 +777,30 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
         if type(deadline_monotonic_ns) is not int:
             raise ValueError('deadline_monotonic_ns must be an integer')
+        remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if not self._cancel_transaction_lock.acquire(timeout=remaining_s):
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cancel_unconfirmed', 'reason':'cancel_transaction_deadline',
+                    'input_dispatched':False, 'owner_process_retired':False,
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
+        try:
+            if time.monotonic_ns() >= deadline_monotonic_ns:
+                self._execution_unknown = True
+                self.review_required = True
+                return {'status':'cancel_unconfirmed', 'reason':'cancel_transaction_deadline',
+                        'input_dispatched':False, 'owner_process_retired':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True, 'review_required':True}
+            return self._cancel_guarded_transaction(token, operation_id=operation_id,
+                deadline_monotonic_ns=deadline_monotonic_ns)
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def _cancel_guarded_transaction(self, token, *, operation_id, deadline_monotonic_ns):
         if self._process is not None and not self._process.is_alive() and self.state != 'closed':
             retirement = getattr(self, '_retirement', None)
             if retirement is None:

@@ -9,6 +9,7 @@ from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 class OwnedCancelLockDeadlineTests(unittest.TestCase):
     def test_contended_control_lock_returns_unknown_without_sending(self):
         owner=object.__new__(OwnedGuardedSessionOwner)
+        owner._cancel_transaction_lock=threading.Lock()
         owner._process=Mock();owner._process.is_alive.return_value=True
         owner._control=Mock();owner._control_lock=threading.Lock()
         owner._execution_unknown=False;owner.review_required=False

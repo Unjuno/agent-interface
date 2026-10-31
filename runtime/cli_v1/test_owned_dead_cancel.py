@@ -1,4 +1,5 @@
 import unittest
+import threading
 from unittest.mock import Mock, patch
 
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
@@ -7,6 +8,7 @@ from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 class DeadOwnerCancelTests(unittest.TestCase):
     def test_dead_owner_keeps_obligation_and_unconfirmed_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._cancel_transaction_lock = threading.Lock()
         owner._process = Mock()
         owner._process.is_alive.return_value = False
         owner._process.exitcode = -15
