@@ -1,0 +1,586 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "iwad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "seed": 991031,
+  "mode": "PLAYER fixed tics",
+  "variables": [
+    "GameVariable.POSITION_X",
+    "GameVariable.POSITION_Y",
+    "GameVariable.ANGLE",
+    "GameVariable.HEALTH",
+    "GameVariable.KILLCOUNT",
+    "GameVariable.SELECTED_WEAPON_AMMO"
+  ],
+  "runs": [
+    {
+      "arm": "withhold",
+      "prefix": [
+        {
+          "label": "forward",
+          "tic": 71,
+          "variables": [
+            271.6531066894531,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "768ac03e2f27abf853a93ca09cde39b5861456e3be63ba8c4a939370ffc158a8",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "settle",
+          "tic": 99,
+          "variables": [
+            401.8170471191406,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "92da2ff7a381963007ee56f806db85cdff15579c84104e180c3088e90204b32a",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "turn",
+          "tic": 131,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "632c66f225e1f922e67e105113947d631fdad4550b59cdd266a4200edaf1eb4a",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "partial_attack",
+          "tic": 134,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "45ce4619934698112b6d60fed4d1dd3f4f50842837953b48f809c4d48f381f05",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "released",
+          "tic": 204,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            49.0
+          ],
+          "screen_sha256": "557db81e3b8a317a9f5a1a77c86dd60ad9beb67c12be658b4bf7b3d371b0bb2c",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        }
+      ],
+      "after": {
+        "label": "after_action",
+        "tic": 216,
+        "variables": [
+          411.53102111816406,
+          -192.0,
+          103.71093752414708,
+          100.0,
+          0.0,
+          49.0
+        ],
+        "screen_sha256": "4e53f7b50f9ea4d43a8e901dc69f2e1d191f9b98d63bf12ca5aa669e3e32b4c6",
+        "labels": [
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      },
+      "final": {
+        "label": "final",
+        "tic": 286,
+        "variables": [
+          411.87738037109375,
+          -199.43215942382812,
+          103.71093752414708,
+          94.0,
+          0.0,
+          49.0
+        ],
+        "screen_sha256": "565c639c5dd9ccf7134046943919fa62ff003b2c9a6af6c80e0e80416c7ebf4e",
+        "labels": [
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      }
+    },
+    {
+      "arm": "fire",
+      "prefix": [
+        {
+          "label": "forward",
+          "tic": 71,
+          "variables": [
+            271.6531066894531,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "768ac03e2f27abf853a93ca09cde39b5861456e3be63ba8c4a939370ffc158a8",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "settle",
+          "tic": 99,
+          "variables": [
+            401.8170471191406,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "92da2ff7a381963007ee56f806db85cdff15579c84104e180c3088e90204b32a",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "turn",
+          "tic": 131,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "632c66f225e1f922e67e105113947d631fdad4550b59cdd266a4200edaf1eb4a",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "partial_attack",
+          "tic": 134,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "45ce4619934698112b6d60fed4d1dd3f4f50842837953b48f809c4d48f381f05",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "released",
+          "tic": 204,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            49.0
+          ],
+          "screen_sha256": "557db81e3b8a317a9f5a1a77c86dd60ad9beb67c12be658b4bf7b3d371b0bb2c",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        }
+      ],
+      "after": {
+        "label": "after_action",
+        "tic": 216,
+        "variables": [
+          411.53102111816406,
+          -192.0,
+          103.71093752414708,
+          100.0,
+          0.0,
+          48.0
+        ],
+        "screen_sha256": "ffd19b1e8124fcac918498f7af258e08497538cac87bf3bd23a8a651c7f63fd5",
+        "labels": [
+          "BulletPuff",
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      },
+      "final": {
+        "label": "final",
+        "tic": 286,
+        "variables": [
+          411.87738037109375,
+          -199.43215942382812,
+          103.71093752414708,
+          94.0,
+          0.0,
+          48.0
+        ],
+        "screen_sha256": "565c639c5dd9ccf7134046943919fa62ff003b2c9a6af6c80e0e80416c7ebf4e",
+        "labels": [
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      }
+    },
+    {
+      "arm": "fire",
+      "prefix": [
+        {
+          "label": "forward",
+          "tic": 71,
+          "variables": [
+            271.6531066894531,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "768ac03e2f27abf853a93ca09cde39b5861456e3be63ba8c4a939370ffc158a8",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "settle",
+          "tic": 99,
+          "variables": [
+            401.8170471191406,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "92da2ff7a381963007ee56f806db85cdff15579c84104e180c3088e90204b32a",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "turn",
+          "tic": 131,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "632c66f225e1f922e67e105113947d631fdad4550b59cdd266a4200edaf1eb4a",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "partial_attack",
+          "tic": 134,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "45ce4619934698112b6d60fed4d1dd3f4f50842837953b48f809c4d48f381f05",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "released",
+          "tic": 204,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            49.0
+          ],
+          "screen_sha256": "557db81e3b8a317a9f5a1a77c86dd60ad9beb67c12be658b4bf7b3d371b0bb2c",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        }
+      ],
+      "after": {
+        "label": "after_action",
+        "tic": 216,
+        "variables": [
+          411.53102111816406,
+          -192.0,
+          103.71093752414708,
+          100.0,
+          0.0,
+          48.0
+        ],
+        "screen_sha256": "ffd19b1e8124fcac918498f7af258e08497538cac87bf3bd23a8a651c7f63fd5",
+        "labels": [
+          "BulletPuff",
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      },
+      "final": {
+        "label": "final",
+        "tic": 286,
+        "variables": [
+          411.87738037109375,
+          -199.43215942382812,
+          103.71093752414708,
+          94.0,
+          0.0,
+          48.0
+        ],
+        "screen_sha256": "565c639c5dd9ccf7134046943919fa62ff003b2c9a6af6c80e0e80416c7ebf4e",
+        "labels": [
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      }
+    },
+    {
+      "arm": "withhold",
+      "prefix": [
+        {
+          "label": "forward",
+          "tic": 71,
+          "variables": [
+            271.6531066894531,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "768ac03e2f27abf853a93ca09cde39b5861456e3be63ba8c4a939370ffc158a8",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "settle",
+          "tic": 99,
+          "variables": [
+            401.8170471191406,
+            -192.0,
+            0.0,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "92da2ff7a381963007ee56f806db85cdff15579c84104e180c3088e90204b32a",
+          "labels": [
+            "DoomPlayer"
+          ]
+        },
+        {
+          "label": "turn",
+          "tic": 131,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "632c66f225e1f922e67e105113947d631fdad4550b59cdd266a4200edaf1eb4a",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "partial_attack",
+          "tic": 134,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            50.0
+          ],
+          "screen_sha256": "45ce4619934698112b6d60fed4d1dd3f4f50842837953b48f809c4d48f381f05",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        },
+        {
+          "label": "released",
+          "tic": 204,
+          "variables": [
+            411.53102111816406,
+            -192.0,
+            103.71093752414708,
+            100.0,
+            0.0,
+            49.0
+          ],
+          "screen_sha256": "557db81e3b8a317a9f5a1a77c86dd60ad9beb67c12be658b4bf7b3d371b0bb2c",
+          "labels": [
+            "DoomPlayer",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "HealthBonus",
+            "Zombieman"
+          ]
+        }
+      ],
+      "after": {
+        "label": "after_action",
+        "tic": 216,
+        "variables": [
+          411.53102111816406,
+          -192.0,
+          103.71093752414708,
+          100.0,
+          0.0,
+          49.0
+        ],
+        "screen_sha256": "4e53f7b50f9ea4d43a8e901dc69f2e1d191f9b98d63bf12ca5aa669e3e32b4c6",
+        "labels": [
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      },
+      "final": {
+        "label": "final",
+        "tic": 286,
+        "variables": [
+          411.87738037109375,
+          -199.43215942382812,
+          103.71093752414708,
+          94.0,
+          0.0,
+          49.0
+        ],
+        "screen_sha256": "565c639c5dd9ccf7134046943919fa62ff003b2c9a6af6c80e0e80416c7ebf4e",
+        "labels": [
+          "DoomPlayer",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "HealthBonus",
+          "Zombieman"
+        ]
+      }
+    }
+  ]
+}
