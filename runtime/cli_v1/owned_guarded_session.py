@@ -971,6 +971,17 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        if not self._cancel_transaction_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'cancel_transaction_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_owned_transaction()
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def _close_owned_transaction(self):
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()
