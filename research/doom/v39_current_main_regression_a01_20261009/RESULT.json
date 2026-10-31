@@ -1,0 +1,33 @@
+{
+  "classification": "CURRENT_MAIN_MODEL_FREE_REGRESSION_REFRESH",
+  "main_commit": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "source_pin_count": 47,
+  "predecessor_pin_commit": "cb3fb7cea16ab57c5474164dc17b88f7ff51daa9",
+  "predecessor_pin_count": 45,
+  "changed_predecessor_pin_count": 3,
+  "normal": {
+    "exit": 0,
+    "tests": 81,
+    "passed": 81,
+    "failed": 0,
+    "elapsed_seconds": 0.128
+  },
+  "optimized": {
+    "exit": 0,
+    "tests": 81,
+    "passed": 81,
+    "failed": 0,
+    "elapsed_seconds": 0.139
+  },
+  "changed_predecessor_pins": [
+    "research/doom/doom_controller_failure_cleanup_v1.py",
+    "research/doom/test_map01_overlap_controller_v39.py",
+    "research/doom/test_map01_v39_pending_observation_drain.py"
+  ],
+  "interpretation": "Both modes pass the scoped current-main model-free regression set. This is source regression evidence only, not live threat-response, physical input release, useful feedback, recovery, or task-effect evidence.",
+  "limits": [
+    "No game, model, GUI, OS input, or container was started.",
+    "The regression set does not establish whether threat-linked HUD changes interrupt an inappropriate running cover before model return.",
+    "No live allocation was run or authorized; Issue #59's required fresh threat exposure remains open."
+  ]
+}
