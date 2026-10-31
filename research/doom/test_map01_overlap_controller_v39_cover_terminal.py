@@ -36,7 +36,7 @@ class CoverTerminalTests(unittest.TestCase):
                  abort_failure=False, abort_terminal_race=False,
                  interrupt_blocks=False,
                  invalidation_failure=False, fatal_receipt_collision=False,
-                 planner_wait_cap=2):
+                 planner_wait_cap=2, reject_renewal=False):
         trace = {"case": name, "commands": [], "events": [], "timeline": []}
         started = threading.Event()
         complete = threading.Event()
@@ -91,6 +91,10 @@ class CoverTerminalTests(unittest.TestCase):
                         complete.set()
                         raise NextBoundary("renewal")
                     identifier = command["id"]
+                    if reject_renewal and count == 2:
+                        incoming.put({"event": "rejected", "id": identifier,
+                                      "reason": "latest observation sequence required before input"})
+                        return
                     if executor is not None:
                         executor.submit(identifier, command["steps"], 1,
                                         time.perf_counter_ns() + 1_000_000_000)
@@ -562,6 +566,39 @@ class CoverTerminalTests(unittest.TestCase):
         self.assert_rejected(trace)
         self.assertNotIn("planner_wait_expired", trace["timeline"])
         self.assertNotIn("pending planner turn transport aborted", trace["error_notes"])
+
+    def test_rejected_renewal_retires_pending_planner_before_executor_join(self):
+        trace = self.exercise("rejected-renewal", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True, planner_wait_cap=.3)
+        self.assertEqual(trace["error"]["type"], "RuntimeError", trace)
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertIn("local_invalidation:synthetic-turn", trace["timeline"], trace)
+        self.assertIn("abort_transport", trace["timeline"], trace)
+        self.assertNotIn("planner_wait_expired", trace["timeline"], trace)
+        self.assertNotIn("final_admission", trace["timeline"], trace)
+        self.assertEqual(trace["fatal_receipt"]["terminal"]["status"], "completed")
+        self.assertFalse(trace["fatal_receipt"]["grants_input_authority"])
+        self.assertTrue(trace["all_futures_done"])
+
+    def test_rejected_renewal_retains_error_if_retirement_reports_failure(self):
+        trace = self.exercise("rejected-renewal-abort-fault", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True, abort_failure=True,
+                              planner_wait_cap=.3)
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertIn("abort_transport", trace["timeline"])
+        self.assertTrue(any("planner transport abort failed" in note for note in trace["error_notes"]))
+        self.assertNotIn("final_admission", trace["timeline"])
+        self.assertTrue(trace["all_futures_done"])
+
+    def test_rejected_renewal_retirement_follows_local_invalidation_failure(self):
+        trace = self.exercise("rejected-renewal-invalidation-fault", "completed", NEUTRAL,
+                              renewed=True, reject_renewal=True, invalidation_failure=True,
+                              planner_wait_cap=.3)
+        self.assertIn("latest observation sequence required before input", trace["error"]["message"])
+        self.assertIn("abort_transport", trace["timeline"])
+        self.assertTrue(any("local invalidation failed" in note for note in trace["error_notes"]))
+        self.assertNotIn("final_admission", trace["timeline"])
+        self.assertTrue(trace["all_futures_done"])
 
     def test_neutral_natural_terminals_keep_renewal(self):
         for status in ("completed", "expired"):

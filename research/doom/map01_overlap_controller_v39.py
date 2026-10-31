@@ -1624,7 +1624,10 @@ def main():
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
                     if next_accepted["event"] != "accepted":
-                        raise RuntimeError(next_accepted)
+                        error = RuntimeError(next_accepted)
+                        retire_failed_cover(planner, planner_handle, future,
+                                            current_terminal, error, args.out)
+                        raise error
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
