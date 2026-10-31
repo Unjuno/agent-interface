@@ -585,10 +585,10 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                   post_resume_close)
                 self.assertFalse(post_resume_close.get('replay_allowed'),
                                  post_resume_close)
-                # Closing a retired owner must not change either observed key.
-                self.assertEqual(
-                    report['independent_readback_after_close']['keys_down'],
-                    report['independent_readback_after_resume']['horizon_readback'])
+                # A later client intentionally holds a; closing the old owner
+                # must not release that newer client's input.
+                self.assertTrue(
+                    report['independent_readback_after_close']['keys_down']['a'])
                 if _WAIT_CANCEL_WHILE_STOPPED:
                     self.assertEqual(post_resume_close['owner_release_attempt'],
                                      stopped_result['owner_release_attempt'])

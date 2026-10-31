@@ -1,3 +1,5 @@
+> **Correction:** The claim below that the original post-close held-key assertion contradicted the earlier task oracle was wrong. The test deliberately presses `a` for a later client between those measurements. PR #9974 replaced the correct assertion with an invalid comparison; the follow-up `wslc_supervisor_resume_window_20261031` restores the check that the newer hold survives. The b06/b07 raw observations and old-task/fresh-task classifications below remain unchanged.
+
 # Stopped-Xvfb supervisor: retain the fresh task even when the old task fails
 
 The existing stopped-server integration first required `a` to remain down after close, then required the supervisor-mode original-task oracle to pass, which requires `a` up at the earlier horizon. That combination made a successful supervisor outcome impossible. This test-only change compares both key states before and after close instead, and evaluates the **unchanged** original-task expectation after the independent fresh-target recovery. UNKNOWN/no-replay assertions and both task oracles remain in force; an original-task failure still fails the supervisor-mode test.
