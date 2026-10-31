@@ -1,0 +1,70 @@
+{
+  "plain": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "model_calls": 6,
+    "input_tokens": 93054,
+    "cached_input_tokens_subset": 73472,
+    "output_tokens": 372,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 29024809589,
+    "model_call_ns": 19821219591,
+    "routes": [
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold"
+    ]
+  },
+  "ephemeral": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "model_calls": 6,
+    "input_tokens": 94505,
+    "cached_input_tokens_subset": 75136,
+    "output_tokens": 706,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 33925453040,
+    "model_call_ns": 20495064856,
+    "routes": [
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold",
+      "cold"
+    ]
+  },
+  "persistent": {
+    "tasks": 6,
+    "exact": 6,
+    "releases_verified": 6,
+    "model_calls": 2,
+    "input_tokens": 25895,
+    "cached_input_tokens_subset": 12288,
+    "output_tokens": 226,
+    "reasoning_output_subset": 0,
+    "task_elapsed_ns": 24025157792,
+    "model_call_ns": 8330176474,
+    "routes": [
+      "cold",
+      "reuse",
+      "reuse",
+      "repair",
+      "reuse",
+      "reuse"
+    ]
+  },
+  "limits": {
+    "schema_preflight": "not run",
+    "arm_order": "fixed plain, ephemeral, persistent",
+    "sample": "one six-task sequence per arm",
+    "provider_cost": "unknown",
+    "ipc": "exploratory shared volume, not hardened",
+    "cached_input": "subset of input, not additive"
+  }
+}
