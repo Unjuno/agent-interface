@@ -1,0 +1,321 @@
+{
+  "cell_summaries": {
+    "CASE_PATCH": {
+      "CONTROLLED": {
+        "metrics": {
+          "dev_accuracy": {
+            "max_fraction": "21/32",
+            "mean_fraction": "51/80",
+            "median_fraction": "5/8",
+            "min_fraction": "5/8",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "fresh_accuracy": {
+            "max_fraction": "5/8",
+            "mean_fraction": "3/5",
+            "median_fraction": "19/32",
+            "min_fraction": "19/32",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "optimism": {
+            "max_fraction": "1/16",
+            "mean_fraction": "3/80",
+            "median_fraction": "1/32",
+            "min_fraction": "0",
+            "n": 100,
+            "negative": 0,
+            "positive": 80,
+            "zero": 20
+          }
+        },
+        "n": 100,
+        "safety_vetoes": 100
+      },
+      "FULL": {
+        "metrics": {
+          "dev_accuracy": {
+            "max_fraction": "23/32",
+            "mean_fraction": "111/160",
+            "median_fraction": "11/16",
+            "min_fraction": "11/16",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "fresh_accuracy": {
+            "max_fraction": "5/8",
+            "mean_fraction": "3/5",
+            "median_fraction": "19/32",
+            "min_fraction": "19/32",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "optimism": {
+            "max_fraction": "3/32",
+            "mean_fraction": "3/32",
+            "median_fraction": "3/32",
+            "min_fraction": "3/32",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          }
+        },
+        "n": 100,
+        "safety_vetoes": 100
+      }
+    },
+    "STRATUM_PATCH": {
+      "CONTROLLED": {
+        "metrics": {
+          "dev_accuracy": {
+            "max_fraction": "29/32",
+            "mean_fraction": "9/10",
+            "median_fraction": "29/32",
+            "min_fraction": "7/8",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "fresh_accuracy": {
+            "max_fraction": "29/32",
+            "mean_fraction": "9/10",
+            "median_fraction": "29/32",
+            "min_fraction": "7/8",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "optimism": {
+            "max_fraction": "0",
+            "mean_fraction": "0",
+            "median_fraction": "0",
+            "min_fraction": "0",
+            "n": 100,
+            "negative": 0,
+            "positive": 0,
+            "zero": 100
+          }
+        },
+        "n": 100,
+        "safety_vetoes": 100
+      },
+      "FULL": {
+        "metrics": {
+          "dev_accuracy": {
+            "max_fraction": "29/32",
+            "mean_fraction": "29/32",
+            "median_fraction": "29/32",
+            "min_fraction": "29/32",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "fresh_accuracy": {
+            "max_fraction": "29/32",
+            "mean_fraction": "29/32",
+            "median_fraction": "29/32",
+            "min_fraction": "29/32",
+            "n": 100,
+            "negative": 0,
+            "positive": 100,
+            "zero": 0
+          },
+          "optimism": {
+            "max_fraction": "0",
+            "mean_fraction": "0",
+            "median_fraction": "0",
+            "min_fraction": "0",
+            "n": 100,
+            "negative": 0,
+            "positive": 0,
+            "zero": 100
+          }
+        },
+        "n": 100,
+        "safety_vetoes": 100
+      }
+    }
+  },
+  "feedback_full_minus_controlled_within_updater": {
+    "CASE_PATCH": {
+      "dev_accuracy": {
+        "max_fraction": "3/32",
+        "mean_fraction": "9/160",
+        "median_fraction": "1/16",
+        "min_fraction": "1/32",
+        "n": 100,
+        "negative": 0,
+        "positive": 100,
+        "zero": 0
+      },
+      "fresh_accuracy": {
+        "max_fraction": "0",
+        "mean_fraction": "0",
+        "median_fraction": "0",
+        "min_fraction": "0",
+        "n": 100,
+        "negative": 0,
+        "positive": 0,
+        "zero": 100
+      },
+      "optimism": {
+        "max_fraction": "3/32",
+        "mean_fraction": "9/160",
+        "median_fraction": "1/16",
+        "min_fraction": "1/32",
+        "n": 100,
+        "negative": 0,
+        "positive": 100,
+        "zero": 0
+      }
+    },
+    "STRATUM_PATCH": {
+      "dev_accuracy": {
+        "max_fraction": "1/32",
+        "mean_fraction": "1/160",
+        "median_fraction": "0",
+        "min_fraction": "0",
+        "n": 100,
+        "negative": 0,
+        "positive": 20,
+        "zero": 80
+      },
+      "fresh_accuracy": {
+        "max_fraction": "1/32",
+        "mean_fraction": "1/160",
+        "median_fraction": "0",
+        "min_fraction": "0",
+        "n": 100,
+        "negative": 0,
+        "positive": 20,
+        "zero": 80
+      },
+      "optimism": {
+        "max_fraction": "0",
+        "mean_fraction": "0",
+        "median_fraction": "0",
+        "min_fraction": "0",
+        "n": 100,
+        "negative": 0,
+        "positive": 0,
+        "zero": 100
+      }
+    }
+  },
+  "inference": "finite authored 100-seed fixture only; no p-value or population inference",
+  "input_sha256": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d",
+  "interaction_case_minus_stratum_of_feedback_effect": {
+    "dev_accuracy": {
+      "max_fraction": "3/32",
+      "mean_fraction": "1/20",
+      "median_fraction": "3/64",
+      "min_fraction": "0",
+      "n": 100,
+      "negative": 0,
+      "positive": 90,
+      "zero": 10
+    },
+    "fresh_accuracy": {
+      "max_fraction": "0",
+      "mean_fraction": "-1/160",
+      "median_fraction": "0",
+      "min_fraction": "-1/32",
+      "n": 100,
+      "negative": 20,
+      "positive": 0,
+      "zero": 80
+    },
+    "optimism": {
+      "max_fraction": "3/32",
+      "mean_fraction": "9/160",
+      "median_fraction": "1/16",
+      "min_fraction": "1/32",
+      "n": 100,
+      "negative": 0,
+      "positive": 100,
+      "zero": 0
+    }
+  },
+  "rows": 400,
+  "schema": "feedback-update-rule-factorial-analysis-v1",
+  "seeds_per_cell": 100,
+  "update_case_minus_stratum_within_feedback": {
+    "CONTROLLED": {
+      "dev_accuracy": {
+        "max_fraction": "-7/32",
+        "mean_fraction": "-21/80",
+        "median_fraction": "-17/64",
+        "min_fraction": "-9/32",
+        "n": 100,
+        "negative": 100,
+        "positive": 0,
+        "zero": 0
+      },
+      "fresh_accuracy": {
+        "max_fraction": "-9/32",
+        "mean_fraction": "-3/10",
+        "median_fraction": "-5/16",
+        "min_fraction": "-5/16",
+        "n": 100,
+        "negative": 100,
+        "positive": 0,
+        "zero": 0
+      },
+      "optimism": {
+        "max_fraction": "1/16",
+        "mean_fraction": "3/80",
+        "median_fraction": "1/32",
+        "min_fraction": "0",
+        "n": 100,
+        "negative": 0,
+        "positive": 80,
+        "zero": 20
+      }
+    },
+    "FULL": {
+      "dev_accuracy": {
+        "max_fraction": "-3/16",
+        "mean_fraction": "-17/80",
+        "median_fraction": "-7/32",
+        "min_fraction": "-7/32",
+        "n": 100,
+        "negative": 100,
+        "positive": 0,
+        "zero": 0
+      },
+      "fresh_accuracy": {
+        "max_fraction": "-9/32",
+        "mean_fraction": "-49/160",
+        "median_fraction": "-5/16",
+        "min_fraction": "-5/16",
+        "n": 100,
+        "negative": 100,
+        "positive": 0,
+        "zero": 0
+      },
+      "optimism": {
+        "max_fraction": "3/32",
+        "mean_fraction": "3/32",
+        "median_fraction": "3/32",
+        "min_fraction": "3/32",
+        "n": 100,
+        "negative": 0,
+        "positive": 100,
+        "zero": 0
+      }
+    }
+  }
+}
