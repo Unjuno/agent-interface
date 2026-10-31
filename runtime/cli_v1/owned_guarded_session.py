@@ -814,6 +814,11 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
 
     def cancel_guarded(self, token, *, operation_id=None,
                        deadline_monotonic_ns=None):
+        if getattr(self, '_idle_rpc_quarantined', False):
+            return {'status':'cancel_unconfirmed','input_dispatched':None,
+                    'release_attempted':False,'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN','task_success':None,
+                    'replay_allowed':False,'late_server_request_possible':True}
         if deadline_monotonic_ns is None:
             deadline_monotonic_ns = time.monotonic_ns() + int(
                 _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)

@@ -73,6 +73,65 @@ class BoundedIdleOwnerExperiment(unittest.TestCase):
  def test_owner_cancel_blocked_capture_discards_late_frame(self):self.exercise(True)
 
 class BoundedIdleOwnedProcessExperiment(unittest.TestCase):
+ def test_inflight_cancel_must_not_release_after_idle_timeout(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   sent,allow_poll=threading.Event(),threading.Event();obs_errors=[];cancel_results=[];cancel_errors=[]
+   original_control=None;observe_thread=cancel_thread=None
+   try:
+    owner.get();original_control=owner._control
+    class DelayedControl:
+     def send(self,request):sent.set()
+     def poll(self,timeout):allow_poll.wait(2);return False
+    owner._control=DelayedControl()
+    def observe():
+     try:owner.observe_idle_until(deadline_ns=time.monotonic_ns()+400_000_000,cancel_token='race-capture')
+     except Exception as error:obs_errors.append(error)
+    def cancel():
+     try:cancel_results.append(owner.cancel_guarded('race-capture'))
+     except Exception as error:cancel_errors.append(error)
+    observe_thread=threading.Thread(target=observe);observe_thread.start();until=time.monotonic()+2
+    while not (root/'owner-return-entered').exists() and time.monotonic()<until:time.sleep(.005)
+    self.assertTrue((root/'owner-return-entered').exists())
+    with patch.object(owner,'_cleanup_after_owner_retirement',side_effect=AssertionError('unfenced cleanup')):
+     cancel_thread=threading.Thread(target=cancel);cancel_thread.start();self.assertTrue(sent.wait(1))
+     observe_thread.join(2);self.assertFalse(observe_thread.is_alive());self.assertTrue(owner.review_required)
+     allow_poll.set();cancel_thread.join(2)
+     self.assertFalse(cancel_thread.is_alive());self.assertEqual(cancel_errors,[])
+     self.assertEqual(len(cancel_results),1);self.assertFalse(cancel_results[0].get('release_attempted',False))
+   finally:
+    allow_poll.set();(root/'resume-owner-return').write_text('resume')
+    if observe_thread is not None:observe_thread.join(2)
+    if cancel_thread is not None:cancel_thread.join(2)
+    if original_control is not None:owner._control=original_control
+    owner.close()
+
+ def test_quarantined_cancel_cannot_launch_unfenced_cleanup(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);(root/'block-owner-return').write_text('block')
+   owner=OwnedGuardedSessionOwner({'app':20},td,':fake-owned-idle',process_identity=True,query_worker=True,
+                                  observation_worker=True,_owner_factory=fake_process_owner)
+   original_control=None
+   try:
+    owner.get()
+    with self.assertRaisesRegex(RuntimeError,'deadline expired'):
+     owner.observe_idle_until(deadline_ns=time.monotonic_ns()+300_000_000,cancel_token='capture-timeout')
+    original_control=owner._control
+    class TimedOutControl:
+     def send(self,request):pass
+     def poll(self,timeout):return False
+    owner._control=TimedOutControl()
+    with patch.object(owner,'_cleanup_after_owner_retirement',side_effect=AssertionError('unfenced cleanup')):
+     result=owner.cancel_guarded('capture-timeout')
+    self.assertFalse(result.get('release_attempted',False))
+    self.assertFalse(result['release_confirmed'])
+    self.assertEqual(result.get('cleanup_status'),'UNKNOWN')
+   finally:
+    if original_control is not None:owner._control=original_control
+    (root/'resume-owner-return').write_text('resume');owner.close()
+
  def test_cancel_after_timeout_cannot_restore_quarantined_owner(self):
   with tempfile.TemporaryDirectory() as td:
    root=Path(td);(root/'block-owner-return').write_text('block')
