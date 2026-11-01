@@ -222,6 +222,47 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         return self._with_target_receipts(
             super()._retirement_cleanup_result_fields(retirement))
 
+    def finalize_exited_unbound_target(self):
+        """Close only a dead unbound target handle after all owner workers retire.
+
+        This never signals, releases input, or changes the old UNKNOWN result.
+        Call only after close; refusal retains custody for a later audit.
+        """
+        refused={'status':'refused','cleanup_status':'UNKNOWN','task_success':None,'replay_allowed':False}
+        locks=[]
+        try:
+            for lock in (self._target_retirement_lock,self._target_cancel_guard,self._rpc_lock,self._control_lock):
+                if not lock.acquire(blocking=False):return dict(refused,reason='operation_busy')
+                locks.append(lock)
+            process=self._process;retirement=getattr(self,'_retirement',None)
+            supervisor=getattr(self,'_target_identity_supervisor_retirement',None)
+            report=getattr(self,'close_report',None)
+            if (self._owned_target_binding is not None or not isinstance(report,dict)
+                    or report.get('cleanup_status')!='UNKNOWN' or not isinstance(retirement,dict)
+                    or retirement.get('retired') is not True or process is None
+                    or process.is_alive() or type(process.exitcode) is not int
+                    or not isinstance(supervisor,dict) or supervisor.get('retired') is not True
+                    or type(supervisor.get('exitcode')) is not int):
+                return dict(refused,reason='retirement_unconfirmed')
+            state=getattr(self,'_unbound_finalize_state',None)
+            if state=='closed':
+                return {'status':'handle_closed','cleanup_status':'UNKNOWN','task_success':None,'replay_allowed':False}
+            if state is not None or self._owned_target_process._closed:
+                return dict(refused,reason='handle_close_unconfirmed')
+            self._unbound_finalize_state='in_progress'
+            try:self._owned_target_process.close(_custody=self._target_custody)
+            except RuntimeError:
+                self._unbound_finalize_state=None
+                return dict(refused,reason='target_still_alive')
+            except BaseException as error:
+                self._unbound_finalize_state='unknown'
+                if not isinstance(error,Exception):raise
+                return dict(refused,reason='handle_close_failed',error_type=type(error).__name__)
+            self._unbound_finalize_state='closed'
+            return {'status':'handle_closed','cleanup_status':'UNKNOWN','task_success':None,'replay_allowed':False}
+        finally:
+            for lock in reversed(locks):lock.release()
+
     def close(self):
         with self._target_retirement_lock:
             previous = deepcopy(getattr(self, '_owned_target_retirement', None))
@@ -258,4 +299,8 @@ class OwnedTargetGuardedSessionOwner(OwnedGuardedSessionOwner):
         finally:
             supervisor = getattr(self, '_target_identity_supervisor', None)
             if supervisor is not None:
-                supervisor.close()
+                receipt=supervisor.close()
+                previous=getattr(self,'_target_identity_supervisor_retirement',None)
+                if not (isinstance(previous,dict) and previous.get('retired') is True
+                        and type(previous.get('exitcode')) is int):
+                    self._target_identity_supervisor_retirement=receipt
