@@ -1,0 +1,27 @@
+test_shutdown_timeout_does_not_allow_late_snapshot_rpc (runtime.cli_v1.test_owned_start_close.OwnedStartCloseMCPTests.test_shutdown_timeout_does_not_allow_late_snapshot_rpc) ... ok
+test_shutdown_racing_with_latch_check_blocks_late_snapshot (runtime.cli_v1.test_owned_start_close.OwnedStartCloseMCPTests.test_shutdown_racing_with_latch_check_blocks_late_snapshot) ... FAIL
+
+======================================================================
+FAIL: test_shutdown_racing_with_latch_check_blocks_late_snapshot (runtime.cli_v1.test_owned_start_close.OwnedStartCloseMCPTests.test_shutdown_racing_with_latch_check_blocks_late_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/src/runtime/cli_v1/test_owned_start_close.py", line 432, in test_shutdown_racing_with_latch_check_blocks_late_snapshot
+    self.assertFalse(results,'snapshot RPC completed after shutdown returned')
+AssertionError: [{'session_id': '72757a047c104b20ab07f8f8560f3c1f', 'mode': 'guarded-x11', 'state': 'open', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': False, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': False, 'retention_mode': 'files', 'compiled_scope': 'native-x11:da8cc59fcd4c429e9f6e19c2b8564bc5', 'compiled_surface': 'x11-window-20', 'observations': None, 'target_queries': {'retired': False, 'pending': False, 'thread_alive': False, 'close_error': None}, 'target': 'app', 'observation_sequence': 0, 'review_required': False}] is not false : snapshot RPC completed after shutdown returned
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.108s
+
+FAILED (failures=1)
