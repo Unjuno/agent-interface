@@ -12,11 +12,23 @@ from __future__ import annotations
 import math
 import multiprocessing
 import os
+import socket
 import threading
 import time
 
 
-def _serve_one(command_receive, result_send, ready_send, worker_target):
+def _serve_one(command_receive, result_send, ready_send, worker_target, xauthority=None,
+               pinned_display_name=None, expected_owner=None):
+    if xauthority is not None:
+        os.environ['XAUTHORITY'] = xauthority
+    pinned_backend = None
+    if pinned_display_name is not None:
+        from runtime.backends.x11_v1.backend import X11Backend
+        pinned_backend = X11Backend(pinned_display_name, {})
+        from .xres_client_fence import client_pid_at_base
+        if client_pid_at_base(pinned_backend.d, expected_owner['resource_base']) != expected_owner['pid']:
+            pinned_backend.close()
+            raise RuntimeError('pinned display owner identity mismatch')
     try:
         ready_send.send({'status': 'ready', 'pid': multiprocessing.current_process().pid})
     finally:
@@ -30,9 +42,28 @@ def _serve_one(command_receive, result_send, ready_send, worker_target):
             result = {'status': 'unknown', 'reason': 'malformed_request'}
         elif time.monotonic_ns() >= request.get('deadline_monotonic_ns', 0):
             result = {'status': 'unknown', 'reason': 'deadline_expired_before_start'}
+        elif pinned_display_name is not None and request.get('display_name') != pinned_display_name:
+            result = {'status': 'unknown', 'reason': 'pinned_display_mismatch',
+                      'operation_id': request.get('operation_id'),
+                      'session_id': request.get('session_id'),
+                      'cleanup_status': 'UNKNOWN'}
+        elif pinned_display_name is not None and (
+                type(request.get('owner_pid')) is not int
+                or type(request.get('x_resource_base')) is not int
+                or request['owner_pid'] != expected_owner['pid']
+                or request['x_resource_base'] != expected_owner['resource_base']):
+            result = {'status': 'unknown', 'reason': 'pinned_owner_mismatch',
+                      'operation_id': request.get('operation_id'),
+                      'session_id': request.get('session_id'),
+                      'cleanup_status': 'UNKNOWN',
+                      'owner_release_attempt': {'status': 'not_attempted',
+                                                'reason': 'pinned_owner_mismatch'}}
         else:
             try:
-                result = worker_target(request)
+                if pinned_backend is None:
+                    result = worker_target(request)
+                else:
+                    result = worker_target(request, pinned_backend=pinned_backend)
                 if not isinstance(result, dict):
                     result = {'status': 'unknown', 'reason': 'malformed_worker_result'}
             except BaseException as error:
@@ -43,6 +74,11 @@ def _serve_one(command_receive, result_send, ready_send, worker_target):
     except (EOFError, OSError):
         pass
     finally:
+        if pinned_backend is not None:
+            try:
+                pinned_backend.close()
+            except BaseException:
+                pass
         for connection in (command_receive, result_send):
             try:
                 connection.close()
@@ -50,14 +86,60 @@ def _serve_one(command_receive, result_send, ready_send, worker_target):
                 pass
 
 
+def _serve_one_with_server_guard(endpoint, expected_server_pid, *args):
+    """Install the X server fence in this disposable process before any X I/O."""
+    from .pidfd_transfer import receive_pidfd
+    from .owned_xlib_connector import OwnedXlibConnector
+    guard = None
+    fd = None
+    try:
+        endpoint.setblocking(False)
+        fd = receive_pidfd(endpoint)
+        endpoint.close()
+        guard = OwnedXlibConnector(fd, expected_server_pid, disposable=True)
+        received_fd, fd = fd, None
+        os.close(received_fd)
+        _serve_one(*args)
+    finally:
+        endpoint.close()
+        if fd is not None:
+            os.close(fd)
+        if guard is not None:
+            guard.close()
+
 class PrestartedCancellationSupervisor:
-    """A ready process that can accept at most one deadline-bound request."""
+    """A ready process that can accept at most one deadline-bound request.
+
+    An optional owned-server pidfd/PID pair pins this worker's new Xlib
+    connection before authentication. The caller retains the supplied fd and
+    must ensure it identifies the intended server. This is not a fence for
+    other workers, existing connections, or direct Xlib bypasses.
+    """
 
     def __init__(self, worker_target, *, expected_session_id=None,
                  startup_timeout_s=5.0,
-                 terminate_grace_s=0.1):
+                 terminate_grace_s=0.1, xauthority=None, pinned_display_name=None,
+                 expected_owner=None, owned_server_pidfd=None,
+                 owned_server_pid=None):
+        if (owned_server_pidfd is None) != (owned_server_pid is None):
+            raise ValueError('owned server pidfd and PID must be provided together')
+        guarded = owned_server_pidfd is not None
+        if guarded and (type(owned_server_pidfd) is not int or owned_server_pidfd < 0
+                or type(owned_server_pid) is not int or owned_server_pid <= 0
+                or pinned_display_name is None):
+            raise ValueError('owned server capability requires a pinned display and valid fd/PID')
         if not callable(worker_target):
             raise TypeError('worker_target must be callable')
+        if xauthority is not None and (type(xauthority) is not str or not xauthority or '\x00' in xauthority):
+            raise ValueError('xauthority must be a nonempty path string')
+        if pinned_display_name is not None and (worker_target is not x11_cancel_worker
+                or type(pinned_display_name) is not str or not pinned_display_name):
+            raise ValueError('pinned display requires the X11 cancellation worker and a display name')
+        if pinned_display_name is not None and (not isinstance(expected_owner, dict)
+                or type(expected_owner.get('pid')) is not int or expected_owner['pid'] <= 0
+                or type(expected_owner.get('resource_base')) is not int
+                or not 0 < expected_owner['resource_base'] < 2**32):
+            raise ValueError('pinned display requires an exact owner identity')
         if (type(startup_timeout_s) not in (int, float)
                 or not math.isfinite(startup_timeout_s)
                 or startup_timeout_s <= 0):
@@ -81,12 +163,28 @@ class PrestartedCancellationSupervisor:
         command_receive, command_send = self._context.Pipe(duplex=False)
         result_receive, result_send = self._context.Pipe(duplex=False)
         ready_receive, ready_send = self._context.Pipe(duplex=False)
-        process = self._context.Process(
-            target=_serve_one,
-            args=(command_receive, result_send, ready_send, worker_target),
-            name='guarded-cancel-supervisor')
+        sender = receiver = None
+        process = None
         try:
+            target = _serve_one
+            args = (command_receive, result_send, ready_send, worker_target, xauthority,
+                    pinned_display_name, expected_owner)
+            if guarded:
+                from .pidfd_transfer import send_pidfd
+                sender, receiver = socket.socketpair()
+                sender.setblocking(False)
+                receiver.setblocking(False)
+                send_pidfd(sender, owned_server_pidfd)
+                sender.close()
+                sender = None
+                target = _serve_one_with_server_guard
+                args = (receiver, owned_server_pid, *args)
+            process = self._context.Process(target=target, args=args,
+                name='guarded-cancel-supervisor')
             process.start()
+            if receiver is not None:
+                receiver.close()
+                receiver = None
             command_receive.close()
             result_send.close()
             ready_send.close()
@@ -112,7 +210,7 @@ class PrestartedCancellationSupervisor:
                 except OSError:
                     pass
             try:
-                alive = process.pid is not None and process.is_alive()
+                alive = process is not None and process.pid is not None and process.is_alive()
             except (AssertionError, ValueError):
                 alive = False
             if alive:
@@ -123,6 +221,9 @@ class PrestartedCancellationSupervisor:
                     process.join(self._terminate_grace_s)
             raise
         finally:
+            for endpoint in (sender, receiver):
+                if endpoint is not None:
+                    endpoint.close()
             try:
                 ready_receive.close()
             except OSError:
@@ -247,7 +348,7 @@ class PrestartedCancellationSupervisor:
             return self._terminate_locked()
 
 
-def x11_cancel_worker(request):
+def x11_cancel_worker(request, *, pinned_backend=None):
     """Observe exact owner disconnection, then release only recorded inputs.
 
     This function runs in the prestarted process. Every synchronous X request
@@ -322,7 +423,7 @@ def x11_cancel_worker(request):
                         cleanup_status='UNKNOWN')
         from Xlib.display import Display
         from .xres_client_fence import client_pid_at_base
-        display = Display(display_name)
+        display = pinned_backend.d if pinned_backend is not None else Display(display_name)
         disconnect_started_ns = time.monotonic_ns()
         while True:
             if time.monotonic_ns() >= deadline_ns:
@@ -364,10 +465,11 @@ def x11_cancel_worker(request):
                 observed_pid = supervisor_pid
                 break
             time.sleep(min(0.01, max(0, deadline_ns - time.monotonic_ns()) / 1e9))
-        try:
-            display.close()
-        except Exception:
-            pass
+        if pinned_backend is None:
+            try:
+                display.close()
+            except Exception:
+                pass
         result['owner_client_disconnect'] = {
             'status':'disconnected', 'reason':disconnect_reason,
             'owner_process_retired':True,
@@ -391,7 +493,7 @@ def x11_cancel_worker(request):
         from Xlib import X
         from Xlib.ext import xtest
         from runtime.backends.x11_v1.backend import BUTTON_MAP
-        backend = X11Backend(display_name, {})
+        backend = pinned_backend if pinned_backend is not None else X11Backend(display_name, {})
         backend.held_keycodes = dict(keys)
         backend.held_buttons = set(buttons)
         release_started_ns = time.monotonic_ns()
@@ -441,7 +543,7 @@ def x11_cancel_worker(request):
                     error=str(error)[:500], owner_release_attempt={
                         'status':'unknown', 'reason':'release_failed'})
     finally:
-        if backend is not None:
+        if backend is not None and pinned_backend is None:
             try:
                 backend.close()
             except BaseException:
