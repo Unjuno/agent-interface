@@ -9,7 +9,9 @@ from copy import deepcopy
 import hashlib
 import json
 import multiprocessing
+import os
 from pathlib import Path
+import select
 import threading
 import time
 from types import SimpleNamespace
@@ -23,6 +25,27 @@ from ..guarded_x11_v1.xres_client_fence import (
 
 class ParentExecutionUnknown(RuntimeError):
     """Parent refused a mutating request before attempting its RPC."""
+
+
+class _ExperimentalEventfd:
+    """Linux-only research prototype; descriptor lifetime is not yet managed."""
+    def __init__(self):
+        self.fd = os.eventfd(0, os.EFD_CLOEXEC | os.EFD_NONBLOCK)
+
+    def __getstate__(self):
+        from multiprocessing.reduction import DupFd
+        return {'fd': DupFd(self.fd)}
+
+    def __setstate__(self, state):
+        self.fd = state['fd'].detach()
+
+    def set(self):
+        os.eventfd_write(self.fd, 1)
+
+    def is_set(self):
+        poller = select.poll()
+        poller.register(self.fd, select.POLLIN)
+        return bool(poller.poll(0))
 
 
 def _input_rpc(operation, arguments):
@@ -354,7 +377,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
-        self._unknown_event = multiprocessing.get_context('spawn').Event()
+        self._unknown_event = (_ExperimentalEventfd()
+            if os.environ.get('AGENT_INTERFACE_EXPERIMENTAL_EVENTFD') == '1'
+            else multiprocessing.get_context('spawn').Event())
         self._execution_unknown = False
         self._retirement = None
         self._owner_client_disconnect = None
