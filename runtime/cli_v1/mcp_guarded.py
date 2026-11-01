@@ -117,10 +117,12 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def close(self):
-        already_closed = self.bridge is not None and getattr(self.bridge, '_closed', False)
-        if self.bridge is not None and not already_closed:
-            # Consume bridge input authority before any cleanup can fail.
+        bridge_closed = self.bridge is not None and getattr(self.bridge, '_closed', False)
+        already_closed = bridge_closed and not getattr(self, '_mcp_close_pending', False)
+        if self.bridge is not None and not bridge_closed:
+            # Consume authority now; remember unfinished cleanup across retries.
             self.bridge._closed = True
+            self._mcp_close_pending = True
         stop_workers = getattr(self.bridge, 'stop_target_queries', None)
         if callable(stop_workers):
             # Retire both idle read-only workers before the session closes its
@@ -153,6 +155,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                 report.update(status='cleanup_failed', receipt_journal={
                     'status':'close_failed', 'error_type':type(error).__name__})
             self.close_report = deepcopy(report)
+        self._mcp_close_pending = False
         return report
 
     def cancel_guarded(self, token):
