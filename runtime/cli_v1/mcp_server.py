@@ -397,6 +397,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_cancel_transaction_timeout_s=(
                       _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S),
                   _guarded_owner_factory=None,
+                  _guarded_display_owner=None, _guarded_xauthority=None,
                   _guarded_win32_owner_factory=None,
                   _guarded_win32_producer_factory=None,
                   _guarded_win32_task_oracle=None,
@@ -476,6 +477,19 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded_owned_process and (session_mode != 'guarded-x11'
             or not guarded_process_identity or not guarded_query_worker):
         raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
+    if (_guarded_display_owner is None) != (_guarded_xauthority is None):
+        raise ValueError('owned display and explicit X authority must be provided together')
+    if _guarded_display_owner is not None:
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        if (not isinstance(_guarded_display_owner, PrivateDisplayOwner)
+                or session_mode != 'guarded-x11' or not guarded_owned_process
+                or not guarded_prestarted_cancel_supervisor
+                or type(display_name) is not str or not display_name
+                or type(_guarded_xauthority) is not str or not _guarded_xauthority
+                or '\x00' in _guarded_xauthority
+                or _guarded_owner_factory is not None
+                or _guarded_cancel_supervisor_target is not None):
+            raise ValueError('owned display requires explicit standard guarded X11 owner and supervisor')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -570,8 +584,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                              retention_mode=guarded_retention_mode)
         if guarded_owned_process:
             from .owned_guarded_session import OwnedGuardedSessionOwner
+            owned_display_options = ({'xauthority':_guarded_xauthority,
+                                      '_owned_display_owner':_guarded_display_owner}
+                                     if _guarded_display_owner is not None else {})
             owner = OwnedGuardedSessionOwner(targets, root, display_name,
-                **owner_options,
+                **owner_options, **owned_display_options,
                 prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
                 _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
                 _owner_factory=_guarded_owner_factory)
