@@ -32,6 +32,17 @@ class HistoryTests(unittest.TestCase):
                             'source_raw_sha256':raw}}}
         return observation, image
 
+    def test_staged_fork_does_not_change_published_history_or_cache(self):
+        history = ObservationHistory(1)
+        history[1] = self.row(1)
+        staged = history.fork()
+        staged[2] = self.row(2)
+        self.assertEqual(list(history), [1])
+        self.assertEqual(list(staged), [1, 2])
+        with patch.object(Path, 'read_bytes', side_effect=AssertionError('published cache was evicted')):
+            self.assertEqual(history[1][0]['sequence'], 1)
+        self.assertEqual(staged[1][0]['sequence'], 1)
+
     def test_evicted_image_collects_and_reloads_exact_pixels_for_old_mint(self):
         history = ObservationHistory()
         original, image = self.row(1)

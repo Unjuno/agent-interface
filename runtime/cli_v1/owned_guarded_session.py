@@ -224,7 +224,7 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
             name='guarded-owner-control', daemon=True)
         control_thread.start()
         allowed = {'snapshot', 'invoke_guarded', 'run_compiled_profile', 'recover_input', 'inspect_target',
-                   'review_target', 'dispatch', 'inspect_after_dispatch', 'observe', 'close'}
+                   'review_target', 'dispatch', 'inspect_after_dispatch', 'observe', 'observe_idle_until', 'close'}
         while True:
             request = rpc_connection.recv()
             operation = request.get('operation')
@@ -253,6 +253,8 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                     elif operation == 'observe':
                         from .observe import observe_in_session
                         result = observe_in_session(owner.get(), **arguments)
+                    elif operation == 'observe_idle_until':
+                        result = owner.observe_idle_until(**arguments)
                     else:
                         result = owner.close()
                     response = {'ok':True, 'result':result,
@@ -330,6 +332,13 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
+        self._idle_rpc_quarantined = False
+        self._idle_quarantine_lock = threading.RLock()
+        self._idle_rpc_inflight = False
+        self._cancel_calls_inflight = 0
+        self._idle_cancel_calls_inflight = 0
+        self._idle_observation_used = False
+        self._idle_closing = False
         self._retirement = None
         self._owner_client_disconnect = None
         self._owner_input_obligations = {'keys':{}, 'buttons':[]}
@@ -340,6 +349,12 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self.review_required = False
 
     def _apply_snapshot(self, snapshot):
+        with self._idle_quarantine_lock:
+            if self._idle_rpc_quarantined:
+                return
+            self._apply_snapshot_unchecked(snapshot)
+
+    def _apply_snapshot_unchecked(self, snapshot):
         self._snapshot_cache = deepcopy(snapshot)
         self.session_id = snapshot.get('session_id', self.session_id)
         self.binding_revision = snapshot.get('binding_revision', self.binding_revision)
@@ -449,7 +464,21 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return response.get('result')
 
     def _call(self, method, **arguments):
+        with self._idle_quarantine_lock:
+            if self._idle_rpc_quarantined:
+                raise RuntimeError('owned idle observation response quarantined')
+            if self._idle_closing:
+                raise RuntimeError('owned idle observation owner closing')
+            if self._cancel_calls_inflight:
+                raise RuntimeError('cancel is in flight; owned RPC refused')
         with self._rpc_lock:
+            with self._idle_quarantine_lock:
+                if self._idle_rpc_quarantined:
+                    raise RuntimeError('owned idle observation response quarantined')
+                if self._idle_closing:
+                    raise RuntimeError('owned idle observation owner closing')
+                if self._cancel_calls_inflight:
+                    raise RuntimeError('cancel is in flight; owned RPC refused')
             return self._request_locked(method, arguments)
 
     def get(self):
@@ -742,6 +771,69 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._call('observe', target=target, frame=frame, region=region,
                           capture_directory=capture_directory)
 
+    def observe_idle_until(self, *, deadline_ns, cancel_token):
+        with self._idle_quarantine_lock:
+            if self._idle_rpc_quarantined:
+                raise RuntimeError('owned idle observation response quarantined')
+            if self._idle_closing:
+                raise RuntimeError('owned idle observation owner closing')
+            if self._cancel_calls_inflight:
+                raise RuntimeError('cancel is in flight; idle observation refused')
+            if self._idle_rpc_inflight:
+                raise RuntimeError('owned idle observation already in flight')
+            self._idle_rpc_inflight = True
+            self._idle_observation_used = True
+        try:
+            return self._observe_idle_until_registered(deadline_ns=deadline_ns, cancel_token=cancel_token)
+        finally:
+            with self._idle_quarantine_lock:
+                if not self._idle_rpc_quarantined:
+                    self._idle_rpc_inflight = False
+
+    def _observe_idle_until_registered(self, *, deadline_ns, cancel_token):
+        # Prototype: isolate the full framed recv; pipe readiness alone does
+        # not imply an entire reply. The owner is never reusable after expiry.
+        if type(deadline_ns) is not int or time.monotonic_ns() >= deadline_ns:
+            raise RuntimeError('owned idle observation deadline expired')
+        if getattr(self, '_idle_rpc_quarantined', False):
+            raise RuntimeError('owned idle observation response quarantined')
+        if self._process is None or self.state != 'open':
+            raise RuntimeError('bounded idle observation requires an already open owner')
+        gate=threading.Lock();done=threading.Event();result={}
+        def receive():
+            try:
+                with self._rpc_lock:
+                    if self._idle_rpc_quarantined or time.monotonic_ns() >= deadline_ns:
+                        raise RuntimeError('owned idle observation deadline expired')
+                    self._rpc.send({'operation':'observe_idle_until', 'arguments':{
+                        'deadline_ns':deadline_ns, 'cancel_token':cancel_token}})
+                    response=self._rpc.recv()
+                    with gate:
+                        if self._idle_rpc_quarantined or time.monotonic_ns() >= deadline_ns:
+                            raise RuntimeError('late owned idle observation response discarded')
+                        snapshot=response.get('snapshot')
+                        if isinstance(snapshot,dict):self._apply_snapshot(snapshot)
+                        if response.get('ok') is not True:
+                            self._execution_unknown=True;self.review_required=True
+                            raise RuntimeError(response.get('error_type','owned_call_failed')+': '+response.get('error',''))
+                        result['value']=response.get('result');done.set()
+            except BaseException as error:
+                with gate:
+                    if not self._idle_rpc_quarantined:
+                        result['error']=error;done.set()
+        threading.Thread(target=receive,name='bounded-idle-rpc',daemon=True).start()
+        remaining=max(0,(deadline_ns-time.monotonic_ns())/1_000_000_000)
+        done.wait(remaining)
+        with gate:
+            if not done.is_set():
+                with self._idle_quarantine_lock:
+                    self._idle_rpc_quarantined=True;self._execution_unknown=True
+                    self.review_required=True;self.state='failed'
+                    self.error='owned idle observation response deadline expired'
+                raise RuntimeError(self.error)
+            if 'error' in result:raise result['error']
+            return result['value']
+
     def _cancel_requires_owner_retirement(self, result):
         if result.get('owner_process_retired') is True:
             return False
@@ -760,6 +852,64 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
 
     def cancel_guarded(self, token, *, operation_id=None,
                        deadline_monotonic_ns=None):
+        if deadline_monotonic_ns is not None and type(deadline_monotonic_ns) is not int:
+            raise ValueError('deadline_monotonic_ns must be an integer')
+        with self._idle_quarantine_lock:
+            if self._idle_rpc_quarantined or (self._idle_closing and self._idle_observation_used):
+                return self._idle_cancel_unknown()
+            idle = self._idle_rpc_inflight
+            self._cancel_calls_inflight += 1
+            if idle:
+                self._idle_cancel_calls_inflight += 1
+        try:
+            if idle:
+                return self._cancel_idle_without_cleanup(token)
+            return self._cancel_guarded_normal(token, operation_id=operation_id,
+                                               deadline_monotonic_ns=deadline_monotonic_ns)
+        finally:
+            with self._idle_quarantine_lock:
+                self._cancel_calls_inflight -= 1
+                if idle:
+                    self._idle_cancel_calls_inflight -= 1
+
+    @staticmethod
+    def _idle_cancel_unknown():
+        return {'status':'cancel_unconfirmed','input_dispatched':None,
+                'release_attempted':False,'release_confirmed':False,
+                'cleanup_status':'UNKNOWN','task_success':None,
+                'replay_allowed':False,'late_server_request_possible':True}
+
+    def _cancel_idle_without_cleanup(self, token):
+        # A concurrent cancellation of a read-only idle capture must never
+        # launch a release after that capture's parent deadline expires.
+        if self._process is None or not self._process.is_alive() or self._control is None:
+            return self._idle_cancel_unknown()
+        try:
+            with self._control_lock:
+                self._control.send({'operation':'cancel_guarded','token':token})
+                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
+                    raise RuntimeError('idle cancellation response unconfirmed')
+                response=self._control.recv()
+        except (EOFError,OSError,RuntimeError):
+            with self._idle_quarantine_lock:
+                self._idle_rpc_quarantined=True;self._execution_unknown=True
+                self.review_required=True;self.state='failed'
+                self.error='idle cancellation response unconfirmed'
+            return self._idle_cancel_unknown()
+        with self._idle_quarantine_lock:
+            if self._idle_rpc_quarantined:
+                return self._idle_cancel_unknown()
+            if (not isinstance(response,dict) or response.get('ok') is not True
+                    or not isinstance(response.get('result'),dict)):
+                self._idle_rpc_quarantined=True;self._execution_unknown=True
+                self.review_required=True;self.state='failed'
+                self.error='idle cancellation response invalid'
+                return self._idle_cancel_unknown()
+            self._apply_snapshot(response.get('snapshot',{}))
+            return response['result']
+
+    def _cancel_guarded_normal(self, token, *, operation_id=None,
+                               deadline_monotonic_ns=None):
         if deadline_monotonic_ns is None:
             deadline_monotonic_ns = time.monotonic_ns() + int(
                 _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
@@ -916,6 +1066,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        with self._idle_quarantine_lock:
+            if (self._idle_observation_used and
+                    (self._idle_cancel_calls_inflight or
+                     (self._idle_rpc_inflight and not self._idle_rpc_quarantined))):
+                return {'status':'cleanup_deferred','session_id':self.session_id,
+                        'release_attempted':False,'release_confirmed':False,
+                        'cleanup_status':'UNKNOWN','task_success':None,
+                        'replay_allowed':False,'verified':False}
+            self._idle_closing = True
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()
@@ -929,6 +1088,21 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'connection_close_attempted':False, 'verified':True}
             self.close_report = row
             return deepcopy(row)
+        if getattr(self, '_idle_rpc_quarantined', False):
+            # No unfenced follow-up release: the pre-timeout input obligations
+            # and possible late server requests remain unknown.
+            retirement = self._retire('quarantined idle observation close')
+            row = {'status':'cleanup_failed', 'session_id':self.session_id,
+                   'release_attempted':False, 'release_confirmed':False,
+                   'cleanup_status':'UNKNOWN', 'task_success':None,
+                   'replay_allowed':False, 'verified':False,
+                   'connection_close_attempted':False,
+                   'owner_process_retired':retirement['retired'],
+                   'owner_process_exitcode':retirement['exitcode'],
+                   'late_server_request_possible':True,
+                   **self._owner_input_obligations_result_fields()}
+            self.close_report = deepcopy(row)
+            return row
         retirement = getattr(self, '_retirement', None)
         client_disconnect = getattr(self, '_owner_client_disconnect', None)
         previous_release_attempt = getattr(self, '_owner_release_attempt', None)
