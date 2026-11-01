@@ -32,6 +32,29 @@ class PrivateDisplayOwner:
         self._starting=False
         self._kill_requested=False
 
+    def duplicate_server_pidfd(self, *, timeout_s):
+        """Duplicate the launched server pidfd; the caller owns the duplicate."""
+        deadline=self._cleanup_deadline(timeout_s)
+        if not self._cleanup_lock.acquire(timeout=max(0,deadline-time.monotonic())):
+            raise TimeoutError('display cleanup lock deadline')
+        try:
+            if not self._lock.acquire(timeout=max(0,deadline-time.monotonic())):
+                raise TimeoutError('display state lock deadline')
+            try:
+                if time.monotonic()>=deadline:
+                    raise TimeoutError('display duplication deadline')
+                if (self._closed or self._starting or self._retired
+                        or self._session is None or self._pidfd is None
+                        or self._process is None or self._process.poll() is not None):
+                    raise RuntimeError('owned display is unavailable')
+                fd=os.dup(self._pidfd)
+                if time.monotonic()>=deadline:
+                    os.close(fd)
+                    raise TimeoutError('display duplication deadline')
+                return fd,self._process.pid
+            finally:self._lock.release()
+        finally:self._cleanup_lock.release()
+
     def _auth_add(self, display, cookie, timeout):
         subprocess.run(['xauth','-f',str(self.directory/'authority'),'-'],
                        input=f'add {display} . {cookie}\n',text=True,
