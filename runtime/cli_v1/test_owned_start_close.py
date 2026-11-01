@@ -8,7 +8,7 @@ import shutil
 import tempfile
 import threading
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.cli_v1.test_mcp_owned_process import _fake_owner_factory
@@ -17,6 +17,124 @@ from runtime.cli_v1.test_mcp_process_identity import metadata
 
 
 class OwnedStartCloseTests(unittest.TestCase):
+    def test_pipe_close_error_preserves_startup_failure_and_other_cleanup(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            context=multiprocessing.get_context('spawn');original_pipe=context.Pipe
+            handles=[]
+            def pipe(*args,**kwargs):
+                pair=original_pipe(*args,**kwargs)
+                for connection in pair:
+                    original_close=connection.close
+                    close_mock=Mock(wraps=original_close)
+                    if not handles:close_mock.side_effect=ValueError('injected close error')
+                    connection.close=close_mock
+                    handles.append((connection,original_close))
+                return pair
+            try:
+                with patch.object(context,'Pipe',side_effect=pipe), \
+                     patch.object(multiprocessing.process.BaseProcess,'start',
+                                  side_effect=OSError('original startup error')):
+                    with self.assertRaisesRegex(OSError,'original startup error'):owner._ensure_started()
+                self.assertEqual(len(handles),4)
+                for connection,_ in handles:connection.close.assert_called_once()
+                self.assertEqual(owner.snapshot()['startup_pipe_cleanup_error_types'],['ValueError'])
+                self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
+            finally:
+                for _,original_close in handles:original_close()
+
+    def test_unconfirmed_retirement_is_not_reported_as_retired(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            process=Mock();process.is_alive.return_value=True;process.pid=123;process.exitcode=None
+            owner._process=process;owner.state='failed'
+            owner._retirement={'retired':False,'exitcode':None}
+            owner._execution_unknown=True;owner.review_required=True
+            self.assertIsNone(owner.snapshot()['owner_process']['retired'])
+
+    def test_retirement_error_does_not_hide_original_startup_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            spawned=[];original=multiprocessing.process.BaseProcess.start
+            def start_then_raise(process):
+                original(process);spawned.append(process)
+                raise OSError('original startup error')
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',start_then_raise), \
+                     patch.object(owner,'_retire',side_effect=RuntimeError('injected retirement error')):
+                    with self.assertRaisesRegex(OSError,'original startup error'):owner._ensure_started()
+                self.assertIs(owner._process,spawned[0])
+                self.assertEqual(owner._startup_retirement_error_type,'RuntimeError')
+                self.assertEqual(owner.state,'failed')
+                self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
+            finally:
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    process.join(3)
+                    self.assertFalse(process.is_alive(),'fixture child cleanup failed')
+
+    def test_exception_after_spawn_and_exit_keeps_process_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            spawned=[];original=multiprocessing.process.BaseProcess.start
+            def start_exit_raise(process):
+                original(process);spawned.append(process)
+                process.kill();process.join(3)
+                if process.is_alive():raise RuntimeError('fixture child failed to exit')
+                raise OSError('injected after spawned child exited')
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',start_exit_raise):
+                    with self.assertRaises(OSError):owner._ensure_started()
+                self.assertEqual(len(spawned),1)
+                self.assertIs(owner._process,spawned[0])
+                self.assertIsNotNone(owner._process.exitcode)
+                self.assertTrue(owner.snapshot()['review_required'])
+                self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
+            finally:
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    process.join(3)
+                    self.assertFalse(process.is_alive(),'fixture child cleanup failed')
+
+    def test_exception_before_spawn_does_not_create_or_retire_child(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            with patch.object(multiprocessing.process.BaseProcess,'start',
+                              side_effect=OSError('injected before spawn')):
+                with self.assertRaises(OSError):owner._ensure_started()
+            self.assertIsNone(owner._process)
+            self.assertEqual(owner.state,'failed')
+            self.assertTrue(owner.snapshot()['startup_process_reference_unregistered'])
+            self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
+            report=owner.close()
+            self.assertFalse(report['verified'])
+            self.assertEqual(report['cleanup_status'],'UNKNOWN')
+            self.assertFalse(report['replay_allowed'])
+
+    def test_exception_after_spawn_retires_the_unregistered_child(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            spawned=[];original=multiprocessing.process.BaseProcess.start
+            def start_then_raise(process):
+                original(process);spawned.append(process)
+                raise OSError('injected after spawn before registration')
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',start_then_raise):
+                    with self.assertRaises(OSError):owner._ensure_started()
+                self.assertEqual(len(spawned),1)
+                self.assertFalse(spawned[0].is_alive(), 'unregistered child survived startup failure')
+                self.assertTrue(owner.snapshot()['review_required'])
+                self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
+            finally:
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    process.join(3)
+                    self.assertFalse(process.is_alive(),'fixture child cleanup failed')
+
     def test_unregistered_failed_owner_does_not_claim_child_dead(self):
         with tempfile.TemporaryDirectory() as directory:
             owner=OwnedGuardedSessionOwner({'app':20},directory)
