@@ -341,9 +341,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
 
     @_execution_unknown.setter
     def _execution_unknown(self, value):
-        if value and getattr(self, '_unknown_event', None) is not None:
-            self._unknown_event.set()
         self._execution_unknown_value = value
+        if value and getattr(self, '_unknown_event', None) is not None:
+            self._unknown_notification_started = True
+            try:
+                self._unknown_event.set()
+            except OSError as error:
+                self._unknown_notification_failure_type = type(error).__name__
+            else:
+                self._unknown_notification_returned = True
 
     def __init__(self, targets, directory, display_name=None, *,
                  process_identity=False, query_worker=False,
@@ -534,10 +540,17 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         execution_unknown = self._execution_unknown
         if self._process is not None:
             process['release_confirmed'] = False if execution_unknown else None
+        notification_failure = getattr(self, '_unknown_notification_failure_type', None)
+        notification = ({'status':'failed', 'error_type':notification_failure}
+            if notification_failure else
+            {'status':'signal_call_returned'} if getattr(self, '_unknown_notification_returned', False) else
+            {'status':'pending'} if getattr(self, '_unknown_notification_started', False) else
+            {'status':'not_attempted'})
         row.update(session_id=self.session_id, mode='guarded-x11-owned-process',
                    state=self.state, binding_revision=self.binding_revision,
                    targets=deepcopy(self.targets), error=self.error,
                    review_required=execution_unknown or self.review_required,
+                   unknown_notification=notification,
                    owner_process=process,
                    owner_client_disconnect=deepcopy(self._owner_client_disconnect),
                    owner_input_obligations=deepcopy(self._owner_input_obligations),

@@ -2501,6 +2501,72 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 await server.call_tool('interface_close',{})
                 _preserve_fake_x_run('known-r537',root)
 
+    async def test_notification_failure_does_not_allow_fake_effect(self):
+        """A failed parent notification must not permit the gated RPC effect."""
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'compiled-profile-mode').write_text('enabled')
+            captured=[];original_init=OwnedGuardedSessionOwner.__init__
+            entered=threading.Event();resume=threading.Event()
+            def capture(owner,*args,**kwargs):
+                original_init(owner,*args,**kwargs);captured.append(owner)
+            with patch.object(OwnedGuardedSessionOwner,'__init__',capture):
+                server=create_server({'app':20},root,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                minted=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='field',source_sequence=observed['source']['sequence'],
+                    point=[8,8],region_size=[12,12])))
+                owner=captured[0]; original=owner._rpc.send
+                def gated(request):
+                    if (request.get('operation')=='invoke_guarded' and
+                            request.get('arguments',{}).get('operation')=='guarded_input'):
+                        entered.set()
+                        if not resume.wait(5):raise TimeoutError('test pipe send gate')
+                    return original(request)
+                with patch.object(owner._rpc,'send',side_effect=gated), \
+                     patch.object(owner._unknown_event,'set',side_effect=OSError('injected')):
+                    action=metadata(await server.call_tool('interface_guarded_input',dict(
+                        alias='field',offset=minted['offset'],interaction='keyboard',
+                        observe_after=False,wait_for_result_ms=0,
+                        tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                    self.assertTrue(await asyncio.to_thread(entered.wait,3))
+                    before_unknown=time.monotonic_ns()
+                    owner._execution_unknown=True
+                    self.assertTrue(owner._execution_unknown)
+                    self.assertEqual(owner.snapshot()['unknown_notification']['status'],'failed')
+                    _write_json(root/'injected-unknown.json',{
+                        'before_ns':before_unknown,'after_ns':time.monotonic_ns(),
+                        'scope':'injected notification OSError during gated send'})
+                    resume.set();deadline=time.monotonic()+5
+                    while time.monotonic()<deadline:
+                        result=metadata(await server.call_tool('interface_results',{
+                            'call_id':action['call_id'],'include_image':False}))
+                        if result.get('status')!='pending':break
+                        await asyncio.sleep(.01)
+                    self.assertNotEqual(result.get('status'),'pending',result)
+                    self.assertFalse((root/'synthetic-effect-receipt.json').exists(),
+                                     'failed notification allowed a fake target effect')
+                    self.assertEqual(result.get('status'),'refused',result)
+            finally:
+                resume.set()
+                if 'action' in locals():
+                    deadline=time.monotonic()+5
+                    while time.monotonic()<deadline:
+                        result=metadata(await server.call_tool('interface_results',{
+                            'call_id':action['call_id'],'include_image':False}))
+                        if result.get('status')!='pending':break
+                        await asyncio.sleep(.01)
+                try:
+                    await server.call_tool('interface_close',{})
+                finally:
+                    if captured and captured[0]._process is not None and captured[0]._process.is_alive():
+                        captured[0]._retire('test cleanup after unfinished close')
+                    if captured and captured[0]._process is not None:
+                        self.assertFalse(captured[0]._process.is_alive())
+                _preserve_fake_x_run('failed-notification-r544',root)
+
     async def test_unknown_transition_after_child_check_prevents_fake_effect(self):
         """Probe an UNKNOWN transition after child RPC admission."""
         with tempfile.TemporaryDirectory() as td:
