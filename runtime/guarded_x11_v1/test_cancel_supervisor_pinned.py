@@ -19,6 +19,7 @@ class PinnedSupervisorCustodyTests(unittest.TestCase):
                         'deadline_monotonic_ns': time.monotonic_ns() + 5_000_000_000}
         self.receive.recv.return_value = {'op': 'run', 'request': self.request}
         self.identity = {'pid': 42, 'resource_base': 4096}
+        self.request.update(owner_pid=42, x_resource_base=4096)
 
     def serve(self, observed_pid):
         with patch('runtime.backends.x11_v1.backend.X11Backend', return_value=self.backend), \
@@ -43,6 +44,18 @@ class PinnedSupervisorCustodyTests(unittest.TestCase):
         self.worker.assert_called_once_with(self.request, pinned_backend=self.backend)
         self.result.send.assert_called_once()
         self.backend.close.assert_called_once()
+
+    def test_wrong_or_missing_owner_is_refused_without_cleanup(self):
+        for field, value in (('owner_pid', 43), ('x_resource_base', 8192),
+                             ('owner_pid', None), ('x_resource_base', True)):
+            with self.subTest(field=field, value=value):
+                self.setUp()
+                self.request[field] = value
+                self.serve(42)
+                self.worker.assert_not_called()
+                envelope = self.result.send.call_args.args[0]
+                self.assertEqual(envelope['result']['reason'], 'pinned_owner_mismatch')
+                self.assertEqual(envelope['result']['cleanup_status'], 'UNKNOWN')
 
     def test_wrong_display_is_refused_without_cleanup(self):
         self.request['display_name'] = ':8'
