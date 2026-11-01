@@ -1,0 +1,46 @@
+{
+  "checks": {
+    "old_stopped": true,
+    "old_exited": true,
+    "distinct_pid": true,
+    "new_same_display_before_delay": true,
+    "old_connection_closed": true,
+    "old_cookie_denied": true,
+    "recorder_covers_old_delay": true,
+    "new_w_press_release": true,
+    "no_b_before_horizon": true,
+    "b_positive_after": true
+  },
+  "times": {
+    "old_queued": 3153737390285,
+    "old_exit": 3153740688543,
+    "fresh_started": 3153774156468,
+    "recorder_ready": 3153779338824,
+    "horizon_end": 3157237620626
+  },
+  "events": [
+    {
+      "type": 2,
+      "detail": 25,
+      "ns": 3153779579241
+    },
+    {
+      "type": 3,
+      "detail": 25,
+      "ns": 3153779590068
+    },
+    {
+      "type": 2,
+      "detail": 56,
+      "ns": 3157238479148
+    },
+    {
+      "type": 3,
+      "detail": 56,
+      "ns": 3157238512139
+    }
+  ],
+  "status": "PASS",
+  "old_error": "ConnectionClosedError",
+  "old_auth_error": "DisplayConnectionError"
+}

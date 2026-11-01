@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checks": {
+    "noauth_wrong_accepted": true,
+    "auth_good_accepted": true,
+    "auth_wrong_rejected": true
+  },
+  "results": {
+    "access_control_off": {
+      "good": {
+        "status": "connected",
+        "protocol_denial_marker": false,
+        "exit": 0
+      },
+      "wrong": {
+        "status": "connected",
+        "protocol_denial_marker": false,
+        "exit": 0
+      }
+    },
+    "cookie_enforced": {
+      "good": {
+        "status": "connected",
+        "protocol_denial_marker": false,
+        "exit": 0
+      },
+      "wrong": {
+        "status": "error",
+        "type": "DisplayConnectionError",
+        "protocol_denial_marker": true,
+        "exit": 0
+      }
+    }
+  },
+  "limits": "same container and UID; cookie secrecy not tested; no process generation fencing"
+}

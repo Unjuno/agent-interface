@@ -754,6 +754,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return True
         return bool(keys) or bool(buttons)
 
+    def _cancel_control_wait_seconds(self, deadline_monotonic_ns):
+        return min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, max(
+            0, (deadline_monotonic_ns - time.monotonic_ns()) / 1e9))
+
+    def _cancel_drain_wait_seconds(self, deadline_monotonic_ns):
+        return min(_CANCEL_RETIRE_GRACE_S, max(
+            0, (deadline_monotonic_ns - time.monotonic_ns()) / 1e9))
+
     def cancel_guarded(self, token, *, operation_id=None,
                        deadline_monotonic_ns=None):
         if deadline_monotonic_ns is None:
@@ -769,7 +777,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         with self._control_lock:
             try:
                 self._control.send({'operation':'cancel_guarded', 'token':token})
-                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
+                if not self._control.poll(self._cancel_control_wait_seconds(deadline_monotonic_ns)):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')
@@ -823,7 +831,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return result
         requires_retirement = self._cancel_requires_owner_retirement(result)
         if (not requires_retirement
-                and self._rpc_lock.acquire(timeout=_CANCEL_RETIRE_GRACE_S)):
+                and self._rpc_lock.acquire(timeout=self._cancel_drain_wait_seconds(
+                    deadline_monotonic_ns))):
             self._rpc_lock.release()
             return result
         retirement_reason = ('cancel left input or server-request obligation'
@@ -884,9 +893,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
-        cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
-        if cleanup_supervisor is not None:
-            cleanup_supervisor.close()
+        try:
+            return self._close_impl()
+        finally:
+            cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
+            if cleanup_supervisor is not None:
+                cleanup_supervisor.close()
+
+    def _close_impl(self):
         if self.close_report is not None:
             return deepcopy(self.close_report)
         if self._process is None:
@@ -905,8 +919,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 and not self._process.is_alive()
                 and client_disconnect is not None
                 and previous_release_attempt is not None):
-            # A later release can cancel a newer client's hold on the shared display.
-            # Preserve the original evidence until display custody is fenced.
+            # Retired-owner X11 obligations are not a display-wide custody
+            # fence. A later release can cancel another client's newer hold.
+            # Preserve the original evidence until such a fence exists.
             release_attempt = deepcopy(previous_release_attempt)
             client_disconnect = deepcopy(client_disconnect)
             report = {

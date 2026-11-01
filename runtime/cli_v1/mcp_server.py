@@ -321,6 +321,8 @@ class _WorkerAdmission:
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
                   guarded_process_identity=False, guarded_query_worker=False, guarded_observation_worker=False,
                   guarded_window_lifecycle=False, guarded_owned_process=False,
+                  _guarded_owned_target_process=None,
+                  _guarded_prestarted_target_identity=False,
                   guarded_retention_mode='files',
                   guarded_prestarted_cancel_supervisor=False,
                   _guarded_cancel_supervisor_target=None,
@@ -406,6 +408,21 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded_owned_process and (session_mode != 'guarded-x11'
             or not guarded_process_identity or not guarded_query_worker):
         raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
+    if _guarded_owned_target_process is not None and (
+            session_mode != 'guarded-x11' or not guarded_owned_process
+            or not guarded_process_identity or not guarded_query_worker):
+        raise ValueError('owned target retirement requires guarded owned-process X11 mode')
+    if (type(_guarded_prestarted_target_identity) is not bool
+            or (_guarded_prestarted_target_identity and _guarded_owned_target_process is None)):
+        raise ValueError('prestarted target identity requires an owned target process')
+    if _guarded_owned_target_process is not None:
+        from runtime.guarded_x11_v1.owned_target_process import OwnedTargetProcess
+        if not isinstance(_guarded_owned_target_process, OwnedTargetProcess):
+            raise TypeError('_guarded_owned_target_process must be an OwnedTargetProcess')
+        if not _guarded_owned_target_process.running:
+            raise ValueError('owned target process must still be running')
+        if len(targets) != 1:
+            raise ValueError('owned target retirement currently requires exactly one target')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -499,12 +516,28 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                              window_lifecycle=guarded_window_lifecycle,
                              retention_mode=guarded_retention_mode)
         if guarded_owned_process:
-            from .owned_guarded_session import OwnedGuardedSessionOwner
-            owner = OwnedGuardedSessionOwner(targets, root, display_name,
-                **owner_options,
-                prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
-                _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
-                _owner_factory=_guarded_owner_factory)
+            try:
+                if _guarded_owned_target_process is not None:
+                    from .owned_target_session import OwnedTargetGuardedSessionOwner
+                    owner = OwnedTargetGuardedSessionOwner(
+                        targets, root, display_name,
+                        owned_target_process=_guarded_owned_target_process,
+                        prestarted_target_identity=_guarded_prestarted_target_identity,
+                        **owner_options,
+                        prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                        _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                        _owner_factory=_guarded_owner_factory)
+                else:
+                    from .owned_guarded_session import OwnedGuardedSessionOwner
+                    owner = OwnedGuardedSessionOwner(targets, root, display_name,
+                        **owner_options,
+                        prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                        _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                        _owner_factory=_guarded_owner_factory)
+            except BaseException:
+                if cancellation_executor is not None:
+                    cancellation_executor.shutdown(wait=False, cancel_futures=True)
+                raise
         else:
             owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False
@@ -618,6 +651,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             try:
                 if operation == 'close':
                     report = close_owner()
+                elif operation == 'guarded_finalize_unbound_target':
+                    report = owner.finalize_exited_unbound_target()
                 elif operation == 'recover_input':
                     report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
                 elif supervised_win32 and operation == 'recover_orphaned_input':
@@ -795,8 +830,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
                 'operation_invoked': False}, error=True)
-        if ((shutting_down and operation != 'close')
-                or (owner is not None and owner.state == 'closed' and operation != 'close')):
+        if ((shutting_down and operation not in ('close','guarded_finalize_unbound_target'))
+                or (owner is not None and owner.state == 'closed' and operation not in ('close','guarded_finalize_unbound_target'))):
             return content({'status': 'session_closed', 'operation_invoked': False,
                             'replay_allowed': False}, error=True)
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
@@ -969,6 +1004,22 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         'cancellation_operation_id':active_cancellation_operation}, error=True)
                 shutting_down = True
             return await submit('close', {}, False, False)
+
+    if guarded and guarded_owned_process and _guarded_owned_target_process is not None:
+        @server.tool()
+        async def interface_guarded_finalize_unbound_target() -> CallToolResult:
+            """Explicitly close an exited unbound target handle after UNKNOWN close.
+
+            Never sends input or signals, does not establish cleanup or task success,
+            and never authorizes replay. Refuses while session close or work is pending.
+            """
+            with calls_lock:
+                if (not shutting_down or server_shutdown_started or owner.close_report is None
+                        or active_cancellation_operation is not None or lock.locked()):
+                    return content({'status':'refused','reason':'close_or_work_pending',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'cleanup_status':'UNKNOWN','task_success':None,'replay_allowed':False},error=True)
+            return await submit('guarded_finalize_unbound_target',{},False,False)
 
     @server.tool()
     async def interface_clock() -> CallToolResult:

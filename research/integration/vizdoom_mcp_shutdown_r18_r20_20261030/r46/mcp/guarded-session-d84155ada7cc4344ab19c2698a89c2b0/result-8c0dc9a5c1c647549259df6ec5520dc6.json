@@ -1,0 +1,114 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 3460698363120,
+    "ended_ns": 3461328971036,
+    "emissions": 2,
+    "program_emissions": 2,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 3461328968940
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 2,
+        "requested_ms": 600,
+        "started_ns": 3460726227217,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 3461326387330
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 2,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "fresh",
+      "point": [
+        44,
+        426
+      ],
+      "observed_box": [
+        32,
+        407,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 2,
+      "valid_until_ns": 3462168670340,
+      "patch_sha256": "1365d46fb5653a1216f1f1f6808da4344381ea66b89d2b9207415a35f875af1b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "fresh",
+      "point": [
+        44,
+        426
+      ],
+      "observed_box": [
+        32,
+        407,
+        24,
+        38
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 3462199162271,
+      "patch_sha256": "1365d46fb5653a1216f1f1f6808da4344381ea66b89d2b9207415a35f875af1b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}
