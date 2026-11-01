@@ -1,0 +1,9 @@
+# Corrected-fixture MCP contrast: same versus separate displays
+
+The earlier r168 allocation used two in-process MCP server objects with distinct guarded owners on the same private Xvfb and synthetic target. With controlled old-key release and blocked sync, first cancellation's readback-verified cleanup changed the second owner's held `a` from down to up. Each owner logged exactly one delayed `b` injection.
+
+A new r169 allocation uses the exact same runtime and corrected/logged fixture, but the harness starts two private Xvfb servers and two separate synthetic targets. The same forced order was used: test clears first old `a`; second owner holds `a`; first MCP cancellation reaches terminal receipt; independent keymap checks the second display before second cancellation. The second `a` remained down. Each owner logged exactly one delayed `b` injection; after the second cancellation and delayed horizon, both displays' tested `a` and `b` keys were up. Both actions and final closes were UNKNOWN / no replay; the targets and Xvfb processes exited.
+
+The second target recorded six `a` presses and six releases for its single requested chord while the hold persisted. No repeat setting was controlled in this trial; earlier r152 supports autorepeat as a possible contributor in a related setup, not proof of this run's cause. Do not interpret the repeated target value as successful single-chord task semantics.
+
+These are two fixed-order single allocations, not a randomized reliability estimate. r169 differs from r168 in both display and target, and isolation is created by the test harness, not integrated into a recovery lifecycle. No inference follows about spontaneous contention, separate MCP transports, old-task recovery, general queue drainage, physical input, MAP01 or production security. Raw events, injection logs, receipts, sources and conditions retained locally.

@@ -1,0 +1,82 @@
+{
+  "ci_distribution_tests_per_os": {
+    "passed": 3,
+    "total": 3
+  },
+  "container_regression": {
+    "git_blob_ignores_worktree_newlines": "PASS",
+    "non_git_filesystem_fallback": "PASS",
+    "uploaded_artifact_checksum": "PASS",
+    "uploaded_artifact_execution": "PASS"
+  },
+  "expected_artifact": {
+    "bytes": 28913,
+    "sha256": "5fc7b440553f96d77b757e1b1ad5ded8961af7ab742b528c27d91b51085a9e05"
+  },
+  "files": {
+    ".github/workflows/runtime-standalone-doctor.yml": {
+      "bytes": 2479,
+      "sha256": "64380d2190d35989516956eccbd3ee2039c4939c8b977570e6ba87368b9bb563"
+    },
+    "runtime/distribution_v1/EXPECTED.json": {
+      "bytes": 162,
+      "sha256": "b3f51c596a595c5d8063ac42e212c401c066ceebab4869c3f0fd840de0c79c8d"
+    },
+    "runtime/distribution_v1/README.md": {
+      "bytes": 490,
+      "sha256": "94ac3264c01704977e855cd764c6e2dc481a278266fb691fb11590585545a7f6"
+    },
+    "runtime/distribution_v1/REPORT.md": {
+      "bytes": 2549,
+      "sha256": "afd1bf285defbd77965ccab1156e010c87d92c67203e7e0613aa861e8612d67b"
+    },
+    "runtime/distribution_v1/build.py": {
+      "bytes": 3844,
+      "sha256": "41cfb9e5024e8044bcace72593167c6532b0e8904b6c8de802129262a2bcdf49"
+    },
+    "runtime/distribution_v1/test_distribution.py": {
+      "bytes": 2589,
+      "sha256": "96b5f097a2d4ca80e9913777ebd5332b1163797e9ff7b1c9eb34cb2afb0bf60b"
+    },
+    "runtime/distribution_v1/verify.py": {
+      "bytes": 2431,
+      "sha256": "925eb9ff1e6cbab748f04c9aff2b53a6afd84d0e7564f686506e8ec0a6c974dc"
+    }
+  },
+  "integration_base": "5970859ba4bf9f4109b45f63ee0981386349de46",
+  "integration_history": {
+    "final_matrix_run": {
+      "all_jobs": [
+        "compile",
+        "distribution_tests",
+        "build",
+        "verify",
+        "execute"
+      ],
+      "artifact_id": 10458089252,
+      "artifact_zip_sha256": "3cac35bef04b362ef8bb2007bdc2307bcec14347c57d33bae52698214501697f",
+      "code_head": "df96b8e6ca0745370387e4bae383a85063bef98c",
+      "macos": "PASS",
+      "run_id": 35124442335,
+      "ubuntu": "PASS",
+      "windows": "PASS"
+    },
+    "first_matrix_run": {
+      "macos": "PASS",
+      "result": "RETAIN_WINDOWS_NEWLINE_FAILURE",
+      "run_id": 35122011948,
+      "ubuntu": "PASS",
+      "windows": "FAIL_ARTIFACT_EXPECTED_SHA",
+      "windows_artifact": {
+        "bytes": 29640,
+        "sha256": "bce70bd4e7b2af22594fbd85ab7b30f67f8dc4c453c9dbb2e62679ac4c0f9436"
+      }
+    },
+    "repair": "package and verify exact committed Git blob bytes instead of OS-transformed worktree bytes"
+  },
+  "issue": 600,
+  "ready_for_side_effects": false,
+  "schema": "agent_interface_standalone_doctor_build_receipt_v2",
+  "support_claim": false,
+  "task": "RUNTIME-STANDALONE-DOCTOR-V1-20260917-001"
+}
