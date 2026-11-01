@@ -47,6 +47,7 @@ class PrivateDisplayRecovery:
         self._lock = threading.Lock()
         self._result = None
         self._token = None
+        self._operation_id = None
 
     def _binding_intact(self):
         return (self._guarded_owner._owned_display_owner is self._display_owner
@@ -57,9 +58,11 @@ class PrivateDisplayRecovery:
                 and self._guarded_owner.display_name == self._display_session.display
                 and self._guarded_owner._xauthority == str(self._display_session.authority))
 
-    def cancel_guarded(self, token, *, deadline_monotonic_ns):
+    def cancel_guarded(self, token, *, deadline_monotonic_ns, operation_id=None):
         if type(token) is not str or not token:
             raise ValueError('nonempty cancellation token required')
+        if operation_id is not None and (type(operation_id) is not str or not operation_id):
+            raise ValueError('operation identity must be a nonempty string')
         if type(deadline_monotonic_ns) is not int or deadline_monotonic_ns <= 0:
             raise ValueError('absolute monotonic deadline required')
         remaining = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
@@ -68,7 +71,7 @@ class PrivateDisplayRecovery:
                     'fresh_display_allowed':False, 'replay_allowed':False}
         try:
             if self._result is not None:
-                if token == self._token:
+                if token == self._token and operation_id == self._operation_id:
                     return deepcopy(self._result)
                 return {'status':'unknown', 'reason':'recovery_already_used',
                         'fresh_display_allowed':False, 'replay_allowed':False}
@@ -83,9 +86,19 @@ class PrivateDisplayRecovery:
             if not self._binding_intact():
                 return {'status':'unknown', 'reason':'display_binding_changed',
                         'fresh_display_allowed':False, 'replay_allowed':False}
+            # Reserve the one-shot before any external side effect. If control
+            # leaves unexpectedly, retries retain UNKNOWN instead of reissuing.
+            self._token = token
+            self._operation_id = operation_id
+            self._result = {'status':'unknown', 'reason':'recovery_interrupted',
+                            'fresh_display_allowed':False, 'replay_allowed':False,
+                            'release_confirmed':False, 'task_success':None,
+                            'cleanup_status':'UNKNOWN'}
             try:
-                cancellation = self._guarded_owner.cancel_guarded(
-                    token, deadline_monotonic_ns=cancel_deadline_ns)
+                options = {'deadline_monotonic_ns':cancel_deadline_ns}
+                if operation_id is not None:
+                    options['operation_id'] = operation_id
+                cancellation = self._guarded_owner.cancel_guarded(token, **options)
             except Exception as error:
                 cancellation = {'status':'cancel_unconfirmed', 'cleanup_status':'UNKNOWN',
                                 'owner_process_retired':False,
@@ -103,6 +116,7 @@ class PrivateDisplayRecovery:
                           'cleanup_status':'UNKNOWN'}
                 self._result = deepcopy(result)
                 self._token = token
+                self._operation_id = operation_id
                 return result
             must_retire = (cancellation.get('status') not in ('cancel_requested', 'not_active')
                            or cancellation.get('cleanup_status') == 'UNKNOWN')
@@ -116,6 +130,7 @@ class PrivateDisplayRecovery:
                     result['reason'] = 'display_binding_changed'
                     self._result = deepcopy(result)
                     self._token = token
+                    self._operation_id = operation_id
                     return result
                 remaining = (deadline_monotonic_ns - after_cancel_ns) / 1e9
                 if remaining <= 0:
@@ -136,6 +151,7 @@ class PrivateDisplayRecovery:
                     and 'reason' not in result)
             self._result = deepcopy(result)
             self._token = token
+            self._operation_id = operation_id
             return result
         finally:
             self._lock.release()
