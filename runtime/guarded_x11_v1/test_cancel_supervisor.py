@@ -44,6 +44,16 @@ def _blocked_worker_with_start_receipt(request):
             'session_id':request['session_id']}
 
 
+class SupervisorTimeoutValidationTests(unittest.TestCase):
+    def test_nonfinite_durations_are_refused_before_process_creation(self):
+        for name in ('startup_timeout_s', 'terminate_grace_s'):
+            for value in (float('nan'), float('inf'), float('-inf')):
+                with self.subTest(name=name, value=value), \
+                     patch('runtime.guarded_x11_v1.cancel_supervisor.multiprocessing.get_context') as context:
+                    with self.assertRaises(ValueError):
+                        PrestartedCancellationSupervisor(_fake_effect_worker, **{name:value})
+                    context.assert_not_called()
+
 class PrestartedCancellationSupervisorTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
