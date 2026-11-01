@@ -651,6 +651,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             try:
                 if operation == 'close':
                     report = close_owner()
+                elif operation == 'guarded_finalize_unbound_target':
+                    report = owner.finalize_exited_unbound_target()
                 elif operation == 'recover_input':
                     report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
                 elif supervised_win32 and operation == 'recover_orphaned_input':
@@ -828,8 +830,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
                 'operation_invoked': False}, error=True)
-        if ((shutting_down and operation != 'close')
-                or (owner is not None and owner.state == 'closed' and operation != 'close')):
+        if ((shutting_down and operation not in ('close','guarded_finalize_unbound_target'))
+                or (owner is not None and owner.state == 'closed' and operation not in ('close','guarded_finalize_unbound_target'))):
             return content({'status': 'session_closed', 'operation_invoked': False,
                             'replay_allowed': False}, error=True)
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
@@ -1002,6 +1004,22 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         'cancellation_operation_id':active_cancellation_operation}, error=True)
                 shutting_down = True
             return await submit('close', {}, False, False)
+
+    if guarded and guarded_owned_process and _guarded_owned_target_process is not None:
+        @server.tool()
+        async def interface_guarded_finalize_unbound_target() -> CallToolResult:
+            """Explicitly close an exited unbound target handle after UNKNOWN close.
+
+            Never sends input or signals, does not establish cleanup or task success,
+            and never authorizes replay. Refuses while session close or work is pending.
+            """
+            with calls_lock:
+                if (not shutting_down or server_shutdown_started or owner.close_report is None
+                        or active_cancellation_operation is not None or lock.locked()):
+                    return content({'status':'refused','reason':'close_or_work_pending',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'cleanup_status':'UNKNOWN','task_success':None,'replay_allowed':False},error=True)
+            return await submit('guarded_finalize_unbound_target',{},False,False)
 
     @server.tool()
     async def interface_clock() -> CallToolResult:
