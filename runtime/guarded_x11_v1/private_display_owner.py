@@ -24,6 +24,7 @@ class PrivateDisplayOwner:
         self.directory=Path(directory)
         self._process=None
         self._pidfd=None
+        self._fd_close_unknown=False
         self._session=None
         self._retired=False
         self._lock=threading.Lock()
@@ -31,6 +32,19 @@ class PrivateDisplayOwner:
         self._closed=False
         self._starting=False
         self._kill_requested=False
+
+    def _close_pidfd_once(self):
+        fd, self._pidfd = self._pidfd, None
+        if fd is None:
+            return
+        self._close_owned_fd(fd)
+
+    def _close_owned_fd(self, fd):
+        try:
+            os.close(fd)
+        except BaseException:
+            self._fd_close_unknown = True
+            raise
 
     def duplicate_server_pidfd(self, *, timeout_s):
         """Duplicate the launched server pidfd; the caller owns the duplicate."""
@@ -49,7 +63,7 @@ class PrivateDisplayOwner:
                     raise RuntimeError('owned display is unavailable')
                 fd=os.dup(self._pidfd)
                 if time.monotonic()>=deadline:
-                    os.close(fd)
+                    self._close_owned_fd(fd)
                     raise TimeoutError('display duplication deadline')
                 return fd,self._process.pid
             finally:self._lock.release()
@@ -76,7 +90,7 @@ class PrivateDisplayOwner:
         try:
             self.directory.mkdir(mode=0o700,parents=False,exist_ok=False)
             authority=self.directory/'authority'
-            fd=os.open(authority,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600);os.close(fd)
+            fd=os.open(authority,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600);self._close_owned_fd(fd)
             cookie=secrets.token_hex(16)
             self._auth_add(':0',cookie,max(0.001,deadline-time.monotonic()))
             read_fd,write_fd=os.pipe()
@@ -86,11 +100,14 @@ class PrivateDisplayOwner:
                     '-nolisten','tcp','-auth',str(authority)],pass_fds=(write_fd,),
                     stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
                 self._pidfd=os.pidfd_open(self._process.pid)
-            os.close(write_fd);write_fd=None
+            owned_write_fd, write_fd = write_fd, None
+            self._close_owned_fd(owned_write_fd)
             remaining=deadline-time.monotonic()
             if remaining<=0 or not select.select([read_fd],[],[],remaining)[0]:
                 raise TimeoutError('display startup deadline')
             number=os.read(read_fd,32).strip()
+            owned_read_fd, read_fd = read_fd, None
+            self._close_owned_fd(owned_read_fd)
             if not number.isdigit() or self._process.poll() is not None:
                 raise RuntimeError('display startup failed')
             display=':'+number.decode('ascii')
@@ -119,14 +136,22 @@ class PrivateDisplayOwner:
                 self._retired=True
             raise
         finally:
-            with self._lock:
-                self._starting=False
-                if self._closed and self._retired and self._pidfd is not None:
-                    os.close(self._pidfd);self._pidfd=None
-            if read_fd is not None:os.close(read_fd)
-            if write_fd is not None:os.close(write_fd)
+            try:
+                with self._lock:
+                    if self._closed and self._retired and self._pidfd is not None:
+                        self._close_pidfd_once()
+            finally:
+                try:
+                    try:
+                        if read_fd is not None:self._close_owned_fd(read_fd)
+                    finally:
+                        if write_fd is not None:self._close_owned_fd(write_fd)
+                finally:
+                    with self._lock:
+                        self._starting=False
 
     def retire(self, *, timeout_s):
+        """Retire the child only; use close() for owned-fd cleanup status."""
         deadline=self._cleanup_deadline(timeout_s)
         if not self._cleanup_lock.acquire(timeout=max(0,deadline-time.monotonic())):
             return {'status':'unknown'}
@@ -170,6 +195,7 @@ class PrivateDisplayOwner:
         return {'status':'retired'}
 
     def close(self, *, timeout_s=3):
+        """Close the owner; ambiguous internal fd closure remains unknown."""
         deadline=self._cleanup_deadline(timeout_s)
         if not self._cleanup_lock.acquire(timeout=max(0,deadline-time.monotonic())):
             return {'status':'unknown'}
@@ -192,5 +218,6 @@ class PrivateDisplayOwner:
             if remaining<=0:return {'status':'unknown'}
             result=self._retire_locked(timeout_s=remaining)
             if result['status']!='retired':return {'status':'unknown'}
-        if self._pidfd is not None:os.close(self._pidfd);self._pidfd=None
+        if self._pidfd is not None:self._close_pidfd_once()
+        if self._fd_close_unknown:return {'status':'unknown'}
         return {'status':'retired' if self._retired else 'closed_no_process'}
