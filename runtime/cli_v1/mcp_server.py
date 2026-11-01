@@ -522,12 +522,17 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 shutting_down = False
 
     def close_owner():
+        stop_executor = True
         try:
             report = owner.close()
+            if (guarded_owned_process and report.get('status') == 'busy'
+                    and report.get('reason') == 'owned_lifecycle_in_progress'):
+                stop_executor = False
+                rollback_unentered_close('close', True)
             _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
             return report
         finally:
-            if cancellation_executor is not None:
+            if stop_executor and cancellation_executor is not None:
                 cancellation_executor.shutdown(wait=True, cancel_futures=False)
 
     @asynccontextmanager

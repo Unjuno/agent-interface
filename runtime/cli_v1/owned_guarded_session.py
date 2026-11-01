@@ -328,6 +328,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._process = None
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
+        self._lifecycle_lock = threading.RLock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
         self._retirement = None
@@ -365,6 +366,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 interrupted_execution=deepcopy(snapshot.get('interrupted_execution'))))
 
     def _ensure_started(self):
+        if not self._lifecycle_lock.acquire(blocking=False):
+            raise RuntimeError('owned guarded lifecycle is busy')
+        try:
+            return self._ensure_started_locked()
+        finally:
+            self._lifecycle_lock.release()
+
+    def _ensure_started_locked(self):
         if self._process is not None:
             if self._process.is_alive() and self.state == 'open':
                 return
@@ -916,6 +925,17 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        if not self._lifecycle_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'owned_lifecycle_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_locked()
+        finally:
+            self._lifecycle_lock.release()
+
+    def _close_locked(self):
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()

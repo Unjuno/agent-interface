@@ -377,6 +377,7 @@ def _apply_queued_child_requests(root):
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
     def test_close_does_not_replay_uncertain_release_without_display_fence(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -406,6 +407,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 return True
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner._snapshot_cache = {}
         owner._process = LiveProcess()
         owner.state = 'open'
@@ -463,6 +465,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.display_name = 'fake-display'
 
         def run_delayed_worker(_target, _args, **kwargs):
@@ -488,6 +491,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.display_name = 'fake-display'
 
         def run_worker(_target, _args, **kwargs):
@@ -511,6 +515,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_retired_release_preserves_shutdown_diagnostics_without_accepting_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.display_name = 'fake-display'
         worker = {
             'status':'unknown',
@@ -560,6 +565,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.joins.append(timeout)
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         process = StubbornProcess()
         owner._process = process
         owner.state = 'open'
@@ -602,6 +608,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.exitcode = -9
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         process = SettlingProcess()
         owner._process = process
         owner.state = 'open'
@@ -646,6 +653,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 raise AssertionError('kill is unnecessary after the grace poll')
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         process = ExitingProcess()
         owner._process = process
         owner.state = 'open'
@@ -663,6 +671,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_timeout_runs_disconnect_gated_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = True
@@ -699,6 +708,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_after_cancel_retirement_preserves_unconfirmed_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -743,6 +753,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_after_cancel_retirement_reuses_existing_cleanup_evidence(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -790,6 +801,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_pipe_failure_runs_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = False
@@ -821,6 +833,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_close_forced_retirement_after_receipt_runs_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.close_report = None
         owner._process = Mock()
         owner._process.is_alive.return_value = True
@@ -927,6 +940,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_retired_owner_with_invalid_live_ledger_does_not_release_stale_cache(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
         owner._owner_input_obligations_source = 'child_rpc_snapshot'
         owner._owner_input_obligations_state = multiprocessing.get_context(
@@ -954,6 +968,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             'keys':{'a':38}, 'buttons':[],
         })
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner._prestarted_cancel_enabled = True
         owner._prestarted_cleanup_result = None
         owner._owner_input_obligations_state = shared
@@ -1001,6 +1016,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         shared[40] ^= 1
 
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
         owner._owner_input_obligations_source = 'child_rpc_snapshot'
         owner._owner_input_obligations_state = shared
@@ -1020,6 +1036,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_disconnect_observer_binds_xres_query_to_owned_process_pid(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner.display_name = ':17'
         owner._snapshot_cache = {
             'owner_x_client_resource_base': 0x1200000,
@@ -1048,6 +1065,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                    'release':{'verified':True, 'keys_down':[],
                               'buttons_down':[]}}
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner._process = Mock()
         owner._process.is_alive.return_value = True
         owner._control = Mock()
@@ -1103,6 +1121,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
     def test_unconfirmed_cancel_wait_is_capped_by_cancel_response_budget(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._lifecycle_lock = threading.RLock()
         owner._process = Mock()
         owner._process.is_alive.return_value = True
         owner._control = Mock()
@@ -1136,6 +1155,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         for name, has_response, response in responses:
             with self.subTest(name=name):
                 owner = object.__new__(OwnedGuardedSessionOwner)
+                owner._lifecycle_lock = threading.RLock()
                 owner._process = Mock()
                 owner._process.is_alive.return_value = True
                 owner._control = Mock()
@@ -1176,6 +1196,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             for disconnect_status in ('disconnected', 'still_connected', 'unknown'):
                 with self.subTest(name=name, disconnect_status=disconnect_status):
                     owner = object.__new__(OwnedGuardedSessionOwner)
+                    owner._lifecycle_lock = threading.RLock()
                     owner._process = Mock()
                     owner._process.is_alive.return_value = True
                     owner._control = Mock()
@@ -1240,6 +1261,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         for disconnect_status in ('still_connected', 'unknown'):
             with self.subTest(disconnect_status=disconnect_status):
                 owner = object.__new__(OwnedGuardedSessionOwner)
+                owner._lifecycle_lock = threading.RLock()
                 owner._process = Mock()
                 owner._process.is_alive.return_value = True
                 owner._control = Mock()
