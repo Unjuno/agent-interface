@@ -1,0 +1,7 @@
+# Private recovery binding diagnostic
+
+The included raw ZIP preserves preregistration, failure and success outputs, status codes and baseline source. Archive members were compared byte-for-byte against their local originals before commit.
+
+Old implementation, r493: two actual private Xvfb servers; owner pinned to A had display/authority metadata deliberately changed to B, and cancel response was injected. Recovery accepted the misbinding, retired B (exit -9) and reported fresh-display allowed. Candidate r494 rejected that binding and both servers stayed live until fixture cleanup. This simulates misbinding; it is not an observed natural same-number replacement or actual active cancellation. r495 validates a real correctly pinned, inactive owner remains UNKNOWN and does not retire its server.
+
+Unit cases separately reproduce ack incorrectly marked completed and bindings changed before/after cancel. On candidate, focused Linux suite passed 102 tests normal and -O; subsequent fixture-only cleanup adjustment was retested (2 real-Xvfb cases). Windows initially exposed a test-path mismatch; corrected tests passed 17 with 2 Linux-only skips. Broad Linux suite on pre-path-adjustment candidate ran 306 tests with one archive error (git absent in image) and 2 skips. Do not relabel that run green. Exclusive custody is required: metadata verification and cancellation/retirement are not atomic against external mutation. No model, automatic recovery, input release or MAP01 completion claim.
