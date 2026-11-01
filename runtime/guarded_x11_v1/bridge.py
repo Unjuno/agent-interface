@@ -14,6 +14,7 @@ import threading
 import uuid
 
 from PIL import Image
+from Xlib.error import ConnectionClosedError
 from .handles import TargetHandleStore
 from .history import ObservationHistory
 from .process_identity import read_linux_x11_process_identity
@@ -885,6 +886,9 @@ class NativeHandleBridge:
                 if time.monotonic_ns() >= self.deadline:
                     raise X11BackendError('native target guard lease expired before dispatch')
             except Exception as error:
+                if isinstance(error, ConnectionClosedError):
+                    # Block reuse without claiming that held input was released.
+                    self.review_required = True
                 row = {"status": "refused", "error": repr(error), "input_dispatched": False}
             else:
                 pointer_ops = ([] if interaction == 'keyboard' else [
