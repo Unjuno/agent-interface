@@ -31,6 +31,7 @@ from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
 _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S = 4.0
+_OWNED_SHUTDOWN_LIFECYCLE_WAIT_S = 1.0
 _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 
@@ -521,10 +522,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     and (owner is None or owner.state != 'closed')):
                 shutting_down = False
 
-    def close_owner():
+    def close_owner(lifecycle_wait_s=None):
         stop_executor = True
         try:
-            report = owner.close()
+            report = (owner.close() if lifecycle_wait_s is None else
+                      owner.close_after_lifecycle_wait(lifecycle_wait_s))
             if (guarded_owned_process and report.get('status') == 'busy'
                     and report.get('reason') == 'owned_lifecycle_in_progress'):
                 stop_executor = False
@@ -561,7 +563,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     await asyncio.gather(*(asyncio.shield(worker) for worker in list(workers)),
                                          return_exceptions=True)
                 if owner is not None:
-                    await asyncio.to_thread(close_owner)
+                    report = await asyncio.to_thread(close_owner)
+                    if (guarded_owned_process and report.get('status') == 'busy'
+                            and report.get('reason') == 'owned_lifecycle_in_progress'):
+                        await asyncio.to_thread(close_owner, _OWNED_SHUTDOWN_LIFECYCLE_WAIT_S)
 
     server = PublicArgumentMCP('Agent Interface public API', lifespan=lifespan, instructions=(
         'Configured target names: ' + json.dumps(sorted(targets)) + '. ' +

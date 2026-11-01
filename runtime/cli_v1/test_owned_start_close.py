@@ -294,6 +294,54 @@ class OwnedStartCloseTests(unittest.TestCase):
 
 
 class OwnedStartCloseMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_shutdown_timeout_does_not_abandon_late_startup_child(self):
+        with tempfile.TemporaryDirectory() as directory:
+            captured=[];original_init=OwnedGuardedSessionOwner.__init__
+            entered=threading.Event();resume=threading.Event();spawned=[];errors=[]
+            def capture(owner,*args,**kwargs):
+                original_init(owner,*args,**kwargs);captured.append(owner)
+            with patch.object(OwnedGuardedSessionOwner,'__init__',capture):
+                server=create_server({'app':20},directory,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            owner=captured[0];original_start=multiprocessing.process.BaseProcess.start
+            def gated_start(process):
+                original_start(process);spawned.append(process);entered.set()
+                if not resume.wait(5):raise TimeoutError('start fixture gate')
+            def start_owner():
+                try:owner._ensure_started()
+                except BaseException as error:errors.append(type(error).__name__)
+            worker=threading.Thread(target=start_owner)
+            lifespan=server.settings.lifespan(server);await lifespan.__aenter__();exiting=None
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',gated_start), \
+                     patch('runtime.cli_v1.mcp_server._OWNED_SHUTDOWN_LIFECYCLE_WAIT_S',.05):
+                    worker.start();self.assertTrue(await asyncio.to_thread(entered.wait,3))
+                    exiting=asyncio.create_task(lifespan.__aexit__(None,None,None))
+                    await asyncio.wait_for(asyncio.shield(exiting),3)
+                    pending=list(Path(directory).glob('session-*-close-pending-*.json'))
+                    self.assertTrue(pending,'missing pending UNKNOWN receipt')
+                    for path in pending:
+                        record=json.loads(path.read_text())
+                        self.assertEqual(record['cleanup_status'],'UNKNOWN')
+                        self.assertFalse(record['replay_allowed'])
+                    resume.set();await asyncio.to_thread(worker.join,5)
+                    self.assertFalse(worker.is_alive());self.assertFalse(errors,errors)
+                    self.assertFalse(owner._process.is_alive(),
+                                     'late startup child was abandoned after shutdown timeout')
+            finally:
+                resume.set();await asyncio.to_thread(worker.join,5)
+                try:
+                    if exiting is None:await lifespan.__aexit__(None,None,None)
+                    else:await asyncio.wait_for(asyncio.shield(exiting),5)
+                finally:
+                    for process in spawned:
+                        if process.is_alive():process.kill()
+                        await asyncio.to_thread(process.join,3)
+                        self.assertFalse(process.is_alive(),'fixture child cleanup failed')
+                    await asyncio.to_thread(worker.join,3)
+                    self.assertFalse(worker.is_alive(),'fixture startup thread did not finish')
+
     async def test_shutdown_busy_persists_pending_without_overwriting_prior(self):
         with tempfile.TemporaryDirectory() as directory:
             captured=[];original_init=OwnedGuardedSessionOwner.__init__

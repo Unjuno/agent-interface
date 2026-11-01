@@ -991,6 +991,18 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         finally:
             self._lifecycle_lock.release()
 
+    def close_after_lifecycle_wait(self, timeout_s):
+        """Try to acquire startup custody for shutdown within a wait budget."""
+        if not self._lifecycle_lock.acquire(timeout=timeout_s):
+            return {'status':'busy', 'reason':'owned_lifecycle_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_locked()
+        finally:
+            self._lifecycle_lock.release()
+
     def _close_locked(self):
         unregistered = getattr(self, '_startup_unregistered_process', None) is not None
         pipe_cleanup_errors = getattr(self, '_startup_pipe_cleanup_error_types', [])
