@@ -115,6 +115,18 @@ class ProcessBridgeTests(unittest.TestCase):
         return self.bridge.keyboard('field', [1, 1],
             tail=[{'op': 'key_chord', 'keys': ['CTRL', 'a']}], expires_at_ns=11_000_000)
 
+    def test_connection_loss_before_admission_requires_review_and_blocks_reuse(self):
+        from Xlib.error import ConnectionClosedError
+        with patch.object(self.bridge, 'check', side_effect=ConnectionClosedError('disconnected')):
+            result = self.invoke()
+        self.assertEqual(result['status'], 'refused')
+        self.assertFalse(result['input_dispatched'])
+        self.assertEqual(self.emissions, [])
+        self.assertTrue(self.bridge.review_required)
+        again = self.invoke()
+        self.assertEqual(again['error'], 'WINDOW_REVIEW_REQUIRED')
+        self.assertEqual(self.emissions, [])
+
     def test_observation_binding_contains_only_identity_digest(self):
         self.assertEqual(self.bridge.history[1][0]['pointer_binding']['process_generation'], 'a' * 64)
 
