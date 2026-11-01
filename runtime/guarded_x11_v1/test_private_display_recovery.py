@@ -36,6 +36,28 @@ class PrivateDisplayRecoveryTests(unittest.TestCase):
     def deadline(self):
         return time.monotonic_ns() + 2_000_000_000
 
+    def test_reserve_is_subtracted_from_cancel_deadline(self):
+        deadline = self.deadline()
+        recovery = PrivateDisplayRecovery(self.display, self.owner, retirement_reserve_ns=500_000_000)
+        result = recovery.cancel_guarded('token', deadline_monotonic_ns=deadline)
+        self.owner.cancel_guarded.assert_called_once_with('token', deadline_monotonic_ns=deadline-500_000_000)
+        self.display.retire.assert_called_once()
+        self.assertTrue(result['fresh_display_allowed'])
+        self.assertFalse(result['replay_allowed'])
+
+    def test_insufficient_cancel_budget_has_no_side_effects(self):
+        recovery = PrivateDisplayRecovery(self.display, self.owner, retirement_reserve_ns=3_000_000_000)
+        result = recovery.cancel_guarded('token', deadline_monotonic_ns=self.deadline())
+        self.assertEqual(result['reason'], 'insufficient_cancel_budget')
+        self.assertFalse(result['fresh_display_allowed'])
+        self.owner.cancel_guarded.assert_not_called()
+        self.display.retire.assert_not_called()
+
+    def test_invalid_reserve_is_rejected(self):
+        for reserve in (-1, True, 1.5, '1', None):
+            with self.subTest(reserve=reserve), self.assertRaises(ValueError):
+                PrivateDisplayRecovery(self.display, self.owner, retirement_reserve_ns=reserve)
+
     def test_retires_matching_owned_display_and_keeps_old_result_unknown(self):
         recovery=PrivateDisplayRecovery(self.display,self.owner)
         result=recovery.cancel_guarded('token',deadline_monotonic_ns=self.deadline())

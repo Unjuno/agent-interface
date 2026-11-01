@@ -13,7 +13,14 @@ from .private_display_owner import PrivateDisplayOwner
 
 
 class PrivateDisplayRecovery:
-    def __init__(self, display_owner, guarded_owner):
+    """Recover once; an optional reserve leaves time for display retirement.
+
+    The reserve shortens the cancellation deadline, but does not impose a
+    hard bound on cancellation, process shutdown, or operating-system calls.
+    """
+    def __init__(self, display_owner, guarded_owner, *, retirement_reserve_ns=0):
+        if type(retirement_reserve_ns) is not int or retirement_reserve_ns < 0:
+            raise ValueError('retirement reserve must be nonnegative integer nanoseconds')
         if not isinstance(display_owner, PrivateDisplayOwner) or not isinstance(guarded_owner, OwnedGuardedSessionOwner):
             raise TypeError('recovery requires private display and guarded owner objects')
         session = display_owner._session
@@ -36,6 +43,7 @@ class PrivateDisplayRecovery:
         self._display_session = session
         self._guarded_process = guarded_process
         self._supervisor = supervisor
+        self._retirement_reserve_ns = retirement_reserve_ns
         self._lock = threading.Lock()
         self._result = None
         self._token = None
@@ -64,15 +72,20 @@ class PrivateDisplayRecovery:
                     return deepcopy(self._result)
                 return {'status':'unknown', 'reason':'recovery_already_used',
                         'fresh_display_allowed':False, 'replay_allowed':False}
-            if time.monotonic_ns() >= deadline_monotonic_ns:
+            now_ns = time.monotonic_ns()
+            if now_ns >= deadline_monotonic_ns:
                 return {'status':'unknown', 'reason':'deadline_before_cancel',
+                        'fresh_display_allowed':False, 'replay_allowed':False}
+            cancel_deadline_ns = deadline_monotonic_ns - self._retirement_reserve_ns
+            if now_ns >= cancel_deadline_ns:
+                return {'status':'unknown', 'reason':'insufficient_cancel_budget',
                         'fresh_display_allowed':False, 'replay_allowed':False}
             if not self._binding_intact():
                 return {'status':'unknown', 'reason':'display_binding_changed',
                         'fresh_display_allowed':False, 'replay_allowed':False}
             try:
                 cancellation = self._guarded_owner.cancel_guarded(
-                    token, deadline_monotonic_ns=deadline_monotonic_ns)
+                    token, deadline_monotonic_ns=cancel_deadline_ns)
             except Exception as error:
                 cancellation = {'status':'cancel_unconfirmed', 'cleanup_status':'UNKNOWN',
                                 'owner_process_retired':False,
