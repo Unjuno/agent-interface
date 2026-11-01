@@ -763,6 +763,34 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             raise ValueError('deadline_monotonic_ns must be an integer')
         self._active_cancel_deadline_ns = deadline_monotonic_ns
         self._active_cancel_operation_id = operation_id or str(token)
+        if self._process is not None and not self._process.is_alive() and self.state != 'closed':
+            retirement = getattr(self, '_retirement', None)
+            if retirement is None:
+                retirement = self._retire('owner exited before cancellation')
+                self._retirement = retirement
+            self._execution_unknown = True
+            self.review_required = True
+            if getattr(self, '_owner_release_attempt', None) is None:
+                live_read = _read_owner_input_obligations(
+                    getattr(self, '_owner_input_obligations_state', None))
+                self._owner_input_obligations_live_read = live_read
+                if live_read.get('status') == 'snapshot':
+                    self._owner_input_obligations = deepcopy(live_read['obligations'])
+                    self._owner_input_obligations_source = 'retired_child_shared_state'
+                if getattr(self, '_owner_client_disconnect', None) is None:
+                    self._owner_client_disconnect = {'status':'unknown',
+                        'reason':'owner_exited_before_cancel'}
+                self._owner_release_attempt = {'status':'not_attempted',
+                    'reason':'owner_exited_before_cancel'}
+            return {'status':'cancel_unconfirmed', 'input_dispatched':False,
+                    'owner_process_retired':retirement.get('retired') is True,
+                    'owner_process_exitcode':retirement.get('exitcode'),
+                    'owner_client_disconnect':deepcopy(self._owner_client_disconnect),
+                    **self._owner_input_obligations_result_fields(),
+                    'owner_release_attempt':deepcopy(self._owner_release_attempt),
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
         if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
                     'release_confirmed':False}
