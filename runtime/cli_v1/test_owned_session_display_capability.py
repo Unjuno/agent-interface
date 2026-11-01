@@ -2,10 +2,13 @@
 import importlib.util
 import multiprocessing
 import os
+import select
 import socket
 from pathlib import Path
 import shutil
+import subprocess
 import sys
+import time
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -166,6 +169,105 @@ class OwnedSessionDisplayCapabilityTests(unittest.TestCase):
                     if process.pid is not None and process.is_alive():
                         process.terminate()
                         process.join(3)
+    def test_same_number_replacement_after_pidfd_duplication_is_refused(self):
+        from Xlib import X, display
+        from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as tmp:
+            server = PrivateDisplayOwner(Path(tmp) / 'server')
+            self.addCleanup(server.close)
+            session = server.start(timeout_s=5)
+            old_pid = server._process.pid
+            original_duplicate = server.duplicate_server_pidfd
+            replacements = []
+            connections = []
+            controls = []
+            duplication_attempts = []
+            def replace_after_duplication(**kwargs):
+                duplication_attempts.append(1)
+                fd, pid = original_duplicate(**kwargs)
+                try:
+                    self.assertEqual(server.retire(timeout_s=3)['status'], 'retired')
+                    ready_read, ready_write = os.pipe()
+                    try:
+                        replacement = subprocess.Popen([
+                            'Xvfb', session.display, '-displayfd', str(ready_write),
+                            '-screen', '0', '640x480x24', '-nolisten', 'tcp',
+                            '-auth', str(session.authority)], pass_fds=(ready_write,),
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        replacements.append(replacement)
+                        os.close(ready_write)
+                        ready_write = None
+                        if not select.select([ready_read], [], [], 5)[0]:
+                            raise RuntimeError('replacement readiness timed out')
+                        ready_number = os.read(ready_read, 32).strip().decode('ascii')
+                        if ready_number != session.display[1:]:
+                            raise RuntimeError('replacement readiness did not match display')
+                    finally:
+                        os.close(ready_read)
+                        if ready_write is not None:
+                            os.close(ready_write)
+                    with patch.dict(os.environ, {'XAUTHORITY':str(session.authority)}):
+                        connection = display.Display('unix' + session.display)
+                    connections.append(connection)
+                    window = connection.screen().root.create_window(10, 10, 100, 80, 0,
+                        connection.screen().root_depth, X.InputOutput, X.CopyFromParent)
+                    window.map()
+                    connection.sync()
+                    owner.targets['app'] = window.id
+                    control = OwnedGuardedSessionOwner({'app':window.id},
+                        Path(tmp) / 'control', session.display, process_identity=True,
+                        query_worker=True, prestarted_cancel_supervisor=True,
+                        xauthority=str(session.authority))
+                    controls.append(control)
+                    control._ensure_started()
+                    self.assertEqual(control.state, 'open')
+                    self.assertEqual(control.close()['status'], 'closed')
+                    return fd, pid
+                except BaseException:
+                    os.close(fd)
+                    raise
+            owner = OwnedGuardedSessionOwner({'app':1}, Path(tmp) / 'owner',
+                session.display, process_identity=True, query_worker=True,
+                prestarted_cancel_supervisor=True, xauthority=str(session.authority),
+                _owned_display_owner=server)
+            self.addCleanup(owner.close)
+            try:
+                with patch.object(server, 'duplicate_server_pidfd',
+                                  side_effect=replace_after_duplication):
+                    with self.assertRaises((RuntimeError, EOFError)):
+                        owner._ensure_started()
+                self.assertEqual(len(replacements), 1)
+                self.assertEqual(len(controls), 1)
+                self.assertEqual(len(duplication_attempts), 1)
+                self.assertNotEqual(replacements[0].pid, old_pid)
+                self.assertIsNone(replacements[0].poll())
+                self.assertNotEqual(owner.state, 'open')
+                self.assertFalse(owner.snapshot()['authority_granted'])
+                self.assertIsNone(owner._cleanup_supervisor)
+                self.assertIsNotNone(owner._process)
+                self.assertFalse(owner._process.is_alive())
+            finally:
+                try:
+                    owner.close()
+                finally:
+                    try:
+                        try:
+                            for control in controls:
+                                control.close()
+                        finally:
+                            for connection in connections:
+                                connection.close()
+                    finally:
+                        for replacement in replacements:
+                            if replacement.poll() is None:
+                                replacement.terminate()
+                                try:
+                                    replacement.wait(timeout=3)
+                                except subprocess.TimeoutExpired:
+                                    replacement.kill()
+                                    replacement.wait(timeout=3)
+
     def test_correct_display_starts_and_other_display_is_refused(self):
         from Xlib import X, display
         from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
