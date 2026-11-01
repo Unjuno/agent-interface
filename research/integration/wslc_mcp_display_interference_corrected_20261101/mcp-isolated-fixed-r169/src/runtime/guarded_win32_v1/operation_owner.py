@@ -1,0 +1,606 @@
+"""Pure custody gate for opt-in Win32 operations.
+
+This module deliberately imports no Win32 API and sends no input. The parent
+caller records exact child-process identity and may request recovery only after
+the matching producer has a confirmed exit and before the cleanup deadline.
+"""
+from __future__ import annotations
+
+import copy
+import re
+import threading
+import time
+import uuid
+
+
+_GENERATION = re.compile(r"^[0-9a-f]{64}$")
+
+
+class OwnerRefused(ValueError):
+    """The owner cannot safely admit or advance this operation."""
+
+    def __init__(self, message, *, code="OWNER_REFUSED", operation_id=None):
+        super().__init__(message)
+        self.code = code
+        self.operation_id = operation_id
+
+
+class OperationOwner:
+    """Parent-side state gate; the identity reader must query the owned handle.
+
+    It must not reopen the process by PID: the retained handle is the evidence
+    that binds the queried creation time to this exact child across PID reuse.
+    """
+
+    def __init__(self, *, clock_ns, process_identity_reader,
+                 perf_counter_ns=None):
+        if (not callable(clock_ns) or not callable(process_identity_reader)
+                or (perf_counter_ns is not None
+                    and not callable(perf_counter_ns))):
+            raise ValueError("monotonic clock and process identity reader required")
+        self._clock_ns = clock_ns
+        self._perf_counter_ns = perf_counter_ns or time.perf_counter_ns
+        self._process_identity_reader = process_identity_reader
+        self._lock = threading.RLock()
+        self._records = {}
+        self._producer_handles = {}
+        self._orphan_handles = []
+        self._active_operation_id = None
+
+    def admit(self, operation_id, target_generation, deadline_ns, obligations,
+              *, start_gate_required=False):
+        self._validate_operation(operation_id, target_generation)
+        if type(start_gate_required) is not bool:
+            raise OwnerRefused("start gate requirement must be boolean")
+        if type(deadline_ns) is not int or deadline_ns <= self._clock_ns():
+            raise OwnerRefused("operation deadline must be in the future")
+        if not isinstance(obligations, (list, tuple)):
+            raise OwnerRefused("unique frozen input obligations required")
+        # Validate and store the same snapshot even if the caller mutates its list.
+        obligations = tuple(obligations)
+        if (any(type(item) is not str or not item for item in obligations)
+                or len(set(obligations)) != len(obligations)):
+            raise OwnerRefused("unique frozen input obligations required")
+        with self._lock:
+            # Lock contention may consume the remaining admission window.
+            if deadline_ns <= self._clock_ns():
+                raise OwnerRefused("operation deadline must be in the future")
+            if operation_id in self._records:
+                raise OwnerRefused("operation ID already used")
+            prior = (self._records.get(self._active_operation_id)
+                     if self._active_operation_id is not None else None)
+            if prior is not None:
+                if prior["status"] not in ("recovered", "completed"):
+                    raise OwnerRefused(
+                        "prior producer or cleanup remains unresolved",
+                        code="INPUT_PRODUCER_UNRESOLVED",
+                        operation_id=prior["operation_id"])
+                if (prior["status"] == "recovered"
+                        and target_generation == prior["target_generation"]):
+                    raise OwnerRefused("fresh target generation required after cancellation")
+            record = {
+                "operation_id": operation_id,
+                "target_generation": target_generation,
+                "deadline_ns": deadline_ns,
+                "obligations": tuple(obligations),
+                "status": "admitted",
+                "producer_identity": None,
+                "producer_exit_code": None,
+                # Direct producers have no known closed gate. Only a caller
+                # that guarantees a parent-owned gate may declare it closed.
+                "producer_gate_state": "closed" if start_gate_required else "untracked",
+                "cleanup_deadline_ns": None,
+                "cleanup_requested_monotonic_ns": None,
+                "recovery_completed_monotonic_ns": None,
+                "cleanup_latency_ns": None,
+                "cleanup_requested_perf_counter_ns": None,
+                "recovery_completed_perf_counter_ns": None,
+                "cleanup_latency_perf_counter_ns": None,
+                "recovery_id": None,
+                "late_input_horizon_ns": 0,
+                "late_input_max_sample_gap_ns": None,
+                "late_input_observation_count": 0,
+                "late_input_release_received_ns": None,
+                "late_input_observation_start_ns": None,
+                "late_input_observation_end_ns": None,
+                "late_input_max_observed_gap_ns": None,
+                "late_input_validation_error": None,
+                "release_confirmed": False,
+                "completion_release_receipt": None,
+                "completion_readback": None,
+                "completion_readback_outcome": "not_attempted",
+                "completion_readback_attempt": None,
+                "task_success": None,
+                "replay_allowed": False,
+                "uncertainty": None,
+            }
+            self._records[operation_id] = record
+            self._active_operation_id = operation_id
+            return self._public(record)
+
+    def producer_started(self, operation_id, target_generation, process_handle,
+                         *, process_identity):
+        with self._lock:
+            record = self._records.get(operation_id)
+            if (record is None
+                    or record["target_generation"] != target_generation
+                    or record["producer_identity"] is not None
+                    or operation_id in self._producer_handles):
+                self._orphan_handles.append(process_handle)
+                if record is not None:
+                    record["status"] = "unknown"
+                return False
+            self._producer_handles[operation_id] = process_handle
+        try:
+            identity = self._process_identity(process_identity)
+            if (type(getattr(process_handle, "pid", None)) is not int
+                    or process_handle.pid != identity["pid"]
+                    or not callable(getattr(process_handle, "is_alive", None))
+                    or not hasattr(process_handle, "exitcode")):
+                raise OwnerRefused("invalid producer process handle")
+        except Exception:
+            with self._lock:
+                record = self._records.get(operation_id)
+                if record is not None:
+                    record["status"] = "unknown"
+            return False
+        try:
+            current_identity = self._process_identity_reader(process_handle)
+            alive = process_handle.is_alive()
+        except Exception:
+            current_identity = None
+            alive = None
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["producer_identity"] is not None
+                    or self._producer_handles.get(operation_id) is not process_handle):
+                return False
+            record["producer_identity"] = identity
+            if current_identity != identity or alive is not True:
+                record["status"] = "unknown"
+                return False
+            # Once cancellation wins, its cleanup deadline governs retirement.
+            # Expiry of the original action window must not erase that state.
+            if record["status"] == "cancel_pending":
+                return False
+            if self._clock_ns() >= record["deadline_ns"]:
+                record["status"] = "unknown"
+                return False
+            if record["status"] == "admitted":
+                record["status"] = "running"
+                return True
+            # Cancellation won the race with child startup. Retain its exact
+            # identity so the owner can await retirement, but never authorize it.
+            return False
+
+    def authorize_producer_start(self, operation_id, target_generation,
+                                 process_handle, open_start_gate):
+        """Atomically open the child gate only while this producer is admitted.
+
+        ``open_start_gate`` must be a nonblocking parent-owned event/set call.
+        Running it under the custody lock orders authorization against cancel:
+        either the gate opens before cancellation closes admission, or cancel
+        wins and the gated child remains unable to emit input.
+        """
+        if not callable(open_start_gate):
+            raise OwnerRefused("parent-owned producer start gate required")
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "running"
+                    or self._producer_handles.get(operation_id) is not process_handle
+                    or self._clock_ns() >= record["deadline_ns"]):
+                return False
+            try:
+                # A gate callback could open the gate and then raise. Never
+                # reinterpret an attempted callback as proof it stayed closed.
+                record["producer_gate_state"] = "authorization_attempted"
+                open_start_gate()
+            except Exception:
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_start_gate_unconfirmed"
+                return False
+            return True
+
+    def producer_handle_for_retirement(self, operation_id, target_generation):
+        """Return the parent's retained handle for cancellation cleanup only."""
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if record["status"] != "cancel_pending":
+                return None
+            return self._producer_handles.get(operation_id)
+
+    def request_cancel(self, operation_id, target_generation, *, cleanup_deadline_ns):
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["cleanup_deadline_ns"] is not None
+                    and record["status"] in ("cancel_pending", "producer_retired",
+                                              "recovery_pending", "recovered",
+                                              "unknown")):
+                return self._public(record)
+            if record["status"] not in ("admitted", "running"):
+                raise OwnerRefused("operation has no cancellable producer")
+            requested_ns = self._clock_ns()
+            requested_perf_ns = self._perf_counter_ns()
+            if (type(cleanup_deadline_ns) is not int
+                    or cleanup_deadline_ns <= requested_ns):
+                record["status"] = "unknown"
+                record["cleanup_deadline_ns"] = cleanup_deadline_ns
+                return self._public(record)
+            record["status"] = "cancel_pending"
+            record["cleanup_deadline_ns"] = cleanup_deadline_ns
+            record["cleanup_requested_monotonic_ns"] = requested_ns
+            record["cleanup_requested_perf_counter_ns"] = requested_perf_ns
+            return self._public(record)
+
+    def producer_retired(self, operation_id, target_generation, process_handle):
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "cancel_pending"
+                    or record["producer_identity"] is None
+                    or self._producer_handles.get(operation_id) is not process_handle):
+                return False
+            expected_identity = dict(record["producer_identity"])
+        try:
+            alive = process_handle.is_alive()
+            exit_code = process_handle.exitcode
+            current_identity = self._process_identity_reader(process_handle)
+        except Exception:
+            alive = None
+            exit_code = None
+            current_identity = None
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "cancel_pending"
+                    or self._producer_handles.get(operation_id) is not process_handle):
+                return False
+            if alive is True:
+                return False
+            if (alive is not False or type(exit_code) is not int
+                    or current_identity != expected_identity
+                    or record["producer_identity"] != expected_identity):
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_exit_or_identity_unconfirmed"
+                return False
+            record["producer_exit_code"] = exit_code
+            if self._clock_ns() >= record["cleanup_deadline_ns"]:
+                record["status"] = "unknown"
+                record["uncertainty"] = "cleanup_deadline_expired_before_retirement"
+                return False
+            record["status"] = "producer_retired"
+            return True
+
+    def producer_completed(self, operation_id, target_generation, process_handle,
+                           *, release_receipt, readback):
+        """Retain completion only after exact exit and independent neutral readback.
+
+        Process exit and the child's release receipt do not independently prove
+        input is up. The caller must also pass a generation-bound readback from
+        the separately supervised observer after exact producer exit.
+        """
+        # Evidence may be caller-owned and the identity query below may block.
+        # Validate and retain detached copies of the same observed values.
+        release_receipt = copy.deepcopy(release_receipt)
+        readback = copy.deepcopy(readback)
+        now_ns = self._clock_ns()
+        release_verified = (
+            type(release_receipt) is dict
+            and release_receipt.get("verified") is True
+            and release_receipt.get("keys_down") == []
+            and release_receipt.get("buttons_down") == []
+            and release_receipt.get("keys_unknown") == []
+            and release_receipt.get("buttons_unknown") == []
+        )
+        readback_bound = (
+            type(readback) is dict
+            and set(readback) == {"operation_id", "target_generation",
+                "producer_exit_confirmed_ns", "observed_monotonic_ns", "neutral"}
+            and readback.get("operation_id") == operation_id
+            and readback.get("target_generation") == target_generation
+            and type(readback.get("producer_exit_confirmed_ns")) is int
+            and readback["producer_exit_confirmed_ns"] > 0
+            and type(readback.get("observed_monotonic_ns")) is int
+            and readback["observed_monotonic_ns"] >= readback["producer_exit_confirmed_ns"]
+            and readback["observed_monotonic_ns"] <= now_ns
+            and type(readback.get("neutral")) is bool
+        )
+        readback_verified = readback_bound and readback["neutral"] is True
+        if readback_verified:
+            readback_outcome = "verified"
+        elif readback_bound:
+            readback_outcome = "non_neutral"
+        elif readback is None:
+            readback_outcome = "missing"
+        else:
+            readback_outcome = "invalid"
+        readback_attempt = (self._safe_readback_attempt(readback)
+            if type(readback) is dict and not readback_verified else None)
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if record["status"] == "completed":
+                if (self._producer_handles.get(operation_id) is process_handle
+                        and release_verified and readback_verified
+                        and record["release_confirmed"]
+                        and record["completion_release_receipt"] == release_receipt
+                        and record["completion_readback"] == readback):
+                    return self._public(record)
+                raise OwnerRefused("completed operation only accepts its exact verified receipt")
+            if record["status"] != "running":
+                if record["status"] in ("cancel_pending", "producer_retired",
+                                         "recovery_pending", "recovered", "unknown"):
+                    if (record["status"] == "unknown"
+                            and self._producer_handles.get(operation_id) is process_handle
+                            and record["completion_readback_outcome"] == "not_attempted"):
+                        record["completion_readback_outcome"] = readback_outcome
+                        record["completion_readback_attempt"] = readback_attempt
+                    return self._public(record)
+                raise OwnerRefused("operation is not awaiting normal producer completion")
+            if (record["producer_identity"] is None
+                    or self._producer_handles.get(operation_id) is not process_handle):
+                raise OwnerRefused("exact running producer handle required for completion")
+            expected_identity = dict(record["producer_identity"])
+        try:
+            alive = process_handle.is_alive()
+            exit_code = process_handle.exitcode
+            current_identity = self._process_identity_reader(process_handle)
+        except Exception:
+            alive = None
+            exit_code = None
+            current_identity = None
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["completion_readback_outcome"] == "not_attempted"
+                    and self._producer_handles.get(operation_id) is process_handle
+                    and record["producer_identity"] == expected_identity):
+                record["completion_readback_outcome"] = readback_outcome
+                record["completion_readback_attempt"] = readback_attempt
+            if (record["status"] != "running"
+                    or self._producer_handles.get(operation_id) is not process_handle
+                    or record["producer_identity"] != expected_identity):
+                if record["status"] in ("cancel_pending", "producer_retired",
+                                         "recovery_pending", "recovered", "unknown"):
+                    return self._public(record)
+                raise OwnerRefused("producer custody changed during normal completion")
+            if (alive is not False or type(exit_code) is not int
+                    or current_identity != expected_identity):
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_exit_or_identity_unconfirmed"
+            elif self._clock_ns() >= record["deadline_ns"]:
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_completion_after_deadline"
+            elif record["producer_gate_state"] != "authorization_attempted":
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_completion_without_authorized_gate"
+            elif not release_verified:
+                record["status"] = "unknown"
+                record["uncertainty"] = "normal_producer_release_unconfirmed"
+            else:
+                record["producer_exit_code"] = exit_code
+                if release_verified and readback_verified:
+                    record["release_confirmed"] = True
+                    record["completion_release_receipt"] = copy.deepcopy(release_receipt)
+                    record["completion_readback"] = copy.deepcopy(readback)
+                    record["status"] = "completed"
+                else:
+                    record["status"] = "unknown"
+                    record["uncertainty"] = (
+                        "normal_producer_release_or_independent_readback_unconfirmed")
+            return self._public(record)
+
+    def mark_unknown(self, operation_id, target_generation, reason):
+        if type(reason) is not str or not reason:
+            raise OwnerRefused("uncertainty reason required")
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if record["status"] != "recovered":
+                record["status"] = "unknown"
+                record["uncertainty"] = reason
+            return self._public(record)
+
+    def expire_cleanup(self, operation_id, target_generation):
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["cleanup_deadline_ns"] is not None
+                    and type(record["cleanup_deadline_ns"]) is int
+                    and self._clock_ns() >= record["cleanup_deadline_ns"]
+                    and record["status"] in ("cancel_pending", "producer_retired",
+                                              "recovery_pending")):
+                record["status"] = "unknown"
+                record["uncertainty"] = "cleanup_deadline_expired"
+            return self._public(record)
+
+    def claim_recovery(self, operation_id, target_generation):
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "producer_retired"
+                    or self._clock_ns() >= record["cleanup_deadline_ns"]):
+                if record["status"] == "producer_retired":
+                    record["status"] = "unknown"
+                return None
+            if record["producer_gate_state"] == "closed":
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_retired_without_start_authorization"
+                return None
+            recovery_id = uuid.uuid4().hex
+            record["recovery_id"] = recovery_id
+            record["status"] = "recovery_pending"
+            return {
+                "operation_id": operation_id,
+                "target_generation": target_generation,
+                "recovery_id": recovery_id,
+                "deadline_ns": record["cleanup_deadline_ns"],
+                "obligations": list(record["obligations"]),
+            }
+
+    def recovery_completed(self, operation_id, target_generation, recovery_id,
+                           *, release_accepted, readback,
+                           release_received_ns=None, late_input_horizon_ns=0,
+                           late_input_max_sample_gap_ns=None,
+                           horizon_observations=None):
+        if (type(late_input_horizon_ns) is not int
+                or late_input_horizon_ns < 0):
+            raise OwnerRefused("late input horizon must be a nonnegative integer")
+        if horizon_observations is None:
+            horizon_observations = [readback]
+        if type(horizon_observations) not in (list, tuple):
+            raise OwnerRefused("late input horizon observations must be a sequence")
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "recovery_pending"
+                    or recovery_id != record["recovery_id"]):
+                return False
+            valid_readback = (
+                type(readback) is dict
+                and readback.get("operation_id") == operation_id
+                and readback.get("target_generation") == target_generation
+                and readback.get("recovery_id") == recovery_id
+                and readback.get("neutral") is True
+            )
+            observation_ns = []
+            gaps = []
+            valid_horizon = True
+            horizon_error = None
+            if late_input_horizon_ns:
+                for observation in horizon_observations:
+                    if (type(observation) is not dict
+                            or observation.get("operation_id") != operation_id
+                            or observation.get("target_generation") != target_generation
+                            or observation.get("recovery_id") != recovery_id
+                            or observation.get("neutral") is not True
+                            or type(observation.get("observed_monotonic_ns")) is not int):
+                        valid_horizon = False
+                        horizon_error = "observation_identity_or_state_invalid"
+                        break
+                    observation_ns.append(observation["observed_monotonic_ns"])
+                gaps = [right - left for left, right
+                        in zip(observation_ns, observation_ns[1:])]
+                if horizon_error is None and not observation_ns:
+                    horizon_error = "no_horizon_observations"
+                elif horizon_error is None and len(observation_ns) < 2:
+                    horizon_error = "insufficient_horizon_observations"
+                elif horizon_error is None and any(right < left for left, right
+                                                   in zip(observation_ns, observation_ns[1:])):
+                    horizon_error = "observation_times_not_monotonic"
+                elif (horizon_error is None
+                        and (type(late_input_max_sample_gap_ns) is not int
+                             or late_input_max_sample_gap_ns <= 0)):
+                    horizon_error = "invalid_max_sample_gap"
+                elif (horizon_error is None
+                        and any(gap > late_input_max_sample_gap_ns for gap in gaps)):
+                    horizon_error = "observation_gap_exceeded"
+                elif horizon_error is None and readback != horizon_observations[-1]:
+                    horizon_error = "terminal_readback_not_last_horizon_sample"
+                elif (horizon_error is None
+                        and (type(release_received_ns) is not int
+                             or observation_ns[0] < release_received_ns)):
+                    horizon_error = "observation_before_release_receipt"
+                elif (horizon_error is None
+                        and observation_ns[0] - release_received_ns
+                        > late_input_max_sample_gap_ns):
+                    horizon_error = "initial_observation_gap_exceeded"
+                elif (horizon_error is None
+                        and observation_ns[-1] - release_received_ns < late_input_horizon_ns):
+                    horizon_error = "horizon_duration_not_covered"
+                if horizon_error is not None:
+                    valid_horizon = False
+            completed_ns = self._clock_ns()
+            completed_perf_ns = self._perf_counter_ns()
+            confirmed = (
+                release_accepted is True
+                and valid_readback
+                and valid_horizon
+                and completed_ns < record["cleanup_deadline_ns"]
+            )
+            record["status"] = "recovered" if confirmed else "unknown"
+            record["release_confirmed"] = bool(confirmed)
+            record["late_input_horizon_ns"] = late_input_horizon_ns
+            record["late_input_max_sample_gap_ns"] = late_input_max_sample_gap_ns
+            record["late_input_observation_count"] = len(observation_ns)
+            record["late_input_release_received_ns"] = release_received_ns
+            record["late_input_observation_start_ns"] = observation_ns[0] if observation_ns else None
+            record["late_input_observation_end_ns"] = observation_ns[-1] if observation_ns else None
+            record["late_input_max_observed_gap_ns"] = max(gaps) if gaps else None
+            record["late_input_validation_error"] = horizon_error
+            if confirmed:
+                record["recovery_completed_monotonic_ns"] = completed_ns
+                record["cleanup_latency_ns"] = (
+                    completed_ns - record["cleanup_requested_monotonic_ns"])
+                record["recovery_completed_perf_counter_ns"] = completed_perf_ns
+                record["cleanup_latency_perf_counter_ns"] = (
+                    completed_perf_ns
+                    - record["cleanup_requested_perf_counter_ns"])
+            else:
+                if release_accepted is not True:
+                    record["uncertainty"] = "recovery_release_unconfirmed"
+                elif not valid_readback:
+                    record["uncertainty"] = "recovery_neutral_readback_unconfirmed"
+                elif not valid_horizon:
+                    record["uncertainty"] = "late_input_horizon_unconfirmed"
+                else:
+                    record["uncertainty"] = "recovery_deadline_expired"
+            return bool(confirmed)
+
+    def result(self, operation_id):
+        with self._lock:
+            record = self._records.get(operation_id)
+            if record is None:
+                raise OwnerRefused("unknown operation ID")
+            if (record["cleanup_deadline_ns"] is not None
+                    and type(record["cleanup_deadline_ns"]) is int
+                    and self._clock_ns() >= record["cleanup_deadline_ns"]
+                    and record["status"] in ("cancel_pending", "producer_retired",
+                                              "recovery_pending")):
+                record["status"] = "unknown"
+                record["uncertainty"] = "cleanup_deadline_expired"
+            return self._public(record)
+
+    def _matching(self, operation_id, target_generation):
+        record = self._records.get(operation_id)
+        if record is None or record["target_generation"] != target_generation:
+            raise OwnerRefused("stale operation ID or target generation")
+        return record
+
+    @staticmethod
+    def _validate_operation(operation_id, target_generation):
+        if type(operation_id) is not str or not operation_id:
+            raise OwnerRefused("nonempty operation ID required")
+        if (type(target_generation) is not str
+                or _GENERATION.fullmatch(target_generation) is None):
+            raise OwnerRefused("SHA-256 target-generation digest required")
+
+    @staticmethod
+    def _process_identity(identity):
+        if (type(identity) is not dict or set(identity) !=
+                {"pid", "creation_time_100ns"}
+                or type(identity["pid"]) is not int or identity["pid"] <= 0
+                or type(identity["creation_time_100ns"]) is not int
+                or identity["creation_time_100ns"] <= 0):
+            raise OwnerRefused("exact producer PID and creation time required")
+        return {"pid": identity["pid"],
+                "creation_time_100ns": identity["creation_time_100ns"]}
+
+    @staticmethod
+    def _public(record):
+        value = copy.deepcopy(record)
+        value["obligations"] = list(value["obligations"])
+        value["phase"] = value["status"]
+        if value["status"] in ("cancel_pending", "producer_retired",
+                                "recovery_pending"):
+            value["status"] = "pending"
+        return value
+
+    @staticmethod
+    def _safe_readback_attempt(readback):
+        """Retain bounded JSON-safe fields from a rejected observer response."""
+        fields = ("operation_id", "target_generation",
+                  "producer_exit_confirmed_ns", "observed_monotonic_ns",
+                  "neutral")
+        retained = {}
+        for name in fields:
+            value = readback.get(name)
+            if type(value) is str and len(value) <= 256:
+                retained[name] = value
+            elif type(value) is int and -(1 << 63) <= value < (1 << 63):
+                retained[name] = value
+            elif type(value) is bool:
+                retained[name] = value
+        return retained
