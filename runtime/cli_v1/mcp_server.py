@@ -680,6 +680,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if owner is not None and owner.state == 'failed' and owner.session is None:
                     report.update(status='backend_unavailable', failure_phase='session_initialization',
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
+                if guarded_owned_process:
+                    from .owned_guarded_session import ParentExecutionUnknown
+                    if isinstance(error, ParentExecutionUnknown):
+                        with calls_lock:
+                            calls[call_id]['backend_attempted'] = False
+                        report.update(status='refused', operation_invoked=False,
+                                      input_dispatched=False, effect_status='none',
+                                      cleanup_status='UNKNOWN', replay_allowed=False)
             if operation == 'dispatch' and inspect_after is not None:
                 try:
                     capture_options = ({'screen_region': inspect_after_region,

@@ -9,7 +9,9 @@ from copy import deepcopy
 import hashlib
 import json
 import multiprocessing
+import os
 from pathlib import Path
+import select
 import threading
 import time
 from types import SimpleNamespace
@@ -19,6 +21,64 @@ from ..guarded_x11_v1.cancel_supervisor import (
     PrestartedCancellationSupervisor, x11_cancel_worker)
 from ..guarded_x11_v1.xres_client_fence import (
     supervise_xres_worker, wait_for_client_disconnect_supervised)
+
+
+class ParentExecutionUnknown(RuntimeError):
+    """Parent refused a mutating request before attempting its RPC."""
+
+
+class _ExperimentalEventfd:
+    """Linux-only research prototype; callers must not close or replace fd."""
+    def __init__(self):
+        self.fd = os.eventfd(0, os.EFD_CLOEXEC | os.EFD_NONBLOCK)
+        self._local_lock = threading.Lock()
+        self.close_status = 'open'
+
+    def __getstate__(self):
+        from multiprocessing.reduction import DupFd
+        with self._local_lock:
+            if self.fd < 0:
+                raise OSError('eventfd is closed')
+            return {'fd': DupFd(self.fd)}
+
+    def __setstate__(self, state):
+        self.fd = state['fd'].detach()
+        self._local_lock = threading.Lock()
+        self.close_status = 'open'
+
+    def set(self):
+        with self._local_lock:
+            if self.fd < 0:
+                raise OSError('eventfd is closed')
+            os.eventfd_write(self.fd, 1)
+
+    def is_set(self):
+        with self._local_lock:
+            if self.fd < 0:
+                raise OSError('eventfd is closed')
+            poller = select.poll()
+            poller.register(self.fd, select.POLLIN)
+            events = poller.poll(0)
+            if not events:
+                return False
+            for fd, flags in events:
+                if fd != self.fd or flags != select.POLLIN:
+                    raise OSError('eventfd poll returned invalid or unexpected events')
+            return True
+
+    def close(self):
+        with self._local_lock:
+            if self.fd >= 0:
+                fd, self.fd = self.fd, -1
+                self.close_status = 'UNKNOWN'
+                os.close(fd)
+                self.close_status = 'closed'
+
+
+def _input_rpc(operation, arguments):
+    return (operation in ('run_compiled_profile', 'dispatch', 'recover_input')
+            or (operation == 'invoke_guarded' and (arguments or {}).get('operation') in
+                ('guarded_input', 'guarded_activate_window', 'guarded_recover_input')))
 
 
 _STARTUP_TIMEOUT_S = 5.0
@@ -204,7 +264,7 @@ def _control_loop(connection, stop, owner, pid):
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                                  directory, display_name, options, owner_factory,
-                                 input_obligations_state):
+                                 input_obligations_state, unknown_event):
     owner = None
     control_stop = threading.Event()
     control_thread = None
@@ -234,7 +294,12 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
             else:
                 try:
                     arguments = request.get('arguments', {})
-                    if operation == 'snapshot':
+                    if _input_rpc(operation, arguments) and unknown_event.is_set():
+                        result = {'status':'refused', 'operation_invoked':False,
+                                  'input_dispatched':False, 'effect_status':'none',
+                                  'cleanup_status':'UNKNOWN', 'release_confirmed':False,
+                                  'task_success':None, 'replay_allowed':False}
+                    elif operation == 'snapshot':
                         result = owner.snapshot()
                     elif operation == 'invoke_guarded':
                         result = owner.invoke_guarded(**arguments)
@@ -297,6 +362,22 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     confirms it before retirement. No process restart or input replay occurs.
     """
 
+    @property
+    def _execution_unknown(self):
+        return getattr(self, '_execution_unknown_value', False)
+
+    @_execution_unknown.setter
+    def _execution_unknown(self, value):
+        self._execution_unknown_value = value
+        if value and getattr(self, '_unknown_event', None) is not None:
+            self._unknown_notification_started = True
+            try:
+                self._unknown_event.set()
+            except OSError as error:
+                self._unknown_notification_failure_type = type(error).__name__
+            else:
+                self._unknown_notification_returned = True
+
     def __init__(self, targets, directory, display_name=None, *,
                  process_identity=False, query_worker=False,
                  observation_worker=False, window_lifecycle=False,
@@ -329,6 +410,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
+        self._unknown_event = (_ExperimentalEventfd()
+            if os.environ.get('AGENT_INTERFACE_EXPERIMENTAL_EVENTFD') == '1'
+            else multiprocessing.get_context('spawn').Event())
         self._execution_unknown = False
         self._retirement = None
         self._owner_client_disconnect = None
@@ -392,7 +476,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'observation_worker':self.observation_worker,
                    'window_lifecycle':self.window_lifecycle,
                    'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
+                  self._owner_factory, input_obligations_state, self._unknown_event),
             name='guarded-x11-owner-' + self.session_id[:8])
         self.state = 'opening'
         try:
@@ -436,6 +520,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._ensure_started()
         if self._rpc is None:
             raise RuntimeError('owned guarded RPC channel unavailable')
+        if self._execution_unknown and _input_rpc(operation, arguments):
+            raise ParentExecutionUnknown('owned execution is unknown; mutating RPC refused')
         self._rpc.send({'operation':operation, 'arguments':arguments or {}})
         response = self._rpc.recv()
         snapshot = response.get('snapshot')
@@ -481,10 +567,17 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         execution_unknown = self._execution_unknown
         if self._process is not None:
             process['release_confirmed'] = False if execution_unknown else None
+        notification_failure = getattr(self, '_unknown_notification_failure_type', None)
+        notification = ({'status':'failed', 'error_type':notification_failure}
+            if notification_failure else
+            {'status':'signal_call_returned'} if getattr(self, '_unknown_notification_returned', False) else
+            {'status':'pending'} if getattr(self, '_unknown_notification_started', False) else
+            {'status':'not_attempted'})
         row.update(session_id=self.session_id, mode='guarded-x11-owned-process',
                    state=self.state, binding_revision=self.binding_revision,
                    targets=deepcopy(self.targets), error=self.error,
                    review_required=execution_unknown or self.review_required,
+                   unknown_notification=notification,
                    owner_process=process,
                    owner_client_disconnect=deepcopy(self._owner_client_disconnect),
                    owner_input_obligations=deepcopy(self._owner_input_obligations),
