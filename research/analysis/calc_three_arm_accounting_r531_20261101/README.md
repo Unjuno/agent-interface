@@ -2,6 +2,8 @@
 
 This is a read-only re-audit of existing evidence at main `ac67f9420e4524d555b8d6b5f3cb99efeba3b01a`; it is not a new live run. The two archived comparison programs re-audited all 12 saved attempts, including saved-cell and neutral-input checks, distinct owner sessions and model-call IDs, and per-route input hashes. `recount.py` adds launcher-interval medians and relative figures without altering the underlying trials. `recount.json` is the saved output.
 
+**Archive metadata discrepancy discovered in a later review:** all six fixed-block `conditions.json` files list `values` and pass criteria as 472/615 but also contain an `intervention` sentence referring to 641/283. The retained input code and independent saved-file scoring checked by the archived auditor use 472/615. The conflicting sentence is preserved; it leaves ambiguity in the documented intervention and is not silently corrected. See [PROFILE.md](PROFILE.md).
+
 | Workload | Route | Samples | Task median | Launcher median | Input-token median |
 |---|---|---:|---:|---:|---:|
 | Fixed | direct | 2 | 6.258 s | 9.922 s | 12,185 |

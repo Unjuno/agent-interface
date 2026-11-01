@@ -1,0 +1,241 @@
+{
+  "status": "audited",
+  "blocks": {
+    "fixed": {
+      "direct": {
+        "n": 2,
+        "model_runner_seconds_median": 5.022845650000001,
+        "task_minus_runner_seconds_median": 1.2348838214999995,
+        "samples": [
+          {
+            "allocation": "eo01",
+            "route": "direct",
+            "task_seconds": 6.44475328,
+            "model_runner_seconds": 5.203349,
+            "task_minus_runner_seconds": 1.2414042799999994,
+            "model_call_seconds": [
+              5.203349
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "fixed expected values and independent scorer changed to 641/283; original 731/864 stale reference retained; same OCR and guard logic"
+          },
+          {
+            "allocation": "ep03",
+            "route": "direct",
+            "task_seconds": 6.070705663,
+            "model_runner_seconds": 4.8423423,
+            "task_minus_runner_seconds": 1.2283633629999997,
+            "model_call_seconds": [
+              4.8423423
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "fixed expected values and independent scorer changed to 641/283; original 731/864 stale reference retained; same OCR and guard logic"
+          }
+        ]
+      },
+      "compiled": {
+        "n": 2,
+        "model_runner_seconds_median": 4.9685815,
+        "task_minus_runner_seconds_median": 1.5919365964999996,
+        "samples": [
+          {
+            "allocation": "eo02",
+            "route": "compiled",
+            "task_seconds": 5.89360389,
+            "model_runner_seconds": 4.3135204,
+            "task_minus_runner_seconds": 1.5800834899999998,
+            "model_call_seconds": [
+              4.3135204
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "fixed expected values and independent scorer changed to 641/283; original 731/864 stale reference retained; same OCR and guard logic"
+          },
+          {
+            "allocation": "ep02",
+            "route": "compiled",
+            "task_seconds": 7.227432303,
+            "model_runner_seconds": 5.6236426,
+            "task_minus_runner_seconds": 1.6037897029999995,
+            "model_call_seconds": [
+              5.6236426
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "fixed expected values and independent scorer changed to 641/283; original 731/864 stale reference retained; same OCR and guard logic"
+          }
+        ]
+      },
+      "fresh": {
+        "n": 2,
+        "model_runner_seconds_median": 8.37365085,
+        "task_minus_runner_seconds_median": 1.2850155654999997,
+        "samples": [
+          {
+            "allocation": "eo03",
+            "route": "fresh",
+            "task_seconds": 8.566229973,
+            "model_runner_seconds": 7.3092461,
+            "task_minus_runner_seconds": 1.2569838730000003,
+            "model_call_seconds": [
+              5.178407,
+              2.1308391
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "fixed expected values and independent scorer changed to 641/283; original 731/864 stale reference retained; same OCR and guard logic"
+          },
+          {
+            "allocation": "ep01",
+            "route": "fresh",
+            "task_seconds": 10.751102858,
+            "model_runner_seconds": 9.4380556,
+            "task_minus_runner_seconds": 1.3130472579999992,
+            "model_call_seconds": [
+              5.944964,
+              3.4930916
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "fixed expected values and independent scorer changed to 641/283; original 731/864 stale reference retained; same OCR and guard logic"
+          }
+        ]
+      }
+    },
+    "temporary_obstruction": {
+      "direct": {
+        "n": 2,
+        "model_runner_seconds_median": 7.694763200000001,
+        "task_minus_runner_seconds_median": 1.5832391575,
+        "samples": [
+          {
+            "allocation": "eq01",
+            "route": "direct",
+            "task_seconds": 8.364756758,
+            "model_runner_seconds": 6.7468502,
+            "task_minus_runner_seconds": 1.6179065580000005,
+            "model_call_seconds": [
+              4.3682836,
+              2.3785666
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "after first model response cover target by 8x8 overlay; verify stale before mint/input; remove own overlay, capture and re-ground"
+          },
+          {
+            "allocation": "er03",
+            "route": "direct",
+            "task_seconds": 10.191247957,
+            "model_runner_seconds": 8.6426762,
+            "task_minus_runner_seconds": 1.5485717569999995,
+            "model_call_seconds": [
+              4.9950647,
+              3.6476115
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "after first model response cover target by 8x8 overlay; verify stale before mint/input; remove own overlay, capture and re-ground"
+          }
+        ]
+      },
+      "compiled": {
+        "n": 2,
+        "model_runner_seconds_median": 8.219112899999999,
+        "task_minus_runner_seconds_median": 1.9309282549999995,
+        "samples": [
+          {
+            "allocation": "eq02",
+            "route": "compiled",
+            "task_seconds": 9.765059754,
+            "model_runner_seconds": 7.7988181,
+            "task_minus_runner_seconds": 1.9662416539999992,
+            "model_call_seconds": [
+              5.0055794,
+              2.7932387
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "after first model response cover target by 8x8 overlay; verify stale before mint/input; remove own overlay, capture and re-ground"
+          },
+          {
+            "allocation": "er02",
+            "route": "compiled",
+            "task_seconds": 10.535022556,
+            "model_runner_seconds": 8.6394077,
+            "task_minus_runner_seconds": 1.895614856,
+            "model_call_seconds": [
+              5.1586468,
+              3.4807609
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "after first model response cover target by 8x8 overlay; verify stale before mint/input; remove own overlay, capture and re-ground"
+          }
+        ]
+      },
+      "fresh": {
+        "n": 2,
+        "model_runner_seconds_median": 10.4248424,
+        "task_minus_runner_seconds_median": 1.6712394909999997,
+        "samples": [
+          {
+            "allocation": "eq03",
+            "route": "fresh",
+            "task_seconds": 13.037335632,
+            "model_runner_seconds": 11.385892,
+            "task_minus_runner_seconds": 1.6514436319999994,
+            "model_call_seconds": [
+              6.160536,
+              2.5401577,
+              2.6851983
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "after first model response cover target by 8x8 overlay; verify stale before mint/input; remove own overlay, capture and re-ground"
+          },
+          {
+            "allocation": "er01",
+            "route": "fresh",
+            "task_seconds": 11.15482815,
+            "model_runner_seconds": 9.4637928,
+            "task_minus_runner_seconds": 1.69103535,
+            "model_call_seconds": [
+              4.8148559,
+              2.3014181,
+              2.3475188
+            ],
+            "condition_values": [
+              "472",
+              "615"
+            ],
+            "intervention": "after first model response cover target by 8x8 overlay; verify stale before mint/input; remove own overlay, capture and re-ground"
+          }
+        ]
+      }
+    }
+  }
+}
