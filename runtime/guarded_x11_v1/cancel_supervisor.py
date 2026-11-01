@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import multiprocessing
 import os
+import socket
 import threading
 import time
 
@@ -73,13 +74,48 @@ def _serve_one(command_receive, result_send, ready_send, worker_target, xauthori
                 pass
 
 
+def _serve_one_with_server_guard(endpoint, expected_server_pid, *args):
+    """Install the X server fence in this disposable process before any X I/O."""
+    from .pidfd_transfer import receive_pidfd
+    from .owned_xlib_connector import OwnedXlibConnector
+    guard = None
+    fd = None
+    try:
+        endpoint.setblocking(False)
+        fd = receive_pidfd(endpoint)
+        endpoint.close()
+        guard = OwnedXlibConnector(fd, expected_server_pid, disposable=True)
+        received_fd, fd = fd, None
+        os.close(received_fd)
+        _serve_one(*args)
+    finally:
+        endpoint.close()
+        if fd is not None:
+            os.close(fd)
+        if guard is not None:
+            guard.close()
+
 class PrestartedCancellationSupervisor:
-    """A ready process that can accept at most one deadline-bound request."""
+    """A ready process that can accept at most one deadline-bound request.
+
+    An optional owned-server pidfd/PID pair pins this worker's new Xlib
+    connection before authentication. The caller retains the supplied fd and
+    must ensure it identifies the intended server. This is not a fence for
+    other workers, existing connections, or direct Xlib bypasses.
+    """
 
     def __init__(self, worker_target, *, expected_session_id=None,
                  startup_timeout_s=5.0,
                  terminate_grace_s=0.1, xauthority=None, pinned_display_name=None,
-                 expected_owner=None):
+                 expected_owner=None, owned_server_pidfd=None,
+                 owned_server_pid=None):
+        if (owned_server_pidfd is None) != (owned_server_pid is None):
+            raise ValueError('owned server pidfd and PID must be provided together')
+        guarded = owned_server_pidfd is not None
+        if guarded and (type(owned_server_pidfd) is not int or owned_server_pidfd < 0
+                or type(owned_server_pid) is not int or owned_server_pid <= 0
+                or pinned_display_name is None):
+            raise ValueError('owned server capability requires a pinned display and valid fd/PID')
         if not callable(worker_target):
             raise TypeError('worker_target must be callable')
         if xauthority is not None and (type(xauthority) is not str or not xauthority or '\x00' in xauthority):
@@ -113,13 +149,28 @@ class PrestartedCancellationSupervisor:
         command_receive, command_send = self._context.Pipe(duplex=False)
         result_receive, result_send = self._context.Pipe(duplex=False)
         ready_receive, ready_send = self._context.Pipe(duplex=False)
-        process = self._context.Process(
-            target=_serve_one,
-            args=(command_receive, result_send, ready_send, worker_target, xauthority,
-                  pinned_display_name, expected_owner),
-            name='guarded-cancel-supervisor')
+        sender = receiver = None
+        process = None
         try:
+            target = _serve_one
+            args = (command_receive, result_send, ready_send, worker_target, xauthority,
+                    pinned_display_name, expected_owner)
+            if guarded:
+                from .pidfd_transfer import send_pidfd
+                sender, receiver = socket.socketpair()
+                sender.setblocking(False)
+                receiver.setblocking(False)
+                send_pidfd(sender, owned_server_pidfd)
+                sender.close()
+                sender = None
+                target = _serve_one_with_server_guard
+                args = (receiver, owned_server_pid, *args)
+            process = self._context.Process(target=target, args=args,
+                name='guarded-cancel-supervisor')
             process.start()
+            if receiver is not None:
+                receiver.close()
+                receiver = None
             command_receive.close()
             result_send.close()
             ready_send.close()
@@ -145,7 +196,7 @@ class PrestartedCancellationSupervisor:
                 except OSError:
                     pass
             try:
-                alive = process.pid is not None and process.is_alive()
+                alive = process is not None and process.pid is not None and process.is_alive()
             except (AssertionError, ValueError):
                 alive = False
             if alive:
@@ -156,6 +207,9 @@ class PrestartedCancellationSupervisor:
                     process.join(self._terminate_grace_s)
             raise
         finally:
+            for endpoint in (sender, receiver):
+                if endpoint is not None:
+                    endpoint.close()
             try:
                 ready_receive.close()
             except OSError:
