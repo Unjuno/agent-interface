@@ -45,7 +45,13 @@ class _ExperimentalEventfd:
     def is_set(self):
         poller = select.poll()
         poller.register(self.fd, select.POLLIN)
-        return bool(poller.poll(0))
+        events = poller.poll(0)
+        if not events:
+            return False
+        for fd, flags in events:
+            if fd != self.fd or flags != select.POLLIN:
+                raise OSError('eventfd poll returned invalid or unexpected events')
+        return True
 
 
 def _input_rpc(operation, arguments):
