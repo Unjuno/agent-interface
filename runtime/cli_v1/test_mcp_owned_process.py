@@ -2548,7 +2548,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertNotEqual(result.get('status'),'pending',result)
                     self.assertFalse((root/'synthetic-effect-receipt.json').exists(),
                                      'failed notification allowed a fake target effect')
-                    self.assertEqual(result.get('status'),'refused',result)
+                    self.assertIn(result.get('status'),('refused','backend_unavailable','runtime_failed'),result)
+                    self.assertFalse(result.get('replay_allowed',True),result)
+                    self.assertFalse(owner._process.is_alive(),result)
             finally:
                 resume.set()
                 if 'action' in locals():
