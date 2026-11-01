@@ -53,6 +53,48 @@ class PrivateDisplayRecoveryTests(unittest.TestCase):
         self.owner.cancel_guarded.assert_not_called()
         self.display.retire.assert_not_called()
 
+    def test_cancellation_operation_identity_is_forwarded_and_binds_receipt(self):
+        recovery = PrivateDisplayRecovery(self.display, self.owner, retirement_reserve_ns=1)
+        deadline = self.deadline()
+        first = recovery.cancel_guarded('token', operation_id='op-1', deadline_monotonic_ns=deadline)
+        self.owner.cancel_guarded.assert_called_once_with('token', operation_id='op-1', deadline_monotonic_ns=deadline-1)
+        duplicate = recovery.cancel_guarded('token', operation_id='op-1', deadline_monotonic_ns=deadline)
+        self.assertEqual(first, duplicate)
+        other = recovery.cancel_guarded('token', operation_id='op-2', deadline_monotonic_ns=deadline)
+        self.assertEqual(other['reason'], 'recovery_already_used')
+        self.assertFalse(other['fresh_display_allowed'])
+        self.owner.cancel_guarded.assert_called_once()
+
+    def test_invalid_cancellation_operation_identity_has_no_side_effects(self):
+        recovery = PrivateDisplayRecovery(self.display, self.owner)
+        for operation_id in ('', 0, True):
+            with self.subTest(operation_id=operation_id), self.assertRaises(ValueError):
+                recovery.cancel_guarded('token', operation_id=operation_id, deadline_monotonic_ns=self.deadline())
+        self.owner.cancel_guarded.assert_not_called()
+        self.display.retire.assert_not_called()
+
+    def test_interrupted_cancel_is_not_reissued(self):
+        recovery = PrivateDisplayRecovery(self.display, self.owner)
+        self.owner.cancel_guarded.side_effect = KeyboardInterrupt('after cancellation side effect')
+        with self.assertRaises(KeyboardInterrupt):
+            recovery.cancel_guarded('token', operation_id='op', deadline_monotonic_ns=self.deadline())
+        result = recovery.cancel_guarded('token', operation_id='op', deadline_monotonic_ns=self.deadline())
+        self.assertEqual(result['status'], 'unknown')
+        self.assertFalse(result['fresh_display_allowed'])
+        self.assertFalse(result['replay_allowed'])
+        self.owner.cancel_guarded.assert_called_once()
+
+    def test_interrupted_retirement_is_not_reissued(self):
+        recovery = PrivateDisplayRecovery(self.display, self.owner)
+        self.display.retire.side_effect = KeyboardInterrupt('after retirement side effect')
+        with self.assertRaises(KeyboardInterrupt):
+            recovery.cancel_guarded('token', operation_id='op', deadline_monotonic_ns=self.deadline())
+        result = recovery.cancel_guarded('token', operation_id='op', deadline_monotonic_ns=self.deadline())
+        self.assertEqual(result['status'], 'unknown')
+        self.assertFalse(result['fresh_display_allowed'])
+        self.owner.cancel_guarded.assert_called_once()
+        self.display.retire.assert_called_once()
+
     def test_invalid_reserve_is_rejected(self):
         for reserve in (-1, True, 1.5, '1', None):
             with self.subTest(reserve=reserve), self.assertRaises(ValueError):
