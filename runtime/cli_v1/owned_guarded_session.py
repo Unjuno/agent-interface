@@ -469,9 +469,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         row = deepcopy(self._snapshot_cache)
         if self._process is None:
             observed_ns = time.monotonic_ns()
-            process = {'pid':None, 'alive':False, 'exitcode':None,
-                       'retired':False, 'release_confirmed':None,
-                       'liveness_observed_monotonic_ns':observed_ns}
+            unconfirmed = self.state not in ('unopened', 'closed')
+            process = {'pid':None, 'alive':None if unconfirmed else False, 'exitcode':None,
+                       'retired':None if unconfirmed else False, 'release_confirmed':None,
+                       'liveness_observed_monotonic_ns':None if unconfirmed else observed_ns}
         else:
             alive = self._process.is_alive()
             observed_ns = time.monotonic_ns()
