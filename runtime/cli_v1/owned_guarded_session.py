@@ -908,8 +908,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 if live_read.get('status') == 'snapshot':
                     self._owner_input_obligations = deepcopy(live_read['obligations'])
                     self._owner_input_obligations_source = 'retired_child_shared_state'
-                self._owner_client_disconnect = {'status':'unknown',
-                    'reason':'owner_exited_before_cancel'}
+                if getattr(self, '_owner_client_disconnect', None) is None:
+                    self._owner_client_disconnect = {'status':'unknown',
+                        'reason':'owner_exited_before_cancel'}
                 self._owner_release_attempt = {'status':'not_attempted',
                     'reason':'owner_exited_before_cancel'}
             return {'status':'cancel_unconfirmed', 'input_dispatched':False,
@@ -921,7 +922,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                     'task_success':None, 'replay_allowed':False,
                     'late_server_request_possible':True, 'review_required':True}
-        if self._process is None or self._control is None:
+        if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
                     'release_confirmed':False}
         remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
