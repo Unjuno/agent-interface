@@ -97,7 +97,53 @@ class McpPrivateDisplayRecoveryTests(unittest.IsolatedAsyncioTestCase):
             root = Path(tmp)
             owner = PrivateDisplayOwner(root / 'display')
             app = server = None
+            fresh_owner = fresh_app = fresh_server = fresh_target = fresh_pidfd = None
             cleanup_pidfd = None
+            async def cleanup_fresh():
+                errors = []
+                try:
+                    if fresh_target is not None:
+                        (root/'fresh-target'/'target-stop').touch()
+                        try: fresh_target.wait(timeout=3)
+                        except subprocess.TimeoutExpired:
+                            fresh_target.kill(); fresh_target.wait(timeout=3)
+                        if fresh_target.returncode != 0:
+                            errors.append('fresh target did not exit cleanly')
+                except Exception as error:
+                    errors.append('fresh target: '+repr(error))
+                try:
+                    if fresh_owner is not None:
+                        fresh_cleanup=fresh_owner.close(timeout_s=3)
+                        if fresh_cleanup.get('status')!='retired':
+                            errors.append('fresh display close: '+repr(fresh_cleanup))
+                except Exception as error:
+                    errors.append('fresh display close: '+repr(error))
+                try:
+                    if (fresh_owner is not None and fresh_owner._process is not None
+                            and fresh_owner._process.poll() is None and fresh_pidfd is not None):
+                        try: signal.pidfd_send_signal(fresh_pidfd, signal.SIGKILL)
+                        except ProcessLookupError: pass
+                        try: fresh_owner._process.wait(timeout=3)
+                        except subprocess.TimeoutExpired: pass
+                except Exception as error:
+                    errors.append('fresh display fallback: '+repr(error))
+                finally:
+                    if fresh_pidfd is not None: os.close(fresh_pidfd)
+                if (fresh_owner is not None and fresh_owner._process is not None
+                        and fresh_owner._process.poll() is None):
+                    errors.append('fresh display alive; client close skipped')
+                else:
+                    try:
+                        if fresh_server is not None:
+                            await asyncio.wait_for(fresh_server.call_tool('interface_close',{}),5)
+                    except Exception as error:
+                        errors.append('fresh server close: '+repr(error))
+                    finally:
+                        try:
+                            if fresh_app is not None: fresh_app.close()
+                        except ConnectionClosedError: pass
+                        except Exception as error: errors.append('fresh app close: '+repr(error))
+                self.assertEqual(errors,[])
             try:
                 session = owner.start(timeout_s=5)
                 cleanup_pidfd = os.dup(owner._pidfd)
@@ -177,27 +223,89 @@ class McpPrivateDisplayRecoveryTests(unittest.IsolatedAsyncioTestCase):
                 archived = json.loads((root/'mcp'/action['call_id']/'cancellation.json').read_text())
                 self.assertEqual(archived['operation_id'], operation_id)
                 self.assertEqual(archived['result'], result)
+                # Only after retirement authorizes it, start a separate display,
+                # target process and MCP server; never replay the old action.
+                fresh_owner = PrivateDisplayOwner(root/'fresh-display')
+                fresh_session = fresh_owner.start(timeout_s=5)
+                fresh_pidfd = os.dup(fresh_owner._pidfd)
+                fresh_dir = root/'fresh-target'; fresh_dir.mkdir()
+                env = dict(os.environ, DISPLAY=fresh_session.display,
+                           XAUTHORITY=str(fresh_session.authority), TARGET_OUT=str(fresh_dir))
+                fresh_target = subprocess.Popen([sys.executable, '-B',
+                    str(Path(__file__).with_name('mcp_recovery_test_target.py'))], env=env,
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                end = time.monotonic()+5
+                while not (fresh_dir/'target-ready.json').exists() and time.monotonic()<end:
+                    if fresh_target.poll() is not None: break
+                    await asyncio.sleep(.01)
+                self.assertTrue((fresh_dir/'target-ready.json').exists())
+                target_info = json.loads((fresh_dir/'target-ready.json').read_text())
+                initial = json.loads((fresh_dir/'target-state.json').read_text())
+                with patch.dict(os.environ, {'XAUTHORITY':str(fresh_session.authority)}):
+                    fresh_app = display.Display(fresh_session.display)
+                fresh_window = fresh_app.create_resource_object('window',target_info['xid'])
+                fresh_window.set_input_focus(X.RevertToParent,X.CurrentTime); fresh_app.sync()
+                fresh_server = create_server({'app':target_info['xid']}, root/'fresh-mcp',
+                    display_name=fresh_session.display, session_mode='guarded-x11',
+                    guarded_owned_process=True, guarded_process_identity=True,
+                    guarded_query_worker=True, guarded_prestarted_cancel_supervisor=True,
+                    _guarded_display_owner=fresh_owner, _guarded_xauthority=str(fresh_session.authority))
+                fresh_observed = metadata(await fresh_server.call_tool('interface_guarded_observe',{}))
+                fresh_minted = metadata(await fresh_server.call_tool('interface_guarded_mint',{
+                    'alias':'fresh','source_sequence':fresh_observed['source']['sequence'],
+                    'point':[30,30],'region_size':[12,12]}))
+                self.assertEqual(fresh_minted.get('status'),'minted',fresh_minted)
+                fresh_action = metadata(await fresh_server.call_tool('interface_guarded_input',{
+                    'alias':'fresh','offset':fresh_minted['offset'],'interaction':'keyboard',
+                    'observe_after':False,'tail':[{'op':'key_chord','keys':['a']}]}))
+                end = time.monotonic()+3; events=[]
+                while time.monotonic()<end:
+                    if (fresh_dir/'target-events.json').exists():
+                        events=json.loads((fresh_dir/'target-events.json').read_text())
+                    if any(e['type']=='release' and e['key']=='a' for e in events): break
+                    await asyncio.sleep(.01)
+                final=json.loads((fresh_dir/'target-state.json').read_text())
+                fresh_code=fresh_app.keysym_to_keycode(XK.string_to_keysym('a'))
+                fresh_bits=fresh_app.query_keymap()
+                key_up=not bool(fresh_bits[fresh_code//8] & (1 << (fresh_code%8)))
+                fresh_close=metadata(await fresh_server.call_tool('interface_close',{}))
+                if evidence_dir:
+                    evidence.update(fresh_display_pid=fresh_owner._process.pid,
+                        fresh_target=target_info, fresh_initial=initial, fresh_final=final,
+                        fresh_action=fresh_action, fresh_events=events, fresh_key_up=key_up,
+                        fresh_close=fresh_close)
+                    Path(evidence_dir,'mcp-recovery-result.json').write_text(
+                        json.dumps(evidence,indent=2)+'\n',encoding='utf-8')
+                self.assertEqual(fresh_action.get('status'),'completed',fresh_action)
+                self.assertEqual(initial,{'count':0}); self.assertEqual(final,{'count':1})
+                self.assertTrue(any(e['type']=='press' and e['key']=='a' for e in events))
+                self.assertTrue(any(e['type']=='release' and e['key']=='a' for e in events))
+                self.assertTrue(key_up)
+                self.assertTrue(fresh_close.get('verified'),fresh_close)
             finally:
-                close_result = None
                 try:
-                    close_result = owner.close(timeout_s=3)
+                    await cleanup_fresh()
                 finally:
+                    close_result = None
                     try:
-                        if owner._process is not None and owner._process.poll() is None and cleanup_pidfd is not None:
-                            try: signal.pidfd_send_signal(cleanup_pidfd, signal.SIGKILL)
-                            except ProcessLookupError: pass
-                            try: owner._process.wait(timeout=3)
-                            except subprocess.TimeoutExpired: pass
+                        close_result = owner.close(timeout_s=3)
                     finally:
-                        if cleanup_pidfd is not None: os.close(cleanup_pidfd)
-                    if owner._process is None or owner._process.poll() is not None:
                         try:
-                            if server is not None:
-                                await asyncio.wait_for(server.call_tool('interface_close', {}), 5)
+                            if owner._process is not None and owner._process.poll() is None and cleanup_pidfd is not None:
+                                try: signal.pidfd_send_signal(cleanup_pidfd, signal.SIGKILL)
+                                except ProcessLookupError: pass
+                                try: owner._process.wait(timeout=3)
+                                except subprocess.TimeoutExpired: pass
                         finally:
-                            if app is not None:
-                                try: app.close()
-                                except ConnectionClosedError: pass
-                    else:
-                        self.fail('owned display remained alive; client close skipped')
-                self.assertEqual(close_result['status'], 'retired', close_result)
+                            if cleanup_pidfd is not None: os.close(cleanup_pidfd)
+                        if owner._process is None or owner._process.poll() is not None:
+                            try:
+                                if server is not None:
+                                    await asyncio.wait_for(server.call_tool('interface_close', {}), 5)
+                            finally:
+                                if app is not None:
+                                    try: app.close()
+                                    except ConnectionClosedError: pass
+                        else:
+                            self.fail('owned display remained alive; client close skipped')
+                    self.assertEqual(close_result['status'], 'retired', close_result)
