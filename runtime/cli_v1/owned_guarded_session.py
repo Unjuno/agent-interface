@@ -328,6 +328,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._process = None
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
+        self._cancel_transaction_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
         self._retirement = None
@@ -761,8 +762,30 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
         if type(deadline_monotonic_ns) is not int:
             raise ValueError('deadline_monotonic_ns must be an integer')
-        self._active_cancel_deadline_ns = deadline_monotonic_ns
-        self._active_cancel_operation_id = operation_id or str(token)
+        remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if not self._cancel_transaction_lock.acquire(timeout=remaining_s):
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cancel_unconfirmed', 'reason':'cancel_transaction_deadline',
+                    'input_dispatched':False, 'owner_process_retired':False,
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
+        try:
+            if time.monotonic_ns() >= deadline_monotonic_ns:
+                self._execution_unknown = True
+                self.review_required = True
+                return {'status':'cancel_unconfirmed', 'reason':'cancel_transaction_deadline',
+                        'input_dispatched':False, 'owner_process_retired':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True, 'review_required':True}
+            return self._cancel_guarded_transaction(token, operation_id=operation_id,
+                deadline_monotonic_ns=deadline_monotonic_ns)
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def _cancel_guarded_transaction(self, token, *, operation_id, deadline_monotonic_ns):
         if self._process is not None and not self._process.is_alive() and self.state != 'closed':
             retirement = getattr(self, '_retirement', None)
             if retirement is None:
@@ -794,10 +817,30 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
                     'release_confirmed':False}
-        with self._control_lock:
+        remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if not self._control_lock.acquire(timeout=remaining_s):
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cancel_unconfirmed', 'reason':'control_lock_deadline',
+                    'input_dispatched':False, 'owner_process_retired':False,
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
+        try:
+            if time.monotonic_ns() >= deadline_monotonic_ns:
+                self._execution_unknown = True
+                self.review_required = True
+                return {'status':'cancel_unconfirmed', 'reason':'control_lock_deadline',
+                        'input_dispatched':False, 'owner_process_retired':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True, 'review_required':True}
+            self._active_cancel_deadline_ns = deadline_monotonic_ns
+            self._active_cancel_operation_id = operation_id or str(token)
             try:
                 self._control.send({'operation':'cancel_guarded', 'token':token})
-                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
+                remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+                if not self._control.poll(min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, remaining_s)):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')
@@ -829,6 +872,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                         'task_success':None, 'replay_allowed':False,
                         'late_server_request_possible':True}
+        finally:
+            self._control_lock.release()
         if response.get('ok') is not True:
             self._execution_unknown = True
             self.review_required = True
@@ -912,6 +957,50 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        if not self._cancel_transaction_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'cancel_transaction_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_owned_transaction()
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def close_after_cancel_if_retired(self):
+        """Retire a lingering owned child without issuing another input release."""
+        if not self._cancel_transaction_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'cancel_transaction_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            retirement = getattr(self, '_retirement', None)
+            process = getattr(self, '_process', None)
+            if (process is not None and (process.is_alive()
+                    or ((not isinstance(retirement, dict) or retirement.get('retired') is not True)
+                        and process.exitcode is not None))):
+                retirement = self._retire('deferred close after cancellation drain')
+                if retirement.get('retired') is True:
+                    if getattr(self, '_owner_client_disconnect', None) is None:
+                        self._owner_client_disconnect = {'status':'unknown',
+                            'reason':'deferred_close_did_not_probe_disconnect'}
+                    if getattr(self, '_owner_release_attempt', None) is None:
+                        self._owner_release_attempt = {'status':'not_attempted',
+                            'reason':'deferred_close_does_not_release'}
+            if (not isinstance(retirement, dict) or retirement.get('retired') is not True
+                    or process is None or process.is_alive()
+                    or getattr(self, '_owner_client_disconnect', None) is None
+                    or getattr(self, '_owner_release_attempt', None) is None):
+                return {'status':'busy', 'reason':'retired_cleanup_evidence_unavailable',
+                        'session_id':self.session_id, 'release_confirmed':False,
+                        'cleanup_status':'UNKNOWN', 'task_success':None,
+                        'replay_allowed':False, 'verified':False}
+            return self._close_owned_transaction()
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def _close_owned_transaction(self):
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()

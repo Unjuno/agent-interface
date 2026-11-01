@@ -1,0 +1,7 @@
+# Deferred shutdown: two subprocess counterexamples
+
+Two focused local subprocess tests exercise the draft `e293c39ac7fd5f2603baee0de487e3bc817ae191` shutdown design. A fake owner and writer are used; this is not an actual MCP transport or proof about a real X11 child.
+
+With the draft's daemon cleanup thread, a child Python interpreter exited before a deliberately delayed 300 ms cleanup receipt was written. Its bounded-exit test with a deliberately stalled writer passed. Temporarily changing only the cleanup thread to non-daemon made the receipt test pass, but a writer sleeping for 30 seconds caused the subprocess to exceed a two-second exit timeout. Both variants therefore fail one of the two tests; neither establishes the required combination of bounded parent exit and retained cleanup custody.
+
+The archive preserves source diffs, test output and exit codes. Runs used Docker Desktop Linux image `agent-interface-xvfb-mcp:late-input-r19`, ID `sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425`, no network, 1 CPU and 1 GiB. The non-daemon variant was reverted after testing. The two regression tests are deliberately retained as ordinary tests: under the current daemon candidate the receipt test fails. A prestarted independent owner/guardian with explicit handoff is a candidate architecture, not an implemented or verified solution. Process crash, OS call bounds, actual owner/supervisor custody and input release remain unverified.
