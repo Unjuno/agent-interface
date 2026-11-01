@@ -1,0 +1,9 @@
+{
+  "allocation": "idle-recovery-generation-r143",
+  "mode": "generation",
+  "image": "sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25",
+  "manifest_sha256": "1e4a9e4ff94447c1e61c1f2afa6c8ae83d7f5e53e59f5635211edbbd63b3b805",
+  "protocol": "Private Xvfb: r141 prior-retirement race leaves old a down; test fixture releases old a; separate X connection presses a for a new simulated client; explicitly invoke stale old private cleanup and observe key state via independent connection; check horizon.",
+  "criteria": "old a held, fixture clears, new client a held before old cleanup, old cleanup confirms disconnect and readback and releases new client a; observed as hazard not recovery. One attempt.",
+  "limits": "Test-injected stale private helper call and simulated X client on exclusive display, no automatic runtime path; one sample, not physical keyboard."
+}

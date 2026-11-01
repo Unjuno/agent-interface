@@ -1,0 +1,282 @@
+"""Quartz cleanup regressions with inert APIs; never construct a native backend."""
+from __future__ import annotations
+
+import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
+
+from runtime.core_v1.contract import SCHEMA_PROGRAM
+from .backend import BUTTONS, CGPoint, QuartzBackend, QuartzBackendError
+from .session import QuartzRuntimeSession
+
+
+class InertQuartz:
+    def __init__(self):
+        self.calls = []
+        self.faults = {}
+        self.keys_down = set()
+        self.buttons_down = set()
+        self.pointer_failures = 0
+
+    def call(self, stage, target):
+        self.calls.append((stage, target))
+        fault = self.faults.get((stage, target))
+        if isinstance(fault, Exception):
+            raise fault
+        return fault
+
+    def CGEventCreateKeyboardEvent(self, source, code, down):
+        if self.call("key_create", (code, down)) == "null":
+            return None
+        return ("key", code, down)
+
+    def CGEventCreateMouseEvent(self, source, kind, point, number):
+        if self.call("button_create", number) == "null":
+            return None
+        return ("button", number, False)
+
+    def CGEventCreate(self, source):
+        self.calls.append(("pointer_create", None))
+        if self.pointer_failures:
+            self.pointer_failures -= 1
+            return None
+        return ("pointer",)
+
+    def CGEventGetLocation(self, event):
+        self.call("pointer_read", None)
+        return CGPoint(10, 20)
+
+    def CGEventPost(self, tap, event):
+        kind, target, down = event
+        self.call("post", (kind, target, down))
+        state = self.keys_down if kind == "key" else self.buttons_down
+        if down:
+            state.add(target)
+        elif self.faults.get(("sticky", (kind, target))) is not True:
+            state.discard(target)
+
+    def CGEventSourceKeyState(self, source, code):
+        self.call("key_read", code)
+        return code in self.keys_down
+
+    def CGEventSourceButtonState(self, source, number):
+        self.call("button_read", number)
+        return number in self.buttons_down
+
+
+class QuartzReleaseFaultTests(unittest.TestCase):
+    def setUp(self):
+        native = patch("runtime.backends.quartz_v1.backend.ctypes.CDLL",
+                       side_effect=AssertionError("native library forbidden"))
+        native.start()
+        self.addCleanup(native.stop)
+        sleeper = patch("runtime.backends.quartz_v1.backend.time.sleep")
+        self.sleep = sleeper.start()
+        self.addCleanup(sleeper.stop)
+        self.cg = InertQuartz()
+        self.backend = object.__new__(QuartzBackend)
+        self.backend.cg = self.cg
+        self.backend.cf = SimpleNamespace(CFRelease=Mock())
+        self.backend.held_keys = {"A": 0, "CTRL": 59}
+        self.backend.held_buttons = {"left", "right"}
+        self.backend.emissions = 0
+        self.backend.accessibility_granted = True
+        self.backend.screen_recording_granted = True
+        self.backend.preflight = Mock()
+        self.cg.keys_down = {0, 59}
+        self.cg.buttons_down = {0, 1}
+
+    def program(self, ops):
+        return {"schema": SCHEMA_PROGRAM, "program_id": "inert-quartz-fault",
+                "source": {"observation_seq": 7, "binding_revision": 3},
+                "authority": {"lease_id": "private-inert", "expires_at_ns": 2_000_000},
+                "terminal": {"release_all_required": True},
+                "ops": ops + [{"op": "release_all"}]}
+
+    def dispatch(self, ops):
+        return QuartzRuntimeSession(self.backend).dispatch(
+            self.program(ops), current_observation_seq=7,
+            current_binding_revision=3, now_ns=1_000_000)
+
+    def assert_other_inputs_released(self):
+        self.assertNotIn(59, self.cg.keys_down)
+        self.assertEqual(self.cg.buttons_down, set())
+        self.assertIn(("key_read", 59), self.cg.calls)
+        self.assertIn(("button_read", 1), self.cg.calls)
+
+    def test_success_releases_and_verifies_all_tracked_inputs(self):
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], True)
+        self.assertEqual((row["keys_down"], row["buttons_down"]), ([], []))
+        self.assertEqual((self.backend.held_keys, self.backend.held_buttons), ({}, set()))
+        self.assertEqual(self.backend.emissions, 4)
+        self.assertEqual(self.backend.cf.CFRelease.call_count, 6)
+
+    def test_null_first_key_event_does_not_skip_other_inputs(self):
+        self.cg.faults[("key_create", (0, False))] = "null"
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(row["keys_down"], ["A"])
+        self.assertEqual(self.backend.held_keys, {"A": 0})
+        self.assert_other_inputs_released()
+        self.assertEqual(len(row["errors"]), 1)
+
+    def test_post_error_keeps_event_release_and_other_input_cleanup(self):
+        self.cg.faults[("post", ("key", 0, False))] = OSError("post A failed")
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assert_other_inputs_released()
+        self.backend.cf.CFRelease.assert_any_call(("key", 0, False))
+        self.assertIn("post A failed", row["errors"][0]["error"])
+
+    def test_pointer_creation_failure_does_not_skip_next_button(self):
+        self.cg.pointer_failures = 1
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(len(row["buttons_down"]), 1)
+        self.assertEqual(len(self.backend.held_buttons), 1)
+        self.assertEqual(sum(stage == "pointer_create" for stage, _ in self.cg.calls), 2)
+        self.assertEqual(len(self.cg.buttons_down), 1)
+
+    def test_null_button_event_does_not_skip_next_button(self):
+        self.cg.faults[("button_create", 0)] = "null"
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(row["buttons_down"], ["left"])
+        self.assertEqual(self.backend.held_buttons, {"left"})
+        self.assertIn(("button_create", 1), self.cg.calls)
+
+    def test_key_probe_failure_is_unknown_and_other_probes_continue(self):
+        self.cg.faults[("key_read", 0)] = OSError("A state unavailable")
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(row["keys_unknown"], ["A"])
+        self.assertEqual(row["keys_down"], [])
+        self.assertEqual(self.backend.held_keys, {"A": 0})
+        self.assert_other_inputs_released()
+
+    def test_button_probe_failure_preserves_only_unresolved_tracking(self):
+        self.cg.faults[("button_read", 0)] = OSError("left state unavailable")
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(row["buttons_unknown"], ["left"])
+        self.assertEqual(self.backend.held_buttons, {"left"})
+        self.assertEqual(self.backend.held_keys, {})
+        self.assertIn(("button_read", 1), self.cg.calls)
+
+    def test_known_down_input_is_not_forgotten(self):
+        self.cg.faults[("sticky", ("key", 0))] = True
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(row["keys_down"], ["A"])
+        self.assertEqual(self.backend.held_keys, {"A": 0})
+        self.assert_other_inputs_released()
+
+    def test_emission_error_cannot_become_verified_even_if_readback_is_up(self):
+        self.cg.keys_down.discard(0)
+        self.cg.faults[("key_create", (0, False))] = "null"
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(row["keys_down"], [])
+        self.assertEqual(self.backend.held_keys, {})
+        self.assertEqual(self.cg.calls.count(("key_create", (0, False))), 1)
+
+    def test_multiple_faults_all_survive_without_retries(self):
+        self.cg.faults[("key_create", (0, False))] = "null"
+        self.cg.faults[("post", ("key", 59, False))] = OSError("CTRL post failed")
+        self.cg.faults[("button_create", 0)] = "null"
+        self.cg.faults[("key_read", 0)] = OSError("A state unavailable")
+        row = self.backend.release_all()
+        self.assertIs(row["verified"], False)
+        self.assertEqual(len(row["errors"]), 4)
+        self.assertEqual(row["keys_unknown"], ["A"])
+        self.assertEqual(row["keys_down"], ["CTRL"])
+        self.assertEqual(row["buttons_down"], ["left"])
+        self.assertNotIn(1, self.cg.buttons_down)
+        self.assertEqual(self.cg.calls.count(("key_create", (0, False))), 1)
+
+    def test_execution_error_survives_unexpected_cleanup_exception(self):
+        original = QuartzBackendError("original text failure")
+        self.backend.text = Mock(side_effect=original)
+        self.backend.release_all = Mock(side_effect=OSError("cleanup failed"))
+        with self.assertRaises(QuartzBackendError) as caught:
+            self.backend.execute({"ops": [{"op": "text", "text": "x"}]})
+        self.assertIs(caught.exception.__cause__, original)
+        self.assertIn("original text failure", str(caught.exception))
+        evidence = caught.exception.execution
+        self.assertEqual(evidence["completed_ops"], [])
+        self.assertEqual(evidence["failed_op"], 0)
+        self.assertIs(evidence["releases"][0]["verified"], False)
+        self.assertIn("cleanup failed", str(evidence["releases"][0]))
+        self.backend.release_all.assert_called_once()
+
+    def test_failed_prefix_and_cleanup_receipt_reach_session_without_tail(self):
+        self.backend.held_keys = {}
+        self.backend.held_buttons = set()
+        self.cg.keys_down = set()
+        self.cg.buttons_down = set()
+        self.backend.text = Mock(side_effect=QuartzBackendError("text refused"))
+        self.cg.faults[("post", ("key", 0, False))] = OSError("A release failed")
+        row = self.dispatch([{"op": "key_state", "key": "A", "down": True},
+                             {"op": "text", "text": "x"},
+                             {"op": "key_state", "key": "CTRL", "down": True}])
+        self.assertEqual((row["status"], row["error"]), ("execution_failed", "BACKEND_EXECUTION"))
+        self.assertIn("text refused", row["detail"])
+        self.assertEqual(row["execution"]["completed_ops"], [0])
+        self.assertEqual(row["execution"]["failed_op"], 1)
+        self.assertIs(row["execution"]["releases"][0]["verified"], False)
+        self.assertNotIn(("key_create", (59, True)), self.cg.calls)
+        self.assertEqual(self.backend.held_keys, {"A": 0})
+
+    def test_unverified_terminal_cleanup_cannot_complete_session(self):
+        self.cg.faults[("sticky", ("key", 0))] = True
+        row = self.dispatch([])
+        self.assertEqual(row["status"], "release_unverified")
+        self.assertEqual(self.backend.held_keys, {"A": 0})
+
+    def test_verified_terminal_cleanup_still_completes_session(self):
+        row = self.dispatch([])
+        self.assertEqual(row["status"], "completed")
+        self.assertIs(row["execution"]["releases"][0]["verified"], True)
+
+    def test_terminal_cleanup_exception_is_not_retried(self):
+        self.backend.release_all = Mock(side_effect=OSError("terminal cleanup unavailable"))
+        row = self.dispatch([])
+        self.assertEqual(row["status"], "release_unverified")
+        self.assertEqual(len(row["execution"]["releases"]), 1)
+        self.assertIs(row["execution"]["releases"][0]["verified"], False)
+        self.backend.release_all.assert_called_once()
+
+    def test_second_preflight_failure_still_retains_cleanup_receipt(self):
+        self.backend.preflight.side_effect = [None, QuartzBackendError("target changed")]
+        row = self.dispatch([])
+        self.assertEqual(row["status"], "execution_failed")
+        self.assertIn("target changed", row["detail"])
+        self.assertEqual(row["execution"]["completed_ops"], [])
+        self.assertIsNone(row["execution"]["failed_op"])
+        self.assertIs(row["execution"]["releases"][0]["verified"], True)
+        self.assertEqual((self.backend.held_keys, self.backend.held_buttons), ({}, set()))
+
+    def test_preflight_error_keeps_original_detail_and_cleanup_failure(self):
+        self.backend.preflight.side_effect = QuartzBackendError("bad target")
+        self.backend.release_all = Mock(side_effect=OSError("cleanup unavailable"))
+        row = self.dispatch([])
+        self.assertEqual((row["status"], row["error"]), ("refused", "BACKEND_CONSTRAINT"))
+        self.assertEqual(row["detail"], "bad target")
+        self.assertIs(row["release"]["verified"], False)
+        self.assertIn("cleanup unavailable", str(row["release"]))
+        self.backend.release_all.assert_called_once()
+
+    def test_core_refusal_does_not_attempt_backend_execution_or_cleanup(self):
+        self.backend.release_all = Mock()
+        row = QuartzRuntimeSession(self.backend).dispatch(
+            self.program([]), current_observation_seq=6,
+            current_binding_revision=3, now_ns=1_000_000)
+        self.assertEqual(row["error"], "STALE_OBSERVATION")
+        self.backend.preflight.assert_not_called()
+        self.backend.release_all.assert_not_called()
+        self.assertEqual(self.cg.calls, [])
+
+
+if __name__ == "__main__":
+    unittest.main()

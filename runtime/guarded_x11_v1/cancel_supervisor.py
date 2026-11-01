@@ -9,6 +9,7 @@ never turns process liveness or a timeout into a release claim.
 
 from __future__ import annotations
 
+import math
 import multiprocessing
 import os
 import socket
@@ -129,9 +130,11 @@ class PrestartedCancellationSupervisor:
                 or not 0 < expected_owner['resource_base'] < 2**32):
             raise ValueError('pinned display requires an exact owner identity')
         if (type(startup_timeout_s) not in (int, float)
+                or not math.isfinite(startup_timeout_s)
                 or startup_timeout_s <= 0):
             raise ValueError('startup_timeout_s must be positive')
         if (type(terminate_grace_s) not in (int, float)
+                or not math.isfinite(terminate_grace_s)
                 or terminate_grace_s < 0):
             raise ValueError('terminate_grace_s must be nonnegative')
         self._context = multiprocessing.get_context('spawn')

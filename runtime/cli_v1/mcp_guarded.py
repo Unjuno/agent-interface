@@ -117,13 +117,19 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def close(self):
+        bridge_closed = self.bridge is not None and getattr(self.bridge, '_closed', False)
+        already_closed = bridge_closed and not getattr(self, '_mcp_close_pending', False)
+        if self.bridge is not None and not bridge_closed:
+            # Consume authority now; remember unfinished cleanup across retries.
+            self.bridge._closed = True
+            self._mcp_close_pending = True
         stop_workers = getattr(self.bridge, 'stop_target_queries', None)
         if callable(stop_workers):
             # Retire both idle read-only workers before the session closes its
             # backend connection. Session.close() owns input cleanup, while the
             # bridge owns these independent worker queues.
             stop_workers()
-        if self.bridge is not None and getattr(self.bridge, '_closed', False):
+        if already_closed:
             report = super().close()
             journal = getattr(self.bridge, '_receipt_journal', None)
             if journal is not None:
@@ -149,6 +155,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                 report.update(status='cleanup_failed', receipt_journal={
                     'status':'close_failed', 'error_type':type(error).__name__})
             self.close_report = deepcopy(report)
+        self._mcp_close_pending = False
         return report
 
     def cancel_guarded(self, token):
@@ -469,8 +476,11 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             """Request cancellation of a running guarded input or compiled method.
 
             Get the call ID from interface_results. This publishes retained local
-            state only; no input or cleanup is injected here. Acknowledgement is
-            not release confirmation. Inspect the original result/cleanup; never
+            state only; no input is injected by this request path. A cancellation
+            signal's input_dispatched=false does not describe the original call:
+            that call may already have sent input. Owned-process cancellation may
+            separately attempt cleanup. Acknowledgement is not release
+            confirmation. Inspect the original result and cleanup receipts; never
             replay uncertain input. Old/unknown call IDs cannot cancel a new call.
             """
             result = cancel(call_id)

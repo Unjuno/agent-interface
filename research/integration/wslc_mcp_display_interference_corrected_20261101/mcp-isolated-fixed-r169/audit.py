@@ -1,0 +1,9 @@
+import hashlib,json,pathlib
+r=pathlib.Path(__file__).resolve().parent;p=r/'r169-isolated';m=json.loads((r/'manifest.json').read_text());c=json.loads((p/'conditions.json').read_text());d=json.loads((p/'output/result.json').read_text());l=json.loads((p/'launcher-result.json').read_text());prev=json.loads((r.parent/'mcp-same-key-fixed-r168'/'manifest.json').read_text());same=json.loads((r.parent/'mcp-same-key-fixed-r168'/'r168-same'/'output/result.json').read_text());sha=lambda b:hashlib.sha256(b).hexdigest()
+assert all(sha((r/k).read_bytes())==v for k,v in m.items()) and c['manifest_sha256']==sha((r/'manifest.json').read_bytes()) and {k:v for k,v in m.items() if k.startswith('src/')}=={k:v for k,v in prev.items() if k.startswith('src/')}
+assert l['returncode']==0 and d['status']=='passed' and d['before_second']['a'] and not d['after_fixture_release']['a'] and d['second_hold_before_cancel']['a'] and d['second_hold_after_first_cancel']['a'] and not same['second_hold_after_first_cancel']['a'] and all(len(v)==1 for v in d['injections'].values()) and all(len(v)==1 for v in same['injections'].values())
+for key in ('first_terminal','second_terminal'):
+ x=d[key];assert x['status']=='runtime_failed' and x['cleanup_status']=='UNKNOWN' and x['cancellation']['status']=='completed' and x['cancellation']['result']['owner_release_attempt']['status']=='readback_verified' and not x['cancellation']['replay_allowed']
+for key in ('first_close_final','second_close_final'):assert d[key]['status']=='cleanup_failed' and d[key]['cleanup_status']=='UNKNOWN'
+e=d['second_target_result']['events'];assert sum(x['type']=='press' and x['key']=='a' for x in e)==6 and sum(x['type']=='release' and x['key']=='a' for x in e)==6 and not any(d['horizon'].values()) and all(d[k]==0 for k in ('target_exit','target2_exit','server_exit','server2_exit'))
+print('PASS: corrected fixture contrast, separate display hold preserved; repeated events retained')

@@ -1,0 +1,100 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 225676639345,
+    "ended_ns": 225689563334,
+    "emissions": 2,
+    "program_emissions": 2,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 225689562108
+      }
+    ],
+    "waits": [],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 2,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "field",
+      "point": [
+        30,
+        30
+      ],
+      "observed_box": [
+        24,
+        24,
+        12,
+        12
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 2,
+      "valid_until_ns": 227164672966,
+      "patch_sha256": "187eb4dc17f9a81cd2fd0805b24e14dd6583b9f5569e175dd488e9ae8d2372ef",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "field",
+      "point": [
+        30,
+        30
+      ],
+      "observed_box": [
+        24,
+        24,
+        12,
+        12
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 227177071050,
+      "patch_sha256": "187eb4dc17f9a81cd2fd0805b24e14dd6583b9f5569e175dd488e9ae8d2372ef",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

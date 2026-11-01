@@ -291,6 +291,18 @@ outside the busy slot. It requires `--guarded-process-identity`; see the
 [exact coverage and remaining synchronous boundaries](../guarded_x11_v1/TARGET_QUERIES.md).
 It does not establish a physical release deadline or isolate all observations.
 
+In a guarded cancellation receipt, `input_dispatched=false` in the
+`cancel_requested` acknowledgement is not a statement that the original
+action dispatched no input. The action may already have changed the target
+or left an input held before cancellation. Nor does that field establish the
+result of a separate cleanup release. Check the original call's retained
+evidence, the cancellation's `release_confirmed` and `cleanup_status`, and
+an appropriate independent task-effect observation. A recorded example has
+an `a` press and target effect before a `cancel_requested` response carrying
+`input_dispatched=false`; cleanup remains `UNKNOWN` despite a later separate
+keys-up readback. See the [bounded Xvfb evidence](../../research/integration/wslc_idle_cancel_immediate_ack_20261101/).
+Do not replay an action whose result or cleanup remains uncertain.
+
 ## Opt-in supervised Win32 mode
 
 On Windows, `--session-mode supervised-win32` selects the standard
