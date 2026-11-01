@@ -15,6 +15,13 @@ from runtime.guarded_x11_v1.cancel_supervisor import (
 )
 
 
+def _hold_readiness(ready, delay):
+    try:
+        time.sleep(delay)
+    finally:
+        ready.close()
+
+
 def _owner_client(display_name, authority, ready, stop):
     from Xlib import display
     os.environ['XAUTHORITY'] = authority
@@ -52,17 +59,28 @@ class OwnedSupervisorCapabilityTests(unittest.TestCase):
         guard = Mock()
         original_close = os.close
         calls = []
+        replacement = []
         def close_then_fail(number):
             calls.append(number)
             original_close(number)
+            replacement.append(os.open(os.devnull, os.O_RDONLY))
             raise OSError('injected close ambiguity')
         with patch('runtime.guarded_x11_v1.pidfd_transfer.receive_pidfd', return_value=fd), \
              patch('runtime.guarded_x11_v1.owned_xlib_connector.OwnedXlibConnector', return_value=guard), \
              patch('runtime.guarded_x11_v1.cancel_supervisor.os.close', side_effect=close_then_fail):
             with self.assertRaisesRegex(OSError, 'injected close ambiguity'):
                 _serve_one_with_server_guard(endpoint, 10)
-        self.assertEqual(calls, [fd])
-        guard.close.assert_called_once()
+        try:
+            self.assertEqual(calls, [fd])
+            self.assertEqual(replacement, [fd])
+            os.fstat(replacement[0])
+            guard.close.assert_called_once()
+        finally:
+            for replacement_fd in replacement:
+                try:
+                    original_close(replacement_fd)
+                except OSError:
+                    pass
     def test_send_and_spawn_failures_close_endpoints_but_keep_caller_fd(self):
         fd = os.pidfd_open(os.getpid())
         self.addCleanup(os.close, fd)
@@ -152,6 +170,47 @@ class OwnedSupervisorCapabilityTests(unittest.TestCase):
                         process.join(3)
                     ready_recv.close()
                     stop_send.close()
+    def test_readiness_failure_retires_started_child_and_keeps_caller_fd(self):
+        fd = os.pidfd_open(os.getpid())
+        self.addCleanup(os.close, fd)
+        options = dict(xauthority='/unused', pinned_display_name=':99',
+                       expected_owner={'pid':os.getpid(), 'resource_base':123},
+                       owned_server_pidfd=fd, owned_server_pid=os.getpid(),
+                       terminate_grace_s=1.0)
+        for delay in (0.0, 5.0):
+            with self.subTest(delay=delay):
+                context = multiprocessing.get_context('spawn')
+                original_process = context.Process
+                started = []
+                def substitute(*, target, args, name):
+                    process = original_process(target=_hold_readiness,
+                                               args=(args[4], delay), name=name)
+                    started.append(process)
+                    return process
+                try:
+                    with patch('runtime.guarded_x11_v1.cancel_supervisor.multiprocessing.get_context',
+                               return_value=context), \
+                         patch.object(context, 'Process', side_effect=substitute):
+                        if delay == 0.0:
+                            with self.assertRaises(EOFError):
+                                PrestartedCancellationSupervisor(
+                                    x11_cancel_worker, startup_timeout_s=3.0, **options)
+                        else:
+                            with self.assertRaisesRegex(RuntimeError, 'readiness timed out'):
+                                PrestartedCancellationSupervisor(
+                                    x11_cancel_worker, startup_timeout_s=0.5, **options)
+                    self.assertEqual(len(started), 1)
+                    started[0].join(3)
+                    self.assertFalse(started[0].is_alive())
+                    self.assertIsNotNone(started[0].exitcode)
+                    os.fstat(fd)
+                finally:
+                    for process in started:
+                        if process.is_alive():
+                            process.terminate()
+                            process.join(3)
+                        if not process.is_alive():
+                            process.close()
     def test_owned_server_starts_and_wrong_server_is_refused(self):
         from Xlib import display
         from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
