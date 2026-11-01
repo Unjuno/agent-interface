@@ -28,30 +28,51 @@ class ParentExecutionUnknown(RuntimeError):
 
 
 class _ExperimentalEventfd:
-    """Linux-only research prototype; descriptor lifetime is not yet managed."""
+    """Linux-only research prototype; callers must not close or replace fd."""
     def __init__(self):
         self.fd = os.eventfd(0, os.EFD_CLOEXEC | os.EFD_NONBLOCK)
+        self._local_lock = threading.Lock()
+        self.close_status = 'open'
 
     def __getstate__(self):
         from multiprocessing.reduction import DupFd
-        return {'fd': DupFd(self.fd)}
+        with self._local_lock:
+            if self.fd < 0:
+                raise OSError('eventfd is closed')
+            return {'fd': DupFd(self.fd)}
 
     def __setstate__(self, state):
         self.fd = state['fd'].detach()
+        self._local_lock = threading.Lock()
+        self.close_status = 'open'
 
     def set(self):
-        os.eventfd_write(self.fd, 1)
+        with self._local_lock:
+            if self.fd < 0:
+                raise OSError('eventfd is closed')
+            os.eventfd_write(self.fd, 1)
 
     def is_set(self):
-        poller = select.poll()
-        poller.register(self.fd, select.POLLIN)
-        events = poller.poll(0)
-        if not events:
-            return False
-        for fd, flags in events:
-            if fd != self.fd or flags != select.POLLIN:
-                raise OSError('eventfd poll returned invalid or unexpected events')
-        return True
+        with self._local_lock:
+            if self.fd < 0:
+                raise OSError('eventfd is closed')
+            poller = select.poll()
+            poller.register(self.fd, select.POLLIN)
+            events = poller.poll(0)
+            if not events:
+                return False
+            for fd, flags in events:
+                if fd != self.fd or flags != select.POLLIN:
+                    raise OSError('eventfd poll returned invalid or unexpected events')
+            return True
+
+    def close(self):
+        with self._local_lock:
+            if self.fd >= 0:
+                fd, self.fd = self.fd, -1
+                self.close_status = 'UNKNOWN'
+                os.close(fd)
+                self.close_status = 'closed'
 
 
 def _input_rpc(operation, arguments):
