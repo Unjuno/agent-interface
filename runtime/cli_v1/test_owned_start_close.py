@@ -17,6 +17,17 @@ from runtime.cli_v1.test_mcp_process_identity import metadata
 
 
 class OwnedStartCloseTests(unittest.TestCase):
+    def test_unregistered_startup_still_closes_existing_supervisor(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            supervisor=Mock()
+            owner._cleanup_supervisor=supervisor
+            owner._startup_unregistered_process=object()
+            report=owner.close()
+            self.assertFalse(report['verified'])
+            self.assertEqual(report['cleanup_status'],'UNKNOWN')
+            supervisor.close.assert_called_once()
+
     def test_partial_pipe_close_then_error_is_not_retried_as_known_open(self):
         with tempfile.TemporaryDirectory() as directory:
             owner=OwnedGuardedSessionOwner({'app':20},directory)
