@@ -1,10 +1,13 @@
 """Linux-only checks for the draft eventfd experiment, not a recovery proof."""
 import os
 import multiprocessing
+import tempfile
+import threading
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
-from runtime.cli_v1.owned_guarded_session import _ExperimentalEventfd
+from runtime.cli_v1.owned_guarded_session import _ExperimentalEventfd, OwnedGuardedSessionOwner
+from runtime.cli_v1.test_mcp_owned_process import _fake_owner_factory
 
 
 def _child_after_parent_close(notifier, ready, proceed, result):
@@ -18,6 +21,94 @@ def _child_after_parent_close(notifier, ready, proceed, result):
 
 @unittest.skipUnless(hasattr(os, 'eventfd'), 'Linux eventfd required')
 class ExperimentalEventfdTests(unittest.TestCase):
+    def test_close_during_spawn_does_not_publish_live_owner(self):
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.dict(os.environ, {'AGENT_INTERFACE_EXPERIMENTAL_EVENTFD':'1'}):
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            entered=threading.Event();resume=threading.Event();errors=[];spawned=[]
+            original=multiprocessing.process.BaseProcess.start
+            def gated_start(process):
+                original(process)
+                spawned.append(process)
+                entered.set()
+                if not resume.wait(5):raise TimeoutError('spawn fixture gate')
+            def start_owner():
+                try:owner._ensure_started()
+                except BaseException as error:errors.append(type(error).__name__)
+            worker=threading.Thread(target=start_owner)
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',gated_start):
+                    worker.start();self.assertTrue(entered.wait(3))
+                    report=owner.close()
+                    resume.set();worker.join(5)
+                self.assertFalse(worker.is_alive())
+                if report.get('status') != 'closed':
+                    self.assertFalse(report.get('verified',False))
+                else:
+                    self.assertFalse(owner._process is not None and owner._process.is_alive(),
+                                     'completed close allowed a started owner to become live')
+                    self.assertNotEqual(owner.state,'open')
+            finally:
+                resume.set();worker.join(5)
+                try:
+                    for process in spawned:
+                        if process.is_alive():process.kill()
+                        process.join(3)
+                        self.assertFalse(process.is_alive(),'spawn fixture cleanup failed')
+                finally:
+                    owner._unknown_event.close()
+
+    def test_live_owner_keeps_notifier_open(self):
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner._unknown_event=_ExperimentalEventfd()
+        owner._process=Mock();owner._process.is_alive.return_value=True
+        owner._close_owned_with_notifier_open=Mock(return_value={'status':'busy'})
+        try:
+            report=owner.close()
+            self.assertEqual(report['status'],'busy')
+            os.fstat(owner._unknown_event.fd)
+        finally:
+            owner._unknown_event.close()
+
+    def test_notifier_close_failure_is_retained_as_unknown_cleanup(self):
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.dict(os.environ, {'AGENT_INTERFACE_EXPERIMENTAL_EVENTFD':'1'}):
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            notifier=owner._unknown_event;fd=notifier.fd
+            try:
+                owner._ensure_started()
+                with patch.object(notifier,'close',side_effect=OSError('injected')):
+                    report=owner.close()
+                self.assertFalse(owner._process.is_alive())
+                self.assertEqual(report['cleanup_status'],'UNKNOWN')
+                self.assertFalse(report['verified'])
+                self.assertFalse(report['replay_allowed'])
+                self.assertEqual(report['unknown_notifier_close']['status'],'UNKNOWN')
+            finally:
+                if owner._process is not None and owner._process.is_alive():
+                    owner._retire('test cleanup')
+                if notifier.fd >= 0:notifier.close()
+
+    def test_owned_session_close_releases_parent_notifier_fd(self):
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.dict(os.environ, {'AGENT_INTERFACE_EXPERIMENTAL_EVENTFD':'1'}):
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            notifier=owner._unknown_event;fd=notifier.fd
+            try:
+                owner._ensure_started()
+                self.assertTrue(owner._process.is_alive())
+                os.fstat(fd)
+                owner.close()
+                self.assertFalse(owner._process.is_alive())
+                with self.assertRaises(OSError):os.fstat(fd)
+            finally:
+                if owner._process is not None and owner._process.is_alive():
+                    owner._retire('test cleanup')
+                notifier.close()
+
     def test_close_then_error_does_not_close_reused_fd(self):
         notifier=_ExperimentalEventfd();old_fd=notifier.fd
         replacement_read=replacement_write=None;installed=False
