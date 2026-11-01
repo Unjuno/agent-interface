@@ -1,4 +1,8 @@
 import multiprocessing
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import threading
 import time
 import unittest
@@ -10,6 +14,49 @@ from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 
 
 class DeferredOwnerCloseTests(unittest.TestCase):
+    def test_graceful_interpreter_exit_is_bounded_if_deferred_writer_stalls(self):
+        program = '''
+import time
+from concurrent.futures import Future
+from runtime.cli_v1.mcp_server import _DeferredOwnerClose
+class Owner:
+    def close_after_cancel_if_retired(self): return {"status":"unknown"}
+def writer(_): time.sleep(30)
+future = Future()
+deferred = _DeferredOwnerClose(Owner(), writer)
+deferred.arm([future])
+future.set_result(None)
+'''
+        try:
+            child = subprocess.run([sys.executable, '-c', program],
+                                   capture_output=True, text=True, timeout=2)
+        except subprocess.TimeoutExpired:
+            self.fail('interpreter exit exceeded 2s when deferred writer stalled')
+        self.assertEqual(child.returncode,0,child.stderr)
+
+    def test_graceful_interpreter_exit_waits_for_deferred_receipt(self):
+        program = '''
+import json, sys, time
+from concurrent.futures import Future
+from pathlib import Path
+from runtime.cli_v1.mcp_server import _DeferredOwnerClose
+class Owner:
+    def close_after_cancel_if_retired(self):
+        time.sleep(.3)
+        return {"status":"cleanup_failed", "cleanup_status":"UNKNOWN", "release_confirmed":False}
+path = Path(sys.argv[1])
+future = Future()
+deferred = _DeferredOwnerClose(Owner(), lambda value: path.write_text(json.dumps(value)))
+deferred.arm([future])
+future.set_result(None)
+'''
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp)/'receipt.json'
+            child = subprocess.run([sys.executable, '-c', program, str(receipt)],
+                                   capture_output=True, text=True, timeout=5)
+            self.assertEqual(child.returncode,0,child.stderr)
+            self.assertTrue(receipt.exists(),'interpreter exited before deferred receipt')
+
     def test_late_cancel_after_child_exit_stops_supervisor_without_release(self):
         owner=OwnedGuardedSessionOwner({'app':1}, '/tmp/deferred-close-test')
         child=multiprocessing.get_context('spawn').Process(target=time.sleep,args=(0,))
