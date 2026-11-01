@@ -17,6 +17,116 @@ from runtime.cli_v1.test_mcp_process_identity import metadata
 
 
 class OwnedStartCloseTests(unittest.TestCase):
+    def test_partial_pipe_close_then_error_is_not_retried_as_known_open(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            context=multiprocessing.get_context('spawn');original_pipe=context.Pipe
+            handles=[];count=0
+            def pipe(*args,**kwargs):
+                nonlocal count
+                count+=1
+                if count==2:raise OSError('injected second pipe failure')
+                pair=original_pipe(*args,**kwargs)
+                for connection in pair:
+                    original_close=connection.close
+                    close_mock=Mock(wraps=original_close)
+                    if not handles:
+                        def close_then_error(close=original_close):
+                            close()
+                            raise ValueError('injected after close')
+                        close_mock.side_effect=close_then_error
+                    connection.close=close_mock
+                    handles.append((connection,original_close))
+                return pair
+            try:
+                with patch.object(context,'Pipe',side_effect=pipe):
+                    with self.assertRaisesRegex(OSError,'second pipe failure'):owner._ensure_started()
+                self.assertTrue(handles[0][0].closed)
+                self.assertIs(owner._startup_unconfirmed_connections[0],handles[0][0])
+                report=owner.close()
+                self.assertFalse(report['verified'])
+                self.assertEqual(report['cleanup_status'],'UNKNOWN')
+                handles[0][0].close.assert_called_once()
+            finally:
+                for _,original_close in handles:original_close()
+
+    def test_later_prestart_allocation_errors_close_both_pipe_pairs(self):
+        for failing in ('RawArray','Process'):
+            with self.subTest(failing=failing), tempfile.TemporaryDirectory() as directory:
+                owner=OwnedGuardedSessionOwner({'app':20},directory)
+                context=multiprocessing.get_context('spawn');original_pipe=context.Pipe;handles=[]
+                def pipe(*args,**kwargs):
+                    pair=original_pipe(*args,**kwargs)
+                    for connection in pair:
+                        original_close=connection.close
+                        connection.close=Mock(wraps=original_close)
+                        handles.append((connection,original_close))
+                    return pair
+                try:
+                    with patch.object(context,'Pipe',side_effect=pipe), \
+                         patch.object(context,failing,side_effect=OSError('allocation failed')):
+                        with self.assertRaisesRegex(OSError,'allocation failed'):owner._ensure_started()
+                    self.assertEqual(len(handles),4)
+                    for connection,_ in handles:connection.close.assert_called_once()
+                    self.assertIsNone(owner._process)
+                finally:
+                    for _,original_close in handles:original_close()
+
+    def test_partial_pipe_cleanup_failure_remains_unknown_on_close(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            context=multiprocessing.get_context('spawn');original_pipe=context.Pipe
+            handles=[];count=0
+            def pipe(*args,**kwargs):
+                nonlocal count
+                count+=1
+                if count==2:raise OSError('injected second pipe failure')
+                pair=original_pipe(*args,**kwargs)
+                for connection in pair:
+                    original_close=connection.close
+                    connection.close=Mock(wraps=original_close)
+                    if not handles:connection.close.side_effect=ValueError('injected close failure')
+                    handles.append((connection,original_close))
+                return pair
+            try:
+                with patch.object(context,'Pipe',side_effect=pipe):
+                    with self.assertRaisesRegex(OSError,'second pipe failure'):owner._ensure_started()
+                self.assertEqual(len(handles),2)
+                for connection,_ in handles:connection.close.assert_called_once()
+                self.assertEqual(owner.snapshot()['startup_pipe_cleanup_error_types'],['ValueError'])
+                self.assertEqual(owner.snapshot()['startup_unconfirmed_connection_count'],1)
+                self.assertIs(owner._startup_unconfirmed_connections[0],handles[0][0])
+                self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
+                report=owner.close()
+                self.assertFalse(report['verified'])
+                self.assertEqual(report['cleanup_status'],'UNKNOWN')
+            finally:
+                for _,original_close in handles:original_close()
+
+    def test_second_pipe_allocation_failure_closes_first_pair(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            context=multiprocessing.get_context('spawn');original_pipe=context.Pipe
+            handles=[];count=0
+            def pipe(*args,**kwargs):
+                nonlocal count
+                count+=1
+                if count==2:raise OSError('injected second pipe failure')
+                pair=original_pipe(*args,**kwargs)
+                for connection in pair:
+                    original_close=connection.close
+                    connection.close=Mock(wraps=original_close)
+                    handles.append((connection,original_close))
+                return pair
+            try:
+                with patch.object(context,'Pipe',side_effect=pipe):
+                    with self.assertRaisesRegex(OSError,'second pipe failure'):owner._ensure_started()
+                self.assertEqual(len(handles),2)
+                for connection,_ in handles:connection.close.assert_called_once()
+                self.assertIsNone(owner._process)
+            finally:
+                for _,original_close in handles:original_close()
+
     def test_pipe_close_error_preserves_startup_failure_and_other_cleanup(self):
         with tempfile.TemporaryDirectory() as directory:
             owner=OwnedGuardedSessionOwner({'app':20},directory)

@@ -386,23 +386,43 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if self.state != 'unopened':
             raise RuntimeError('owned guarded session unavailable: ' + self.state)
         context = multiprocessing.get_context('spawn')
-        rpc_parent, rpc_child = context.Pipe(duplex=True)
-        control_parent, control_child = context.Pipe(duplex=True)
-        input_obligations_state = context.RawArray(
-            'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
-        self._owner_input_obligations_state = input_obligations_state
-        _publish_owner_input_obligations(input_obligations_state, {}, [])
-        process = context.Process(
-            target=_serve_owned_guarded_session,
-            args=(rpc_child, control_child, self.targets, str(self._owner_root),
-                  self.display_name,
-                  {'process_identity':self.process_identity,
-                   'query_worker':self.query_worker,
-                   'observation_worker':self.observation_worker,
-                   'window_lifecycle':self.window_lifecycle,
-                   'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
-            name='guarded-x11-owner-' + self.session_id[:8])
+        allocated_connections = []
+        try:
+            rpc_parent, rpc_child = context.Pipe(duplex=True)
+            allocated_connections.extend((rpc_parent, rpc_child))
+            control_parent, control_child = context.Pipe(duplex=True)
+            allocated_connections.extend((control_parent, control_child))
+            input_obligations_state = context.RawArray(
+                'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
+            self._owner_input_obligations_state = input_obligations_state
+            _publish_owner_input_obligations(input_obligations_state, {}, [])
+            process = context.Process(
+                target=_serve_owned_guarded_session,
+                args=(rpc_child, control_child, self.targets, str(self._owner_root),
+                      self.display_name,
+                      {'process_identity':self.process_identity,
+                       'query_worker':self.query_worker,
+                       'observation_worker':self.observation_worker,
+                       'window_lifecycle':self.window_lifecycle,
+                       'retention_mode':self.retention_mode},
+                      self._owner_factory, input_obligations_state),
+                name='guarded-x11-owner-' + self.session_id[:8])
+        except BaseException:
+            self.state = 'failed'
+            cleanup_errors = []
+            unconfirmed_connections = []
+            for connection in allocated_connections:
+                try:
+                    connection.close()
+                except Exception as error:
+                    cleanup_errors.append(type(error).__name__)
+                    unconfirmed_connections.append(connection)
+            if cleanup_errors:
+                self._execution_unknown = True
+                self.review_required = True
+                self._startup_pipe_cleanup_error_types = cleanup_errors
+                self._startup_unconfirmed_connections = unconfirmed_connections
+            raise
         self.state = 'opening'
         try:
             process.start()
@@ -454,13 +474,16 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             if self.state == 'opening':
                 self.state = 'failed'
             cleanup_errors = []
+            unconfirmed_connections = []
             for connection in (rpc_parent, control_parent, rpc_child, control_child):
                 try:
                     connection.close()
                 except Exception as error:
                     cleanup_errors.append(type(error).__name__)
+                    unconfirmed_connections.append(connection)
             if cleanup_errors:
                 self._startup_pipe_cleanup_error_types = cleanup_errors
+                self._startup_unconfirmed_connections = unconfirmed_connections
             raise
 
     def _request_locked(self, operation, arguments=None):
@@ -530,6 +553,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    startup_identity_error_type=getattr(self, '_startup_identity_error_type', None),
                    startup_pipe_cleanup_error_types=deepcopy(getattr(
                        self, '_startup_pipe_cleanup_error_types', [])),
+                   startup_unconfirmed_connection_count=len(getattr(
+                       self, '_startup_unconfirmed_connections', [])),
                    startup_process_reference_unregistered=(
                        getattr(self, '_startup_unregistered_process', None) is not None),
                    cleanup_status='UNKNOWN' if execution_unknown else None,
@@ -967,14 +992,18 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             self._lifecycle_lock.release()
 
     def _close_locked(self):
-        if getattr(self, '_startup_unregistered_process', None) is not None:
+        unregistered = getattr(self, '_startup_unregistered_process', None) is not None
+        pipe_cleanup_errors = getattr(self, '_startup_pipe_cleanup_error_types', [])
+        if unregistered or pipe_cleanup_errors:
             self._execution_unknown = True
             self.review_required = True
-            return {'status':'cleanup_failed', 'reason':'startup_process_unregistered',
+            return {'status':'cleanup_failed', 'reason':('startup_process_unregistered'
+                    if unregistered else 'startup_pipe_cleanup_unconfirmed'),
                     'session_id':self.session_id, 'release_confirmed':False,
                     'cleanup_status':'UNKNOWN', 'task_success':None,
                     'replay_allowed':False, 'verified':False,
-                    'owner_process_retired':None, 'late_server_request_possible':True}
+                    'owner_process_retired':None, 'late_server_request_possible':True,
+                    'startup_pipe_cleanup_error_types':deepcopy(pipe_cleanup_errors)}
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()
