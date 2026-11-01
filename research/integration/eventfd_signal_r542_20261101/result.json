@@ -1,0 +1,29 @@
+{
+  "python": "3.11.2",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "start_method": "spawn",
+  "arms": [
+    {
+      "arm": "unrevoked_control",
+      "signal_elapsed_ns": 219,
+      "child_exitcode": 0,
+      "child_observation": {
+        "readable": false
+      }
+    },
+    {
+      "arm": "signal_before_check",
+      "signal_elapsed_ns": 3627,
+      "child_exitcode": 0,
+      "child_observation": {
+        "readable": true
+      }
+    },
+    {
+      "arm": "kill_then_signal",
+      "signal_elapsed_ns": 1660,
+      "child_exitcode": -9,
+      "child_observation": null
+    }
+  ]
+}
