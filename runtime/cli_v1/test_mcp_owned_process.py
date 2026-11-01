@@ -244,6 +244,17 @@ def _fake_owner_factory(targets, directory, display_name, options):
     patcher.start()
     cleanup.addCleanup(patcher.stop)
     owner = GuardedSessionOwner(targets, directory, display_name, **options)
+    if (root/'gate-child-invoke').exists():
+        original_invoke = owner.invoke_guarded
+        def gated_invoke(operation, arguments, call_root):
+            if operation == 'guarded_input':
+                (root/'child-invoke-entered').write_text('entered', encoding='utf-8')
+                deadline=time.monotonic()+5
+                while not (root/'resume-child-invoke').exists() and time.monotonic()<deadline:
+                    time.sleep(.005)
+                if not (root/'resume-child-invoke').exists():raise TimeoutError('child gate')
+            return original_invoke(operation, arguments, call_root)
+        owner.invoke_guarded = gated_invoke
     owner._owned_process_test_cleanup = cleanup
     return owner
 
@@ -2489,6 +2500,67 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool('interface_close',{})
                 _preserve_fake_x_run('known-r537',root)
+
+    async def test_unknown_transition_after_child_check_prevents_fake_effect(self):
+        """Probe an UNKNOWN transition after child RPC admission."""
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'compiled-profile-mode').write_text('enabled')
+            (root/'gate-child-invoke').write_text('enabled')
+            captured=[];original_init=OwnedGuardedSessionOwner.__init__
+            def capture(owner,*args,**kwargs):
+                original_init(owner,*args,**kwargs);captured.append(owner)
+            with patch.object(OwnedGuardedSessionOwner,'__init__',capture):
+                server=create_server({'app':20},root,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                minted=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='field',source_sequence=observed['source']['sequence'],
+                    point=[8,8],region_size=[12,12])))
+                action=metadata(await server.call_tool('interface_guarded_input',dict(
+                    alias='field',offset=minted['offset'],interaction='keyboard',
+                    observe_after=False,wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                deadline=time.monotonic()+3
+                while not (root/'child-invoke-entered').exists() and time.monotonic()<deadline:
+                    await asyncio.sleep(.005)
+                self.assertTrue((root/'child-invoke-entered').exists())
+                before_unknown=time.monotonic_ns()
+                captured[0]._execution_unknown=True;captured[0].review_required=True
+                _write_json(root/'injected-unknown.json',{
+                    'before_ns':before_unknown,'after_ns':time.monotonic_ns(),
+                    'scope':'injected UNKNOWN after child RPC check'})
+                (root/'resume-child-invoke').write_text('resume')
+                deadline=time.monotonic()+5
+                while time.monotonic()<deadline:
+                    result=metadata(await server.call_tool('interface_results',{
+                        'call_id':action['call_id'],'include_image':False}))
+                    if result.get('status')!='pending':break
+                    await asyncio.sleep(.01)
+                self.assertNotEqual(result.get('status'),'pending',result)
+                self.assertFalse((root/'synthetic-effect-receipt.json').exists(),
+                                 'fake target committed after UNKNOWN and child admission')
+                self.assertEqual(result.get('status'),'refused',result)
+                self.assertFalse(result.get('input_dispatched',True))
+                self.assertFalse(result.get('replay_allowed',True))
+            finally:
+                (root/'resume-child-invoke').write_text('resume')
+                if 'action' in locals():
+                    deadline=time.monotonic()+5
+                    while time.monotonic()<deadline:
+                        result=metadata(await server.call_tool('interface_results',{
+                            'call_id':action['call_id'],'include_image':False}))
+                        if result.get('status')!='pending':break
+                        await asyncio.sleep(.01)
+                try:
+                    await server.call_tool('interface_close',{})
+                finally:
+                    if captured and captured[0]._process is not None and captured[0]._process.is_alive():
+                        captured[0]._retire('test cleanup after unfinished close')
+                    if captured and captured[0]._process is not None:
+                        self.assertFalse(captured[0]._process.is_alive())
+                _preserve_fake_x_run('unknown-child-r539',root)
 
     async def test_unknown_transition_during_send_prevents_late_fake_effect(self):
         """Exercise the boundary after the parent's pre-send check."""

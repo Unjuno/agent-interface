@@ -25,6 +25,12 @@ class ParentExecutionUnknown(RuntimeError):
     """Parent refused a mutating request before attempting its RPC."""
 
 
+def _input_rpc(operation, arguments):
+    return (operation in ('run_compiled_profile', 'dispatch', 'recover_input')
+            or (operation == 'invoke_guarded' and (arguments or {}).get('operation') in
+                ('guarded_input', 'guarded_activate_window', 'guarded_recover_input')))
+
+
 _STARTUP_TIMEOUT_S = 5.0
 _CLOSE_TIMEOUT_S = 5.0
 # Cancellation must reach the bounded retirement path promptly even when the
@@ -208,7 +214,7 @@ def _control_loop(connection, stop, owner, pid):
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                                  directory, display_name, options, owner_factory,
-                                 input_obligations_state):
+                                 input_obligations_state, unknown_event):
     owner = None
     control_stop = threading.Event()
     control_thread = None
@@ -238,7 +244,12 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
             else:
                 try:
                     arguments = request.get('arguments', {})
-                    if operation == 'snapshot':
+                    if _input_rpc(operation, arguments) and unknown_event.is_set():
+                        result = {'status':'refused', 'operation_invoked':False,
+                                  'input_dispatched':False, 'effect_status':'none',
+                                  'cleanup_status':'UNKNOWN', 'release_confirmed':False,
+                                  'task_success':None, 'replay_allowed':False}
+                    elif operation == 'snapshot':
                         result = owner.snapshot()
                     elif operation == 'invoke_guarded':
                         result = owner.invoke_guarded(**arguments)
@@ -301,6 +312,16 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     confirms it before retirement. No process restart or input replay occurs.
     """
 
+    @property
+    def _execution_unknown(self):
+        return getattr(self, '_execution_unknown_value', False)
+
+    @_execution_unknown.setter
+    def _execution_unknown(self, value):
+        if value and getattr(self, '_unknown_event', None) is not None:
+            self._unknown_event.set()
+        self._execution_unknown_value = value
+
     def __init__(self, targets, directory, display_name=None, *,
                  process_identity=False, query_worker=False,
                  observation_worker=False, window_lifecycle=False,
@@ -333,6 +354,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
+        self._unknown_event = multiprocessing.get_context('spawn').Event()
         self._execution_unknown = False
         self._retirement = None
         self._owner_client_disconnect = None
@@ -396,7 +418,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'observation_worker':self.observation_worker,
                    'window_lifecycle':self.window_lifecycle,
                    'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
+                  self._owner_factory, input_obligations_state, self._unknown_event),
             name='guarded-x11-owner-' + self.session_id[:8])
         self.state = 'opening'
         try:
@@ -440,10 +462,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._ensure_started()
         if self._rpc is None:
             raise RuntimeError('owned guarded RPC channel unavailable')
-        if (self._execution_unknown and
-                (operation in ('run_compiled_profile', 'dispatch', 'recover_input')
-                 or (operation == 'invoke_guarded' and (arguments or {}).get('operation') in
-                     ('guarded_input', 'guarded_activate_window', 'guarded_recover_input')))):
+        if self._execution_unknown and _input_rpc(operation, arguments):
             raise ParentExecutionUnknown('owned execution is unknown; mutating RPC refused')
         self._rpc.send({'operation':operation, 'arguments':arguments or {}})
         response = self._rpc.recv()
