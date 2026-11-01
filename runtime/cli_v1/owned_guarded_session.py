@@ -346,7 +346,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self.targets = deepcopy(snapshot.get('targets', self.targets))
         self.state = snapshot.get('state', self.state)
         self.error = snapshot.get('error', self.error)
-        self.review_required = snapshot.get('review_required', self.review_required)
+        self.review_required = (self._execution_unknown or
+                                snapshot.get('review_required', self.review_required))
         obligations = snapshot.get('owner_input_obligations')
         if (isinstance(obligations, dict)
                 and isinstance(obligations.get('keys'), dict)
@@ -477,10 +478,13 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                        'release_confirmed':False if self._execution_unknown else None,
                        'x_client_resource_base':self._snapshot_cache.get(
                            'owner_x_client_resource_base')}
+        execution_unknown = self._execution_unknown
+        if self._process is not None:
+            process['release_confirmed'] = False if execution_unknown else None
         row.update(session_id=self.session_id, mode='guarded-x11-owned-process',
                    state=self.state, binding_revision=self.binding_revision,
                    targets=deepcopy(self.targets), error=self.error,
-                   review_required=self.review_required,
+                   review_required=execution_unknown or self.review_required,
                    owner_process=process,
                    owner_client_disconnect=deepcopy(self._owner_client_disconnect),
                    owner_input_obligations=deepcopy(self._owner_input_obligations),
@@ -488,7 +492,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    owner_input_obligations_live_read=deepcopy(
                        self._owner_input_obligations_live_read),
                    owner_release_attempt=deepcopy(self._owner_release_attempt),
-                   cleanup_status='UNKNOWN' if self._execution_unknown else None,
+                   cleanup_status='UNKNOWN' if execution_unknown else None,
                    authority_granted=False, restart_allowed=False)
         return row
 
