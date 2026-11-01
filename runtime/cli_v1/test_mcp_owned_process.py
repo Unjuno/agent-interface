@@ -2490,6 +2490,72 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 await server.call_tool('interface_close',{})
                 _preserve_fake_x_run('known-r537',root)
 
+    async def test_unknown_transition_during_send_prevents_late_fake_effect(self):
+        """Exercise the boundary after the parent's pre-send check."""
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'compiled-profile-mode').write_text('enabled')
+            captured=[]; original_init=OwnedGuardedSessionOwner.__init__
+            entered=threading.Event();resume=threading.Event()
+            def capture(owner,*args,**kwargs):
+                original_init(owner,*args,**kwargs);captured.append(owner)
+            with patch.object(OwnedGuardedSessionOwner,'__init__',capture):
+                server=create_server({'app':20},root,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                minted=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='field',source_sequence=observed['source']['sequence'],
+                    point=[8,8],region_size=[12,12])))
+                owner=captured[0]; original=owner._rpc.send
+                def gated(request):
+                    if (request.get('operation')=='invoke_guarded' and
+                            request.get('arguments',{}).get('operation')=='guarded_input'):
+                        entered.set()
+                        if not resume.wait(5):raise TimeoutError('test pipe send gate')
+                    return original(request)
+                with patch.object(owner._rpc,'send',side_effect=gated):
+                    action=metadata(await server.call_tool('interface_guarded_input',dict(
+                        alias='field',offset=minted['offset'],interaction='keyboard',
+                        observe_after=False,wait_for_result_ms=0,
+                        tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                    self.assertTrue(await asyncio.to_thread(entered.wait,3))
+                    before_unknown=time.monotonic_ns()
+                    owner._execution_unknown=True;owner.review_required=True
+                    _write_json(root/'injected-unknown.json',{
+                        'before_ns':before_unknown,'after_ns':time.monotonic_ns(),
+                        'scope':'injected parent UNKNOWN while pipe send is gated'})
+                    resume.set();deadline=time.monotonic()+5
+                    while time.monotonic()<deadline:
+                        result=metadata(await server.call_tool('interface_results',{
+                            'call_id':action['call_id'],'include_image':False}))
+                        if result.get('status')!='pending':break
+                        await asyncio.sleep(.01)
+                    self.assertNotEqual(result.get('status'),'pending',result)
+                    self.assertFalse((root/'synthetic-effect-receipt.json').exists(),
+                                     'fake target committed after UNKNOWN while send was gated')
+                    self.assertEqual(result.get('status'),'refused',result)
+                    self.assertFalse(result.get('input_dispatched',True))
+                    self.assertFalse(result.get('replay_allowed',True))
+            finally:
+                resume.set()
+                if 'action' in locals():
+                    deadline=time.monotonic()+5
+                    while time.monotonic()<deadline:
+                        result=metadata(await server.call_tool('interface_results',{
+                            'call_id':action['call_id'],'include_image':False}))
+                        if result.get('status')!='pending':break
+                        await asyncio.sleep(.01)
+                closed={}
+                try:
+                    closed=metadata(await server.call_tool('interface_close',{}))
+                finally:
+                    if captured and captured[0]._process is not None and captured[0]._process.is_alive():
+                        captured[0]._retire('test cleanup after unfinished close')
+                if captured and captured[0]._process is not None:
+                    self.assertFalse(captured[0]._process.is_alive(),closed)
+                _preserve_fake_x_run('unknown-send-r538',root)
+
     async def test_unknown_transition_before_rpc_prevents_late_fake_effect(self):
         """A parent-side UNKNOWN transition precedes a gated Fake X RPC."""
         with tempfile.TemporaryDirectory() as td:
@@ -2547,9 +2613,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                             'call_id':action['call_id'],'include_image':False}))
                         if result.get('status')!='pending':break
                         await asyncio.sleep(.01)
-                closed=metadata(await server.call_tool('interface_close',{}))
-                if captured and captured[0]._process is not None and captured[0]._process.is_alive():
-                    captured[0]._retire('test cleanup after unfinished close')
+                closed={}
+                try:
+                    closed=metadata(await server.call_tool('interface_close',{}))
+                finally:
+                    if captured and captured[0]._process is not None and captured[0]._process.is_alive():
+                        captured[0]._retire('test cleanup after unfinished close')
                 if captured and captured[0]._process is not None:
                     self.assertFalse(captured[0]._process.is_alive(),closed)
                 _preserve_fake_x_run('unknown-r537',root)

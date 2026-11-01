@@ -21,6 +21,10 @@ from ..guarded_x11_v1.xres_client_fence import (
     supervise_xres_worker, wait_for_client_disconnect_supervised)
 
 
+class ParentExecutionUnknown(RuntimeError):
+    """Parent refused a mutating request before attempting its RPC."""
+
+
 _STARTUP_TIMEOUT_S = 5.0
 _CLOSE_TIMEOUT_S = 5.0
 # Cancellation must reach the bounded retirement path promptly even when the
@@ -436,6 +440,11 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._ensure_started()
         if self._rpc is None:
             raise RuntimeError('owned guarded RPC channel unavailable')
+        if (self._execution_unknown and
+                (operation in ('run_compiled_profile', 'dispatch', 'recover_input')
+                 or (operation == 'invoke_guarded' and (arguments or {}).get('operation') in
+                     ('guarded_input', 'guarded_activate_window', 'guarded_recover_input')))):
+            raise ParentExecutionUnknown('owned execution is unknown; mutating RPC refused')
         self._rpc.send({'operation':operation, 'arguments':arguments or {}})
         response = self._rpc.recv()
         snapshot = response.get('snapshot')
