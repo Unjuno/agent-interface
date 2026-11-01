@@ -1,0 +1,281 @@
+{
+  "status": "audited",
+  "blocks": {
+    "fixed": {
+      "routes": {
+        "direct": {
+          "n": 2,
+          "task_seconds_median": 6.257729471499999,
+          "launcher_seconds_median": 9.922,
+          "input_tokens_median": 12185.0,
+          "output_tokens_median": 62.0,
+          "model_calls": [
+            1,
+            1
+          ],
+          "samples": [
+            {
+              "allocation": "eo01",
+              "route": "direct",
+              "task_seconds": 6.44475328,
+              "launcher_seconds": 11.438,
+              "calls": 1,
+              "input_tokens": 12185,
+              "cached_input_tokens": 0,
+              "output_tokens": 62,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            },
+            {
+              "allocation": "ep03",
+              "route": "direct",
+              "task_seconds": 6.070705663,
+              "launcher_seconds": 8.406,
+              "calls": 1,
+              "input_tokens": 12185,
+              "cached_input_tokens": 0,
+              "output_tokens": 62,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            }
+          ]
+        },
+        "compiled": {
+          "n": 2,
+          "task_seconds_median": 6.560518096499999,
+          "launcher_seconds_median": 8.93,
+          "input_tokens_median": 12185.0,
+          "output_tokens_median": 78.0,
+          "model_calls": [
+            1,
+            1
+          ],
+          "samples": [
+            {
+              "allocation": "eo02",
+              "route": "compiled",
+              "task_seconds": 5.89360389,
+              "launcher_seconds": 8.281,
+              "calls": 1,
+              "input_tokens": 12185,
+              "cached_input_tokens": 0,
+              "output_tokens": 78,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            },
+            {
+              "allocation": "ep02",
+              "route": "compiled",
+              "task_seconds": 7.227432303,
+              "launcher_seconds": 9.579,
+              "calls": 1,
+              "input_tokens": 12185,
+              "cached_input_tokens": 8192,
+              "output_tokens": 78,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            }
+          ]
+        },
+        "fresh": {
+          "n": 2,
+          "task_seconds_median": 9.6586664155,
+          "launcher_seconds_median": 13.374500000000001,
+          "input_tokens_median": 25743.0,
+          "output_tokens_median": 132.0,
+          "model_calls": [
+            2,
+            2
+          ],
+          "samples": [
+            {
+              "allocation": "eo03",
+              "route": "fresh",
+              "task_seconds": 8.566229973,
+              "launcher_seconds": 10.968,
+              "calls": 2,
+              "input_tokens": 25735,
+              "cached_input_tokens": 12160,
+              "output_tokens": 124,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            },
+            {
+              "allocation": "ep01",
+              "route": "fresh",
+              "task_seconds": 10.751102858,
+              "launcher_seconds": 15.781,
+              "calls": 2,
+              "input_tokens": 25751,
+              "cached_input_tokens": 12160,
+              "output_tokens": 140,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            }
+          ]
+        }
+      },
+      "compiled_vs_fresh": {
+        "task_interval_reduction_fraction": 0.32076356980588605,
+        "launcher_interval_reduction_fraction": 0.33231148827993573,
+        "input_token_reduction_fraction": 0.5266674435768948
+      }
+    },
+    "temporary_obstruction": {
+      "routes": {
+        "direct": {
+          "n": 2,
+          "task_seconds_median": 9.2780023575,
+          "launcher_seconds_median": 12.9605,
+          "input_tokens_median": 25751.0,
+          "output_tokens_median": 148.0,
+          "model_calls": [
+            2,
+            2
+          ],
+          "samples": [
+            {
+              "allocation": "eq01",
+              "route": "direct",
+              "task_seconds": 8.364756758,
+              "launcher_seconds": 13.328,
+              "calls": 2,
+              "input_tokens": 25751,
+              "cached_input_tokens": 12160,
+              "output_tokens": 156,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            },
+            {
+              "allocation": "er03",
+              "route": "direct",
+              "task_seconds": 10.191247957,
+              "launcher_seconds": 12.593,
+              "calls": 2,
+              "input_tokens": 25751,
+              "cached_input_tokens": 20352,
+              "output_tokens": 140,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            }
+          ]
+        },
+        "compiled": {
+          "n": 2,
+          "task_seconds_median": 10.150041155,
+          "launcher_seconds_median": 12.475999999999999,
+          "input_tokens_median": 25751.0,
+          "output_tokens_median": 140.0,
+          "model_calls": [
+            2,
+            2
+          ],
+          "samples": [
+            {
+              "allocation": "eq02",
+              "route": "compiled",
+              "task_seconds": 9.765059754,
+              "launcher_seconds": 12.093,
+              "calls": 2,
+              "input_tokens": 25751,
+              "cached_input_tokens": 19968,
+              "output_tokens": 140,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            },
+            {
+              "allocation": "er02",
+              "route": "compiled",
+              "task_seconds": 10.535022556,
+              "launcher_seconds": 12.859,
+              "calls": 2,
+              "input_tokens": 25751,
+              "cached_input_tokens": 20352,
+              "output_tokens": 140,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            }
+          ]
+        },
+        "fresh": {
+          "n": 2,
+          "task_seconds_median": 12.096081891,
+          "launcher_seconds_median": 15.812999999999999,
+          "input_tokens_median": 40666.0,
+          "output_tokens_median": 194.0,
+          "model_calls": [
+            3,
+            3
+          ],
+          "samples": [
+            {
+              "allocation": "eq03",
+              "route": "fresh",
+              "task_seconds": 13.037335632,
+              "launcher_seconds": 15.391,
+              "calls": 3,
+              "input_tokens": 40682,
+              "cached_input_tokens": 25472,
+              "output_tokens": 202,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            },
+            {
+              "allocation": "er01",
+              "route": "fresh",
+              "task_seconds": 11.15482815,
+              "launcher_seconds": 16.235,
+              "calls": 3,
+              "input_tokens": 40650,
+              "cached_input_tokens": 33280,
+              "output_tokens": 186,
+              "saved_values": [
+                "472",
+                "615"
+              ],
+              "neutral": true
+            }
+          ]
+        }
+      },
+      "compiled_vs_fresh": {
+        "task_interval_reduction_fraction": 0.16088190816961467,
+        "launcher_interval_reduction_fraction": 0.2110289002719281,
+        "input_token_reduction_fraction": 0.36676830767717505
+      }
+    }
+  }
+}
