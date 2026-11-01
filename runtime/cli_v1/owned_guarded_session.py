@@ -9,6 +9,8 @@ from copy import deepcopy
 import hashlib
 import json
 import multiprocessing
+import os
+import socket
 from pathlib import Path
 import threading
 import time
@@ -204,12 +206,14 @@ def _control_loop(connection, stop, owner, pid):
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                                  directory, display_name, options, owner_factory,
-                                 input_obligations_state):
+                                 input_obligations_state, xauthority=None):
     owner = None
     control_stop = threading.Event()
     control_thread = None
     ready_sent = False
     try:
+        if xauthority is not None:
+            os.environ['XAUTHORITY'] = xauthority
         owner = (owner_factory(targets, directory, display_name, options)
                  if owner_factory is not None else
                  GuardedSessionOwner(targets, directory, display_name, **options))
@@ -289,12 +293,37 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                 pass
 
 
+def _serve_owned_guarded_with_display(endpoint, server_pid, *args):
+    """Fence the disposable owner before opening any python-xlib connection."""
+    from ..guarded_x11_v1.pidfd_transfer import receive_pidfd
+    from ..guarded_x11_v1.owned_xlib_connector import OwnedXlibConnector
+    guard = None
+    fd = None
+    try:
+        endpoint.setblocking(False)
+        fd = receive_pidfd(endpoint)
+        endpoint.close()
+        guard = OwnedXlibConnector(fd, server_pid, disposable=True)
+        received_fd, fd = fd, None
+        os.close(received_fd)
+        _serve_owned_guarded_session(*args)
+    finally:
+        endpoint.close()
+        if fd is not None:
+            os.close(fd)
+        if guard is not None:
+            guard.close()
+
 class OwnedGuardedSessionOwner(GuardedSessionOwner):
     """GuardedSessionOwner-compatible facade backed by one spawned process.
 
     This is opt-in. Cancellation may retire the exact owned process after a
     bounded grace, but release remains UNKNOWN unless the child reports and
     confirms it before retirement. No process restart or input replay occurs.
+
+    The private _owned_display_owner option is experimental: it guards the
+    owner and prestarted cancellation supervisor's python-xlib connections.
+    It does not establish a complete display fence or configure the MCP entry.
     """
 
     def __init__(self, targets, directory, display_name=None, *,
@@ -303,7 +332,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                  retention_mode='files',
                  prestarted_cancel_supervisor=False,
                  _cleanup_supervisor_target=None,
-                 _owner_factory=None):
+                 _owner_factory=None, xauthority=None, _owned_display_owner=None):
         super().__init__(targets, directory, display_name,
                          process_identity=process_identity,
                          query_worker=query_worker,
@@ -314,12 +343,27 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._owner_factory = _owner_factory
         if type(prestarted_cancel_supervisor) is not bool:
             raise ValueError('prestarted_cancel_supervisor must be a boolean')
+        if xauthority is not None:
+            if type(xauthority) is not str or not xauthority or '\x00' in xauthority:
+                raise ValueError('xauthority must be a nonempty path string')
+            if not prestarted_cancel_supervisor:
+                raise ValueError('explicit xauthority requires prestarted cancellation supervisor')
+        self._xauthority = xauthority
+        if _owned_display_owner is not None:
+            from ..guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+            if (not isinstance(_owned_display_owner, PrivateDisplayOwner)
+                    or not prestarted_cancel_supervisor or xauthority is None
+                    or type(display_name) is not str or not display_name
+                    or _owner_factory is not None or _cleanup_supervisor_target is not None):
+                raise ValueError('owned display requires the standard owner, explicit authority and prestarted supervisor')
+        self._owned_display_owner = _owned_display_owner
         if _cleanup_supervisor_target is not None and not callable(_cleanup_supervisor_target):
             raise TypeError('_cleanup_supervisor_target must be callable')
         self._prestarted_cancel_enabled = prestarted_cancel_supervisor
         self._cleanup_supervisor_target = (_cleanup_supervisor_target
             or x11_cancel_worker)
         self._cleanup_supervisor = None
+        self._startup_supervisor_retirement = None
         self._prestarted_cleanup_result = None
         self._active_cancel_operation_id = None
         self._active_cancel_deadline_ns = None
@@ -328,6 +372,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._process = None
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
+        self._cancel_transaction_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
         self._retirement = None
@@ -382,23 +427,45 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
         self._owner_input_obligations_state = input_obligations_state
         _publish_owner_input_obligations(input_obligations_state, {}, [])
-        process = context.Process(
-            target=_serve_owned_guarded_session,
-            args=(rpc_child, control_child, self.targets, str(self._owner_root),
-                  self.display_name,
-                  {'process_identity':self.process_identity,
-                   'query_worker':self.query_worker,
-                   'observation_worker':self.observation_worker,
-                   'window_lifecycle':self.window_lifecycle,
-                   'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
-            name='guarded-x11-owner-' + self.session_id[:8])
+        process = None
+        sender = receiver = None
+        server_pid = None
         self.state = 'opening'
         try:
+            target = _serve_owned_guarded_session
+            args = (rpc_child, control_child, self.targets, str(self._owner_root),
+                    self.display_name,
+                    {'process_identity':self.process_identity,
+                     'query_worker':self.query_worker,
+                     'observation_worker':self.observation_worker,
+                     'window_lifecycle':self.window_lifecycle,
+                     'retention_mode':self.retention_mode},
+                    self._owner_factory, input_obligations_state, self._xauthority)
+            if self._owned_display_owner is not None:
+                from ..guarded_x11_v1.pidfd_transfer import send_pidfd
+                fd, server_pid = self._owned_display_owner.duplicate_server_pidfd(timeout_s=1.0)
+                try:
+                    sender, receiver = socket.socketpair()
+                    sender.setblocking(False)
+                    receiver.setblocking(False)
+                    send_pidfd(sender, fd)
+                finally:
+                    owned_fd, fd = fd, None
+                    os.close(owned_fd)
+                sender.close()
+                sender = None
+                target = _serve_owned_guarded_with_display
+                args = (receiver, server_pid, *args)
+            process = context.Process(target=target, args=args,
+                name='guarded-x11-owner-' + self.session_id[:8])
             process.start()
+            # Record child custody before any fallible endpoint cleanup.
+            self._process, self._rpc, self._control = process, rpc_parent, control_parent
+            if receiver is not None:
+                receiver.close()
+                receiver = None
             rpc_child.close()
             control_child.close()
-            self._process, self._rpc, self._control = process, rpc_parent, control_parent
             if not rpc_parent.poll(_STARTUP_TIMEOUT_S):
                 self._execution_unknown = True
                 self._retire('owned guarded process startup timed out')
@@ -411,17 +478,55 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 raise RuntimeError(self.error)
             self._apply_snapshot(response['snapshot'])
             if self._prestarted_cancel_enabled:
-                self._cleanup_supervisor = PrestartedCancellationSupervisor(
-                    self._cleanup_supervisor_target,
-                    expected_session_id=self.session_id)
+                capability = {}
+                fd = None
+                if self._owned_display_owner is not None:
+                    fd, current_pid = self._owned_display_owner.duplicate_server_pidfd(timeout_s=1.0)
+                    if current_pid != server_pid:
+                        owned_fd, fd = fd, None
+                        os.close(owned_fd)
+                        raise RuntimeError('owned display identity changed during startup')
+                    capability = {'owned_server_pidfd':fd, 'owned_server_pid':server_pid}
+                try:
+                    self._cleanup_supervisor = PrestartedCancellationSupervisor(
+                        self._cleanup_supervisor_target,
+                        expected_session_id=self.session_id, xauthority=self._xauthority,
+                        pinned_display_name=(self.display_name if self._xauthority is not None
+                            and self._cleanup_supervisor_target is x11_cancel_worker else None),
+                        expected_owner=({'pid':self._snapshot_cache.get('owner_process_pid'),
+                            'resource_base':self._snapshot_cache.get('owner_x_client_resource_base')}
+                            if self._xauthority is not None
+                            and self._cleanup_supervisor_target is x11_cancel_worker else None),
+                        **capability)
+                finally:
+                    if fd is not None:
+                        owned_fd, fd = fd, None
+                        os.close(owned_fd)
             self.state = 'open'
         except BaseException:
             try:
-                process_alive = process.pid is not None and process.is_alive()
+                process_alive = process is not None and process.pid is not None and process.is_alive()
             except (AssertionError, ValueError):
                 process_alive = False
-            if process_alive:
-                self._retire('owned or cancellation supervisor readiness failed')
+            try:
+                if process_alive:
+                    try:
+                        self._retire('owned or cancellation supervisor readiness failed')
+                    except BaseException as error:
+                        self._retirement = {'retired':None, 'exitcode':None,
+                            'reason':'startup_retirement_failed',
+                            'error_type':type(error).__name__}
+                        self.state = 'failed'
+                        self.error = 'owned process retirement unconfirmed'
+                        self._execution_unknown = True
+                        self.review_required = True
+            finally:
+                if self._cleanup_supervisor is not None:
+                    try:
+                        self._startup_supervisor_retirement = self._cleanup_supervisor.close()
+                    except BaseException as error:
+                        self._startup_supervisor_retirement = {
+                            'retired':None, 'error_type':type(error).__name__}
             if self.state == 'opening':
                 self.state = 'failed'
             for connection in (rpc_parent, control_parent, rpc_child, control_child):
@@ -430,6 +535,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 except OSError:
                     pass
             raise
+        finally:
+            for endpoint in (sender, receiver):
+                if endpoint is not None:
+                    endpoint.close()
 
     def _request_locked(self, operation, arguments=None):
         self._ensure_started()
@@ -761,8 +870,30 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
         if type(deadline_monotonic_ns) is not int:
             raise ValueError('deadline_monotonic_ns must be an integer')
-        self._active_cancel_deadline_ns = deadline_monotonic_ns
-        self._active_cancel_operation_id = operation_id or str(token)
+        remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if not self._cancel_transaction_lock.acquire(timeout=remaining_s):
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cancel_unconfirmed', 'reason':'cancel_transaction_deadline',
+                    'input_dispatched':False, 'owner_process_retired':False,
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
+        try:
+            if time.monotonic_ns() >= deadline_monotonic_ns:
+                self._execution_unknown = True
+                self.review_required = True
+                return {'status':'cancel_unconfirmed', 'reason':'cancel_transaction_deadline',
+                        'input_dispatched':False, 'owner_process_retired':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True, 'review_required':True}
+            return self._cancel_guarded_transaction(token, operation_id=operation_id,
+                deadline_monotonic_ns=deadline_monotonic_ns)
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def _cancel_guarded_transaction(self, token, *, operation_id, deadline_monotonic_ns):
         if self._process is not None and not self._process.is_alive() and self.state != 'closed':
             retirement = getattr(self, '_retirement', None)
             if retirement is None:
@@ -794,10 +925,30 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
                     'release_confirmed':False}
-        with self._control_lock:
+        remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if not self._control_lock.acquire(timeout=remaining_s):
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cancel_unconfirmed', 'reason':'control_lock_deadline',
+                    'input_dispatched':False, 'owner_process_retired':False,
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True, 'review_required':True}
+        try:
+            if time.monotonic_ns() >= deadline_monotonic_ns:
+                self._execution_unknown = True
+                self.review_required = True
+                return {'status':'cancel_unconfirmed', 'reason':'control_lock_deadline',
+                        'input_dispatched':False, 'owner_process_retired':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True, 'review_required':True}
+            self._active_cancel_deadline_ns = deadline_monotonic_ns
+            self._active_cancel_operation_id = operation_id or str(token)
             try:
                 self._control.send({'operation':'cancel_guarded', 'token':token})
-                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
+                remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+                if not self._control.poll(min(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S, remaining_s)):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')
@@ -829,6 +980,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                         'task_success':None, 'replay_allowed':False,
                         'late_server_request_possible':True}
+        finally:
+            self._control_lock.release()
         if response.get('ok') is not True:
             self._execution_unknown = True
             self.review_required = True
@@ -912,6 +1065,39 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        if not self._cancel_transaction_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'cancel_transaction_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_owned_transaction()
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def close_after_cancel_if_retired(self):
+        """Close without a new release only after an earlier retirement receipt."""
+        if not self._cancel_transaction_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'cancel_transaction_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            retirement = getattr(self, '_retirement', None)
+            process = getattr(self, '_process', None)
+            if (not isinstance(retirement, dict) or retirement.get('retired') is not True
+                    or process is None or process.is_alive()
+                    or getattr(self, '_owner_client_disconnect', None) is None
+                    or getattr(self, '_owner_release_attempt', None) is None):
+                return {'status':'busy', 'reason':'retired_cleanup_evidence_unavailable',
+                        'session_id':self.session_id, 'release_confirmed':False,
+                        'cleanup_status':'UNKNOWN', 'task_success':None,
+                        'replay_allowed':False, 'verified':False}
+            return self._close_owned_transaction()
+        finally:
+            self._cancel_transaction_lock.release()
+
+    def _close_owned_transaction(self):
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()

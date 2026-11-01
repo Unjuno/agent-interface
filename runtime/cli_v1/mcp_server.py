@@ -1,7 +1,7 @@
 """Optional stdio MCP transport; one-shot by default, with explicit owned-session modes."""
 import argparse
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 import contextvars
 from copy import deepcopy
 from contextlib import asynccontextmanager
@@ -31,8 +31,78 @@ from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
 _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S = 4.0
+_GUARDED_CLOSE_CANCEL_DRAIN_TIMEOUT_S = 5.0
 _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
+
+
+class _DeferredOwnerClose:
+    """Once all tracked cancellations finish, attempt one evidence-gated close."""
+    def __init__(self, owner, writer):
+        self._owner = owner
+        self._writer = writer
+        self._lock = threading.Lock()
+        self._armed = False
+        self._started = False
+        self._futures = ()
+        self.last_report = None
+
+    def arm(self, futures):
+        futures = tuple(futures)
+        if not futures:
+            return False
+        with self._lock:
+            if self._armed:
+                return False
+            self._armed = True
+            self._futures = futures
+        for future in futures:
+            future.add_done_callback(self._maybe_start)
+        self._maybe_start(None)
+        return True
+
+    def _maybe_start(self, _future):
+        with self._lock:
+            if self._started or not all(f.done() for f in self._futures):
+                return
+            self._started = True
+        threading.Thread(target=self._run, name='guarded-deferred-close',
+                         daemon=True).start()
+
+    def _run(self):
+        try:
+            report = self._owner.close_after_cancel_if_retired()
+            if not isinstance(report, dict):
+                raise TypeError('deferred close report must be a mapping')
+            report = dict(report, deferred=True)
+        except Exception as error:
+            report = {'status':'close_unconfirmed', 'error_type':type(error).__name__,
+                      'deferred':True, 'release_confirmed':False,
+                      'cleanup_status':'UNKNOWN', 'task_success':None,
+                      'replay_allowed':False, 'verified':False}
+        self.last_report = deepcopy(report)
+        try:
+            self._writer(report)
+        except Exception as error:
+            self.last_report = dict(report, persistence_failure=type(error).__name__)
+
+
+def _close_owner_after_cancel_drain(owner, cancellation_executor, futures=(), *,
+                                    drain_timeout_s=_GUARDED_CLOSE_CANCEL_DRAIN_TIMEOUT_S):
+    """Stop submissions; close only after tracked cancellations have finished."""
+    if (type(drain_timeout_s) not in (int, float) or not math.isfinite(drain_timeout_s)
+            or drain_timeout_s < 0):
+        raise ValueError('drain timeout must be finite and nonnegative')
+    if cancellation_executor is not None:
+        cancellation_executor.shutdown(wait=False, cancel_futures=False)
+    if futures:
+        _, pending = wait(futures, timeout=drain_timeout_s)
+        if pending:
+            return {'status':'busy', 'reason':'cancellation_drain_timeout',
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False, 'verified':False,
+                    'pending_cancellations':len(pending)}
+    return owner.close()
 
 
 def _normalize_supervised_win32_program(program):
@@ -327,6 +397,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_cancel_transaction_timeout_s=(
                       _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S),
                   _guarded_owner_factory=None,
+                  _guarded_display_owner=None, _guarded_xauthority=None,
+                  _guarded_recovery_retirement_reserve_ns=None,
                   _guarded_win32_owner_factory=None,
                   _guarded_win32_producer_factory=None,
                   _guarded_win32_task_oracle=None,
@@ -406,6 +478,24 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded_owned_process and (session_mode != 'guarded-x11'
             or not guarded_process_identity or not guarded_query_worker):
         raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
+    if (_guarded_display_owner is None) != (_guarded_xauthority is None):
+        raise ValueError('owned display and explicit X authority must be provided together')
+    if (_guarded_recovery_retirement_reserve_ns is not None
+            and (type(_guarded_recovery_retirement_reserve_ns) is not int
+                 or _guarded_recovery_retirement_reserve_ns < 0
+                 or _guarded_display_owner is None)):
+        raise ValueError('private recovery requires owned display and a nonnegative integer reserve')
+    if _guarded_display_owner is not None:
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        if (not isinstance(_guarded_display_owner, PrivateDisplayOwner)
+                or session_mode != 'guarded-x11' or not guarded_owned_process
+                or not guarded_prestarted_cancel_supervisor
+                or type(display_name) is not str or not display_name
+                or type(_guarded_xauthority) is not str or not _guarded_xauthority
+                or '\x00' in _guarded_xauthority
+                or _guarded_owner_factory is not None
+                or _guarded_cancel_supervisor_target is not None):
+            raise ValueError('owned display requires explicit standard guarded X11 owner and supervisor')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -500,8 +590,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                              retention_mode=guarded_retention_mode)
         if guarded_owned_process:
             from .owned_guarded_session import OwnedGuardedSessionOwner
+            owned_display_options = ({'xauthority':_guarded_xauthority,
+                                      '_owned_display_owner':_guarded_display_owner}
+                                     if _guarded_display_owner is not None else {})
             owner = OwnedGuardedSessionOwner(targets, root, display_name,
-                **owner_options,
+                **owner_options, **owned_display_options,
                 prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
                 _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
                 _owner_factory=_guarded_owner_factory)
@@ -510,6 +603,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     shutting_down = False
     server_shutdown_started = False
     server_instance_id = uuid.uuid4().hex
+    deferred_owner_close = (_DeferredOwnerClose(owner, lambda report: _write_json(
+        root / ('session-' + owner.session_id + '-deferred-close.json'), report))
+        if guarded_owned_process else None)
 
     def rollback_unentered_close(operation, revoked):
         """Release a manual close reservation only if no worker entered it."""
@@ -522,13 +618,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 shutting_down = False
 
     def close_owner():
+        with calls_lock:
+            futures = tuple(cancellation_futures.values())
+        report = _close_owner_after_cancel_drain(owner, cancellation_executor, futures)
         try:
-            report = owner.close()
             _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
-            return report
         finally:
-            if cancellation_executor is not None:
-                cancellation_executor.shutdown(wait=True, cancel_futures=False)
+            if (deferred_owner_close is not None and report.get('status') == 'busy'
+                    and report.get('reason') == 'cancellation_drain_timeout'):
+                deferred_owner_close.arm(futures)
+        return report
 
     @asynccontextmanager
     async def lifespan(_server):
@@ -1020,7 +1119,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     transaction_deadline_ns = (cancellation.get(
                         'transaction_deadline_monotonic_ns')
                         if isinstance(cancellation, dict) else None)
-                result = owner.cancel_guarded(call_id,
+                if _guarded_recovery_retirement_reserve_ns is not None:
+                    from runtime.guarded_x11_v1.private_display_recovery import PrivateDisplayRecovery
+                    cancellation_owner = PrivateDisplayRecovery(
+                        _guarded_display_owner, owner,
+                        retirement_reserve_ns=_guarded_recovery_retirement_reserve_ns)
+                else:
+                    cancellation_owner = owner
+                result = cancellation_owner.cancel_guarded(call_id,
                     operation_id=operation_id,
                     deadline_monotonic_ns=transaction_deadline_ns)
                 if not isinstance(result, dict):
