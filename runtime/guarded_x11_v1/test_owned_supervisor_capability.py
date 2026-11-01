@@ -170,6 +170,76 @@ class OwnedSupervisorCapabilityTests(unittest.TestCase):
                         process.join(3)
                     ready_recv.close()
                     stop_send.close()
+    def test_other_retired_owner_request_does_not_release_live_held_key(self):
+        from Xlib import X, XK, display
+        from Xlib.ext import xtest
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as tmp:
+            owner = PrivateDisplayOwner(Path(tmp) / 'display')
+            self.addCleanup(owner.close)
+            session = owner.start(timeout_s=5)
+            with patch.dict(os.environ, {'XAUTHORITY': str(session.authority)}):
+                observer = display.Display(session.display)
+            self.addCleanup(observer.close)
+            code = observer.keysym_to_keycode(XK.string_to_keysym('a'))
+            context = multiprocessing.get_context('spawn')
+            clients = []
+            supervisor = None
+            try:
+                for _ in range(2):
+                    ready_recv, ready_send = context.Pipe(False)
+                    stop_recv, stop_send = context.Pipe(False)
+                    process = context.Process(target=_owner_client,
+                        args=(session.display, str(session.authority), ready_send, stop_recv))
+                    process.start()
+                    clients.append((process, ready_recv, stop_send, None))
+                    ready_send.close(); stop_recv.close()
+                    self.assertTrue(ready_recv.poll(5))
+                    identity = ready_recv.recv()
+                    clients[-1] = (process, ready_recv, stop_send, identity)
+                first, second = clients
+                fd, server_pid = owner.duplicate_server_pidfd(timeout_s=1)
+                try:
+                    supervisor = PrestartedCancellationSupervisor(
+                        x11_cancel_worker, xauthority=str(session.authority),
+                        pinned_display_name=session.display, expected_owner=first[3],
+                        owned_server_pidfd=fd, owned_server_pid=server_pid)
+                finally:
+                    os.close(fd)
+                second[2].send('stop'); second[0].join(3)
+                self.assertEqual(second[0].exitcode, 0)
+                self.assertTrue(first[0].is_alive())
+                xtest.fake_input(observer, X.KeyPress, code); observer.sync()
+                self.assertTrue(_key_down(observer, code))
+                wrong = second[3]
+                request = {'operation_id':'other', 'session_id':'session',
+                    'owner_process_retired':True, 'owner_process_exitcode':0,
+                    'owner_pid':wrong['pid'], 'x_resource_base':wrong['resource_base'],
+                    'binding_revision':0, 'owner_generation':{'session_id':'session',
+                        'child_pid':wrong['pid'], 'x_resource_base':wrong['resource_base'],
+                        'binding_revision':0}, 'keys':{'a':code}, 'buttons':[],
+                    'display_name':session.display}
+                result = supervisor.run(request,
+                    deadline_monotonic_ns=time.monotonic_ns()+2_000_000_000)
+                observer.sync()
+                self.assertTrue(_key_down(observer, code), result)
+                self.assertEqual(result['status'], 'unknown')
+                self.assertEqual(result['reason'], 'pinned_owner_mismatch')
+                self.assertEqual(result['owner_release_attempt']['status'], 'not_attempted')
+                self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+            finally:
+                try:
+                    xtest.fake_input(observer, X.KeyRelease, code); observer.sync()
+                finally:
+                    if supervisor is not None: supervisor.close()
+                    for process, ready, stop, _ in clients:
+                        if process.is_alive():
+                            try: stop.send('stop')
+                            except (OSError, EOFError): pass
+                            process.join(3)
+                        if process.is_alive(): process.terminate(); process.join(3)
+                        ready.close(); stop.close()
+
     def test_readiness_failure_retires_started_child_and_keeps_caller_fd(self):
         fd = os.pidfd_open(os.getpid())
         self.addCleanup(os.close, fd)

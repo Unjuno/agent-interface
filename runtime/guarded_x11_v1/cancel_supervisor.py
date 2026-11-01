@@ -47,6 +47,17 @@ def _serve_one(command_receive, result_send, ready_send, worker_target, xauthori
                       'operation_id': request.get('operation_id'),
                       'session_id': request.get('session_id'),
                       'cleanup_status': 'UNKNOWN'}
+        elif pinned_display_name is not None and (
+                type(request.get('owner_pid')) is not int
+                or type(request.get('x_resource_base')) is not int
+                or request['owner_pid'] != expected_owner['pid']
+                or request['x_resource_base'] != expected_owner['resource_base']):
+            result = {'status': 'unknown', 'reason': 'pinned_owner_mismatch',
+                      'operation_id': request.get('operation_id'),
+                      'session_id': request.get('session_id'),
+                      'cleanup_status': 'UNKNOWN',
+                      'owner_release_attempt': {'status': 'not_attempted',
+                                                'reason': 'pinned_owner_mismatch'}}
         else:
             try:
                 if pinned_backend is None:
