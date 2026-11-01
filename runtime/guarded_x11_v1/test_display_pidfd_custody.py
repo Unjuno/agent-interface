@@ -1,9 +1,15 @@
-import os, select, tempfile, unittest, threading, time
+import os, select, shutil, signal, sys, tempfile, unittest, threading, time
 from unittest.mock import patch
 from pathlib import Path
 from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
 
+_HAS_PRIVATE_XVFB = (sys.platform.startswith('linux') and callable(getattr(os,'pidfd_open',None))
+    and callable(getattr(signal,'pidfd_send_signal',None)) and hasattr(select,'poll')
+    and Path('/proc/self/fdinfo').is_dir() and shutil.which('Xvfb') is not None
+    and shutil.which('xauth') is not None)
+
 class Custody(unittest.TestCase):
+    @unittest.skipUnless(_HAS_PRIVATE_XVFB, 'requires Linux pidfd, procfs, Xvfb and xauth')
     def test_duplicate_remains_bound_and_detects_retirement(self):
         with tempfile.TemporaryDirectory() as d:
             owner=PrivateDisplayOwner(Path(d)/'display')
@@ -22,6 +28,7 @@ class Custody(unittest.TestCase):
                 if fd is not None:os.close(fd)
                 owner.close(timeout_s=3)
 
+    @unittest.skipUnless(_HAS_PRIVATE_XVFB, 'requires Linux pidfd, procfs, Xvfb and xauth')
     def test_close_waits_for_real_duplication_in_progress(self):
         with tempfile.TemporaryDirectory() as d:
             owner=PrivateDisplayOwner(Path(d)/'display');owner.start(timeout_s=5)
@@ -54,6 +61,7 @@ class Custody(unittest.TestCase):
                 for fd,_ in duplicate:os.close(fd)
                 owner.close(timeout_s=3)
 
+    @unittest.skipUnless(_HAS_PRIVATE_XVFB, 'requires Linux pidfd, procfs, Xvfb and xauth')
     def test_each_lock_timeout_is_bounded(self):
         with tempfile.TemporaryDirectory() as d:
             owner=PrivateDisplayOwner(Path(d)/'display');owner.start(timeout_s=5)
@@ -74,6 +82,7 @@ class Custody(unittest.TestCase):
                 fd,pid=owner.duplicate_server_pidfd(timeout_s=1);os.close(fd)
             finally:owner.close(timeout_s=3)
 
+    @unittest.skipUnless(_HAS_PRIVATE_XVFB, 'requires Linux pidfd, procfs, Xvfb and xauth')
     def test_late_duplicate_is_closed_not_returned(self):
         with tempfile.TemporaryDirectory() as d:
             owner=PrivateDisplayOwner(Path(d)/'display');owner.start(timeout_s=5)
