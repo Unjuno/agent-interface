@@ -17,6 +17,41 @@ from runtime.cli_v1.test_mcp_process_identity import metadata
 
 
 class OwnedStartCloseTests(unittest.TestCase):
+    def test_close_during_admitted_rpc_send_retires_child_unknown(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            owner._ensure_started()
+            entered=threading.Event();resume=threading.Event();errors=[];results=[]
+            original_send=owner._rpc.send
+            def gated_send(message):
+                entered.set()
+                if not resume.wait(5):raise TimeoutError('send fixture gate')
+                return original_send(message)
+            def call():
+                try:results.append(owner._call('snapshot'))
+                except Exception as error:errors.append(type(error).__name__)
+            worker=threading.Thread(target=call)
+            try:
+                with patch.object(owner._rpc,'send',side_effect=gated_send), \
+                     patch('runtime.cli_v1.owned_guarded_session._CLOSE_TIMEOUT_S',.05):
+                    worker.start();self.assertTrue(entered.wait(3))
+                    report=owner.close()
+                    self.assertEqual(report['cleanup_status'],'UNKNOWN')
+                    self.assertFalse(report['verified'])
+                    self.assertFalse(report['replay_allowed'])
+                    self.assertTrue(report['late_server_request_possible'])
+                    self.assertTrue(report['owner_process_retired'])
+                    resume.set();worker.join(5)
+                    self.assertFalse(worker.is_alive())
+                    self.assertFalse(results)
+                    self.assertTrue(errors)
+                    self.assertFalse(owner._process.is_alive())
+            finally:
+                resume.set();worker.join(5)
+                if owner._process.is_alive():owner._process.kill()
+                owner._process.join(3)
+
     def test_partial_pipe_close_then_error_is_not_retried_as_known_open(self):
         with tempfile.TemporaryDirectory() as directory:
             owner=OwnedGuardedSessionOwner({'app':20},directory)
