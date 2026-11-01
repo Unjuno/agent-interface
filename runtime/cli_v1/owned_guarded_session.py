@@ -328,6 +328,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._process = None
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
+        self._lifecycle_lock = threading.RLock()
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
         self._retirement = None
@@ -365,6 +366,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 interrupted_execution=deepcopy(snapshot.get('interrupted_execution'))))
 
     def _ensure_started(self):
+        if not self._lifecycle_lock.acquire(blocking=False):
+            raise RuntimeError('owned guarded lifecycle is busy')
+        try:
+            return self._ensure_started_locked()
+        finally:
+            self._lifecycle_lock.release()
+
+    def _ensure_started_locked(self):
         if self._process is not None:
             if self._process.is_alive() and self.state == 'open':
                 return
@@ -377,23 +386,43 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if self.state != 'unopened':
             raise RuntimeError('owned guarded session unavailable: ' + self.state)
         context = multiprocessing.get_context('spawn')
-        rpc_parent, rpc_child = context.Pipe(duplex=True)
-        control_parent, control_child = context.Pipe(duplex=True)
-        input_obligations_state = context.RawArray(
-            'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
-        self._owner_input_obligations_state = input_obligations_state
-        _publish_owner_input_obligations(input_obligations_state, {}, [])
-        process = context.Process(
-            target=_serve_owned_guarded_session,
-            args=(rpc_child, control_child, self.targets, str(self._owner_root),
-                  self.display_name,
-                  {'process_identity':self.process_identity,
-                   'query_worker':self.query_worker,
-                   'observation_worker':self.observation_worker,
-                   'window_lifecycle':self.window_lifecycle,
-                   'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
-            name='guarded-x11-owner-' + self.session_id[:8])
+        allocated_connections = []
+        try:
+            rpc_parent, rpc_child = context.Pipe(duplex=True)
+            allocated_connections.extend((rpc_parent, rpc_child))
+            control_parent, control_child = context.Pipe(duplex=True)
+            allocated_connections.extend((control_parent, control_child))
+            input_obligations_state = context.RawArray(
+                'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
+            self._owner_input_obligations_state = input_obligations_state
+            _publish_owner_input_obligations(input_obligations_state, {}, [])
+            process = context.Process(
+                target=_serve_owned_guarded_session,
+                args=(rpc_child, control_child, self.targets, str(self._owner_root),
+                      self.display_name,
+                      {'process_identity':self.process_identity,
+                       'query_worker':self.query_worker,
+                       'observation_worker':self.observation_worker,
+                       'window_lifecycle':self.window_lifecycle,
+                       'retention_mode':self.retention_mode},
+                      self._owner_factory, input_obligations_state),
+                name='guarded-x11-owner-' + self.session_id[:8])
+        except BaseException:
+            self.state = 'failed'
+            cleanup_errors = []
+            unconfirmed_connections = []
+            for connection in allocated_connections:
+                try:
+                    connection.close()
+                except Exception as error:
+                    cleanup_errors.append(type(error).__name__)
+                    unconfirmed_connections.append(connection)
+            if cleanup_errors:
+                self._execution_unknown = True
+                self.review_required = True
+                self._startup_pipe_cleanup_error_types = cleanup_errors
+                self._startup_unconfirmed_connections = unconfirmed_connections
+            raise
         self.state = 'opening'
         try:
             process.start()
@@ -417,19 +446,44 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     expected_session_id=self.session_id)
             self.state = 'open'
         except BaseException:
+            # A start failure can follow creation of the OS child even if the
+            # normal parent registration has not yet executed.
+            self._execution_unknown = True
+            self.review_required = True
             try:
-                process_alive = process.pid is not None and process.is_alive()
-            except (AssertionError, ValueError):
-                process_alive = False
-            if process_alive:
-                self._retire('owned or cancellation supervisor readiness failed')
+                started = process.pid is not None
+            except Exception as error:
+                started = None
+                self._startup_identity_error_type = type(error).__name__
+            if started:
+                if self._process is None:
+                    self._process = process
+                if self._process is process:
+                    try:
+                        if process.is_alive():
+                            self._retire('owned or cancellation supervisor readiness failed')
+                    except Exception as error:
+                        self._startup_retirement_error_type = type(error).__name__
+                else:
+                    self._startup_unregistered_process = process
+                    self._startup_retirement_error_type = 'ProcessIdentityMismatch'
+            else:
+                self._startup_unregistered_process = process
+                self._startup_retirement_error_type = ('ProcessIdentityUnavailable'
+                    if started is None else 'ProcessNotRegistered')
             if self.state == 'opening':
                 self.state = 'failed'
+            cleanup_errors = []
+            unconfirmed_connections = []
             for connection in (rpc_parent, control_parent, rpc_child, control_child):
                 try:
                     connection.close()
-                except OSError:
-                    pass
+                except Exception as error:
+                    cleanup_errors.append(type(error).__name__)
+                    unconfirmed_connections.append(connection)
+            if cleanup_errors:
+                self._startup_pipe_cleanup_error_types = cleanup_errors
+                self._startup_unconfirmed_connections = unconfirmed_connections
             raise
 
     def _request_locked(self, operation, arguments=None):
@@ -460,9 +514,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         row = deepcopy(self._snapshot_cache)
         if self._process is None:
             observed_ns = time.monotonic_ns()
-            process = {'pid':None, 'alive':False, 'exitcode':None,
-                       'retired':False, 'release_confirmed':None,
-                       'liveness_observed_monotonic_ns':observed_ns}
+            unconfirmed = self.state not in ('unopened', 'closed')
+            process = {'pid':None, 'alive':None if unconfirmed else False, 'exitcode':None,
+                       'retired':None if unconfirmed else False, 'release_confirmed':None,
+                       'liveness_observed_monotonic_ns':None if unconfirmed else observed_ns}
         else:
             alive = self._process.is_alive()
             observed_ns = time.monotonic_ns()
@@ -474,7 +529,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             process = {'pid':self._process.pid, 'alive':alive,
                        'liveness_observed_monotonic_ns':observed_ns,
                        'exitcode':self._process.exitcode,
-                       'retired':self._retirement is not None,
+                       'retired':False if self._retirement is None else
+                                 True if isinstance(self._retirement, dict) and
+                                         self._retirement.get('retired') is True else None,
                        'release_confirmed':False if self._execution_unknown else None,
                        'x_client_resource_base':self._snapshot_cache.get(
                            'owner_x_client_resource_base')}
@@ -492,6 +549,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    owner_input_obligations_live_read=deepcopy(
                        self._owner_input_obligations_live_read),
                    owner_release_attempt=deepcopy(self._owner_release_attempt),
+                   startup_retirement_error_type=getattr(self, '_startup_retirement_error_type', None),
+                   startup_identity_error_type=getattr(self, '_startup_identity_error_type', None),
+                   startup_pipe_cleanup_error_types=deepcopy(getattr(
+                       self, '_startup_pipe_cleanup_error_types', [])),
+                   startup_unconfirmed_connection_count=len(getattr(
+                       self, '_startup_unconfirmed_connections', [])),
+                   startup_process_reference_unregistered=(
+                       getattr(self, '_startup_unregistered_process', None) is not None),
                    cleanup_status='UNKNOWN' if execution_unknown else None,
                    authority_granted=False, restart_allowed=False)
         return row
@@ -916,6 +981,41 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        if not self._lifecycle_lock.acquire(blocking=False):
+            return {'status':'busy', 'reason':'owned_lifecycle_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_locked()
+        finally:
+            self._lifecycle_lock.release()
+
+    def close_after_lifecycle_wait(self, timeout_s):
+        """Try to acquire startup custody for shutdown within a wait budget."""
+        if not self._lifecycle_lock.acquire(timeout=timeout_s):
+            return {'status':'busy', 'reason':'owned_lifecycle_in_progress',
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False}
+        try:
+            return self._close_locked()
+        finally:
+            self._lifecycle_lock.release()
+
+    def _close_locked(self):
+        unregistered = getattr(self, '_startup_unregistered_process', None) is not None
+        pipe_cleanup_errors = getattr(self, '_startup_pipe_cleanup_error_types', [])
+        if unregistered or pipe_cleanup_errors:
+            self._execution_unknown = True
+            self.review_required = True
+            return {'status':'cleanup_failed', 'reason':('startup_process_unregistered'
+                    if unregistered else 'startup_pipe_cleanup_unconfirmed'),
+                    'session_id':self.session_id, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False, 'verified':False,
+                    'owner_process_retired':None, 'late_server_request_possible':True,
+                    'startup_pipe_cleanup_error_types':deepcopy(pipe_cleanup_errors)}
         cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
         if cleanup_supervisor is not None:
             cleanup_supervisor.close()
