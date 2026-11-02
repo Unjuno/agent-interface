@@ -21,12 +21,9 @@ class _Reader:
         self.thread=threading.Thread(target=self._run,name='job-host-'+name,daemon=True)
     def start(self):
         self.attempted=True;self.start_state='unknown'
-        try:self.thread.start()
-        except BaseException:
-            # Thread.start may fail before creating a thread or after creation;
-            # only a positive not-started observation permits ownership release.
-            if self.thread.ident is None and not self.thread.is_alive():self.start_state='not_started'
-            raise
+        # Once Thread.start is entered, an exception may arrive after native
+        # creation but before ident/alive state is published. Keep ownership.
+        self.thread.start()
         self.started=True;self.start_state='started'
     def _run(self):
         digest=hashlib.sha256()
