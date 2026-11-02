@@ -31,6 +31,8 @@ def _input_dispatched_from_result(result):
     execution = result.get("execution")
     program_emissions = (execution.get("program_emissions")
         if type(execution) is dict else None)
+    if type(program_emissions) is not int:
+        program_emissions = result.get("program_emissions")
     if type(program_emissions) is int:
         return program_emissions > 0
     if type(result.get("input_dispatched")) is bool:

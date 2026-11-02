@@ -20,6 +20,7 @@ from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate
 
 _execution_target = ContextVar("win32_execution_target", default=None)
 _cleanup_active = ContextVar("win32_cleanup_active", default=False)
+_program_emissions = ContextVar("win32_program_emissions", default=None)
 
 
 class Win32BackendError(RuntimeError):
@@ -28,11 +29,13 @@ class Win32BackendError(RuntimeError):
 
 class Win32ExecutionError(Win32BackendError):
     """Owned envelope retaining execution and cleanup evidence."""
-    def __init__(self, original_error, release_receipt, cleanup_error):
+    def __init__(self, original_error, release_receipt, cleanup_error,
+                 program_emissions=None):
         super().__init__(str(original_error))
         self.original_error = original_error
         self.release_receipt = release_receipt
         self.cleanup_error = cleanup_error
+        self.program_emissions = program_emissions
 
 
 
@@ -533,7 +536,13 @@ class Win32Backend:
         sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
         if sent != 1:
             raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
+        Win32Backend._record_emission(self)
+
+    def _record_emission(self) -> None:
         self.emissions += 1
+        count = _program_emissions.get()
+        if count is not None and not _cleanup_active.get():
+            _program_emissions.set(count + 1)
 
     def _send_key(self, vk: int, down: bool, encoding: str | None = None) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
@@ -750,7 +759,7 @@ class Win32Backend:
         rx, ry = self._root_point(target, frame, x, y)
         if not self.user32.SetCursorPos(rx, ry):
             raise Win32BackendError("SetCursorPos failed")
-        self.emissions += 1
+        Win32Backend._record_emission(self)
 
     def pointer_button(self, button: str, down: bool) -> None:
         if button not in BUTTON_FLAGS:
@@ -1056,6 +1065,7 @@ class Win32Backend:
         releases: list[dict[str, Any]] = []
         started = time.monotonic_ns()
         execution_token = _execution_target.set(current_target)
+        program_emissions_token = _program_emissions.set(0)
         try:
             for op in program["ops"]:
                 kind = op["op"]
@@ -1115,22 +1125,33 @@ class Win32Backend:
                     releases.append(self.release_all())
                 else:
                     raise Win32BackendError(f"unsupported op {kind}")
+            program_emissions = _program_emissions.get()
         except Exception as error:
+            # Snapshot before cleanup: release_all may itself emit UP events,
+            # which must not be attributed to the failed task program.
+            program_emissions = _program_emissions.get()
             try:
                 release = self.release_all()
             except Exception as cleanup_error:
-                if isinstance(error, Win32BackendError):
+                if isinstance(error, Win32BackendError) or program_emissions > 0:
                     raise Win32ExecutionError(
                         error, None, {"type": type(cleanup_error).__name__,
-                                      "detail": str(cleanup_error)}
+                                      "detail": str(cleanup_error)},
+                        program_emissions=program_emissions,
                     ) from error
                 raise
             releases.append(release)
-            if isinstance(error, Win32BackendError):
-                raise Win32ExecutionError(error, release, None) from error
+            if isinstance(error, Win32BackendError) or program_emissions > 0:
+                raise Win32ExecutionError(
+                    error, release, None,
+                    program_emissions=program_emissions,
+                ) from error
             raise
         finally:
+            _program_emissions.reset(program_emissions_token)
             _execution_target.reset(execution_token)
         return {"started_ns": started, "ended_ns": time.monotonic_ns(),
-                "emissions": self.emissions, "observations": observations,
+                "emissions": self.emissions,
+                "program_emissions": program_emissions,
+                "observations": observations,
                 "releases": releases}
