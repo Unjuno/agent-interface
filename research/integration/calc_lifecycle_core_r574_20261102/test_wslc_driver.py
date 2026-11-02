@@ -1,5 +1,6 @@
 import json, subprocess, tempfile, unittest
 from pathlib import Path
+from unittest.mock import patch
 from wslc_driver import ContainerDriver
 
 RUN='b'*32
@@ -119,15 +120,18 @@ class DriverTests(unittest.TestCase):
                    {'out':(CID+'\n').encode()},{'out':row('exited')},
                    {'out':state(code=137)},{'out':row('exited')},
                    {'out':(CID+'\n').encode()},{'out':b''}]
-        with tempfile.TemporaryDirectory() as d:
-            root=Path(d);cli=FakeCli(root,responses)
-            driver=ContainerDriver(root,RUN,IMAGE,['x'],runner=cli)
-            self.assertEqual(driver.start(timeout_s=3)['status'],'running')
-            self.assertEqual(driver.wait(timeout_s=3)['status'],'UNKNOWN')
-            receipt=driver.reconcile(timeout_s=5)
-            self.assertEqual(receipt['task_status'],'UNKNOWN')
-            self.assertEqual(receipt['remove']['observed_exit_code'],137)
-            self.assertEqual(receipt['remove']['status'],'observed_absent')
+        # This fake response sequence tests reconciliation outcomes, not elapsed
+        # time; keep suite scheduling/fsync latency from consuming its 5 s budget.
+        with patch('wslc_driver.time.monotonic', return_value=0):
+            with tempfile.TemporaryDirectory() as d:
+                root=Path(d);cli=FakeCli(root,responses)
+                driver=ContainerDriver(root,RUN,IMAGE,['x'],runner=cli)
+                self.assertEqual(driver.start(timeout_s=3)['status'],'running')
+                self.assertEqual(driver.wait(timeout_s=3)['status'],'UNKNOWN')
+                receipt=driver.reconcile(timeout_s=5)
+                self.assertEqual(receipt['task_status'],'UNKNOWN')
+                self.assertEqual(receipt['remove']['observed_exit_code'],137)
+                self.assertEqual(receipt['remove']['status'],'observed_absent')
 
     def test_malformed_status_or_exit_is_never_exited(self):
         with tempfile.TemporaryDirectory() as d:
