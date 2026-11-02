@@ -1,0 +1,116 @@
+{
+  "status": "scoped_provider_fresh_pass",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "low",
+  "script_sha256": "fd2f3b6a03ce9e5321b0e345a37bf2b5899d2504d84091939cb536c4792191ce",
+  "codex_sha256": "3097c909fb6d5cd63510d44aceb1d42df9f6e85722a3e447e477def1ecf60e16",
+  "source_hashes_unchanged": true,
+  "host_started_ns": 8736828000000,
+  "host_ended_ns": 8756218000000,
+  "container_task_start_ns": 4689414187,
+  "container_task_end_ns": 18038546851,
+  "container_method_start_ns": 14367871976,
+  "container_method_end_ns": 18036342052,
+  "host_exit": 0,
+  "container_exit": 0,
+  "host_cleanup": "closed_scoped",
+  "container_cleanup": "observed_absent",
+  "turns": [
+    {
+      "id": "pilot-1",
+      "ok": true,
+      "attempted": true,
+      "image_binding_ok": true,
+      "sequence": 1,
+      "usage": {
+        "input_tokens": 12173,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "close_returned": null,
+      "call_id_present": true
+    },
+    {
+      "id": "pilot-2",
+      "ok": true,
+      "attempted": true,
+      "image_binding_ok": true,
+      "sequence": 3,
+      "usage": {
+        "input_tokens": 13534,
+        "cached_input_tokens": 12160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "close_returned": null,
+      "call_id_present": true
+    },
+    {
+      "id": "pilot-3",
+      "ok": true,
+      "attempted": true,
+      "image_binding_ok": true,
+      "sequence": 12,
+      "usage": {
+        "input_tokens": 14895,
+        "cached_input_tokens": 13440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "close_returned": true,
+      "call_id_present": true
+    }
+  ],
+  "action_release_checks": {
+    "click-result.json": true,
+    "fresh-entry.json": true,
+    "fresh-save.json": true
+  },
+  "owner_close_verified": true,
+  "final_neutral_readback": true,
+  "stale_gate_verified": true,
+  "saved_sha256": "ab4e77a75c1bc6c8d27d8209cb0fa0bc7c3cac8c574bcd9de8aaa68917b256e2",
+  "host_rescore": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ]
+  }
+}
