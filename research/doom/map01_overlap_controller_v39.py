@@ -2042,6 +2042,7 @@ def main():
                         rotation=rotate_retired_owner_after_cancel(
                             process, wait, terminal, minimum_sequence=latest["sequence"],
                             expected_intent_token=accepted["intent_token"])
+                        guard_receipt=running_guard.record_interrupted_terminal(terminal)
                         latest=rotation["source_observation"]
                         rotation["cause"]="qualified_owner_interruption"
                         owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
@@ -2050,7 +2051,7 @@ def main():
                             "intent_token":accepted["intent_token"]},
                             "cancel_event":None,"physical_release_event":None,
                             "release_pending_guard":None,"terminal":terminal,
-                            "guard":None,"recovered_owner_interruption":rotation}
+                            "guard":guard_receipt,"recovered_owner_interruption":rotation}
                     if terminal["status"]!="completed":raise RuntimeError(terminal)
                     guard_receipt=running_guard.record_completed_terminal(
                         terminal,final=False)

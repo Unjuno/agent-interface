@@ -1,6 +1,9 @@
 import copy
+import sys
 import unittest
+from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "live_control"))
 from verified_interruption_release_v1 import qualified_interruption_release
 
 
