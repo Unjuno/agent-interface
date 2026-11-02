@@ -271,7 +271,9 @@ class OwnedStartCloseTests(unittest.TestCase):
                 with patch.object(multiprocessing.process.BaseProcess,'start',start_then_raise):
                     with self.assertRaises(OSError):owner._ensure_started()
                 self.assertEqual(len(spawned),1)
+                self.assertIs(owner._process,spawned[0])
                 self.assertFalse(spawned[0].is_alive(), 'unregistered child survived startup failure')
+                self.assertIs(owner._retirement['retired'],True)
                 self.assertTrue(owner.snapshot()['review_required'])
                 self.assertEqual(owner.snapshot()['cleanup_status'],'UNKNOWN')
             finally:
