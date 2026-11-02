@@ -1,6 +1,8 @@
 import json
 import subprocess
 import unittest
+import tempfile
+from pathlib import Path
 from unittest.mock import patch
 
 from wslc_cleanup import cleanup_owned
@@ -19,8 +21,8 @@ def inspect(cid=CID, run=RUN, running=True):
                         'State': {'Running': running}}]).encode()
 
 
-def row(cid=CID, run=RUN):
-    return json.dumps({'ID': cid, 'Labels': LABEL + '=' + run}).encode() + b'\n'
+def row(cid=CID, run=RUN, state='running'):
+    return json.dumps({'ID': cid, 'Labels': LABEL + '=' + run, 'State': state}).encode() + b'\n'
 
 
 class Runner:
@@ -75,7 +77,7 @@ class CleanupTests(unittest.TestCase):
 
     def test_deadline_after_inspect_prevents_list(self):
         runner = Runner([{'out': inspect()}])
-        with patch('wslc_cleanup.time.monotonic', side_effect=[0, 0, 2]):
+        with patch('wslc_cleanup.time.monotonic', side_effect=[0, 0, 0, 2]):
             result = cleanup_owned(CID, RUN, timeout_s=1, runner=runner)
         self.assertEqual(result['status'], 'UNKNOWN')
         self.assertEqual(len(runner.calls), 1)
@@ -89,6 +91,81 @@ class CleanupTests(unittest.TestCase):
         self.assertEqual(len(runner.calls), 3)
         self.assertEqual(base64.b64decode(result['commands'][-1]['stdout_b64']), b'partial')
         self.assertEqual(base64.b64decode(result['commands'][-1]['stderr_b64']), b'error')
+    def test_interruption_keeps_stop_intent_in_durable_journal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect()}, {'out': row()}, KeyboardInterrupt()])
+            with self.assertRaises(KeyboardInterrupt):
+                cleanup_owned(CID, RUN, runner=runner, journal_path=journal)
+            events = [json.loads(line) for line in journal.read_text().splitlines()]
+            self.assertEqual(events[-1]['event'], 'command_interrupted')
+            self.assertEqual(events[-1]['error_type'], 'KeyboardInterrupt')
+            self.assertEqual(events[-2]['event'], 'command_started')
+            self.assertEqual(events[-2]['argv'][-1], CID)
+            self.assertIn('stop', events[-2]['argv'])
+
+    def test_journal_failure_before_stop_prevents_stop(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect()}, {'out': row()}])
+            # Four fsyncs record inspect/list intent and return; the fifth is stop intent.
+            with patch('wslc_cleanup.os.fsync', side_effect=[None, None, None, None, OSError('disk')]):
+                with self.assertRaises(OSError):
+                    cleanup_owned(CID, RUN, runner=runner, journal_path=journal)
+            self.assertEqual(len(runner.calls), 2)
+
+    def test_journal_return_failure_is_not_reported_as_cli_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect()}])
+            with patch('wslc_cleanup.os.fsync', side_effect=[None, OSError('disk')]):
+                with self.assertRaises(OSError):
+                    cleanup_owned(CID, RUN, runner=runner, journal_path=journal)
+            self.assertEqual(len(runner.calls), 1)
+            events = [json.loads(line) for line in journal.read_text().splitlines()]
+            self.assertNotIn('command_failed', [event['event'] for event in events])
+
+    def test_journal_contains_final_result_on_normal_return(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')}])
+            result = cleanup_owned(CID, RUN, runner=runner, journal_path=journal)
+            events = [json.loads(line) for line in journal.read_text().splitlines()]
+            self.assertEqual(events[-1]['event'], 'result')
+            self.assertEqual(events[-1]['receipt'], result)
+
+    def test_stopped_owned_target_is_observed_but_not_stopped(self):
+        runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')}])
+        result = cleanup_owned(CID, RUN, runner=runner)
+        self.assertEqual(result['status'], 'observed_stopped')
+        self.assertEqual(len(runner.calls), 2)
+
+    def test_stale_stopped_inspect_does_not_claim_stopped(self):
+        runner = Runner([{'out': inspect(running=False)}, {'out': row(state='running')}])
+        self.assertEqual(cleanup_owned(CID, RUN, runner=runner)['status'], 'UNKNOWN')
+        self.assertEqual(len(runner.calls), 2)
+
+    def test_deadline_after_intent_does_not_invoke_command(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([])
+            with patch('wslc_cleanup.time.monotonic', side_effect=[0, 0, 2]):
+                result = cleanup_owned(CID, RUN, timeout_s=1, runner=runner, journal_path=journal)
+            self.assertEqual(result['status'], 'UNKNOWN')
+            self.assertEqual(runner.calls, [])
+            events = [json.loads(line) for line in journal.read_text().splitlines()]
+            self.assertEqual(events[1]['event'], 'command_not_invoked')
+
+    def test_existing_journal_prevents_any_command(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            journal.write_text('previous')
+            runner = Runner([])
+            with self.assertRaises(FileExistsError):
+                cleanup_owned(CID, RUN, runner=runner, journal_path=journal)
+            self.assertEqual(runner.calls, [])
+            self.assertEqual(journal.read_text(), 'previous')
+
     def test_expired_budget_never_calls_cli(self):
         runner = Runner([])
         self.assertEqual(cleanup_owned(CID, RUN, timeout_s=0, runner=runner)['status'], 'UNKNOWN')
