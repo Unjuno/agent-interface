@@ -417,12 +417,20 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     expected_session_id=self.session_id)
             self.state = 'open'
         except BaseException:
+            self._execution_unknown = True
+            self.review_required = True
             try:
-                process_alive = process.pid is not None and process.is_alive()
+                started = process.pid is not None
+                if started and self._process is None:
+                    self._process = process
+                process_alive = started and process.is_alive()
             except (AssertionError, ValueError):
                 process_alive = False
-            if process_alive:
-                self._retire('owned or cancellation supervisor readiness failed')
+            if process_alive and self._process is process:
+                try:
+                    self._retire('owned or cancellation supervisor readiness failed')
+                except Exception as error:
+                    self.error = 'owned startup retirement failed: ' + type(error).__name__
             if self.state == 'opening':
                 self.state = 'failed'
             for connection in (rpc_parent, control_parent, rpc_child, control_child):

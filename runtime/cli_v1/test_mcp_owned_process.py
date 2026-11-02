@@ -375,6 +375,75 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_exited_child_reference_is_kept_after_start_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            spawned=[];original=multiprocessing.process.BaseProcess.start
+            def start_exit_fail(process):
+                original(process);spawned.append(process)
+                process.terminate();process.join(3)
+                raise OSError('injected after child exit')
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',start_exit_fail), \
+                     patch.object(owner,'_retire',wraps=owner._retire) as retire:
+                    with self.assertRaisesRegex(OSError,'injected after child exit'):
+                        owner._ensure_started()
+                self.assertIs(owner._process,spawned[0])
+                self.assertFalse(spawned[0].is_alive())
+                self.assertTrue(owner._execution_unknown)
+                self.assertTrue(owner.review_required)
+                retire.assert_not_called()
+            finally:
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    process.join(3)
+
+    def test_spawn_error_preserves_original_when_retirement_raises(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            spawned=[];original=multiprocessing.process.BaseProcess.start
+            def start_then_fail(process):
+                original(process);spawned.append(process)
+                raise OSError('injected start error')
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',start_then_fail), \
+                     patch.object(owner,'_retire',side_effect=RuntimeError('injected retirement error')):
+                    with self.assertRaisesRegex(OSError,'injected start error'):
+                        owner._ensure_started()
+                self.assertIs(owner._process,spawned[0])
+                self.assertTrue(owner._execution_unknown)
+                self.assertTrue(owner.review_required)
+            finally:
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    process.join(3)
+                    self.assertFalse(process.is_alive(),'fixture cleanup failed')
+
+    def test_spawn_then_start_error_retains_and_retires_exact_child(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory,
+                process_identity=True,query_worker=True,_owner_factory=_fake_owner_factory)
+            spawned=[];original=multiprocessing.process.BaseProcess.start
+            def start_then_fail(process):
+                original(process);spawned.append(process)
+                raise OSError('injected after successful spawn')
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',start_then_fail):
+                    with self.assertRaisesRegex(OSError,'injected after successful spawn'):
+                        owner._ensure_started()
+                self.assertEqual(len(spawned),1)
+                self.assertIs(owner._process,spawned[0])
+                self.assertFalse(spawned[0].is_alive())
+                self.assertIs(owner._retirement['retired'],True)
+                self.assertTrue(owner._execution_unknown)
+            finally:
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    process.join(3)
+                    self.assertFalse(process.is_alive(),'fixture cleanup failed')
+
     def test_snapshot_does_not_report_unconfirmed_retirement_as_retired(self):
         with tempfile.TemporaryDirectory() as directory:
             owner=OwnedGuardedSessionOwner({'app':20},directory)
