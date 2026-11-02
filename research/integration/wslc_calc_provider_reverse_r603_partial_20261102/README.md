@@ -1,0 +1,7 @@
+# R603: partial reverse-order real-provider comparison
+
+The pre-registered fresh and compiled cells completed and were independently reviewed; direct has not run. Docker Desktop restart interrupted the block after compiled. Any later direct run must disclose that environment intervention; this is not a completed matched block. See CONDITIONS.md for the original stop and scope rules.
+
+Each cell used the same 171 staged source hashes and the synthetic 472/615 Calc task. The provider requests used the requested gpt-6.1-sol low model; fresh used three turns and compiled two. The audit checked image bindings, nonempty verified input release, owner close, neutral readback, strict FODS effect and host/container exits and cleanup. Compiled reached SAFE_YIELD/effect_unavailable, then used a fresh cue and guarded Save without replaying entry. Stale pixel difference was checked before minting; this is not evidence of runtime stale-capability rejection.
+
+Private raw manifests and files remain local; only their SHA-256 commitments and sanitized aggregate observations are published here. These commitments do not make private raw evidence independently available. Cached input is included in input tokens. The two observations are not sufficient to establish causal speed, reliability, or statistical superiority; cache and provider conditions vary, and the arms have different turn counts. Host timing includes setup and executable hashing. No whole-period deadline, general parent-death guarantee, MAP01 or overall project completion is established.
