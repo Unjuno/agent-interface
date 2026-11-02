@@ -17,10 +17,17 @@ def _deadline(timeout):
 class _Reader:
     def __init__(self, name, stream, output, failure):
         self.name=name;self.stream=stream;self.output=output;self.failure=failure
-        self.done=threading.Event();self.attempted=False;self.started=False;self.eof=False;self.errors=[];self.bytes=0;self.sha256=None
+        self.done=threading.Event();self.attempted=False;self.started=False;self.start_state='not_attempted';self.eof=False;self.errors=[];self.bytes=0;self.sha256=None
         self.thread=threading.Thread(target=self._run,name='job-host-'+name,daemon=True)
     def start(self):
-        self.attempted=True;self.thread.start();self.started=True
+        self.attempted=True;self.start_state='unknown'
+        try:self.thread.start()
+        except BaseException:
+            # Thread.start may fail before creating a thread or after creation;
+            # only a positive not-started observation permits ownership release.
+            if self.thread.ident is None and not self.thread.is_alive():self.start_state='not_started'
+            raise
+        self.started=True;self.start_state='started'
     def _run(self):
         digest=hashlib.sha256()
         try:
@@ -41,7 +48,7 @@ class _Reader:
             except BaseException as exc:self.errors.append(type(exc).__name__);self.failure.set()
             self.sha256=digest.hexdigest();self.done.set()
     def snapshot(self):
-        return {'attempted':self.attempted,'started':self.started,'done':self.done.is_set(),'eof':self.eof,
+        return {'attempted':self.attempted,'started':self.started,'start_state':self.start_state,'done':self.done.is_set(),'eof':self.eof,
                 'errors':list(self.errors),'bytes':self.bytes,'sha256':self.sha256}
 
 
@@ -70,7 +77,7 @@ class JobHost:
             self.process.resume();self.start_complete=True
         except BaseException as exc:
             for output in opened:
-                if all(reader.output is not output or not reader.attempted for reader in self.readers.values()):
+                if all(reader.output is not output or reader.start_state in ('not_attempted','not_started') for reader in self.readers.values()):
                     try:output.close()
                     except BaseException as cleanup_exc:exc.add_note('log close error: '+repr(cleanup_exc))
             try:
@@ -102,12 +109,12 @@ class JobHost:
         for reader in self.readers.values():
             if reader.thread.ident is not None:reader.thread.join(timeout=max(0,deadline-time.monotonic()))
         readers={name:reader.snapshot() for name,reader in self.readers.items()}
-        joined=all(not r.attempted or (r.thread.ident is not None and not r.thread.is_alive()) for r in self.readers.values())
+        joined=all(r.start_state in ('not_attempted','not_started') or (r.thread.ident is not None and not r.thread.is_alive()) for r in self.readers.values())
         streams=self.process.close_streams() if joined else {'streams_closed':False,'errors':[{'type':'reader_still_alive'}]}
         deadline_exceeded=time.monotonic()>=deadline
         good=(not deadline_exceeded and process.get('job_closed') is True and process.get('process_exited') is True
               and process.get('kernel_handles_closed') is True and not process.get('errors')
-              and joined and len(readers)==2 and all(r['started'] and r['done'] and r['eof'] and not r['errors'] for r in readers.values())
+              and joined and len(readers)==2 and all(r['start_state']=='started' and r['started'] and r['done'] and r['eof'] and not r['errors'] for r in readers.values())
               and streams.get('streams_closed') is True and not streams.get('errors'))
         result={'status':'closed_scoped' if good else 'UNKNOWN','process':process,'readers':readers,'streams':streams,'deadline_exceeded':deadline_exceeded}
         if good:self.final=result

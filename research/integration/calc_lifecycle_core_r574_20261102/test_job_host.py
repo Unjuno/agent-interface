@@ -110,6 +110,42 @@ class JobHostTests(unittest.TestCase):
                 self.assertEqual(receipt['status'],'UNKNOWN')
             finally:host.close(timeout_s=5)
 
+    def test_second_thread_start_prelaunch_failure_closes_only_unstarted_log(self):
+        with tempfile.TemporaryDirectory() as d:
+            host=JobHost([sys.executable,'-c','import time;time.sleep(30)'],d)
+            original=threading.Thread.start;calls=[]
+            def fail_second(thread):
+                calls.append(thread)
+                if len(calls)==2:raise RuntimeError('injected before OS thread creation')
+                return original(thread)
+            try:
+                with patch.object(threading.Thread,'start',fail_second):
+                    with self.assertRaises(RuntimeError):host.start()
+                receipt=host.close(timeout_s=5)
+                self.assertEqual(receipt['readers']['stderr']['start_state'],'not_started')
+                self.assertTrue(receipt['streams']['streams_closed'])
+                self.assertTrue(host.readers['stderr'].output.closed)
+                self.assertEqual(receipt['status'],'UNKNOWN')
+            finally:host.close(timeout_s=5)
+
+    def test_second_thread_start_ambiguous_failure_keeps_unknown(self):
+        with tempfile.TemporaryDirectory() as d:
+            host=JobHost([sys.executable,'-c','import time;time.sleep(30)'],d)
+            original=threading.Thread.start;calls=[]
+            def start_then_raise(thread):
+                calls.append(thread)
+                original(thread)
+                if len(calls)==2:raise RuntimeError('injected after OS thread creation')
+            try:
+                with patch.object(threading.Thread,'start',start_then_raise):
+                    with self.assertRaises(RuntimeError):host.start()
+                receipt=host.close(timeout_s=5)
+                self.assertEqual(receipt['readers']['stderr']['start_state'],'unknown')
+                self.assertFalse(receipt['readers']['stderr']['started'])
+                self.assertTrue(receipt['streams']['streams_closed'])
+                self.assertEqual(receipt['status'],'UNKNOWN')
+            finally:host.close(timeout_s=5)
+
     def test_partial_output_followed_by_timeout_is_not_success(self):
         code="import sys,time;sys.stdout.write('{partial');sys.stdout.flush();time.sleep(30)"
         with tempfile.TemporaryDirectory() as d:
