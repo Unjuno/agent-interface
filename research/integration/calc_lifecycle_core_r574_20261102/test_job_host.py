@@ -113,18 +113,25 @@ class JobHostTests(unittest.TestCase):
                 self.assertTrue(receipt['streams']['streams_closed'])
             finally:host.close(timeout_s=5)
 
-    def test_thread_start_postcreation_exception_keeps_unknown(self):
+    def test_delayed_reader_identity_retires_streams_but_keeps_unknown(self):
         with tempfile.TemporaryDirectory() as d:
             host=JobHost([sys.executable,'-c','import time;time.sleep(30)'],d)
-            original=threading.Thread.start;calls=[]
+            original=threading.Thread.start;ident_property=threading.Thread.ident;calls=[];hidden={}
             def start_then_raise(thread):
                 calls.append(thread)
                 original(thread)
                 if len(calls)==2:raise RuntimeError('injected after OS thread creation')
+            def delayed_ident(thread):
+                if thread.name=='job-host-stderr' and hidden.get(thread,0)<4:
+                    hidden[thread]=hidden.get(thread,0)+1;return None
+                return ident_property.fget(thread)
             try:
-                with patch.object(threading.Thread,'start',start_then_raise):
+                with patch.object(threading.Thread,'start',start_then_raise), patch.object(threading.Thread,'ident',property(delayed_ident)):
                     with self.assertRaises(RuntimeError):host.start()
-                receipt=host.close(timeout_s=5)
+                    first=host.close(timeout_s=5)
+                    self.assertEqual(first['readers']['stderr']['start_state'],'unknown')
+                    self.assertFalse(first['streams']['streams_closed'])
+                    receipt=host.close(timeout_s=5)
                 self.assertEqual(receipt['readers']['stderr']['start_state'],'unknown')
                 self.assertFalse(receipt['readers']['stderr']['started'])
                 self.assertTrue(receipt['readers']['stderr']['done'])
