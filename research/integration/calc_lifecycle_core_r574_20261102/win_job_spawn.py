@@ -1,6 +1,6 @@
 """Windows-only research prototype: create a suspended process directly in a private job.
 
-No stdio pipes, model, production shutdown, descendant audit, or parent-death claim.
+Optional experimental stdio; no model, production shutdown, or general custody claim.
 """
 import ctypes
 from ctypes import wintypes
@@ -42,11 +42,13 @@ def _error(where):
 
 
 class AtomicJobProcess:
-    def __init__(self, argv):
+    def __init__(self, argv, *, stdio=False):
         if sys.platform!='win32':raise OSError('Windows required')
+        if type(stdio) is not bool:raise ValueError('stdio must be boolean')
         if not isinstance(argv,list) or not argv or any(not isinstance(x,str) or not x or '\0' in x for x in argv) or not os.path.isabs(argv[0]):
             raise ValueError('absolute executable and nonempty arguments required')
         self.job=None;self.process=None;self.thread=None;self.pid=None;self.suspended=True
+        self.stdio=stdio;self.stdin=None;self.stdout=None;self.stderr=None;self._raw_fds=set();self._unknown_raw_fds=set();self.pipe_close_errors=[];self.stream_close_errors=[]
         self.argv=list(argv);self.start_attempted=False;self.start_complete=False;self.closing=False;self.membership_confirmed=False;self.pi=PROCESS_INFORMATION()
 
     def start(self):
@@ -55,34 +57,79 @@ class AtomicJobProcess:
         argv=self.argv
         attrs=None;initialized=False
         try:
+            child_handles=None
+            if self.stdio:
+                import msvcrt
+                ends=[]
+                for name,child_reads in (('stdin',True),('stdout',False),('stderr',False)):
+                    read_fd,write_fd=os.pipe();self._raw_fds.update((read_fd,write_fd))
+                    child_fd,parent_fd=(read_fd,write_fd) if child_reads else (write_fd,read_fd)
+                    os.set_handle_inheritable(msvcrt.get_osfhandle(child_fd),True)
+                    os.set_handle_inheritable(msvcrt.get_osfhandle(parent_fd),False)
+                    stream=os.fdopen(parent_fd,'wb' if child_reads else 'rb',buffering=0)
+                    self._raw_fds.remove(parent_fd);setattr(self,name,stream)
+                    ends.append(msvcrt.get_osfhandle(child_fd))
+                child_handles=(wintypes.HANDLE*3)(*ends)
             self.job=k.CreateJobObjectW(None,None)
             if not self.job:raise _error('CreateJobObjectW')
             limits=EXTENDED_LIMIT();limits.BasicLimitInformation.LimitFlags=0x2000
             if not k.SetInformationJobObject(self.job,9,ctypes.byref(limits),ctypes.sizeof(limits)):raise _error('SetInformationJobObject')
             size=ctypes.c_size_t(0);ctypes.set_last_error(0)
-            initial=k.InitializeProcThreadAttributeList(None,1,0,ctypes.byref(size))
+            initial=k.InitializeProcThreadAttributeList(None,2 if self.stdio else 1,0,ctypes.byref(size))
             if initial or ctypes.get_last_error()!=122 or not size.value:raise _error('InitializeProcThreadAttributeList size')
             attrs=ctypes.create_string_buffer(size.value)
-            if not k.InitializeProcThreadAttributeList(attrs,1,0,ctypes.byref(size)):raise _error('InitializeProcThreadAttributeList')
+            if not k.InitializeProcThreadAttributeList(attrs,2 if self.stdio else 1,0,ctypes.byref(size)):raise _error('InitializeProcThreadAttributeList')
             initialized=True
             jobs=(wintypes.HANDLE*1)(self.job)
             if not k.UpdateProcThreadAttribute(attrs,0,0x0002000D,ctypes.cast(jobs,ctypes.c_void_p),ctypes.sizeof(jobs),None,None):raise _error('UpdateProcThreadAttribute JOB_LIST')
+            if self.stdio and not k.UpdateProcThreadAttribute(attrs,0,0x00020002,ctypes.cast(child_handles,ctypes.c_void_p),ctypes.sizeof(child_handles),None,None):raise _error('UpdateProcThreadAttribute HANDLE_LIST')
             startup=STARTUPINFOEX();startup.StartupInfo.cb=ctypes.sizeof(startup);startup.lpAttributeList=ctypes.cast(attrs,ctypes.c_void_p)
+            if self.stdio:
+                startup.StartupInfo.dwFlags|=0x100
+                startup.StartupInfo.hStdInput=child_handles[0];startup.StartupInfo.hStdOutput=child_handles[1];startup.StartupInfo.hStdError=child_handles[2]
             pi=self.pi;cmd=ctypes.create_unicode_buffer(subprocess.list2cmdline(argv))
-            if not k.CreateProcessW(argv[0],cmd,None,None,False,0x00080000|0x00000004|0x08000000,None,None,ctypes.byref(startup),ctypes.byref(pi)):raise _error('CreateProcessW')
+            if not k.CreateProcessW(argv[0],cmd,None,None,self.stdio,0x00080000|0x00000004|0x08000000,None,None,ctypes.byref(startup),ctypes.byref(pi)):raise _error('CreateProcessW')
             self.process=pi.hProcess;self.thread=pi.hThread;self.pid=pi.dwProcessId
+            self._close_raw_fds()
             if not self.in_job():raise RuntimeError('created process not in private job')
             self.membership_confirmed=True
             self.start_complete=True
         except BaseException as exc:
             try:
                 had_process=self.process is not None
+                try:self._close_raw_fds()
+                except OSError as pipe_exc:exc.add_note('pipe cleanup unknown: '+repr(pipe_exc))
                 cleanup=self.close()
-                if not cleanup.get('job_closed') or (had_process and not cleanup.get('process_exited')) or cleanup.get('errors'):exc.add_note('cleanup not confirmed: '+repr(cleanup))
+                streams=self.close_streams() if cleanup.get('process_exited') else {'streams_closed':False,'errors':[]}
+                if not cleanup.get('job_closed') or (had_process and not cleanup.get('process_exited')) or cleanup.get('errors') or not streams['streams_closed'] or streams['errors']:
+                    exc.add_note('cleanup not confirmed: '+repr({'process':cleanup,'streams':streams}))
             except BaseException as cleanup_exc:exc.add_note('cleanup error: '+repr(cleanup_exc))
             raise
         finally:
             if initialized:k.DeleteProcThreadAttributeList(attrs)
+            try:self._close_raw_fds()
+            except OSError as exc:
+                self.start_complete=False
+                pass
+
+    def _close_raw_fds(self):
+        failures=[]
+        while self._raw_fds:
+            fd=self._raw_fds.pop()
+            try:os.close(fd)
+            except OSError as exc:
+                self._unknown_raw_fds.add(fd);self.pipe_close_errors.append({'fd':fd,'type':type(exc).__name__});failures.append(str(exc))
+        if failures:raise OSError('unconfirmed pipe closure: '+repr(failures))
+
+    def close_streams(self):
+        errors=[]
+        for name in ('stdin','stdout','stderr'):
+            stream=getattr(self,name)
+            if stream is not None and not stream.closed:
+                try:stream.close()
+                except Exception as exc:errors.append({'stream':name,'type':type(exc).__name__})
+        self.stream_close_errors.extend(errors)
+        return {'streams_closed':all(getattr(self,n) is None or getattr(self,n).closed for n in ('stdin','stdout','stderr')) and not self._raw_fds and not self._unknown_raw_fds and not self.stream_close_errors,'unresolved_raw_fds':sorted(self._raw_fds | self._unknown_raw_fds),'errors':list(self.stream_close_errors)}
 
     def in_job(self):
         if not self.job or not self.process:return False
@@ -130,5 +177,10 @@ class AtomicJobProcess:
         if self.process and result['process_exited']:
             if k.CloseHandle(self.process):self.process=None;self.pi.hProcess=None
             else:result['errors'].append({'operation':'CloseHandle(process)','winerror':ctypes.get_last_error()})
-        result['handles_closed']=self.job is None and self.thread is None and self.process is None
+        result['kernel_handles_closed']=self.job is None and self.thread is None and self.process is None
+        result['streams_closed']=all(getattr(self,n) is None or getattr(self,n).closed for n in ('stdin','stdout','stderr')) and not self._raw_fds and not self._unknown_raw_fds and not self.stream_close_errors
+        result['handles_closed']=result['kernel_handles_closed'] and result['streams_closed']
+        result['unresolved_raw_fds']=sorted(self._raw_fds | self._unknown_raw_fds)
+        result['pipe_close_errors']=list(self.pipe_close_errors)
+        result['stream_close_errors']=list(self.stream_close_errors)
         return result
