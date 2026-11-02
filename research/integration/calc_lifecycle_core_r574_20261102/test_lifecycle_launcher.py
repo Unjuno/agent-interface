@@ -82,6 +82,32 @@ class LauncherTests(unittest.TestCase):
             self.assertEqual(result['cleanup']['status'],'unknown')
             self.assertIn('audit',driver.calls)
 
+    def test_audit_exception_is_persisted_as_incomplete(self):
+        class BrokenAudit(FakeDriver):
+            def audit(self,allocation):
+                self.calls.append('audit')
+                raise RuntimeError('scorer unavailable')
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'run'
+            result=run_attempt(path,{'run_id':'audit-error'},BrokenAudit(),timeout_s=1)
+            self.assertEqual(result['status'],'incomplete')
+            self.assertEqual(result['audit'],{'status':'error','error_type':'RuntimeError'})
+            self.assertEqual(result['input_release'],'UNKNOWN')
+            self.assertEqual(json.loads((path/'result.json').read_text()),result)
+
+    def test_audit_interrupt_persists_before_propagating(self):
+        class InterruptedAudit(FakeDriver):
+            def audit(self,allocation):
+                self.calls.append('audit')
+                raise KeyboardInterrupt()
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'run'
+            with self.assertRaises(KeyboardInterrupt):
+                run_attempt(path,{'run_id':'audit-interrupt'},InterruptedAudit(),timeout_s=1)
+            result=json.loads((path/'result.json').read_text())
+            self.assertEqual(result['status'],'incomplete')
+            self.assertEqual(result['audit'],{'status':'error','error_type':'KeyboardInterrupt'})
+
     def test_interrupt_in_host_cleanup_still_runs_container_cleanup(self):
         class InterruptHost(FakeDriver):
             def stop_host(self,token,timeout):self.calls.append('host_stop');raise KeyboardInterrupt()

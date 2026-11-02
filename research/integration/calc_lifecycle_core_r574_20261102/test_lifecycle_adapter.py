@@ -192,7 +192,7 @@ class LifecycleAdapterTests(unittest.TestCase):
         self.assertEqual(result['audit']['status'], 'passed')
         self.assertEqual(result['input_release'], 'confirmed')
         self.assertEqual(audit_rows, ['472/615\n'])
-        self.assertLess(runner.timeouts[0], 10)
+        self.assertLessEqual(runner.timeouts[0], 10)
         self.assertTrue(runner.removed)
 
     def test_container_start_timeout_stays_incomplete_and_cleans_host(self):

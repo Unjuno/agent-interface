@@ -13,7 +13,9 @@ python -m unittest discover -s research/integration/calc_lifecycle_core_r574_202
 python -O -m unittest discover -s research/integration/calc_lifecycle_core_r574_20261102 -p 'test_*.py' -v
 ```
 
-On Windows/Python 3.11.9, these commands passed 98 tests each in normal and optimized mode on 2026-11-03. The suite includes a composed adapter path with a real short-lived Windows `JobHost` child and a fake WSLc transport, plus a regression proving that a successful stop receipt cannot override a later UNKNOWN/remove observation. Task-effect and neutral-input receipts are synthetic test data; the tests do not invoke WSLc or prove real input release or application effect.
+On Windows/Python 3.11.9, these commands passed 100 tests each in normal and optimized mode on 2026-11-03. The suite includes a composed adapter path with a real short-lived Windows `JobHost` child and a fake WSLc transport, plus regressions for stale cleanup receipts and audit exceptions/interrupts. Task-effect and neutral-input receipts are synthetic test data; the tests do not invoke WSLc or prove real input release or application effect.
+
+Test storage location affects this suite's real file `fsync` calls. With the default temporary directory on an HDD, a 4 KiB `fsync` probe took 1.2–1.7 s; a full 100-test run then took 488.706 s and failed 6 tests plus 4 errors as short test budgets expired. Re-running unchanged test semantics with the temporary directory on the local SSD passed in normal mode (2.372 s) and optimized mode (2.353 s). Keep that host-storage distinction when reproducing local timings; this is harness behavior, not live WSLc evidence.
 
 No live allocation, model call, WSLc container or GUI was run for this prototype. The existing benchmark evidence and limits remain in `../calc_interval_scorecard_r572_20261102/`. The goal remains full measured task/release/recovery comparison, not completion of this helper.
 
