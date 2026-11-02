@@ -549,7 +549,7 @@ class Win32Backend:
         count = _program_emissions.get()
         if count is not None and not _cleanup_active.get():
             _program_emissions.set(count + 1)
-            counter = self._program_emission_counter
+            counter = getattr(self, "_program_emission_counter", None)
             if counter is not None:
                 # This is a single-writer aligned 32-bit shared value. Avoid a
                 # process-owned lock that could remain held on forced exit. If
@@ -562,7 +562,7 @@ class Win32Backend:
         if count is not None and not _cleanup_active.get():
             self.emissions += 1
             _program_emissions.set(count + 1)
-            counter = self._program_emission_counter
+            counter = getattr(self, "_program_emission_counter", None)
             if counter is not None:
                 counter.value += 1
 
