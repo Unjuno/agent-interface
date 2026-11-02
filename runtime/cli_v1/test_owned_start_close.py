@@ -329,6 +329,46 @@ class OwnedStartCloseTests(unittest.TestCase):
 
 
 class OwnedStartCloseMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_public_observe_cannot_complete_after_shutdown_during_start(self):
+        with tempfile.TemporaryDirectory() as directory:
+            captured=[];original_init=OwnedGuardedSessionOwner.__init__
+            entered=threading.Event();resume=threading.Event();spawned=[]
+            def capture(owner,*args,**kwargs):
+                original_init(owner,*args,**kwargs);captured.append(owner)
+            with patch.object(OwnedGuardedSessionOwner,'__init__',capture):
+                server=create_server({'app':20},directory,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            original_start=multiprocessing.process.BaseProcess.start
+            def gated_start(process):
+                original_start(process);spawned.append(process);entered.set()
+                if not resume.wait(20):raise TimeoutError('start fixture gate')
+            lifespan=server.settings.lifespan(server);await lifespan.__aenter__()
+            call=None;exiting=None
+            try:
+                with patch.object(multiprocessing.process.BaseProcess,'start',gated_start), \
+                     patch('runtime.cli_v1.mcp_server._OWNED_SHUTDOWN_LIFECYCLE_WAIT_S',.05):
+                    call=asyncio.create_task(server.call_tool('interface_guarded_observe',{}))
+                    self.assertTrue(await asyncio.to_thread(entered.wait,3))
+                    exiting=asyncio.create_task(lifespan.__aexit__(None,None,None))
+                    await asyncio.wait_for(asyncio.shield(exiting),12)
+                    self.assertFalse(call.done(),'observe returned before the fixture gate opened')
+                    resume.set()
+                    result=metadata(await asyncio.wait_for(asyncio.shield(call),5))
+                    self.assertNotEqual(result.get('status'),'observed',
+                        'public observe completed after shutdown returned')
+            finally:
+                resume.set()
+                if call is not None:
+                    try:await asyncio.wait_for(asyncio.shield(call),5)
+                    except Exception:pass
+                if exiting is None:await lifespan.__aexit__(None,None,None)
+                elif not exiting.done():await asyncio.wait_for(asyncio.shield(exiting),12)
+                for process in spawned:
+                    if process.is_alive():process.kill()
+                    await asyncio.to_thread(process.join,3)
+                    self.assertFalse(process.is_alive(),'fixture child cleanup failed')
+
     async def test_shutdown_timeout_does_not_abandon_late_startup_child(self):
         with tempfile.TemporaryDirectory() as directory:
             captured=[];original_init=OwnedGuardedSessionOwner.__init__
