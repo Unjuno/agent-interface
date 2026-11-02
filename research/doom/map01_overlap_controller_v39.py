@@ -970,6 +970,34 @@ def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequen
                        + str(last_refusal or "two-second budget expired"))
 
 
+def recover_owner_interruption(process, wait, terminal, guard, *,
+                               expected_intent_token, minimum_sequence):
+    """Revoke the interrupted action before any owner or source recovery work."""
+    if not qualified_interruption_release(terminal, expected_intent_token):
+        raise ValueError("qualified owner interruption required")
+    guard_receipt = guard.record_interrupted_terminal(terminal)
+    if (type(guard_receipt) is not dict
+            or guard_receipt.get("state") != "REVOKED_ACTION_NOT_CURRENT"
+            or guard_receipt.get("current_input_authority") is not False
+            or guard_receipt.get("physical_input_may_be_down") is not False
+            or guard_receipt.get("requires_new_decision") is not True):
+        raise RuntimeError("interrupted action guard did not close before recovery")
+    rotation = rotate_retired_owner_after_cancel(
+        process, wait, terminal, minimum_sequence=minimum_sequence,
+        expected_intent_token=expected_intent_token)
+    source = rotation.get("source_observation")
+    if (type(source) is not dict
+            or source.get("input_owner_generation") != rotation.get("generation")
+            or type(source.get("sequence")) is not int
+            or source.get("sequence") <= minimum_sequence
+            or type(source.get("target_process_identity")) is not dict
+            or source["target_process_identity"].get("sequence") != source.get("sequence")
+            or source["target_process_identity"].get("surface") !=
+               source.get("pointer_binding", {}).get("surface")):
+        raise RuntimeError("fresh post-interruption source was not verified")
+    return guard_receipt, rotation
+
+
 def win(path):
     return subprocess.run(["wslpath", "-w", str(Path(path).resolve())],
                           check=True, capture_output=True, text=True).stdout.strip()
@@ -2039,10 +2067,10 @@ def main():
                         if (index + 1 >= args.iterations or not args.target_process_identity
                                 or args.target_window_lifecycle or args.owned_input_service):
                             raise RuntimeError("qualified owner interruption has no eligible recovery slot")
-                        rotation=rotate_retired_owner_after_cancel(
-                            process, wait, terminal, minimum_sequence=latest["sequence"],
+                        guard_receipt,rotation=recover_owner_interruption(
+                            process,wait,terminal,running_guard,
+                            minimum_sequence=latest["sequence"],
                             expected_intent_token=accepted["intent_token"])
-                        guard_receipt=running_guard.record_interrupted_terminal(terminal)
                         latest=rotation["source_observation"]
                         rotation["cause"]="qualified_owner_interruption"
                         owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
