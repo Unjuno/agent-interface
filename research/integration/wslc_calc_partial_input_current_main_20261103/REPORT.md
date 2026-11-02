@@ -1,6 +1,6 @@
 # Partial-input recovery: current-main conformance boundary
 
-Date: 2026-11-03  
+Date: 2026-11-03
 Current main: `473ef8431a76ba85c6da5c48fcdb6f79b2208ea3`
 
 ## Evidence lineage
@@ -19,7 +19,7 @@ regressed. The A02 behavior must not be described as current-main validation.
 Reproduce the comparison from the repository root:
 
 ```powershell
-python research/integration/wslc_calc_partial_input_current_main_20261103/audit_runtime_lineage.py --ref HEAD
+python research/integration/wslc_calc_partial_input_current_main_20261103/audit_runtime_lineage.py --ref 473ef8431a76ba85c6da5c48fcdb6f79b2208ea3
 ```
 
 ## Current composed-path check
