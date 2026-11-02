@@ -87,6 +87,7 @@ class HeldProducerFactory:
         self.process = process
         self.identity = identity
         self.started = threading.Event()
+        self.program_actions_lower_bound = 0
 
     def __call__(self, _action):
         return self.process, lambda: self.identity, self.started.set
@@ -95,6 +96,11 @@ class HeldProducerFactory:
         if process is not self.process or process.is_alive():
             raise RuntimeError("producer has not exited")
         raise AssertionError("a cancelled producer has no normal completion receipt")
+
+    def read_program_actions_lower_bound(self, process):
+        if process is not self.process:
+            raise ValueError("unknown producer process")
+        return self.program_actions_lower_bound
 
 
 class RecoveringFakeSupervisor(FakeSupervisor):
@@ -632,11 +638,15 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             while True:
                 retained = self.row(await server.call_tool("interface_results", {
                     "call_id": pending["call_id"]}))
-                if retained["action"]["status"] != "running":
+                if (retained["action"]["status"] != "running"
+                        and "program_actions_lower_bound" in retained["action"]):
                     break
                 self.assertLess(time.monotonic(), deadline, retained)
                 await asyncio.sleep(0.01)
             self.assertEqual(retained["cancellation"]["status"], "recovered")
+            self.assertEqual(
+                retained["action"]["program_actions_lower_bound"], 0)
+            self.assertIsNone(retained["action"].get("input_dispatched"))
 
             close_statuses = []
             # Recovered cancellation ends input custody; the public dispatch
@@ -710,7 +720,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 while True:
                     old_result = self.row(await old_server.call_tool("interface_results", {
                         "call_id": old_pending["call_id"]}))
-                    if old_result["action"]["status"] != "running":
+                    if (old_result["action"]["status"] != "running"
+                            and "program_actions_lower_bound"
+                                in old_result["action"]):
                         break
                     self.assertLess(time.monotonic(), deadline, old_result)
                     await asyncio.sleep(0.01)
@@ -764,6 +776,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
         owner.bind_target_generation_reader(lambda: GENERATION)
         producer = HeldProducerFactory(process, identity)
+        producer.program_actions_lower_bound = 2
         with TemporaryDirectory() as root:
             server = self.make_server(root, owner, producer)
             program = self.valid_program()
@@ -784,7 +797,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             while True:
                 retained = self.row(await server.call_tool("interface_results", {
                     "call_id": pending["call_id"]}))
-                if retained["action"]["status"] != "running":
+                if (retained["action"]["status"] != "running"
+                        and "program_actions_lower_bound" in retained["action"]):
                     break
                 self.assertLess(time.monotonic(), deadline, retained)
                 await asyncio.sleep(0.01)
@@ -810,12 +824,35 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertLess(cleanup["recovery_completed_monotonic_ns"],
                             cleanup["cleanup_deadline_ns"])
             self.assertTrue(action_result["release_confirmed"])
-            self.assertIsNone(action_result["input_dispatched"])
+            self.assertTrue(action_result["input_dispatched"])
+            self.assertEqual(action_result["program_actions_lower_bound"], 2)
+            self.assertTrue(retained["action"]["input_dispatched"])
             self.assertEqual(action_result["effect_status"], "unknown")
             self.assertIsNone(action_result["task_success"])
             self.assertFalse(action_result["replay_allowed"])
             self.assertIsNone(retained["task_success"])
             self.assertFalse(retained["replay_allowed"])
+            call_directory = Path(root) / pending["call_id"]
+            report_path = call_directory / "report.json"
+            report_temp = call_directory / ".report.json.tmp"
+            deadline = time.monotonic() + 2
+            while time.monotonic() < deadline:
+                if report_path.is_file() and not report_temp.exists():
+                    break
+                await asyncio.sleep(0.01)
+            self.assertTrue(report_path.is_file())
+            self.assertFalse(report_temp.exists())
+            public_dispatch = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertIs(public_dispatch["input_dispatched"], True)
+            self.assertEqual(
+                public_dispatch["result"]["program_actions_lower_bound"], 2)
+            deadline = time.monotonic() + 2
+            while True:
+                closed = self.row(await server.call_tool("interface_close", {}))
+                if closed["status"] == "closed":
+                    break
+                self.assertLess(time.monotonic(), deadline, closed)
+                await asyncio.sleep(0.02)
 
     async def test_late_recovery_after_dispatch_return_promotes_action_receipt(self):
         process = FakeProcess()

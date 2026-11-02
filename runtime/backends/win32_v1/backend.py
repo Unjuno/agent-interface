@@ -186,7 +186,8 @@ def virtual_key(key: str) -> int:
 
 
 class Win32Backend:
-    def __init__(self, targets: dict[str, int]):
+    def __init__(self, targets: dict[str, int], *,
+                 program_emission_counter=None):
         if sys.platform != "win32":
             raise Win32BackendError("Win32 backend requires Windows")
         self.user32 = ctypes.WinDLL("user32", use_last_error=True)
@@ -211,6 +212,11 @@ class Win32Backend:
         self._last_state_query_witness: list[dict[str, Any]] = []
         self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
+        if (program_emission_counter is not None
+                and (type(program_emission_counter) is not ctypes.c_long
+                     or ctypes.addressof(program_emission_counter) % 4 != 0)):
+            raise Win32BackendError("invalid program emission counter")
+        self._program_emission_counter = program_emission_counter
         self.capture_artifacts = None
         self._target_incarnation_bindings: dict[tuple[str, int], dict[str, Any]] = {}
         self._closed = False
@@ -543,6 +549,22 @@ class Win32Backend:
         count = _program_emissions.get()
         if count is not None and not _cleanup_active.get():
             _program_emissions.set(count + 1)
+            counter = self._program_emission_counter
+            if counter is not None:
+                # This is a single-writer aligned 32-bit shared value. Avoid a
+                # process-owned lock that could remain held on forced exit. If
+                # exit interrupts this read-modify-write, the count stays low.
+                counter.value += 1
+
+    def _record_action(self) -> None:
+        """Count a confirmed OS input action, including SetCursorPos moves."""
+        count = _program_emissions.get()
+        if count is not None and not _cleanup_active.get():
+            self.emissions += 1
+            _program_emissions.set(count + 1)
+            counter = self._program_emission_counter
+            if counter is not None:
+                counter.value += 1
 
     def _send_key(self, vk: int, down: bool, encoding: str | None = None) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
@@ -759,7 +781,7 @@ class Win32Backend:
         rx, ry = self._root_point(target, frame, x, y)
         if not self.user32.SetCursorPos(rx, ry):
             raise Win32BackendError("SetCursorPos failed")
-        Win32Backend._record_emission(self)
+        Win32Backend._record_action(self)
 
     def pointer_button(self, button: str, down: bool) -> None:
         if button not in BUTTON_FLAGS:

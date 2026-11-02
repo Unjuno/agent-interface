@@ -417,6 +417,7 @@ class PureWin32HelperTests(unittest.TestCase):
         backend.held_buttons = set()
         backend.pending_unicode_ups = set()
         backend.emissions = 0
+        backend._program_emission_counter = None
         backend.user32 = State(set())
         events = []
         backend.preflight = lambda program: None
@@ -438,6 +439,7 @@ class Win32SessionRecoveryTests(unittest.TestCase):
     def backend(self):
         backend = Win32Backend.__new__(Win32Backend)
         backend.emissions = 0
+        backend._program_emission_counter = None
         backend.held_keys = {}
         backend.held_buttons = set()
         backend.pending_unicode_ups = set()
@@ -477,6 +479,42 @@ class Win32SessionRecoveryTests(unittest.TestCase):
 
         self.assertEqual(result["program_emissions"], 4)
         self.assertEqual(result["emissions"], 5)
+
+    def test_shared_program_action_counter_is_lower_bound_and_excludes_cleanup(self):
+        import ctypes
+        from runtime.backends.win32_v1.backend import (
+            _cleanup_active, _program_emissions,
+        )
+
+        backend = self.backend()
+        counter = ctypes.c_long(0)
+        backend._program_emission_counter = counter
+        token = _program_emissions.set(0)
+        try:
+            backend._record_emission()
+            self.assertEqual(counter.value, 1)
+            backend._record_action()
+            self.assertEqual(counter.value, 2)
+            backend.user32 = type("Cursor", (), {
+                "SetCursorPos": staticmethod(lambda _x, _y: True),
+                "IsWindow": staticmethod(lambda hwnd: hwnd == 101),
+                "GetForegroundWindow": staticmethod(lambda: 101),
+                "GetAncestor": staticmethod(lambda hwnd, _flag: hwnd),
+            })()
+            backend._root_point = lambda *_args: (17, 23)
+            backend.targets = {"fixture": 101}
+            backend.pointer_move("fixture", "window_client", 7, 9)
+            self.assertEqual(counter.value, 3)
+            cleanup_token = _cleanup_active.set(True)
+            try:
+                backend._record_emission()
+                backend._record_action()
+            finally:
+                _cleanup_active.reset(cleanup_token)
+            self.assertEqual(counter.value, 3)
+            self.assertEqual(_program_emissions.get(), 3)
+        finally:
+            _program_emissions.reset(token)
 
     def test_partial_program_emissions_survive_cleanup_and_ignore_prior_emissions(self):
         from runtime.cli_v1.owned_win32_session import _input_dispatched_from_result

@@ -156,6 +156,18 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             'effect_status': 'unknown', 'task_success': None,
             'replay_allowed': False})
         action = row['action']
+    progress_reader = getattr(
+        producer_factory, 'read_program_actions_lower_bound', None)
+    if (callable(progress_reader)
+            and action.get('status') in ('recovered', 'unknown')):
+        try:
+            row = owner.capture_program_emission_progress(call_id,
+                progress_reader)
+            action = row['action']
+        except Exception:
+            # Recovery custody remains authoritative. Missing progress evidence
+            # leaves delivery unknown; it must not undo a verified release.
+            pass
     result = action.get('result') or {'status': action.get('status', 'unknown'),
         'task_success': None, 'replay_allowed': False}
     cancellation = row.get('cancellation')
