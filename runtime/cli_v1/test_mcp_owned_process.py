@@ -375,6 +375,22 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_snapshot_does_not_report_unconfirmed_retirement_as_retired(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owner=OwnedGuardedSessionOwner({'app':20},directory)
+            owner._process=Mock(pid=1234,exitcode=None)
+            owner._process.is_alive.return_value=True
+            self.assertIs(owner.snapshot()['owner_process']['retired'],False)
+            owner._retirement={'retired':False,'exitcode':None,'reason':'not confirmed'}
+            process=owner.snapshot()['owner_process']
+            self.assertTrue(process['alive'])
+            self.assertIsNone(process['retired'])
+            self.assertIsNone(json.loads(json.dumps(process))['retired'])
+            owner._retirement={'retired':True,'exitcode':-15,'reason':'confirmed'}
+            owner._process.is_alive.return_value=False
+            owner._process.exitcode=-15
+            self.assertIs(owner.snapshot()['owner_process']['retired'],True)
+
     def test_close_does_not_replay_uncertain_release_without_display_fence(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner._lifecycle_lock = threading.RLock()
@@ -1338,6 +1354,25 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 main()
             self.assertEqual(raised.exception.code, 2)
             self.assertFalse(output.exists())
+
+    async def test_public_observe_preserves_unconfirmed_retirement_as_null(self):
+        with tempfile.TemporaryDirectory() as directory:
+            owners=[];original=OwnedGuardedSessionOwner.__init__
+            def capture(owner,*args,**kwargs):
+                original(owner,*args,**kwargs);owners.append(owner)
+            with patch.object(OwnedGuardedSessionOwner,'__init__',capture):
+                server=create_server({'app':20},directory,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                first=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(first['status'],'observed')
+                owners[0]._retirement={'retired':False,'exitcode':None,'reason':'unconfirmed'}
+                second=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(second['status'],'observed')
+                self.assertIsNone(second['session']['owner_process']['retired'])
+            finally:
+                await server.call_tool('interface_close',{})
 
     async def test_standard_guarded_tools_keep_generation_and_input_in_owned_process(self):
         with tempfile.TemporaryDirectory() as td:

@@ -83,6 +83,11 @@ experimental prestarted cancellation worker. It requires
 off; it does not change release, replay, or task-success claims. See the
 [supervisor design and evidence limits](../architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
 
+In an owned-process session snapshot, `owner_process.retired` is `false` when
+no retirement record exists, `true` only when retirement was confirmed, and
+`null` when a retirement record exists but confirmation is unavailable. This
+field does not confirm input release, task success, or future server-side effects.
+
 For one explicitly configured Windows HWND, the stdio server also provides the
 opt-in `--session-mode supervised-win32` standard MCP route. It binds the
 generation returned by public observation through admission and a gated native
