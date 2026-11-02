@@ -1,0 +1,5 @@
+# R564: prior grant can be forwarded after parent death
+
+One preregistered WSL Ubuntu Python 3.12.3 fake-process trial, no GUI/input/network. The supervisor received a grant, then was paused before forwarding. The controller killed and reaped the parent, released the supervisor, and observed the grant forwarded and a child-created fake-effect marker after parent death. The child was reaped and both child and supervisor pidfds became readable; no fixture emergency kill was recorded. Exit 0 means the counterexample was observed. The pre-run script SHA-256 was `013ac5f65de30d77575d7a8637f8574a6619c33ad2a4fef2c0e2460dfad6cf2c`; conditions, source, logs and run ID are in raw.zip.
+
+This demonstrates a flaw in this intentionally simple synthetic gate, not a real agent-interface input. A production design must distinguish cancellation/parent-death revocation from an already admitted operation and preserve UNKNOWN where effects cannot be fenced. PID-file-to-pidfd identity is not independently bound; supervisor exit status is not independently collected. It does not prove safety of a proposed replacement, input release, WSLc, MAP01, general timing or reliability.
