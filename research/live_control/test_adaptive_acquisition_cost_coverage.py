@@ -30,8 +30,8 @@ class CostCoverage(unittest.TestCase):
         r=self.route('first_upstream_failure',coarse='model',coarse_fn=failure);self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertEqual(r['accounting']['completed_calls'],0);self.assertIsNone(r['accounting']['cost'])
     def test_success_then_failure_cost_unavailable(self):
         r=self.route('success_then_failure',coarse='model',anchor_fn=failure);self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],2);self.assertEqual(r['accounting']['completed_calls'],1);self.assertIsNone(r['accounting']['cost'])
-    def test_malformed_result_cost_unavailable(self):
-        r=self.route('malformed_result',coarse='model',coarse_fn=lambda _:{'cost':9});self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertIsNone(r['accounting']['cost'])
+    def test_malformed_result_preserves_independent_valid_cost(self):
+        r=self.route('malformed_result',coarse='model',coarse_fn=lambda _:{'cost':9});self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertEqual(r['attempt_ledger'][0]['cost'],9);self.assertEqual(r['accounting']['cost_coverage'],1);self.assertEqual(r['accounting']['cost'],9)
     def test_missing_adapter_cost_unavailable(self):
         r=self.route('missing_adapter',coarse='model',missing=True);self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertIsNone(r['accounting']['cost'])
     def test_two_known_successes_exact_total(self):
