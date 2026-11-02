@@ -25,6 +25,7 @@ from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, reject_duplicate_json_members,
     reject_control_boundary_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
+from verified_interruption_release_v1 import qualified_interruption_release
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
     reconcile_artifact)
@@ -874,12 +875,15 @@ def cancel_invalidated_action(process, wait, identifier, guard, *, failure_root=
             return event, released, release_receipt, row, receipt
 
 
-def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequence):
-    """Rearm a retired process-identity input owner before the next decision."""
+def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequence,
+                                      expected_intent_token=None):
+    """Rearm a retired owner after a qualified cancellation or interruption."""
+    allowed = (type(terminal) is dict and terminal.get("status") == "cancelled")
+    interrupted = qualified_interruption_release(terminal, expected_intent_token)
     if (type(terminal) is not dict or terminal.get("event") != "terminal"
-            or terminal.get("status") != "cancelled"
+            or not (allowed or interrupted)
             or type(terminal.get("id")) is not str or not terminal["id"]):
-        raise ValueError("cancelled terminal required for owner generation rotation")
+        raise ValueError("verified cancelled or qualified interruption terminal required")
     release = terminal.get("release")
     if (type(release) is not dict or release.get("verified") is not True
             or any(release.get(name) != [] for name in
@@ -964,6 +968,34 @@ def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequen
                     source_observation=observation)
     raise RuntimeError("bounded post-rotation source refresh failed: "
                        + str(last_refusal or "two-second budget expired"))
+
+
+def recover_owner_interruption(process, wait, terminal, guard, *,
+                               expected_intent_token, minimum_sequence):
+    """Revoke the interrupted action before any owner or source recovery work."""
+    if not qualified_interruption_release(terminal, expected_intent_token):
+        raise ValueError("qualified owner interruption required")
+    guard_receipt = guard.record_interrupted_terminal(terminal)
+    if (type(guard_receipt) is not dict
+            or guard_receipt.get("state") != "REVOKED_ACTION_NOT_CURRENT"
+            or guard_receipt.get("current_input_authority") is not False
+            or guard_receipt.get("physical_input_may_be_down") is not False
+            or guard_receipt.get("requires_new_decision") is not True):
+        raise RuntimeError("interrupted action guard did not close before recovery")
+    rotation = rotate_retired_owner_after_cancel(
+        process, wait, terminal, minimum_sequence=minimum_sequence,
+        expected_intent_token=expected_intent_token)
+    source = rotation.get("source_observation")
+    if (type(source) is not dict
+            or source.get("input_owner_generation") != rotation.get("generation")
+            or type(source.get("sequence")) is not int
+            or source.get("sequence") <= minimum_sequence
+            or type(source.get("target_process_identity")) is not dict
+            or source["target_process_identity"].get("sequence") != source.get("sequence")
+            or source["target_process_identity"].get("surface") !=
+               source.get("pointer_binding", {}).get("surface")):
+        raise RuntimeError("fresh post-interruption source was not verified")
+    return guard_receipt, rotation
 
 
 def win(path):
@@ -2029,6 +2061,25 @@ def main():
                             owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
                 else:
                     terminal=boundary
+                    if (terminal.get("status")=="needs_decision"
+                            and qualified_interruption_release(
+                                terminal, accepted.get("intent_token"))):
+                        if (index + 1 >= args.iterations or not args.target_process_identity
+                                or args.target_window_lifecycle or args.owned_input_service):
+                            raise RuntimeError("qualified owner interruption has no eligible recovery slot")
+                        guard_receipt,rotation=recover_owner_interruption(
+                            process,wait,terminal,running_guard,
+                            minimum_sequence=latest["sequence"],
+                            expected_intent_token=accepted["intent_token"])
+                        latest=rotation["source_observation"]
+                        rotation["cause"]="qualified_owner_interruption"
+                        owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
+                        return {"records":[],"invalidated":True,"partial":{
+                            "id":identifier,"role":role,"status":"interrupted_action_not_current",
+                            "intent_token":accepted["intent_token"]},
+                            "cancel_event":None,"physical_release_event":None,
+                            "release_pending_guard":None,"terminal":terminal,
+                            "guard":guard_receipt,"recovered_owner_interruption":rotation}
                     if terminal["status"]!="completed":raise RuntimeError(terminal)
                     guard_receipt=running_guard.record_completed_terminal(
                         terminal,final=False)
@@ -2123,7 +2174,8 @@ def main():
                     stale_recovery=result["stale_recovery"]
                     break
                 if result["invalidated"]:
-                    running_invalidation=result["guard"]["invalidation"]
+                    if result.get("recovered_owner_interruption") is None:
+                        running_invalidation=result["guard"]["invalidation"]
                     partial_execution=result["partial"]
                     break
                 contingency=contingencies.get(segment_end)

@@ -1,12 +1,14 @@
 """Actual V12 owner with isolated read-only identity client; Fake X only."""
 from contextlib import contextmanager
+import json
 from pathlib import Path
 import sys
 import threading
+import tempfile
 import time
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 sys.path[:0] = [str(Path(__file__).resolve().parent), str(Path(__file__).resolve().parents[2])]
 from test_input_owner_v12_explicit_up_cancel import FakeDisplay
@@ -61,6 +63,62 @@ def fixture():
 
 
 class OwnerIdentityTests(unittest.TestCase):
+    def test_active_identity_query_is_bounded_and_releases_held_key(self):
+        with fixture() as (owner, lease, display, reader, events):
+            lease.deadline=time.perf_counter_ns()+5_000_000_000
+            lease.target_process_identity=(1,41,'a'*64,lease.deadline)
+            owner.call('down', lease, 'W')
+            reader.entered.clear(); reader.block = True
+            self.assertTrue(reader.entered.wait(1))
+            try:
+                limit=time.monotonic()+1.5
+                while time.monotonic()<limit and not any(
+                        row.get('event')=='owner_release' for row in owner.records):
+                    time.sleep(.01)
+                release=next(row for row in reversed(owner.records)
+                             if row.get('event')=='owner_release')
+                self.assertEqual(release['reason'], 'target_generation_invalidated')
+                self.assertTrue(release['verified'])
+                self.assertEqual(release['keys_down'], [])
+                self.assertEqual(release['keys_unknown'], [])
+                self.assertEqual(display.down, set())
+                state=owner.identity_reader.worker.snapshot()
+                self.assertTrue(state['retired'])
+                self.assertTrue(state['pending'])
+                self.assertTrue(state['thread_alive'])
+            finally:
+                reader.resume.set()
+
+    def test_opt_in_delayed_input_owner_query_retires_then_quarantined_reader_finishes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'fault.jsonl'
+            reader = SimpleNamespace(read=Mock(return_value='a' * 64),
+                                     close=threading.Event().set)
+            with patch.dict('os.environ', {
+                'AGENT_INTERFACE_TEST_IDENTITY_QUERY_DELAY_MS': '1500',
+                'AGENT_INTERFACE_TEST_IDENTITY_QUERY_OCCURRENCE': '1',
+                'AGENT_INTERFACE_TEST_IDENTITY_QUERY_FAULT_PATH': str(path),
+            }), patch.object(identity, 'X11TargetQueries', return_value=reader):
+                delayed = identity.IdentityReader(':fake', purpose='input_owner')
+                with self.assertRaises(RuntimeError):
+                    delayed.read(41, perf_deadline_ns=time.perf_counter_ns()+100_000_000)
+                self.assertTrue(delayed.worker.snapshot()['retired'])
+                self.assertTrue(delayed.worker.snapshot()['pending'])
+                self.assertTrue(delayed.worker.snapshot()['thread_alive'])
+                deadline = time.monotonic()+2
+                while time.monotonic()<deadline and delayed.worker.snapshot()['thread_alive']:
+                    time.sleep(.01)
+                self.assertFalse(delayed.worker.snapshot()['thread_alive'])
+                self.assertFalse(delayed.worker.snapshot()['pending'])
+                reader.read.assert_not_called()
+                rows=[json.loads(line) for line in path.read_text().splitlines()]
+                self.assertEqual([row['event'] for row in rows],
+                                 ['delay_started','delay_finished'])
+                self.assertEqual(rows[0]['purpose'],'input_owner')
+                self.assertEqual(rows[0]['operation'],'process_identity')
+                self.assertGreaterEqual(rows[1]['finished_ns']-rows[0]['started_ns'],
+                                        1_400_000_000)
+
     def test_reply_completed_after_wait_timeout_before_owner_stop_check(self):
         for ok in (True, False):
             with self.subTest(reply_ok=ok):

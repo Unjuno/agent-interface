@@ -2,6 +2,7 @@
 from copy import deepcopy
 
 from running_action_guard_v2 import RunningActionGuardV2
+from verified_interruption_release_v1 import qualified_interruption_release
 
 
 SCHEMA = "running-action-guard-v3"
@@ -81,6 +82,16 @@ class RunningActionGuardV3(RunningActionGuardV2):
         result = self.receipt()
         result["program_terminal_pending"] = False
         return result
+
+    def record_interrupted_terminal(self, terminal):
+        intent = self.active_intent
+        if (type(intent) is not dict
+                or not qualified_interruption_release(terminal, intent.get("intent_token"))
+                or terminal.get("id") != intent.get("id")):
+            raise ValueError("qualified active-intent interruption required")
+        self.guard.record_interrupted_terminal(terminal, intent["intent_token"])
+        self.active_intent = None
+        return self.receipt()
 
     def record_completed_terminal(self, terminal, *, final=False):
         result = super().record_completed_terminal(terminal, final=final)

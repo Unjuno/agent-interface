@@ -8,6 +8,7 @@ from input_transition_owner_v4 import InputOwner as TransitionOwner
 from input_owner_v12 import InputOwner as NativeOwner
 from target_process_identity_v1 import IdentityReader
 from executor_v3 import DecisionRequired
+from verified_interruption_release_v1 import qualified_interruption_release
 
 
 class Backend(Previous):
@@ -30,8 +31,8 @@ class Backend(Previous):
             if owner_service is not None:
                 from input_owner_service_adapter import OwnedOwnerAdapter
                 self._provided_input_owner=OwnedOwnerAdapter(owner_service,display=session.name)
-            self.window_identity = IdentityReader(session.name) if window_lifecycle else None
-            self.capture_identity = IdentityReader(session.name)
+            self.window_identity = IdentityReader(session.name, purpose='window') if window_lifecycle else None
+            self.capture_identity = IdentityReader(session.name, purpose='capture')
             super().__init__(session, out, self._emit_identity, signal_readers)
             options = dict(process_identity=True)
             if window_lifecycle: options.update(window_lifecycle=True, _window_reader=self.window_identity)
@@ -79,17 +80,19 @@ class Backend(Previous):
         return result
 
     def rotate_input_owner_after_cancel(self, terminal):
-        """Replace only a retired process-identity owner after verified cancel.
+        """Replace only a retired process-identity owner after verified release.
 
         A blocked old read-only worker remains quarantined. It is never reused
         and at most one unresolved worker may outlive the current generation.
         """
         if self._provided_input_owner is not None or self.window_identity is not None:
             raise ValueError('owner rotation is not qualified for transferred/window lifecycle readers')
+        ordinary_cancel = (type(terminal) is dict and terminal.get('status') == 'cancelled')
+        interrupted = qualified_interruption_release(terminal)
         if (type(terminal) is not dict or terminal.get('event') != 'terminal'
                 or type(terminal.get('id')) is not str or not terminal['id']
-                or terminal.get('status') != 'cancelled'):
-            raise ValueError('matching cancelled terminal required for owner rotation')
+                or not (ordinary_cancel or interrupted)):
+            raise ValueError('verified cancelled or qualified interruption terminal required')
         if terminal['id'] in self._consumed_rotation_terminals:
             raise ValueError('terminal already consumed by owner rotation')
         if (type(terminal.get('input_owner_generation')) is not int

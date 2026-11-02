@@ -7,6 +7,43 @@ from .target_queries import QueryUnavailable, TargetQueryWorker, X11TargetQuerie
 
 
 class QueryWorkerTests(unittest.TestCase):
+    def test_delayed_read_hook_retires_and_quarantines_without_starting_late_query(self):
+        entered, resume, closed = threading.Event(), threading.Event(), threading.Event()
+        reader = SimpleNamespace(read=Mock(return_value=True), close=closed.set)
+        def before_read(operation, xid):
+            self.assertEqual((operation, xid), ('focus', 20))
+            entered.set()
+            resume.wait(2)
+        worker = TargetQueryWorker(lambda: reader, before_read=before_read)
+        result = []
+        def invoke():
+            try:
+                result.append(worker.read('focus', 20,
+                    deadline_ns=time.monotonic_ns()+80_000_000,
+                    cancelled=lambda: False))
+            except QueryUnavailable:
+                result.append('retired')
+        caller = threading.Thread(target=invoke)
+        caller.start()
+        try:
+            self.assertTrue(entered.wait(1))
+            caller.join(1)
+            self.assertFalse(caller.is_alive())
+            self.assertEqual(result, ['retired'])
+            self.assertTrue(worker.snapshot()['retired'])
+            self.assertTrue(worker.snapshot()['pending'])
+            self.assertTrue(worker.snapshot()['thread_alive'])
+            resume.set()
+            self.assertTrue(closed.wait(1))
+            worker.thread.join(1)
+            self.assertFalse(worker.snapshot()['pending'])
+            self.assertFalse(worker.snapshot()['thread_alive'])
+            reader.read.assert_not_called()
+        finally:
+            resume.set()
+            worker.close()
+            caller.join(2)
+
     def test_focus_transport_failure_retires_reader_but_legacy_helper_refuses(self):
         closed = threading.Event()
         connection = SimpleNamespace(get_input_focus=Mock(side_effect=OSError('transport failed')),

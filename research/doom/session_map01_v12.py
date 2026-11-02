@@ -32,6 +32,12 @@ def file_sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def make_executor_factory(emit):
+    if not callable(emit):
+        raise TypeError("executor event sink must be callable")
+    return lambda backend: Executor(backend, emit)
+
+
 def wait_for_stable_file(path, timeout=5):
     path = Path(path)
     deadline = time.monotonic() + timeout
@@ -272,7 +278,8 @@ def main():
                 name: DoomStatusNumberReader(iwad, signal_id=name)
                 for name in ("health", "ammo")}
             backend = Backend(session, args.out, emit, signal_readers)
-        executor = Executor(backend, emit)
+        executor_factory = make_executor_factory(emit)
+        executor = executor_factory(backend)
         operations = ["submit", "cancel", "clock", "finish"]
         if (callable(getattr(backend, "rotate_input_owner_after_cancel", None))
                      and getattr(backend, "window_identity", None) is None
@@ -337,7 +344,7 @@ def main():
                 elif command["op"] == "rotate_input_owner":
                     executor, rotation = owner_generation_protocol.rotate(
                         command, executor=executor, backend=backend,
-                        executor_factory=Executor)
+                        executor_factory=executor_factory)
                     emit(rotation)
                 elif command["op"] == "refresh_owner_source":
                     try:

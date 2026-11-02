@@ -190,6 +190,44 @@ class RunningActionGuard:
         self.state = REVOKED
         return self.receipt()
 
+    def record_interrupted_terminal(self, terminal, intent_token):
+        """Close an active program only after its owner interruption is bound."""
+        if self.state != ACTIVE or self.active_program is None:
+            raise ValueError("active program required before interrupted terminal")
+        if (type(intent_token) is not str or not intent_token
+                or type(terminal) is not dict or terminal.get("event") != "terminal"
+                or terminal.get("status") != "needs_decision"
+                or terminal.get("id") != self.active_program["id"]
+                or type(terminal.get("terminal_ns")) is not int
+                or terminal["terminal_ns"] < self.active_program["accepted_ns"]):
+            raise ValueError("matching needs-decision interruption terminal required")
+        interruption = terminal.get("interruption")
+        record = interruption.get("record") if type(interruption) is dict else None
+        release = terminal.get("release")
+        if (type(interruption) is not dict
+                or interruption.get("intent_token") != intent_token
+                or type(record) is not dict or record.get("intent_token") != intent_token
+                or record.get("event") != "owner_release"
+                or record.get("verified") is not True
+                or type(release) is not dict or release.get("verified") is not True
+                or any(record.get(key) != [] for key in
+                       ("keys_down", "buttons_down", "keys_unknown", "key_state_errors"))
+                or any(release.get(key) != [] for key in
+                       ("keys_down", "buttons_down", "keys_unknown", "key_state_errors"))
+                or type(release.get("verified_ns")) is not int
+                or release["verified_ns"] > terminal["terminal_ns"]):
+            raise ValueError("token-matched verified owner release required")
+        self.terminals.append(deepcopy(terminal))
+        self.active_program = None
+        self.invalidation = {
+            "kind": "owner_generation_interruption",
+            "reason": record.get("reason"),
+            "requires_new_decision": True,
+            "grants_input_authority": False,
+        }
+        self.state = REVOKED
+        return self.receipt()
+
     def record_completed_terminal(self, terminal, *, final):
         if self.state != ACTIVE or self.active_program is None or type(final) is not bool:
             raise ValueError("active program and explicit final flag required")

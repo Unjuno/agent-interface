@@ -11,6 +11,8 @@ from Xlib import X, XK, display, error
 from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
 
+IDENTITY_QUERY_BUDGET_NS = 1_000_000_000
+
 
 class InputOwner:
     def __init__(self, display_name, *, process_identity=False, window_lifecycle=False, _window_reader=None):
@@ -25,12 +27,12 @@ class InputOwner:
         self.identity_reader = None
         if process_identity:
             from target_process_identity_v1 import IdentityReader
-            self.identity_reader = IdentityReader(display_name)
+            self.identity_reader = IdentityReader(display_name, purpose='input_owner')
             if window_lifecycle:
                 if _window_reader is not None and not isinstance(_window_reader, IdentityReader):
                     self.identity_reader.close()
                     raise ValueError('canonical IdentityReader required')
-                self.window_reader = _window_reader or IdentityReader(display_name)
+                self.window_reader = _window_reader or IdentityReader(display_name, purpose='window')
                 self._owns_window_reader = _window_reader is None
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
@@ -306,7 +308,8 @@ class InputOwner:
         def focus_id(lease=None):
             if self.identity_reader is not None and lease is not None:
                 return self.identity_reader.read_focus(lease.expected_surface,
-                    perf_deadline_ns=lease.deadline,
+                    perf_deadline_ns=min(lease.deadline,
+                        time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS),
                     cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
@@ -399,7 +402,9 @@ class InputOwner:
                     (active is lease and source != active_identity)):
                 return False
             try:
-                current = self.identity_reader.read(source[1], perf_deadline_ns=source[3],
+                query_deadline_ns = min(lease.deadline,
+                    time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS)
+                current = self.identity_reader.read(source[1], perf_deadline_ns=query_deadline_ns,
                     cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
                 valid = (current == source[2] and source == lease.target_process_identity and
                          source[3] == lease.deadline)
@@ -409,7 +414,9 @@ class InputOwner:
                             or window_source[3] != source[3]
                             or (active is lease and window_source != active_window_identity)):
                         return False
-                    window = self.window_reader.read_window(source[1], perf_deadline_ns=source[3],
+                    query_deadline_ns = min(lease.deadline,
+                        time.perf_counter_ns()+IDENTITY_QUERY_BUDGET_NS)
+                    window = self.window_reader.read_window(source[1], perf_deadline_ns=query_deadline_ns,
                         cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
                     valid = (valid and window == window_source[2]
                              and window_source == lease.target_window_identity
