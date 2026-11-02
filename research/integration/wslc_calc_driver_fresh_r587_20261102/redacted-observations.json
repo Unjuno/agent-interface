@@ -1,0 +1,94 @@
+{
+  "status": "scoped_fixture_pass",
+  "run_id": "af86d7d416eb4ef8bb7d9f734ff2f77c",
+  "grounding": "fixed_fixture_not_model",
+  "script_sha256": "2129e227af0a0f438bd58d73dece81331a3fbbd444ce82cc105ff7fcab1f8747",
+  "started_ns": 5977093000000,
+  "ended_ns": 5983796000000,
+  "start": {
+    "status": "running",
+    "cid": "e39517b18ba9acb7894af89b4ef9a02dbbc741a72563cea43183e0f5e474c51d"
+  },
+  "wait": {
+    "status": "exited",
+    "cid": "e39517b18ba9acb7894af89b4ef9a02dbbc741a72563cea43183e0f5e474c51d",
+    "exit_code": 0
+  },
+  "source_hashes_unchanged": true,
+  "fixture_responses": [
+    {
+      "id": "pilot-1",
+      "image_sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+      "source_sequence": 1,
+      "time_ns": 5982046000000
+    },
+    {
+      "id": "pilot-2",
+      "image_sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+      "source_sequence": 3,
+      "time_ns": 5982375000000
+    },
+    {
+      "id": "pilot-3",
+      "image_sha256": "f8befaa155b47e89b6148eec265eac8fec1a136ecbb6dd817d84c4403de66a0d",
+      "source_sequence": 12,
+      "time_ns": 5982937000000
+    }
+  ],
+  "fixture_errors": [],
+  "fixture_thread_alive": false,
+  "action_release_checks": {
+    "click-result.json": true,
+    "fresh-entry.json": true,
+    "fresh-save.json": true
+  },
+  "owner_close_verified": true,
+  "final_neutral_readback": true,
+  "stale_gate_verified": true,
+  "saved_sha256": "72140836b7f73097b4061ede130456aa7ff3a85c0fd8d50c9e9865beba2216ec",
+  "host_rescore": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ]
+  },
+  "cleanup_status": "observed_absent",
+  "cleanup_exit_code": 0,
+  "task_start_ns": 4620493540,
+  "task_end_ns": 6002603755,
+  "method_start_ns": 5219854890,
+  "method_end_ns": 6000677641
+}
