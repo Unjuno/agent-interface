@@ -14,6 +14,131 @@ import map01_overlap_controller_v39 as controller
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_retired_owner_rotation_requires_verified_cancel_and_matches_generation(self):
+        import io
+        terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                    "input_owner_generation": 1,
+                    "input_owner_id": "old-owner",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        process = Namespace(stdin=io.StringIO())
+        receipt = {"event": "input_owner_generation", "terminal_id": "plan-old",
+                   "generation": 2, "previous_generation": 1,
+                   "previous_owner_id": "old-owner",
+                   "owner_id": "fresh-owner", "source_invalidated": True,
+                   "grants_input_authority": False}
+        observation = {"event": "observation", "id": "owner-generation-source-2-1",
+                       "input_owner_generation": 2, "sequence": 8,
+                       "pointer_binding": {"surface": 17},
+                       "target_process_identity": {"sequence": 8, "surface": 17,
+                                                    "digest": "d" * 64}}
+        refreshed = {"event": "input_owner_source_refreshed", "terminal_id": "plan-old",
+                     "generation": 2, "owner_id": "fresh-owner",
+                     "observation_id": observation["id"], "sequence": 8,
+                     "attempt": 1,
+                     "surface": 17, "digest": "d" * 64,
+                     "source_invalidated": False, "grants_input_authority": False}
+        events = [receipt, observation, refreshed]
+        def wait(predicate, timeout=40):
+            return next(row for row in events if predicate(row))
+        result = controller.rotate_retired_owner_after_cancel(
+            process, wait, terminal, minimum_sequence=7)
+        self.assertEqual(result["event"], "input_owner_generation")
+        self.assertEqual(result["source_observation"], observation)
+        self.assertEqual(result["source_refresh"], refreshed)
+        command = process.stdin.getvalue()
+        self.assertIn('"op": "rotate_input_owner"', command)
+        self.assertIn('"op": "refresh_owner_source"', command)
+        self.assertIn('"id": "plan-old"', command)
+
+    def test_post_rotation_source_refresh_stops_after_four_refusals(self):
+        import json
+        terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                    "input_owner_generation": 1, "input_owner_id": "old-owner",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        events = [{"event": "input_owner_generation", "terminal_id": "plan-old",
+                   "generation": 2, "previous_generation": 1,
+                   "previous_owner_id": "old-owner", "owner_id": "fresh-owner",
+                   "source_invalidated": True, "grants_input_authority": False}]
+        class Stdin:
+            def __init__(self): self.commands = []
+            def write(self, payload):
+                command = json.loads(payload)
+                self.commands.append(command)
+                if command["op"] == "refresh_owner_source":
+                    events.append({"event": "rejected", "id": "plan-old",
+                                   "terminal_id": "plan-old",
+                                   "operation": "refresh_owner_source",
+                                   "attempt": len(self.commands) - 1,
+                                   "reason": "synthetic capture refusal"})
+            def flush(self): pass
+        stdin = Stdin()
+        def wait(predicate, timeout=40):
+            return next(row for row in reversed(events) if predicate(row))
+        with self.assertRaisesRegex(RuntimeError, "bounded post-rotation source refresh failed"):
+            controller.rotate_retired_owner_after_cancel(
+                Namespace(stdin=stdin), wait, terminal, minimum_sequence=7)
+        refreshes = [row for row in stdin.commands if row["op"] == "refresh_owner_source"]
+        self.assertEqual(len(refreshes), 4)
+        self.assertEqual(len(stdin.commands), 5)
+
+    def test_owner_rotation_refuses_unverified_or_wrong_generation_receipts(self):
+        import io
+        base = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                "input_owner_generation": 1,
+                "input_owner_id": "old-owner",
+                "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                            "keys_unknown": [], "key_state_errors": [],
+                            "target_process_identity_reader": {"retired": True}}}
+        for mutate in (
+                lambda row: row.update(status="completed"),
+                lambda row: row["release"].update(keys_down=["space"]),
+                lambda row: row["release"].pop("target_process_identity_reader"),
+        ):
+            terminal = {**base, "release": dict(base["release"])}
+            mutate(terminal)
+            with self.subTest(terminal=terminal), self.assertRaises(ValueError):
+                controller.rotate_retired_owner_after_cancel(
+                    Namespace(stdin=io.StringIO()), lambda _predicate: None, terminal,
+                    minimum_sequence=7)
+
+        terminal = dict(base)
+        process = Namespace(stdin=io.StringIO())
+        wrong_generation = {"event": "input_owner_generation", "terminal_id": "plan-old",
+                            "generation": 3, "previous_generation": 2,
+                            "previous_owner_id": "other-owner",
+                            "owner_id": "fresh-owner", "source_invalidated": True,
+                            "grants_input_authority": False}
+        with self.assertRaisesRegex(RuntimeError, "refused or malformed"):
+            controller.rotate_retired_owner_after_cancel(
+                process, lambda predicate: wrong_generation if predicate(wrong_generation) else None,
+                terminal, minimum_sequence=7)
+
+    def test_post_rotation_observation_must_advance_sequence(self):
+        import io
+        terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
+                    "input_owner_generation": 1, "input_owner_id": "old-owner",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        receipt = {"event": "input_owner_generation", "terminal_id": "plan-old",
+                   "generation": 2, "previous_generation": 1,
+                   "previous_owner_id": "old-owner", "owner_id": "fresh-owner",
+                   "source_invalidated": True, "grants_input_authority": False}
+        stale = {"event": "observation", "id": "owner-generation-source-2-1",
+                 "input_owner_generation": 2, "sequence": 10,
+                 "pointer_binding": {"surface": 17},
+                 "target_process_identity": {"sequence": 10, "surface": 17,
+                                              "digest": "d" * 64}}
+        def wait(predicate, timeout=40):
+            return next(row for row in (receipt, stale) if predicate(row))
+        with self.assertRaisesRegex(RuntimeError, "fresh post-rotation"):
+            controller.rotate_retired_owner_after_cancel(
+                Namespace(stdin=io.StringIO()), wait, terminal, minimum_sequence=10)
+
     def test_pending_observation_hard_crossing_cancels_old_cover_after_model_wait(self):
         from observable_signal_guard_v2 import (
             ObservableSignalGuard, ObservableSignalPolicyMonitor)

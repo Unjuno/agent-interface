@@ -20,6 +20,7 @@ from executor_v12 import Executor
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
+from input_owner_generation_protocol_v1 import InputOwnerGenerationProtocol
 
 
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
@@ -132,12 +133,14 @@ def main():
     session = game = executor = backend = None
     control_started_ns = None
     latest_observation = None
+    owner_generation_protocol = InputOwnerGenerationProtocol()
 
     def emit(row):
         nonlocal latest_observation
         with lock:
             if row.get("event") == "observation":
                 latest_observation = dict(row)
+            owner_generation_protocol.record_terminal(row, backend)
             row["emit_ns"] = time.perf_counter_ns()
             encoded = json.dumps(row)
             with (args.out / "events.jsonl").open("a") as stream:
@@ -169,6 +172,7 @@ def main():
                  HERE / "doom_typed_release_backend_v1.py",
                  HERE / "doom_typed_coast_backend_v1.py",
                  HERE / "doom_typed_observation_v1.py",
+                 HERE / "input_owner_generation_protocol_v1.py",
                  HERE / "doom_hud_signal_v3.py",
                  HERE / "doom_hud_signal_v2.py",
                  HERE / "doom_hud_signal_v1.py"):
@@ -270,6 +274,11 @@ def main():
             backend = Backend(session, args.out, emit, signal_readers)
         executor = Executor(backend, emit)
         operations = ["submit", "cancel", "clock", "finish"]
+        if (callable(getattr(backend, "rotate_input_owner_after_cancel", None))
+                     and getattr(backend, "window_identity", None) is None
+                     and getattr(backend, "_provided_input_owner", None) is None):
+            operations.append("rotate_input_owner")
+            operations.append("refresh_owner_source")
         if args.fixture_out is not None:
             operations.append("save_fixture")
         prohibited = ["pause", "API action selection", "automap", "object labels", "sector labels"]
@@ -286,6 +295,11 @@ def main():
                                 {"op": "observe"}]},
                   "coast": {"op": "coast", "duration_ms": "1-5000",
                             "sample_ms": "50-1000", "input_authority": False},
+                  "rotate_input_owner": {"op": "rotate_input_owner",
+                      "id": "previously published cancelled terminal with verified empty release"},
+                  "refresh_owner_source": {"op": "refresh_owner_source",
+                      "id": "terminal id of the just-rotated owner generation",
+                      "input_authority": False},
                   "limits": {"steps": "1-16", "total_hold_ms": 10000,
                              "implicit_queue": False},
                   "accepted_attestation": "SHA-256 of canonical validated step JSON"},
@@ -320,6 +334,23 @@ def main():
                 elif command["op"] == "clock":
                     emit({"event": "clock", "runtime_ns": time.perf_counter_ns(),
                           "sequence": backend.sequence})
+                elif command["op"] == "rotate_input_owner":
+                    executor, rotation = owner_generation_protocol.rotate(
+                        command, executor=executor, backend=backend,
+                        executor_factory=Executor)
+                    emit(rotation)
+                elif command["op"] == "refresh_owner_source":
+                    try:
+                        refreshed = owner_generation_protocol.refresh_source(
+                            command, backend=backend)
+                    except Exception as error:
+                        emit({"event": "rejected", "id": command.get("id"),
+                              "terminal_id": command.get("id"),
+                              "operation": "refresh_owner_source",
+                              "attempt": owner_generation_protocol._refresh_attempts,
+                              "reason": str(error)})
+                    else:
+                        emit(refreshed)
                 elif command["op"] == "save_fixture":
                     if args.fixture_out is None:
                         raise ValueError("save_fixture is unavailable in measured control")
@@ -387,7 +418,8 @@ def main():
                 else:
                     raise ValueError("unsupported command")
             except (ValueError, TypeError, KeyError, Expired) as error:
-                emit({"event": "rejected", "reason": str(error)})
+                emit({"event": "rejected", "id": command.get("id"),
+                      "reason": str(error)})
     finally:
         # A close or evidence-save error must not skip later owned resources.
         # Each finally preserves failure reporting and the existing close order.
@@ -401,7 +433,7 @@ def main():
                         backend.close()
                     finally:
                         (args.out / "owner-events.json").write_text(
-                            json.dumps(backend.owner.records, indent=2))
+                            json.dumps(getattr(backend, "owner_records", backend.owner.records), indent=2))
         finally:
             try:
                 if game is not None:

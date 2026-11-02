@@ -21,6 +21,10 @@ class Backend(Previous):
         self._capture_samples = None
         self._source_identity = None
         self._source_window_identity = None
+        self._owner_generation = 0
+        self._retired_owner_quarantine = []
+        self._archived_owner_records = []
+        self._consumed_rotation_terminals = set()
         self.window_identity=self.capture_identity=None
         try:
             if owner_service is not None:
@@ -74,6 +78,84 @@ class Backend(Previous):
             result['owner_service_obligation']=self._provided_input_owner.obligation_snapshot()
         return result
 
+    def rotate_input_owner_after_cancel(self, terminal):
+        """Replace only a retired process-identity owner after verified cancel.
+
+        A blocked old read-only worker remains quarantined. It is never reused
+        and at most one unresolved worker may outlive the current generation.
+        """
+        if self._provided_input_owner is not None or self.window_identity is not None:
+            raise ValueError('owner rotation is not qualified for transferred/window lifecycle readers')
+        if (type(terminal) is not dict or terminal.get('event') != 'terminal'
+                or type(terminal.get('id')) is not str or not terminal['id']
+                or terminal.get('status') != 'cancelled'):
+            raise ValueError('matching cancelled terminal required for owner rotation')
+        if terminal['id'] in self._consumed_rotation_terminals:
+            raise ValueError('terminal already consumed by owner rotation')
+        if (type(terminal.get('input_owner_generation')) is not int
+                or terminal.get('input_owner_generation') != self._owner_generation
+                or type(terminal.get('input_owner_id')) is not str
+                or terminal.get('input_owner_id') != self.owner.owner_id):
+            raise ValueError('terminal does not match current owner generation')
+        release = terminal.get('release')
+        if (type(release) is not dict or release.get('verified') is not True
+                or any(release.get(name) != [] for name in
+                       ('keys_down', 'buttons_down', 'keys_unknown', 'key_state_errors'))):
+            raise ValueError('verified empty terminal release required for owner rotation')
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is not None:
+                raise ValueError('Executor custody must be released before owner rotation')
+            if self._executor_release_obligation is not None:
+                raise ValueError('unresolved release obligation forbids owner rotation')
+            remaining = []
+            for reader in self._retired_owner_quarantine:
+                state = reader.worker.snapshot()
+                if state['thread_alive'] or state['pending']:
+                    remaining.append(reader)
+            self._retired_owner_quarantine = remaining
+            if remaining:
+                raise ValueError('one unresolved retired identity reader already quarantined')
+            old_owner = self.owner
+            old_native = old_owner._inner
+            old_reader = old_native.identity_reader
+            state = old_reader.worker.snapshot() if old_reader is not None else None
+            if state is None or state.get('retired') is not True:
+                raise ValueError('current identity reader is not retired')
+            self._consumed_rotation_terminals.add(terminal['id'])
+            old_owner.close()
+            if not old_native.stopped.is_set():
+                raise RuntimeError('old input owner thread did not stop')
+            close_rows = [row for row in old_owner.records
+                          if isinstance(row, dict) and row.get('event') == 'owner_release']
+            if (not close_rows or close_rows[-1].get('reason') != 'close'
+                    or close_rows[-1].get('verified') is not True
+                    or any(close_rows[-1].get(name) != [] for name in
+                           ('keys_down', 'buttons_down', 'keys_unknown', 'key_state_errors'))):
+                raise RuntimeError('old input owner close did not verify empty release')
+            self._archived_owner_records.extend(old_owner.records)
+            state = old_reader.worker.snapshot()
+            if state['thread_alive'] or state['pending']:
+                self._retired_owner_quarantine.append(old_reader)
+            self.owner = TransitionOwner(
+                self.session.name,
+                _owner_cls=partial(NativeOwner, process_identity=True))
+            self._owner_generation += 1
+            self._source_identity = None
+            self._source_window_identity = None
+            return {'event': 'input_owner_generation',
+                    'generation': self._owner_generation,
+                    'previous_generation': self._owner_generation - 1,
+                    'terminal_id': terminal['id'],
+                    'previous_owner_id': old_owner.owner_id,
+                    'owner_id': self.owner.owner_id,
+                    'quarantined_readers': len(self._retired_owner_quarantine),
+                    'source_invalidated': True,
+                    'grants_input_authority': False}
+
+    @property
+    def owner_records(self):
+        return list(self._archived_owner_records) + list(self.owner.records)
+
     def binding(self):
         value = super().binding()
         xid = value.get('surface')
@@ -100,7 +182,8 @@ class Backend(Previous):
                 raise DecisionRequired('process identity changed across capture')
             identity = {'sequence': event['sequence'], 'surface': samples[1][0]['surface'],
                         'digest': samples[1][1]}
-            event = dict(event, target_process_identity=identity)
+            event = dict(event, target_process_identity=identity,
+                         input_owner_generation=self._owner_generation)
             if self.window_identity is not None:
                 event['target_window_identity'] = dict(sequence=identity['sequence'], surface=identity['surface'], digest=samples[1][2])
         self._external_emit(event)
