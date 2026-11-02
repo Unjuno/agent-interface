@@ -30,8 +30,8 @@ class Backend(Previous):
             if owner_service is not None:
                 from input_owner_service_adapter import OwnedOwnerAdapter
                 self._provided_input_owner=OwnedOwnerAdapter(owner_service,display=session.name)
-            self.window_identity = IdentityReader(session.name) if window_lifecycle else None
-            self.capture_identity = IdentityReader(session.name)
+            self.window_identity = IdentityReader(session.name, purpose='window') if window_lifecycle else None
+            self.capture_identity = IdentityReader(session.name, purpose='capture')
             super().__init__(session, out, self._emit_identity, signal_readers)
             options = dict(process_identity=True)
             if window_lifecycle: options.update(window_lifecycle=True, _window_reader=self.window_identity)

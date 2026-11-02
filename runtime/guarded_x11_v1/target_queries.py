@@ -103,8 +103,11 @@ class TargetQueryWorker:
     A timed-out client closes on its own thread after its blocked call returns.
     This cannot interrupt X, force close, or establish a physical release bound.
     """
-    def __init__(self, factory):
+    def __init__(self, factory, *, before_read=None):
+        if before_read is not None and not callable(before_read):
+            raise TypeError('before_read must be callable when supplied')
         self.factory = factory
+        self.before_read = before_read
         self.lock = threading.Lock()
         self.queue = queue.Queue(maxsize=1)
         self.thread = None
@@ -137,6 +140,15 @@ class TargetQueryWorker:
                     # Do not begin another I/O operation when that open returns.
                     with self.lock:
                         if self.retired: raise QueryUnavailable('target query retired during open')
+                    if self.before_read is not None:
+                        self.before_read(job.operation, job.xid)
+                    # A test barrier may outlive the caller's deadline. Once
+                    # the waiter retires this worker, never start the delayed
+                    # X request; its thread remains quarantined until the
+                    # barrier returns and this check is reached.
+                    with self.lock:
+                        if self.retired:
+                            raise QueryUnavailable('target query retired before read')
                     job.value = reader.read(job.operation,job.xid)
                 except BaseException as error:
                     job.error = error

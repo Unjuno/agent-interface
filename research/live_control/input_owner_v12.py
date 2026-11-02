@@ -25,12 +25,12 @@ class InputOwner:
         self.identity_reader = None
         if process_identity:
             from target_process_identity_v1 import IdentityReader
-            self.identity_reader = IdentityReader(display_name)
+            self.identity_reader = IdentityReader(display_name, purpose='input_owner')
             if window_lifecycle:
                 if _window_reader is not None and not isinstance(_window_reader, IdentityReader):
                     self.identity_reader.close()
                     raise ValueError('canonical IdentityReader required')
-                self.window_reader = _window_reader or IdentityReader(display_name)
+                self.window_reader = _window_reader or IdentityReader(display_name, purpose='window')
                 self._owns_window_reader = _window_reader is None
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
