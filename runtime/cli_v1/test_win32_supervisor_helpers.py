@@ -403,6 +403,15 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 clock_ns=lambda: 100, configured_targets={"fixture": 44})
         self.assertEqual(opened, [])
 
+    def test_recovery_does_not_accept_release_returned_at_deadline(self):
+        backend = FakeBackend({"fixture": 44})
+        times = iter((10, 10, 100))
+        with self.assertRaisesRegex(TimeoutError, "expired after release"):
+            _recover(self.request(), backend_factory=lambda targets: backend,
+                clock_ns=lambda: next(times), configured_targets={"fixture": 44})
+        self.assertEqual(backend.release_calls, 1)
+        self.assertTrue(backend.closed)
+
     def test_unicode_only_recovery_uses_configured_single_target(self):
         instances = []
         def factory(targets):
