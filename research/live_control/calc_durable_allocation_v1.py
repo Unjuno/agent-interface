@@ -83,13 +83,17 @@ class DurableCalcAllocation:
             "durability_limit": "fsynced local files; no independent post-crash custodian",
         }
         _encode(self.manifest)
-        _write_exclusive(self.path / "conditions.json", self.manifest)
+        conditions_digest = _write_exclusive(self.path / "conditions.json", self.manifest)
         fd = os.open(self.path / "events.jsonl",
                      os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0), 0o600)
         try:
             os.fsync(fd)
         finally:
             os.close(fd)
+        self.append_event("allocation_created", {
+            "conditions_sha256": conditions_digest,
+            "source_sha256": source_sha256,
+            "observation_ids": list(observation_ids)})
 
     @property
     def source_sha256(self):
@@ -247,6 +251,16 @@ def audit_allocation(path):
             raise ValueError("event hash chain mismatch; allocation outcome UNKNOWN")
         previous = digest
         rows.append(frame)
+    if not rows or rows[0]["event_type"] != "allocation_created":
+        raise ValueError("allocation conditions lack a creation-event anchor")
+    expected_creation = {
+        "conditions_sha256": hashlib.sha256(
+            (root / "conditions.json").read_bytes()).hexdigest(),
+        "source_sha256": manifest.get("source_sha256"),
+        "observation_ids": manifest.get("observation_ids"),
+    }
+    if rows[0]["data"] != expected_creation:
+        raise ValueError("allocation manifest/event mismatch; conditions may be rewritten")
     result_path = root / "result.json"
     result_bytes = result_path.read_bytes() if result_path.exists() else None
     result = json.loads(result_bytes) if result_bytes is not None else None
@@ -255,12 +269,28 @@ def audit_allocation(path):
         raise ValueError("terminal result schema mismatch")
     receipt = json.loads((root / "compiled_receipt.json").read_bytes()) if (root / "compiled_receipt.json").exists() else None
     effect = json.loads((root / "effect_receipt.json").read_bytes()) if (root / "effect_receipt.json").exists() else None
+    interface_path = root / "interface_binding.json"
+    interface_binding = json.loads(interface_path.read_bytes()) if interface_path.exists() else None
+    interface_events = [row["data"] for row in rows if row["event_type"] == "interface_bound"]
+    if interface_binding is not None and (
+            len(interface_events) != 1 or interface_events[0] != interface_binding):
+        raise ValueError("interface binding event/file mismatch")
+    if interface_binding is None and interface_events:
+        raise ValueError("interface binding event lacks its file")
+    if interface_binding is not None and (
+            interface_binding.get("source_sha256") != manifest.get("source_sha256") or
+            interface_binding.get("observation_ids") != manifest.get("observation_ids")):
+        raise ValueError("interface binding source mismatch")
     for envelope in (receipt, effect):
         if envelope is not None and (
                 envelope.get("allocation_id") != manifest.get("allocation_id") or
                 envelope.get("source_sha256") != manifest.get("source_sha256") or
                 envelope.get("observation_ids") != manifest.get("observation_ids")):
             raise ValueError("durable receipt source binding mismatch")
+    if receipt is not None and (
+            interface_binding is None or
+            receipt.get("interface_binding") != interface_binding):
+        raise ValueError("compiled receipt interface binding mismatch")
     receipt_bytes = (root / "compiled_receipt.json").read_bytes() if receipt is not None else None
     effect_bytes = (root / "effect_receipt.json").read_bytes() if effect is not None else None
     receipt_digest = hashlib.sha256(receipt_bytes).hexdigest() if receipt_bytes is not None else None
