@@ -74,9 +74,11 @@ class CompiledCoreCompositionTests(unittest.TestCase):
             lambda: False)
         return backend, observer, bridge, events
 
-    def execute_compiled(self, *, change_generation_before_execute=False):
+    def execute_compiled(self, *, change_generation_before_execute=False,
+                         report_uncertain_execution=False):
         backend, observer, bridge, events = self.setup_bridge()
         call_rows = []
+        effect_checks = []
 
         def observe(_request):
             if not call_rows:
@@ -112,6 +114,15 @@ class CompiledCoreCompositionTests(unittest.TestCase):
                     'release': {'verified': False, 'keys_down': [],
                                 'buttons_down': []}}
             release = result['execution']['releases'][-1]
+            if report_uncertain_execution:
+                # The native operation did run and released all input, but the
+                # caller cannot certify a complete task effect. Preserve that
+                # uncertainty instead of promoting it to a completed action.
+                return {'status': 'delivery_uncertain', 'action_id': 'move-1',
+                    'effect_ref': 'effect-1', 'input_dispatched': True,
+                    'release': {'verified': release['verified'],
+                        'keys_down': release['keys_down'],
+                        'buttons_down': release['buttons_down']}}
             return {'status': 'completed', 'action_id': 'move-1',
                 'effect_ref': 'effect-1', 'input_dispatched': True,
                 'release': {'verified': release['verified'],
@@ -122,22 +133,23 @@ class CompiledCoreCompositionTests(unittest.TestCase):
             'observe': observe,
             'admit': admit,
             'execute': execute,
-            'verify_effect': lambda request: {
+            'verify_effect': lambda request: effect_checks.append(request) or {
                 'status': 'succeeded',
                 'evidence_ref': request['observation']['evidence_ref']},
             'cancelled': lambda: False,
         }, clock=time.monotonic_ns)
-        return receipt, events, call_rows, observer
+        return receipt, events, call_rows, observer, effect_checks
 
     def test_compiled_core_executes_against_the_same_observation_generation(self):
-        receipt, events, sequences, _ = self.execute_compiled()
+        receipt, events, sequences, _, effect_checks = self.execute_compiled()
         self.assertEqual(receipt['outcome'], 'TASK_SUCCEEDED')
         self.assertEqual(receipt['completed_transitions'], 1)
         self.assertEqual(sequences, [1, 2])
         self.assertEqual(events, [['move', 'fixture', 3, 3], ['release']])
+        self.assertEqual(len(effect_checks), 1)
 
     def test_generation_change_after_admission_is_refused_by_live_bridge_guard(self):
-        receipt, events, sequences, observer = self.execute_compiled(
+        receipt, events, sequences, observer, effect_checks = self.execute_compiled(
             change_generation_before_execute=True)
         self.assertEqual((receipt['outcome'], receipt['reason']),
                          ('SAFE_YIELD', 'execution_refused'))
@@ -148,6 +160,21 @@ class CompiledCoreCompositionTests(unittest.TestCase):
                         if row['event'] == 'action_terminal')
         self.assertFalse(terminal['release_verified'])
         self.assertTrue(observer.review_required)
+        self.assertEqual(effect_checks, [])
+
+    def test_uncertain_dispatch_with_verified_release_stops_before_effect_or_replay(self):
+        receipt, events, sequences, _, effect_checks = self.execute_compiled(
+            report_uncertain_execution=True)
+        self.assertEqual((receipt['outcome'], receipt['reason']),
+                         ('SAFE_YIELD', 'delivery_uncertain'))
+        self.assertEqual(receipt['completed_transitions'], 0)
+        self.assertEqual(sequences, [1])
+        self.assertEqual(events, [['move', 'fixture', 3, 3], ['release']])
+        self.assertEqual(effect_checks, [])
+        terminal = next(row for row in receipt['critical_events']
+                        if row['event'] == 'action_terminal')
+        self.assertTrue(terminal['input_dispatched'])
+        self.assertTrue(terminal['release_verified'])
 
 
 if __name__ == '__main__':
