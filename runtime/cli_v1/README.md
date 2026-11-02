@@ -254,11 +254,14 @@ These changes replace v1's conflated success booleans; callers inspecting the
 schema must accept v2 explicitly. This adapter still does not perform visual
 target revalidation, compile guarded methods or obtain an application score.
 
-Usage is forwarded separately from dispatch outcome. `usage_status` is `reported`
-only when a nonempty usage mapping is present from the explicit adapter argument
-or the raw dispatch response; otherwise it is `unavailable`. An empty `usage`
-object is a compatibility placeholder, not a zero-token report. Accounting code
-must check `usage_status` before aggregating numeric fields.
+Usage is forwarded separately from dispatch outcome. For the provider token
+schema, `usage_status` is `reported` only when both `input_tokens` and
+`output_tokens` are present and every supplied token count is a nonnegative
+integer. A nonempty subset is `partial`; malformed counts are `malformed`.
+Explicit zero counts are reported values. Missing or empty usage is
+`unavailable`. Legacy opaque usage maps retain their historical reported
+behavior. Raw usage fields are preserved in every case; accounting code must
+check `usage_status` before aggregating token totals.
 
 
 Read a retained prepared-exchange receipt together with its referenced PNG:
