@@ -105,6 +105,10 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 "program_emissions": 2, "emissions": 4}}, True),
             ({"status": "completed", "execution": {
                 "program_emissions": 0, "emissions": 4}}, False),
+            ({"status": "execution_failed", "program_emissions": 2,
+                "backend_emissions": 5}, True),
+            ({"status": "execution_failed", "program_emissions": 0,
+                "backend_emissions": 5}, False),
             ({"status": "completed", "execution": {"emissions": 3}}, True),
             ({"status": "completed", "input_dispatched": False,
                 "execution": {"emissions": 3}}, False),

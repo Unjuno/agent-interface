@@ -14,6 +14,8 @@ The backend is intentionally narrow:
 
 Core admission runs before native preflight. Native target/key/text/frame constraints are preflighted before the first physical emission. Stale observation, stale binding, lease expiry, native preflight failures, and unsupported coordinate frames must produce zero task input.
 
+Successful executions report `program_emissions` for that invocation. The count is execution-local and excludes earlier backend emissions and terminal/compensating release activity. `Win32ExecutionError` retains the same count before cleanup starts; the runtime session returns it with the failed result and reports `input_dispatched=true` when it is positive. A zero count is preserved as `program_emissions=0` without asserting a pre-input refusal, because cleanup may still have emitted input. This count reports dispatch attempts accepted by the backend, not application delivery or task effect.
+
 This path is not considered supported merely because it imports or compiles. Promotion requires the frozen native Windows integration block to pass on an actual Windows runner. Secure desktop, elevated/UIPI boundaries, IME behavior, mixed-DPI multi-monitor setups, and privileged applications remain outside v1 unless separately evidenced.
 
 The release ledger treats zero from `GetAsyncKeyState` as unknown, since Windows

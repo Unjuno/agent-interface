@@ -181,6 +181,7 @@ class Win32RuntimeSession:
         except Win32BackendError as error:
             release = getattr(error, "release_receipt", None)
             cleanup_error = getattr(error, "cleanup_error", None)
+            program_emissions = getattr(error, "program_emissions", None)
             if isinstance(error, Win32ExecutionError):
                 if release is not None and cleanup_error is None:
                     self._record_release([release])
@@ -188,7 +189,7 @@ class Win32RuntimeSession:
                     self.recovery_required = True
             # A plain Win32BackendError from execute is its repeated preflight
             # refusal. The backend raises it before the operation loop emits input.
-            return {
+            result = {
                 "status": "execution_failed",
                 "error": "BACKEND_EXECUTION",
                 "release": release,
@@ -197,6 +198,14 @@ class Win32RuntimeSession:
                 "backend_emissions": self.backend.emissions,
                 "recovery_required": self.recovery_required,
             }
+            if type(program_emissions) is int and program_emissions >= 0:
+                result["program_emissions"] = program_emissions
+                # False is reserved for an explicit pre-input refusal in the
+                # compiled-GUI terminal contract. On execution failure, zero
+                # program emissions is useful count evidence but not a refusal.
+                if program_emissions > 0:
+                    result["input_dispatched"] = True
+            return result
         except Exception:
             self.recovery_required = True
             raise

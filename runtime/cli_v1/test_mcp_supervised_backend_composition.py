@@ -15,7 +15,10 @@ from runtime.backends.win32_v1.session import Win32RuntimeSession
 from runtime.backends.win32_v1.test_supervised_session import (
     FakeUser32, RetainedProcess, _identity, _recovery_observer_server,
 )
-from runtime.cli_v1.mcp_server import create_server
+from runtime.cli_v1.mcp_server import (
+    _run_supervised_win32_dispatch,
+    create_server,
+)
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.guarded_win32_v1.operation_owner import OperationOwner, OwnerRefused
 from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
@@ -167,6 +170,59 @@ def _supervised_backend_producer(action, start_gate, state, events, entered,
 
 
 class SupervisedBackendCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_standard_dispatch_projects_failure_program_emissions(self):
+        class Owner:
+            def __init__(self, program_emissions):
+                self.program_emissions = program_emissions
+
+            def bind_target_generation(self):
+                return {"target_binding_id": "b" * 32,
+                        "target_generation": GENERATION}
+
+            def admit_standard_action(self, *_args, **_kwargs):
+                return None
+
+            def start_producer(self, *_args, **_kwargs):
+                return None
+
+            def complete_exited_action(self, call_id, **_kwargs):
+                return {"action": {
+                    "call_id": call_id,
+                    "operation_id": "c" * 32,
+                    "target_generation": GENERATION,
+                    "status": "completed",
+                    "result": {"status": "execution_failed",
+                               "program_emissions": self.program_emissions},
+                    "release_confirmed": False,
+                }}
+
+        class ProducerFactory:
+            def read_result(self, *_args, **_kwargs):
+                return None
+
+        program = {
+            "schema": "agent-interface/program-v1",
+            "program_id": "partial-text",
+            "source": {"observation_seq": 1, "binding_revision": 1},
+            "authority": {"lease_id": "lease",
+                           "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "text", "text": "AB"}, {"op": "release_all"}],
+        }
+        arguments = {"program": program, "current_observation_seq": 1,
+                     "current_binding_revision": 1}
+
+        dispatched = _run_supervised_win32_dispatch(
+            Owner(2), ProducerFactory(), "d" * 32, arguments)
+        self.assertEqual(dispatched["result"]["program_emissions"], 2)
+        self.assertIs(dispatched["input_dispatched"], True)
+        self.assertFalse(dispatched["release_confirmed"])
+
+        no_program_input = _run_supervised_win32_dispatch(
+            Owner(0), ProducerFactory(), "e" * 32, arguments)
+        self.assertEqual(no_program_input["result"]["program_emissions"], 0)
+        self.assertIs(no_program_input["input_dispatched"], False)
+
     async def test_public_route_rejects_unbounded_late_input_horizon(self):
         with tempfile.TemporaryDirectory() as root:
             with self.assertRaisesRegex(ValueError, "nonnegative integer"):

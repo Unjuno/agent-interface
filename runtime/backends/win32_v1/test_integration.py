@@ -453,6 +453,130 @@ class Win32SessionRecoveryTests(unittest.TestCase):
             current_binding_revision=3,
         )
 
+    def text_program(self, program_id):
+        program = make_program(program_id)
+        program["ops"] = [{"op": "text", "text": "AB"}, {"op": "release_all"}]
+        return program
+
+    def test_completed_program_emissions_exclude_terminal_release_emission(self):
+        backend = self.backend()
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        def send(_event):
+            backend._record_emission()
+
+        def release_with_one_emission():
+            backend._record_emission()
+            return receipt
+
+        backend._send = send
+        backend._release_all_unchecked = release_with_one_emission
+        backend.release_all = Win32Backend.release_all.__get__(backend, Win32Backend)
+        result = backend.execute(self.text_program("completed-text"))
+
+        self.assertEqual(result["program_emissions"], 4)
+        self.assertEqual(result["emissions"], 5)
+
+    def test_partial_program_emissions_survive_cleanup_and_ignore_prior_emissions(self):
+        from runtime.cli_v1.owned_win32_session import _input_dispatched_from_result
+
+        backend = self.backend()
+        backend.emissions = 9
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        send_count = 0
+
+        def fail_after_two_program_emissions(_event):
+            nonlocal send_count
+            send_count += 1
+            if send_count == 3:
+                raise Win32BackendError("injected partial text failure")
+            backend._record_emission()
+
+        def cleanup_emits_one_release():
+            backend.emissions += 1
+            return receipt
+
+        backend._send = fail_after_two_program_emissions
+        backend.release_all = cleanup_emits_one_release
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        session = Win32RuntimeSession(backend)
+
+        failed = session.dispatch(self.text_program("partial-text"),
+            current_observation_seq=7, current_binding_revision=3)
+
+        self.assertEqual(failed["status"], "execution_failed")
+        self.assertEqual(failed["backend_emissions"], 12)
+        self.assertEqual(failed["program_emissions"], 2)
+        self.assertIs(failed["input_dispatched"], True)
+        self.assertIs(_input_dispatched_from_result(failed), True)
+        self.assertFalse(failed["recovery_required"])
+
+    def test_zero_program_emissions_do_not_count_cleanup_as_task_input(self):
+        from runtime.cli_v1.owned_win32_session import _input_dispatched_from_result
+
+        backend = self.backend()
+        backend.emissions = 4
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        def fail_before_program_emission(_event):
+            raise Win32BackendError("injected first-unit failure")
+
+        def cleanup_emits_release():
+            backend.emissions += 1
+            return receipt
+
+        backend._send = fail_before_program_emission
+        backend.release_all = cleanup_emits_release
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        session = Win32RuntimeSession(backend)
+
+        failed = session.dispatch(self.text_program("no-program-input"),
+            current_observation_seq=7, current_binding_revision=3)
+
+        self.assertEqual(failed["backend_emissions"], 5)
+        self.assertEqual(failed["program_emissions"], 0)
+        self.assertNotIn("input_dispatched", failed)
+        self.assertIs(_input_dispatched_from_result(failed), False)
+        self.assertFalse(failed["recovery_required"])
+
+    def test_partial_program_emissions_survive_cleanup_failure(self):
+        backend = self.backend()
+        receipt = {"verified": False, "keys_down": ["A"], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+
+        send_count = 0
+
+        def fail_after_program_emission(_event):
+            nonlocal send_count
+            send_count += 1
+            if send_count == 2:
+                raise ValueError("injected partial text failure")
+            backend._record_emission()
+
+        def cleanup_fails_after_emitting_release():
+            backend.emissions += 1
+            raise RuntimeError("injected release failure")
+
+        backend._send = fail_after_program_emission
+        backend.release_all = cleanup_fails_after_emitting_release
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        session = Win32RuntimeSession(backend)
+
+        failed = session.dispatch(self.text_program("partial-with-release-failure"),
+            current_observation_seq=7, current_binding_revision=3)
+
+        self.assertEqual(failed["status"], "execution_failed")
+        self.assertEqual(failed["detail"], "injected partial text failure")
+        self.assertEqual(failed["program_emissions"], 1)
+        self.assertIs(failed["input_dispatched"], True)
+        self.assertEqual(failed["cleanup_error"]["detail"], "injected release failure")
+        self.assertTrue(failed["recovery_required"])
+        self.assertTrue(session.recovery_required)
+
     def test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch(self):
         backend = self.backend()
         session = Win32RuntimeSession(backend)
