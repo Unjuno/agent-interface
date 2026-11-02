@@ -14,19 +14,22 @@ def _run(args, timeout):
     return subprocess.run(args, capture_output=True, timeout=timeout, check=False)
 
 
-def cleanup_owned(cid, run_id, *, timeout_s=10, runner=_run, journal_path=None):
+def cleanup_owned(cid, run_id, *, timeout_s=10, runner=_run, journal_path=None, remove_exited=False):
+    # Removal requires a durable attempt record before any command.
+    if remove_exited is True and journal_path is None:
+        raise ValueError('remove_exited requires a journal')
     # Exclusive creation prevents accidental replacement of an earlier receipt.
     if journal_path is None:
-        return _cleanup_owned(cid, run_id, timeout_s, runner, None)
+        return _cleanup_owned(cid, run_id, timeout_s, runner, None, remove_exited)
     with open(journal_path, 'x', encoding='utf-8') as journal:
-        result = _cleanup_owned(cid, run_id, timeout_s, runner, journal)
+        result = _cleanup_owned(cid, run_id, timeout_s, runner, journal, remove_exited)
         journal.write(json.dumps({'event': 'result', 'receipt': result}, sort_keys=True) + '\n')
         journal.flush()
         os.fsync(journal.fileno())
         return result
 
 
-def _cleanup_owned(cid, run_id, timeout_s, runner, journal):
+def _cleanup_owned(cid, run_id, timeout_s, runner, journal, remove_exited):
     def log(event):
         if journal is not None:
             journal.write(json.dumps(event, sort_keys=True) + '\n')
@@ -36,7 +39,8 @@ def _cleanup_owned(cid, run_id, timeout_s, runner, journal):
     result = {'status': 'UNKNOWN', 'commands': []}
     if (not isinstance(cid, str) or not re.fullmatch(r'[0-9a-f]{64}', cid)
             or not isinstance(run_id, str) or not re.fullmatch(r'[0-9a-f]{32}', run_id)
-            or type(timeout_s) not in (int, float) or not math.isfinite(timeout_s) or timeout_s <= 0):
+            or type(timeout_s) not in (int, float) or not math.isfinite(timeout_s) or timeout_s <= 0
+            or type(remove_exited) is not bool):
         return result
     deadline = time.monotonic() + timeout_s
 
@@ -95,7 +99,23 @@ def _cleanup_owned(cid, run_id, timeout_s, runner, journal):
     if item['State']['Running'] is False:
         if rows[0].get('State') != 'exited':
             return result
-        result['status'] = 'observed_stopped'
+        if not remove_exited:
+            result['status'] = 'observed_stopped'
+            return result
+        state = item['State']
+        if state.get('Status') != 'exited' or type(state.get('ExitCode')) is not int:
+            return result
+        result['observed_exit_code'] = state['ExitCode']
+        log({'event': 'exit_observed', 'cid': cid, 'exit_code': state['ExitCode']})
+        raw = call(['wslc', 'container', 'remove', cid])
+        if raw is None or raw.strip() != cid.encode('ascii'):
+            return result
+        result['remove_command_succeeded'] = True
+        raw = call(list_args)
+        if raw is not None and not raw.strip():
+            result['status'] = 'observed_absent'
+        return result
+    if remove_exited:
         return result
     raw = call(['wslc', 'container', 'stop', '--time', '2', cid])
     if raw is None or raw.strip() != cid.encode('ascii'):

@@ -16,9 +16,9 @@ def response(args, *, code=0, out=b'', err=b''):
     return subprocess.CompletedProcess(args, code, out, err)
 
 
-def inspect(cid=CID, run=RUN, running=True):
+def inspect(cid=CID, run=RUN, running=True, exit_code=7):
     return json.dumps([{'Id': cid, 'Config': {'Labels': {LABEL: run}},
-                        'State': {'Running': running}}]).encode()
+                        'State': {'Running': running, 'Status': 'running' if running else 'exited', 'ExitCode': exit_code}}]).encode()
 
 
 def row(cid=CID, run=RUN, state='running'):
@@ -35,6 +35,12 @@ class Runner:
         if isinstance(answer, BaseException):
             raise answer
         return response(args, **answer)
+
+
+def remove_with_journal(runner):
+    with tempfile.TemporaryDirectory() as directory:
+        return cleanup_owned(CID, RUN, runner=runner, remove_exited=True,
+                             journal_path=Path(directory) / 'cleanup.jsonl')
 
 
 class CleanupTests(unittest.TestCase):
@@ -155,6 +161,90 @@ class CleanupTests(unittest.TestCase):
             self.assertEqual(runner.calls, [])
             events = [json.loads(line) for line in journal.read_text().splitlines()]
             self.assertEqual(events[1]['event'], 'command_not_invoked')
+
+    def test_exited_receipt_is_retained_before_exact_removal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')},
+                             {'out': (CID+'\n').encode()}, {'out': b''}])
+            result = cleanup_owned(CID, RUN, runner=runner, journal_path=journal, remove_exited=True)
+            self.assertEqual(result['status'], 'observed_absent')
+            self.assertEqual(result['observed_exit_code'], 7)
+            self.assertEqual(runner.calls[2][0], ['wslc', 'container', 'remove', CID])
+            events = [json.loads(line) for line in journal.read_text().splitlines()]
+            self.assertLess(next(i for i,e in enumerate(events) if e['event']=='exit_observed'),
+                            next(i for i,e in enumerate(events) if e['event']=='command_started' and 'remove' in e['argv']))
+
+    def test_remove_requires_exclusive_journal(self):
+        runner = Runner([])
+        with self.assertRaises(ValueError):
+            cleanup_owned(CID, RUN, runner=runner, remove_exited=True)
+        self.assertEqual(runner.calls, [])
+
+    def test_exit_receipt_requires_valid_exited_state(self):
+        for code in (None, True, '7'):
+            runner = Runner([{'out': inspect(running=False, exit_code=code)}, {'out': row(state='exited')}])
+            result = remove_with_journal(runner)
+            self.assertEqual(result['status'], 'UNKNOWN')
+            self.assertNotIn('observed_exit_code', result)
+            self.assertLessEqual(len(runner.calls), 2)
+
+    def test_failed_remove_keeps_exit_observation_but_not_absence(self):
+        runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')}, {'code': 1}])
+        result = remove_with_journal(runner)
+        self.assertEqual(result['status'], 'UNKNOWN')
+        self.assertEqual(result['observed_exit_code'], 7)
+
+    def test_exit_evidence_sync_failure_prevents_remove(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')}])
+            # Inspect and list each write intent and return; the fifth sync is exit evidence.
+            with patch('wslc_cleanup.os.fsync', side_effect=[None, None, None, None, OSError('disk')]):
+                with self.assertRaises(OSError):
+                    cleanup_owned(CID, RUN, runner=runner, journal_path=journal, remove_exited=True)
+            self.assertEqual(len(runner.calls), 2)
+
+    def test_deadline_during_exit_sync_prevents_remove(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Path(directory) / 'cleanup.jsonl'
+            runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')}])
+            clock = {'now': 0, 'syncs': 0}
+            def sync(_):
+                clock['syncs'] += 1
+                if clock['syncs'] == 5:
+                    clock['now'] = 2
+            with patch('wslc_cleanup.os.fsync', side_effect=sync), \
+                 patch('wslc_cleanup.time.monotonic', side_effect=lambda: clock['now']):
+                result = cleanup_owned(CID, RUN, runner=runner, journal_path=journal,
+                                       remove_exited=True, timeout_s=1)
+            self.assertEqual(result['status'], 'UNKNOWN')
+            self.assertEqual(result['observed_exit_code'], 7)
+            self.assertEqual(len(runner.calls), 2)
+
+    def test_remove_timeout_retains_partial_output_and_exit_evidence(self):
+        import base64
+        timeout = subprocess.TimeoutExpired('wslc', 1, output=b'partial')
+        runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')}, timeout])
+        result = remove_with_journal(runner)
+        self.assertEqual(result['status'], 'UNKNOWN')
+        self.assertEqual(result['observed_exit_code'], 7)
+        self.assertEqual(base64.b64decode(result['commands'][-1]['stdout_b64']), b'partial')
+        self.assertEqual(len(runner.calls), 3)
+
+    def test_remove_success_without_empty_post_list_stays_unknown(self):
+        runner = Runner([{'out': inspect(running=False)}, {'out': row(state='exited')},
+                         {'out': (CID+'\n').encode()}, {'out': row(state='exited')}])
+        result = remove_with_journal(runner)
+        self.assertEqual(result['status'], 'UNKNOWN')
+        self.assertEqual(result['observed_exit_code'], 7)
+        self.assertTrue(result['remove_command_succeeded'])
+
+    def test_running_target_is_never_removed_by_exited_mode(self):
+        runner = Runner([{'out': inspect()}, {'out': row()}])
+        result = remove_with_journal(runner)
+        self.assertEqual(result['status'], 'UNKNOWN')
+        self.assertEqual(len(runner.calls), 2)
 
     def test_existing_journal_prevents_any_command(self):
         with tempfile.TemporaryDirectory() as directory:
