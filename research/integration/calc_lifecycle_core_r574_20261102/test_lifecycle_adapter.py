@@ -23,6 +23,7 @@ class FakeWslc:
         self.neutral_input = neutral_input
         self.removed = False
         self.calls = []
+        self.timeouts = []
 
     def _state(self, *, running=False):
         return json.dumps([{
@@ -35,6 +36,7 @@ class FakeWslc:
 
     def __call__(self, args, timeout):
         self.calls.append(args)
+        self.timeouts.append(timeout)
         if args[1] == 'run':
             if self.fail_start:
                 raise subprocess.TimeoutExpired(args, timeout, output=b'partial')
@@ -66,6 +68,50 @@ class FakeWslc:
 
 
 class LifecycleAdapterValidationTests(unittest.TestCase):
+    def test_wait_interrupt_still_closes_host_and_cleans_container(self):
+        class InterruptingHost:
+            def __init__(self, argv, path):
+                self.closed = False
+
+            def start(self):
+                pass
+
+            def wait(self, *, timeout_s):
+                raise KeyboardInterrupt()
+
+            def close(self, *, timeout_s):
+                self.closed = True
+                return {'status': 'closed_scoped'}
+
+        with tempfile.TemporaryDirectory() as temp:
+            allocation = Path(temp) / 'attempt'
+            output = allocation / 'container' / 'out'
+            runner = FakeWslc(output)
+            hosts = []
+
+            def make_host(argv, path):
+                host = InterruptingHost(argv, path)
+                hosts.append(host)
+                return host
+
+            adapter = WslcLifecycleAdapter(
+                host_argv=[sys.executable, '-c', 'pass'],
+                image=IMAGE, container_command=['python3', '-c', 'pass'],
+                audit=lambda root: {'status': 'passed', 'release_confirmed': True},
+                mounts={'/out': (output, False)}, runner=runner,
+                host_factory=make_host,
+            )
+            with self.assertRaises(KeyboardInterrupt):
+                run_attempt(allocation, {'run_id': RUN}, adapter, timeout_s=10)
+            self.assertTrue(hosts[0].closed)
+            self.assertTrue(runner.removed)
+            result = json.loads((allocation / 'result.json').read_text(encoding='utf-8'))
+            self.assertEqual(result['status'], 'incomplete')
+            self.assertEqual(result['cleanup_errors'], [
+                {'phase': 'host_cleanup', 'type': 'KeyboardInterrupt'}])
+            self.assertEqual(result['cleanup']['status'], 'confirmed')
+            self.assertEqual(result['audit']['status'], 'not_run')
+
     def test_cleanup_requires_final_exact_id_absence_not_stale_stop_receipt(self):
         class ReappearedContainer:
             def reconcile(self, *, timeout_s):
@@ -146,6 +192,7 @@ class LifecycleAdapterTests(unittest.TestCase):
         self.assertEqual(result['audit']['status'], 'passed')
         self.assertEqual(result['input_release'], 'confirmed')
         self.assertEqual(audit_rows, ['472/615\n'])
+        self.assertLess(runner.timeouts[0], 10)
         self.assertTrue(runner.removed)
 
     def test_container_start_timeout_stays_incomplete_and_cleans_host(self):

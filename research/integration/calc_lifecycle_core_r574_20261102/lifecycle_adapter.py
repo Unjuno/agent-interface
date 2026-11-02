@@ -86,8 +86,11 @@ class WslcLifecycleAdapter:
     def start_host(host, allocation):
         host.start()
 
-    def start_container(self, container, allocation):
-        receipt = container.start(timeout_s=self.container_start_timeout_s)
+    def start_container(self, container, allocation, timeout_s):
+        if (type(timeout_s) not in (int, float)
+                or not math.isfinite(timeout_s) or timeout_s <= 0):
+            raise TimeoutError('no execution budget remains for container start')
+        receipt = container.start(timeout_s=min(self.container_start_timeout_s, timeout_s))
         if not isinstance(receipt, dict) or receipt.get('status') not in ('running', 'exited'):
             raise RuntimeError('container start identity is unresolved')
 
@@ -100,12 +103,35 @@ class WslcLifecycleAdapter:
         valid_budget = (type(timeout_s) in (int, float)
                         and math.isfinite(timeout_s) and timeout_s > 0)
         deadline = time.monotonic() + timeout_s if valid_budget else time.monotonic()
+        wait_error = close_error = None
         if valid_budget:
-            wait_receipt = host.wait(timeout_s=max(0.001, deadline - time.monotonic()))
+            try:
+                wait_receipt = host.wait(timeout_s=max(0.001, deadline - time.monotonic()))
+            except BaseException as exc:
+                wait_error = exc
+                wait_receipt = {'status': 'UNKNOWN', 'error_type': type(exc).__name__}
         else:
             wait_receipt = {'status': 'UNKNOWN', 'reason': 'no_cleanup_budget'}
-        close_receipt = host.close(timeout_s=max(0.001, deadline - time.monotonic()))
+        try:
+            close_receipt = host.close(timeout_s=max(0.001, deadline - time.monotonic()))
+        except BaseException as exc:
+            close_error = exc
+            close_receipt = {'status': 'UNKNOWN', 'error_type': type(exc).__name__}
         late = not valid_budget or time.monotonic() >= deadline
+        errors = [error for error in (wait_error, close_error) if error is not None]
+        if errors:
+            primary = next((error for error in errors if not isinstance(error, Exception)), errors[0])
+            for error in errors:
+                if error is not primary:
+                    try:
+                        primary.add_note('additional host cleanup error: ' + repr(error))
+                    except AttributeError:
+                        pass
+            if not isinstance(primary, Exception):
+                raise primary
+            return {'status': 'UNKNOWN', 'exit_code': None, 'wait': wait_receipt,
+                    'retirement': close_receipt, 'returned_late': late,
+                    'error_type': type(primary).__name__}
         code = wait_receipt.get('exit_code') if isinstance(wait_receipt, dict) else None
         closed = (isinstance(close_receipt, dict)
                   and close_receipt.get('status') == 'closed_scoped')

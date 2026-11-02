@@ -25,6 +25,7 @@ def run_attempt(allocation, conditions, driver, *, timeout_s):
     audit = {'status':'not_run'}
     error = None
     fatal = None
+    cleanup_errors = []
     phase = 'prepare'
     try:
         # Preparation must only allocate local identity tokens, never start a resource.
@@ -33,9 +34,11 @@ def run_attempt(allocation, conditions, driver, *, timeout_s):
         phase = 'host_start'; host_attempted = True
         driver.start_host(host, allocation); events['host_started_ns'] = time.monotonic_ns()
         phase = 'before_container_start'
-        if time.monotonic_ns() >= deadline_ns: raise TimeoutError('execution deadline before container start')
+        container_start_timeout = (deadline_ns - time.monotonic_ns()) / 1_000_000_000
+        if container_start_timeout <= 0: raise TimeoutError('execution deadline before container start')
         phase = 'container_start'; container_attempted = True
-        driver.start_container(container, allocation); events['container_started_ns'] = time.monotonic_ns()
+        driver.start_container(container, allocation, container_start_timeout)
+        events['container_started_ns'] = time.monotonic_ns()
         phase = 'container_wait'
         remaining = max(0.0, (deadline_ns - time.monotonic_ns()) / 1_000_000_000)
         if remaining <= 0: raise TimeoutError('execution deadline before container wait')
@@ -61,15 +64,21 @@ def run_attempt(allocation, conditions, driver, *, timeout_s):
             try: host_result = driver.stop_host(host, max(0.0, (cleanup_deadline_ns-time.monotonic_ns()) / 1_000_000_000))
             except BaseException as exc:
                 host_result = {'status':'unknown','error_type':type(exc).__name__}
+                cleanup_errors.append({'phase':'host_cleanup','type':type(exc).__name__})
                 if fatal is None and not isinstance(exc, Exception): fatal = exc
-        if not isinstance(host_result, dict): host_result = {'status':'unknown','error_type':'InvalidReceipt'}
+        if not isinstance(host_result, dict):
+            host_result = {'status':'unknown','error_type':'InvalidReceipt'}
+            cleanup_errors.append({'phase':'host_cleanup','type':'InvalidReceipt'})
         events['host_cleanup_returned_ns'] = time.monotonic_ns()
         if container_attempted:
             try: cleanup = driver.cleanup_container(container, max(0.0, (cleanup_deadline_ns-time.monotonic_ns()) / 1_000_000_000))
             except BaseException as exc:
                 cleanup = {'status':'unknown','error_type':type(exc).__name__}
+                cleanup_errors.append({'phase':'container_cleanup','type':type(exc).__name__})
                 if fatal is None and not isinstance(exc, Exception): fatal = exc
-        if not isinstance(cleanup, dict): cleanup = {'status':'unknown','error_type':'InvalidReceipt'}
+        if not isinstance(cleanup, dict):
+            cleanup = {'status':'unknown','error_type':'InvalidReceipt'}
+            cleanup_errors.append({'phase':'container_cleanup','type':'InvalidReceipt'})
         events['container_cleanup_returned_ns'] = time.monotonic_ns()
         cleanup_deadline_exceeded = events['container_cleanup_returned_ns'] >= cleanup_deadline_ns
     # This is only eligible for scoring after the producer exited successfully.
@@ -90,7 +99,7 @@ def run_attempt(allocation, conditions, driver, *, timeout_s):
     result = {'status':'completed_scoped' if eligible else 'incomplete',
               'input_release':release,'container':container_result,'host':host_result,
               'cleanup':cleanup,'cleanup_deadline_exceeded':cleanup_deadline_exceeded,
-              'audit':audit,'error':error,'events':events}
+              'audit':audit,'error':error,'cleanup_errors':cleanup_errors,'events':events}
     tmp = allocation / 'result.tmp'
     tmp.write_text(json.dumps(result, sort_keys=True, indent=2) + '\n', encoding='utf-8')
     tmp.replace(allocation / 'result.json')

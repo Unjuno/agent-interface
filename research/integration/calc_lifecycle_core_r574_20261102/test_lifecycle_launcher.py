@@ -11,7 +11,7 @@ class FakeDriver:
     def prepare_host(self,allocation):return 'host-token'
     def prepare_container(self,allocation):return 'container-token'
     def start_host(self,token,allocation):self.calls.append('host_start')
-    def start_container(self,token,allocation):self.calls.append('container_start')
+    def start_container(self,token,allocation,timeout):self.calls.append('container_start')
     def wait_container(self,token,timeout):
         self.calls.append('container_wait')
         return {'status':'timeout','exit_code':None} if self.timeout else {'status':'exited','exit_code':0}
@@ -44,7 +44,7 @@ class LauncherTests(unittest.TestCase):
     def test_partial_start_failure_is_unknown_and_host_is_stopped(self):
         class PartialStart(FakeDriver):
             def cleanup_container(self,token,timeout):self.calls.append('container_cleanup');return {'status':'unknown'}
-            def start_container(self, token, allocation):
+            def start_container(self, token, allocation, timeout):
                 self.calls.append('container_start')
                 raise RuntimeError('start returned no handle')
         with tempfile.TemporaryDirectory() as d:
@@ -115,6 +115,18 @@ class LauncherTests(unittest.TestCase):
             run_attempt(Path(d)/'run',{'run_id':'budget'},driver,timeout_s=1)
             self.assertGreater(driver.wait_timeout,0)
             self.assertLess(driver.wait_timeout,1)
+
+    def test_container_start_receives_remaining_execution_budget(self):
+        class CaptureStart(FakeDriver):
+            def start_container(self, token, allocation, timeout):
+                self.start_timeout=timeout
+                super().start_container(token,allocation,timeout)
+        ticks=iter(range(0, 10_000_000_000, 100_000_000))
+        with tempfile.TemporaryDirectory() as d, patch('lifecycle_launcher.time.monotonic_ns',side_effect=lambda:next(ticks)):
+            driver=CaptureStart()
+            run_attempt(Path(d)/'run',{'run_id':'start-budget'},driver,timeout_s=1)
+            self.assertGreater(driver.start_timeout,0)
+            self.assertLess(driver.start_timeout,1)
 
     def test_malformed_wait_receipt_is_unknown_and_persisted(self):
         class BadWait(FakeDriver):
