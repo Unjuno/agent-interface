@@ -42,11 +42,26 @@ def _error(where):
 
 
 class AtomicJobProcess:
-    def __init__(self, argv, *, stdio=False):
+    def __init__(self, argv, *, stdio=False, cwd=None, environment=None):
         if sys.platform!='win32':raise OSError('Windows required')
         if type(stdio) is not bool:raise ValueError('stdio must be boolean')
         if not isinstance(argv,list) or not argv or any(not isinstance(x,str) or not x or '\0' in x for x in argv) or not os.path.isabs(argv[0]):
             raise ValueError('absolute executable and nonempty arguments required')
+        if cwd is not None:
+            cwd=os.fsdecode(cwd)
+            if not os.path.isabs(cwd) or not os.path.isdir(cwd) or '\0' in cwd:raise ValueError('existing absolute cwd required')
+        env_block=None
+        if environment is not None:
+            if not isinstance(environment,dict):raise ValueError('environment must be a dict')
+            keys=set()
+            for key,value in environment.items():
+                if not isinstance(key,str) or not key or '=' in key or '\0' in key or not isinstance(value,str) or '\0' in value:
+                    raise ValueError('invalid environment entry')
+                normalized=key.upper()
+                if normalized in keys:raise ValueError('duplicate environment key')
+                keys.add(normalized)
+            env_block='\0'.join(key+'='+environment[key] for key in sorted(environment,key=str.upper))+'\0\0'
+        self.cwd=cwd;self.environment_block=env_block
         self.job=None;self.process=None;self.thread=None;self.pid=None;self.suspended=True
         self.stdio=stdio;self.stdin=None;self.stdout=None;self.stderr=None;self._raw_fds=set();self._unknown_raw_fds=set();self.pipe_close_errors=[];self.stream_close_errors=[]
         self.argv=list(argv);self.start_attempted=False;self.start_complete=False;self.closing=False;self.membership_confirmed=False;self.pi=PROCESS_INFORMATION()
@@ -88,7 +103,9 @@ class AtomicJobProcess:
                 startup.StartupInfo.dwFlags|=0x100
                 startup.StartupInfo.hStdInput=child_handles[0];startup.StartupInfo.hStdOutput=child_handles[1];startup.StartupInfo.hStdError=child_handles[2]
             pi=self.pi;cmd=ctypes.create_unicode_buffer(subprocess.list2cmdline(argv))
-            if not k.CreateProcessW(argv[0],cmd,None,None,self.stdio,0x00080000|0x00000004|0x08000000,None,None,ctypes.byref(startup),ctypes.byref(pi)):raise _error('CreateProcessW')
+            environment=ctypes.create_unicode_buffer(self.environment_block) if self.environment_block is not None else None
+            flags=0x00080000|0x00000004|0x08000000|(0x400 if environment is not None else 0)
+            if not k.CreateProcessW(argv[0],cmd,None,None,self.stdio,flags,environment,self.cwd,ctypes.byref(startup),ctypes.byref(pi)):raise _error('CreateProcessW')
             self.process=pi.hProcess;self.thread=pi.hThread;self.pid=pi.dwProcessId
             self._close_raw_fds()
             if not self.in_job():raise RuntimeError('created process not in private job')

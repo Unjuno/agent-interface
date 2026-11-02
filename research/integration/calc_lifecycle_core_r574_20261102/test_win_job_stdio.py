@@ -1,4 +1,5 @@
-import os,sys,threading,unittest
+import os,sys,tempfile,threading,unittest
+from pathlib import Path
 from unittest.mock import patch
 import win_job_spawn
 from win_job_spawn import AtomicJobProcess
@@ -19,6 +20,23 @@ class JobStdioTests(unittest.TestCase):
             self.assertTrue(p.close()['handles_closed'])
         finally:
             p.close();p.close_streams()
+
+    def test_explicit_cwd_and_unicode_environment_reach_child(self):
+        with tempfile.TemporaryDirectory() as root:
+            d=str(Path(root)/'試験 cwd');Path(d).mkdir()
+            env=dict(os.environ);env['AI_TASK_ENV']='試験-value'
+            code="import os,sys;sys.stdout.buffer.write((os.getcwd()+'\\n'+os.environ['AI_TASK_ENV']+'\\n').encode('utf-8'))"
+            p=AtomicJobProcess([sys.executable,'-u','-c',code],stdio=True,cwd=d,environment=env)
+            try:
+                p.start();p.resume();self.assertEqual(p.wait(5),0)
+                lines=p.stdout.read().decode('utf-8').splitlines()
+                self.assertEqual(os.path.normcase(lines[0]),os.path.normcase(d))
+                self.assertEqual(lines[1],'試験-value')
+            finally:p.close();p.close_streams()
+
+    def test_duplicate_case_environment_rejected_before_start(self):
+        with self.assertRaises(ValueError):
+            AtomicJobProcess([sys.executable],environment={'TEST':'a','test':'b'})
 
     def test_descendant_holds_stdout_until_job_is_closed(self):
         child="import time; print('grandchild',flush=True); time.sleep(30)"
