@@ -1,0 +1,98 @@
+{
+  "admission_count": 5,
+  "audit_code_sha256": "efcf73b71114f748d72d42041a2b76c141c61b40305ecc8ac703aba931546e72",
+  "cancel_cleanup_count": 1,
+  "direct_transition_count": 4,
+  "evidence_sha256": {
+    "PREREG.json": "af3627c8c01c81c0938ceb20b08b6319a1312abecedc66487dcc0ec1ab93dd35",
+    "events.jsonl": "900bf8dd6f680d59ded67cbef4521eb29369c4dca9c6a524a84921ff5370f157",
+    "owner-events.json": "e6ea4cfdd5622e6ac0caeb4a907b8d201e5cbdd772fd0cda431950026f559256",
+    "score.json": "bedd07740e6e61c99e785bbfff0f411f6e8d0d4c8e06be10098ff67db0de2b39",
+    "scorer-samples.jsonl": "4593d29771356bf1aa4c8e3f8d5781e5234ce3833d04a9f6eeddcf9b6e1412ac"
+  },
+  "explicit_up_count": 4,
+  "invalid_evidence": [],
+  "key_release_lineage_complete": true,
+  "matches": [
+    {
+      "ack_to_keyrelease_start_ms": 184.418943,
+      "ack_to_server_keymap_up_ms": 184.55549,
+      "id": "plan-0-primary-0-0",
+      "intent_token": "d3cb7d1b3a5c450b8db8d35065e54c34",
+      "key": "space",
+      "keycode": 65,
+      "physical_verification_authoritative": false,
+      "release_evidence": "explicit_up",
+      "server_key_down_after": false,
+      "server_key_down_before": true,
+      "step": 0
+    },
+    {
+      "ack_to_keyrelease_start_ms": 387.304442,
+      "ack_to_server_keymap_up_ms": 387.490182,
+      "id": "cover-1",
+      "intent_token": "953deeaed6f848c48568cb23f7ce3145",
+      "key": "a",
+      "keycode": 38,
+      "physical_verification_authoritative": false,
+      "release_evidence": "explicit_up",
+      "server_key_down_after": false,
+      "server_key_down_before": true,
+      "step": 0
+    },
+    {
+      "ack_to_keyrelease_start_ms": 183.248115,
+      "ack_to_server_keymap_up_ms": 183.378971,
+      "id": "cover-1",
+      "intent_token": "953deeaed6f848c48568cb23f7ce3145",
+      "key": "space",
+      "keycode": 65,
+      "physical_verification_authoritative": false,
+      "release_evidence": "explicit_up",
+      "server_key_down_after": false,
+      "server_key_down_before": true,
+      "step": 1
+    },
+    {
+      "ack_to_keyrelease_start_ms": 365.507036,
+      "ack_to_server_keymap_up_ms": 365.659177,
+      "id": "cover-1",
+      "intent_token": "953deeaed6f848c48568cb23f7ce3145",
+      "key": "d",
+      "keycode": 40,
+      "physical_verification_authoritative": false,
+      "release_evidence": "explicit_up",
+      "server_key_down_after": false,
+      "server_key_down_before": true,
+      "step": 2
+    },
+    {
+      "ack_to_keyrelease_start_ms": 177.35162,
+      "ack_to_server_keymap_up_ms": 177.582088,
+      "id": "cover-1",
+      "intent_token": "953deeaed6f848c48568cb23f7ce3145",
+      "key": "a",
+      "keycode": 38,
+      "physical_verification_authoritative": false,
+      "release_evidence": "verified_cancel_cleanup",
+      "server_key_down_after": false,
+      "server_key_down_before": true,
+      "step": 4
+    }
+  ],
+  "pass": true,
+  "schema": "map01-v39-retained-key-lineage-audit-v1",
+  "scope_note": "X-server keymap verification only; no physical-key timing or independent useful-feedback onset is inferred.",
+  "task_effect": {
+    "death_count": 0,
+    "first_post_admission_useful_progress_ms": null,
+    "first_post_admission_useful_progress_ns": null,
+    "independent_sample_count": 242,
+    "independent_score_present": true,
+    "kill_count": 0,
+    "map_exit": false,
+    "useful_progress_observed": false
+  },
+  "unresolved_admissions": [],
+  "verified_key_release_count": 5
+}
