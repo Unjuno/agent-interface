@@ -3,7 +3,9 @@ import tempfile
 import unittest
 from unittest.mock import Mock
 
-from runtime.backends.win32_v1.backend import Win32Backend
+from runtime.backends.win32_v1.backend import (
+    Win32Backend, Win32BackendError, Win32ExecutionError,
+)
 from runtime.core_v1.compiled_gui import run
 from runtime.guarded_win32_v1.bridge import MoveBridge
 from runtime.guarded_win32_v1.fresh import FreshWin32Reference
@@ -171,6 +173,78 @@ class CompiledCoreCompositionTests(unittest.TestCase):
         self.assertEqual(sequences, [1])
         self.assertEqual(events, [['move', 'fixture', 3, 3], ['release']])
         self.assertEqual(effect_checks, [])
+        terminal = next(row for row in receipt['critical_events']
+                        if row['event'] == 'action_terminal')
+        self.assertTrue(terminal['input_dispatched'])
+        self.assertTrue(terminal['release_verified'])
+
+    def test_partial_multichar_text_delivery_releases_and_never_replays(self):
+        backend, observer, _, _ = self.setup_bridge()
+        backend.pending_unicode_ups = set()
+        backend.preflight = lambda _program: None
+        backend.release_all = Win32Backend.release_all.__get__(backend)
+        sends = []
+        fail_once = {'enabled': True}
+
+        def send_unicode_unit(unit, down):
+            sends.append((unit, down))
+            if unit == ord('B') and down is False and fail_once['enabled']:
+                fail_once['enabled'] = False
+                raise Win32BackendError('injected second-character UP failure')
+            backend.emissions += 1
+
+        backend._send_unicode_unit = send_unicode_unit
+        spec = interface()
+        spec['actions']['move']['operation'] = 'text'
+        observations = []
+        dispatches = []
+        effect_checks = []
+
+        def observe(_request):
+            row, _ = observer.get(1)
+            observations.append(row['sequence'])
+            return {'sequence': row['sequence'], 'captured_ns': row['capture_ns'],
+                    'surface': 'win32-fixture', 'predicates': {'ready': True},
+                    'evidence_ref': 'frame-1', 'evidence_digest': 'digest-1'}
+
+        def execute(_request):
+            dispatches.append(True)
+            before = backend.emissions
+            try:
+                backend.execute({'ops': [{'op': 'text', 'text': 'AB'}]})
+            except Win32ExecutionError as error:
+                release = error.release_receipt
+                return {'status': 'delivery_uncertain', 'action_id': 'text-1',
+                        'effect_ref': 'text-effect-1',
+                        'input_dispatched': backend.emissions > before,
+                        'release': {'verified': release['verified'],
+                                    'keys_down': release['keys_down'],
+                                    'buttons_down': release['buttons_down']}}
+            self.fail('injected text failure must escape the backend as an owned failure')
+
+        receipt = run(spec, {
+            'observe': observe,
+            'admit': lambda request: {'eligible': True, 'status': 'revalidated',
+                'authorization': 'single-use-text-permit',
+                'expected_sequence': request['observation']['sequence'],
+                'valid_until_ns': time.monotonic_ns() + 4_000_000_000},
+            'execute': execute,
+            'verify_effect': lambda request: effect_checks.append(request) or {
+                'status': 'succeeded', 'evidence_ref': 'unexpected'},
+            'cancelled': lambda: False,
+        }, clock=time.monotonic_ns)
+
+        self.assertEqual((receipt['outcome'], receipt['reason']),
+                         ('SAFE_YIELD', 'delivery_uncertain'))
+        self.assertEqual(receipt['completed_transitions'], 0)
+        self.assertEqual(dispatches, [True])
+        self.assertEqual(observations, [1])
+        self.assertEqual(effect_checks, [])
+        self.assertEqual(sends, [(ord('A'), True), (ord('A'), False),
+                                 (ord('B'), True), (ord('B'), False),
+                                 (ord('B'), False)])
+        self.assertEqual(backend.pending_unicode_ups, set())
+        self.assertEqual(backend.emissions, 4)
         terminal = next(row for row in receipt['critical_events']
                         if row['event'] == 'action_terminal')
         self.assertTrue(terminal['input_dispatched'])
