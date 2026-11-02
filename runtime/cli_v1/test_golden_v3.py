@@ -17,6 +17,26 @@ class GoldenV3AdapterTests(unittest.TestCase):
         row=adapt_dispatch_result({"status":"returned","usage":{"input_tokens":0,"output_tokens":0}})
         self.assertEqual(row["usage"],{"input_tokens":0,"output_tokens":0})
         self.assertEqual(row["usage_status"],"reported")
+
+    def test_partial_token_usage_is_not_reported_as_complete(self):
+        row=adapt_dispatch_result({"status":"runtime_failed","usage":{"input_tokens":12}})
+        self.assertEqual(row["status"],"partial")
+        self.assertEqual(row["usage"],{"input_tokens":12})
+        self.assertEqual(row["usage_status"],"partial")
+
+    def test_complete_token_usage_survives_failed_dispatch(self):
+        usage={"input_tokens":12,"output_tokens":4,"cached_input_tokens":3,"reasoning_tokens":1}
+        row=adapt_dispatch_result({"status":"runtime_failed","usage":usage})
+        self.assertEqual(row["status"],"partial")
+        self.assertEqual(row["usage"],usage)
+        self.assertEqual(row["usage_status"],"reported")
+
+    def test_malformed_token_usage_is_not_reported(self):
+        for usage in ({"input_tokens":True,"output_tokens":4},
+                      {"input_tokens":12,"output_tokens":-1},
+                      {"input_tokens":12,"output_tokens":4,"cached_input_tokens":None}):
+            with self.subTest(usage=usage):
+                self.assertEqual(adapt_dispatch_result({"status":"returned","usage":usage})["usage_status"],"malformed")
     def test_effect_success_without_task_success_is_partial(self):
         row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True,"task_success":False,"partial_effects":["save"]}})
         self.assertEqual(row["status"],"partial"); self.assertEqual(row["partial_effects"],["save"])

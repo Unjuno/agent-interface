@@ -34,6 +34,27 @@ def _delivery_evidence(result: dict[str, Any], nested: dict[str, Any]) -> str | 
         return "confirmed_partial"
     return "confirmed" if any(value == "confirmed" for _, value in values) else None
 
+
+def _usage_status(usage: Mapping[str, Any]) -> str:
+    """Describe whether token usage is complete enough for comparison totals.
+
+    Older callers may still supply opaque usage maps such as ``{"input": 3}``;
+    those retain their historical reported/unavailable behavior. Once the
+    provider token schema is used, both input and output totals are required.
+    """
+    if not usage:
+        return "unavailable"
+    token_fields = {"input_tokens", "output_tokens", "cached_input_tokens", "reasoning_tokens"}
+    if not token_fields.intersection(usage):
+        return "reported"
+    if "input_tokens" not in usage or "output_tokens" not in usage:
+        return "partial"
+    for field in token_fields.intersection(usage):
+        value = usage[field]
+        if type(value) is not int or value < 0:
+            return "malformed"
+    return "reported"
+
 def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None=None, lifecycle: list[str]|None=None) -> dict[str,Any]:
     status=result.get("status")
     states=list(lifecycle) if lifecycle is not None else ["dispatch"]
@@ -54,7 +75,7 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
         task_success=None
     usage_value=usage if usage is not None else result.get("usage")
     usage_fields=dict(usage_value) if isinstance(usage_value, Mapping) else {}
-    usage_status="reported" if usage_fields else "unavailable"
+    usage_status=_usage_status(usage_fields)
     if delivery == "confirmed_partial":
         mapped="partial"
     elif delivery is not None and delivery not in AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES:
@@ -105,7 +126,7 @@ def _reject(reason:str,result:dict[str,Any],usage:Mapping[str,Any]|None)->dict[s
     return {"schema":"golden-v3-result-v2","program_completed":False,"task_success":None,
             "authority_granted":False,"status":"refused","partial_effects":[],"cleanup_error":None,
             "lifecycle":[],"usage":usage_fields,
-            "usage_status":"reported" if usage_fields else "unavailable",
+            "usage_status":_usage_status(usage_fields),
             "adapter_error":reason,"diagnostic":result.get("error"),
             "native_status":None,"raw_dispatch":deepcopy(result)}
 
