@@ -4,12 +4,14 @@ This is an incomplete, injectable orchestration prototype for the planned real-C
 
 The core creates a fresh allocation directory, persists conditions, starts and waits through a driver, independently attempts host/container cleanup, separately records audit/release/cleanup, and marks a late zero exit incomplete. Execution and cleanup have separate budgets; a synchronous driver that blocks indefinitely can exceed them, and audit is not yet bounded. `before_result_write_ns` explicitly excludes final result serialization/write. Startup token preparation currently exists only in memory, not in a durable pre-spawn ownership protocol. Abrupt process death, conditions/result write failure, subprocess descendants, end-to-end exact-CID reconciliation through the launcher, and partial-start reconciliation need a real design and tests before use.
 
-Run the local fake-driver checks with:
+Run the complete local fake/injected suite with:
 
 ```
-python -m unittest discover -s research/integration/calc_lifecycle_core_r574_20261102 -p test_lifecycle_launcher.py -v
-python -O -m unittest discover -s research/integration/calc_lifecycle_core_r574_20261102 -p test_lifecycle_launcher.py -v
+python -m unittest discover -s research/integration/calc_lifecycle_core_r574_20261102 -p 'test_*.py' -v
+python -O -m unittest discover -s research/integration/calc_lifecycle_core_r574_20261102 -p 'test_*.py' -v
 ```
+
+On Windows/Python 3.11.9, these commands passed 90 tests each in normal and optimized mode on 2026-11-03. The suite is simulated/injected; it is not live WSLc, GUI, input-release, or task-effect evidence.
 
 No live allocation, model call, WSLc container or GUI was run for this prototype. The existing benchmark evidence and limits remain in `../calc_interval_scorecard_r572_20261102/`. The goal remains full measured task/release/recovery comparison, not completion of this helper.
 
