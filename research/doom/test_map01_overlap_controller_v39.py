@@ -14,6 +14,79 @@ import map01_overlap_controller_v39 as controller
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_pending_observation_hard_crossing_cancels_old_cover_after_model_wait(self):
+        from observable_signal_guard_v2 import (
+            ObservableSignalGuard, ObservableSignalPolicyMonitor)
+
+        binding = {"surface": 7, "geometry": [0, 0, 640, 480]}
+        wad = "b" * 64
+
+        def health_signal(value, sequence, capture_ns):
+            return {"format": "observable-signal-v1", "status": "observed",
+                    "signal_id": "health", "value": value, "sequence": sequence,
+                    "capture_ns": capture_ns, "binding": binding, "wad_sha256": wad}
+
+        source = health_signal(73, 1, 1_000)
+        spec = {"op": "observable_signal_guard", "guard_id": "cover-health",
+                "source_sequence": 1, "signal_id": "health", "source_value": 73,
+                "hard_minimum": 67, "max_source_age_ms": 30_000,
+                "on_soft_change": "preserve_existing_policy",
+                "on_hard_change": "needs_decision", "on_unknown": "needs_decision"}
+        monitor = ObservableSignalPolicyMonitor(
+            ObservableSignalGuard(spec, source, binding),
+            type("UnusedExtractor", (), {"read": lambda self, row: None})())
+
+        def observation(value, sequence, capture_ns):
+            health = health_signal(value, sequence, capture_ns)
+            ammo = dict(health, signal_id="ammo", value=40)
+            return {"event": "typed_observation", "schema": "doom-typed-observation-v1",
+                    "sequence": sequence, "capture_ns": capture_ns,
+                    "pointer_binding": binding, "frame_size": [640, 480],
+                    "frame_rgb_sha256": "a" * 64,
+                    "typed_extraction_started_ns": capture_ns + 1,
+                    "typed_ready_ns": capture_ns + 2,
+                    "signals": {"health": health, "ammo": ammo},
+                    "artifact_published": False, "grants_input_authority": False}
+
+        incoming = queue.Queue()
+        incoming.put(observation(70, 2, 2_000))  # soft loss preserves this policy
+        incoming.put(observation(65, 3, 3_000))  # authored hard floor is crossed
+        drained = controller.drain_pending_observation_events(
+            incoming, monitor, "cover-7")
+        self.assertEqual(monitor.soft_event_count, 1)
+        self.assertEqual(drained["invalidation"]["outcome"]["status"],
+                         "HARD_INVALIDATED")
+        self.assertEqual(drained["invalidation"]["sequence"], 3)
+
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def invalidate_turn(self, handle): return {"outcome": "locally_invalidated"}
+            def abort_pending_turn(self): pass
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        terminal = {"event": "terminal", "id": "cover-7", "status": "cancelled",
+                    "release": {"event": "owner_release", "verified": True,
+                                "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": []}}
+        process, planner, pending_turn = Process(), Planner(), object()
+        interruption, closed = controller.cancel_invalidated_cover(
+            planner, pending_turn, process,
+            lambda predicate: terminal if predicate(terminal) else None,
+            "cover-7")
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+        self.assertEqual(planner.interrupted, [pending_turn])
+        self.assertEqual(interruption["status"], "interrupted")
+        self.assertIs(closed, terminal)
+        self.assertEqual(closed["release"]["keys_down"], [])
+
     def test_stale_executor_rejection_replans_from_new_image_and_hud(self):
         from test_running_action_guard_v2 import (ready as ready_admission,
             action as guarded_action, compiler)
