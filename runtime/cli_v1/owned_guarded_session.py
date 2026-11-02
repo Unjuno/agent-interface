@@ -474,7 +474,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             process = {'pid':self._process.pid, 'alive':alive,
                        'liveness_observed_monotonic_ns':observed_ns,
                        'exitcode':self._process.exitcode,
-                       'retired':self._retirement is not None,
+                       'retired':False if self._retirement is None else
+                                 True if isinstance(self._retirement, dict) and
+                                         self._retirement.get('retired') is True else None,
                        'release_confirmed':False if self._execution_unknown else None,
                        'x_client_resource_base':self._snapshot_cache.get(
                            'owner_x_client_resource_base')}
