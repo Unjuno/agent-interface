@@ -1,6 +1,9 @@
+import ctypes
 import json
+import multiprocessing
 import sys
 import tempfile
+import time
 import unittest
 
 
@@ -32,6 +35,47 @@ class Context:
         self.process = Process(target=target, args=args, daemon=daemon)
         return self.process
 
+    def RawValue(self, *args, **kwargs):
+        return multiprocessing.get_context("spawn").RawValue(*args, **kwargs)
+
+
+def _record_emission_then_block(counter, recorded):
+    from runtime.backends.win32_v1.backend import (
+        Win32Backend, _program_emissions,
+    )
+    backend = Win32Backend.__new__(Win32Backend)
+    backend.emissions = 0
+    backend._program_emission_counter = counter
+    token = _program_emissions.set(0)
+    try:
+        backend._record_emission()
+    finally:
+        _program_emissions.reset(token)
+    recorded.set()
+    while True:
+        time.sleep(1)
+
+
+class SharedEmissionCounterProcessTests(unittest.TestCase):
+    def test_count_is_readable_after_forced_writer_retirement(self):
+        context = multiprocessing.get_context("spawn")
+        counter = context.RawValue(ctypes.c_long, 0)
+        recorded = context.Event()
+        process = context.Process(target=_record_emission_then_block,
+            args=(counter, recorded), daemon=True)
+        process.start()
+        try:
+            self.assertTrue(recorded.wait(2), "child did not record its emission")
+            self.assertEqual(counter.value, 1)
+            process.terminate()
+            process.join(2)
+            self.assertFalse(process.is_alive())
+            self.assertEqual(counter.value, 1)
+        finally:
+            if process.is_alive():
+                process.terminate()
+                process.join(2)
+
 
 @unittest.skipUnless(sys.platform == "win32", "native Win32 producer factory")
 class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
@@ -62,11 +106,24 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
             self.assertIsNone(process.pid)
             self.assertEqual(process.args[1], {"fixture": 42})
             self.assertEqual(process.args[2]["operation_id"], "2" * 32)
+            self.assertEqual(process.args[4].value, 0)
             self.assertFalse(context.event.opened)
             self.assertEqual(identity_reader(), {"pid": 41,
                 "creation_time_100ns": 99})
             open_gate()
             self.assertTrue(context.event.opened)
+
+    def test_emission_lower_bound_survives_producer_retirement(self):
+        with tempfile.TemporaryDirectory() as root:
+            factory = self.factory_type({"fixture": 42}, root,
+                context=Context(), process_identity_reader=lambda _process: {
+                    "pid": 41, "creation_time_100ns": 99})
+            process, _, _ = factory(self.make_action())
+            process.alive, process.exitcode = False, -15
+            process.args[4].value = 2
+
+            self.assertEqual(
+                factory.read_program_actions_lower_bound(process), 2)
 
     def test_result_reader_checks_identity_and_consumes_one_packet_once(self):
         with tempfile.TemporaryDirectory() as root:

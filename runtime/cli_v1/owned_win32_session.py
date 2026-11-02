@@ -309,6 +309,46 @@ class OwnedWin32SessionOwner:
                     action["status"] = "unknown"
         return accepted
 
+    def capture_program_emission_progress(self, call_id, reader):
+        """Retain an OS-accepted input action lower bound, not task effect."""
+        if not callable(reader):
+            raise ValueError("program action progress reader required")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            process_handle = self._producer_handles.get(call_id)
+            operation_id = record["action"]["operation_id"]
+            generation = record["action"]["target_generation"]
+        if process_handle is None:
+            raise ValueError("caller action has no retained producer")
+        count = reader(process_handle)
+        if type(count) is not int or count < 0:
+            raise ValueError("program action lower bound must be a nonnegative integer")
+        observed_ns = time.monotonic_ns()
+        with self._lock:
+            record = self._calls.get(call_id)
+            if (record is None
+                    or record["action"]["operation_id"] != operation_id
+                    or record["action"]["target_generation"] != generation
+                    or self._producer_handles.get(call_id) is not process_handle):
+                raise ValueError("caller action changed during progress capture")
+            action = record["action"]
+            previous = action.get("program_actions_lower_bound", 0)
+            if count < previous:
+                raise ValueError("program action lower bound cannot decrease")
+            action["program_actions_lower_bound"] = count
+            action["program_actions_observed_monotonic_ns"] = observed_ns
+            if count > 0:
+                action["input_dispatched"] = True
+            result = action.get("result")
+            if type(result) is dict:
+                result["program_actions_lower_bound"] = count
+                result["program_actions_observed_monotonic_ns"] = observed_ns
+                if count > 0:
+                    result["input_dispatched"] = True
+            return deepcopy(record)
+
     def start_producer(self, call_id, producer_factory):
         """Start an injected gated producer only after custody admission.
 
