@@ -19,10 +19,20 @@ class GoldenV3AdapterTests(unittest.TestCase):
         self.assertEqual(row["usage_status"],"reported")
 
     def test_partial_token_usage_is_not_reported_as_complete(self):
-        row=adapt_dispatch_result({"status":"runtime_failed","usage":{"input_tokens":12}})
-        self.assertEqual(row["status"],"partial")
-        self.assertEqual(row["usage"],{"input_tokens":12})
-        self.assertEqual(row["usage_status"],"partial")
+        partial_usages = (
+            {"input_tokens":12},
+            {"output_tokens":4},
+            {"cached_input_tokens":3},
+            {"reasoning_tokens":1},
+            {"input_tokens":12,"cached_input_tokens":3},
+            {"output_tokens":4,"reasoning_tokens":1},
+        )
+        for usage in partial_usages:
+            with self.subTest(usage=usage):
+                row=adapt_dispatch_result({"status":"runtime_failed","usage":usage})
+                self.assertEqual(row["status"],"partial")
+                self.assertEqual(row["usage"],usage)
+                self.assertEqual(row["usage_status"],"partial")
 
     def test_complete_token_usage_survives_failed_dispatch(self):
         usage={"input_tokens":12,"output_tokens":4,"cached_input_tokens":3,"reasoning_tokens":1}
