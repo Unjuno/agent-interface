@@ -63,6 +63,32 @@ def fixture():
 
 
 class OwnerIdentityTests(unittest.TestCase):
+    def test_active_identity_query_is_bounded_and_releases_held_key(self):
+        with fixture() as (owner, lease, display, reader, events):
+            lease.deadline=time.perf_counter_ns()+5_000_000_000
+            lease.target_process_identity=(1,41,'a'*64,lease.deadline)
+            owner.call('down', lease, 'W')
+            reader.entered.clear(); reader.block = True
+            self.assertTrue(reader.entered.wait(1))
+            try:
+                limit=time.monotonic()+1.5
+                while time.monotonic()<limit and not any(
+                        row.get('event')=='owner_release' for row in owner.records):
+                    time.sleep(.01)
+                release=next(row for row in reversed(owner.records)
+                             if row.get('event')=='owner_release')
+                self.assertEqual(release['reason'], 'target_generation_invalidated')
+                self.assertTrue(release['verified'])
+                self.assertEqual(release['keys_down'], [])
+                self.assertEqual(release['keys_unknown'], [])
+                self.assertEqual(display.down, set())
+                state=owner.identity_reader.worker.snapshot()
+                self.assertTrue(state['retired'])
+                self.assertTrue(state['pending'])
+                self.assertTrue(state['thread_alive'])
+            finally:
+                reader.resume.set()
+
     def test_opt_in_delayed_input_owner_query_retires_then_quarantined_reader_finishes(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'fault.jsonl'
