@@ -53,7 +53,7 @@ def _aggregate_cost(costs, attempted_calls):
 class ModelFailure(RuntimeError):
     def __init__(self, message, *, call_id=None, thread_id=None, usage=None,
                  requested_model=None, requested_effort=None,
-                 visible_images_submitted=None, wait_ns=None,
+                 visible_images_submitted=None, wait_ns=None, cost=None,
                  typed_status="FAILED_UPSTREAM"):
         super().__init__(message)
         if typed_status not in {"DEFERRED_UPSTREAM", "FAILED_UPSTREAM",
@@ -66,6 +66,7 @@ class ModelFailure(RuntimeError):
         self.usage = usage
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
+        self.cost = cost
         self.typed_status = typed_status
 
 
@@ -102,6 +103,14 @@ def _optional_count(value, name):
     return value
 
 
+def _optional_cost(value):
+    if value is None or type(value) is bool or not isinstance(value, (int, float)):
+        return None
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    return value
+
+
 def _optional_identity(value, name):
     if value is not None and (type(value) is not str or not value):
         raise ValueError(f"nonempty {name} or unavailable required")
@@ -123,13 +132,8 @@ def _model_result(value):
     if "thread_id" in value and (type(value["thread_id"]) is not str or
                                   not value["thread_id"]):
         raise ValueError("nonempty thread id required when supplied")
-    if value["cost"] is not None and not isinstance(value["cost"], (int, float)):
-        raise ValueError("cost must be numeric or unavailable")
     result = copy.deepcopy(value)
-    if type(result["cost"]) is bool:
-        result["cost"] = None
-    if isinstance(result["cost"], float) and not math.isfinite(result["cost"]):
-        result["cost"] = None
+    result["cost"] = _optional_cost(value["cost"])
     result["usage"] = _usage(value["usage"])
     result["visible_images_submitted"] = _optional_count(
         value["visible_images_submitted"], "visible_images_submitted")
@@ -339,7 +343,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         attempt = {"attempt_id": attempt_id, "stage": name, "status": "started",
                    "started_ns": started, "completed_ns": None, "call_id": None,
                    "thread_id": None, "requested_model": None,
-                   "requested_effort": None, "usage": None,
+                   "requested_effort": None, "usage": None, "cost": None,
                    "visible_images_submitted": None,
                    "wait_ns": None, "error": None}
         attempts.append(attempt); stages[name] = {"status": "started", "reason": None}
@@ -366,7 +370,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
             metadata_error = None
             try:
                 for field in ("call_id", "thread_id", "requested_model",
-                              "requested_effort", "usage",
+                                  "requested_effort", "usage", "cost",
                               "visible_images_submitted", "wait_ns"):
                     try:
                         # A returned but malformed envelope can still contain
@@ -381,8 +385,12 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                                        "requested_effort"):
                             attempt[field] = None
                         else:
-                            attempt[field] = (_usage(value) if field == "usage" else
-                                          _optional_count(value, field))
+                            if field == "usage":
+                                attempt[field] = _usage(value)
+                            elif field == "cost":
+                                attempt[field] = _optional_cost(value)
+                            else:
+                                attempt[field] = _optional_count(value, field)
                     except ValueError as invalid_metadata:
                         if type(raw_result) is not dict:
                             metadata_error = invalid_metadata
@@ -397,6 +405,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         # or journal callback can fail. Missing timing remains explicitly None.
         attempt.update(status="completed",
                        call_id=result["call_id"], usage=result["usage"],
+                       cost=result["cost"],
                        requested_model=result["requested_model"],
                        requested_effort=result["requested_effort"],
                        visible_images_submitted=result["visible_images_submitted"],
@@ -426,7 +435,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   for field in USAGE_FIELDS}
         image_coverage = sum(row["visible_images_submitted"] is not None for row in attempts)
         wait_coverage = sum(row["wait_ns"] is not None for row in attempts)
-        costs = [row["cost"] for row in model_calls if row["cost"] is not None]
+        costs = [row["cost"] for row in attempts if row["cost"] is not None]
         if spec["route"] == "cold" and spec["coarse_origin"] == "model_produced":
             comparison = {"class": "full_cold", "omitted_stages": [],
                           "comparable_to_full_cold": True}
@@ -455,6 +464,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                       "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
                           if wait_coverage == len(attempts) else None),
                       "model_wait_coverage": wait_coverage,
+                      "cost_coverage": len(costs),
                       "cost": _aggregate_cost(costs, len(attempts)),
                       "cached_input_semantics": "subset of input_tokens; never added to input total"},
                   "phase_timings": phases,

@@ -71,11 +71,13 @@ class CalcHandoffTests(unittest.TestCase):
    state['observations']+=1;seq=state['observations']
    predicates={'field_pixels_changed':False,'field_value_matches_task':seq>1,
     'field_target_present':True,'submit_target_present':True,'submission_pixels_changed':False}
-   return {'sequence':seq,'captured_ns':time.monotonic_ns(),'surface':'calc','predicates':predicates,
+   # Runtime deadline and accepted-capture comparison use perf_counter_ns;
+   # fixture timestamps must share that clock domain on Windows too.
+   return {'sequence':seq,'captured_ns':time.perf_counter_ns(),'surface':'calc','predicates':predicates,
     'evidence_ref':f'frame{seq}','evidence_digest':f'digest{seq}'}
   def admit(payload):
    return {'eligible':True,'status':'revalidated','authorization':f'auth{payload["observation"]["sequence"]}',
-    'expected_sequence':payload['observation']['sequence'],'valid_until_ns':time.monotonic_ns()+1_000_000_000}
+    'expected_sequence':payload['observation']['sequence'],'valid_until_ns':time.perf_counter_ns()+1_000_000_000}
   def execute(_):
    state['inputs']+=1
    if state['inputs']==2:
