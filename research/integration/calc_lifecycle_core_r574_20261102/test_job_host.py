@@ -131,6 +131,10 @@ class JobHostTests(unittest.TestCase):
                 self.assertTrue(receipt['streams']['streams_closed'])
                 self.assertTrue(host.readers['stderr'].output.closed)
                 self.assertEqual(receipt['status'],'UNKNOWN')
+                retried=host.close(timeout_s=5)
+                self.assertEqual(retried['status'],'UNKNOWN')
+                self.assertTrue(retried['streams']['streams_closed'])
+                self.assertTrue(retried['process']['kernel_handles_closed'])
             finally:host.close(timeout_s=5)
 
     def test_partial_output_followed_by_timeout_is_not_success(self):
