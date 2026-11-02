@@ -25,6 +25,7 @@ def _merge_sources(out, *, process_identity=False, window_lifecycle=False,owned_
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
     additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
+    additions.append(HERE/'input_owner_generation_protocol_v1.py')
     additions.append(RESEARCH/'live_control/input_owner_rpc_v2.py')
     if owned_input_service:
         additions.extend([HERE/'session_owned_owner_backend.py',RESEARCH/'live_control/input_owner_service_adapter.py',

@@ -874,6 +874,98 @@ def cancel_invalidated_action(process, wait, identifier, guard, *, failure_root=
             return event, released, release_receipt, row, receipt
 
 
+def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequence):
+    """Rearm a retired process-identity input owner before the next decision."""
+    if (type(terminal) is not dict or terminal.get("event") != "terminal"
+            or terminal.get("status") != "cancelled"
+            or type(terminal.get("id")) is not str or not terminal["id"]):
+        raise ValueError("cancelled terminal required for owner generation rotation")
+    release = terminal.get("release")
+    if (type(release) is not dict or release.get("verified") is not True
+            or any(release.get(name) != [] for name in
+                   ("keys_down", "buttons_down", "keys_unknown", "key_state_errors"))):
+        raise ValueError("verified empty input release required for owner generation rotation")
+    reader = release.get("target_process_identity_reader")
+    if type(reader) is not dict or type(reader.get("retired")) is not bool:
+        raise ValueError("terminal lacks process-identity reader state")
+    if reader["retired"] is not True:
+        return None
+    if (type(terminal.get("input_owner_generation")) is not int
+            or type(terminal.get("input_owner_id")) is not str):
+        raise ValueError("terminal lacks input owner generation identity")
+    if type(minimum_sequence) is not int or minimum_sequence < 0:
+        raise ValueError("latest pre-rotation observation sequence required")
+    process.stdin.write(json.dumps({"op": "rotate_input_owner", "id": terminal["id"]}) + "\n")
+    process.stdin.flush()
+    receipt = wait(lambda row: row.get("terminal_id", row.get("id")) == terminal["id"]
+                   and row.get("event") in ("input_owner_generation", "rejected"))
+    if (receipt.get("event") != "input_owner_generation"
+            or type(receipt.get("generation")) is not int
+            or receipt["generation"] != terminal["input_owner_generation"] + 1
+            or receipt.get("source_invalidated") is not True
+            or receipt.get("grants_input_authority") is not False
+            or receipt.get("terminal_id") != terminal["id"]
+            or receipt.get("previous_generation") != terminal.get("input_owner_generation")
+            or receipt.get("previous_owner_id") != terminal.get("input_owner_id")
+            or type(receipt.get("owner_id")) is not str
+            or not receipt["owner_id"]):
+        raise RuntimeError("input owner generation rotation was refused or malformed")
+    refresh_deadline = time.monotonic() + 2
+    last_refusal = None
+    for attempt in range(1, 5):
+        remaining = refresh_deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        process.stdin.write(json.dumps(
+            {"op": "refresh_owner_source", "id": terminal["id"]}) + "\n")
+        process.stdin.flush()
+        first = wait(lambda row: (
+            row.get("event") == "observation"
+            and row.get("id") ==
+                f"owner-generation-source-{receipt['generation']}-{attempt}")
+            or (row.get("event") == "rejected"
+                and row.get("operation") == "refresh_owner_source"
+                and row.get("terminal_id", row.get("id")) == terminal["id"]),
+            timeout=remaining)
+        if first.get("event") == "rejected":
+            last_refusal = first
+            continue
+        observation = first
+        identity = observation.get("target_process_identity")
+        pointer = observation.get("pointer_binding")
+        if (observation.get("input_owner_generation") != receipt["generation"]
+                or type(observation.get("sequence")) is not int
+                or observation.get("sequence") <= minimum_sequence
+                or type(identity) is not dict
+                or identity.get("sequence") != observation.get("sequence")
+                or type(identity.get("digest")) is not str
+                or len(identity["digest"]) != 64
+                or type(pointer) is not dict
+                or pointer.get("surface") != identity.get("surface")):
+            raise RuntimeError("fresh post-rotation process-bound observation was not verified")
+        refreshed = wait(lambda row: row.get("event") in
+                         ("input_owner_source_refreshed", "rejected")
+                         and row.get("terminal_id", row.get("id")) == terminal["id"],
+                         timeout=max(0.001, refresh_deadline - time.monotonic()))
+        if refreshed.get("event") == "rejected":
+            last_refusal = refreshed
+            continue
+        if (refreshed.get("generation") != receipt["generation"]
+                or refreshed.get("attempt") != attempt
+                or refreshed.get("owner_id") != receipt.get("owner_id")
+                or refreshed.get("observation_id") != observation.get("id")
+                or refreshed.get("sequence") != observation.get("sequence")
+                or refreshed.get("surface") != identity.get("surface")
+                or refreshed.get("digest") != identity.get("digest")
+                or refreshed.get("source_invalidated") is not False
+                or refreshed.get("grants_input_authority") is not False):
+            raise RuntimeError("post-rotation source refresh receipt was refused or malformed")
+        return dict(receipt, source_refresh=refreshed,
+                    source_observation=observation)
+    raise RuntimeError("bounded post-rotation source refresh failed: "
+                       + str(last_refusal or "two-second budget expired"))
+
+
 def win(path):
     return subprocess.run(["wslpath", "-w", str(Path(path).resolve())],
                           check=True, capture_output=True, text=True).stdout.strip()
@@ -1860,6 +1952,7 @@ def main():
             refresh_program_ids=[]
             stale_rejection=None
             stale_recovery=None
+            owner_generation_rotations=[]
             def execute_segment(identifier,commands,role,command_indices,
                                 contingency_after=None,branch_evidence=None):
                 nonlocal program_admissions,first_accepted,final_action_admission,latest
@@ -1926,6 +2019,14 @@ def main():
                     (cancel_event,physical_release_event,release_pending_receipt,
                      terminal,guard_receipt)=cancel_invalidated_action(
                         process,wait,identifier,running_guard,failure_root=args.out)
+                    if (index + 1 < args.iterations and args.target_process_identity
+                            and not args.target_window_lifecycle
+                            and not args.owned_input_service):
+                        rotation=rotate_retired_owner_after_cancel(
+                            process, wait, terminal,
+                            minimum_sequence=latest["sequence"])
+                        if rotation is not None:
+                            owner_generation_rotations.append(dict(rotation,terminal_id=identifier))
                 else:
                     terminal=boundary
                     if terminal["status"]!="completed":raise RuntimeError(terminal)
@@ -2085,6 +2186,7 @@ def main():
                   "running_action_guard":running_action_receipt,
                   "executor_preacceptance_rejection":stale_rejection,
                   "pending_observation_recovery":recovery,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "running_action_invalidation":running_invalidation,
                   "partial_execution":partial_execution,
                   "action_refresh_program_ids":refresh_program_ids,
@@ -2130,6 +2232,7 @@ def main():
                "final_action_admission":final_action_admission,
                "running_action_guard":running_action_receipt,
                "running_action_invalidation":running_invalidation,
+               "input_owner_generation_rotations":owner_generation_rotations,
                "partial_execution":partial_execution,
                "action_refresh_program_ids":refresh_program_ids,
                "planner_cancellation_requested":planner_result.cancellation_requested,
