@@ -182,6 +182,30 @@ class DurableCalcAllocationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "terminal event/result mismatch"):
                 audit_allocation(ledger.path)
 
+    def test_condition_rewrite_is_detected_by_creation_event_anchor(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = allocation(Path(tmp))
+            run_case(ledger, caller_adapters())
+            path = ledger.path / "conditions.json"
+            manifest = json.loads(path.read_text())
+            manifest["conditions"]["model"] = "rewritten-model"
+            path.write_text(json.dumps(manifest, sort_keys=True, separators=(",", ":"),
+                                     ensure_ascii=False, allow_nan=False) + "\n")
+            with self.assertRaisesRegex(ValueError, "allocation manifest/event mismatch"):
+                audit_allocation(ledger.path)
+
+    def test_interface_binding_rewrite_is_detected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = allocation(Path(tmp))
+            run_case(ledger, caller_adapters())
+            path = ledger.path / "interface_binding.json"
+            binding = json.loads(path.read_text())
+            binding["interface_id"] = "rewritten-interface"
+            path.write_text(json.dumps(binding, sort_keys=True, separators=(",", ":"),
+                                     ensure_ascii=False, allow_nan=False) + "\n")
+            with self.assertRaisesRegex(ValueError, "interface binding event/file mismatch"):
+                audit_allocation(ledger.path)
+
 
 if __name__ == "__main__":
     unittest.main()
