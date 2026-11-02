@@ -1,6 +1,6 @@
 {
   "block": "R603",
-  "state": "partial: direct not run; Docker restart interrupted block",
+  "state": "complete: all three routes observed; direct ran after Docker Desktop restart",
   "order": [
     "fresh",
     "compiled",
@@ -86,6 +86,44 @@
       "saved_fods_sha256": "9690133a80977a05fa43119353fa950a208756cf42a0a5b46ac6ce5a27026599",
       "independent_image_bindings_verified": true,
       "compiled_recovery_verified": true
+    },
+    "direct": {
+      "status": "scoped_provider_direct_pass",
+      "task_seconds": 9.529396662,
+      "host_seconds": 16.907,
+      "turn_usage": [
+        {
+          "input_tokens": 12176,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 78,
+          "reasoning_output_tokens": 0
+        },
+        {
+          "input_tokens": 13554,
+          "cached_input_tokens": 11776,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 62,
+          "reasoning_output_tokens": 0
+        }
+      ],
+      "effect_pass": true,
+      "actions_released": {
+        "click-result.json": true,
+        "fresh-entry.json": true,
+        "fresh-save.json": true
+      },
+      "owner_close_verified": true,
+      "final_neutral": true,
+      "host_exit": 0,
+      "host_cleanup": "closed_scoped",
+      "container_exit": 0,
+      "container_cleanup": "observed_absent",
+      "private_manifest_sha256": "4eddfc64b1b4888cf57c0fceb2a7e1f2955da95fbd997785a481499818bea939",
+      "saved_fods_sha256": "7e70b4a207691492cccbf1d5a1e749190349711d6c278943cb329c0a7fb032fc",
+      "independent_image_bindings_verified": true,
+      "docker_engine_version": "29.8.1",
+      "docker_restart_intervened": true
     }
   }
 }
