@@ -62,7 +62,10 @@ class CostInvocationComposition(unittest.TestCase):
                     with self.subTest(stage=stage,known=known,terminal=terminal):
                         row=cell('healthy',terminal,[.125,.25],stage,known);self.assertIsNone(row['escaped']);r=row['result'];attempted=1 if stage=='coarse' else 2
                         self.assertEqual(row['counts'],{'execute':0,'verify':0,'model':attempted,'terminal':1})
-                        self.assertEqual(r['input_authority'],'none');self.assertIsNone(r['delivery']);self.assertIsNone(r['execution_progress']);self.assertIsNone(r['task_effect']);self.assertIsNone(r['accounting']['cost'])
+                        self.assertEqual(r['input_authority'],'none');self.assertIsNone(r['delivery']);self.assertIsNone(r['execution_progress']);self.assertIsNone(r['task_effect'])
                         self.assertEqual(r['accounting']['attempted_calls'],attempted);self.assertEqual(r['accounting']['completed_calls'],attempted-1)
+                        expected_cost = ((0.125 if stage == 'target' else 0) + 1.25) if known else None
+                        self.assertEqual(r['accounting']['cost'], expected_cost)
+                        self.assertEqual(r['accounting']['cost_coverage'], (attempted - 1 + int(known)))
                         self.assertEqual(r['outcome'],'CALLER_FAILED' if terminal else 'TASK_DEFERRED')
                         json.dumps(r,allow_nan=False)
