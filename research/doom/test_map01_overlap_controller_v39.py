@@ -626,6 +626,36 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIn('"planner_turns":len(decisions)', source[report_path - 5000:report_path])
         self.assertIn('x["final_action_admission"]["status"] for x in decisions', source[report_path - 3000:report_path])
 
+    def test_invalidated_planner_answer_is_discarded_before_motor_admission(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        loop = source.index("for index in range(args.iterations):", execute)
+        planner_source = source.index("action_source_observation=dict(latest)", loop)
+        invalidation = source.index("if invalidation is not None:", planner_source)
+        recover = source.index("recover_pending_observation_backlog(", invalidation)
+        fresh_source = source.index('latest = recovery["latest"]', recover)
+        discard = source.index('"model_action_discarded":True', fresh_source)
+        discard_reason = source.index(
+            '"discard_reason":"policy_dependency_invalidated"', discard)
+        continue_to_replan = source.index("continue", discard)
+        answer_gate = source.index("if not planner_result.answer_eligible:", continue_to_replan)
+        action_validation = source.index("validate_action(action)", continue_to_replan)
+        action_admission = source.index(
+            'failure_cleanup.set_stage("action_admission")', action_validation)
+        compile_for_input = source.index("steps=compile_commands(commands)", action_admission)
+
+        self.assertLess(loop, planner_source)
+        self.assertLess(planner_source, invalidation)
+        self.assertLess(invalidation, recover)
+        self.assertLess(recover, fresh_source)
+        self.assertLess(fresh_source, discard)
+        self.assertLess(discard, discard_reason)
+        self.assertLess(discard, continue_to_replan)
+        self.assertLess(continue_to_replan, answer_gate)
+        self.assertLess(answer_gate, action_validation)
+        self.assertLess(action_validation, action_admission)
+        self.assertLess(action_admission, compile_for_input)
+
     def test_production_initial_cover_rejection_branch_uses_caller_reset(self):
         source = Path(controller.__file__).read_text(encoding="utf-8")
         execute = source.index("def main(")
