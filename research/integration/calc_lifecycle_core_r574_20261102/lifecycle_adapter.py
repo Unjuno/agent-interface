@@ -127,11 +127,13 @@ class WslcLifecycleAdapter:
         receipt = container.reconcile(timeout_s=timeout_s)
         if not isinstance(receipt, dict):
             return {'status': 'UNKNOWN', 'reconcile': {'status': 'UNKNOWN'}}
-        absent = any(
-            isinstance(receipt.get(name), dict)
-            and receipt[name].get('status') == 'observed_absent'
-            and receipt.get(name + '_returned_late') is False
-            for name in ('stop', 'remove'))
+        # The second reconciliation pass follows stop and may reveal that the
+        # exact container is still present or has reappeared. Only its final
+        # exact-ID absence observation can confirm cleanup for this attempt.
+        final_remove = receipt.get('remove')
+        absent = (isinstance(final_remove, dict)
+                  and final_remove.get('status') == 'observed_absent'
+                  and receipt.get('remove_returned_late') is False)
         return {'status': 'confirmed' if absent else 'UNKNOWN',
                 'reconcile': receipt}
 

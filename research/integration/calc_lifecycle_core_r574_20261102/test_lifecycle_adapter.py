@@ -66,6 +66,24 @@ class FakeWslc:
 
 
 class LifecycleAdapterValidationTests(unittest.TestCase):
+    def test_cleanup_requires_final_exact_id_absence_not_stale_stop_receipt(self):
+        class ReappearedContainer:
+            def reconcile(self, *, timeout_s):
+                return {
+                    'stop': {'status': 'observed_absent'},
+                    'stop_returned_late': False,
+                    'remove': {'status': 'UNKNOWN', 'observed_running': True},
+                    'remove_returned_late': False,
+                }
+
+        adapter = WslcLifecycleAdapter(
+            host_argv=[sys.executable, '-c', 'pass'],
+            image=IMAGE, container_command=['python3', '-c', 'pass'],
+            audit=lambda root: {'status': 'failed'},
+        )
+        result = adapter.cleanup_container(ReappearedContainer(), 1)
+        self.assertEqual(result['status'], 'UNKNOWN')
+
     def test_mounts_cannot_escape_or_expose_the_attempt_root(self):
         for mount_path_kind in ('outside', 'root'):
             with self.subTest(mount_path=mount_path_kind), tempfile.TemporaryDirectory() as temp:
