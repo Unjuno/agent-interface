@@ -1,9 +1,9 @@
 # Issue #57: public Calc profile composition boundary
 
-Status: implementation contract and test matrix only. This is not a live result,
-an efficiency result, or permission to consume another allocation. It uses the
-already-retained G10 OCR graph and Calc public input-guard cases as design input;
-it does not edit or replay their raw evidence.
+Status: implementation contract plus a growing offline composition matrix. This
+is not a live result, an efficiency result, or permission to consume another
+allocation. It uses the already-retained G10 OCR graph and Calc public input-
+guard cases as design input; it does not edit or replay their raw evidence.
 
 ## Chosen composition
 
@@ -29,28 +29,41 @@ client-selected code or paths, automatic remint/activation, persistent sensors,
 new model calls inside the owner, and Docker/WSLc execution from this adapter.
 This profile does not claim a general Calc controller or a successful transfer.
 
-## Existing evidence and missing composition check
+## Existing evidence and remaining composition matrix
 
 | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
 | --- | --- | --- |
-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; Calc public-adapter wrong/unknown graph cases | Through the registered MCP profile: wrong, unknown, ambiguous OCR refuses Save, retains entered prefix, and never replays it. |
-| #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; outer recorder in `research/integration/standard_mcp_task_ledger_57_v1` | Join failed, stopped, repaired and successful model attempts to profile call receipts; token fields preserve partial/unavailable semantics. |
+| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown OCR path below | Add an ambiguous OCR case and model-wait dependency mutation through the composed registered profile. |
+| #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
 | #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
 | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
 | Scope, lease, cancellation, release, bounded progress, uncertain delivery/no replay | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; `runtime/cli_v1/test_mcp_owned_process.py`; retained R04-R06 and S27-S28 packets | Cancel at partial input and blocked OCR; keep the old call unknown, verify release separately, prohibit suffix replay, then repair only from a new observation/attempt. |
 | Independent task effect and collateral | G10's separately parsed saved XML; `runtime/results/calc-public-input-guard-live-01/FINAL_REPORT.md` | Public post-close verifier scores the exact task-owned artifact. Correct file, wrong value, extra cell, missing file and unreadable file each produce distinct typed result; graph success never substitutes. |
 | #12/#46 comparison integrity | Existing #57 frozen and audited Calc three-arm, varied-value, temporary-obstruction and lifecycle packets | Freeze task/model/settings, cold/warm/invalidation/repair arms, allowed attempts, order, endpoints, and stop rule. Keep past small-sample blocks separate. |
 
-The single missing composed-path check is: **a public owned-process MCP call
-selects the registered profile, executes the bounded graph with its trusted OCR
-input guard, terminates neutrally, then a distinct verifier scores the exact
-saved artifact by call ID, while the outer all-attempt ledger joins actual
-provider usage without changing the graph's `task_success=null`.** Component
-unit tests and prior direct-owner live cases do not establish this connection.
+The registered-profile composition path now exists in
+`research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score`.
+It sends a synthetic App Server generation through the recorded public Relay to
+the registered Calc profile, verifies neutral close/release, scores parsed FODS
+cells independently, and keeps the runtime graph verdict separate. The test
+also records a timed-out schema-preflight attempt with partial raw bytes and
+unavailable usage before the successful attempt; no MCP call is emitted for the
+timeout. It then sends wrong-result and unknown-result OCR runs through the same
+registered profile and public Relay. Both retain one released input transition,
+stop before Save, return `SAFE_YIELD`, and deny replay. The four-attempt joined
+summary remains complete while token totals stay unknown because the timeout
+usage is unavailable. The injected planner echoes supplied arguments and
+reports synthetic usage, so this proves a local composition contract only.
+
+Remaining offline work is the composed ambiguous-OCR case, dependency
+invalidation after provider wait, and one bounded new-attempt repair case with
+all receipts joined. Existing direct-owner, Fake X and recorder tests cover
+parts separately; they do not establish these combined Calc-profile paths. No
+real provider reconciliation or live efficiency comparison exists.
 
 ## Gate before any new live comparison
 
-Implement and pass the composed-path offline suite first. Freeze code/model,
+Complete the remaining composed-path offline matrix first. Freeze code/model,
 task values, cold and warm repetitions, invalidation and repair conditions,
 all-attempt accounting, timing boundaries and RETAIN/HOLD/REJECT thresholds
 before requesting any new allocation. Existing live allocations remain

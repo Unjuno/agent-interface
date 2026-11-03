@@ -1,0 +1,504 @@
+{
+  "request": {
+    "action": "enter",
+    "operation": "enter_pair",
+    "authorization": "13f81fa323fd4948ad9a7dd85f54ae34",
+    "expected_sequence": 2,
+    "valid_until_ns": 6883968272450
+  },
+  "action_id": "action-08f43570a2df4345864e53dd61da38e3",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 6882518139604,
+      "ended_ns": 6882931244193,
+      "emissions": 16,
+      "program_emissions": 16,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 6882931241657
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 1,
+          "started_ns": 6882542394015,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 6882543463271
+        },
+        {
+          "operation_index": 4,
+          "requested_ms": 1,
+          "started_ns": 6882568575451,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 6882569657566
+        },
+        {
+          "operation_index": 7,
+          "requested_ms": 100,
+          "started_ns": 6882622942309,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 6882723094783
+        },
+        {
+          "operation_index": 9,
+          "requested_ms": 1,
+          "started_ns": 6882754137853,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 6882755262682
+        },
+        {
+          "operation_index": 11,
+          "requested_ms": 1,
+          "started_ns": 6882779147167,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 6882780234486
+        },
+        {
+          "operation_index": 14,
+          "requested_ms": 100,
+          "started_ns": 6882830896483,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 6882931025346
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 3,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 3,
+        "valid_until_ns": 6883994389526,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:7",
+        "observation_sequence": 4,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 4,
+        "valid_until_ns": 6884018431675,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:3",
+        "observation_sequence": 5,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 5,
+        "valid_until_ns": 6884043693210,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:1",
+        "observation_sequence": 6,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 6,
+        "valid_until_ns": 6884069905663,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:Return",
+        "observation_sequence": 7,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 7,
+        "valid_until_ns": 6884093270447,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:8",
+        "observation_sequence": 8,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 8,
+        "valid_until_ns": 6884225160103,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:6",
+        "observation_sequence": 9,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 9,
+        "valid_until_ns": 6884255569069,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:4",
+        "observation_sequence": 10,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 10,
+        "valid_until_ns": 6884280681442,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:Return",
+        "observation_sequence": 11,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "calc_entry",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "calc_entry",
+        "point": [
+          16,
+          31
+        ],
+        "observed_box": [
+          4,
+          23,
+          24,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 11,
+        "valid_until_ns": 6884304509509,
+        "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 3,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882508866847,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882517913660
+      },
+      {
+        "stage": "before_key_press:7",
+        "observation_sequence": 4,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882532654631,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882541896797
+      },
+      {
+        "stage": "before_key_press:3",
+        "observation_sequence": 5,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882558705004,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882567935783
+      },
+      {
+        "stage": "before_key_press:1",
+        "observation_sequence": 6,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882584044586,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882592553019
+      },
+      {
+        "stage": "before_key_press:Return",
+        "observation_sequence": 7,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882607492966,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882618079853
+      },
+      {
+        "stage": "before_key_press:8",
+        "observation_sequence": 8,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882743625076,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882753511538
+      },
+      {
+        "stage": "before_key_press:6",
+        "observation_sequence": 9,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882769654050,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882778383968
+      },
+      {
+        "stage": "before_key_press:4",
+        "observation_sequence": 10,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882795281450,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882803779386
+      },
+      {
+        "stage": "before_key_press:Return",
+        "observation_sequence": 11,
+        "scope": "native-x11:283be261139d4f9ea801f322cc1df8c9",
+        "binding_revision": 0,
+        "started_ns": 6882819029273,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 6882827849441
+      }
+    ]
+  }
+}

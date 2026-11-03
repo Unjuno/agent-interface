@@ -1,0 +1,266 @@
+diff --git a/research/integration/issue57_calc_public_profile_plan_20261103/README.md b/research/integration/issue57_calc_public_profile_plan_20261103/README.md
+index bbeef249666..f42b267b098 100644
+--- a/research/integration/issue57_calc_public_profile_plan_20261103/README.md
++++ b/research/integration/issue57_calc_public_profile_plan_20261103/README.md
+@@ -1,9 +1,9 @@
+ # Issue #57: public Calc profile composition boundary
+ 
+-Status: implementation contract and test matrix only. This is not a live result,
+-an efficiency result, or permission to consume another allocation. It uses the
+-already-retained G10 OCR graph and Calc public input-guard cases as design input;
+-it does not edit or replay their raw evidence.
++Status: implementation contract plus a growing offline composition matrix. This
++is not a live result, an efficiency result, or permission to consume another
++allocation. It uses the already-retained G10 OCR graph and Calc public input-
++guard cases as design input; it does not edit or replay their raw evidence.
+ 
+ ## Chosen composition
+ 
+@@ -29,28 +29,41 @@ client-selected code or paths, automatic remint/activation, persistent sensors,
+ new model calls inside the owner, and Docker/WSLc execution from this adapter.
+ This profile does not claim a general Calc controller or a successful transfer.
+ 
+-## Existing evidence and missing composition check
++## Existing evidence and remaining composition matrix
+ 
+ | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
+ | --- | --- | --- |
+-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; Calc public-adapter wrong/unknown graph cases | Through the registered MCP profile: wrong, unknown, ambiguous OCR refuses Save, retains entered prefix, and never replays it. |
+-| #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; outer recorder in `research/integration/standard_mcp_task_ledger_57_v1` | Join failed, stopped, repaired and successful model attempts to profile call receipts; token fields preserve partial/unavailable semantics. |
++| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown OCR path below | Add an ambiguous OCR case and model-wait dependency mutation through the composed registered profile. |
++| #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
+ | #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
+ | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
+ | Scope, lease, cancellation, release, bounded progress, uncertain delivery/no replay | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; `runtime/cli_v1/test_mcp_owned_process.py`; retained R04-R06 and S27-S28 packets | Cancel at partial input and blocked OCR; keep the old call unknown, verify release separately, prohibit suffix replay, then repair only from a new observation/attempt. |
+ | Independent task effect and collateral | G10's separately parsed saved XML; `runtime/results/calc-public-input-guard-live-01/FINAL_REPORT.md` | Public post-close verifier scores the exact task-owned artifact. Correct file, wrong value, extra cell, missing file and unreadable file each produce distinct typed result; graph success never substitutes. |
+ | #12/#46 comparison integrity | Existing #57 frozen and audited Calc three-arm, varied-value, temporary-obstruction and lifecycle packets | Freeze task/model/settings, cold/warm/invalidation/repair arms, allowed attempts, order, endpoints, and stop rule. Keep past small-sample blocks separate. |
+ 
+-The single missing composed-path check is: **a public owned-process MCP call
+-selects the registered profile, executes the bounded graph with its trusted OCR
+-input guard, terminates neutrally, then a distinct verifier scores the exact
+-saved artifact by call ID, while the outer all-attempt ledger joins actual
+-provider usage without changing the graph's `task_success=null`.** Component
+-unit tests and prior direct-owner live cases do not establish this connection.
++The registered-profile composition path now exists in
++`research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score`.
++It sends a synthetic App Server generation through the recorded public Relay to
++the registered Calc profile, verifies neutral close/release, scores parsed FODS
++cells independently, and keeps the runtime graph verdict separate. The test
++also records a timed-out schema-preflight attempt with partial raw bytes and
++unavailable usage before the successful attempt; no MCP call is emitted for the
++timeout. It then sends wrong-result and unknown-result OCR runs through the same
++registered profile and public Relay. Both retain one released input transition,
++stop before Save, return `SAFE_YIELD`, and deny replay. The four-attempt joined
++summary remains complete while token totals stay unknown because the timeout
++usage is unavailable. The injected planner echoes supplied arguments and
++reports synthetic usage, so this proves a local composition contract only.
++
++Remaining offline work is the composed ambiguous-OCR case, dependency
++invalidation after provider wait, and one bounded new-attempt repair case with
++all receipts joined. Existing direct-owner, Fake X and recorder tests cover
++parts separately; they do not establish these combined Calc-profile paths. No
++real provider reconciliation or live efficiency comparison exists.
+ 
+ ## Gate before any new live comparison
+ 
+-Implement and pass the composed-path offline suite first. Freeze code/model,
++Complete the remaining composed-path offline matrix first. Freeze code/model,
+ task values, cold and warm repetitions, invalidation and repair conditions,
+ all-attempt accounting, timing boundaries and RETAIN/HOLD/REJECT thresholds
+ before requesting any new allocation. Existing live allocations remain
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+index f6c741d0f64..aadf034925f 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+@@ -1117,7 +1117,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                 _preserve_fake_x_run("provider-mcp-stale-generation", root)
+ 
+     async def test_fake_app_server_generation_is_recorded_through_calc_profile_and_score(self):
+-        """Compose fake App Server, Calc public MCP, and an independent FODS score."""
++        """Compose provider accounting, Calc public MCP, and an independent FODS score."""
+         import xml.etree.ElementTree as ET
+         import runtime.cli_v1.test_mcp_owned_process as calc_tests
+ 
+@@ -1139,9 +1139,13 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+             protocol_journal.write_text(
+                 '{"direction":"received","message":{"method":"thread/started"}}\n',
+                 encoding="utf-8")
+-            counts = {"tool": 0, "generation": 0}
++            counts = {"tool": 0, "successful_generation": 0,
++                      "provider_attempts": 0, "preflight_timeout_recorded": False,
++                      "routed_profile_attempt_ids": set()}
+             observed = {"artifact": None, "artifact_bytes": None,
+-                        "verification": None, "close": None}
++                        "verification": None, "close": None,
++                        "negative_profile_results": {}}
++            test_case = self
+ 
+             class ServerClient:
+                 def __init__(self, server):
+@@ -1165,18 +1169,46 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                     async def call_tool(self, name, arguments):
+                         counts["tool"] += 1
+                         call_id = f"calc-tool-{counts['tool']:04d}"
++                        attempt_id = arguments.get("attempt_id")
+                         if (name == "interface_guarded_calc_compiled" and
+-                                arguments.get("attempt_id") == "calc-offline-e2e-01" and
+-                                counts["generation"] == 0):
+-                            counts["generation"] += 1
++                                isinstance(attempt_id, str) and
++                                attempt_id.startswith("calc-offline-") and
++                                attempt_id not in counts["routed_profile_attempt_ids"]):
++                            counts["routed_profile_attempt_ids"].add(attempt_id)
++                            if (attempt_id == "calc-offline-e2e-01" and
++                                    not counts["preflight_timeout_recorded"]):
++                                counts["preflight_timeout_recorded"] = True
++                                counts["provider_attempts"] += 1
++
++                                class PreflightTimeout(TimeoutError):
++                                    response_bytes = b'{"phase":"schema-preflight","partial":'
++
++                                async def timed_out_preflight():
++                                    raise PreflightTimeout(
++                                        "synthetic schema preflight timeout")
++
++                                with test_case.assertRaises(PreflightTimeout):
++                                    await caller.invoke_provider(
++                                        "calc-provider-preflight-00",
++                                        b'{"task":"calc-save","phase":"schema-preflight"}',
++                                        timed_out_preflight)
++
++                            counts["successful_generation"] += 1
++                            counts["provider_attempts"] += 1
++                            provider_attempt_id = (
++                                f"calc-provider-attempt-{counts['provider_attempts']:02d}")
++                            provider_tool_call_id = (
++                                f"calc-provider-tool-{counts['provider_attempts']:02d}")
+                             answer = json.dumps(
+                                 arguments, sort_keys=True, separators=(",", ":"))
+                             usage = {"last": {
+                                 "inputTokens": 42, "cachedInputTokens": 30,
+                                 "cacheWriteInputTokens": 2, "outputTokens": 12,
+                                 "reasoningOutputTokens": 3}}
+-                            thread_id = "calc-fake-thread"
+-                            turn_id = "calc-fake-turn"
++                            thread_id = (
++                                f"calc-fake-thread-{counts['successful_generation']:02d}")
++                            turn_id = (
++                                f"calc-fake-turn-{counts['successful_generation']:02d}")
+ 
+                             class FakePlanner:
+                                 def begin_turn(self, prompt, *, output_schema,
+@@ -1219,7 +1251,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                                 model="fake-offline-model", effort="low")
+                             request_bytes, provider_call = build_model_provider_call(
+                                 model_call=model_call.call,
+-                                root=provider_call_root,
++                                root=provider_call_root / provider_attempt_id,
+                                 prompt="Execute the supplied registered Calc task request.",
+                                 image=image_path, contract="registered-calc-profile",
+                                 workspace=workspace)
+@@ -1232,13 +1264,18 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                                     turn_id=backend["turn_id"])
+ 
+                             joined = await caller.invoke_generation_to_tool(
+-                                "calc-provider-attempt-01", request_bytes,
+-                                provider_call, "calc-provider-tool-01", name,
++                                provider_attempt_id, request_bytes,
++                                provider_call, provider_tool_call_id, name,
+                                 prepare_arguments)
+                             if not joined["tool_call_submitted"]:
+                                 raise AssertionError(joined)
++                            response_text = joined["tool_response"]["result"][
++                                "content"][0]["text"]
++                            if attempt_id != "calc-offline-e2e-01":
++                                observed["negative_profile_results"][attempt_id] = (
++                                    json.loads(response_text))
+                             return SimpleNamespace(content=[SimpleNamespace(
+-                                text=joined["tool_response"]["result"]["content"][0]["text"])])
++                                text=response_text)])
+ 
+                         request = {"id": counts["tool"], "tool": name,
+                                    "arguments": arguments}
+@@ -1281,9 +1318,30 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                 case = calc_tests.OwnedProcessMCPTests(
+                     "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
+                 await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
++                negative_case = calc_tests.OwnedProcessMCPTests(
++                    "test_registered_calc_profile_stops_on_wrong_or_unknown_ocr")
++                await negative_case.test_registered_calc_profile_stops_on_wrong_or_unknown_ocr()
+ 
+-            self.assertEqual(counts["generation"], 1)
++            self.assertEqual(counts["successful_generation"], 3)
++            self.assertEqual(counts["provider_attempts"], 4)
+             self.assertGreater(counts["tool"], 1)
++            self.assertEqual(set(observed["negative_profile_results"]), {
++                "calc-offline-wrong-after-input",
++                "calc-offline-unknown-after-input"})
++            for attempt_id, expected_reason in (
++                    ("calc-offline-wrong-after-input", "effect_failed"),
++                    ("calc-offline-unknown-after-input", "effect_unavailable")):
++                negative = observed["negative_profile_results"][attempt_id]
++                self.assertEqual(negative["method_receipt"]["outcome"],
++                                 "SAFE_YIELD", negative)
++                self.assertEqual(negative["method_receipt"]["reason"],
++                                 expected_reason, negative)
++                self.assertEqual(negative["method_receipt"]["completed_transitions"],
++                                 1, negative)
++                self.assertTrue(all(row["release_verified"] is True for row in
++                                    negative["method_receipt"]["transitions"]), negative)
++                self.assertIsNone(negative["task_success"], negative)
++                self.assertFalse(negative["replay_allowed"], negative)
+             self.assertTrue(observed["verification"]["task_success"])
+             self.assertTrue(observed["close"]["release_confirmed"])
+             artifact_bytes = observed["artifact_bytes"]
+@@ -1301,13 +1359,15 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+             receipt = recorder.reconcile()
+             summary = summarize(receipt["events"])
+             self.assertTrue(receipt["complete"])
+-            self.assertEqual(summary["model_attempt_count"], 1)
++            self.assertEqual(summary["model_attempt_count"], 4)
+             self.assertEqual(summary["tool_call_count"], counts["tool"])
+-            self.assertEqual(summary["input_tokens"], 42)
+-            self.assertEqual(summary["output_tokens"], 12)
+-            self.assertEqual(summary["cached_input_tokens"], 30)
+-            self.assertEqual(summary["cache_write_input_tokens"], 2)
+-            self.assertEqual(summary["reasoning_output_tokens"], 3)
++            self.assertEqual(summary["usage_status"], "incomplete")
++            self.assertIsNone(summary["input_tokens"])
++            self.assertIsNone(summary["output_tokens"])
++            self.assertEqual(summary["detailed_usage_status"], "incomplete")
++            self.assertIsNone(summary["cached_input_tokens"])
++            self.assertIsNone(summary["cache_write_input_tokens"])
++            self.assertIsNone(summary["reasoning_output_tokens"])
+             self.assertIsNone(summary["image_input_tokens"])
+             self.assertTrue(summary["task_success"])
+ 
+@@ -1325,8 +1385,28 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                     json.dumps({
+                         "schema": "agent-interface/fake-appserver-calc-boundary-v1",
+                         "provider": "synthetic_fake_planner_echoes_supplied_arguments",
+-                        "model_generations": counts["generation"],
++                        "model_generations": counts["successful_generation"],
++                        "provider_attempts": counts["provider_attempts"],
+                         "public_mcp_tool_calls": counts["tool"],
++                        "model_attempts": [
++                            {"attempt_id": row["attempt_id"],
++                             "status": row["status"],
++                             "usage_status": row["usage"]["status"]}
++                            for row in receipt["events"]
++                            if row["kind"] == "model_attempt"],
++                        "negative_profile_results": {
++                            attempt_id: {
++                                "outcome": result["method_receipt"]["outcome"],
++                                "reason": result["method_receipt"]["reason"],
++                                "completed_transitions": result["method_receipt"][
++                                    "completed_transitions"],
++                                "released_transitions": [
++                                    row["release_verified"] for row in
++                                    result["method_receipt"]["transitions"]],
++                                "task_success": result["task_success"],
++                                "replay_allowed": result["replay_allowed"]}
++                            for attempt_id, result in
++                            observed["negative_profile_results"].items()},
+                         "task_effect": observed["verification"],
+                         "owner_close": observed["close"],
+                         "independent_stdlib_fods_values": scored_values,

@@ -1,0 +1,189 @@
+{
+  "independent_stdlib_fods_values": [
+    "731",
+    "864"
+  ],
+  "independent_task_success": true,
+  "limits": [
+    "FakeX_only",
+    "no_live_provider",
+    "no_live_Calc",
+    "no_efficiency_comparison"
+  ],
+  "model_attempts": [
+    {
+      "attempt_id": "calc-provider-preflight-00",
+      "status": "timeout",
+      "usage_status": "unavailable"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-02",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-03",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-04",
+      "status": "completed",
+      "usage_status": "reported"
+    }
+  ],
+  "model_generations": 3,
+  "negative_profile_results": {
+    "calc-offline-unknown-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "calc-offline-wrong-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    }
+  },
+  "owner_close": {
+    "authority_granted": false,
+    "call_directory": "/tmp/tmpgbuyrj37/38528e4a355f4aad87add20dadee2150",
+    "call_id": "38528e4a355f4aad87add20dadee2150",
+    "connection_close_attempted": true,
+    "owner_process_exitcode": 0,
+    "owner_process_retired": true,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 6934209558426,
+      "verified": true
+    },
+    "release_attempted": true,
+    "release_confirmed": true,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:516c1895c6ea4bd6b6326fa3e76da909",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 13,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 6934259537145,
+        "pid": 22,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 22,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": false,
+      "session_id": "6b15e3ddee8e445388f37728da1313d4",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "session_id": "6b15e3ddee8e445388f37728da1313d4",
+    "status": "closed",
+    "verified": true
+  },
+  "provider": "synthetic_fake_planner_echoes_supplied_arguments",
+  "provider_attempts": 4,
+  "public_mcp_tool_calls": 24,
+  "schema": "agent-interface/fake-appserver-calc-boundary-v1",
+  "task_effect": {
+    "attempt_id": "calc-offline-e2e-01",
+    "call_id": "c16b0ab6bca54aadb560ceeea63afb8d",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "guarded_x11_calc",
+    "status": "verified",
+    "task_effect": {
+      "artifact_bytes": 511,
+      "artifact_identity": [
+        87,
+        182941,
+        511,
+        1793699657973958945,
+        1793699657973958945
+      ],
+      "artifact_sha256": "48163f1ffe7808bf18719c3d0085265fbf960de40b91c8dfbec3ac1a0fc4c450",
+      "attempt_id": "calc-offline-e2e-01",
+      "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+      "parsed_effect": {
+        "artifact_bytes": 511,
+        "artifact_sha256": "48163f1ffe7808bf18719c3d0085265fbf960de40b91c8dfbec3ac1a0fc4c450",
+        "cells": {
+          "A1": "731",
+          "A2": "864"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "profile_id": "calc-ocr-save-v1",
+      "reason": "registered_calc_saved_artifact_verified",
+      "replay_allowed": false,
+      "save_controller": {
+        "attempt_id": "calc-offline-e2e-01",
+        "call_id": "f38dad3ddc0e4731950b131a866b4254",
+        "method_receipt_sha256": "123e4a1e876a776d7bc0af04d38ccacc453c8570c0d737d595aaa7f85713a8a4",
+        "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+        "profile_id": "calc-ocr-save-v1",
+        "save_action_id": "action-9caf64b196a44124ba9487515be4f60c",
+        "save_request_id": "a655a5130e91adc93563b5c9350cd83c",
+        "save_request_monotonic_ns": 6929160753732,
+        "schema": "agent-interface/calc-registered-save-controller-v1",
+        "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "save_request_id": "a655a5130e91adc93563b5c9350cd83c",
+      "save_request_monotonic_ns": 6929160753732,
+      "status": "verified",
+      "task_success": true,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "task_success": true
+  }
+}

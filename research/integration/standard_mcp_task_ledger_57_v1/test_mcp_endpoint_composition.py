@@ -1117,7 +1117,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 _preserve_fake_x_run("provider-mcp-stale-generation", root)
 
     async def test_fake_app_server_generation_is_recorded_through_calc_profile_and_score(self):
-        """Compose fake App Server, Calc public MCP, and an independent FODS score."""
+        """Compose provider accounting, Calc public MCP, and an independent FODS score."""
         import xml.etree.ElementTree as ET
         import runtime.cli_v1.test_mcp_owned_process as calc_tests
 
@@ -1139,9 +1139,13 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             protocol_journal.write_text(
                 '{"direction":"received","message":{"method":"thread/started"}}\n',
                 encoding="utf-8")
-            counts = {"tool": 0, "generation": 0}
+            counts = {"tool": 0, "successful_generation": 0,
+                      "provider_attempts": 0, "preflight_timeout_recorded": False,
+                      "routed_profile_attempt_ids": set()}
             observed = {"artifact": None, "artifact_bytes": None,
-                        "verification": None, "close": None}
+                        "verification": None, "close": None,
+                        "negative_profile_results": {}}
+            test_case = self
 
             class ServerClient:
                 def __init__(self, server):
@@ -1165,18 +1169,46 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     async def call_tool(self, name, arguments):
                         counts["tool"] += 1
                         call_id = f"calc-tool-{counts['tool']:04d}"
+                        attempt_id = arguments.get("attempt_id")
                         if (name == "interface_guarded_calc_compiled" and
-                                arguments.get("attempt_id") == "calc-offline-e2e-01" and
-                                counts["generation"] == 0):
-                            counts["generation"] += 1
+                                isinstance(attempt_id, str) and
+                                attempt_id.startswith("calc-offline-") and
+                                attempt_id not in counts["routed_profile_attempt_ids"]):
+                            counts["routed_profile_attempt_ids"].add(attempt_id)
+                            if (attempt_id == "calc-offline-e2e-01" and
+                                    not counts["preflight_timeout_recorded"]):
+                                counts["preflight_timeout_recorded"] = True
+                                counts["provider_attempts"] += 1
+
+                                class PreflightTimeout(TimeoutError):
+                                    response_bytes = b'{"phase":"schema-preflight","partial":'
+
+                                async def timed_out_preflight():
+                                    raise PreflightTimeout(
+                                        "synthetic schema preflight timeout")
+
+                                with test_case.assertRaises(PreflightTimeout):
+                                    await caller.invoke_provider(
+                                        "calc-provider-preflight-00",
+                                        b'{"task":"calc-save","phase":"schema-preflight"}',
+                                        timed_out_preflight)
+
+                            counts["successful_generation"] += 1
+                            counts["provider_attempts"] += 1
+                            provider_attempt_id = (
+                                f"calc-provider-attempt-{counts['provider_attempts']:02d}")
+                            provider_tool_call_id = (
+                                f"calc-provider-tool-{counts['provider_attempts']:02d}")
                             answer = json.dumps(
                                 arguments, sort_keys=True, separators=(",", ":"))
                             usage = {"last": {
                                 "inputTokens": 42, "cachedInputTokens": 30,
                                 "cacheWriteInputTokens": 2, "outputTokens": 12,
                                 "reasoningOutputTokens": 3}}
-                            thread_id = "calc-fake-thread"
-                            turn_id = "calc-fake-turn"
+                            thread_id = (
+                                f"calc-fake-thread-{counts['successful_generation']:02d}")
+                            turn_id = (
+                                f"calc-fake-turn-{counts['successful_generation']:02d}")
 
                             class FakePlanner:
                                 def begin_turn(self, prompt, *, output_schema,
@@ -1219,7 +1251,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                 model="fake-offline-model", effort="low")
                             request_bytes, provider_call = build_model_provider_call(
                                 model_call=model_call.call,
-                                root=provider_call_root,
+                                root=provider_call_root / provider_attempt_id,
                                 prompt="Execute the supplied registered Calc task request.",
                                 image=image_path, contract="registered-calc-profile",
                                 workspace=workspace)
@@ -1232,13 +1264,18 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                     turn_id=backend["turn_id"])
 
                             joined = await caller.invoke_generation_to_tool(
-                                "calc-provider-attempt-01", request_bytes,
-                                provider_call, "calc-provider-tool-01", name,
+                                provider_attempt_id, request_bytes,
+                                provider_call, provider_tool_call_id, name,
                                 prepare_arguments)
                             if not joined["tool_call_submitted"]:
                                 raise AssertionError(joined)
+                            response_text = joined["tool_response"]["result"][
+                                "content"][0]["text"]
+                            if attempt_id != "calc-offline-e2e-01":
+                                observed["negative_profile_results"][attempt_id] = (
+                                    json.loads(response_text))
                             return SimpleNamespace(content=[SimpleNamespace(
-                                text=joined["tool_response"]["result"]["content"][0]["text"])])
+                                text=response_text)])
 
                         request = {"id": counts["tool"], "tool": name,
                                    "arguments": arguments}
@@ -1281,9 +1318,30 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 case = calc_tests.OwnedProcessMCPTests(
                     "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
                 await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+                negative_case = calc_tests.OwnedProcessMCPTests(
+                    "test_registered_calc_profile_stops_on_wrong_or_unknown_ocr")
+                await negative_case.test_registered_calc_profile_stops_on_wrong_or_unknown_ocr()
 
-            self.assertEqual(counts["generation"], 1)
+            self.assertEqual(counts["successful_generation"], 3)
+            self.assertEqual(counts["provider_attempts"], 4)
             self.assertGreater(counts["tool"], 1)
+            self.assertEqual(set(observed["negative_profile_results"]), {
+                "calc-offline-wrong-after-input",
+                "calc-offline-unknown-after-input"})
+            for attempt_id, expected_reason in (
+                    ("calc-offline-wrong-after-input", "effect_failed"),
+                    ("calc-offline-unknown-after-input", "effect_unavailable")):
+                negative = observed["negative_profile_results"][attempt_id]
+                self.assertEqual(negative["method_receipt"]["outcome"],
+                                 "SAFE_YIELD", negative)
+                self.assertEqual(negative["method_receipt"]["reason"],
+                                 expected_reason, negative)
+                self.assertEqual(negative["method_receipt"]["completed_transitions"],
+                                 1, negative)
+                self.assertTrue(all(row["release_verified"] is True for row in
+                                    negative["method_receipt"]["transitions"]), negative)
+                self.assertIsNone(negative["task_success"], negative)
+                self.assertFalse(negative["replay_allowed"], negative)
             self.assertTrue(observed["verification"]["task_success"])
             self.assertTrue(observed["close"]["release_confirmed"])
             artifact_bytes = observed["artifact_bytes"]
@@ -1301,13 +1359,15 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             receipt = recorder.reconcile()
             summary = summarize(receipt["events"])
             self.assertTrue(receipt["complete"])
-            self.assertEqual(summary["model_attempt_count"], 1)
+            self.assertEqual(summary["model_attempt_count"], 4)
             self.assertEqual(summary["tool_call_count"], counts["tool"])
-            self.assertEqual(summary["input_tokens"], 42)
-            self.assertEqual(summary["output_tokens"], 12)
-            self.assertEqual(summary["cached_input_tokens"], 30)
-            self.assertEqual(summary["cache_write_input_tokens"], 2)
-            self.assertEqual(summary["reasoning_output_tokens"], 3)
+            self.assertEqual(summary["usage_status"], "incomplete")
+            self.assertIsNone(summary["input_tokens"])
+            self.assertIsNone(summary["output_tokens"])
+            self.assertEqual(summary["detailed_usage_status"], "incomplete")
+            self.assertIsNone(summary["cached_input_tokens"])
+            self.assertIsNone(summary["cache_write_input_tokens"])
+            self.assertIsNone(summary["reasoning_output_tokens"])
             self.assertIsNone(summary["image_input_tokens"])
             self.assertTrue(summary["task_success"])
 
@@ -1325,8 +1385,28 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     json.dumps({
                         "schema": "agent-interface/fake-appserver-calc-boundary-v1",
                         "provider": "synthetic_fake_planner_echoes_supplied_arguments",
-                        "model_generations": counts["generation"],
+                        "model_generations": counts["successful_generation"],
+                        "provider_attempts": counts["provider_attempts"],
                         "public_mcp_tool_calls": counts["tool"],
+                        "model_attempts": [
+                            {"attempt_id": row["attempt_id"],
+                             "status": row["status"],
+                             "usage_status": row["usage"]["status"]}
+                            for row in receipt["events"]
+                            if row["kind"] == "model_attempt"],
+                        "negative_profile_results": {
+                            attempt_id: {
+                                "outcome": result["method_receipt"]["outcome"],
+                                "reason": result["method_receipt"]["reason"],
+                                "completed_transitions": result["method_receipt"][
+                                    "completed_transitions"],
+                                "released_transitions": [
+                                    row["release_verified"] for row in
+                                    result["method_receipt"]["transitions"]],
+                                "task_success": result["task_success"],
+                                "replay_allowed": result["replay_allowed"]}
+                            for attempt_id, result in
+                            observed["negative_profile_results"].items()},
                         "task_effect": observed["verification"],
                         "owner_close": observed["close"],
                         "independent_stdlib_fods_values": scored_values,
