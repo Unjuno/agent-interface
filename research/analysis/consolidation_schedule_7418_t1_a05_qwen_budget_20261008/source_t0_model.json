@@ -1,0 +1,15 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T0-A01-20261008",
+  "query_ids": ["q_common_save", "q_rare_exception", "q_conflict", "q_history_delta", "q_heldout_conjunction"],
+  "query_budget": {"queries_per_checkpoint": 5, "model_calls": 0, "model_visible_token_budget": 0},
+  "batch_size": 2,
+  "checkpoints": [1, 2, 3, 4, 5, 6],
+  "episodes": [
+    {"id":"ep01","source_ids":["src-01"],"kind":"common_success","context":{"app":"editor","mode":"draft","surface":"standard"},"action":"save","exact_effect":"draft_saved","verification":"verified"},
+    {"id":"ep02","source_ids":["src-02"],"kind":"common_success","context":{"app":"editor","mode":"draft","surface":"standard"},"action":"save","exact_effect":"draft_saved","verification":"verified"},
+    {"id":"ep03","source_ids":["src-03"],"kind":"rare_exception","context":{"app":"editor","mode":"publish","surface":"standard"},"action":"withhold_publish","exact_effect":"no_external_effect","forbidden_effect":"publish","verification":"verified"},
+    {"id":"ep04","source_ids":["src-04"],"kind":"fact_observation","fact_key":"revision-r7-mode","value":"draft","verification":"verified"},
+    {"id":"ep05","source_ids":["src-05"],"kind":"fact_observation","fact_key":"revision-r7-mode","value":"published","verification":"verified"},
+    {"id":"ep06","source_ids":["src-06-baseline","src-06-current"],"kind":"history_pair","baseline":{"mode":"draft","source_id":"src-06-baseline"},"current":{"mode":"published","source_id":"src-06-current"},"version":"revision-r8","verification":"verified"}
+  ]
+}

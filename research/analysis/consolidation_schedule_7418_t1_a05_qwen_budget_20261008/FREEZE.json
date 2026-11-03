@@ -1,0 +1,86 @@
+{
+  "a04_diagnostic": "The terminal A04 row was consolidation with done_reason=length and eval_count=256; output was truncated JSON. No A04 outputs are reused or scored.",
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A05-QWEN-BUDGET-20261008",
+  "base_main_sha": "a537c80de21ba24d774fb332e34fcd415db51b7d",
+  "branch": "research/8406-schedule-t1-a05-qwen-budget-20261008",
+  "companion_to": 7418,
+  "construction_tests": "4/4 PASS before freeze; no A05 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED if >=0.10 pairwise exact-accuracy difference same direction all 3 seeds plus clean audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED if all differences <0.10 for all seeds and audit passes; otherwise UNCERTAIN; method/identity/raw failure => FAIL_METHOD",
+  "delta_from_A04": [
+    "fresh allocation and seeds 4501/4502/4503",
+    "consolidation output cap raised from 256 to 2048 after A04 terminal done_reason=length at 256",
+    "all A04 model outputs excluded; same source corpus, schedule arms, model digest and query protocol"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 2048,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4501,
+      4502,
+      4503
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "c030f8e2e720bc0d291463a131824ec9e4bae09d5be92b93e67ce679cbe596ff",
+    "PROTOCOL.md": "2ffb0039b0e74750d3b21354e8476001eb81fc9531c3299817e2248cf0fce62d",
+    "README.md": "88288e52d942ac295b43d60c18d434a90d608d87f723c9eadff6c866242de8ad",
+    "auditor.py": "c06456c00f97a11460cd17f583d2449d0a01da379c876ff73c747ed0f57fdfe7",
+    "candidate.py": "d4847ad6521431f9b585323f53e9c3ae6799f71e2bcbe18835ec3728d7a9e721",
+    "episode_ledger.json": "c88b0741e47e85ed4f77b331d56ead2a0c1ef04c0d303e99cf8532b901d67ffc",
+    "prompts.json": "7ac8c338b8b47fb45ec63d9b028161c2fa492d6689a5c8580540667689591404",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "368d66b3d0c7b30c370aacb5de93b24911540b1e25b486cbddded5b49c7d8648"
+  },
+  "identity_gate": "Private /api/tags exact model and digest before/after each request; /api/ps empty only before first generation and exactly one runner at frozen digest thereafter, checked before/after every call.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a05-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a05_qwen_budget_20261008",
+  "pre_freeze_HEAD": "a537c80de21ba24d774fb332e34fcd415db51b7d",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a05_qwen_budget_20261008/results/FORMAL_T1_A05/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  }
+}
