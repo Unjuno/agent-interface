@@ -14,4 +14,4 @@ This run closes the offline Fake X composed Calc path from provider generation t
 
 ## Harness retries
 
-Early container invocations failed before the experiment because the image exposes `python3` rather than `python`, then because the runner had CRLF line endings or an incorrect working directory, and evidence reruns reused existing output paths. The final-11 run exposed a test assertion comparing role names with alias names; that key mismatch was fixed. These attempts are retained in their logs and are not counted as successful experiment runs. Final-12 is authoritative. Earlier final-08, final-09, and final-10 captures remain historical diagnostics.
+Earlier runner attempts failed during setup or exposed a test assertion key mismatch; their exit codes and causes are summarized in `failed-attempts.md` and are not counted as successful experiments. Final-12 is the sole full raw capture retained for this packet. Earlier duplicate and partial raw directories were removed from the PR after final-12 superseded them.
