@@ -15,6 +15,8 @@ from runtime.cli_v1.mcp_server import create_server
 class FakeBridge:
     def __init__(self, display, targets, target, directory):
         self.sequence=0;self.binding_revision=0;self.review_required=False
+        self.target=target
+        self.history={}
         self.directory=Path(directory);self.directory.mkdir()
         self.backend=SimpleNamespace(configure_capture_artifacts=self.configure,
             targets={target:SimpleNamespace(id=targets[target])},release_all=Mock(return_value={
@@ -26,11 +28,14 @@ class FakeBridge:
         self.keyboard=Mock(side_effect=self.input)
         self.move=Mock(side_effect=self.input)
         self.review_window=Mock(return_value={'status':'needs_review','input_dispatched':False})
+        self.windows_for_process=Mock(return_value=[{
+            'xid':91,'process_pid':4321,'mapped':True,
+            'input_authority':False,'authenticated_role':False}])
 
-    def mint_reference(self, alias, source_sequence, point, *, region_size):
+    def mint_reference(self, alias, source_sequence, point, *, region_size, freshness_ms=1500):
         return {'offset':self.mint(alias,source_sequence,point,region_size=region_size),
                 'lifetime':{'clock':'time.monotonic_ns','minted_ns':1_000_000_000,
-                    'expires_ns':301_000_000_000,'capture_freshness_ms':1500,
+                    'expires_ns':301_000_000_000,'capture_freshness_ms':freshness_ms,
                     'authority_granted':False,'scope':'Same execution host clock; deadline does not grant input authority.'}}
 
     def configure(self, directory, *, retain_rgb=False):
@@ -45,8 +50,11 @@ class FakeBridge:
                 'artifact':{'path':str(image),'mime_type':'image/png',
                     'sha256':hashlib.sha256(image.read_bytes()).hexdigest(),
                     'source_raw_sha256':'raw-fixture'}}
-        return {'sequence':self.sequence,'observation_id':'fixture-'+str(self.sequence),
+        native['native_window_id']=next(iter(self.backend.targets.values())).id
+        observation={'sequence':self.sequence,'observation_id':'fixture-'+str(self.sequence),
                 'binding_revision':0,'capture_ns':1,'pointer_binding':{},'native':native}
+        self.history[self.sequence]=(observation,None)
+        return observation
 
     def input(self,*args,**kwargs):
         # The same worker must retain its request before reaching this boundary.
@@ -266,6 +274,17 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             many=metadata(await server.call_tool('interface_guarded_mint_many',{'source_sequence':1,'references':[{'alias':'save','point':[20,20],'region_size':[24,14]}]}))
             self.assertEqual(many['minted'][0]['lifetime'],row['lifetime'])
             self.assertEqual(many['minted'][0]['offset'],[12,7])
+            await server.call_tool('interface_close',{})
+
+    async def test_minted_reference_accepts_bounded_custom_freshness(self):
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            response=await server.call_tool('interface_guarded_mint',{
+                'alias':'field','source_sequence':1,'point':[20,20],
+                'region_size':[24,14],'freshness_ms':3000})
+            row=metadata(response)
+            self.assertEqual(row['lifetime']['capture_freshness_ms'],3000)
+            self.assertFalse(row['lifetime']['authority_granted'])
             await server.call_tool('interface_close',{})
 
     async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
@@ -861,6 +880,7 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                     'binding_revision':self.binding_revision,
                     'pointer_binding':{'surface':7},
                     'native':{'sha256':raw_digest,'capture_started_ns':captured,
+                        'native_window_id':7,
                         'artifact':{'path':str(path),'mime_type':'image/png',
                             'sha256':hashlib.sha256(payload).hexdigest(),
                             'source_raw_sha256':raw_digest}}}
@@ -944,10 +964,10 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertEqual([event['action_id'] for event in effects],
                              [transition['action_id'] for transition in transitions])
             self.assertEqual(len(receipt['observations']),3)
-            self.assertEqual(bridge.sequence,3)
+            self.assertEqual(bridge.sequence,4)
             self.assertEqual(len(bridge.inputs),2)
-            self.assertEqual(row['feedback']['image_status'],'image')
-            self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-3')
+            self.assertEqual(row['feedback']['image_status'],'image',row)
+            self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-4')
             timing=row['owner_timing']
             self.assertEqual(timing['clock'],'time.monotonic_ns')
             self.assertEqual(timing['schema'],
@@ -1010,7 +1030,7 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                     owner.run_compiled({}, {}, call_root=root/'call', **self.callbacks())
                 opened.assert_not_called()
 
-    def test_final_image_uses_new_call_root_without_extra_observation(self):
+    def test_final_image_uses_owner_feedback_capture_in_new_call_root(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);owner=self.owner(root);bridge=owner.bridge
             receipt={'outcome':'TASK_SUCCEEDED','observations':[{'sequence':1}]}
@@ -1022,9 +1042,9 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                 row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
             self.assertEqual(row['method_receipt'],receipt)
             self.assertIsNone(row['task_success']);self.assertFalse(row['replay_allowed'])
-            self.assertEqual(row['feedback']['image_status'],'image')
+            self.assertEqual(row['feedback']['image_status'],'image',row)
             self.assertTrue(Path(row['feedback']['image_reference']['path']).is_relative_to(root/'method'))
-            self.assertEqual(bridge.sequence,1);bridge.observe.assert_not_called();run.assert_called_once()
+            self.assertEqual(bridge.sequence,2);bridge.observe.assert_called_once();run.assert_called_once()
 
     def test_zero_observation_yield_does_not_present_previous_capture(self):
         with tempfile.TemporaryDirectory() as td:

@@ -4,14 +4,30 @@ import json
 from pathlib import Path
 
 
-def read_linux_x11_process_identity(connection, xid):
-    """Hash XID + server-reported PID + /proc start ticks.
+def process_generation_from_identity(xid, pid, start_ticks):
+    """Return the stable local XID/PID/start-tick identity digest."""
+    if (type(xid) is not int or not 1 < xid < 2**32
+            or type(pid) is not int or pid <= 0
+            or type(start_ticks) is not int or start_ticks <= 0):
+        raise ValueError('invalid X11 process identity fields')
+    payload = {'scheme':'xres-linux-process-v1','xid':xid,
+               'pid':pid,'start_ticks':start_ticks}
+    return hashlib.sha256(json.dumps(payload,sort_keys=True,
+        separators=(',',':')).encode('ascii')).hexdigest()
 
-    Requires a trusted local X server whose PID namespace matches this /proc.
-    No window-property fallback. Calls are synchronous, without an I/O bound.
-    Same-process resource/client reuse and changes after this read are not
-    excluded by this evidence.
-    """
+
+def process_incarnation_from_identity(pid, start_ticks):
+    """Return the local process incarnation digest shared by its X resources."""
+    if type(pid) is not int or pid <= 0 or type(start_ticks) is not int or start_ticks <= 0:
+        raise ValueError('invalid X11 process incarnation fields')
+    payload = {'scheme':'xres-linux-process-incarnation-v1',
+               'pid':pid,'start_ticks':start_ticks}
+    return hashlib.sha256(json.dumps(payload,sort_keys=True,
+        separators=(',',':')).encode('ascii')).hexdigest()
+
+
+def _read_linux_x11_process_incarnation(connection, xid):
+    """Read a trusted XRes PID and Linux process start tick pair."""
     if type(xid) is not int or not 1 < xid < 2**32:
         raise RuntimeError('invalid target resource')
     if not connection.has_extension('X-Resource'):
@@ -29,10 +45,6 @@ def read_linux_x11_process_identity(connection, xid):
         raise RuntimeError('X-Resource 1.2 required')
     reply = connection.res_query_client_ids([{'client': xid, 'mask': 2}])
     try:
-        # One resource and one mask were requested. XRes returns the owning
-        # client's canonical resource base, not necessarily the window XID.
-        # Association comes from this single-resource query to the trusted
-        # server; do not derive a client mask from this connection's resources.
         if len(reply.ids) != 1:
             raise RuntimeError('ambiguous local client PID')
         item = reply.ids[0]
@@ -53,6 +65,35 @@ def read_linux_x11_process_identity(connection, xid):
     if (len(fields) <= 19 or fields[0] in ('Z', 'X', 'x')
             or not fields[19].isascii() or not fields[19].isdigit()):
         raise RuntimeError('process start identity unavailable')
-    payload = {'scheme': 'xres-linux-process-v1', 'xid': xid,
-               'pid': pid, 'start_ticks': int(fields[19])}
-    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(',', ':')).encode('ascii')).hexdigest()
+    return pid, int(fields[19])
+
+
+def read_linux_x11_process_identity(connection, xid):
+    """Hash XID + server-reported PID + /proc start ticks.
+
+    Requires a trusted local X server whose PID namespace matches this /proc.
+    No window-property fallback. Calls are synchronous, without an I/O bound.
+    Same-process resource/client reuse and changes after this read are not
+    excluded by this evidence.
+    """
+    details = read_linux_x11_process_identity_details(connection,xid)
+    return details['process_generation']
+
+
+def read_linux_x11_process_incarnation(connection, xid):
+    """Hash the XRes PID and /proc start tick without the window XID.
+
+    This allows comparison of two windows owned by one process. It remains a
+    local-server/PID-namespace correlation cue and is not authenticated window
+    role, transient-parent identity, or a race-free process lifetime fence.
+    """
+    details = read_linux_x11_process_identity_details(connection,xid)
+    return details['process_incarnation']
+
+
+def read_linux_x11_process_identity_details(connection,xid):
+    """Read PID/start ticks and both digests from one XRes query boundary."""
+    pid,start_ticks = _read_linux_x11_process_incarnation(connection,xid)
+    return {'xid':xid,'pid':pid,'start_ticks':start_ticks,
+        'process_generation':process_generation_from_identity(xid,pid,start_ticks),
+        'process_incarnation':process_incarnation_from_identity(pid,start_ticks)}

@@ -2,6 +2,7 @@
 from contextlib import contextmanager
 from copy import deepcopy
 import inspect
+import re
 from pathlib import Path
 from time import monotonic_ns
 import json
@@ -9,6 +10,11 @@ from mcp.types import CallToolResult, TextContent
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 from typing import Annotated, Literal
 from .mcp_session import MCPSessionOwner
+
+_WINDOW_METADATA_MAX_AGE_NS = 500_000_000
+_WINDOW_METADATA_IDENTITY_FIELDS = (
+    'xid', 'parent_xid', 'transient_for_xid', 'wm_class', 'title_cue',
+    'role_cue', 'mapped', 'process_incarnation', 'window_incarnation')
 
 
 class GroundedReference(BaseModel):
@@ -256,14 +262,32 @@ class GuardedSessionOwner(MCPSessionOwner):
             try:
                 sequence = receipt['observations'][-1]['sequence']
                 if (type(sequence) is not int or sequence <= previous_sequence
-                        or sequence != bridge.sequence):
-                    raise ValueError('final graph observation no longer matches this owner')
-                source, _ = bridge.history[sequence]
-                feedback = present_result({
+                        or sequence not in bridge.history):
+                    raise ValueError('final graph observation is missing from this owner')
+                # Graph observations remain the method's semantic record. One
+                # later owner observation supplies delivery feedback only; it
+                # is not fed back into task/effect evaluation.
+                feedback_source = bridge.observe()
+                feedback_sequence = feedback_source.get('sequence')
+                if (type(feedback_sequence) is not int
+                        or feedback_sequence <= sequence
+                        or feedback_sequence not in bridge.history):
+                    raise ValueError('post-method feedback capture unavailable')
+                source, _feedback_image = bridge.history[feedback_sequence]
+                native_feedback = source.get('native', {})
+                if (native_feedback.get('native_window_id') !=
+                        bridge.backend.targets[bridge.target].id
+                        or bridge.review_required or bridge.session.recovery_required):
+                    raise ValueError('latest owner capture association is uncertain')
+                feedback_report = {
                     'schema':'agent-interface/runtime-observation-v1',
                     'status':'returned', 'observation_id':source['observation_id'],
                     'observation':source['native'], 'input_dispatched':False,
-                    'side_effect_authority':False}, root, compact=True, report_refs=True)
+                    'side_effect_authority':False}
+                feedback = present_result(
+                    feedback_report, root, compact=True, report_refs=True)
+                feedback['owner_feedback_sequence'] = feedback_sequence
+                feedback['owner_feedback_observation_id'] = source['observation_id']
                 if feedback.get('image_status') != 'image':
                     bridge.review_required = True
             except Exception as error:
@@ -296,7 +320,128 @@ class GuardedSessionOwner(MCPSessionOwner):
                 verify_effect=verify_effect,
                 cancelled=self.bridge._cancel_requested)
 
+    def run_registered_calc_profile(self, profile_id, bindings, *,
+                                    reviewed_sequence, reviewed_artifact_sha256,
+                                    blank_reviewed, attempt_id, call_root,
+                                    cancel_token, task_artifact=None):
+        """Run the one server-owned Calc profile; requests contain data only."""
+        from runtime.guarded_x11_v1.calc_profile_v1 import (
+            PROFILE_ID, CalcPrimaryProfile)
+        if profile_id != PROFILE_ID:
+            raise ValueError('unregistered compiled profile')
+        if not self.query_worker:
+            raise RuntimeError('registered compiled calls require the owned query worker')
+        if (type(attempt_id) is not str
+                or not 1 <= len(attempt_id) <= 128
+                or any(ord(char) < 0x21 or ord(char) > 0x7e for char in attempt_id)):
+            raise ValueError('attempt_id must be printable ASCII, 1..128 characters')
+        self.get()
+        root = Path(call_root)
+        profile = CalcPrimaryProfile(self.bridge, bindings, root,
+            reviewed_sequence=reviewed_sequence,
+            reviewed_artifact_sha256=reviewed_artifact_sha256,
+            blank_reviewed=blank_reviewed,
+            call_id=(task_artifact.call_id if task_artifact is not None
+                     else cancel_token),
+            attempt_id=attempt_id, task_artifact=task_artifact)
+        with self.bridge.cancellation_scope(cancel_token, cancel_when_idle=True):
+            result = self.run_compiled(profile.interface, profile.bindings,
+                call_root=root/'compiled', perceive=profile.perceive,
+                guard_perceive=profile.guard_perceive,
+                verify_effect=profile.verify_effect,
+                post_release_settle_ms=250,
+                cancelled=self.bridge._cancel_requested)
+        result['profile_id'] = PROFILE_ID
+        result['attempt_id'] = attempt_id
+        result['task_effect_verification'] = {
+            'status':'not_configured', 'task_success':None,
+            'reason':'trusted_save_controller_unavailable'}
+        if profile.task_artifact is not None:
+            result['task_artifact_admission'] = profile.task_artifact.descriptor
+            result['task_save_request'] = deepcopy(profile.task_save_request)
+            result['task_artifact_root_call_id'] = profile.task_artifact.call_id
+        return result
+
+    def inspect_window_metadata(self, window_id):
+        """Read one explicit XID's metadata cues through isolated XRes queries."""
+        self.get()
+        metadata = self.bridge.inspect_window_metadata(window_id)
+        return {'operation':'guarded_window_metadata','status':'inspected',
+            'window_metadata':metadata,'input_dispatched':False,
+            'authority_granted':False,'task_success':None,'replay_allowed':False}
+
+    def windows_for_process(self, pid, title_hint):
+        """Discover candidate XIDs for one exact XRes PID; grant no authority."""
+        if (type(pid) is not int or pid <= 0 or type(title_hint) is not str
+                or not title_hint or len(title_hint) > 128
+                or not title_hint.isprintable()):
+            raise ValueError('positive PID and bounded printable title hint required')
+        if not self.query_worker or not self.process_identity:
+            raise RuntimeError('process window discovery requires isolated XRes queries')
+        self.get()
+        rows = self.bridge.windows_for_process(pid, title_hint)
+        if not isinstance(rows, list):
+            raise RuntimeError('process window discovery returned malformed metadata')
+        return {'operation':'guarded_process_windows','status':'discovered',
+            'process_pid':pid,'title_hint':title_hint,'windows':deepcopy(rows),
+            'input_dispatched':False,'authority_granted':False,
+            'task_success':None,'replay_allowed':False}
+
+    def revalidate_window_metadata(self, source_metadata):
+        """Re-read an exact in-memory metadata source; never grants input authority."""
+        now = monotonic_ns()
+        observed_ns = (source_metadata.get('observed_monotonic_ns')
+            if isinstance(source_metadata, dict) else None)
+        base = {'operation':'guarded_window_metadata_revalidate',
+            'input_dispatched':False,'authority_granted':False,
+            'task_success':None,'replay_allowed':False}
+        if (not isinstance(source_metadata, dict)
+                or source_metadata.get('schema') !=
+                    'agent-interface/x11-window-metadata-cues-v1'
+                or type(observed_ns) is not int or observed_ns > now
+                or now - observed_ns > _WINDOW_METADATA_MAX_AGE_NS
+                or source_metadata.get('mapped') is not True
+                or source_metadata.get('focused_before') is not True
+                or source_metadata.get('focused_after') is not True):
+            return dict(base,status='stale_or_unfocused',same_window=False,
+                reason='source_expired_or_not_focused')
+        try:
+            current = self.inspect_window_metadata(source_metadata['xid'])['window_metadata']
+        except Exception as error:
+            return dict(base,status='needs_review',same_window=False,
+                reason='fresh_metadata_unavailable',error=repr(error))
+        completed_ns = monotonic_ns()
+        if (completed_ns < observed_ns
+                or completed_ns - observed_ns > _WINDOW_METADATA_MAX_AGE_NS):
+            return dict(base,status='stale_or_unfocused',same_window=False,
+                reason='source_expired_during_revalidation',
+                source_observed_monotonic_ns=observed_ns,
+                current_observed_monotonic_ns=current.get('observed_monotonic_ns'))
+        same = (current.get('mapped') is True
+            and current.get('focused_before') is True
+            and current.get('focused_after') is True
+            and all(current.get(field) == source_metadata.get(field)
+                    for field in _WINDOW_METADATA_IDENTITY_FIELDS))
+        return dict(base,status='revalidated' if same else 'needs_review',
+            same_window=same,source_observed_monotonic_ns=observed_ns,
+            current_observed_monotonic_ns=current.get('observed_monotonic_ns'),
+            source_window_metadata=deepcopy(source_metadata),
+            current_window_metadata=current,
+            reason=None if same else 'window_metadata_changed')
+
     def invoke_guarded(self, operation, arguments, call_root):
+        if operation == 'guarded_window_metadata':
+            try:
+                return self.inspect_window_metadata(arguments['window_id'])
+            except Exception as error:
+                return {'operation':operation,'status':'needs_review',
+                    'error':repr(error),'input_dispatched':False,
+                    'authority_granted':False,'task_success':None,
+                    'replay_allowed':False}
+        if operation == 'guarded_window_metadata_revalidate':
+            result = self.revalidate_window_metadata(arguments.get('source_metadata'))
+            result['metadata_call_id'] = arguments.get('metadata_call_id')
+            return result
         if operation == 'guarded_recover_input':
             if self.state != 'open' or self.bridge is None or self.session is None:
                 return dict(operation=operation,status='refused',error='RECOVERY_REQUIRES_OPEN_SESSION',
@@ -432,7 +577,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                 if len(point) != 2 or len(size) != 2 or any(not 4 <= v <= 96 for v in size):
                     raise ValueError('point pair and region_size pair in 4..96 required')
                 grounded = bridge.mint_reference(arguments['alias'], arguments['source_sequence'], point,
-                                     region_size=tuple(size))
+                    region_size=tuple(size), freshness_ms=arguments.get('freshness_ms',1500))
                 return dict(row, status='minted', alias=arguments['alias'], **grounded,
                             source_sequence=arguments['source_sequence'], input_dispatched=False)
             if operation == 'guarded_review_window':
@@ -448,7 +593,9 @@ class GuardedSessionOwner(MCPSessionOwner):
             return dict(row, status='refused', error=repr(error), input_dispatched=False)
 
 
-def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=False):
+def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=False,
+                           window_lifecycle_enabled=False,
+                           calc_launch_enabled=False):
     @server.tool()
     async def interface_guarded_recover_input(current_binding_revision: StrictInt,
             wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
@@ -473,7 +620,7 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
     if cancel is not None:
         @server.tool()
         async def interface_guarded_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
-            """Request cancellation of a running guarded input or compiled method.
+            """Request cancellation of a running guarded operation.
 
             Get the call ID from interface_results. This publishes retained local
             state only; no input is injected by this request path. A cancellation
@@ -487,13 +634,33 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             return await result if inspect.isawaitable(result) else result
     if compiled_enabled:
         @server.tool()
+        async def interface_guarded_window_metadata(window_id: StrictInt) -> CallToolResult:
+            """Read bounded X11 metadata for one explicitly supplied window ID.
+
+            Returns title/class/role/transient/process/window-generation cues
+            and focus sampled around the read. These values are not authenticated
+            identity and grant no target selection or input authority. Errors
+            retire the isolated query reader and require session review.
+            """
+            if not 1 < window_id < 2**32:
+                return CallToolResult(content=[TextContent(type='text',
+                    text=json.dumps({'status':'invalid_request',
+                        'error':'INVALID_WINDOW_ID','operation_invoked':False,
+                        'input_dispatched':False,'authority_granted':False,
+                        'task_success':None,'replay_allowed':False}))],isError=True)
+            return await submit('guarded_window_metadata',
+                {'window_id':window_id},False,False)
+
+        @server.tool()
         async def interface_guarded_compiled(interface: dict, bindings: dict,
                 predicate_rules: dict, effect_rules: dict,
                 wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
             """Run one bounded compiled X11 method through the owned standard caller.
 
             This tool is exposed only with guarded owned-process, process-identity
-            and query-worker startup enabled. `interface.session_scope` and
+            query-worker, and window-lifecycle startup enabled. The window
+            incarnation guard binds the reviewed source and every input check
+            to one exact XID lifetime. `interface.session_scope` and
             `interface.surface` must match the `session.compiled_scope` and
             `session.compiled_surface` returned by an earlier guarded observation.
             Bindings name previously minted aliases and exact offsets/tails.
@@ -525,6 +692,135 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             arguments={'interface':interface,'bindings':bindings,
                 'predicate_rules':predicate_rules,'effect_rules':effect_rules}
             return await submit('guarded_compiled',arguments,False,False,
+                wait_for_result_ms=wait_for_result_ms)
+        @server.tool()
+        async def interface_guarded_calc_prepare(attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)]) -> CallToolResult:
+            """Reserve one blank server-owned FODS for the Calc profile.
+
+            The call ID is the unguessable reservation handle. This operation
+            creates an artifact only: it does not launch Calc, discover a
+            window, retain process-group custody, or establish pre-launch
+            containment. It dispatches no input and accepts no filesystem path.
+            A reservation is bounded to one at a time, bound to the same attempt,
+            and consumed at most once by interface_guarded_calc_compiled. Do not treat its
+            artifact path or call ID as proof that any process was launched.
+            """
+            if not re.fullmatch(r'[\x21-\x7e]{1,128}',attempt_id):
+                row={'status':'invalid_request','error':'CALC_ATTEMPT_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if not window_lifecycle_enabled:
+                row={'status':'invalid_request',
+                    'error':'CALC_WINDOW_LIFECYCLE_REQUIRED',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            return await submit('guarded_calc_prepare',{'attempt_id':attempt_id},
+                False,False,wait_for_result_ms=10000)
+
+        if calc_launch_enabled:
+            @server.tool()
+            async def interface_guarded_calc_launch(prepared_call_id: Annotated[
+                    StrictStr,Field(pattern=r'^[0-9a-f]{32}$')],
+                    wait_for_result_ms: Annotated[StrictInt,Field(ge=0,le=10000)]=1000
+                    ) -> CallToolResult:
+                """Launch the reserved Calc artifact and retain parent process custody.
+
+                Available only with explicit fixed launcher configuration and
+                an owned guarded X11 session whose sole target is the X root.
+                This starts Calc with a unique LibreOffice profile, synchronizes
+                exact launcher/GUI process-group custody, and returns read-only
+                XRes window candidates. It never focuses or activates a
+                candidate. Inspect the returned XID/title/class, then call
+                `interface_guarded_review_window` for that exact XID. Review
+                must confirm focus and stable generation before the launcher
+                can bind it for the registered profile. No task input or task
+                effect is implied by launch.
+                """
+                return await submit('guarded_calc_launch',
+                    {'prepared_call_id':prepared_call_id},False,False,
+                    wait_for_result_ms=wait_for_result_ms)
+
+        @server.tool()
+        async def interface_guarded_calc_compiled(profile_id: StrictStr,
+                bindings: dict, reviewed_sequence: StrictInt,
+                reviewed_artifact_sha256: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{64}$')],
+                blank_reviewed: StrictBool, attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
+                prepared_call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')] | None = None,
+                wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
+            """Run the one fixed Calc 731/864 profile through the owned process.
+
+            This request selects only a registered server profile; it cannot
+            supply code, OCR commands, callbacks, interface graphs, input tails,
+            or filesystem paths. Bindings provide only previously minted entry
+            and Save aliases/offsets. The reviewed sequence/hash must still be
+            the current source; `blank_reviewed` is the caller's asserted visual
+            review of that exact image. The profile rechecks current OCR inside
+            the existing native input guard before Save keystrokes. A Save key
+            is only a request. This profile does not score persisted workbook
+            bytes; graph `task_success` remains null. `attempt_id` joins this
+            local call to an outer provider ledger and carries no token claims.
+            `interface_verify_task(call_id)` is available only on this owned
+            guarded-X11 route and after a verified owner close plus a parent-held
+            exit receipt for the exact Calc process generation. It scores no
+            caller path or supplied values; without target-exit and trusted
+            call-owned save custody it returns unknown. The current Ctrl+S-only
+            profile cannot establish persisted workbook effect.
+            Call interface_guarded_calc_prepare to reserve the server-owned
+            artifact. When the opt-in launch route is configured, call
+            interface_guarded_calc_launch with that preparation call ID, inspect
+            its exact XRes candidate, and explicitly call
+            interface_guarded_review_window before this profile. The launch
+            operation retains launcher/process-group custody in the parent and
+            binds the reviewed window generation. Without launch configuration,
+            pass the preparation call ID here to bind the reserved artifact to
+            an already reviewed existing process/window. Calls without a
+            prepared artifact use the legacy local artifact path and cannot
+            establish parent pre-launch custody. This profile still does not
+            prove a trusted saved workbook effect.
+            """
+            from runtime.guarded_x11_v1.calc_profile_v1 import PROFILE_ID
+            valid_bindings = (isinstance(bindings,dict) and set(bindings)=={'entry','save'}
+                and all(isinstance(bindings[name],dict)
+                    and set(bindings[name])=={'alias','offset'}
+                    and isinstance(bindings[name]['alias'],str)
+                    and isinstance(bindings[name]['offset'],list)
+                    and len(bindings[name]['offset'])==2
+                    and all(type(value) is int and value>=0
+                            for value in bindings[name]['offset'])
+                    for name in ('entry','save')))
+            if profile_id != PROFILE_ID or not valid_bindings:
+                row={'status':'invalid_request','error':'CALC_PROFILE_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if (type(blank_reviewed) is not bool or not blank_reviewed
+                    or type(reviewed_sequence) is not int or reviewed_sequence<=0
+                    or not re.fullmatch(r'[0-9a-f]{64}',reviewed_artifact_sha256)
+                    or not re.fullmatch(r'[\x21-\x7e]{1,128}',attempt_id)):
+                row={'status':'invalid_request','error':'CALC_REVIEW_OR_ATTEMPT_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if not window_lifecycle_enabled:
+                row={'status':'invalid_request',
+                    'error':'CALC_WINDOW_LIFECYCLE_REQUIRED',
+                    'detail':'start the owned guarded-X11 server with window lifecycle enabled',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            arguments={'profile_id':profile_id,'bindings':bindings,
+                'reviewed_sequence':reviewed_sequence,
+                'reviewed_artifact_sha256':reviewed_artifact_sha256,
+                'blank_reviewed':blank_reviewed,'attempt_id':attempt_id,
+                'prepared_call_id':prepared_call_id}
+            return await submit('guarded_calc_compiled',arguments,False,False,
                 wait_for_result_ms=wait_for_result_ms)
     @server.tool()
     async def interface_guarded_activate_window(window_id: StrictInt, source_sequence: StrictInt,
@@ -571,18 +867,20 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
 
     @server.tool()
     async def interface_guarded_mint(alias: StrictStr, source_sequence: StrictInt,
-                                    point: list[StrictInt], region_size: list[StrictInt]) -> CallToolResult:
+                                    point: list[StrictInt], region_size: list[StrictInt],
+                                    freshness_ms: Annotated[StrictInt, Field(ge=100,le=5000)]=1500) -> CallToolResult:
         """Name an explicitly image-grounded point from an exact delivered source.
 
         point=[screen_x,screen_y]; region_size=[width,height], each 4..96 pixels.
         Flat source regions refuse. Returns alias, offset and finite lifetime
         in this execution host's monotonic clock; compare with interface_clock.
-        Lifetime does not guarantee fresh pixels or admission; retained lookup
+        Freshness is bounded to 100..5000 ms; it does not guarantee current
+        pixels or admission. Retained lookup
         never renews it. After a pause, explicitly observe/review and ground a
         new alias if needed. Creates no input or semantic identity guarantee.
         """
         return await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
-                            point=point,region_size=region_size),False,False)
+                            point=point,region_size=region_size,freshness_ms=freshness_ms),False,False)
 
     @server.tool()
     async def interface_guarded_mint_many(source_sequence: StrictInt,

@@ -12,6 +12,12 @@ from .test_mcp_process_identity import FakeX, metadata
 from runtime.guarded_x11_v1.test_window_lifecycle import LifecycleConnection
 
 
+def identity_details(fake, connection, xid):
+    generation = fake.read(connection, xid)
+    return {'xid':xid,'pid':101,'start_ticks':202,
+        'process_generation':generation,'process_incarnation':'b'*64}
+
+
 class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
     async def exercise(self, fault=None, trigger=None, isolated=False, selected=True):
         fake = FakeX(self)
@@ -48,7 +54,7 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as td, \
                 patch('time.monotonic_ns', side_effect=lambda: now[0]), \
                 patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
-                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read), \
+                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity_details', side_effect=lambda connection,xid: identity_details(fake,connection,xid)), \
                 patch('runtime.backends.x11_v1.backend.xtest.fake_input', side_effect=emit):
             original_track = type(fake.backend)._track_key_press
             fake.backend._track_key_press = track_after_destroy
@@ -177,7 +183,7 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
         fake.backend.observe_read_only = destroyed_during_capture
         with tempfile.TemporaryDirectory() as td, \
                 patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
-                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read):
+                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity_details', side_effect=lambda connection,xid: identity_details(fake,connection,xid)):
             server = create_server({'app':20}, td, session_mode='guarded-x11',
                 guarded_process_identity=True, guarded_query_worker=True, guarded_window_lifecycle=True)
             try:
@@ -239,7 +245,7 @@ class LifecycleBoundaries(unittest.TestCase):
                 connection = LifecycleConnection()
                 with tempfile.TemporaryDirectory() as td, \
                         patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
-                        patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read), \
+                        patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity_details', side_effect=lambda connection,xid: identity_details(fake,connection,xid)), \
                         patch('time.monotonic_ns', return_value=1_000_000):
                     bridge = NativeHandleBridge(None, {'app':20}, 'app', td+'/bridge',
                         process_identity=True, query_worker=True, window_lifecycle=True)

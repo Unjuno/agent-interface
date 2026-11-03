@@ -413,6 +413,59 @@ class NativeHandleBridge:
             return self._target_query('focus',window_id) is True
         return focus_within_target(self.backend.d,window_id)
 
+    def inspect_window_metadata(self, window_id):
+        """Read bounded metadata cues for one explicit XID; never selects it."""
+        if (getattr(self, '_closed', False) or self.active is not None
+                or self.session.recovery_required or self.review_required):
+            raise X11BackendError('window metadata requires an idle reviewed owner')
+        if (not getattr(self, '_process_identity_guard', False)
+                or getattr(self, '_target_queries', None) is None):
+            raise X11BackendError('window metadata requires isolated process queries')
+        if type(window_id) is not int or not 1 < window_id < 2**32:
+            raise ValueError('explicit X window ID required')
+        return self._target_query('window_metadata', window_id,
+            idle_deadline_ns=time.monotonic_ns()+1_000_000_000)
+
+    def windows_for_process(self, pid, title_hint):
+        """Find viewable XRes-owned windows; never selects or focuses one."""
+        if (getattr(self, '_closed', False) or self.active is not None
+                or self.session.recovery_required or self.review_required):
+            raise X11BackendError('process window discovery requires an idle reviewed owner')
+        if (type(pid) is not int or pid <= 0
+                or not getattr(self, '_process_identity_guard', False)
+                or getattr(self, '_target_queries', None) is None):
+            raise X11BackendError('process window discovery requires isolated XRes queries')
+        rows = self._target_query('windows_for_process',
+            {'pid':pid,'title_hint':title_hint},
+            idle_deadline_ns=time.monotonic_ns()+2_000_000_000)
+        if (not isinstance(rows, list)
+                or any(not isinstance(row, dict)
+                    or row.get('process_pid') != pid
+                    or row.get('mapped') is not True
+                    for row in rows)):
+            self.review_required = True
+            raise X11BackendError('process window discovery returned invalid metadata')
+        return rows
+
+    def inspect_process_incarnation(self, window_id):
+        """Read the isolated XRes PID/start incarnation for one explicit XID."""
+        if (getattr(self, '_closed', False) or self.active is not None
+                or self.session.recovery_required or self.review_required):
+            raise X11BackendError('process incarnation requires an idle reviewed owner')
+        if (not getattr(self, '_process_identity_guard', False)
+                or getattr(self, '_target_queries', None) is None):
+            raise X11BackendError('process incarnation requires isolated process queries')
+        if type(window_id) is not int or not 1 < window_id < 2**32:
+            raise ValueError('explicit X window ID required')
+        value = self._target_query('process_incarnation', window_id,
+            idle_deadline_ns=time.monotonic_ns()+1_000_000_000)
+        if (type(value) is not str or len(value) != 64
+                or any(c not in '0123456789abcdef' for c in value)):
+            self.review_required = True
+            self._target_queries.close()
+            raise X11BackendError('process incarnation token unavailable')
+        return value
+
     def observe(self):
         isolated = self._isolated_observation_active()
         lifecycle = getattr(self,'_window_lifecycle_guard',False)
@@ -472,8 +525,11 @@ class NativeHandleBridge:
         """Legacy offset-only grounding; use mint_reference for expiry metadata."""
         return self.mint_reference(alias, source_sequence, point, region_size=region_size)['offset']
 
-    def mint_reference(self, alias, source_sequence, point, *, region_size=(24, 38)):
+    def mint_reference(self, alias, source_sequence, point, *, region_size=(24, 38),
+                       freshness_ms=1500):
         """Ground a finite alias without capture, renewal, input or authority."""
+        if type(freshness_ms) is not int or not 100 <= freshness_ms <= 5000:
+            raise ValueError('capture freshness must be an integer from 100 to 5000 ms')
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
             raise X11BackendError('input recovery required before minting')
         if getattr(self, 'review_required', False):
@@ -486,13 +542,13 @@ class NativeHandleBridge:
         box = [point[0] - w // 2, point[1] - h // 2, w, h]
         minted_ns = time.monotonic_ns()
         result = self.store.mint(alias, "window_content", box, observation, image,
-                                 minted_ns, ttl_ms=300000, freshness_ms=1500,
+                                 minted_ns, ttl_ms=300000, freshness_ms=freshness_ms,
                                  search_radius=0, allowed_transformations=("window_translation",))
         self.used_aliases = getattr(self, 'used_aliases', set()) | {alias}
         self._save("mint-" + alias + ".json", result)
         return {'offset': [w // 2, h // 2], 'lifetime': {
             'clock': 'time.monotonic_ns', 'minted_ns': minted_ns,
-            'expires_ns': result['expires_ns'], 'capture_freshness_ms': 1500,
+            'expires_ns': result['expires_ns'], 'capture_freshness_ms': freshness_ms,
             'authority_granted': False,
             'scope': 'Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.'}}
 

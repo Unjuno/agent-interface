@@ -265,6 +265,21 @@ class ReaderTests(unittest.TestCase):
         self.assertEqual(connection.res_query_version.call_count, 1)
         self.assertEqual(connection.res_query_client_ids.call_count, 2)
 
+    def test_process_incarnation_digest_matches_distinct_windows_of_same_process(self):
+        from runtime.guarded_x11_v1.process_identity import (
+            read_linux_x11_process_identity, read_linux_x11_process_incarnation)
+        connection = self.connection()
+        stat = '42 (name with ) inside) ' + ' '.join(['S'] + ['0'] * 18 + ['123'])
+        with patch('runtime.guarded_x11_v1.process_identity.Path.read_text',
+                   return_value=stat):
+            first = read_linux_x11_process_incarnation(connection, 20)
+            second = read_linux_x11_process_incarnation(connection, 21)
+            window_specific_a = read_linux_x11_process_identity(connection, 20)
+            window_specific_b = read_linux_x11_process_identity(connection, 21)
+        self.assertEqual(first, second)
+        self.assertNotEqual(window_specific_a, window_specific_b)
+        self.assertEqual(len(first), 64)
+
     def test_missing_extension_has_no_pid_property_fallback(self):
         from runtime.guarded_x11_v1.process_identity import read_linux_x11_process_identity
         connection = SimpleNamespace(has_extension=lambda _: False)

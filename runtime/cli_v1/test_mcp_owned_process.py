@@ -11,7 +11,7 @@ import shutil
 import tempfile
 import time
 import unittest
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from types import SimpleNamespace
 from PIL import Image
 
@@ -22,6 +22,24 @@ from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.backends.x11_v1.backend import X11Backend
 from runtime.cli_v1.test_mcp_process_identity import FakeX, metadata
+from runtime.guarded_x11_v1.process_identity import (
+    process_generation_from_identity,process_incarnation_from_identity)
+
+_CALC_TEST_PID=4321
+_CALC_TEST_START_TICKS=98765
+_CALC_TEST_PROCESS_GENERATION=process_generation_from_identity(
+    20,_CALC_TEST_PID,_CALC_TEST_START_TICKS)
+_CALC_TEST_PROCESS_INCARNATION=process_incarnation_from_identity(
+    _CALC_TEST_PID,_CALC_TEST_START_TICKS)
+_CALC_TASK_FODS=(b'<?xml version="1.0"?><office:document-content '
+    b'xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" '
+    b'xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0">'
+    b'<office:body><office:spreadsheet><table:table table:name="Sheet1">'
+    b'<table:table-row><table:table-cell office:value-type="float" office:value="731"/>'
+    b'</table:table-row><table:table-row>'
+    b'<table:table-cell office:value-type="float" office:value="864"/>'
+    b'</table:table-row></table:table></office:spreadsheet></office:body>'
+    b'</office:document-content>')
 
 
 def _blocked_release_worker(_send_connection):
@@ -189,12 +207,72 @@ class _FakeQueries:
     def __init__(self, root):
         self.root = Path(root)
 
-    def read(self, operation, _xid):
-        if operation == 'focus':
-            return True
+    def read(self, operation, xid):
+        if operation == 'windows_for_process':
+            if (type(xid) is not dict or set(xid) != {'pid','title_hint'}
+                    or xid.get('pid') != _CALC_TEST_PID
+                    or xid.get('title_hint') != 'Book1'):
+                raise ValueError('unexpected synthetic process discovery request')
+            return [{
+                'schema':'agent-interface/x11-window-metadata-cues-v1',
+                'xid':20,'process_pid':_CALC_TEST_PID,
+                'process_start_ticks':_CALC_TEST_START_TICKS,
+                'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                'window_incarnation':'c'*64,'mapped':True,
+                'focused_before':True,'focused_after':True,
+                'discovery_title_hint':'Book1','discovery_title_xid':20,
+                'input_authority':False,'authenticated_role':False}]
         if operation == 'process_identity':
             marker = self.root/'fake-process-generation'
             return marker.read_text(encoding='utf-8') if marker.exists() else 'a'*64
+        if operation == 'focus':
+            return True
+        if operation == 'window_incarnation':
+            if xid != 20:
+                raise ValueError('unknown synthetic window')
+            return 'c'*64
+        if operation == 'process_incarnation':
+            marker = self.root/'fake-process-incarnation'
+            return marker.read_text(encoding='utf-8') if marker.exists() else (
+                _CALC_TEST_PROCESS_INCARNATION if (self.root/'calc-profile-mode').exists()
+                else 'b'*64)
+        if operation == 'window_metadata':
+            count_path=self.root/'window-metadata-query-count'
+            count=int(count_path.read_text(encoding='ascii')) if count_path.exists() else 0
+            count_path.write_text(str(count+1),encoding='ascii')
+            if (count >= 1
+                    and (self.root/'fake-window-metadata-delay-second-query').exists()):
+                time.sleep(0.6)
+            if xid != 20:
+                raise ValueError('unknown synthetic window')
+            observed=time.monotonic_ns()
+            if (self.root/'fake-window-metadata-stale').exists():
+                observed-=1_000_000_000
+            changed=(self.root/'fake-window-metadata-changed').exists()
+            process_marker=self.root/'fake-process-incarnation'
+            process_incarnation=(process_marker.read_text(encoding='utf-8')
+                if process_marker.exists() else (
+                    _CALC_TEST_PROCESS_INCARNATION
+                    if (self.root/'calc-profile-mode').exists() else 'b'*64))
+            if (self.root/'fake-window-metadata-change-incarnation').exists():
+                process_marker.write_text('d'*64,encoding='utf-8')
+            return {'schema':'agent-interface/x11-window-metadata-cues-v1',
+                'query_started_monotonic_ns':observed-1_000,
+                'observed_monotonic_ns':observed,
+                'xid':20,'parent_xid':1,'transient_for_xid':None,
+                'wm_class':['soffice','LibreOffice'],
+                'title_cue':'Different Window' if changed else 'Book1 - Calc',
+                'role_cue':None,'mapped':True,
+                'process_incarnation':process_incarnation,
+                'process_generation':(_CALC_TEST_PROCESS_GENERATION
+                    if (self.root/'calc-profile-mode').exists() else 'a'*64),
+                'process_pid':(_CALC_TEST_PID
+                    if (self.root/'calc-profile-mode').exists() else 1234),
+                'process_start_ticks':(_CALC_TEST_START_TICKS
+                    if (self.root/'calc-profile-mode').exists() else 1),
+                'window_incarnation':'c'*64,'focused_before':True,
+                'focused_after':True,'input_authority':False,
+                'authenticated_role':False}
         raise ValueError(operation)
 
     def close(self):
@@ -206,6 +284,7 @@ def _fake_owner_factory(targets, directory, display_name, options):
     cleanup = _Cleanup()
     fake = FakeX(cleanup)
     fake.backend.d.get_display_name = lambda:'fake-display'
+    fake.backend.d.get_input_focus = lambda:SimpleNamespace(focus=SimpleNamespace(id=20))
     fake.backend.d.display = SimpleNamespace(
         info=SimpleNamespace(resource_id_base=0x1200000))
     root = Path(directory)
@@ -245,7 +324,194 @@ def _fake_owner_factory(targets, directory, display_name, options):
     cleanup.addCleanup(patcher.stop)
     owner = GuardedSessionOwner(targets, directory, display_name, **options)
     owner._owned_process_test_cleanup = cleanup
+    if (root/'calc-profile-mode').exists():
+        _configure_calc_profile_fake(owner, fake, root, options.get('test_input_obligations_state'))
+    if (root/'fake-target-exit-receipt').exists():
+        original_calc_profile = owner.run_registered_calc_profile
+        def profile_with_exact_exit_receipt(*args, **kwargs):
+            report = original_calc_profile(*args, **kwargs)
+            descriptor = report['task_artifact_admission']
+            save_request = report['task_save_request']
+            target_pid = descriptor['target_pid']
+            report['target_process_exit_receipt'] = {
+                'schema':'agent-interface/calc-target-exit-receipt-v2',
+                'status':'exited','verified':True,
+                'process_generation':descriptor['process_generation'],
+                'xid':descriptor['target_xid'],'pid':target_pid,
+                'start_ticks':descriptor['target_start_ticks'],
+                'exit_code':0,
+                'observed_monotonic_ns':max(time.monotonic_ns(),
+                    save_request['save_request_monotonic_ns'] + 1),
+                'custody':'libreoffice-oosplash-direct-child-v1',
+                'launcher_pid':target_pid+100,
+                'launcher_start_ticks':123456,
+                'launcher_executable':'/usr/lib/libreoffice/program/oosplash',
+                'launcher_package_version':'4:7.4.7-1+deb12u14',
+                'launcher_exit_code':0,'replacement_observed':False}
+            return report
+        owner.run_registered_calc_profile = profile_with_exact_exit_receipt
     return owner
+
+
+def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
+    """Use a synthetic 1280x800 Calc-like source in the spawned owner only."""
+    from runtime.guarded_x11_v1.calc_profile_v1 import CalcPrimaryProfile
+    from runtime.guarded_x11_v1.bridge import NativeHandleBridge
+    from runtime.guarded_x11_v1.compiled import _Adapter
+
+    fake.generation=_CALC_TEST_PROCESS_GENERATION
+    (root/'fake-process-generation').write_text(
+        _CALC_TEST_PROCESS_GENERATION,encoding='utf-8')
+    (root/'fake-process-incarnation').write_text(
+        _CALC_TEST_PROCESS_INCARNATION,encoding='utf-8')
+
+    image = Image.new('RGB', (1280, 800), 'white')
+    for left, top, right, bottom in ((4,23,28,39),(35,143,90,160),(127,143,215,160),
+                                    (185,190,216,221)):
+        for y in range(top, bottom):
+            for x in range(left, right):
+                if (x + y) % 2:
+                    image.putpixel((x,y), (225,225,225))
+    fake.raw = image.tobytes('raw', 'BGRX')
+    fake.calc_pointer = {'x':0, 'y':0, 'mask':0}
+    fake.calc_state = {'entered':False, 'both_entered':False,
+                       'save_requested':False, 'events':[], 'typed':[]}
+    fake.backend.geometry = lambda _target:dict(x=0, y=0, width=1280, height=800)
+    fake.backend.d.screen = lambda:SimpleNamespace(width_in_pixels=1280,
+                                                    height_in_pixels=800)
+    visual = SimpleNamespace(visual_id=1, red_mask=0xff0000,
+        green_mask=0x00ff00, blue_mask=0x0000ff, visual_class=X.TrueColor)
+    fake.backend.d.display.info = SimpleNamespace(resource_id_base=0x1200000,
+        image_byte_order=0,
+        pixmap_formats=[SimpleNamespace(depth=24,bits_per_pixel=32,scanline_pad=32)],
+        roots=[SimpleNamespace(allowed_depths=[SimpleNamespace(visuals=[visual])])])
+    fake.backend.root.get_image = lambda *_args:SimpleNamespace(
+        data=fake.raw, depth=24, visual=1)
+    fake.backend.root.query_pointer = lambda:SimpleNamespace(
+        root_x=fake.calc_pointer['x'], root_y=fake.calc_pointer['y'],
+        mask=fake.calc_pointer['mask'])
+    keycodes = {}
+    names = {}
+    def keycode(name):
+        if name not in keycodes:
+            code = 20 + len(keycodes)
+            keycodes[name] = code
+            names[code] = name
+        return keycodes[name]
+    fake.backend._keycode = keycode
+    fake.backend._keyboard_mapping_snapshot = lambda:('synthetic-calc-keymap',)
+    fake.backend.keysym_to_keycode = lambda _keysym: keycode('mapped')
+    fake.backend.keycode_to_keysym = lambda _code, _index: 0
+
+    def image_with_marker(points):
+        current = Image.frombytes('RGB', (1280, 800), fake.raw, 'raw', 'BGRX')
+        for point, color in points:
+            current.putpixel(point, color)
+        fake.raw = current.tobytes('raw', 'BGRX')
+
+    from runtime.backends.x11_v1.backend import X11Backend
+    fake.backend.observe_read_only = lambda target, frame, region: X11Backend.capture(
+        fake.backend, target, frame, *region)
+    original_bridge_init = NativeHandleBridge.__init__
+    def calc_bridge_init(bridge, *args, **kwargs):
+        original_bridge_init(bridge, *args, **kwargs)
+        bridge._window_title = lambda:'primary-values.xlsx — LibreOffice Calc'
+    NativeHandleBridge.__init__ = calc_bridge_init
+
+    original_init = CalcPrimaryProfile.__init__
+    def fake_ocr(command, *, input, capture_output, timeout, check):
+        assert command[0] == 'test-tesseract'
+        assert command[command.index('--psm') + 1] == '6'
+        assert 'tessedit_char_whitelist=0123456789' in command
+        assert capture_output is True and check is False and timeout > 0
+        pixels = Image.open(io.BytesIO(input)).convert('RGB')
+        assert pixels.size == (180, 68)
+        filled = fake.calc_state['both_entered']
+        header = b'level\tleft\ttop\twidth\theight\tconf\ttext\n'
+        mode = (root/'calc-profile-mode').read_text(encoding='utf-8').strip()
+        if mode == 'block-ocr':
+            (root/'calc-ocr-entered.json').write_text(
+                json.dumps({'at_ns':time.monotonic_ns(),
+                            'input_bytes':len(input)}), encoding='utf-8')
+            deadline = time.monotonic() + 2
+            while not (root/'resume-calc-ocr').exists() and time.monotonic() < deadline:
+                time.sleep(0.005)
+        low_once = (mode == 'settle-after-low-confidence'
+                    and fake.calc_state['both_entered']
+                    and not (root/'post-release-settle-observed').exists())
+        stdout = (header if not filled or mode == 'unknown-after-input' else
+                  header +
+                  (b'5\t8\t4\t44\t24\t70\t731\n5\t8\t38\t44\t24\t70\t864\n'
+                   if low_once else
+                   b'5\t8\t4\t44\t24\t95\t731\n' +
+                   (b'5\t8\t38\t44\t24\t95\t863\n'
+                    if mode == 'wrong-after-input' else
+                    b'5\t8\t38\t44\t24\t95\t864\n')))
+        evidence=(root/'fake-ocr-observations.jsonl')
+        with evidence.open('a',encoding='utf-8') as stream:
+            stream.write(json.dumps({'pixels_filled':filled,'low_once':low_once,
+                'output':stdout.decode('utf-8')})+'\n')
+        return SimpleNamespace(returncode=0, stdout=stdout, stderr=b'')
+    def init_with_fake_ocr(profile, *args, **kwargs):
+        kwargs['ocr_runner'] = fake_ocr
+        original_init(profile, *args, **kwargs)
+    CalcPrimaryProfile.__init__ = init_with_fake_ocr
+    original_settle = _Adapter._settle_after_release
+    def observe_settle(adapter):
+        (root/'post-release-settle-observed').write_text(
+            str(time.monotonic_ns()),encoding='ascii')
+        return original_settle(adapter)
+    _Adapter._settle_after_release = observe_settle
+    import runtime.guarded_x11_v1.calc_profile_v1 as calc_profile
+    original_which = calc_profile.shutil.which
+    calc_profile.shutil.which = lambda name: (
+        'test-tesseract' if name == 'tesseract' else original_which(name))
+
+    original_emit = fake.emit
+    def calc_emit(display, kind, code=0, **kwargs):
+        original_emit(display, kind, code)
+        if kind == X.MotionNotify:
+            fake.calc_pointer.update(x=kwargs.get('x', 0), y=kwargs.get('y', 0))
+        elif kind in (X.ButtonPress, X.ButtonRelease):
+            mask = {1:X.Button1Mask, 2:X.Button2Mask, 3:X.Button3Mask}.get(code, 0)
+            if kind == X.ButtonPress:
+                fake.calc_pointer['mask'] |= mask
+            else:
+                fake.calc_pointer['mask'] &= ~mask
+        elif kind == X.KeyPress:
+            name = names.get(code)
+            fake.calc_state['events'].append({'kind':'KeyPress', 'key':name})
+            if name in {'Return', 'ENTER'} and fake.calc_state['typed']:
+                value = ''.join(fake.calc_state['typed'])
+                fake.calc_state['typed'] = []
+                if value == '731' and not fake.calc_state['entered']:
+                    fake.calc_state['entered'] = True
+                    image_with_marker([((40,145),(20,20,20))])
+                elif value == '864' and fake.calc_state['entered']:
+                    fake.calc_state['both_entered'] = True
+                    image_with_marker([((40,162),(30,30,30))])
+            elif name == 's' and fake.calc_state['entered']:
+                fake.calc_state['save_requested'] = True
+                image_with_marker([((300,300),(40,40,40))])
+            elif name and len(name) == 1:
+                fake.calc_state['typed'].append(name)
+        elif kind == X.KeyRelease:
+            fake.calc_state['events'].append({'kind':'KeyRelease', 'key':names.get(code)})
+        _write_json(root/'calc-fake-state.json', {
+            **fake.calc_state, 'down':sorted(fake.down),
+            'pointer':dict(fake.calc_pointer)})
+    fake_input = patch('runtime.backends.x11_v1.backend.xtest.fake_input',
+                       side_effect=calc_emit)
+    fake_input.start()
+    owner._owned_process_test_cleanup.addCleanup(fake_input.stop)
+    owner._owned_process_test_cleanup.addCleanup(
+        lambda:setattr(CalcPrimaryProfile, '__init__', original_init))
+    owner._owned_process_test_cleanup.addCleanup(
+        lambda:setattr(_Adapter, '_settle_after_release', original_settle))
+    owner._owned_process_test_cleanup.addCleanup(
+        lambda:setattr(NativeHandleBridge, '__init__', original_bridge_init))
+    owner._owned_process_test_cleanup.addCleanup(
+        lambda:setattr(calc_profile.shutil, 'which', original_which))
 
 
 def _read_json(path, default):
@@ -375,6 +641,157 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_owned_process_window_discovery_is_read_only_and_uses_query_worker(self):
+        from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            owner=OwnedGuardedSessionOwner({'app':20},root,':fake',
+                process_identity=True,query_worker=True,
+                _owner_factory=_fake_owner_factory)
+            try:
+                report=owner.windows_for_process(_CALC_TEST_PID,'Book1')
+                self.assertEqual(report['status'],'discovered',report)
+                self.assertEqual(report['process_pid'],_CALC_TEST_PID)
+                self.assertFalse(report['input_dispatched'],report)
+                self.assertFalse(report['authority_granted'],report)
+                self.assertIsNone(report['task_success'],report)
+                self.assertFalse(report['replay_allowed'],report)
+                self.assertEqual([row['xid'] for row in report['windows']],[20])
+                self.assertEqual(report['windows'][0]['process_generation'],
+                    _CALC_TEST_PROCESS_GENERATION)
+            finally:
+                owner.close()
+
+    async def test_calc_preparation_expires_and_old_handle_is_rejected_preinput(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+                _calc_preparation_ttl_ns=1)
+            try:
+                first=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'attempt-expired'}))
+                self.assertEqual(first['status'],'prepared',first)
+                self.assertEqual(first['expires_in_ms'],0,first)
+                second=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'attempt-current'}))
+                self.assertEqual(second['status'],'prepared',second)
+                self.assertNotEqual(second['call_id'],first['call_id'],second)
+                stale=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'entry','offset':[0,0]},
+                                    'save':{'alias':'save','offset':[0,0]}},
+                        'reviewed_sequence':1,'reviewed_artifact_sha256':'a'*64,
+                        'blank_reviewed':True,'attempt_id':'attempt-expired',
+                        'prepared_call_id':first['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(stale['status'],'invalid_request',stale)
+                self.assertFalse(stale['operation_invoked'],stale)
+                self.assertFalse(stale['input_dispatched'],stale)
+                self.assertFalse(list(root.glob('*/compiled/')))
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_window_metadata_revalidation_rejects_source_expiring_during_query(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'fake-window-metadata-delay-second-query').write_text(
+                'yes',encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                source=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata',{'window_id':20}))
+                self.assertEqual(source['status'],'inspected',source)
+                result=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata_revalidate',
+                    {'metadata_call_id':source['call_id']}))
+                self.assertEqual(result['status'],'stale_or_unfocused',result)
+                self.assertEqual(result['reason'],
+                    'source_expired_during_revalidation',result)
+                self.assertFalse(result['same_window'],result)
+                self.assertFalse(result['authority_granted'],result)
+                self.assertFalse(result['input_dispatched'],result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertEqual((root/'window-metadata-query-count').read_text(), '2')
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_window_metadata_revalidation_rejects_expired_source_before_query(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'fake-window-metadata-stale').write_text('yes',encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                  guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                source=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata',{'window_id':20}))
+                self.assertEqual(source['status'],'inspected',source)
+                stale=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata_revalidate',
+                    {'metadata_call_id':source['call_id']}))
+                self.assertEqual(stale['status'],'stale_or_unfocused',stale)
+                self.assertFalse(stale['operation_invoked'],stale)
+                self.assertFalse(stale['input_dispatched'],stale)
+                self.assertFalse(stale['authority_granted'],stale)
+                self.assertIsNone(stale['task_success'],stale)
+                self.assertEqual((root/'window-metadata-query-count').read_text(), '1')
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_window_metadata_tool_returns_cues_without_authority_or_input(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                result=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata',{'window_id':20}))
+                self.assertEqual(result['status'],'inspected',result)
+                cue=result['window_metadata']
+                self.assertEqual(cue['xid'],20)
+                self.assertEqual(cue['wm_class'],['soffice','LibreOffice'])
+                self.assertEqual(cue['title_cue'],'Book1 - Calc')
+                self.assertFalse(cue['input_authority'])
+                self.assertFalse(cue['authenticated_role'])
+                self.assertFalse(result['input_dispatched'])
+                self.assertFalse(result['authority_granted'])
+                self.assertIsNone(result['task_success'])
+                self.assertFalse(result['replay_allowed'])
+                report_path=Path(result['call_directory'])/'report.json'
+                retained=json.loads(report_path.read_text(encoding='utf-8'))
+                retained['window_metadata']['title_cue']='forged on disk'
+                report_path.write_text(json.dumps(retained),encoding='utf-8')
+                stable=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata_revalidate',
+                    {'metadata_call_id':result['call_id']}))
+                self.assertEqual(stable['status'],'revalidated',stable)
+                self.assertTrue(stable['same_window'],stable)
+                self.assertEqual(stable['metadata_call_id'],result['call_id'],stable)
+                self.assertFalse(stable['input_dispatched'],stable)
+                self.assertFalse(stable['authority_granted'],stable)
+                self.assertIsNone(stable['task_success'],stable)
+                (root/'fake-window-metadata-changed').write_text('yes',encoding='utf-8')
+                changed=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata_revalidate',
+                    {'metadata_call_id':result['call_id']}))
+                self.assertEqual(changed['status'],'needs_review',changed)
+                self.assertFalse(changed['same_window'],changed)
+                self.assertFalse(changed['authority_granted'],changed)
+                unknown=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata',{'window_id':21}))
+                self.assertEqual(unknown['status'],'needs_review',unknown)
+                self.assertFalse(unknown['input_dispatched'],unknown)
+                self.assertFalse(unknown['authority_granted'],unknown)
+            finally:
+                await server.call_tool('interface_close',{})
+
     def test_snapshot_does_not_report_unconfirmed_retirement_as_retired(self):
         with tempfile.TemporaryDirectory() as directory:
             owner=OwnedGuardedSessionOwner({'app':20},directory)
@@ -454,7 +871,130 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 guarded_process_identity=True,guarded_query_worker=True)
             names={tool.name for tool in await server.list_tools()}
             self.assertNotIn('interface_guarded_compiled',names)
+            self.assertNotIn('interface_guarded_calc_compiled',names)
             await server.call_tool('interface_close',{})
+
+    async def test_parent_custodied_calc_launch_is_opt_in_and_gates_profile(self):
+        with tempfile.TemporaryDirectory() as td, patch(
+                'runtime.cli_v1.mcp_server._x11_root_window_id',return_value=20), patch(
+                'runtime.cli_v1.mcp_server.os',SimpleNamespace(name='posix')):
+            server=create_server({'app':20},td,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+                _calc_launch_factory=lambda _artifact:None)
+            try:
+                names={tool.name for tool in await server.list_tools()}
+                self.assertIn('interface_guarded_calc_launch',names)
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'launch-gate-01'}))
+                self.assertEqual(prepared['status'],'prepared',prepared)
+                result=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'entry','offset':[0,0]},
+                                    'save':{'alias':'save','offset':[0,0]}},
+                        'reviewed_sequence':1,'reviewed_artifact_sha256':'a'*64,
+                        'blank_reviewed':True,'attempt_id':'launch-gate-01',
+                        'prepared_call_id':prepared['call_id']}))
+                self.assertEqual(result['status'],'needs_review',result)
+                self.assertEqual(result['error'],'CALC_LAUNCH_REVIEW_BIND_REQUIRED',result)
+                self.assertFalse(result['operation_invoked'],result)
+                self.assertFalse(result['input_dispatched'],result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertTrue(Path(prepared['artifact_path']).is_file())
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_public_calc_launch_review_and_close_keep_cleanup_separate_from_exit(self):
+        lifecycle_order=[]
+        class FakeCalcLaunch:
+            launched=False
+            def launch(self,artifact):
+                self.launched=True
+                return {'status':'launched','pid':4500,'start_ticks':700,
+                    'input_dispatched':False,'task_success':None,
+                    'replay_allowed':False}
+            def retain_initial_process_group_custody(self,owner):
+                owner._calc_process_group_custody={'fixture':'parent-custody'}
+                owner._calc_process_group_cleanup_target=self.cleanup_owned_process_group
+                return {'status':'launcher_retained','custody':{'fixture':'parent-custody'},
+                    'authority_granted':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+            def discover_owned_window(self,_owner,**_kwargs):
+                return {'status':'candidate_found','candidate':{
+                    'xid':91,'process_pid':4501,'process_start_ticks':701,
+                    'mapped':True},'input_dispatched':False,
+                    'authority_granted':False,'task_success':None,
+                    'replay_allowed':False}
+            def review_and_bind_owned_window(self,_owner,window_id,**_kwargs):
+                return {'status':'reviewed','candidate':{'xid':window_id},
+                    'input_dispatched':False,'authority_granted':False,
+                    'task_success':None,'replay_allowed':False}
+            def wait_for_verified_exit(self,*,timeout_s):
+                self.assert_timeout=timeout_s
+                lifecycle_order.append(('target_exit_wait',timeout_s))
+                return {'status':'unknown','reason':'calc_target_exit_timeout',
+                    'task_success':None,'replay_allowed':False}
+            def cleanup_owned_process_group(self,custody):
+                return {'status':'terminated','verified_empty':True,
+                    'clean_exit_verified':False,'custody':custody,
+                    'task_success':None,'replay_allowed':False}
+            def close(self):
+                return None
+
+        original_owner_close=OwnedGuardedSessionOwner.close
+        def tracked_owner_close(owner):
+            result=original_owner_close(owner)
+            lifecycle_order.append(('input_owner_closed',result.get('status'),
+                                    result.get('verified')))
+            return result
+
+        with tempfile.TemporaryDirectory() as td, patch(
+                'runtime.cli_v1.mcp_server._x11_root_window_id',return_value=20), patch(
+                'runtime.cli_v1.mcp_server.os',SimpleNamespace(name='posix')):
+            launches=[]
+            def factory(artifact):
+                launch=FakeCalcLaunch();launches.append(launch);return launch
+            server=create_server({'app':20},td,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+                _calc_launch_factory=factory)
+            close_patcher=patch.object(OwnedGuardedSessionOwner,'close',tracked_owner_close)
+            close_patcher.start()
+            try:
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'launch-live-route-01'}))
+                launch=metadata(await server.call_tool(
+                    'interface_guarded_calc_launch',{
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(launch['status'],'candidate_found',launch)
+                self.assertEqual(launch['parent_process_custody'],'retained',launch)
+                self.assertFalse(launch['input_dispatched'],launch)
+                self.assertFalse(launch['authority_granted'],launch)
+                reviewed=metadata(await server.call_tool(
+                    'interface_guarded_review_window',{'window_id':91}))
+                self.assertEqual(reviewed['status'],'reviewed',reviewed)
+                self.assertTrue(launches[0].launched)
+                closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertEqual(closed['status'],'closed',closed)
+                lifecycle=closed['calc_target_lifecycle'][0]
+                self.assertEqual(lifecycle['process_group_cleanup']['status'],
+                    'terminated',lifecycle)
+                self.assertTrue(lifecycle['process_group_cleanup']['verified_empty'])
+                self.assertFalse(lifecycle['process_group_cleanup']['clean_exit_verified'])
+                self.assertEqual(lifecycle['target_process_exit_receipt']['reason'],
+                    'forced_cleanup_is_not_clean_exit')
+                self.assertIsNone(closed.get('task_success'))
+                self.assertEqual(lifecycle_order[0][0],'input_owner_closed',lifecycle_order)
+                self.assertEqual(lifecycle_order[1],('target_exit_wait',5.0),lifecycle_order)
+            finally:
+                try:
+                    await server.call_tool('interface_close',{})
+                finally:
+                    close_patcher.stop()
 
     async def test_invalid_compiled_profile_is_rejected_before_call_admission(self):
         with tempfile.TemporaryDirectory() as td:
@@ -474,6 +1014,644 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(list(root.glob('calls/*/request.json')))
             finally:
                 await server.call_tool('interface_close',{})
+
+    async def test_unregistered_calc_profile_is_refused_before_owner_call(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                result=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                    'profile_id':'client-module:callback',
+                    'bindings':{'entry':{'alias':'field','offset':[1,1]},
+                                'save':{'alias':'field2','offset':[2,2]}},
+                    'reviewed_sequence':1,
+                    'reviewed_artifact_sha256':'a'*64,
+                    'blank_reviewed':True,'attempt_id':'attempt-1'}))
+                self.assertEqual(result['status'],'invalid_request',result)
+                self.assertFalse(result['operation_invoked'])
+                self.assertIsNone(result['task_success'])
+                self.assertFalse(result['replay_allowed'])
+                self.assertFalse(list(root.glob('*/request.json')))
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_registered_calc_profile_runs_through_owned_mcp_and_releases(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+            (root/'fake-target-exit-receipt').write_text('enabled',encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'calc-offline-e2e-01'}))
+                self.assertEqual(prepared['status'],'prepared',prepared)
+                self.assertFalse(prepared['operation_invoked'],prepared)
+                self.assertFalse(prepared['input_dispatched'],prepared)
+                prepared_path=Path(prepared['artifact_path'])
+                self.assertEqual(prepared_path.name,'task-artifact.fods',prepared)
+                self.assertEqual(prepared_path.parent.name,prepared['call_id'],prepared)
+                self.assertTrue(prepared_path.is_file(),prepared)
+                self.assertEqual(prepared['expires_in_ms'],300000,prepared)
+                self.assertEqual(prepared['target_launch_status'],
+                                 'not_attempted',prepared)
+                self.assertEqual(prepared['parent_process_custody'],
+                                 'not_established',prepared)
+                second_preparation=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'other-attempt'}))
+                self.assertEqual(second_preparation['status'],'busy',second_preparation)
+                self.assertFalse(second_preparation['operation_invoked'],
+                                 second_preparation)
+                mismatch=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'calc_entry','offset':[0,0]},
+                                    'save':{'alias':'calc_save','offset':[0,0]}},
+                        'reviewed_sequence':1,'reviewed_artifact_sha256':'a'*64,
+                        'blank_reviewed':True,'attempt_id':'different-attempt',
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(mismatch['status'],'invalid_request',mismatch)
+                self.assertFalse(mismatch['operation_invoked'],mismatch)
+                self.assertFalse(mismatch['input_dispatched'],mismatch)
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(observed['status'],'observed',observed)
+                source=observed['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=source['sequence'],
+                    point=[16,31],region_size=[24,16])))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=source['sequence'],
+                    point=[200,205],region_size=[16,12])))
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
+                result=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                    'profile_id':'calc-ocr-save-v1',
+                    'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                'save':{'alias':'calc_save','offset':save['offset']}},
+                    'reviewed_sequence':source['sequence'],
+                    'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                    'blank_reviewed':True,'attempt_id':'calc-offline-e2e-01',
+                    'prepared_call_id':prepared['call_id'],
+                    'wait_for_result_ms':10000}))
+                self.assertIn('profile_id',result,result)
+                self.assertEqual(result['profile_id'],'calc-ocr-save-v1',result)
+                self.assertEqual(result['attempt_id'],'calc-offline-e2e-01',result)
+                self.assertEqual(result['task_effect_verification']['status'],
+                                 'not_configured',result)
+                self.assertEqual(result['task_artifact_admission']['call_id'],
+                                 prepared['call_id'],result)
+                self.assertEqual(result['task_artifact_admission']['attempt_id'],
+                                 result['attempt_id'],result)
+                self.assertEqual(result['task_artifact_admission']['process_generation'],
+                                 source['pointer_binding']['process_generation'],result)
+                self.assertEqual(result['task_artifact_admission']['window_generation'],
+                                 source['pointer_binding']['window_generation'],result)
+                self.assertEqual(result['task_artifact_root_call_id'],
+                                 prepared['call_id'],result)
+                self.assertEqual(result['feedback']['image_status'],'image',result)
+                self.assertGreater(result['feedback']['owner_feedback_sequence'],
+                    result['method_receipt']['observations'][-1]['sequence'],result)
+                self.assertEqual(
+                    result['feedback']['image_reference']['observation_id'],
+                    result['feedback']['owner_feedback_observation_id'],result)
+                self.assertIsInstance(result['task_save_request'],dict,result)
+                self.assertEqual(result['target_process_exit_receipt']['schema'],
+                    'agent-interface/calc-target-exit-receipt-v2',result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertFalse(result['replay_allowed'],result)
+                self.assertNotEqual(result['method_receipt']['outcome'],
+                                    'TASK_SUCCEEDED',result)
+                fake_state_paths=list(root.rglob('calc-fake-state.json'))
+                self.assertEqual(result['method_receipt']['completed_transitions'],2,result)
+                self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD',result)
+                self.assertEqual(result['method_receipt']['reason'],'effect_unavailable',result)
+                self.assertTrue(all(row['release_verified'] is True
+                                    for row in result['method_receipt']['transitions']),result)
+                self.assertTrue(any(row['predicates'].get('cells_filled') is True
+                                    for row in result['method_receipt']['observations']),result)
+                ocr_paths=list(Path(result['call_directory']).glob('calc-ocr/*.json'))
+                ocr_records=[json.loads(path.read_text()) for path in ocr_paths]
+                self.assertGreater(len(ocr_records),1,ocr_records)
+                self.assertTrue(all(row['input_dispatched'] is False and
+                                    row['authority_granted'] is False
+                                    for row in ocr_records),ocr_records)
+                self.assertTrue(fake_state_paths)
+                fake_state=json.loads(fake_state_paths[0].read_text())
+                self.assertTrue(fake_state['entered'],fake_state)
+                self.assertTrue(fake_state['save_requested'],fake_state)
+                self.assertEqual(fake_state['down'],[],fake_state)
+                self.assertTrue(list(Path(result['call_directory']).glob('calc-ocr/*.tsv')))
+                self.assertTrue(list(Path(result['call_directory']).glob('compiled/images/*.png')))
+                lookup=metadata(await server.call_tool('interface_results',{
+                    'call_id':result['call_id']}))
+                self.assertEqual(lookup['profile_id'],'calc-ocr-save-v1',lookup)
+                self.assertEqual(lookup['attempt_id'],'calc-offline-e2e-01',lookup)
+                self.assertEqual(lookup['task_artifact_admission'],
+                                 result['task_artifact_admission'],lookup)
+                self.assertEqual(lookup['task_save_request'],
+                                 result['task_save_request'],lookup)
+                self.assertEqual(lookup['target_process_exit_receipt'],
+                    result['target_process_exit_receipt'],lookup)
+                self.assertIsNone(lookup['task_success'],lookup)
+                preclose=metadata(await server.call_tool('interface_verify_task',{
+                    'call_id':result['call_id']}))
+                self.assertEqual(preclose['status'],'unknown',preclose)
+                self.assertEqual(preclose['reason'],'verified_close_required',preclose)
+                replay=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                    'profile_id':'calc-ocr-save-v1',
+                    'bindings':{'entry':{'alias':'calc_entry','offset':[0,0]},
+                                'save':{'alias':'calc_save','offset':[0,0]}},
+                    'reviewed_sequence':1,'reviewed_artifact_sha256':'a'*64,
+                    'blank_reviewed':True,'attempt_id':'calc-offline-e2e-01',
+                    'prepared_call_id':prepared['call_id'],'wait_for_result_ms':10000}))
+                self.assertEqual(replay['status'],'invalid_request',replay)
+                self.assertFalse(replay['operation_invoked'],replay)
+                self.assertFalse(replay['input_dispatched'],replay)
+            finally:
+                closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertEqual(closed['status'],'closed',closed)
+                self.assertTrue(closed['verified'],closed)
+                self.assertTrue(closed['owner_process_retired'],closed)
+                self.assertTrue(closed['release_confirmed'],closed)
+            # FakeX simulates the target writing the saved document. The
+            # verifier must join these parsed bytes to the parent-held action
+            # and exit receipts, not the presentation report file.
+            artifact_path=Path(prepared['artifact_path'])
+            artifact_path.write_bytes(_CALC_TASK_FODS)
+            report_path=Path(result['call_directory'])/'report.json'
+            report_path.write_text(json.dumps({
+                'task_artifact_admission':{'forged':True},
+                'task_save_request':{'forged':True},
+                'target_process_exit_receipt':{'forged':True}}),encoding='utf-8')
+            verified=metadata(await server.call_tool('interface_verify_task',{
+                'call_id':result['call_id']}))
+            self.assertEqual(verified['status'],'verified',verified)
+            self.assertIs(verified['task_success'],True,verified)
+            self.assertEqual(verified['task_effect']['reason'],
+                             'registered_calc_saved_artifact_verified',verified)
+            self.assertEqual(verified['task_effect']['parsed_effect']['cells'],
+                             {'A1':'731','A2':'864'},verified)
+            self.assertEqual(verified['task_effect']['save_controller']['call_id'],
+                             prepared['call_id'],verified)
+            self.assertFalse(verified['operation_invoked'],verified)
+            repeated=metadata(await server.call_tool('interface_verify_task',{
+                'call_id':result['call_id']}))
+            self.assertEqual(repeated['status'],'verified',repeated)
+            self.assertIs(repeated['task_success'],True,repeated)
+            self.assertFalse(repeated['operation_invoked'],repeated)
+            wrong_profile=metadata(await server.call_tool('interface_verify_task',{
+                'call_id':'0'*32}))
+            self.assertEqual(wrong_profile['status'],'unknown_call',wrong_profile)
+            self.assertFalse(wrong_profile['operation_invoked'],wrong_profile)
+            retain_evidence = os.environ.get(
+                'AGENT_INTERFACE_RETAIN_CALC_PROFILE_EVIDENCE')
+            if retain_evidence:
+                (root/'task-verification-result.json').write_text(json.dumps({
+                    'call_id':verified['call_id'],
+                    'attempt_id':verified['attempt_id'],
+                    'status':verified['status'],
+                    'reason':verified['task_effect']['reason'],
+                    'task_success':verified['task_success'],
+                    'artifact_sha256':verified['task_effect'].get('artifact_sha256'),
+                    'report_file_was_tampered':True,
+                    'close':{'verified':closed['verified'],
+                        'owner_process_retired':closed['owner_process_retired'],
+                        'release_confirmed':closed['release_confirmed']},
+                },sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+                evidence_root=Path(retain_evidence).resolve()
+                evidence_root.mkdir(parents=True,exist_ok=False)
+                shutil.copytree(root,evidence_root/'raw-runtime')
+                source_root=Path(__file__).resolve().parents[2]
+                source_files=(
+                    'runtime/guarded_x11_v1/calc_profile_v1.py',
+                    'runtime/guarded_x11_v1/calc_task_artifact_v1.py',
+                    'runtime/cli_v1/mcp_guarded.py',
+                    'runtime/cli_v1/mcp_server.py',
+                    'runtime/cli_v1/owned_guarded_session.py',
+                    'runtime/cli_v1/test_mcp_owned_process.py')
+                manifest={
+                    'schema':'agent-interface/calc-owned-mcp-offline-evidence-v1',
+                    'environment':'synthetic FakeX in an owned child process; no live GUI',
+                    'profile_id':'calc-ocr-save-v1',
+                    'attempt_id':'calc-offline-e2e-01',
+                    'call_id':result['call_id'],
+                    'graph':{'outcome':result['method_receipt']['outcome'],
+                        'reason':result['method_receipt']['reason'],
+                        'completed_transitions':result['method_receipt']['completed_transitions'],
+                        'release_verified':[row['release_verified'] for row in
+                                            result['method_receipt']['transitions']],
+                        'recognized_filled_observation':any(
+                            row['predicates'].get('cells_filled') is True for row in
+                            result['method_receipt']['observations'])},
+                    'synthetic_environment':{'values_entered':'A1=731; A2=864',
+                        'save_requested':True,'all_fake_inputs_released':True},
+                    'task_effect_verification':result['task_effect_verification'],
+                    'parent_verification':{'status':verified['status'],
+                        'reason':verified['task_effect']['reason'],
+                        'task_success':verified['task_success'],
+                        'report_file_was_tampered':True},
+                    'task_success':result['task_success'],
+                    'ocr_record_count':len(list(Path(result['call_directory']).glob(
+                        'calc-ocr/*.json'))),
+                    'owner_elapsed_ns':result.get('owner_timing',{}).get('elapsed_ns'),
+                    'raw_evidence':'raw-runtime/ (call reports, PNG captures, OCR TSV and receipts)',
+                    'source_sha256':{name:hashlib.sha256(
+                        (source_root/name).read_bytes()).hexdigest()
+                        for name in source_files}}
+                (evidence_root/'manifest.json').write_text(json.dumps(
+                    manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+
+    async def test_registered_calc_profile_requires_window_lifecycle_at_startup(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                result=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'entry','offset':[1,1]},
+                                    'save':{'alias':'save','offset':[2,2]}},
+                        'reviewed_sequence':1,
+                        'reviewed_artifact_sha256':'a'*64,
+                        'blank_reviewed':True,
+                        'attempt_id':'calc-lifecycle-required'}))
+                self.assertEqual(result['status'],'invalid_request',result)
+                self.assertEqual(result['error'],'CALC_WINDOW_LIFECYCLE_REQUIRED',result)
+                self.assertFalse(result['operation_invoked'],result)
+                self.assertFalse(result['input_dispatched'],result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertFalse(list(root.rglob('request.json')))
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_registered_calc_profile_settles_once_after_low_confidence(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'calc-profile-mode').write_text(
+                'settle-after-low-confidence',encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{'attempt_id':'calc-settle-low-01'}))
+                source=metadata(await server.call_tool(
+                    'interface_guarded_observe',{}))['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=source['sequence'],
+                    point=[16,31],region_size=[24,16])))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=source['sequence'],
+                    point=[200,205],region_size=[16,12])))
+                result=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                    'save':{'alias':'calc_save','offset':save['offset']}},
+                        'reviewed_sequence':source['sequence'],
+                        'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                        'blank_reviewed':True,'attempt_id':'calc-settle-low-01',
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD',result)
+                self.assertEqual(result['method_receipt']['reason'],'effect_unavailable',result)
+                self.assertEqual(result['method_receipt']['completed_transitions'],2,result)
+                settles=list(root.rglob('*-post-release-settle.json'))
+                self.assertEqual(len(settles),2,[p.name for p in settles])
+                for path in settles:
+                    row=json.loads(path.read_text(encoding='utf-8'))
+                    self.assertEqual(row['requested_ms'],250,row)
+                    self.assertIn(row['status'],('settled','budget_limited'),row)
+                ocr=list(Path(result['call_directory']).glob('calc-ocr/*.json'))
+                self.assertGreaterEqual(len(ocr),4,[p.name for p in ocr])
+                report=metadata(await server.call_tool('interface_results',{
+                    'call_id':result['call_id']}))
+                self.assertIsNone(report['task_success'],report)
+            finally:
+                closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertTrue(closed['release_confirmed'],closed)
+
+    async def test_registered_calc_profile_stops_on_wrong_or_unknown_ocr(self):
+        for mode,expected_reason in (('wrong-after-input','effect_failed'),
+                                     ('unknown-after-input','effect_unavailable')):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
+                root=Path(td)
+                (root/'calc-profile-mode').write_text(mode,encoding='utf-8')
+                server=create_server({'app':20},root,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_window_lifecycle=True,guarded_owned_process=True,
+                    _guarded_owner_factory=_fake_owner_factory)
+                try:
+                    observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                    self.assertEqual(observed['status'],'observed',observed)
+                    source=observed['source']
+                    entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                        alias='calc_entry',source_sequence=source['sequence'],
+                        point=[16,31],region_size=[24,16])))
+                    save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                        alias='calc_save',source_sequence=source['sequence'],
+                        point=[200,205],region_size=[16,12])))
+                    self.assertEqual(entry['status'],'minted',entry)
+                    self.assertEqual(save['status'],'minted',save)
+                    result=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                    'save':{'alias':'calc_save','offset':save['offset']}},
+                        'reviewed_sequence':source['sequence'],
+                        'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                        'blank_reviewed':True,'attempt_id':f'calc-offline-{mode}',
+                        'wait_for_result_ms':10000}))
+                    self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD',result)
+                    self.assertEqual(result['method_receipt']['reason'],expected_reason,result)
+                    self.assertEqual(result['method_receipt']['completed_transitions'],1,result)
+                    self.assertIsNone(result['task_success'],result)
+                    self.assertFalse(result['replay_allowed'],result)
+                    terminals=[event for event in result['method_receipt']['critical_events']
+                               if event.get('event')=='action_terminal']
+                    self.assertTrue(terminals, result)
+                    self.assertTrue(all(event.get('release_verified') is True
+                                        for event in terminals),result)
+                    fake_state=json.loads(next(root.rglob('calc-fake-state.json')).read_text())
+                    self.assertTrue(fake_state['entered'],fake_state)
+                    self.assertFalse(fake_state['save_requested'],fake_state)
+                    self.assertEqual(fake_state['down'],[],fake_state)
+                finally:
+                    await server.call_tool('interface_close',{})
+                retain_negative = os.environ.get(
+                    'AGENT_INTERFACE_RETAIN_CALC_PROFILE_NEGATIVE_EVIDENCE')
+                if retain_negative:
+                    evidence_root=Path(retain_negative).resolve()/mode
+                    evidence_root.mkdir(parents=True,exist_ok=False)
+                    shutil.copytree(root,evidence_root/'raw-runtime')
+                    source_root=Path(__file__).resolve().parents[2]
+                    source_files=(
+                        'runtime/guarded_x11_v1/calc_profile_v1.py',
+                        'runtime/cli_v1/mcp_guarded.py',
+                        'runtime/cli_v1/mcp_server.py',
+                        'runtime/cli_v1/owned_guarded_session.py',
+                        'runtime/cli_v1/test_mcp_owned_process.py')
+                    manifest={
+                        'schema':'agent-interface/calc-owned-mcp-offline-evidence-v1',
+                        'environment':'synthetic FakeX in an owned child process; no live GUI',
+                        'profile_id':result['profile_id'],
+                        'attempt_id':result['attempt_id'],
+                        'call_id':result['call_id'],
+                        'ocr_mode':mode,
+                        'graph':{'outcome':result['method_receipt']['outcome'],
+                            'reason':result['method_receipt']['reason'],
+                            'completed_transitions':result['method_receipt']['completed_transitions'],
+                            'release_verified':[event['release_verified'] for event in terminals]},
+                        'synthetic_environment':{'save_requested':fake_state['save_requested'],
+                            'all_fake_inputs_released':not fake_state['down']},
+                        'task_effect_verification':result['task_effect_verification'],
+                        'task_success':result['task_success'],
+                        'raw_evidence':'raw-runtime/ (call reports, PNG captures, OCR TSV and receipts)',
+                        'source_sha256':{name:hashlib.sha256(
+                            (source_root/name).read_bytes()).hexdigest()
+                            for name in source_files}}
+                    (evidence_root/'manifest.json').write_text(json.dumps(
+                        manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+
+    async def test_registered_calc_profile_cancel_during_ocr_keeps_release_and_effect_unknown(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'calc-profile-mode').write_text('block-ocr',encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                guarded_retention_mode='journal',
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(observed['status'],'observed',observed)
+                source=observed['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=source['sequence'],
+                    point=[16,31],region_size=[24,16])))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=source['sequence'],
+                    point=[200,205],region_size=[16,12])))
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
+                pending=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                    'profile_id':'calc-ocr-save-v1',
+                    'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                'save':{'alias':'calc_save','offset':save['offset']}},
+                    'reviewed_sequence':source['sequence'],
+                    'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                    'blank_reviewed':True,'attempt_id':'calc-cancel-during-ocr',
+                    'wait_for_result_ms':0}))
+                self.assertEqual(pending['status'],'pending',pending)
+                deadline=time.monotonic()+3
+                while not (root/'calc-ocr-entered.json').exists() and time.monotonic()<deadline:
+                    await asyncio.sleep(0.005)
+                self.assertTrue((root/'calc-ocr-entered.json').exists())
+                with patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
+                           return_value={'status':'disconnected','worker_retired':True,
+                                         'elapsed_ms':2.5}), \
+                     patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs',
+                           return_value={'status':'readback_verified',
+                               'release':{'verified':True,'keys_down':[],
+                                          'buttons_down':[],'monotonic_ns':12}}):
+                    cancel=metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                self.assertIn(cancel['status'],
+                    ('pending','cancel_unconfirmed','cancel_requested','runtime_failed'),cancel)
+                self.assertFalse(cancel.get('release_confirmed',False),cancel)
+                self.assertIsNone(cancel.get('task_success'),cancel)
+                self.assertFalse(cancel.get('replay_allowed',False),cancel)
+                terminal=await self._wait_for_cancel_terminal(server,pending['call_id'])
+                cleanup=terminal['cancellation']['result']
+                self.assertTrue(cleanup['owner_process_retired'],cleanup)
+                self.assertFalse(cleanup['release_confirmed'],cleanup)
+                self.assertEqual(cleanup['cleanup_status'],'UNKNOWN',cleanup)
+                self.assertIsNone(cleanup['task_success'],cleanup)
+                self.assertFalse(cleanup['replay_allowed'],cleanup)
+                self.assertEqual(cleanup.get('owner_input_obligations'),
+                    {'keys':{},'buttons':[]})
+                # OCR is held before yielding a result. No Calc input or save
+                # command can follow cancellation from this retired owner.
+                state_paths=list(root.rglob('calc-fake-state.json'))
+                if state_paths:
+                    state=json.loads(state_paths[0].read_text())
+                    self.assertFalse(state['save_requested'],state)
+                    self.assertEqual(state['down'],[],state)
+                compiled_root=Path(terminal['call_directory'])/'compiled'
+                if compiled_root.exists():
+                    self.assertFalse(list(compiled_root.rglob('*.json')))
+            finally:
+                (root/'resume-calc-ocr').write_text('resume',encoding='utf-8')
+                await server.call_tool('interface_close',{})
+                _preserve_fake_x_run('calc-cancel-during-ocr',root)
+
+    async def test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+            _write_json(root/'supervisor-fake-x.json',{'down':[1], 'effects':[], 'refused':[]})
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                guarded_prestarted_cancel_supervisor=True,
+                _guarded_cancel_supervisor_target=_fake_prestarted_cancel_worker,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                source=observed['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=source['sequence'],
+                    point=[16,31],region_size=[24,16])))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=source['sequence'],
+                    point=[200,205],region_size=[16,12])))
+                pending=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                    'profile_id':'calc-ocr-save-v1',
+                    'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                'save':{'alias':'calc_save','offset':save['offset']}},
+                    'reviewed_sequence':source['sequence'],
+                    'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                    'blank_reviewed':True,'attempt_id':'calc-cancel-after-transition',
+                    'wait_for_result_ms':0}))
+                self.assertEqual(pending['status'],'pending',pending)
+                deadline=time.monotonic()+3
+                save_seen=False
+                while time.monotonic()<deadline:
+                    states=list(root.rglob('calc-fake-state.json'))
+                    if states:
+                        try:
+                            state=json.loads(states[0].read_text())
+                        except (OSError,json.JSONDecodeError):
+                            await asyncio.sleep(0.005)
+                            continue
+                        save_seen=state['save_requested']
+                        if save_seen:
+                            break
+                    await asyncio.sleep(0.005)
+                self.assertTrue(save_seen,'test did not reach Save boundary')
+                (root/'block-owner-io').write_text('block',encoding='utf-8')
+                deadline=time.monotonic()+3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic()<deadline:
+                    await asyncio.sleep(0.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+                cancel=metadata(await server.call_tool('interface_guarded_cancel',
+                    {'call_id':pending['call_id']}))
+                self.assertIn(cancel['status'],
+                    ('pending','cancel_unconfirmed','cancel_requested','runtime_failed'),cancel)
+                terminal=await self._wait_for_cancel_terminal(server,pending['call_id'])
+                cleanup=terminal['cancellation']['result']
+                self.assertTrue(cleanup['owner_process_retired'],cleanup)
+                self.assertFalse(cleanup['release_confirmed'],cleanup)
+                self.assertEqual(cleanup['cleanup_status'],'UNKNOWN',cleanup)
+                self.assertIsNone(cleanup['task_success'],cleanup)
+                self.assertFalse(cleanup['replay_allowed'],cleanup)
+                retained=metadata(await server.call_tool('interface_results',{
+                    'call_id':pending['call_id'],'include_image':False}))
+                self.assertIsNone(retained['task_success'],retained)
+                self.assertFalse(retained['replay_allowed'],retained)
+                retained_call=retained.get('retained_call',{})
+                self.assertEqual(retained_call.get('operation'),
+                                 'guarded_calc_compiled',retained_call)
+                self.assertEqual(retained_call.get('profile_id'),
+                                 'calc-ocr-save-v1',retained_call)
+                self.assertEqual(retained_call.get('attempt_id'),
+                                 'calc-cancel-after-transition',retained_call)
+                self.assertEqual(retained_call.get('state'),'finished',retained_call)
+                report=json.loads((root/pending['call_id']/'report.json').read_text())
+                self.assertFalse(report.get('replay_allowed',True),report)
+                self.assertIsNone(report.get('task_success'),report)
+                self.assertNotEqual(report.get('method_receipt',{}).get('outcome'),
+                                    'TASK_SUCCEEDED',report)
+            finally:
+                (root/'resume-owner-io').write_text('resume',encoding='utf-8')
+                await self._wait_for_cancel_terminal(server,pending['call_id'])
+                await server.call_tool('interface_close',{})
+                _preserve_fake_x_run('calc-cancel-after-save-request',root)
+
+    async def test_registered_calc_profile_refuses_changed_process_generation(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+            (root/'fake-process-incarnation').write_text('b'*64,encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(observed['status'],'observed',observed)
+                source=observed['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=source['sequence'],
+                    point=[16,31],region_size=[24,16])))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=source['sequence'],
+                    point=[200,205],region_size=[16,12])))
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
+                (root/'fake-window-metadata-change-incarnation').write_text(
+                    'yes',encoding='utf-8')
+                result=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+                    'profile_id':'calc-ocr-save-v1',
+                    'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                'save':{'alias':'calc_save','offset':save['offset']}},
+                    'reviewed_sequence':source['sequence'],
+                    'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                    'blank_reviewed':True,'attempt_id':'calc-offline-generation-change',
+                    'wait_for_result_ms':10000}))
+                # The Calc artifact adapter now rechecks process identity
+                # before graph admission, so this mutation is rejected before
+                # the method emits any observation or transition receipt.
+                self.assertEqual(result['status'],'runtime_failed',result)
+                self.assertFalse(result.get('input_dispatched',False),result)
+                self.assertIn('target generation',result.get('error',''),result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertFalse(result['replay_allowed'],result)
+                self.assertFalse(list(root.rglob('calc-fake-state.json')))
+            finally:
+                closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertEqual(closed['status'],'closed',closed)
+                self.assertTrue(closed['verified'],closed)
+                self.assertTrue(closed['owner_process_retired'],closed)
+            retain_negative = os.environ.get(
+                'AGENT_INTERFACE_RETAIN_CALC_PROFILE_NEGATIVE_EVIDENCE')
+            if retain_negative:
+                evidence_root=Path(retain_negative).resolve()/'source-generation-change'
+                evidence_root.mkdir(parents=True,exist_ok=False)
+                shutil.copytree(root,evidence_root/'raw-runtime')
+                source_root=Path(__file__).resolve().parents[2]
+                source_files=(
+                    'runtime/guarded_x11_v1/calc_profile_v1.py',
+                    'runtime/guarded_x11_v1/calc_task_artifact_v1.py',
+                    'runtime/cli_v1/mcp_guarded.py',
+                    'runtime/cli_v1/mcp_server.py',
+                    'runtime/cli_v1/owned_guarded_session.py',
+                    'runtime/cli_v1/test_mcp_owned_process.py')
+                manifest={
+                    'schema':'agent-interface/calc-owned-mcp-offline-evidence-v1',
+                    'environment':'synthetic FakeX in an owned child process; no live GUI',
+                    'profile_id':'calc-ocr-save-v1',
+                    'attempt_id':'calc-offline-generation-change',
+                    'call_id':result['call_id'],
+                    'condition':'process generation changed after observation and mint, before graph input',
+                    'preflight':{'status':result['status'],
+                        'error':result.get('error'),
+                        'input_dispatched':result.get('input_dispatched',False),
+                        'fake_input_state_file_created':bool(list(root.rglob('calc-fake-state.json')))},
+                    'task_success':result['task_success'],
+                    'raw_evidence':'raw-runtime/ (call reports, PNG captures and receipts)',
+                    'source_sha256':{name:hashlib.sha256(
+                        (source_root/name).read_bytes()).hexdigest()
+                        for name in source_files}}
+                (evidence_root/'manifest.json').write_text(json.dumps(
+                    manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
 
     def test_retired_release_accepts_verified_reply_from_delayed_worker(self):
         from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
@@ -595,6 +1773,142 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(process.joins, [0.01, 0.01])
         self.assertTrue(owner._execution_unknown)
         self.assertTrue(owner.review_required)
+
+    def test_retirement_cleans_parent_retained_calc_group_separately(self):
+        class ExitingProcess:
+            exitcode=-9
+            def is_alive(self): return False
+            def join(self, timeout=None): pass
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner._process=ExitingProcess()
+        owner.state='open'; owner.error=None
+        owner._execution_unknown=False; owner.review_required=False
+        owner._retirement=None
+        custody={'schema':'agent-interface/calc-process-group-custody-v1',
+            'pgid':4100,'session_id':4100,
+            'launcher':{'pid':4100,'start_ticks':70001},
+            'target':{'pid':4101,'start_ticks':70002},
+            'expected_members':{'4100':70001,'4101':70002}}
+        cleanup={'schema':'agent-interface/calc-process-group-cleanup-v1',
+            'status':'terminated','verified_empty':True,
+            'clean_exit_verified':False,'task_success':None,
+            'replay_allowed':False}
+        owner._calc_process_group_custody=custody
+        owner._calc_process_group_cleanup=None
+        owner._calc_process_group_cleanup_target=Mock(return_value=cleanup)
+
+        result=owner._retire('synthetic owner death')
+
+        self.assertTrue(result['retired'])
+        self.assertEqual(result['calc_process_group_cleanup'],cleanup)
+        owner._calc_process_group_cleanup_target.assert_called_once_with(custody)
+        self.assertTrue(owner._execution_unknown)
+        self.assertTrue(owner.review_required)
+        self.assertFalse(result['calc_process_group_cleanup']['clean_exit_verified'])
+        self.assertIsNone(result['calc_process_group_cleanup']['task_success'])
+
+    def test_parent_retains_only_independently_revalidated_calc_group(self):
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner._calc_process_group_custody=None
+        custody={'schema':'agent-interface/calc-process-group-custody-v1',
+            'pgid':4100,'session_id':4100,
+            'launcher':{'pid':4100,'start_ticks':70001},
+            'target':{'pid':4101,'start_ticks':70002},
+            'expected_members':{'4100':70001,'4101':70002}}
+        rows=[{'pid':4100,'start_ticks':70001,'process_group':4100,'session_id':4100},
+            {'pid':4101,'start_ticks':70002,'process_group':4100,'session_id':4100}]
+        with patch('runtime.guarded_x11_v1.calc_process_group_v1.read_linux_process_group',
+                   return_value=rows) as reader:
+            retained=owner.retain_calc_process_group_custody(custody)
+        self.assertEqual(retained,custody)
+        reader.assert_called_once_with(4100,4100)
+        with self.assertRaisesRegex(RuntimeError,'one-shot'):
+            owner.retain_calc_process_group_custody(dict(custody,pgid=4102))
+        unretained=object.__new__(OwnedGuardedSessionOwner)
+        unretained._calc_process_group_custody=None
+        changed=dict(custody,target=dict(custody['target'],start_ticks=70003))
+        with patch('runtime.guarded_x11_v1.calc_process_group_v1.read_linux_process_group',
+                   return_value=rows):
+            with self.assertRaisesRegex(ValueError,'unowned or changed'):
+                unretained.retain_calc_process_group_custody(changed)
+
+    def test_pre_review_calc_custody_advance_records_exact_child_handoff(self):
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner.state='open';owner.binding_revision=0;owner.review_required=False
+        owner._execution_unknown=False;owner._calc_process_group_cleanup=None
+        owner._owner_release_attempt=None
+        owner._owner_input_obligations={'keys':{},'buttons':[]}
+        previous={'schema':'agent-interface/calc-process-group-custody-v1',
+            'pgid':4100,'session_id':4100,
+            'launcher':{'pid':4100,'start_ticks':70001},
+            'target':{'pid':4101,'start_ticks':70002},
+            'expected_members':{'4100':70001,'4101':70002}}
+        advanced={**previous,'target':{'pid':4102,'start_ticks':70003},
+            'expected_members':{'4100':70001,'4102':70003}}
+        owner._calc_process_group_custody=previous
+        owner._calc_process_group_custody_history=[]
+        executable='/usr/lib/libreoffice/program/soffice.bin'
+        argv=[executable,'--calc','/server/task-artifact.fods']
+        rows=[{'pid':4100,'start_ticks':70001,'process_group':4100,
+                'session_id':4100,'parent_pid':1},
+              {'pid':4102,'start_ticks':70003,'process_group':4100,
+                'session_id':4100,'parent_pid':4100}]
+        with (patch('runtime.cli_v1.owned_guarded_session.Path.resolve',
+                    return_value=PurePosixPath(executable)),
+              patch('runtime.cli_v1.owned_guarded_session.Path.read_bytes',
+                    return_value=b'\0'.join(value.encode() for value in argv)+b'\0'),
+              patch('runtime.guarded_x11_v1.calc_process_group_v1.read_linux_process_group',
+                    return_value=rows),
+              patch('runtime.guarded_x11_v1.calc_process_group_v1.advance_process_group_custody',
+                    return_value=advanced) as advance):
+            result=owner.advance_calc_process_group_custody(target_pid=4102,
+                target_start_ticks=70003,gui_executable=executable,
+                expected_argv=argv)
+        self.assertEqual(result['status'],'advanced')
+        self.assertEqual(owner._calc_process_group_custody,advanced)
+        self.assertEqual(owner._calc_process_group_custody_history[0]['target'],
+            {'pid':4102,'start_ticks':70003})
+        self.assertFalse(result['authority_granted'])
+        self.assertFalse(result['input_dispatched'])
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+        advance.assert_called_once_with(previous,target_pid=4102,
+            target_start_ticks=70003,group_snapshot=rows)
+
+    def test_pre_review_calc_custody_advance_rejects_changed_argv(self):
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner.state='open';owner.binding_revision=0;owner.review_required=False
+        owner._execution_unknown=False;owner._calc_process_group_cleanup=None
+        owner._owner_release_attempt=None
+        owner._owner_input_obligations={'keys':{},'buttons':[]}
+        owner._calc_process_group_custody={'schema':'agent-interface/calc-process-group-custody-v1'}
+        executable='/usr/lib/libreoffice/program/soffice.bin'
+        with (patch('runtime.cli_v1.owned_guarded_session.Path.resolve',
+                    return_value=PurePosixPath(executable)),
+              patch('runtime.cli_v1.owned_guarded_session.Path.read_bytes',
+                    return_value=b'/usr/lib/libreoffice/program/soffice.bin\0--calc\0wrong.fods\0'),
+              patch('runtime.guarded_x11_v1.calc_process_group_v1.read_linux_process_group') as reader):
+            with self.assertRaisesRegex(ValueError,'executable or launch argv changed'):
+                owner.advance_calc_process_group_custody(target_pid=4102,
+                    target_start_ticks=70003,gui_executable=executable,
+                    expected_argv=[executable,'--calc','/server/task-artifact.fods'])
+        reader.assert_not_called()
+
+    def test_pre_review_calc_custody_advance_refuses_after_window_review(self):
+        owner=object.__new__(OwnedGuardedSessionOwner)
+        owner.state='open';owner.binding_revision=1
+        owner.review_required=False;owner._execution_unknown=False
+        owner._calc_process_group_cleanup=None
+        owner._owner_release_attempt=None
+        owner._owner_input_obligations={'keys':{},'buttons':[]}
+        owner._calc_process_group_custody={'schema':'agent-interface/calc-process-group-custody-v1'}
+        with patch('runtime.guarded_x11_v1.calc_process_group_v1.read_linux_process_group') as reader:
+            with self.assertRaisesRegex(RuntimeError,'idle pre-review owner'):
+                owner.advance_calc_process_group_custody(target_pid=4102,
+                    target_start_ticks=70003,
+                    gui_executable='/usr/lib/libreoffice/program/soffice.bin',
+                    expected_argv=['/usr/lib/libreoffice/program/soffice.bin'])
+        reader.assert_not_called()
 
     def test_retire_settles_brief_exit_race_after_kill(self):
         class SettlingProcess:

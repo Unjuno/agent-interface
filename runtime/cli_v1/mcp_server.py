@@ -35,6 +35,16 @@ _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 
 
+def _x11_root_window_id(display_name=None):
+    """Return the root XID for the configured connection without changing focus."""
+    from Xlib import display as xdisplay
+    connection=xdisplay.Display(display_name)
+    try:
+        return connection.screen().root.id
+    finally:
+        connection.close()
+
+
 def _normalize_supervised_win32_program(program):
     """Apply the standard caller's bounded syntax expansion before admission."""
     if type(program) is not dict or type(program.get('ops')) is not list:
@@ -341,6 +351,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_cancel_transaction_timeout_s=(
                       _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S),
                   _guarded_owner_factory=None,
+                  _calc_preparation_ttl_ns=300_000_000_000,
+                  _calc_launch_factory=None,
+                  _calc_launch_title_hint='task-artifact.fods',
+                  _calc_discovery_deadline_s=20.0,
                   _guarded_win32_owner_factory=None,
                   _guarded_win32_producer_factory=None,
                   _guarded_win32_task_oracle=None,
@@ -417,6 +431,24 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             or not math.isfinite(_guarded_cancel_transaction_timeout_s)
             or _guarded_cancel_transaction_timeout_s <= 0):
         raise ValueError('guarded cancellation transaction timeout must be positive')
+    if type(_calc_preparation_ttl_ns) is not int or _calc_preparation_ttl_ns <= 0:
+        raise ValueError('Calc preparation TTL must be a positive integer nanosecond value')
+    if _calc_launch_factory is not None:
+        if (not callable(_calc_launch_factory) or os.name != 'posix'
+                or session_mode != 'guarded-x11' or not guarded_owned_process
+                or not guarded_process_identity or not guarded_query_worker
+                or not guarded_window_lifecycle or len(targets) != 1):
+            raise ValueError('Calc launch requires POSIX guarded-owned X11 with process identity, query worker, window lifecycle, and one root target')
+        if (type(_calc_launch_title_hint) is not str or not _calc_launch_title_hint
+                or len(_calc_launch_title_hint)>128
+                or not _calc_launch_title_hint.isprintable()
+                or type(_calc_discovery_deadline_s) not in (int,float)
+                or not math.isfinite(_calc_discovery_deadline_s)
+                or not 0 < _calc_discovery_deadline_s <= 60):
+            raise ValueError('Calc launch discovery configuration is invalid')
+        root_xid=_x11_root_window_id(display_name)
+        if next(iter(targets.values())) != root_xid:
+            raise ValueError('Calc launch mode requires the configured target to be this X11 root window')
     if guarded_owned_process and (session_mode != 'guarded-x11'
             or not guarded_process_identity or not guarded_query_worker):
         raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
@@ -428,6 +460,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     task_oracle_tasks = set()
     calls = {}
     calls_lock = threading.Lock()
+    calc_artifacts = {}
+    calc_launches = {}
+    calc_preparation_slot = None
+    calc_preparation_deadline_ns = None
     supervised_cancel_requests = set()
     cancellation_executor = (ThreadPoolExecutor(max_workers=1,
         thread_name_prefix='guarded-cancel') if guarded_owned_process else None)
@@ -537,7 +573,73 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     def close_owner():
         try:
-            report = owner.close()
+            calc_lifecycle=[]
+            clean_exits={}
+            try:
+                # Close/release the input owner before waiting for the target.
+                # The parent-held Calc supervisor is independent of the child
+                # owner process and can observe its exact generation afterward.
+                report = owner.close()
+            except Exception as error:
+                report={'status':'cleanup_failed','error':repr(error),
+                    'release_attempted':True,'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN','verified':False,
+                    'task_success':None,'replay_allowed':False}
+            for prepared_id,entry in list(calc_launches.items()):
+                supervisor=entry.get('supervisor')
+                if supervisor is None:
+                    continue
+                try:
+                    exit_receipt=supervisor.wait_for_verified_exit(timeout_s=5.0)
+                except Exception as error:
+                    exit_receipt={'status':'unknown','reason':'target_exit_observation_failed',
+                        'error':repr(error),'task_success':None,'replay_allowed':False}
+                if isinstance(exit_receipt,dict) and exit_receipt.get('verified') is True:
+                    clean_exits[prepared_id]=deepcopy(exit_receipt)
+                calc_lifecycle.append({'prepared_call_id':prepared_id,
+                    'target_process_exit_receipt':deepcopy(exit_receipt)})
+            for row in calc_lifecycle:
+                prepared_id=row['prepared_call_id']
+                entry=calc_launches[prepared_id]
+                supervisor=entry.get('supervisor')
+                if prepared_id not in clean_exits:
+                    cleanup=None
+                    cleanup_method=getattr(owner,'_cleanup_retained_calc_process_group',None)
+                    if callable(cleanup_method):
+                        try:
+                            cleanup=cleanup_method()
+                        except Exception as error:
+                            cleanup={'status':'unknown','reason':'parent_cleanup_failed',
+                                'error':repr(error),'verified_empty':False,
+                                'clean_exit_verified':False,'task_success':None,
+                                'replay_allowed':False}
+                    if cleanup is None:
+                        cleanup={'status':'unknown','reason':'parent_custody_unavailable',
+                            'verified_empty':False,'clean_exit_verified':False,
+                            'task_success':None,'replay_allowed':False}
+                    row['process_group_cleanup']=deepcopy(cleanup)
+                    entry['cleanup']=deepcopy(cleanup)
+                    row['target_process_exit_receipt']={'status':'unknown',
+                        'reason':'forced_cleanup_is_not_clean_exit',
+                        'task_success':None,'replay_allowed':False}
+                else:
+                    row['process_group_cleanup']={'status':'not_needed',
+                        'verified_empty':None,'clean_exit_verified':True,
+                        'task_success':None,'replay_allowed':False}
+                    entry['exit_receipt']=deepcopy(clean_exits[prepared_id])
+                if supervisor is not None:
+                    try:
+                        supervisor.close()
+                    except Exception as error:
+                        row['log_close_error']=repr(error)
+                with calls_lock:
+                    prepared=calls.get(prepared_id,{})
+                    compiled_id=prepared.get('artifact_consumed_by')
+                    if compiled_id in calls and prepared_id in clean_exits:
+                        calls[compiled_id]['target_process_exit_receipt']=deepcopy(
+                            clean_exits[prepared_id])
+            if calc_lifecycle:
+                report['calc_target_lifecycle']=calc_lifecycle
             _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
             return report
         finally:
@@ -586,6 +688,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     def invoke(admission, operation, kwargs, compact, report_refs, detail="full", observation_refs=False,
                registered_call_id=None, wait_for_result_ms=None):
+        nonlocal calc_preparation_slot, calc_preparation_deadline_ns
         if not admission.enter():
             return None  # A rejected/cancelled queued submission must never invoke.
         call_id = registered_call_id
@@ -599,6 +702,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 calls[call_id] = {"call_id": call_id, "operation": operation,
                                   "state": "running", "arguments": deepcopy(kwargs),
                                   "backend_attempted": False, "persistence_failure": None}
+                if operation == 'guarded_calc_compiled':
+                    calls[call_id].update(
+                        profile_id=kwargs.get('profile_id'),
+                        attempt_id=kwargs.get('attempt_id'))
                 if wait_for_result_ms is not None:
                     calls[call_id]['response_wait_ms'] = wait_for_result_ms
             # Serialize before calling the backend. A persistence failure here sends no input.
@@ -621,6 +728,208 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     'failure_phase': 'request_persistence', 'operation_invoked': False,
                     'call_id': call_id, 'call_directory': str(call_root),
                     'replay_allowed': False}, error=True)
+            if operation == 'guarded_calc_launch':
+                prepared_call_id=kwargs.get('prepared_call_id')
+                with calls_lock:
+                    prepared=calls.get(prepared_call_id)
+                    artifact=calc_artifacts.get(prepared_call_id)
+                    expired=(calc_preparation_slot==prepared_call_id
+                        and calc_preparation_deadline_ns is not None
+                        and time.monotonic_ns()>=calc_preparation_deadline_ns)
+                    if expired:
+                        calc_artifacts.pop(prepared_call_id,None)
+                        calc_preparation_slot=None
+                        calc_preparation_deadline_ns=None
+                        if prepared is not None:
+                            prepared['reservation_expired']=True
+                    launch_exists=bool(calc_launches)
+                    valid=(_calc_launch_factory is not None
+                        and calc_preparation_slot==prepared_call_id
+                        and prepared is not None
+                        and prepared.get('operation')=='guarded_calc_prepare'
+                        and prepared.get('state')=='finished'
+                        and artifact is not None
+                        and not launch_exists)
+                    if not valid:
+                        calls[call_id].update(state='finished',backend_attempted=False,
+                            predispatch_rejection='calc_launch_reservation_invalid_or_consumed')
+                        return content({'status':'invalid_request',
+                            'error':'CALC_LAUNCH_RESERVATION_INVALID_OR_CONSUMED',
+                            'call_id':call_id,'operation_invoked':False,
+                            'input_dispatched':False,'authority_granted':False,
+                            'task_success':None,'replay_allowed':False},error=True)
+                    prepared['calc_launch_attempted']=True
+                    launch_entry={'prepared_call_id':prepared_call_id,
+                        'attempt_id':prepared.get('attempt_id'),
+                        'supervisor':None,'launch':None,'discovery':None,
+                        'binding':None,'cleanup':None}
+                    calc_launches[prepared_call_id]=launch_entry
+                try:
+                    owner.get()
+                    supervisor=_calc_launch_factory(artifact)
+                    required=('launch','discover_owned_window',
+                        'review_and_bind_owned_window','wait_for_verified_exit',
+                        'cleanup_owned_process_group','close')
+                    if any(not callable(getattr(supervisor,name,None)) for name in required):
+                        raise TypeError('configured Calc launch supervisor is incomplete')
+                    launch_entry['supervisor']=supervisor
+                    launched=supervisor.launch(artifact)
+                    launch_entry['launch']=deepcopy(launched)
+                    initial_custody=supervisor.retain_initial_process_group_custody(owner)
+                    launch_entry['initial_custody']=deepcopy(initial_custody)
+                    discovery=supervisor.discover_owned_window(owner,
+                        title_hint=_calc_launch_title_hint,
+                        deadline_s=_calc_discovery_deadline_s)
+                    launch_entry['discovery']=deepcopy(discovery)
+                    if discovery.get('status') != 'candidate_found':
+                        launch_entry['cleanup']=deepcopy(
+                            owner._cleanup_retained_calc_process_group())
+                    report={'status':discovery.get('status','unknown'),
+                        'prepared_call_id':prepared_call_id,
+                        'attempt_id':launch_entry['attempt_id'],
+                        'target_launch_status':launched.get('status'),
+                        'parent_process_custody':('retained' if
+                            getattr(owner,'_calc_process_group_custody',None)
+                            is not None else 'not_established'),
+                        'launch_receipt':deepcopy(launched),
+                        'initial_process_group_custody':deepcopy(initial_custody),
+                        'window_discovery':deepcopy(discovery),
+                        'process_group_cleanup':deepcopy(launch_entry['cleanup']),
+                        'authority_granted':False,'input_dispatched':False,
+                        'task_success':None,'replay_allowed':False}
+                    with calls_lock:
+                        calls[prepared_call_id]['calc_launch_call_id']=call_id
+                        calls[call_id].update(status=report['status'],
+                            prepared_call_id=prepared_call_id,
+                            target_launch_status=report['target_launch_status'],
+                            parent_process_custody=report['parent_process_custody'])
+                except Exception as error:
+                    if (launch_entry['supervisor'] is not None
+                            and launch_entry['supervisor'].launched
+                            and getattr(owner,'_calc_process_group_custody',None) is not None):
+                        try:
+                            launch_entry['cleanup']=deepcopy(
+                                owner._cleanup_retained_calc_process_group())
+                        except Exception as cleanup_error:
+                            launch_entry['cleanup']={'status':'unknown',
+                                'reason':'parent_cleanup_failed','error':repr(cleanup_error),
+                                'verified_empty':False,'clean_exit_verified':False,
+                                'task_success':None,'replay_allowed':False}
+                    report={'status':'unknown','error':'CALC_LAUNCH_OR_DISCOVERY_FAILED',
+                        'detail':repr(error),'prepared_call_id':prepared_call_id,
+                        'target_launch_status':('unknown' if launch_entry['supervisor'] is not None
+                            and launch_entry['supervisor'].launched else 'not_attempted'),
+                        'parent_process_custody':('retained' if
+                            getattr(owner,'_calc_process_group_custody',None)
+                            is not None else 'unknown'),
+                        'process_group_cleanup':deepcopy(launch_entry['cleanup']),
+                        'authority_granted':False,'input_dispatched':False,
+                        'task_success':None,'replay_allowed':False}
+                report.update(call_id=call_id,operation_invoked=True,
+                    call_directory=str(call_root))
+                try:
+                    _write_json(call_root/'report.json',report)
+                except (OSError,ValueError,TypeError) as error:
+                    report['persistence_error']=repr(error)
+                    report['replay_allowed']=False
+                with calls_lock:
+                    calls[call_id].update(report)
+                return content(report,error=report.get('status') not in
+                    ('candidate_found','unknown'))
+            if operation == 'guarded_calc_prepare':
+                with calls_lock:
+                    if (calc_preparation_slot is not None
+                            and calc_preparation_deadline_ns is not None
+                            and time.monotonic_ns() >= calc_preparation_deadline_ns):
+                        expired_id = calc_preparation_slot
+                        calc_artifacts.pop(expired_id,None)
+                        expired_record = calls.get(expired_id)
+                        if expired_record is not None:
+                            expired_record['reservation_expired'] = True
+                        calc_preparation_slot = None
+                        calc_preparation_deadline_ns = None
+                    if calc_preparation_slot is not None:
+                        calls[call_id].update(state='finished',
+                            backend_attempted=False,
+                            predispatch_rejection='calc_preparation_already_reserved')
+                        return content({'status':'busy',
+                            'error':'CALC_PREPARATION_ALREADY_RESERVED',
+                            'call_id':call_id,'operation_invoked':False,
+                            'input_dispatched':False,'task_success':None,
+                            'replay_allowed':False},error=True)
+                from runtime.guarded_x11_v1.calc_task_artifact_v1 import CalcTaskArtifact
+                artifact = CalcTaskArtifact(call_root, call_id=call_id,
+                    attempt_id=kwargs['attempt_id'])
+                with calls_lock:
+                    calc_artifacts[call_id] = artifact
+                    calc_preparation_deadline_ns = (
+                        time.monotonic_ns() + _calc_preparation_ttl_ns)
+                    calls[call_id].update(state='finished', prepared=True,
+                        profile_id='calc-ocr-save-v1',
+                        attempt_id=kwargs['attempt_id'],
+                        reservation_expires_monotonic_ns=calc_preparation_deadline_ns)
+                    calc_preparation_slot = call_id
+                result = {'status':'prepared','call_id':call_id,
+                    'attempt_id':kwargs['attempt_id'],
+                    'expires_in_ms':_calc_preparation_ttl_ns // 1_000_000,
+                    'artifact_path':str(artifact.path),
+                    'artifact_name':'task-artifact.fods',
+                    'target_launch_status':'not_attempted',
+                    'parent_process_custody':'not_established',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                _write_json(call_root / 'report.json', result)
+                return content(result)
+            task_artifact = None
+            if operation == 'guarded_calc_compiled':
+                prepared_call_id = kwargs.get('prepared_call_id')
+                if _calc_launch_factory is not None:
+                    launch_entry=calc_launches.get(prepared_call_id)
+                    if (prepared_call_id is None or launch_entry is None
+                            or not isinstance(launch_entry.get('binding'),dict)
+                            or launch_entry['binding'].get('status')!='reviewed'):
+                        calls[call_id].update(state='finished',
+                            backend_attempted=False,
+                            predispatch_rejection='launched_calc_window_review_and_bind_required')
+                        return content({'status':'needs_review',
+                            'error':'CALC_LAUNCH_REVIEW_BIND_REQUIRED',
+                            'call_id':call_id,'operation_invoked':False,
+                            'input_dispatched':False,'authority_granted':False,
+                            'task_success':None,'replay_allowed':False},error=True)
+                if prepared_call_id:
+                    with calls_lock:
+                        prepared = calls.get(prepared_call_id)
+                        candidate = calc_artifacts.get(prepared_call_id)
+                        expired = (calc_preparation_slot == prepared_call_id
+                            and calc_preparation_deadline_ns is not None
+                            and time.monotonic_ns() >= calc_preparation_deadline_ns)
+                        if expired:
+                            calc_artifacts.pop(prepared_call_id,None)
+                            calc_preparation_slot = None
+                            calc_preparation_deadline_ns = None
+                            if prepared is not None:
+                                prepared['reservation_expired'] = True
+                        if (calc_preparation_slot != prepared_call_id
+                                or prepared is None
+                                or prepared.get('operation') != 'guarded_calc_prepare'
+                                or prepared.get('state') != 'finished'
+                                or prepared.get('attempt_id') != kwargs.get('attempt_id')
+                                or candidate is None
+                                or candidate.call_id != prepared_call_id
+                                or candidate.attempt_id != kwargs.get('attempt_id')):
+                            calls[call_id].update(state='finished',
+                                backend_attempted=False,
+                                predispatch_rejection='prepared_artifact_invalid_or_consumed')
+                            return content({'status':'invalid_request',
+                                'error':'CALC_PREPARED_ARTIFACT_INVALID_OR_CONSUMED',
+                                'call_id':call_id,'operation_invoked':False,
+                                'input_dispatched':False,'task_success':None,
+                                'replay_allowed':False},error=True)
+                        task_artifact = calc_artifacts.pop(prepared_call_id)
+                        calc_preparation_slot = None
+                        calc_preparation_deadline_ns = None
+                        prepared['artifact_consumed_by'] = call_id
+                        calls[call_id]['task_artifact_root_call_id'] = prepared_call_id
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
             inspect_after = options.pop('inspect_after', None)
@@ -641,6 +950,35 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         kwargs['interface'], kwargs['bindings'],
                         kwargs['predicate_rules'], kwargs['effect_rules'],
                         call_root, call_id)
+                elif operation == 'guarded_review_window' and _calc_launch_factory is not None:
+                    prepared_call_id=calc_preparation_slot
+                    launch_entry=calc_launches.get(prepared_call_id)
+                    candidate=(launch_entry.get('discovery',{}).get('candidate')
+                        if isinstance(launch_entry,dict)
+                        and isinstance(launch_entry.get('discovery'),dict) else None)
+                    supervisor=(launch_entry.get('supervisor')
+                        if isinstance(launch_entry,dict) else None)
+                    if (supervisor is None or not isinstance(candidate,dict)
+                            or candidate.get('xid')!=kwargs.get('window_id')):
+                        report={'operation':operation,'status':'needs_review',
+                            'error':'CALC_WINDOW_NOT_CURRENT_LAUNCH_CANDIDATE',
+                            'input_dispatched':False,'authority_granted':False,
+                            'task_success':None,'replay_allowed':False}
+                    else:
+                        report=supervisor.review_and_bind_owned_window(owner,
+                            kwargs['window_id'],call_root=call_root/'calc-review')
+                        if report.get('status')=='reviewed':
+                            launch_entry['binding']=deepcopy(report)
+                            launch_entry['bound_prepared_call_id']=prepared_call_id
+                elif operation == 'guarded_calc_compiled':
+                    report = owner.run_registered_calc_profile(
+                        kwargs['profile_id'], kwargs['bindings'],
+                        reviewed_sequence=kwargs['reviewed_sequence'],
+                        reviewed_artifact_sha256=kwargs['reviewed_artifact_sha256'],
+                        blank_reviewed=kwargs['blank_reviewed'],
+                        attempt_id=kwargs['attempt_id'],
+                        call_root=call_root, cancel_token=call_id,
+                        task_artifact=task_artifact)
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif supervised_win32 and operation == 'dispatch':
@@ -711,6 +1049,29 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if operation.startswith('guarded_'):
                 report.setdefault('replay_allowed', False)
                 report.setdefault('task_success', None)
+            if operation == 'guarded_calc_compiled':
+                # These exact child-returned values are copied into the parent
+                # ledger before any client can tamper with report.json. They
+                # describe admission and a save request, not a GUI save proof.
+                with calls_lock:
+                    calls[call_id]['task_artifact_admission'] = deepcopy(
+                        report.get('task_artifact_admission'))
+                    calls[call_id]['task_save_request'] = deepcopy(
+                        report.get('task_save_request'))
+                    calls[call_id]['task_method_receipt'] = deepcopy(
+                        report.get('method_receipt'))
+                    calls[call_id]['target_process_exit_receipt'] = deepcopy(
+                        report.get('target_process_exit_receipt'))
+                    calls[call_id]['task_artifact_root_call_id'] = report.get(
+                        'task_artifact_root_call_id', calls[call_id].get(
+                            'task_artifact_root_call_id', call_id))
+            if operation == 'guarded_window_metadata':
+                with calls_lock:
+                    calls[call_id]['window_metadata'] = deepcopy(
+                        report.get('window_metadata'))
+            elif operation == 'guarded_window_metadata_revalidate':
+                with calls_lock:
+                    calls[call_id]['window_metadata_revalidation'] = deepcopy(report)
             if owner is not None:
                 report['session'] = owner.snapshot()
             try:
@@ -800,7 +1161,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
         nonlocal shutting_down
-        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled','recover_orphaned_input')
+        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled','guarded_calc_compiled','guarded_calc_prepare','guarded_calc_launch','recover_orphaned_input')
                 and not (supervised_win32 and operation == 'dispatch')
                 or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
             return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
@@ -1024,6 +1385,112 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     if guarded:
         from .mcp_guarded import register_guarded_tools
+        if guarded_owned_process:
+            @server.tool()
+            async def interface_guarded_window_metadata_revalidate(
+                    metadata_call_id: Annotated[StrictStr,
+                        Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
+                """Re-query a recent explicit-XID metadata result from server memory.
+
+                The source must be a finished metadata call that remains no older
+                than 500 ms through the fresh isolated query, mapped and focused
+                before/after. The query must match its cues and process/window
+                incarnation. This grants no target selection or input authority.
+                """
+                with calls_lock:
+                    source = deepcopy(calls.get(metadata_call_id))
+                if (not isinstance(source, dict)
+                        or source.get('operation') != 'guarded_window_metadata'
+                        or source.get('state') != 'finished'
+                        or not isinstance(source.get('window_metadata'), dict)):
+                    return content({'status':'unknown_call',
+                        'metadata_call_id':metadata_call_id,'same_window':False,
+                        'operation_invoked':False,'input_dispatched':False,
+                        'authority_granted':False,'task_success':None,
+                        'replay_allowed':False}, error=True)
+                source_metadata = source['window_metadata']
+                observed_ns = source_metadata.get('observed_monotonic_ns')
+                now_ns = time.monotonic_ns()
+                if (type(observed_ns) is not int or observed_ns > now_ns
+                        or now_ns - observed_ns > 500_000_000):
+                    return content({'status':'stale_or_unfocused',
+                        'metadata_call_id':metadata_call_id,'same_window':False,
+                        'reason':'source_expired_or_not_focused',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'authority_granted':False,'task_success':None,
+                        'replay_allowed':False})
+                return await submit('guarded_window_metadata_revalidate',
+                    {'source_metadata':source_metadata,
+                     'metadata_call_id':metadata_call_id},False,False)
+
+            @server.tool()
+            async def interface_verify_task(
+                    call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]
+                    ) -> CallToolResult:
+                """Verify only a terminal registered Calc call after verified close.
+
+                This read-only verifier accepts no path, values, or caller receipt.
+                It also requires a parent-held exit receipt for the exact Calc
+                target generation; retirement of the X11 input owner alone is
+                insufficient. Missing target-exit or Save custody remains
+                unknown; parsed content alone does not establish that the
+                managed GUI produced the artifact.
+                """
+                with calls_lock:
+                    record = deepcopy(calls.get(call_id))
+                if (record is None or record.get('operation') != 'guarded_calc_compiled'
+                        or record.get('profile_id') != 'calc-ocr-save-v1'):
+                    return content({'status':'unknown_call','call_id':call_id,
+                        'task_success':None,'operation_invoked':False,
+                        'input_dispatched':False,'replay_allowed':False,
+                        'scope':'guarded_x11_calc'}, error=True)
+                if record.get('state') != 'finished':
+                    return content({'status':'pending','call_id':call_id,
+                        'task_success':None,'operation_invoked':False,
+                        'input_dispatched':False,'replay_allowed':False,
+                        'scope':'guarded_x11_calc'})
+                # A close operation is serialized after the Calc call by the
+                # public API. The child receipt is retained in owner.close_report;
+                # the call-directory report is presentation, not authority.
+                close_receipt = deepcopy(getattr(owner, 'close_report', None))
+                if (not isinstance(close_receipt, dict)
+                        or close_receipt.get('status') != 'closed'
+                        or close_receipt.get('verified') is not True
+                        or close_receipt.get('owner_process_retired') is not True
+                        or close_receipt.get('release_confirmed') is not True):
+                    return content({'status':'unknown','call_id':call_id,
+                        'task_success':None,'reason':'verified_close_required',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'replay_allowed':False,'scope':'guarded_x11_calc'}, error=True)
+                attempt_id = record.get('attempt_id')
+                descriptor = record.get('task_artifact_admission')
+                save_request = record.get('task_save_request')
+                artifact_root_call_id = record.get('task_artifact_root_call_id',call_id)
+                if (not isinstance(descriptor, dict)
+                        or descriptor.get('profile_id') != 'calc-ocr-save-v1'
+                        or descriptor.get('attempt_id') != attempt_id):
+                    effect = {'status':'unknown','task_success':None,
+                              'reason':'artifact_admission_unavailable'}
+                else:
+                    from runtime.guarded_x11_v1.calc_task_artifact_v1 import (
+                        make_registered_calc_save_controller_receipt,
+                        verify_task_artifact_descriptor)
+                    save_controller = make_registered_calc_save_controller_receipt(
+                        descriptor=descriptor,
+                        method_receipt=record.get('task_method_receipt'),
+                        save_request=save_request)
+                    effect = verify_task_artifact_descriptor(root / artifact_root_call_id,
+                        descriptor=descriptor,save_request=save_request,
+                        close_receipt=close_receipt,
+                        target_exit_receipt=record.get('target_process_exit_receipt'),
+                        trusted_save_controller_receipt=save_controller)
+                return content({'status':effect.get('status','unknown'),
+                    'call_id':call_id,'attempt_id':attempt_id,
+                    'task_effect':effect,'task_success':effect.get('task_success'),
+                    'operation_invoked':False,'input_dispatched':False,
+                    'replay_allowed':False,'scope':'guarded_x11_calc'},
+                    error=effect.get('status') != 'verified')
+
         def complete_cancellation(call_id, operation_id):
             nonlocal active_cancellation_operation, unarchived_cancellation_call_id
             try:
@@ -1096,7 +1563,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             with calls_lock:
                 record = calls.get(call_id)
                 valid_call = (record is not None
-                    and record['operation'] in ('guarded_input','guarded_compiled')
+                    and record['operation'] in ('guarded_input','guarded_compiled',
+                                                  'guarded_calc_compiled')
                     and (record['state'] == 'running' or 'cancellation' in record
                          or (cancellation_executor is not None
                              and record.get('cancellation_archived') is True)))
@@ -1219,7 +1687,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 cancellation=current))
         register_guarded_tools(server, submit,
             cancel=cancel_guarded if guarded_query_worker else None,
-            compiled_enabled=guarded_owned_process)
+            compiled_enabled=guarded_owned_process,
+            window_lifecycle_enabled=guarded_window_lifecycle,
+            calc_launch_enabled=_calc_launch_factory is not None)
     elif guarded_win32:
         from .mcp_win32 import register_guarded_win32_tools
         register_guarded_win32_tools(server, owner, content,
@@ -1602,6 +2072,12 @@ def main():
                         help='run the complete guarded-X11 session in one spawned owner process; requires process identity and query worker')
     parser.add_argument('--guarded-prestarted-cancel-supervisor',action='store_true',
                         help='prestart a one-shot cancellation supervisor; requires --guarded-owned-process')
+    parser.add_argument('--calc-launcher-executable', type=Path,
+                        help='fixed absolute Debian LibreOffice oosplash executable; enables parent-custodied Calc launch')
+    parser.add_argument('--calc-gui-executable', type=Path,
+                        help='fixed absolute Debian LibreOffice soffice.bin executable')
+    parser.add_argument('--calc-window-title-hint', default='task-artifact.fods')
+    parser.add_argument('--calc-discovery-deadline-s', type=float, default=20.0)
     args = parser.parse_args()
     if args.guarded_process_identity and args.session_mode != 'guarded-x11':
         parser.error('--guarded-process-identity requires --session-mode guarded-x11')
@@ -1618,6 +2094,21 @@ def main():
         parser.error('--guarded-retention-mode journal requires --session-mode guarded-x11')
     if args.guarded_prestarted_cancel_supervisor and not args.guarded_owned_process:
         parser.error('--guarded-prestarted-cancel-supervisor requires --guarded-owned-process')
+    calc_paths=(args.calc_launcher_executable,args.calc_gui_executable)
+    if any(value is not None for value in calc_paths):
+        if any(value is None for value in calc_paths):
+            parser.error('--calc-launcher-executable and --calc-gui-executable must be configured together')
+        if (args.session_mode!='guarded-x11' or not args.guarded_process_identity
+                or not args.guarded_query_worker or not args.guarded_window_lifecycle
+                or not args.guarded_owned_process):
+            parser.error('Calc launch requires guarded-x11, process identity, query worker, window lifecycle and owned-process mode')
+        if any(not value.is_absolute() for value in calc_paths):
+            parser.error('Calc executable paths must be absolute')
+        if (not args.calc_window_title_hint or len(args.calc_window_title_hint)>128
+                or not args.calc_window_title_hint.isprintable()
+                or not math.isfinite(args.calc_discovery_deadline_s)
+                or not 0 < args.calc_discovery_deadline_s <= 60):
+            parser.error('Calc window discovery hint or deadline is invalid')
     options = {'guarded_process_identity':args.guarded_process_identity}
     if args.guarded_query_worker: options['guarded_query_worker'] = True
     if args.guarded_observation_worker: options['guarded_observation_worker'] = True
@@ -1627,6 +2118,15 @@ def main():
     if args.guarded_owned_process: options['guarded_owned_process'] = True
     if args.guarded_prestarted_cancel_supervisor:
         options['guarded_prestarted_cancel_supervisor'] = True
+    if args.calc_launcher_executable is not None:
+        from runtime.guarded_x11_v1.calc_launcher_v1 import CalcLaunchSupervisor
+        options['_calc_launch_factory'] = lambda artifact: CalcLaunchSupervisor(
+            args.calc_launcher_executable,
+            custody_mode='libreoffice-oosplash-child',
+            oosplash_executable=args.calc_launcher_executable,
+            gui_executable=args.calc_gui_executable)
+        options['_calc_launch_title_hint'] = args.calc_window_title_hint
+        options['_calc_discovery_deadline_s'] = args.calc_discovery_deadline_s
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
                   args.output_directory, display_name=args.display, session_mode=args.session_mode,
                   **options).run(transport='stdio')

@@ -47,6 +47,13 @@ class ReferenceLifetimeTests(unittest.TestCase):
         self.assertEqual(row['lifetime']['capture_freshness_ms'],1500)
         stale=self.bridge.store.resolve_point('field',[12,7],self.observation,self.image,2_500_000_001,self.bridge.scope)
         self.assertEqual(stale['status'],'STALE')
+        self.assertFalse(stale['eligible'])
+
+    def test_custom_capture_freshness_is_bounded_and_reported(self):
+        row=self.bridge.mint_reference('field',1,[50,50],region_size=(24,14),freshness_ms=3000)
+        self.assertEqual(row['lifetime']['capture_freshness_ms'],3000)
+        with self.assertRaises(ValueError):
+            self.bridge.mint_reference('too_long',1,[50,50],region_size=(24,14),freshness_ms=5001)
         changed=self.image.copy();changed.paste('black',(38,43,62,57))
         mismatch=self.bridge.store.resolve_point('field',[12,7],self.observation,changed,1_000_000_001,self.bridge.scope)
         self.assertFalse(mismatch['eligible'])

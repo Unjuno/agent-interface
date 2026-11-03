@@ -2,6 +2,8 @@ import asyncio
 import base64
 import hashlib
 import json
+import os
+import shutil
 import tempfile
 import threading
 import unittest
@@ -1113,6 +1115,226 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool("interface_close", {})
                 _preserve_fake_x_run("provider-mcp-stale-generation", root)
+
+    async def test_fake_app_server_generation_is_recorded_through_calc_profile_and_score(self):
+        """Compose fake App Server, Calc public MCP, and an independent FODS score."""
+        import xml.etree.ElementTree as ET
+        import runtime.cli_v1.test_mcp_owned_process as calc_tests
+
+        retained = os.environ.get("AGENT_INTERFACE_RETAIN_APP_SERVER_CALC_EVIDENCE")
+        evidence_root = Path(retained).resolve() if retained else None
+        if evidence_root is not None and evidence_root.exists():
+            raise FileExistsError(evidence_root)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image_path = root / "observation.png"
+            Image.new("RGB", (8, 8), (220, 220, 220)).save(image_path)
+            recorder = ProviderAttemptRecorder(root / "provider-ledger")
+            provider_call_root = root / "provider-call"
+            protocol_journal = root / "app-server" / "protocol.jsonl"
+            protocol_journal.parent.mkdir()
+            protocol_journal.write_text(
+                '{"direction":"received","message":{"method":"thread/started"}}\n',
+                encoding="utf-8")
+            counts = {"tool": 0, "generation": 0}
+            observed = {"artifact": None, "artifact_bytes": None,
+                        "verification": None, "close": None}
+
+            class ServerClient:
+                def __init__(self, server):
+                    self.server = server
+
+                async def call_tool(self, name, arguments):
+                    return await self.server.call_tool(name, arguments)
+
+            original_create_server = calc_tests.create_server
+
+            def create_recording_server(*args, **kwargs):
+                server = original_create_server(*args, **kwargs)
+                caller = RecordedPublicMcpCaller(
+                    Relay(ServerClient(server), tools={
+                        "interface_guarded_calc_compiled"}), recorder)
+
+                class RecordingServer:
+                    def __getattr__(self, name):
+                        return getattr(server, name)
+
+                    async def call_tool(self, name, arguments):
+                        counts["tool"] += 1
+                        call_id = f"calc-tool-{counts['tool']:04d}"
+                        if (name == "interface_guarded_calc_compiled" and
+                                arguments.get("attempt_id") == "calc-offline-e2e-01" and
+                                counts["generation"] == 0):
+                            counts["generation"] += 1
+                            answer = json.dumps(
+                                arguments, sort_keys=True, separators=(",", ":"))
+                            usage = {"last": {
+                                "inputTokens": 42, "cachedInputTokens": 30,
+                                "cacheWriteInputTokens": 2, "outputTokens": 12,
+                                "reasoningOutputTokens": 3}}
+                            thread_id = "calc-fake-thread"
+                            turn_id = "calc-fake-turn"
+
+                            class FakePlanner:
+                                def begin_turn(self, prompt, *, output_schema,
+                                               image_path):
+                                    if (not prompt or output_schema != {"type": "object"} or
+                                            not Path(image_path).is_file()):
+                                        raise ValueError("invalid fake App Server request")
+                                    return SimpleNamespace(thread_id=thread_id,
+                                                           turn_id=turn_id)
+
+                                def await_turn(self, handle, timeout):
+                                    if timeout <= 0:
+                                        raise ValueError("bounded fake turn required")
+                                    events = [
+                                        {"direction": "received", "message": {
+                                            "method": "thread/tokenUsage/updated",
+                                            "params": {"threadId": handle.thread_id,
+                                                "turnId": handle.turn_id,
+                                                "tokenUsage": usage}}},
+                                        {"direction": "received", "message": {
+                                            "method": "turn/completed",
+                                            "params": {"threadId": handle.thread_id,
+                                                "turn": {"id": handle.turn_id,
+                                                    "status": "completed",
+                                                    "items": [{"type": "agentMessage",
+                                                        "text": answer}]}}}},
+                                    ]
+                                    with protocol_journal.open("a", encoding="utf-8") as stream:
+                                        for event in events:
+                                            stream.write(json.dumps(event,
+                                                separators=(",", ":")) + "\n")
+                                    return SimpleNamespace(answer_eligible=True,
+                                        answer=json.loads(answer), status="completed",
+                                        usage=usage)
+
+                            model_call = AppServerPublicMcpModelCall(
+                                FakePlanner(), protocol_journal, workspace=workspace,
+                                contract="registered-calc-profile",
+                                output_schema={"type": "object"},
+                                model="fake-offline-model", effort="low")
+                            request_bytes, provider_call = build_model_provider_call(
+                                model_call=model_call.call,
+                                root=provider_call_root,
+                                prompt="Execute the supplied registered Calc task request.",
+                                image=image_path, contract="registered-calc-profile",
+                                workspace=workspace)
+
+                            def prepare_arguments(generation):
+                                backend = generation["backend_result"]
+                                return parse_app_server_tool_request(
+                                    generation["response_bytes"],
+                                    thread_id=backend["thread_id"],
+                                    turn_id=backend["turn_id"])
+
+                            joined = await caller.invoke_generation_to_tool(
+                                "calc-provider-attempt-01", request_bytes,
+                                provider_call, "calc-provider-tool-01", name,
+                                prepare_arguments)
+                            if not joined["tool_call_submitted"]:
+                                raise AssertionError(joined)
+                            return SimpleNamespace(content=[SimpleNamespace(
+                                text=joined["tool_response"]["result"]["content"][0]["text"])])
+
+                        request = {"id": counts["tool"], "tool": name,
+                                   "arguments": arguments}
+                        request_bytes = json.dumps(request, sort_keys=True,
+                            separators=(",", ":")).encode("utf-8")
+
+                        async def invoke_tool():
+                            result = await server.call_tool(name, arguments)
+                            result_bytes = json.dumps(result.model_dump(mode="json"),
+                                sort_keys=True, separators=(",", ":")).encode("utf-8")
+                            return {"result": json.loads(result_bytes),
+                                    "response_bytes": result_bytes}
+
+                        result = await recorder.invoke_tool_async(
+                            None, call_id, name, request_bytes, invoke_tool)
+                        body = metadata(SimpleNamespace(content=[SimpleNamespace(
+                            text=result["content"][0]["text"])]))
+                        if name == "interface_guarded_calc_prepare" and body.get(
+                                "status") == "prepared":
+                            observed["artifact"] = Path(body["artifact_path"])
+                        if name == "interface_verify_task" and body.get(
+                                "status") == "verified":
+                            observed["artifact_bytes"] = observed["artifact"].read_bytes()
+                            observed["verification"] = body
+                        if name == "interface_close":
+                            observed["close"] = body
+                        return SimpleNamespace(content=[SimpleNamespace(
+                            text=result["content"][0]["text"])])
+
+                return RecordingServer()
+
+            runtime_evidence = (evidence_root / "raw-runtime"
+                                if evidence_root is not None else None)
+            env = {}
+            if runtime_evidence is not None:
+                env["AGENT_INTERFACE_RETAIN_CALC_PROFILE_EVIDENCE"] = str(
+                    runtime_evidence)
+            with patch.dict(os.environ, env), patch.object(
+                    calc_tests, "create_server", create_recording_server):
+                case = calc_tests.OwnedProcessMCPTests(
+                    "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
+                await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+
+            self.assertEqual(counts["generation"], 1)
+            self.assertGreater(counts["tool"], 1)
+            self.assertTrue(observed["verification"]["task_success"])
+            self.assertTrue(observed["close"]["release_confirmed"])
+            artifact_bytes = observed["artifact_bytes"]
+            self.assertIsInstance(artifact_bytes, bytes)
+            root_xml = ET.fromstring(artifact_bytes)
+            office_ns = "urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+            scored_values = [cell.attrib.get(f"{{{office_ns}}}value")
+                for cell in root_xml.iter()
+                if cell.tag.endswith("table-cell") and
+                cell.attrib.get(f"{{{office_ns}}}value") is not None]
+            self.assertEqual(scored_values, ["731", "864"])
+            recorder.record_task_score(
+                "stdlib-fods-cell-values-v1", scored_values == ["731", "864"],
+                artifact_bytes)
+            receipt = recorder.reconcile()
+            summary = summarize(receipt["events"])
+            self.assertTrue(receipt["complete"])
+            self.assertEqual(summary["model_attempt_count"], 1)
+            self.assertEqual(summary["tool_call_count"], counts["tool"])
+            self.assertEqual(summary["input_tokens"], 42)
+            self.assertEqual(summary["output_tokens"], 12)
+            self.assertEqual(summary["cached_input_tokens"], 30)
+            self.assertEqual(summary["cache_write_input_tokens"], 2)
+            self.assertEqual(summary["reasoning_output_tokens"], 3)
+            self.assertIsNone(summary["image_input_tokens"])
+            self.assertTrue(summary["task_success"])
+
+            if evidence_root is not None:
+                if not evidence_root.is_dir() or {
+                        item.name for item in evidence_root.iterdir()} != {"raw-runtime"}:
+                    raise FileExistsError(evidence_root)
+                shutil.copytree(recorder.root, evidence_root / "provider-ledger")
+                shutil.copytree(provider_call_root, evidence_root / "provider-call")
+                shutil.copy2(protocol_journal, evidence_root / "app-server-protocol.jsonl")
+                (evidence_root / "joined-ledger-summary.json").write_text(
+                    json.dumps(summary, sort_keys=True, indent=2,
+                               allow_nan=False) + "\n", encoding="utf-8")
+                (evidence_root / "boundary-results.json").write_text(
+                    json.dumps({
+                        "schema": "agent-interface/fake-appserver-calc-boundary-v1",
+                        "provider": "synthetic_fake_planner_echoes_supplied_arguments",
+                        "model_generations": counts["generation"],
+                        "public_mcp_tool_calls": counts["tool"],
+                        "task_effect": observed["verification"],
+                        "owner_close": observed["close"],
+                        "independent_stdlib_fods_values": scored_values,
+                        "independent_task_success": scored_values == ["731", "864"],
+                        "limits": ["FakeX_only", "no_live_provider", "no_live_Calc",
+                                   "no_efficiency_comparison"]},
+                        sort_keys=True, indent=2, allow_nan=False) + "\n",
+                    encoding="utf-8")
 
 
 if __name__ == "__main__":

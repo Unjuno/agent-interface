@@ -1,6 +1,25 @@
 # Worker work map
 
-## Current work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
+## Current work-map pointer — 2026-11-03, after PR #10167 and Issue #57 update
+
+**Last verified `origin/main` (2026-11-03):** `36063fa125804abcf3357d22fbffa3dfc10931dd`
+(PR #10167). The GitHub record for [Issue #57](https://github.com/Unjuno/agent-interface/issues/57)
+is currently **open**, updated 2026-11-03. Its fixed-task and varied-value Calc
+blocks remain scoped small-sample evidence; they are not a new allocation or a
+general efficiency result. Same-model cold/warm/invalidation/repair comparison,
+complete live provider/all-attempt accounting, and WSLc/MAP01 transfer remain
+unproven. The 2026-10-29 pointer and its measurements below are historical.
+
+The local `integration/calc-public-profile-v1-main-r75` change set composes the
+registered owned-process Calc profile, call-owned saved-artifact verifier, and
+Fake App Server/provider-attempt ledger path. Its r75 packet records one narrow
+live fixed-task result: saved cells A1=731/A2=864, verified release and exact
+target exit. The provider composition is synthetic and offline; r75 is not
+provider-efficiency evidence. Neither result completes Issue #57 or proves WSLc/
+MAP01 transfer. Do not replay prior allocations or promote these results beyond
+their recorded scope.
+
+## Historical work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
 
 
 Docker/Xvfb repeat control has a matched preregistered A-B-B-A standard-caller comparison: repeat ON failed the old effect-count oracle 2/2; persistent OFF passed it 2/2. See [the comparison report](../research/integration/docker_xvfb_autorepeat_matched_caller_20261029/README.md). This is n=2 per condition, with a 4 s sampling gap during server pause and no production/global-desktop policy change. Old API receipts remain conservative UNKNOWN and replay-denied.
@@ -19,8 +38,9 @@ Current touched-family status: #17 is CLOSED as completed since 2026-10-28; this
 does not close the separate end-to-end computer-control goal. Its latest scoped
 OS-pipe recovery samples R44/R45 did not establish their gate. PR #9790 is merged and adds an offline fail-closed check for
 an unobserved initial late-input horizon gap; it does not establish native
-release or the broader blocked OS-pipe/journal/telemetry hypothesis in #17. #57 is CLOSED
-as completed on 2026-10-27, but that state is not project-wide completion.
+release or the broader blocked OS-pipe/journal/telemetry hypothesis in #17. This
+2026-10-29 snapshot said #57 was CLOSED as completed on 2026-10-27; that recorded
+status is superseded by the current GitHub open state and residuals in the pointer above.
 #7924 remains OPEN with its migration STOP; it grants no WSLc allocation.
 Current-main GZDoom R71/R73 movement and R72 idle-control records are linked
 from [`CURRENT_GOAL.md`](CURRENT_GOAL.md); they do not prove MAP01 completion.

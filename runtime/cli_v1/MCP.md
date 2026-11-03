@@ -286,8 +286,9 @@ is a caller precondition, not authenticated by this flag. Same-process resource
 reuse, sampling races and synchronous blocked-I/O release remain unresolved.
 
 The experimental `--guarded-query-worker` option additionally separates active
-focus/process queries and exposes call-ID-scoped `interface_guarded_cancel`
-outside the busy slot. It requires `--guarded-process-identity`; see the
+focus/process queries and exposes call-ID-scoped `interface_guarded_cancel` for
+guarded input and compiled calls, outside the busy slot. It requires
+`--guarded-process-identity`; see the
 [exact coverage and remaining synchronous boundaries](../guarded_x11_v1/TARGET_QUERIES.md).
 It does not establish a physical release deadline or isolate all observations.
 
@@ -437,6 +438,81 @@ review returns an image/source for new aliases. This is the bridge's focused
 window contract, not authenticated application identity or transient-family
 review. Aliases expire under the bridge's existing bounded lifetime and remain
 session-local. Closing or restarting does not revive them.
+
+In guarded owned-process mode with process-identity and query-worker options,
+`interface_guarded_window_metadata(window_id)` reads bounded title, class, role,
+transient/parent, mapped, focus, and process/window-incarnation cues for one
+explicit XID. It neither enumerates windows nor selects or focuses the supplied
+ID. These X11 properties are untrusted cues and do not authorize input into a
+dialog. A query failure retires the reader and requires closing/reviewing a
+fresh session. `interface_guarded_window_metadata_revalidate(metadata_call_id)`
+re-queries only a finished metadata call retained in this server's memory. Its
+source must be no older than 500 ms both before and after the fresh query,
+mapped, and focused before/after. It returns
+`revalidated` only if a fresh sample matches the exact XID, transient/parent,
+class/title/role cues, process incarnation and window incarnation. A filesystem
+report or caller-supplied metadata cannot replace that source. This remains
+observation only and does not create a dialog input reference or make Save-As
+supported.
+
+The registered `calc-ocr-save-v1` owned-process route reserves a call-local
+blank `task-artifact.fods` and binds its descriptor to the reviewed process
+generation, exact XID/PID/start-tick tuple, and fresh window incarnation. The
+verifier recomputes the generation from that tuple and checks that the later
+target-exit receipt has the same identity. The parent retains the descriptor
+and fixed-profile Ctrl+S request in its in-memory call ledger; the report file
+is presentation and cannot authorize task verification. The server must be
+started with guarded window lifecycle enabled; without it, the Calc endpoint
+rejects the request before creating an owner call or emitting input.
+`interface_verify_task(call_id)` is available only after the owner close receipt
+proves process retirement and neutral input release. The optional launch route
+opens the reserved FODS, but the fixed profile's Ctrl+S remains only a save
+request. Missing or unchanged saved bytes return UNKNOWN; parsed changed bytes
+also remain UNKNOWN until a trusted GUI save path proves that exact task
+document was saved. The route does not yet support Save-As or establish a
+successful Calc task.
+
+`interface_guarded_calc_prepare(attempt_id)` creates one blank server-owned
+FODS reservation. Its response reports `target_launch_status=not_attempted` and
+`parent_process_custody=not_established` because preparation itself does not
+launch Calc. Without launch configuration, pass its call ID as
+`prepared_call_id` to `interface_guarded_calc_compiled`; the parent-held
+reservation is consumed once and the artifact binds to the reviewed existing
+window generation. One reservation is allowed at a time and expires after five
+minutes.
+
+For the opt-in Debian LibreOffice launch path, provide both absolute executable
+paths when starting the server:
+
+```text
+--calc-launcher-executable /usr/lib/libreoffice/program/oosplash
+--calc-gui-executable /usr/lib/libreoffice/program/soffice.bin
+```
+
+This requires POSIX guarded-X11 mode, process identity, query worker, window
+lifecycle, an owned-process session, and exactly one configured X11 root
+window. The pinned oosplash/soffice.bin package contract is checked at launch.
+For this pinned Debian/Xvfb path the launcher sets
+`SAL_USE_VCLPLUGIN=gen`; live comparison showed the default backend mapped a
+focused Calc window while rendering a uniform gray frame, whereas `gen` rendered
+the Calc grid and menus. This environment override grants no input authority.
+The fixed Calc OCR profile runs one numeric-only PSM 6 pass on a 2x enlarged
+crop containing A1 and A2, preserving its existing per-cell confidence
+threshold. A retained live frame showed the previous whole-screen OCR reading
+correct transient values below threshold and yielding before Save. The crop/
+scale candidate currently has one exploratory blank/filled screenshot pair; a
+fresh live profile run is required before treating it as qualified. It does not
+establish a trusted saved effect.
+The public sequence is prepare, `interface_guarded_calc_launch`, inspect the
+returned candidate, then explicitly review that XID with
+`interface_guarded_review_window` before `interface_guarded_calc_compiled`.
+Discovery never focuses a window or grants input; profile execution is rejected
+until the exact candidate is reviewed and bound. Only one launch attempt is
+allowed per server. If discovery fails or the session closes while Calc is
+still running, bounded process-group cleanup is separate from a clean target
+exit receipt and cannot prove task success. This route connects launch and
+parent cleanup custody; it does not yet prove delayed-input recovery, trusted
+saved task effect, or an efficiency comparison.
 
 The immediate capture does not wait for redraw or establish semantic completion.
 `wait_update` is a bounded delay. CTRL+A emission does not prove selection, and
@@ -777,6 +853,14 @@ and may still execute; ending this wait does not cancel or permit replay. Read
 the original `interface_results(call_id)`. Other input/recovery/close remains busy
 until the writer finishes. This is a cooperative response wait, not a hard
 transport/OS/physical-release bound or a task-success predicate.
+
+Recovery accepts the same response-wait option but is not a cancellation target.
+It is one synchronous release-only transaction under the normal busy slot; a
+pending response means that exact recovery still owns the slot. Poll its call ID
+with `interface_results`; do not issue another recovery or use
+`interface_guarded_cancel` on the recovery call. Cancellation remains for
+guarded input and compiled calls with cooperative cancellation tokens whose
+uncertain owner retirement may need separate cleanup custody.
 
 ## Public compiled X11 method
 
