@@ -1,0 +1,45 @@
+### registered-shape normal | exit=0
+Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_object_output_with_incompatible_mcp_shape_is_rejected_before_owner() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-g14-composition-matrix-20261103\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py:784> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:908, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.329 seconds
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.478s
+
+OK
+
+### registered-shape optimized | exit=0
+Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_object_output_with_incompatible_mcp_shape_is_rejected_before_owner() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-g14-composition-matrix-20261103\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py:784> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:908, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.437 seconds
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.559s
+
+OK
+
+### guarded full normal | exit=0
+........................execute program 'C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe': <_WindowsSubprocessTransport pid=43208 running stdin=<_ProactorWritePipeTransport fd=1088 read=<_OverlappedFuture pending cb=[_ProactorWritePipeTransport._pipe_closed()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py:479>> stdout=<_ProactorReadPipeTransport fd=680 read=<_OverlappedFuture pending cb=[_ProactorReadPipeTransport._loop_reading()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py:502>>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_WindowsSubprocessTransport pid=43208 running stdin=<_ProactorWritePipeTransport closed> stdout=<_ProactorReadPipeTransport closed>> exited with return code 0
+............................
+----------------------------------------------------------------------
+Ran 52 tests in 13.736s
+
+OK
+
+### guarded full optimized | exit=0
+........................execute program 'C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe': <_WindowsSubprocessTransport pid=52916 running stdin=<_ProactorWritePipeTransport fd=1008 read=<_OverlappedFuture pending cb=[_ProactorWritePipeTransport._pipe_closed()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py:479>> stdout=<_ProactorReadPipeTransport fd=804 read=<_OverlappedFuture pending cb=[_ProactorReadPipeTransport._loop_reading()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py:502>>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_WindowsSubprocessTransport pid=52916 running stdin=<_ProactorWritePipeTransport closed> stdout=<_ProactorReadPipeTransport closed>> exited with return code 0
+............................
+----------------------------------------------------------------------
+Ran 52 tests in 13.772s
+
+OK
