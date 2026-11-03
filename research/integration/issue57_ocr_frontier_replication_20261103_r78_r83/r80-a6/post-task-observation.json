@@ -1,0 +1,230 @@
+{
+  "call_directory": "/evidence/r80-a6/server-output/0b1d73323d60495abdd929d4c1e72d1d",
+  "call_id": "0b1d73323d60495abdd929d4c1e72d1d",
+  "image_status": "image",
+  "input_dispatched": false,
+  "observation_report": {
+    "input_dispatched": false,
+    "observation": {
+      "artifact": {
+        "bytes": 57309,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/evidence/r80-a6/server-output/0b1d73323d60495abdd929d4c1e72d1d/images/50711369c2d94013b559eebafbdfe9da.png",
+        "sha256": "5c0cb9612471da938311170129bb2c1c8b5abfcce00d1b17d2c74fae7259f09f",
+        "source_raw_sha256": "2e0b1fdfe9b3dc0ae19d1b1647ab5eb5e1e24f8d57b042e0a04243e30222cce1",
+        "timing_ns": {
+          "converted": 5068055088333,
+          "encoded": 5068071635249,
+          "hashed": 5068075420562,
+          "started": 5068054696823,
+          "written": 5068073715918
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 5068052943954,
+      "capture_started_ns": 5068050414871,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 8389410,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "2e0b1fdfe9b3dc0ae19d1b1647ab5eb5e1e24f8d57b042e0a04243e30222cce1",
+      "target": "calc",
+      "width": 1280
+    },
+    "observation_id": "a1c01ff4564e4232a393f5f8b014b820",
+    "schema": "agent-interface/runtime-observation-v1",
+    "side_effect_authority": false,
+    "status": "returned"
+  },
+  "operation": "guarded_observe",
+  "replay_allowed": false,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 1,
+    "calc_process_group_cleanup": null,
+    "calc_process_group_custody": {
+      "expected_members": {
+        "2241": 506113,
+        "2256": 506208
+      },
+      "launcher": {
+        "pid": 2241,
+        "start_ticks": 506113
+      },
+      "pgid": 2241,
+      "schema": "agent-interface/calc-process-group-custody-v1",
+      "session_id": 2241,
+      "target": {
+        "pid": 2256,
+        "start_ticks": 506208
+      }
+    },
+    "calc_process_group_custody_history": [
+      {
+        "custody": {
+          "expected_members": {
+            "2241": 506113,
+            "2251": 506113
+          },
+          "launcher": {
+            "pid": 2241,
+            "start_ticks": 506113
+          },
+          "pgid": 2241,
+          "schema": "agent-interface/calc-process-group-custody-v1",
+          "session_id": 2241,
+          "target": {
+            "pid": 2251,
+            "start_ticks": 506113
+          }
+        },
+        "observed_monotonic_ns": 5061147652592,
+        "transition": "initial"
+      },
+      {
+        "argv": [
+          "/usr/lib/libreoffice/program/soffice.bin",
+          "-env:UserInstallation=file:///evidence/r80-a6/server-output/82cd381a7e9a45ff80fe00166a774fda/calc-launch-profile",
+          "--calc",
+          "/evidence/r80-a6/server-output/82cd381a7e9a45ff80fe00166a774fda/task-artifact.fods",
+          "--nologo",
+          "--nodefault",
+          "--nofirststartwizard",
+          "--norestore"
+        ],
+        "authority_granted": false,
+        "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+        "input_dispatched": false,
+        "observed_monotonic_ns": 5062229649115,
+        "previous_target": {
+          "pid": 2251,
+          "start_ticks": 506113
+        },
+        "replay_allowed": false,
+        "target": {
+          "pid": 2256,
+          "start_ticks": 506208
+        },
+        "task_success": null,
+        "transition": "pre_review_gui_child_replacement"
+      }
+    ],
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:ed0395b84b61441bb2e8d8fd48d67d46",
+    "compiled_surface": "x11-window-8389410",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 20,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 5068288544442,
+      "pid": 2237,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 4194304
+    },
+    "owner_process_pid": 2237,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 4194304,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "retention_mode": "files",
+    "review_required": false,
+    "session_id": "e80660eea08b48d49f05086557ca76df",
+    "state": "open",
+    "target": "calc",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": false,
+      "thread_alive": true
+    },
+    "targets": {
+      "calc": 8389410
+    },
+    "window_lifecycle": true
+  },
+  "source": {
+    "binding_revision": 1,
+    "capture_ns": 5068050414871,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 57309,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/evidence/r80-a6/server-output/0b1d73323d60495abdd929d4c1e72d1d/images/50711369c2d94013b559eebafbdfe9da.png",
+        "sha256": "5c0cb9612471da938311170129bb2c1c8b5abfcce00d1b17d2c74fae7259f09f",
+        "source_raw_sha256": "2e0b1fdfe9b3dc0ae19d1b1647ab5eb5e1e24f8d57b042e0a04243e30222cce1",
+        "timing_ns": {
+          "converted": 5068055088333,
+          "encoded": 5068071635249,
+          "hashed": 5068075420562,
+          "started": 5068054696823,
+          "written": 5068073715918
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 5068052943954,
+      "capture_started_ns": 5068050414871,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 8389410,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "2e0b1fdfe9b3dc0ae19d1b1647ab5eb5e1e24f8d57b042e0a04243e30222cce1",
+      "target": "calc",
+      "width": 1280
+    },
+    "observation_id": "a1c01ff4564e4232a393f5f8b014b820",
+    "pointer_binding": {
+      "focus": 8389410,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ],
+      "process_generation": "775cffc3bcc69017bacb472b60943f4ab1b34e947ff8ff105e793a65e37b7d2a",
+      "surface": 8389410,
+      "window_generation": "9da19dc6daaa1737b2d283755793acd924072e26516c75d81a15712d174b69f0"
+    },
+    "sequence": 20,
+    "timing_ns": {
+      "artifact_verified": 5068079661957,
+      "binding_checked": 5068077833338,
+      "decoded": 5068079665291,
+      "public_returned": 5068075446968,
+      "started": 5068049677944
+    }
+  },
+  "status": "observed",
+  "task_success": null
+}

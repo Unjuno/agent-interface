@@ -1,0 +1,171 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-ocr-save-v1",
+  "method": "calc-ocr-save-v1",
+  "method_version": "1",
+  "session_scope": "native-x11:1ec9db0bc3254fc3bc703a97769ac83f",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_unavailable",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 5000584266644,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_filled": "unknown"
+      },
+      "observation_started_ns": 5000583439378,
+      "observation_accepted_ns": 5000700993853
+    },
+    {
+      "sequence": 13,
+      "captured_ns": 5001744315631,
+      "evidence_ref": "observation-13",
+      "evidence_digest": "5c0cb9612471da938311170129bb2c1c8b5abfcce00d1b17d2c74fae7259f09f",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": true
+      },
+      "observation_started_ns": 5001742543265,
+      "observation_accepted_ns": 5001857703117
+    },
+    {
+      "sequence": 18,
+      "captured_ns": 5002706474903,
+      "evidence_ref": "observation-18",
+      "evidence_digest": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": true
+      },
+      "observation_started_ns": 5002705302403,
+      "observation_accepted_ns": 5002820064867
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "filled",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-21229311c0274d5ebfcd2c4508c94ec5",
+      "effect_ref": "compiled-8779964815d3432ba1195e37b4b150e3-17-execution",
+      "release_verified": true,
+      "execution_started_ns": 5000710671507,
+      "execution_accepted_ns": 5001739597099
+    },
+    {
+      "from_state": "filled",
+      "to_state": "handoff",
+      "action": "save",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_filled": true
+      },
+      "observation_sequence": 13,
+      "evidence_ref": "observation-13",
+      "action_id": "action-347870e409b54c3c81bd7ab5b25a1647",
+      "effect_ref": "compiled-8779964815d3432ba1195e37b4b150e3-32-execution",
+      "release_verified": true,
+      "execution_started_ns": 5001871571349,
+      "execution_accepted_ns": 5002703494417
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "completed",
+      "action_id": "action-21229311c0274d5ebfcd2c4508c94ec5",
+      "release_verified": true,
+      "execution_started_ns": 5000710671507,
+      "execution_accepted_ns": 5001739597099
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter",
+      "status": "succeeded",
+      "evidence_ref": "observation-13",
+      "action_id": "action-21229311c0274d5ebfcd2c4508c94ec5",
+      "execution_accepted_ns": 5001739597099,
+      "effect_observation_captured_ns": 5001744315631,
+      "effect_observation_accepted_ns": 5001857703117,
+      "effect_verification_started_ns": 5001860187331,
+      "effect_verification_accepted_ns": 5001862918841
+    },
+    {
+      "event": "branch_selected",
+      "state": "filled",
+      "outcome": "action",
+      "action": "save",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_filled": true
+      },
+      "evidence_ref": "observation-13"
+    },
+    {
+      "event": "action_terminal",
+      "action": "save",
+      "status": "completed",
+      "action_id": "action-347870e409b54c3c81bd7ab5b25a1647",
+      "release_verified": true,
+      "execution_started_ns": 5001871571349,
+      "execution_accepted_ns": 5002703494417
+    },
+    {
+      "event": "effect_checked",
+      "action": "save",
+      "status": "unavailable",
+      "evidence_ref": "observation-18",
+      "action_id": "action-347870e409b54c3c81bd7ab5b25a1647",
+      "execution_accepted_ns": 5002703494417,
+      "effect_observation_captured_ns": 5002706474903,
+      "effect_observation_accepted_ns": 5002820064867,
+      "effect_verification_started_ns": 5002822033326,
+      "effect_verification_accepted_ns": 5002824560138
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-18",
+  "pending_effect": {
+    "action": "save",
+    "expected_effect": {
+      "cells_filled": true
+    },
+    "effect_ref": "compiled-8779964815d3432ba1195e37b4b150e3-32-execution"
+  },
+  "started_ns": 5000583432392,
+  "ended_ns": 5002826014780,
+  "elapsed_ns": 2242582388,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

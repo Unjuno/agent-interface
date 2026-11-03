@@ -1,0 +1,35 @@
+{
+  "request": {
+    "interface_id": "calc-ocr-save-v1",
+    "session_scope": "native-x11:ed0395b84b61441bb2e8d8fd48d67d46",
+    "action": "enter",
+    "operation": "enter_pair",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "calc_entry",
+      "identity_predicate": "context_ok",
+      "dependencies": [
+        "context_ok"
+      ]
+    },
+    "observation": {
+      "sequence": 2,
+      "captured_ns": 5064466788836,
+      "surface": "x11-window-8389410",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_filled": "unknown"
+      },
+      "evidence_ref": "observation-2",
+      "evidence_digest": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "bded43fc6be6459f97381f58de26d2c3",
+    "expected_sequence": 2,
+    "valid_until_ns": 5069466788836
+  }
+}
