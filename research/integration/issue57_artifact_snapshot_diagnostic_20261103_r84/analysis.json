@@ -1,0 +1,109 @@
+{
+  "attempt": "r84-a8",
+  "checks": {
+    "after_close_snapshot_verified": true,
+    "all_samples_same_sha": true,
+    "all_samples_stable": true,
+    "all_samples_verified": true,
+    "clean_exit": true,
+    "close_release_confirmed": true,
+    "container_exit_zero": true,
+    "head_matches_frozen_base": true,
+    "natural_target_exit_zero": true,
+    "owner_exit_zero": true,
+    "parent_verifier_passed": true,
+    "path_verifier_after_samples_verified": true,
+    "preclose_snapshot_differs_from_blank": true,
+    "r80_before_after_hashes_differ": true,
+    "r80_retained_afterrun_file_now_verifies": true,
+    "r80_t0_was_blank_artifact": true,
+    "release_empty": true,
+    "same_sha_after_close": true,
+    "sample_offsets_exact": true
+  },
+  "compiled_method_outcome": "SAFE_YIELD",
+  "compiled_method_reason": "effect_unavailable",
+  "condition": "predicate-scoped OCR skip",
+  "diagnostic_result": "DID_NOT_REPRODUCE_R80_BLANK_PRE-CLOSE_SNAPSHOT",
+  "interpretation": "The r80 pre-close read was byte-identical to its blank artifact; the retained file later differs and verifies. r84 was already valid at the first immutable sample and remained byte/stat-time stable through 1000ms and after close. This shows a transient write/progression discrepancy is plausible but does not establish its cause or OCR causality.",
+  "parent_task_success": true,
+  "r80_contrast": {
+    "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+    "preclose_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+    "retained_afterrun_sha256": "1b266ca140a06d315121b66ddfeb9068114d30d7590a9e212ad13bae6096ecb7",
+    "retained_afterrun_verification": {
+      "artifact_bytes": 19140,
+      "artifact_sha256": "1b266ca140a06d315121b66ddfeb9068114d30d7590a9e212ad13bae6096ecb7",
+      "cells": {
+        "A1": "731",
+        "A2": "864"
+      },
+      "status": "verified",
+      "task_success": true
+    }
+  },
+  "r84_task_gate_pass": true,
+  "samples": [
+    {
+      "bytes": 19140,
+      "inode": 1125899909104683,
+      "mtime_ns": 1793698471865032300,
+      "offset_ms": 0,
+      "record_sha_matches": true,
+      "sha256": "43bef56bcb7cf3f9f37a12075ce4fd4a4d10c14c3154d4ceee4f8c92bfd3cbf7",
+      "stable_during_read": true,
+      "status": "verified",
+      "task_success": true,
+      "verifier_reproduced": true
+    },
+    {
+      "bytes": 19140,
+      "inode": 1125899909104683,
+      "mtime_ns": 1793698471865032300,
+      "offset_ms": 100,
+      "record_sha_matches": true,
+      "sha256": "43bef56bcb7cf3f9f37a12075ce4fd4a4d10c14c3154d4ceee4f8c92bfd3cbf7",
+      "stable_during_read": true,
+      "status": "verified",
+      "task_success": true,
+      "verifier_reproduced": true
+    },
+    {
+      "bytes": 19140,
+      "inode": 1125899909104683,
+      "mtime_ns": 1793698471865032300,
+      "offset_ms": 250,
+      "record_sha_matches": true,
+      "sha256": "43bef56bcb7cf3f9f37a12075ce4fd4a4d10c14c3154d4ceee4f8c92bfd3cbf7",
+      "stable_during_read": true,
+      "status": "verified",
+      "task_success": true,
+      "verifier_reproduced": true
+    },
+    {
+      "bytes": 19140,
+      "inode": 1125899909104683,
+      "mtime_ns": 1793698471865032300,
+      "offset_ms": 500,
+      "record_sha_matches": true,
+      "sha256": "43bef56bcb7cf3f9f37a12075ce4fd4a4d10c14c3154d4ceee4f8c92bfd3cbf7",
+      "stable_during_read": true,
+      "status": "verified",
+      "task_success": true,
+      "verifier_reproduced": true
+    },
+    {
+      "bytes": 19140,
+      "inode": 1125899909104683,
+      "mtime_ns": 1793698471865032300,
+      "offset_ms": 1000,
+      "record_sha_matches": true,
+      "sha256": "43bef56bcb7cf3f9f37a12075ce4fd4a4d10c14c3154d4ceee4f8c92bfd3cbf7",
+      "stable_during_read": true,
+      "status": "verified",
+      "task_success": true,
+      "verifier_reproduced": true
+    }
+  ],
+  "schema": "agent-interface/issue57-artifact-snapshot-diagnostic-v1"
+}

@@ -1,0 +1,24 @@
+{
+  "base_commit": "a7bac319ab880637f1db9d0b8b1670b313269393",
+  "container_limits": "2 CPU / 4 GiB memory+swap / 256 PIDs / local logs / 600s",
+  "docker_desktop": "4.93.0.240920",
+  "docker_server": "29.8.1",
+  "experiment_script_sha256": "ef457689827c6361917cdb2c58dd7dc2784fa32f17916aaa5b2e3d8d04d5cf57",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "runner_sha256": "c76d2e4b86d61a2e5f25a8e3702c9ccc36ab76b6764f2701abdce36a4798494b",
+  "runtime_sha256": {
+    "runtime/cli_v1/mcp_server.py": "4122e78bef98f4eacece76d6dae3f049bf75b000c57ad2f95311b119ac1285ca",
+    "runtime/guarded_x11_v1/calc_launcher_v1.py": "75db62d3716f41bbe7af639c2e422cd625bab98a0f0dd3bf21b2ea1a97f8f305",
+    "runtime/guarded_x11_v1/calc_process_group_v1.py": "16c6b6b86ba1b760c0343091389310f44573390b206ec00c07376764e3be8fc1",
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "0cd7f0d42be1bd93bf83d0ffdb636e846b41a8d5ab7503ae830789b176af4071"
+  },
+  "sample_offsets_ms": [
+    0,
+    100,
+    250,
+    500,
+    1000
+  ],
+  "schema": "agent-interface/issue57-artifact-snapshot-freeze-v1",
+  "wsl_limits": "24GB memory / 8 CPU / 8GB swap / gradual reclaim"
+}
