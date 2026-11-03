@@ -13,7 +13,7 @@ from PIL import Image
 
 from runtime.guarded_x11_v1.calc_profile_v1 import (
     PROFILE_ID, CalcPrimaryProfile, _CELL_BOXES, _ENTRY_ANCHOR, _cell_cue,
-    verify_saved_fods)
+    validate_calc_task_values, verify_saved_fods)
 from runtime.guarded_x11_v1.handles import TargetHandleStore
 from runtime.guarded_x11_v1.process_identity import (
     process_generation_from_identity,process_incarnation_from_identity)
@@ -89,6 +89,27 @@ class CalcProfileTests(unittest.TestCase):
         self.assertEqual(_cell_cue(FILLED.decode()), 'filled')
         old_rows = HEADER + b'5\t95\t185\t22\t12\t95\t731\n5\t95\t205\t22\t12\t95\t864\n'
         self.assertEqual(_cell_cue(old_rows.decode()), 'unknown')
+
+    def test_task_values_are_bounded_and_drive_ocr_and_saved_effect_scoring(self):
+        values = {'A1':'24680','A2':'13579'}
+        custom_tsv = (HEADER + b'5\t95\t146\t22\t12\t95\t24680\n'
+                      + b'5\t95\t162\t22\t12\t95\t13579\n')
+        self.assertEqual(_cell_cue(custom_tsv.decode(), expected=values), 'filled')
+        self.assertEqual(_cell_cue(FILLED.decode(), expected=values), 'wrong')
+        for invalid in (
+                {'A1':'1','A2':'2','A3':'3'},
+                {'A1':'01','A2':'2'},
+                {'A1':'1.5','A2':'2'},
+                {'A1':'1','A2':'x'},
+                {'A1':1,'A2':'2'},
+                {}):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                validate_calc_task_values(invalid)
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'task.fods'
+            self._fods(path, a1=values['A1'], a2=values['A2'])
+            self.assertEqual(verify_saved_fods(path, expected=values)['task_success'], True)
+            self.assertEqual(verify_saved_fods(path)['task_success'], False)
 
     @staticmethod
     def _fods(path, *, a1='731', a2='864', extra=None, malformed=False,
@@ -228,7 +249,9 @@ class CalcProfileTests(unittest.TestCase):
             native, _ = self._source(root, 1, image, binding)
             image = Image.open(native['native']['artifact']['path']).convert('RGB')
             bridge = _Bridge(image, native)
-            bridge.ocr_rows = [HEADER, ROI_FILLED, ROI_FILLED]
+            values = {'A1':'24680','A2':'13579'}
+            roi_filled = ROI_FILLED.replace(b'731', b'24680').replace(b'864', b'13579')
+            bridge.ocr_rows = [HEADER, roi_filled, roi_filled]
             ocr_calls = []
             def ocr(command, **kwargs):
                 ocr_calls.append((command, kwargs))
@@ -239,13 +262,15 @@ class CalcProfileTests(unittest.TestCase):
                 profile = CalcPrimaryProfile(bridge, bindings, root,
                     reviewed_sequence=1,
                     reviewed_artifact_sha256=native['native']['artifact']['sha256'],
-                    blank_reviewed=True, ocr_runner=ocr)
+                    blank_reviewed=True, ocr_runner=ocr, task_values=values)
             self.assertEqual(profile.interface['interface_id'], PROFILE_ID)
             self.assertEqual(profile.interface['method']['max_transitions'], 2)
             self.assertEqual(profile.interface['method']['max_runtime_ms'], 10000)
             self.assertEqual(profile.bindings['enter']['interaction'], 'keyboard')
             self.assertEqual(profile.bindings['enter']['tail'][0],
-                             {'op':'text','text':'731','gap_ms':1})
+                             {'op':'text','text':'24680','gap_ms':1})
+            self.assertEqual(profile.bindings['enter']['tail'][3],
+                             {'op':'text','text':'13579','gap_ms':1})
             self.assertNotIn({'op':'key_chord','keys':['Left']},
                              profile.bindings['enter']['tail'])
             self.assertIn('cells_filled', profile.interface['symbols']['save']['dependencies'])

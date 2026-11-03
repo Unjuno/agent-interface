@@ -142,3 +142,25 @@ This prevents post-deadline callback starts; it cannot interrupt a synchronous
 callback that began before the deadline. It proves no live Calc result, task
 artifact, provider accounting, WSLc, MAP01 or efficiency improvement. #57 stays
 open.
+
+## Current-main composed suite on pinned Docker (2026-11-04)
+
+The Calc plan, task-artifact verifier, public guarded MCP/owned-process path,
+provider-ledger/spool composition, and measurement validator were applied to
+current `origin/main` `cf3ddf2f8ef44f78fac3cfed78df2904aa596691` without patch
+conflicts. On the cached Xvfb image with network disabled, read-only source and
+bounded CPU/memory/PID limits, the 214-test composed set passed in normal mode
+(112.157 s) and optimized mode (113.302 s), with Docker exit 0. Exact source
+pins, command, stdout/stderr, engine/image identity, and four checksum-covered
+packets are in
+[`current-main-integration-docker-20261104/`](current-main-integration-docker-20261104/README.md)
+and its follow-up directories. The initial run and two fixture-construction
+failures remain preserved; the fixture now follows the real observe→mint
+provenance contract before checking that launch binding is refused when not
+configured.
+
+This is offline synthetic Fake X/provider composition only. No provider/model
+generation, live Calc GUI, WSLc, MAP01, token economy, or end-to-end efficiency
+was measured. It does not evaluate Docker host stability. Issue #57 remains
+open; the matched cold/warm/invalidation/repair lifecycle comparison and live
+second-domain boundary remain unresolved.

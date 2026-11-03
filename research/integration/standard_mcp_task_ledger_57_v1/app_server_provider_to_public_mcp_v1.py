@@ -182,7 +182,11 @@ class AppServerPublicMcpModelCall:
         started_ns = time.perf_counter_ns()
         try:
             with self._lock:
-                before = self.protocol_journal_path.stat().st_size
+                # A file-spool planner may cause the host App Server to create
+                # the shared journal only after it atomically claims the
+                # request. Treat that first turn as an offset-zero slice.
+                before = (self.protocol_journal_path.stat().st_size
+                          if self.protocol_journal_path.exists() else 0)
                 handle = self.planner.begin_turn(
                     prompt, output_schema=self.output_schema,
                     image_path=self.path_converter(image))
