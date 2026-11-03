@@ -1,0 +1,8 @@
+# Local setup errors (not scientific attempts)
+
+All times 2026-11-03 local Windows host. These were errors in constructing this isolated audit checkout, not failures of the published WSLc trials or of the candidate implementation.
+
+1. The new worktree was initially created with `--no-checkout`; initial sparse patterns omitted the comparison blocks' forward-control directories and `runtime/cli_v1`, `runtime/selector_v1`, and `runtime/motor_state_v1`. The first compare invocations failed with `FileNotFoundError` for control `raw.zip` / audit files; the first endpoint test imports failed with `ModuleNotFoundError` for those omitted runtime packages. The sparse set was expanded, the newly-created worktree was restored to its exact `HEAD`, and the same checks then passed. No pre-existing checkout was reset or changed.
+2. The initial standalone screenshot-inspection script lacked a `__main__` guard. Python's Windows multiprocessing spawn re-imported it and produced a child-process traceback while the parent saw no image. The helper was corrected to use a main guard; its single bounded observation-only run then returned exactly one 32x32 PNG. It issued no input and used only a temporary fake-X server.
+
+Neither setup issue changed source archives, comparator inputs, or any live allocation. They are kept visible rather than counted as experiment failures.
