@@ -9,7 +9,7 @@ from copy import deepcopy
 import hashlib
 import json
 import multiprocessing
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import threading
 import time
 from types import SimpleNamespace
@@ -223,8 +223,12 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
             args=(control_connection, control_stop, owner, pid),
             name='guarded-owner-control', daemon=True)
         control_thread.start()
-        allowed = {'snapshot', 'invoke_guarded', 'run_compiled_profile', 'recover_input', 'inspect_target',
-                   'review_target', 'dispatch', 'inspect_after_dispatch', 'observe', 'close'}
+        allowed = {'snapshot', 'invoke_guarded', 'run_compiled_profile',
+                   'run_registered_calc_profile', 'inspect_window_metadata',
+                   'inspect_process_incarnation', 'windows_for_process',
+                   'recover_input', 'inspect_target',
+                   'review_target', 'dispatch', 'inspect_after_dispatch',
+                   'observe', 'close'}
         while True:
             request = rpc_connection.recv()
             operation = request.get('operation')
@@ -240,6 +244,14 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                         result = owner.invoke_guarded(**arguments)
                     elif operation == 'run_compiled_profile':
                         result = owner.run_compiled_profile(**arguments)
+                    elif operation == 'run_registered_calc_profile':
+                        result = owner.run_registered_calc_profile(**arguments)
+                    elif operation == 'inspect_window_metadata':
+                        result = owner.inspect_window_metadata(**arguments)
+                    elif operation == 'inspect_process_incarnation':
+                        result = owner.inspect_process_incarnation(**arguments)
+                    elif operation == 'windows_for_process':
+                        result = owner.windows_for_process(**arguments)
                     elif operation == 'recover_input':
                         result = owner.recover_input(**arguments)
                     elif operation == 'inspect_target':
@@ -303,6 +315,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                  retention_mode='files',
                  prestarted_cancel_supervisor=False,
                  _cleanup_supervisor_target=None,
+                 _calc_process_group_cleanup_target=None,
                  _owner_factory=None):
         super().__init__(targets, directory, display_name,
                          process_identity=process_identity,
@@ -320,6 +333,13 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._cleanup_supervisor_target = (_cleanup_supervisor_target
             or x11_cancel_worker)
         self._cleanup_supervisor = None
+        if (_calc_process_group_cleanup_target is not None
+                and not callable(_calc_process_group_cleanup_target)):
+            raise ValueError('_calc_process_group_cleanup_target must be callable')
+        self._calc_process_group_cleanup_target = _calc_process_group_cleanup_target
+        self._calc_process_group_custody = None
+        self._calc_process_group_custody_history = []
+        self._calc_process_group_cleanup = None
         self._prestarted_cleanup_result = None
         self._active_cancel_operation_id = None
         self._active_cancel_deadline_ns = None
@@ -496,7 +516,149 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    owner_release_attempt=deepcopy(self._owner_release_attempt),
                    cleanup_status='UNKNOWN' if execution_unknown else None,
                    authority_granted=False, restart_allowed=False)
+        if getattr(self, '_calc_process_group_custody', None) is not None:
+            row['calc_process_group_custody'] = deepcopy(
+                self._calc_process_group_custody)
+            row['calc_process_group_custody_history'] = deepcopy(
+                getattr(self, '_calc_process_group_custody_history', []))
+            row['calc_process_group_cleanup'] = deepcopy(
+                self._calc_process_group_cleanup)
         return row
+
+    def retain_calc_process_group_custody(self, custody):
+        """Independently verify and retain an owned Calc group before retirement."""
+        from runtime.guarded_x11_v1.calc_process_group_v1 import (
+            make_launcher_process_group_custody, make_process_group_custody,
+            read_linux_process_group)
+        if getattr(self, '_calc_process_group_custody', None) is not None:
+            if custody == self._calc_process_group_custody:
+                return deepcopy(self._calc_process_group_custody)
+            raise RuntimeError('Calc process-group custody is one-shot')
+        if not isinstance(custody, dict):
+            raise ValueError('Calc process-group custody record required')
+        launcher, target = custody.get('launcher'), custody.get('target')
+        pgid, sid = custody.get('pgid'), custody.get('session_id')
+        if (not isinstance(launcher, dict)
+                or (target is not None and not isinstance(target,dict))
+                or type(pgid) is not int or sid != pgid):
+            raise ValueError('Calc process-group custody identity malformed')
+        rows = read_linux_process_group(pgid, sid)
+        if target is None:
+            verified = make_launcher_process_group_custody(
+                leader_pid=launcher.get('pid'),
+                leader_start_ticks=launcher.get('start_ticks'),
+                group_snapshot=rows)
+        else:
+            verified = make_process_group_custody(
+                leader_pid=launcher.get('pid'),
+                leader_start_ticks=launcher.get('start_ticks'),
+                target_pid=target.get('pid'),
+                target_start_ticks=target.get('start_ticks'),
+                group_snapshot=rows)
+        if verified != custody:
+            raise ValueError('Calc process-group custody changed before parent retention')
+        self._calc_process_group_custody = deepcopy(verified)
+        history = getattr(self, '_calc_process_group_custody_history', None)
+        if history is None:
+            history = self._calc_process_group_custody_history = []
+        history.append({'transition':'initial','custody':deepcopy(verified),
+            'observed_monotonic_ns':time.monotonic_ns()})
+        return deepcopy(verified)
+
+    def advance_calc_process_group_custody(self, *, target_pid,
+            target_start_ticks, gui_executable, expected_argv):
+        """Retain one verified pre-review replacement child for bounded cleanup.
+
+        The server-side Calc supervisor supplies its pinned executable and
+        exact launch argv. Advancement is allowed only while the old GUI
+        generation is gone and the dedicated group contains exactly the
+        launcher plus the replacement direct child. This grants no window or
+        input authority and never turns forced cleanup into a clean exit.
+        """
+        from runtime.guarded_x11_v1.calc_process_group_v1 import (
+            advance_process_group_custody, read_linux_process_group)
+        previous = getattr(self, '_calc_process_group_custody', None)
+        if (not isinstance(previous, dict) or self.state != 'open'
+                or self.binding_revision != 0
+                or getattr(self, 'review_required', False)
+                or getattr(self, '_execution_unknown', False)
+                or getattr(self, '_calc_process_group_cleanup', None) is not None
+                or getattr(self, '_owner_release_attempt', None) is not None
+                or any(getattr(self, '_owner_input_obligations', {}).get(key)
+                       for key in ('keys','buttons'))):
+            raise RuntimeError('Calc custody handoff requires an idle pre-review owner')
+        if (type(target_pid) is not int or target_pid <= 0
+                or type(target_start_ticks) is not int or target_start_ticks <= 0
+                or type(gui_executable) is not str
+                or not PurePosixPath(gui_executable).is_absolute()
+                or type(expected_argv) not in (list,tuple)
+                or not expected_argv
+                or any(type(value) is not str for value in expected_argv)
+                or expected_argv[0] != gui_executable):
+            raise ValueError('pinned GUI executable and exact argv required')
+        try:
+            actual_exe = str(Path('/proc',str(target_pid),'exe').resolve(strict=True))
+            raw_argv = Path('/proc',str(target_pid),'cmdline').read_bytes()
+            if not raw_argv or not raw_argv.endswith(b'\0'):
+                raise ValueError('replacement GUI command line unavailable')
+            actual_argv = tuple(value.decode('utf-8','strict')
+                for value in raw_argv[:-1].split(b'\0'))
+        except (OSError,UnicodeError) as error:
+            raise ValueError('replacement GUI process identity unavailable') from error
+        splash = [value for value in actual_argv[1:]
+            if value.startswith('--splash-pipe=')
+            and value[14:].isascii() and value[14:].isdigit()]
+        filtered_argv = tuple(value for value in actual_argv
+            if value not in splash)
+        if (actual_exe != gui_executable or filtered_argv != tuple(expected_argv)
+                or len(splash) > 1):
+            raise ValueError('replacement GUI executable or launch argv changed')
+        rows = read_linux_process_group(previous['pgid'],previous['session_id'])
+        advanced = advance_process_group_custody(previous,
+            target_pid=target_pid,target_start_ticks=target_start_ticks,
+            group_snapshot=rows)
+        transition = {'transition':'pre_review_gui_child_replacement',
+            'previous_target':deepcopy(previous['target']),
+            'target':deepcopy(advanced['target']),
+            'gui_executable':actual_exe,'argv':list(filtered_argv),
+            'observed_monotonic_ns':time.monotonic_ns(),
+            'authority_granted':False,'input_dispatched':False,
+            'task_success':None,'replay_allowed':False}
+        history = getattr(self, '_calc_process_group_custody_history', None)
+        if history is None:
+            history = self._calc_process_group_custody_history = []
+        history.append(transition)
+        self._calc_process_group_custody = deepcopy(advanced)
+        self._calc_process_group_cleanup = None
+        return {'status':'advanced','custody':deepcopy(advanced),
+            'transition':deepcopy(transition),'authority_granted':False,
+            'input_dispatched':False,'task_success':None,'replay_allowed':False}
+
+    def _cleanup_retained_calc_process_group(self):
+        custody = getattr(self, '_calc_process_group_custody', None)
+        if custody is None:
+            return None
+        prior = getattr(self, '_calc_process_group_cleanup', None)
+        if prior is not None:
+            return deepcopy(prior)
+        try:
+            from runtime.guarded_x11_v1.calc_process_group_v1 import cleanup_process_group
+            cleanup = getattr(self, '_calc_process_group_cleanup_target', None)
+            result = (cleanup(custody) if callable(cleanup)
+                      else cleanup_process_group(custody))
+        except Exception as error:
+            result = {'schema':'agent-interface/calc-process-group-cleanup-v1',
+                'status':'unknown','reason':'parent_cleanup_failed',
+                'error_type':type(error).__name__,'verified_empty':False,
+                'clean_exit_verified':False,'task_success':None,
+                'replay_allowed':False}
+        if not isinstance(result, dict):
+            result = {'schema':'agent-interface/calc-process-group-cleanup-v1',
+                'status':'unknown','reason':'parent_cleanup_result_malformed',
+                'verified_empty':False,'clean_exit_verified':False,
+                'task_success':None,'replay_allowed':False}
+        self._calc_process_group_cleanup = deepcopy(result)
+        return deepcopy(result)
 
     def _observe_owner_client_disconnect(self):
         resource_base = self._snapshot_cache.get('owner_x_client_resource_base')
@@ -710,6 +872,28 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                           effect_rules=deepcopy(effect_rules),
                           call_root=str(call_root), cancel_token=cancel_token)
 
+    def run_registered_calc_profile(self, profile_id, bindings, *,
+                                    reviewed_sequence, reviewed_artifact_sha256,
+                                    blank_reviewed, attempt_id, call_root,
+                                    cancel_token, task_artifact=None):
+        return self._call('run_registered_calc_profile',
+            profile_id=profile_id, bindings=deepcopy(bindings),
+            reviewed_sequence=reviewed_sequence,
+            reviewed_artifact_sha256=reviewed_artifact_sha256,
+            blank_reviewed=blank_reviewed, attempt_id=attempt_id,
+            call_root=str(call_root), cancel_token=cancel_token,
+            task_artifact=task_artifact)
+
+    def inspect_window_metadata(self, window_id):
+        return self._call('inspect_window_metadata',window_id=window_id)
+
+    def windows_for_process(self, pid, title_hint):
+        """Read-only XRes discovery through the isolated owner query worker."""
+        return self._call('windows_for_process',pid=pid,title_hint=title_hint)
+
+    def inspect_process_incarnation(self, window_id):
+        return self._call('inspect_process_incarnation',window_id=window_id)
+
     def recover_input(self, current_binding_revision, target=None, region=None,
                       capture_directory=None):
         arguments = dict(current_binding_revision=current_binding_revision,
@@ -907,6 +1091,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._retirement = {'reason':reason, 'retired':retired,
                             'exitcode':exitcode,
                             'kill_escalated':kill_escalated}
+        target_cleanup = self._cleanup_retained_calc_process_group()
+        if target_cleanup is not None:
+            self._retirement['calc_process_group_cleanup'] = target_cleanup
         self.state = 'failed'
         self.error = reason
         self._execution_unknown = True
@@ -1026,6 +1213,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                               and report.get('connection_close_attempted') is True
                               and neutral)
             report = dict(report, verified=verified_close,
+                          owner_process_retired=True,
+                          owner_process_exitcode=self._process.exitcode,
                           release_confirmed=(release.get('verified') is True
                               if isinstance(release, dict) else None))
         if not self._process.is_alive() and report.get('verified') is True:

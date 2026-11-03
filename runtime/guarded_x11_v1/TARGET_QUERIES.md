@@ -56,6 +56,18 @@ retirement without joining that thread. Pending/close-error state is reported in
 MCP `session.target_queries`. A retired reader requires explicitly closing the
 session and starting/reviewing a fresh one; window review cannot reset it.
 
+`window_metadata` is an opt-in bounded read-only query for one explicit XID. It
+returns parent/transient XIDs, bounded WM_CLASS/title/role cues, mapped state,
+an XRes plus `/proc` process-incarnation digest, a subscribed window-incarnation
+token, and focus-ancestry checks before and after the sample. The process digest
+is shared across windows owned by the same XRes PID and `/proc` start time;
+the existing per-window process digest remains XID-specific. Metadata strings
+and transient/role declarations are application-controlled cues and do not
+authenticate a dialog or grant input authority. This query alone does not
+authorize typing into a Save-As chooser: a dialog-specific reference and a
+separate input-press fence bound to the Calc owner and chooser incarnation are
+still required.
+
 ## Scope and remaining boundaries
 
 This is a named focus/process-query isolation mechanism, **not full observation

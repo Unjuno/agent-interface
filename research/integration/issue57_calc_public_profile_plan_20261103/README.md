@@ -58,3 +58,10 @@ consumed; this document authorizes no replay. The existing matched Calc blocks
 remain narrow evidence: two samples per arm, scripted tasks, cache/provider and
 route differences. They cannot be pooled into a population speedup, price, or
 reliability claim. Keep MAP01 and WSLc boundaries distinct.
+
+
+## Post-close exact Calc exit observation (2026-11-03, r75-c1)
+
+A fresh single live attempt passed the preregistered close/release/exit gates. The independent verifier parsed the call-owned FODS as A1=731/A2=864. Both compiled transitions released input; owner close verified empty keys/buttons and exited 0. The parent then observed the exact Calc and `oosplash` generation exit 0 92.712 ms after the release receipt; forced process cleanup was not needed. The independent verifier returned `verified`, `task_success=true`; container exit was 0. All 264 packet files and the packet manifest were locally hash-checked against the frozen source hashes. See [the raw r75 packet](post-close-exit-wait-live-validation-20261103-r75/README.md).
+
+This is one fixed-task live integration result, not provider efficiency, broad reliability, WSLc, MAP01, or Issue #57 completion. r73/r74 failed attempts remain preserved in their original worktree and were not rerun. The source implementation was uncommitted in its source worktree at audit time; this integration branch is the review copy.
