@@ -40,8 +40,9 @@ class ProviderAttemptRecorder:
 
     ``provider_call`` returns a mapping with ``status``, ``usage`` and optional
     ``response_bytes``. The start row and request bytes are fsynced before the
-    callable runs. A timeout or exception is retained with unavailable usage and
-    then re-raised to preserve the provider's ordinary control flow.
+    callable runs. A timeout or exception is retained with unavailable usage
+    unless it carries validated usage and response bytes, then re-raised to
+    preserve the provider's ordinary control flow.
     """
 
     def __init__(self, root, *, clock_ns=time.monotonic_ns):
@@ -146,8 +147,9 @@ class ProviderAttemptRecorder:
         try:
             result = provider_call()
         except BaseException as exc:
-            status = self._exception_status(exc)
-            self.finish(attempt_id, status=status, usage=_UNAVAILABLE_USAGE)
+            self.finish(attempt_id, status=self._exception_status(exc),
+                        usage=self._exception_usage(exc),
+                        response_bytes=self._exception_response_bytes(exc))
             raise
 
         return self._record_provider_result(attempt_id, result)
@@ -159,7 +161,8 @@ class ProviderAttemptRecorder:
             result = await provider_call()
         except BaseException as exc:
             self.finish(attempt_id, status=self._exception_status(exc),
-                        usage=_UNAVAILABLE_USAGE)
+                        usage=self._exception_usage(exc),
+                        response_bytes=self._exception_response_bytes(exc))
             raise
 
         return self._record_provider_result(attempt_id, result)
@@ -191,6 +194,20 @@ class ProviderAttemptRecorder:
         if isinstance(exc, (KeyboardInterrupt, asyncio.CancelledError)):
             return "cancelled"
         return "failed"
+
+    @staticmethod
+    def _exception_usage(exc):
+        usage = getattr(exc, "usage", _UNAVAILABLE_USAGE)
+        try:
+            _validate_usage(usage)
+        except LedgerValidationError:
+            return _UNAVAILABLE_USAGE
+        return usage
+
+    @staticmethod
+    def _exception_response_bytes(exc):
+        response_bytes = getattr(exc, "response_bytes", None)
+        return response_bytes if isinstance(response_bytes, bytes) else None
 
     def begin_tool_call(self, attempt_id, call_id, method, request_bytes):
         """Persist one MCP call admission before invoking the transport."""

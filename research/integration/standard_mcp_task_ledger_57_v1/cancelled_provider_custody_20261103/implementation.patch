@@ -1,0 +1,157 @@
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py b/research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py
+index 812c7d22208..f48d8933f07 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py
+@@ -40,8 +40,9 @@ class ProviderAttemptRecorder:
+ 
+     ``provider_call`` returns a mapping with ``status``, ``usage`` and optional
+     ``response_bytes``. The start row and request bytes are fsynced before the
+-    callable runs. A timeout or exception is retained with unavailable usage and
+-    then re-raised to preserve the provider's ordinary control flow.
++    callable runs. A timeout or exception is retained with unavailable usage
++    unless it carries validated usage and response bytes, then re-raised to
++    preserve the provider's ordinary control flow.
+     """
+ 
+     def __init__(self, root, *, clock_ns=time.monotonic_ns):
+@@ -146,8 +147,9 @@ class ProviderAttemptRecorder:
+         try:
+             result = provider_call()
+         except BaseException as exc:
+-            status = self._exception_status(exc)
+-            self.finish(attempt_id, status=status, usage=_UNAVAILABLE_USAGE)
++            self.finish(attempt_id, status=self._exception_status(exc),
++                        usage=self._exception_usage(exc),
++                        response_bytes=self._exception_response_bytes(exc))
+             raise
+ 
+         return self._record_provider_result(attempt_id, result)
+@@ -159,7 +161,8 @@ class ProviderAttemptRecorder:
+             result = await provider_call()
+         except BaseException as exc:
+             self.finish(attempt_id, status=self._exception_status(exc),
+-                        usage=_UNAVAILABLE_USAGE)
++                        usage=self._exception_usage(exc),
++                        response_bytes=self._exception_response_bytes(exc))
+             raise
+ 
+         return self._record_provider_result(attempt_id, result)
+@@ -192,6 +195,20 @@ class ProviderAttemptRecorder:
+             return "cancelled"
+         return "failed"
+ 
++    @staticmethod
++    def _exception_usage(exc):
++        usage = getattr(exc, "usage", _UNAVAILABLE_USAGE)
++        try:
++            _validate_usage(usage)
++        except LedgerValidationError:
++            return _UNAVAILABLE_USAGE
++        return usage
++
++    @staticmethod
++    def _exception_response_bytes(exc):
++        response_bytes = getattr(exc, "response_bytes", None)
++        return response_bytes if isinstance(response_bytes, bytes) else None
++
+     def begin_tool_call(self, attempt_id, call_id, method, request_bytes):
+         """Persist one MCP call admission before invoking the transport."""
+         if attempt_id is not None and (
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py b/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py
+index a13c14e3e96..482b90132c0 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py
+@@ -112,9 +112,10 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
+         if cancelled:
+             usage_source = (error_usage if error is not None else
+                             result.get("usage") if isinstance(result, dict) else None)
+-            return {"status": "cancelled",
+-                    "usage": _usage({"usage": usage_source}),
+-                    "response_bytes": raw, "error_type": "CancelledError"}
++            cancellation = asyncio.CancelledError()
++            cancellation.usage = _usage({"usage": usage_source})
++            cancellation.response_bytes = raw
++            raise cancellation
+         if error is not None:
+             status = ("timeout" if isinstance(
+                 error, (TimeoutError, subprocess.TimeoutExpired)) else "failed")
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+index 4075fe4ecb9..401d6cbc6f2 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+@@ -3,6 +3,7 @@ import base64
+ import hashlib
+ import json
+ import tempfile
++import threading
+ import unittest
+ from pathlib import Path
+ from types import SimpleNamespace
+@@ -849,6 +850,67 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+             self.assertEqual(sum(event["kind"] == "tool_call"
+                                  for event in receipt["events"]), 0)
+ 
++    async def test_cancelled_model_attempt_waits_for_worker_and_retains_cost_and_raw(self):
++        with tempfile.TemporaryDirectory() as temporary:
++            root = Path(temporary)
++            image_path = root / "image.bin"
++            image_path.write_bytes(b"image-bytes")
++            model_root = root / "model-call"
++            worker_started = threading.Event()
++            allow_worker_finish = threading.Event()
++            response_bytes = b'{"type":"turn.completed"}\n'
++
++            def slow_model(call_root, *_args):
++                worker_started.set()
++                if not allow_worker_finish.wait(timeout=2):
++                    raise TimeoutError("synthetic worker release deadline")
++                events = call_root / "model" / "events.jsonl"
++                events.parent.mkdir(parents=True)
++                events.write_bytes(response_bytes)
++                return {"usage": {"input_tokens": 23, "output_tokens": 5}}
++
++            request, provider = build_model_provider_call(
++                model_call=slow_model, root=model_root, prompt="p",
++                image=image_path, contract="compiled", workspace=root)
++            recorder = ProviderAttemptRecorder(root / "ledger")
++
++            class RejectingRelay:
++                next_id = 1
++
++                async def request(self, _request):
++                    raise AssertionError("cancelled generation must not reach Relay")
++
++            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
++            pending = asyncio.create_task(caller.invoke_generation_to_tool(
++                "generation-cancelled", request, provider,
++                "tool-after-cancel", "interface_guarded_compiled",
++                parse_agent_message))
++            try:
++                self.assertTrue(await asyncio.to_thread(
++                    worker_started.wait, 2), "model worker did not start")
++                pending.cancel()
++                await asyncio.sleep(0)
++                self.assertFalse(pending.done(),
++                                 "cancelled call must retain worker custody")
++            finally:
++                allow_worker_finish.set()
++
++            with self.assertRaises(asyncio.CancelledError):
++                await asyncio.wait_for(pending, timeout=2)
++            receipt = recorder.reconcile()
++            self.assertTrue(receipt["complete"])
++            attempt = next(event for event in receipt["events"]
++                           if event["kind"] == "model_attempt")
++            self.assertEqual(attempt["status"], "cancelled")
++            self.assertEqual(attempt["usage"], {
++                "status": "reported", "input_tokens": 23, "output_tokens": 5})
++            response = next(ref for ref in attempt["raw_refs"]
++                            if ref["path"].endswith("response.bin"))
++            self.assertEqual((recorder.root / response["path"]).read_bytes(),
++                             response_bytes)
++            self.assertEqual(sum(event["kind"] == "tool_call"
++                                 for event in receipt["events"]), 0)
++
+     async def test_async_attempt_joins_generation_bound_public_compiled_tool(self):
+         with tempfile.TemporaryDirectory() as temporary:
+             root = Path(temporary)

@@ -3,6 +3,7 @@ import base64
 import hashlib
 import json
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -846,6 +847,67 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             response = next(ref for ref in attempt["raw_refs"]
                             if ref["path"].endswith("response.bin"))
             self.assertEqual((recorder.root / response["path"]).read_bytes(), partial)
+            self.assertEqual(sum(event["kind"] == "tool_call"
+                                 for event in receipt["events"]), 0)
+
+    async def test_cancelled_model_attempt_waits_for_worker_and_retains_cost_and_raw(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            image_path = root / "image.bin"
+            image_path.write_bytes(b"image-bytes")
+            model_root = root / "model-call"
+            worker_started = threading.Event()
+            allow_worker_finish = threading.Event()
+            response_bytes = b'{"type":"turn.completed"}\n'
+
+            def slow_model(call_root, *_args):
+                worker_started.set()
+                if not allow_worker_finish.wait(timeout=2):
+                    raise TimeoutError("synthetic worker release deadline")
+                events = call_root / "model" / "events.jsonl"
+                events.parent.mkdir(parents=True)
+                events.write_bytes(response_bytes)
+                return {"usage": {"input_tokens": 23, "output_tokens": 5}}
+
+            request, provider = build_model_provider_call(
+                model_call=slow_model, root=model_root, prompt="p",
+                image=image_path, contract="compiled", workspace=root)
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request):
+                    raise AssertionError("cancelled generation must not reach Relay")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            pending = asyncio.create_task(caller.invoke_generation_to_tool(
+                "generation-cancelled", request, provider,
+                "tool-after-cancel", "interface_guarded_compiled",
+                parse_agent_message))
+            try:
+                self.assertTrue(await asyncio.to_thread(
+                    worker_started.wait, 2), "model worker did not start")
+                pending.cancel()
+                await asyncio.sleep(0)
+                self.assertFalse(pending.done(),
+                                 "cancelled call must retain worker custody")
+            finally:
+                allow_worker_finish.set()
+
+            with self.assertRaises(asyncio.CancelledError):
+                await asyncio.wait_for(pending, timeout=2)
+            receipt = recorder.reconcile()
+            self.assertTrue(receipt["complete"])
+            attempt = next(event for event in receipt["events"]
+                           if event["kind"] == "model_attempt")
+            self.assertEqual(attempt["status"], "cancelled")
+            self.assertEqual(attempt["usage"], {
+                "status": "reported", "input_tokens": 23, "output_tokens": 5})
+            response = next(ref for ref in attempt["raw_refs"]
+                            if ref["path"].endswith("response.bin"))
+            self.assertEqual((recorder.root / response["path"]).read_bytes(),
+                             response_bytes)
             self.assertEqual(sum(event["kind"] == "tool_call"
                                  for event in receipt["events"]), 0)
 
