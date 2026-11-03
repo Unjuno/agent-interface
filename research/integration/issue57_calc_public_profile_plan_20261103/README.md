@@ -93,6 +93,25 @@ It does not establish real-provider timing/accounting, a live Calc recovery, a
 matched efficiency result, actual provider reconciliation, retry, or full
 lifecycle accounting. See the current matrix for exact status and rerun conditions.
 
+## Provider-ledger pending cancellation composition (2026-11-04)
+
+The separate generic compiled-path regression
+`test_partial_input_cancel_accounting.py::test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger`
+now binds one synthetic provider attempt to a public compiled MCP request while
+Fake X holds a key down. A test-controlled cleanup supervisor forces the public
+cancel response to `pending`; the caller then retrieves the same call ID and
+cancellation operation through `interface_results` until terminal. The Fake X
+cleanup record shows a key release, while the runtime receipt remains
+`cleanup_status=UNKNOWN`, `release_confirmed=false`, `task_success=null`, and
+replay denied. No second provider attempt, compiled call, input, or recovery is
+sent. The full raw provider ledger and Fake X evidence are retained in
+`../standard_mcp_task_ledger_57_v1/partial-input-cancel-pending-accounting-20261104-01/`.
+
+This is synthetic cancellation custody/accounting evidence, not successful
+runtime release, task effect, bounded recovery, live provider behavior, or live
+Calc/WSLc/MAP01 evidence. It narrows the composed pending-response gap; the
+positive release-and-fresh-attempt recovery gate remains open.
+
 ## Current-main OCR comparison and same-frame Save follow-up (2026-11-03)
 
 The retained r78–r83 block passed all functional gates in five of six arms;
