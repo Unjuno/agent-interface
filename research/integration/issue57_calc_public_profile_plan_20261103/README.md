@@ -31,12 +31,17 @@ This profile does not claim a general Calc controller or a successful transfer.
 
 ## Existing evidence and remaining composition matrix
 
+The requirement-to-test audit for current main is maintained in
+[COMPOSITION_MATRIX_20261103.md](COMPOSITION_MATRIX_20261103.md). The table
+below is a compact orientation; its older stale-wait wording is superseded by
+the provider-wait composition test described below.
+
 | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
 | --- | --- | --- |
-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | The direct MCP route rejects an already-stale review before worker admission after a simulated wait. Compose a real provider wait with that mutation; preserve child-side checks for the post-preflight race. |
-| #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
-| #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
-| #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
+| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed wrong/unknown/ambiguous OCR and provider-wait paths below | Fake App Server/Fake X cases reject wrong, unknown, ambiguous, and stale-after-wait inputs before unsafe continuation; remaining live and held-out coverage is listed in the matrix. |
+| #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; Fake App Server composition and provider-wait repair tests | Synthetic joined path now records timeout, cancelled, malformed, four completed generations, and the separate stale-to-fresh repair. Actual provider reconciliation, retries/skipped stages, and lifecycle totals remain open. |
+| #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | The Fake App Server case records a preflight-labeled timeout, but does not exercise schema compatibility conversion/gating before GUI authority. |
+| #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; `test_calc_provider_wait_stale_refusal_then_one_fresh_attempt_releases` | FakePlanner is held while a title/source cue changes; the old response is refused before input, then a separate fresh attempt proceeds. This is synthetic, not a real provider run. |
 | Scope, lease, cancellation, release, bounded progress, uncertain delivery/no replay | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; `runtime/cli_v1/test_mcp_owned_process.py`; retained R04-R06 and S27-S28 packets | Cancel at partial input and blocked OCR; keep the old call unknown, verify release separately, prohibit suffix replay, then repair only from a new observation/attempt. |
 | Independent task effect and collateral | G10's separately parsed saved XML; `runtime/results/calc-public-input-guard-live-01/FINAL_REPORT.md` | Public post-close verifier scores the exact task-owned artifact. Correct file, wrong value, extra cell, missing file and unreadable file each produce distinct typed result; graph success never substitutes. |
 | #12/#46 comparison integrity | Existing #57 frozen and audited Calc three-arm, varied-value, temporary-obstruction and lifecycle packets | Freeze task/model/settings, cold/warm/invalidation/repair arms, allowed attempts, order, endpoints, and stop rule. Keep past small-sample blocks separate. |
@@ -46,14 +51,18 @@ The registered-profile composition path now exists in
 It sends a synthetic App Server generation through the recorded public Relay to
 the registered Calc profile, verifies neutral close/release, scores parsed FODS
 cells independently, and keeps the runtime graph verdict separate. The test
-also records a timed-out schema-preflight attempt with partial raw bytes and
+also records a preflight-labeled timeout attempt with partial raw bytes and
 unavailable usage before the successful attempt; no MCP call is emitted for the
-timeout. It then sends wrong-result and unknown-result OCR runs through the same
-registered profile and public Relay. Both retain one released input transition,
-stop before Save, return `SAFE_YIELD`, and deny replay. The four-attempt joined
-summary remains complete while token totals stay unknown because the timeout
-usage is unavailable. The injected planner echoes supplied arguments and
-reports synthetic usage, so this proves a local composition contract only.
+timeout. This is accounting injection, not a schema-compatibility preflight
+test. A malformed terminal provider result and a cancelled generation are
+also retained as attempts with unavailable usage and raw response; neither is
+sent to the MCP parser or tool. The test then sends wrong-result, unknown-result, and
+ambiguous-OCR runs through the same registered profile and public Relay. Each
+retains a released input transition, stops before Save, returns `SAFE_YIELD`,
+and denies replay. The seven-attempt joined summary remains complete while token
+totals stay unknown because the timeout, malformed, and cancelled-attempt usage is
+unavailable. The injected planner echoes supplied arguments and reports
+synthetic usage, so this proves a local composition contract only.
 
 The composed wrong/unknown OCR cases now also include duplicate high-confidence
 cell output after one input transition. The parser marks that ambiguous OCR
@@ -61,17 +70,17 @@ unknown; the registered profile yields after the partial effect, records the
 input release, leaves Save undispatched, and denies replay. This is still a
 Fake X regression, not an application-level ambiguity result.
 
-The stale-review MCP check now rejects a sequence superseded during a controlled
-20 ms wait and changed window-title cue before scheduling the owner operation.
-This is a simulated wait, with no provider request; it does not establish the
-provider-to-MCP timing/join boundary. The raw owner and tool receipts are in
-[the r02 stale-review packet](../standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r02/README.md).
+The provider-wait MCP composition now holds a FakePlanner generation while the
+Calc source/title cue changes, rejects the old response before input, then
+completes one separately grounded fresh attempt. Fake X writes the fixture FODS
+only on Ctrl+S; the independent parent verifier parses it after close. The
+runtime graph result remains `SAFE_YIELD/effect_unavailable`, distinct from the
+parent task score. The test passes in normal and optimized Python.
 
-Remaining offline work is to compose an actual provider wait with this mutation
-and complete one bounded new-attempt repair case with all receipts joined.
-Existing direct-owner, Fake X and recorder tests cover parts separately; they do
-not establish those combined paths. No real provider reconciliation or live
-efficiency comparison exists.
+This closes the specific synthetic wait-to-stale-refusal-to-fresh-repair seam.
+It does not establish real-provider timing/accounting, a live Calc recovery, a
+matched efficiency result, actual provider reconciliation, retry, or full
+lifecycle accounting. See the current matrix for exact status and rerun conditions.
 
 ## Gate before any new live comparison
 
