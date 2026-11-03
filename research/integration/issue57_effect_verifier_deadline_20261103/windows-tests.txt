@@ -1,0 +1,15 @@
+python=Python 3.11.9
+normal: python -m unittest runtime.core_v1.test_compiled_gui runtime.guarded_x11_v1.test_compiled
+optimized: python -O -m unittest runtime.core_v1.test_compiled_gui runtime.guarded_x11_v1.test_compiled
+
+.................................................................................
+----------------------------------------------------------------------
+Ran 81 tests in 0.701s
+
+OK
+.................................................................................
+----------------------------------------------------------------------
+Ran 81 tests in 0.704s
+
+OK
+git diff --check: PASS

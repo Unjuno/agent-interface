@@ -1,0 +1,77 @@
+diff --git a/runtime/core_v1/compiled_gui.py b/runtime/core_v1/compiled_gui.py
+index 2a0ace4ed09..5b71baf7079 100644
+--- a/runtime/core_v1/compiled_gui.py
++++ b/runtime/core_v1/compiled_gui.py
+@@ -330,7 +330,10 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
+                       "status": status, "evidence_ref": observation["evidence_ref"],
+                       "verifier": "compiled_predicate_condition", **effect_timing})
+                 return finish("SAFE_YIELD", "effect_" + status)
+-            effect_timing["effect_verification_started_ns"] = clock()
++            verification_started_ns = clock()
++            if verification_started_ns >= deadline:
++                return finish("SAFE_YIELD", "budget_exhausted")
++            effect_timing["effect_verification_started_ns"] = verification_started_ns
+             try:
+                 effect = unchanged_verifier({
+                     "expected_effect": copy.deepcopy(expected),
+diff --git a/runtime/core_v1/test_compiled_gui.py b/runtime/core_v1/test_compiled_gui.py
+index f04ecf60824..c495d504720 100644
+--- a/runtime/core_v1/test_compiled_gui.py
++++ b/runtime/core_v1/test_compiled_gui.py
+@@ -30,12 +30,12 @@ class Driver:
+  def verify(self,p):
+   self.record('verify_effect',p);return {'status':'succeeded','evidence_ref':p['observation']['evidence_ref']}
+  def journal(self,p):self.record('journal',p)
+- def run(self,spec=None):
++ def run(self,spec=None,clock=None):
+   adapters={'observe':self.observe,'admit':self.admit,'execute':self.execute,
+    'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal}
+   unchanged=getattr(self,'verify_unchanged_effect',None)
+   if unchanged is not None:adapters['verify_unchanged_effect']=unchanged
+-  return run(spec or interface(),adapters,clock=lambda:self.now)
++  return run(spec or interface(),adapters,clock=clock or (lambda:self.now))
+ 
+ class CompiledBoundaryTests(unittest.TestCase):
+ 
+@@ -54,6 +54,41 @@ class CompiledBoundaryTests(unittest.TestCase):
+   self.assertEqual(len(d.calls['verify_effect']),2)
+   self.assertEqual(receipt['critical_events'][-1]['reason'],'method_complete')
+ 
++ def test_unchanged_effect_verifier_does_not_start_at_expired_deadline(self):
++  def unchanged_driver():
++   d=Driver();base=d.observe
++   def observe(request):
++    row=base(request)
++    if len(d.calls['observe'])==3:row['evidence_digest']='digest2'
++    return row
++   d.observe=observe;d.verify_unchanged_effect=d.verify
++   s=interface();s['method']['max_runtime_ms']=1
++   return d,s
++
++  calibration,calibration_spec=unchanged_driver()
++  calibration_reads=[0];reads_at_callback=[]
++  def calibration_clock():
++   calibration_reads[0]+=1
++   return 0
++  def calibrated_verifier(request):
++   reads_at_callback.append(calibration_reads[0])
++   return calibration.verify(request)
++  calibration.verify_unchanged_effect=calibrated_verifier
++  baseline=calibration.run(calibration_spec,clock=calibration_clock)
++  self.assertEqual(baseline['outcome'],'TASK_SUCCEEDED')
++  self.assertEqual(len(reads_at_callback),1)
++
++  d,spec=unchanged_driver();reads=[0]
++  deadline_read=reads_at_callback[0]
++  def deadline_clock():
++   reads[0]+=1
++   return 1_000_000 if reads[0]==deadline_read else 0
++  receipt=d.run(spec,clock=deadline_clock)
++  self.assertEqual((receipt['outcome'],receipt['reason']),('SAFE_YIELD','budget_exhausted'))
++  self.assertEqual(receipt['completed_transitions'],2)
++  self.assertEqual(receipt['pending_effect']['action'],'save')
++  self.assertEqual(len(d.calls['verify_effect']),1)
++
+  def test_receipt_times_bound_observation_execution_and_effect_confirmation(self):
+   now=[0];observations=[]
+   def clock():now[0]+=10;return now[0]
