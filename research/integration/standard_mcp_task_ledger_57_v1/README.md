@@ -51,6 +51,16 @@ changes generation after provider completion and confirms zero transitions,
 evidence. It is not a live provider run, production routing change, external
 usage reconciliation or completion of Issue #57's matched efficiency gate.
 
+### Missing terminal turn usage correction (2026-11-03)
+
+The adapter's defensive `await_turn() -> None` path previously discarded a
+matching nonterminal token-usage event already present in the retained protocol
+journal. It now preserves that evidence as partial usage, still refuses the
+public-MCP dispatch, and records one complete failed model-attempt event. The
+new regression asserts both the generation result and durable ledger row. This
+fix improves local all-attempt accounting only; it does not supply a terminal
+provider total or independently reconcile provider-side retries.
+
 ## Question and use
 
 Issue #57's current public `interface_guarded_compiled` caller lacks one joined
