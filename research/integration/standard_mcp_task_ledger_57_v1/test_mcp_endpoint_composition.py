@@ -1356,7 +1356,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                       "routed_profile_attempt_ids": set()}
             observed = {"artifact": None, "artifact_bytes": None,
                         "verification": None, "close": None,
-                        "negative_profile_results": {}, "public_caller": None}
+                        "negative_profile_results": {}, "public_caller": None,
+                        "compiled_result_candidates": []}
             test_case = self
 
             class ServerClient:
@@ -1506,6 +1507,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                             None, call_id, name, request_bytes, invoke_tool)
                         body = metadata(SimpleNamespace(content=[SimpleNamespace(
                             text=result["content"][0]["text"])]))
+                        if name == "interface_guarded_calc_compiled":
+                            observed["compiled_result_candidates"].append({
+                                "attempt_id": arguments.get("attempt_id"),
+                                "body": body})
                         if name == "interface_guarded_calc_prepare" and body.get(
                                 "status") == "prepared":
                             observed["artifact"] = Path(body["artifact_path"])
@@ -1617,6 +1622,17 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(negative["replay_allowed"], negative)
             self.assertTrue(observed["verification"]["task_success"])
             self.assertTrue(observed["close"]["release_confirmed"])
+            provider_primary = next(candidate["body"] for candidate in
+                observed["compiled_result_candidates"]
+                if candidate["attempt_id"] == "calc-offline-e2e-01")
+            self.assertEqual(provider_primary["status"], "invalid_request",
+                             provider_primary)
+            self.assertEqual(provider_primary["error"],
+                "CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE", provider_primary)
+            self.assertFalse(provider_primary["operation_invoked"], provider_primary)
+            self.assertFalse(provider_primary["input_dispatched"], provider_primary)
+            self.assertIsNone(provider_primary["task_success"], provider_primary)
+            self.assertFalse(provider_primary["replay_allowed"], provider_primary)
             artifact_bytes = observed["artifact_bytes"]
             self.assertIsInstance(artifact_bytes, bytes)
             root_xml = ET.fromstring(artifact_bytes)
@@ -1709,10 +1725,22 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                 "replay_allowed": result["replay_allowed"]}
                             for attempt_id, result in
                             observed["negative_profile_results"].items()},
-                        "task_effect": observed["verification"],
-                        "owner_close": observed["close"],
+                        "separate_direct_task_effect": observed["verification"],
+                        "separate_direct_owner_close": observed["close"],
                         "independent_stdlib_fods_values": scored_values,
-                        "independent_task_success": scored_values == ["731", "864"],
+                        "independent_fods_value_match": scored_values == expected_values,
+                        "verified_task_effect_success":
+                            observed["verification"]["task_effect"]["task_success"],
+                        "provider_compiled_call_candidates": [
+                            {"attempt_id": candidate["attempt_id"],
+                             "status": candidate["body"].get("status"),
+                             "task_success": candidate["body"].get("task_success"),
+                             "error": candidate["body"].get("error"),
+                             "detail": candidate["body"].get("detail"),
+                             "handoff_reason": candidate["body"].get(
+                                 "method_receipt", {}).get("reason"),
+                             "keys": sorted(candidate["body"])}
+                            for candidate in observed["compiled_result_candidates"]],
                         "limits": ["FakeX_only", "no_live_provider", "no_live_Calc",
                                    "no_efficiency_comparison"]},
                         sort_keys=True, indent=2, allow_nan=False) + "\n",

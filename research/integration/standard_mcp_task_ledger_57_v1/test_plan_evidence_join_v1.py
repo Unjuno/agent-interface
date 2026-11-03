@@ -1,5 +1,4 @@
 import unittest
-
 from ledger import LedgerValidationError
 from plan_evidence_join_v1 import canonical_plan_sha256, validate_plan_evidence_join
 
@@ -73,6 +72,12 @@ class PlanEvidenceJoinTests(unittest.TestCase):
         with self.assertRaises(LedgerValidationError):
             validate_plan_evidence_join(value)
 
+    def test_rejects_unknown_final_task_success(self):
+        value = fixture()
+        value["rows"][0]["execution"]["task_success"] = None
+        with self.assertRaises(LedgerValidationError):
+            validate_plan_evidence_join(value)
+
     def test_rejects_cross_task_warm_source(self):
         value = fixture()
         value["rows"][3]["source_task_id"] = "task-1"
@@ -84,7 +89,29 @@ class PlanEvidenceJoinTests(unittest.TestCase):
         value["rows"][1]["prepare_receipt"]["owner_id"] = "owner-task-1"
         with self.assertRaises(LedgerValidationError):
             validate_plan_evidence_join(value)
+        value = fixture()
+        value["rows"][1]["prepare_receipt"]["artifact_id"] = "artifact-task-1"
+        with self.assertRaises(LedgerValidationError):
+            validate_plan_evidence_join(value)
 
+    def test_rejects_duplicate_public_prepare_attempt(self):
+        value = fixture()
+        value["rows"][1]["prepare_receipt"]["attempt_id"] = "attempt-1"
+        with self.assertRaises(LedgerValidationError):
+            validate_plan_evidence_join(value)
+
+    def test_accepts_partial_cold_trace_without_claiming_full_horizon(self):
+        value = fixture()
+        value["rows"] = value["rows"][:1]
+        result = validate_plan_evidence_join(value)
+        self.assertEqual(result["generated_plan_count"], 1)
+        self.assertEqual(result["task_count"], 1)
+
+    def test_rejects_post_repair_warm_without_repair(self):
+        value = fixture()
+        value["rows"] = [value["rows"][0], value["rows"][3]]
+        with self.assertRaises(LedgerValidationError):
+            validate_plan_evidence_join(value)
 
 if __name__ == "__main__":
     unittest.main()

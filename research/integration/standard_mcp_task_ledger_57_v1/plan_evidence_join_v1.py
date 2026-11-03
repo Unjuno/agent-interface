@@ -57,18 +57,34 @@ def validate_plan_evidence_join(value):
     if value["schema"] != "agent-interface/calc-plan-evidence-join-v1":
         _fail("unsupported plan evidence join schema")
     rows = value["rows"]
-    if type(rows) is not list or len(rows) < 4:
-        _fail("join requires cold, warm, repair and post-repair warm rows")
+    if type(rows) is not list or len(rows) < 1:
+        _fail("join requires at least one observed task row")
     by_task = _unique_index(rows, "task_id", "task rows")
     if len(by_task) != len(rows):
         _fail("task IDs must be unique")
 
-    expected_modes = ["cold", "warm", "repair", "post_repair_warm"]
-    if [row.get("mode") for row in rows] != expected_modes:
-        _fail("rows must contain ordered cold, warm, repair and post-repair warm")
-    attempt_ids, call_ids, owner_ids, verifier_ids = (set(), set(), set(), set())
+    modes = [row.get("mode") for row in rows]
+    if modes[0] != "cold" or any(mode not in {
+            "cold", "warm", "repair", "post_repair_warm"} for mode in modes):
+        _fail("rows must begin with cold and use known lifecycle modes")
+    if modes.count("cold") != 1 or modes.count("repair") > 1:
+        _fail("horizon permits one cold generation and at most one repair")
+    repair_positions = [index for index, mode in enumerate(modes) if mode == "repair"]
+    if repair_positions and repair_positions[0] < 2:
+        _fail("repair requires at least one warm task after cold")
+    if any(mode == "post_repair_warm" for mode in modes) and not repair_positions:
+        _fail("post-repair reuse requires a repair task")
+    if repair_positions:
+        repair_at = repair_positions[0]
+        if any(mode != "warm" for mode in modes[1:repair_at]):
+            _fail("pre-repair tasks must be warm reuse")
+        if any(mode != "post_repair_warm" for mode in modes[repair_at + 1:]):
+            _fail("post-repair tasks must reuse the repaired plan")
+    elif any(mode != "warm" for mode in modes[1:]):
+        _fail("tasks after cold must be warm unless one repair occurs")
+    attempt_ids, prepare_attempt_ids, call_ids = set(), set(), set()
+    owner_ids, artifact_ids, verifier_ids = set(), set(), set()
     digest_by_task = {}
-    generation_tasks = {}
     for index, row in enumerate(rows):
         if type(row) is not dict or set(row) != {
                 "task_id", "mode", "source_task_id", "plan_sha256",
@@ -95,8 +111,6 @@ def validate_plan_evidence_join(value):
             digest = canonical_plan_sha256(raw["plan"])
             if row["plan_sha256"] != digest:
                 _fail("plan digest does not match retained provider plan")
-            generation_tasks[row["task_id"]] = {"attempt_id": attempt,
-                                                 "digest": digest}
         else:
             if raw != {"provider_generation_count": 0}:
                 _fail("warm reuse must explicitly show no provider generation")
@@ -120,8 +134,14 @@ def validate_plan_evidence_join(value):
         call_ids.add(prepared["call_id"])
         if type(prepared["attempt_id"]) is not str or not prepared["attempt_id"]:
             _fail("public prepare attempt ID is required")
-        if type(prepared["artifact_id"]) is not str or not prepared["artifact_id"]:
-            _fail("parent artifact identity is required")
+        prepare_attempt = prepared["attempt_id"]
+        if prepare_attempt in prepare_attempt_ids:
+            _fail("every public prepare call requires a fresh attempt ID")
+        prepare_attempt_ids.add(prepare_attempt)
+        artifact = prepared["artifact_id"]
+        if type(artifact) is not str or not artifact or artifact in artifact_ids:
+            _fail("every task requires a fresh parent artifact identity")
+        artifact_ids.add(artifact)
         owner = prepared["owner_id"]
         if type(owner) is not str or not owner or owner in owner_ids:
             _fail("every task requires a fresh owner identity")
@@ -160,12 +180,16 @@ def validate_plan_evidence_join(value):
             if prepared["attempt_id"] == raw.get("attempt_id"):
                 _fail("warm reuse cannot reuse the source generation attempt")
 
-    if rows[1]["source_task_id"] != rows[0]["task_id"]:
-        _fail("pre-invalidation warm task must cite cold task")
-    if rows[3]["source_task_id"] != rows[2]["task_id"]:
-        _fail("post-repair warm task must cite repair task")
-    if rows[2]["task_id"] == rows[0]["task_id"]:
-        _fail("repair task needs fresh task identity")
-    return {"task_count": len(rows), "generated_plan_count": 2,
+    for index, mode in enumerate(modes[1:], start=1):
+        expected_source = (rows[0]["task_id"] if mode == "warm" else
+                           rows[repair_positions[0]]["task_id"]
+                           if mode == "post_repair_warm" else None)
+        if mode == "repair" and rows[index]["task_id"] == rows[0]["task_id"]:
+            _fail("repair task needs fresh task identity")
+        if mode != "repair" and rows[index]["source_task_id"] != expected_source:
+            _fail("reuse row must cite its source generation task")
+        if mode == "repair" and rows[index]["source_task_id"] is not None:
+            _fail("repair generation must not claim a reuse source")
+    return {"task_count": len(rows), "generated_plan_count": len(attempt_ids),
             "provider_generation_attempt_ids": sorted(attempt_ids),
             "validated_task_ids": list(by_task)}
