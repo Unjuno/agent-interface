@@ -40,7 +40,7 @@ the provider-wait composition test described below.
 | --- | --- | --- |
 | #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed wrong/unknown/ambiguous OCR and provider-wait paths below | Fake App Server/Fake X cases reject wrong, unknown, ambiguous, and stale-after-wait inputs before unsafe continuation; remaining live and held-out coverage is listed in the matrix. |
 | #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; Fake App Server composition and provider-wait repair tests | Synthetic joined path now records timeout, cancelled, malformed, four completed generations, and the separate stale-to-fresh repair. Actual provider reconciliation, retries/skipped stages, and lifecycle totals remain open. |
-| #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | The Fake App Server case records a preflight-labeled timeout, but does not exercise schema compatibility conversion/gating before GUI authority. |
+| #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts; `test_mcp_endpoint_composition.py::test_non_object_model_output_is_retained_without_gui_authority` | The new composed parser gate rejects a top-level array before Relay/MCP dispatch while preserving completed status, token usage, and raw bytes. It does not yet exercise object-shaped incompatibility with the registered Calc profile or the schema compatibility conversion. |
 | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; `test_calc_provider_wait_stale_refusal_then_one_fresh_attempt_releases` | FakePlanner is held while a title/source cue changes; the old response is refused before input, then a separate fresh attempt proceeds. This is synthetic, not a real provider run. |
 | Scope, lease, cancellation, release, bounded progress, uncertain delivery/no replay | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; `runtime/cli_v1/test_mcp_owned_process.py`; retained R04-R06 and S27-S28 packets | Cancel at partial input and blocked OCR; keep the old call unknown, verify release separately, prohibit suffix replay, then repair only from a new observation/attempt. |
 | Independent task effect and collateral | G10's separately parsed saved XML; `runtime/results/calc-public-input-guard-live-01/FINAL_REPORT.md` | Public post-close verifier scores the exact task-owned artifact. Correct file, wrong value, extra cell, missing file and unreadable file each produce distinct typed result; graph success never substitutes. |
@@ -54,7 +54,12 @@ cells independently, and keeps the runtime graph verdict separate. The test
 also records a preflight-labeled timeout attempt with partial raw bytes and
 unavailable usage before the successful attempt; no MCP call is emitted for the
 timeout. This is accounting injection, not a schema-compatibility preflight
-test. A malformed terminal provider result and a cancelled generation are
+test. A separate parser-boundary case sends a synthetic completed response
+whose agent message is a top-level array. The attempt's reported token usage and
+exact raw bytes remain in the provider ledger, while parsing rejects the
+non-object before Relay/MCP dispatch. This does not prove conversion or
+validation of an object-shaped payload against the registered profile schema.
+A malformed terminal provider result and a cancelled generation are
 also retained as attempts with unavailable usage and raw response; neither is
 sent to the MCP parser or tool. The test then sends wrong-result, unknown-result, and
 ambiguous-OCR runs through the same registered profile and public Relay. Each

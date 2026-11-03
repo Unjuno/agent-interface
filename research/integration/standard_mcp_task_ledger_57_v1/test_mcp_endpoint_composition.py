@@ -656,6 +656,56 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(summary["model_attempt_count"], 1)
             self.assertEqual(summary["tool_call_count"], 0)
 
+    async def test_non_object_model_output_is_retained_without_gui_authority(self):
+        """Reject incompatible structured output before public MCP dispatch."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            response_bytes = (
+                b'{"type":"item.completed","item":'
+                b'{"type":"agent_message","text":"[]"}}\n'
+            )
+            image_path = root / "image.bin"
+            image_path.write_bytes(b"synthetic-observation")
+
+            request = b'{"prompt":"return one object"}'
+
+            async def provider():
+                return {"status": "completed",
+                        "usage": {"status": "reported",
+                                  "input_tokens": 17, "output_tokens": 3},
+                        "response_bytes": response_bytes}
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request):
+                    raise AssertionError(
+                        "schema-incompatible output must not reach public MCP")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            with self.assertRaisesRegex(ValueError, "JSON object"):
+                await caller.invoke_generation_to_tool(
+                    "generation-incompatible-schema", request, provider,
+                    "tool-after-incompatible-schema",
+                    "interface_guarded_compiled",
+                    lambda generation: parse_agent_message(
+                        generation["response_bytes"]))
+
+            receipt = recorder.reconcile()
+            attempt = next(event for event in receipt["events"]
+                           if event["kind"] == "model_attempt")
+            self.assertTrue(receipt["complete"])
+            self.assertEqual(attempt["status"], "completed")
+            self.assertEqual(attempt["usage"]["input_tokens"], 17)
+            self.assertEqual(attempt["usage"]["output_tokens"], 3)
+            response_ref = next(ref for ref in attempt["raw_refs"]
+                                if ref["path"].endswith("response.bin"))
+            self.assertEqual((recorder.root / response_ref["path"]).read_bytes(),
+                             response_bytes)
+            self.assertEqual(sum(event["kind"] == "tool_call"
+                                 for event in receipt["events"]), 0)
+
     async def test_fake_provider_image_and_stale_generation_roundtrip_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
