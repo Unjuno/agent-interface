@@ -1141,10 +1141,12 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 encoding="utf-8")
             counts = {"tool": 0, "successful_generation": 0,
                       "provider_attempts": 0, "preflight_timeout_recorded": False,
+                      "malformed_generation_recorded": False,
+                      "stopped_generation_recorded": False,
                       "routed_profile_attempt_ids": set()}
             observed = {"artifact": None, "artifact_bytes": None,
                         "verification": None, "close": None,
-                        "negative_profile_results": {}}
+                        "negative_profile_results": {}, "public_caller": None}
             test_case = self
 
             class ServerClient:
@@ -1161,6 +1163,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 caller = RecordedPublicMcpCaller(
                     Relay(ServerClient(server), tools={
                         "interface_guarded_calc_compiled"}), recorder)
+                observed["public_caller"] = caller
 
                 class RecordingServer:
                     def __getattr__(self, name):
@@ -1322,8 +1325,66 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     "test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr")
                 await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr()
 
+            # A malformed terminal provider result is an attempted generation,
+            # but it must not be parsed into or dispatched as an MCP tool call.
+            counts["provider_attempts"] += 1
+            malformed_attempt_id = (
+                f"calc-provider-attempt-{counts['provider_attempts']:02d}")
+            malformed_raw = b'{"generation":"truncated'
+
+            async def malformed_provider_result():
+                return {
+                    "status": "malformed",
+                    "usage": {"status": "unavailable",
+                              "input_tokens": None, "output_tokens": None},
+                    "response_bytes": malformed_raw,
+                    "error_type": "structured_response_malformed",
+                }
+
+            def malformed_must_not_be_parsed(_generation):
+                raise AssertionError("malformed generation reached MCP parser")
+
+            malformed_tool_calls_before = counts["tool"]
+            malformed = await observed["public_caller"].invoke_generation_to_tool(
+                malformed_attempt_id,
+                b'{"task":"calc-save","phase":"malformed-generation"}',
+                malformed_provider_result, "calc-provider-malformed-tool-06",
+                "interface_guarded_calc_compiled",
+                malformed_must_not_be_parsed)
+            counts["malformed_generation_recorded"] = True
+            self.assertFalse(malformed["tool_call_submitted"], malformed)
+            self.assertEqual(malformed["generation"]["status"], "malformed",
+                             malformed)
+            self.assertEqual(counts["tool"], malformed_tool_calls_before)
+
+            counts["provider_attempts"] += 1
+            stopped_attempt_id = (
+                f"calc-provider-attempt-{counts['provider_attempts']:02d}")
+
+            async def stopped_provider_result():
+                return {
+                    "status": "cancelled",
+                    "usage": {"status": "unavailable",
+                              "input_tokens": None, "output_tokens": None},
+                    "response_bytes": b'{"turn_status":"cancelled"}',
+                }
+
+            stopped_tool_calls_before = counts["tool"]
+            stopped = await observed["public_caller"].invoke_generation_to_tool(
+                stopped_attempt_id,
+                b'{"task":"calc-save","phase":"cancelled-generation"}',
+                stopped_provider_result, "calc-provider-cancelled-tool-07",
+                "interface_guarded_calc_compiled",
+                malformed_must_not_be_parsed)
+            counts["stopped_generation_recorded"] = True
+            self.assertFalse(stopped["tool_call_submitted"], stopped)
+            self.assertEqual(stopped["generation"]["status"], "cancelled", stopped)
+            self.assertEqual(counts["tool"], stopped_tool_calls_before)
+
             self.assertEqual(counts["successful_generation"], 4)
-            self.assertEqual(counts["provider_attempts"], 5)
+            self.assertEqual(counts["provider_attempts"], 7)
+            self.assertTrue(counts["malformed_generation_recorded"])
+            self.assertTrue(counts["stopped_generation_recorded"])
             self.assertGreater(counts["tool"], 1)
             self.assertEqual(set(observed["negative_profile_results"]), {
                 "calc-offline-wrong-after-input",
@@ -1360,8 +1421,20 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 artifact_bytes)
             receipt = recorder.reconcile()
             summary = summarize(receipt["events"])
+            malformed_event = next(event for event in receipt["events"]
+                if event["kind"] == "model_attempt" and
+                event["attempt_id"] == malformed_attempt_id)
+            stopped_event = next(event for event in receipt["events"]
+                if event["kind"] == "model_attempt" and
+                event["attempt_id"] == stopped_attempt_id)
             self.assertTrue(receipt["complete"])
-            self.assertEqual(summary["model_attempt_count"], 5)
+            self.assertEqual(summary["model_attempt_count"], 7)
+            self.assertEqual(malformed_event["status"], "malformed")
+            self.assertEqual(malformed_event["usage"]["status"], "unavailable")
+            self.assertEqual(malformed_event["response_status"], "raw_retained")
+            self.assertEqual(stopped_event["status"], "cancelled")
+            self.assertEqual(stopped_event["usage"]["status"], "unavailable")
+            self.assertEqual(stopped_event["response_status"], "raw_retained")
             self.assertEqual(summary["tool_call_count"], counts["tool"])
             self.assertEqual(summary["usage_status"], "incomplete")
             self.assertIsNone(summary["input_tokens"])
@@ -1389,6 +1462,22 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         "provider": "synthetic_fake_planner_echoes_supplied_arguments",
                         "model_generations": counts["successful_generation"],
                         "provider_attempts": counts["provider_attempts"],
+                        "malformed_generation_recorded":
+                            counts["malformed_generation_recorded"],
+                        "stopped_generation_recorded":
+                            counts["stopped_generation_recorded"],
+                        "malformed_model_attempt": {
+                            "attempt_id": malformed_event["attempt_id"],
+                            "status": malformed_event["status"],
+                            "usage_status": malformed_event["usage"]["status"],
+                            "response_status": malformed_event["response_status"],
+                        },
+                        "stopped_model_attempt": {
+                            "attempt_id": stopped_event["attempt_id"],
+                            "status": stopped_event["status"],
+                            "usage_status": stopped_event["usage"]["status"],
+                            "response_status": stopped_event["response_status"],
+                        },
                         "public_mcp_tool_calls": counts["tool"],
                         "model_attempts": [
                             {"attempt_id": row["attempt_id"],
