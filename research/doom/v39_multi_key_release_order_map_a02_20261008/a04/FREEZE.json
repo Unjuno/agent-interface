@@ -1,0 +1,24 @@
+{
+  "schema": "issue59-pr7692-release-order-map-a04-freeze-v1",
+  "classification": "offline composed construction; exact capture/finalizer/scorer adapter; zero-duration tail",
+  "base_main_sha_at_evidence_delivery": "bfcc14e08fbfe5f2f04cd0237d13559e5d62538b",
+  "source_pr": 7692,
+  "source_pr_head": "7ec4e3ef405919bf5f1bfd9eeddbe630f3a5b32e",
+  "source_sha256": {
+    "session_map01_v19.py": "2c5304bd246118f8124d5f7b50b81f869fb35ea3ee76887f4682748fdf95618a",
+    "map01_scorer_stdio_adapter_v3.py": "48518dd27d8271c2b9be271b0e48bd2827240a53883d07713563faa6e7e731cc",
+    "map01_scorer_stdio_adapter_v1.py": "ab0558555725644c940639bbb9577d5c37eda009edeb3f298149825981f2a481",
+    "main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "INPUT_EVENTS.jsonl": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "decision": "PASS_COMPOSED_BOUNDARY_CANDIDATE",
+  "outcome": {
+    "exact_single_slot_valid_boundaries": 15,
+    "candidate_nested_map_valid_boundaries": 41,
+    "total_schedules_per_capture": 41,
+    "candidate_sample_count_per_schedule": 0,
+    "held_after_empty_in_all_schedules": true
+  },
+  "limits": ["no V19 main/session", "synthetic schedule identities and timestamps", "zero-duration scorer tail", "no controller, X server, physical input, GUI, model, game, or live allocation", "source PR remains unmerged"]
+}
