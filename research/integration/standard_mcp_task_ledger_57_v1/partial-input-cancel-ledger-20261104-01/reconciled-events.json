@@ -1,0 +1,648 @@
+{
+  "complete": true,
+  "events": [
+    {
+      "call_id": "calc-cancel-control-001",
+      "ended_ns": 128400375000000,
+      "kind": "tool_call",
+      "method": "interface_guarded_observe",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-12fc76c9ca67faa038cce0e75abdf3a0ca91f901b2731f0e7183fd37ae3ce500.tool-request.bin",
+          "sha256": "e69f085c1cae149c05700abcea047780e53dc421a46fef8bd174795f08dd4baf"
+        },
+        {
+          "path": "raw/tool-12fc76c9ca67faa038cce0e75abdf3a0ca91f901b2731f0e7183fd37ae3ce500.tool-response.bin",
+          "sha256": "164b05fbfe6d6747a3784d171ed132ee454a6e2d4e11679d2a221f4284a21e0b"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"operation\": \"guarded_observe\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"observed\", \"input_dispatched\": false, \"source\": {\"sequence\": 1, \"observation_id\": \"7a918012a0ea4d34b3e532258d5695d6\", \"binding_revision\": 0, \"capture_ns\": 128400296000000, \"image_source\": \"exact_capture_rgb_handoff\", \"pointer_binding\": {\"focus\": 20, \"surface\": 20, \"geometry\": [0, 0, 1280, 800], \"process_generation\": \"ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe\", \"window_generation\": \"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"}, \"native\": {\"bytes\": 4096000, \"sha256\": \"2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b\", \"width\": 1280, \"height\": 800, \"target\": \"app\", \"native_window_id\": 20, \"frame\": \"screen_physical_px\", \"region\": [0, 0, 1280, 800], \"capture_started_ns\": 128400296000000, \"capture_ended_ns\": 128400296000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\95c810a6300e4eccae3ccba2841af430\\\\images\\\\308484c73cc14d78a137f7291457ec1e.png\", \"sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"bytes\": 5109, \"width\": 1280, \"height\": 800, \"source_raw_sha256\": \"2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b\", \"timing_ns\": {\"started\": 128400312000000, \"converted\": 128400312000000, \"encoded\": 128400328000000, \"written\": 128400328000000, \"hashed\": 128400343000000}}}, \"timing_ns\": {\"started\": 128400296000000, \"public_returned\": 128400343000000, \"binding_checked\": 128400343000000, \"artifact_verified\": 128400343000000, \"decoded\": 128400343000000}}, \"observation_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"status\": \"returned\", \"observation_id\": \"7a918012a0ea4d34b3e532258d5695d6\", \"observation\": {\"bytes\": 4096000, \"sha256\": \"2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b\", \"width\": 1280, \"height\": 800, \"target\": \"app\", \"native_window_id\": 20, \"frame\": \"screen_physical_px\", \"region\": [0, 0, 1280, 800], \"capture_started_ns\": 128400296000000, \"capture_ended_ns\": 128400296000000, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\95c810a6300e4eccae3ccba2841af430\\\\images\\\\308484c73cc14d78a137f7291457ec1e.png\", \"sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"bytes\": 5109, \"width\": 1280, \"height\": 800, \"source_raw_sha256\": \"2211cd9144d3a7b6a0363283506d28f4da83525802ac2fadf28f4fbc041c772b\", \"timing_ns\": {\"started\": 128400312000000, \"converted\": 128400312000000, \"encoded\": 128400328000000, \"written\": 128400328000000, \"hashed\": 128400343000000}}}, \"side_effect_authority\": false, \"input_dispatched\": false}, \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128400375000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"image_status\": \"image\", \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\95c810a6300e4eccae3ccba2841af430\", \"call_id\": \"95c810a6300e4eccae3ccba2841af430\"}",
+            "type": "text"
+          },
+          {
+            "annotations": null,
+            "data": "iVBORw0KGgoAAAANSUhEUgAABQAAAAMgCAIAAADz+lisAAATvElEQVR4nO3ZMW7YSBBFQUsH0f2vJV6EG3sBY0msyenRqwo6YsAJH/7HeZ6/AAAA4Kf7XP0DAAAA8AYBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACT8FsDHcfyVCwAAANP8FsBfX1/Hcfz/u+oxAAAA8Cf/XoD/SgOvegwAAAD8iQUYAACABAswAAAACRZgAAAAEizAAAAAJFiAAQAASLAAAwAAkGABBgAAIMECDAAAQIIFGAAAgAQLMAAAAAkWYAAAABIswAAAACRYgAEAAEj4OM9z9T8AAADA4z7/+xMAAADYnwAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJrwbwcRzD7/smvHrCBQAAeNz5lu/v7y3umya8d8IFAAB4wXsBfK6urJklNuHVEy4AAMDTLMArS2zCeydcAACAF1iAF5fYhFdPuAAAAE+zAK8ssQnvnXABAABeYAFeXGITXj3hAgAAPM0CvLLEJrx3wgUAAHiBBXhxiU149YQLAADwNAvwyhKb8N4JFwAA4AUW4MUlNuHVEy4AAMDTLMArS2zCeydcAACAF1iAF5fYhFdPuAAAAE+zAK8ssQnvnXABAABeYAFeXGITXj3hAgAAPM0CvLLEJrx3wgUAAHiBBXhxiU149YQLAADwtI/zPH8BAADAT/e5+gcAAADgDQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIC56jiORy8AAMCjPs7zXP0PbOM4jq+vryfu6pcBAAA/nwWYq56rXwswAADwAgswN1iAAQCAfVmAucoCDAAAbM0CzA0WYAAAYF8WYK6yAAMAAFuzAHODBRgAANiXBZirLMAAAMDWLMDcYAEGAAD2ZQHmKgswAACwNQswN1iAAQCAfVmAucoCDAAAbM0CzA0WYAAAYF8WYK6yAAMAAFuzAHODBRgAANiXBZirLMAAAMDWLMDcYAEGAAD2ZQHmKgswAACwNQswN1iAAQCAfVmAucoCDAAAbM0CzA0WYAAAYF8WYK6yAAMAAFuzAHODBRgAANiXBZirLMAAAMDWLMDcYAEGAAD2ZQHmKgswAACwNQswN1iAAQCAfVmAucoCDAAAbM0CzA0WYAAAYF8WYK6yAAMAAFuzAAMAAJBgAQYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJAggAEAAEgQwAAAACQIYAAAABIEMAAAAAkCGAAAgAQBDAAAQIIABgAAIEEAAwAAkCCAAQAASBDAAAAAJAhgAAAAEgQwAAAACQIYAACABAEMAABAggAGAAAgQQADAACQIIABAABIEMAAAAAkCGAAAAASBDAAAAAJAhgAAIAEAQwAAECCAAYAACBBAAMAAJDwD5mbWvvf4UNQAAAAAElFTkSuQmCC",
+            "meta": null,
+            "mimeType": "image/png",
+            "type": "image"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 1,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128398093000000
+    },
+    {
+      "call_id": "calc-cancel-control-002",
+      "ended_ns": 128400625000000,
+      "kind": "tool_call",
+      "method": "interface_guarded_mint",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-e26f53bd6015eaa99dca19f3778dc4e6bd782326a5ebf45b289f97d9f6fc922d.tool-request.bin",
+          "sha256": "bcff1da7e6b4291a85599d0135e2eaa9012a4727475e0d66b0cccd866b106379"
+        },
+        {
+          "path": "raw/tool-e26f53bd6015eaa99dca19f3778dc4e6bd782326a5ebf45b289f97d9f6fc922d.tool-response.bin",
+          "sha256": "aa3b734fe59beeba17741fa9e42113f751c51d394447d04832df223ee0e83a6f"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"operation\": \"guarded_mint\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"minted\", \"alias\": \"calc_entry\", \"offset\": [12, 8], \"lifetime\": {\"clock\": \"time.monotonic_ns\", \"minted_ns\": 128400578000000, \"expires_ns\": 128700578000000, \"capture_freshness_ms\": 1500, \"authority_granted\": false, \"scope\": \"Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.\"}, \"source_sequence\": 1, \"input_dispatched\": false, \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128400609000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\dec34f2f58ce49f283b13401a279fef6\", \"call_id\": \"dec34f2f58ce49f283b13401a279fef6\"}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 2,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128400453000000
+    },
+    {
+      "call_id": "calc-cancel-control-003",
+      "ended_ns": 128400859000000,
+      "kind": "tool_call",
+      "method": "interface_guarded_mint",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-f24751f7bd275eee22b63c18469be6d7bdbfcaa35fadb543651be3436f33fb0e.tool-request.bin",
+          "sha256": "8806794ebf59305d93927f05888d081869023224fac77e4b283d504e3321702d"
+        },
+        {
+          "path": "raw/tool-f24751f7bd275eee22b63c18469be6d7bdbfcaa35fadb543651be3436f33fb0e.tool-response.bin",
+          "sha256": "fc81e50e85a061916840e96c6bff0b87d0dd151eb1b44b9f26039fa0e91b7d3d"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"operation\": \"guarded_mint\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"minted\", \"alias\": \"calc_save\", \"offset\": [8, 6], \"lifetime\": {\"clock\": \"time.monotonic_ns\", \"minted_ns\": 128400812000000, \"expires_ns\": 128700812000000, \"capture_freshness_ms\": 1500, \"authority_granted\": false, \"scope\": \"Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.\"}, \"source_sequence\": 1, \"input_dispatched\": false, \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128400859000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\625edd6128a14d358953d23f985dfe89\", \"call_id\": \"625edd6128a14d358953d23f985dfe89\"}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 3,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128400687000000
+    },
+    {
+      "call_id": "calc-cancel-control-004",
+      "ended_ns": 128401140000000,
+      "kind": "tool_call",
+      "method": "interface_guarded_calc_prepare",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-3119b204b409bd94e6e351cd26f7a4c1a74942b46b895f5ab20fb0d72528d847.tool-request.bin",
+          "sha256": "90c6b98acb5a112e1a0baf73912a4405b08dd94c7f071093b2dda829107d6efd"
+        },
+        {
+          "path": "raw/tool-3119b204b409bd94e6e351cd26f7a4c1a74942b46b895f5ab20fb0d72528d847.tool-response.bin",
+          "sha256": "54fe05c18ae5c4c4fcc39f5a8cc2f8a59e4779500e9dca35367ab3cda410bfa5"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"prepared\", \"call_id\": \"a87bf38d945743adae9c895810b169e4\", \"attempt_id\": \"calc-cancel-after-transition\", \"task_values\": {\"A1\": \"731\", \"A2\": \"864\"}, \"task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"expires_in_ms\": 300000, \"artifact_path\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\a87bf38d945743adae9c895810b169e4\\\\task-artifact.fods\", \"artifact_name\": \"task-artifact.fods\", \"target_launch_status\": \"not_attempted\", \"parent_process_custody\": \"not_established\", \"operation_invoked\": false, \"input_dispatched\": false, \"task_success\": null, \"replay_allowed\": false}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 4,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128400937000000
+    },
+    {
+      "attempt_id": "calc-cancel-after-transition",
+      "ended_ns": 128401312000000,
+      "kind": "model_attempt",
+      "raw_refs": [
+        {
+          "path": "raw/calc-cancel-after-transition.request.bin",
+          "sha256": "3ec1bac3e9faf399228cc4048e99e44d41201c6bae294a35129e881d9a4618a2"
+        },
+        {
+          "path": "raw/calc-cancel-after-transition.response.bin",
+          "sha256": "cb284ac04cbd9eee44723057b4055776266eb23d2bf7f7d889e8acad04235eab"
+        }
+      ],
+      "response_status": "raw_retained",
+      "seq": 5,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128401203000000,
+      "status": "completed",
+      "usage": {
+        "cache_write_input_tokens": 1,
+        "cached_input_tokens": 8,
+        "input_tokens": 61,
+        "output_tokens": 13,
+        "reasoning_output_tokens": 2,
+        "status": "reported"
+      }
+    },
+    {
+      "call_id": "calc-provider-tool-call-01",
+      "ended_ns": 128401453000000,
+      "kind": "tool_call",
+      "method": "interface_guarded_calc_compiled",
+      "model_attempt_id": "calc-cancel-after-transition",
+      "raw_refs": [
+        {
+          "path": "raw/tool-023158e9a2de222a36c9b4084bbba2e5a32a3813afb1d6a76516f289f9d4df41.tool-request.bin",
+          "sha256": "495d5348c30111ed7a32dfe91030b4b16a4063bc9d4ab2910c683a9321d38044"
+        },
+        {
+          "path": "raw/tool-023158e9a2de222a36c9b4084bbba2e5a32a3813afb1d6a76516f289f9d4df41.tool-response.bin",
+          "sha256": "5e79d89910e555c2bfdf5f3521ca4854331e2143439d1b3116784d41842f6e9a"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"pending\", \"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"running\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": false, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 128401437000000,
+        "sdk_return_ns": 128401453000000,
+        "status": "returned",
+        "tool": "interface_guarded_calc_compiled"
+      },
+      "seq": 6,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128401359000000
+    },
+    {
+      "call_id": "calc-cancel-control-005",
+      "ended_ns": 128403015000000,
+      "kind": "tool_call",
+      "method": "interface_guarded_cancel",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-54d5685fba8a9d60fc71f66cec818a1e22502f446654fd6fd33a3f9700ec2c2b.tool-request.bin",
+          "sha256": "c119faf0c48d3d647c05be6b8ac211450ab0867857a08c1f3e8d11cc84fd935e"
+        },
+        {
+          "path": "raw/tool-54d5685fba8a9d60fc71f66cec818a1e22502f446654fd6fd33a3f9700ec2c2b.tool-response.bin",
+          "sha256": "2c7c0e9f10fe18a3705ec16018149ee3e504a77eb9747637c20c9c33c1decaac"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"pending\", \"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}, \"result_available\": true, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"The response wait ended; this cancellation operation retains custody. Retrieve it through interface_results. Pending permits no replay.\"}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 7,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128402640000000
+    },
+    {
+      "call_id": "calc-cancel-control-006",
+      "ended_ns": 128403156000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-5b50dbff2ca1aaa8f9a345e8dd2bde9a4584284fd98be56f2bc8fdbc020c15be.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-5b50dbff2ca1aaa8f9a345e8dd2bde9a4584284fd98be56f2bc8fdbc020c15be.tool-response.bin",
+          "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"pending\", \"call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"running\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}, \"operation_invoked\": false}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 8,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128403078000000
+    },
+    {
+      "call_id": "calc-cancel-control-007",
+      "ended_ns": 128403343000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-b883008bbc315986d1d863e87024ba29cc1cfdcfaa0bfecff237f5d9f20737bb.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-b883008bbc315986d1d863e87024ba29cc1cfdcfaa0bfecff237f5d9f20737bb.tool-response.bin",
+          "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"pending\", \"call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"running\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}, \"operation_invoked\": false}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 9,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128403234000000
+    },
+    {
+      "call_id": "calc-cancel-control-008",
+      "ended_ns": 128403515000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-b4ff2b55a9465a30bd336eea1942aa19e1f67313d97a2337508e74a10221f5fd.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-b4ff2b55a9465a30bd336eea1942aa19e1f67313d97a2337508e74a10221f5fd.tool-response.bin",
+          "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"pending\", \"call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"running\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}, \"operation_invoked\": false}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 10,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128403421000000
+    },
+    {
+      "call_id": "calc-cancel-control-009",
+      "ended_ns": 128403687000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-37f7446104dcc993ff9b4291723e40ffffbcb5368a2a3a15cb66b01f36883c28.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-37f7446104dcc993ff9b4291723e40ffffbcb5368a2a3a15cb66b01f36883c28.tool-response.bin",
+          "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"pending\", \"call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"running\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"pending\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}, \"operation_invoked\": false}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 11,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128403609000000
+    },
+    {
+      "call_id": "calc-cancel-control-010",
+      "ended_ns": 128403953000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-073164f70c1205e0122e3d67020620e8eb8a2e59dd2b2115e1ffcbe73ea7316f.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-073164f70c1205e0122e3d67020620e8eb8a2e59dd2b2115e1ffcbe73ea7316f.tool-response.bin",
+          "sha256": "96e19f42639d847a99cf7dbda6075b8197a047563fbe5f059a04dbbf1c370b19"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"runtime_failed\", \"error\": \"EOFError()\", \"operation\": \"guarded_calc_compiled\", \"operation_invoked\": false, \"effect_status\": \"unknown\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"cleanup_status\": \"UNKNOWN\", \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128403765000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"late_server_request_possible\": true, \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 15, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128403765000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\ef8ef67cd477422e946a4752ea7fab63\", \"retained_call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"finished\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"task_artifact_admission\": null, \"task_save_request\": null, \"task_method_receipt\": null, \"target_process_exit_receipt\": null, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"completed\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 128403875000000}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"completed\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 128403875000000}}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 12,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128403781000000
+    },
+    {
+      "call_id": "calc-cancel-control-011",
+      "ended_ns": 128404156000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-5363c0bd98c4dd07c2b652eb984861ae7b6366fd741c52f431e4393ef746fd65.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-5363c0bd98c4dd07c2b652eb984861ae7b6366fd741c52f431e4393ef746fd65.tool-response.bin",
+          "sha256": "96e19f42639d847a99cf7dbda6075b8197a047563fbe5f059a04dbbf1c370b19"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"runtime_failed\", \"error\": \"EOFError()\", \"operation\": \"guarded_calc_compiled\", \"operation_invoked\": false, \"effect_status\": \"unknown\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"cleanup_status\": \"UNKNOWN\", \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128403765000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"late_server_request_possible\": true, \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 15, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128403765000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\ef8ef67cd477422e946a4752ea7fab63\", \"retained_call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"finished\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"task_artifact_admission\": null, \"task_save_request\": null, \"task_method_receipt\": null, \"target_process_exit_receipt\": null, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"completed\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 128403875000000}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"completed\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 128403875000000}}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 13,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128404062000000
+    },
+    {
+      "call_id": "calc-cancel-control-012",
+      "ended_ns": 128404343000000,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-fddcb733ddc7e4fbdbf192c33d54faf6cf83e24d51326c5f0a3ee6881a39a5ac.tool-request.bin",
+          "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+        },
+        {
+          "path": "raw/tool-fddcb733ddc7e4fbdbf192c33d54faf6cf83e24d51326c5f0a3ee6881a39a5ac.tool-response.bin",
+          "sha256": "96e19f42639d847a99cf7dbda6075b8197a047563fbe5f059a04dbbf1c370b19"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"runtime_failed\", \"error\": \"EOFError()\", \"operation\": \"guarded_calc_compiled\", \"operation_invoked\": false, \"effect_status\": \"unknown\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"cleanup_status\": \"UNKNOWN\", \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128403765000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"late_server_request_possible\": true, \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 15, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": true, \"liveness_observed_monotonic_ns\": 128403765000000, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\ef8ef67cd477422e946a4752ea7fab63\", \"retained_call\": {\"call_id\": \"ef8ef67cd477422e946a4752ea7fab63\", \"operation\": \"guarded_calc_compiled\", \"state\": \"finished\", \"arguments\": {\"profile_id\": \"calc-ocr-save-v1\", \"bindings\": {\"entry\": {\"alias\": \"calc_entry\", \"offset\": [12, 8]}, \"save\": {\"alias\": \"calc_save\", \"offset\": [8, 6]}}, \"reviewed_sequence\": 1, \"reviewed_artifact_sha256\": \"6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba\", \"blank_reviewed\": true, \"attempt_id\": \"calc-cancel-after-transition\", \"prepared_call_id\": \"a87bf38d945743adae9c895810b169e4\"}, \"backend_attempted\": true, \"persistence_failure\": null, \"profile_id\": \"calc-ocr-save-v1\", \"attempt_id\": \"calc-cancel-after-transition\", \"response_wait_ms\": 0, \"task_artifact_root_call_id\": \"a87bf38d945743adae9c895810b169e4\", \"parent_task_plan\": {\"schema\": \"agent-interface/calc-symbolic-plan-v1\", \"interface_id\": \"planner-calc-two-cell-v1\", \"predicates\": [\"context_ok\", \"blank\", \"cells_match\"], \"symbols\": {\"cell_entry\": {\"role\": \"entry\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\"]}, \"save_control\": {\"role\": \"save\", \"identity_predicate\": \"context_ok\", \"dependencies\": [\"context_ok\", \"cells_match\"]}}, \"actions\": {\"populate_cells\": {\"operation\": \"enter_pair\", \"target_symbol\": \"cell_entry\", \"expected_effect\": {\"cells_match\": true}}, \"persist_document\": {\"operation\": \"request_save\", \"target_symbol\": \"save_control\", \"expected_effect\": {\"cells_match\": true}}}, \"method\": {\"name\": \"populate-and-save\", \"version\": \"1\", \"initial_state\": \"blank_sheet\", \"max_transitions\": 2, \"max_runtime_ms\": 9000, \"states\": {\"blank_sheet\": {\"branches\": [{\"when\": {\"context_ok\": true, \"blank\": true}, \"outcome\": \"action\", \"action\": \"populate_cells\", \"next_state\": \"values_entered\", \"reason\": null}]}, \"values_entered\": {\"branches\": [{\"when\": {\"context_ok\": true, \"cells_match\": true}, \"outcome\": \"action\", \"action\": \"persist_document\", \"next_state\": \"save_handoff\", \"reason\": null}]}, \"save_handoff\": {\"branches\": [{\"when\": {\"context_ok\": true}, \"outcome\": \"yield\", \"action\": null, \"next_state\": null, \"reason\": \"effect_unavailable\"}]}}}}, \"parent_task_plan_sha256\": \"ad668f2a298538469884e561738e240fbba0b454108286bd3c3eb3b6f7ef16b2\", \"task_artifact_admission\": null, \"task_save_request\": null, \"task_method_receipt\": null, \"target_process_exit_receipt\": null, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"completed\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 128403875000000}}, \"cancellation\": {\"operation_id\": \"25daea35b1c44c6fb126df113f1d64b1\", \"status\": \"completed\", \"admitted_monotonic_ns\": 128402765000000, \"caller_response_deadline_monotonic_ns\": 128403065000000, \"transaction_deadline_monotonic_ns\": 128406765000000, \"owner_generation\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"child_pid\": 38088, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 128403875000000}}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 14,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128404234000000
+    },
+    {
+      "call_id": "calc-cancel-control-013",
+      "ended_ns": 128404609000000,
+      "kind": "tool_call",
+      "method": "interface_close",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-4e1537c5716bc5601f5f5776356a7c5f0c1ac4856ebc856bdec73bc978824d68.tool-request.bin",
+          "sha256": "4f5d400a0296990a3d35dbfa6838b3e0517ce2acf1ec0aadc9ede415eba9f746"
+        },
+        {
+          "path": "raw/tool-4e1537c5716bc5601f5f5776356a7c5f0c1ac4856ebc856bdec73bc978824d68.tool-response.bin",
+          "sha256": "cfbdf0be602c02c0f1b99e4d5f0d24e687161fb30664d565f731fd579360a58a"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "content": [
+          {
+            "annotations": null,
+            "meta": null,
+            "text": "{\"status\": \"cleanup_failed\", \"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"release_attempted\": true, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"verified\": false, \"connection_close_attempted\": false, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"late_server_request_possible\": true, \"retirement_reason\": \"cancel retirement grace elapsed\", \"error\": \"cancel retirement grace elapsed\", \"session\": {\"session_id\": \"597b4ce96ece433c96b66560fd9f0342\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"failed\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": \"cancel retirement grace elapsed\", \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": true, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:03ac95e1883848b38ae95eb62eb9099c\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 15, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 38088, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 38088, \"alive\": false, \"liveness_observed_monotonic_ns\": 128404593000000, \"exitcode\": -15, \"retired\": true, \"release_confirmed\": false, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 38088}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\"}, \"call_directory\": \"D:\\\\CodexData\\\\Temp\\\\tmp_rxmci4r\\\\c9c7ee4859c2470a9d0e2fa5b23eea73\", \"call_id\": \"c9c7ee4859c2470a9d0e2fa5b23eea73\"}",
+            "type": "text"
+          }
+        ],
+        "isError": true,
+        "meta": null,
+        "structuredContent": null
+      },
+      "seq": 15,
+      "session_id": "a48f7b13a76044448729efe071638ed5",
+      "started_ns": 128404406000000
+    }
+  ],
+  "raw_refs": [
+    {
+      "path": "raw/tool-12fc76c9ca67faa038cce0e75abdf3a0ca91f901b2731f0e7183fd37ae3ce500.tool-request.bin",
+      "sha256": "e69f085c1cae149c05700abcea047780e53dc421a46fef8bd174795f08dd4baf"
+    },
+    {
+      "path": "raw/tool-12fc76c9ca67faa038cce0e75abdf3a0ca91f901b2731f0e7183fd37ae3ce500.tool-response.bin",
+      "sha256": "164b05fbfe6d6747a3784d171ed132ee454a6e2d4e11679d2a221f4284a21e0b"
+    },
+    {
+      "path": "raw/tool-e26f53bd6015eaa99dca19f3778dc4e6bd782326a5ebf45b289f97d9f6fc922d.tool-request.bin",
+      "sha256": "bcff1da7e6b4291a85599d0135e2eaa9012a4727475e0d66b0cccd866b106379"
+    },
+    {
+      "path": "raw/tool-e26f53bd6015eaa99dca19f3778dc4e6bd782326a5ebf45b289f97d9f6fc922d.tool-response.bin",
+      "sha256": "aa3b734fe59beeba17741fa9e42113f751c51d394447d04832df223ee0e83a6f"
+    },
+    {
+      "path": "raw/tool-f24751f7bd275eee22b63c18469be6d7bdbfcaa35fadb543651be3436f33fb0e.tool-request.bin",
+      "sha256": "8806794ebf59305d93927f05888d081869023224fac77e4b283d504e3321702d"
+    },
+    {
+      "path": "raw/tool-f24751f7bd275eee22b63c18469be6d7bdbfcaa35fadb543651be3436f33fb0e.tool-response.bin",
+      "sha256": "fc81e50e85a061916840e96c6bff0b87d0dd151eb1b44b9f26039fa0e91b7d3d"
+    },
+    {
+      "path": "raw/tool-3119b204b409bd94e6e351cd26f7a4c1a74942b46b895f5ab20fb0d72528d847.tool-request.bin",
+      "sha256": "90c6b98acb5a112e1a0baf73912a4405b08dd94c7f071093b2dda829107d6efd"
+    },
+    {
+      "path": "raw/tool-3119b204b409bd94e6e351cd26f7a4c1a74942b46b895f5ab20fb0d72528d847.tool-response.bin",
+      "sha256": "54fe05c18ae5c4c4fcc39f5a8cc2f8a59e4779500e9dca35367ab3cda410bfa5"
+    },
+    {
+      "path": "raw/calc-cancel-after-transition.request.bin",
+      "sha256": "3ec1bac3e9faf399228cc4048e99e44d41201c6bae294a35129e881d9a4618a2"
+    },
+    {
+      "path": "raw/calc-cancel-after-transition.response.bin",
+      "sha256": "cb284ac04cbd9eee44723057b4055776266eb23d2bf7f7d889e8acad04235eab"
+    },
+    {
+      "path": "raw/tool-023158e9a2de222a36c9b4084bbba2e5a32a3813afb1d6a76516f289f9d4df41.tool-request.bin",
+      "sha256": "495d5348c30111ed7a32dfe91030b4b16a4063bc9d4ab2910c683a9321d38044"
+    },
+    {
+      "path": "raw/tool-023158e9a2de222a36c9b4084bbba2e5a32a3813afb1d6a76516f289f9d4df41.tool-response.bin",
+      "sha256": "5e79d89910e555c2bfdf5f3521ca4854331e2143439d1b3116784d41842f6e9a"
+    },
+    {
+      "path": "raw/tool-54d5685fba8a9d60fc71f66cec818a1e22502f446654fd6fd33a3f9700ec2c2b.tool-request.bin",
+      "sha256": "c119faf0c48d3d647c05be6b8ac211450ab0867857a08c1f3e8d11cc84fd935e"
+    },
+    {
+      "path": "raw/tool-54d5685fba8a9d60fc71f66cec818a1e22502f446654fd6fd33a3f9700ec2c2b.tool-response.bin",
+      "sha256": "2c7c0e9f10fe18a3705ec16018149ee3e504a77eb9747637c20c9c33c1decaac"
+    },
+    {
+      "path": "raw/tool-5b50dbff2ca1aaa8f9a345e8dd2bde9a4584284fd98be56f2bc8fdbc020c15be.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-5b50dbff2ca1aaa8f9a345e8dd2bde9a4584284fd98be56f2bc8fdbc020c15be.tool-response.bin",
+      "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+    },
+    {
+      "path": "raw/tool-b883008bbc315986d1d863e87024ba29cc1cfdcfaa0bfecff237f5d9f20737bb.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-b883008bbc315986d1d863e87024ba29cc1cfdcfaa0bfecff237f5d9f20737bb.tool-response.bin",
+      "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+    },
+    {
+      "path": "raw/tool-b4ff2b55a9465a30bd336eea1942aa19e1f67313d97a2337508e74a10221f5fd.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-b4ff2b55a9465a30bd336eea1942aa19e1f67313d97a2337508e74a10221f5fd.tool-response.bin",
+      "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+    },
+    {
+      "path": "raw/tool-37f7446104dcc993ff9b4291723e40ffffbcb5368a2a3a15cb66b01f36883c28.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-37f7446104dcc993ff9b4291723e40ffffbcb5368a2a3a15cb66b01f36883c28.tool-response.bin",
+      "sha256": "7784996f711045a07fa7ff2fa78ae123508cc255ce10703b109228e8b76ffbc7"
+    },
+    {
+      "path": "raw/tool-073164f70c1205e0122e3d67020620e8eb8a2e59dd2b2115e1ffcbe73ea7316f.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-073164f70c1205e0122e3d67020620e8eb8a2e59dd2b2115e1ffcbe73ea7316f.tool-response.bin",
+      "sha256": "96e19f42639d847a99cf7dbda6075b8197a047563fbe5f059a04dbbf1c370b19"
+    },
+    {
+      "path": "raw/tool-5363c0bd98c4dd07c2b652eb984861ae7b6366fd741c52f431e4393ef746fd65.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-5363c0bd98c4dd07c2b652eb984861ae7b6366fd741c52f431e4393ef746fd65.tool-response.bin",
+      "sha256": "96e19f42639d847a99cf7dbda6075b8197a047563fbe5f059a04dbbf1c370b19"
+    },
+    {
+      "path": "raw/tool-fddcb733ddc7e4fbdbf192c33d54faf6cf83e24d51326c5f0a3ee6881a39a5ac.tool-request.bin",
+      "sha256": "1bc70530709293c07b0549246b8100bbe911ecafcf887bd478759fc0deb84293"
+    },
+    {
+      "path": "raw/tool-fddcb733ddc7e4fbdbf192c33d54faf6cf83e24d51326c5f0a3ee6881a39a5ac.tool-response.bin",
+      "sha256": "96e19f42639d847a99cf7dbda6075b8197a047563fbe5f059a04dbbf1c370b19"
+    },
+    {
+      "path": "raw/tool-4e1537c5716bc5601f5f5776356a7c5f0c1ac4856ebc856bdec73bc978824d68.tool-request.bin",
+      "sha256": "4f5d400a0296990a3d35dbfa6838b3e0517ce2acf1ec0aadc9ede415eba9f746"
+    },
+    {
+      "path": "raw/tool-4e1537c5716bc5601f5f5776356a7c5f0c1ac4856ebc856bdec73bc978824d68.tool-response.bin",
+      "sha256": "cfbdf0be602c02c0f1b99e4d5f0d24e687161fb30664d565f731fd579360a58a"
+    }
+  ],
+  "unresolved_attempt_ids": [],
+  "unresolved_tool_call_ids": []
+}
