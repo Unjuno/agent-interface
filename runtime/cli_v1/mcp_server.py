@@ -281,12 +281,22 @@ class PublicArgumentMCP(FastMCP):
     async def call_tool(self, name, arguments):
         for tool in await self.list_tools():
             if tool.name == name:
-                unknown = sorted(set(arguments) - set(tool.inputSchema.get('properties', {})))
+                schema = tool.inputSchema
+                properties = schema.get('properties', {})
+                unknown = sorted(set(arguments) - set(properties))
                 if unknown:
                     return content({'status': 'invalid_request',
                         'error': 'unknown top-level tool arguments',
                         'unknown_arguments': unknown, 'operation_invoked': False,
                         'input_dispatched': False, 'replay_allowed': False}, error=True)
+                missing = sorted(set(schema.get('required', ())) - set(arguments))
+                if missing:
+                    return content({'status': 'invalid_request',
+                        'error': 'missing required tool arguments',
+                        'missing_arguments': missing, 'operation_invoked': False,
+                        'input_dispatched': False, 'release_confirmed': None,
+                        'effect_status': 'unknown', 'task_success': None,
+                        'replay_allowed': False}, error=True)
                 break
         return await super().call_tool(name, arguments)
 

@@ -746,18 +746,22 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         generation["response_bytes"]))
                 self.assertTrue(result["tool_call_submitted"])
                 self.assertEqual(result["generation"]["status"], "completed")
-                # FastMCP rejects before the handler, but the Relay deliberately
-                # classifies the raised ToolError as uncertain delivery. Keep
-                # the caller-side status unknown and never infer replay safety.
                 self.assertEqual(
                     result["tool_response"]["status"],
-                    "unknown_requires_reconciliation", result["tool_response"])
-                self.assertIn("validation errors",
-                              result["tool_response"]["error"])
-                self.assertIn("Field required", result["tool_response"]["error"])
-                self.assertEqual(result["tool_response"]["recovery"],
-                                 "Inspect the same allocation/request. Do not replay input.")
-                self.assertNotIn("replay_allowed", result["tool_response"])
+                    "returned", result["tool_response"])
+                mcp_result = result["tool_response"]["result"]
+                self.assertTrue(mcp_result["isError"], mcp_result)
+                refusal = json.loads(mcp_result["content"][0]["text"])
+                self.assertEqual(refusal["status"], "invalid_request", refusal)
+                self.assertEqual(refusal["error"],
+                                 "missing required tool arguments", refusal)
+                self.assertEqual(refusal["missing_arguments"], [
+                    "attempt_id", "bindings", "blank_reviewed", "profile_id",
+                    "reviewed_artifact_sha256", "reviewed_sequence"], refusal)
+                self.assertFalse(refusal["operation_invoked"], refusal)
+                self.assertFalse(refusal["input_dispatched"], refusal)
+                self.assertIsNone(refusal["task_success"], refusal)
+                self.assertFalse(refusal["replay_allowed"], refusal)
 
                 receipt = recorder.reconcile()
                 attempt = next(event for event in receipt["events"]
