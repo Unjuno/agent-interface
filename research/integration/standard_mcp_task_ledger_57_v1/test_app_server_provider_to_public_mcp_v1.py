@@ -9,6 +9,7 @@ from app_server_provider_to_public_mcp_v1 import (
     AppServerPublicMcpModelCall,
     parse_app_server_tool_request,
 )
+from ledger import summarize
 from provider_attempt_recorder import ProviderAttemptRecorder
 from recorded_integrated_efficiency_model_call_v1 import build_model_provider_call
 from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
@@ -183,6 +184,72 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(receipt["complete"])
             self.assertEqual([event["kind"] for event in receipt["events"]],
                              ["model_attempt"])
+
+    async def test_timeout_preserves_partial_protocol_usage_and_skips_public_relay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "session" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(b"")
+            usage_row = {"direction": "received", "message": {
+                "method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-timeout", "turnId": "turn-timeout",
+                    "tokenUsage": {"last": {
+                        "inputTokens": 19, "outputTokens": 3,
+                        "cachedInputTokens": 7}}}}}
+            complete = json.dumps(usage_row).encode() + b"\n"
+
+            class TimedOutPlanner:
+                def begin_turn(self, *_args, **_kwargs):
+                    return SimpleNamespace(thread_id="thread-timeout",
+                                           turn_id="turn-timeout")
+
+                def await_turn(self, _handle, timeout):
+                    with journal.open("ab") as stream:
+                        stream.write(complete)
+                        stream.write(b'{"direction":"received","message":')
+                    raise TimeoutError("turn deadline elapsed")
+
+            model = AppServerPublicMcpModelCall(
+                TimedOutPlanner(), journal, workspace=workspace,
+                contract="public-mcp", output_schema={"type": "object"},
+                model="gpt-test", effort="low")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request_bytes):
+                    raise AssertionError("timed-out turn must not reach public MCP")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            request, provider = build_model_provider_call(
+                model_call=model.call, root=root / "timeout-attempt",
+                prompt="task", image=image, contract="public-mcp",
+                workspace=workspace)
+            result = await caller.invoke_generation_to_tool(
+                "timeout-attempt", request, provider, "call-timeout",
+                "interface_guarded_compiled", json.loads)
+
+            self.assertFalse(result["tool_call_submitted"])
+            generation = result["generation"]
+            self.assertEqual(generation["status"], "timeout")
+            self.assertEqual(generation["usage"], {
+                "status": "partial", "input_tokens": 19,
+                "output_tokens": 3, "cached_input_tokens": 7})
+            self.assertIn(complete, generation["response_bytes"])
+            receipt = recorder.reconcile()
+            self.assertTrue(receipt["complete"])
+            self.assertEqual([event["kind"] for event in receipt["events"]],
+                             ["model_attempt"])
+            self.assertEqual(receipt["events"][0]["usage"], generation["usage"])
+            summary = summarize(receipt["events"])
+            self.assertEqual(summary["usage_status"], "incomplete")
+            self.assertIsNone(summary["input_tokens"])
 
     async def test_usage_mismatch_with_protocol_journal_skips_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
