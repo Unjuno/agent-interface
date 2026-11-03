@@ -706,6 +706,79 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(sum(event["kind"] == "tool_call"
                                  for event in receipt["events"]), 0)
 
+    async def test_object_output_with_incompatible_mcp_shape_is_rejected_before_owner(self):
+        """Route an object-shaped mismatch through real MCP argument validation."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(
+                Relay(ServerClient(), tools={"interface_guarded_calc_compiled"}),
+                recorder)
+            response_bytes = (
+                b'{"type":"item.completed","item":'
+                b'{"type":"agent_message","text":"{}"}}\n'
+            )
+
+            async def provider():
+                return {"status": "completed",
+                        "usage": {"status": "reported",
+                                  "input_tokens": 19, "output_tokens": 2},
+                        "response_bytes": response_bytes}
+
+            try:
+                result = await caller.invoke_generation_to_tool(
+                    "generation-object-schema-mismatch", b'{"prompt":"calc"}',
+                    provider, "tool-object-schema-mismatch",
+                    "interface_guarded_calc_compiled",
+                    lambda generation: parse_agent_message(
+                        generation["response_bytes"]))
+                self.assertTrue(result["tool_call_submitted"])
+                self.assertEqual(result["generation"]["status"], "completed")
+                # FastMCP rejects before the handler, but the Relay deliberately
+                # classifies the raised ToolError as uncertain delivery. Keep
+                # the caller-side status unknown and never infer replay safety.
+                self.assertEqual(
+                    result["tool_response"]["status"],
+                    "unknown_requires_reconciliation", result["tool_response"])
+                self.assertIn("validation errors",
+                              result["tool_response"]["error"])
+                self.assertIn("Field required", result["tool_response"]["error"])
+                self.assertEqual(result["tool_response"]["recovery"],
+                                 "Inspect the same allocation/request. Do not replay input.")
+                self.assertNotIn("replay_allowed", result["tool_response"])
+
+                receipt = recorder.reconcile()
+                attempt = next(event for event in receipt["events"]
+                               if event["kind"] == "model_attempt")
+                tool_call = next(event for event in receipt["events"]
+                                 if event["kind"] == "tool_call")
+                self.assertTrue(receipt["complete"])
+                self.assertEqual(attempt["status"], "completed")
+                self.assertEqual(attempt["usage"]["input_tokens"], 19)
+                self.assertEqual(attempt["usage"]["output_tokens"], 2)
+                raw_ref = next(ref for ref in attempt["raw_refs"]
+                               if ref["path"].endswith("response.bin"))
+                self.assertEqual((recorder.root / raw_ref["path"]).read_bytes(),
+                                 response_bytes)
+                self.assertEqual(tool_call["response_status"], "matched")
+                self.assertEqual(sum(event["kind"] == "tool_call"
+                                     for event in receipt["events"]), 1)
+                self.assertFalse(list(server_root.glob("*/request.json")))
+            finally:
+                await server.call_tool("interface_close", {})
+
     async def test_fake_provider_image_and_stale_generation_roundtrip_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
