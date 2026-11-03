@@ -1,0 +1,180 @@
+diff --git a/.gitattributes b/.gitattributes
+index 2318f02018e..362579b1e4c 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -106,3 +106,7 @@ research/integration/mcp_relay_cancel_lookahead_20261028_r01/** -text -whitespac
+ research/integration/issue57_calc_public_profile_plan_20261103/post-close-exit-wait-live-validation-20261103-r75/** -text
+ research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261103-r03/** -text
+ research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261103-r03/** whitespace=cr-at-eol,-blank-at-eol
++research/integration/standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r01/** -text
++research/integration/standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r01/** whitespace=cr-at-eol,-blank-at-eol
++research/integration/standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r02/** -text
++research/integration/standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r02/** whitespace=cr-at-eol,-blank-at-eol
+diff --git a/research/integration/issue57_calc_public_profile_plan_20261103/README.md b/research/integration/issue57_calc_public_profile_plan_20261103/README.md
+index aa017a652c8..ca1ecea9dff 100644
+--- a/research/integration/issue57_calc_public_profile_plan_20261103/README.md
++++ b/research/integration/issue57_calc_public_profile_plan_20261103/README.md
+@@ -33,7 +33,7 @@ This profile does not claim a general Calc controller or a successful transfer.
+ 
+ | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
+ | --- | --- | --- |
+-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | Add model-wait dependency mutation through the composed registered profile. |
++| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | The direct MCP route rejects an already-stale review before worker admission after a simulated wait. Compose a real provider wait with that mutation; preserve child-side checks for the post-preflight race. |
+ | #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
+ | #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
+ | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
+@@ -61,11 +61,17 @@ unknown; the registered profile yields after the partial effect, records the
+ input release, leaves Save undispatched, and denies replay. This is still a
+ Fake X regression, not an application-level ambiguity result.
+ 
+-Remaining offline work is dependency invalidation after provider wait and one
+-bounded new-attempt repair case with all receipts joined. Existing direct-owner,
+-Fake X and recorder tests cover parts separately; they do not establish these
+-combined Calc-profile paths. No real provider reconciliation or live efficiency
+-comparison exists.
++The stale-review MCP check now rejects a sequence superseded during a controlled
++20 ms wait and changed window-title cue before scheduling the owner operation.
++This is a simulated wait, with no provider request; it does not establish the
++provider-to-MCP timing/join boundary. The raw owner and tool receipts are in
++[the r02 stale-review packet](../standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r02/README.md).
++
++Remaining offline work is to compose an actual provider wait with this mutation
++and complete one bounded new-attempt repair case with all receipts joined.
++Existing direct-owner, Fake X and recorder tests cover parts separately; they do
++not establish those combined paths. No real provider reconciliation or live
++efficiency comparison exists.
+ 
+ ## Gate before any new live comparison
+ 
+diff --git a/runtime/cli_v1/mcp_server.py b/runtime/cli_v1/mcp_server.py
+index 5a09921f185..c9d66e30990 100644
+--- a/runtime/cli_v1/mcp_server.py
++++ b/runtime/cli_v1/mcp_server.py
+@@ -1174,6 +1174,26 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
+                 or (owner is not None and owner.state == 'closed' and operation != 'close')):
+             return content({'status': 'session_closed', 'operation_invoked': False,
+                             'replay_allowed': False}, error=True)
++        if (operation == 'guarded_calc_compiled' and guarded_owned_process
++                and owner is not None):
++            # Model planning can outlive the reviewed source. Reject a source
++            # already known stale before scheduling the owner operation; the
++            # child profile still revalidates to cover changes after this check.
++            snapshot = owner.snapshot()
++            current_sequence = snapshot.get('observation_sequence')
++            if (type(current_sequence) is not int
++                    or kwargs.get('reviewed_sequence') != current_sequence):
++                return content({
++                    'status':'invalid_request',
++                    'error':'CALC_REVIEW_SOURCE_STALE',
++                    'detail':'reviewed source is no longer the current owner observation',
++                    'current_sequence':current_sequence,
++                    'operation_invoked':False,
++                    'input_dispatched':False,
++                    'release_confirmed':None,
++                    'effect_status':'unknown',
++                    'task_success':None,
++                    'replay_allowed':False},error=True)
+         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
+         if not lock.acquire(blocking=False):
+             return content({'status': 'busy', 'operation_invoked': False}, error=True)
+diff --git a/runtime/cli_v1/test_mcp_owned_process.py b/runtime/cli_v1/test_mcp_owned_process.py
+index f7020593d1d..3beca173ec3 100644
+--- a/runtime/cli_v1/test_mcp_owned_process.py
++++ b/runtime/cli_v1/test_mcp_owned_process.py
+@@ -1425,6 +1425,96 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+                     (evidence_root/'manifest.json').write_text(json.dumps(
+                         manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+ 
++    async def test_registered_calc_profile_rejects_stale_review_after_model_wait(self):
++        """A provider response grounded on a superseded source cannot enter Calc."""
++        with tempfile.TemporaryDirectory() as td:
++            root=Path(td)
++            (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
++            server=create_server({'app':20},root,session_mode='guarded-x11',
++                guarded_process_identity=True,guarded_query_worker=True,
++                guarded_window_lifecycle=True,guarded_owned_process=True,
++                _guarded_owner_factory=_fake_owner_factory)
++            try:
++                old=metadata(await server.call_tool('interface_guarded_observe',{}))
++                self.assertEqual(old['status'],'observed',old)
++                old_source=old['source']
++                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
++                    alias='calc_entry',source_sequence=old_source['sequence'],
++                    point=[16,31],region_size=[24,16])))
++                save=metadata(await server.call_tool('interface_guarded_mint',dict(
++                    alias='calc_save',source_sequence=old_source['sequence'],
++                    point=[200,205],region_size=[16,12])))
++                self.assertEqual(entry['status'],'minted',entry)
++                self.assertEqual(save['status'],'minted',save)
++
++                # Stand in for the interval while a model response is pending:
++                # the title/modal dependency changes before its old request arrives.
++                (root/'fake-window-metadata-changed').write_text(
++                    'provider-wait mutation',encoding='utf-8')
++                await asyncio.sleep(0.02)
++                fresh=metadata(await server.call_tool('interface_guarded_observe',{}))
++                self.assertEqual(fresh['status'],'observed',fresh)
++                self.assertGreater(fresh['source']['sequence'],old_source['sequence'])
++
++                result=metadata(await server.call_tool(
++                    'interface_guarded_calc_compiled',{
++                        'profile_id':'calc-ocr-save-v1',
++                        'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
++                                    'save':{'alias':'calc_save','offset':save['offset']}},
++                        'reviewed_sequence':old_source['sequence'],
++                        'reviewed_artifact_sha256':old_source['native']['artifact']['sha256'],
++                        'blank_reviewed':True,
++                        'attempt_id':'calc-offline-stale-review-after-wait',
++                        'wait_for_result_ms':10000}))
++                self.assertEqual(result['status'],'invalid_request',result)
++                self.assertEqual(result['error'],'CALC_REVIEW_SOURCE_STALE',result)
++                self.assertFalse(result['operation_invoked'],result)
++                self.assertFalse(result['input_dispatched'],result)
++                self.assertIsNone(result['release_confirmed'],result)
++                self.assertIsNone(result.get('task_success'),result)
++                self.assertFalse(result.get('replay_allowed',True),result)
++                self.assertFalse(list(root.rglob('calc-fake-state.json')))
++            finally:
++                closed=metadata(await server.call_tool('interface_close',{}))
++                self.assertEqual(closed['status'],'closed',closed)
++                self.assertTrue(closed['verified'],closed)
++                # No input was dispatched, so a release receipt is N/A rather
++                # than fabricated as verified. The fake app emitted no input state.
++                self.assertIsNone(closed['release_confirmed'],closed)
++                self.assertEqual(closed['session']['owner_input_obligations'],
++                                 {'keys':{},'buttons':[]},closed)
++            retained=os.environ.get(
++                'AGENT_INTERFACE_RETAIN_CALC_PROFILE_NEGATIVE_EVIDENCE')
++            if retained:
++                evidence_root=Path(retained).resolve()/'stale-review-after-model-wait'
++                evidence_root.mkdir(parents=True,exist_ok=False)
++                shutil.copytree(root,evidence_root/'raw-runtime')
++                source_root=Path(__file__).resolve().parents[2]
++                source_files=(
++                    'runtime/guarded_x11_v1/calc_profile_v1.py',
++                    'runtime/cli_v1/mcp_guarded.py',
++                    'runtime/cli_v1/mcp_server.py',
++                    'runtime/cli_v1/owned_guarded_session.py',
++                    'runtime/cli_v1/test_mcp_owned_process.py')
++                manifest={
++                    'schema':'agent-interface/calc-stale-review-after-wait-v1',
++                    'environment':'synthetic Fake X; no model/provider request was sent',
++                    'wait_simulation':'20 ms bounded test delay plus changed window title metadata',
++                    'old_sequence':old_source['sequence'],
++                    'new_sequence':fresh['source']['sequence'],
++                    'compiled_result':result,
++                    'owner_close':closed,
++                    'no_input_state_artifact':not bool(list(
++                        root.rglob('calc-fake-state.json'))),
++                    'release_confirmed':closed.get('release_confirmed'),
++                    'raw_evidence':'raw-runtime/ (observations, owner RPC receipts, calls)',
++                    'source_sha256':{name:hashlib.sha256(
++                        (source_root/name).read_bytes()).hexdigest()
++                        for name in source_files}}
++                (evidence_root/'manifest.json').write_text(json.dumps(
++                    manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',
++                    encoding='utf-8')
++
+     async def test_registered_calc_profile_cancel_during_ocr_keeps_release_and_effect_unknown(self):
+         with tempfile.TemporaryDirectory() as td:
+             root=Path(td)

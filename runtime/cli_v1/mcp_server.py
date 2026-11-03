@@ -1174,6 +1174,26 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 or (owner is not None and owner.state == 'closed' and operation != 'close')):
             return content({'status': 'session_closed', 'operation_invoked': False,
                             'replay_allowed': False}, error=True)
+        if (operation == 'guarded_calc_compiled' and guarded_owned_process
+                and owner is not None):
+            # Model planning can outlive the reviewed source. Reject a source
+            # already known stale before scheduling the owner operation; the
+            # child profile still revalidates to cover changes after this check.
+            snapshot = owner.snapshot()
+            current_sequence = snapshot.get('observation_sequence')
+            if (type(current_sequence) is not int
+                    or kwargs.get('reviewed_sequence') != current_sequence):
+                return content({
+                    'status':'invalid_request',
+                    'error':'CALC_REVIEW_SOURCE_STALE',
+                    'detail':'reviewed source is no longer the current owner observation',
+                    'current_sequence':current_sequence,
+                    'operation_invoked':False,
+                    'input_dispatched':False,
+                    'release_confirmed':None,
+                    'effect_status':'unknown',
+                    'task_success':None,
+                    'replay_allowed':False},error=True)
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)

@@ -1425,6 +1425,96 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     (evidence_root/'manifest.json').write_text(json.dumps(
                         manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
 
+    async def test_registered_calc_profile_rejects_stale_review_after_model_wait(self):
+        """A provider response grounded on a superseded source cannot enter Calc."""
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                old=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(old['status'],'observed',old)
+                old_source=old['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=old_source['sequence'],
+                    point=[16,31],region_size=[24,16])))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=old_source['sequence'],
+                    point=[200,205],region_size=[16,12])))
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
+
+                # Stand in for the interval while a model response is pending:
+                # the title/modal dependency changes before its old request arrives.
+                (root/'fake-window-metadata-changed').write_text(
+                    'provider-wait mutation',encoding='utf-8')
+                await asyncio.sleep(0.02)
+                fresh=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(fresh['status'],'observed',fresh)
+                self.assertGreater(fresh['source']['sequence'],old_source['sequence'])
+
+                result=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-ocr-save-v1',
+                        'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
+                                    'save':{'alias':'calc_save','offset':save['offset']}},
+                        'reviewed_sequence':old_source['sequence'],
+                        'reviewed_artifact_sha256':old_source['native']['artifact']['sha256'],
+                        'blank_reviewed':True,
+                        'attempt_id':'calc-offline-stale-review-after-wait',
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(result['status'],'invalid_request',result)
+                self.assertEqual(result['error'],'CALC_REVIEW_SOURCE_STALE',result)
+                self.assertFalse(result['operation_invoked'],result)
+                self.assertFalse(result['input_dispatched'],result)
+                self.assertIsNone(result['release_confirmed'],result)
+                self.assertIsNone(result.get('task_success'),result)
+                self.assertFalse(result.get('replay_allowed',True),result)
+                self.assertFalse(list(root.rglob('calc-fake-state.json')))
+            finally:
+                closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertEqual(closed['status'],'closed',closed)
+                self.assertTrue(closed['verified'],closed)
+                # No input was dispatched, so a release receipt is N/A rather
+                # than fabricated as verified. The fake app emitted no input state.
+                self.assertIsNone(closed['release_confirmed'],closed)
+                self.assertEqual(closed['session']['owner_input_obligations'],
+                                 {'keys':{},'buttons':[]},closed)
+            retained=os.environ.get(
+                'AGENT_INTERFACE_RETAIN_CALC_PROFILE_NEGATIVE_EVIDENCE')
+            if retained:
+                evidence_root=Path(retained).resolve()/'stale-review-after-model-wait'
+                evidence_root.mkdir(parents=True,exist_ok=False)
+                shutil.copytree(root,evidence_root/'raw-runtime')
+                source_root=Path(__file__).resolve().parents[2]
+                source_files=(
+                    'runtime/guarded_x11_v1/calc_profile_v1.py',
+                    'runtime/cli_v1/mcp_guarded.py',
+                    'runtime/cli_v1/mcp_server.py',
+                    'runtime/cli_v1/owned_guarded_session.py',
+                    'runtime/cli_v1/test_mcp_owned_process.py')
+                manifest={
+                    'schema':'agent-interface/calc-stale-review-after-wait-v1',
+                    'environment':'synthetic Fake X; no model/provider request was sent',
+                    'wait_simulation':'20 ms bounded test delay plus changed window title metadata',
+                    'old_sequence':old_source['sequence'],
+                    'new_sequence':fresh['source']['sequence'],
+                    'compiled_result':result,
+                    'owner_close':closed,
+                    'no_input_state_artifact':not bool(list(
+                        root.rglob('calc-fake-state.json'))),
+                    'release_confirmed':closed.get('release_confirmed'),
+                    'raw_evidence':'raw-runtime/ (observations, owner RPC receipts, calls)',
+                    'source_sha256':{name:hashlib.sha256(
+                        (source_root/name).read_bytes()).hexdigest()
+                        for name in source_files}}
+                (evidence_root/'manifest.json').write_text(json.dumps(
+                    manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',
+                    encoding='utf-8')
+
     async def test_registered_calc_profile_cancel_during_ocr_keeps_release_and_effect_unknown(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)

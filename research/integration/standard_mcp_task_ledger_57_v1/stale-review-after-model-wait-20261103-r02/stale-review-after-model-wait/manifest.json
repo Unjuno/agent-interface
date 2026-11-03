@@ -1,0 +1,96 @@
+{
+  "compiled_result": {
+    "current_sequence": 2,
+    "detail": "reviewed source is no longer the current owner observation",
+    "effect_status": "unknown",
+    "error": "CALC_REVIEW_SOURCE_STALE",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "release_confirmed": null,
+    "replay_allowed": false,
+    "status": "invalid_request",
+    "task_success": null
+  },
+  "environment": "synthetic Fake X; no model/provider request was sent",
+  "new_sequence": 2,
+  "no_input_state_artifact": true,
+  "old_sequence": 1,
+  "owner_close": {
+    "authority_granted": false,
+    "call_directory": "D:\\CodexData\\Temp\\tmp7w9dtuf9\\7d9851e81990457a9ac61015d8150898",
+    "call_id": "7d9851e81990457a9ac61015d8150898",
+    "connection_close_attempted": true,
+    "owner_process_exitcode": 0,
+    "owner_process_retired": true,
+    "release_attempted": false,
+    "release_confirmed": null,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:00d32c7cefe441aba58d05edc49b6030",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 2,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 100710421000000,
+        "pid": 14144,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 14144,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": false,
+      "session_id": "570ad0a443754203a7fe343fc08101e0",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "session_id": "570ad0a443754203a7fe343fc08101e0",
+    "status": "closed",
+    "verified": true
+  },
+  "raw_evidence": "raw-runtime/ (observations, owner RPC receipts, calls)",
+  "release_confirmed": null,
+  "schema": "agent-interface/calc-stale-review-after-wait-v1",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_guarded.py": "7d0b9fc49670d2a5fbcea3d5b1a5c6c9d51b4f12cf9184000edff7ce21786d78",
+    "runtime/cli_v1/mcp_server.py": "3b1db5aef235b99c2a7d950cb968539623a0028b5bdca0f39322729e3827a567",
+    "runtime/cli_v1/owned_guarded_session.py": "a9c254171b053bb2e86bd17b6288b6f418e4f1e71dac6a262419765f8218d8dc",
+    "runtime/cli_v1/test_mcp_owned_process.py": "d435d036744c9f02e78cd3eafe08c3a6fef0122937dca88f799309bb7fc4ce95",
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "0cd7f0d42be1bd93bf83d0ffdb636e846b41a8d5ab7503ae830789b176af4071"
+  },
+  "wait_simulation": "20 ms bounded test delay plus changed window title metadata"
+}
