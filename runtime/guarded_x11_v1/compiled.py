@@ -15,7 +15,7 @@ def surface(bridge):
 
 
 class _Adapter:
-    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, post_release_settle_ms=0):
+    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, verify_unchanged_effect=None, post_release_settle_ms=0):
         self.interface = validate(interface)
         # Symbol labels belong to the graph language; target references name
         # the existing native registry and must obey its actual alias contract.
@@ -30,6 +30,8 @@ class _Adapter:
             raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         if guard_perceive is not None and not callable(guard_perceive):
             raise ValueError('guard_perceive must be callable when supplied')
+        if verify_unchanged_effect is not None and not callable(verify_unchanged_effect):
+            raise ValueError('verify_unchanged_effect must be callable when supplied')
         if not callable(getattr(bridge,'input_guard',None)):
             raise ValueError('bridge input guard capability required')
         if type(bindings) is not dict or set(bindings) != set(self.interface['actions']):
@@ -49,6 +51,7 @@ class _Adapter:
         self.scope, self.revision, self.surface = bridge.scope, bridge.binding_revision, surface(bridge)
         self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
+        self.unchanged_verifier = verify_unchanged_effect
         self.guard_perceive = perceive if guard_perceive is None else guard_perceive
         self.post_release_settle_ms = post_release_settle_ms
         self._method_deadline_ns = None
@@ -289,6 +292,30 @@ class _Adapter:
         self.retain('effect', {'request':request,'result':result})
         return result
 
+    def verify_unchanged_effect(self, request):
+        if self.unchanged_verifier is None:
+            raise RuntimeError('unchanged-frame effect verifier was not configured')
+        if (not self.associated() or self.latest != request['observation'] or
+                self.bridge.sequence != self.latest['sequence']):
+            result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
+        else:
+            try:
+                result = self.unchanged_verifier(
+                    copy.deepcopy(request), copy.deepcopy(self.native), self.image.copy())
+            except Exception as error:
+                try:
+                    self.retain('exception', {'stage':'unchanged_effect_verification',
+                        'error_type':type(error).__name__,'error':repr(error),
+                        'replay_allowed':False,
+                        'effect_status':'unknown; inspect retained bridge receipts before any new action'})
+                except Exception:
+                    pass
+                raise
+            if not self.associated() or self.bridge.sequence != self.latest['sequence']:
+                result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
+        self.retain('unchanged-effect', {'request':request,'result':result})
+        return result
+
     def execute_method(self):
         self._method_deadline_ns = None
         def graph_clock():
@@ -299,9 +326,12 @@ class _Adapter:
         self.retain('plan', {'interface':self.interface,'bindings':self.bindings,
             'scope':'trusted caller-owned read-only perception/effect callbacks; not independent task scoring'})
         try:
-            result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
+            adapters = {'observe':self.observe,'admit':self.admit,
                 'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self._cancellation_state,
-                'journal':lambda event:self.retain('event',event)}, clock=graph_clock)
+                'journal':lambda event:self.retain('event',event)}
+            if self.unchanged_verifier is not None:
+                adapters['verify_unchanged_effect'] = self.verify_unchanged_effect
+            result = run_graph(self.interface, adapters, clock=graph_clock)
         except Exception as error:
             self.retain('exception', {'error':repr(error),'replay_allowed':False,
                 'effect_status':'unknown; inspect retained bridge receipts before any new action'})
@@ -344,7 +374,7 @@ class _Adapter:
 
 
 def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False,
-        guard_perceive=None, post_release_settle_ms=0):
+        guard_perceive=None, verify_unchanged_effect=None, post_release_settle_ms=0):
     """Run the existing graph once against freshly grounded bridge aliases.
 
     Symbols name existing aliases; bindings specify each guarded interaction,
@@ -360,4 +390,5 @@ def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambd
     """
     return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled,
                     guard_perceive=guard_perceive,
+                    verify_unchanged_effect=verify_unchanged_effect,
                     post_release_settle_ms=post_release_settle_ms).execute_method()

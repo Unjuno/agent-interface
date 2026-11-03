@@ -575,3 +575,10 @@ class CalcPrimaryProfile:
                 window_generation=self.task_window_generation)
         return {'status': status,
                 'evidence_ref': request.get('observation', {}).get('evidence_ref')}
+
+    def verify_unchanged_effect(self, request, native, rgb):
+        """Permit only the nonvisual Save receipt path on an unchanged frame."""
+        if request.get('action') == 'save':
+            return self.verify_effect(request, native, rgb)
+        return {'status':'unavailable',
+                'evidence_ref':request.get('observation', {}).get('evidence_ref')}

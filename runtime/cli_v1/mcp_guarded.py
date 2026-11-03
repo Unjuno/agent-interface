@@ -193,7 +193,8 @@ class GuardedSessionOwner(MCPSessionOwner):
 
     def run_compiled(self, interface, bindings, *, call_root, perceive,
                      verify_effect, cancelled=lambda: False,
-                     guard_perceive=None, post_release_settle_ms=0):
+                     guard_perceive=None, verify_unchanged_effect=None,
+                     post_release_settle_ms=0):
         """Run one explicit graph on this already-open Python owner.
 
         Ground references first. Callbacks are trusted read-only caller code,
@@ -214,6 +215,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise ValueError('explicit callable perception, effect and cancellation required')
         if guard_perceive is not None and not callable(guard_perceive):
             raise ValueError('guard_perceive must be callable when supplied')
+        if verify_unchanged_effect is not None and not callable(verify_unchanged_effect):
+            raise ValueError('verify_unchanged_effect must be callable when supplied')
         if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
             raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         from runtime.guarded_x11_v1 import compiled
@@ -251,6 +254,7 @@ class GuardedSessionOwner(MCPSessionOwner):
             receipt = compiled.run(bridge, interface, bindings, perceive=perceive,
                                    verify_effect=verify_effect, cancelled=cancelled,
                                    guard_perceive=guard_perceive,
+                                   verify_unchanged_effect=verify_unchanged_effect,
                                    post_release_settle_ms=post_release_settle_ms)
         except BaseException as error:
             bridge.review_required = True
@@ -349,6 +353,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                 call_root=root/'compiled', perceive=profile.perceive,
                 guard_perceive=profile.guard_perceive,
                 verify_effect=profile.verify_effect,
+                verify_unchanged_effect=profile.verify_unchanged_effect,
                 post_release_settle_ms=250,
                 cancelled=self.bridge._cancel_requested)
         result['profile_id'] = PROFILE_ID

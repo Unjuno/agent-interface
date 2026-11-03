@@ -93,6 +93,22 @@ It does not establish real-provider timing/accounting, a live Calc recovery, a
 matched efficiency result, actual provider reconciliation, retry, or full
 lifecycle accounting. See the current matrix for exact status and rerun conditions.
 
+## Current-main OCR comparison and same-frame Save follow-up (2026-11-03)
+
+The retained r78–r83 block passed all functional gates in five of six arms;
+r80-a6 remains a failed arm due to pre-close artifact verification and natural
+exit failures. Its later FODS contents and visible post-task cells do not repair
+the missing pre-close proof. The separate [forensic follow-up](../issue57_r80_same_frame_effect_followup_20261103/README.md)
+traces the missing Save-request receipt to the graph's same-digest
+`no_progress` shortcut, which returned before the effect callback. An offline
+change now permits a registered profile to opt into a dedicated unchanged-frame
+verifier; Calc uses this only to retain the Save-request receipt and still
+returns `effect_unavailable`. This source change has not yet passed a fresh live
+Calc attempt. See the
+[r78–r83 results](../issue57_ocr_frontier_replication_20261103_r78_r83/README.md),
+[r80 forensic follow-up](../issue57_ocr_frontier_replication_20261103_r78_r83/r80-a6/FORENSIC_FOLLOWUP.md),
+and updated [composition matrix](COMPOSITION_MATRIX_20261103.md).
+
 ## Gate before any new live comparison
 
 Complete the remaining composed-path offline matrix first. Freeze code/model,

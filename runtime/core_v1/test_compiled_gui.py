@@ -30,9 +30,29 @@ class Driver:
  def verify(self,p):
   self.record('verify_effect',p);return {'status':'succeeded','evidence_ref':p['observation']['evidence_ref']}
  def journal(self,p):self.record('journal',p)
- def run(self,spec=None):return run(spec or interface(),{'observe':self.observe,'admit':self.admit,'execute':self.execute,'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal},clock=lambda:self.now)
+ def run(self,spec=None):
+  adapters={'observe':self.observe,'admit':self.admit,'execute':self.execute,
+   'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal}
+  unchanged=getattr(self,'verify_unchanged_effect',None)
+  if unchanged is not None:adapters['verify_unchanged_effect']=unchanged
+  return run(spec or interface(),adapters,clock=lambda:self.now)
 
 class CompiledBoundaryTests(unittest.TestCase):
+
+ def test_unchanged_frame_uses_explicit_nonvisual_effect_verifier(self):
+  d=Driver();base=d.observe
+  def observe(request):
+   row=base(request)
+   if len(d.calls['observe'])==3:
+    row['evidence_digest']='digest2'
+   return row
+  d.observe=observe
+  d.verify_unchanged_effect=d.verify
+  receipt=d.run()
+  self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED')
+  self.assertEqual(receipt['completed_transitions'],2)
+  self.assertEqual(len(d.calls['verify_effect']),2)
+  self.assertEqual(receipt['critical_events'][-1]['reason'],'method_complete')
 
  def test_receipt_times_bound_observation_execution_and_effect_confirmation(self):
   now=[0];observations=[]

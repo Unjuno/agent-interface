@@ -58,6 +58,16 @@ not an independent oracle and not a generic vision/OCR service. Scope/sequence
 changes in either callback prevent continuation or completion. They are
 synchronous per-iteration reads, not installed or background sensors.
 
+When a fresh post-action capture has the same evidence digest as the pre-action
+capture, the graph normally yields `SAFE_YIELD / no_progress` before calling
+the effect verifier. A caller may explicitly provide
+`verify_unchanged_effect` for actions whose effect can be checked without a
+visible frame change. That callback runs only on the unchanged-digest path and
+must independently establish the action's intended effect; the default path
+remains unchanged. The registered Calc profile opts in only to retain the
+nonvisual Save-request receipt and returns `unavailable`, so this path does not
+claim a persisted workbook effect or authorize another action.
+
 Every graph iteration retains a fresh native image and metadata through the
 bridge. Its output directory also retains the fixed plan, graph events,
 reference resolutions, admissions, full input receipts, effect verdicts and
