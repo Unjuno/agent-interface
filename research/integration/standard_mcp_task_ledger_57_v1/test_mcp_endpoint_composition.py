@@ -1556,8 +1556,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
                 await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
                 negative_case = calc_tests.OwnedProcessMCPTests(
-                    "test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr")
-                await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr()
+                    "test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr")
+                await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr()
 
             # A malformed terminal provider result is an attempted generation,
             # but it must not be parsed into or dispatched as an MCP tool call.
@@ -1615,18 +1615,20 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(stopped["generation"]["status"], "cancelled", stopped)
             self.assertEqual(counts["tool"], stopped_tool_calls_before)
 
-            self.assertEqual(counts["successful_generation"], 4)
-            self.assertEqual(counts["provider_attempts"], 7)
+            self.assertEqual(counts["successful_generation"], 5)
+            self.assertEqual(counts["provider_attempts"], 8)
             self.assertTrue(counts["malformed_generation_recorded"])
             self.assertTrue(counts["stopped_generation_recorded"])
             self.assertGreater(counts["tool"], 1)
             self.assertEqual(set(observed["negative_profile_results"]), {
                 "calc-offline-wrong-after-input",
                 "calc-offline-unknown-after-input",
+                "calc-offline-no-match-after-input",
                 "calc-offline-ambiguous-after-input"})
             for attempt_id, expected_reason in (
                     ("calc-offline-wrong-after-input", "effect_failed"),
                     ("calc-offline-unknown-after-input", "effect_unavailable"),
+                    ("calc-offline-no-match-after-input", "effect_unavailable"),
                     ("calc-offline-ambiguous-after-input", "effect_unavailable")):
                 negative = observed["negative_profile_results"][attempt_id]
                 self.assertEqual(negative["method_receipt"]["outcome"],
@@ -1716,7 +1718,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 if event["kind"] == "model_attempt" and
                 event["attempt_id"] == stopped_attempt_id)
             self.assertTrue(receipt["complete"])
-            self.assertEqual(summary["model_attempt_count"], 7)
+            self.assertEqual(summary["model_attempt_count"], 8)
             self.assertEqual(malformed_event["status"], "malformed")
             self.assertEqual(malformed_event["usage"]["status"], "unavailable")
             self.assertEqual(malformed_event["response_status"], "raw_retained")

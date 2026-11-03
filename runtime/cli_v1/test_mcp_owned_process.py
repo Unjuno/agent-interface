@@ -492,6 +492,11 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
         wrong_a2=str(int(task_values['A2'])+1).encode('ascii')
         if not filled or mode == 'unknown-after-input':
             stdout=header
+        elif mode == 'no-match-after-input':
+            # OCR returned text inside the reviewed cell, but it cannot be
+            # interpreted as the expected decimal value. This is a no-match,
+            # not evidence that the task effect failed.
+            stdout=(header+b'5\t8\t4\t44\t24\t95\tnoise\n')
         elif low_once:
             stdout=(header+b'5\t8\t4\t44\t24\t70\t'+a1+b'\n'
                     +b'5\t8\t38\t44\t24\t70\t'+a2+b'\n')
@@ -1673,11 +1678,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 closed=metadata(await server.call_tool('interface_close',{}))
                 self.assertTrue(closed['release_confirmed'],closed)
 
-    async def test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr(self):
+    async def test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr(self):
         from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import (
             plan as calc_symbolic_plan)
         for mode,expected_reason in (('wrong-after-input','effect_failed'),
                                      ('unknown-after-input','effect_unavailable'),
+                                     ('no-match-after-input','effect_unavailable'),
                                      ('ambiguous-after-input','effect_unavailable')):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
                 root=Path(td)
