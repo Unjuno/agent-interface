@@ -1,0 +1,55 @@
+{
+  "schema": "agent-interface/current-main-composition-rerun-v1",
+  "base_main": "1db2df19bbc311bfd77df97e7223274480aaf6ac",
+  "candidate_source": "base plus candidate-test-fix.patch",
+  "docker_engine": "29.8.1",
+  "host_wsl_config": "32GB / 8 CPU / 16GB swap / gradual reclaim",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "container": {
+    "pids_limit": 256,
+    "memory_plus_swap": "4g total",
+    "cpus": 2,
+    "memory": "4g",
+    "source_mount": "read-only",
+    "network": "none"
+  },
+  "baseline": {
+    "optimized": "219/219 pass",
+    "normal": "219 tests, one KeyError on owner_process_retired",
+    "docker_exit": 1
+  },
+  "candidate": {
+    "optimized": "219/219 pass, 96.735 s",
+    "normal": "219/219 pass, 95.081 s",
+    "docker_exit": 0
+  },
+  "deterministic_pending": {
+    "delay_ms": 350,
+    "replay_allowed": false,
+    "terminal_owner_retired": true,
+    "optimized": "1/1 pass",
+    "normal": "1/1 pass",
+    "asserted_initial_status": "pending",
+    "release_confirmed": false,
+    "task_success": null
+  },
+  "provider_generations": 0,
+  "gui_actions": 0,
+  "scope": "synthetic Fake X/provider composition and cancellation receipt accounting",
+  "limitations": [
+    "not live provider or GUI control evidence",
+    "not end-to-end efficiency",
+    "not WSLc/MAP01",
+    "not long-term Docker stability"
+  ],
+  "post_docker_restart": {
+    "docker_engine": "29.8.1",
+    "wsl_idle_timeout": "unset",
+    "normal": "219/219 pass, 98.331 s",
+    "optimized": "219/219 pass",
+    "docker_exit": 0,
+    "provider_generations": 0,
+    "gui_actions": 0
+  }
+}

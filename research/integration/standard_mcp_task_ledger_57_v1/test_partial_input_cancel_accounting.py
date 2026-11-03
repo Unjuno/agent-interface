@@ -1,9 +1,11 @@
 """Join a post-input Calc cancellation to exactly one provider attempt."""
 
+import asyncio
 import json
 import os
 import shutil
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -264,6 +266,199 @@ class PartialInputCancelAccountingTests(unittest.IsolatedAsyncioTestCase):
                         "control_methods": [row["method"] for row in control_calls],
                         "compiled_count": state["compiled_count"]},
                         sort_keys=True, indent=2) + "\n", encoding="utf-8")
+
+    async def test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger(self):
+        retained = os.environ.get(
+            "AGENT_INTERFACE_RETAIN_PARTIAL_PENDING_COMPOSITION")
+        retained = Path(retained).resolve() if retained else None
+        if retained is not None and retained.exists():
+            raise FileExistsError(retained)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            (server_root / "compiled-profile-mode").write_text("enabled")
+            calc_tests._write_json(server_root / "supervisor-fake-x.json", {
+                "down": [], "effects": [], "refused": []})
+            recorder = ProviderAttemptRecorder(root / "provider-ledger")
+            server = calc_tests.create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True, guarded_prestarted_cancel_supervisor=True,
+                _guarded_cancel_supervisor_target=(
+                    calc_tests._fake_prestarted_cancel_worker),
+                _guarded_owner_factory=calc_tests._fake_owner_factory)
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            controls = []
+            closed = False
+
+            async def public_call(call_id, name, arguments):
+                controls.append({"call_id": call_id, "method": name,
+                                 "arguments": arguments})
+                return await caller.call_tool(None, call_id, name, arguments)
+
+            def body(response):
+                return json.loads(response["result"]["content"][0]["text"])
+
+            try:
+                observed = body(await public_call(
+                    "observe-01", "interface_guarded_observe", {}))
+                source = observed["source"]
+                minted = body(await public_call("mint-01",
+                    "interface_guarded_mint", {
+                        "alias": "field", "source_sequence": source["sequence"],
+                        "point": [8, 8], "region_size": [12, 12]}))
+                payload = calc_tests._compiled_profile_payload(
+                    observed["session"]["compiled_scope"],
+                    observed["session"]["compiled_surface"], minted["offset"])
+                payload["wait_for_result_ms"] = 0
+                answer = json.dumps(payload, sort_keys=True,
+                                    separators=(",", ":")).encode()
+                (server_root / "block-owner-io").write_text("block")
+
+                async def provider_call():
+                    return {"status": "completed", "usage": {
+                        "status": "reported", "input_tokens": 61,
+                        "output_tokens": 13, "cached_input_tokens": 8,
+                        "reasoning_output_tokens": 2}, "response_bytes": answer}
+
+                joined = await caller.invoke_generation_to_tool(
+                    "partial-input-attempt-01", b"synthetic provider request",
+                    provider_call, "compiled-tool-01",
+                    "interface_guarded_compiled",
+                    lambda generation: json.loads(generation["response_bytes"]))
+                self.assertTrue(joined["tool_call_submitted"], joined)
+                pending = body(joined["tool_response"])
+                self.assertEqual(pending.get("status"), "pending", pending)
+                call_id = pending["call_id"]
+
+                deadline = time.monotonic() + 3
+                while (not (server_root / "owner-io-entered.json").exists()
+                       and time.monotonic() < deadline):
+                    await asyncio.sleep(0.005)
+                self.assertTrue((server_root / "owner-io-entered.json").exists())
+                down = json.loads((server_root / "owner-io-entered.json").read_text())
+                self.assertTrue(down, "cancel must occur while input is held down")
+                calc_tests._write_json(server_root / "supervisor-fake-x.json", {
+                    "down": down, "effects": [], "refused": []})
+                (server_root / "block-cleanup-supervisor").write_text("block")
+
+                cancel = body(await public_call("cancel-01",
+                    "interface_guarded_cancel", {"call_id": call_id}))
+                self.assertEqual(cancel.get("status"), "pending", cancel)
+                self.assertEqual(cancel.get("cancellation", {}).get("status"),
+                                 "pending", cancel)
+                self.assertEqual(cancel.get("call_id"), call_id, cancel)
+                operation_id = cancel.get("operation_id")
+                self.assertIsInstance(operation_id, str, cancel)
+                self.assertEqual(cancel.get("cancellation", {}).get(
+                    "operation_id"), operation_id, cancel)
+                (server_root / "continue-cleanup-supervisor").write_text("continue")
+
+                polls = []
+                deadline = time.monotonic() + 6
+                while time.monotonic() < deadline:
+                    result = body(await public_call(
+                        f"results-{len(polls) + 1:03d}", "interface_results",
+                        {"call_id": call_id, "include_image": False}))
+                    polls.append(result)
+                    cancellation = result.get("cancellation")
+                    if (isinstance(cancellation, dict) and
+                            cancellation.get("status") != "pending"):
+                        break
+                    await asyncio.sleep(0.05)
+                else:
+                    self.fail("same cancellation did not reach a terminal receipt")
+
+                terminal = polls[-1]
+                self.assertEqual(terminal.get("call_id"), call_id, terminal)
+                self.assertEqual(terminal["cancellation"].get("operation_id"),
+                                 operation_id, terminal)
+                cleanup = terminal["cancellation"].get("result", {})
+                self.assertTrue(cleanup.get("owner_process_retired"), cleanup)
+                self.assertEqual(cleanup.get("cleanup_status"), "UNKNOWN", cleanup)
+                self.assertFalse(cleanup.get("release_confirmed"), cleanup)
+                self.assertIsNone(terminal.get("task_success"), terminal)
+                self.assertFalse(terminal.get("replay_allowed"), terminal)
+
+                fake_x_after = json.loads(
+                    (server_root / "supervisor-fake-x.json").read_text())
+                self.assertEqual(fake_x_after["down"], [])
+                await public_call("close-01", "interface_close", {})
+                closed = True
+                receipt = recorder.reconcile()
+                self.assertTrue(receipt["complete"], receipt)
+                attempts = [row for row in receipt["events"]
+                            if row["kind"] == "model_attempt"]
+                tools = [row for row in receipt["events"]
+                         if row["kind"] == "tool_call"]
+                self.assertEqual(len(attempts), 1, attempts)
+                self.assertEqual(attempts[0]["attempt_id"],
+                                 "partial-input-attempt-01")
+                self.assertEqual(attempts[0]["usage"]["input_tokens"], 61)
+                self.assertEqual(attempts[0]["usage"]["output_tokens"], 13)
+                self.assertEqual(sum(row["method"] ==
+                    "interface_guarded_compiled" for row in tools), 1)
+                compiled_event = next(row for row in tools
+                                      if row["method"] ==
+                                      "interface_guarded_compiled")
+                self.assertEqual(compiled_event.get("model_attempt_id"),
+                                 "partial-input-attempt-01", compiled_event)
+                self.assertEqual(sum(row["method"] in {
+                    "interface_guarded_input", "interface_guarded_recover_input"}
+                    for row in tools), 0)
+                self.assertEqual(sum(row["method"] == "interface_guarded_cancel"
+                                     for row in tools), 1)
+                self.assertEqual(sum(row["method"] == "interface_results"
+                                     for row in tools), len(polls))
+                self.assertEqual(sum(row["method"] == "interface_close"
+                                     for row in tools), 1)
+                poll_requests = [row["arguments"] for row in controls
+                                 if row["method"] == "interface_results"]
+                self.assertTrue(all(row.get("call_id") == call_id
+                                    for row in poll_requests), poll_requests)
+                unlinked_controls = [row for row in tools if row["method"] in {
+                    "interface_guarded_cancel", "interface_results",
+                    "interface_close"}]
+                self.assertTrue(all(row.get("model_attempt_id") is None
+                                    for row in unlinked_controls), unlinked_controls)
+                self.assertTrue(all(row["call_id"] == call_id for row in polls))
+            finally:
+                (server_root / "resume-owner-io").write_text("resume")
+                (server_root / "continue-cleanup-supervisor").write_text("continue")
+                if not closed:
+                    try:
+                        await public_call("close-01", "interface_close", {})
+                    except Exception:
+                        await server.call_tool("interface_close", {})
+
+            if retained is not None:
+                retained.mkdir(parents=True, exist_ok=False)
+                shutil.copytree(recorder.root, retained / "provider-ledger")
+                shutil.copy2(server_root / "supervisor-fake-x.json",
+                             retained / "supervisor-fake-x.json")
+                shutil.copy2(server_root / "owner-io-entered.json",
+                             retained / "owner-io-entered.json")
+                (retained / "reconciled-events.json").write_text(
+                    json.dumps(receipt, sort_keys=True, indent=2) + "\n",
+                    encoding="utf-8")
+                (retained / "joined-result.json").write_text(json.dumps({
+                    "compiled_pending": pending, "cancel_response": cancel,
+                    "cancel_operation_id": operation_id,
+                    "result_poll_call_ids": [row["arguments"]["call_id"]
+                        for row in controls if row["method"] == "interface_results"],
+                    "result_poll_statuses": [row.get("cancellation", {}).get("status")
+                                             for row in polls],
+                    "cancel_terminal": terminal,
+                    "input_keys_before_cancel": down,
+                    "cleanup_fake_x_after": fake_x_after},
+                    sort_keys=True, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,14 @@
+{
+  "base_main": "1db2df19bbc311bfd77df97e7223274480aaf6ac",
+  "test": "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prearmed_cleanup_can_precede_retired_owners_queued_down",
+  "container_network": "none",
+  "container_cpus": 2,
+  "container_memory": "4g",
+  "container_memory_plus_swap": "4g total",
+  "pids_limit": 256,
+  "delay_ms": 350,
+  "normal": "1 passed",
+  "optimized": "1 passed",
+  "docker_exit": 0,
+  "assertion": "first response pending; same call polled to terminal owner_process_retired=true, release_confirmed=false, cleanup UNKNOWN, replay denied"
+}
