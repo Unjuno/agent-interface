@@ -1,0 +1,16 @@
+test_unregistered_startup_still_closes_existing_supervisor (runtime.cli_v1.test_owned_start_close.OwnedStartCloseTests.test_unregistered_startup_still_closes_existing_supervisor) ... FAIL
+
+======================================================================
+FAIL: test_unregistered_startup_still_closes_existing_supervisor (runtime.cli_v1.test_owned_start_close.OwnedStartCloseTests.test_unregistered_startup_still_closes_existing_supervisor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/runtime/cli_v1/test_owned_start_close.py", line 29, in test_unregistered_startup_still_closes_existing_supervisor
+    supervisor.close.assert_called_once()
+  File "/usr/lib/python3.11/unittest/mock.py", line 912, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'close' to have been called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

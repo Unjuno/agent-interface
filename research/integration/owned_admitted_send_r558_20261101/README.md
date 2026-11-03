@@ -1,0 +1,5 @@
+# R558: admitted RPC paused before send
+
+Pinned Linux image `sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425`, isolated with network none, 1 CPU, 1 GiB, read-only source. Base, pre-run test diff, normal and optimized output and exit codes are retained. A fake owner starts before a private snapshot RPC acquires its operation lock; its parent-side pipe send is gated before the original send. With the close lock wait reduced to 50 ms, close retires the exact child and returns unverified UNKNOWN, no replay, late server request possible. After the gate opens, the caller gets an exception and no snapshot. Both runs passed. Fixture cleanup joins the child.
+
+This is not an input-release test, public MCP admission test, timeout guarantee for process creation/kill, or evidence about requests already accepted by X or a real GUI. Close may perform other operations beyond the lock timeout; a parent death or a permanently blocked send remains outside the observation. The r556 late-start RPC regression remains red, so the enclosing PR remains draft.
