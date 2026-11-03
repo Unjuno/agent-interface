@@ -289,6 +289,49 @@ class CalcProfileTests(unittest.TestCase):
             self.assertEqual(roi.mode, 'L')
             self.assertEqual(roi.size, (180, 68))
 
+    def test_unchanged_frame_verifies_only_nonvisual_save_receipt(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            image = _profile_image()
+            binding = {'surface': 20, 'focus': 21, 'geometry': [0, 0, 1280, 800],
+                       'process_generation': PROCESS_GENERATION}
+            native, _ = self._source(root, 1, image, binding)
+            image = Image.open(native['native']['artifact']['path']).convert('RGB')
+            bridge = _Bridge(image, native)
+            with patch('runtime.guarded_x11_v1.calc_profile_v1.shutil.which',
+                       return_value='tesseract'):
+                profile = CalcPrimaryProfile(
+                    bridge, {'entry': {'alias':'calc_entry','offset':[12,8]},
+                             'save': {'alias':'calc_save','offset':[3,3]}},
+                    root, reviewed_sequence=1,
+                    reviewed_artifact_sha256=native['native']['artifact']['sha256'],
+                    blank_reviewed=True, ocr_runner=lambda *_a, **_kw: None)
+            requests = []
+
+            def record_save_request(**kwargs):
+                requests.append(kwargs)
+                return {'schema':'agent-interface/calc-task-save-request-v1',
+                        'save_request_id':'a'*32}
+
+            profile.task_artifact = SimpleNamespace(
+                record_save_request=record_save_request)
+            profile.task_process_generation = 'b'*64
+            profile.task_window_generation = 'c'*64
+            observation = {'evidence_ref':'observation-unchanged',
+                           'predicates':{'cells_filled':True}}
+            request = {'action':'save','observation':observation}
+            verdict = profile.verify_unchanged_effect(request, native, image)
+            self.assertEqual(verdict, {'status':'unavailable',
+                'evidence_ref':'observation-unchanged'})
+            self.assertEqual(requests, [{'process_generation':'b'*64,
+                                         'window_generation':'c'*64}])
+            self.assertEqual(profile.task_save_request['save_request_id'],'a'*32)
+
+            enter_verdict = profile.verify_unchanged_effect(
+                {'action':'enter','observation':observation}, native, image)
+            self.assertEqual(enter_verdict['status'],'unavailable')
+            self.assertEqual(len(requests),1)
+
     def test_source_change_yields_unknown_without_reusing_ocr(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

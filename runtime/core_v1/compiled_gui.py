@@ -311,7 +311,11 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 "effect_verification_accepted_ns": None,
             }
             if observation["evidence_digest"] == previous_digest:
-                return finish("SAFE_YIELD", "no_progress")
+                unchanged_verifier = adapters.get("verify_unchanged_effect")
+                if not callable(unchanged_verifier):
+                    return finish("SAFE_YIELD", "no_progress")
+            else:
+                unchanged_verifier = adapters["verify_effect"]
             expected = pending_effect["expected_effect"]
             observed = observation["predicates"]
             unknown = any(key not in observed or
@@ -328,7 +332,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 return finish("SAFE_YIELD", "effect_" + status)
             effect_timing["effect_verification_started_ns"] = clock()
             try:
-                effect = adapters["verify_effect"]({
+                effect = unchanged_verifier({
                     "expected_effect": copy.deepcopy(expected),
                     "action": pending_effect["action"],
                     "effect_ref": pending_effect["effect_ref"],

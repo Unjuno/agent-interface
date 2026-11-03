@@ -521,7 +521,8 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
                     if len(artifacts)==1:
                         artifacts[0].write_bytes(_CALC_TASK_FODS)
                         fake.calc_state['artifact_written_on_save']=True
-                image_with_marker([((300,300),(40,40,40))])
+                if not (root/'calc-save-frame-unchanged').exists():
+                    image_with_marker([((300,300),(40,40,40))])
             elif name and len(name) == 1:
                 fake.calc_state['typed'].append(name)
         elif kind == X.KeyRelease:
@@ -918,12 +919,17 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 prepared=metadata(await server.call_tool(
                     'interface_guarded_calc_prepare',{'attempt_id':'launch-gate-01'}))
                 self.assertEqual(prepared['status'],'prepared',prepared)
+                observed=metadata(await server.call_tool(
+                    'interface_guarded_observe',{}))
+                self.assertEqual(observed['status'],'observed',observed)
+                source=observed['source']
                 result=metadata(await server.call_tool(
                     'interface_guarded_calc_compiled',{
                         'profile_id':'calc-ocr-save-v1',
                         'bindings':{'entry':{'alias':'entry','offset':[0,0]},
                                     'save':{'alias':'save','offset':[0,0]}},
-                        'reviewed_sequence':1,'reviewed_artifact_sha256':'a'*64,
+                        'reviewed_sequence':source['sequence'],
+                        'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
                         'blank_reviewed':True,'attempt_id':'launch-gate-01',
                         'prepared_call_id':prepared['call_id']}))
                 self.assertEqual(result['status'],'needs_review',result)
@@ -1071,6 +1077,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             root=Path(td)
             (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
             (root/'fake-target-exit-receipt').write_text('enabled',encoding='utf-8')
+            (root/'calc-save-frame-unchanged').write_text('enabled',encoding='utf-8')
             server=create_server({'app':20},root,session_mode='guarded-x11',
                 guarded_process_identity=True,guarded_query_worker=True,
                 guarded_window_lifecycle=True,guarded_owned_process=True,
@@ -1142,6 +1149,19 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                                  source['pointer_binding']['window_generation'],result)
                 self.assertEqual(result['task_artifact_root_call_id'],
                                  prepared['call_id'],result)
+                self.assertEqual(result['method_receipt']['reason'],
+                                 'effect_unavailable',result)
+                graph_observations=result['method_receipt']['observations']
+                self.assertGreaterEqual(len(graph_observations),2,result)
+                self.assertEqual(graph_observations[-2]['evidence_digest'],
+                                 graph_observations[-1]['evidence_digest'],result)
+                same_frame_save_checks=[event for event in
+                    result['method_receipt']['critical_events']
+                    if event.get('event')=='effect_checked'
+                    and event.get('action')=='save']
+                self.assertEqual(len(same_frame_save_checks),1,result)
+                self.assertEqual(same_frame_save_checks[0]['status'],
+                                 'unavailable',result)
                 self.assertEqual(result['feedback']['image_status'],'image',result)
                 self.assertGreater(result['feedback']['owner_feedback_sequence'],
                     result['method_receipt']['observations'][-1]['sequence'],result)

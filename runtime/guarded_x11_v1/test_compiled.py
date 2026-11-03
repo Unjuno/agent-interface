@@ -80,6 +80,41 @@ def verify(payload,native,image): return {'status':'succeeded','evidence_ref':pa
 
 class CompiledX11Tests(unittest.TestCase):
 
+    def test_unchanged_frame_save_uses_opt_in_callback_and_stays_unverified(self):
+        b=Bridge(); original=b.observe
+        def observe_with_unchanged_save_frame():
+            native=original()
+            # The entry transition changes the frame once. The subsequent
+            # Save request leaves the pixels unchanged while the trusted
+            # observation predicate still advances from the app-level state.
+            native['native']['artifact']['sha256'] = (
+                'a'*64 if native['sequence'] == 1 else 'b'*64)
+            return native
+        b.observe=observe_with_unchanged_save_frame
+        unchanged=[]
+        def verify_unchanged(request,native,image):
+            unchanged.append(request['action'])
+            return {'status':'unavailable',
+                    'evidence_ref':request['observation']['evidence_ref']}
+        def observe_effect(native,image):
+            return {'phase':native['sequence']-1,'present':True}
+        result=run(b,spec(),bindings(),perceive=observe_effect,
+                   verify_effect=verify,
+                   verify_unchanged_effect=verify_unchanged)
+        self.assertEqual((result['outcome'],result['reason']),
+                         ('SAFE_YIELD','effect_unavailable'))
+        self.assertEqual(result['completed_transitions'],2)
+        self.assertEqual([row['action'] for row in result['transitions']],
+                         ['enter','save'])
+        self.assertTrue(all(row['release_verified']
+                            for row in result['transitions']))
+        self.assertEqual(len(b.inputs),2)
+        self.assertEqual(unchanged,['save'])
+        retained=[value for name,value in b.saved
+                  if name.endswith('-unchanged-effect.json')]
+        self.assertEqual(len(retained),1)
+        self.assertEqual(retained[0]['result']['status'],'unavailable')
+
     def test_post_release_settle_waits_before_effect_observation(self):
         b=Bridge(); times=[]
         def observe(native,image):
