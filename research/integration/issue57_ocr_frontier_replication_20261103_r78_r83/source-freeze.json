@@ -1,0 +1,35 @@
+{
+  "base_commit": "8bb083ac3680715089a22bebbbc4198399758f4d",
+  "docker_server": "29.8.1",
+  "experiment_sha256": {
+    "r78-b5/experiment.py": "772de79fdbdf40b49254330fe63e982ed83d7c73dd0562a6a489ce04347a5d80",
+    "r79-a5/experiment.py": "596c0b9859a2b018bcd499e3ffcd4671bd4b7945ef08a656939d5fd4efc1653a",
+    "r80-a6/experiment.py": "42ac331a7e7f4312d48ddca67d073312e79b8d725cc68abc1a49bf5d8d42f022",
+    "r81-b6/experiment.py": "e521a1ff2e0c210c43c42693ebf0c9892e7f6cbd5abc893b171f5eb5bddebfcb",
+    "r82-b7/experiment.py": "c5f4921992553a17371272101ea2d1137ee12689863a0c7fdcaa076d0442384a",
+    "r83-a7/experiment.py": "0dc2ee05521980ba715089c10ce333df96461abe765a5aadd9eb3c5f4c37be9f"
+  },
+  "host_limits": {
+    "container": "2CPU/4GiB/4GiB swap/256 PIDs/local logs",
+    "memory_bytes": "25203224576",
+    "wslconfig": "24GB/8 CPU/8GB swap/gradual reclaim"
+  },
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "order": [
+    "r78-b5:always",
+    "r79-a5:skip",
+    "r80-a6:skip",
+    "r81-b6:always",
+    "r82-b7:always",
+    "r83-a7:skip"
+  ],
+  "schema": "agent-interface/issue57-ocr-replication-freeze-v1",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "4122e78bef98f4eacece76d6dae3f049bf75b000c57ad2f95311b119ac1285ca",
+    "runtime/cli_v1/owned_guarded_session.py": "a9c254171b053bb2e86bd17b6288b6f418e4f1e71dac6a262419765f8218d8dc",
+    "runtime/guarded_x11_v1/bridge.py": "e83e4a218bdfd751a68caef3f20d91bc495dfad19611c705714a126d9fd8fb1a",
+    "runtime/guarded_x11_v1/calc_launcher_v1.py": "75db62d3716f41bbe7af639c2e422cd625bab98a0f0dd3bf21b2ea1a97f8f305",
+    "runtime/guarded_x11_v1/calc_process_group_v1.py": "16c6b6b86ba1b760c0343091389310f44573390b206ec00c07376764e3be8fc1",
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "0cd7f0d42be1bd93bf83d0ffdb636e846b41a8d5ab7503ae830789b176af4071"
+  }
+}
