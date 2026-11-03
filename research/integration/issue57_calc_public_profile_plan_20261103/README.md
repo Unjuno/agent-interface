@@ -33,7 +33,7 @@ This profile does not claim a general Calc controller or a successful transfer.
 
 | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
 | --- | --- | --- |
-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | Add model-wait dependency mutation through the composed registered profile. |
+| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | The direct MCP route rejects an already-stale review before worker admission after a simulated wait. Compose a real provider wait with that mutation; preserve child-side checks for the post-preflight race. |
 | #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
 | #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
 | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
@@ -61,11 +61,17 @@ unknown; the registered profile yields after the partial effect, records the
 input release, leaves Save undispatched, and denies replay. This is still a
 Fake X regression, not an application-level ambiguity result.
 
-Remaining offline work is dependency invalidation after provider wait and one
-bounded new-attempt repair case with all receipts joined. Existing direct-owner,
-Fake X and recorder tests cover parts separately; they do not establish these
-combined Calc-profile paths. No real provider reconciliation or live efficiency
-comparison exists.
+The stale-review MCP check now rejects a sequence superseded during a controlled
+20 ms wait and changed window-title cue before scheduling the owner operation.
+This is a simulated wait, with no provider request; it does not establish the
+provider-to-MCP timing/join boundary. The raw owner and tool receipts are in
+[the r02 stale-review packet](../standard_mcp_task_ledger_57_v1/stale-review-after-model-wait-20261103-r02/README.md).
+
+Remaining offline work is to compose an actual provider wait with this mutation
+and complete one bounded new-attempt repair case with all receipts joined.
+Existing direct-owner, Fake X and recorder tests cover parts separately; they do
+not establish those combined paths. No real provider reconciliation or live
+efficiency comparison exists.
 
 ## Gate before any new live comparison
 
