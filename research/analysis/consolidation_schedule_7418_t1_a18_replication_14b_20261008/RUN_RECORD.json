@@ -1,0 +1,52 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A18-REPLICATION-14B-20261008",
+  "status": "STOP_INCOMPLETE",
+  "created_utc": "2026-10-08",
+  "package": "research/analysis/consolidation_schedule_7418_t1_a18_replication_14b_20261008",
+  "fixture_source": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/model.json",
+  "model": "qwen3:14b",
+  "model_parameters": "14.8B",
+  "model_quantization": "Q4_K_M",
+  "model_digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+  "private_base_url": "http://127.0.0.1:11435",
+  "private_store": "/tmp/unjuno-8406-t1-a16-ollama-store",
+  "seeds": [
+    5701,
+    5702,
+    5703
+  ],
+  "arms": [
+    "episodic_only",
+    "per_episode",
+    "batch_2",
+    "terminal"
+  ],
+  "checkpoints": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "queries_per_checkpoint": 5,
+  "planned_calls": {
+    "query": 360,
+    "consolidation": 30,
+    "total": 390
+  },
+  "single_intervention_vs_a16": "Only the numeric seeds change from A16; model, prompt, fixture, schedules, decoding, auditor, and query controls remain fixed.",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "preflight_path": "results/FORMAL_T1_A18/PREFLIGHT.json",
+  "raw_path": "results/FORMAL_T1_A18/raw.jsonl",
+  "audit_path": "results/FORMAL_T1_A18/audit.json",
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406",
+  "candidate_invocations": 1,
+  "auditor_invocations": 0,
+  "persisted_rows": 231,
+  "candidate_exit_code": 1,
+  "stop_record": "STOP_RECORD.json",
+  "raw_sha256": "b6baad54c447ccbe34b3c4a0f70e1d727f37acb92c85eff98796ca34dffc50c8",
+  "candidate_error": "OSError: [Errno 28] No space left on device"
+}

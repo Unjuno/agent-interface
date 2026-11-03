@@ -1,0 +1,36 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A18-REPLICATION-14B-20261008",
+  "status": "STOP_INCOMPLETE",
+  "reason": "Candidate exited with OSError [Errno 28] No space left on device while flushing the next raw JSONL record after its model response returned.",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 1,
+  "auditor_invocations": 0,
+  "planned_rows": 390,
+  "persisted_rows": 231,
+  "persisted_row_ids_contiguous": true,
+  "persisted_rows_valid_json": true,
+  "persisted_call_error_rows": 0,
+  "persisted_model_names": [
+    "qwen3:14b"
+  ],
+  "persisted_model_digests": [
+    "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8"
+  ],
+  "next_row_id": 231,
+  "next_response_received_but_not_persisted": true,
+  "model_api_responses_completed_inferred": 232,
+  "unpersisted_response_recoverable": false,
+  "raw_path": "results/FORMAL_T1_A18/raw.jsonl",
+  "raw_bytes": 1269544,
+  "raw_sha256": "b6baad54c447ccbe34b3c4a0f70e1d727f37acb92c85eff98796ca34dffc50c8",
+  "preflight_sha256": "01c953bf4a61c50a80149b1abba57bf81a5c6047f54a7e6d3b3a077ca68416f4",
+  "candidate_error": "OSError: [Errno 28] No space left on device",
+  "private_server_stopped": true,
+  "private_server_port_11435_listener_after_stop": false,
+  "interpretation": "No auditor was run because the frozen 390-row completion gate was not met. No cadence or accuracy conclusion can be drawn from this partial output. No retry or seed replacement was made.",
+  "frozen_run_record_sha256": "8359a360381380002f30a776eddeb18484fa203e03da446230e51e354d04488c",
+  "frozen_input_hash_mismatches_after_run": [
+    "RUN_RECORD.json"
+  ],
+  "post_run_mismatch_explanation": "RUN_RECORD.json was updated after the one-shot attempt to record its terminal STOP state; the preregistered frozen version is preserved in the freeze commit above."
+}
