@@ -4,6 +4,8 @@ This directory is the research workspace and retained evidence record for Agent 
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
+- Closed PR #7148: [X11 input-custody safety HOLD](integration/x11_input_custody_7148/RECOVERY.md) — retained candidate tests do not establish safe release: source-supported wrong-ClientPointer and unreadable-button-state constructions can falsely clear custody. No runtime patch is adopted.
+
 ## Start here
 
 - Issue #8663: [predicate-aware DPOR evidence](gui_query_dpor_8663_a01_20261009/CUSTODY.md) — synthetic results with retained STOP, FAIL and corrected audit; the preregistered auditor limit was exceeded. No live GUI claim.
