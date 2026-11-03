@@ -1,0 +1,85 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A04-PRIVATE-QWEN-20261008",
+  "base_main_sha": "8ec1369bf81025ed433b4391871f9bb503198c19",
+  "branch": "research/8406-schedule-t1-a04-private-qwen-20261008",
+  "companion_to": 7418,
+  "construction_tests": "4/4 PASS before freeze; no A04 generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED for >=0.10 paired exact-accuracy difference same direction all 3 seeds and clean audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED when all pairwise abs differences <0.10 every seed and audit passes; otherwise UNCERTAIN; identity/raw/method failure => FAIL_METHOD",
+  "delta_from_A03": [
+    "fresh seed set 4401/4402/4403",
+    "private Ollama model store/service on port 11435 isolated from mutable global Gemma daemon",
+    "Qwen3:8B with frozen digest; first load occurs on first formal candidate request, with tag and runner identity recorded around every request"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 256,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4401,
+      4402,
+      4403
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "e2a65c1faeabb9236966949fe2d277e8e92a2e0dc9664664fb688525263588fb",
+    "PROTOCOL.md": "dffd883d7176e45fa876b0daccd3373a6078f160fdc501981db32bfc108e8598",
+    "README.md": "73494523474ac7d4400510e1b8217556498e1bddda996da7fe600d8ad2f913fb",
+    "auditor.py": "e7fa3ea3e086afae5c7470168c47844f00b17ce10063f7f8e9b900a9b920d8f1",
+    "candidate.py": "8080d0b8ade54bd91405a3f19f81346ab497b28cde3702aa21cf39b48a144664",
+    "episode_ledger.json": "e7992954860be07f2205fb6af4dc9f9b3e90f29bd72728552a60f106bb645a5c",
+    "prompts.json": "7ac8c338b8b47fb45ec63d9b028161c2fa492d6689a5c8580540667689591404",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "8ddf1f2c2526ee377bc276f32a4e1e940c5ac0994b43c35240cb4e0d6f42773d"
+  },
+  "identity_gate": "Private /api/tags exact qwen3:8b digest before/after every request; /api/ps empty only before first call, then exactly one runner at the frozen digest before/after each call.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a04-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a04_private_qwen_20261008",
+  "pre_freeze_HEAD": "184862bc19e1c547a10a42f7383101b22a685d23",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a04_private_qwen_20261008/results/FORMAL_T1_A04/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama model boundary",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  }
+}
