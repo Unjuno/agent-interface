@@ -783,6 +783,87 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool("interface_close", {})
 
+    async def test_object_output_with_invalid_registered_mcp_types_returns_refusal(self):
+        """Type/constraint failures stop before the registered Calc handler."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(
+                Relay(ServerClient(), tools={"interface_guarded_calc_compiled"}),
+                recorder)
+            arguments = {
+                "profile_id": 7,
+                "bindings": {},
+                "reviewed_sequence": 1,
+                "reviewed_artifact_sha256": "not-a-sha256",
+                "blank_reviewed": True,
+                "attempt_id": "schema-type-refusal",
+            }
+            response_bytes = json.dumps({
+                "type": "item.completed",
+                "item": {"type": "agent_message",
+                         "text": json.dumps(arguments)},
+            }, separators=(",", ":")).encode("utf-8") + b"\n"
+
+            async def provider():
+                return {"status": "completed",
+                        "usage": {"status": "reported",
+                                  "input_tokens": 21, "output_tokens": 3},
+                        "response_bytes": response_bytes}
+
+            try:
+                result = await caller.invoke_generation_to_tool(
+                    "generation-invalid-registered-types", b'{"prompt":"calc"}',
+                    provider, "tool-invalid-registered-types",
+                    "interface_guarded_calc_compiled",
+                    lambda generation: parse_agent_message(
+                        generation["response_bytes"]))
+                self.assertEqual(result["tool_response"]["status"], "returned")
+                mcp_result = result["tool_response"]["result"]
+                self.assertTrue(mcp_result["isError"], mcp_result)
+                refusal = json.loads(mcp_result["content"][0]["text"])
+                self.assertEqual(refusal["status"], "invalid_request", refusal)
+                self.assertEqual(refusal["error"],
+                                 "tool arguments failed schema validation", refusal)
+                self.assertFalse(refusal["operation_invoked"], refusal)
+                self.assertFalse(refusal["input_dispatched"], refusal)
+                self.assertIsNone(refusal["task_success"], refusal)
+                self.assertFalse(refusal["replay_allowed"], refusal)
+                errors = refusal["validation_errors"]
+                self.assertEqual({tuple(item["path"]) for item in errors}, {
+                    ("profile_id",), ("reviewed_artifact_sha256",)})
+                self.assertTrue(all("code" in item for item in errors))
+                serialized_refusal = json.dumps(refusal)
+                self.assertNotIn("not-a-sha256", serialized_refusal)
+                self.assertNotIn('"input"', serialized_refusal)
+
+                receipt = recorder.reconcile()
+                attempt = next(event for event in receipt["events"]
+                               if event["kind"] == "model_attempt")
+                self.assertTrue(receipt["complete"])
+                self.assertEqual(attempt["status"], "completed")
+                self.assertEqual(attempt["usage"]["input_tokens"], 21)
+                self.assertEqual(attempt["usage"]["output_tokens"], 3)
+                raw_ref = next(ref for ref in attempt["raw_refs"]
+                               if ref["path"].endswith("response.bin"))
+                self.assertEqual((recorder.root / raw_ref["path"]).read_bytes(),
+                                 response_bytes)
+                self.assertFalse(list(server_root.glob("*/request.json")))
+            finally:
+                await server.call_tool("interface_close", {})
+
     async def test_fake_provider_image_and_stale_generation_roundtrip_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

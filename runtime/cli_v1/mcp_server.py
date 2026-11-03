@@ -18,7 +18,7 @@ import uuid
 from mcp.server.fastmcp import FastMCP
 import anyio
 from mcp.types import CallToolResult, ImageContent, TextContent
-from pydantic import Field, StrictBool, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictInt, StrictStr, ValidationError
 
 from .api import dispatch
 from .mcp_session import MCPSessionOwner
@@ -267,10 +267,12 @@ def content(result, *, error=False, include_image=True):
 
 
 class PublicArgumentMCP(FastMCP):
-    """Reject unknown top-level tool arguments before SDK coercion or input.
+    """Reject malformed public arguments before tool invocation or input.
 
-    Nested program/tail dictionaries retain their existing runtime validators.
-    Only public FastMCP list/call methods are used; SDK metadata is not patched.
+    The registered FastMCP argument model is prevalidated so schema failures are
+    distinguishable from errors raised by the tool function itself. This reads
+    FastMCP's tool metadata but does not modify it; normal calls still use the
+    public ``call_tool`` path.
     """
     async def list_tools(self):
         tools = await super().list_tools()
@@ -297,6 +299,29 @@ class PublicArgumentMCP(FastMCP):
                         'input_dispatched': False, 'release_confirmed': None,
                         'effect_status': 'unknown', 'task_success': None,
                         'replay_allowed': False}, error=True)
+                registered_tool = self._tool_manager.get_tool(name)
+                metadata = registered_tool.fn_metadata
+                try:
+                    parsed = metadata.pre_parse_json(arguments)
+                    validated = metadata.arg_model.model_validate(parsed)
+                    validated.model_dump_one_level()
+                except ValidationError as error:
+                    errors = error.errors(include_input=False)
+                    details = []
+                    for item in errors[:32]:
+                        path = [part for part in item.get('loc', ())
+                                if type(part) in (str, int)]
+                        code = item.get('type')
+                        details.append({'path': path,
+                                        'code': code if isinstance(code, str)
+                                        else 'validation_error'})
+                    return content({'status': 'invalid_request',
+                        'error': 'tool arguments failed schema validation',
+                        'validation_errors': details,
+                        'validation_errors_truncated': len(errors) > len(details),
+                        'operation_invoked': False, 'input_dispatched': False,
+                        'release_confirmed': None, 'effect_status': 'unknown',
+                        'task_success': None, 'replay_allowed': False}, error=True)
                 break
         return await super().call_tool(name, arguments)
 
