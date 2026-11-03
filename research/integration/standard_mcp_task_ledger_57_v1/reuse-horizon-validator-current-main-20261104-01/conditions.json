@@ -1,0 +1,37 @@
+{
+  "schema": "agent-interface/reuse-horizon-validator-rerun-v1",
+  "run_date": "2026-11-04",
+  "source_revision": "1db2df19bbc311bfd77df97e7223274480aaf6ac",
+  "validator_blob": "e6732e2566b2c249f15eac72c88c62c799d1073d",
+  "tests_blob": "3cb10bbce50046a94ee1564a22f5cbc30dfdd030",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "docker_engine": "29.8.1",
+  "active_host_wsl_config": "32GB memory / 8 CPUs / 16GB swap / gradual reclaim",
+  "container_network": "none",
+  "container_cpus": 2,
+  "container_memory": "4g",
+  "container_memory_plus_swap": "4g total",
+  "pids_limit": 256,
+  "source_mount": "read-only",
+  "packet_mount": "writable evidence only",
+  "commands": [
+    "python3 -m unittest -v test_comparison_measurement_v1",
+    "python3 -O -m unittest -v test_comparison_measurement_v1"
+  ],
+  "results": {
+    "optimized": "17/17 passed",
+    "normal": "17/17 passed",
+    "docker_exit": 0
+  },
+  "provider_generations": 0,
+  "gui_actions": 0,
+  "scope": "synthetic offline validator only",
+  "limitations": [
+    "not a live provider or GUI experiment",
+    "not an end-to-end latency or efficiency result",
+    "not evidence of Docker long-term stability",
+    "host CPUs=8 differs from stale 12-CPU historical stability note"
+  ],
+  "packaging_failure": "One separate documentation capture invocation was rejected before container start (exit 125) due PowerShell argument splitting; the exact direct-argument run passed and is retained separately."
+}
