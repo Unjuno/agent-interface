@@ -1,0 +1,171 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-ocr-save-v1",
+  "method": "calc-ocr-save-v1",
+  "method_version": "1",
+  "session_scope": "native-x11:5484ccfb027549bf8971401a38d9f2ab",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_unavailable",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 4363633624085,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_filled": "unknown"
+      },
+      "observation_started_ns": 4363632802086,
+      "observation_accepted_ns": 4363745330707
+    },
+    {
+      "sequence": 13,
+      "captured_ns": 4364850627621,
+      "evidence_ref": "observation-13",
+      "evidence_digest": "5c0cb9612471da938311170129bb2c1c8b5abfcce00d1b17d2c74fae7259f09f",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": true
+      },
+      "observation_started_ns": 4364849779346,
+      "observation_accepted_ns": 4364962841443
+    },
+    {
+      "sequence": 18,
+      "captured_ns": 4365795253978,
+      "evidence_ref": "observation-18",
+      "evidence_digest": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": true
+      },
+      "observation_started_ns": 4365794256435,
+      "observation_accepted_ns": 4365908942455
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "filled",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-c803dd9f5f164091b71ee792a2f021cf",
+      "effect_ref": "compiled-6214681028ec4e9bb1270054fd3c6205-17-execution",
+      "release_verified": true,
+      "execution_started_ns": 4363753217403,
+      "execution_accepted_ns": 4364847921567
+    },
+    {
+      "from_state": "filled",
+      "to_state": "handoff",
+      "action": "save",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_filled": true
+      },
+      "observation_sequence": 13,
+      "evidence_ref": "observation-13",
+      "action_id": "action-cb8d161da8db4c4184c3bfd85cb6789b",
+      "effect_ref": "compiled-6214681028ec4e9bb1270054fd3c6205-32-execution",
+      "release_verified": true,
+      "execution_started_ns": 4364976936993,
+      "execution_accepted_ns": 4365791088353
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "completed",
+      "action_id": "action-c803dd9f5f164091b71ee792a2f021cf",
+      "release_verified": true,
+      "execution_started_ns": 4363753217403,
+      "execution_accepted_ns": 4364847921567
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter",
+      "status": "succeeded",
+      "evidence_ref": "observation-13",
+      "action_id": "action-c803dd9f5f164091b71ee792a2f021cf",
+      "execution_accepted_ns": 4364847921567,
+      "effect_observation_captured_ns": 4364850627621,
+      "effect_observation_accepted_ns": 4364962841443,
+      "effect_verification_started_ns": 4364964900899,
+      "effect_verification_accepted_ns": 4364967454416
+    },
+    {
+      "event": "branch_selected",
+      "state": "filled",
+      "outcome": "action",
+      "action": "save",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_filled": true
+      },
+      "evidence_ref": "observation-13"
+    },
+    {
+      "event": "action_terminal",
+      "action": "save",
+      "status": "completed",
+      "action_id": "action-cb8d161da8db4c4184c3bfd85cb6789b",
+      "release_verified": true,
+      "execution_started_ns": 4364976936993,
+      "execution_accepted_ns": 4365791088353
+    },
+    {
+      "event": "effect_checked",
+      "action": "save",
+      "status": "unavailable",
+      "evidence_ref": "observation-18",
+      "action_id": "action-cb8d161da8db4c4184c3bfd85cb6789b",
+      "execution_accepted_ns": 4365791088353,
+      "effect_observation_captured_ns": 4365795253978,
+      "effect_observation_accepted_ns": 4365908942455,
+      "effect_verification_started_ns": 4365910543664,
+      "effect_verification_accepted_ns": 4365913422566
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-18",
+  "pending_effect": {
+    "action": "save",
+    "expected_effect": {
+      "cells_filled": true
+    },
+    "effect_ref": "compiled-6214681028ec4e9bb1270054fd3c6205-32-execution"
+  },
+  "started_ns": 4363632795928,
+  "ended_ns": 4365915247044,
+  "elapsed_ns": 2282451116,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

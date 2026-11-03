@@ -1,0 +1,35 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-0ca021820c514439844e6c636c7c9763",
+  "source": {
+    "observation_seq": 14,
+    "binding_revision": 1
+  },
+  "authority": {
+    "lease_id": "native-x11-991be17a278d4b9bb1a26755f1a22326",
+    "expires_at_ns": 4423871865745
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "calc"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "s"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}
