@@ -1,0 +1,151 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 2443474821511,
+      "ended_ns": 2443992100858,
+      "emissions": 24,
+      "program_emissions": 24,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 2443992098501
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 1,
+          "started_ns": 2443500746290,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443501815873
+        },
+        {
+          "operation_index": 4,
+          "requested_ms": 1,
+          "started_ns": 2443526610601,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443527682303
+        },
+        {
+          "operation_index": 6,
+          "requested_ms": 1,
+          "started_ns": 2443553059890,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443554129122
+        },
+        {
+          "operation_index": 8,
+          "requested_ms": 1,
+          "started_ns": 2443579539053,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443580613623
+        },
+        {
+          "operation_index": 11,
+          "requested_ms": 100,
+          "started_ns": 2443636845400,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443737011417
+        },
+        {
+          "operation_index": 13,
+          "requested_ms": 1,
+          "started_ns": 2443768315835,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443769383566
+        },
+        {
+          "operation_index": 15,
+          "requested_ms": 1,
+          "started_ns": 2443793134251,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443794202876
+        },
+        {
+          "operation_index": 17,
+          "requested_ms": 1,
+          "started_ns": 2443817094258,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443818161883
+        },
+        {
+          "operation_index": 19,
+          "requested_ms": 1,
+          "started_ns": 2443841479936,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443842547907
+        },
+        {
+          "operation_index": 22,
+          "requested_ms": 100,
+          "started_ns": 2443891709138,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 2443991847534
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    "recovery_required": false
+  }
+}

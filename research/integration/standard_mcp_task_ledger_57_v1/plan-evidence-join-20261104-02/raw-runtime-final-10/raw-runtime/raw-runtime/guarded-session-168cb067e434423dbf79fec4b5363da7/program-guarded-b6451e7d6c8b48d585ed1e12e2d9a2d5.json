@@ -1,0 +1,35 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-b6451e7d6c8b48d585ed1e12e2d9a2d5",
+  "source": {
+    "observation_seq": 17,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-36afd7089818476b85037445e48a2442",
+    "expires_at_ns": 2651271765776
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "s"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

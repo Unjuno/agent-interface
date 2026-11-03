@@ -1,18 +1,13 @@
 {
-  "schema": "agent-interface/plan-evidence-join-run-v1",
-  "source_commit": "6100f2a2fdb42d832ac491314e5cb1ccc2e2554c",
+  "cpus": 2,
   "docker_image": "agent-interface-xvfb-mcp:late-input-r19",
   "docker_image_digest": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
-  "network": "none",
-  "cpus": 2,
+  "fake_app_server_calc_composition": "1/1 passed, 9.443s",
+  "integrated_docker_exit": 0,
   "memory": "4g",
   "memory_swap": "4g total",
-  "pids_limit": 256,
-  "source_mount": "read-only",
+  "network": "none",
   "normal_unit_tests": "27/27 passed",
-  "optimized_unit_tests": "27/27 passed",
-  "fake_app_server_calc_composition": "1/1 passed, 9.450s",
-  "scope": "Synthetic evidence-join tests; provider-routed Calc compiled call refused for missing mint receipt; separate nested Fake X path verifies FODS values/release, not same call",
   "not_established": [
     "live model-authored plan",
     "provider efficiency",
@@ -21,11 +16,16 @@
     "MAP01",
     "Docker long-duration host stability"
   ],
-  "integrated_docker_exit": 0,
+  "optimized_unit_tests": "27/27 passed",
+  "pids_limit": 256,
   "retained_raw_artifact_dirs": [
-    "raw-runtime-final-08/provider-call",
-    "raw-runtime-final-08/provider-ledger",
-    "raw-runtime-final-08/raw-runtime",
-    "raw-runtime-final-08/app-server-protocol.jsonl"
-  ]
+    "raw-runtime-final-10/provider-call",
+    "raw-runtime-final-10/provider-ledger",
+    "raw-runtime-final-10/raw-runtime",
+    "raw-runtime-final-10/app-server-protocol.jsonl"
+  ],
+  "schema": "agent-interface/plan-evidence-join-run-v1",
+  "scope": "Synthetic evidence-join tests; provider-routed Calc compiled call used minted bindings, completed two transitions and verified release after both; final save effect unavailable; separate direct FODS effect is not joined",
+  "source_commit": "b78fad04e3f6e82a7163417c3507a53eff3fc20e + diagnostic result-separation changes in test_mcp_endpoint_composition.py",
+  "source_mount": "read-only"
 }

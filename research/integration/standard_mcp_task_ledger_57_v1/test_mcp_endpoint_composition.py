@@ -1357,7 +1357,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             observed = {"artifact": None, "artifact_bytes": None,
                         "verification": None, "close": None,
                         "negative_profile_results": {}, "public_caller": None,
-                        "compiled_result_candidates": []}
+                        "compiled_result_candidates": [], "mint_receipts": [],
+                        "provider_routed_compiled_results": []}
             test_case = self
 
             class ServerClient:
@@ -1485,6 +1486,11 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                 raise AssertionError(joined)
                             response_text = joined["tool_response"]["result"][
                                 "content"][0]["text"]
+                            if name == "interface_guarded_calc_compiled":
+                                observed["provider_routed_compiled_results"].append({
+                                    "attempt_id": arguments.get("attempt_id"),
+                                    "bindings": arguments.get("bindings"),
+                                    "body": json.loads(response_text)})
                             if attempt_id != "calc-offline-e2e-01":
                                 observed["negative_profile_results"][attempt_id] = (
                                     json.loads(response_text))
@@ -1510,6 +1516,15 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         if name == "interface_guarded_calc_compiled":
                             observed["compiled_result_candidates"].append({
                                 "attempt_id": arguments.get("attempt_id"),
+                                "reviewed_sequence": arguments.get("reviewed_sequence"),
+                                "bindings": arguments.get("bindings"),
+                                "body": body})
+                        if name == "interface_guarded_mint":
+                            observed["mint_receipts"].append({
+                                "requested_alias": arguments.get("alias"),
+                                "requested_source_sequence": arguments.get(
+                                    "source_sequence"),
+                                "requested_point": arguments.get("point"),
                                 "body": body})
                         if name == "interface_guarded_calc_prepare" and body.get(
                                 "status") == "prepared":
@@ -1633,6 +1648,22 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(provider_primary["input_dispatched"], provider_primary)
             self.assertIsNone(provider_primary["task_success"], provider_primary)
             self.assertFalse(provider_primary["replay_allowed"], provider_primary)
+            routed_primary = next(candidate for candidate in
+                observed["provider_routed_compiled_results"]
+                if candidate["attempt_id"] == "calc-offline-e2e-01")
+            routed_receipt = routed_primary["body"]["method_receipt"]
+            self.assertEqual(routed_receipt["outcome"], "SAFE_YIELD",
+                             routed_primary)
+            self.assertEqual(routed_receipt["reason"], "effect_unavailable",
+                             routed_primary)
+            self.assertEqual(routed_receipt["completed_transitions"], 2,
+                             routed_primary)
+            self.assertTrue(all(row["release_verified"] is True for row in
+                                routed_receipt["transitions"]), routed_primary)
+            self.assertIsNone(routed_primary["body"]["task_success"],
+                              routed_primary)
+            self.assertFalse(routed_primary["body"]["replay_allowed"],
+                             routed_primary)
             artifact_bytes = observed["artifact_bytes"]
             self.assertIsInstance(artifact_bytes, bytes)
             root_xml = ET.fromstring(artifact_bytes)
@@ -1733,6 +1764,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                             observed["verification"]["task_effect"]["task_success"],
                         "provider_compiled_call_candidates": [
                             {"attempt_id": candidate["attempt_id"],
+                             "reviewed_sequence": candidate["reviewed_sequence"],
+                             "bindings": candidate["bindings"],
                              "status": candidate["body"].get("status"),
                              "task_success": candidate["body"].get("task_success"),
                              "error": candidate["body"].get("error"),
@@ -1741,6 +1774,24 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                  "method_receipt", {}).get("reason"),
                              "keys": sorted(candidate["body"])}
                             for candidate in observed["compiled_result_candidates"]],
+                        "provider_routed_compiled_call_results": [
+                            {"attempt_id": candidate["attempt_id"],
+                             "bindings": candidate["bindings"],
+                             "outcome": candidate["body"].get(
+                                 "method_receipt", {}).get("outcome"),
+                             "reason": candidate["body"].get(
+                                 "method_receipt", {}).get("reason"),
+                             "completed_transitions": candidate["body"].get(
+                                 "method_receipt", {}).get("completed_transitions"),
+                             "release_verified": [row.get("release_verified")
+                                 for row in candidate["body"].get(
+                                     "method_receipt", {}).get("transitions", [])],
+                             "task_success": candidate["body"].get("task_success"),
+                             "replay_allowed": candidate["body"].get(
+                                 "replay_allowed")}
+                            for candidate in
+                            observed["provider_routed_compiled_results"]],
+                        "public_mint_receipts": observed["mint_receipts"],
                         "limits": ["FakeX_only", "no_live_provider", "no_live_Calc",
                                    "no_efficiency_comparison"]},
                         sort_keys=True, indent=2, allow_nan=False) + "\n",
