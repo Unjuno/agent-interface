@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "research/analysis/raw_artifact_bypass_8581_t0_a02_20261009/auditor.py", line 144, in <module>
+    main()
+  File "research/analysis/raw_artifact_bypass_8581_t0_a02_20261009/auditor.py", line 140, in main
+    print(json.dumps({"disposition": result["disposition"], "errors": len(errors), "mutations": mutations}, sort_keys=True))
+NameError: name 'mutations' is not defined
