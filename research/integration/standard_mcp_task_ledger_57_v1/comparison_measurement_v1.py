@@ -15,6 +15,17 @@ from ledger import LedgerValidationError, validate_record
 
 
 _HASH = re.compile(r"^[0-9a-f]{64}$")
+_C_ATTEMPT_DISPOSITIONS = {
+    "plan_generation": {"completed"},
+    "stale_response": {"completed"},
+    "fallback": {"completed"},
+    "abstention": {"abstained"},
+    "failure": {"failed"},
+    "timeout": {"timeout"},
+    "cancellation": {"cancelled"},
+    "refusal": {"refused"},
+    "malformed_response": {"malformed"},
+}
 _ARMS = {"A", "B", "C"}
 _PHASES = {
     "setup_acquisition", "observation_grounding", "provider_wait",
@@ -183,13 +194,15 @@ def validate_reuse_horizon(value):
     The horizon is a predeclared sequence of matched A/B/C task blocks. Arm C
     has one semantic-plan lineage: a cold generation, one or more warm uses,
     exactly one staged dependency change and repair, then post-repair warm use.
-    Token counts and elapsed time are accumulated separately.
+    Every C model attempt has an explicit disposition, while only plan-generation
+    attempts participate in plan lineage. Token counts and elapsed time include
+    all attempts and are accumulated separately.
     """
     if type(value) is not dict or set(value) != {
             "schema", "comparison_id", "predeclared_horizon",
             "invalidation_after_task_index", "blocks", "c_plan_trace"}:
         _fail("reuse horizon fields do not match the comparison schema")
-    if value["schema"] != "agent-interface/reuse-horizon-comparison-v1":
+    if value["schema"] != "agent-interface/reuse-horizon-comparison-v2":
         _fail("unsupported reuse-horizon schema")
     if not isinstance(value["comparison_id"], str) or not value["comparison_id"].strip():
         _fail("comparison_id is required")
@@ -255,19 +268,22 @@ def validate_reuse_horizon(value):
     if type(trace) is not list or len(trace) != horizon:
         _fail("C plan trace must contain one entry per horizon task")
     c_attempts = []
+    c_attempt_events = []
     for block in blocks:
         run_c = next(run for run in block["runs"]
                      if run["task_ledger"]["comparison"]["arm"] == "C")
-        c_attempts.append({event["attempt_id"] for event in
-                           run_c["task_ledger"]["events"]
-                           if event["kind"] == "model_attempt"})
+        attempts = [event for event in run_c["task_ledger"]["events"]
+                    if event["kind"] == "model_attempt"]
+        c_attempt_events.append(attempts)
+        c_attempts.append({event["attempt_id"] for event in attempts})
 
     normalized_trace = []
     plan_digest = dependency_digest = repair_plan = repair_dependency = None
     repair_index = invalidation_after + 1
     for index, row in enumerate(trace, start=1):
         required = {"task_index", "mode", "plan_sha256", "source_task_index",
-                    "dependency_sha256", "plan_generation_attempt_ids"}
+                    "dependency_sha256", "plan_generation_attempt_ids",
+                    "attempt_dispositions"}
         if type(row) is not dict or set(row) != required or row["task_index"] != index:
             _fail("C plan trace fields and order are invalid")
         mode = row["mode"]
@@ -279,13 +295,37 @@ def validate_reuse_horizon(value):
                 row["dependency_sha256"]):
             _fail("dependency digest must be lowercase SHA-256")
         attempt_ids = row["plan_generation_attempt_ids"]
-        if (type(attempt_ids) is not list or len(attempt_ids) != len(set(attempt_ids))
-                or any(not isinstance(item, str) or not item for item in attempt_ids)):
+        if (type(attempt_ids) is not list
+                or any(not isinstance(item, str) or not item for item in attempt_ids)
+                or len(attempt_ids) != len(set(attempt_ids))):
             _fail("plan generation attempts must be a unique explicit list")
         if any(attempt not in c_attempts[index - 1] for attempt in attempt_ids):
             _fail("plan generation attempt is absent from the matching C ledger")
-        if set(attempt_ids) != c_attempts[index - 1]:
-            _fail("every C model attempt must be accounted as plan generation in this horizon")
+        dispositions = row["attempt_dispositions"]
+        if type(dispositions) is not list:
+            _fail("C attempt dispositions must be an exhaustive ordered list")
+        attempts = c_attempt_events[index - 1]
+        expected_attempt_ids = [event["attempt_id"] for event in attempts]
+        disposition_ids = []
+        for disposition in dispositions:
+            if type(disposition) is not dict or set(disposition) != {
+                    "attempt_id", "disposition"}:
+                _fail("each C model attempt needs an explicit disposition")
+            disposition_ids.append(disposition["attempt_id"])
+        if disposition_ids != expected_attempt_ids:
+            _fail("C attempt dispositions must classify every ledger attempt in event order")
+        ledger_attempts = {event["attempt_id"]: event for event in attempts}
+        for disposition in dispositions:
+            kind = disposition["disposition"]
+            if not isinstance(kind, str) or kind not in _C_ATTEMPT_DISPOSITIONS:
+                _fail("unknown C attempt disposition")
+            if ledger_attempts[disposition["attempt_id"]]["status"] not in \
+                    _C_ATTEMPT_DISPOSITIONS[kind]:
+                _fail("C attempt disposition does not match its ledger status")
+        classified_plan_ids = [item["attempt_id"] for item in dispositions
+                               if item["disposition"] == "plan_generation"]
+        if attempt_ids != classified_plan_ids:
+            _fail("plan generation lineage must match the classified plan attempts")
 
         if index == 1:
             if mode != "cold" or row["source_task_index"] is not None or not attempt_ids:
