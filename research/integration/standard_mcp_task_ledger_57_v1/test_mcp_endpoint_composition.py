@@ -350,7 +350,6 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             workspace = root / "workspace"
             workspace.mkdir()
             image_path = root / "observation.png"
-            image_path.write_bytes(b"synthetic observed image")
             journal = root / "app-server" / "protocol.jsonl"
             journal.parent.mkdir()
             journal.write_bytes(
@@ -371,6 +370,14 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             try:
                 observation = await caller.call_tool(
                     None, "observe-appserver", "interface_guarded_observe", {})
+                images = [item for item in observation["result"]["content"]
+                          if item.get("type") == "image"]
+                self.assertEqual(len(images), 1)
+                image_bytes = base64.b64decode(images[0]["data"], validate=True)
+                self.assertTrue(image_bytes.startswith(b"\x89PNG\r\n\x1a\n"))
+                image_path.write_bytes(image_bytes)
+                with Image.open(image_path) as observed_image:
+                    self.assertEqual(observed_image.format, "PNG")
                 observed = json.loads(
                     observation["result"]["content"][0]["text"])
                 minted_call = await caller.call_tool(
@@ -395,6 +402,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 class FakePlanner:
                     def begin_turn(self, prompt, *, output_schema, image_path):
                         self.asserted_call = (prompt, output_schema, image_path)
+                        self.image_bytes = Path(image_path).read_bytes()
                         return SimpleNamespace(thread_id="thread-appserver",
                                                turn_id="turn-appserver")
 
@@ -439,6 +447,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         generation["response_bytes"], thread_id="thread-appserver",
                         turn_id="turn-appserver"))
 
+                self.assertEqual(planner.image_bytes, image_bytes)
                 self.assertTrue(result["tool_call_submitted"], result["generation"])
                 self.assertEqual(result["generation"]["usage"]["input_tokens"], 42)
                 self.assertEqual(result["generation"]["usage"]["reasoning_output_tokens"], 3)
@@ -481,7 +490,6 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             workspace = root / "workspace"
             workspace.mkdir()
             image_path = root / "observation.png"
-            image_path.write_bytes(b"synthetic observed image")
             journal = root / "app-server" / "protocol.jsonl"
             journal.parent.mkdir()
             journal.write_bytes(b"")
@@ -501,6 +509,14 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             try:
                 observation = await caller.call_tool(
                     None, "observe-stale-appserver", "interface_guarded_observe", {})
+                images = [item for item in observation["result"]["content"]
+                          if item.get("type") == "image"]
+                self.assertEqual(len(images), 1)
+                image_bytes = base64.b64decode(images[0]["data"], validate=True)
+                self.assertTrue(image_bytes.startswith(b"\x89PNG\r\n\x1a\n"))
+                image_path.write_bytes(image_bytes)
+                with Image.open(image_path) as observed_image:
+                    self.assertEqual(observed_image.format, "PNG")
                 observed = json.loads(
                     observation["result"]["content"][0]["text"])
                 minted_call = await caller.call_tool(
@@ -522,6 +538,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 class FakePlanner:
                     def begin_turn(self, _prompt, *, output_schema, image_path):
                         self.asserted_call = (output_schema, image_path)
+                        self.image_bytes = Path(image_path).read_bytes()
                         return SimpleNamespace(thread_id="thread-stale-appserver",
                                                turn_id="turn-stale-appserver")
 
@@ -550,8 +567,9 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                             status="completed", answer_eligible=True,
                             answer=payload, usage=usage)
 
+                planner = FakePlanner()
                 model = AppServerPublicMcpModelCall(
-                    FakePlanner(), journal, workspace=workspace,
+                    planner, journal, workspace=workspace,
                     contract="public-mcp", output_schema={"type": "object"},
                     model="synthetic-app-server", effort="low")
                 request, provider = build_model_provider_call(
@@ -571,6 +589,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     "stale-appserver-generation", request, provider,
                     "stale-appserver-call", "interface_guarded_compiled",
                     change_generation_after_provider)
+                self.assertEqual(planner.image_bytes, image_bytes)
                 self.assertTrue(composed["tool_call_submitted"])
                 self.assertEqual(composed["generation"]["status"], "completed")
                 result = json.loads(
