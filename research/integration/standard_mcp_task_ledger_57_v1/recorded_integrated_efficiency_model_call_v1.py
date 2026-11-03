@@ -112,9 +112,10 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
         if cancelled:
             usage_source = (error_usage if error is not None else
                             result.get("usage") if isinstance(result, dict) else None)
-            return {"status": "cancelled",
-                    "usage": _usage({"usage": usage_source}),
-                    "response_bytes": raw, "error_type": "CancelledError"}
+            cancellation = asyncio.CancelledError()
+            cancellation.usage = _usage({"usage": usage_source})
+            cancellation.response_bytes = raw
+            raise cancellation
         if error is not None:
             status = ("timeout" if isinstance(
                 error, (TimeoutError, subprocess.TimeoutExpired)) else "failed")
