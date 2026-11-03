@@ -45,3 +45,8 @@ Commands run with Windows Python 3.11:
 Raw Fake X files, provider-call files, App Server protocol bytes, recorder JSONL,
 and reconciled events are retained beside this report. `SHA256SUMS` covers every
 file in this packet except itself.
+
+
+## Custody correction
+
+The original manifest referenced six local test stdout logs that were not present in the committed packet. Those files are not claimed as retained and have been removed from the corrected manifest. The corrected manifest covers all 169 files present in this packet, excluding itself.
