@@ -1418,6 +1418,250 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         sort_keys=True, indent=2, allow_nan=False) + "\n",
                     encoding="utf-8")
 
+    async def test_calc_provider_wait_stale_refusal_then_one_fresh_attempt_releases(self):
+        """Hold a model turn across a title/source change, then recover once."""
+        import xml.etree.ElementTree as ET
+        import runtime.cli_v1.test_mcp_owned_process as calc_tests
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)
+            server_root=root/'server'; server_root.mkdir()
+            (server_root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+            (server_root/'fake-target-exit-receipt').write_text('enabled',encoding='utf-8')
+            (server_root/'fake-calc-save-writes-artifact').write_text(
+                'enabled',encoding='utf-8')
+            (server_root/'fake-calc-record-point-resolution').write_text(
+                'enabled',encoding='utf-8')
+            workspace=root/'workspace'; workspace.mkdir()
+            journal=root/'app-server'/'protocol.jsonl'; journal.parent.mkdir()
+            journal.write_bytes(b'{"direction":"received","message":{"method":"thread/started"}}\n')
+            recorder=ProviderAttemptRecorder(root/'provider-ledger')
+            server=create_server({'app':20},server_root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+
+            class ServerClient:
+                async def call_tool(self,name,arguments):
+                    return await server.call_tool(name,arguments)
+
+            caller=RecordedPublicMcpCaller(Relay(ServerClient(),tools={
+                'interface_guarded_observe','interface_guarded_mint',
+                'interface_guarded_calc_prepare','interface_guarded_calc_compiled',
+                'interface_close','interface_verify_task'}),recorder)
+            provider_waiting=threading.Event()
+            release_provider=threading.Event()
+            class FakePlanner:
+                def __init__(self):
+                    self.turn_index=0
+                    self.payloads=[]
+                def begin_turn(self,prompt,*,output_schema,image_path):
+                    index=self.turn_index; self.turn_index+=1
+                    return SimpleNamespace(thread_id=f'calc-thread-{index+1}',
+                        turn_id=f'calc-turn-{index+1}',index=index)
+                def await_turn(self,handle,timeout):
+                    if handle.index==0:
+                        provider_waiting.set()
+                        if not release_provider.wait(timeout=5):
+                            raise TimeoutError('synthetic provider wait did not resume')
+                    usage={'last':{'inputTokens':40+10*handle.index,
+                        'outputTokens':9+2*handle.index,
+                        'cachedInputTokens':10,'cacheWriteInputTokens':1,
+                        'reasoningOutputTokens':0}}
+                    text=json.dumps(self.payloads[handle.index],separators=(',',':'))
+                    rows=(
+                        {'direction':'received','observed_ns':10+handle.index*10,
+                         'message':{'method':'thread/tokenUsage/updated','params':{
+                            'threadId':handle.thread_id,'turnId':handle.turn_id,
+                            'tokenUsage':usage}}},
+                        {'direction':'received','observed_ns':11+handle.index*10,
+                         'message':{'method':'turn/completed','params':{
+                            'threadId':handle.thread_id,'turn':{'id':handle.turn_id,
+                            'status':'completed','items':[{'type':'agentMessage',
+                            'text':text}]}}}})
+                    with journal.open('ab') as stream:
+                        for row in rows:
+                            stream.write(json.dumps(row,separators=(',',':')).encode()+b'\n')
+                    return SimpleNamespace(status='completed',answer_eligible=True,
+                        answer=self.payloads[handle.index],usage=usage)
+
+            planner=FakePlanner()
+            model=AppServerPublicMcpModelCall(planner,journal,workspace=workspace,
+                contract='registered-calc-profile',output_schema={'type':'object'},
+                model='fake-wait-model',effort='low')
+
+            async def observe_and_save_image(call_id):
+                response=await caller.call_tool(None,call_id,
+                    'interface_guarded_observe',{})
+                body=json.loads(response['result']['content'][0]['text'])
+                images=[row for row in response['result']['content']
+                        if row.get('type')=='image']
+                self.assertEqual(len(images),1)
+                image_bytes=base64.b64decode(images[0]['data'],validate=True)
+                image_path=root/f'{call_id}.png'; image_path.write_bytes(image_bytes)
+                return body,image_path
+
+            async def mint(source, suffix):
+                entry_response=await caller.call_tool(None,f'{suffix}-entry',
+                    'interface_guarded_mint',{'alias':f'entry_{suffix}',
+                    'source_sequence':source['sequence'],'point':[16,31],
+                    'region_size':[24,16],'freshness_ms':5000})
+                save_response=await caller.call_tool(None,f'{suffix}-save',
+                    'interface_guarded_mint',{'alias':f'save_{suffix}',
+                    'source_sequence':source['sequence'],'point':[200,205],
+                    'region_size':[16,12],'freshness_ms':5000})
+                entry=json.loads(entry_response['result']['content'][0]['text'])
+                save=json.loads(save_response['result']['content'][0]['text'])
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
+                return {'entry':{'alias':f'entry_{suffix}','offset':entry['offset']},
+                        'save':{'alias':f'save_{suffix}','offset':save['offset']}}
+
+            def payload(source,bindings,attempt_id,prepared_call_id=None):
+                row={'profile_id':'calc-ocr-save-v1','bindings':bindings,
+                    'reviewed_sequence':source['sequence'],
+                    'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                    'blank_reviewed':True,'attempt_id':attempt_id,
+                    'wait_for_result_ms':10000}
+                if prepared_call_id is not None:
+                    row['prepared_call_id']=prepared_call_id
+                return row
+
+            def parse_generation(generation):
+                backend=generation['backend_result']
+                return parse_app_server_tool_request(generation['response_bytes'],
+                    thread_id=backend['thread_id'],turn_id=backend['turn_id'])
+
+            try:
+                old,old_image=await observe_and_save_image('observe-old')
+                old_source=old['source']
+                old_bindings=await mint(old_source,'old')
+                planner.payloads.append(payload(old_source,old_bindings,
+                    'calc-wait-attempt-01'))
+                request1,provider1=build_model_provider_call(model_call=model.call,
+                    root=root/'provider-call'/'attempt-01',
+                    prompt='Use this reviewed Calc source to perform the task.',
+                    image=old_image,contract='registered-calc-profile',workspace=workspace)
+                first_task=asyncio.create_task(caller.invoke_generation_to_tool(
+                    'calc-wait-attempt-01',request1,provider1,'calc-wait-call-01',
+                    'interface_guarded_calc_compiled',parse_generation))
+                self.assertTrue(await asyncio.to_thread(provider_waiting.wait,5))
+
+                # The model has the old source while the application metadata changes.
+                (server_root/'fake-window-metadata-changed-calc').write_text(
+                    'changed-during-provider-wait',encoding='utf-8')
+                changed_source,_=await observe_and_save_image(
+                    'observe-during-provider-wait')
+                self.assertGreater(changed_source['source']['sequence'],
+                    old_source['sequence'])
+                release_provider.set()
+                first=await first_task
+                self.assertTrue(first['tool_call_submitted'],first)
+                first_body=json.loads(first['tool_response']['result']['content'][0]['text'])
+                self.assertEqual(first['generation']['status'],'completed')
+                self.assertIn('status',first_body,first_body)
+                self.assertEqual(first_body['status'],'invalid_request',first_body)
+                self.assertEqual(first_body['error'],'CALC_REVIEW_SOURCE_STALE',first_body)
+                self.assertFalse(first_body['operation_invoked'],first_body)
+                self.assertFalse(first_body['input_dispatched'],first_body)
+                self.assertIsNone(first_body['release_confirmed'],first_body)
+                self.assertIsNone(first_body['task_success'],first_body)
+                self.assertFalse(first_body['replay_allowed'],first_body)
+                self.assertFalse(list(server_root.rglob('calc-fake-state.json')))
+
+                prepared_response=await caller.call_tool(None,'prepare-attempt-02',
+                    'interface_guarded_calc_prepare',{'attempt_id':'calc-wait-attempt-02'})
+                prepared=json.loads(prepared_response['result']['content'][0]['text'])
+                self.assertEqual(prepared['status'],'prepared',prepared)
+                fresh,fresh_image=await observe_and_save_image('observe-after-wait')
+                self.assertGreater(fresh['source']['sequence'],
+                    changed_source['source']['sequence'])
+                new_bindings=await mint(fresh['source'],'fresh')
+                self.assertEqual(new_bindings['entry']['offset'],[12,8],
+                    new_bindings)
+                planner.payloads.append(payload(fresh['source'],new_bindings,
+                    'calc-wait-attempt-02',prepared['call_id']))
+                request2,provider2=build_model_provider_call(model_call=model.call,
+                    root=root/'provider-call'/'attempt-02',
+                    prompt='Reobserve and complete one bounded fresh attempt.',
+                    image=fresh_image,contract='registered-calc-profile',workspace=workspace)
+                second=await caller.invoke_generation_to_tool('calc-wait-attempt-02',
+                    request2,provider2,'calc-wait-call-02',
+                    'interface_guarded_calc_compiled',parse_generation)
+                result=json.loads(second['tool_response']['result']['content'][0]['text'])
+                self.assertEqual(second['generation']['status'],'completed')
+                self.assertIn('method_receipt',result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD',result)
+                self.assertEqual(result['method_receipt']['reason'],'effect_unavailable',result)
+                self.assertEqual(result['method_receipt']['completed_transitions'],2,result)
+                self.assertTrue(all(row['release_verified'] is True for row in
+                    result['method_receipt']['transitions']),result)
+                self.assertFalse(result['replay_allowed'],result)
+
+                close_response=await caller.call_tool(None,'close-after-repair',
+                    'interface_close',{})
+                closed=json.loads(close_response['result']['content'][0]['text'])
+                self.assertTrue(closed['verified'],closed)
+                self.assertTrue(closed['release_confirmed'],closed)
+                artifact_path=Path(prepared['artifact_path'])
+                self.assertTrue(artifact_path.is_file(),artifact_path)
+                fake_state=json.loads(next(server_root.rglob(
+                    'calc-fake-state.json')).read_text(encoding='utf-8'))
+                self.assertTrue(fake_state['save_requested'],fake_state)
+                self.assertEqual(fake_state['completed_entries'],['731','864'],fake_state)
+                self.assertTrue(fake_state['artifact_written_on_save'],fake_state)
+                verified_response=await caller.call_tool(None,'verify-after-repair',
+                    'interface_verify_task',{'call_id':result['call_id']})
+                verified=json.loads(verified_response['result']['content'][0]['text'])
+                self.assertEqual(verified['status'],'verified',verified)
+                self.assertIs(verified['task_success'],True,verified)
+                artifact_bytes=artifact_path.read_bytes()
+                self.assertEqual(artifact_bytes,calc_tests._CALC_TASK_FODS)
+                root_xml=ET.fromstring(artifact_bytes)
+                office='urn:oasis:names:tc:opendocument:xmlns:office:1.0'
+                values=[cell.attrib.get(f'{{{office}}}value') for cell in
+                    root_xml.iter() if cell.tag.endswith('table-cell') and
+                    cell.attrib.get(f'{{{office}}}value') is not None]
+                self.assertEqual(values,['731','864'])
+                recorder.record_task_score('stdlib-fods-cell-values-v1',
+                    values==['731','864'],artifact_bytes)
+                receipt=recorder.reconcile(); summary=summarize(receipt['events'])
+                self.assertTrue(receipt['complete'])
+                self.assertEqual(summary['model_attempt_count'],2)
+                self.assertEqual(summary['usage_status'],'complete')
+                self.assertEqual(summary['input_tokens'],90)
+                self.assertEqual(summary['output_tokens'],20)
+                self.assertEqual(summary['task_success'],True)
+                self.assertEqual([event['attempt_id'] for event in receipt['events']
+                    if event['kind']=='model_attempt'],
+                    ['calc-wait-attempt-01','calc-wait-attempt-02'])
+
+                retained=os.environ.get('AGENT_INTERFACE_RETAIN_CALC_PROVIDER_WAIT_EVIDENCE')
+                if retained:
+                    destination=Path(retained).resolve(); destination.mkdir(parents=True,exist_ok=False)
+                    shutil.copytree(recorder.root,destination/'provider-ledger')
+                    shutil.copytree(root/'provider-call',destination/'provider-call')
+                    shutil.copytree(server_root,destination/'server-runtime')
+                    shutil.copy2(journal,destination/'app-server-protocol.jsonl')
+                    report={'schema':'agent-interface/calc-provider-wait-repair-v1',
+                        'provider_attempts':2,'first_stale_response':first_body,
+                        'first_attempt_had_fake_input_state':False,
+                        'fresh_sequence_after_wait':fresh['source']['sequence'],
+                        'second_attempt_result':result,'owner_close':closed,
+                        'task_artifact_origin':'Fake X Calc wrote fixture FODS on Ctrl+S before interface_close',
+                        'task_effect_from_calc_operation':True,
+                        'live_calc_task_effect':False,
+                        'task_verification':verified,'independent_fods_values':values,
+                        'joined_summary':summary,
+                        'limits':['FakePlanner_only','FakeX_only',
+                                  'no_live_provider','no_live_Calc','no_efficiency_claim']}
+                    (destination/'boundary-results.json').write_text(json.dumps(
+                        report,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+            finally:
+                release_provider.set()
+                await server.call_tool('interface_close',{})
+
 
 if __name__ == "__main__":
     unittest.main()

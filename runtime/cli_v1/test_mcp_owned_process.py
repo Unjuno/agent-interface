@@ -249,6 +249,7 @@ class _FakeQueries:
             if (self.root/'fake-window-metadata-stale').exists():
                 observed-=1_000_000_000
             changed=(self.root/'fake-window-metadata-changed').exists()
+            changed_calc=(self.root/'fake-window-metadata-changed-calc').exists()
             process_marker=self.root/'fake-process-incarnation'
             process_incarnation=(process_marker.read_text(encoding='utf-8')
                 if process_marker.exists() else (
@@ -261,7 +262,8 @@ class _FakeQueries:
                 'observed_monotonic_ns':observed,
                 'xid':20,'parent_xid':1,'transient_for_xid':None,
                 'wm_class':['soffice','LibreOffice'],
-                'title_cue':'Different Window' if changed else 'Book1 - Calc',
+                'title_cue':('Different Window' if changed else
+                    'Book1 - Calc — updated' if changed_calc else 'Book1 - Calc'),
                 'role_cue':None,'mapped':True,
                 'process_incarnation':process_incarnation,
                 'process_generation':(_CALC_TEST_PROCESS_GENERATION
@@ -375,7 +377,8 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
     fake.raw = image.tobytes('raw', 'BGRX')
     fake.calc_pointer = {'x':0, 'y':0, 'mask':0}
     fake.calc_state = {'entered':False, 'both_entered':False,
-                       'save_requested':False, 'events':[], 'typed':[]}
+                       'save_requested':False, 'artifact_written_on_save':False,
+                       'completed_entries':[], 'events':[], 'typed':[]}
     fake.backend.geometry = lambda _target:dict(x=0, y=0, width=1280, height=800)
     fake.backend.d.screen = lambda:SimpleNamespace(width_in_pixels=1280,
                                                     height_in_pixels=800)
@@ -416,6 +419,20 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
     def calc_bridge_init(bridge, *args, **kwargs):
         original_bridge_init(bridge, *args, **kwargs)
         bridge._window_title = lambda:'primary-values.xlsx — LibreOffice Calc'
+        if (root/'fake-calc-record-point-resolution').exists():
+            original_resolve=bridge.store.resolve_point
+            def record_resolution(alias, offset, observation, image, now_ns,
+                                  session_scope=None):
+                result=original_resolve(alias,offset,observation,image,now_ns,
+                    session_scope=session_scope)
+                row={'alias':alias,'offset':offset,'observation_sequence':
+                    observation.get('sequence') if isinstance(observation,dict) else None,
+                    'observation_box':observation.get('box') if isinstance(observation,dict) else None,
+                    'result':result}
+                with (root/'calc-point-resolutions.jsonl').open('a',encoding='utf-8') as stream:
+                    stream.write(json.dumps(row,sort_keys=True,allow_nan=False)+'\n')
+                return result
+            bridge.store.resolve_point=record_resolution
     NativeHandleBridge.__init__ = calc_bridge_init
 
     original_init = CalcPrimaryProfile.__init__
@@ -490,12 +507,20 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
                 fake.calc_state['typed'] = []
                 if value == '731' and not fake.calc_state['entered']:
                     fake.calc_state['entered'] = True
+                    fake.calc_state['completed_entries'].append(value)
                     image_with_marker([((40,145),(20,20,20))])
                 elif value == '864' and fake.calc_state['entered']:
                     fake.calc_state['both_entered'] = True
+                    fake.calc_state['completed_entries'].append(value)
                     image_with_marker([((40,162),(30,30,30))])
             elif name == 's' and fake.calc_state['entered']:
                 fake.calc_state['save_requested'] = True
+                if (fake.calc_state['both_entered'] and
+                        (root/'fake-calc-save-writes-artifact').exists()):
+                    artifacts=list(root.rglob('task-artifact.fods'))
+                    if len(artifacts)==1:
+                        artifacts[0].write_bytes(_CALC_TASK_FODS)
+                        fake.calc_state['artifact_written_on_save']=True
                 image_with_marker([((300,300),(40,40,40))])
             elif name and len(name) == 1:
                 fake.calc_state['typed'].append(name)
