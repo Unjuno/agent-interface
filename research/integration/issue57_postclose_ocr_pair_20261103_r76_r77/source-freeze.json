@@ -1,0 +1,36 @@
+{
+  "schema": "agent-interface/issue57-postclose-ocr-pair-freeze-v1",
+  "base_commit": "673f3584c437bd9a7be0051bf111e408092bacf8",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "docker_server": "29.8.1",
+  "runtime_source_sha256": {
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "0cd7f0d42be1bd93bf83d0ffdb636e846b41a8d5ab7503ae830789b176af4071",
+    "runtime/guarded_x11_v1/calc_launcher_v1.py": "75db62d3716f41bbe7af639c2e422cd625bab98a0f0dd3bf21b2ea1a97f8f305",
+    "runtime/guarded_x11_v1/calc_process_group_v1.py": "16c6b6b86ba1b760c0343091389310f44573390b206ec00c07376764e3be8fc1",
+    "runtime/cli_v1/owned_guarded_session.py": "a9c254171b053bb2e86bd17b6288b6f418e4f1e71dac6a262419765f8218d8dc",
+    "runtime/cli_v1/mcp_server.py": "4122e78bef98f4eacece76d6dae3f049bf75b000c57ad2f95311b119ac1285ca"
+  },
+  "runner_sha256": "c76d2e4b86d61a2e5f25a8e3702c9ccc36ab76b6764f2701abdce36a4798494b",
+  "attempt_source_sha256": {
+    "r76-a4/experiment.py": "cab0355bc20ce8cf9e92329c539f5b498e4d861c8160fcf980e383d9af4a4c72",
+    "r77-b4/experiment.py": "f13941b8e35be7455c3b295175f2c38faf73003e7411aa5b03e113122e07b4c0"
+  },
+  "host_limits": {
+    "memory_bytes": 25203224576,
+    "wslconfig": "24GB/8 CPU/8GB swap/gradual reclaim",
+    "logging": "local",
+    "cpus": 8
+  },
+  "container_limits": {
+    "timeout_seconds": 600,
+    "pids": 256,
+    "logging": "local",
+    "memory_swap": "4g",
+    "memory": "4g",
+    "cpus": 2
+  },
+  "order": [
+    "r76-a4:skip",
+    "r77-b4:always"
+  ]
+}

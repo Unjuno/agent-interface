@@ -1,0 +1,8 @@
+# Frozen Docker invocations — r76-r77
+
+```powershell
+docker run --rm --pull=never --memory=4g --memory-swap=4g --cpus=2 --pids-limit=256 --log-driver=local --env ATTEMPT_DIR=r76-a4 --env OCR_GUARD_CONTROL=skip --mount type=bind,source=C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/issue57-r76-current-main-673f358-20261103,destination=/workspace,readonly --mount type=bind,source=C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/issue57-r76-current-main-673f358-20261103/research/integration/issue57_postclose_ocr_pair_20261103_r76_r77,destination=/evidence --workdir /workspace agent-interface-xvfb-mcp:late-input-r19 bash -lc "timeout --foreground --signal=TERM --kill-after=5s 600s /bin/bash /evidence/runner.sh"
+docker run --rm --pull=never --memory=4g --memory-swap=4g --cpus=2 --pids-limit=256 --log-driver=local --env ATTEMPT_DIR=r77-b4 --env OCR_GUARD_CONTROL=always --mount type=bind,source=C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/issue57-r76-current-main-673f358-20261103,destination=/workspace,readonly --mount type=bind,source=C:/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/issue57-r76-current-main-673f358-20261103/research/integration/issue57_postclose_ocr_pair_20261103_r76_r77,destination=/evidence --workdir /workspace agent-interface-xvfb-mcp:late-input-r19 bash -lc "timeout --foreground --signal=TERM --kill-after=5s 600s /bin/bash /evidence/runner.sh"
+```
+
+Order is fixed: r76-a4, verify Docker Engine responsive and no running container, then r77-b4. Capture each command's exit status in that attempt's `docker-exit-code.json`. Do not rerun on any failure.
