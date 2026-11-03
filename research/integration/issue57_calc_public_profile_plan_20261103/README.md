@@ -31,6 +31,12 @@ This profile does not claim a general Calc controller or a successful transfer.
 
 ## Existing evidence and remaining composition matrix
 
+The archive-to-current-main comparison of the retained live Calc G10 path is
+in [CALC_G10_CURRENT_MAIN_CROSSWALK_20261104.md](CALC_G10_CURRENT_MAIN_CROSSWALK_20261104.md).
+It confirms that the public Calc adapter composition already exists offline;
+the unresolved boundary is live provider/accounting and the frozen comparison,
+not another copy of the G10 driver.
+
 The requirement-to-test audit for current main is maintained in
 [COMPOSITION_MATRIX_20261103.md](COMPOSITION_MATRIX_20261103.md). The table
 below is a compact orientation; its older stale-wait wording is superseded by
