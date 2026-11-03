@@ -142,3 +142,9 @@ This prevents post-deadline callback starts; it cannot interrupt a synchronous
 callback that began before the deadline. It proves no live Calc result, task
 artifact, provider accounting, WSLc, MAP01 or efficiency improvement. #57 stays
 open.
+
+## Fresh current-main same-frame live attempt r87-c11 (2026-11-03)
+
+The one-shot Calc/Xvfb run completed and the saved task effect, call/generation-bound Save request, verified enter/save releases, empty close state, natural Calc/oosplash exit, and Docker exit all passed. The preregistered equal-digest condition failed: the final accepted observation digests were distinct, so this is **FAIL_OR_UNKNOWN**, not a live same-frame pass. Raw data and gates are in [r87-c11 report](../issue57_calc_sameframe_live_20261103_r87/README.md). The earlier r84-r86 setup failures remain separately preserved. Next, identify the digest-changing observation signal from raw screenshots/metadata; do not weaken the gate or rerun a consumed attempt. No provider, efficiency, WSLc, MAP01, or broad-reliability claim follows.
+
+r87 raw-image diagnosis found the full-frame digest mismatch is sparse (591/1,024,000 pixels), including the toolbar Save icon after save and small lower chrome/scrollbar pixels; the retained task surface and selected cell appear unchanged. The preregistered full-frame digest condition still failed and remains a failed gate. The next experiment should preregister stable task-surface evidence while retaining raw full-frame images and independent artifact verification.
