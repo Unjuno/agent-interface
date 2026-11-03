@@ -148,14 +148,19 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             opened.assert_not_called()
 
     async def test_invalid_feedback_refuses_before_open_or_input(self):
-        from mcp.server.fastmcp.exceptions import ToolError
         for cue in ({'expected_title':''},{'expected_title':'saved','timeout_ms':10001},
                     {'expected_title':'saved','rejected_titles':['saved']},
                     {'expected_title':'saved','unknown':1}):
             with self.subTest(cue=cue), tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
                 server=create_server({'app':123},td,session_mode='guarded-x11')
-                with self.assertRaises(ToolError):
-                    await server.call_tool('interface_guarded_input',dict(alias='save',offset=[12,7],tail=[],feedback=cue))
+                response=await server.call_tool('interface_guarded_input',
+                    dict(alias='save',offset=[12,7],tail=[],feedback=cue))
+                row=metadata(response)
+                self.assertTrue(response.isError)
+                self.assertEqual(row['status'],'invalid_request',row)
+                self.assertFalse(row['operation_invoked'],row)
+                self.assertFalse(row['input_dispatched'],row)
+                self.assertFalse(row['replay_allowed'],row)
                 opened.assert_not_called()
 
     async def test_requested_activation_review_returns_exact_image_without_edit(self):
@@ -477,7 +482,6 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             factory.assert_not_called()
 
     async def test_batch_entire_schema_validated_before_any_mint(self):
-        from mcp.server.fastmcp.exceptions import ToolError
         from copy import deepcopy
         valid={'alias':'field','point':[20,30],'region_size':[24,14]}
         bad=[]
@@ -487,9 +491,39 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
             for refs in bad:
-                with self.subTest(refs=refs),self.assertRaises(ToolError):
-                    await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
+                with self.subTest(refs=refs):
+                    response=await server.call_tool('interface_guarded_mint_many',{
+                        'source_sequence':7,'references':refs})
+                    row=metadata(response)
+                    self.assertTrue(response.isError)
+                    self.assertIn(row['status'],('invalid_request','refused'),row)
+                    if row['status']=='invalid_request':
+                        self.assertFalse(row['operation_invoked'],row)
+                        self.assertFalse(row['input_dispatched'],row)
+                        self.assertFalse(row['replay_allowed'],row)
+                        self.assertTrue(row['validation_errors'],row)
+                        self.assertTrue(all(item['path'][0]=='references'
+                                            for item in row['validation_errors']),row)
+                        self.assertNotIn('input_value',json.dumps(row))
             factory.assert_not_called();self.assertEqual(list(Path(td).iterdir()),[])
+
+    async def test_handler_validation_error_is_not_mislabeled_as_argument_refusal(self):
+        from mcp.server.fastmcp.exceptions import ToolError
+        from pydantic import TypeAdapter, ValidationError
+        from runtime.cli_v1.mcp_server import PublicArgumentMCP
+        server=PublicArgumentMCP('handler-validation-error-test')
+        invoked=[]
+
+        @server.tool()
+        async def handler_raises_validation_error(value:int)->dict:
+            invoked.append(value)
+            TypeAdapter(int).validate_python('not-an-integer')
+            return {'status':'unreachable'}
+
+        with self.assertRaises(ToolError) as raised:
+            await server.call_tool('handler_raises_validation_error',{'value':7})
+        self.assertEqual(invoked,[7])
+        self.assertIsInstance(raised.exception.__cause__,ValidationError)
 
     async def test_unknown_top_level_arguments_never_reach_bridge(self):
         opened=[]
@@ -604,8 +638,13 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_strict_schema_and_failed_initialization_do_not_reopen(self):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=OSError('display failed')) as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
-            with self.assertRaises(Exception):
-                await server.call_tool('interface_guarded_mint',{'alias':'x','source_sequence':True,'point':[1,2],'region_size':[24,14]})
+            invalid=await server.call_tool('interface_guarded_mint',
+                {'alias':'x','source_sequence':True,'point':[1,2],'region_size':[24,14]})
+            invalid_row=metadata(invalid)
+            self.assertTrue(invalid.isError)
+            self.assertEqual(invalid_row['status'],'invalid_request',invalid_row)
+            self.assertFalse(invalid_row['operation_invoked'],invalid_row)
+            self.assertFalse(invalid_row['input_dispatched'],invalid_row)
             factory.assert_not_called()
             row=metadata(await server.call_tool('interface_guarded_observe',{}))
             self.assertEqual(row['status'],'backend_unavailable')
