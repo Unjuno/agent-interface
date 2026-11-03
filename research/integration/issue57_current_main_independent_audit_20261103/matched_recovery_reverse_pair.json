@@ -1,0 +1,73 @@
+{
+  "scope": "two ordered pairs, fixed task, no population inference",
+  "records": [
+    {
+      "allocation": "i01",
+      "route": "fresh",
+      "task_seconds": 13.348113119,
+      "launcher_seconds": 15.698121499997796,
+      "calls": 3,
+      "usage": {
+        "input_tokens": 40746,
+        "cached_input_tokens": 25472,
+        "output_tokens": 234
+      },
+      "saved_effect": true,
+      "neutral": true
+    },
+    {
+      "allocation": "i02",
+      "route": "compiled",
+      "task_seconds": 9.964750381,
+      "launcher_seconds": 12.284282199980225,
+      "calls": 2,
+      "usage": {
+        "input_tokens": 25779,
+        "cached_input_tokens": 12160,
+        "output_tokens": 140
+      },
+      "saved_effect": true,
+      "neutral": true
+    },
+    {
+      "allocation": "j01",
+      "route": "compiled",
+      "task_seconds": 9.279885693,
+      "launcher_seconds": 12.353905800002394,
+      "calls": 2,
+      "usage": {
+        "input_tokens": 25763,
+        "cached_input_tokens": 12160,
+        "output_tokens": 124
+      },
+      "saved_effect": true,
+      "neutral": true
+    },
+    {
+      "allocation": "j02",
+      "route": "fresh",
+      "task_seconds": 14.433198294,
+      "launcher_seconds": 16.756766100006644,
+      "calls": 3,
+      "usage": {
+        "input_tokens": 40698,
+        "cached_input_tokens": 21504,
+        "output_tokens": 186
+      },
+      "saved_effect": true,
+      "neutral": true
+    }
+  ],
+  "medians": {
+    "fresh": {
+      "task_seconds": 13.8906557065,
+      "input_tokens": 40722.0,
+      "output_tokens": 210.0
+    },
+    "compiled": {
+      "task_seconds": 9.622318037,
+      "input_tokens": 25771.0,
+      "output_tokens": 132.0
+    }
+  }
+}

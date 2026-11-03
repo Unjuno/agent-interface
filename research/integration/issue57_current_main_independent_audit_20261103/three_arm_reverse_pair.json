@@ -1,0 +1,112 @@
+{
+  "status": "audited",
+  "trials": [
+    {
+      "allocation": "eo01",
+      "route": "direct",
+      "task_seconds": 6.44475328,
+      "launcher_seconds": 11.438,
+      "calls": 1,
+      "input_tokens": 12185,
+      "cached_input_tokens": 0,
+      "output_tokens": 62,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "eo02",
+      "route": "compiled",
+      "task_seconds": 5.89360389,
+      "launcher_seconds": 8.281,
+      "calls": 1,
+      "input_tokens": 12185,
+      "cached_input_tokens": 0,
+      "output_tokens": 78,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "eo03",
+      "route": "fresh",
+      "task_seconds": 8.566229973,
+      "launcher_seconds": 10.968,
+      "calls": 2,
+      "input_tokens": 25735,
+      "cached_input_tokens": 12160,
+      "output_tokens": 124,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "ep03",
+      "route": "direct",
+      "task_seconds": 6.070705663,
+      "launcher_seconds": 8.406,
+      "calls": 1,
+      "input_tokens": 12185,
+      "cached_input_tokens": 0,
+      "output_tokens": 62,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "ep02",
+      "route": "compiled",
+      "task_seconds": 7.227432303,
+      "launcher_seconds": 9.579,
+      "calls": 1,
+      "input_tokens": 12185,
+      "cached_input_tokens": 8192,
+      "output_tokens": 78,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "ep01",
+      "route": "fresh",
+      "task_seconds": 10.751102858,
+      "launcher_seconds": 15.781,
+      "calls": 2,
+      "input_tokens": 25751,
+      "cached_input_tokens": 12160,
+      "output_tokens": 140,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    }
+  ],
+  "medians": {
+    "direct": {
+      "task_seconds": 6.257729471499999,
+      "input_tokens": 12185.0,
+      "output_tokens": 62.0
+    },
+    "compiled": {
+      "task_seconds": 6.560518096499999,
+      "input_tokens": 12185.0,
+      "output_tokens": 78.0
+    },
+    "fresh": {
+      "task_seconds": 9.6586664155,
+      "input_tokens": 25743.0,
+      "output_tokens": 132.0
+    }
+  }
+}

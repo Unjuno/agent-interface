@@ -1,0 +1,112 @@
+{
+  "status": "audited",
+  "trials": [
+    {
+      "allocation": "eq01",
+      "route": "direct",
+      "task_seconds": 8.364756758,
+      "launcher_seconds": 13.328,
+      "calls": 2,
+      "input_tokens": 25751,
+      "cached_input_tokens": 12160,
+      "output_tokens": 156,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "eq02",
+      "route": "compiled",
+      "task_seconds": 9.765059754,
+      "launcher_seconds": 12.093,
+      "calls": 2,
+      "input_tokens": 25751,
+      "cached_input_tokens": 19968,
+      "output_tokens": 140,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "eq03",
+      "route": "fresh",
+      "task_seconds": 13.037335632,
+      "launcher_seconds": 15.391,
+      "calls": 3,
+      "input_tokens": 40682,
+      "cached_input_tokens": 25472,
+      "output_tokens": 202,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "er03",
+      "route": "direct",
+      "task_seconds": 10.191247957,
+      "launcher_seconds": 12.593,
+      "calls": 2,
+      "input_tokens": 25751,
+      "cached_input_tokens": 20352,
+      "output_tokens": 140,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "er02",
+      "route": "compiled",
+      "task_seconds": 10.535022556,
+      "launcher_seconds": 12.859,
+      "calls": 2,
+      "input_tokens": 25751,
+      "cached_input_tokens": 20352,
+      "output_tokens": 140,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    },
+    {
+      "allocation": "er01",
+      "route": "fresh",
+      "task_seconds": 11.15482815,
+      "launcher_seconds": 16.235,
+      "calls": 3,
+      "input_tokens": 40650,
+      "cached_input_tokens": 33280,
+      "output_tokens": 186,
+      "saved_values": [
+        "472",
+        "615"
+      ],
+      "neutral": true
+    }
+  ],
+  "medians": {
+    "direct": {
+      "task_seconds": 9.2780023575,
+      "input_tokens": 25751.0,
+      "output_tokens": 148.0
+    },
+    "compiled": {
+      "task_seconds": 10.150041155,
+      "input_tokens": 25751.0,
+      "output_tokens": 140.0
+    },
+    "fresh": {
+      "task_seconds": 12.096081891,
+      "input_tokens": 40666.0,
+      "output_tokens": 194.0
+    }
+  }
+}
