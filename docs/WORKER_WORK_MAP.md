@@ -1,23 +1,24 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-03, after PR #10167 and Issue #57 update
+## Current work-map pointer — 2026-11-03, after PR #10168 merge
 
-**Last verified `origin/main` (2026-11-03):** `36063fa125804abcf3357d22fbffa3dfc10931dd`
-(PR #10167). The GitHub record for [Issue #57](https://github.com/Unjuno/agent-interface/issues/57)
+**Last verified `origin/main` (2026-11-03):** `39120425c284e8bc01f5a85d27f9a546d955b91a`
+(PR #10168). The GitHub record for [Issue #57](https://github.com/Unjuno/agent-interface/issues/57)
 is currently **open**, updated 2026-11-03. Its fixed-task and varied-value Calc
 blocks remain scoped small-sample evidence; they are not a new allocation or a
 general efficiency result. Same-model cold/warm/invalidation/repair comparison,
 complete live provider/all-attempt accounting, and WSLc/MAP01 transfer remain
 unproven. The 2026-10-29 pointer and its measurements below are historical.
 
-The local `integration/calc-public-profile-v1-main-r75` change set composes the
-registered owned-process Calc profile, call-owned saved-artifact verifier, and
-Fake App Server/provider-attempt ledger path. Its r75 packet records one narrow
-live fixed-task result: saved cells A1=731/A2=864, verified release and exact
-target exit. The provider composition is synthetic and offline; r75 is not
-provider-efficiency evidence. Neither result completes Issue #57 or proves WSLc/
-MAP01 transfer. Do not replay prior allocations or promote these results beyond
-their recorded scope.
+[PR #10168](https://github.com/Unjuno/agent-interface/pull/10168) merged the
+registered owned-process Calc profile, call-owned saved-artifact verifier,
+parent process custody, and offline Fake App Server/provider-attempt composition.
+Its retained [r75 packet](../research/integration/issue57_calc_public_profile_plan_20261103/post-close-exit-wait-live-validation-20261103-r75/README.md)
+records one narrow live fixed-task result: saved cells A1=731/A2=864, verified
+release and exact target exit. The provider composition is synthetic and offline;
+r75 is not provider-efficiency evidence. Neither result completes Issue #57 or
+proves WSLc/MAP01 transfer. Do not replay prior allocations or promote these
+results beyond their recorded scope.
 
 ## Historical work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
 
