@@ -249,3 +249,6 @@ Historical and superseded integration paths remain in place when their exact nam
 - [Retired primary review supplements #6919](../recovery/retired_primary_review_supplements_20261004/README.md) — 324 exact review files and two source histories; Windows output-pipe witnesses and the original accepted-transport FAIL retained, no old vote transfer or current runtime adoption.
 
 - [Retired checkpoint and nominal-record reviews #6918 / #6923](../recovery/retired_record_review_custody_20261004/README.md) — 64 exact review files and two source histories; first reviewer failures and old preparation tuples retained, no current runtime adoption or historical vote transfer.
+## Docker stability smoke
+
+The [current-main validator smoke, R02](docker_stability_validator_current_main_20261104_r02/20261103T234407Z/README.md) runs the 17-test synthetic lifecycle/reuse-horizon module in a network-disabled, read-only, resource-bounded Docker container on `c0ebed2`. Both normal and optimized runs pass and the engine answers after exit. This is a short workload check, not long-term stability or live-control evidence.
