@@ -1,0 +1,59 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "py",
+        "-3.11",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr"
+      ],
+      "result": "PASS"
+    },
+    {
+      "argv": [
+        "py",
+        "-3.11",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr"
+      ],
+      "result": "PASS"
+    },
+    {
+      "argv": [
+        "py",
+        "-3.11",
+        "-m",
+        "unittest",
+        "test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score"
+      ],
+      "result": "PASS"
+    },
+    {
+      "argv": [
+        "py",
+        "-3.11",
+        "-O",
+        "-m",
+        "unittest",
+        "test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score"
+      ],
+      "result": "PASS"
+    }
+  ],
+  "environment": "Local Windows Python 3.11; synthetic Fake X and Fake Planner only; no Docker container, live Calc, or provider API.",
+  "evidence_files": [
+    "boundary-results.json",
+    "joined-ledger-summary.json",
+    "provider-ledger/",
+    "provider-call/",
+    "app-server-protocol.jsonl",
+    "raw-runtime/",
+    "source-diff.patch"
+  ],
+  "schema": "agent-interface/issue57-calc-ambiguous-mcp-evidence-v1",
+  "scope": "Composed ambiguity abstention; this does not validate physical GUI state or live provider accounting.",
+  "source_base_commit": "36def5ca259783783f5be18e5cb9405abf6c368e"
+}
