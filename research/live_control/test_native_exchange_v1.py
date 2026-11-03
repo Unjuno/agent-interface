@@ -207,7 +207,7 @@ class NativeExchangeTests(unittest.TestCase):
         actual_read = Path.read_bytes
         reads = []
         def changed_read(path):
-            if path == request:
+            if path == request.resolve(strict=True):
                 reads.append(path)
                 if len(reads) == 2:
                     return encoded(dict(self.decision, finish=False))
