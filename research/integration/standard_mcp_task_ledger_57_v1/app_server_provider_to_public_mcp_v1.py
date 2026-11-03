@@ -69,6 +69,37 @@ def _journal_turn_usage(response_bytes, *, thread_id, turn_id):
     return None if not updates else updates[-1]
 
 
+def _best_effort_partial_turn_usage(response_bytes, *, thread_id, turn_id):
+    """Return the latest complete usage update seen before an interrupted turn.
+
+    A timed-out protocol stream may end with a partial JSONL record. Only
+    newline-terminated records are considered, and malformed/incomplete rows
+    are ignored. The result is intentionally partial: it is only the latest
+    usage snapshot available at interruption, not a terminal provider total.
+    """
+    updates = []
+    for line in response_bytes.splitlines(keepends=True):
+        if not line.endswith((b"\n", b"\r")):
+            continue
+        try:
+            row = json.loads(line)
+        except (TypeError, ValueError):
+            continue
+        if not isinstance(row, dict):
+            continue
+        message = row.get("message")
+        if (row.get("direction") != "received" or not isinstance(message, dict) or
+                message.get("method") != "thread/tokenUsage/updated"):
+            continue
+        params = message.get("params", {})
+        if (isinstance(params, dict) and params.get("threadId") == thread_id and
+                params.get("turnId") == turn_id):
+            usage = _partial_turn_usage(params.get("tokenUsage"))
+            if usage:
+                updates.append(usage)
+    return None if not updates else updates[-1]
+
+
 def parse_app_server_tool_request(response_bytes, *, thread_id, turn_id):
     """Read the one completed structured answer from a retained protocol slice."""
     if not isinstance(response_bytes, bytes):
@@ -147,6 +178,7 @@ class AppServerPublicMcpModelCall:
         turn = None
         protocol_bytes = b""
         before = None
+        call_error = None
         started_ns = time.perf_counter_ns()
         try:
             with self._lock:
@@ -154,7 +186,10 @@ class AppServerPublicMcpModelCall:
                 handle = self.planner.begin_turn(
                     prompt, output_schema=self.output_schema,
                     image_path=self.path_converter(image))
-                turn = self.planner.await_turn(handle, timeout=self.turn_timeout)
+                try:
+                    turn = self.planner.await_turn(handle, timeout=self.turn_timeout)
+                except BaseException as exc:
+                    call_error = exc
                 journal = self.protocol_journal_path.read_bytes()
                 if len(journal) < before:
                     raise RuntimeError("app-server protocol journal was truncated")
@@ -169,6 +204,22 @@ class AppServerPublicMcpModelCall:
                 except OSError:
                     pass
             events_path.write_bytes(protocol_bytes)
+
+        if call_error is not None:
+            if handle is not None:
+                partial_usage = _best_effort_partial_turn_usage(
+                    protocol_bytes, thread_id=handle.thread_id,
+                    turn_id=handle.turn_id)
+                if partial_usage is not None:
+                    reported_usage = _partial_turn_usage(
+                        getattr(call_error, "usage", None))
+                    if reported_usage is None or reported_usage == partial_usage:
+                        call_error.usage = {"status": "partial", **partial_usage}
+                    else:
+                        call_error.usage = None
+                        call_error.usage_error = (
+                            "exception usage differs from retained protocol journal")
+            raise call_error
 
         if turn is None or not getattr(turn, "answer_eligible", False):
             error = RuntimeError("app-server answer is ineligible; no tool call")

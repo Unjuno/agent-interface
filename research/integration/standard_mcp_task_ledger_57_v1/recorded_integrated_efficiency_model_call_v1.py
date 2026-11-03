@@ -36,7 +36,8 @@ def _usage(result):
             details[name] = None
     known = sum(value is not None for value in counts.values())
     known_details = any(value is not None for value in details.values())
-    return {"status": "reported" if known == 2 else
+    return {"status": "partial" if source.get("status") == "partial" else
+            "reported" if known == 2 else
             "partial" if known or known_details else "unavailable",
             **counts, **details}
 
@@ -74,37 +75,51 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
             return None
 
     async def provider_call():
-        task = asyncio.create_task(asyncio.to_thread(
-            model_call, root, prompt, image, contract, Path(workspace)))
+        def invoke_model_call():
+            try:
+                return {"result": model_call(
+                    root, prompt, image, contract, Path(workspace)),
+                    "error": None, "error_usage": None}
+            except BaseException as exc:
+                # Return the exception as data. In particular, asyncio's
+                # thread bridge may reconstruct TimeoutError and drop custom
+                # attributes attached by a provider adapter.
+                return {"result": None, "error": exc,
+                        "error_usage": getattr(exc, "usage", None)}
+
+        task = asyncio.create_task(asyncio.to_thread(invoke_model_call))
         cancelled = False
         try:
-            result = await asyncio.shield(task)
+            outcome = await asyncio.shield(task)
         except asyncio.CancelledError:
             # Keep custody until the synchronous call ends; to_thread cannot
             # terminate its worker. The actual model runner has its own bound.
             cancelled = True
             try:
-                result = await task
+                outcome = await task
             except BaseException as exc:
-                result = None
-                error = exc
-            else:
-                error = None
+                outcome = {"result": None, "error": exc,
+                           "error_usage": getattr(exc, "usage", None)}
         except BaseException as exc:
-            result = None
-            error = exc
-        else:
-            error = None
+            outcome = {"result": None, "error": exc,
+                       "error_usage": getattr(exc, "usage", None)}
+
+        result = outcome["result"]
+        error = outcome["error"]
+        error_usage = outcome["error_usage"]
 
         raw = event_bytes()
         if cancelled:
-            return {"status": "cancelled", "usage": _usage(None),
+            usage_source = (error_usage if error is not None else
+                            result.get("usage") if isinstance(result, dict) else None)
+            return {"status": "cancelled",
+                    "usage": _usage({"usage": usage_source}),
                     "response_bytes": raw, "error_type": "CancelledError"}
         if error is not None:
             status = ("timeout" if isinstance(
                 error, (TimeoutError, subprocess.TimeoutExpired)) else "failed")
             return {"status": status,
-                    "usage": _usage({"usage": getattr(error, "usage", None)}),
+                    "usage": _usage({"usage": error_usage}),
                     "response_bytes": raw,
                     "error_type": type(error).__name__}
         return {"status": "completed", "usage": _usage(result),
