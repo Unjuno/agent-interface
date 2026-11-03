@@ -19,6 +19,7 @@ _C_ATTEMPT_DISPOSITIONS = {
     "plan_generation": {"completed"},
     "stale_response": {"completed"},
     "fallback": {"completed"},
+    "non_plan_response": {"completed"},
     "abstention": {"abstained"},
     "failure": {"failed"},
     "timeout": {"timeout"},

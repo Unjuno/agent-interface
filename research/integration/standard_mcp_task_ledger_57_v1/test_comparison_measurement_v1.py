@@ -228,6 +228,12 @@ class ComparisonMeasurementTests(unittest.TestCase):
                          [{"attempt_id": "model-C-2",
                            "disposition": "stale_response"}])
 
+        value["c_plan_trace"][1]["attempt_dispositions"][0][
+            "disposition"] = "non_plan_response"
+        result = validate_reuse_horizon(value)
+        self.assertEqual(result["cumulative"]["C"]["total_tokens"],
+                         [10, 12, 22, 22])
+
         value["c_plan_trace"][1]["attempt_dispositions"] = []
         with self.assertRaises(LedgerValidationError):
             validate_reuse_horizon(value)
