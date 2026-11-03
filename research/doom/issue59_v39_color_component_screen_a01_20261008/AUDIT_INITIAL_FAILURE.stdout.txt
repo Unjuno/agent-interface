@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\outputs\issue59-fixed-yellow-cue\audit.py", line 30, in <module>
+    row=rows[e['code']]; path=ROOT/f"{e['sequence']:03}.png"; raw=path.read_bytes(); assets_ok &= len(raw)==e['bytes'] and hashlib.sha256(raw).hexdigest()==e['sha256']
+                                                                  ^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\work\\pr7662-audit-chronology\\research\\doom\\results\\map01-v39-coast-liveness-live-01\\runtime\\005.png'
+
