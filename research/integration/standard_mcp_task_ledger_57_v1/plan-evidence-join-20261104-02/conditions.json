@@ -2,8 +2,10 @@
   "cpus": 2,
   "docker_image": "agent-interface-xvfb-mcp:late-input-r19",
   "docker_image_digest": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
-  "fake_app_server_calc_composition": "1/1 passed, 9.443s",
+  "fake_app_server_calc_composition": "1/1 passed, 9.433s",
+  "final_task_effect": "verified; task_success=true; replay_allowed=false",
   "integrated_docker_exit": 0,
+  "integrated_task_success": true,
   "memory": "4g",
   "memory_swap": "4g total",
   "network": "none",
@@ -18,14 +20,16 @@
   ],
   "optimized_unit_tests": "27/27 passed",
   "pids_limit": 256,
+  "provider_routed_attempt": "calc-offline-e2e-01",
+  "provider_routed_intermediate_result": "SAFE_YIELD/effect_unavailable after 2 transitions; release verified after both",
   "retained_raw_artifact_dirs": [
-    "raw-runtime-final-10/provider-call",
-    "raw-runtime-final-10/provider-ledger",
-    "raw-runtime-final-10/raw-runtime",
-    "raw-runtime-final-10/app-server-protocol.jsonl"
+    "raw-runtime-final-12/provider-call",
+    "raw-runtime-final-12/provider-ledger",
+    "raw-runtime-final-12/raw-runtime",
+    "raw-runtime-final-12/app-server-protocol.jsonl"
   ],
   "schema": "agent-interface/plan-evidence-join-run-v1",
-  "scope": "Synthetic evidence-join tests; provider-routed Calc compiled call used minted bindings, completed two transitions and verified release after both; final save effect unavailable; separate direct FODS effect is not joined",
-  "source_commit": "b78fad04e3f6e82a7163417c3507a53eff3fc20e + diagnostic result-separation changes in test_mcp_endpoint_composition.py",
+  "scope": "Synthetic Fake Planner integration: same attempt and prepared call joined to verified close-bound artifact effect by call ID, method-receipt digest, scoped minted alias offsets, and artifact digest; independent FODS parse scored expected cell values",
+  "source_commit": "409affbec6dc4492896ce37454c5ca7b0eadd192 + final-12 provider-effect-join assertions in test_mcp_endpoint_composition.py",
   "source_mount": "read-only"
 }

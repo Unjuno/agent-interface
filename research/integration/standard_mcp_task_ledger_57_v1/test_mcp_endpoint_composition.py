@@ -1490,6 +1490,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                 observed["provider_routed_compiled_results"].append({
                                     "attempt_id": arguments.get("attempt_id"),
                                     "bindings": arguments.get("bindings"),
+                                    "prepared_call_id": arguments.get(
+                                        "prepared_call_id"),
+                                    "reviewed_sequence": arguments.get(
+                                        "reviewed_sequence"),
                                     "body": json.loads(response_text)})
                             if attempt_id != "calc-offline-e2e-01":
                                 observed["negative_profile_results"][attempt_id] = (
@@ -1666,6 +1670,32 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                              routed_primary)
             artifact_bytes = observed["artifact_bytes"]
             self.assertIsInstance(artifact_bytes, bytes)
+            verified_effect = observed["verification"]["task_effect"]
+            save_controller = verified_effect["save_controller"]
+            provider_method_receipt_sha256 = hashlib.sha256(json.dumps(
+                routed_receipt, sort_keys=True, separators=(",", ":"),
+                allow_nan=False).encode("utf-8")).hexdigest()
+            self.assertTrue(observed["verification"]["task_success"])
+            self.assertEqual(verified_effect["attempt_id"],
+                             routed_primary["attempt_id"])
+            self.assertEqual(save_controller["attempt_id"],
+                             routed_primary["attempt_id"])
+            self.assertEqual(save_controller["call_id"],
+                             routed_primary["prepared_call_id"])
+            self.assertEqual(save_controller["method_receipt_sha256"],
+                             provider_method_receipt_sha256)
+            self.assertEqual(verified_effect["profile_id"], "calc-ocr-save-v1")
+            self.assertEqual(verified_effect["artifact_sha256"],
+                             hashlib.sha256(artifact_bytes).hexdigest())
+            scoped_mints = [row for row in observed["mint_receipts"]
+                if row["body"].get("session", {}).get("compiled_scope") ==
+                routed_receipt["session_scope"]]
+            mint_offsets = {row["requested_alias"]: row["body"].get("offset")
+                for row in scoped_mints if row["body"].get("status") == "minted"}
+            self.assertEqual(mint_offsets, {
+                binding["alias"]: binding["offset"] for binding in
+                routed_primary["bindings"].values()})
+            self.assertEqual(len(scoped_mints), 2)
             root_xml = ET.fromstring(artifact_bytes)
             office_ns = "urn:oasis:names:tc:opendocument:xmlns:office:1.0"
             scored_values = [cell.attrib.get(f"{{{office_ns}}}value")
@@ -1791,6 +1821,21 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                  "replay_allowed")}
                             for candidate in
                             observed["provider_routed_compiled_results"]],
+                        "provider_task_effect_join": {
+                            "status": observed["verification"]["status"],
+                            "task_success": observed["verification"]["task_success"],
+                            "attempt_id": routed_primary["attempt_id"],
+                            "prepared_call_id": routed_primary["prepared_call_id"],
+                            "save_controller_call_id": save_controller["call_id"],
+                            "provider_method_receipt_sha256":
+                                provider_method_receipt_sha256,
+                            "save_controller_method_receipt_sha256":
+                                save_controller["method_receipt_sha256"],
+                            "compiled_scope": routed_receipt["session_scope"],
+                            "minted_alias_offsets": mint_offsets,
+                            "verified_artifact_sha256":
+                                verified_effect["artifact_sha256"],
+                            "replay_allowed": verified_effect["replay_allowed"]},
                         "public_mint_receipts": observed["mint_receipts"],
                         "limits": ["FakeX_only", "no_live_provider", "no_live_Calc",
                                    "no_efficiency_comparison"]},
