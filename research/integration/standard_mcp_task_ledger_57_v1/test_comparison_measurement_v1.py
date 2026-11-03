@@ -102,6 +102,7 @@ class ComparisonMeasurementTests(unittest.TestCase):
             trace.append({
                 "task_index": index,
                 "mode": mode,
+                "plan_outcome": "available",
                 "plan_sha256": plan_hashes[index],
                 "source_task_index": {1: None, 2: 1, 3: 3, 4: 3}[index],
                 "dependency_sha256": dependency_hashes[index],
@@ -113,10 +114,12 @@ class ComparisonMeasurementTests(unittest.TestCase):
                 }] if index in (1, 3) else []),
             })
         return {
-            "schema": "agent-interface/reuse-horizon-comparison-v2",
+            "schema": "agent-interface/reuse-horizon-comparison-v3",
             "comparison_id": "synthetic-reuse-horizon",
             "predeclared_horizon": 4,
             "invalidation_after_task_index": 2,
+            "max_c_model_attempts_per_task": 3,
+            "horizon_outcome": "complete",
             "blocks": blocks,
             "c_plan_trace": trace,
         }
@@ -194,12 +197,120 @@ class ComparisonMeasurementTests(unittest.TestCase):
             result["correctness_qualified_elapsed_break_even_task_index"],
             {"A": None, "B": None})
 
-    def test_reuse_horizon_rejects_unscored_cold_plan_and_wrong_repair_lineage(self):
+    def test_reuse_horizon_preserves_failed_cold_and_repair_task_scores(self):
         value = self.horizon()
         value["blocks"][0]["runs"][2]["task_ledger"]["events"][-1][
             "task_success"] = False
+        result = validate_reuse_horizon(value)
+        self.assertEqual(result["cumulative"]["C"]["task_success"][0], False)
+        self.assertEqual(result["correctness_qualified_token_break_even_task_index"],
+                         {"A": None, "B": None})
+        value = self.horizon()
+        value["blocks"][2]["runs"][2]["task_ledger"]["events"][-1][
+            "task_success"] = False
+        result = validate_reuse_horizon(value)
+        self.assertEqual(result["cumulative"]["C"]["task_success"][2], False)
+        self.assertEqual(result["correctness_qualified_elapsed_break_even_task_index"],
+                         {"A": 1, "B": 1})
+
+    def test_reuse_horizon_counts_bounded_cold_retry_before_plan_generation(self):
+        value = self.horizon()
+        value["max_c_model_attempts_per_task"] = 2
+        cold_run = value["blocks"][0]["runs"][2]
+        events = cold_run["task_ledger"]["events"]
+        events[0]["status"] = "failed"
+        events[0]["started_ns"], events[0]["ended_ns"] = 10, 15
+        events[0]["usage"] = {
+            "status": "reported", "input_tokens": 1, "output_tokens": 1}
+        retry = {
+            "seq": 2, "kind": "model_attempt", "attempt_id": "model-C-1-retry",
+            "status": "completed", "started_ns": 15, "ended_ns": 30,
+            "usage": {"status": "reported", "input_tokens": 8,
+                      "output_tokens": 2},
+        }
+        events.insert(1, retry)
+        events[2]["seq"] = 3
+        events[2]["started_ns"], events[2]["ended_ns"] = 30, 35
+        events[2]["model_attempt_id"] = "model-C-1-retry"
+        events[3]["seq"] = 4
+        events[3]["started_ns"], events[3]["ended_ns"] = 40, 41
+        cold_run["measurement"]["model_delivered_images"].append({
+            "attempt_id": "model-C-1-retry", "sha256": "1" * 64})
+        cold_run["measurement"]["local_observations"][0]["captured_ns"] = 33
+        phases = cold_run["measurement"]["phases"]
+        phases[1]["ended_ns"] = 30
+        phases[2]["started_ns"], phases[2]["ended_ns"] = 30, 35
+        phases[3]["started_ns"], phases[3]["ended_ns"] = 35, 40
+        phases[4]["started_ns"], phases[4]["ended_ns"] = 40, 41
+        phases[5]["started_ns"] = 41
+        phases[5]["ended_ns"] = 45
+        cold_run["measurement"]["ended_ns"] = 45
+        cold_run["measurement"]["elapsed_ns"] = 40
+        value["c_plan_trace"][0]["plan_generation_attempt_ids"] = [
+            "model-C-1-retry"]
+        value["c_plan_trace"][0]["attempt_dispositions"] = [
+            {"attempt_id": "model-C-1", "disposition": "failure"},
+            {"attempt_id": "model-C-1-retry", "disposition": "plan_generation"},
+        ]
+        result = validate_reuse_horizon(value)
+        self.assertEqual(result["cumulative"]["C"]["total_tokens"],
+                         [12, 12, 22, 22])
+        self.assertEqual(result["cumulative"]["C"]["elapsed_ns"],
+                         [40, 70, 100, 130])
+
+        value["max_c_model_attempts_per_task"] = 1
         with self.assertRaises(LedgerValidationError):
             validate_reuse_horizon(value)
+
+    def test_reuse_horizon_reports_terminal_cold_plan_failure(self):
+        value = self.horizon()
+        value["blocks"] = value["blocks"][:1]
+        value["c_plan_trace"] = value["c_plan_trace"][:1]
+        value["horizon_outcome"] = "cold_plan_unavailable"
+        cold = value["blocks"][0]["runs"][2]["task_ledger"]["events"]
+        cold[0]["status"] = "abstained"
+        cold[-1]["task_success"] = False
+        trace = value["c_plan_trace"][0]
+        trace["plan_outcome"] = "unavailable"
+        trace["plan_sha256"] = None
+        trace["plan_generation_attempt_ids"] = []
+        trace["attempt_dispositions"] = [{
+            "attempt_id": "model-C-1", "disposition": "abstention"}]
+        result = validate_reuse_horizon(value)
+        self.assertFalse(result["horizon_complete"])
+        self.assertEqual(result["horizon_outcome"], "cold_plan_unavailable")
+        self.assertEqual(result["observed_block_count"], 1)
+        self.assertEqual(result["cumulative"]["C"]["total_tokens"], [10])
+        self.assertEqual(result["token_break_even_task_index"], {"A": None, "B": None})
+
+        value["horizon_outcome"] = "complete"
+        with self.assertRaises(LedgerValidationError):
+            validate_reuse_horizon(value)
+
+    def test_reuse_horizon_reports_terminal_repair_failure_without_reuse(self):
+        value = self.horizon()
+        value["blocks"] = value["blocks"][:3]
+        value["c_plan_trace"] = value["c_plan_trace"][:3]
+        value["horizon_outcome"] = "repair_plan_unavailable"
+        repair = value["blocks"][2]["runs"][2]["task_ledger"]["events"]
+        repair[0]["status"] = "timeout"
+        repair[0]["usage"] = {
+            "status": "unavailable", "input_tokens": None, "output_tokens": None}
+        repair[-1]["task_success"] = False
+        trace = value["c_plan_trace"][2]
+        trace["plan_outcome"] = "unavailable"
+        trace["plan_sha256"] = None
+        trace["plan_generation_attempt_ids"] = []
+        trace["attempt_dispositions"] = [{
+            "attempt_id": "model-C-3", "disposition": "timeout"}]
+        result = validate_reuse_horizon(value)
+        self.assertFalse(result["horizon_complete"])
+        self.assertEqual(result["horizon_outcome"], "repair_plan_unavailable")
+        self.assertEqual(result["observed_block_count"], 3)
+        self.assertEqual(result["cumulative"]["C"]["total_tokens"], [10, 10, None])
+        self.assertEqual(result["cumulative"]["C"]["elapsed_ns"], [30, 60, 90])
+        self.assertEqual(result["token_break_even_task_index"], {"A": None, "B": None})
+        self.assertEqual(len(result["plan_trace"]), 3)
 
     def test_reuse_horizon_accounts_for_non_generation_warm_attempt(self):
         value = self.horizon()
@@ -291,7 +402,7 @@ class ComparisonMeasurementTests(unittest.TestCase):
         result = validate_reuse_horizon(value)
         self.assertEqual(result["token_break_even_task_index"], {"A": None, "B": 2})
 
-    def test_reuse_horizon_requires_model_pin_and_successful_repair(self):
+    def test_reuse_horizon_requires_model_pin_and_preserves_failed_repair_score(self):
         value = self.horizon()
         for arm_run in value["blocks"][0]["runs"]:
             arm_run["task_ledger"]["model"] = None
@@ -313,8 +424,8 @@ class ComparisonMeasurementTests(unittest.TestCase):
         value = self.horizon()
         value["blocks"][2]["runs"][2]["task_ledger"]["events"][-1][
             "task_success"] = False
-        with self.assertRaises(LedgerValidationError):
-            validate_reuse_horizon(value)
+        result = validate_reuse_horizon(value)
+        self.assertEqual(result["cumulative"]["C"]["task_success"][2], False)
 
     def test_other_phase_requires_reason_and_all_ledger_events_fit_lifecycle(self):
         value = run("A", 1)

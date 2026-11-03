@@ -37,12 +37,14 @@ profile; this does not isolate the effect of any single setting.
   2 CPUs, 4 GiB memory and 4 GiB total memory+swap, 256 PID limit, source
   read-only, exit 0; normal and optimized suites each passed 214/214 before the
   current validator change.
-- Current reuse-horizon attempt-accounting run: same image and isolation
+- Current reuse-horizon all-attempt accounting run: same image and isolation
   limits; normal and optimized modes each passed 14/14, exit 0. Logs and
-  checksums are retained in
-  `reuse-horizon-attempt-accounting-20261104-01/`.
-- The four previous broad-run packet manifests and the current validator packet
-  manifest verify. `git diff --check` passed.
+  checksums are retained in `reuse-horizon-attempt-accounting-20261104-01/`.
+- Current v3 terminal-outcome and bounded-retry run: same image and isolation
+  limits; normal and optimized modes each passed 17/17, exit 0. Logs and
+  checksums are retained in `reuse-horizon-terminal-outcomes-20261104-01/`.
+- The four broad-run packet manifests and both validator packet manifests
+  verify. `git diff --check` passed.
 
 A bounded test run establishes that Docker remained responsive through that
 run, not a long-duration stability rate or the cause of earlier crashes. Recent

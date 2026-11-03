@@ -190,31 +190,49 @@ def validate_matched_block(runs):
 
 
 def validate_reuse_horizon(value):
-    """Validate cold/warm/one-repair/post-repair reuse and cumulative outcomes.
+    """Validate bounded plan generation, reuse, invalidation and repair outcomes.
 
     The horizon is a predeclared sequence of matched A/B/C task blocks. Arm C
     has one semantic-plan lineage: a cold generation, one or more warm uses,
     exactly one staged dependency change and repair, then post-repair warm use.
-    Every C model attempt has an explicit disposition, while only plan-generation
+    A no-plan cold or repair outcome may terminate a partial horizon. Every C
+    model attempt has an explicit disposition, while only plan-generation
     attempts participate in plan lineage. Token counts and elapsed time include
-    all attempts and are accumulated separately.
+    all observed attempts and are accumulated separately.
     """
     if type(value) is not dict or set(value) != {
             "schema", "comparison_id", "predeclared_horizon",
-            "invalidation_after_task_index", "blocks", "c_plan_trace"}:
+            "invalidation_after_task_index", "max_c_model_attempts_per_task",
+            "horizon_outcome", "blocks", "c_plan_trace"}:
         _fail("reuse horizon fields do not match the comparison schema")
-    if value["schema"] != "agent-interface/reuse-horizon-comparison-v2":
+    if value["schema"] != "agent-interface/reuse-horizon-comparison-v3":
         _fail("unsupported reuse-horizon schema")
     if not isinstance(value["comparison_id"], str) or not value["comparison_id"].strip():
         _fail("comparison_id is required")
     horizon = value["predeclared_horizon"]
     blocks = value["blocks"]
-    if (type(horizon) is not int or horizon < 4 or type(blocks) is not list
-            or len(blocks) != horizon):
-        _fail("observed blocks must equal a predeclared horizon of at least four tasks")
     invalidation_after = value["invalidation_after_task_index"]
+    if type(horizon) is not int or horizon < 4:
+        _fail("predeclared horizon must contain at least four tasks")
     if type(invalidation_after) is not int or not 2 <= invalidation_after < horizon:
         _fail("invalidation position must follow cold plus warm use and precede repair")
+    if type(blocks) is not list or not 1 <= len(blocks) <= horizon:
+        _fail("observed blocks must be a nonempty prefix of the predeclared horizon")
+    horizon_outcome = value["horizon_outcome"]
+    expected_terminal_lengths = {
+        "complete": horizon,
+        "cold_plan_unavailable": 1,
+        "repair_plan_unavailable": invalidation_after + 1,
+    }
+    if (not isinstance(horizon_outcome, str)
+            or horizon_outcome not in expected_terminal_lengths):
+        _fail("unknown horizon outcome")
+    if len(blocks) != expected_terminal_lengths[horizon_outcome]:
+        _fail("observed block count does not match the declared horizon outcome")
+    max_c_model_attempts = value["max_c_model_attempts_per_task"]
+    if (type(max_c_model_attempts) is not int
+            or not 1 <= max_c_model_attempts <= 16):
+        _fail("C model-attempt cap must be between one and sixteen per task")
 
     validated_blocks = []
     model_pin = environment_pin = fixture_pin = scorer_pin = None
@@ -266,8 +284,8 @@ def validate_reuse_horizon(value):
         validated_blocks.append(summary)
 
     trace = value["c_plan_trace"]
-    if type(trace) is not list or len(trace) != horizon:
-        _fail("C plan trace must contain one entry per horizon task")
+    if type(trace) is not list or len(trace) != len(blocks):
+        _fail("C plan trace must contain one entry per observed horizon task")
     c_attempts = []
     c_attempt_events = []
     for block in blocks:
@@ -275,6 +293,8 @@ def validate_reuse_horizon(value):
                      if run["task_ledger"]["comparison"]["arm"] == "C")
         attempts = [event for event in run_c["task_ledger"]["events"]
                     if event["kind"] == "model_attempt"]
+        if len(attempts) > max_c_model_attempts:
+            _fail("C model-attempt cap exceeded for a horizon task")
         c_attempt_events.append(attempts)
         c_attempts.append({event["attempt_id"] for event in attempts})
 
@@ -284,14 +304,19 @@ def validate_reuse_horizon(value):
     for index, row in enumerate(trace, start=1):
         required = {"task_index", "mode", "plan_sha256", "source_task_index",
                     "dependency_sha256", "plan_generation_attempt_ids",
-                    "attempt_dispositions"}
+                    "attempt_dispositions", "plan_outcome"}
         if type(row) is not dict or set(row) != required or row["task_index"] != index:
             _fail("C plan trace fields and order are invalid")
         mode = row["mode"]
-        if row["plan_sha256"] is None:
-            _fail("each C task needs a retained semantic-plan digest")
-        if not isinstance(row["plan_sha256"], str) or not _HASH.fullmatch(row["plan_sha256"]):
-            _fail("plan digest must be lowercase SHA-256")
+        plan_outcome = row["plan_outcome"]
+        if plan_outcome not in ("available", "unavailable"):
+            _fail("plan outcome must be available or unavailable")
+        if plan_outcome == "available":
+            if not isinstance(row["plan_sha256"], str) or not _HASH.fullmatch(
+                    row["plan_sha256"]):
+                _fail("available plan needs a lowercase SHA-256 digest")
+        elif row["plan_sha256"] is not None:
+            _fail("unavailable plan cannot carry a semantic-plan digest")
         if not isinstance(row["dependency_sha256"], str) or not _HASH.fullmatch(
                 row["dependency_sha256"]):
             _fail("dependency digest must be lowercase SHA-256")
@@ -300,6 +325,8 @@ def validate_reuse_horizon(value):
                 or any(not isinstance(item, str) or not item for item in attempt_ids)
                 or len(attempt_ids) != len(set(attempt_ids))):
             _fail("plan generation attempts must be a unique explicit list")
+        if len(attempt_ids) > 1:
+            _fail("each C task may retain at most one generated plan")
         if any(attempt not in c_attempts[index - 1] for attempt in attempt_ids):
             _fail("plan generation attempt is absent from the matching C ledger")
         dispositions = row["attempt_dispositions"]
@@ -329,28 +356,38 @@ def validate_reuse_horizon(value):
             _fail("plan generation lineage must match the classified plan attempts")
 
         if index == 1:
-            if mode != "cold" or row["source_task_index"] is not None or not attempt_ids:
-                _fail("first C task must cold-generate its plan from a recorded attempt")
-            if validated_blocks[index - 1]["arms"]["C"]["task_success"] is not True:
-                _fail("cold C plan task must pass its independent task score")
-            plan_digest = row["plan_sha256"]
+            if mode != "cold" or row["source_task_index"] is not None:
+                _fail("first C task must be the cold-plan attempt")
+            if plan_outcome == "available":
+                if not attempt_ids or horizon_outcome == "cold_plan_unavailable":
+                    _fail("available cold plan must come from a recorded generation attempt")
+                plan_digest = row["plan_sha256"]
+            elif (horizon_outcome != "cold_plan_unavailable"
+                    or len(blocks) != 1 or attempt_ids):
+                _fail("cold plan failure must terminate the horizon without a plan")
             dependency_digest = row["dependency_sha256"]
         elif index < repair_index:
-            if (mode != "warm" or row["source_task_index"] != 1 or attempt_ids
+            if (mode != "warm" or plan_outcome != "available"
+                    or row["source_task_index"] != 1 or attempt_ids
                     or row["plan_sha256"] != plan_digest
                     or row["dependency_sha256"] != dependency_digest):
                 _fail("pre-invalidation C tasks must reuse the cold plan without regeneration")
         elif index == repair_index:
-            if (mode != "repair" or row["source_task_index"] != index or not attempt_ids
-                    or row["plan_sha256"] == plan_digest
+            if (mode != "repair" or row["source_task_index"] != index
                     or row["dependency_sha256"] == dependency_digest):
-                _fail("declared invalidation must cause exactly one fresh plan repair")
-            if validated_blocks[index - 1]["arms"]["C"]["task_success"] is not True:
-                _fail("repaired C plan task must pass its independent task score")
-            repair_plan = row["plan_sha256"]
+                _fail("declared invalidation must have a repair task under changed dependencies")
+            if plan_outcome == "available":
+                if (not attempt_ids or row["plan_sha256"] == plan_digest
+                        or horizon_outcome == "repair_plan_unavailable"):
+                    _fail("successful repair must retain a fresh generated plan")
+                repair_plan = row["plan_sha256"]
+            elif (horizon_outcome != "repair_plan_unavailable"
+                    or index != len(blocks) or attempt_ids):
+                _fail("repair plan failure must terminate without post-repair reuse")
             repair_dependency = row["dependency_sha256"]
         else:
-            if (mode != "post_repair_warm" or row["source_task_index"] != repair_index
+            if (mode != "post_repair_warm" or plan_outcome != "available"
+                    or row["source_task_index"] != repair_index
                     or attempt_ids or row["plan_sha256"] != repair_plan
                     or row["dependency_sha256"] != repair_dependency):
                 _fail("post-repair tasks must reuse the repaired plan without regeneration")
@@ -419,9 +456,18 @@ def validate_reuse_horizon(value):
                     and all_correct_so_far and c_elapsed < base_elapsed):
                 qualified_elapsed_break_even[baseline] = index
 
+    if horizon_outcome != "complete":
+        break_even = {baseline: None for baseline in ("A", "B")}
+        qualified_break_even = {baseline: None for baseline in ("A", "B")}
+        elapsed_break_even = {baseline: None for baseline in ("A", "B")}
+        qualified_elapsed_break_even = {baseline: None for baseline in ("A", "B")}
+
     return {
         "comparison_id": value["comparison_id"],
         "predeclared_horizon": horizon,
+        "observed_block_count": len(blocks),
+        "horizon_complete": horizon_outcome == "complete",
+        "horizon_outcome": horizon_outcome,
         "invalidation_after_task_index": invalidation_after,
         "plan_trace": normalized_trace,
         "cumulative": cumulative,
