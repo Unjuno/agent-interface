@@ -3662,9 +3662,30 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(entered['queued'], [{'kind':X.KeyPress, 'code':1}])
                 self.assertEqual(entered['down'], [])
 
-                cancelled = metadata(await server.call_tool('interface_guarded_cancel',
-                    {'call_id':pending['call_id']}))
-                self.assertTrue(cancelled['owner_process_retired'], cancelled)
+                original_cleanup = OwnedGuardedSessionOwner._cleanup_after_owner_retirement
+
+                def delayed_cleanup(owner, retirement):
+                    time.sleep(0.35)
+                    return original_cleanup(owner, retirement)
+
+                with patch.object(OwnedGuardedSessionOwner,
+                                  '_cleanup_after_owner_retirement',
+                                  new=delayed_cleanup):
+                    cancelled = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                self.assertEqual(cancelled.get('status'), 'pending', cancelled)
+                # The public cancellation response has a shorter bounded wait
+                # than the retained cleanup transaction. Under suite load it
+                # may return pending while the exact operation still owns the
+                # retired process; retrieve that same operation to terminal.
+                cancel_deadline = time.monotonic() + 3
+                while (cancelled.get('status') == 'pending'
+                       and time.monotonic() < cancel_deadline):
+                    await asyncio.sleep(0.005)
+                    cancelled = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                self.assertIsNot(cancelled.get('status'), 'pending', cancelled)
+                self.assertIs(cancelled.get('owner_process_retired'), True, cancelled)
                 self.assertFalse(cancelled['release_confirmed'])
                 self.assertTrue(cancelled['late_server_request_possible'])
 
