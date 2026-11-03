@@ -1,0 +1,273 @@
+{
+  "independent_fods_value_match": true,
+  "independent_stdlib_fods_values": [
+    "24680",
+    "13579"
+  ],
+  "limits": [
+    "FakeX_only",
+    "no_live_provider",
+    "no_live_Calc",
+    "no_efficiency_comparison"
+  ],
+  "malformed_generation_recorded": true,
+  "malformed_model_attempt": {
+    "attempt_id": "calc-provider-attempt-06",
+    "response_status": "raw_retained",
+    "status": "malformed",
+    "usage_status": "unavailable"
+  },
+  "model_attempts": [
+    {
+      "attempt_id": "calc-provider-preflight-00",
+      "status": "timeout",
+      "usage_status": "unavailable"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-02",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-03",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-04",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-05",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-06",
+      "status": "malformed",
+      "usage_status": "unavailable"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-07",
+      "status": "cancelled",
+      "usage_status": "unavailable"
+    }
+  ],
+  "model_generations": 4,
+  "negative_profile_results": {
+    "calc-offline-ambiguous-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "calc-offline-unknown-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "calc-offline-wrong-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    }
+  },
+  "provider": "synthetic_fake_planner_echoes_supplied_arguments",
+  "provider_attempts": 7,
+  "provider_compiled_call_candidates": [
+    {
+      "attempt_id": "different-attempt",
+      "detail": "reviewed sequence is not the latest source observed through this MCP session",
+      "error": "CALC_REVIEW_SOURCE_STALE",
+      "handoff_reason": null,
+      "keys": [
+        "detail",
+        "effect_status",
+        "error",
+        "input_dispatched",
+        "operation_invoked",
+        "release_confirmed",
+        "replay_allowed",
+        "status",
+        "task_success"
+      ],
+      "status": "invalid_request",
+      "task_success": null
+    },
+    {
+      "attempt_id": "calc-offline-e2e-01",
+      "detail": "entry alias has no matching mint receipt in this MCP session",
+      "error": "CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE",
+      "handoff_reason": null,
+      "keys": [
+        "detail",
+        "effect_status",
+        "error",
+        "input_dispatched",
+        "operation_invoked",
+        "release_confirmed",
+        "replay_allowed",
+        "status",
+        "task_success"
+      ],
+      "status": "invalid_request",
+      "task_success": null
+    }
+  ],
+  "public_mcp_tool_calls": 32,
+  "schema": "agent-interface/fake-appserver-calc-boundary-v1",
+  "separate_direct_owner_close": {
+    "authority_granted": false,
+    "call_directory": "/tmp/tmpinu5a87w/271b386523c242e0bceffd08d265c921",
+    "call_id": "271b386523c242e0bceffd08d265c921",
+    "connection_close_attempted": true,
+    "owner_process_exitcode": 0,
+    "owner_process_retired": true,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 2184383030739,
+      "verified": true
+    },
+    "release_attempted": true,
+    "release_confirmed": true,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:61f37522cfe14ac6b6cd039e695acf09",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 13,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 2184484523453,
+        "pid": 27,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 27,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": false,
+      "session_id": "2cda51e03a104d71842bad27b3d6d049",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "session_id": "2cda51e03a104d71842bad27b3d6d049",
+    "status": "closed",
+    "verified": true
+  },
+  "separate_direct_task_effect": {
+    "attempt_id": "calc-offline-e2e-01",
+    "call_id": "0c5beff638b94e1eab19a821db4b0dd8",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "guarded_x11_calc",
+    "status": "verified",
+    "task_effect": {
+      "artifact_bytes": 515,
+      "artifact_identity": [
+        87,
+        192832,
+        515,
+        1793729987113148959,
+        1793729987113148959
+      ],
+      "artifact_sha256": "ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4",
+      "attempt_id": "calc-offline-e2e-01",
+      "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+      "expected_values": {
+        "A1": "24680",
+        "A2": "13579"
+      },
+      "parsed_effect": {
+        "artifact_bytes": 515,
+        "artifact_sha256": "ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4",
+        "cells": {
+          "A1": "24680",
+          "A2": "13579"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "profile_id": "calc-ocr-save-v1",
+      "reason": "registered_calc_saved_artifact_verified",
+      "replay_allowed": false,
+      "save_controller": {
+        "attempt_id": "calc-offline-e2e-01",
+        "call_id": "4bcc5d14cb6a4afda6116ea25de0a93e",
+        "method_receipt_sha256": "0ef6c1164e1e7b61e175de05e35dd7c5f0f9003f8d2ac527f89ba17a5dff5961",
+        "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+        "profile_id": "calc-ocr-save-v1",
+        "save_action_id": "action-96ef25df6e6e43e0a45cf20ea77b612f",
+        "save_request_id": "b280850b7f591e3362980372bd24285d",
+        "save_request_monotonic_ns": 2177936100238,
+        "schema": "agent-interface/calc-registered-save-controller-v1",
+        "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "save_request_id": "b280850b7f591e3362980372bd24285d",
+      "save_request_monotonic_ns": 2177936100238,
+      "status": "verified",
+      "task_success": true,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "task_success": true
+  },
+  "stopped_generation_recorded": true,
+  "stopped_model_attempt": {
+    "attempt_id": "calc-provider-attempt-07",
+    "response_status": "raw_retained",
+    "status": "cancelled",
+    "usage_status": "unavailable"
+  },
+  "verified_task_effect_success": true
+}

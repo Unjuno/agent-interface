@@ -1,0 +1,31 @@
+{
+  "schema": "agent-interface/plan-evidence-join-run-v1",
+  "source_commit": "6100f2a2fdb42d832ac491314e5cb1ccc2e2554c",
+  "docker_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "docker_image_digest": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "cpus": 2,
+  "memory": "4g",
+  "memory_swap": "4g total",
+  "pids_limit": 256,
+  "source_mount": "read-only",
+  "normal_unit_tests": "27/27 passed",
+  "optimized_unit_tests": "27/27 passed",
+  "fake_app_server_calc_composition": "1/1 passed, 9.450s",
+  "scope": "Synthetic evidence-join tests; provider-routed Calc compiled call refused for missing mint receipt; separate nested Fake X path verifies FODS values/release, not same call",
+  "not_established": [
+    "live model-authored plan",
+    "provider efficiency",
+    "live Calc GUI",
+    "WSLc",
+    "MAP01",
+    "Docker long-duration host stability"
+  ],
+  "integrated_docker_exit": 0,
+  "retained_raw_artifact_dirs": [
+    "raw-runtime-final-08/provider-call",
+    "raw-runtime-final-08/provider-ledger",
+    "raw-runtime-final-08/raw-runtime",
+    "raw-runtime-final-08/app-server-protocol.jsonl"
+  ]
+}

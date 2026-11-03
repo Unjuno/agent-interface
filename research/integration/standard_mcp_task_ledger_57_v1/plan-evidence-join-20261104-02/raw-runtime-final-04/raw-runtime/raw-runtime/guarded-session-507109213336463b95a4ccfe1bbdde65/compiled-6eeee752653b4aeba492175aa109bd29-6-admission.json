@@ -1,0 +1,35 @@
+{
+  "request": {
+    "interface_id": "planner-calc-two-cell-v1",
+    "session_scope": "native-x11:f5e8cff81d68432d9320b6466329ca34",
+    "action": "populate_cells",
+    "operation": "enter_pair",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "calc_entry",
+      "identity_predicate": "context_ok",
+      "dependencies": [
+        "context_ok"
+      ]
+    },
+    "observation": {
+      "sequence": 2,
+      "captured_ns": 2042793531267,
+      "surface": "x11-window-20",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_match": "unknown"
+      },
+      "evidence_ref": "observation-2",
+      "evidence_digest": "6fe567ff3374651f65a6c5f139f4490c15c9ec977f5926afd0c24eb6b91f2eba"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "caf51d64d34d46cc81265158ca45fd28",
+    "expected_sequence": 2,
+    "valid_until_ns": 2044293531267
+  }
+}
