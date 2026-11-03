@@ -1,0 +1,31 @@
+{
+  "record_type": "posthoc_execution_capture",
+  "experiment": "V39_LEGACY_TRANSITION_A04",
+  "executed_at_local": "2026-10-05 Asia/Tokyo (time not separately captured)",
+  "baseline_commit": "46bed14701c6ba7d509c620bf6f582c84993f949",
+  "baseline_source_sha256": "14e6c6c4872b25529210a670b85b7bbf00b7ad88cc917812d9bda4865186be4f",
+  "candidate_source_sha256": "46788cd6725b9d0135acc86b54ed4022dddb0e8e7a76bdbf39e5cbfa1b1f9049",
+  "test_sha256": "51ed277a8989b95bcfae0549456c7a85f5c31d7452f8f501ea30d6be55ebfe27",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "container_policy": {
+    "pull": "never",
+    "network": "none",
+    "cpus_requested": "1",
+    "memory_requested": "512M",
+    "user": "1000:1000",
+    "source_mount": "read-only",
+    "result_and_audit_mount": "distinct writable output",
+    "auto_remove": true
+  },
+  "candidate_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --name v39-edge-legacy-a04-candidate-20261005 --volume <worktree>:/src:ro --volume <candidate-output>:/out:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/results/v39_adapter_edge_cardinality_59_a01_20261005/a04-legacy-transition-outer-event/run_a04.py",
+  "auditor_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --name v39-edge-legacy-a04-audit-20261005 --volume <worktree>:/src:ro --volume <a04-evidence>:/evidence:ro --volume <audit-output>:/audit:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/results/v39_adapter_edge_cardinality_59_a01_20261005/a04-legacy-transition-outer-event/audit_a04.py",
+  "baseline_tests": 2,
+  "baseline_failed_tests": 1,
+  "candidate_tests": 2,
+  "candidate_failed_tests": 0,
+  "audit": "PASS",
+  "audit_checks": 14,
+  "container_inventory_after_each_run": "empty (wslc container list observed after candidate and auditor)",
+  "resource_warning": "WSLc reported missing swap-limit capabilities or cgroup; memory limited without swap. No swap cap or fully enforced memory claim."
+}
