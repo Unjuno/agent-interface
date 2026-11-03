@@ -37,12 +37,27 @@ class AuthoredHealthBoundaryAuditTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     validate(altered)
 
+    def test_corrected_audit_binds_exact_result_bytes_and_preserves_original(self):
+        root = Path(__file__).parent
+        result_bytes = (root / "RESULT.json").read_bytes()
+        audit = json.loads((root / "AUDIT.json").read_text(encoding="utf-8"))
+        original = json.loads((root / "AUDIT_A01.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(audit["schema"],
+                         "issue59-authored-health-loss-boundary-audit-v2")
+        self.assertEqual(audit["result_hash_encoding"],
+                         "exact committed RESULT.json bytes")
+        self.assertEqual(audit["result_sha256"], hashlib.sha256(result_bytes).hexdigest())
+        self.assertEqual(audit["supersedes"], "AUDIT_A01.json")
+        self.assertEqual(original["result_sha256"], hashlib.sha256(
+            result_bytes.replace(b"\r\n", b"\n")).hexdigest())
+
 
     def test_manifest_matches_exact_package_bytes(self):
         root = Path(__file__).parent
         manifest = json.loads((root / "MANIFEST.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["schema"], "issue59-authored-health-loss-boundary-manifest-v2")
-        expected = {"AUDIT.json", "MANIFEST_A01.json", "README.md", "RESULT.json",
+        self.assertEqual(manifest["schema"], "issue59-authored-health-loss-boundary-manifest-v3")
+        expected = {"AUDIT.json", "AUDIT_A01.json", "MANIFEST_A01.json", "README.md", "RESULT.json",
                     "RUN_COMMAND.txt", "audit.py", "candidate.py", "test_audit.py", "FREEZE.json"}
         entries = manifest["files"]
         self.assertEqual({row["path"] for row in entries}, expected)
