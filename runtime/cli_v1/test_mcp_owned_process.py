@@ -439,12 +439,16 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
         low_once = (mode == 'settle-after-low-confidence'
                     and fake.calc_state['both_entered']
                     and not (root/'post-release-settle-observed').exists())
+        ambiguous_after_input = (mode == 'ambiguous-after-input'
+                                 and fake.calc_state['both_entered'])
         stdout = (header if not filled or mode == 'unknown-after-input' else
                   header +
                   (b'5\t8\t4\t44\t24\t70\t731\n5\t8\t38\t44\t24\t70\t864\n'
                    if low_once else
                    b'5\t8\t4\t44\t24\t95\t731\n' +
-                   (b'5\t8\t38\t44\t24\t95\t863\n'
+                   (b'5\t8\t4\t44\t24\t95\t731\n'
+                    if ambiguous_after_input else
+                    b'5\t8\t38\t44\t24\t95\t863\n'
                     if mode == 'wrong-after-input' else
                     b'5\t8\t38\t44\t24\t95\t864\n')))
         evidence=(root/'fake-ocr-observations.jsonl')
@@ -1339,9 +1343,10 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 closed=metadata(await server.call_tool('interface_close',{}))
                 self.assertTrue(closed['release_confirmed'],closed)
 
-    async def test_registered_calc_profile_stops_on_wrong_or_unknown_ocr(self):
+    async def test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr(self):
         for mode,expected_reason in (('wrong-after-input','effect_failed'),
-                                     ('unknown-after-input','effect_unavailable')):
+                                     ('unknown-after-input','effect_unavailable'),
+                                     ('ambiguous-after-input','effect_unavailable')):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
                 root=Path(td)
                 (root/'calc-profile-mode').write_text(mode,encoding='utf-8')

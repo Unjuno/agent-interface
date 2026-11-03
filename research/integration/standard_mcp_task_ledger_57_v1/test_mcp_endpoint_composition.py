@@ -1319,18 +1319,20 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
                 await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
                 negative_case = calc_tests.OwnedProcessMCPTests(
-                    "test_registered_calc_profile_stops_on_wrong_or_unknown_ocr")
-                await negative_case.test_registered_calc_profile_stops_on_wrong_or_unknown_ocr()
+                    "test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr")
+                await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr()
 
-            self.assertEqual(counts["successful_generation"], 3)
-            self.assertEqual(counts["provider_attempts"], 4)
+            self.assertEqual(counts["successful_generation"], 4)
+            self.assertEqual(counts["provider_attempts"], 5)
             self.assertGreater(counts["tool"], 1)
             self.assertEqual(set(observed["negative_profile_results"]), {
                 "calc-offline-wrong-after-input",
-                "calc-offline-unknown-after-input"})
+                "calc-offline-unknown-after-input",
+                "calc-offline-ambiguous-after-input"})
             for attempt_id, expected_reason in (
                     ("calc-offline-wrong-after-input", "effect_failed"),
-                    ("calc-offline-unknown-after-input", "effect_unavailable")):
+                    ("calc-offline-unknown-after-input", "effect_unavailable"),
+                    ("calc-offline-ambiguous-after-input", "effect_unavailable")):
                 negative = observed["negative_profile_results"][attempt_id]
                 self.assertEqual(negative["method_receipt"]["outcome"],
                                  "SAFE_YIELD", negative)
@@ -1359,7 +1361,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             receipt = recorder.reconcile()
             summary = summarize(receipt["events"])
             self.assertTrue(receipt["complete"])
-            self.assertEqual(summary["model_attempt_count"], 4)
+            self.assertEqual(summary["model_attempt_count"], 5)
             self.assertEqual(summary["tool_call_count"], counts["tool"])
             self.assertEqual(summary["usage_status"], "incomplete")
             self.assertIsNone(summary["input_tokens"])

@@ -33,7 +33,7 @@ This profile does not claim a general Calc controller or a successful transfer.
 
 | Requirement | Existing evidence to reuse | Integrated enforcement and regression still required |
 | --- | --- | --- |
-| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown OCR path below | Add an ambiguous OCR case and model-wait dependency mutation through the composed registered profile. |
+| #52: abstain on no match, ambiguity, unavailable evidence; preserve partial effects | `runtime/core_v1/test_compiled_gui.py`; `runtime/cli_v1/test_mcp_owned_process.py`; composed registered-profile wrong/unknown/ambiguous OCR path below | Add model-wait dependency mutation through the composed registered profile. |
 | #53: all-attempt usage and call accounting | `runtime/cli_v1/test_golden_v3.py`, `test_golden_delivery_join.py`; `research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py::test_fake_app_server_generation_is_recorded_through_calc_profile_and_score` | Extend the synthetic timeout-preflight plus success case to stopped, repaired and malformed generations; reconcile against actual provider logs before a live claim. |
 | #54: schema preflight before GUI authority | Existing `runtime/cli_v1` preflight tests and receipts | Profile and graph schema rejection occurs before owner admission/input; preflight attempts remain in the outer ledger. |
 | #55: dependency revalidation after model wait | `runtime/guarded_x11_v1/test_compiled.py`; `test_input_dependency.py`; Calc public input-guard mutation tests | Change OCR cells, title/modal, sequence, focus, target binding or deadline between observation and input; prove refusal before Save via the real owned-process MCP route. |
@@ -55,11 +55,17 @@ summary remains complete while token totals stay unknown because the timeout
 usage is unavailable. The injected planner echoes supplied arguments and
 reports synthetic usage, so this proves a local composition contract only.
 
-Remaining offline work is the composed ambiguous-OCR case, dependency
-invalidation after provider wait, and one bounded new-attempt repair case with
-all receipts joined. Existing direct-owner, Fake X and recorder tests cover
-parts separately; they do not establish these combined Calc-profile paths. No
-real provider reconciliation or live efficiency comparison exists.
+The composed wrong/unknown OCR cases now also include duplicate high-confidence
+cell output after one input transition. The parser marks that ambiguous OCR
+unknown; the registered profile yields after the partial effect, records the
+input release, leaves Save undispatched, and denies replay. This is still a
+Fake X regression, not an application-level ambiguity result.
+
+Remaining offline work is dependency invalidation after provider wait and one
+bounded new-attempt repair case with all receipts joined. Existing direct-owner,
+Fake X and recorder tests cover parts separately; they do not establish these
+combined Calc-profile paths. No real provider reconciliation or live efficiency
+comparison exists.
 
 ## Gate before any new live comparison
 
