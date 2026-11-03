@@ -55,3 +55,29 @@ checksum manifests verify. This result is offline synthetic composition only;
 it does not measure Docker Desktop reliability, live provider behavior, live
 Calc, WSLc/MAP01, task economics, or end-to-end efficiency. Issue #57 remains
 open and its lifecycle comparison and live second-domain gates remain unmet.
+
+## Post-first-transition cancellation accounting (2026-11-04)
+
+Main source: `14ee3784d3b898ec2a998b1c472dafa12ee391a4` (PR #10188).
+
+The new `test_partial_input_cancel_accounting.py` composition joins one
+synthetic Fake App Server model attempt (reported 61 input and 13 output tokens) to the registered Calc compiled call, then retains cancel, delayed
+results, and close as unlinked orchestration calls. The ledger has 14 tool
+calls and refuses any second model, compiled, input, or recovery call after the
+uncertain post-input cancellation. Cleanup remains `UNKNOWN`, release is
+unconfirmed, task success is unknown, and replay is denied. This extends the
+#53 accounting regression through the partial-input cancellation boundary; it
+does not demonstrate successful release or task effect.
+
+The [retained packet](../standard_mcp_task_ledger_57_v1/partial-input-cancel-ledger-20261104-01/README.md)
+contains the Fake X receipts, provider ledger, App Server journal, and raw
+requests/responses. Its corrected manifest verifies all 169 retained Git blobs.
+Six referenced stdout logs were absent from the committed packet and are
+explicitly disclosed rather than claimed as retained. Local current-main tests
+passed for the 16-case composition suite and this cancellation test in normal
+and optimized Python; the independent boundary, provider-cancel, and Calc
+refusal regressions also passed in their recorded modes.
+
+All of this is synthetic/local evidence. Actual provider reconciliation, live
+Calc release after cancellation, matched end-to-end efficiency, WSLc, MAP01,
+and general reliability remain open.
