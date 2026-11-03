@@ -40,6 +40,18 @@ class _UnscorableArtifact(ValueError):
     """Well-formed Flat ODF whose structure exceeds this fixed scorer."""
 
 
+def validate_calc_task_values(values=None):
+    """Return exactly two bounded decimal cell values for the registered task."""
+    if values is None:
+        values = _EXPECTED
+    if (type(values) is not dict or set(values) != set(_EXPECTED)
+            or any(type(value) is not str
+                   or not re.fullmatch(r'(?:0|[1-9][0-9]{0,8})', value)
+                   for value in values.values())):
+        raise ValueError('Calc task requires bounded decimal A1 and A2 values')
+    return dict(values)
+
+
 def verify_saved_fods(path, *, expected=None):
     """Independently score one server-selected Flat ODF spreadsheet artifact.
 
@@ -63,12 +75,7 @@ def verify_saved_fods(path, *, expected=None):
 def verify_saved_fods_bytes(data, *, expected=None):
     """Score an already custody-checked Flat ODF byte snapshot."""
     try:
-        if expected is None:
-            expected = _EXPECTED
-        if (not isinstance(expected, dict) or set(expected) != set(_EXPECTED)
-                or any(type(key) is not str or type(value) is not str
-                       for key, value in expected.items())):
-            raise ValueError('unexpected fixed Calc expectation')
+        expected = validate_calc_task_values(expected)
         if not isinstance(data, bytes) or not data or len(data) > 64 * 1024 * 1024:
             raise ValueError('artifact size outside bounds')
         if b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():
@@ -159,7 +166,9 @@ def verify_saved_fods_bytes(data, *, expected=None):
                 'error_type':type(error).__name__}
 
 
-def _cell_cue(tsv, *, coordinate_origin=(0, 0), coordinate_scale=1):
+def _cell_cue(tsv, *, coordinate_origin=(0, 0), coordinate_scale=1,
+              expected=None):
+    expected = validate_calc_task_values(expected)
     found = {name: [] for name in _CELL_BOXES}
     if (not isinstance(coordinate_origin, (tuple, list)) or len(coordinate_origin) != 2
             or any(type(value) is not int for value in coordinate_origin)
@@ -201,14 +210,14 @@ def _cell_cue(tsv, *, coordinate_origin=(0, 0), coordinate_scale=1):
     if any(len(values) != 1 for values in found.values()):
         return 'unknown'
     return ('filled' if all(found[name] == [value]
-                            for name, value in _EXPECTED.items()) else 'wrong')
+                            for name, value in expected.items()) else 'wrong')
 
 
 class CalcPrimaryProfile:
     def __init__(self, bridge, bindings, call_root, *, reviewed_sequence,
                  reviewed_artifact_sha256, blank_reviewed,
                  clock=time.monotonic_ns, ocr_runner=None, call_id=None,
-                 attempt_id=None, task_artifact=None):
+                 attempt_id=None, task_artifact=None, task_values=None):
         if type(blank_reviewed) is not bool or blank_reviewed is not True:
             raise ValueError('fresh blank-sheet review is required')
         if type(reviewed_sequence) is not int or reviewed_sequence <= 0:
@@ -255,6 +264,12 @@ class CalcPrimaryProfile:
         self.reviewed_revision = bridge.binding_revision
         self.reviewed_window_id = self.reviewed_binding.get('surface')
         self.task_artifact = task_artifact
+        self.task_values = validate_calc_task_values(
+            task_artifact.expected_values if task_values is None
+            and task_artifact is not None else task_values)
+        if (task_artifact is not None
+                and task_artifact.expected_values != self.task_values):
+            raise ValueError('Calc task values differ from prepared artifact custody')
         self.task_save_request = None
         if (task_artifact is not None
                 and (getattr(task_artifact, 'call_id', None) != call_id
@@ -285,7 +300,8 @@ class CalcPrimaryProfile:
                     process_generation=process_generation,
                     window_generation=metadata['window_incarnation'],
                     target_xid=metadata['xid'],target_pid=metadata['process_pid'],
-                    target_start_ticks=metadata['process_start_ticks'],
+                target_start_ticks=metadata['process_start_ticks'],
+                expected_values=self.task_values,
                     clock=clock)
             elif (self.task_artifact.process_generation is None
                     and self.task_artifact.window_generation is None):
@@ -317,21 +333,37 @@ class CalcPrimaryProfile:
             raise ValueError('Calc entry must use the reviewed stable menu keyboard anchor')
         self.blank_pixels = {name: image.crop(box).tobytes()
                              for name, box in _CELL_BOXES.items()}
-        self.bindings = {
+        role_bindings = {
             'enter': {'interaction': 'keyboard',
                       'offset': list(bindings['entry']['offset']),
                       'tail': [
-                          {'op': 'text', 'text': '731', 'gap_ms': 1},
+                          {'op': 'text', 'text': self.task_values['A1'], 'gap_ms': 1},
                           {'op': 'key_chord', 'keys': ['Return']},
                           {'op': 'wait_update', 'timeout_ms': 100},
-                          {'op': 'text', 'text': '864', 'gap_ms': 1},
+                          {'op': 'text', 'text': self.task_values['A2'], 'gap_ms': 1},
                           {'op': 'key_chord', 'keys': ['Return']},
                           {'op': 'wait_update', 'timeout_ms': 100}]},
             'save': {'interaction': 'keyboard',
                      'offset': list(bindings['save']['offset']),
                      'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']},
                               {'op': 'wait_update', 'timeout_ms': 100}]}}
-        self.interface = self._interface(bindings)
+        self.symbolic_plan_binding = None
+        self.action_roles = {'enter':'enter', 'save':'save'}
+        if self.task_artifact is not None and self.task_artifact.task_plan is not None:
+            from runtime.guarded_x11_v1.compiled import surface
+            self.symbolic_plan_binding = self.task_artifact.bind_task_plan(
+                session_scope=self.reviewed_scope, surface=surface(self.bridge),
+                target_aliases={'entry':self.entry_alias,'save':self.save_alias})
+            self.interface = self.symbolic_plan_binding['interface']
+            self.action_roles = {}
+            self.bindings = {}
+            for action_name, action in self.interface['actions'].items():
+                role = 'enter' if action['operation'] == 'enter_pair' else 'save'
+                self.action_roles[action_name] = role
+                self.bindings[action_name] = role_bindings[role]
+        else:
+            self.bindings = role_bindings
+            self.interface = self._interface(bindings)
         self.seen_sequences = set()
         self.ocr_count = 0
         self.evidence_count = 0
@@ -489,7 +521,8 @@ class CalcPrimaryProfile:
                 or self.clock() >= self.deadline_ns):
             raise ValueError('bounded OCR did not return a current complete result')
         cue = _cell_cue((result.stdout or b'').decode('utf-8'),
-                        coordinate_origin=crop_origin, coordinate_scale=2)
+                        coordinate_origin=crop_origin, coordinate_scale=2,
+                        expected=self.task_values)
         record = {'profile_id': PROFILE_ID, 'sequence': sequence,
                   'artifact_sha256': digest, 'ocr_status': cue,
                   'ocr_invoked': True,
@@ -522,8 +555,9 @@ class CalcPrimaryProfile:
             for name, box in _CELL_BOXES.items()))
         cells_filled = (True if cue == 'filled' else
                         False if cue == 'wrong' else 'unknown')
+        effect_name = 'cells_match' if self.symbolic_plan_binding else 'cells_filled'
         predicates = {'context_ok': context_ok, 'blank': blank,
-                      'cells_filled': cells_filled}
+                      effect_name: cells_filled}
         return predicates
 
     def guard_perceive(self, native, rgb):
@@ -551,21 +585,24 @@ class CalcPrimaryProfile:
             for name, box in _CELL_BOXES.items()))
         cells_filled = (True if cue == 'filled' else
                         False if cue == 'wrong' else 'unknown')
+        effect_name = 'cells_match' if self.symbolic_plan_binding else 'cells_filled'
         predicates = {'context_ok':context_ok, 'blank':blank,
-                      'cells_filled':cells_filled}
+                      effect_name:cells_filled}
         return predicates
 
     def verify_effect(self, request, _native, _rgb):
         action = request.get('action')
         observed = request.get('observation', {}).get('predicates', {})
-        if action == 'enter':
-            status = ('succeeded' if observed.get('cells_filled') is True else
-                      'failed' if observed.get('cells_filled') is False else 'unavailable')
+        role = self.action_roles.get(action)
+        effect_name = 'cells_match' if self.symbolic_plan_binding else 'cells_filled'
+        if role == 'enter':
+            status = ('succeeded' if observed.get(effect_name) is True else
+                      'failed' if observed.get(effect_name) is False else 'unavailable')
         else:
             # Ctrl+S is a request only. The separate saved-file scorer is not
             # implemented by this profile and graph success stays unproven.
             status = 'unavailable'
-        if (action == 'save'
+        if (role == 'save'
                 and self.task_artifact is not None
                 and self.task_save_request is None):
             # The graph's save effect remains unavailable. This receipt records
@@ -578,7 +615,7 @@ class CalcPrimaryProfile:
 
     def verify_unchanged_effect(self, request, native, rgb):
         """Permit only the nonvisual Save receipt path on an unchanged frame."""
-        if request.get('action') == 'save':
+        if self.action_roles.get(request.get('action')) == 'save':
             return self.verify_effect(request, native, rgb)
         return {'status':'unavailable',
                 'evidence_ref':request.get('observation', {}).get('evidence_ref')}

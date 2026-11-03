@@ -36,3 +36,20 @@ it is not a live-provider or general reliability result.
 - Historical r75-c1 is one Docker/Xvfb Calc mechanics trial, not WSLc, MAP01, a live-provider comparison, or a current-source pass. Its frozen source is not the current main source.
 
 No live allocation, real provider request, or Docker image pull was performed for this follow-up. It adds an offline same-frame verifier opt-in and regression only; the live Calc failure remains intact. The next gate is to validate the new nonvisual effect boundary in a fresh approved Calc attempt, then continue the frozen multi-condition lifecycle comparison before any WSLc/MAP01 completion claim.
+
+## Current-main composed validation (2026-11-04)
+
+The composed Calc/MCP/provider-ledger/spool/measurement suite was rebased onto
+`origin/main` `cf3ddf2f8ef44f78fac3cfed78df2904aa596691`. On the cached pinned
+Xvfb image, all 214 tests passed in normal mode (112.157 s) and optimized mode
+(113.302 s). The container exited 0 with network disabled, source mounted
+read-only, 2 CPU, 4 GiB memory plus swap, and 256 PID limit. Full command and
+raw outputs are preserved in the [current-main Docker packet](current-main-integration-docker-followup-20261104-03/README.md).
+
+The initial stale-fixture refusal and two fixture-construction failures remain
+in the preceding packets. The final fixture obtains freshly observed and
+minted references before exercising the launch-review gate. All four packet
+checksum manifests verify. This result is offline synthetic composition only;
+it does not measure Docker Desktop reliability, live provider behavior, live
+Calc, WSLc/MAP01, task economics, or end-to-end efficiency. Issue #57 remains
+open and its lifecycle comparison and live second-domain gates remain unmet.

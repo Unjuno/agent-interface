@@ -5,6 +5,7 @@ is always task_success=None until parent-held receipts prove the exact Calc
 process exited and a trusted call-bound Save controller proves the document
 and save lifecycle. Parsed bytes are a separate cue.
 """
+import copy
 import hashlib
 import json
 import os
@@ -15,7 +16,7 @@ import stat
 import time
 
 from .calc_effect_v1 import _read_regular
-from .calc_profile_v1 import verify_saved_fods_bytes
+from .calc_profile_v1 import validate_calc_task_values, verify_saved_fods_bytes
 
 
 _ARTIFACT_NAME = 'task-artifact.fods'
@@ -49,8 +50,52 @@ def _stable_directory(path):
     return resolved
 
 
+def _plan_save_receipt_contract(interface):
+    """Extract the only accepted two-action receipt shape from a bound plan."""
+    from runtime.core_v1.compiled_gui import validate
+    try:
+        interface = validate(interface)
+    except (TypeError, ValueError, KeyError):
+        return None
+    by_operation = {}
+    for name, action in interface['actions'].items():
+        operation = action['operation']
+        if operation in by_operation:
+            return None
+        by_operation[operation] = name
+    if set(by_operation) != {'enter_pair', 'request_save'}:
+        return None
+    method = interface['method']
+    states = method['states']
+    initial = method['initial_state']
+    entry_name, save_name = by_operation['enter_pair'], by_operation['request_save']
+    first = states[initial]['branches']
+    if len(first) != 1 or first[0].get('action') != entry_name:
+        return None
+    intermediate = first[0].get('next_state')
+    second = states.get(intermediate, {}).get('branches', [])
+    if len(second) != 1 or second[0].get('action') != save_name:
+        return None
+    saved = second[0].get('next_state')
+    final = states.get(saved, {}).get('branches', [])
+    if (len(final) != 1 or final[0].get('outcome') != 'yield'
+            or final[0].get('reason') != 'effect_unavailable'):
+        return None
+    if (first[0].get('when') != {'context_ok': True, 'blank': True}
+            or second[0].get('when') != {'context_ok': True, 'cells_match': True}
+            or interface['actions'][entry_name].get('expected_effect') != {'cells_match': True}
+            or interface['actions'][save_name].get('expected_effect') != {'cells_match': True}):
+        return None
+    return {'interface': interface, 'entry_action': entry_name,
+        'save_action': save_name, 'initial_state': initial,
+        'intermediate_state': intermediate,
+        'entry_when': first[0]['when'], 'save_when': second[0]['when']}
+
+
 def make_registered_calc_save_controller_receipt(*, descriptor, method_receipt,
-                                                   save_request):
+                                                   save_request,
+                                                   parent_task_plan=None,
+                                                   parent_task_plan_sha256=None):
     """Bind a parent-retained fixed-profile save dispatch to its exact call.
 
     The receipt is an in-memory server value. Callers cannot submit one through
@@ -68,9 +113,6 @@ def make_registered_calc_save_controller_receipt(*, descriptor, method_receipt,
     window_generation = descriptor.get('window_generation')
     identity = (call_id, attempt_id, process_generation, window_generation)
     if (descriptor.get('profile_id') != 'calc-ocr-save-v1'
-            or method_receipt.get('interface_id') != 'calc-ocr-save-v1'
-            or method_receipt.get('method') != 'calc-ocr-save-v1'
-            or method_receipt.get('method_version') != '1'
             or method_receipt.get('format') != 'compiled-gui-runtime-receipt-v1'
             or method_receipt.get('outcome') != 'SAFE_YIELD'
             or method_receipt.get('reason') != 'effect_unavailable'
@@ -86,40 +128,93 @@ def make_registered_calc_save_controller_receipt(*, descriptor, method_receipt,
             or save_request['save_request_monotonic_ns'] <= 0):
         return None
 
+    task_plan_digest = descriptor.get('task_plan_sha256')
+    plan_contract = None
+    if task_plan_digest is None:
+        if (parent_task_plan is not None or parent_task_plan_sha256 is not None
+                or method_receipt.get('task_plan_sha256') is not None
+                or method_receipt.get('task_plan_interface') is not None
+                or method_receipt.get('interface_id') != 'calc-ocr-save-v1'
+                or method_receipt.get('method') != 'calc-ocr-save-v1'
+                or method_receipt.get('method_version') != '1'):
+            return None
+    else:
+        if (type(parent_task_plan) is not dict
+                or parent_task_plan_sha256 != task_plan_digest
+                or method_receipt.get('task_plan_sha256') != task_plan_digest
+                or type(method_receipt.get('task_plan_interface')) is not dict):
+            return None
+        interface = method_receipt['task_plan_interface']
+        symbols = interface.get('symbols')
+        if type(symbols) is not dict:
+            return None
+        aliases = {}
+        for symbol in symbols.values():
+            if type(symbol) is not dict or symbol.get('kind') != 'target_reference':
+                return None
+            role = ('entry' if symbol.get('dependencies') == ['context_ok'] else
+                    'save' if symbol.get('dependencies') == ['context_ok','cells_match']
+                    else None)
+            if role is None or role in aliases:
+                return None
+            aliases[role] = symbol.get('target_reference')
+        if set(aliases) != {'entry','save'}:
+            return None
+        from .calc_symbolic_plan_v1 import validate_and_bind_calc_plan
+        try:
+            rebound = validate_and_bind_calc_plan(parent_task_plan,
+                session_scope=interface['session_scope'],
+                surface=interface['surface'], target_aliases=aliases)
+        except (TypeError, ValueError, KeyError):
+            return None
+        if (rebound['plan_sha256'] != task_plan_digest
+                or rebound['interface'] != interface
+                or method_receipt.get('interface_id') != interface['interface_id']
+                or method_receipt.get('method') != interface['method']['name']
+                or method_receipt.get('method_version') != interface['method']['version']):
+            return None
+        plan_contract = _plan_save_receipt_contract(interface)
+        if plan_contract is None:
+            return None
+
     events = method_receipt.get('critical_events')
     if type(events) is not list or len(events) != 7:
         return None
     branch_enter, enter_terminal, enter_effect, branch_save, save_terminal, save_effect, finished = events
     if not all(type(row) is dict for row in events):
         return None
+    entry_action = plan_contract['entry_action'] if plan_contract else 'enter'
+    save_action = plan_contract['save_action'] if plan_contract else 'save'
+    initial_state = plan_contract['initial_state'] if plan_contract else 'initial'
+    intermediate_state = plan_contract['intermediate_state'] if plan_contract else 'filled'
+    entry_when = plan_contract['entry_when'] if plan_contract else {'blank':True,'context_ok':True}
+    save_when = plan_contract['save_when'] if plan_contract else {'cells_filled':True,'context_ok':True}
     if not (branch_enter.get('event') == 'branch_selected'
-            and branch_enter.get('state') == 'initial'
-            and branch_enter.get('action') == 'enter'
+            and branch_enter.get('state') == initial_state
+            and branch_enter.get('action') == entry_action
             and branch_enter.get('outcome') == 'action'
-            and branch_enter.get('matched_conditions') ==
-                {'blank': True, 'context_ok': True}
+            and branch_enter.get('matched_conditions') == entry_when
             and enter_terminal.get('event') == 'action_terminal'
-            and enter_terminal.get('action') == 'enter'
+            and enter_terminal.get('action') == entry_action
             and enter_terminal.get('status') == 'completed'
             and enter_terminal.get('release_verified') is True
             and type(enter_terminal.get('action_id')) is str
             and enter_effect.get('event') == 'effect_checked'
-            and enter_effect.get('action') == 'enter'
+            and enter_effect.get('action') == entry_action
             and enter_effect.get('action_id') == enter_terminal['action_id']
             and enter_effect.get('status') == 'succeeded'
             and branch_save.get('event') == 'branch_selected'
-            and branch_save.get('state') == 'filled'
-            and branch_save.get('action') == 'save'
+            and branch_save.get('state') == intermediate_state
+            and branch_save.get('action') == save_action
             and branch_save.get('outcome') == 'action'
-            and branch_save.get('matched_conditions') ==
-                {'cells_filled': True, 'context_ok': True}
+            and branch_save.get('matched_conditions') == save_when
             and save_terminal.get('event') == 'action_terminal'
-            and save_terminal.get('action') == 'save'
+            and save_terminal.get('action') == save_action
             and save_terminal.get('status') == 'completed'
             and save_terminal.get('release_verified') is True
             and type(save_terminal.get('action_id')) is str
             and save_effect.get('event') == 'effect_checked'
-            and save_effect.get('action') == 'save'
+            and save_effect.get('action') == save_action
             and save_effect.get('action_id') == save_terminal['action_id']
             and save_effect.get('status') == 'unavailable'
             and finished.get('event') == 'runtime_finished'
@@ -135,7 +230,7 @@ def make_registered_calc_save_controller_receipt(*, descriptor, method_receipt,
     transitions = method_receipt.get('transitions')
     if (type(transitions) is not list or len(transitions) != 2
             or [row.get('action') for row in transitions if type(row) is dict]
-                != ['enter', 'save']
+                != [entry_action, save_action]
             or any(row.get('release_verified') is not True for row in transitions
                    if type(row) is dict)):
         return None
@@ -156,7 +251,8 @@ class CalcTaskArtifact:
 
     def __init__(self, call_root, *, call_id, attempt_id, process_generation=None,
                  window_generation=None, target_xid=None, target_pid=None,
-                 target_start_ticks=None, clock=time.monotonic_ns):
+                 target_start_ticks=None, expected_values=None, task_plan=None,
+                 clock=time.monotonic_ns):
         if type(call_id) is not str or not re.fullmatch(r'[0-9a-f]{32}', call_id):
             raise ValueError('invalid call ID')
         if (type(attempt_id) is not str or not re.fullmatch(r'[\x21-\x7e]{1,128}', attempt_id)):
@@ -175,6 +271,17 @@ class CalcTaskArtifact:
         self.call_root = _stable_directory(call_root)
         self.call_id = call_id
         self.attempt_id = attempt_id
+        self._expected_values = validate_calc_task_values(expected_values)
+        self._task_plan = None
+        self._task_plan_sha256 = None
+        self._bound_task_plan = None
+        if task_plan is not None:
+            from .calc_symbolic_plan_v1 import validate_and_bind_calc_plan
+            bound = validate_and_bind_calc_plan(task_plan,
+                session_scope='prepared-scope', surface='prepared-surface',
+                target_aliases={'entry':'prepared_entry','save':'prepared_save'})
+            self._task_plan = copy.deepcopy(task_plan)
+            self._task_plan_sha256 = bound['plan_sha256']
         self._process_generation = None
         self._window_generation = None
         self._target_xid = None
@@ -250,6 +357,37 @@ class CalcTaskArtifact:
         return self._process_generation
 
     @property
+    def expected_values(self):
+        return dict(self._expected_values)
+
+    @property
+    def task_plan(self):
+        return copy.deepcopy(self._task_plan)
+
+    @property
+    def task_plan_sha256(self):
+        return self._task_plan_sha256
+
+    @property
+    def bound_task_plan(self):
+        return copy.deepcopy(self._bound_task_plan)
+
+    def bind_task_plan(self, *, session_scope, surface, target_aliases):
+        """Bind only the retained plan to fresh, caller-minted references."""
+        if self._task_plan is None:
+            return None
+        if self._bound_task_plan is not None:
+            raise ValueError('Calc task plan is already bound')
+        from .calc_symbolic_plan_v1 import validate_and_bind_calc_plan
+        bound = validate_and_bind_calc_plan(self._task_plan,
+            session_scope=session_scope, surface=surface,
+            target_aliases=target_aliases)
+        if bound['plan_sha256'] != self._task_plan_sha256:
+            raise ValueError('retained Calc task plan digest changed')
+        self._bound_task_plan = copy.deepcopy(bound)
+        return copy.deepcopy(bound)
+
+    @property
     def window_generation(self):
         return self._window_generation
 
@@ -261,6 +399,8 @@ class CalcTaskArtifact:
         descriptor = {'schema':_DESCRIPTOR_SCHEMA,
                 'call_id': self.call_id, 'attempt_id': self.attempt_id,
                 'profile_id': 'calc-ocr-save-v1', 'artifact_name': _ARTIFACT_NAME,
+                'expected_values': dict(self.expected_values),
+                'task_plan_sha256': self.task_plan_sha256,
                 'blank_sha256': self._blank_sha256,
                 'blank_bytes': len(_BLANK_FODS),
                 'blank_identity': list(self._blank_identity),
@@ -336,8 +476,14 @@ def verify_task_artifact_descriptor(call_root, *, descriptor, save_request,
             or close_receipt.get('owner_process_retired') is not True
             or close_receipt.get('release_confirmed') is not True):
         return dict(unknown, reason='verified_close_required')
+    try:
+        expected_values = validate_calc_task_values(
+            descriptor.get('expected_values') if type(descriptor) is dict else None)
+    except (TypeError, ValueError):
+        return dict(unknown, reason='artifact_expected_values_invalid')
     descriptor_fields = {'schema','call_id','attempt_id','profile_id',
-        'artifact_name','blank_sha256','blank_bytes','blank_identity',
+        'artifact_name','expected_values','task_plan_sha256',
+        'blank_sha256','blank_bytes','blank_identity',
         'process_generation','window_generation','target_xid','target_pid',
         'target_start_ticks'}
     if (type(descriptor) is not dict or set(descriptor) != descriptor_fields
@@ -345,6 +491,11 @@ def verify_task_artifact_descriptor(call_root, *, descriptor, save_request,
             or descriptor.get('call_id') != call_id
             or descriptor.get('profile_id') != 'calc-ocr-save-v1'
             or descriptor.get('artifact_name') != _ARTIFACT_NAME
+            or descriptor.get('expected_values') != expected_values
+            or (descriptor.get('task_plan_sha256') is not None
+                and (type(descriptor.get('task_plan_sha256')) is not str
+                     or not re.fullmatch(r'[0-9a-f]{64}',
+                                         descriptor['task_plan_sha256'])))
             or type(descriptor.get('attempt_id')) is not str
             or not re.fullmatch(r'[\x21-\x7e]{1,128}',descriptor['attempt_id'])
             or type(descriptor.get('blank_sha256')) is not str
@@ -445,9 +596,10 @@ def verify_task_artifact_descriptor(call_root, *, descriptor, save_request,
         return dict(unknown, reason='artifact_unchanged_after_save_request',
                     attempt_id=descriptor['attempt_id'],
                     artifact_sha256=digest,artifact_identity=list(identity))
-    effect = verify_saved_fods_bytes(data)
+    effect = verify_saved_fods_bytes(data, expected=descriptor['expected_values'])
     result_fields = dict(attempt_id=descriptor['attempt_id'],
         profile_id='calc-ocr-save-v1',
+        expected_values=dict(descriptor['expected_values']),
         process_generation=descriptor['process_generation'],
         window_generation=descriptor['window_generation'],
         save_request_id=save_request['save_request_id'],

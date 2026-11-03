@@ -4,8 +4,10 @@ import hashlib
 import json
 import os
 import shutil
+import sys
 import tempfile
 import threading
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -1623,9 +1625,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 for cell in root_xml.iter()
                 if cell.tag.endswith("table-cell") and
                 cell.attrib.get(f"{{{office_ns}}}value") is not None]
-            self.assertEqual(scored_values, ["731", "864"])
+            expected_values = ["24680", "13579"]
+            self.assertEqual(scored_values, expected_values)
             recorder.record_task_score(
-                "stdlib-fods-cell-values-v1", scored_values == ["731", "864"],
+                "stdlib-fods-cell-values-v1", scored_values == expected_values,
                 artifact_bytes)
             receipt = recorder.reconcile()
             summary = summarize(receipt["events"])
@@ -1719,10 +1722,17 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
         """Hold a model turn across a title/source change, then recover once."""
         import xml.etree.ElementTree as ET
         import runtime.cli_v1.test_mcp_owned_process as calc_tests
+        from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import plan as calc_plan
+        from runtime.guarded_x11_v1.process_identity import (
+            process_generation_from_identity,process_incarnation_from_identity)
 
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary)
             server_root=root/'server'; server_root.mkdir()
+            task_values={'A1':'24680','A2':'13579'}
+            task_plan=calc_plan()
+            (server_root/'calc-task-values.json').write_text(
+                json.dumps(task_values),encoding='utf-8')
             (server_root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
             (server_root/'fake-target-exit-receipt').write_text('enabled',encoding='utf-8')
             (server_root/'fake-calc-save-writes-artifact').write_text(
@@ -1746,6 +1756,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 'interface_guarded_observe','interface_guarded_mint',
                 'interface_guarded_calc_prepare','interface_guarded_calc_compiled',
                 'interface_close','interface_verify_task'}),recorder)
+            phase_ns={}
             provider_waiting=threading.Event()
             release_provider=threading.Event()
             class FakePlanner:
@@ -1758,6 +1769,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         turn_id=f'calc-turn-{index+1}',index=index)
                 def await_turn(self,handle,timeout):
                     if handle.index==0:
+                        self.wait_started_ns=time.monotonic_ns()
                         provider_waiting.set()
                         if not release_provider.wait(timeout=5):
                             raise TimeoutError('synthetic provider wait did not resume')
@@ -1829,10 +1841,23 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 return parse_app_server_tool_request(generation['response_bytes'],
                     thread_id=backend['thread_id'],turn_id=backend['turn_id'])
 
+            def parse_tool_arguments(generation, expected_method):
+                request=parse_generation(generation)
+                if request.get('method') != expected_method:
+                    raise ValueError('provider selected an unexpected public MCP method')
+                arguments=request.get('arguments')
+                if not isinstance(arguments,dict):
+                    raise ValueError('provider tool arguments must be an object')
+                return arguments
+
             try:
+                phase_started=time.monotonic_ns()
                 old,old_image=await observe_and_save_image('observe-old')
+                phase_ns['initial_observe']=time.monotonic_ns()-phase_started
                 old_source=old['source']
+                phase_started=time.monotonic_ns()
                 old_bindings=await mint(old_source,'old')
+                phase_ns['initial_mint']=time.monotonic_ns()-phase_started
                 planner.payloads.append(payload(old_source,old_bindings,
                     'calc-wait-attempt-01'))
                 request1,provider1=build_model_provider_call(model_call=model.call,
@@ -1843,16 +1868,22 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     'calc-wait-attempt-01',request1,provider1,'calc-wait-call-01',
                     'interface_guarded_calc_compiled',parse_generation))
                 self.assertTrue(await asyncio.to_thread(provider_waiting.wait,5))
+                provider_wait_started_ns=planner.wait_started_ns
 
                 # The model has the old source while the application metadata changes.
+                stale_generation_started_ns=time.monotonic_ns()
                 (server_root/'fake-window-metadata-changed-calc').write_text(
                     'changed-during-provider-wait',encoding='utf-8')
-                changed_source,_=await observe_and_save_image(
+                changed,changed_image=await observe_and_save_image(
                     'observe-during-provider-wait')
-                self.assertGreater(changed_source['source']['sequence'],
+                changed_source=changed['source']
+                self.assertGreater(changed_source['sequence'],
                     old_source['sequence'])
                 release_provider.set()
+                phase_ns['provider_wait_including_stale_observation']= (
+                    time.monotonic_ns()-provider_wait_started_ns)
                 first=await first_task
+                phase_ns['stale_generation_to_refusal']=time.monotonic_ns()-stale_generation_started_ns
                 self.assertTrue(first['tool_call_submitted'],first)
                 first_body=json.loads(first['tool_response']['result']['content'][0]['text'])
                 self.assertEqual(first['generation']['status'],'completed')
@@ -1866,25 +1897,64 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(first_body['replay_allowed'],first_body)
                 self.assertFalse(list(server_root.rglob('calc-fake-state.json')))
 
-                prepared_response=await caller.call_tool(None,'prepare-attempt-02',
-                    'interface_guarded_calc_prepare',{'attempt_id':'calc-wait-attempt-02'})
-                prepared=json.loads(prepared_response['result']['content'][0]['text'])
-                self.assertEqual(prepared['status'],'prepared',prepared)
+                phase_started=time.monotonic_ns()
                 fresh,fresh_image=await observe_and_save_image('observe-after-wait')
+                phase_ns['fresh_observe']=time.monotonic_ns()-phase_started
                 self.assertGreater(fresh['source']['sequence'],
-                    changed_source['source']['sequence'])
+                    changed_source['sequence'])
+                phase_started=time.monotonic_ns()
                 new_bindings=await mint(fresh['source'],'fresh')
+                phase_ns['fresh_mint']=time.monotonic_ns()-phase_started
                 self.assertEqual(new_bindings['entry']['offset'],[12,8],
                     new_bindings)
-                planner.payloads.append(payload(fresh['source'],new_bindings,
-                    'calc-wait-attempt-02',prepared['call_id']))
+
+                # The provider response, not the test harness call site, now
+                # carries the symbolic plan into the parent-owned preparation.
+                task_attempt_id='calc-wait-attempt-02'
+                prepare_tool={'method':'interface_guarded_calc_prepare',
+                    'arguments':{'attempt_id':task_attempt_id,
+                        'task_values':task_values,'task_plan':task_plan}}
+                planner.payloads.append(prepare_tool)
                 request2,provider2=build_model_provider_call(model_call=model.call,
-                    root=root/'provider-call'/'attempt-02',
-                    prompt='Reobserve and complete one bounded fresh attempt.',
+                    root=root/'provider-call'/'attempt-02-prepare',
+                    prompt='From the fresh Calc image, propose the bounded task plan and prepare the task.',
                     image=fresh_image,contract='registered-calc-profile',workspace=workspace)
-                second=await caller.invoke_generation_to_tool('calc-wait-attempt-02',
-                    request2,provider2,'calc-wait-call-02',
-                    'interface_guarded_calc_compiled',parse_generation)
+                phase_started=time.monotonic_ns()
+                prepare_generation=await caller.invoke_generation_to_tool(
+                    'calc-wait-attempt-02',request2,provider2,
+                    'calc-wait-call-02-prepare','interface_guarded_calc_prepare',
+                    lambda generation: parse_tool_arguments(
+                        generation,'interface_guarded_calc_prepare'))
+                phase_ns['provider_authored_prepare']=time.monotonic_ns()-phase_started
+                self.assertEqual(prepare_generation['generation']['status'],
+                                 'completed')
+                self.assertTrue(prepare_generation['tool_call_submitted'])
+                prepared=json.loads(prepare_generation['tool_response'][
+                    'result']['content'][0]['text'])
+                self.assertEqual(prepared['status'],'prepared',prepared)
+                self.assertEqual(prepared['task_values'],task_values,prepared)
+                self.assertEqual(len(prepared['task_plan_sha256']),64,prepared)
+                retained_request=parse_generation(
+                    prepare_generation['generation'])
+                self.assertEqual(retained_request['arguments']['task_plan'],task_plan)
+                self.assertEqual(retained_request['arguments']['task_values'],task_values)
+                self.assertEqual(retained_request['arguments']['attempt_id'],
+                                 task_attempt_id)
+
+                planner.payloads.append({'method':'interface_guarded_calc_compiled',
+                    'arguments':payload(fresh['source'],new_bindings,
+                        task_attempt_id,prepared['call_id'])})
+                request2,provider2=build_model_provider_call(model_call=model.call,
+                    root=root/'provider-call'/'attempt-03-execute',
+                    prompt='Use the retained prepared plan and these freshly minted bindings to execute once.',
+                    image=fresh_image,contract='registered-calc-profile',workspace=workspace)
+                phase_started=time.monotonic_ns()
+                second=await caller.invoke_generation_to_tool('calc-wait-attempt-03',
+                    request2,provider2,'calc-wait-call-03-execute',
+                    'interface_guarded_calc_compiled',lambda generation:
+                        parse_tool_arguments(generation,
+                            'interface_guarded_calc_compiled'))
+                phase_ns['fresh_provider_to_compiled_result']=time.monotonic_ns()-phase_started
                 result=json.loads(second['tool_response']['result']['content'][0]['text'])
                 self.assertEqual(second['generation']['status'],'completed')
                 self.assertIn('method_receipt',result)
@@ -1892,12 +1962,21 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD',result)
                 self.assertEqual(result['method_receipt']['reason'],'effect_unavailable',result)
                 self.assertEqual(result['method_receipt']['completed_transitions'],2,result)
+                self.assertEqual(result['method_receipt']['task_plan_sha256'],
+                                 prepared['task_plan_sha256'],result)
+                self.assertEqual(result['task_artifact_admission']['expected_values'],
+                                 task_values,result)
                 self.assertTrue(all(row['release_verified'] is True for row in
                     result['method_receipt']['transitions']),result)
                 self.assertFalse(result['replay_allowed'],result)
+                phase_ns['compiled_graph_runtime']= (
+                    result['method_receipt']['ended_ns']
+                    - result['method_receipt']['started_ns'])
 
+                phase_started=time.monotonic_ns()
                 close_response=await caller.call_tool(None,'close-after-repair',
                     'interface_close',{})
+                phase_ns['neutral_close']=time.monotonic_ns()-phase_started
                 closed=json.loads(close_response['result']['content'][0]['text'])
                 self.assertTrue(closed['verified'],closed)
                 self.assertTrue(closed['release_confirmed'],closed)
@@ -1906,33 +1985,334 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 fake_state=json.loads(next(server_root.rglob(
                     'calc-fake-state.json')).read_text(encoding='utf-8'))
                 self.assertTrue(fake_state['save_requested'],fake_state)
-                self.assertEqual(fake_state['completed_entries'],['731','864'],fake_state)
+                self.assertEqual(fake_state['completed_entries'],
+                                 [task_values['A1'],task_values['A2']],fake_state)
                 self.assertTrue(fake_state['artifact_written_on_save'],fake_state)
+                phase_started=time.monotonic_ns()
                 verified_response=await caller.call_tool(None,'verify-after-repair',
                     'interface_verify_task',{'call_id':result['call_id']})
+                phase_ns['post_close_independent_score']=time.monotonic_ns()-phase_started
                 verified=json.loads(verified_response['result']['content'][0]['text'])
                 self.assertEqual(verified['status'],'verified',verified)
                 self.assertIs(verified['task_success'],True,verified)
                 artifact_bytes=artifact_path.read_bytes()
-                self.assertEqual(artifact_bytes,calc_tests._CALC_TASK_FODS)
+                expected_fods=calc_tests._CALC_TASK_FODS.replace(
+                    b'office:value="731"',
+                    ('office:value="'+task_values['A1']+'"').encode())
+                expected_fods=expected_fods.replace(b'office:value="864"',
+                    ('office:value="'+task_values['A2']+'"').encode())
+                self.assertEqual(artifact_bytes,expected_fods)
                 root_xml=ET.fromstring(artifact_bytes)
                 office='urn:oasis:names:tc:opendocument:xmlns:office:1.0'
                 values=[cell.attrib.get(f'{{{office}}}value') for cell in
                     root_xml.iter() if cell.tag.endswith('table-cell') and
                     cell.attrib.get(f'{{{office}}}value') is not None]
-                self.assertEqual(values,['731','864'])
+                self.assertEqual(values,[task_values['A1'],task_values['A2']])
                 recorder.record_task_score('stdlib-fods-cell-values-v1',
-                    values==['731','864'],artifact_bytes)
+                    values==[task_values['A1'],task_values['A2']],artifact_bytes)
+
+                # A repaired semantic plan must cross another owner boundary
+                # without carrying the prior artifact, target, scope, or aliases.
+                warm_values={'A1':'11223','A2':'44556'}
+                warm_root=root/'post-repair-warm-owner'; warm_root.mkdir()
+                (warm_root/'calc-task-values.json').write_text(
+                    json.dumps(warm_values),encoding='utf-8')
+                (warm_root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+                (warm_root/'fake-target-exit-receipt').write_text(
+                    'enabled',encoding='utf-8')
+                (warm_root/'fake-calc-save-writes-artifact').write_text(
+                    'enabled',encoding='utf-8')
+                (warm_root/'fake-calc-record-point-resolution').write_text(
+                    'enabled',encoding='utf-8')
+                (warm_root/'fake-process-incarnation').write_text(
+                    process_incarnation_from_identity(4322,98766),
+                    encoding='ascii')
+                (warm_root/'fake-process-generation').write_text(
+                    process_generation_from_identity(20,4322,98766),
+                    encoding='ascii')
+                (warm_root/'fake-window-incarnation').write_text(
+                    'a'*64,encoding='ascii')
+                (warm_root/'fake-process-pid').write_text('4322',encoding='ascii')
+                (warm_root/'fake-process-start-ticks').write_text(
+                    '98766',encoding='ascii')
+                warm_server=create_server({'app':20},warm_root,
+                    session_mode='guarded-x11',guarded_process_identity=True,
+                    guarded_query_worker=True,guarded_window_lifecycle=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+                warm_closed=False
+                try:
+                    warm_prepared_response=await warm_server.call_tool(
+                        'interface_guarded_calc_prepare',{
+                            'attempt_id':'calc-wait-attempt-03',
+                            'task_values':warm_values,'task_plan':task_plan})
+                    warm_prepared=json.loads(warm_prepared_response.content[0].text)
+                    self.assertEqual(warm_prepared['status'],'prepared',
+                                     warm_prepared)
+                    self.assertEqual(warm_prepared['task_plan_sha256'],
+                                     prepared['task_plan_sha256'],warm_prepared)
+                    warm_observed_response=await warm_server.call_tool(
+                        'interface_guarded_observe',{})
+                    warm_observed=json.loads(warm_observed_response.content[0].text)
+                    warm_source=warm_observed['source']
+                    warm_entry_name='entry_postrepair'
+                    warm_save_name='save_postrepair'
+                    warm_entry_response=await warm_server.call_tool(
+                        'interface_guarded_mint',{
+                            'alias':warm_entry_name,
+                            'source_sequence':warm_source['sequence'],
+                            'point':[16,31],'region_size':[24,16],
+                            'freshness_ms':5000})
+                    warm_save_response=await warm_server.call_tool(
+                        'interface_guarded_mint',{
+                            'alias':warm_save_name,
+                            'source_sequence':warm_source['sequence'],
+                            'point':[200,205],'region_size':[16,12],
+                            'freshness_ms':5000})
+                    warm_entry=json.loads(warm_entry_response.content[0].text)
+                    warm_save=json.loads(warm_save_response.content[0].text)
+                    self.assertEqual(warm_entry['status'],'minted',warm_entry)
+                    self.assertEqual(warm_save['status'],'minted',warm_save)
+                    warm_result_response=await warm_server.call_tool(
+                        'interface_guarded_calc_compiled',{
+                            'profile_id':'calc-ocr-save-v1',
+                            'bindings':{
+                                'entry':{'alias':warm_entry_name,
+                                         'offset':warm_entry['offset']},
+                                'save':{'alias':warm_save_name,
+                                        'offset':warm_save['offset']}},
+                            'reviewed_sequence':warm_source['sequence'],
+                            'reviewed_artifact_sha256':warm_source[
+                                'native']['artifact']['sha256'],
+                            'blank_reviewed':True,
+                            'attempt_id':'calc-wait-attempt-03',
+                            'prepared_call_id':warm_prepared['call_id'],
+                            'wait_for_result_ms':10000})
+                    warm_result=json.loads(warm_result_response.content[0].text)
+                    self.assertIn('method_receipt',warm_result,warm_result)
+                    self.assertEqual(warm_result['method_receipt'][
+                        'task_plan_sha256'],prepared['task_plan_sha256'],
+                        warm_result)
+                    self.assertEqual(warm_result['method_receipt'][
+                        'completed_transitions'],2,warm_result)
+                    self.assertTrue(all(row['release_verified'] is True for row in
+                        warm_result['method_receipt']['transitions']),warm_result)
+                    self.assertIsNone(warm_result['task_success'],warm_result)
+                    warm_close_response=await warm_server.call_tool(
+                        'interface_close',{})
+                    warm_close=json.loads(warm_close_response.content[0].text)
+                    warm_closed=True
+                    self.assertTrue(warm_close['verified'],warm_close)
+                    self.assertTrue(warm_close['release_confirmed'],warm_close)
+                    warm_artifact=Path(warm_prepared['artifact_path'])
+                    self.assertTrue(warm_artifact.is_file(),warm_artifact)
+                    warm_verify_response=await warm_server.call_tool(
+                        'interface_verify_task',{'call_id':warm_result['call_id']})
+                    warm_verified=json.loads(warm_verify_response.content[0].text)
+                    self.assertEqual(warm_verified['status'],'verified',
+                                     warm_verified)
+                    self.assertIs(warm_verified['task_success'],True,warm_verified)
+                    self.assertEqual(warm_verified['task_effect']['parsed_effect'][
+                        'cells'],warm_values,warm_verified)
+                    self.assertNotEqual(warm_prepared['call_id'],prepared['call_id'])
+                    self.assertNotEqual(str(warm_artifact),str(artifact_path))
+                    self.assertNotEqual(warm_source['sequence'],fresh['source'][
+                        'sequence'])
+                    for generation in ('process_generation','window_generation'):
+                        self.assertNotEqual(warm_source['pointer_binding'][generation],
+                            fresh['source']['pointer_binding'][generation])
+                    self.assertNotEqual(warm_result['method_receipt'][
+                        'task_plan_interface']['session_scope'],
+                        result['method_receipt']['task_plan_interface'][
+                            'session_scope'])
+                    warm_interface=warm_result['method_receipt'][
+                        'task_plan_interface']
+                    repaired_interface=result['method_receipt'][
+                        'task_plan_interface']
+                    for symbol in ('cell_entry','save_control'):
+                        self.assertNotEqual(warm_interface['symbols'][symbol][
+                            'target_reference'],
+                            repaired_interface['symbols'][symbol][
+                                'target_reference'])
+                    post_repair_reuse={'attempt_id':'calc-wait-attempt-03',
+                        'plan_origin':'prior_attempt_reuse',
+                        'plan_source_attempt_id':'calc-wait-attempt-02',
+                        'plan_sha256':warm_prepared['task_plan_sha256'],
+                        'provider_generation_count':0,
+                        'provider_usage':'not measured; no provider was invoked',
+                        'task_values':warm_values,'observed_source':warm_source,
+                        'prepared':warm_prepared,'result':warm_result,
+                        'close':warm_close,'verification':warm_verified}
+                finally:
+                    if not warm_closed:
+                        await warm_server.call_tool('interface_close',{})
+
+                stale_alias_values={'A1':'66778','A2':'99001'}
+                stale_alias_root=root/'stale-alias-owner'; stale_alias_root.mkdir()
+                (stale_alias_root/'calc-task-values.json').write_text(
+                    json.dumps(stale_alias_values),encoding='utf-8')
+                (stale_alias_root/'calc-profile-mode').write_text(
+                    'enabled',encoding='utf-8')
+                (stale_alias_root/'fake-target-exit-receipt').write_text(
+                    'enabled',encoding='utf-8')
+                (stale_alias_root/'fake-calc-save-writes-artifact').write_text(
+                    'enabled',encoding='utf-8')
+                (stale_alias_root/'fake-calc-record-point-resolution').write_text(
+                    'enabled',encoding='utf-8')
+                stale_pid,stale_ticks=4323,98767
+                (stale_alias_root/'fake-process-generation').write_text(
+                    process_generation_from_identity(20,stale_pid,stale_ticks),
+                    encoding='ascii')
+                (stale_alias_root/'fake-process-incarnation').write_text(
+                    process_incarnation_from_identity(stale_pid,stale_ticks),
+                    encoding='ascii')
+                (stale_alias_root/'fake-process-pid').write_text(
+                    str(stale_pid),encoding='ascii')
+                (stale_alias_root/'fake-process-start-ticks').write_text(
+                    str(stale_ticks),encoding='ascii')
+                (stale_alias_root/'fake-window-incarnation').write_text(
+                    'b'*64,encoding='ascii')
+                stale_alias_server=create_server({'app':20},stale_alias_root,
+                    session_mode='guarded-x11',guarded_process_identity=True,
+                    guarded_query_worker=True,guarded_window_lifecycle=True,
+                    guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+                stale_alias_closed=False
+                try:
+                    stale_prepared_response=await stale_alias_server.call_tool(
+                        'interface_guarded_calc_prepare',{
+                            'attempt_id':'calc-wait-attempt-04',
+                            'task_values':stale_alias_values,'task_plan':task_plan})
+                    stale_prepared=json.loads(stale_prepared_response.content[0].text)
+                    self.assertEqual(stale_prepared['status'],'prepared',
+                                     stale_prepared)
+                    stale_observed_response=await stale_alias_server.call_tool(
+                        'interface_guarded_observe',{})
+                    stale_observed=json.loads(stale_observed_response.content[0].text)
+                    stale_source=stale_observed['source']
+                    stale_alias_response=await stale_alias_server.call_tool(
+                        'interface_guarded_calc_compiled',{
+                            'profile_id':'calc-ocr-save-v1',
+                            'bindings':new_bindings,
+                            'reviewed_sequence':stale_source['sequence'],
+                            'reviewed_artifact_sha256':stale_source[
+                                'native']['artifact']['sha256'],
+                            'blank_reviewed':True,
+                            'attempt_id':'calc-wait-attempt-04',
+                            'prepared_call_id':stale_prepared['call_id'],
+                            'wait_for_result_ms':10000})
+                    stale_alias=json.loads(stale_alias_response.content[0].text)
+                    self.assertEqual(stale_alias['status'],'invalid_request',
+                                     stale_alias)
+                    self.assertEqual(stale_alias['error'],
+                        'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',
+                        stale_alias)
+                    self.assertFalse(stale_alias['operation_invoked'],
+                                     stale_alias)
+                    self.assertFalse(stale_alias['input_dispatched'],
+                                     stale_alias)
+                    self.assertIsNone(stale_alias['release_confirmed'],
+                                      stale_alias)
+                    self.assertFalse(stale_alias['replay_allowed'],stale_alias)
+                    self.assertFalse(list(stale_alias_root.rglob(
+                        'calc-fake-state.json')),
+                        'stale aliases must be refused before Fake X receives input')
+                    local_aliases={}
+                    for name,point,size in (
+                            ('local_entry',[16,31],[24,16]),
+                            ('local_save',[200,205],[16,12])):
+                        minted_response=await stale_alias_server.call_tool(
+                            'interface_guarded_mint',{
+                                'alias':name,
+                                'source_sequence':stale_source['sequence'],
+                                'point':point,'region_size':size,
+                                'freshness_ms':5000})
+                        local_aliases[name]=json.loads(
+                            minted_response.content[0].text)
+                        self.assertEqual(local_aliases[name]['status'],'minted',
+                                         local_aliases[name])
+                    reobserved_response=await stale_alias_server.call_tool(
+                        'interface_guarded_observe',{})
+                    reobserved=json.loads(reobserved_response.content[0].text)
+                    self.assertGreater(reobserved['source']['sequence'],
+                                       stale_source['sequence'],reobserved)
+                    stale_frame_response=await stale_alias_server.call_tool(
+                        'interface_guarded_calc_compiled',{
+                            'profile_id':'calc-ocr-save-v1',
+                            'bindings':{
+                                'entry':{'alias':'local_entry','offset':
+                                    local_aliases['local_entry']['offset']},
+                                'save':{'alias':'local_save','offset':
+                                    local_aliases['local_save']['offset']}},
+                            'reviewed_sequence':stale_source['sequence'],
+                            'reviewed_artifact_sha256':stale_source[
+                                'native']['artifact']['sha256'],
+                            'blank_reviewed':True,
+                            'attempt_id':'calc-wait-attempt-04-stale-frame',
+                            'prepared_call_id':stale_prepared['call_id'],
+                            'wait_for_result_ms':10000})
+                    stale_frame=json.loads(stale_frame_response.content[0].text)
+                    self.assertEqual(stale_frame['status'],'invalid_request',
+                                     stale_frame)
+                    self.assertEqual(stale_frame['error'],
+                        'CALC_REVIEW_SOURCE_STALE',stale_frame)
+                    self.assertFalse(stale_frame['operation_invoked'],stale_frame)
+                    self.assertFalse(stale_frame['input_dispatched'],stale_frame)
+                    self.assertFalse(list(stale_alias_root.rglob(
+                        'calc-fake-state.json')),
+                        'superseded observation must be refused before owner runtime')
+                    stale_alias_close_response=await stale_alias_server.call_tool(
+                        'interface_close',{})
+                    stale_alias_close=json.loads(
+                        stale_alias_close_response.content[0].text)
+                    stale_alias_closed=True
+                    self.assertTrue(stale_alias_close['verified'],
+                                    stale_alias_close)
+                    self.assertIsNone(stale_alias_close['release_confirmed'],
+                        'owner close stays conservative even though MCP preflight '
+                        'proves no runtime call was submitted: '
+                        +repr(stale_alias_close))
+                    stale_alias_rejection={'attempt_id':'calc-wait-attempt-04',
+                        'plan_origin':'prior_attempt_reuse',
+                        'plan_source_attempt_id':'calc-wait-attempt-02',
+                        'plan_sha256':stale_prepared['task_plan_sha256'],
+                        'stale_bindings':new_bindings,
+                        'observed_source':stale_source,
+                        'runtime_result':stale_alias,
+                        'same_owner_superseded_frame':{
+                            'old_source':stale_source,
+                            'latest_source':reobserved['source'],
+                            'old_source_mints':local_aliases,
+                            'result':stale_frame},
+                        'fake_input_state_created':False,
+                        'close':stale_alias_close,
+                        'task_score':'not_run; MCP preflight refused before owner runtime',
+                        'release_interpretation':'unknown in owner close receipt; '
+                            'the MCP boundary independently proves operation_invoked=false'}
+                finally:
+                    if not stale_alias_closed:
+                        await stale_alias_server.call_tool('interface_close',{})
+
                 receipt=recorder.reconcile(); summary=summarize(receipt['events'])
                 self.assertTrue(receipt['complete'])
-                self.assertEqual(summary['model_attempt_count'],2)
+                self.assertEqual(summary['model_attempt_count'],3)
                 self.assertEqual(summary['usage_status'],'complete')
-                self.assertEqual(summary['input_tokens'],90)
-                self.assertEqual(summary['output_tokens'],20)
+                self.assertEqual(summary['input_tokens'],150)
+                self.assertEqual(summary['output_tokens'],33)
                 self.assertEqual(summary['task_success'],True)
                 self.assertEqual([event['attempt_id'] for event in receipt['events']
                     if event['kind']=='model_attempt'],
-                    ['calc-wait-attempt-01','calc-wait-attempt-02'])
+                    ['calc-wait-attempt-01','calc-wait-attempt-02',
+                     'calc-wait-attempt-03'])
+                self.assertTrue(phase_ns)
+                self.assertEqual(set(phase_ns),{
+                    'initial_observe','initial_mint',
+                    'provider_wait_including_stale_observation',
+                    'stale_generation_to_refusal','fresh_observe',
+                    'fresh_mint','provider_authored_prepare',
+                    'fresh_provider_to_compiled_result',
+                    'compiled_graph_runtime','neutral_close',
+                    'post_close_independent_score'},phase_ns)
+                self.assertTrue(all(type(value) is int and value >= 0
+                                    for value in phase_ns.values()),phase_ns)
 
                 retained=os.environ.get('AGENT_INTERFACE_RETAIN_CALC_PROVIDER_WAIT_EVIDENCE')
                 if retained:
@@ -1940,17 +2320,51 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     shutil.copytree(recorder.root,destination/'provider-ledger')
                     shutil.copytree(root/'provider-call',destination/'provider-call')
                     shutil.copytree(server_root,destination/'server-runtime')
+                    shutil.copytree(warm_root,
+                                    destination/'post-repair-warm-owner')
+                    shutil.copytree(stale_alias_root,
+                                    destination/'stale-alias-owner')
+                    shutil.copy2(old_image,destination/'source-before-wait.png')
+                    shutil.copy2(changed_image,
+                                 destination/'source-during-wait-change.png')
+                    shutil.copy2(fresh_image,
+                                 destination/'source-after-repair.png')
                     shutil.copy2(journal,destination/'app-server-protocol.jsonl')
-                    report={'schema':'agent-interface/calc-provider-wait-repair-v1',
-                        'provider_attempts':2,'first_stale_response':first_body,
+                    report={'schema':'agent-interface/calc-provider-wait-repair-reuse-v1',
+                        'provider_attempts':3,'first_stale_response':first_body,
+                        'environment':{'provider':'FakePlanner','target':'FakeX Calc fixture',
+                            'runtime':'Windows owned guarded-X11 composition',
+                            'python_version':sys.version,
+                            'optimization_level':sys.flags.optimize,
+                            'test_command':('python -O' if sys.flags.optimize else 'python')
+                                +' -m unittest -k calc_provider_wait_stale_refusal_then_one_fresh_attempt_releases research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py',
+                            'task_values':task_values,
+                            'plan_sha256':prepared['task_plan_sha256'],
+                            'timing_note':'monotonic phase diagnostics only; provider wait and usage are synthetic; no warm-vs-cold efficiency comparison'},
                         'first_attempt_had_fake_input_state':False,
                         'fresh_sequence_after_wait':fresh['source']['sequence'],
-                        'second_attempt_result':result,'owner_close':closed,
+                        'repaired_execution_result':result,'owner_close':closed,
                         'task_artifact_origin':'Fake X Calc wrote fixture FODS on Ctrl+S before interface_close',
                         'task_effect_from_calc_operation':True,
                         'live_calc_task_effect':False,
                         'task_verification':verified,'independent_fods_values':values,
+                        'stale_source':old_source,
+                        'changed_source_during_provider_wait':changed_source,
+                        'repair_source':fresh['source'],
+                        'post_repair_reuse':post_repair_reuse,
+                        'stale_alias_rejection':stale_alias_rejection,
                         'joined_summary':summary,
+                        'synthetic_phase_durations_ns':phase_ns,
+                        'source_sha256':{name:hashlib.sha256(
+                            (Path(__file__).resolve().parents[3]/name).read_bytes()
+                            ).hexdigest() for name in (
+                                'research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py',
+                                'research/integration/standard_mcp_task_ledger_57_v1/app_server_provider_to_public_mcp_v1.py',
+                                'runtime/cli_v1/mcp_server.py',
+                                'runtime/cli_v1/mcp_guarded.py',
+                                'runtime/guarded_x11_v1/calc_symbolic_plan_v1.py',
+                                'runtime/guarded_x11_v1/calc_profile_v1.py')},
+                        'timing_scope':'Windows monotonic wall time, FakePlanner/FakeX; provider wait is injected and token/price values are synthetic; phase durations are not matched efficiency evidence',
                         'limits':['FakePlanner_only','FakeX_only',
                                   'no_live_provider','no_live_Calc','no_efficiency_claim']}
                     (destination/'boundary-results.json').write_text(json.dumps(

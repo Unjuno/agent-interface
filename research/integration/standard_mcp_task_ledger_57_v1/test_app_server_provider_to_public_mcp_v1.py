@@ -16,6 +16,54 @@ from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
 
 
 class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
+    async def test_spooled_host_may_create_protocol_journal_after_request(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "spool" / "protocol.jsonl"
+            answer = {"tool": "interface_guarded_compiled", "arguments": {"value": 1}}
+            usage = {"last": {"inputTokens": 21, "outputTokens": 8,
+                "cachedInputTokens": 0, "cacheWriteInputTokens": 0,
+                "reasoningOutputTokens": 1}}
+            rows = [
+                {"direction": "received", "message": {
+                    "method": "thread/tokenUsage/updated", "params": {
+                        "threadId": "thread-spool", "turnId": "turn-spool",
+                        "tokenUsage": usage}}},
+                {"direction": "received", "message": {
+                    "method": "turn/completed", "params": {
+                        "threadId": "thread-spool", "turn": {
+                            "id": "turn-spool", "status": "completed",
+                            "items": [{"type": "agentMessage", "text": json.dumps(answer)}]}}}},
+            ]
+            expected_bytes = b"".join(json.dumps(row, separators=(",", ":")).encode()+b"\n" for row in rows)
+
+            class SpoolPlanner:
+                def begin_turn(self, prompt, *, output_schema, image_path):
+                    return SimpleNamespace(thread_id="thread-spool", turn_id="turn-spool")
+
+                def await_turn(self, handle, timeout):
+                    journal.parent.mkdir(parents=True, exist_ok=True)
+                    journal.write_bytes(expected_bytes)
+                    return SimpleNamespace(status="completed", answer_eligible=True,
+                        answer=answer, error=None, usage=usage,
+                        cancellation_requested=False, completed_agent_messages=1)
+
+            model = AppServerPublicMcpModelCall(SpoolPlanner(), journal,
+                workspace=workspace, contract="public-mcp", output_schema={"type": "object"},
+                model="gpt-test", effort="low", path_converter=lambda path: str(path))
+            result = model.call(root / "provider-attempt", "choose one tool", image,
+                "public-mcp", workspace)
+            self.assertEqual(result["raw"], answer)
+            self.assertEqual((root / "provider-attempt" / "model" / "events.jsonl").read_bytes(),
+                expected_bytes)
+            self.assertEqual(result["usage"], {"input_tokens": 21,
+                "cached_input_tokens": 0, "cache_write_input_tokens": 0,
+                "output_tokens": 8, "reasoning_output_tokens": 1})
+
     async def test_app_server_turn_bytes_join_usage_and_public_tool_call(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
