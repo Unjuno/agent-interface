@@ -126,3 +126,19 @@ reliability claim. Keep MAP01 and WSLc boundaries distinct.
 A fresh single live attempt passed the preregistered close/release/exit gates. The independent verifier parsed the call-owned FODS as A1=731/A2=864. Both compiled transitions released input; owner close verified empty keys/buttons and exited 0. The parent then observed the exact Calc and `oosplash` generation exit 0 92.712 ms after the release receipt; forced process cleanup was not needed. The independent verifier returned `verified`, `task_success=true`; container exit was 0. All 264 packet files and the packet manifest were locally hash-checked against the frozen source hashes. See [the raw r75 packet](post-close-exit-wait-live-validation-20261103-r75/README.md).
 
 This is one fixed-task live integration result, not provider efficiency, broad reliability, WSLc, MAP01, or Issue #57 completion. r73/r74 failed attempts remain preserved in their original worktree and were not rerun. The source implementation was uncommitted in its source worktree at audit time; this integration branch is the review copy.
+
+## Same-frame verifier deadline boundary (2026-11-03)
+
+A deterministic regression found a finite-budget edge: the graph could pass its
+budget check, then reach the exact deadline immediately before invoking the
+opt-in same-frame effect verifier. The runtime now samples the clock at that
+callback boundary and yields `SAFE_YIELD/budget_exhausted` without starting the
+callback at or after expiry. The effect stays pending, and earlier transitions
+remain in the receipt. A focused calibration test exercises the unchanged-frame
+Save path. The core/X11 suites pass 81/81 in Windows and pinned Docker, normal
+and `-O`; see [the evidence packet](../issue57_effect_verifier_deadline_20261103/README.md).
+
+This prevents post-deadline callback starts; it cannot interrupt a synchronous
+callback that began before the deadline. It proves no live Calc result, task
+artifact, provider accounting, WSLc, MAP01 or efficiency improvement. #57 stays
+open.

@@ -330,7 +330,10 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                       "status": status, "evidence_ref": observation["evidence_ref"],
                       "verifier": "compiled_predicate_condition", **effect_timing})
                 return finish("SAFE_YIELD", "effect_" + status)
-            effect_timing["effect_verification_started_ns"] = clock()
+            verification_started_ns = clock()
+            if verification_started_ns >= deadline:
+                return finish("SAFE_YIELD", "budget_exhausted")
+            effect_timing["effect_verification_started_ns"] = verification_started_ns
             try:
                 effect = unchanged_verifier({
                     "expected_effect": copy.deepcopy(expected),
