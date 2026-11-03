@@ -1,0 +1,77 @@
+{
+  "experiment_id": "v39-preacceptance-stale-replan-a03-20261008",
+  "disposition": "PASS_SYNTHETIC_FRESH_ANSWER_ADMISSION_BOUNDARY",
+  "main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "source_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "research/live_control/executor_v11.py": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+    "research/doom/v39_preacceptance_stale_replan_a02_20261008/RESULT.json at PR #8501 head 5494e1c74365174f335c0c65d5416e863934c492": {
+      "sha256": "6a04c8262eb3dc578d549507a07e478a6c61c3a31d9a71827e033da4ce98117e",
+      "path": "A02_RESULT.json"
+    }
+  },
+  "stale_sequence_1": {
+    "reason": "latest observation sequence required before input",
+    "submit_attempts": 1,
+    "compiled_steps": [
+      {
+        "op": "hold",
+        "keys": [
+          "Up",
+          "Shift_L",
+          "space"
+        ],
+        "duration_ms": 350
+      }
+    ],
+    "accepted_events": 0,
+    "backend_validation_calls": 0,
+    "worker_starts": 0,
+    "old_plan_retried_after_rejection": false
+  },
+  "fresh_sequence_2": {
+    "health": 86,
+    "ammo": 12,
+    "image_rgb_sha256": "1a95bea73a494c877a43cfd7a69d533fbcceaad3e9c13bf8281e381cfff39fd0",
+    "turn_count": 2,
+    "compiled_steps": [
+      {
+        "op": "hold",
+        "keys": [
+          "Down",
+          "space"
+        ],
+        "duration_ms": 300
+      }
+    ],
+    "accepted_events": [
+      {
+        "event": "accepted",
+        "id": "fresh-seq-2",
+        "steps": 1,
+        "program_sha256": "caf84b8bc9b4db1a1e9927555b06aa994e694c1ded8d1eb1cb1b789c335788f0",
+        "intent_token": "inert-fixture-token"
+      }
+    ],
+    "backend_validation_calls": 1,
+    "worker_started_inertly": true,
+    "physical_input": false
+  },
+  "second_drift_sequence_3": {
+    "expected_sequence": 2,
+    "backend_sequence": 3,
+    "reason": "latest observation sequence required before input",
+    "accepted_events": 0,
+    "backend_validation_calls": 0,
+    "worker_starts": 0
+  },
+  "controls": {
+    "stale_pre_acceptance_refused": true,
+    "fresh_exact_sequence_admitted_once": true,
+    "subsequent_sequence_advance_refused": true,
+    "old_action_not_retried_after_refusal": true
+  },
+  "scope": "method-level synthetic composition only; exact submit method, inert Lease/backend/thread boundaries"
+}
