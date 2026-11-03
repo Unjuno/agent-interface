@@ -1,0 +1,9 @@
+Working directory: research/doom
+Python: /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 (Python 3.12.14, Pillow 12.3.0)
+
+From the repository root, extract the pinned source closure:
+python3 research/doom/v39_current_main_regression_a01_20261009/extract_sources.py --repo <checkout> --dest <existing-empty-temp-directory>
+Then set the working directory to <existing-empty-temp-directory>/research/doom and run:
+
+/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m unittest test_map01_overlap_controller_v39 test_map01_overlap_controller_v39_dual_signal test_map01_overlap_controller_v39_cover_terminal test_map01_v39_pending_observation_drain test_session_map01_v15
+/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -O -m unittest test_map01_overlap_controller_v39 test_map01_overlap_controller_v39_dual_signal test_map01_overlap_controller_v39_cover_terminal test_map01_v39_pending_observation_drain test_session_map01_v15
