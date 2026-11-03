@@ -1,0 +1,2 @@
+# r420 conditions
+Fresh WSLc allocation; same r417 procedure and pinned image 6150a4f3c779, 1 CPU/1 GiB, no network, no pull, 55s timeout. Source base 1ad443152603e67c8f990fd5c72b5e44c42b3846 plus uncommitted bridge/test connection-loss review patch; hash those two files before run. One attempt, no retry. Preserve the r417 PASS criteria but additionally inspect whether stale-action receipt sets review_required=true, and record MCP cleanup separately. This fixture uses synthetic targets, private Python MCP and pre-input replacement; no model or held-input recovery claim.

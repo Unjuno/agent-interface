@@ -1,0 +1,16 @@
+# Xvfb autorepeat control after uncertain guarded cancellation
+
+The earlier [guarded-owner display comparison](../wslc_guarded_owner_display_cancel_20261101/README.md) recorded two additional `a` presses after a stopped Xvfb resumed. This new fixed-order WSLc pair tests whether global X keyboard autorepeat contributes under a related controlled setup. In each private Xvfb, an actual spawned guarded owner sent `a` to a separate target; a fixture paused the owner immediately after the real press was synchronized. The target's first `a` and independent key-down were observed before the server was stopped. Cancellation while stopped retired the owner but left cleanup `UNKNOWN`, release unconfirmed, an `a` obligation, and replay disallowed. The server was then resumed for 500 ms before a fixture released the old key.
+
+| Global autorepeat | Readback | Old target `a` presses before fixture release | Additional presses after resume |
+| --- | --- | ---: | ---: |
+| On, first arm | on; per-key bit enabled | 14 | 13 |
+| Off, second arm | off; per-key bit enabled | 1 | 0 |
+
+The additional press timestamps in the on arm fall after server resume and before the 500 ms observation window ended. The off arm recorded only the original press in that window. This supports autorepeat as a contributor in this single controlled pair, consistent with earlier isolated research in [#9814](https://github.com/Unjuno/agent-interface/pull/9814); fixed order and one host limit causal and general claims. The fixture explicitly released old `a` afterward in both arms. Turning autorepeat off did not itself release the held key, confirm cleanup, or make a shared display safe.
+
+Both arms subsequently created a fresh target and owner. An injected old-connection release cleared a fresh `b` hold on the shared display, after which the fresh guarded `a` task reached its target and returned a verified release with neutral X input. The old owner was paused by test code rather than by a natural X I/O hang. The cancellation signal's `input_dispatched=false` is scoped to that signal, not to the already-observed original action; see [#10089](https://github.com/Unjuno/agent-interface/pull/10089).
+
+The pair used pre-run main `e5925b6bd99fd4ff3f8e0bda5ed4d7cc02d92c4d`, `PrivateDisplayOwner` source from draft [#10088](https://github.com/Unjuno/agent-interface/pull/10088) `93ef7f4321b94ef83cdbea472cba7e85f51cfb78`, and the guarded-owner snapshot from [#10074](https://github.com/Unjuno/agent-interface/pull/10074) `0675ab810f7ee890d0904b8a402678c81f8dbafb`. This is a mixed source tree retained in the archive, not a claim of one integrated commit. The pinned image was `sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25`, one CPU, 1 GiB memory limit, no network and no pull; WSLc reported swap was not limited.
+
+Both launchers returned zero. [raw.zip](raw.zip), SHA-256 `9fc101909f40474a182c7967550fe8fd7ab6bdc8ce7e9228a82468d7ef54f431`, contains frozen conditions, mixed source, event logs and receipts; ephemeral authority files are excluded. The audit checks source hashes, setting readback, cancellation custody, event timing/counts, fresh task/release and process exits. No natural-failure recovery, old-task success, production integration, hard deadline, MAP01 completion or general reliability is established.

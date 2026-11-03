@@ -1,0 +1,3 @@
+# r420 result
+
+One fresh private WSLc MCP trial, based on r417 with the connection-loss review patch in the mounted working tree. Scoped runner PASS: same-XID fresh target focused, stale action refused, fresh counter 0 and no a events over 2 s. Unlike r417, stale-action receipt had session review_required=true. The subsequent close still returned cleanup_failed, verified false, release_confirmed false and cleanup UNKNOWN. The old target connection closed with its server; fresh target was pidfd-terminated, replacement exited 0, old display reported retired. This does not demonstrate successful release, queued/in-flight input containment, or automatic recovery. Conditions, source hashes, runner and complete raw receipts are retained. Host swap limits unavailable.

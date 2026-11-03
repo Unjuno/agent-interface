@@ -1,0 +1,5 @@
+# r416 result
+
+One fresh WSLc trial exited 0. Query and observation constructors connected to the original private Xvfb under its pidfd connector. The original was retired, and a replacement started at the same display number with the same authority; a separate unguarded Python process connected successfully. Both constructors then refused with `owned display unavailable`; the connector was closed, replacement exited 0, and the original owner reported retired. Host reported swap limits unavailable. Conditions, runner, stdout/stderr, exit status and hashes are retained in this directory.
+
+This checks refusal of new constructor connections after old-server death, in a disposable process, not a running MCP session. Earlier connections were closed before retirement; it does not demonstrate behavior of an in-flight request, queued input, application effects, or recovery. The separate control is a real connection but no independent packet trace was captured. One trial is not a reliability estimate.

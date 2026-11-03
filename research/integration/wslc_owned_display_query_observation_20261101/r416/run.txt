@@ -1,0 +1,34 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "cases": {
+    "query_before": "connected",
+    "observation_before": "connected",
+    "query_after": "RuntimeError: owned display unavailable",
+    "observation_after": "RuntimeError: owned display unavailable"
+  },
+  "cleanup": [
+    [
+      "guard",
+      true
+    ],
+    [
+      "replacement_exit",
+      0
+    ],
+    [
+      "old",
+      {
+        "status": "retired"
+      }
+    ]
+  ],
+  "old_retire": {
+    "status": "retired"
+  },
+  "replacement_number": "0",
+  "control": {
+    "exit": 0,
+    "stderr": ""
+  },
+  "pass": true
+}

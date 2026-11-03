@@ -1,0 +1,30 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "cases": {
+    "control_a": "connected",
+    "control_b": "connected",
+    "query_a": "connected",
+    "query_b": "RuntimeError: display peer mismatch",
+    "observation_a": "connected",
+    "observation_b": "RuntimeError: display peer mismatch"
+  },
+  "cleanup": [
+    [
+      "guard",
+      true
+    ],
+    [
+      "b",
+      {
+        "status": "retired"
+      }
+    ],
+    [
+      "a",
+      {
+        "status": "retired"
+      }
+    ]
+  ],
+  "pass": true
+}

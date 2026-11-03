@@ -1,0 +1,9 @@
+# Private display draft: concurrent close and retire during startup
+
+Two controlled races were reproduced against the prior [#10088](https://github.com/Unjuno/agent-interface/pull/10088) draft before this change. When one close was paused immediately before closing the pidfd, a second close entered the same close operation; this could double-close a descriptor. Separately, retiring the server while startup was paused after spawn allowed startup to return the now-dead display. The initial failing console outputs are not included in this archive.
+
+The draft serializes close and retire with a cleanup lock, and treats retire during startup as a pending close request, fencing publication. The first test deliberately holds the first `os.close` call and checks that a second caller does not enter it; the second holds final authority setup and verifies retirement prevents publishing a session. Both tests use the real spawned Xvfb with controlled synchronization. They do not cover every scheduler interleaving.
+
+Nine tests passed in each of two fresh WSLc containers, normal Python and `-O`, using pinned image `sha256:6150a4f3c779a51b3ac6a7d93bc1d0450803325efb7ab38ade8b1aaf79c33e25`, one CPU, 1 GiB memory limit, no network and no pull. WSLc reported swap was not limited. [raw.zip](raw.zip), SHA-256 `c6caddb48b69b446825ea6c2c1d96644603d2c7dc12dbd666b79b9e0aa43396f`, retains source, tests, hashes and both outputs.
+
+This remains a draft without guarded-owner or MCP integration. The cleanup lock itself has no bounded acquisition guarantee; pending startup close requires a later check. Other process and descriptor failure paths, resource exhaustion, cookie lifecycle, broader suites and same-user isolation remain unverified. Prior held-key composition used an earlier revision; this evidence does not establish physical release, finite task recovery, MAP01 completion or a hard deadline.
