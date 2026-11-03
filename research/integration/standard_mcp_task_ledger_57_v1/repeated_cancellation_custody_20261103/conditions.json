@@ -1,0 +1,19 @@
+{
+  "experiment": "repeated_cancellation_custody_v1",
+  "base_main_sha": "54ead5c20e864cd116da07b8f854ec7a31e550c0",
+  "python": "Python 3.11.9",
+  "environment": "local Windows; synthetic fake provider and Relay; no WSLc, MAP01, live provider, or Docker",
+  "cancel_schedule": "cancel after synchronous worker starts; yield to event loop; cancel again while worker remains blocked; release only after both cancellation deliveries",
+  "baseline": "one cancellation was caught, then a direct await allowed the second cancellation to detach the to_thread task; complete usage was lost as unavailable",
+  "change": "keep awaiting through asyncio.shield in a loop after each caller cancellation until the worker task is terminal",
+  "assertions": [
+    "both cancellations leave synchronous worker under custody",
+    "cancellation is re-raised after worker completion",
+    "known usage is retained in cancelled model-attempt ledger event",
+    "raw response JSONL bytes are retained",
+    "public MCP tool dispatch count is zero",
+    "ledger reconciles complete"
+  ],
+  "suite": "test_recorded_model_call_usage, test_provider_attempt_recorder, test_mcp_endpoint_composition",
+  "suite_result": "32 passed in normal Python and 32 passed with python -O"
+}

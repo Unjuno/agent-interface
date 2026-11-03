@@ -1,0 +1,55 @@
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py b/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py
+index 482b90132c0..9890733d324 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/recorded_integrated_efficiency_model_call_v1.py
+@@ -89,20 +89,23 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
+ 
+         task = asyncio.create_task(asyncio.to_thread(invoke_model_call))
+         cancelled = False
+-        try:
+-            outcome = await asyncio.shield(task)
+-        except asyncio.CancelledError:
+-            # Keep custody until the synchronous call ends; to_thread cannot
+-            # terminate its worker. The actual model runner has its own bound.
+-            cancelled = True
++        while True:
+             try:
+-                outcome = await task
++                outcome = await asyncio.shield(task)
++                break
++            except asyncio.CancelledError as exc:
++                # Re-shield after each caller cancellation. Awaiting the
++                # to_thread task directly here would let a second cancellation
++                # detach its still-running synchronous worker.
++                cancelled = True
++                if task.cancelled():
++                    outcome = {"result": None, "error": exc,
++                               "error_usage": getattr(exc, "usage", None)}
++                    break
+             except BaseException as exc:
+                 outcome = {"result": None, "error": exc,
+                            "error_usage": getattr(exc, "usage", None)}
+-        except BaseException as exc:
+-            outcome = {"result": None, "error": exc,
+-                       "error_usage": getattr(exc, "usage", None)}
++                break
+ 
+         result = outcome["result"]
+         error = outcome["error"]
+diff --git a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+index 401d6cbc6f2..5f5da9ffbc5 100644
+--- a/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
++++ b/research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py
+@@ -891,7 +891,11 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+                 pending.cancel()
+                 await asyncio.sleep(0)
+                 self.assertFalse(pending.done(),
+-                                 "cancelled call must retain worker custody")
++                                 "first cancellation must retain worker custody")
++                pending.cancel()
++                await asyncio.sleep(0)
++                self.assertFalse(pending.done(),
++                                 "repeated cancellation must retain worker custody")
+             finally:
+                 allow_worker_finish.set()
+ 

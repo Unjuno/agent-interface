@@ -89,20 +89,23 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
 
         task = asyncio.create_task(asyncio.to_thread(invoke_model_call))
         cancelled = False
-        try:
-            outcome = await asyncio.shield(task)
-        except asyncio.CancelledError:
-            # Keep custody until the synchronous call ends; to_thread cannot
-            # terminate its worker. The actual model runner has its own bound.
-            cancelled = True
+        while True:
             try:
-                outcome = await task
+                outcome = await asyncio.shield(task)
+                break
+            except asyncio.CancelledError as exc:
+                # Re-shield after each caller cancellation. Awaiting the
+                # to_thread task directly here would let a second cancellation
+                # detach its still-running synchronous worker.
+                cancelled = True
+                if task.cancelled():
+                    outcome = {"result": None, "error": exc,
+                               "error_usage": getattr(exc, "usage", None)}
+                    break
             except BaseException as exc:
                 outcome = {"result": None, "error": exc,
                            "error_usage": getattr(exc, "usage", None)}
-        except BaseException as exc:
-            outcome = {"result": None, "error": exc,
-                       "error_usage": getattr(exc, "usage", None)}
+                break
 
         result = outcome["result"]
         error = outcome["error"]

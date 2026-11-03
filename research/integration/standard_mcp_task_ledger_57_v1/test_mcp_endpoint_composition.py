@@ -891,7 +891,11 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 pending.cancel()
                 await asyncio.sleep(0)
                 self.assertFalse(pending.done(),
-                                 "cancelled call must retain worker custody")
+                                 "first cancellation must retain worker custody")
+                pending.cancel()
+                await asyncio.sleep(0)
+                self.assertFalse(pending.done(),
+                                 "repeated cancellation must retain worker custody")
             finally:
                 allow_worker_finish.set()
 
