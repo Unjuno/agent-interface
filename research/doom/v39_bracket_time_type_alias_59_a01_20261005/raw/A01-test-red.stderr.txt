@@ -1,0 +1,34 @@
+test_coherent_integer_control_remains_paired (research.doom.test_map01_v39_bracket_time_type_alias.BracketTimestampTypeAliasTests.test_coherent_integer_control_remains_paired) ... ok
+test_false_timestamp_cannot_alias_integer_zero (research.doom.test_map01_v39_bracket_time_type_alias.BracketTimestampTypeAliasTests.test_false_timestamp_cannot_alias_integer_zero) ... FAIL
+test_true_timestamp_cannot_alias_integer_one (research.doom.test_map01_v39_bracket_time_type_alias.BracketTimestampTypeAliasTests.test_true_timestamp_cannot_alias_integer_one) ... FAIL
+
+======================================================================
+FAIL: test_false_timestamp_cannot_alias_integer_zero (research.doom.test_map01_v39_bracket_time_type_alias.BracketTimestampTypeAliasTests.test_false_timestamp_cannot_alias_integer_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\work\bracket-time-types-59-a01\research\doom\test_map01_v39_bracket_time_type_alias.py", line 43, in test_false_timestamp_cannot_alias_integer_zero
+    self.assert_bool_alias_rejected(0, False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\work\bracket-time-types-59-a01\research\doom\test_map01_v39_bracket_time_type_alias.py", line 38, in assert_bool_alias_rejected
+    self.assertEqual(result["status"], "adapter_edge_receipt_incomplete")
+AssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'
+- adapter_edge_brackets_paired
++ adapter_edge_receipt_incomplete
+
+
+======================================================================
+FAIL: test_true_timestamp_cannot_alias_integer_one (research.doom.test_map01_v39_bracket_time_type_alias.BracketTimestampTypeAliasTests.test_true_timestamp_cannot_alias_integer_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\work\bracket-time-types-59-a01\research\doom\test_map01_v39_bracket_time_type_alias.py", line 46, in test_true_timestamp_cannot_alias_integer_one
+    self.assert_bool_alias_rejected(1, True)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\work\bracket-time-types-59-a01\research\doom\test_map01_v39_bracket_time_type_alias.py", line 38, in assert_bool_alias_rejected
+    self.assertEqual(result["status"], "adapter_edge_receipt_incomplete")
+AssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'
+- adapter_edge_brackets_paired
++ adapter_edge_receipt_incomplete
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.184s
+
+FAILED (failures=2)

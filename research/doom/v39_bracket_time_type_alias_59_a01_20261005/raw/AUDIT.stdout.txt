@@ -1,0 +1,79 @@
+{
+  "checks": {
+    "baseline_accepts_each_bool_alias": true,
+    "candidate_rejects_each_bool_alias": true,
+    "candidate_source_sha_matches_green_raw": true,
+    "frozen_source_sha_matches": true,
+    "local_fixture_sha_matches": true,
+    "positive_control_stays_paired": true,
+    "retained_green_matches_independent_replay": true,
+    "retained_green_records_rejection": true,
+    "retained_red_records_false_accept": true,
+    "runner_sha_matches": true,
+    "source_validates_exact_bracket_interval": false
+  },
+  "decision": "FAIL",
+  "mutations": [
+    {
+      "baseline": {
+        "application_consumption_observed": false,
+        "down_edge_interval_ns": [
+          0,
+          1
+        ],
+        "grants_input_authority": false,
+        "status": "adapter_edge_brackets_paired",
+        "up_edge_interval_ns": [
+          2,
+          3
+        ]
+      },
+      "candidate": {
+        "application_consumption_observed": null,
+        "down_edge_interval_ns": null,
+        "grants_input_authority": null,
+        "status": "adapter_edge_receipt_incomplete",
+        "up_edge_interval_ns": null
+      },
+      "case": "down_lower_false_alias"
+    },
+    {
+      "baseline": {
+        "application_consumption_observed": false,
+        "down_edge_interval_ns": [
+          0,
+          1
+        ],
+        "grants_input_authority": false,
+        "status": "adapter_edge_brackets_paired",
+        "up_edge_interval_ns": [
+          2,
+          3
+        ]
+      },
+      "candidate": {
+        "application_consumption_observed": null,
+        "down_edge_interval_ns": null,
+        "grants_input_authority": null,
+        "status": "adapter_edge_receipt_incomplete",
+        "up_edge_interval_ns": null
+      },
+      "case": "down_upper_true_alias"
+    }
+  ],
+  "positive": {
+    "application_consumption_observed": false,
+    "down_edge_interval_ns": [
+      0,
+      1
+    ],
+    "grants_input_authority": false,
+    "status": "adapter_edge_brackets_paired",
+    "up_edge_interval_ns": [
+      2,
+      3
+    ]
+  },
+  "schema": "v39-bracket-time-type-alias-audit-v1",
+  "scope": "source/fixture/raw replay only; no live input, application, game, model, or task effect"
+}

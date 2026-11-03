@@ -1,0 +1,94 @@
+{
+  "decision": "PASS_TYPE_ALIAS_REJECTED",
+  "input_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "mutations": [
+    {
+      "baseline": {
+        "application_consumption_observed": false,
+        "down_edge_interval_ns": [
+          0,
+          1
+        ],
+        "grants_input_authority": false,
+        "status": "adapter_edge_brackets_paired",
+        "up_edge_interval_ns": [
+          2,
+          3
+        ]
+      },
+      "before": 0,
+      "candidate": {
+        "application_consumption_observed": null,
+        "down_edge_interval_ns": null,
+        "grants_input_authority": null,
+        "status": "adapter_edge_receipt_incomplete",
+        "up_edge_interval_ns": null
+      },
+      "case": "down_lower_false_alias",
+      "endpoint": 0,
+      "mutated": false,
+      "row_index": 0
+    },
+    {
+      "baseline": {
+        "application_consumption_observed": false,
+        "down_edge_interval_ns": [
+          0,
+          1
+        ],
+        "grants_input_authority": false,
+        "status": "adapter_edge_brackets_paired",
+        "up_edge_interval_ns": [
+          2,
+          3
+        ]
+      },
+      "before": 1,
+      "candidate": {
+        "application_consumption_observed": null,
+        "down_edge_interval_ns": null,
+        "grants_input_authority": null,
+        "status": "adapter_edge_receipt_incomplete",
+        "up_edge_interval_ns": null
+      },
+      "case": "down_upper_true_alias",
+      "endpoint": 1,
+      "mutated": true,
+      "row_index": 0
+    }
+  ],
+  "positive": {
+    "baseline": {
+      "application_consumption_observed": false,
+      "down_edge_interval_ns": [
+        0,
+        1
+      ],
+      "grants_input_authority": false,
+      "status": "adapter_edge_brackets_paired",
+      "up_edge_interval_ns": [
+        2,
+        3
+      ]
+    },
+    "candidate": {
+      "application_consumption_observed": false,
+      "down_edge_interval_ns": [
+        0,
+        1
+      ],
+      "grants_input_authority": false,
+      "status": "adapter_edge_brackets_paired",
+      "up_edge_interval_ns": [
+        2,
+        3
+      ]
+    }
+  },
+  "schema": "v39-bracket-time-type-alias-a01-v1",
+  "scope": "deterministic source projection over retained X-server sampling rows; no live input or application claim",
+  "source_commit": "719ef679c977a925db3a6d1fe15f9cd93cf2b42c",
+  "source_git_blob": "21e6b164562725dfb502d5a7a7d9ceb06fb92bd6",
+  "source_sha256_before": "4c54851ecfe9798c331f10a871a68fe816406b2873d5759dad7675f1d4ecc01e",
+  "source_sha256_candidate": "203060c23fe5ccb05655f875be2175ce2754c17e6582540d893b03158983bc7c"
+}
