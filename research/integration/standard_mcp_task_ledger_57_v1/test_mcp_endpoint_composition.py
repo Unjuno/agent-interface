@@ -1356,7 +1356,9 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                       "routed_profile_attempt_ids": set()}
             observed = {"artifact": None, "artifact_bytes": None,
                         "verification": None, "close": None,
-                        "negative_profile_results": {}, "public_caller": None}
+                        "negative_profile_results": {}, "public_caller": None,
+                        "compiled_result_candidates": [], "mint_receipts": [],
+                        "provider_routed_compiled_results": []}
             test_case = self
 
             class ServerClient:
@@ -1484,6 +1486,15 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                 raise AssertionError(joined)
                             response_text = joined["tool_response"]["result"][
                                 "content"][0]["text"]
+                            if name == "interface_guarded_calc_compiled":
+                                observed["provider_routed_compiled_results"].append({
+                                    "attempt_id": arguments.get("attempt_id"),
+                                    "bindings": arguments.get("bindings"),
+                                    "prepared_call_id": arguments.get(
+                                        "prepared_call_id"),
+                                    "reviewed_sequence": arguments.get(
+                                        "reviewed_sequence"),
+                                    "body": json.loads(response_text)})
                             if attempt_id != "calc-offline-e2e-01":
                                 observed["negative_profile_results"][attempt_id] = (
                                     json.loads(response_text))
@@ -1506,6 +1517,19 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                             None, call_id, name, request_bytes, invoke_tool)
                         body = metadata(SimpleNamespace(content=[SimpleNamespace(
                             text=result["content"][0]["text"])]))
+                        if name == "interface_guarded_calc_compiled":
+                            observed["compiled_result_candidates"].append({
+                                "attempt_id": arguments.get("attempt_id"),
+                                "reviewed_sequence": arguments.get("reviewed_sequence"),
+                                "bindings": arguments.get("bindings"),
+                                "body": body})
+                        if name == "interface_guarded_mint":
+                            observed["mint_receipts"].append({
+                                "requested_alias": arguments.get("alias"),
+                                "requested_source_sequence": arguments.get(
+                                    "source_sequence"),
+                                "requested_point": arguments.get("point"),
+                                "body": body})
                         if name == "interface_guarded_calc_prepare" and body.get(
                                 "status") == "prepared":
                             observed["artifact"] = Path(body["artifact_path"])
@@ -1617,8 +1641,61 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(negative["replay_allowed"], negative)
             self.assertTrue(observed["verification"]["task_success"])
             self.assertTrue(observed["close"]["release_confirmed"])
+            provider_primary = next(candidate["body"] for candidate in
+                observed["compiled_result_candidates"]
+                if candidate["attempt_id"] == "calc-offline-e2e-01")
+            self.assertEqual(provider_primary["status"], "invalid_request",
+                             provider_primary)
+            self.assertEqual(provider_primary["error"],
+                "CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE", provider_primary)
+            self.assertFalse(provider_primary["operation_invoked"], provider_primary)
+            self.assertFalse(provider_primary["input_dispatched"], provider_primary)
+            self.assertIsNone(provider_primary["task_success"], provider_primary)
+            self.assertFalse(provider_primary["replay_allowed"], provider_primary)
+            routed_primary = next(candidate for candidate in
+                observed["provider_routed_compiled_results"]
+                if candidate["attempt_id"] == "calc-offline-e2e-01")
+            routed_receipt = routed_primary["body"]["method_receipt"]
+            self.assertEqual(routed_receipt["outcome"], "SAFE_YIELD",
+                             routed_primary)
+            self.assertEqual(routed_receipt["reason"], "effect_unavailable",
+                             routed_primary)
+            self.assertEqual(routed_receipt["completed_transitions"], 2,
+                             routed_primary)
+            self.assertTrue(all(row["release_verified"] is True for row in
+                                routed_receipt["transitions"]), routed_primary)
+            self.assertIsNone(routed_primary["body"]["task_success"],
+                              routed_primary)
+            self.assertFalse(routed_primary["body"]["replay_allowed"],
+                             routed_primary)
             artifact_bytes = observed["artifact_bytes"]
             self.assertIsInstance(artifact_bytes, bytes)
+            verified_effect = observed["verification"]["task_effect"]
+            save_controller = verified_effect["save_controller"]
+            provider_method_receipt_sha256 = hashlib.sha256(json.dumps(
+                routed_receipt, sort_keys=True, separators=(",", ":"),
+                allow_nan=False).encode("utf-8")).hexdigest()
+            self.assertTrue(observed["verification"]["task_success"])
+            self.assertEqual(verified_effect["attempt_id"],
+                             routed_primary["attempt_id"])
+            self.assertEqual(save_controller["attempt_id"],
+                             routed_primary["attempt_id"])
+            self.assertEqual(save_controller["call_id"],
+                             routed_primary["prepared_call_id"])
+            self.assertEqual(save_controller["method_receipt_sha256"],
+                             provider_method_receipt_sha256)
+            self.assertEqual(verified_effect["profile_id"], "calc-ocr-save-v1")
+            self.assertEqual(verified_effect["artifact_sha256"],
+                             hashlib.sha256(artifact_bytes).hexdigest())
+            scoped_mints = [row for row in observed["mint_receipts"]
+                if row["body"].get("session", {}).get("compiled_scope") ==
+                routed_receipt["session_scope"]]
+            mint_offsets = {row["requested_alias"]: row["body"].get("offset")
+                for row in scoped_mints if row["body"].get("status") == "minted"}
+            self.assertEqual(mint_offsets, {
+                binding["alias"]: binding["offset"] for binding in
+                routed_primary["bindings"].values()})
+            self.assertEqual(len(scoped_mints), 2)
             root_xml = ET.fromstring(artifact_bytes)
             office_ns = "urn:oasis:names:tc:opendocument:xmlns:office:1.0"
             scored_values = [cell.attrib.get(f"{{{office_ns}}}value")
@@ -1709,10 +1786,57 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                 "replay_allowed": result["replay_allowed"]}
                             for attempt_id, result in
                             observed["negative_profile_results"].items()},
-                        "task_effect": observed["verification"],
-                        "owner_close": observed["close"],
+                        "separate_direct_task_effect": observed["verification"],
+                        "separate_direct_owner_close": observed["close"],
                         "independent_stdlib_fods_values": scored_values,
-                        "independent_task_success": scored_values == ["731", "864"],
+                        "independent_fods_value_match": scored_values == expected_values,
+                        "verified_task_effect_success":
+                            observed["verification"]["task_effect"]["task_success"],
+                        "provider_compiled_call_candidates": [
+                            {"attempt_id": candidate["attempt_id"],
+                             "reviewed_sequence": candidate["reviewed_sequence"],
+                             "bindings": candidate["bindings"],
+                             "status": candidate["body"].get("status"),
+                             "task_success": candidate["body"].get("task_success"),
+                             "error": candidate["body"].get("error"),
+                             "detail": candidate["body"].get("detail"),
+                             "handoff_reason": candidate["body"].get(
+                                 "method_receipt", {}).get("reason"),
+                             "keys": sorted(candidate["body"])}
+                            for candidate in observed["compiled_result_candidates"]],
+                        "provider_routed_compiled_call_results": [
+                            {"attempt_id": candidate["attempt_id"],
+                             "bindings": candidate["bindings"],
+                             "outcome": candidate["body"].get(
+                                 "method_receipt", {}).get("outcome"),
+                             "reason": candidate["body"].get(
+                                 "method_receipt", {}).get("reason"),
+                             "completed_transitions": candidate["body"].get(
+                                 "method_receipt", {}).get("completed_transitions"),
+                             "release_verified": [row.get("release_verified")
+                                 for row in candidate["body"].get(
+                                     "method_receipt", {}).get("transitions", [])],
+                             "task_success": candidate["body"].get("task_success"),
+                             "replay_allowed": candidate["body"].get(
+                                 "replay_allowed")}
+                            for candidate in
+                            observed["provider_routed_compiled_results"]],
+                        "provider_task_effect_join": {
+                            "status": observed["verification"]["status"],
+                            "task_success": observed["verification"]["task_success"],
+                            "attempt_id": routed_primary["attempt_id"],
+                            "prepared_call_id": routed_primary["prepared_call_id"],
+                            "save_controller_call_id": save_controller["call_id"],
+                            "provider_method_receipt_sha256":
+                                provider_method_receipt_sha256,
+                            "save_controller_method_receipt_sha256":
+                                save_controller["method_receipt_sha256"],
+                            "compiled_scope": routed_receipt["session_scope"],
+                            "minted_alias_offsets": mint_offsets,
+                            "verified_artifact_sha256":
+                                verified_effect["artifact_sha256"],
+                            "replay_allowed": verified_effect["replay_allowed"]},
+                        "public_mint_receipts": observed["mint_receipts"],
                         "limits": ["FakeX_only", "no_live_provider", "no_live_Calc",
                                    "no_efficiency_comparison"]},
                         sort_keys=True, indent=2, allow_nan=False) + "\n",
