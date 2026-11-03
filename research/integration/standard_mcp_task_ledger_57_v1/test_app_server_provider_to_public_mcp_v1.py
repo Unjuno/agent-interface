@@ -185,6 +185,61 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual([event["kind"] for event in receipt["events"]],
                              ["model_attempt"])
 
+    async def test_missing_turn_preserves_journal_partial_usage_and_skips_public_relay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "session" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(b"")
+
+            class MissingTurnPlanner:
+                def begin_turn(self, *_args, **_kwargs):
+                    return SimpleNamespace(thread_id="thread-none", turn_id="turn-none")
+
+                def await_turn(self, _handle, timeout):
+                    usage_row = {"direction": "received", "message": {
+                        "method": "thread/tokenUsage/updated", "params": {
+                            "threadId": "thread-none", "turnId": "turn-none",
+                            "tokenUsage": {"last": {
+                                "inputTokens": 17, "cachedInputTokens": 4}}}}}
+                    with journal.open("ab") as stream:
+                        stream.write(json.dumps(usage_row).encode() + b"\n")
+                    return None
+
+            model = AppServerPublicMcpModelCall(
+                MissingTurnPlanner(), journal, workspace=workspace,
+                contract="public-mcp", output_schema={"type": "object"},
+                model="gpt-test", effort="low", path_converter=str)
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                async def request(self, _request_bytes):
+                    raise AssertionError("missing model turn must not reach public MCP")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            request, provider = build_model_provider_call(
+                model_call=model.call, root=root / "missing-turn", prompt="task",
+                image=image, contract="public-mcp", workspace=workspace)
+            result = await caller.invoke_generation_to_tool(
+                "missing-turn", request, provider, "call-missing-turn",
+                "interface_guarded_compiled", json.loads)
+
+            self.assertFalse(result["tool_call_submitted"])
+            self.assertEqual(result["generation"]["status"], "failed")
+            self.assertEqual(result["generation"]["usage"], {
+                "status": "partial", "input_tokens": 17,
+                "output_tokens": None, "cached_input_tokens": 4})
+            receipt = recorder.reconcile()
+            self.assertTrue(receipt["complete"])
+            self.assertEqual([event["kind"] for event in receipt["events"]],
+                             ["model_attempt"])
+            self.assertEqual(receipt["events"][0]["usage"],
+                             result["generation"]["usage"])
+
     async def test_timeout_preserves_partial_protocol_usage_and_skips_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

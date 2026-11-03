@@ -225,17 +225,23 @@ class AppServerPublicMcpModelCall:
             error = RuntimeError("app-server answer is ineligible; no tool call")
             error.call_id = getattr(handle, "turn_id", None)
             error.thread_id = getattr(handle, "thread_id", None)
-            if turn is not None and handle is not None:
-                usage = _partial_turn_usage(getattr(turn, "usage", None))
+            if handle is not None:
                 journal_usage = _partial_turn_usage(_journal_turn_usage(
                     protocol_bytes, thread_id=handle.thread_id,
                     turn_id=handle.turn_id))
-                if usage == journal_usage:
-                    error.usage = usage
+                if turn is None:
+                    # No terminal turn object exists to cross-check the
+                    # nonterminal usage update. Preserve it as partial usage;
+                    # the recorder must not report a known count as missing.
+                    error.usage = journal_usage
                 else:
-                    error.usage = None
-                    error.usage_error = (
-                        "ineligible turn usage differs from retained protocol journal")
+                    usage = _partial_turn_usage(getattr(turn, "usage", None))
+                    if usage == journal_usage:
+                        error.usage = usage
+                    else:
+                        error.usage = None
+                        error.usage_error = (
+                            "ineligible turn usage differs from retained protocol journal")
             else:
                 error.usage = None
             raise error
