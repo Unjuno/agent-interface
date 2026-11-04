@@ -374,6 +374,52 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(refused_many['input_dispatched'],refused_many)
         self.assertFalse(any(op=='guarded_calc_compiled' for op,_ in calls),calls)
 
+    async def test_successful_window_review_updates_calc_source_ledger(self):
+        """A review's returned frame is current for subsequent Calc mints."""
+        from mcp.server.fastmcp import FastMCP
+        from mcp.types import CallToolResult, TextContent
+        from runtime.cli_v1.mcp_guarded import register_guarded_tools
+        calls=[]
+
+        async def submit(operation, arguments, compact, report_refs, **kwargs):
+            calls.append((operation,arguments))
+            if operation == 'guarded_review_window':
+                row={'status':'reviewed','source':{'sequence':7,
+                    'native':{'artifact':{'sha256':'7'*64}}}}
+            elif operation == 'guarded_mint':
+                row={'status':'minted','alias':arguments['alias'],'offset':[12,7]}
+            elif operation == 'guarded_calc_compiled':
+                row={'status':'completed','operation_invoked':True}
+            else:
+                row={'status':'unexpected','operation':operation}
+            return CallToolResult(content=[TextContent(type='text',
+                text=json.dumps(row))])
+
+        server=FastMCP('calc-review-source-ledger-test')
+        register_guarded_tools(server,submit,compiled_enabled=True,
+            window_lifecycle_enabled=True)
+        reviewed=metadata(await server.call_tool('interface_guarded_review_window',
+            {'window_id':456}))
+        self.assertEqual(reviewed['source']['sequence'],7)
+        bindings={}
+        for name,point in (('calc_entry',[16,16]),('calc_save',[40,16])):
+            minted=metadata(await server.call_tool('interface_guarded_mint',{
+                'alias':name,'source_sequence':7,'point':point,
+                'region_size':[12,12]}))
+            self.assertEqual(minted['status'],'minted',minted)
+            bindings['entry' if name=='calc_entry' else 'save']={
+                'alias':name,'offset':minted['offset']}
+        compiled=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1','bindings':bindings,
+            'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
+            'blank_reviewed':True,'attempt_id':'calc-review-source-ledger'}))
+        self.assertEqual(compiled['status'],'completed',compiled)
+        self.assertIn(('guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1','bindings':bindings,
+            'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
+            'blank_reviewed':True,'attempt_id':'calc-review-source-ledger',
+            'prepared_call_id':None}),calls)
+
     async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
         from mcp.server.fastmcp.exceptions import ToolError
         opened = []
