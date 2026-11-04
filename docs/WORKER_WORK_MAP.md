@@ -1,11 +1,9 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-04, after PR #10215
+## Current work-map pointer — 2026-11-04, after PR #10216
 
-**Last verified `origin/main` (2026-11-04):** `2d5931fb0fc273116d8b940034be759598db46f7`
-(documentation-only PR #10215). Its code parent includes PR #10214 at
-`cc24af030e7e1024fb3ecdc5817ed5f411194789`. This is a directional pointer,
-not a complete Issue/PR census.
+**Last verified `origin/main` (2026-11-04):** `6d48883bac760d6ec5406e1c7adb7884d94a1f03`
+(PR #10216). This is a directional pointer, not a complete Issue/PR census.
 
 [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open.
 Merged PRs #10209 and #10210 add offline Fake App Server/FileSpool composition
@@ -16,12 +14,12 @@ cold/warm/invalidation/repair comparison, full live provider/all-attempt
 accounting, integrated efficiency, and WSLc/MAP01 transfer remain unproven.
 The latest issue update is 2026-11-04; do not rerun any consumed allocation.
 
-An unmerged local follow-up adds a positive regression for stable `lstat` and
-`fstat` samples whose ctime values differ across APIs while birthtime and file
-identity agree. The Calc effect-checker suite passes 6/6 in normal and
-optimized Python 3.11.9. This locks the intended cross-API comparison alongside
-the existing same-API ctime-change refusals; the synthetic stat records do not
-verify filesystem timestamp behavior or live Calc effects.
+Merged PR #10216 adds a positive regression for stable `lstat` and `fstat`
+samples whose ctime values differ across APIs while birthtime and file identity
+agree. The Calc effect-checker suite passes 6/6 in normal and optimized Python
+3.11.9. This locks the intended cross-API comparison alongside the existing
+same-API ctime-change refusals; synthetic stat records do not verify filesystem
+timestamp behavior or live Calc effects.
 
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) remains open
 after being reopened on 2026-11-04. [PR #10214](https://github.com/Unjuno/agent-interface/pull/10214)
