@@ -137,6 +137,116 @@ class ProviderAttemptRecorderTests(unittest.TestCase):
             self.assertIsNone(totals["input_tokens"])
             self.assertEqual(totals["usage_status"], "incomplete")
 
+    def test_late_usage_after_timeout_and_task_score_is_accounted_once(self):
+        with tempfile.TemporaryDirectory() as temp:
+            ticks = iter((10, 20, 30))
+            recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: next(ticks))
+
+            def provider_call():
+                raise TimeoutError("caller deadline expired")
+
+            with self.assertRaises(TimeoutError):
+                recorder.invoke("attempt-01", b"provider request", provider_call)
+
+            before = recorder.reconcile()
+            self.assertEqual(before["events"][0]["status"], "timeout")
+            self.assertEqual(before["events"][0]["usage"]["status"], "unavailable")
+            recorder.record_task_score("independent-oracle-v1", True, b"saved=731")
+
+            partial = {"status": "partial", "input_tokens": 17,
+                       "output_tokens": None}
+            partial_bytes = json.dumps(partial, sort_keys=True,
+                                       separators=(",", ":")).encode("utf-8")
+            with self.assertRaises(AttemptJournalError):
+                recorder.observe_late_usage("attempt-01", usage=partial,
+                                            usage_bytes=partial_bytes, observed_ns=29)
+            recorder.observe_late_usage("attempt-01", usage=partial,
+                                        usage_bytes=partial_bytes, observed_ns=35)
+
+            decreasing = {"status": "partial", "input_tokens": 16,
+                          "output_tokens": None}
+            decreasing_bytes = json.dumps(decreasing, sort_keys=True,
+                                          separators=(",", ":")).encode("utf-8")
+            with self.assertRaises(AttemptJournalError):
+                recorder.observe_late_usage("attempt-01", usage=decreasing,
+                                            usage_bytes=decreasing_bytes,
+                                            observed_ns=36)
+
+            usage = {"status": "reported", "input_tokens": 17,
+                     "output_tokens": 3}
+            usage_bytes = json.dumps(usage, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")
+            recorder.observe_late_usage("attempt-01", usage=usage,
+                                        usage_bytes=usage_bytes, observed_ns=40)
+
+            receipt = recorder.reconcile()
+            attempt, score = receipt["events"]
+            self.assertTrue(receipt["complete"])
+            self.assertEqual([event["kind"] for event in receipt["events"]],
+                             ["model_attempt", "task_score"])
+            self.assertEqual(attempt["kind"], "model_attempt")
+            self.assertEqual(attempt["status"], "timeout")
+            self.assertEqual(attempt["usage"], usage)
+            self.assertEqual(attempt["late_usage_observed_ns"], [35, 40])
+            self.assertEqual(score["kind"], "task_score")
+            self.assertTrue(score["task_success"])
+            self.assertEqual(len(receipt["raw_refs"]), 4)
+            first_late_ref = next(ref for ref in receipt["raw_refs"]
+                                  if ref["path"].endswith("late-usage-0001.bin"))
+            self.assertEqual(Path(temp, first_late_ref["path"]).read_bytes(),
+                             partial_bytes)
+            late_ref = next(ref for ref in receipt["raw_refs"]
+                            if ref["path"].endswith("late-usage-0002.bin"))
+            self.assertEqual(Path(temp, late_ref["path"]).read_bytes(), usage_bytes)
+            summary = validate_record({
+                "schema": "agent-interface/standard-mcp-task-ledger-v1",
+                "run_id": "late-usage-run-01",
+                "comparison": {"arm": "integrated", "block": 1,
+                               "order": 1, "task_seed": "late-usage-seed"},
+                "task": {"task_id": "late-usage-task",
+                         "fixture_sha256": "a" * 64,
+                         "scorer_sha256": "b" * 64},
+                "source": {"commit": "c" * 40, "route_sha256": "d" * 64},
+                "environment_sha256": "e" * 64,
+                "model": {"id": "model-x", "effort": "low",
+                          "request_config_sha256": "f" * 64},
+                "raw_refs": receipt["raw_refs"],
+                "events": receipt["events"],
+            })
+            self.assertEqual(summary["model_attempt_count"], 1)
+            self.assertEqual(summary["input_tokens"], 17)
+            self.assertEqual(summary["output_tokens"], 3)
+            self.assertTrue(summary["task_success"])
+            rows = [json.loads(line) for line in
+                    Path(temp, "attempts.jsonl").read_text().splitlines()]
+            self.assertEqual([row["observation_index"] for row in rows
+                              if row["event"] == "model_attempt_usage_observed"],
+                             [1, 2])
+
+            with self.assertRaises(AttemptJournalError):
+                recorder.observe_late_usage("attempt-01", usage=usage,
+                                            usage_bytes=usage_bytes,
+                                            observed_ns=41)
+            with self.assertRaises(AttemptJournalError):
+                recorder.begin("attempt-02", b"cannot add a new attempt")
+
+            journal_path = Path(temp, "attempts.jsonl")
+            original_rows = [json.loads(line) for line in
+                             journal_path.read_text().splitlines()]
+            for invalid_index in (True, 1.0):
+                corrupt_rows = [dict(row) for row in original_rows]
+                late_row = next(row for row in corrupt_rows
+                                if row["event"] == "model_attempt_usage_observed")
+                late_row["observation_index"] = invalid_index
+                journal_path.write_text("".join(
+                    json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n"
+                    for row in corrupt_rows))
+                with self.assertRaises(AttemptJournalError):
+                    recorder.reconcile()
+                journal_path.write_text("".join(
+                    json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n"
+                    for row in original_rows))
+
     def test_partial_usage_stays_incomplete_in_shared_ledger_summary(self):
         with tempfile.TemporaryDirectory() as temp:
             ticks = iter((10, 20))
