@@ -15,6 +15,7 @@ from unittest.mock import patch
 
 from PIL import Image
 
+from app_server_file_spool_v1 import FileSpoolPlanner, claim_next, publish_stage
 from app_server_provider_to_public_mcp_v1 import (
     AppServerPublicMcpModelCall,
     parse_app_server_tool_request,
@@ -1480,11 +1481,108 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                         answer=json.loads(answer), status="completed",
                                         usage=usage)
 
-                            model_call = AppServerPublicMcpModelCall(
-                                FakePlanner(), protocol_journal, workspace=workspace,
-                                contract="registered-calc-profile",
-                                output_schema={"type": "object"},
-                                model="fake-offline-model", effort="low")
+                            output_schema = {"type": "object"}
+                            model = "fake-offline-model"
+                            effort = "low"
+                            spool_worker = None
+                            spool_errors = []
+                            if attempt_id == "calc-offline-e2e-01":
+                                # Exercise the actual host/container file-spool
+                                # boundary for the successful composed Calc
+                                # generation. Other negative-path generations
+                                # continue to use the in-process fake planner.
+                                spool_root = provider_call_root / "file-spool"
+                                spool_root.mkdir(parents=True)
+                                spool_image = spool_root / image_path.name
+                                shutil.copyfile(image_path, spool_image)
+                                schema_sha256 = hashlib.sha256(json.dumps(
+                                    output_schema, sort_keys=True,
+                                    separators=(",", ":")).encode("utf-8")).hexdigest()
+                                spool_planner = FileSpoolPlanner(
+                                    spool_root, model=model, effort=effort,
+                                    expected_schema_sha256=schema_sha256,
+                                    start_timeout=5)
+
+                                def fake_spool_host():
+                                    try:
+                                        deadline = time.monotonic() + 10
+                                        request = None
+                                        while time.monotonic() < deadline:
+                                            request = claim_next(
+                                                spool_root, expected_model=model,
+                                                expected_effort=effort,
+                                                expected_schema_sha256=schema_sha256)
+                                            if request is not None:
+                                                break
+                                            time.sleep(0.01)
+                                        if request is None:
+                                            raise TimeoutError(
+                                                "file-spool request was not published")
+                                        if (not request.get("prompt") or
+                                                Path(request["_image_path"]).read_bytes() !=
+                                                spool_image.read_bytes()):
+                                            raise AssertionError(
+                                                "file-spool request lost its prompt/image")
+                                        thread_id = "calc-spool-thread-01"
+                                        turn_id = "calc-spool-turn-01"
+                                        publish_stage(spool_root,
+                                            request["attempt_id"], "started", {
+                                                "thread_id": thread_id,
+                                                "turn_id": turn_id,
+                                                "model": model, "effort": effort,
+                                            })
+                                        events = [
+                                            {"direction": "received", "message": {
+                                                "method": "thread/tokenUsage/updated",
+                                                "params": {"threadId": thread_id,
+                                                    "turnId": turn_id,
+                                                    "tokenUsage": usage}}},
+                                            {"direction": "received", "message": {
+                                                "method": "turn/completed",
+                                                "params": {"threadId": thread_id,
+                                                    "turn": {"id": turn_id,
+                                                        "status": "completed",
+                                                        "items": [{"type": "agentMessage",
+                                                            "text": json.dumps(arguments,
+                                                                sort_keys=True,
+                                                                separators=(",", ":"))}]}}}},
+                                        ]
+                                        with protocol_journal.open(
+                                                "a", encoding="utf-8", newline="\n") as stream:
+                                            for event in events:
+                                                stream.write(json.dumps(event,
+                                                    separators=(",", ":")) + "\n")
+                                        publish_stage(spool_root,
+                                            request["attempt_id"], "completed", {
+                                                "thread_id": thread_id,
+                                                "turn_id": turn_id,
+                                                "status": "completed",
+                                                "answer_eligible": True,
+                                                "answer": arguments,
+                                                "usage": usage,
+                                                "completed_agent_messages": 1,
+                                            })
+                                    except BaseException as error:
+                                        spool_errors.append(error)
+
+                                model_call = AppServerPublicMcpModelCall(
+                                    spool_planner, protocol_journal,
+                                    workspace=workspace,
+                                    contract="registered-calc-profile",
+                                    output_schema=output_schema,
+                                    model=model, effort=effort,
+                                    path_converter=lambda _image: spool_image,
+                                    turn_timeout=10)
+                                spool_worker = threading.Thread(
+                                    target=fake_spool_host, daemon=True)
+                                spool_worker.start()
+                            else:
+                                model_call = AppServerPublicMcpModelCall(
+                                    FakePlanner(), protocol_journal,
+                                    workspace=workspace,
+                                    contract="registered-calc-profile",
+                                    output_schema=output_schema,
+                                    model=model, effort=effort)
                             request_bytes, provider_call = build_model_provider_call(
                                 model_call=model_call.call,
                                 root=provider_call_root / provider_attempt_id,
@@ -1499,10 +1597,19 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                     thread_id=backend["thread_id"],
                                     turn_id=backend["turn_id"])
 
-                            joined = await caller.invoke_generation_to_tool(
-                                provider_attempt_id, request_bytes,
-                                provider_call, provider_tool_call_id, name,
-                                prepare_arguments)
+                            try:
+                                joined = await caller.invoke_generation_to_tool(
+                                    provider_attempt_id, request_bytes,
+                                    provider_call, provider_tool_call_id, name,
+                                    prepare_arguments)
+                            finally:
+                                if spool_worker is not None:
+                                    spool_worker.join(timeout=10)
+                                    if spool_worker.is_alive():
+                                        raise TimeoutError(
+                                            "fake file-spool host did not finish")
+                                    if spool_errors:
+                                        raise spool_errors[0]
                             if not joined["tool_call_submitted"]:
                                 raise AssertionError(joined)
                             response_text = joined["tool_response"]["result"][
