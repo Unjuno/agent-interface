@@ -14,7 +14,7 @@ install_dependencies() {
 if [[ "${1:-}" == "--install-dependencies" && $# -eq 1 ]]; then
   install_dependencies
 else
-  printf '%s\n' 'This setup downloads pinned Python dependencies for the checked-out runtime source.' 'To authorize, pass --install-dependencies.' 'It does not download runtime source, a model, Chrome, Codex, or a Docker image.' >&2
+  printf '%s\n' 'This setup only downloads pinned Python dependencies into runtime/.venv for the checked-out source.' 'To authorize only that dependency step, pass --install-dependencies.' 'It does not acquire runtime source/package, model weights, Chrome, Codex, or a container image.' >&2
   exit 2
 fi
 exec "$venv/bin/python" "$root/runtime/golden_desktop_demo_v3.py" doctor

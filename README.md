@@ -112,10 +112,11 @@ python -m pip install -r research/requirements.txt
 
 This command prepares research dependencies; it does not install Agent Interface
 as a runtime, download a model, or install a GUI application. The golden-demo
-runtime dependencies use the explicit opt-in setup described in
-[`runtime/README.md`](runtime/README.md). Model access and external application
-or runtime downloads are separate setup steps and should be clearly named by the
-workflow that needs them.
+setup has a separate explicit opt-in for its pinned Python dependencies. Runtime
+source checkout, portable package build/acquisition, model/provider use, and
+external application installation are independent actions; the setup flag does
+not authorize those other acquisitions. See [`runtime/README.md`](runtime/README.md)
+for the exact current boundaries and supported paths.
 
 Design ideas and analytical or empirical research proposals are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Idea issue form](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
 
