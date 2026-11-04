@@ -970,6 +970,28 @@ def rotate_retired_owner_after_cancel(process, wait, terminal, *, minimum_sequen
                        + str(last_refusal or "two-second budget expired"))
 
 
+def recover_cover_owner_after_cancel_if_retired(
+        process, wait, terminal, *, minimum_sequence,
+        target_process_identity, target_window_lifecycle, owned_input_service):
+    """Rotate a retired identity reader before replanning after cover cancel.
+
+    Cover cancellation can retire the process-identity reader even though the
+    cancelled cover's release is verified empty. Reusing that reader for the
+    next action makes the owner reject its first key-down with an opaque
+    needs_decision terminal. Recover only on the backend route whose owner
+    lifecycle is explicitly supported; transferred owners and window-lifecycle
+    readers have separate custody contracts.
+    """
+    flags = (target_process_identity, target_window_lifecycle, owned_input_service)
+    if any(type(value) is not bool for value in flags):
+        raise ValueError("boolean owner-recovery route selection required")
+    if (not target_process_identity or target_window_lifecycle or owned_input_service
+            or type(terminal) is not dict or terminal.get("status") != "cancelled"):
+        return None
+    return rotate_retired_owner_after_cancel(
+        process, wait, terminal, minimum_sequence=minimum_sequence)
+
+
 def recover_owner_interruption(process, wait, terminal, guard, *,
                                expected_intent_token, minimum_sequence):
     """Revoke the interrupted action before any owner or source recovery work."""
@@ -1600,6 +1622,21 @@ def main():
         terminal_health_observation=None
         program_admissions=0
         for index in range(args.iterations):
+            owner_generation_rotations=[]
+
+            def recover_cover_owner(terminal, cause):
+                nonlocal latest
+                rotation = recover_cover_owner_after_cancel_if_retired(
+                    process, wait, terminal, minimum_sequence=latest["sequence"],
+                    target_process_identity=args.target_process_identity,
+                    target_window_lifecycle=args.target_window_lifecycle,
+                    owned_input_service=args.owned_input_service)
+                if rotation is not None:
+                    latest = rotation["source_observation"]
+                    owner_generation_rotations.append(
+                        dict(rotation, terminal_id=terminal["id"], cause=cause))
+                return rotation
+
             failure_cleanup.set_stage("source_refresh")
             if index and index % args.session_span == 0:
                 planner.start_session()
@@ -1693,6 +1730,7 @@ def main():
                     cover_submission_invalidation_receipt(
                         cover_result, cancel_terminal)
                 latest = cover_result["latest"]
+                recover_cover_owner(cancel_terminal, "initial_cover_invalidation")
                 cover = None
                 cover_semantic=[];cover_validity_semantic=None
                 cover_policy_source_iteration=None;cover_steps=[]
@@ -1746,6 +1784,7 @@ def main():
                         planner_interrupt,current_terminal=cancel_invalidated_cover(
                             planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                         cover_terminals.append(current_terminal)
+                        recover_cover_owner(current_terminal, "policy_invalidated_cover")
                         break
                     current_terminal=boundary
                     cover_terminals.append(current_terminal)
@@ -1780,6 +1819,7 @@ def main():
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                             cover_terminals.append(current_terminal)
+                            recover_cover_owner(current_terminal, "drained_policy_invalidation")
                     elif drained["pending_events"]:
                         invalidation = {
                             "event": "policy_invalidation",
@@ -1790,6 +1830,7 @@ def main():
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                             cover_terminals.append(current_terminal)
+                            recover_cover_owner(current_terminal, "pending_observation_backlog")
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
@@ -1812,6 +1853,15 @@ def main():
                     else:
                         current_terminal=boundary
                 cover_terminals.append(current_terminal)
+                rotation = recover_cover_owner(
+                    current_terminal, "planner_turn_complete_cover_cancel")
+                if rotation is not None and invalidation is None:
+                    invalidation = {
+                        "event": "policy_invalidation",
+                        "reason": "retired_owner_generation_after_cover_cancel",
+                        "terminal_id": current_terminal["id"],
+                        "requires_new_decision": True,
+                    }
             failure_cleanup.set_stage("cover_terminal_validation")
             if current_cover is not None:
                 validate_planner_cover_terminal(planner, planner_handle, future,
@@ -1854,6 +1904,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             if not planner_result.answer_eligible:
@@ -1879,6 +1930,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             try:
@@ -1911,6 +1963,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             if action["state"] != "active":
@@ -1934,6 +1987,7 @@ def main():
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "terminal_candidate":True,"model_action_discarded":False})
                 break
             failure_cleanup.set_stage("action_admission")
@@ -1968,6 +2022,7 @@ def main():
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
                   "cover_submission_invalidation":cover_submission_invalidation,
+                  "input_owner_generation_rotations":owner_generation_rotations,
                   "plan_terminal":"not_admitted"})
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
@@ -1984,7 +2039,6 @@ def main():
             refresh_program_ids=[]
             stale_rejection=None
             stale_recovery=None
-            owner_generation_rotations=[]
             def execute_segment(identifier,commands,role,command_indices,
                                 contingency_after=None,branch_evidence=None):
                 nonlocal program_admissions,first_accepted,final_action_admission,latest
