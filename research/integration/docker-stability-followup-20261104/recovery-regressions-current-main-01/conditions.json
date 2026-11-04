@@ -1,0 +1,16 @@
+{
+  "schema": "agent-interface/docker-stability-recovery-regressions-v1",
+  "current_main_sha": "f0b1f983fc695ea9c825e7204d0ed7ba2b3a7d4f",
+  "worktree_head": "43bede916458ba5c79c9f1d252b6b35d61453130",
+  "wslconfig": "[wsl2] | memory=32GB | processors=12 | swap=16GB |  | [experimental] | autoMemoryReclaim=gradual | ",
+  "docker_engine": "29.8.1",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "cpu_limit": 2,
+  "memory_limit": "4g",
+  "memory_and_swap_limit": "4g total",
+  "pids_limit": 256,
+  "source_mount": "read-only",
+  "test_scope": "Fake X cancellation supervisor only; no real app/provider"
+}
