@@ -1960,10 +1960,15 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             Requires a fresh supervised-Win32 session with no admitted action,
             the exact source target generation, frozen obligations, and the
             retained UNKNOWN custody record with the source producer observed
-            absent. The server checks those fields and
+            absent, including the boolean `late_server_request_possible` from
+            the terminal source receipt. If that flag is true, release/readback
+            alone is insufficient: the supervisor must also complete its
+            configured independent late-input horizon or the session remains
+            fenced against new actions. The server checks those fields and
             hashes the canonical record into its receipt; this is a trace digest,
-            not an authenticity signature. A successful recovery
-            proves only release/readback. The source action remains UNKNOWN,
+            not an authenticity signature. A successful recovery proves release
+            and neutral readback, plus the bounded horizon when the source receipt
+            says late requests remain possible. The source action remains UNKNOWN,
             replay stays denied, and any next action requires a fresh generation.
             """
             return await submit('recover_orphaned_input', {

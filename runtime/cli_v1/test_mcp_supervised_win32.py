@@ -230,6 +230,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             "obligations": ["key:fixture:W"],
                             "do_not_replay": True,
                             "observed_producer_live": False,
+                            "late_server_request_possible": False,
                             "dispatch": {"input_dispatched": None,
                                 "release_confirmed": False,
                                 "task_success": None,

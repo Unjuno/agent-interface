@@ -1,6 +1,7 @@
 import unittest
 import os
 from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 from runtime.cli_v1.win32_supervisor_helpers import (
     _helper_main, _observe, _parse_obligations, _recover)
@@ -189,6 +190,78 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(calls, [("recovery", ["key:fixture:W"]),
                                  ("observer", ["key:fixture:W"])])
         self.assertEqual(obligations, ["key:fixture:CTRL"])
+
+    def test_orphan_recovery_retains_bound_late_input_horizon(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        now = [10]
+        supervisor._clock_ns = lambda: now[0]
+        supervisor.late_input_horizon_ns = 20
+        supervisor._late_input_sample_interval_s = 0.00000001
+        recovery_id = "3" * 32
+        requests = []
+        def exchange(role, request, deadline):
+            requests.append(role)
+            row = {"operation_id": OPERATION,
+                "target_generation": GENERATION, "recovery_id": recovery_id}
+            if role == "recovery":
+                row["release_accepted"] = True
+            else:
+                row.update(neutral=True, observed_monotonic_ns=now[0],
+                    key_button_states=[False], unicode_event_units=0)
+            return row
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: self.fail(
+            "valid horizon observations must preserve the helpers")
+        def advance(_seconds):
+            now[0] += 10
+
+        with patch("runtime.guarded_win32_v1.process_cancellation.time.sleep",
+                   side_effect=advance):
+            result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+                recovery_id, 100, ["key:fixture:W"])
+
+        self.assertEqual(result["status"], "recovered")
+        self.assertTrue(result["release_confirmed"])
+        self.assertTrue(result["late_input_horizon_verified"])
+        self.assertEqual(result["late_input_horizon_ns"], 20)
+        self.assertEqual(result["late_input_observation_count"], 3)
+        self.assertEqual(result["late_input_release_received_monotonic_ns"], 10)
+        self.assertEqual(result["late_input_observation_end_monotonic_ns"], 30)
+        self.assertEqual(requests, ["recovery", "observer", "observer", "observer"])
+
+    def test_orphan_recovery_keeps_release_unknown_on_delayed_input_in_horizon(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        now = [10]
+        supervisor._clock_ns = lambda: now[0]
+        supervisor.late_input_horizon_ns = 20
+        supervisor._late_input_sample_interval_s = 0.00000001
+        recovery_id = "3" * 32
+        observer_count = [0]
+        def exchange(role, request, deadline):
+            row = {"operation_id": OPERATION,
+                "target_generation": GENERATION, "recovery_id": recovery_id}
+            if role == "recovery":
+                row["release_accepted"] = True
+            else:
+                observer_count[0] += 1
+                delayed_down = observer_count[0] == 2
+                row.update(neutral=not delayed_down,
+                    observed_monotonic_ns=now[0],
+                    key_button_states=[delayed_down], unicode_event_units=0)
+            return row
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: None
+        def advance(_seconds):
+            now[0] += 10
+
+        with patch("runtime.guarded_win32_v1.process_cancellation.time.sleep",
+                   side_effect=advance):
+            result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+                recovery_id, 100, ["key:fixture:W"])
+
+        self.assertEqual(result["status"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["reason"], "late_input_horizon_unconfirmed")
 
     def test_orphan_recovery_reports_the_deadline_checked_completion_time(self):
         supervisor = object.__new__(OperationCancellationSupervisor)

@@ -20,6 +20,7 @@ _IDENTIFIER = re.compile(r"^[0-9a-f]{32}$")
 _PENDING_PHASES = {"cancel_pending", "producer_retired", "recovery_pending"}
 _CANCEL_TRANSACTION_NS = 3_000_000_000
 _ORPHAN_RECOVERY_WINDOW_NS = 5_000_000_000
+_MAX_LATE_INPUT_HORIZON_NS = 60_000_000_000
 _TARGET_BINDING_TTL_NS = 60_000_000_000
 _MAX_TARGET_BINDINGS = 64
 
@@ -849,6 +850,8 @@ class OwnedWin32SessionOwner:
                 or source_custody_record.get("obligations") != list(obligations)
                 or source_custody_record.get("do_not_replay") is not True
                 or source_custody_record.get("observed_producer_live") is not False
+                or type(source_custody_record.get(
+                    "late_server_request_possible")) is not bool
                 or type(dispatch) is not dict
                 or (dispatch.get("input_dispatched") is not None
                     and dispatch.get("input_dispatched") is not True)
@@ -899,6 +902,24 @@ class OwnedWin32SessionOwner:
                 and receipt.get("target_generation") == source_target_generation
                 and receipt.get("recovery_id") == recovery_id
                 and receipt.get("release_confirmed") is True)
+            if (confirmed and source_custody_record[
+                    "late_server_request_possible"] is True):
+                horizon_ns = receipt.get("late_input_horizon_ns")
+                release_ns = receipt.get(
+                    "late_input_release_received_monotonic_ns")
+                end_ns = receipt.get("late_input_observation_end_monotonic_ns")
+                count = receipt.get("late_input_observation_count")
+                max_gap_ns = receipt.get("late_input_max_observed_gap_ns")
+                allowed_gap_ns = receipt.get("late_input_max_sample_gap_ns")
+                confirmed = (receipt.get("late_input_horizon_verified") is True
+                    and type(horizon_ns) is int
+                    and 0 < horizon_ns <= _MAX_LATE_INPUT_HORIZON_NS
+                    and type(release_ns) is int and release_ns >= 0
+                    and type(end_ns) is int and end_ns - release_ns >= horizon_ns
+                    and type(count) is int and count >= 2
+                    and type(max_gap_ns) is int and max_gap_ns >= 0
+                    and type(allowed_gap_ns) is int and allowed_gap_ns > 0
+                    and max_gap_ns <= allowed_gap_ns)
             if confirmed:
                 self._orphan_recovery_fenced_generations.add(
                     source_target_generation)
