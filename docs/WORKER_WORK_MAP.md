@@ -1,11 +1,11 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-05, after PR #10224
+## Current work-map pointer — 2026-11-05, after PR #10225
 
-**Verified `origin/main` (2026-11-05):** `024f6fa16a0d4730d19e2f3c2b9542fca9e7721b`
-(PR #10224). This tree includes merged #10214 and #10216, plus runtime
-acquisition boundary updates in #10219/#10223. This is a directional pointer,
-not a complete Issue/PR census.
+**Verified `origin/main` (2026-11-05):** `f0b4bf11ba0f7387993efa71440c4d61e27a467a`
+(PR #10225). This tree includes merged #10214, #10216, #10223, and #10224.
+Runtime acquisition boundaries are documented in #10219/#10223 and
+`runtime/README.md`. This is a directional pointer, not a complete Issue/PR census.
 
 [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open
 (last updated 2026-11-04). Its 2026-11-01 evidence adds two opposite-order
