@@ -1,0 +1,88 @@
+{
+  "status": "scoped_fixture_pass",
+  "run_id": "0659760e0d5149a29091dcad3c4aed3a",
+  "grounding": "fixed_fixture_not_model",
+  "script_sha256": "334fa97ef1ae64b2f65cdfedf2f178e80bd135f05a19a7222469965cd02803b9",
+  "started_ns": 5636328000000,
+  "ended_ns": 5643109000000,
+  "start": {
+    "status": "running",
+    "cid": "045932fda63313a90a02681170e64dfd17b1117c8d8672789e9a6dc35d050bf4"
+  },
+  "wait": {
+    "status": "exited",
+    "cid": "045932fda63313a90a02681170e64dfd17b1117c8d8672789e9a6dc35d050bf4",
+    "exit_code": 0
+  },
+  "source_hashes_unchanged": true,
+  "fixture_responses": [
+    {
+      "id": "pilot-1",
+      "image_sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+      "source_sequence": 1,
+      "time_ns": 5641421000000
+    },
+    {
+      "id": "pilot-2",
+      "image_sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+      "source_sequence": 3,
+      "time_ns": 5641734000000
+    }
+  ],
+  "fixture_errors": [],
+  "fixture_thread_alive": false,
+  "action_release_checks": {
+    "click-result.json": true,
+    "fresh-entry.json": true,
+    "fresh-save.json": true
+  },
+  "owner_close_verified": true,
+  "final_neutral_readback": true,
+  "stale_gate_verified": true,
+  "saved_sha256": "a81f353cfb7d9c1497c1a841135f90acbbe29e4327472ae726dd8f28d69765ae",
+  "host_rescore": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ]
+  },
+  "cleanup_status": "observed_absent",
+  "cleanup_exit_code": 0,
+  "task_start_ns": 4733584525,
+  "task_end_ns": 6136862172,
+  "method_start_ns": 5361741564,
+  "method_end_ns": 6133101805
+}
