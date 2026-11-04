@@ -5,12 +5,14 @@ import tempfile
 import threading
 import time
 import unittest
+from types import SimpleNamespace
 
 from app_server_file_spool_v1 import (
     FileSpoolPlanner,
     SpoolError,
     SpoolOutcomeUnknown,
     claim_next,
+    publish_late_usage,
     publish_request,
     publish_stage,
     wait_for_stage,
@@ -170,6 +172,66 @@ class AppServerFileSpoolTests(unittest.TestCase):
         with self.assertRaisesRegex(SpoolError, "unknown admission outcome"):
             planner.begin_turn("Do not replay.", output_schema=self.schema,
                 image_path=self.image)
+
+    def test_file_planner_bridges_unknown_sidecars_to_usage_only_source(self):
+        self.publish()
+        claimed = claim_next(self.root, expected_model="gpt-6.1-sol",
+            expected_effort="medium", expected_schema_sha256=self.schema_sha256)
+        self.assertEqual(claimed["attempt_id"], "attempt-1")
+        handle = SimpleNamespace(attempt_id="attempt-1", thread_id="thread-1",
+                                 turn_id="turn-1")
+        planner = FileSpoolPlanner(self.root, model="gpt-6.1-sol", effort="medium",
+            expected_schema_sha256=self.schema_sha256)
+        planner._active = handle
+        unknown = {
+            "thread_id": handle.thread_id,
+            "turn_id": handle.turn_id,
+            "status": "unknown",
+            "answer_eligible": False,
+            "answer": None,
+            "late_usage_cursor": [7, 0],
+        }
+        publish_stage(self.root, "attempt-1", "unknown", unknown)
+        rows = [
+            {"direction": "received", "observed_ns": 1, "message": {
+                "method": "turn/completed", "params": {"threadId": "thread-1",
+                    "turn": {"id": "turn-1", "status": "completed",
+                        "items": [{"type": "agentMessage", "text": '{"tool":"unsafe"}'}]}}}},
+            {"direction": "received", "observed_ns": 2, "message": {
+                "method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-1", "turnId": "turn-1",
+                    "tokenUsage": {"last": {"inputTokens": 20, "outputTokens": 4}}}}},
+            {"direction": "received", "observed_ns": 3, "message": {
+                "method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-1", "turnId": "turn-1",
+                    "tokenUsage": {"last": {"inputTokens": 25, "outputTokens": 5}}}}},
+        ]
+        lines = [json.dumps(row, separators=(",", ":")).encode("utf-8") + b"\n"
+                 for row in rows]
+        (self.root / "protocol.jsonl").write_bytes(b"".join(lines))
+        publish_late_usage(self.root, "attempt-1", 1, {
+            "thread_id": "thread-1", "turn_id": "turn-1", "journal_offset": 0,
+            "usage": rows[1]["message"]["params"]["tokenUsage"],
+            "source_jsonl": lines[1].decode("utf-8"),
+            "source_jsonl_sha256": hashlib.sha256(lines[1]).hexdigest(),
+        })
+        publish_late_usage(self.root, "attempt-1", 2, {
+            "thread_id": "thread-1", "turn_id": "turn-1",
+            "journal_offset": len(lines[0]) + len(lines[1]),
+            "usage": rows[2]["message"]["params"]["tokenUsage"],
+            "source_jsonl": lines[2].decode("utf-8"),
+            "source_jsonl_sha256": hashlib.sha256(lines[2]).hexdigest(),
+        })
+
+        source = planner.late_usage_source(handle, self.root / "protocol.jsonl")
+        source.capture_terminal()
+        first = source.read(0.1)
+        second = source.read(0.1)
+        self.assertEqual(first["source_bytes"], lines[1])
+        self.assertEqual(first["usage"]["input_tokens"], 20)
+        self.assertEqual(second["source_bytes"], lines[2])
+        self.assertEqual(second["usage"]["output_tokens"], 5)
+        self.assertNotIn(b"unsafe", first["source_bytes"] + second["source_bytes"])
 
     def test_publish_bounds_prompt_and_image_size(self):
         with self.assertRaisesRegex(ValueError, "prompt exceeds"):

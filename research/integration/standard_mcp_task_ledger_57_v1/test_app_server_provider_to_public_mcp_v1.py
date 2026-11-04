@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import json
 import tempfile
 import unittest
@@ -13,9 +14,116 @@ from ledger import summarize
 from provider_attempt_recorder import ProviderAttemptRecorder
 from recorded_integrated_efficiency_model_call_v1 import build_model_provider_call
 from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
+from app_server_file_spool_v1 import (
+    FileSpoolPlanner,
+    SpoolOutcomeUnknown,
+    _canonical_json_sha256,
+    claim_next,
+    publish_late_usage,
+    publish_request,
+    publish_stage,
+)
 
 
 class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
+    async def test_file_spool_late_usage_reaches_post_score_ledger_without_answer_replay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            spool = root / "spool"
+            spool.mkdir()
+            image_ref = spool / "attempts" / "appserver-test" / "frame.png"
+            image_ref.parent.mkdir(parents=True)
+            image_ref.write_bytes(b"synthetic image")
+            schema = {"type": "object"}
+            publish_request(spool, attempt_id="appserver-test", prompt="Choose one action.",
+                output_schema=schema, image_path=image_ref,
+                model="gpt-test", effort="low")
+            claim_next(spool, expected_model="gpt-test", expected_effort="low",
+                expected_schema_sha256=_canonical_json_sha256(schema))
+
+            handle = SimpleNamespace(attempt_id="appserver-test", thread_id="thread-spool",
+                                     turn_id="turn-spool")
+            planner = FileSpoolPlanner(spool, model="gpt-test", effort="low",
+                expected_schema_sha256=_canonical_json_sha256(schema))
+            planner._active = handle
+            planner.begin_turn = lambda *_args, **_kwargs: handle
+
+            def timeout_turn(_handle, timeout):
+                raise SpoolOutcomeUnknown("appserver-test", "provider completion")
+
+            planner.await_turn = timeout_turn
+
+            def received(message):
+                return (json.dumps({"direction": "received", "observed_ns": 1,
+                    "message": message}, separators=(",", ":")).encode("utf-8") + b"\n")
+
+            initial = received({"method": "thread/tokenUsage/updated", "params": {
+                "threadId": handle.thread_id, "turnId": handle.turn_id,
+                "tokenUsage": {"last": {"inputTokens": 12}}}})
+            stale_answer = received({"method": "turn/completed", "params": {
+                "threadId": handle.thread_id, "turn": {"id": handle.turn_id,
+                    "status": "completed", "items": [{"type": "agentMessage",
+                        "text": '{"method":"interface_guarded_compiled","arguments":{"late":true}}'}]}}})
+            late_usage = {"last": {"inputTokens": 18, "outputTokens": 3}}
+            late_line = received({"method": "thread/tokenUsage/updated", "params": {
+                "threadId": handle.thread_id, "turnId": handle.turn_id,
+                "tokenUsage": late_usage}})
+            journal = spool / "protocol.jsonl"
+            journal.write_bytes(initial + stale_answer + late_line)
+            publish_stage(spool, handle.attempt_id, "unknown", {
+                "thread_id": handle.thread_id, "turn_id": handle.turn_id,
+                "status": "unknown", "answer_eligible": False, "answer": None,
+                "usage": None, "late_usage_cursor": [1, len(initial)]})
+            publish_late_usage(spool, handle.attempt_id, 1, {
+                "thread_id": handle.thread_id, "turn_id": handle.turn_id,
+                "journal_offset": len(initial), "usage": late_usage,
+                "source_jsonl": late_line.decode("utf-8"),
+                "source_jsonl_sha256": hashlib.sha256(late_line).hexdigest(),
+            })
+
+            model = AppServerPublicMcpModelCall(
+                planner, journal, workspace=workspace, contract="public-mcp",
+                output_schema=schema, model="gpt-test", effort="low")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class Relay:
+                calls = 0
+
+                async def request(self, _request_bytes):
+                    self.calls += 1
+                    raise AssertionError("late answer must never reach public MCP")
+
+            relay = Relay()
+            caller = RecordedPublicMcpCaller(
+                relay, recorder, allowed_methods={"interface_guarded_compiled"})
+            request, provider = build_model_provider_call(
+                model_call=model.call, root=root / "late-attempt", prompt="task",
+                image=image, contract="public-mcp", workspace=workspace)
+            outcome = await caller.invoke_generation_to_tool(
+                "attempt-spool-late", request, provider, "call-spool-late",
+                "interface_guarded_compiled", json.loads)
+            generation = outcome["generation"]
+            self.assertEqual(generation["status"], "timeout")
+            self.assertFalse(outcome["tool_call_submitted"])
+            self.assertTrue(hasattr(generation.get("late_usage_source"), "read"))
+            self.assertEqual(relay.calls, 0)
+            recorder.record_task_score("synthetic-oracle-v1", True,
+                                        b"synthetic-state=unchanged")
+            observed = await caller.observe_late_usage(
+                "attempt-spool-late", generation, timeout=1)
+            self.assertTrue(observed["observed"])
+            self.assertEqual(observed["usage"]["input_tokens"], 18)
+            self.assertEqual(observed["usage"]["output_tokens"], 3)
+            ledger = recorder.reconcile()
+            self.assertEqual(ledger["events"][0]["status"], "timeout")
+            self.assertEqual(ledger["events"][0]["usage"], observed["usage"])
+            self.assertEqual(summarize(ledger["events"])["model_attempt_count"], 1)
+            self.assertTrue(ledger["events"][1]["task_success"])
+
     async def test_unallowlisted_public_method_is_refused_before_relay_or_recording(self):
         class Relay:
             next_id = 1

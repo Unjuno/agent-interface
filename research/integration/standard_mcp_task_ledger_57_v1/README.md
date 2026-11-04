@@ -162,11 +162,15 @@ or make another public MCP call. This is a deterministic adapter composition;
 first, then holds the App Server client for a fixed five-second grace. During
 that window it waits only for fresh same-turn usage notifications and stores
 each exact JSONL row in an immutable `*.late-usage-NNNNNN.json` sidecar with
-thread/turn identity and SHA-256 custody. A late `turn/completed` answer is not
-read or returned, the timed-out request is not retried, and the client closes
+thread/turn identity and SHA-256 custody. A late `turn/completed` answer is
+ignored and never returned, the timed-out request is not retried, and the client closes
 after the grace. The sidecar is retained evidence; automatic ingestion into
-the downstream task ledger/scorer is not yet connected. The worker-path test
-uses a synthetic client and does not establish real provider timing or billing.
+the downstream task ledger/scorer is now connected through an explicit
+post-score `RecordedPublicMcpCaller.observe_late_usage` call. `FileSpoolPlanner`
+validates the immutable UNKNOWN boundary, sidecar identity/hash, and matching
+same-turn journal row before returning usage to the existing recorder. This is
+still a deterministic composition: worker and provider test streams are
+synthetic, so they do not establish real provider timing or billing.
 This is a research composition adapter, not an automatic hook in the frozen
 integrated-efficiency runner or every production provider/orchestrator. The
 [`recorded_integrated_efficiency_model_call_v1.py`](recorded_integrated_efficiency_model_call_v1.py)

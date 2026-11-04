@@ -205,6 +205,74 @@ class _LateAppServerUsageSource:
                     "observed_ns": time.perf_counter_ns()}
 
 
+class _LateSpoolUsageSource:
+    """Read hash-bound, same-turn usage sidecars from the host spool worker."""
+
+    def __init__(self, planner, handle, journal_path):
+        self.planner = planner
+        self.handle = handle
+        self.journal_path = Path(journal_path)
+        self._sequence = 1
+        self._captured = False
+        self._lock = threading.Lock()
+
+    def capture_terminal(self):
+        """Mark caller custody without blocking for the host receipt to land."""
+        with self._lock:
+            self._captured = True
+
+    def read(self, timeout):
+        """Return one usage sidecar; never inspect a terminal answer payload."""
+        if (type(timeout) not in (int, float) or not 0 <= timeout <= 30):
+            raise ValueError("late spool usage wait must be between 0 and 30 seconds")
+        with self._lock:
+            if not self._captured:
+                raise RuntimeError("late spool usage requires terminal custody")
+            payload = self.planner.wait_late_usage_sidecar(
+                self.handle, self._sequence, timeout)
+            if payload is None:
+                return None
+            terminal_cursor = payload.get("terminal_cursor")
+            record = payload.get("record")
+            if (type(terminal_cursor) is not tuple or len(terminal_cursor) != 2 or
+                    any(type(value) is not int or value < 0 for value in terminal_cursor) or
+                    not isinstance(record, dict)):
+                raise ValueError("late spool usage source returned a malformed record")
+            usage_raw = record["usage"]
+            source_bytes = record["source_jsonl"].encode("utf-8")
+            offset = record["journal_offset"]
+            if offset < terminal_cursor[1] or self.journal_path.stat().st_size < offset:
+                raise RuntimeError("late spool usage is outside its timeout journal boundary")
+            matched = None
+            with self.journal_path.open("rb") as stream:
+                stream.seek(offset)
+                for line in stream:
+                    try:
+                        row = json.loads(line)
+                    except (TypeError, ValueError):
+                        continue
+                    message = row.get("message") if isinstance(row, dict) else None
+                    params = message.get("params") if isinstance(message, dict) else None
+                    if (isinstance(row, dict) and row.get("direction") == "received" and
+                            isinstance(message, dict) and
+                            message.get("method") == "thread/tokenUsage/updated" and
+                            isinstance(params, dict) and
+                            params.get("threadId") == self.handle.thread_id and
+                            params.get("turnId") == self.handle.turn_id):
+                        matched = (line, params.get("tokenUsage"))
+                        break
+            if matched != (source_bytes, usage_raw):
+                raise RuntimeError("late spool sidecar differs from the retained protocol row")
+            usage = _normalized_late_usage(usage_raw)
+            usage_bytes = json.dumps(
+                usage, allow_nan=False, sort_keys=True,
+                separators=(",", ":")).encode("utf-8")
+            self._sequence += 1
+            return {"usage": usage, "usage_bytes": usage_bytes,
+                    "source_bytes": source_bytes,
+                    "observed_ns": time.perf_counter_ns()}
+
+
 def parse_app_server_tool_request(response_bytes, *, thread_id, turn_id):
     """Read the one completed structured answer from a retained protocol slice."""
     if not isinstance(response_bytes, bytes):
@@ -328,11 +396,15 @@ class AppServerPublicMcpModelCall:
                         call_error.usage = None
                         call_error.usage_error = (
                             "exception usage differs from retained protocol journal")
-                if (isinstance(call_error, TimeoutError) and
-                        callable(getattr(self.planner, "late_usage_cursor", None)) and
-                        callable(getattr(self.planner, "wait_late_usage", None))):
-                    call_error.late_usage_source = _LateAppServerUsageSource(
-                        self.planner, handle, self.protocol_journal_path)
+                if isinstance(call_error, TimeoutError):
+                    spool_source = getattr(self.planner, "late_usage_source", None)
+                    if callable(spool_source):
+                        call_error.late_usage_source = spool_source(
+                            handle, self.protocol_journal_path)
+                    elif (callable(getattr(self.planner, "late_usage_cursor", None)) and
+                            callable(getattr(self.planner, "wait_late_usage", None))):
+                        call_error.late_usage_source = _LateAppServerUsageSource(
+                            self.planner, handle, self.protocol_journal_path)
             raise call_error
 
         if turn is None or not getattr(turn, "answer_eligible", False):
