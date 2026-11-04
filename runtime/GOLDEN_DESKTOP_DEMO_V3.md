@@ -11,7 +11,7 @@ specific false-positive that allowed v2 to spend its schema preflight and start
 an app-server thread before the GUI process failed on import.
 
 ```bash
-bash runtime/setup-golden-demo-v3.sh
+bash runtime/setup-golden-demo-v3.sh --install-dependencies
 bash runtime/golden-demo-v3.sh doctor
 bash runtime/golden-demo-v3.sh run
 ```
