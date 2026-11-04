@@ -8,7 +8,7 @@ The R92 `audit.json` and worker receipt preserve the terminal classification. Th
 
 ## Bounded command-free remediation check
 
-A fresh App Server process was launched with the existing `research/live_control/codex_app_server_command_v1.py:direct_command` builder. It created one ephemeral read-only thread and queried MCP status; it never sent `turn/start`. The complete status response listed `node_repl` and `openaiDeveloperDocs`, both explicitly `disabled` with zero tools. No plugin-injected `codex_apps` or `cua_repl` entries appeared. The retained diagnostic journal and audit are under `mcp-isolation-diagnostic-01/`; audit passed with zero model turns.
+Two separate fresh App Server checks were retained. First, `research/live_control/codex_app_server_command_v1.py:direct_command` created an ephemeral read-only thread and queried status with zero model turns; `node_repl` and `openaiDeveloperDocs` were both explicitly disabled with zero tools, and no plugin-injected entries appeared. Then the repaired spool worker `command()` helper did the same; the complete status again listed only those two servers, both disabled with zero tools, and no `turn/start`. The worker-command journal is under `worker-command-diagnostic-01/`; both checks are covered by the local result checksum manifest.
 
 ## Code repair
 
@@ -19,3 +19,4 @@ Local verification: `py -3.13 -m unittest test_app_server_spool_worker_v1 test_c
 ## Scope
 
 This closes the setup-isolation defect demonstrated by R92 and verifies a no-turn isolation path. It does not establish provider token accounting, task effect, latency savings, or a successful live control comparison. A future provider attempt requires a new preregistration and must pass the disabled-server gate before its one model turn.
+
