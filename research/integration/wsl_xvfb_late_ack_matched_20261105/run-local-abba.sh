@@ -23,22 +23,16 @@ fi
 {
   date -u +'%Y-%m-%dT%H:%M:%SZ'
   uname -a
-  Xvfb -version 2>&1 | head -n 2 || true
+  dpkg-query -W -f='xvfb=${Version}\n' xvfb 2>&1 || true
   "$python_bin" --version
   "$python_bin" -m pip freeze
-  git -C "$repo_root" rev-parse HEAD
+  echo 'source_sha=57573394c4d88988a40b0e57c270c945a3a621cd'
 } >"$raw_dir/run-metadata.txt"
 
 for trial in A1:0 B1:1 B2:1 A2:0; do
   name="${trial%%:*}"
   prestarted="${trial##*:}"
-  case "$name" in
-    A1) display_number=90 ;;
-    B1) display_number=91 ;;
-    B2) display_number=92 ;;
-    A2) display_number=93 ;;
-    *) echo "unexpected preregistered trial: $name" >&2; exit 2 ;;
-  esac
+  case "$name" in A1|B1|B2|A2) display_number=88 ;; *) echo "unexpected preregistered trial: $name" >&2; exit 2 ;; esac
   display=":$display_number"
   socket="/tmp/.X11-unix/X$display_number"
   if [[ -e "$socket" ]]; then

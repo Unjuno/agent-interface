@@ -2,10 +2,19 @@
 
 ## Status
 
-Preregistered before execution. This is a local Ubuntu WSL 2 / private Xvfb
-comparison, not WSLc, a physical desktop, a live game, or a model/provider run.
-The source under test is the current `main` checkout at the SHA recorded in
-`run-metadata.txt`.
+Preregistered before execution. The final execution environment is one
+ephemeral Linux container on the user's Docker Desktop engine, using the
+already-cached Xvfb test image pinned by its image ID below. The container has
+network disabled, a read-only root filesystem, a private tmpfs for Xvfb, a
+read-only source bind mount, and this packet's raw directory as the only
+writable bind mount. This is not WSLc, a physical desktop, a live game, or a
+model/provider run. The source under test is current `main` at
+`57573394c4d88988a40b0e57c270c945a3a621cd`.
+
+Container image: `agent-interface-xvfb-mcp:late-input-r19`,
+`sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425`.
+The existing image contains Python/Xvfb and the exact CI test dependencies;
+no image pull or model/provider setup is performed.
 
 ## Question and hypothesis
 
@@ -48,10 +57,10 @@ CI attempts that used different ACK-delay settings.
 
 ## Execution and retained raw data
 
-Run `run-local-abba.sh` from this checkout with the pinned test interpreter
-created in `/home/user/.cache/agent-interface-xvfb-pr10226-20261105/venv`. Raw
-reports and logs are retained under `raw/`; the summary and hashes are added
-only after the four fixed attempts finish.
+Run `run-local-abba.sh` inside the pinned container with
+`AGENT_INTERFACE_TEST_PYTHON=/usr/bin/python3`. Raw reports and logs are
+retained under `raw/`; the summary and hashes are added only after the four
+fixed attempts finish.
 
 ## Preflight correction (before any input trial)
 
@@ -60,4 +69,14 @@ had been placed in `/tmp`, which was cleared between WSL command invocations.
 It did not start Xvfb or dispatch input and is not counted among A1/B1/B2/A2.
 The failed preflight is retained as `raw/initial-preflight-failure.txt`. The
 interpreter location was changed to the WSL user's persistent cache; all frozen
-trial conditions, order, and outcome rules remain unchanged.
+trial conditions, order, and outcome rules remain unchanged. The next runner
+preflight started a private Xvfb on `:90`, while the integration fixture
+intentionally skips unless `DISPLAY=:88`; unittest therefore reported one
+skipped test and emitted no result report. No test body or input dispatch ran.
+This is also a harness-setup failure, not a scored trial. A WSL preflight then
+showed `/tmp/.X11-unix` is read-only and mode 0777; restoring its standard 1777
+mode was refused by the filesystem. The test uses only display `:88`, now fixed
+in the runner. The already-cached Docker image gives a writable isolated tmpfs
+without changing the WSL system directory. The preflight records are retained
+in `raw/`; no task input was dispatched and the A1/B1/B2/A2 scored sequence has
+not begun.
