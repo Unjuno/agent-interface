@@ -1,0 +1,494 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 171488234000000,
+    "ended_ns": 171488906000000,
+    "emissions": 16,
+    "program_emissions": 16,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 171488906000000
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 2,
+        "requested_ms": 1,
+        "started_ns": 171488281000000,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 171488296000000
+      },
+      {
+        "operation_index": 4,
+        "requested_ms": 1,
+        "started_ns": 171488328000000,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 171488343000000
+      },
+      {
+        "operation_index": 7,
+        "requested_ms": 100,
+        "started_ns": 171488421000000,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 171488531000000
+      },
+      {
+        "operation_index": 9,
+        "requested_ms": 1,
+        "started_ns": 171488593000000,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 171488609000000
+      },
+      {
+        "operation_index": 11,
+        "requested_ms": 1,
+        "started_ns": 171488640000000,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 171488656000000
+      },
+      {
+        "operation_index": 14,
+        "requested_ms": 100,
+        "started_ns": 171488796000000,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 171488906000000
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 5,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 5,
+      "valid_until_ns": 171493171000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:7",
+      "observation_sequence": 6,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 6,
+      "valid_until_ns": 171493234000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:3",
+      "observation_sequence": 7,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 7,
+      "valid_until_ns": 171493296000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:1",
+      "observation_sequence": 8,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 8,
+      "valid_until_ns": 171493343000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:Return",
+      "observation_sequence": 9,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 9,
+      "valid_until_ns": 171493375000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:8",
+      "observation_sequence": 10,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 10,
+      "valid_until_ns": 171493531000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:6",
+      "observation_sequence": 11,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 11,
+      "valid_until_ns": 171493609000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:4",
+      "observation_sequence": 12,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 12,
+      "valid_until_ns": 171493656000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_key_press:Return",
+      "observation_sequence": 13,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "entry_fresh",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "entry_fresh",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 13,
+      "valid_until_ns": 171493703000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ],
+  "additional_input_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 5,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488218000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488234000000
+    },
+    {
+      "stage": "before_key_press:7",
+      "observation_sequence": 6,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488265000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488281000000
+    },
+    {
+      "stage": "before_key_press:3",
+      "observation_sequence": 7,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488328000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488328000000
+    },
+    {
+      "stage": "before_key_press:1",
+      "observation_sequence": 8,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488375000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488375000000
+    },
+    {
+      "stage": "before_key_press:Return",
+      "observation_sequence": 9,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488406000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488421000000
+    },
+    {
+      "stage": "before_key_press:8",
+      "observation_sequence": 10,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488578000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488593000000
+    },
+    {
+      "stage": "before_key_press:6",
+      "observation_sequence": 11,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488625000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488640000000
+    },
+    {
+      "stage": "before_key_press:4",
+      "observation_sequence": 12,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488687000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488703000000
+    },
+    {
+      "stage": "before_key_press:Return",
+      "observation_sequence": 13,
+      "scope": "native-x11:5753fc9c1945400686c127fe1d579bbf",
+      "binding_revision": 0,
+      "started_ns": 171488781000000,
+      "eligible": true,
+      "authority_granted": false,
+      "ended_ns": 171488781000000
+    }
+  ]
+}

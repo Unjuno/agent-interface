@@ -2191,13 +2191,42 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
         import xml.etree.ElementTree as ET
         import runtime.cli_v1.test_mcp_owned_process as calc_tests
         from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import plan as calc_plan
+        from runtime.guarded_x11_v1.calc_model_plan_adapter_v1 import (
+            adapt_calc_model_plan)
         from runtime.guarded_x11_v1.process_identity import (
             process_generation_from_identity,process_incarnation_from_identity)
 
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary)
             server_root=root/'server'; server_root.mkdir()
-            task_values={'A1':'24680','A2':'13579'}
+            repository_root=Path(__file__).resolve().parents[3]
+            r93_path=repository_root/'research'/'integration'/(
+                'issue57_model_usage_preflight_20261104_r93')/'r93-a01'/(
+                'worker-result.json')
+            if r93_path.is_file():
+                r93_raw=r93_path.read_bytes()
+                r93_document=json.loads(r93_raw)
+                self.assertEqual(r93_document['status'],'completed')
+                self.assertTrue(r93_document['answer_eligible'])
+                historical_usage={key:r93_document['usage']['last'][key]
+                    for key in ('inputTokens','outputTokens','totalTokens')}
+                model_plan=r93_document['answer']
+                model_plan_source='saved-r93-worker-result'
+            else:
+                # Reproducible clean-checkout fallback; no provider invocation.
+                model_plan={
+                    'cells_blank':True,'confidence':0.99,
+                    'proposed_actions':['enter_731_in_A1',
+                        'enter_864_in_A2','save'],
+                    'selected_cell':'A1','visible_sheet':'Sheet1',
+                    'visual_note':'Sheet1 is visible; A1 is selected and the visible worksheet cells are blank.'}
+                r93_raw=json.dumps(model_plan,sort_keys=True,
+                    separators=(',',':')).encode('utf-8')
+                historical_usage=None
+                model_plan_source='reproducible-embedded-test-fixture'
+            model_plan_sha256=hashlib.sha256(r93_raw).hexdigest()
+            task_values=adapt_calc_model_plan(model_plan)
+            self.assertEqual(task_values,{'A1':'731','A2':'864'})
             task_plan=calc_plan()
             (server_root/'calc-task-values.json').write_text(
                 json.dumps(task_values),encoding='utf-8')
@@ -2801,6 +2830,15 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                  destination/'source-after-repair.png')
                     shutil.copy2(journal,destination/'app-server-protocol.jsonl')
                     report={'schema':'agent-interface/calc-provider-wait-repair-reuse-v1',
+                        'model_plan_replay':{
+                            'source':model_plan_source,
+                            'source_sha256':model_plan_sha256,
+                            'historical_usage':historical_usage,
+                            'new_provider_call_for_replay':False,
+                            'adapted_task_values':task_values,
+                            'adapter':'runtime.guarded_x11_v1.calc_model_plan_adapter_v1',
+                            'authority_carried_from_plan':False,
+                            'fresh_observation_required':True},
                         'provider_attempts':3,'first_stale_response':first_body,
                         'environment':{'provider':'FakePlanner','target':'FakeX Calc fixture',
                             'runtime':'Windows owned guarded-X11 composition',
