@@ -254,6 +254,37 @@ class CompiledX11Tests(unittest.TestCase):
         self.assertEqual(len(b.inputs),1)
         self.assertIsNotNone(result['pending_effect'])
 
+    def test_late_input_callback_retains_release_and_effect_without_continuation(self):
+        b=Bridge(); interface=spec(); interface['method']['max_runtime_ms']=200
+        received_deadlines=[]; effect_checks=[]; base=b.click
+        def delayed_click(alias,offset,**kwargs):
+            received_deadlines.append(kwargs.get('expires_at_ns'))
+            terminal=base(alias,offset,**kwargs)
+            time.sleep(.4)
+            return terminal
+        b.click=delayed_click
+        def verify_after_action(request,native,image):
+            effect_checks.append(request)
+            return verify(request,native,image)
+        result=run(b,interface,bindings(),perceive=perceive,
+                   verify_effect=verify_after_action)
+        self.assertEqual((result['outcome'],result['reason']),
+                         ('SAFE_YIELD','budget_exhausted'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual([row[0] for row in b.inputs],['field'])
+        self.assertEqual(len(received_deadlines),1)
+        self.assertIs(type(received_deadlines[0]),int)
+        self.assertEqual(effect_checks,[])
+        self.assertEqual(len(result['observations']),1)
+        self.assertTrue(result['transitions'][0]['release_verified'])
+        self.assertEqual(result['pending_effect']['action'],'enter')
+        retained=dict(b.saved)
+        execution = next(value for name,value in retained.items()
+                         if name.endswith('-execution.json'))
+        self.assertEqual(execution['result']['execution']['releases'],
+                         [{'verified':True,'keys_down':[],'buttons_down':[]}])
+        self.assertTrue(any(name.endswith('-receipt.json') for name in retained))
+
     def test_post_release_settle_does_not_wait_after_unverified_release(self):
         b=Bridge();b.release=False
         with patch('runtime.guarded_x11_v1.compiled.time.sleep') as sleep:
