@@ -93,3 +93,6 @@ accounting, scoring, order, repetitions, budget, stop rule, and allocation
 availability are independently checked. Preserve G10 as its separate
 positive live OCR result and preserve the current synthetic composition as
 offline evidence.
+## Latest current-main composition rerun (2026-11-04)
+
+After the previous 16/16 normal and optimized run at `bd5f574e8bfda33deca5117d6f2bd2709edd8016`, the same existing module was rerun on the then-current main commit `27c9814890ff753e632274658c35639b58ceb9e9` using the same pinned network-disabled image and resource limits. It again passed 16/16 in both modes (20.473 s normal, 23.187 s optimized). The raw packet is [`current-main-composition-rerun-20261104-01`](current-main-composition-rerun-20261104-01/README.md). This closes the source-revision freshness gap for the offline seam only; it does not change the live/provider or efficiency limitations above.
