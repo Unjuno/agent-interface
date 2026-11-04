@@ -318,9 +318,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(Path(td, call_id, 'report.json').read_bytes(), raw_before)
                 observe.assert_called_once()
                 for invalid in ('false', 0):
-                    with self.assertRaises(Exception):
-                        await server.call_tool('interface_results', {
-                            'call_id': call_id, 'include_image': invalid})
+                    refused = await server.call_tool('interface_results', {
+                        'call_id': call_id, 'include_image': invalid})
+                    self.assertTrue(refused.isError)
+                    refusal = json.loads(refused.content[0].text)
+                    self.assertEqual(refusal['status'], 'invalid_request')
+                    self.assertFalse(refusal['operation_invoked'])
+                    self.assertFalse(refusal['input_dispatched'])
 
     async def test_result_pages_are_stable_when_new_calls_arrive(self):
         with tempfile.TemporaryDirectory() as td:
@@ -778,9 +782,14 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             server = create_server({'fixture': 123}, td)
             for seq in (True, '1', 1.5):
                 with patch('runtime.cli_v1.mcp_server.dispatch') as dispatch:
-                    with self.assertRaises(Exception):
-                        await server.call_tool('interface_dispatch', {
-                            'program': {}, 'current_observation_seq': seq, 'current_binding_revision': 0})
+                    refused = await server.call_tool('interface_dispatch', {
+                        'program': {}, 'current_observation_seq': seq,
+                        'current_binding_revision': 0})
+                    self.assertTrue(refused.isError)
+                    refusal = json.loads(refused.content[0].text)
+                    self.assertEqual(refusal['status'], 'invalid_request')
+                    self.assertFalse(refusal['operation_invoked'])
+                    self.assertFalse(refusal['input_dispatched'])
                     dispatch.assert_not_called()
             self.assertEqual(list(Path(td).iterdir()), [])
 

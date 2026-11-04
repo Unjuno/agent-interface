@@ -1,0 +1,1114 @@
+{
+  "independent_fods_value_match": true,
+  "independent_stdlib_fods_values": [
+    "24680",
+    "13579"
+  ],
+  "limits": [
+    "FakeX_only",
+    "no_live_provider",
+    "no_live_Calc",
+    "no_efficiency_comparison"
+  ],
+  "malformed_generation_recorded": true,
+  "malformed_model_attempt": {
+    "attempt_id": "calc-provider-attempt-06",
+    "response_status": "raw_retained",
+    "status": "malformed",
+    "usage_status": "unavailable"
+  },
+  "model_attempts": [
+    {
+      "attempt_id": "calc-provider-preflight-00",
+      "status": "timeout",
+      "usage_status": "unavailable"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-02",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-03",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-04",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-05",
+      "status": "completed",
+      "usage_status": "reported"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-06",
+      "status": "malformed",
+      "usage_status": "unavailable"
+    },
+    {
+      "attempt_id": "calc-provider-attempt-07",
+      "status": "cancelled",
+      "usage_status": "unavailable"
+    }
+  ],
+  "model_generations": 4,
+  "negative_profile_results": {
+    "calc-offline-ambiguous-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "calc-offline-unknown-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "calc-offline-wrong-after-input": {
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "released_transitions": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    }
+  },
+  "provider": "synthetic_fake_planner_echoes_supplied_arguments",
+  "provider_attempts": 7,
+  "provider_compiled_call_candidates": [
+    {
+      "attempt_id": "different-attempt",
+      "bindings": {
+        "entry": {
+          "alias": "calc_entry",
+          "offset": [
+            0,
+            0
+          ]
+        },
+        "save": {
+          "alias": "calc_save",
+          "offset": [
+            0,
+            0
+          ]
+        }
+      },
+      "detail": "reviewed sequence is not the latest source observed through this MCP session",
+      "error": "CALC_REVIEW_SOURCE_STALE",
+      "handoff_reason": null,
+      "keys": [
+        "detail",
+        "effect_status",
+        "error",
+        "input_dispatched",
+        "operation_invoked",
+        "release_confirmed",
+        "replay_allowed",
+        "status",
+        "task_success"
+      ],
+      "reviewed_sequence": 1,
+      "status": "invalid_request",
+      "task_success": null
+    },
+    {
+      "attempt_id": "calc-offline-e2e-01",
+      "bindings": {
+        "entry": {
+          "alias": "calc_entry",
+          "offset": [
+            0,
+            0
+          ]
+        },
+        "save": {
+          "alias": "calc_save",
+          "offset": [
+            0,
+            0
+          ]
+        }
+      },
+      "detail": "entry alias has no matching mint receipt in this MCP session",
+      "error": "CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE",
+      "handoff_reason": null,
+      "keys": [
+        "detail",
+        "effect_status",
+        "error",
+        "input_dispatched",
+        "operation_invoked",
+        "release_confirmed",
+        "replay_allowed",
+        "status",
+        "task_success"
+      ],
+      "reviewed_sequence": 1,
+      "status": "invalid_request",
+      "task_success": null
+    }
+  ],
+  "provider_routed_compiled_call_results": [
+    {
+      "attempt_id": "calc-offline-e2e-01",
+      "bindings": {
+        "entry": {
+          "alias": "calc_entry",
+          "offset": [
+            12,
+            8
+          ]
+        },
+        "save": {
+          "alias": "calc_save",
+          "offset": [
+            8,
+            6
+          ]
+        }
+      },
+      "completed_transitions": 2,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "release_verified": [
+        true,
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    {
+      "attempt_id": "calc-offline-wrong-after-input",
+      "bindings": {
+        "entry": {
+          "alias": "calc_entry",
+          "offset": [
+            12,
+            8
+          ]
+        },
+        "save": {
+          "alias": "calc_save",
+          "offset": [
+            8,
+            6
+          ]
+        }
+      },
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "release_verified": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    {
+      "attempt_id": "calc-offline-unknown-after-input",
+      "bindings": {
+        "entry": {
+          "alias": "calc_entry",
+          "offset": [
+            12,
+            8
+          ]
+        },
+        "save": {
+          "alias": "calc_save",
+          "offset": [
+            8,
+            6
+          ]
+        }
+      },
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "release_verified": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    },
+    {
+      "attempt_id": "calc-offline-ambiguous-after-input",
+      "bindings": {
+        "entry": {
+          "alias": "calc_entry",
+          "offset": [
+            12,
+            8
+          ]
+        },
+        "save": {
+          "alias": "calc_save",
+          "offset": [
+            8,
+            6
+          ]
+        }
+      },
+      "completed_transitions": 1,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "release_verified": [
+        true
+      ],
+      "replay_allowed": false,
+      "task_success": null
+    }
+  ],
+  "provider_task_effect_join": {
+    "attempt_id": "calc-offline-e2e-01",
+    "compiled_scope": "native-x11:af5f6f2455b242ee8d808fda6768a4a1",
+    "minted_alias_offsets": {
+      "calc_entry": [
+        12,
+        8
+      ],
+      "calc_save": [
+        8,
+        6
+      ]
+    },
+    "prepared_call_id": "8656d5053a5f4191af5689e8a3969bab",
+    "provider_method_receipt_sha256": "adb626188f637318b86b0bd85c95212e102ddb4569ecf1c18e107f319b2f4c4a",
+    "replay_allowed": false,
+    "save_controller_call_id": "8656d5053a5f4191af5689e8a3969bab",
+    "save_controller_method_receipt_sha256": "adb626188f637318b86b0bd85c95212e102ddb4569ecf1c18e107f319b2f4c4a",
+    "status": "verified",
+    "task_success": true,
+    "verified_artifact_sha256": "ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4"
+  },
+  "public_mcp_tool_calls": 32,
+  "public_mint_receipts": [
+    {
+      "body": {
+        "alias": "calc_entry",
+        "call_directory": "/tmp/tmpfuuwhbos/08289d7bdc724d98896822751d9d64ff",
+        "call_id": "08289d7bdc724d98896822751d9d64ff",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 1500,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3289464666496,
+          "minted_ns": 2989464666496,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          12,
+          8
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:af5f6f2455b242ee8d808fda6768a4a1",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2989465998837,
+            "pid": 14,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 14,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "31f82a61c7094a50a0ec7e3167e1b855",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_entry",
+      "requested_point": [
+        16,
+        31
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_save",
+        "call_directory": "/tmp/tmpfuuwhbos/95ee7a6e5c8c4f69bb5be67243d9a6ec",
+        "call_id": "95ee7a6e5c8c4f69bb5be67243d9a6ec",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 1500,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3289479037783,
+          "minted_ns": 2989479037783,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          8,
+          6
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:af5f6f2455b242ee8d808fda6768a4a1",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2989480325739,
+            "pid": 14,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 14,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "31f82a61c7094a50a0ec7e3167e1b855",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_save",
+      "requested_point": [
+        200,
+        205
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_entry",
+        "call_directory": "/tmp/tmps_85v1hv/448e8440e2a646b3bf3b13d62d3ca9b8",
+        "call_id": "448e8440e2a646b3bf3b13d62d3ca9b8",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3293232043087,
+          "minted_ns": 2993232043087,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          12,
+          8
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:fd7fd8b364b64785b1364c9a9ef04f7d",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2993233375251,
+            "pid": 18,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 18,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "44f70186497e4483861fdd5cb092f995",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_entry",
+      "requested_point": [
+        16,
+        31
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_save",
+        "call_directory": "/tmp/tmps_85v1hv/8d5c6c024a014ef981dcd604f8c8d294",
+        "call_id": "8d5c6c024a014ef981dcd604f8c8d294",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3293252712366,
+          "minted_ns": 2993252712366,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          8,
+          6
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:fd7fd8b364b64785b1364c9a9ef04f7d",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2993253983922,
+            "pid": 18,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 18,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "44f70186497e4483861fdd5cb092f995",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_save",
+      "requested_point": [
+        200,
+        205
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_entry",
+        "call_directory": "/tmp/tmpfc5dnomh/4f65599036ee48e8ab72eec2cded3c12",
+        "call_id": "4f65599036ee48e8ab72eec2cded3c12",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3294865317419,
+          "minted_ns": 2994865317419,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          12,
+          8
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:601517771db548168e17c4f551ca6a65",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2994866701922,
+            "pid": 22,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 22,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "5d9a0ee607654e1782b7c0631e586b93",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_entry",
+      "requested_point": [
+        16,
+        31
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_save",
+        "call_directory": "/tmp/tmpfc5dnomh/f309d49227b343d6ab63c7b08c10d6a1",
+        "call_id": "f309d49227b343d6ab63c7b08c10d6a1",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3294889268784,
+          "minted_ns": 2994889268784,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          8,
+          6
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:601517771db548168e17c4f551ca6a65",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2994890560734,
+            "pid": 22,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 22,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "5d9a0ee607654e1782b7c0631e586b93",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_save",
+      "requested_point": [
+        200,
+        205
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_entry",
+        "call_directory": "/tmp/tmp12_z4yqg/61ceb0ddcafd4a1ab4f7054b7d2262bc",
+        "call_id": "61ceb0ddcafd4a1ab4f7054b7d2262bc",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3296454705630,
+          "minted_ns": 2996454705630,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          12,
+          8
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:15c89882638f48b0acbefc29121a8c96",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2996456093263,
+            "pid": 26,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 26,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "7d497290a9e64551846df0f6fd168f52",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_entry",
+      "requested_point": [
+        16,
+        31
+      ],
+      "requested_source_sequence": 1
+    },
+    {
+      "body": {
+        "alias": "calc_save",
+        "call_directory": "/tmp/tmp12_z4yqg/9b5ae14a5ef4481d8d7e91e3bb04f93a",
+        "call_id": "9b5ae14a5ef4481d8d7e91e3bb04f93a",
+        "input_dispatched": false,
+        "lifetime": {
+          "authority_granted": false,
+          "capture_freshness_ms": 5000,
+          "clock": "time.monotonic_ns",
+          "expires_ns": 3296475984213,
+          "minted_ns": 2996475984213,
+          "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+        },
+        "offset": [
+          8,
+          6
+        ],
+        "operation": "guarded_mint",
+        "replay_allowed": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 0,
+          "cleanup_status": null,
+          "compiled_scope": "native-x11:15c89882638f48b0acbefc29121a8c96",
+          "compiled_surface": "x11-window-20",
+          "error": null,
+          "interrupted_execution": null,
+          "mode": "guarded-x11-owned-process",
+          "observation_sequence": 1,
+          "observation_worker": false,
+          "observations": null,
+          "owner_client_disconnect": null,
+          "owner_input_obligations": {
+            "buttons": [],
+            "keys": {}
+          },
+          "owner_input_obligations_live_read": {
+            "status": "not_read"
+          },
+          "owner_input_obligations_source": "child_rpc_snapshot",
+          "owner_process": {
+            "alive": true,
+            "exitcode": null,
+            "liveness_observed_monotonic_ns": 2996477440375,
+            "pid": 26,
+            "release_confirmed": null,
+            "retired": false,
+            "x_client_resource_base": 18874368
+          },
+          "owner_process_pid": 26,
+          "owner_release_attempt": null,
+          "owner_x_client_resource_base": 18874368,
+          "process_identity": true,
+          "query_worker": true,
+          "recovery_required": false,
+          "restart_allowed": false,
+          "retention_mode": "files",
+          "review_required": false,
+          "session_id": "7d497290a9e64551846df0f6fd168f52",
+          "state": "open",
+          "target": "app",
+          "target_queries": {
+            "close_error": null,
+            "pending": false,
+            "retired": false,
+            "thread_alive": true
+          },
+          "targets": {
+            "app": 20
+          },
+          "window_lifecycle": true
+        },
+        "source_sequence": 1,
+        "status": "minted",
+        "task_success": null
+      },
+      "requested_alias": "calc_save",
+      "requested_point": [
+        200,
+        205
+      ],
+      "requested_source_sequence": 1
+    }
+  ],
+  "schema": "agent-interface/fake-appserver-calc-boundary-v1",
+  "separate_direct_owner_close": {
+    "authority_granted": false,
+    "call_directory": "/tmp/tmp12_z4yqg/62e17528ca8141ab8c3b4b02e762368f",
+    "call_id": "62e17528ca8141ab8c3b4b02e762368f",
+    "connection_close_attempted": true,
+    "owner_process_exitcode": 0,
+    "owner_process_retired": true,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 2997364519869,
+      "verified": true
+    },
+    "release_attempted": true,
+    "release_confirmed": true,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:15c89882638f48b0acbefc29121a8c96",
+      "compiled_surface": "x11-window-20",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 13,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": false,
+        "exitcode": 0,
+        "liveness_observed_monotonic_ns": 2997464719236,
+        "pid": 26,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 18874368
+      },
+      "owner_process_pid": 26,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 18874368,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "retention_mode": "files",
+      "review_required": false,
+      "session_id": "7d497290a9e64551846df0f6fd168f52",
+      "state": "closed",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": true,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 20
+      },
+      "window_lifecycle": true
+    },
+    "session_id": "7d497290a9e64551846df0f6fd168f52",
+    "status": "closed",
+    "verified": true
+  },
+  "separate_direct_task_effect": {
+    "attempt_id": "calc-offline-e2e-01",
+    "call_id": "5983b0bd7995479d9823e03c63946a6a",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "guarded_x11_calc",
+    "status": "verified",
+    "task_effect": {
+      "artifact_bytes": 515,
+      "artifact_identity": [
+        87,
+        192830,
+        515,
+        1793730799915487499,
+        1793730799915487499
+      ],
+      "artifact_sha256": "ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4",
+      "attempt_id": "calc-offline-e2e-01",
+      "blank_sha256": "b9c3744304b6f13c7804aa1ad1fe1e18384f6c53bf058975c05eae5139637d4f",
+      "expected_values": {
+        "A1": "24680",
+        "A2": "13579"
+      },
+      "parsed_effect": {
+        "artifact_bytes": 515,
+        "artifact_sha256": "ed70fd54358de3ce7831a580ebff4e509702bb9cb17f84280ef86541da287ed4",
+        "cells": {
+          "A1": "24680",
+          "A2": "13579"
+        },
+        "status": "verified",
+        "task_success": true
+      },
+      "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+      "profile_id": "calc-ocr-save-v1",
+      "reason": "registered_calc_saved_artifact_verified",
+      "replay_allowed": false,
+      "save_controller": {
+        "attempt_id": "calc-offline-e2e-01",
+        "call_id": "8656d5053a5f4191af5689e8a3969bab",
+        "method_receipt_sha256": "adb626188f637318b86b0bd85c95212e102ddb4569ecf1c18e107f319b2f4c4a",
+        "process_generation": "ac963b7fdb87257d3761d87f56947423db4dc055f3a638b141841a9a8948c6fe",
+        "profile_id": "calc-ocr-save-v1",
+        "save_action_id": "action-b4ccc4043d2843159dee69a33d3ca8a7",
+        "save_request_id": "211ec34bb98d899629888dde47b8e8f3",
+        "save_request_monotonic_ns": 2990833024797,
+        "schema": "agent-interface/calc-registered-save-controller-v1",
+        "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "save_request_id": "211ec34bb98d899629888dde47b8e8f3",
+      "save_request_monotonic_ns": 2990833024797,
+      "status": "verified",
+      "task_success": true,
+      "window_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "task_success": true
+  },
+  "stopped_generation_recorded": true,
+  "stopped_model_attempt": {
+    "attempt_id": "calc-provider-attempt-07",
+    "response_status": "raw_retained",
+    "status": "cancelled",
+    "usage_status": "unavailable"
+  },
+  "verified_task_effect_success": true
+}

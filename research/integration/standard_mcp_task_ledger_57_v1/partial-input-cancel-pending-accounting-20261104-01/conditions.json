@@ -1,0 +1,92 @@
+{
+  "environment": {
+    "container_cpus": 2,
+    "container_memory": "4g",
+    "container_memory_plus_swap": "4g total",
+    "container_network": "none",
+    "docker_engine": "29.8.1",
+    "host_os": "Windows",
+    "image": "agent-interface-xvfb-mcp:late-input-r19",
+    "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "pids_limit": 256,
+    "python": "3.11",
+    "source_mount": "read-only"
+  },
+  "excluded_exploration": [
+    "unittest discovery invocation failure preserved",
+    "initial non-pending timing run preserved",
+    "missing-asyncio test failure preserved",
+    "Calc wrapper timing/timeout exploration preserved and excluded"
+  ],
+  "final_run": "generic-public-cancel-poll-04",
+  "final_run_identity": {
+    "cancellation_result": "initial public cancel pending; same call and operation reach terminal UNKNOWN cleanup; release remains unconfirmed; no task success and no replay",
+    "container_network": "none",
+    "cpus": 2,
+    "docker_engine": "29.8.1",
+    "image": "agent-interface-xvfb-mcp:late-input-r19",
+    "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "live_gui_actions": 0,
+    "live_provider_generations": 0,
+    "memory": "4g",
+    "memory_plus_swap": "4g total",
+    "pids_limit": 256,
+    "scope": "synthetic provider ledger to public generic compiled MCP, partial-input cancellation, same-call poll, independent Fake X cleanup",
+    "source_mount": "read-only",
+    "source_revision": "b7fe79a9e739ac31079bea4d677ea3a8cf025ada",
+    "source_test_sha256": "d26b0705314a080354008d8d192373a3d311bb3cff85caaed0cbb4ca8e994356"
+  },
+  "limitations": [
+    "no provider reconciliation",
+    "no runtime release confirmation",
+    "no successful recovery",
+    "no task effect",
+    "no efficiency comparison",
+    "not Calc/WSLc/MAP01",
+    "not general reliability"
+  ],
+  "live_gui_actions": 0,
+  "live_provider_generations": 0,
+  "per_mode": {
+    "compiled_calls": 1,
+    "fake_cleanup_effects": [
+      "KeyRelease"
+    ],
+    "fake_keys_after_cleanup": [],
+    "held_keys_before_cancel": [
+      1
+    ],
+    "model_attempts": 1,
+    "replay_allowed": false,
+    "result_poll_statuses": [
+      "pending",
+      "completed"
+    ],
+    "runtime_cleanup_status": "UNKNOWN",
+    "runtime_release_confirmed": false,
+    "same_call_id_through_poll": true,
+    "same_cancellation_operation_id_through_poll": true,
+    "subsequent_model_or_input_replay": false,
+    "synthetic_usage": {
+      "cached_input_semantics": "subset of input_tokens",
+      "cached_input_tokens": 8,
+      "input_tokens": 61,
+      "output_tokens": 13,
+      "reasoning_output_tokens": 2
+    },
+    "task_success": null,
+    "tool_calls": 7
+  },
+  "results": {
+    "docker_exit": 0,
+    "docker_normal": "1/1 pass",
+    "docker_optimized": "1/1 pass",
+    "windows_normal": "1/1 pass",
+    "windows_optimized": "1/1 pass"
+  },
+  "schema": "agent-interface/public-pending-cancel-composition-v1",
+  "scope": "synthetic public generic compiled MCP path with Fake X and synthetic provider ledger",
+  "source_revision": "b7fe79a9e739ac31079bea4d677ea3a8cf025ada",
+  "source_test_sha256": "d26b0705314a080354008d8d192373a3d311bb3cff85caaed0cbb4ca8e994356",
+  "test": "test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger"
+}

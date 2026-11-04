@@ -481,6 +481,18 @@ reservation is consumed once and the artifact binds to the reviewed existing
 window generation. One reservation is allowed at a time and expires after five
 minutes.
 
+Preparation may also receive bounded `task_values` for A1/A2 and an optional
+`task_plan`. The values are copied into the parent-owned artifact descriptor
+and drive the registered input, OCR match, and independent post-close FODS
+score. The plan is a finite declarative graph with only the registered
+enter-pair and Save-request operations; it contains no coordinates, aliases,
+values, callbacks, or executable code. The parent retains and hashes the plan,
+binds it to fresh reviewed aliases at execution, and revalidates that binding
+against the released runtime receipt before accepting the Save custody receipt.
+This optional route has synthetic composed regression coverage; it does not
+establish live-provider efficiency, warm reuse, invalidation/repair, or
+cross-domain behavior.
+
 For the opt-in Debian LibreOffice launch path, provide both absolute executable
 paths when starting the server:
 

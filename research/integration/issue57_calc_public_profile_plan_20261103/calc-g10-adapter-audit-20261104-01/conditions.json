@@ -1,0 +1,25 @@
+{
+  "schema": "issue57-calc-g10-current-public-adapter-audit-v1",
+  "source_commit": "bd5f574e8bfda33deca5117d6f2bd2709edd8016",
+  "test_module": "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+  "command": "python3 -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py",
+  "modes": ["normal", "optimized (-O)"],
+  "docker": {
+    "engine": "29.8.1",
+    "image": "agent-interface-xvfb-mcp:late-input-r19",
+    "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "network": "none",
+    "cpus": 2,
+    "memory": "4g",
+    "memory_swap": "4g total",
+    "pids_limit": 256,
+    "source_mount": "read-only",
+    "evidence_mount": "read-write",
+    "container_cleanup": "docker run --rm"
+  },
+  "predeclared_interpretation": {
+    "pass": "All tests in both modes pass; this confirms only the synthetic current-main public adapter contract.",
+    "failure": "Preserve exact logs and treat the current public adapter seam as not qualified by this run.",
+    "not_claimed": ["live Calc", "real provider/model accounting", "new allocation", "WSLc", "MAP01", "end-to-end efficiency", "general reliability"]
+  }
+}

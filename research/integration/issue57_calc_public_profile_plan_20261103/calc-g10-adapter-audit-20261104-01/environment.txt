@@ -1,0 +1,11 @@
+docker_engine=29.8.1
+docker_context=desktop-linux
+image=agent-interface-xvfb-mcp:late-input-r19
+image_id=sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425
+network=none
+cpus=2
+memory=4g
+memory+swap=4g total
+pids_limit=256
+source_mount=read-only
+container=--rm

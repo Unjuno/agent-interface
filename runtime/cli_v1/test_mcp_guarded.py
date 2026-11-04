@@ -292,6 +292,88 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(row['lifetime']['authority_granted'])
             await server.call_tool('interface_close',{})
 
+    async def test_calc_alias_ledger_does_not_promote_stale_mint_receipts(self):
+        """A mint receipt for an old frame cannot satisfy current Calc provenance."""
+        from mcp.server.fastmcp import FastMCP
+        from mcp.types import CallToolResult, TextContent
+        from runtime.cli_v1.mcp_guarded import register_guarded_tools
+        sequence=0
+        calls=[]
+
+        async def submit(operation, arguments, compact, report_refs, **kwargs):
+            nonlocal sequence
+            calls.append((operation,arguments))
+            if operation == 'guarded_observe':
+                sequence+=1
+                row={'status':'observed','source':{'sequence':sequence,
+                    'native':{'artifact':{'sha256':f'{sequence:064x}'}}}}
+            elif operation == 'guarded_mint':
+                row={'status':'minted','alias':arguments['alias'],'offset':[12,7]}
+            elif operation == 'guarded_mint_many':
+                row={'status':'minted','source_sequence':arguments['source_sequence'],
+                    'minted':[{'alias':reference['alias'],'offset':[12,7]}
+                        for reference in arguments['references']]}
+            elif operation == 'guarded_calc_compiled':
+                row={'status':'completed','operation_invoked':True}
+            else:
+                row={'status':'unexpected','operation':operation}
+            return CallToolResult(content=[TextContent(type='text',
+                text=json.dumps(row))])
+
+        server=FastMCP('calc-alias-ledger-test')
+        register_guarded_tools(server,submit,compiled_enabled=True,
+            window_lifecycle_enabled=True)
+        first=metadata(await server.call_tool('interface_guarded_observe',{}))
+        old_mint=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'old_save','source_sequence':first['source']['sequence'],
+            'point':[24,24],'region_size':[12,12]}))
+        second=metadata(await server.call_tool('interface_guarded_observe',{}))
+        fresh_entry=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'calc_entry','source_sequence':second['source']['sequence'],
+            'point':[16,16],'region_size':[12,12]}))
+        stale_save=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'calc_save','source_sequence':first['source']['sequence'],
+            'point':[24,24],'region_size':[12,12]}))
+        self.assertEqual(old_mint['status'],'minted',old_mint)
+        self.assertEqual(stale_save['status'],'minted',stale_save)
+        refused=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1',
+            'bindings':{
+                'entry':{'alias':'calc_entry','offset':fresh_entry['offset']},
+                'save':{'alias':'calc_save','offset':stale_save['offset']}},
+            'reviewed_sequence':second['source']['sequence'],
+            'reviewed_artifact_sha256':second['source']['native']['artifact']['sha256'],
+            'blank_reviewed':True,'attempt_id':'calc-stale-mint-receipt-ledger'}))
+        self.assertEqual(refused['status'],'invalid_request',refused)
+        self.assertEqual(refused['error'],'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',refused)
+        self.assertFalse(refused['operation_invoked'],refused)
+        self.assertFalse(refused['input_dispatched'],refused)
+        self.assertIsNone(refused['release_confirmed'],refused)
+        self.assertFalse(refused['replay_allowed'],refused)
+
+        third=metadata(await server.call_tool('interface_guarded_observe',{}))
+        fresh_entry=metadata(await server.call_tool('interface_guarded_mint',{
+            'alias':'calc_entry','source_sequence':third['source']['sequence'],
+            'point':[16,16],'region_size':[12,12]}))
+        stale_many=metadata(await server.call_tool('interface_guarded_mint_many',{
+            'source_sequence':first['source']['sequence'],'references':[
+                {'alias':'calc_save','point':[24,24],'region_size':[12,12]}]}))
+        self.assertEqual(stale_many['status'],'minted',stale_many)
+        refused_many=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1',
+            'bindings':{
+                'entry':{'alias':'calc_entry','offset':fresh_entry['offset']},
+                'save':{'alias':'calc_save','offset':stale_many['minted'][0]['offset']}},
+            'reviewed_sequence':third['source']['sequence'],
+            'reviewed_artifact_sha256':third['source']['native']['artifact']['sha256'],
+            'blank_reviewed':True,'attempt_id':'calc-stale-mint-many-ledger'}))
+        self.assertEqual(refused_many['status'],'invalid_request',refused_many)
+        self.assertEqual(refused_many['error'],
+            'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',refused_many)
+        self.assertFalse(refused_many['operation_invoked'],refused_many)
+        self.assertFalse(refused_many['input_dispatched'],refused_many)
+        self.assertFalse(any(op=='guarded_calc_compiled' for op,_ in calls),calls)
+
     async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
         from mcp.server.fastmcp.exceptions import ToolError
         opened = []

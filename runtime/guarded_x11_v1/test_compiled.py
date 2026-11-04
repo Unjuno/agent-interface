@@ -9,6 +9,8 @@ import unittest
 from PIL import Image
 from runtime.core_v1.test_compiled_gui import interface
 from runtime.guarded_x11_v1.compiled import run, _Adapter
+from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import validate_and_bind_calc_plan
+from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import plan as calc_plan
 
 class Bridge:
     def __init__(self):
@@ -79,6 +81,36 @@ def perceive(native,image): return {'phase':image.getpixel((0,0))[0],'present':T
 def verify(payload,native,image): return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
 
 class CompiledX11Tests(unittest.TestCase):
+
+    def test_reused_semantic_plan_requires_fresh_scope_binding(self):
+        first_bridge=Bridge()
+        first=validate_and_bind_calc_plan(calc_plan(),
+            session_scope=first_bridge.scope,surface='x11-window-20',
+            target_aliases={'entry':'entry_first','save':'save_first'})
+        action_bindings={name:{'interaction':'keyboard','offset':[1,1],
+            'tail':[]} for name in first['interface']['actions']}
+        _Adapter(first_bridge,first['interface'],action_bindings,perceive,
+            verify,lambda:False)
+
+        next_bridge=Bridge()
+        next_bridge.scope='next-session'
+        with self.assertRaisesRegex(ValueError,
+                                    'interface must name this bridge scope'):
+            _Adapter(next_bridge,first['interface'],action_bindings,perceive,
+                verify,lambda:False)
+        self.assertEqual(next_bridge.inputs,[])
+
+        second=validate_and_bind_calc_plan(calc_plan(),
+            session_scope=next_bridge.scope,surface='x11-window-20',
+            target_aliases={'entry':'entry_second','save':'save_second'})
+        self.assertEqual(first['plan_sha256'],second['plan_sha256'])
+        second_bindings={name:{'interaction':'keyboard','offset':[1,1],
+            'tail':[]} for name in second['interface']['actions']}
+        adapter=_Adapter(next_bridge,second['interface'],second_bindings,
+            perceive,verify,lambda:False)
+        self.assertEqual(adapter.interface['session_scope'],'next-session')
+        self.assertEqual(adapter.interface['symbols']['cell_entry']
+                         ['target_reference'],'entry_second')
 
     def test_unchanged_frame_save_uses_opt_in_callback_and_stays_unverified(self):
         b=Bridge(); original=b.observe

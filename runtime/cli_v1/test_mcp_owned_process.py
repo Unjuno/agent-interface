@@ -213,12 +213,24 @@ class _FakeQueries:
                     or xid.get('pid') != _CALC_TEST_PID
                     or xid.get('title_hint') != 'Book1'):
                 raise ValueError('unexpected synthetic process discovery request')
+            process_generation_path=self.root/'fake-process-generation'
+            window_incarnation_path=self.root/'fake-window-incarnation'
+            process_pid_path=self.root/'fake-process-pid'
+            process_start_path=self.root/'fake-process-start-ticks'
             return [{
                 'schema':'agent-interface/x11-window-metadata-cues-v1',
-                'xid':20,'process_pid':_CALC_TEST_PID,
-                'process_start_ticks':_CALC_TEST_START_TICKS,
-                'process_generation':_CALC_TEST_PROCESS_GENERATION,
-                'window_incarnation':'c'*64,'mapped':True,
+                'xid':20,'process_pid':(int(process_pid_path.read_text(
+                    encoding='ascii')) if process_pid_path.exists()
+                    else _CALC_TEST_PID),
+                'process_start_ticks':(int(process_start_path.read_text(
+                    encoding='ascii')) if process_start_path.exists()
+                    else _CALC_TEST_START_TICKS),
+                'process_generation':(process_generation_path.read_text(
+                    encoding='utf-8') if process_generation_path.exists()
+                    else _CALC_TEST_PROCESS_GENERATION),
+                'window_incarnation':(window_incarnation_path.read_text(
+                    encoding='utf-8') if window_incarnation_path.exists()
+                    else 'c'*64),'mapped':True,
                 'focused_before':True,'focused_after':True,
                 'discovery_title_hint':'Book1','discovery_title_xid':20,
                 'input_authority':False,'authenticated_role':False}]
@@ -230,7 +242,8 @@ class _FakeQueries:
         if operation == 'window_incarnation':
             if xid != 20:
                 raise ValueError('unknown synthetic window')
-            return 'c'*64
+            marker=self.root/'fake-window-incarnation'
+            return marker.read_text(encoding='utf-8') if marker.exists() else 'c'*64
         if operation == 'process_incarnation':
             marker = self.root/'fake-process-incarnation'
             return marker.read_text(encoding='utf-8') if marker.exists() else (
@@ -251,6 +264,12 @@ class _FakeQueries:
             changed=(self.root/'fake-window-metadata-changed').exists()
             changed_calc=(self.root/'fake-window-metadata-changed-calc').exists()
             process_marker=self.root/'fake-process-incarnation'
+            process_pid_path=self.root/'fake-process-pid'
+            process_start_path=self.root/'fake-process-start-ticks'
+            process_pid=(int(process_pid_path.read_text(encoding='ascii'))
+                if process_pid_path.exists() else _CALC_TEST_PID)
+            process_start_ticks=(int(process_start_path.read_text(encoding='ascii'))
+                if process_start_path.exists() else _CALC_TEST_START_TICKS)
             process_incarnation=(process_marker.read_text(encoding='utf-8')
                 if process_marker.exists() else (
                     _CALC_TEST_PROCESS_INCARNATION
@@ -266,13 +285,17 @@ class _FakeQueries:
                     'Book1 - Calc — updated' if changed_calc else 'Book1 - Calc'),
                 'role_cue':None,'mapped':True,
                 'process_incarnation':process_incarnation,
-                'process_generation':(_CALC_TEST_PROCESS_GENERATION
+                'process_generation':((self.root/'fake-process-generation').read_text(
+                    encoding='utf-8') if (self.root/'fake-process-generation').exists()
+                    else _CALC_TEST_PROCESS_GENERATION
                     if (self.root/'calc-profile-mode').exists() else 'a'*64),
-                'process_pid':(_CALC_TEST_PID
+                'process_pid':(process_pid
                     if (self.root/'calc-profile-mode').exists() else 1234),
-                'process_start_ticks':(_CALC_TEST_START_TICKS
+                'process_start_ticks':(process_start_ticks
                     if (self.root/'calc-profile-mode').exists() else 1),
-                'window_incarnation':'c'*64,'focused_before':True,
+                'window_incarnation':((self.root/'fake-window-incarnation').read_text(
+                    encoding='utf-8') if (self.root/'fake-window-incarnation').exists()
+                    else 'c'*64),'focused_before':True,
                 'focused_after':True,'input_authority':False,
                 'authenticated_role':False}
         raise ValueError(operation)
@@ -361,11 +384,13 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
     from runtime.guarded_x11_v1.bridge import NativeHandleBridge
     from runtime.guarded_x11_v1.compiled import _Adapter
 
-    fake.generation=_CALC_TEST_PROCESS_GENERATION
-    (root/'fake-process-generation').write_text(
-        _CALC_TEST_PROCESS_GENERATION,encoding='utf-8')
-    (root/'fake-process-incarnation').write_text(
-        _CALC_TEST_PROCESS_INCARNATION,encoding='utf-8')
+    generation_path=root/'fake-process-generation'
+    if not generation_path.exists():
+        generation_path.write_text(_CALC_TEST_PROCESS_GENERATION,encoding='utf-8')
+    fake.generation=generation_path.read_text(encoding='utf-8')
+    incarnation_path=root/'fake-process-incarnation'
+    if not incarnation_path.exists():
+        incarnation_path.write_text(_CALC_TEST_PROCESS_INCARNATION,encoding='utf-8')
 
     image = Image.new('RGB', (1280, 800), 'white')
     for left, top, right, bottom in ((4,23,28,39),(35,143,90,160),(127,143,215,160),
@@ -378,7 +403,10 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
     fake.calc_pointer = {'x':0, 'y':0, 'mask':0}
     fake.calc_state = {'entered':False, 'both_entered':False,
                        'save_requested':False, 'artifact_written_on_save':False,
-                       'completed_entries':[], 'events':[], 'typed':[]}
+                       'completed_entries':[], 'events':[], 'typed':[],
+                       'task_values':json.loads((root/'calc-task-values.json').read_text(
+                           encoding='utf-8')) if (root/'calc-task-values.json').exists()
+                           else {'A1':'731','A2':'864'}}
     fake.backend.geometry = lambda _target:dict(x=0, y=0, width=1280, height=800)
     fake.backend.d.screen = lambda:SimpleNamespace(width_in_pixels=1280,
                                                     height_in_pixels=800)
@@ -458,16 +486,29 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
                     and not (root/'post-release-settle-observed').exists())
         ambiguous_after_input = (mode == 'ambiguous-after-input'
                                  and fake.calc_state['both_entered'])
-        stdout = (header if not filled or mode == 'unknown-after-input' else
-                  header +
-                  (b'5\t8\t4\t44\t24\t70\t731\n5\t8\t38\t44\t24\t70\t864\n'
-                   if low_once else
-                   b'5\t8\t4\t44\t24\t95\t731\n' +
-                   (b'5\t8\t4\t44\t24\t95\t731\n'
-                    if ambiguous_after_input else
-                    b'5\t8\t38\t44\t24\t95\t863\n'
-                    if mode == 'wrong-after-input' else
-                    b'5\t8\t38\t44\t24\t95\t864\n')))
+        task_values=fake.calc_state['task_values']
+        a1=task_values['A1'].encode('ascii')
+        a2=task_values['A2'].encode('ascii')
+        wrong_a2=str(int(task_values['A2'])+1).encode('ascii')
+        if not filled or mode == 'unknown-after-input':
+            stdout=header
+        elif mode == 'no-match-after-input':
+            # OCR returned text inside the reviewed cell, but it cannot be
+            # interpreted as the expected decimal value. This is a no-match,
+            # not evidence that the task effect failed.
+            stdout=(header+b'5\t8\t4\t44\t24\t95\tnoise\n')
+        elif low_once:
+            stdout=(header+b'5\t8\t4\t44\t24\t70\t'+a1+b'\n'
+                    +b'5\t8\t38\t44\t24\t70\t'+a2+b'\n')
+        else:
+            if ambiguous_after_input:
+                stdout=(header+b'5\t8\t4\t44\t24\t95\t'+a1+b'\n'
+                        +b'5\t8\t38\t44\t24\t95\t'+a2+b'\n'
+                        +b'5\t8\t38\t44\t24\t95\t'+wrong_a2+b'\n')
+            else:
+                second=wrong_a2 if mode == 'wrong-after-input' else a2
+                stdout=(header+b'5\t8\t4\t44\t24\t95\t'+a1+b'\n'
+                        +b'5\t8\t38\t44\t24\t95\t'+second+b'\n')
         evidence=(root/'fake-ocr-observations.jsonl')
         with evidence.open('a',encoding='utf-8') as stream:
             stream.write(json.dumps({'pixels_filled':filled,'low_once':low_once,
@@ -505,11 +546,11 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
             if name in {'Return', 'ENTER'} and fake.calc_state['typed']:
                 value = ''.join(fake.calc_state['typed'])
                 fake.calc_state['typed'] = []
-                if value == '731' and not fake.calc_state['entered']:
+                if value == fake.calc_state['task_values']['A1'] and not fake.calc_state['entered']:
                     fake.calc_state['entered'] = True
                     fake.calc_state['completed_entries'].append(value)
                     image_with_marker([((40,145),(20,20,20))])
-                elif value == '864' and fake.calc_state['entered']:
+                elif value == fake.calc_state['task_values']['A2'] and fake.calc_state['entered']:
                     fake.calc_state['both_entered'] = True
                     fake.calc_state['completed_entries'].append(value)
                     image_with_marker([((40,162),(30,30,30))])
@@ -519,7 +560,13 @@ def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
                         (root/'fake-calc-save-writes-artifact').exists()):
                     artifacts=list(root.rglob('task-artifact.fods'))
                     if len(artifacts)==1:
-                        artifacts[0].write_bytes(_CALC_TASK_FODS)
+                        dynamic_fods=_CALC_TASK_FODS.replace(
+                            b'office:value="731"',
+                            ('office:value="'+fake.calc_state['task_values']['A1']+'"').encode())
+                        dynamic_fods=dynamic_fods.replace(
+                            b'office:value="864"',
+                            ('office:value="'+fake.calc_state['task_values']['A2']+'"').encode())
+                        artifacts[0].write_bytes(dynamic_fods)
                         fake.calc_state['artifact_written_on_save']=True
                 if not (root/'calc-save-frame-unchanged').exists():
                     image_with_marker([((300,300),(40,40,40))])
@@ -923,11 +970,21 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     'interface_guarded_observe',{}))
                 self.assertEqual(observed['status'],'observed',observed)
                 source=observed['source']
+                entry=metadata(await server.call_tool(
+                    'interface_guarded_mint',{
+                        'alias':'entry','source_sequence':source['sequence'],
+                        'point':[8,8],'region_size':[4,4]}))
+                save=metadata(await server.call_tool(
+                    'interface_guarded_mint',{
+                        'alias':'save','source_sequence':source['sequence'],
+                        'point':[20,20],'region_size':[4,4]}))
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
                 result=metadata(await server.call_tool(
                     'interface_guarded_calc_compiled',{
                         'profile_id':'calc-ocr-save-v1',
-                        'bindings':{'entry':{'alias':'entry','offset':[0,0]},
-                                    'save':{'alias':'save','offset':[0,0]}},
+                        'bindings':{'entry':{'alias':'entry','offset':entry['offset']},
+                                    'save':{'alias':'save','offset':save['offset']}},
                         'reviewed_sequence':source['sequence'],
                         'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
                         'blank_reviewed':True,'attempt_id':'launch-gate-01',
@@ -1073,8 +1130,20 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 await server.call_tool('interface_close',{})
 
     async def test_registered_calc_profile_runs_through_owned_mcp_and_releases(self):
+        from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import (
+            plan as calc_symbolic_plan)
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
+            task_values={'A1':'24680','A2':'13579'}
+            task_plan=calc_symbolic_plan()
+            from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import (
+                validate_and_bind_calc_plan)
+            result_digest=validate_and_bind_calc_plan(task_plan,
+                session_scope='prepared-scope',surface='prepared-surface',
+                target_aliases={'entry':'prepared_entry','save':'prepared_save'})[
+                    'plan_sha256']
+            (root/'calc-task-values.json').write_text(
+                json.dumps(task_values),encoding='utf-8')
             (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
             (root/'fake-target-exit-receipt').write_text('enabled',encoding='utf-8')
             (root/'calc-save-frame-unchanged').write_text('enabled',encoding='utf-8')
@@ -1084,8 +1153,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 _guarded_owner_factory=_fake_owner_factory)
             try:
                 prepared=metadata(await server.call_tool(
-                    'interface_guarded_calc_prepare',{'attempt_id':'calc-offline-e2e-01'}))
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'calc-offline-e2e-01',
+                        'task_values':task_values,
+                        'task_plan':task_plan}))
                 self.assertEqual(prepared['status'],'prepared',prepared)
+                self.assertEqual(prepared['task_values'],task_values,prepared)
+                self.assertEqual(prepared['task_plan_sha256'],result_digest,prepared)
                 self.assertFalse(prepared['operation_invoked'],prepared)
                 self.assertFalse(prepared['input_dispatched'],prepared)
                 prepared_path=Path(prepared['artifact_path'])
@@ -1143,6 +1217,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                                  prepared['call_id'],result)
                 self.assertEqual(result['task_artifact_admission']['attempt_id'],
                                  result['attempt_id'],result)
+                self.assertEqual(result['task_artifact_admission']['task_plan_sha256'],
+                                 result_digest,result)
+                self.assertEqual(result['method_receipt']['task_plan_sha256'],
+                                 result_digest,result)
+                self.assertEqual(result['method_receipt']['task_plan_interface']
+                                 ['interface_id'],
+                                 'planner-calc-two-cell-v1',result)
                 self.assertEqual(result['task_artifact_admission']['process_generation'],
                                  source['pointer_binding']['process_generation'],result)
                 self.assertEqual(result['task_artifact_admission']['window_generation'],
@@ -1158,7 +1239,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 same_frame_save_checks=[event for event in
                     result['method_receipt']['critical_events']
                     if event.get('event')=='effect_checked'
-                    and event.get('action')=='save']
+                    and event.get('action')=='persist_document']
                 self.assertEqual(len(same_frame_save_checks),1,result)
                 self.assertEqual(same_frame_save_checks[0]['status'],
                                  'unavailable',result)
@@ -1181,7 +1262,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result['method_receipt']['reason'],'effect_unavailable',result)
                 self.assertTrue(all(row['release_verified'] is True
                                     for row in result['method_receipt']['transitions']),result)
-                self.assertTrue(any(row['predicates'].get('cells_filled') is True
+                self.assertTrue(any(row['predicates'].get('cells_match') is True
                                     for row in result['method_receipt']['observations']),result)
                 ocr_paths=list(Path(result['call_directory']).glob('calc-ocr/*.json'))
                 ocr_records=[json.loads(path.read_text()) for path in ocr_paths]
@@ -1231,7 +1312,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             # verifier must join these parsed bytes to the parent-held action
             # and exit receipts, not the presentation report file.
             artifact_path=Path(prepared['artifact_path'])
-            artifact_path.write_bytes(_CALC_TASK_FODS)
+            dynamic_fods=_CALC_TASK_FODS.replace(
+                b'office:value="731"',
+                ('office:value="'+task_values['A1']+'"').encode())
+            dynamic_fods=dynamic_fods.replace(
+                b'office:value="864"',
+                ('office:value="'+task_values['A2']+'"').encode())
+            artifact_path.write_bytes(dynamic_fods)
             report_path=Path(result['call_directory'])/'report.json'
             report_path.write_text(json.dumps({
                 'task_artifact_admission':{'forged':True},
@@ -1244,10 +1331,11 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(verified['task_effect']['reason'],
                              'registered_calc_saved_artifact_verified',verified)
             self.assertEqual(verified['task_effect']['parsed_effect']['cells'],
-                             {'A1':'731','A2':'864'},verified)
+                             task_values,verified)
             self.assertEqual(verified['task_effect']['save_controller']['call_id'],
                              prepared['call_id'],verified)
             self.assertFalse(verified['operation_invoked'],verified)
+
             repeated=metadata(await server.call_tool('interface_verify_task',{
                 'call_id':result['call_id']}))
             self.assertEqual(repeated['status'],'verified',repeated)
@@ -1315,6 +1403,208 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 (evidence_root/'manifest.json').write_text(json.dumps(
                     manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',encoding='utf-8')
 
+    async def test_semantic_plan_reuse_across_fresh_calc_owners_scores_each_task(self):
+        from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import (
+            plan as calc_symbolic_plan)
+        from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import (
+            validate_and_bind_calc_plan)
+
+        with tempfile.TemporaryDirectory() as td:
+            parent=Path(td)
+            task_plan=calc_symbolic_plan()
+            canonical_plan_bytes=json.dumps(task_plan,sort_keys=True,
+                separators=(',',':'),allow_nan=False).encode('utf-8')
+            boundary_values=(
+                ('0','999999999'), ('1','100000000'), ('9','99999999'),
+                ('10','10000000'), ('99','9999999'), ('100','999999'),
+                ('999','99999'), ('1000','9999'),
+                ('99999999','1'), ('999999999','0'))
+            task_rows=tuple((f'warm-task-{index+1:02d}',
+                {'A1':a1,'A2':a2},f'{index+1:064x}')
+                for index,(a1,a2) in enumerate(boundary_values))
+            receipts=[]
+            benchmark_started_ns=time.monotonic_ns()
+            for index,(attempt_id,task_values,incarnation) in enumerate(task_rows):
+                task_started_ns=time.monotonic_ns()
+                plan_origin=('fixture_seed' if index==0 else
+                             'prior_attempt_reuse')
+                plan_source_attempt_id=(None if index==0 else
+                                        task_rows[0][0])
+                supplied_plan=json.loads(canonical_plan_bytes)
+                root=parent/f'owner-{index+1}'
+                root.mkdir()
+                (root/'calc-task-values.json').write_text(
+                    json.dumps(task_values),encoding='utf-8')
+                (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
+                (root/'fake-target-exit-receipt').write_text('enabled',encoding='utf-8')
+                (root/'fake-calc-save-writes-artifact').write_text(
+                    'enabled',encoding='utf-8')
+                (root/'fake-process-incarnation').write_text(
+                    incarnation,encoding='ascii')
+                server=create_server({'app':20},root,session_mode='guarded-x11',
+                    guarded_process_identity=True,guarded_query_worker=True,
+                    guarded_window_lifecycle=True,guarded_owned_process=True,
+                    _guarded_owner_factory=_fake_owner_factory)
+                closed=False
+                try:
+                    prepared=metadata(await server.call_tool(
+                        'interface_guarded_calc_prepare',{
+                            'attempt_id':attempt_id,'task_values':task_values,
+                            'task_plan':supplied_plan}))
+                    self.assertEqual(prepared['status'],'prepared',prepared)
+                    observed=metadata(await server.call_tool(
+                        'interface_guarded_observe',{}))
+                    self.assertEqual(observed['status'],'observed',observed)
+                    source=observed['source']
+                    entry_alias=f'entry_{index+1}'
+                    save_alias=f'save_{index+1}'
+                    entry=metadata(await server.call_tool(
+                        'interface_guarded_mint',{
+                            'alias':entry_alias,'source_sequence':source['sequence'],
+                            'point':[16,31],'region_size':[24,16]}))
+                    save=metadata(await server.call_tool(
+                        'interface_guarded_mint',{
+                            'alias':save_alias,'source_sequence':source['sequence'],
+                            'point':[200,205],'region_size':[16,12]}))
+                    self.assertEqual(entry['status'],'minted',entry)
+                    self.assertEqual(save['status'],'minted',save)
+                    expected_binding=validate_and_bind_calc_plan(supplied_plan,
+                        session_scope=observed['session']['compiled_scope'],
+                        surface=observed['session']['compiled_surface'],
+                        target_aliases={'entry':entry_alias,'save':save_alias})
+                    result=metadata(await server.call_tool(
+                        'interface_guarded_calc_compiled',{
+                            'profile_id':'calc-ocr-save-v1',
+                            'bindings':{
+                                'entry':{'alias':entry_alias,'offset':entry['offset']},
+                                'save':{'alias':save_alias,'offset':save['offset']}},
+                            'reviewed_sequence':source['sequence'],
+                            'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                            'blank_reviewed':True,'attempt_id':attempt_id,
+                            'prepared_call_id':prepared['call_id'],
+                            'wait_for_result_ms':10000}))
+                    self.assertEqual(result['method_receipt']['task_plan_sha256'],
+                                     prepared['task_plan_sha256'],result)
+                    self.assertEqual(prepared['task_plan_sha256'],
+                                     expected_binding['plan_sha256'],prepared)
+                    self.assertEqual(result['method_receipt']['task_plan_interface'],
+                                     expected_binding['interface'],result)
+                    self.assertEqual(result['method_receipt']['completed_transitions'],2,
+                                     result)
+                    self.assertTrue(all(row['release_verified'] is True for row in
+                        result['method_receipt']['transitions']),result)
+                    self.assertIsNone(result['task_success'],result)
+                    closed_result=metadata(await server.call_tool(
+                        'interface_close',{}))
+                    closed=True
+                    self.assertEqual(closed_result['status'],'closed',closed_result)
+                    self.assertTrue(closed_result['verified'],closed_result)
+                    self.assertTrue(closed_result['release_confirmed'],closed_result)
+                    artifact_path=Path(prepared['artifact_path'])
+                    self.assertTrue(artifact_path.is_file(),artifact_path)
+                    fake_state=json.loads(next(root.rglob(
+                        'calc-fake-state.json')).read_text(encoding='utf-8'))
+                    self.assertTrue(fake_state['save_requested'],fake_state)
+                    self.assertTrue(fake_state['artifact_written_on_save'],fake_state)
+                    self.assertEqual(fake_state['completed_entries'],
+                                     [task_values['A1'],task_values['A2']],fake_state)
+                    verified=metadata(await server.call_tool(
+                        'interface_verify_task',{'call_id':result['call_id']}))
+                    self.assertEqual(verified['status'],'verified',verified)
+                    self.assertIs(verified['task_success'],True,verified)
+                    self.assertEqual(verified['task_effect']['parsed_effect']['cells'],
+                                     task_values,verified)
+                    receipts.append({'attempt_id':attempt_id,
+                        'prepared':prepared,'observed':observed,'result':result,
+                        'close':closed_result,'verified':verified,
+                        'plan_interface':result['method_receipt']['task_plan_interface'],
+                        'plan_origin':plan_origin,
+                        'plan_source_attempt_id':plan_source_attempt_id,
+                        'task_elapsed_ns':time.monotonic_ns()-task_started_ns})
+                finally:
+                    if not closed:
+                        await server.call_tool('interface_close',{})
+
+            first,second=receipts[:2]
+            self.assertEqual(len(receipts),10)
+            self.assertTrue(all(row['verified']['task_success'] is True
+                                for row in receipts))
+            self.assertEqual(len({row['verified']['task_effect']['artifact_sha256']
+                                  for row in receipts}),len(receipts))
+            self.assertEqual(len({row['observed']['session']['session_id']
+                                  for row in receipts}),len(receipts))
+            self.assertEqual(len({row['attempt_id'] for row in receipts}),len(receipts))
+            self.assertEqual(len({row['prepared']['task_plan_sha256']
+                                  for row in receipts}),1)
+            for row in receipts[1:]:
+                self.assertEqual(row['plan_origin'],'prior_attempt_reuse')
+                self.assertEqual(row['plan_source_attempt_id'],first['attempt_id'])
+            self.assertNotEqual(first['prepared']['call_id'],
+                                second['prepared']['call_id'])
+            self.assertNotEqual(first['result']['call_id'],second['result']['call_id'])
+            self.assertNotEqual(first['observed']['session']['session_id'],
+                                second['observed']['session']['session_id'])
+            self.assertNotEqual(first['plan_interface']['session_scope'],
+                                second['plan_interface']['session_scope'])
+            self.assertNotEqual(first['plan_interface']['symbols']['cell_entry']
+                                ['target_reference'],
+                                second['plan_interface']['symbols']['cell_entry']
+                                ['target_reference'])
+            self.assertEqual(first['prepared']['task_plan_sha256'],
+                             second['prepared']['task_plan_sha256'])
+            self.assertEqual(first['plan_origin'],'fixture_seed')
+            self.assertIsNone(first['plan_source_attempt_id'])
+            self.assertEqual(second['plan_origin'],'prior_attempt_reuse')
+            self.assertEqual(second['plan_source_attempt_id'],
+                             first['attempt_id'])
+            retain=os.environ.get('AGENT_INTERFACE_RETAIN_CALC_PLAN_REUSE_EVIDENCE')
+            if retain:
+                evidence_root=Path(retain).resolve()
+                evidence_root.mkdir(parents=True,exist_ok=False)
+                shutil.copytree(parent,evidence_root/'raw-runtime')
+                source_root=Path(__file__).resolve().parents[2]
+                source_files=(
+                    'runtime/cli_v1/test_mcp_owned_process.py',
+                    'runtime/cli_v1/mcp_guarded.py',
+                    'runtime/cli_v1/mcp_server.py',
+                    'runtime/guarded_x11_v1/calc_profile_v1.py',
+                    'runtime/guarded_x11_v1/calc_task_artifact_v1.py',
+                    'runtime/guarded_x11_v1/calc_symbolic_plan_v1.py')
+                manifest={'schema':'agent-interface/calc-semantic-plan-fresh-owner-reuse-v1',
+                    'conditions':{'environment':'Windows Fake X owned-process fixtures',
+                        'owners':len(receipts),'task_artifacts_per_owner':1,
+                        'retained_plan_sha256':first['prepared']['task_plan_sha256'],
+                        'provider_generation_count':0,
+                        'provider_usage':'not measured; no provider was invoked',
+                        'task_values':[row[1] for row in task_rows],
+                        'task_elapsed_ns':[row['task_elapsed_ns'] for row in receipts],
+                        'total_elapsed_ns':time.monotonic_ns()-benchmark_started_ns,
+                        'successful_task_count':sum(
+                            row['verified']['task_success'] is True for row in receipts),
+                        'reuse_scope':'semantic plan only; all sessions, aliases, artifacts and calls are fresh',
+                        'model_tokens':'not measured','efficiency_claim':False},
+                    'tasks':[{'attempt_id':row['attempt_id'],
+                        'prepared_call_id':row['prepared']['call_id'],
+                        'compiled_call_id':row['result']['call_id'],
+                        'session_id':row['observed']['session']['session_id'],
+                        'session_scope':row['plan_interface']['session_scope'],
+                        'plan_origin':row['plan_origin'],
+                        'plan_source_attempt_id':row['plan_source_attempt_id'],
+                        'plan_sha256':row['prepared']['task_plan_sha256'],
+                        'task_success':row['verified']['task_success'],
+                        'artifact_sha256':row['verified']['task_effect']['artifact_sha256'],
+                        'release_verified':[event['release_verified'] for event in
+                            row['result']['method_receipt']['transitions']],
+                        'owner_close_verified':row['close']['verified'],
+                        'owner_release_confirmed':row['close']['release_confirmed']}
+                        for row in receipts],
+                    'raw_evidence':'raw-runtime/ (ten owner call trees and generated task artifacts)',
+                    'source_sha256':{name:hashlib.sha256(
+                        (source_root/name).read_bytes()).hexdigest()
+                        for name in source_files}}
+                (evidence_root/'manifest.json').write_text(json.dumps(
+                    manifest,sort_keys=True,indent=2,allow_nan=False)+'\n',
+                    encoding='utf-8')
     async def test_registered_calc_profile_requires_window_lifecycle_at_startup(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
@@ -1388,9 +1678,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 closed=metadata(await server.call_tool('interface_close',{}))
                 self.assertTrue(closed['release_confirmed'],closed)
 
-    async def test_registered_calc_profile_stops_on_wrong_unknown_or_ambiguous_ocr(self):
+    async def test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr(self):
+        from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import (
+            plan as calc_symbolic_plan)
         for mode,expected_reason in (('wrong-after-input','effect_failed'),
                                      ('unknown-after-input','effect_unavailable'),
+                                     ('no-match-after-input','effect_unavailable'),
                                      ('ambiguous-after-input','effect_unavailable')):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
                 root=Path(td)
@@ -1405,12 +1698,19 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     source=observed['source']
                     entry=metadata(await server.call_tool('interface_guarded_mint',dict(
                         alias='calc_entry',source_sequence=source['sequence'],
-                        point=[16,31],region_size=[24,16])))
+                        point=[16,31],region_size=[24,16],freshness_ms=5000)))
                     save=metadata(await server.call_tool('interface_guarded_mint',dict(
                         alias='calc_save',source_sequence=source['sequence'],
-                        point=[200,205],region_size=[16,12])))
+                        point=[200,205],region_size=[16,12],freshness_ms=5000)))
                     self.assertEqual(entry['status'],'minted',entry)
                     self.assertEqual(save['status'],'minted',save)
+                    task_plan=calc_symbolic_plan()
+                    prepared=metadata(await server.call_tool(
+                        'interface_guarded_calc_prepare',{
+                            'attempt_id':f'calc-offline-{mode}',
+                            'task_values':{'A1':'731','A2':'864'},
+                            'task_plan':task_plan}))
+                    self.assertEqual(prepared['status'],'prepared',prepared)
                     result=metadata(await server.call_tool('interface_guarded_calc_compiled',{
                         'profile_id':'calc-ocr-save-v1',
                         'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
@@ -1418,7 +1718,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                         'reviewed_sequence':source['sequence'],
                         'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
                         'blank_reviewed':True,'attempt_id':f'calc-offline-{mode}',
+                        'prepared_call_id':prepared['call_id'],
                         'wait_for_result_ms':10000}))
+                    self.assertIn('method_receipt',result,result)
                     self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD',result)
                     self.assertEqual(result['method_receipt']['reason'],expected_reason,result)
                     self.assertEqual(result['method_receipt']['completed_transitions'],1,result)
@@ -1633,6 +1935,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 _preserve_fake_x_run('calc-cancel-during-ocr',root)
 
     async def test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown(self):
+        from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import (
+            plan as calc_symbolic_plan)
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
             (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
@@ -1652,6 +1956,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 save=metadata(await server.call_tool('interface_guarded_mint',dict(
                     alias='calc_save',source_sequence=source['sequence'],
                     point=[200,205],region_size=[16,12])))
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'calc-cancel-after-transition',
+                        'task_values':{'A1':'731','A2':'864'},
+                        'task_plan':calc_symbolic_plan()}))
+                self.assertEqual(prepared['status'],'prepared',prepared)
                 pending=metadata(await server.call_tool('interface_guarded_calc_compiled',{
                     'profile_id':'calc-ocr-save-v1',
                     'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
@@ -1659,6 +1969,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     'reviewed_sequence':source['sequence'],
                     'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
                     'blank_reviewed':True,'attempt_id':'calc-cancel-after-transition',
+                    'prepared_call_id':prepared['call_id'],
                     'wait_for_result_ms':0}))
                 self.assertEqual(pending['status'],'pending',pending)
                 deadline=time.monotonic()+3
@@ -3351,9 +3662,30 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(entered['queued'], [{'kind':X.KeyPress, 'code':1}])
                 self.assertEqual(entered['down'], [])
 
-                cancelled = metadata(await server.call_tool('interface_guarded_cancel',
-                    {'call_id':pending['call_id']}))
-                self.assertTrue(cancelled['owner_process_retired'], cancelled)
+                original_cleanup = OwnedGuardedSessionOwner._cleanup_after_owner_retirement
+
+                def delayed_cleanup(owner, retirement):
+                    time.sleep(0.35)
+                    return original_cleanup(owner, retirement)
+
+                with patch.object(OwnedGuardedSessionOwner,
+                                  '_cleanup_after_owner_retirement',
+                                  new=delayed_cleanup):
+                    cancelled = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                self.assertEqual(cancelled.get('status'), 'pending', cancelled)
+                # The public cancellation response has a shorter bounded wait
+                # than the retained cleanup transaction. Under suite load it
+                # may return pending while the exact operation still owns the
+                # retired process; retrieve that same operation to terminal.
+                cancel_deadline = time.monotonic() + 3
+                while (cancelled.get('status') == 'pending'
+                       and time.monotonic() < cancel_deadline):
+                    await asyncio.sleep(0.005)
+                    cancelled = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                self.assertIsNot(cancelled.get('status'), 'pending', cancelled)
+                self.assertIs(cancelled.get('owner_process_retired'), True, cancelled)
                 self.assertFalse(cancelled['release_confirmed'])
                 self.assertTrue(cancelled['late_server_request_possible'])
 

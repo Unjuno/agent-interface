@@ -1,0 +1,26 @@
+E
+======================================================================
+ERROR: test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger (test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/research/integration/standard_mcp_task_ledger_57_v1/test_partial_input_cancel_accounting.py", line 374, in test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger
+    await asyncio.sleep(0.05)
+          ^^^^^^^
+NameError: name 'asyncio' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 1.366s
+
+FAILED (errors=1)

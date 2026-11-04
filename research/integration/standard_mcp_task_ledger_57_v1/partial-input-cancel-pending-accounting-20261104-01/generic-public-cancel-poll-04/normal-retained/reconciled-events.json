@@ -1,0 +1,401 @@
+{
+  "complete": true,
+  "events": [
+    {
+      "call_id": "observe-01",
+      "ended_ns": 3944263817338,
+      "kind": "tool_call",
+      "method": "interface_guarded_observe",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-651a600a42d1d918f6ac53bf520027e45cb0ab7a750b8232356b9f162e2a01fe.tool-request.bin",
+          "sha256": "698edc53661982c2d68654907d3636fd3a34c4484442eb507783967c1d0eff89"
+        },
+        {
+          "path": "raw/tool-651a600a42d1d918f6ac53bf520027e45cb0ab7a750b8232356b9f162e2a01fe.tool-response.bin",
+          "sha256": "45698d69293feba592a1871c083716ba4874ba0d11dd4ebcbe44fafe65bea8f1"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"operation\": \"guarded_observe\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"observed\", \"input_dispatched\": false, \"source\": {\"sequence\": 1, \"observation_id\": \"c34ccf77a0e14ed19cffbfde47e49af0\", \"binding_revision\": 0, \"capture_ns\": 3944260072863, \"image_source\": \"exact_capture_rgb_handoff\", \"pointer_binding\": {\"focus\": 20, \"surface\": 20, \"geometry\": [0, 0, 32, 32], \"process_generation\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}, \"native\": {\"artifact\": {\"mime_type\": \"image/png\", \"path\": \"/tmp/tmpqtk_6xkj/server/12e7277ecbbe4ac0a1acab876600e822/images/523d03b50ac6489eb4da2bd4f1ec246f.png\", \"sha256\": \"7e8724a803c3d3a30d9e751c0639a0c8d52ef23b0f3c41a9543d0f313913643c\", \"bytes\": 313, \"width\": 32, \"height\": 32, \"source_raw_sha256\": \"fd07dbd471407c82423fad55d608df20b0cc3ee96d37d3473ef2cb6adde87af3\", \"timing_ns\": {\"started\": 3944256144430, \"converted\": 3944256176716, \"encoded\": 3944259944942, \"written\": 3944260040098, \"hashed\": 3944260054113}}, \"sha256\": \"fd07dbd471407c82423fad55d608df20b0cc3ee96d37d3473ef2cb6adde87af3\", \"width\": 32, \"height\": 32, \"capture_started_ns\": 3944260072863}, \"timing_ns\": {\"started\": 3944256078953, \"public_returned\": 3944260075522, \"binding_checked\": 3944260190741, \"artifact_verified\": 3944260214107, \"decoded\": 3944260216928}}, \"observation_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"status\": \"returned\", \"observation_id\": \"c34ccf77a0e14ed19cffbfde47e49af0\", \"observation\": {\"artifact\": {\"mime_type\": \"image/png\", \"path\": \"/tmp/tmpqtk_6xkj/server/12e7277ecbbe4ac0a1acab876600e822/images/523d03b50ac6489eb4da2bd4f1ec246f.png\", \"sha256\": \"7e8724a803c3d3a30d9e751c0639a0c8d52ef23b0f3c41a9543d0f313913643c\", \"bytes\": 313, \"width\": 32, \"height\": 32, \"source_raw_sha256\": \"fd07dbd471407c82423fad55d608df20b0cc3ee96d37d3473ef2cb6adde87af3\", \"timing_ns\": {\"started\": 3944256144430, \"converted\": 3944256176716, \"encoded\": 3944259944942, \"written\": 3944260040098, \"hashed\": 3944260054113}}, \"sha256\": \"fd07dbd471407c82423fad55d608df20b0cc3ee96d37d3473ef2cb6adde87af3\", \"width\": 32, \"height\": 32, \"capture_started_ns\": 3944260072863}, \"side_effect_authority\": false, \"input_dispatched\": false}, \"session\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": false, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 12, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 12, \"alive\": true, \"liveness_observed_monotonic_ns\": 3944262061716, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"image_status\": \"image\", \"call_directory\": \"/tmp/tmpqtk_6xkj/server/12e7277ecbbe4ac0a1acab876600e822\", \"call_id\": \"12e7277ecbbe4ac0a1acab876600e822\"}",
+              "type": "text"
+            },
+            {
+              "annotations": null,
+              "data": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAABAElEQVR4nLXTy3KDIBhA4ZM2vd8StUZR5P3fMguLAwoIFGfOAnDxzQ/jCVBHdkYCp+NagIeDMoHHI1oB5+JtgaeyOYHngvmAl1IFgNcihYG3/7cLvOcm50UM8JGSWJ1EAp8Rdc7zeODLXxv4mgR8b2pch1apwI9RbW/dZQAXuEClFzvlAdf4MoAKrlDFpVKBWk9QQR1MzoskoDGuaAYaV4O5zX6DBfi1E6uTeKD1A62uN9Z/FZmghRt0cNsWCXR7QOeryAS9nqDfFgOIICCMK+pB2CX/BytgsN9gBgbdBEPZR16AESSMMO4C0g9IPyCXjphg0hNMMGUDygMo44omUHeQlzFYQbHaNQAAAABJRU5ErkJggg==",
+              "meta": null,
+              "mimeType": "image/png",
+              "type": "image"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3943257915048,
+        "sdk_return_ns": 3944263557369,
+        "status": "returned",
+        "tool": "interface_guarded_observe"
+      },
+      "seq": 1,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3943255895614
+    },
+    {
+      "call_id": "mint-01",
+      "ended_ns": 3944279370297,
+      "kind": "tool_call",
+      "method": "interface_guarded_mint",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-baf9f271580a8e2d13f53d96ca3c5e012031228343d86a1927bf0a2cfbb1af14.tool-request.bin",
+          "sha256": "ab22270c383ec3888bb3391abc1ca88f23b6331a57b41db38fe2f8cadc144cb4"
+        },
+        {
+          "path": "raw/tool-baf9f271580a8e2d13f53d96ca3c5e012031228343d86a1927bf0a2cfbb1af14.tool-response.bin",
+          "sha256": "9aa5af2201078aee623677f543e0bf7a7752e85ceec8a0365539f5a198f801c2"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 2,
+        "next_id": 3,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"operation\": \"guarded_mint\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"minted\", \"alias\": \"field\", \"offset\": [6, 6], \"lifetime\": {\"clock\": \"time.monotonic_ns\", \"minted_ns\": 3944272804311, \"expires_ns\": 4244272804311, \"capture_freshness_ms\": 1500, \"authority_granted\": false, \"scope\": \"Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.\"}, \"source_sequence\": 1, \"input_dispatched\": false, \"session\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": false, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 1, \"review_required\": false, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {}, \"buttons\": []}, \"owner_process_pid\": 12, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 12, \"alive\": true, \"liveness_observed_monotonic_ns\": 3944274235836, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_directory\": \"/tmp/tmpqtk_6xkj/server/e1f54f310f014b988807b9a5180c7119\", \"call_id\": \"e1f54f310f014b988807b9a5180c7119\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3944267598705,
+        "sdk_return_ns": 3944278902758,
+        "status": "returned",
+        "tool": "interface_guarded_mint"
+      },
+      "seq": 2,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944265871566
+    },
+    {
+      "attempt_id": "partial-input-attempt-01",
+      "ended_ns": 3944287116357,
+      "kind": "model_attempt",
+      "raw_refs": [
+        {
+          "path": "raw/partial-input-attempt-01.request.bin",
+          "sha256": "a13418806133dbda8e6838b6c8523640aa13c8661c170192aa8ab9cd5bbb8917"
+        },
+        {
+          "path": "raw/partial-input-attempt-01.response.bin",
+          "sha256": "7f6c41d7ee07dca4619828d2b8db1ba63011338b210f17afa78ad0249f2d062a"
+        }
+      ],
+      "response_status": "raw_retained",
+      "seq": 3,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944285159896,
+      "status": "completed",
+      "usage": {
+        "cached_input_tokens": 8,
+        "input_tokens": 61,
+        "output_tokens": 13,
+        "reasoning_output_tokens": 2,
+        "status": "reported"
+      }
+    },
+    {
+      "call_id": "compiled-tool-01",
+      "ended_ns": 3944305834717,
+      "kind": "tool_call",
+      "method": "interface_guarded_compiled",
+      "model_attempt_id": "partial-input-attempt-01",
+      "raw_refs": [
+        {
+          "path": "raw/tool-35764dac34b51f6d98c48cb6b80726d2387e7fa51f63581516f8a87309e57cba.tool-request.bin",
+          "sha256": "cad3da4d861f4fadf845097c244fd5f51067fb6da8c6f91a0e488d4312bb162d"
+        },
+        {
+          "path": "raw/tool-35764dac34b51f6d98c48cb6b80726d2387e7fa51f63581516f8a87309e57cba.tool-response.bin",
+          "sha256": "6823bace50a4f4a01170eb5a4f4be65dcf054c657483cc159c81b01b10a390a1"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 3,
+        "next_id": 4,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"pending\", \"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"call\": {\"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"operation\": \"guarded_compiled\", \"state\": \"running\", \"arguments\": {\"interface\": {\"actions\": {\"enter\": {\"expected_effect\": {\"phase\": 1}, \"operation\": \"enter\", \"target_symbol\": \"field\"}}, \"format\": \"compiled-gui-interface-v1\", \"interface_id\": \"owned-compiled-profile\", \"method\": {\"initial_state\": \"before\", \"max_runtime_ms\": 5000, \"max_transitions\": 1, \"name\": \"one-visible-transition\", \"states\": {\"before\": {\"branches\": [{\"action\": \"enter\", \"next_state\": \"done\", \"outcome\": \"action\", \"reason\": null, \"when\": {\"phase\": 0}}]}, \"done\": {\"branches\": [{\"action\": null, \"next_state\": null, \"outcome\": \"complete\", \"reason\": null, \"when\": {\"phase\": 1}}]}}, \"version\": \"1\"}, \"predicates\": [\"phase\", \"present\"], \"session_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"surface\": \"x11-window-20\", \"symbols\": {\"field\": {\"dependencies\": [\"present\"], \"identity_predicate\": \"present\", \"kind\": \"target_reference\", \"target_reference\": \"field\"}}}, \"bindings\": {\"enter\": {\"interaction\": \"keyboard\", \"offset\": [6, 6], \"tail\": [{\"keys\": [\"CTRL\", \"a\"], \"op\": \"key_chord\"}]}}, \"predicate_rules\": {\"phase\": {\"point\": [1, 1], \"states\": [{\"rgb\": [31, 29, 1], \"value\": 0}, {\"rgb\": [255, 0, 0], \"value\": 1}]}, \"present\": {\"point\": [2, 2], \"states\": [{\"rgb\": [62, 58, 4], \"value\": true}]}}, \"effect_rules\": {\"enter\": {\"point\": [1, 1], \"rgb\": [255, 0, 0]}}}, \"backend_attempted\": true, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3944291233406,
+        "sdk_return_ns": 3944305181120,
+        "status": "returned",
+        "tool": "interface_guarded_compiled"
+      },
+      "seq": 4,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944289513266
+    },
+    {
+      "call_id": "cancel-01",
+      "ended_ns": 3944564897054,
+      "kind": "tool_call",
+      "method": "interface_guarded_cancel",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-18e04c6419865959886aa2127731469a770bb42c1206186a540dd0303040c0e1.tool-request.bin",
+          "sha256": "26b787765f3dbb62f8a61a76b9fb8a39a1afcaa0a8cb750c0ae7e5744f76694b"
+        },
+        {
+          "path": "raw/tool-18e04c6419865959886aa2127731469a770bb42c1206186a540dd0303040c0e1.tool-response.bin",
+          "sha256": "f8e6fb3b32614c3a69d9960bf652fde3387f1f2a141453dcec173201d99c11eb"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 4,
+        "next_id": 5,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"pending\", \"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"operation_id\": \"52cf753bc8ef4cad81451bed357e0b5a\", \"cancellation\": {\"operation_id\": \"52cf753bc8ef4cad81451bed357e0b5a\", \"status\": \"pending\", \"admitted_monotonic_ns\": 3944309921685, \"caller_response_deadline_monotonic_ns\": 3944609921685, \"transaction_deadline_monotonic_ns\": 3948309921685, \"owner_generation\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"child_pid\": 12, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}, \"result_available\": true, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"The response wait ended; this cancellation operation retains custody. Retrieve it through interface_results. Pending permits no replay.\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3944309707641,
+        "sdk_return_ns": 3944564026450,
+        "status": "returned",
+        "tool": "interface_guarded_cancel"
+      },
+      "seq": 5,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944308196562
+    },
+    {
+      "call_id": "results-001",
+      "ended_ns": 3944577540614,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-342c20260a9402818f35367d6571cf4903eb49d9fff5114e4e16174ddefeab85.tool-request.bin",
+          "sha256": "b0712ad9cc5f7d281a72a3892029e687e0706fde90a794e4a8d8bbe65e9832a8"
+        },
+        {
+          "path": "raw/tool-342c20260a9402818f35367d6571cf4903eb49d9fff5114e4e16174ddefeab85.tool-response.bin",
+          "sha256": "496c8117c65663e5e5451eaf50c24d34a6fda6386fe0f64b5eba6f3f0fce30d0"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 5,
+        "next_id": 6,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"runtime_failed\", \"error\": \"EOFError()\", \"operation\": \"guarded_compiled\", \"operation_invoked\": false, \"effect_status\": \"unknown\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"cleanup_status\": \"UNKNOWN\", \"owner_process\": {\"pid\": 12, \"alive\": true, \"liveness_observed_monotonic_ns\": 3944311595131, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"late_server_request_possible\": true, \"session\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 4, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}, \"owner_process_pid\": 12, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 12, \"alive\": true, \"liveness_observed_monotonic_ns\": 3944311636950, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"call_directory\": \"/tmp/tmpqtk_6xkj/server/bd64098329ea412fb87af6d91a6b6b73\", \"retained_call\": {\"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"operation\": \"guarded_compiled\", \"state\": \"finished\", \"arguments\": {\"interface\": {\"actions\": {\"enter\": {\"expected_effect\": {\"phase\": 1}, \"operation\": \"enter\", \"target_symbol\": \"field\"}}, \"format\": \"compiled-gui-interface-v1\", \"interface_id\": \"owned-compiled-profile\", \"method\": {\"initial_state\": \"before\", \"max_runtime_ms\": 5000, \"max_transitions\": 1, \"name\": \"one-visible-transition\", \"states\": {\"before\": {\"branches\": [{\"action\": \"enter\", \"next_state\": \"done\", \"outcome\": \"action\", \"reason\": null, \"when\": {\"phase\": 0}}]}, \"done\": {\"branches\": [{\"action\": null, \"next_state\": null, \"outcome\": \"complete\", \"reason\": null, \"when\": {\"phase\": 1}}]}}, \"version\": \"1\"}, \"predicates\": [\"phase\", \"present\"], \"session_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"surface\": \"x11-window-20\", \"symbols\": {\"field\": {\"dependencies\": [\"present\"], \"identity_predicate\": \"present\", \"kind\": \"target_reference\", \"target_reference\": \"field\"}}}, \"bindings\": {\"enter\": {\"interaction\": \"keyboard\", \"offset\": [6, 6], \"tail\": [{\"keys\": [\"CTRL\", \"a\"], \"op\": \"key_chord\"}]}}, \"predicate_rules\": {\"phase\": {\"point\": [1, 1], \"states\": [{\"rgb\": [31, 29, 1], \"value\": 0}, {\"rgb\": [255, 0, 0], \"value\": 1}]}, \"present\": {\"point\": [2, 2], \"states\": [{\"rgb\": [62, 58, 4], \"value\": true}]}}, \"effect_rules\": {\"enter\": {\"point\": [1, 1], \"rgb\": [255, 0, 0]}}}, \"backend_attempted\": true, \"persistence_failure\": null, \"response_wait_ms\": 0, \"cancellation\": {\"operation_id\": \"52cf753bc8ef4cad81451bed357e0b5a\", \"status\": \"pending\", \"admitted_monotonic_ns\": 3944309921685, \"caller_response_deadline_monotonic_ns\": 3944609921685, \"transaction_deadline_monotonic_ns\": 3948309921685, \"owner_generation\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"child_pid\": 12, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}}, \"cancellation\": {\"operation_id\": \"52cf753bc8ef4cad81451bed357e0b5a\", \"status\": \"pending\", \"admitted_monotonic_ns\": 3944309921685, \"caller_response_deadline_monotonic_ns\": 3944609921685, \"transaction_deadline_monotonic_ns\": 3948309921685, \"owner_generation\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"child_pid\": 12, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false}}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3944569086127,
+        "sdk_return_ns": 3944576507624,
+        "status": "returned",
+        "tool": "interface_results"
+      },
+      "seq": 6,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944567569049
+    },
+    {
+      "call_id": "results-002",
+      "ended_ns": 3944653307395,
+      "kind": "tool_call",
+      "method": "interface_results",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-b07e439bb539a1bb2b7d652726fa9a9e1ecef275ab946082c1b675d502dadb0e.tool-request.bin",
+          "sha256": "0a123d37bb8b2946c70dac187a213a23db3f18c83b668145c36b429fad670238"
+        },
+        {
+          "path": "raw/tool-b07e439bb539a1bb2b7d652726fa9a9e1ecef275ab946082c1b675d502dadb0e.tool-response.bin",
+          "sha256": "253771ec624a1a32683255c9575a455b1a050d4916f040fba2f639531936b6c2"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 6,
+        "next_id": 7,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"runtime_failed\", \"error\": \"EOFError()\", \"operation\": \"guarded_compiled\", \"operation_invoked\": false, \"effect_status\": \"unknown\", \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"cleanup_status\": \"UNKNOWN\", \"owner_process\": {\"pid\": 12, \"alive\": true, \"liveness_observed_monotonic_ns\": 3944311595131, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"late_server_request_possible\": true, \"session\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 4, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}, \"owner_process_pid\": 12, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 12, \"alive\": true, \"liveness_observed_monotonic_ns\": 3944311636950, \"exitcode\": null, \"retired\": false, \"release_confirmed\": null, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": null, \"owner_input_obligations_source\": \"child_rpc_snapshot\", \"owner_input_obligations_live_read\": {\"status\": \"not_read\"}, \"owner_release_attempt\": null, \"cleanup_status\": null}, \"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"call_directory\": \"/tmp/tmpqtk_6xkj/server/bd64098329ea412fb87af6d91a6b6b73\", \"retained_call\": {\"call_id\": \"bd64098329ea412fb87af6d91a6b6b73\", \"operation\": \"guarded_compiled\", \"state\": \"finished\", \"arguments\": {\"interface\": {\"actions\": {\"enter\": {\"expected_effect\": {\"phase\": 1}, \"operation\": \"enter\", \"target_symbol\": \"field\"}}, \"format\": \"compiled-gui-interface-v1\", \"interface_id\": \"owned-compiled-profile\", \"method\": {\"initial_state\": \"before\", \"max_runtime_ms\": 5000, \"max_transitions\": 1, \"name\": \"one-visible-transition\", \"states\": {\"before\": {\"branches\": [{\"action\": \"enter\", \"next_state\": \"done\", \"outcome\": \"action\", \"reason\": null, \"when\": {\"phase\": 0}}]}, \"done\": {\"branches\": [{\"action\": null, \"next_state\": null, \"outcome\": \"complete\", \"reason\": null, \"when\": {\"phase\": 1}}]}}, \"version\": \"1\"}, \"predicates\": [\"phase\", \"present\"], \"session_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"surface\": \"x11-window-20\", \"symbols\": {\"field\": {\"dependencies\": [\"present\"], \"identity_predicate\": \"present\", \"kind\": \"target_reference\", \"target_reference\": \"field\"}}}, \"bindings\": {\"enter\": {\"interaction\": \"keyboard\", \"offset\": [6, 6], \"tail\": [{\"keys\": [\"CTRL\", \"a\"], \"op\": \"key_chord\"}]}}, \"predicate_rules\": {\"phase\": {\"point\": [1, 1], \"states\": [{\"rgb\": [31, 29, 1], \"value\": 0}, {\"rgb\": [255, 0, 0], \"value\": 1}]}, \"present\": {\"point\": [2, 2], \"states\": [{\"rgb\": [62, 58, 4], \"value\": true}]}}, \"effect_rules\": {\"enter\": {\"point\": [1, 1], \"rgb\": [255, 0, 0]}}}, \"backend_attempted\": true, \"persistence_failure\": null, \"response_wait_ms\": 0, \"cancellation\": {\"operation_id\": \"52cf753bc8ef4cad81451bed357e0b5a\", \"status\": \"completed\", \"admitted_monotonic_ns\": 3944309921685, \"caller_response_deadline_monotonic_ns\": 3944609921685, \"transaction_deadline_monotonic_ns\": 3948309921685, \"owner_generation\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"child_pid\": 12, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 12}, \"owner_input_obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 3944615765522}}, \"cancellation\": {\"operation_id\": \"52cf753bc8ef4cad81451bed357e0b5a\", \"status\": \"completed\", \"admitted_monotonic_ns\": 3944309921685, \"caller_response_deadline_monotonic_ns\": 3944609921685, \"transaction_deadline_monotonic_ns\": 3948309921685, \"owner_generation\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"child_pid\": 12, \"x_resource_base\": 18874368, \"binding_revision\": 0}, \"release_confirmed\": false, \"task_success\": null, \"replay_allowed\": false, \"result\": {\"status\": \"cancel_requested\", \"already_requested\": false, \"input_dispatched\": false, \"release_confirmed\": false, \"review_required\": true, \"replay_allowed\": false, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 12}, \"owner_input_obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"late_server_request_possible\": true}, \"completed_monotonic_ns\": 3944615765522}}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3944640832302,
+        "sdk_return_ns": 3944652115423,
+        "status": "returned",
+        "tool": "interface_results"
+      },
+      "seq": 7,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944637240390
+    },
+    {
+      "call_id": "close-01",
+      "ended_ns": 3944666379373,
+      "kind": "tool_call",
+      "method": "interface_close",
+      "model_attempt_id": null,
+      "raw_refs": [
+        {
+          "path": "raw/tool-0045df1e82834ae61274cef85638f611db912b73b7e3968f64c3d183357364fe.tool-request.bin",
+          "sha256": "c5473d6f61ecff8029312020b2c3322ec4d4ffa9ba6908112fb7e014d5172af2"
+        },
+        {
+          "path": "raw/tool-0045df1e82834ae61274cef85638f611db912b73b7e3968f64c3d183357364fe.tool-response.bin",
+          "sha256": "5b982a904e3929d19af985b6f23c2b4216ba6cab33e74bec174d30cca9690982"
+        }
+      ],
+      "response_status": "matched",
+      "result": {
+        "id": 7,
+        "next_id": 8,
+        "result": {
+          "content": [
+            {
+              "annotations": null,
+              "meta": null,
+              "text": "{\"status\": \"cleanup_failed\", \"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"release_attempted\": true, \"release_confirmed\": false, \"cleanup_status\": \"UNKNOWN\", \"task_success\": null, \"replay_allowed\": false, \"verified\": false, \"connection_close_attempted\": false, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 12}, \"owner_input_obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"owner_process_retired\": true, \"owner_process_exitcode\": -15, \"late_server_request_possible\": true, \"retirement_reason\": \"cancel left input or server-request obligation\", \"error\": \"cancel left input or server-request obligation\", \"session\": {\"session_id\": \"ad0eb395ea1347f9a4f0e1a8708164c1\", \"mode\": \"guarded-x11-owned-process\", \"state\": \"failed\", \"binding_revision\": 0, \"targets\": {\"app\": 20}, \"recovery_required\": false, \"error\": \"cancel left input or server-request obligation\", \"authority_granted\": false, \"restart_allowed\": false, \"process_identity\": true, \"query_worker\": true, \"observation_worker\": false, \"window_lifecycle\": false, \"retention_mode\": \"files\", \"compiled_scope\": \"native-x11:09c8f83de584452aa1d08597ba30e65e\", \"compiled_surface\": \"x11-window-20\", \"observations\": null, \"target_queries\": {\"retired\": false, \"pending\": false, \"thread_alive\": true, \"close_error\": null}, \"target\": \"app\", \"observation_sequence\": 4, \"review_required\": true, \"interrupted_execution\": null, \"owner_input_obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}, \"owner_process_pid\": 12, \"owner_x_client_resource_base\": 18874368, \"owner_process\": {\"pid\": 12, \"alive\": false, \"liveness_observed_monotonic_ns\": 3944663164478, \"exitcode\": -15, \"retired\": true, \"release_confirmed\": false, \"x_client_resource_base\": 18874368}, \"owner_client_disconnect\": {\"status\": \"disconnected\", \"resource_base\": 18874368, \"expected_pid\": 12}, \"owner_input_obligations_source\": \"retired_child_shared_state\", \"owner_input_obligations_live_read\": {\"status\": \"snapshot\", \"obligations\": {\"keys\": {\"CTRL\": 1}, \"buttons\": []}}, \"owner_release_attempt\": {\"status\": \"readback_verified\", \"release\": {\"verified\": true, \"keys_down\": [], \"buttons_down\": [], \"independent_fake_x_readback\": true}}, \"cleanup_status\": \"UNKNOWN\"}, \"call_directory\": \"/tmp/tmpqtk_6xkj/server/c1afe77936ea47d5aabbd1df42910e3c\", \"call_id\": \"c1afe77936ea47d5aabbd1df42910e3c\"}",
+              "type": "text"
+            }
+          ],
+          "isError": true,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 3944657651345,
+        "sdk_return_ns": 3944665076233,
+        "status": "returned",
+        "tool": "interface_close"
+      },
+      "seq": 8,
+      "session_id": "5007326bf94844b3a7f8e9386eec81e4",
+      "started_ns": 3944656212736
+    }
+  ],
+  "raw_refs": [
+    {
+      "path": "raw/tool-651a600a42d1d918f6ac53bf520027e45cb0ab7a750b8232356b9f162e2a01fe.tool-request.bin",
+      "sha256": "698edc53661982c2d68654907d3636fd3a34c4484442eb507783967c1d0eff89"
+    },
+    {
+      "path": "raw/tool-651a600a42d1d918f6ac53bf520027e45cb0ab7a750b8232356b9f162e2a01fe.tool-response.bin",
+      "sha256": "45698d69293feba592a1871c083716ba4874ba0d11dd4ebcbe44fafe65bea8f1"
+    },
+    {
+      "path": "raw/tool-baf9f271580a8e2d13f53d96ca3c5e012031228343d86a1927bf0a2cfbb1af14.tool-request.bin",
+      "sha256": "ab22270c383ec3888bb3391abc1ca88f23b6331a57b41db38fe2f8cadc144cb4"
+    },
+    {
+      "path": "raw/tool-baf9f271580a8e2d13f53d96ca3c5e012031228343d86a1927bf0a2cfbb1af14.tool-response.bin",
+      "sha256": "9aa5af2201078aee623677f543e0bf7a7752e85ceec8a0365539f5a198f801c2"
+    },
+    {
+      "path": "raw/partial-input-attempt-01.request.bin",
+      "sha256": "a13418806133dbda8e6838b6c8523640aa13c8661c170192aa8ab9cd5bbb8917"
+    },
+    {
+      "path": "raw/partial-input-attempt-01.response.bin",
+      "sha256": "7f6c41d7ee07dca4619828d2b8db1ba63011338b210f17afa78ad0249f2d062a"
+    },
+    {
+      "path": "raw/tool-35764dac34b51f6d98c48cb6b80726d2387e7fa51f63581516f8a87309e57cba.tool-request.bin",
+      "sha256": "cad3da4d861f4fadf845097c244fd5f51067fb6da8c6f91a0e488d4312bb162d"
+    },
+    {
+      "path": "raw/tool-35764dac34b51f6d98c48cb6b80726d2387e7fa51f63581516f8a87309e57cba.tool-response.bin",
+      "sha256": "6823bace50a4f4a01170eb5a4f4be65dcf054c657483cc159c81b01b10a390a1"
+    },
+    {
+      "path": "raw/tool-18e04c6419865959886aa2127731469a770bb42c1206186a540dd0303040c0e1.tool-request.bin",
+      "sha256": "26b787765f3dbb62f8a61a76b9fb8a39a1afcaa0a8cb750c0ae7e5744f76694b"
+    },
+    {
+      "path": "raw/tool-18e04c6419865959886aa2127731469a770bb42c1206186a540dd0303040c0e1.tool-response.bin",
+      "sha256": "f8e6fb3b32614c3a69d9960bf652fde3387f1f2a141453dcec173201d99c11eb"
+    },
+    {
+      "path": "raw/tool-342c20260a9402818f35367d6571cf4903eb49d9fff5114e4e16174ddefeab85.tool-request.bin",
+      "sha256": "b0712ad9cc5f7d281a72a3892029e687e0706fde90a794e4a8d8bbe65e9832a8"
+    },
+    {
+      "path": "raw/tool-342c20260a9402818f35367d6571cf4903eb49d9fff5114e4e16174ddefeab85.tool-response.bin",
+      "sha256": "496c8117c65663e5e5451eaf50c24d34a6fda6386fe0f64b5eba6f3f0fce30d0"
+    },
+    {
+      "path": "raw/tool-b07e439bb539a1bb2b7d652726fa9a9e1ecef275ab946082c1b675d502dadb0e.tool-request.bin",
+      "sha256": "0a123d37bb8b2946c70dac187a213a23db3f18c83b668145c36b429fad670238"
+    },
+    {
+      "path": "raw/tool-b07e439bb539a1bb2b7d652726fa9a9e1ecef275ab946082c1b675d502dadb0e.tool-response.bin",
+      "sha256": "253771ec624a1a32683255c9575a455b1a050d4916f040fba2f639531936b6c2"
+    },
+    {
+      "path": "raw/tool-0045df1e82834ae61274cef85638f611db912b73b7e3968f64c3d183357364fe.tool-request.bin",
+      "sha256": "c5473d6f61ecff8029312020b2c3322ec4d4ffa9ba6908112fb7e014d5172af2"
+    },
+    {
+      "path": "raw/tool-0045df1e82834ae61274cef85638f611db912b73b7e3968f64c3d183357364fe.tool-response.bin",
+      "sha256": "5b982a904e3929d19af985b6f23c2b4216ba6cab33e74bec174d30cca9690982"
+    }
+  ],
+  "unresolved_attempt_ids": [],
+  "unresolved_tool_call_ids": []
+}

@@ -31,6 +31,12 @@ This profile does not claim a general Calc controller or a successful transfer.
 
 ## Existing evidence and remaining composition matrix
 
+The archive-to-current-main comparison of the retained live Calc G10 path is
+in [CALC_G10_CURRENT_MAIN_CROSSWALK_20261104.md](CALC_G10_CURRENT_MAIN_CROSSWALK_20261104.md).
+It confirms that the public Calc adapter composition already exists offline;
+the unresolved boundary is live provider/accounting and the frozen comparison,
+not another copy of the G10 driver.
+
 The requirement-to-test audit for current main is maintained in
 [COMPOSITION_MATRIX_20261103.md](COMPOSITION_MATRIX_20261103.md). The table
 below is a compact orientation; its older stale-wait wording is superseded by
@@ -93,6 +99,25 @@ It does not establish real-provider timing/accounting, a live Calc recovery, a
 matched efficiency result, actual provider reconciliation, retry, or full
 lifecycle accounting. See the current matrix for exact status and rerun conditions.
 
+## Provider-ledger pending cancellation composition (2026-11-04)
+
+The separate generic compiled-path regression
+`test_partial_input_cancel_accounting.py::test_generic_compiled_partial_input_cancel_polls_same_call_in_ledger`
+now binds one synthetic provider attempt to a public compiled MCP request while
+Fake X holds a key down. A test-controlled cleanup supervisor forces the public
+cancel response to `pending`; the caller then retrieves the same call ID and
+cancellation operation through `interface_results` until terminal. The Fake X
+cleanup record shows a key release, while the runtime receipt remains
+`cleanup_status=UNKNOWN`, `release_confirmed=false`, `task_success=null`, and
+replay denied. No second provider attempt, compiled call, input, or recovery is
+sent. The full raw provider ledger and Fake X evidence are retained in
+`../standard_mcp_task_ledger_57_v1/partial-input-cancel-pending-accounting-20261104-01/`.
+
+This is synthetic cancellation custody/accounting evidence, not successful
+runtime release, task effect, bounded recovery, live provider behavior, or live
+Calc/WSLc/MAP01 evidence. It narrows the composed pending-response gap; the
+positive release-and-fresh-attempt recovery gate remains open.
+
 ## Current-main OCR comparison and same-frame Save follow-up (2026-11-03)
 
 The retained r78–r83 block passed all functional gates in five of six arms;
@@ -148,3 +173,24 @@ open.
 The one-shot Calc/Xvfb run completed and the saved task effect, call/generation-bound Save request, verified enter/save releases, empty close state, natural Calc/oosplash exit, and Docker exit all passed. The preregistered equal-digest condition failed: the final accepted observation digests were distinct, so this is **FAIL_OR_UNKNOWN**, not a live same-frame pass. Raw data and gates are in [r87-c11 report](../issue57_calc_sameframe_live_20261103_r87/README.md). The earlier r84-r86 setup failures remain separately preserved. Next, identify the digest-changing observation signal from raw screenshots/metadata; do not weaken the gate or rerun a consumed attempt. No provider, efficiency, WSLc, MAP01, or broad-reliability claim follows.
 
 r87 raw-image diagnosis found the full-frame digest mismatch is sparse (591/1,024,000 pixels), including the toolbar Save icon after save and small lower chrome/scrollbar pixels; the retained task surface and selected cell appear unchanged. The preregistered full-frame digest condition still failed and remains a failed gate. The next experiment should preregister stable task-surface evidence while retaining raw full-frame images and independent artifact verification.
+## Current-main composed suite on pinned Docker (2026-11-04)
+
+The Calc plan, task-artifact verifier, public guarded MCP/owned-process path,
+provider-ledger/spool composition, and measurement validator were applied to
+current `origin/main` `cf3ddf2f8ef44f78fac3cfed78df2904aa596691` without patch
+conflicts. On the cached Xvfb image with network disabled, read-only source and
+bounded CPU/memory/PID limits, the 214-test composed set passed in normal mode
+(112.157 s) and optimized mode (113.302 s), with Docker exit 0. Exact source
+pins, command, stdout/stderr, engine/image identity, and four checksum-covered
+packets are in
+[`current-main-integration-docker-20261104/`](current-main-integration-docker-20261104/README.md)
+and its follow-up directories. The initial run and two fixture-construction
+failures remain preserved; the fixture now follows the real observe→mint
+provenance contract before checking that launch binding is refused when not
+configured.
+
+This is offline synthetic Fake X/provider composition only. No provider/model
+generation, live Calc GUI, WSLc, MAP01, token economy, or end-to-end efficiency
+was measured. It does not evaluate Docker host stability. Issue #57 remains
+open; the matched cold/warm/invalidation/repair lifecycle comparison and live
+second-domain boundary remain unresolved.

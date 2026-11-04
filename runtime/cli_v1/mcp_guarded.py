@@ -358,6 +358,14 @@ class GuardedSessionOwner(MCPSessionOwner):
                 cancelled=self.bridge._cancel_requested)
         result['profile_id'] = PROFILE_ID
         result['attempt_id'] = attempt_id
+        if profile.symbolic_plan_binding is not None:
+            result['task_plan_sha256'] = profile.symbolic_plan_binding['plan_sha256']
+            result['task_plan_interface'] = deepcopy(
+                profile.symbolic_plan_binding['interface'])
+            result['method_receipt']['task_plan_sha256'] = (
+                profile.symbolic_plan_binding['plan_sha256'])
+            result['method_receipt']['task_plan_interface'] = deepcopy(
+                profile.symbolic_plan_binding['interface'])
         result['task_effect_verification'] = {
             'status':'not_configured', 'task_success':None,
             'reason':'trusted_save_controller_unavailable'}
@@ -601,6 +609,17 @@ class GuardedSessionOwner(MCPSessionOwner):
 def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=False,
                            window_lifecycle_enabled=False,
                            calc_launch_enabled=False):
+    # Mint receipts are scoped to this MCP registration (and therefore to one
+    # server session). A caller cannot transplant aliases from another owner.
+    minted_calc_aliases = {}
+    latest_calc_source_sequence = None
+
+    def _json_tool_result(response):
+        try:
+            return json.loads(response.content[0].text)
+        except (AttributeError, IndexError, KeyError, TypeError, ValueError):
+            return None
+
     @server.tool()
     async def interface_guarded_recover_input(current_binding_revision: StrictInt,
             wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
@@ -699,8 +718,11 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             return await submit('guarded_compiled',arguments,False,False,
                 wait_for_result_ms=wait_for_result_ms)
         @server.tool()
-        async def interface_guarded_calc_prepare(attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)]) -> CallToolResult:
-            """Reserve one blank server-owned FODS for the Calc profile.
+        async def interface_guarded_calc_prepare(
+                attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
+                task_values: dict | None = None,
+                task_plan: dict | None = None) -> CallToolResult:
+            """Reserve one blank server-owned FODS and retain task inputs/plan.
 
             The call ID is the unguessable reservation handle. This operation
             creates an artifact only: it does not launch Calc, discover a
@@ -709,7 +731,37 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             A reservation is bounded to one at a time, bound to the same attempt,
             and consumed at most once by interface_guarded_calc_compiled. Do not treat its
             artifact path or call ID as proof that any process was launched.
+            `task_values` are bounded decimal strings for A1/A2 and remain in
+            parent custody for input, OCR and post-close scoring. Optional
+            `task_plan` is a bounded declarative graph without values, aliases,
+            coordinates, code or callbacks. The parent retains it and binds it
+            to fresh reviewed aliases at execution.
             """
+            from runtime.guarded_x11_v1.calc_profile_v1 import validate_calc_task_values
+            try:
+                validated_values = validate_calc_task_values(task_values)
+            except (TypeError,ValueError) as error:
+                row={'status':'invalid_request','error':'CALC_TASK_VALUES_INVALID',
+                    'detail':str(error),'operation_invoked':False,
+                    'input_dispatched':False,'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if task_plan is not None:
+                try:
+                    from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import (
+                        validate_and_bind_calc_plan)
+                    validate_and_bind_calc_plan(task_plan,
+                        session_scope='prepared-scope',
+                        surface='prepared-surface',
+                        target_aliases={'entry':'prepared_entry',
+                                        'save':'prepared_save'})
+                except (TypeError,ValueError) as error:
+                    row={'status':'invalid_request','error':'CALC_TASK_PLAN_INVALID',
+                        'detail':str(error),'operation_invoked':False,
+                        'input_dispatched':False,'task_success':None,
+                        'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
             if not re.fullmatch(r'[\x21-\x7e]{1,128}',attempt_id):
                 row={'status':'invalid_request','error':'CALC_ATTEMPT_INVALID',
                     'operation_invoked':False,'input_dispatched':False,
@@ -723,7 +775,8 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
                     'task_success':None,'replay_allowed':False}
                 return CallToolResult(content=[TextContent(
                     type='text',text=json.dumps(row,allow_nan=False))],isError=True)
-            return await submit('guarded_calc_prepare',{'attempt_id':attempt_id},
+            return await submit('guarded_calc_prepare',{'attempt_id':attempt_id,
+                'task_values':validated_values,'task_plan':task_plan},
                 False,False,wait_for_result_ms=10000)
 
         if calc_launch_enabled:
@@ -756,22 +809,25 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
                 blank_reviewed: StrictBool, attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
                 prepared_call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')] | None = None,
                 wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
-            """Run the one fixed Calc 731/864 profile through the owned process.
+            """Run the registered two-cell Calc profile through the owned process.
 
             This request selects only a registered server profile; it cannot
             supply code, OCR commands, callbacks, interface graphs, input tails,
-            or filesystem paths. Bindings provide only previously minted entry
+            or filesystem paths. A symbolic graph was bounded and retained by
+            the parent at prepare; this request cannot replace it. Bindings provide only previously minted entry
             and Save aliases/offsets. The reviewed sequence/hash must still be
             the current source; `blank_reviewed` is the caller's asserted visual
             review of that exact image. The profile rechecks current OCR inside
             the existing native input guard before Save keystrokes. A Save key
             is only a request. This profile does not score persisted workbook
-            bytes; graph `task_success` remains null. `attempt_id` joins this
+            bytes; graph `task_success` remains null until the separate
+            parent-side post-close verifier proves saved effect. `attempt_id` joins this
             local call to an outer provider ledger and carries no token claims.
             `interface_verify_task(call_id)` is available only on this owned
             guarded-X11 route and after a verified owner close plus a parent-held
             exit receipt for the exact Calc process generation. It scores no
-            caller path or supplied values; without target-exit and trusted
+            caller path; expected values come from the parent-held preparation.
+            Without target-exit and trusted
             call-owned save custody it returns unknown. The current Ctrl+S-only
             profile cannot establish persisted workbook effect.
             Call interface_guarded_calc_prepare to reserve the server-owned
@@ -820,6 +876,29 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
                     'task_success':None,'replay_allowed':False}
                 return CallToolResult(content=[TextContent(
                     type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if latest_calc_source_sequence != reviewed_sequence:
+                row={'status':'invalid_request',
+                    'error':'CALC_REVIEW_SOURCE_STALE',
+                    'detail':'reviewed sequence is not the latest source observed through this MCP session',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'release_confirmed':None,'effect_status':'unknown',
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            for name in ('entry','save'):
+                binding = bindings[name]
+                receipt = minted_calc_aliases.get(binding['alias'])
+                if (receipt is None
+                        or receipt['source_sequence'] != reviewed_sequence
+                        or receipt['offset'] != binding['offset']):
+                    row={'status':'invalid_request',
+                        'error':'CALC_BINDING_NOT_MINTED_FOR_REVIEWED_SOURCE',
+                        'detail':f'{name} alias has no matching mint receipt in this MCP session',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'release_confirmed':None,'effect_status':'unknown',
+                        'task_success':None,'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
             arguments={'profile_id':profile_id,'bindings':bindings,
                 'reviewed_sequence':reviewed_sequence,
                 'reviewed_artifact_sha256':reviewed_artifact_sha256,
@@ -868,7 +947,18 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         observation_refs=true references exact duplicate native image metadata at
         source.native within this response; image delivery is unchanged.
         """
-        return await submit('guarded_observe', {}, False, False, observation_refs=observation_refs)
+        nonlocal latest_calc_source_sequence
+        response = await submit('guarded_observe', {}, False, False,
+                                observation_refs=observation_refs)
+        receipt = _json_tool_result(response)
+        source = receipt.get('source') if isinstance(receipt,dict) else None
+        sequence = source.get('sequence') if isinstance(source,dict) else None
+        if (isinstance(receipt,dict) and receipt.get('status') == 'observed'
+                and type(sequence) is int and sequence > 0):
+            latest_calc_source_sequence = sequence
+            # Every new observation supersedes the caller's prior reviewed frame.
+            minted_calc_aliases.clear()
+        return response
 
     @server.tool()
     async def interface_guarded_mint(alias: StrictStr, source_sequence: StrictInt,
@@ -884,8 +974,19 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         never renews it. After a pause, explicitly observe/review and ground a
         new alias if needed. Creates no input or semantic identity guarantee.
         """
-        return await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
+        minted_calc_aliases.pop(alias, None)
+        response = await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
                             point=point,region_size=region_size,freshness_ms=freshness_ms),False,False)
+        receipt = _json_tool_result(response)
+        if (isinstance(receipt,dict) and receipt.get('status') == 'minted'
+                and receipt.get('alias') == alias
+                and source_sequence == latest_calc_source_sequence
+                and isinstance(receipt.get('offset'),list)
+                and len(receipt['offset']) == 2
+                and all(type(value) is int and value >= 0 for value in receipt['offset'])):
+            minted_calc_aliases[alias]={'source_sequence':source_sequence,
+                'offset':list(receipt['offset'])}
+        return response
 
     @server.tool()
     async def interface_guarded_mint_many(source_sequence: StrictInt,
@@ -902,9 +1003,28 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         Each successful reference includes its own finite lifetime in this host's
         monotonic clock. Reading retained results does not renew that deadline.
         """
-        return await submit('guarded_mint_many',{
+        references_payload=[ref.model_dump() for ref in references]
+        for reference in references_payload:
+            minted_calc_aliases.pop(reference['alias'],None)
+        response = await submit('guarded_mint_many',{
             'source_sequence':source_sequence,
-            'references':[ref.model_dump() for ref in references]},False,False)
+            'references':references_payload},False,False)
+        receipt = _json_tool_result(response)
+        if (isinstance(receipt,dict) and receipt.get('status') == 'minted'
+                and source_sequence == latest_calc_source_sequence
+                and isinstance(receipt.get('minted'),list)):
+            requested={reference['alias'] for reference in references_payload}
+            for minted in receipt['minted']:
+                if (isinstance(minted,dict) and minted.get('status','minted') == 'minted'
+                        and minted.get('alias') in requested
+                        and isinstance(minted.get('offset'),list)
+                        and len(minted['offset']) == 2
+                        and all(type(value) is int and value >= 0
+                                for value in minted['offset'])):
+                    minted_calc_aliases[minted['alias']]={
+                        'source_sequence':source_sequence,
+                        'offset':list(minted['offset'])}
+        return response
 
     @server.tool()
     async def interface_guarded_input(alias: StrictStr, offset: list[StrictInt], tail: list[dict],

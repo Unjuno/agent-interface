@@ -1,0 +1,25 @@
+{
+  "base_sha": "cf3ddf2f8ef44f78fac3cfed78df2904aa596691",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "docker_engine": "29.8.1",
+  "docker_wsl_config": "32GB/12 CPU/16GB swap/gradual reclaim",
+  "network": "none",
+  "cpus": 2,
+  "memory": "4g",
+  "memory_plus_swap": "4g total",
+  "pids_limit": 256,
+  "init": true,
+  "source_mount": "read-only",
+  "scope": "comparison measurement validator unit tests only; synthetic offline fixtures",
+  "provider_generations": 0,
+  "modes": [
+    "normal",
+    "optimized -O"
+  ],
+  "source_revision": "75e60499f1a7c9d5414c779034e2639f3313e50d plus tracked working-tree diff; exact tested source hashes in source_sha256.json",
+  "host_physical_memory_bytes": 68542832640,
+  "host_logical_cpus": 24,
+  "engine_visible_cpus": 12,
+  "engine_memory_bytes": 33658011648
+}

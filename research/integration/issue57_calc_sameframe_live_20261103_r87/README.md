@@ -1,6 +1,6 @@
 # Current-main Calc same-frame live check — r87-c11
 
-One fresh Calc/Xvfb task ran on current main `cf3ddf2f8ef44f78fac3cfed78df2904aa596691` with pinned image `sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425` and Docker Engine 29.8.1. No provider/model call. Full conditions are frozen in [preregistration](preregistration.md); source and script hashes are in [source-freeze](source-freeze.json); all raw attempt outputs and per-file hashes are under [r87-c11](r87-c11/).
+One fresh Calc/Xvfb task ran on current main `cf3ddf2f8ef44f78fac3cfed78df2904aa596691` with pinned image `sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425` and Docker Engine 29.8.1. No provider/model call. Full conditions are frozen in [preregistration](preregistration.md); source and script hashes are in [source-freeze](source-freeze.json); the retained attempt outputs and per-file hash manifest are under [r87-c11](r87-c11/). A later custody audit found seven listed log files absent and one unrecovered source-script mismatch; see the [custody follow-up](../issue57_r87_custody_correction_20261104/WINDOWS_CHECKOUT_FOLLOWUP_20261104.md).
 
 ## Result: FAIL_OR_UNKNOWN under the preregistered full-frame digest gate
 
@@ -15,3 +15,7 @@ The earlier r84/r85/r86 setup failures are preserved separately: missing mounted
 Design a prospective effect-evidence comparison that distinguishes task-surface stability from expected save-state chrome changes. Freeze the crop/normalization and verifier timing before a new attempt, keep the raw full-frame images, and independently verify the saved artifact. Do not use this result to retroactively relax the r87 gate or rerun a consumed attempt.
 
 This one local scripted task does not establish provider accounting, efficiency, broad reliability, WSLc, MAP01, or Issue #57 completion.
+
+## Custody status
+
+An additive custody audit found that the 235-entry attempt manifest is not fully present in the PR tree: seven listed logs are absent and the frozen `experiment.py` bytes are not exact. The Windows checkout also required a `-text` rule to prevent CRLF conversion of raw FODS. The precise findings and corrected offline re-audit are in [`WINDOWS_CHECKOUT_FOLLOWUP_20261104.md`](../issue57_r87_custody_correction_20261104/WINDOWS_CHECKOUT_FOLLOWUP_20261104.md) and [`issue57_r87_custody_correction_20261104/README.md`](../issue57_r87_custody_correction_20261104/README.md). The live result remains `FAIL_OR_UNKNOWN`; do not interpret this packet as complete raw custody.

@@ -9,6 +9,7 @@ from runtime.guarded_x11_v1.calc_task_artifact_v1 import (
     CalcTaskArtifact,make_registered_calc_save_controller_receipt,
     verify_task_artifact_descriptor)
 from runtime.guarded_x11_v1.process_identity import process_generation_from_identity
+from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import plan as calc_plan
 
 
 CALL_ID = '1' * 32
@@ -82,6 +83,34 @@ def successful_registered_profile_receipt():
              'effect_verification_accepted_ns':200},
             {'event':'runtime_finished','outcome':'SAFE_YIELD',
              'reason':'effect_unavailable'}]}
+
+
+def successful_symbolic_plan_receipt(artifact):
+    bound = artifact.bind_task_plan(session_scope='native-x11:session-01',
+        surface='x11-window-20',
+        target_aliases={'entry':'fresh_entry','save':'fresh_save'})
+    interface = bound['interface']
+    enter_id, save_id = 'action-' + '3' * 32, 'action-' + '4' * 32
+    receipt = successful_registered_profile_receipt()
+    receipt.update(interface_id=interface['interface_id'],
+        method=interface['method']['name'],
+        method_version=interface['method']['version'],
+        task_plan_sha256=bound['plan_sha256'],
+        task_plan_interface=interface)
+    events = receipt['critical_events']
+    replacements = [(0,'state','blank_sheet'),(0,'action','populate_cells'),
+        (0,'matched_conditions',{'blank':True,'context_ok':True}),
+        (1,'action','populate_cells'),(1,'action_id',enter_id),
+        (2,'action','populate_cells'),(2,'action_id',enter_id),
+        (3,'state','values_entered'),(3,'action','persist_document'),
+        (3,'matched_conditions',{'cells_match':True,'context_ok':True}),
+        (4,'action','persist_document'),(4,'action_id',save_id),
+        (5,'action','persist_document'),(5,'action_id',save_id)]
+    for index,key,value in replacements:
+        events[index][key]=value
+    receipt['transitions']=[{'action':'populate_cells','release_verified':True},
+        {'action':'persist_document','release_verified':True}]
+    return receipt
 
 
 class CalcTaskArtifactTests(unittest.TestCase):
@@ -214,6 +243,39 @@ class CalcTaskArtifactTests(unittest.TestCase):
         self.assertEqual(result['save_controller']['save_action_id'],
                          'action-' + '2' * 32)
 
+    def test_parent_custody_scores_distinct_values_reserved_before_gui_execution(self):
+        expected = {'A1':'24680','A2':'13579'}
+        dynamic_fods = FODS.replace(b'office:value="731"', b'office:value="24680"')
+        dynamic_fods = dynamic_fods.replace(b'office:value="864"', b'office:value="13579"')
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = new_artifact(directory, expected_values=expected, clock=lambda:150)
+            self.assertEqual(artifact.descriptor['expected_values'], expected)
+            request = artifact.record_save_request(
+                process_generation=PROCESS_GENERATION,
+                window_generation=WINDOW_GENERATION)
+            controller = make_registered_calc_save_controller_receipt(
+                descriptor=artifact.descriptor,
+                method_receipt=successful_registered_profile_receipt(),
+                save_request=request)
+            (Path(directory) / CALL_ID / ARTIFACT_NAME).write_bytes(dynamic_fods)
+            result = artifact.verify_after_close(CLOSE,
+                dict(TARGET_EXIT,observed_monotonic_ns=250),controller)
+        self.assertEqual((result['status'], result['task_success']), ('verified', True), result)
+        self.assertEqual(result['expected_values'], expected)
+        self.assertEqual(result['parsed_effect']['cells'], expected)
+        self.assertEqual(verify_saved_fods_bytes(dynamic_fods)['task_success'], False)
+
+    def test_invalid_expected_values_are_refused_before_artifact_reservation(self):
+        for expected in ({'A1':'731'}, {'A1':'001','A2':'2'},
+                         {'A1':'731','A2':'864','A3':'1'}):
+            with self.subTest(expected=expected), tempfile.TemporaryDirectory() as directory:
+                call_root=Path(directory)/CALL_ID
+                call_root.mkdir()
+                with self.assertRaises(ValueError):
+                    CalcTaskArtifact(call_root, call_id=CALL_ID,
+                        attempt_id=ATTEMPT_ID, expected_values=expected)
+                self.assertFalse((call_root / ARTIFACT_NAME).exists())
+
     def test_registered_save_receipt_refuses_missing_release_or_effect_proof(self):
         with tempfile.TemporaryDirectory() as directory:
             artifact = new_artifact(directory, clock=lambda:150)
@@ -232,6 +294,31 @@ class CalcTaskArtifactTests(unittest.TestCase):
                 save_request=request)
         self.assertIsNone(bad_release)
         self.assertIsNone(bad_effect)
+
+    def test_parent_plan_binds_planner_named_save_receipt_and_rejects_substitution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = new_artifact(directory, task_plan=calc_plan(), clock=lambda:150)
+            save_request = artifact.record_save_request(
+                process_generation=PROCESS_GENERATION,
+                window_generation=WINDOW_GENERATION)
+            method = successful_symbolic_plan_receipt(artifact)
+            kwargs = dict(descriptor=artifact.descriptor,
+                method_receipt=method, save_request=save_request,
+                parent_task_plan=artifact.task_plan,
+                parent_task_plan_sha256=artifact.task_plan_sha256)
+            controller = make_registered_calc_save_controller_receipt(**kwargs)
+            bad_event = dict(kwargs)
+            bad_event['method_receipt'] = dict(method,
+                critical_events=[dict(row) for row in method['critical_events']])
+            bad_event['method_receipt']['critical_events'][3]['action'] = 'other_save'
+            bad_digest = dict(kwargs, parent_task_plan_sha256='f' * 64)
+            substituted_plan = artifact.task_plan
+            substituted_plan['interface_id'] = 'other-plan'
+            bad_plan = dict(kwargs, parent_task_plan=substituted_plan)
+        self.assertIsNotNone(controller)
+        self.assertIsNone(make_registered_calc_save_controller_receipt(**bad_event))
+        self.assertIsNone(make_registered_calc_save_controller_receipt(**bad_digest))
+        self.assertIsNone(make_registered_calc_save_controller_receipt(**bad_plan))
 
     def test_target_process_exit_must_match_admitted_generation(self):
         with tempfile.TemporaryDirectory() as directory:

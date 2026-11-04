@@ -894,7 +894,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             'replay_allowed':False},error=True)
                 from runtime.guarded_x11_v1.calc_task_artifact_v1 import CalcTaskArtifact
                 artifact = CalcTaskArtifact(call_root, call_id=call_id,
-                    attempt_id=kwargs['attempt_id'])
+                    attempt_id=kwargs['attempt_id'],
+                    expected_values=kwargs.get('task_values'),
+                    task_plan=kwargs.get('task_plan'))
                 with calls_lock:
                     calc_artifacts[call_id] = artifact
                     calc_preparation_deadline_ns = (
@@ -906,6 +908,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     calc_preparation_slot = call_id
                 result = {'status':'prepared','call_id':call_id,
                     'attempt_id':kwargs['attempt_id'],
+                    'task_values':dict(artifact.expected_values),
+                    'task_plan_sha256':artifact.task_plan_sha256,
                     'expires_in_ms':_calc_preparation_ttl_ns // 1_000_000,
                     'artifact_path':str(artifact.path),
                     'artifact_name':'task-artifact.fods',
@@ -965,6 +969,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         calc_preparation_deadline_ns = None
                         prepared['artifact_consumed_by'] = call_id
                         calls[call_id]['task_artifact_root_call_id'] = prepared_call_id
+                        calls[call_id]['parent_task_plan'] = task_artifact.task_plan
+                        calls[call_id]['parent_task_plan_sha256'] = (
+                            task_artifact.task_plan_sha256)
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
             inspect_after = options.pop('inspect_after', None)
@@ -1533,7 +1540,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     save_controller = make_registered_calc_save_controller_receipt(
                         descriptor=descriptor,
                         method_receipt=record.get('task_method_receipt'),
-                        save_request=save_request)
+                        save_request=save_request,
+                        parent_task_plan=record.get('parent_task_plan'),
+                        parent_task_plan_sha256=record.get(
+                            'parent_task_plan_sha256'))
                     effect = verify_task_artifact_descriptor(root / artifact_root_call_id,
                         descriptor=descriptor,save_request=save_request,
                         close_receipt=close_receipt,
