@@ -6,6 +6,7 @@ import tempfile
 import ast
 from argparse import Namespace
 from pathlib import Path
+from unittest.mock import patch
 
 
 HERE = Path(__file__).resolve().parent
@@ -14,6 +15,82 @@ import map01_overlap_controller_v39 as controller
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_cover_cancel_rotates_retired_owner_only_on_eligible_route(self):
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [],
+                                "target_process_identity_reader": {"retired": True}}}
+        process = Namespace(stdin=object())
+        wait = object()
+        rotation = {"generation": 2, "source_observation": {"sequence": 8}}
+        with patch.object(controller, "rotate_retired_owner_after_cancel",
+                          return_value=rotation) as rotate:
+            result = controller.recover_cover_owner_after_cancel_if_retired(
+                process, wait, terminal, minimum_sequence=7,
+                target_process_identity=True, target_window_lifecycle=False,
+                owned_input_service=False)
+        self.assertIs(result, rotation)
+        rotate.assert_called_once_with(process, wait, terminal, minimum_sequence=7)
+
+        for terminal_mutation, flags in (
+                (lambda row: row.update(status="completed"), (True, False, False)),
+                (lambda row: None, (False, False, False)),
+                (lambda row: None, (True, True, False)),
+                (lambda row: None, (True, False, True)),
+        ):
+            candidate = {**terminal, "release": dict(terminal["release"])}
+            terminal_mutation(candidate)
+            with self.subTest(status=candidate["status"], flags=flags), \
+                    patch.object(controller, "rotate_retired_owner_after_cancel") as rotate:
+                result = controller.recover_cover_owner_after_cancel_if_retired(
+                    process, wait, candidate, minimum_sequence=7,
+                    target_process_identity=flags[0],
+                    target_window_lifecycle=flags[1],
+                    owned_input_service=flags[2])
+                self.assertIsNone(result)
+                rotate.assert_not_called()
+
+    def test_main_recovers_generation_after_each_policy_cover_cancel(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        calls = [node for node in ast.walk(main) if isinstance(node, ast.Call)
+                 and isinstance(node.func, ast.Name)]
+        cancel_lines = sorted(node.lineno for node in calls
+                              if node.func.id == "cancel_invalidated_cover")
+        recovery_lines = sorted(
+            node.lineno for node in calls
+            if node.func.id == "recover_cover_owner"
+            and node.args and isinstance(node.args[0], ast.Name)
+            and node.args[0].id == "current_terminal")
+        self.assertEqual(len(cancel_lines), 3)
+        self.assertEqual(len(recovery_lines), 4)
+        for cancel_line in cancel_lines:
+            with self.subTest(cancel_line=cancel_line):
+                self.assertTrue(any(0 < line - cancel_line <= 5
+                                    for line in recovery_lines))
+
+    def test_main_decision_records_include_cover_owner_recovery_receipts(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        decision_appends = [node for node in ast.walk(main)
+                            if isinstance(node, ast.Call)
+                            and isinstance(node.func, ast.Attribute)
+                            and isinstance(node.func.value, ast.Name)
+                            and node.func.value.id == "decisions"
+                            and node.func.attr == "append"]
+        self.assertGreater(len(decision_appends), 0)
+        for append in decision_appends:
+            with self.subTest(line=append.lineno):
+                row = append.args[0] if append.args else None
+                self.assertIsInstance(row, ast.Dict)
+                keys = {key.value for key in row.keys
+                        if isinstance(key, ast.Constant)}
+                self.assertIn("input_owner_generation_rotations", keys)
+
     def test_retired_owner_rotation_requires_verified_cancel_and_matches_generation(self):
         import io
         terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",
