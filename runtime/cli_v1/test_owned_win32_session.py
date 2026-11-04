@@ -5,9 +5,10 @@ import hashlib
 import json
 import time
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from runtime.guarded_win32_v1.operation_owner import OperationOwner, OwnerRefused
+from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.cli_v1.mcp_guarded import register_guarded_tools
 from runtime.backends.win32_v1.backend import Win32Backend
@@ -883,6 +884,98 @@ class OwnedWin32SessionTests(unittest.TestCase):
             operation_deadline_ns=self.clock() + 5_000_000_000,
             obligations=["key:map01:W"])
         self.assertEqual(admitted["action"]["status"], "admitted")
+
+    def test_late_request_overlong_observation_gap_keeps_new_generation_fenced(self):
+        supervisor = FakeCancellationSupervisor(self.owner)
+        def recovered(operation_id, generation, recovery_id, deadline_ns,
+                      obligations):
+            return {"status": "recovered", "release_confirmed": True,
+                "operation_id": operation_id, "target_generation": generation,
+                "recovery_id": recovery_id, "late_input_horizon_verified": True,
+                "late_input_horizon_ns": 100,
+                "late_input_release_received_monotonic_ns": 200,
+                "late_input_observation_end_monotonic_ns": 300,
+                "late_input_observation_count": 2,
+                "late_input_max_observed_gap_ns": 201,
+                "late_input_max_sample_gap_ns": 200}
+        supervisor.recover_orphaned_input = Mock(side_effect=recovered)
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        generation = [GEN_A]
+        session.bind_target_generation_reader(lambda: generation[0])
+        record = orphan_custody_record()
+        record["late_server_request_possible"] = True
+
+        result = session.recover_orphaned_input(
+            source_operation_id=ACTION_ID,
+            source_target_generation=GEN_A,
+            obligations=["key:map01:W"], source_custody_record=record)
+
+        self.assertEqual(result["recovery_status"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["source_action_status"], "unknown")
+        self.assertFalse(result["replay_allowed"])
+        generation[0] = GEN_B
+        binding = session.bind_target_generation()
+        with self.assertRaisesRegex(ValueError, "ORPHAN_RECOVERY_UNRESOLVED"):
+            session.admit_action_from_binding("4" * 32, "5" * 32,
+                binding["target_binding_id"],
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+
+    def test_integrated_supervisor_late_down_keeps_new_generation_fenced(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        now = [time.monotonic_ns()]
+        supervisor._clock_ns = lambda: now[0]
+        supervisor.late_input_horizon_ns = 20_000_000
+        supervisor._late_input_sample_interval_s = 0.01
+        observer_count = [0]
+
+        def exchange(role, request, deadline):
+            row = {"operation_id": request["operation_id"],
+                "target_generation": request["target_generation"],
+                "recovery_id": request["recovery_id"]}
+            if role == "recovery":
+                row["release_accepted"] = True
+                return row
+            observer_count[0] += 1
+            delayed_down = observer_count[0] == 2
+            row.update(neutral=not delayed_down,
+                observed_monotonic_ns=now[0],
+                key_button_states=[delayed_down], unicode_event_units=0)
+            return row
+
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: None
+        session = OwnedWin32SessionOwner(self.owner, supervisor,
+                                         synthetic_only=False)
+        generation = [GEN_A]
+        session.bind_target_generation_reader(lambda: generation[0])
+        record = orphan_custody_record()
+        record["late_server_request_possible"] = True
+
+        def advance(seconds):
+            now[0] += max(1, int(seconds * 1_000_000_000))
+
+        with patch("runtime.guarded_win32_v1.process_cancellation.time.sleep",
+                   side_effect=advance):
+            result = session.recover_orphaned_input(
+                source_operation_id=ACTION_ID,
+                source_target_generation=GEN_A,
+                obligations=["key:map01:W"], source_custody_record=record)
+
+        self.assertEqual(observer_count[0], 2)
+        self.assertEqual(result["recovery_status"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["source_action_status"], "unknown")
+        self.assertFalse(result["replay_allowed"])
+        generation[0] = GEN_B
+        binding = session.bind_target_generation()
+        with self.assertRaisesRegex(ValueError, "ORPHAN_RECOVERY_UNRESOLVED"):
+            session.admit_action_from_binding("4" * 32, "5" * 32,
+                binding["target_binding_id"],
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
 
     def test_orphan_recovery_accepts_known_dispatch_but_rejects_known_no_dispatch(self):
         for dispatched, expected in ((True, "recovered"), (False, "refused")):
