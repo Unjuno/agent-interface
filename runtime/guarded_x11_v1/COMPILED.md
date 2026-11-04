@@ -154,6 +154,16 @@ renews authority. After a model wait, use the ordinary target/dependency review
 and admission; preserve a refusal instead of replaying input with a longer lease.
 A useful visible predicate is separate from independently scored persisted effects.
 
+The synchronous bridge call cannot be preempted by the method budget. If an
+input callback returns after that budget, the graph retains the returned action
+and actual release receipt, marks its effect pending, and stops before another
+effect observation or input. The focused fake-bridge regression exercises this
+ordering in normal and optimized Python; it does not prove a native server will
+return, that an OS-level release happens by the deadline, or that application
+effects are correct. Resolve any such pending effect through explicit authorized
+observation and recovery; never infer task success or replay permission from the
+late receipt.
+
 ## Native cleanup receipts before execution
 
 Backend validation may refuse a program before execution and return its verified

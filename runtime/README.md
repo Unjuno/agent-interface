@@ -57,24 +57,28 @@ sources unchanged.
 ./runtime/golden-demo-v3.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
 ```
 
-### Acquisition is separate from preparation
+### Runtime acquisition, dependency preparation, and model access are separate
 
-The setup flag authorizes only the pinned Python dependency download and installation. It does
-not authorize acquiring the runtime source/package, model weights, a GUI application, Codex, or a
-container image. Keep these as distinct user decisions:
+Nothing in the setup path implicitly acquires the runtime package or model weights. The setup
+flag authorizes only creation of `runtime/.venv`, download and installation of the pinned Python
+dependencies, and the following local `doctor` check. It does not authorize a checkout, portable
+runtime artifact retrieval, model/provider setup, GUI application install, Codex install, or image
+pull. Treat each as its own explicit action:
 
 | Action | Current path | What it acquires |
 |---|---|---|
-| Get runtime source | User explicitly checks out this repository/revision. | Source code only; no model weights. |
-| Get the portable runtime | Build with the explicit `runtime.distribution_v2` command, or explicitly download the `portable-runtime-<platform>` artifact from its CI run. | A `.pyz` from committed source; CI artifacts are not a release and no setup script fetches or installs them. |
-| Prepare golden-demo Python dependencies | Pass `--install-dependencies` to the setup script. | The nine pinned distributions in `requirements-golden.txt`, into `runtime/.venv`; then it runs the fifteen-check v3 `doctor`. |
-| Use a model/provider | Use the existing Windows Codex installation and its separately configured authorization. | The golden-demo bridge does not download model weights. |
-| Install an external GUI application | Install it separately if needed. | The setup/doctor path checks for Chromium and the Codex CLI bridge; it does not install them. |
+| Get runtime source | Explicitly clone/checkout the repository and chosen revision. | Source files only; no model weights. |
+| Build the portable runtime | Explicitly run `python -m runtime.distribution_v2.build` with output paths. | A local `.pyz` plus manifest/checksum; this build reads committed source and performs no network acquisition. |
+| Retrieve a built runtime | Explicitly retrieve the `portable-runtime-<platform>` CI artifact and place it where intended. | A `.pyz` artifact; CI artifacts are not a release, and setup does not retrieve or install them. |
+| Prepare golden-demo Python dependencies | Explicitly pass `--install-dependencies` to the setup script. | Creates `runtime/.venv`, installs the nine pinned distributions from `requirements-golden.txt`, then runs the local fifteen-check v3 `doctor`. |
+| Use a model/provider | Use the existing Windows Codex installation and its separately configured authorization. | The bridge invokes that provider path; it does not download model weights or install/configure the provider. |
+| Install an external GUI application | Install it separately if needed. | Setup/doctor checks for Chromium and the Codex CLI bridge; it does not install them. |
+| Pull a container image | Explicitly select and pull the required image in the container workflow. | Golden-demo setup does not pull images or start containers. |
 
 There is currently no supported one-command runtime-package download/install flow or downloadable
 runtime release in this research-preview path. The CI workflow only builds and uploads artifacts;
-retrieving and placing one is a separate user action. The v2 setup script follows the same
-dependency-only opt-in rule. Missing external executables remain explicit `doctor` failures.
+retrieving and placing one is a separate user action. The v3 setup script implements only the
+dependency-install action above. Missing external executables remain explicit `doctor` failures.
 
 `doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
 `audit-retained` verifies source hashes and the published fixed comparison without
