@@ -1087,6 +1087,10 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         or the transient-family inspection contract of persistent-x11 mode.
         """
         nonlocal latest_calc_source_sequence
+        # Every review attempt revokes prior grounding; only a verified review
+        # may establish the source sequence used by the Calc profile.
+        latest_calc_source_sequence = None
+        minted_calc_aliases.clear()
         response = await submit('guarded_review_window',{'window_id':window_id},False,False)
         receipt = _json_tool_result(response)
         review = receipt.get('review') if isinstance(receipt,dict) else None

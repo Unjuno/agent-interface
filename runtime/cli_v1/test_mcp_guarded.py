@@ -384,8 +384,11 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
         async def submit(operation, arguments, compact, report_refs, **kwargs):
             calls.append((operation,arguments))
             if operation == 'guarded_review_window':
-                row={'status':'reviewed','review':{'source':{'sequence':7,
-                    'native':{'artifact':{'sha256':'7'*64}}}}}
+                if arguments['window_id'] == 999:
+                    row={'status':'needs_review','review':{}}
+                else:
+                    row={'status':'reviewed','review':{'source':{'sequence':7,
+                        'native':{'artifact':{'sha256':'7'*64}}}}}
             elif operation == 'guarded_mint':
                 row={'status':'minted','alias':arguments['alias'],'offset':[12,7]}
             elif operation == 'guarded_calc_compiled':
@@ -419,6 +422,18 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
             'blank_reviewed':True,'attempt_id':'calc-review-source-ledger',
             'prepared_call_id':None}),calls)
+        failed_review=metadata(await server.call_tool('interface_guarded_review_window',
+            {'window_id':999}))
+        self.assertEqual(failed_review['status'],'needs_review')
+        refused=metadata(await server.call_tool('interface_guarded_calc_compiled',{
+            'profile_id':'calc-ocr-save-v1','bindings':bindings,
+            'reviewed_sequence':7,'reviewed_artifact_sha256':'7'*64,
+            'blank_reviewed':True,'attempt_id':'calc-review-source-ledger'}))
+        self.assertEqual(refused['error'],'CALC_REVIEW_SOURCE_STALE',refused)
+        compiled_attempts=[args for operation,args in calls
+            if operation=='guarded_calc_compiled']
+        self.assertEqual([args['attempt_id'] for args in compiled_attempts],
+            ['calc-review-source-ledger'])
 
     async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
         from mcp.server.fastmcp.exceptions import ToolError
