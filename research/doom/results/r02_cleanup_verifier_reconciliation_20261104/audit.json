@@ -1,0 +1,100 @@
+{
+  "allocation_id": "map01-v39-current-main-threat-live-20261024-r02",
+  "classification": "RETAINED_CLEANUP_FALSE_NEGATIVE_RECONCILED",
+  "current_cleanup_source_git_blob": "d4b513a11a1c6a3381ef022e215c60fd869e47bb",
+  "current_event_specific_owner_rows_valid": true,
+  "current_main_commit": "98b34a5170920be1fdc725fbf6ef50538217a88e",
+  "current_owner_events_closed_recomputed": true,
+  "evidence_hashes": {
+    "PREREG.json": {
+      "canonical_crlf_sha256": "af3627c8c01c81c0938ceb20b08b6319a1312abecedc66487dcc0ec1ab93dd35",
+      "canonical_lf_sha256": "5859b26c54d6f3c713c3eafe551ebaf7568b3bba7a8b8764a69db1a73dc0a2e6",
+      "expected_sha256": "af3627c8c01c81c0938ceb20b08b6319a1312abecedc66487dcc0ec1ab93dd35",
+      "matches_representation": "CRLF",
+      "working_tree_byte_sha256": "af3627c8c01c81c0938ceb20b08b6319a1312abecedc66487dcc0ec1ab93dd35"
+    },
+    "events.jsonl": {
+      "canonical_crlf_sha256": "900bf8dd6f680d59ded67cbef4521eb29369c4dca9c6a524a84921ff5370f157",
+      "canonical_lf_sha256": "29e77e0e83edcd6b09aa929d0e26eb1a357af4016d7b7227b352205d3a109c29",
+      "expected_sha256": "900bf8dd6f680d59ded67cbef4521eb29369c4dca9c6a524a84921ff5370f157",
+      "matches_representation": "CRLF",
+      "working_tree_byte_sha256": "900bf8dd6f680d59ded67cbef4521eb29369c4dca9c6a524a84921ff5370f157"
+    },
+    "owner-events.json": {
+      "canonical_crlf_sha256": "e6ea4cfdd5622e6ac0caeb4a907b8d201e5cbdd772fd0cda431950026f559256",
+      "canonical_lf_sha256": "7f57771f1810e00c6c0995223b5b5606902ff1a07ffb2bc43a718bcb4c439c1e",
+      "expected_sha256": "e6ea4cfdd5622e6ac0caeb4a907b8d201e5cbdd772fd0cda431950026f559256",
+      "matches_representation": "CRLF",
+      "working_tree_byte_sha256": "e6ea4cfdd5622e6ac0caeb4a907b8d201e5cbdd772fd0cda431950026f559256"
+    },
+    "score.json": {
+      "canonical_crlf_sha256": "bedd07740e6e61c99e785bbfff0f411f6e8d0d4c8e06be10098ff67db0de2b39",
+      "canonical_lf_sha256": "ac6b5c8b8d6ae7195aea8ef56ede9d14796f14bb96cf62e4782d725e03dcda7a",
+      "expected_sha256": "bedd07740e6e61c99e785bbfff0f411f6e8d0d4c8e06be10098ff67db0de2b39",
+      "matches_representation": "CRLF",
+      "working_tree_byte_sha256": "bedd07740e6e61c99e785bbfff0f411f6e8d0d4c8e06be10098ff67db0de2b39"
+    },
+    "scorer-samples.jsonl": {
+      "canonical_crlf_sha256": "4593d29771356bf1aa4c8e3f8d5781e5234ce3833d04a9f6eeddcf9b6e1412ac",
+      "canonical_lf_sha256": "994e6c3c80db1a82e322dc7226fbbcc168dbad322219fd8c058a670b5128168b",
+      "expected_sha256": "4593d29771356bf1aa4c8e3f8d5781e5234ce3833d04a9f6eeddcf9b6e1412ac",
+      "matches_representation": "CRLF",
+      "working_tree_byte_sha256": "4593d29771356bf1aa4c8e3f8d5781e5234ce3833d04a9f6eeddcf9b6e1412ac"
+    }
+  },
+  "explicit_keyup_count": 4,
+  "frozen_cleanup_source_sha256_crlf": "8d8094cbe04f69d3ecb66be6ca4717c27e7a491e77efe9ea79f5bbed496e233f",
+  "frozen_cleanup_source_sha256_lf": "5f6fd4bf642e79b547cbc8b6d1cac7bb7d75e35b7c92766ba8501fdb32c0b079",
+  "frozen_repository_commit": "26c383a983782be25d6a1ae33814f7c551d88d63",
+  "generic_verified_count": 6,
+  "last_owner_event": {
+    "event": "owner_release",
+    "reason": "close",
+    "verified": true
+  },
+  "non_owner_cleanup_components": {
+    "all_cleanup_stages_returned": true,
+    "child_exit": true,
+    "empty_release_verified": true,
+    "input_terminals_complete": true,
+    "planner_close_returned": true,
+    "score_file_present": true,
+    "scorer_terminal_observed": true,
+    "stdout_reader_error_free": true,
+    "stdout_reader_retired": true
+  },
+  "old_generic_owner_predicate_closed": false,
+  "old_owner_events_closed_receipt": false,
+  "owner_event_count": 10,
+  "pass": true,
+  "preregistered_cleanup_source_sha256": "8d8094cbe04f69d3ecb66be6ca4717c27e7a491e77efe9ea79f5bbed496e233f",
+  "retained_cleanup_complete": false,
+  "retained_key_lineage_auditor_source_sha256": "efcf73b71114f748d72d42041a2b76c141c61b40305ecc8ac703aba931546e72",
+  "retained_runtime_failure": {
+    "message_retained": false,
+    "stage": "active_action_execution",
+    "type": "RuntimeError"
+  },
+  "retained_score": {
+    "death_count": 0,
+    "kill_count": 0,
+    "map_exit": false
+  },
+  "retained_task_effect": {
+    "death_count": 0,
+    "first_post_admission_useful_progress_ms": null,
+    "first_post_admission_useful_progress_ns": null,
+    "independent_sample_count": 242,
+    "independent_score_present": true,
+    "kill_count": 0,
+    "map_exit": false,
+    "useful_progress_observed": false
+  },
+  "schema": "map01-v39-r02-cleanup-verifier-reconciliation-v1",
+  "scope_limits": [
+    "X-server keymap evidence only; no physical-key or application-consumption claim",
+    "does not diagnose the RuntimeError cause",
+    "does not establish MAP01 exit, causal benefit, or project completion",
+    "posthoc read-only reconciliation; no allocation rerun or raw mutation"
+  ]
+}
