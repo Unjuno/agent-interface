@@ -17,14 +17,19 @@ def _json_bytes(value):
 class RecordedPublicMcpCaller:
     """Durably record provider attempts and their standard public Relay calls."""
 
-    def __init__(self, relay, recorder):
+    def __init__(self, relay, recorder, *, allowed_methods):
         if not callable(getattr(relay, "request", None)):
             raise TypeError("relay must expose async request(bytes)")
         if not callable(getattr(recorder, "invoke_async", None)) or not callable(
                 getattr(recorder, "invoke_tool_async", None)):
             raise TypeError("recorder must expose async provider and MCP boundaries")
+        if (type(allowed_methods) not in (set, frozenset) or not allowed_methods or
+                any(type(method) is not str or not method
+                    for method in allowed_methods)):
+            raise ValueError("allowed_methods must be a nonempty set of method names")
         self.relay = relay
         self.recorder = recorder
+        self.allowed_methods = frozenset(allowed_methods)
 
     async def invoke_provider(self, attempt_id, request_bytes, provider_call):
         """Record one injected provider call before invoking it."""
@@ -320,6 +325,8 @@ class RecordedPublicMcpCaller:
 
     async def call_tool(self, attempt_id, call_id, method, arguments):
         """Record the exact JSON request/response envelopes around Relay.request."""
+        if type(method) is not str or method not in self.allowed_methods:
+            raise ValueError("public MCP method is outside the caller allowlist")
         request = {"id": self.relay.next_id, "tool": method,
                    "arguments": arguments}
         request_bytes = _json_bytes(request)

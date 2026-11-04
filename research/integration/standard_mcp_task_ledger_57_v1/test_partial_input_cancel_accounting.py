@@ -59,7 +59,8 @@ class PartialInputCancelAccountingTests(unittest.IsolatedAsyncioTestCase):
 
                 caller = RecordedPublicMcpCaller(
                     Relay(ServerClient(), tools={
-                        "interface_guarded_calc_compiled"}), recorder)
+                        "interface_guarded_calc_compiled"}), recorder,
+                    allowed_methods={"interface_guarded_calc_compiled"})
 
                 class FakePlanner:
                     def __init__(self, answer):
@@ -294,7 +295,11 @@ class PartialInputCancelAccountingTests(unittest.IsolatedAsyncioTestCase):
                 async def call_tool(self, name, arguments):
                     return await server.call_tool(name, arguments)
 
-            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder,
+                allowed_methods={"interface_guarded_compiled",
+                    "interface_guarded_observe", "interface_guarded_mint",
+                    "interface_guarded_cancel", "interface_results",
+                    "interface_close"})
             controls = []
             closed = False
 

@@ -16,6 +16,25 @@ from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
 
 
 class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
+    async def test_unallowlisted_public_method_is_refused_before_relay_or_recording(self):
+        class Relay:
+            next_id = 1
+
+            async def request(self, _request_bytes):
+                self.fail("unallowlisted method must not reach Relay")
+
+        with tempfile.TemporaryDirectory() as temporary:
+            recorder = ProviderAttemptRecorder(Path(temporary) / "ledger")
+            relay = Relay()
+            caller = RecordedPublicMcpCaller(
+                relay, recorder, allowed_methods={"interface_guarded_calc_compiled"})
+            with self.assertRaisesRegex(ValueError, "outside the caller allowlist"):
+                await caller.call_tool(
+                    "attempt-1", "call-1", "interface_guarded_input",
+                    {"alias": "task", "offset": [0, 0], "tail": []})
+            self.assertFalse(hasattr(relay, "requested"))
+            self.assertEqual(recorder.reconcile()["events"], [])
+
     async def test_spooled_host_may_create_protocol_journal_after_request(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -134,7 +153,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                             "status": "returned", "result": {"ok": True}}
 
             relay = Relay()
-            caller = RecordedPublicMcpCaller(relay, recorder)
+            caller = RecordedPublicMcpCaller(
+                relay, recorder, allowed_methods={"interface_guarded_compiled"})
             provider_request, provider_call = build_model_provider_call(
                 model_call=model.call, root=root / "model-attempt",
                 prompt="submit the exact visible task token", image=image,
@@ -215,7 +235,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request_bytes):
                     raise AssertionError("failed model turn must not reach public MCP")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             request, provider = build_model_provider_call(
                 model_call=model.call, root=root / "failed-attempt", prompt="task",
                 image=image, contract="public-mcp", workspace=workspace)
@@ -268,7 +289,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request_bytes):
                     raise AssertionError("missing model turn must not reach public MCP")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             request, provider = build_model_provider_call(
                 model_call=model.call, root=root / "missing-turn", prompt="task",
                 image=image, contract="public-mcp", workspace=workspace)
@@ -329,7 +351,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request_bytes):
                     raise AssertionError("timed-out turn must not reach public MCP")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             request, provider = build_model_provider_call(
                 model_call=model.call, root=root / "timeout-attempt",
                 prompt="task", image=image, contract="public-mcp",
@@ -409,7 +432,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request_bytes):
                     raise AssertionError("inconsistent usage must not reach public MCP")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             request, provider = build_model_provider_call(
                 model_call=model.call, root=root / "mismatched-attempt",
                 prompt="task", image=image, contract="public-mcp",

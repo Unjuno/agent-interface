@@ -167,6 +167,22 @@ synthetic Fake X results only; the fixture has no real provider, production
 application, external scorer, native input, or live task. The saved response is
 the returned MCP text block, not a network-wire capture.
 
+### Explicit method allowlist (2026-11-04)
+
+`RecordedPublicMcpCaller` now requires a nonempty per-instance
+`allowed_methods` set and rejects any other method before Relay dispatch or
+ledger recording. The Relay should independently use the same per-attempt tool
+set. Structured JSON output alone does not constrain a model-selected method
+name. Calc orchestration must enumerate its full required set, including
+observation, fresh target review, prepare/compiled execution, result polling,
+close/release and independent task verification where applicable.
+
+The fixed `agent-interface-xvfb-mcp:late-input-r19` image was checked using a
+no-display, network-disabled stdio initialize/`tools/list` handshake (18 tools;
+schema digest is retained in the local continuation record). No GUI or input
+was invoked. This validates transport/tool exposure only, not provider-to-live-
+Calc composition or efficiency.
+
 The stale-generation composition now uses that bridge with an injected model
 call: it preserves the exact test image bytes in the wrapper-input receipt and
 captures synthetic JSONL generation events. The test sends the observation and
