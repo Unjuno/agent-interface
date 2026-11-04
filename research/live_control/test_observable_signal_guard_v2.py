@@ -72,6 +72,19 @@ class ObservableSignalGuardV2Tests(unittest.TestCase):
         self.assertFalse(event["outcome"]["grants_input_authority"])
         self.assertEqual(extractor.calls, 0)
 
+    def test_zero_health_is_a_typed_hard_invalidation(self):
+        extractor = Extractor()
+        monitor = ObservableSignalPolicyMonitor(
+            ObservableSignalGuard(spec(), signal(), signal()["binding"]), extractor)
+
+        event = monitor.observe(typed_observation(signal(0)))
+
+        self.assertEqual(event["outcome"]["status"], "HARD_INVALIDATED")
+        self.assertEqual(event["outcome"]["current_value"], 0)
+        self.assertTrue(event["outcome"]["requires_new_decision"])
+        self.assertFalse(event["outcome"]["grants_input_authority"])
+        self.assertEqual(extractor.calls, 0)
+
     def test_health_only_monitor_fails_closed_on_malformed_typed_epoch(self):
         extractor = Extractor()
         monitor = ObservableSignalPolicyMonitor(
