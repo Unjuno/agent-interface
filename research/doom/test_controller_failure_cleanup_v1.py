@@ -60,9 +60,28 @@ class Tests(unittest.TestCase):
             self.assertEqual(retained.read_text(), 'session import diagnostic\n')
             self.assertTrue(child.stderr.closed)
             receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertEqual(receipt['format'],'controller-failure-cleanup-v2')
+            self.assertEqual(receipt['primary_error_type'],'RuntimeError')
+            self.assertEqual(receipt['primary_error_message'],
+                             'session exited before ready')
+            self.assertFalse(receipt['primary_error_message_truncated'])
             self.assertEqual(receipt['stderr_capture']['status'],'complete')
             self.assertEqual(receipt['stderr_capture']['bytes_observed'],
                              len(b'session import diagnostic\n'))
+
+    def test_primary_exception_message_is_bounded_and_marks_truncation(self):
+        from doom_controller_failure_cleanup_v1 import MAX_PRIMARY_ERROR_MESSAGE_CHARS
+        with tempfile.TemporaryDirectory() as tmp:
+            error=ValueError('x'*(MAX_PRIMARY_ERROR_MESSAGE_CHARS+19))
+            with self.assertRaises(ValueError):
+                with ControllerFailureCleanup(Planner(),Path(tmp)):
+                    raise error
+            receipt=json.loads((Path(tmp)/'controller-failure.json').read_text())
+            self.assertEqual(len(receipt['primary_error_message']),
+                             MAX_PRIMARY_ERROR_MESSAGE_CHARS)
+            self.assertEqual(receipt['primary_error_message'],
+                             'x'*MAX_PRIMARY_ERROR_MESSAGE_CHARS)
+            self.assertTrue(receipt['primary_error_message_truncated'])
 
     def test_failure_cleanup_bounds_stderr_reader_and_leaves_timed_out_stream_open(self):
         class BlockingReader:
