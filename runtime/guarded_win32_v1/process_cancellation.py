@@ -535,11 +535,79 @@ class OperationCancellationSupervisor:
                     "release_confirmed": False,
                     "release_receipt": release,
                     "readback": readback if type(readback) is dict else None}
+        horizon_observations = [readback]
+        horizon_end_ns = release_received_ns + getattr(
+            self, "late_input_horizon_ns", 0)
+        while True:
+            remaining_ns = horizon_end_ns - self._clock_ns()
+            if remaining_ns <= 0:
+                break
+            remaining_s = remaining_ns / 1_000_000_000
+            time.sleep(min(getattr(self, "_late_input_sample_interval_s", 0.025),
+                           remaining_s))
+            readback = self._exchange_helper("observer", dict(request,
+                request_id=uuid.uuid4().hex), deadline_ns)
+            observed_ns = (readback.get("observed_monotonic_ns")
+                           if type(readback) is dict else None)
+            completed_ns = self._clock_ns()
+            valid_observation = (type(readback) is dict
+                and readback.get("operation_id") == operation_id
+                and readback.get("target_generation") == generation
+                and readback.get("recovery_id") == recovery_id
+                and readback.get("neutral") is True
+                and _consistent_neutral_observation(readback, obligations)
+                and type(observed_ns) is int
+                and observed_ns >= horizon_observations[-1]["observed_monotonic_ns"]
+                and observed_ns <= completed_ns and completed_ns < deadline_ns)
+            if not valid_observation:
+                self._invalidate_helper("observer", deadline_ns)
+                return {"status": "unknown", "reason": "late_input_horizon_unconfirmed",
+                    "operation_id": operation_id,
+                    "target_generation": generation, "recovery_id": recovery_id,
+                    "release_confirmed": False, "release_receipt": release,
+                    "readback": readback if type(readback) is dict else None,
+                    "late_input_horizon_ns": getattr(
+                        self, "late_input_horizon_ns", 0),
+                    "late_input_observation_count": len(horizon_observations)}
+            horizon_observations.append(readback)
+        horizon_ns = getattr(self, "late_input_horizon_ns", 0)
+        max_gap_ns = (max(25_000_000,
+            int(getattr(self, "_late_input_sample_interval_s", 0.025)
+                * 4 * 1_000_000_000)) if horizon_ns else None)
+        max_observed_gap_ns = max((right["observed_monotonic_ns"]
+            - left["observed_monotonic_ns"]
+            for left, right in zip(horizon_observations,
+                                   horizon_observations[1:])), default=0)
+        if (horizon_ns and (self._clock_ns() < horizon_end_ns
+                or horizon_observations[-1]["observed_monotonic_ns"]
+                    - release_received_ns < horizon_ns
+                or max_observed_gap_ns > max_gap_ns)):
+            return {"status": "unknown", "reason": "late_input_horizon_incomplete",
+                "operation_id": operation_id, "target_generation": generation,
+                "recovery_id": recovery_id, "release_confirmed": False,
+                "release_receipt": release, "readback": horizon_observations[-1],
+                "late_input_horizon_ns": horizon_ns,
+                "late_input_observation_count": len(horizon_observations),
+                "late_input_release_received_monotonic_ns": release_received_ns,
+                "late_input_observation_end_monotonic_ns":
+                    horizon_observations[-1]["observed_monotonic_ns"],
+                "late_input_max_observed_gap_ns": max_observed_gap_ns,
+                "late_input_max_sample_gap_ns": max_gap_ns}
+        recovery_completed_ns = (self._clock_ns() if horizon_ns
+                                 else completed_ns)
         return {"status": "recovered", "operation_id": operation_id,
                 "target_generation": generation, "recovery_id": recovery_id,
                 "release_confirmed": True, "release_receipt": release,
                 "readback": readback,
-                "recovery_completed_monotonic_ns": completed_ns}
+                "recovery_completed_monotonic_ns": recovery_completed_ns,
+                "late_input_horizon_ns": horizon_ns,
+                "late_input_observation_count": len(horizon_observations),
+                "late_input_release_received_monotonic_ns": release_received_ns,
+                "late_input_observation_end_monotonic_ns":
+                    horizon_observations[-1]["observed_monotonic_ns"],
+                "late_input_max_observed_gap_ns": max_observed_gap_ns,
+                "late_input_max_sample_gap_ns": max_gap_ns,
+                "late_input_horizon_verified": bool(horizon_ns)}
 
     def _run_observer(self, operation_id, generation, request, not_before_ns):
         observation_request = dict(request)
