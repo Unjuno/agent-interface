@@ -13,8 +13,15 @@ CUSTODY_NAME = 'calc-artifact-custody.json'
 
 
 def _identity(info):
+    # On Windows, stat/lstat and fstat expose st_ctime_ns differently:
+    # pathname stats report creation time while descriptor stats report the
+    # last metadata-change time.  Compare the stable creation timestamp when
+    # available, retaining ctime on platforms that do not expose birthtime.
+    change_or_birth_ns = getattr(info, 'st_birthtime_ns', None)
+    if type(change_or_birth_ns) is not int:
+        change_or_birth_ns = info.st_ctime_ns
     return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns,
-            info.st_ctime_ns)
+            change_or_birth_ns)
 
 
 def _read_regular(path, *, max_bytes):

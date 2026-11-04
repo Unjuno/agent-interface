@@ -6,7 +6,8 @@ import unittest
 from pathlib import Path
 
 from runtime.guarded_x11_v1.calc_effect_v1 import (
-    ARTIFACT_NAME, CUSTODY_NAME, verify_call_owned_calc_effect)
+    ARTIFACT_NAME, CUSTODY_NAME, _identity, _read_regular,
+    verify_call_owned_calc_effect)
 
 
 FODS = (b'<?xml version="1.0"?><office:document-content '
@@ -24,14 +25,24 @@ CLOSE = {'status':'closed','verified':True,'owner_process_retired':True,
 
 
 class CalcEffectGateTests(unittest.TestCase):
+    def test_regular_artifact_read_uses_path_and_descriptor_stable_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / ARTIFACT_NAME
+            artifact.write_bytes(b'blank')
+            artifact.write_bytes(FODS)
+
+            data, identity = _read_regular(artifact, max_bytes=64 * 1024)
+
+            self.assertEqual(data, FODS)
+            self.assertEqual(identity, _identity(artifact.lstat()))
+
     def test_self_consistent_forged_sidecar_cannot_promote_parsed_bytes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             artifact = root / ARTIFACT_NAME
             artifact.write_bytes(FODS)
             info = artifact.stat()
-            identity = [info.st_dev, info.st_ino, info.st_size,
-                        info.st_mtime_ns, info.st_ctime_ns]
+            identity = list(_identity(info))
             close_hash = hashlib.sha256(json.dumps(CLOSE, sort_keys=True,
                 separators=(',', ':')).encode()).hexdigest()
             custody = {
