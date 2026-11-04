@@ -141,6 +141,84 @@ class ProviderAttemptRecorder:
                 "response_ref": response_ref,
             })
 
+    def observe_late_usage(self, attempt_id, *, usage, usage_bytes,
+                           observed_ns=None):
+        """Attach one cumulative attempt-usage receipt after terminal return.
+
+        This is accounting evidence only: it cannot change the terminal status,
+        add a provider attempt, or authorize any later tool operation. The raw
+        receipt must be a JSON encoding of the normalized usage mapping.
+        """
+        if not isinstance(attempt_id, str) or not _ATTEMPT_ID.fullmatch(attempt_id):
+            raise AttemptJournalError("attempt id must be a safe path component")
+        if not isinstance(usage_bytes, bytes):
+            raise AttemptJournalError("late usage receipt must be raw bytes")
+        try:
+            _validate_usage(usage)
+            decoded = json.loads(usage_bytes.decode("utf-8"))
+        except (LedgerValidationError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise AttemptJournalError("late usage receipt is malformed") from exc
+        if decoded != usage:
+            raise AttemptJournalError("late usage receipt does not match normalized usage")
+        if usage.get("status") not in ("partial", "reported"):
+            raise AttemptJournalError("late usage must contain reported counters")
+
+        with self._lock:
+            current = self.reconcile(allow_incomplete=True)
+            starts = {row["attempt_id"]: row for row in self._read_rows()
+                      if row["event"] == "model_attempt_started"}
+            terminals = {row["attempt_id"]: row for row in self._read_rows()
+                         if row["event"] == "model_attempt_finished"}
+            start = starts.get(attempt_id)
+            terminal = terminals.get(attempt_id)
+            if start is None or terminal is None:
+                raise AttemptJournalError("late usage requires a terminal attempt")
+            if start.get("session_id") != self.session_id:
+                raise IncompleteProviderAttemptError(
+                    "cannot observe usage for another recorder session")
+            if terminal["status"] not in ("timeout", "failed", "cancelled"):
+                raise AttemptJournalError(
+                    "late usage is only valid for a non-completed attempt")
+            observations = [row for row in self._read_rows()
+                            if row.get("event") == "model_attempt_usage_observed" and
+                            row.get("attempt_id") == attempt_id]
+            prior_usage = (observations[-1]["usage"] if observations else
+                           terminal["usage"])
+            if prior_usage["status"] == "reported":
+                raise AttemptJournalError("attempt already has complete late usage")
+            if any(value is not None and
+                   (usage.get(key) is None or usage.get(key) < value)
+                   for key, value in prior_usage.items() if key != "status"):
+                raise AttemptJournalError(
+                    "late cumulative usage regressed or omitted a known counter")
+            if not current["complete"] and attempt_id in current["unresolved_attempt_ids"]:
+                raise IncompleteProviderAttemptError("attempt is not terminal")
+
+            observed_ns = self._now() if observed_ns is None else observed_ns
+            if type(observed_ns) is not int or observed_ns < terminal["ended_ns"]:
+                raise AttemptJournalError("late usage must follow the terminal attempt")
+            latest_recorded_ns = max((row.get(
+                "ended_ns", row.get("started_ns", row.get("observed_ns", -1)))
+                for row in self._read_rows()), default=-1)
+            if observed_ns < latest_recorded_ns:
+                raise AttemptJournalError(
+                    "late usage must follow the existing journal chronology")
+            if observations and observed_ns < observations[-1]["observed_ns"]:
+                raise AttemptJournalError("late usage observations must be chronological")
+            observation_index = len(observations) + 1
+            receipt_ref = self._write_raw(
+                attempt_id, f"late-usage-{observation_index:04d}", usage_bytes)
+            self._append({
+                "event": "model_attempt_usage_observed",
+                "attempt_id": attempt_id,
+                "session_id": self.session_id,
+                "observation_index": observation_index,
+                "observed_ns": observed_ns,
+                "usage_scope": "attempt_total",
+                "usage": usage,
+                "receipt_ref": receipt_ref,
+            })
+
     def invoke(self, attempt_id, request_bytes, provider_call):
         """Record a call, including thrown failures, and return its raw result."""
         self.begin(attempt_id, request_bytes)
@@ -400,6 +478,7 @@ class ProviderAttemptRecorder:
         with self._lock:
             rows = self._read_rows()
             starts, finished, model_order = {}, {}, []
+            late_usage = {}
             tool_starts, tool_finished, tool_order = {}, {}, []
             previous_started_ns = -1
             latest_ended_ns = -1
@@ -407,7 +486,8 @@ class ProviderAttemptRecorder:
             for row in rows:
                 event = row.get("event")
                 attempt_id = row.get("attempt_id")
-                if task_score_row is not None:
+                if (task_score_row is not None and
+                        row.get("event") != "model_attempt_usage_observed"):
                     raise AttemptJournalError("task score must be the terminal journal event")
                 valid_attempt_id = (isinstance(attempt_id, str) and
                                     _ATTEMPT_ID.fullmatch(attempt_id))
@@ -415,7 +495,9 @@ class ProviderAttemptRecorder:
                      and not valid_attempt_id) or
                     (event in ("tool_call_started", "tool_call_finished") and
                      attempt_id is not None and not valid_attempt_id) or
-                    (event == "task_score_recorded" and attempt_id is not None)):
+                    (event == "task_score_recorded" and attempt_id is not None) or
+                    (event == "model_attempt_usage_observed" and
+                     not valid_attempt_id)):
                     raise AttemptJournalError("journal row has an invalid attempt id")
                 if event == "model_attempt_started":
                     if attempt_id in starts:
@@ -452,6 +534,49 @@ class ProviderAttemptRecorder:
                     if response_ref is not None:
                         self._verify_raw_ref(response_ref)
                     finished[attempt_id] = row
+                elif event == "model_attempt_usage_observed":
+                    terminal = finished.get(attempt_id)
+                    observations = late_usage.setdefault(attempt_id, [])
+                    if (terminal is None or
+                            terminal["status"] not in ("timeout", "failed", "cancelled")):
+                        raise AttemptJournalError("orphan late usage receipt")
+                    if (row.get("session_id") != starts[attempt_id]["session_id"] or
+                            row.get("usage_scope") != "attempt_total"):
+                        raise AttemptJournalError("late usage receipt changed its owner or scope")
+                    if (type(row.get("observation_index")) is not int or
+                            row["observation_index"] != len(observations) + 1):
+                        raise AttemptJournalError("late usage observation sequence is invalid")
+                    observed_ns = row.get("observed_ns")
+                    if (type(observed_ns) is not int or
+                            observed_ns < terminal["ended_ns"] or
+                            observed_ns < latest_ended_ns or
+                            observed_ns < previous_started_ns or
+                            (observations and
+                             observed_ns < observations[-1]["observed_ns"])):
+                        raise AttemptJournalError("late usage observation time is invalid")
+                    previous_started_ns = observed_ns
+                    latest_ended_ns = max(latest_ended_ns, observed_ns)
+                    try:
+                        _validate_usage(row.get("usage"))
+                        receipt_bytes = self._verify_raw_ref(row.get("receipt_ref"))
+                        decoded = json.loads(receipt_bytes.decode("utf-8"))
+                    except (LedgerValidationError, UnicodeDecodeError,
+                            json.JSONDecodeError) as exc:
+                        raise AttemptJournalError("late usage receipt is malformed") from exc
+                    if (row["usage"].get("status") not in ("partial", "reported") or
+                            decoded != row["usage"]):
+                        raise AttemptJournalError("late usage raw receipt does not match")
+                    prior_usage = (observations[-1]["usage"] if observations else
+                                   terminal["usage"])
+                    if prior_usage["status"] == "reported":
+                        raise AttemptJournalError("late usage follows complete usage")
+                    if any(value is not None and
+                           (row["usage"].get(key) is None or
+                            row["usage"].get(key) < value)
+                           for key, value in prior_usage.items() if key != "status"):
+                        raise AttemptJournalError(
+                            "late cumulative usage regressed or omitted a known counter")
+                    observations.append(row)
                 elif event == "tool_call_started":
                     call_id = row.get("call_id")
                     if (not isinstance(call_id, str) or
@@ -553,15 +678,22 @@ class ProviderAttemptRecorder:
                 refs = [start["request_ref"]]
                 if terminal.get("response_ref") is not None:
                     refs.append(terminal["response_ref"])
-                ordered_events.append((start["started_ns"], {
+                late = late_usage.get(attempt_id, [])
+                refs.extend(item["receipt_ref"] for item in late)
+                event = {
                     "kind": "model_attempt", "attempt_id": attempt_id,
                     "session_id": start["session_id"], "status": terminal["status"],
                     "started_ns": start["started_ns"],
-                    "ended_ns": terminal["ended_ns"], "usage": terminal["usage"],
+                    "ended_ns": terminal["ended_ns"],
+                    "usage": (late[-1]["usage"] if late else terminal["usage"]),
                     "response_status": ("raw_retained" if terminal.get(
                         "response_ref") is not None else "unavailable"),
                     "raw_refs": refs,
-                }))
+                }
+                if late:
+                    event["late_usage_observed_ns"] = [
+                        item["observed_ns"] for item in late]
+                ordered_events.append((start["started_ns"], event))
 
             for call_id in tool_order:
                 if call_id not in tool_finished:

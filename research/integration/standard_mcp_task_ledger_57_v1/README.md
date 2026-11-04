@@ -128,6 +128,15 @@ bytes and digest with its scorer ID and `true` / `false` / `unknown` verdict.
 The recorder validates and preserves this caller-supplied certificate; it
 cannot establish that the scorer was truly independent. Recording a score also
 prevents later attempts from being appended to that run.
+`observe_late_usage` adds a separately timestamped, SHA-256-bound provider
+receipt after a failed, cancelled, or timed-out attempt has already returned.
+Each receipt is a cumulative total for that one attempt; known counters cannot
+decrease or disappear across snapshots. Reconciliation retains every receipt,
+the original terminal status and task score, and projects the latest snapshot
+onto the original attempt so aggregate totals count it once. A completed
+`reported` snapshot closes further late-usage updates. The recorder does not
+query a provider or infer billing. This is a local ledger capability; no real
+provider's post-timeout delivery behavior is established by the synthetic test.
 The recorder resolves the raw directory at startup and before each write; it
 refuses a path that no longer resolves to the run's direct `raw/` child. The
 caller must still provide a private, exclusively owned run directory.
