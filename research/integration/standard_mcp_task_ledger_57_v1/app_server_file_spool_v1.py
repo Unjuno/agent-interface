@@ -214,6 +214,32 @@ def publish_stage(root: Path, attempt_id: str, stage: str, record: dict) -> None
     })
 
 
+def publish_late_usage(root: Path, attempt_id: str, sequence: int, record: dict) -> None:
+    """Publish one immutable, custody-bound usage row after UNKNOWN."""
+    attempt_id = _attempt_id(attempt_id)
+    if type(sequence) is not int or sequence < 1:
+        raise ValueError("late usage sequence must be a positive integer")
+    if not isinstance(record, dict):
+        raise TypeError("late usage record must be an object")
+    _, inflight, responses = _spool_dirs(Path(root))
+    if not (inflight / f"{attempt_id}.json").is_file():
+        raise SpoolError("cannot publish late usage without an inflight claim")
+    if not (responses / f"{attempt_id}.unknown.json").is_file():
+        raise SpoolError("late usage requires an immutable UNKNOWN receipt")
+    envelope = {
+        "schema": "agent-interface/app-server-spool-late-usage-v1",
+        "attempt_id": attempt_id,
+        "sequence": sequence,
+        "record": record,
+    }
+    encoded = json.dumps(envelope, sort_keys=True, separators=(",", ":"),
+                         allow_nan=False).encode("utf-8")
+    if len(encoded) > _MAX_RECORD_BYTES:
+        raise SpoolError("late usage record exceeds the bounded spool record size")
+    _write_json_atomic_once(
+        responses / f"{attempt_id}.late-usage-{sequence:06d}.json", envelope)
+
+
 def wait_for_stage(root: Path, attempt_id: str, stage: str, *, timeout: float) -> dict:
     """Wait without resubmitting; timeout is an explicit UNKNOWN outcome."""
     attempt_id = _attempt_id(attempt_id)

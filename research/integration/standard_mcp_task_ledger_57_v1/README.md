@@ -158,8 +158,15 @@ after the timeout terminal row is durable; its separate
 usage notifications. It retains the exact App Server JSONL usage row separately
 from the normalized ledger receipt. The wait does not consume `turn/completed`
 or make another public MCP call. This is a deterministic adapter composition;
-`app_server_spool_worker_v1.py` still closes its client immediately after a
-timeout and does not yet publish a late-usage sidecar.
+`app_server_spool_worker_v1.py` now publishes the immutable UNKNOWN receipt
+first, then holds the App Server client for a fixed five-second grace. During
+that window it waits only for fresh same-turn usage notifications and stores
+each exact JSONL row in an immutable `*.late-usage-NNNNNN.json` sidecar with
+thread/turn identity and SHA-256 custody. A late `turn/completed` answer is not
+read or returned, the timed-out request is not retried, and the client closes
+after the grace. The sidecar is retained evidence; automatic ingestion into
+the downstream task ledger/scorer is not yet connected. The worker-path test
+uses a synthetic client and does not establish real provider timing or billing.
 This is a research composition adapter, not an automatic hook in the frozen
 integrated-efficiency runner or every production provider/orchestrator. The
 [`recorded_integrated_efficiency_model_call_v1.py`](recorded_integrated_efficiency_model_call_v1.py)
