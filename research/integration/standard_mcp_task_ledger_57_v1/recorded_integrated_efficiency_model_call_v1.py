@@ -79,13 +79,16 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
             try:
                 return {"result": model_call(
                     root, prompt, image, contract, Path(workspace)),
-                    "error": None, "error_usage": None}
+                    "error": None, "error_usage": None,
+                    "late_usage_source": None}
             except BaseException as exc:
                 # Return the exception as data. In particular, asyncio's
                 # thread bridge may reconstruct TimeoutError and drop custom
                 # attributes attached by a provider adapter.
                 return {"result": None, "error": exc,
-                        "error_usage": getattr(exc, "usage", None)}
+                        "error_usage": getattr(exc, "usage", None),
+                        "late_usage_source": getattr(
+                            exc, "late_usage_source", None)}
 
         task = asyncio.create_task(asyncio.to_thread(invoke_model_call))
         cancelled = False
@@ -100,16 +103,21 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
                 cancelled = True
                 if task.cancelled():
                     outcome = {"result": None, "error": exc,
-                               "error_usage": getattr(exc, "usage", None)}
+                               "error_usage": getattr(exc, "usage", None),
+                               "late_usage_source": getattr(
+                                   exc, "late_usage_source", None)}
                     break
             except BaseException as exc:
                 outcome = {"result": None, "error": exc,
-                           "error_usage": getattr(exc, "usage", None)}
+                           "error_usage": getattr(exc, "usage", None),
+                           "late_usage_source": getattr(
+                               exc, "late_usage_source", None)}
                 break
 
         result = outcome["result"]
         error = outcome["error"]
         error_usage = outcome["error_usage"]
+        late_usage_source = outcome.get("late_usage_source")
 
         raw = event_bytes()
         if cancelled:
@@ -122,10 +130,13 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
         if error is not None:
             status = ("timeout" if isinstance(
                 error, (TimeoutError, subprocess.TimeoutExpired)) else "failed")
-            return {"status": status,
-                    "usage": _usage({"usage": error_usage}),
-                    "response_bytes": raw,
-                    "error_type": type(error).__name__}
+            result = {"status": status,
+                      "usage": _usage({"usage": error_usage}),
+                      "response_bytes": raw,
+                      "error_type": type(error).__name__}
+            if status == "timeout" and late_usage_source is not None:
+                result["late_usage_source"] = late_usage_source
+            return result
         return {"status": "completed", "usage": _usage(result),
                 "response_bytes": raw, "backend_result": result}
 

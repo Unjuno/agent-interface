@@ -377,6 +377,155 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(summary["usage_status"], "incomplete")
             self.assertIsNone(summary["input_tokens"])
 
+    async def test_post_score_late_app_server_usage_is_custodied_without_answer_replay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "session" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(b"")
+
+            def received(message):
+                return (json.dumps({"direction": "received",
+                                    "observed_ns": 1,
+                                    "message": message},
+                                   separators=(",", ":")).encode("utf-8") + b"\n")
+
+            initial_usage = {"last": {"inputTokens": 19,
+                                       "cachedInputTokens": 7}}
+            initial_row = received({
+                "method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-late", "turnId": "turn-late",
+                    "tokenUsage": initial_usage}})
+            partial_usage = {"last": {"inputTokens": 20,
+                                       "cachedInputTokens": 7}}
+            partial_row = received({
+                "method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-late", "turnId": "turn-late",
+                    "tokenUsage": partial_usage}})
+            final_usage = {"last": {
+                "inputTokens": 21, "outputTokens": 4,
+                "cachedInputTokens": 7, "cacheWriteInputTokens": 0,
+                "reasoningOutputTokens": 1}}
+            final_row = received({
+                "method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-late", "turnId": "turn-late",
+                    "tokenUsage": final_usage}})
+            stale_answer = received({
+                "method": "turn/completed", "params": {
+                    "threadId": "thread-late", "turn": {
+                        "id": "turn-late", "status": "completed",
+                        "items": [{"type": "agentMessage",
+                                   "text": json.dumps({
+                                       "method": "interface_guarded_compiled",
+                                       "arguments": {"stale": True}})}]}}})
+
+            class LatePlanner:
+                late_rows_written = False
+
+                def begin_turn(self, *_args, **_kwargs):
+                    return SimpleNamespace(thread_id="thread-late",
+                                           turn_id="turn-late")
+
+                def await_turn(self, _handle, timeout):
+                    journal.write_bytes(initial_row)
+                    raise TimeoutError("turn deadline elapsed")
+
+                def late_usage_cursor(self, handle):
+                    assert handle.thread_id == "thread-late"
+                    return 1, journal.stat().st_size
+
+                def wait_late_usage(self, handle, cursor, timeout):
+                    assert handle.turn_id == "turn-late"
+                    assert 0 <= timeout <= 5
+                    if cursor[0] == 1 and not self.late_rows_written:
+                        assert cursor == (1, len(initial_row))
+                        with journal.open("ab") as stream:
+                            stream.write(stale_answer)
+                            stream.write(partial_row)
+                            stream.write(final_row)
+                        self.late_rows_written = True
+                        return partial_usage, 2
+                    if cursor[0] == 2 and self.late_rows_written:
+                        return final_usage, 3
+                    return None
+
+            model = AppServerPublicMcpModelCall(
+                LatePlanner(), journal, workspace=workspace,
+                contract="public-mcp", output_schema={"type": "object"},
+                model="gpt-test", effort="low")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request_bytes):
+                    raise AssertionError("late answer must never reach public MCP")
+
+            relay = RejectingRelay()
+            caller = RecordedPublicMcpCaller(
+                relay, recorder, allowed_methods={"interface_guarded_compiled"})
+            request, provider = build_model_provider_call(
+                model_call=model.call, root=root / "late-attempt",
+                prompt="task", image=image, contract="public-mcp",
+                workspace=workspace)
+            outcome = await caller.invoke_generation_to_tool(
+                "attempt-late", request, provider, "call-late",
+                "interface_guarded_compiled", json.loads)
+            generation = outcome["generation"]
+
+            self.assertFalse(outcome["tool_call_submitted"])
+            self.assertEqual(generation["status"], "timeout")
+            self.assertEqual(generation["usage"]["input_tokens"], 19)
+            self.assertIsNone(generation["usage"]["output_tokens"])
+            self.assertTrue(hasattr(generation.get("late_usage_source"), "read"))
+            self.assertEqual(relay.next_id, 1)
+            before_score = recorder.reconcile()
+            self.assertEqual(before_score["events"][0]["status"], "timeout")
+            self.assertFalse(any(row.get("event") ==
+                                 "model_attempt_usage_observed"
+                                 for row in before_score["events"]))
+            with self.assertRaisesRegex(ValueError, "only after task score"):
+                await caller.observe_late_usage(
+                    "attempt-late", generation, timeout=5)
+            recorder.record_task_score("synthetic-oracle-v1", True,
+                                        b"synthetic-state=unchanged")
+
+            observed = await caller.observe_late_usage(
+                "attempt-late", generation, timeout=5)
+            self.assertTrue(observed["observed"])
+            self.assertEqual(observed["observations"], 2)
+            self.assertEqual(observed["usage"], {
+                "status": "reported", "input_tokens": 21, "output_tokens": 4,
+                "cached_input_tokens": 7, "cache_write_input_tokens": 0,
+                "reasoning_output_tokens": 1, "image_input_tokens": None})
+            after = recorder.reconcile()
+            attempt, score = after["events"]
+            self.assertEqual([event["kind"] for event in after["events"]],
+                             ["model_attempt", "task_score"])
+            self.assertEqual(attempt["status"], "timeout")
+            self.assertEqual(attempt["usage"], observed["usage"])
+            self.assertTrue(score["task_success"])
+            self.assertEqual(len(attempt["late_usage_observed_ns"]), 2)
+            self.assertEqual(len(after["raw_refs"]), 7)
+            source_refs = [ref for ref in after["raw_refs"]
+                           if "late-source-" in ref["path"]]
+            source_rows = [Path(recorder.root, ref["path"]).read_bytes()
+                           for ref in source_refs]
+            self.assertEqual(source_rows, [partial_row, final_row])
+            source_path = Path(recorder.root, source_refs[-1]["path"])
+            self.assertEqual(summarize(after["events"])["model_attempt_count"], 1)
+            self.assertEqual(summarize(after["events"])["input_tokens"], 21)
+            self.assertEqual(summarize(after["events"])["output_tokens"], 4)
+            self.assertTrue(summarize(after["events"])["task_success"])
+            source_path.write_bytes(final_row.replace(b"\"inputTokens\":21",
+                                                       b"\"inputTokens\":22"))
+            with self.assertRaisesRegex(ValueError, "raw evidence digest does not match"):
+                recorder.reconcile()
+
     async def test_usage_mismatch_with_protocol_journal_skips_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

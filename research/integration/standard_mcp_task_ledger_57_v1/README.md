@@ -151,6 +151,15 @@ request before `Relay.request` and retains the complete returned envelope. Its
 `invoke_generation_to_tool` path submits only completed generations with
 captured response bytes; a failed generation is durably recorded without a
 tool submission.
+On the App Server adapter path, a timeout can carry an explicit late-usage
+source. The standard caller captures its same-turn usage/journal boundary only
+after the timeout terminal row is durable; its separate
+`observe_late_usage` method requires task-score custody and waits only for new
+usage notifications. It retains the exact App Server JSONL usage row separately
+from the normalized ledger receipt. The wait does not consume `turn/completed`
+or make another public MCP call. This is a deterministic adapter composition;
+`app_server_spool_worker_v1.py` still closes its client immediately after a
+timeout and does not yet publish a late-usage sidecar.
 This is a research composition adapter, not an automatic hook in the frozen
 integrated-efficiency runner or every production provider/orchestrator. The
 [`recorded_integrated_efficiency_model_call_v1.py`](recorded_integrated_efficiency_model_call_v1.py)

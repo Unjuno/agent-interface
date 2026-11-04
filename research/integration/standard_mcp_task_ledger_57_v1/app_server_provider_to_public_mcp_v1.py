@@ -100,6 +100,111 @@ def _best_effort_partial_turn_usage(response_bytes, *, thread_id, turn_id):
     return None if not updates else updates[-1]
 
 
+def _normalized_late_usage(value):
+    if type(value) is not dict or type(value.get("last")) is not dict:
+        raise ValueError("late app-server usage has no last-turn snapshot")
+    last = value["last"]
+    fields = {
+        "input_tokens": "inputTokens",
+        "output_tokens": "outputTokens",
+        "cached_input_tokens": "cachedInputTokens",
+        "cache_write_input_tokens": "cacheWriteInputTokens",
+        "reasoning_output_tokens": "reasoningOutputTokens",
+        "image_input_tokens": "imageInputTokens",
+    }
+    counts = {}
+    for target, source in fields.items():
+        amount = last.get(source)
+        if amount is not None and (type(amount) is not int or amount < 0):
+            raise ValueError("late app-server usage counters must be nonnegative integers")
+        counts[target] = amount
+    if all(counts[name] is not None for name in ("input_tokens", "output_tokens")):
+        status = "reported"
+    elif any(amount is not None for amount in counts.values()):
+        status = "partial"
+    else:
+        raise ValueError("late app-server usage has no known counters")
+    return {"status": status, **counts}
+
+
+class _LateAppServerUsageSource:
+    """Read only new, same-turn usage rows after caller terminalization."""
+
+    def __init__(self, planner, handle, journal_path):
+        self.planner = planner
+        self.handle = handle
+        self.journal_path = Path(journal_path)
+        self._lock = threading.Lock()
+        self._cursor = None
+
+    def capture_terminal(self):
+        """Mark the exact usage/journal boundary after the timeout is durable."""
+        with self._lock:
+            if self._cursor is not None:
+                raise RuntimeError("late usage terminal boundary was already captured")
+            cursor = self.planner.late_usage_cursor(self.handle)
+            if (type(cursor) is not tuple or len(cursor) != 2 or
+                    any(type(value) is not int or value < 0 for value in cursor)):
+                raise RuntimeError("planner returned an invalid late usage cursor")
+            self._cursor = cursor
+
+    def read(self, timeout):
+        """Return one cumulative update with its exact appended JSONL row."""
+        if (type(timeout) not in (int, float) or timeout < 0 or timeout > 30):
+            raise ValueError("late usage wait must be between 0 and 30 seconds")
+        with self._lock:
+            if self._cursor is None:
+                raise RuntimeError("late usage boundary has not been captured")
+            prior_count, offset = self._cursor
+            received = self.planner.wait_late_usage(
+                self.handle, self._cursor, timeout)
+            if received is None:
+                return None
+            token_usage, next_count = received
+            if type(next_count) is not int or next_count != prior_count + 1:
+                raise RuntimeError("planner returned a non-advancing usage cursor")
+
+            if self.journal_path.stat().st_size < offset:
+                raise RuntimeError("app-server protocol journal was truncated")
+            with self.journal_path.open("rb") as stream:
+                stream.seek(offset)
+                appended = stream.read()
+            match = None
+            consumed_bytes = 0
+            for line in appended.splitlines(keepends=True):
+                if not line.endswith((b"\n", b"\r")):
+                    break
+                consumed_bytes += len(line)
+                try:
+                    row = json.loads(line)
+                except (TypeError, ValueError):
+                    continue
+                message = row.get("message") if isinstance(row, dict) else None
+                if (not isinstance(row, dict) or row.get("direction") != "received" or
+                        not isinstance(message, dict) or
+                        message.get("method") != "thread/tokenUsage/updated"):
+                    continue
+                params = message.get("params")
+                if (isinstance(params, dict) and
+                        params.get("threadId") == self.handle.thread_id and
+                        params.get("turnId") == self.handle.turn_id):
+                    match = (line, params.get("tokenUsage"))
+                    break
+            if match is None:
+                raise RuntimeError("new usage notification has no retained raw row")
+            source_bytes, source_usage = match
+            if source_usage != token_usage:
+                raise RuntimeError("usage notification differs from retained raw row")
+            usage = _normalized_late_usage(token_usage)
+            usage_bytes = json.dumps(
+                usage, allow_nan=False, sort_keys=True,
+                separators=(",", ":")).encode("utf-8")
+            self._cursor = (next_count, offset + consumed_bytes)
+            return {"usage": usage, "usage_bytes": usage_bytes,
+                    "source_bytes": source_bytes,
+                    "observed_ns": time.perf_counter_ns()}
+
+
 def parse_app_server_tool_request(response_bytes, *, thread_id, turn_id):
     """Read the one completed structured answer from a retained protocol slice."""
     if not isinstance(response_bytes, bytes):
@@ -223,6 +328,11 @@ class AppServerPublicMcpModelCall:
                         call_error.usage = None
                         call_error.usage_error = (
                             "exception usage differs from retained protocol journal")
+                if (isinstance(call_error, TimeoutError) and
+                        callable(getattr(self.planner, "late_usage_cursor", None)) and
+                        callable(getattr(self.planner, "wait_late_usage", None))):
+                    call_error.late_usage_source = _LateAppServerUsageSource(
+                        self.planner, handle, self.protocol_journal_path)
             raise call_error
 
         if turn is None or not getattr(turn, "answer_eligible", False):
