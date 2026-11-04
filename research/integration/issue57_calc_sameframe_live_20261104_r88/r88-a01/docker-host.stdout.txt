@@ -1,0 +1,21 @@
+attempt_dir=r88-a01
+start_utc=2026-11-04T02:23:28Z
+image_os=debian 12
+python=Python 3.11.2
+package_libreoffice=4:7.4.7-1+deb12u14
+package_tesseract=5.3.0-2
+Traceback (most recent call last):
+  File "/evidence/r88-a01/experiment.py", line 221, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/evidence/r88-a01/experiment.py", line 171, in main
+    raise RuntimeError('compiled response omitted its method receipt')
+RuntimeError: compiled response omitted its method receipt

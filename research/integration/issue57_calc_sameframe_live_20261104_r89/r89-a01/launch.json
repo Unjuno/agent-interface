@@ -1,0 +1,978 @@
+{
+  "attempt_id": "issue57-r89-a01",
+  "authority_granted": false,
+  "call_directory": "/evidence/r89-a01/server-output/33a0d425b2c64b2ca87db828f92b1159",
+  "call_id": "33a0d425b2c64b2ca87db828f92b1159",
+  "initial_process_group_custody": {
+    "authority_granted": false,
+    "child": {
+      "argv": [
+        "/usr/lib/libreoffice/program/soffice.bin",
+        "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+        "--calc",
+        "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+        "--nologo",
+        "--nodefault",
+        "--nofirststartwizard",
+        "--norestore"
+      ],
+      "authority_granted": false,
+      "executable": "/usr/lib/libreoffice/program/soffice.bin",
+      "expected_argv": [
+        "/usr/lib/libreoffice/program/soffice.bin",
+        "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+        "--calc",
+        "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+        "--nologo",
+        "--nodefault",
+        "--nofirststartwizard",
+        "--norestore"
+      ],
+      "input_dispatched": false,
+      "launcher_pid": 2242,
+      "launcher_start_ticks": 108356,
+      "package_version": "4:7.4.7-1+deb12u14",
+      "parent_pid": 2242,
+      "pid": 2252,
+      "replay_allowed": false,
+      "start_ticks": 108357,
+      "task_success": null
+    },
+    "custody": {
+      "expected_members": {
+        "2242": 108356,
+        "2252": 108357
+      },
+      "launcher": {
+        "pid": 2242,
+        "start_ticks": 108356
+      },
+      "pgid": 2242,
+      "schema": "agent-interface/calc-process-group-custody-v1",
+      "session_id": 2242,
+      "target": {
+        "pid": 2252,
+        "start_ticks": 108357
+      }
+    },
+    "input_dispatched": false,
+    "replay_allowed": false,
+    "status": "child_retained",
+    "task_success": null
+  },
+  "input_dispatched": false,
+  "launch_receipt": {
+    "argv": [
+      "/usr/lib/libreoffice/program/soffice",
+      "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+      "--calc",
+      "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+      "--nologo",
+      "--nodefault",
+      "--nofirststartwizard",
+      "--norestore"
+    ],
+    "artifact_path": "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+    "environment_overrides": {
+      "SAL_USE_VCLPLUGIN": "gen"
+    },
+    "input_dispatched": false,
+    "pid": 2242,
+    "profile_directory": "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+    "replay_allowed": false,
+    "start_ticks": 108356,
+    "status": "launched",
+    "task_success": null
+  },
+  "operation_invoked": true,
+  "parent_process_custody": "retained",
+  "prepared_call_id": "1cc9b48dcb44487993f9e691b116c0fd",
+  "process_group_cleanup": null,
+  "replay_allowed": false,
+  "status": "candidate_found",
+  "target_launch_status": "launched",
+  "task_success": null,
+  "window_discovery": {
+    "authority_granted": false,
+    "candidate": {
+      "authenticated_role": false,
+      "discovery_title_hint": "task-artifact.fods",
+      "discovery_title_xid": 8389410,
+      "focused_after": true,
+      "focused_before": true,
+      "input_authority": false,
+      "mapped": true,
+      "observed_monotonic_ns": 1085515997888,
+      "parent_xid": 2097252,
+      "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+      "process_incarnation": "fcc0279451e7e0aae16c8d257630efd5bcae2fe2efd687d46d5b161e435b8af9",
+      "process_pid": 2257,
+      "process_start_ticks": 108442,
+      "query_started_monotonic_ns": 1085514845818,
+      "role_cue": null,
+      "schema": "agent-interface/x11-window-metadata-cues-v1",
+      "title_cue": "task-artifact.fods - LibreOffice Calc",
+      "transient_for_xid": null,
+      "window_incarnation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+      "wm_class": [
+        "libreoffice",
+        "libreoffice-calc"
+      ],
+      "xid": 8389410
+    },
+    "child": {
+      "argv": [
+        "/usr/lib/libreoffice/program/soffice.bin",
+        "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+        "--calc",
+        "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+        "--nologo",
+        "--nodefault",
+        "--nofirststartwizard",
+        "--norestore"
+      ],
+      "authority_granted": false,
+      "executable": "/usr/lib/libreoffice/program/soffice.bin",
+      "expected_argv": [
+        "/usr/lib/libreoffice/program/soffice.bin",
+        "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+        "--calc",
+        "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+        "--nologo",
+        "--nodefault",
+        "--nofirststartwizard",
+        "--norestore"
+      ],
+      "input_dispatched": false,
+      "launcher_pid": 2242,
+      "launcher_start_ticks": 108356,
+      "package_version": "4:7.4.7-1+deb12u14",
+      "parent_pid": 2242,
+      "pid": 2257,
+      "replay_allowed": false,
+      "start_ticks": 108442,
+      "task_success": null
+    },
+    "custody": {
+      "expected_members": {
+        "2242": 108356,
+        "2257": 108442
+      },
+      "launcher": {
+        "pid": 2242,
+        "start_ticks": 108356
+      },
+      "pgid": 2242,
+      "schema": "agent-interface/calc-process-group-custody-v1",
+      "session_id": 2242,
+      "target": {
+        "pid": 2257,
+        "start_ticks": 108442
+      }
+    },
+    "input_dispatched": false,
+    "replay_allowed": false,
+    "samples": [
+      {
+        "monotonic_ns": 1083583115589,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1083738161781,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1083892442456,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1084046649739,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1084201007202,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1084354856894,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2252,
+            "replay_allowed": false,
+            "start_ticks": 108357,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2252": 108357
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1084508904901,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "advanced",
+          "task_success": null,
+          "transition": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "gui_executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "input_dispatched": false,
+            "observed_monotonic_ns": 1084505687389,
+            "previous_target": {
+              "pid": 2252,
+              "start_ticks": 108357
+            },
+            "replay_allowed": false,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            },
+            "task_success": null,
+            "transition": "pre_review_gui_child_replacement"
+          }
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1084663102929,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1084816890554,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1085189752926,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1085356160457,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": []
+      },
+      {
+        "monotonic_ns": 1085521793443,
+        "query_status": "discovered",
+        "synchronization": {
+          "authority_granted": false,
+          "child": {
+            "argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "authority_granted": false,
+            "executable": "/usr/lib/libreoffice/program/soffice.bin",
+            "expected_argv": [
+              "/usr/lib/libreoffice/program/soffice.bin",
+              "-env:UserInstallation=file:///evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/calc-launch-profile",
+              "--calc",
+              "/evidence/r89-a01/server-output/1cc9b48dcb44487993f9e691b116c0fd/task-artifact.fods",
+              "--nologo",
+              "--nodefault",
+              "--nofirststartwizard",
+              "--norestore"
+            ],
+            "input_dispatched": false,
+            "launcher_pid": 2242,
+            "launcher_start_ticks": 108356,
+            "package_version": "4:7.4.7-1+deb12u14",
+            "parent_pid": 2242,
+            "pid": 2257,
+            "replay_allowed": false,
+            "start_ticks": 108442,
+            "task_success": null
+          },
+          "custody": {
+            "expected_members": {
+              "2242": 108356,
+              "2257": 108442
+            },
+            "launcher": {
+              "pid": 2242,
+              "start_ticks": 108356
+            },
+            "pgid": 2242,
+            "schema": "agent-interface/calc-process-group-custody-v1",
+            "session_id": 2242,
+            "target": {
+              "pid": 2257,
+              "start_ticks": 108442
+            }
+          },
+          "input_dispatched": false,
+          "replay_allowed": false,
+          "status": "unchanged",
+          "task_success": null
+        },
+        "windows": [
+          {
+            "authenticated_role": false,
+            "discovery_title_hint": "task-artifact.fods",
+            "discovery_title_xid": 8389410,
+            "focused_after": true,
+            "focused_before": true,
+            "input_authority": false,
+            "mapped": true,
+            "observed_monotonic_ns": 1085515997888,
+            "parent_xid": 2097252,
+            "process_generation": "d704922985a66a2d9ad5097b7771e41695aa23f1b0355ed4e7ef63bd41dd558b",
+            "process_incarnation": "fcc0279451e7e0aae16c8d257630efd5bcae2fe2efd687d46d5b161e435b8af9",
+            "process_pid": 2257,
+            "process_start_ticks": 108442,
+            "query_started_monotonic_ns": 1085514845818,
+            "role_cue": null,
+            "schema": "agent-interface/x11-window-metadata-cues-v1",
+            "title_cue": "task-artifact.fods - LibreOffice Calc",
+            "transient_for_xid": null,
+            "window_incarnation": "50dc1503403e2470ed42f9b6f8809dda1c19d66c5eb528219f928640f2213ed9",
+            "wm_class": [
+              "libreoffice",
+              "libreoffice-calc"
+            ],
+            "xid": 8389410
+          }
+        ]
+      }
+    ],
+    "status": "candidate_found",
+    "task_success": null
+  }
+}

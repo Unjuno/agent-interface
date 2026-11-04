@@ -1086,4 +1086,20 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         bridge's focused-window contract, not authenticated application identity
         or the transient-family inspection contract of persistent-x11 mode.
         """
-        return await submit('guarded_review_window',{'window_id':window_id},False,False)
+        nonlocal latest_calc_source_sequence
+        # Every review attempt revokes prior grounding; only a verified review
+        # may establish the source sequence used by the Calc profile.
+        latest_calc_source_sequence = None
+        minted_calc_aliases.clear()
+        response = await submit('guarded_review_window',{'window_id':window_id},False,False)
+        receipt = _json_tool_result(response)
+        review = receipt.get('review') if isinstance(receipt,dict) else None
+        source = review.get('source') if isinstance(review,dict) else None
+        sequence = source.get('sequence') if isinstance(source,dict) else None
+        if (isinstance(receipt,dict) and receipt.get('status') == 'reviewed'
+                and type(sequence) is int and sequence > 0):
+            latest_calc_source_sequence = sequence
+            # A successful review is a fresh source just like observe; old
+            # aliases cannot remain grounded after the reviewed frame changes.
+            minted_calc_aliases.clear()
+        return response
