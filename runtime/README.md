@@ -59,6 +59,13 @@ sources unchanged.
 
 ### Runtime acquisition, dependency preparation, and model access are separate
 
+**Nothing is downloaded or installed merely by reading this guide or invoking a setup
+script without its explicit flag.** A user who wants a runnable runtime must first
+choose and explicitly perform one of these acquisition paths: check out the source,
+build the portable archive locally, or retrieve a platform artifact produced by CI.
+There is no supported command that silently downloads and installs a runtime package.
+The setup scripts below do not perform any of those runtime-acquisition steps.
+
 Nothing in the setup path implicitly acquires the runtime package or model weights. The setup
 flag authorizes only creation of `runtime/.venv`, download and installation of the pinned Python
 dependencies, and the following local `doctor` check. It does not authorize a checkout, portable
@@ -67,10 +74,10 @@ pull. Treat each as its own explicit action:
 
 | Action | Current path | What it acquires |
 |---|---|---|
-| Get runtime source | Explicitly clone/checkout the repository and chosen revision. | Source files only; no model weights. |
+| Get runtime source | Explicitly clone/checkout the repository and chosen revision. | Source files only; no model weights or provider setup. |
 | Build the portable runtime | Explicitly run `python -m runtime.distribution_v2.build` with output paths. | A local `.pyz` plus manifest/checksum; this build reads committed source and performs no network acquisition. |
 | Retrieve a built runtime | Explicitly retrieve the `portable-runtime-<platform>` CI artifact and place it where intended. | A `.pyz` artifact; CI artifacts are not a release, and setup does not retrieve or install them. |
-| Prepare golden-demo Python dependencies | Explicitly pass `--install-dependencies` to the setup script. | Creates `runtime/.venv`, installs the nine pinned distributions from `requirements-golden.txt`, then runs the local fifteen-check v3 `doctor`. |
+| Prepare golden-demo Python dependencies | Explicitly pass `--install-dependencies` to the setup script. | Creates `runtime/.venv`, installs the nine pinned distributions from `requirements-golden.txt`, then runs the local fifteen-check v3 `doctor`. This does not get or install the runtime package. |
 | Use a model/provider | Use the existing Windows Codex installation and its separately configured authorization. | The bridge invokes that provider path; it does not download model weights or install/configure the provider. |
 | Install an external GUI application | Install it separately if needed. | Setup/doctor checks for Chromium and the Codex CLI bridge; it does not install them. |
 | Pull a container image | Explicitly select and pull the required image in the container workflow. | Golden-demo setup does not pull images or start containers. |
