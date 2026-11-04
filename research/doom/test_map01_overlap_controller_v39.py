@@ -14,6 +14,106 @@ import map01_overlap_controller_v39 as controller
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_retired_process_identity_terminal_carries_rotation_generation_into_recovery(self):
+        import io
+        import json
+        import sys
+        from types import ModuleType
+
+        # Isolate the method under test from the backend's historical import
+        # chain (which pulls optional desktop spreadsheet dependencies).
+        stubs = {
+            "doom_owner_thread_release_batch_backend_v1": {"Backend": type("Previous", (), {})},
+            "input_transition_owner_v4": {"InputOwner": type("TransitionOwner", (), {})},
+            "input_owner_v12": {"InputOwner": type("NativeOwner", (), {})},
+            "target_process_identity_v1": {"IdentityReader": type("IdentityReader", (), {})},
+            "executor_v3": {"DecisionRequired": type("DecisionRequired", (Exception,), {})},
+            "verified_interruption_release_v1": {
+                "qualified_interruption_release": lambda *_args, **_kwargs: False,
+            },
+        }
+        previous_modules = {name: sys.modules.get(name) for name in stubs}
+        for name, members in stubs.items():
+            module = ModuleType(name)
+            for key, value in members.items():
+                setattr(module, key, value)
+            sys.modules[name] = module
+        try:
+            from doom_process_identity_backend_v1 import Backend
+        finally:
+            for name, previous_module in previous_modules.items():
+                if previous_module is None:
+                    del sys.modules[name]
+                else:
+                    sys.modules[name] = previous_module
+
+        emitted = []
+        backend = Namespace(
+            _external_emit=emitted.append,
+            _provided_input_owner=None,
+            capture_identity=object(),
+            _owner_generation=4,
+            owner=Namespace(owner_id="owner-generation-4"),
+        )
+        raw_terminal = {
+            "event": "terminal", "id": "cover-after-focus-loss",
+            "status": "cancelled", "terminal_ns": 500,
+            "input_owner_generation": 99,
+            "release": {
+                "verified": True, "keys_down": [], "buttons_down": [],
+                "keys_unknown": [], "key_state_errors": [],
+                "target_process_identity_reader": {"retired": True},
+            },
+        }
+        Backend._emit_identity(backend, raw_terminal)
+        terminal = emitted[0]
+        self.assertEqual(terminal["input_owner_generation"], 4)
+        self.assertEqual(terminal["input_owner_id"], "owner-generation-4")
+        receipt = {
+            "event": "input_owner_generation",
+            "terminal_id": terminal["id"],
+            "generation": 5,
+            "previous_generation": 4,
+            "previous_owner_id": "owner-generation-4",
+            "owner_id": "owner-generation-5",
+            "source_invalidated": True,
+            "grants_input_authority": False,
+        }
+        observation = {
+            "event": "observation", "id": "owner-generation-source-5-1",
+            "input_owner_generation": 5, "sequence": 8,
+            "pointer_binding": {"surface": 17},
+            "target_process_identity": {
+                "sequence": 8, "surface": 17, "digest": "d" * 64,
+            },
+        }
+        refreshed = {
+            "event": "input_owner_source_refreshed",
+            "terminal_id": terminal["id"], "generation": 5,
+            "owner_id": "owner-generation-5", "attempt": 1,
+            "observation_id": observation["id"], "sequence": 8,
+            "surface": 17, "digest": "d" * 64,
+            "source_invalidated": False, "grants_input_authority": False,
+        }
+        events = [receipt, observation, refreshed]
+
+        def wait(predicate, timeout=40):
+            return next(row for row in events if predicate(row))
+
+        process = Namespace(stdin=io.StringIO())
+        recovery = controller.rotate_retired_owner_after_cancel(
+            process, wait, terminal, minimum_sequence=7)
+        self.assertEqual(recovery["source_observation"], observation)
+        self.assertEqual(recovery["source_refresh"], refreshed)
+        commands = [json.loads(row) for row in process.stdin.getvalue().splitlines()]
+        self.assertEqual(
+            commands,
+            [
+                {"op": "rotate_input_owner", "id": terminal["id"]},
+                {"op": "refresh_owner_source", "id": terminal["id"]},
+            ],
+        )
+
     def test_retired_owner_rotation_requires_verified_cancel_and_matches_generation(self):
         import io
         terminal = {"event": "terminal", "id": "plan-old", "status": "cancelled",

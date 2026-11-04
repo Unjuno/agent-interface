@@ -178,6 +178,13 @@ class Backend(Previous):
 
     def _emit_identity(self, event):
         is_source = event.get('event') in ('typed_observation', 'observation')
+        if (event.get('event') == 'terminal'
+                and self._provided_input_owner is None
+                and getattr(self, 'capture_identity', None) is not None):
+            owner_id = getattr(getattr(self, 'owner', None), 'owner_id', None)
+            if type(owner_id) is str and owner_id:
+                event = dict(event, input_owner_generation=self._owner_generation,
+                             input_owner_id=owner_id)
         if is_source:
             samples = self._capture_samples
             if (type(samples) is not list or len(samples) != 2 or samples[0] != samples[1] or
