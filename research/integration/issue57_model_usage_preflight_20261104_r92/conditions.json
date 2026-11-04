@@ -1,0 +1,46 @@
+{
+  "schema": "agent-interface/issue57-model-usage-preflight-v1",
+  "attempt_id": "issue57-r92-a01",
+  "source_commit": "c21853e54cbe7bd86ab12e218613db82ed90e529",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "turn_timeout_seconds": 90,
+  "max_model_turns": 1,
+  "retry_allowed": false,
+  "app_server_mcp_tools": "all_disabled_required_before_turn",
+  "thread_approval_policy": "never",
+  "thread_sandbox": "read-only",
+  "ui_input_allowed": false,
+  "mcp_tool_call_allowed": false,
+  "task_values": {
+    "A1": "731",
+    "A2": "864"
+  },
+  "screenshot_source": "research/integration/issue57_calc_sameframe_live_20261104_r91/r91-a01/server-output/ee25a3f96572450dbf94164898859032/calc-review/images/79aec2607b494109aabdc5b563f3c26b.png",
+  "screenshot_sha256": "a236f067e223e6f069dbdc3a8663813cef4bba209c87247a9a16f124d3975803",
+  "screenshot_dimensions": [
+    1280,
+    800
+  ],
+  "codex_cli_path": "C:\\Users\\user\\AppData\\Local\\OpenAI\\Codex\\bin\\22cfb1d302613eae\\codex.exe",
+  "codex_cli_sha256": "3097c909fb6d5cd63510d44aceb1d42df9f6e85722a3e447e477def1ecf60e16",
+  "codex_cli_version": "codex-cli 0.166.0-alpha.5.1",
+  "source_file_sha256": [
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/app_server_file_spool_v1.py",
+      "sha256": "69d8a97c713a0d5b5f70286043ae024062dcdc75205533b72085260b26f66593"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/app_server_spool_worker_v1.py",
+      "sha256": "89ff44be9b3a7ba7631d67c2f190346d1f4aa55f5a95aebb39711e09fa958770"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/codex_app_server_client_v1.py",
+      "sha256": "a9fa4fdf613c2c54796bfdc256e3c979af2358d05aebe63ee5e691adb9821a40"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/persistent_planner_adapter_v1.py",
+      "sha256": "1f8bc3e2eeea037ba94e84c6ba5b2e82ef4ca6d2896f1c4cb580f9e933c73100"
+    }
+  ]
+}
