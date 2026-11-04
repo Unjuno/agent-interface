@@ -15,6 +15,9 @@ class DoomSignalValueDomainTests(unittest.TestCase):
                         signal_value_in_domain(signal_id, value),
                         minimum <= value <= maximum)
 
+    def test_zero_health_is_a_valid_observation_boundary(self):
+        self.assertTrue(signal_value_in_domain("health", 0))
+
     def test_noninteger_and_unknown_signal_ids_are_rejected(self):
         for value in (True, False, 1.0, "1", None):
             with self.subTest(value=value):

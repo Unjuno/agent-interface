@@ -49,6 +49,17 @@ class ActionValidityAdmissionTests(unittest.TestCase):
         self.assertEqual(result["status"], "REJECTED_PREDICATE")
         self.assertTrue(result["requires_new_decision"])
 
+    def test_zero_health_snapshot_is_observed_but_rejects_action(self):
+        current = snapshot()
+        current["signals"]["health"]["value"] = 0
+
+        result = evaluate_action_validity(
+            ACTION, contract(), current, 1_101_000_000)
+
+        self.assertEqual(result["status"], "REJECTED_PREDICATE")
+        self.assertFalse(result["action_may_proceed_to_executor_admission"])
+        self.assertTrue(result["requires_new_decision"])
+
     def test_numeric_signal_type_change_rejects_boolean_and_float_aliases(self):
         for value in (True, 79.0):
             with self.subTest(value=value):

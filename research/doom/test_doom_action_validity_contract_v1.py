@@ -73,6 +73,12 @@ class DoomActionValidityContractTests(unittest.TestCase):
         self.assertEqual(value["source"]["signals"]["health"]["value"], 200)
         self.assertEqual(value["source"]["signals"]["ammo"]["value"], 999)
 
+    def test_zero_health_is_observable_but_cannot_source_an_action(self):
+        with self.assertRaisesRegex(ValueError, "exact observed health source"):
+            build_contract(
+                [{"action": "retreat_fire", "extent": "short"}], authored(),
+                signal("health", 0), signal("ammo", 47))
+
 
 if __name__ == "__main__":
     unittest.main()

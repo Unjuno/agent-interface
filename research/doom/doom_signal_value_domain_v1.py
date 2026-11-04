@@ -3,7 +3,7 @@ from types import MappingProxyType
 
 
 SIGNAL_VALUE_RANGES = MappingProxyType({
-    "health": (1, 200),
+    "health": (0, 200),
     "ammo": (0, 999),
 })
 
