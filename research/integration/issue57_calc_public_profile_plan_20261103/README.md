@@ -223,3 +223,32 @@ but it does not satisfy Issue #57's actual token, resumption, full-lifecycle
 latency, cold/warm/invalidation/repair, or second-domain comparison. The shared
 WSLc client ownership STOP/HOLD recorded in Issue #7924 also remains separate;
 this Docker/Xvfb sample does not clear it.
+
+## Actual App Server provider-usage gate (2026-11-04, R92/R93)
+
+R92-A01 exercised the real Codex App Server worker once but correctly stopped
+before `turn/start`: its bare command left `codex_apps` (2,262 tools, starting)
+and `cua_repl` (3 tools, connected) active. No model turn, UI input, MCP call,
+or Calc effect occurred. This exposed that the worker command helper disabled
+feature families but omitted configured MCP-name overrides. The helper now
+reads configured MCP names only, disables only existing entries, and retains
+the App Server runtime status fail-closed gate. Nine targeted local tests pass.
+
+A retained command-free live check using the repaired worker command reported
+only `node_repl` and `openaiDeveloperDocs`, both disabled with empty tool sets;
+no model turn was started. A fresh R93-A01 then passed the one-turn provider
+usage gate: one schema-constrained read-only image plan, one start/completion,
+and exact agreement between terminal usage and the protocol usage event. The
+reported usage was 11,938 input, 76 output, 0 reasoning, 0 cached input, and 0
+cache-write tokens; all six plan gates passed. The 5.297-second worker duration
+is a single observation and has no matched baseline. R93 did not call MCP, send
+Calc input, release physical input, or establish task effect. Full R92/R93
+summaries and checksums are in
+[the R92 follow-up](../issue57_model_usage_preflight_20261104_r92/RESULTS.md)
+and [the R93 result](../issue57_model_usage_preflight_20261104_r93/RESULTS.md).
+
+This validates a scoped App Server usage-custody path and fixes an isolation
+setup defect. It does not close the matched cold/warm/invalidation/repair
+lifecycle comparison, prove upstream provider billing/retry reconciliation,
+show lower latency/token use than baseline, or advance WSLc/MAP01 boundaries.
+Issue #57 remains open.
