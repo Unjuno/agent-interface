@@ -50,3 +50,9 @@ python research/integration/issue57_r87_custody_correction_20261104/audit_r87_cu
 The script reads only Git objects and the committed manifest; it never modifies
 the packet. Expected result on PR #10185 head `7a38f7fd` is 225 verified, 7 missing, and
 3 mismatched entries.
+
+## Windows checkout follow-up (2026-11-04)
+
+The Windows worktree's `core.autocrlf=true` changed the working-copy bytes for the r87 FODS before re-audit. See [the additive checkout/custody follow-up](WINDOWS_CHECKOUT_FOLLOWUP_20261104.md). After restoring the exact Git-verified raw bytes and hash-verifying CRLF reconstruction for two entries, the r87 audit again reports only the unchanged full-frame digest failure. Seven original log files and the exact frozen `experiment.py` bytes remain unrecovered. Do not treat this follow-up as new live evidence.
+
+The [corrected custody manifest](CUSTODY_CORRECTED_MANIFEST_20261104.json) preserves the original expected hashes while separating 227 verified byte streams, seven unavailable log files, and the unrecovered xperiment.py source bytes. Four exact-hash log copies from r75 are recorded as alternate-attempt copies and were not inserted as r87 originals.
