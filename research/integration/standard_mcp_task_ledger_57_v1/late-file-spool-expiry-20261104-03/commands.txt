@@ -1,0 +1,19 @@
+# Run from D:\ai57-main-current-20261104\research\integration\standard_mcp_task_ledger_57_v1
+$packet = 'late-file-spool-expiry-20261104-03'
+$env:PYTHONPATH = 'D:\ai57-main-current-20261104;.'
+
+# Windows normal
+$env:AGENT_INTERFACE_FAKE_X_EVIDENCE = "$packet/windows-run-01/fake-x"
+python -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_late_file_spool_completion_after_timeout_never_reaches_public_mcp -v
+
+# Windows optimized
+$env:AGENT_INTERFACE_FAKE_X_EVIDENCE = "$packet/windows-opt-run-01/fake-x"
+python -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_late_file_spool_completion_after_timeout_never_reaches_public_mcp -v
+
+# Docker normal
+# Source read-only, evidence-only writable bind, no network.
+docker run --rm --network none --cpus=2 --memory=4g --memory-swap=4g --pids-limit=256 -v D:/ai57-main-current-20261104:/workspace:ro -v D:/ai57-main-current-20261104/research/integration/standard_mcp_task_ledger_57_v1/late-file-spool-expiry-20261104-03:/evidence -w /workspace/research/integration/standard_mcp_task_ledger_57_v1 -e PYTHONPATH=/workspace:/workspace/research/integration/standard_mcp_task_ledger_57_v1 -e AGENT_INTERFACE_FAKE_X_EVIDENCE=/evidence/docker-run-01/fake-x agent-interface-xvfb-mcp:late-input-r19 python3 -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_late_file_spool_completion_after_timeout_never_reaches_public_mcp -v
+
+# Docker optimized
+# Same frozen image and limits as above.
+docker run --rm --network none --cpus=2 --memory=4g --memory-swap=4g --pids-limit=256 -v D:/ai57-main-current-20261104:/workspace:ro -v D:/ai57-main-current-20261104/research/integration/standard_mcp_task_ledger_57_v1/late-file-spool-expiry-20261104-03:/evidence -w /workspace/research/integration/standard_mcp_task_ledger_57_v1 -e PYTHONPATH=/workspace:/workspace/research/integration/standard_mcp_task_ledger_57_v1 -e AGENT_INTERFACE_FAKE_X_EVIDENCE=/evidence/docker-opt-run-01/fake-x agent-interface-xvfb-mcp:late-input-r19 python3 -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_late_file_spool_completion_after_timeout_never_reaches_public_mcp -v

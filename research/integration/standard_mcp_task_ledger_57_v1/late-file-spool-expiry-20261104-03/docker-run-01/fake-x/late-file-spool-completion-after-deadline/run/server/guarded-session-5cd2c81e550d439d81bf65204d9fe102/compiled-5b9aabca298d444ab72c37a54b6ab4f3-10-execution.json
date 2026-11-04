@@ -1,0 +1,175 @@
+{
+  "request": {
+    "action": "enter",
+    "operation": "enter",
+    "authorization": "8e824123931c4ed5ae4cfd927a1541a5",
+    "expected_sequence": 2,
+    "valid_until_ns": 7055212629386
+  },
+  "action_id": "action-7a1ba8e4f33642a5acce2f3149cfb760",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 7053714550751,
+      "ended_ns": 7053716667979,
+      "emissions": 4,
+      "program_emissions": 4,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 7053716666707
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 3,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "field",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "field",
+        "point": [
+          8,
+          8
+        ],
+        "observed_box": [
+          2,
+          2,
+          12,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 3,
+        "valid_until_ns": 7055213749269,
+        "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 4,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "field",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "field",
+        "point": [
+          8,
+          8
+        ],
+        "observed_box": [
+          2,
+          2,
+          12,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 4,
+        "valid_until_ns": 7055214843615,
+        "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:a",
+        "observation_sequence": 5,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "field",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "field",
+        "point": [
+          8,
+          8
+        ],
+        "observed_box": [
+          2,
+          2,
+          12,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 5,
+        "valid_until_ns": 7055215989680,
+        "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 3,
+        "scope": "native-x11:da7351d7206343d8a49117ff9a5deb9e",
+        "binding_revision": 0,
+        "started_ns": 7053714068806,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 7053714367781
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 4,
+        "scope": "native-x11:da7351d7206343d8a49117ff9a5deb9e",
+        "binding_revision": 0,
+        "started_ns": 7053715124017,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 7053715402748
+      },
+      {
+        "stage": "before_key_press:a",
+        "observation_sequence": 5,
+        "scope": "native-x11:da7351d7206343d8a49117ff9a5deb9e",
+        "binding_revision": 0,
+        "started_ns": 7053716268673,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 7053716484562
+      }
+    ]
+  }
+}

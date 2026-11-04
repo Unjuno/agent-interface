@@ -493,6 +493,220 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 await server.call_tool("interface_close", {})
                 _preserve_fake_x_run("appserver-public-mcp-success", root)
 
+    async def test_late_file_spool_completion_after_timeout_never_reaches_public_mcp(self):
+        """A late host completion stays UNKNOWN after the caller deadline."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            (server_root / "compiled-profile-mode").write_text("enabled")
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image_path = root / "observation.png"
+            journal = root / "app-server" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(b"")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+            )
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(Relay(ServerClient(), tools={
+                "interface_guarded_observe", "interface_guarded_mint",
+                "interface_guarded_compiled", "interface_close"}), recorder,
+                allowed_methods={"interface_guarded_observe",
+                    "interface_guarded_mint", "interface_guarded_compiled",
+                    "interface_close"})
+            timeout_seen = threading.Event()
+            worker_errors = []
+            timing = {"provider_timeout_ns": None,
+                      "late_completion_published_ns": None}
+            try:
+                observation = await caller.call_tool(
+                    None, "late-observe", "interface_guarded_observe", {})
+                image_item = next(item for item in observation["result"]["content"]
+                                  if item.get("type") == "image")
+                image_bytes = base64.b64decode(image_item["data"], validate=True)
+                image_path.write_bytes(image_bytes)
+                observed = json.loads(observation["result"]["content"][0]["text"])
+                minted_call = await caller.call_tool(
+                    None, "late-mint", "interface_guarded_mint", {
+                        "alias": "field",
+                        "source_sequence": observed["source"]["sequence"],
+                        "point": [8, 8], "region_size": [12, 12],
+                    })
+                minted = json.loads(minted_call["result"]["content"][0]["text"])
+                payload = _compiled_profile_payload(
+                    observed["session"]["compiled_scope"],
+                    observed["session"]["compiled_surface"], minted["offset"])
+                initial_state = (server_root /
+                    "synthetic-application-initial.rgb").read_bytes()
+                first_action = await caller.call_tool(
+                    None, "late-baseline-compiled", "interface_guarded_compiled",
+                    payload)
+                first_receipt = json.loads(
+                    first_action["result"]["content"][0]["text"])
+                self.assertEqual(first_receipt["method_receipt"]["outcome"],
+                                 "TASK_SUCCEEDED", first_receipt)
+                self.assertTrue(all(row["release_verified"] is True for row in
+                    first_receipt["method_receipt"]["transitions"]), first_receipt)
+                completed_state = (server_root /
+                    "synthetic-application-state.rgb").read_bytes()
+                self.assertNotEqual(completed_state, initial_state)
+                spool_root = root / "shared-spool"
+                spool_root.mkdir()
+                spool_image = spool_root / image_path.name
+                shutil.copyfile(image_path, spool_image)
+                schema = {"type": "object"}
+                schema_sha256 = hashlib.sha256(json.dumps(
+                    schema, sort_keys=True, separators=(",", ":")).encode()
+                    ).hexdigest()
+
+                class DeadlineObservedPlanner(FileSpoolPlanner):
+                    def await_turn(self, handle, timeout=120):
+                        try:
+                            return super().await_turn(handle, timeout=timeout)
+                        except TimeoutError:
+                            timing["provider_timeout_ns"] = time.perf_counter_ns()
+                            timeout_seen.set()
+                            raise
+
+                planner = DeadlineObservedPlanner(
+                    spool_root, model="synthetic-late-model", effort="low",
+                    expected_schema_sha256=schema_sha256, start_timeout=2)
+                model = AppServerPublicMcpModelCall(
+                    planner, journal, workspace=workspace, contract="public-mcp",
+                    output_schema=schema, model="synthetic-late-model", effort="low",
+                    path_converter=lambda _image: spool_image, turn_timeout=1)
+
+                def late_host_once():
+                    try:
+                        deadline = time.monotonic() + 2
+                        request = None
+                        while request is None and time.monotonic() < deadline:
+                            request = claim_next(spool_root,
+                                expected_model="synthetic-late-model",
+                                expected_effort="low",
+                                expected_schema_sha256=schema_sha256)
+                            if request is None:
+                                time.sleep(0.005)
+                        if request is None:
+                            raise TimeoutError("spool request was not claimed")
+                        publish_stage(spool_root, request["attempt_id"], "started", {
+                            "thread_id": "late-thread", "turn_id": "late-turn"})
+                        if not timeout_seen.wait(timeout=3):
+                            raise TimeoutError("caller deadline was not observed")
+                        late_usage = {"last": {"inputTokens": 55,
+                                                "outputTokens": 9}}
+                        late_events = [
+                            {"direction": "received", "message": {
+                                "method": "thread/tokenUsage/updated",
+                                "params": {"threadId": "late-thread",
+                                    "turnId": "late-turn", "tokenUsage": late_usage}}},
+                            {"direction": "received", "message": {
+                                "method": "turn/completed", "params": {
+                                    "threadId": "late-thread", "turn": {
+                                        "id": "late-turn", "status": "completed",
+                                        "items": [{"type": "agentMessage",
+                                            "text": json.dumps(payload,
+                                                sort_keys=True, separators=(",", ":"))}]}}}},
+                        ]
+                        with journal.open("a", encoding="utf-8", newline="\n") as stream:
+                            for event in late_events:
+                                stream.write(json.dumps(event,
+                                    separators=(",", ":")) + "\n")
+                        publish_stage(spool_root, request["attempt_id"], "completed", {
+                            "thread_id": "late-thread", "turn_id": "late-turn",
+                            "status": "completed", "answer_eligible": True,
+                            "answer": payload, "usage": late_usage,
+                            "completed_agent_messages": 1,
+                        })
+                        timing["late_completion_published_ns"] = time.perf_counter_ns()
+                    except BaseException as error:
+                        worker_errors.append(error)
+
+                host = threading.Thread(target=late_host_once, daemon=True)
+                host.start()
+                request_bytes, provider_call = build_model_provider_call(
+                    model_call=model.call, root=root / "late-provider-attempt",
+                    prompt="apply one registered Calc change", image=image_path,
+                    contract="public-mcp", workspace=workspace)
+                tool_calls_before = summarize(
+                    recorder.reconcile()["events"])["tool_call_count"]
+                provider_started_ns = time.perf_counter_ns()
+                composed = await caller.invoke_generation_to_tool(
+                    "late-generation", request_bytes, provider_call,
+                    "late-compiled-call", "interface_guarded_compiled",
+                    lambda generation: parse_app_server_tool_request(
+                        generation["response_bytes"], thread_id="late-thread",
+                        turn_id="late-turn"))
+                caller_returned_ns = time.perf_counter_ns()
+                host.join(timeout=3)
+                self.assertFalse(host.is_alive())
+                self.assertEqual(worker_errors, [])
+                self.assertLess(provider_started_ns, timing["provider_timeout_ns"])
+                self.assertLess(timing["provider_timeout_ns"],
+                                timing["late_completion_published_ns"])
+                self.assertLess(timing["late_completion_published_ns"],
+                                caller_returned_ns,
+                                "late receipt must land while outer call is still pending")
+                timing.update({
+                    "provider_returned_ns": caller_returned_ns,
+                    "caller_elapsed_ns": caller_returned_ns - provider_started_ns,
+                    "late_completion_delay_after_timeout_ns": (
+                        timing["late_completion_published_ns"] -
+                        timing["provider_timeout_ns"]),
+                    "configured_turn_timeout_s": 1,
+                    "generation_status": composed["generation"]["status"],
+                    "tool_call_submitted": composed["tool_call_submitted"],
+                    "late_completion_before_outer_return": True,
+                })
+                self.assertFalse(composed["tool_call_submitted"], composed)
+                self.assertEqual(composed["generation"]["status"], "timeout")
+                spool_attempt = next((spool_root / "responses").glob("*.completed.json"))
+                self.assertEqual(json.loads(spool_attempt.read_text())["record"]["answer"],
+                                 payload)
+                after_events = recorder.reconcile()["events"]
+                self.assertEqual(summarize(after_events)["tool_call_count"],
+                                 tool_calls_before)
+                self.assertEqual((server_root /
+                    "synthetic-application-state.rgb").read_bytes(), completed_state)
+                timing.update({
+                    "task_success": True,
+                    "release_verified": all(row["release_verified"] is True for row in
+                        first_receipt["method_receipt"]["transitions"]),
+                    "public_tool_calls_after_late_completion": summarize(
+                        after_events)["tool_call_count"],
+                    "task_state_sha256_before_late_completion": hashlib.sha256(
+                        completed_state).hexdigest(),
+                    "task_state_sha256_after_late_completion": hashlib.sha256(
+                        (server_root / "synthetic-application-state.rgb"
+                         ).read_bytes()).hexdigest(),
+                })
+                close = await caller.call_tool(None, "late-close",
+                                               "interface_close", {})
+                close_body = json.loads(close["result"]["content"][0]["text"])
+                self.assertTrue(close_body["release_confirmed"], close_body)
+                timing["close_release_confirmed"] = close_body["release_confirmed"]
+                (root / "late-completion-measurement.json").write_text(
+                    json.dumps(timing, sort_keys=True, indent=2) + "\n",
+                    encoding="utf-8", newline="\n")
+                score_state = completed_state
+                recorder.record_task_score("late-spool-no-effect-pixel-v1",
+                                           True, score_state)
+                summary = summarize(recorder.reconcile()["events"])
+                self.assertTrue(summary["task_success"])
+            finally:
+                await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("late-file-spool-completion-after-deadline", root)
+
     async def test_fake_app_server_stale_target_is_refused_by_public_compiled_tool(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
