@@ -87,6 +87,15 @@ def owner_event_verified(row):
 
 
 MAX_CHILD_STDERR_BYTES=1_048_576
+MAX_PRIMARY_ERROR_MESSAGE_CHARS=4096
+
+def primary_error_message(error):
+    """Retain a bounded primary exception message without risking cleanup."""
+    try:
+        message=str(error)
+    except BaseException:
+        message=f'<unprintable {type(error).__name__}>'
+    return message[:MAX_PRIMARY_ERROR_MESSAGE_CHARS], len(message)>MAX_PRIMARY_ERROR_MESSAGE_CHARS
 
 def capture_child_stderr(stream,path,max_bytes=MAX_CHILD_STDERR_BYTES):
     """Drain one owned child stderr pipe with a byte cap and retain its prefix."""
@@ -160,7 +169,10 @@ class ControllerFailureCleanup:
     def __enter__(self): return self
     def __exit__(self, kind, error, traceback):
         if error is None: return False
-        receipt={'format':'controller-failure-cleanup-v1', 'primary_error_type':kind.__name__,
+        message,message_truncated=primary_error_message(error)
+        receipt={'format':'controller-failure-cleanup-v2', 'primary_error_type':kind.__name__,
+                 'primary_error_message':message,
+                 'primary_error_message_truncated':message_truncated,
                  'failed_stage':self.failed_stage,'stages':[], 'input_release_verified':False,
                  'input_releases_verified_empty':False,
                  'scope':'owned child process only; no physical release or scorer certificate'}
