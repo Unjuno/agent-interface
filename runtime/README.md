@@ -50,16 +50,20 @@ input runtime and independent exact-token scorer, and keeps the frozen compariso
 sources unchanged.
 
 ```bash
-./runtime/setup-golden-demo-v3.sh
+./runtime/setup-golden-demo-v3.sh --install-dependencies
 ./runtime/golden-demo-v3.sh doctor
 ./runtime/golden-demo-v3.sh audit-retained
 ./runtime/golden-demo-v3.sh run
 ./runtime/golden-demo-v3.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
 ```
 
-The setup script creates `runtime/.venv`, installs the nine pinned distributions in
-`requirements-golden.txt`, and runs the fifteen-check v3 `doctor`. It does not install Chrome or
-Codex; missing external executables remain explicit doctor failures.
+Obtain the repository checkout separately. The setup script stops without network access unless
+the user passes `--install-dependencies`. That explicit opt-in creates `runtime/.venv`, downloads and installs
+the nine pinned Python distributions in `requirements-golden.txt`, then runs the fifteen-check v3
+`doctor`. This step does not download the runtime package, a model, Chrome, Codex, or a Docker
+image. Model/provider authorization and external application/runtime installation are separate
+user actions; missing external executables remain explicit doctor failures. The v2 setup script
+follows the same opt-in rule.
 
 `doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
 `audit-retained` verifies source hashes and the published fixed comparison without
