@@ -39,6 +39,36 @@ class CalcEffectGateTests(unittest.TestCase):
             self.assertEqual(data, FODS)
             self.assertEqual(identity, _identity(artifact.lstat()))
 
+    def test_stable_path_and_descriptor_may_report_different_ctime(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / ARTIFACT_NAME
+            artifact.write_bytes(FODS)
+            info = artifact.lstat()
+            birthtime_ns = getattr(info, 'st_birthtime_ns', None)
+            if type(birthtime_ns) is not int:
+                birthtime_ns = info.st_ctime_ns
+
+            def sample(ctime_ns):
+                return SimpleNamespace(
+                    st_mode=info.st_mode, st_dev=info.st_dev, st_ino=info.st_ino,
+                    st_size=info.st_size, st_mtime_ns=info.st_mtime_ns,
+                    st_ctime_ns=ctime_ns, st_birthtime_ns=birthtime_ns)
+
+            path_before = sample(info.st_ctime_ns)
+            path_after = sample(info.st_ctime_ns)
+            descriptor_open = sample(info.st_ctime_ns + 1)
+            descriptor_after = sample(info.st_ctime_ns + 1)
+            with patch.object(Path, 'lstat', side_effect=(path_before, path_after)), \
+                    patch('runtime.guarded_x11_v1.calc_effect_v1.os.fstat',
+                          side_effect=(descriptor_open, descriptor_after)):
+                data, identity = _read_regular(artifact, max_bytes=64 * 1024)
+
+            self.assertEqual(data, FODS)
+            self.assertEqual(_identity(path_before), _identity(descriptor_open))
+            self.assertNotEqual(path_before.st_ctime_ns,
+                                descriptor_open.st_ctime_ns)
+            self.assertEqual(identity, _identity(descriptor_after))
+
     def test_same_descriptor_ctime_change_is_not_hidden_by_birthtime(self):
         with tempfile.TemporaryDirectory() as directory:
             artifact = Path(directory) / ARTIFACT_NAME

@@ -1,9 +1,11 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-04, after PRs #10211 and #10214
+## Current work-map pointer — 2026-11-04, after PR #10215
 
-**Last verified `origin/main` (2026-11-04):** `cc24af030e7e1024fb3ecdc5817ed5f411194789`
-(PR #10214). This is a directional pointer, not a complete Issue/PR census.
+**Last verified `origin/main` (2026-11-04):** `2d5931fb0fc273116d8b940034be759598db46f7`
+(documentation-only PR #10215). Its code parent includes PR #10214 at
+`cc24af030e7e1024fb3ecdc5817ed5f411194789`. This is a directional pointer,
+not a complete Issue/PR census.
 
 [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open.
 Merged PRs #10209 and #10210 add offline Fake App Server/FileSpool composition
@@ -13,6 +15,13 @@ These are bounded synthetic integration results. Same-model
 cold/warm/invalidation/repair comparison, full live provider/all-attempt
 accounting, integrated efficiency, and WSLc/MAP01 transfer remain unproven.
 The latest issue update is 2026-11-04; do not rerun any consumed allocation.
+
+An unmerged local follow-up adds a positive regression for stable `lstat` and
+`fstat` samples whose ctime values differ across APIs while birthtime and file
+identity agree. The Calc effect-checker suite passes 6/6 in normal and
+optimized Python 3.11.9. This locks the intended cross-API comparison alongside
+the existing same-API ctime-change refusals; the synthetic stat records do not
+verify filesystem timestamp behavior or live Calc effects.
 
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) remains open
 after being reopened on 2026-11-04. [PR #10214](https://github.com/Unjuno/agent-interface/pull/10214)
@@ -27,6 +36,17 @@ is separate from these code changes and grants no WSLc allocation. Do not treat
 the local Docker regression run recorded with PR #10214 as a GUI/game experiment,
 WSLc validation, provider-efficiency measurement, or MAP01 evidence. The
 2026-11-03 pointer and all measurements below remain historical.
+
+**Open Calc lifecycle prototype:** [Draft PR #10144](https://github.com/Unjuno/agent-interface/pull/10144)
+was rechecked OPEN on 2026-11-04. Its Windows `JobHost` test uses an injected
+fake WSLc transport and synthetic release/task receipts; the adapter test is
+not evidence of a live WSLc/container or Calc run. The PR records unresolved
+restart-safe custody, end-to-end bounds for synchronous operations, descendant
+ownership under interruption, independent release authentication and task
+scoring, and matched effect/recovery trials with full attempt accounting. Keep
+it Draft until those specific requirements are addressed or separately
+qualified. This lifecycle prototype is distinct from the R93 saved-plan replay
+through Fake X in PR #10211 and does not unblock #7924's STOP/HOLD.
 
 ## Historical work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
 
