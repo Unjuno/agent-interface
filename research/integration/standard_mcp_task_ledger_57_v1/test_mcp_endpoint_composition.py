@@ -206,7 +206,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def call_tool(self, name, arguments):
                     return await server.call_tool(name, arguments)
 
-            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder,
+                allowed_methods={"interface_guarded_compiled",
+                    "interface_guarded_observe", "interface_guarded_review_window",
+                    "interface_guarded_mint"})
             provider_calls = 0
             recovery_calls = 0
             try:
@@ -371,7 +374,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def call_tool(self, name, arguments):
                     return await server.call_tool(name, arguments)
 
-            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder,
+                allowed_methods={"interface_guarded_compiled",
+                    "interface_guarded_observe", "interface_guarded_mint",
+                    "interface_guarded_review_window"})
             try:
                 observation = await caller.call_tool(
                     None, "observe-appserver", "interface_guarded_observe", {})
@@ -510,7 +516,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def call_tool(self, name, arguments):
                     return await server.call_tool(name, arguments)
 
-            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder,
+                allowed_methods={"interface_guarded_observe", "interface_guarded_mint",
+                    "interface_guarded_compiled", "interface_close",
+                    "interface_verify_task"})
             try:
                 observation = await caller.call_tool(
                     None, "observe-stale-appserver", "interface_guarded_observe", {})
@@ -637,7 +646,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request_bytes):
                     raise AssertionError("failed generation must not reach Relay")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
 
             async def failed_provider():
                 return {"status": "failed",
@@ -685,7 +695,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     raise AssertionError(
                         "schema-incompatible output must not reach public MCP")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             with self.assertRaisesRegex(ValueError, "JSON object"):
                 await caller.invoke_generation_to_tool(
                     "generation-incompatible-schema", request, provider,
@@ -727,7 +738,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
 
             caller = RecordedPublicMcpCaller(
                 Relay(ServerClient(), tools={"interface_guarded_calc_compiled"}),
-                recorder)
+                recorder, allowed_methods={"interface_guarded_calc_compiled"})
             response_bytes = (
                 b'{"type":"item.completed","item":'
                 b'{"type":"agent_message","text":"{}"}}\n'
@@ -804,7 +815,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
 
             caller = RecordedPublicMcpCaller(
                 Relay(ServerClient(), tools={"interface_guarded_calc_compiled"}),
-                recorder)
+                recorder, allowed_methods={"interface_guarded_calc_compiled"})
             arguments = {
                 "profile_id": 7,
                 "bindings": {},
@@ -885,7 +896,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     return await server.call_tool(name, arguments)
 
             relay = Relay(ServerClient())
-            caller = RecordedPublicMcpCaller(relay, recorder)
+            caller = RecordedPublicMcpCaller(relay, recorder,
+                allowed_methods={"interface_guarded_observe",
+                    "interface_guarded_mint", "interface_guarded_compiled",
+                    "interface_guarded_review_window"})
 
             try:
                 observation = await caller.call_tool(
@@ -1045,7 +1059,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request):
                     raise AssertionError("timeout generation must not reach Relay")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             result = await caller.invoke_generation_to_tool(
                 "generation-timeout", request, provider, "tool-after-timeout",
                 "interface_guarded_compiled", parse_agent_message)
@@ -1092,7 +1107,8 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def request(self, _request):
                     raise AssertionError("cancelled generation must not reach Relay")
 
-            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder,
+                allowed_methods={"interface_guarded_compiled"})
             pending = asyncio.create_task(caller.invoke_generation_to_tool(
                 "generation-cancelled", request, provider,
                 "tool-after-cancel", "interface_guarded_compiled",
@@ -1374,7 +1390,12 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 server = original_create_server(*args, **kwargs)
                 caller = RecordedPublicMcpCaller(
                     Relay(ServerClient(server), tools={
-                        "interface_guarded_calc_compiled"}), recorder)
+                        "interface_guarded_calc_compiled", "interface_guarded_observe",
+                        "interface_guarded_mint", "interface_close",
+                        "interface_verify_task"}), recorder,
+                    allowed_methods={"interface_guarded_calc_compiled",
+                        "interface_guarded_observe", "interface_guarded_mint",
+                        "interface_close", "interface_verify_task"})
                 observed["public_caller"] = caller
 
                 class RecordingServer:
@@ -1878,10 +1899,12 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 async def call_tool(self,name,arguments):
                     return await server.call_tool(name,arguments)
 
-            caller=RecordedPublicMcpCaller(Relay(ServerClient(),tools={
+            allowed_methods={
                 'interface_guarded_observe','interface_guarded_mint',
                 'interface_guarded_calc_prepare','interface_guarded_calc_compiled',
-                'interface_close','interface_verify_task'}),recorder)
+                'interface_close','interface_verify_task'}
+            caller=RecordedPublicMcpCaller(Relay(ServerClient(),tools=allowed_methods),
+                recorder,allowed_methods=allowed_methods)
             phase_ns={}
             provider_waiting=threading.Event()
             release_provider=threading.Event()
