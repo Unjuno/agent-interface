@@ -14,14 +14,20 @@ CUSTODY_NAME = 'calc-artifact-custody.json'
 
 def _identity(info):
     # On Windows, stat/lstat and fstat expose st_ctime_ns differently:
-    # pathname stats report creation time while descriptor stats report the
-    # last metadata-change time.  Compare the stable creation timestamp when
-    # available, retaining ctime on platforms that do not expose birthtime.
+    # pathname stats report creation time while descriptor stats can report
+    # last-write time. Compare the stable creation timestamp across those APIs
+    # when available, retaining ctime on platforms without birthtime.
     change_or_birth_ns = getattr(info, 'st_birthtime_ns', None)
     if type(change_or_birth_ns) is not int:
         change_or_birth_ns = info.st_ctime_ns
     return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns,
             change_or_birth_ns)
+
+
+def _same_stat_version(left, right):
+    """Compare same-API stat samples, preserving their ctime change check."""
+    return (_identity(left) == _identity(right)
+            and left.st_ctime_ns == right.st_ctime_ns)
 
 
 def _read_regular(path, *, max_bytes):
@@ -48,7 +54,8 @@ def _read_regular(path, *, max_bytes):
                 raise ValueError('file exceeds bound')
         after = os.fstat(fd)
         current = path.lstat()
-        if (_identity(opened) != _identity(after)
+        if (not _same_stat_version(opened, after)
+                or not _same_stat_version(before, current)
                 or _identity(after) != _identity(current)
                 or total != after.st_size):
             raise ValueError('file changed while reading')

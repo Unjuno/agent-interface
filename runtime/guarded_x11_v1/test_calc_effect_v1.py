@@ -4,9 +4,12 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 from runtime.guarded_x11_v1.calc_effect_v1 import (
     ARTIFACT_NAME, CUSTODY_NAME, _identity, _read_regular,
+    _same_stat_version,
     verify_call_owned_calc_effect)
 
 
@@ -35,6 +38,54 @@ class CalcEffectGateTests(unittest.TestCase):
 
             self.assertEqual(data, FODS)
             self.assertEqual(identity, _identity(artifact.lstat()))
+
+    def test_same_descriptor_ctime_change_is_not_hidden_by_birthtime(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / ARTIFACT_NAME
+            artifact.write_bytes(FODS)
+            info = artifact.lstat()
+            fields = {name: getattr(info, name) for name in (
+                'st_mode', 'st_dev', 'st_ino', 'st_size', 'st_mtime_ns',
+                'st_ctime_ns')}
+            birthtime_ns = getattr(info, 'st_birthtime_ns', None)
+            fields['st_birthtime_ns'] = (birthtime_ns if type(birthtime_ns) is int
+                                         else info.st_ctime_ns)
+            opened = SimpleNamespace(**fields)
+            changed_fields = dict(fields)
+            changed_fields['st_ctime_ns'] += 1
+            changed = SimpleNamespace(**changed_fields)
+
+            with patch('runtime.guarded_x11_v1.calc_effect_v1.os.fstat',
+                       side_effect=(opened, changed)):
+                with self.assertRaisesRegex(ValueError, 'file changed while reading'):
+                    _read_regular(artifact, max_bytes=64 * 1024)
+
+        self.assertEqual(_identity(opened), _identity(changed))
+        self.assertFalse(_same_stat_version(opened, changed))
+
+    def test_same_path_ctime_change_is_not_hidden_by_birthtime(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / ARTIFACT_NAME
+            artifact.write_bytes(FODS)
+            info = artifact.lstat()
+            fields = {name: getattr(info, name) for name in (
+                'st_mode', 'st_dev', 'st_ino', 'st_size', 'st_mtime_ns',
+                'st_ctime_ns')}
+            birthtime_ns = getattr(info, 'st_birthtime_ns', None)
+            fields['st_birthtime_ns'] = (birthtime_ns if type(birthtime_ns) is int
+                                         else info.st_ctime_ns)
+            descriptor = SimpleNamespace(**fields)
+            changed_fields = dict(fields)
+            changed_fields['st_ctime_ns'] += 1
+            path_after = SimpleNamespace(**changed_fields)
+
+            with patch('runtime.guarded_x11_v1.calc_effect_v1.os.fstat',
+                       side_effect=(descriptor, descriptor)), patch.object(
+                           Path, 'lstat', side_effect=(info, path_after)):
+                with self.assertRaisesRegex(ValueError, 'file changed while reading'):
+                    _read_regular(artifact, max_bytes=64 * 1024)
+
+        self.assertFalse(_same_stat_version(info, path_after))
 
     def test_self_consistent_forged_sidecar_cannot_promote_parsed_bytes(self):
         with tempfile.TemporaryDirectory() as directory:
