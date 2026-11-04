@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 from pathlib import Path
 import re
 import tomllib
 import time
 
-from app_server_file_spool_v1 import claim_next, publish_stage
+from app_server_file_spool_v1 import claim_next, publish_late_usage, publish_stage
 from codex_app_server_client_v1 import CodexAppServerClient
 from persistent_planner_adapter_v1 import PersistentPlannerAdapter
 
@@ -18,6 +19,7 @@ _BASE_INSTRUCTIONS = (
     "Return one JSON object matching the supplied output schema. Use only the "
     "provided prompt and image. Do not call tools, read files, or request approval."
 )
+_LATE_USAGE_GRACE_SECONDS = 5.0
 
 
 def _assert_no_mcp_tools(client, thread_id: str) -> None:
@@ -55,6 +57,75 @@ def _assert_no_mcp_tools(client, thread_id: str) -> None:
         raise RuntimeError(f"refusing model turn: {active} MCP servers are not disabled")
 
 
+def _harvest_late_usage(root: Path, attempt_id: str, planner, handle,
+                        protocol_path: Path, cursor: tuple[int, int], *,
+                        grace_seconds: float) -> list[dict]:
+    """Persist only fresh same-turn usage notifications within a fixed bound."""
+    if (type(cursor) is not tuple or len(cursor) != 2 or
+            any(type(value) is not int or value < 0 for value in cursor)):
+        raise ValueError("late usage cursor is invalid")
+    deadline = time.monotonic() + grace_seconds
+    count, offset = cursor
+    receipts = []
+    while time.monotonic() < deadline:
+        received = planner.wait_late_usage(
+            handle, (count, offset), max(0.0, deadline - time.monotonic()))
+        if received is None:
+            break
+        token_usage, next_count = received
+        if type(next_count) is not int or next_count != count + 1:
+            raise RuntimeError("late usage cursor did not advance by one")
+        if not isinstance(token_usage, dict):
+            raise RuntimeError("late usage notification omitted tokenUsage")
+        if protocol_path.stat().st_size < offset:
+            raise RuntimeError("App Server journal was truncated during late usage wait")
+        with protocol_path.open("rb") as stream:
+            stream.seek(offset)
+            appended = stream.read()
+        matched = None
+        consumed = 0
+        for line in appended.splitlines(keepends=True):
+            if not line.endswith(b"\n"):
+                break
+            consumed += len(line)
+            try:
+                row = json.loads(line)
+            except (UnicodeError, json.JSONDecodeError):
+                continue
+            message = row.get("message") if isinstance(row, dict) else None
+            params = message.get("params") if isinstance(message, dict) else None
+            if (isinstance(row, dict) and row.get("direction") == "received" and
+                    isinstance(message, dict) and
+                    message.get("method") == "thread/tokenUsage/updated" and
+                    isinstance(params, dict) and
+                    params.get("threadId") == handle.thread_id and
+                    params.get("turnId") == handle.turn_id):
+                matched = (line, params.get("tokenUsage"))
+                break
+        if matched is None:
+            raise RuntimeError("new same-turn usage notification has no retained JSONL row")
+        source_line, source_usage = matched
+        if source_usage != token_usage:
+            raise RuntimeError("late usage differs from its retained App Server row")
+        source_hash = hashlib.sha256(source_line).hexdigest()
+        journal_hash = hashlib.sha256(protocol_path.read_bytes()).hexdigest()
+        record = {
+            "thread_id": handle.thread_id,
+            "turn_id": handle.turn_id,
+            "journal_offset": offset,
+            "usage": token_usage,
+            "source_jsonl": source_line.decode("utf-8"),
+            "source_jsonl_sha256": source_hash,
+            "protocol_journal_sha256_at_observation": journal_hash,
+        }
+        sequence = len(receipts) + 1
+        publish_late_usage(root, attempt_id, sequence, record)
+        receipts.append({"sequence": sequence, "usage": token_usage,
+                         "source_jsonl_sha256": source_hash})
+        count, offset = next_count, offset + consumed
+    return receipts
+
+
 def process_one_request(root: Path, *, command: list[str], cwd: str | Path,
                         model: str, effort: str, expected_schema_sha256: str,
                         turn_timeout: int = 90) -> dict:
@@ -78,6 +149,8 @@ def process_one_request(root: Path, *, command: list[str], cwd: str | Path,
     handle = None
     result = None
     error = None
+    late_usage_cursor = None
+    awaiting_turn = False
     started_ns = time.perf_counter_ns()
     try:
         client = CodexAppServerClient(command, cwd=cwd, journal_path=str(protocol_path))
@@ -109,10 +182,19 @@ def process_one_request(root: Path, *, command: list[str], cwd: str | Path,
             "model": model,
             "effort": effort,
         })
+        awaiting_turn = True
         result = planner.await_turn(handle, timeout=turn_timeout)
     except BaseException as exc:
         error = {"type": type(exc).__name__, "message": str(exc)}
-        if planner is not None and handle is not None:
+        if isinstance(exc, TimeoutError) and awaiting_turn and planner is not None and handle is not None:
+            try:
+                late_usage_cursor = planner.late_usage_cursor(handle)
+            except BaseException as cursor_error:
+                error["late_usage_cursor_error"] = {
+                    "type": type(cursor_error).__name__,
+                    "message": str(cursor_error),
+                }
+        if late_usage_cursor is None and planner is not None and handle is not None:
             try:
                 planner.interrupt(handle)
             except BaseException as interrupt_error:
@@ -121,7 +203,7 @@ def process_one_request(root: Path, *, command: list[str], cwd: str | Path,
                     "message": str(interrupt_error),
                 }
     finally:
-        if client is not None:
+        if client is not None and late_usage_cursor is None:
             try:
                 client.close(timeout=10)
             except BaseException as close_error:
@@ -159,7 +241,30 @@ def process_one_request(root: Path, *, command: list[str], cwd: str | Path,
             "worker_elapsed_ns": elapsed_ns,
             "protocol_journal_sha256": protocol_sha256,
         }
-        publish_stage(root, request["attempt_id"], "unknown", record)
+        if late_usage_cursor is not None:
+            record["late_usage_grace_seconds"] = _LATE_USAGE_GRACE_SECONDS
+            record["late_usage_cursor"] = list(late_usage_cursor)
+        try:
+            publish_stage(root, request["attempt_id"], "unknown", record)
+            if late_usage_cursor is not None and handle is not None:
+                try:
+                    record["late_usage_receipts"] = _harvest_late_usage(
+                        root, request["attempt_id"], planner, handle, protocol_path,
+                        late_usage_cursor, grace_seconds=_LATE_USAGE_GRACE_SECONDS)
+                except BaseException as harvest_error:
+                    record["late_usage_harvest_error"] = {
+                        "type": type(harvest_error).__name__,
+                        "message": str(harvest_error),
+                    }
+        finally:
+            if client is not None and late_usage_cursor is not None:
+                try:
+                    client.close(timeout=10)
+                except BaseException as close_error:
+                    record["close_error"] = {
+                        "type": type(close_error).__name__,
+                        "message": str(close_error),
+                    }
         return record
 
     record = {
