@@ -1,0 +1,36 @@
+{
+  "request": {
+    "interface_id": "planner-calc-two-cell-v1",
+    "session_scope": "native-x11:7fa436e4124a4d87a52d03ce2548e989",
+    "action": "persist_document",
+    "operation": "request_save",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "save_postrepair",
+      "identity_predicate": "context_ok",
+      "dependencies": [
+        "context_ok",
+        "cells_match"
+      ]
+    },
+    "observation": {
+      "sequence": 16,
+      "captured_ns": 171174062000000,
+      "surface": "x11-window-20",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_match": true
+      },
+      "evidence_ref": "observation-16",
+      "evidence_digest": "4b78c4b11890f26247b2e5c4ba12161cc9b61b5303bda53d46080726a941b578"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "a23cfa5c6c304b2e926cc1cdb9318f57",
+    "expected_sequence": 16,
+    "valid_until_ns": 171179062000000
+  }
+}
