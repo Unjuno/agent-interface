@@ -1,0 +1,1 @@
+wslc.exe run --rm --pull never --network none --cpus 1 --volume "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\orphan-late-request-recovery-20261104:/src:ro" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -c "import PIL; print(PIL.__version__)"
