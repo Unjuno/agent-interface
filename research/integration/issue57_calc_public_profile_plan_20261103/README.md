@@ -194,3 +194,32 @@ generation, live Calc GUI, WSLc, MAP01, token economy, or end-to-end efficiency
 was measured. It does not evaluate Docker host stability. Issue #57 remains
 open; the matched cold/warm/invalidation/repair lifecycle comparison and live
 second-domain boundary remain unresolved.
+
+## Fresh Docker/Xvfb Calc integration result r91-a01 (2026-11-04)
+
+The follow-up [r91 preregistration and raw result](../issue57_calc_sameframe_live_20261104_r91/r91-a01/result-summary.md)
+used the registered `calc-ocr-save-v1` path against a fresh Calc process on the
+cached, digest-pinned Docker/Xvfb image. Its first reviewed frame passed the
+frozen 1280x800 nonblank gate (2,125 unique RGB colors; dominant fraction
+0.66922), so the bounded readiness loop added no wait and dispatched no input
+before the gate. The sole task then verified A1=731/A2=864 from the saved FODS,
+both input releases, neutral close, exact-generation natural exit, identical
+frozen task crop, and Docker exit 0. The full 255-file packet is covered by
+`RESULT_SHA256SUMS.txt`.
+
+The original frozen audit could not decode the host-written UTF-8 BOM on the
+Docker exit JSON. Its original `FAIL_OR_UNKNOWN` record remains intact; a
+separate offline recheck differing only in BOM-tolerant JSON decoding passed
+all preregistered gates. The `SAFE_YIELD/effect_unavailable` graph outcome is
+the designed Save-effect handoff: the registered parent controller binds the
+released Save request to the exact call, attempt, process/window generation,
+and method-receipt digest, then the post-close verifier checks the persisted
+artifact. This is one successful composed-path sample, not a reliability or
+efficiency estimate.
+
+R91 used no provider/model generation and has no matched conventional arm.
+Thus it adds live effect/release evidence to the Calc composition crosswalk,
+but it does not satisfy Issue #57's actual token, resumption, full-lifecycle
+latency, cold/warm/invalidation/repair, or second-domain comparison. The shared
+WSLc client ownership STOP/HOLD recorded in Issue #7924 also remains separate;
+this Docker/Xvfb sample does not clear it.
