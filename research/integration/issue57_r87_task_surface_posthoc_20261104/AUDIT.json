@@ -1,0 +1,180 @@
+{
+  "candidate_task_surface": {
+    "boundary_note": "initial crop includes one scrollbar-edge column at x=1218; refined crop excludes that column",
+    "coordinate_convention": "Pillow crop box: left, upper, right, lower; right/lower exclusive",
+    "included": "Calc column and row headers plus visible spreadsheet cell canvas",
+    "initial_visual_boundary_crop": {
+      "box": [
+        0,
+        126,
+        1219,
+        742
+      ],
+      "changed_pixel_details": [
+        {
+          "observation_13_rgb": [
+            199,
+            199,
+            199
+          ],
+          "observation_18_rgb": [
+            192,
+            192,
+            192
+          ],
+          "xy": [
+            1218,
+            132
+          ]
+        },
+        {
+          "observation_13_rgb": [
+            111,
+            111,
+            110
+          ],
+          "observation_18_rgb": [
+            70,
+            70,
+            70
+          ],
+          "xy": [
+            1218,
+            147
+          ]
+        },
+        {
+          "observation_13_rgb": [
+            199,
+            199,
+            199
+          ],
+          "observation_18_rgb": [
+            194,
+            194,
+            194
+          ],
+          "xy": [
+            1218,
+            148
+          ]
+        },
+        {
+          "observation_13_rgb": [
+            111,
+            111,
+            110
+          ],
+          "observation_18_rgb": [
+            105,
+            105,
+            105
+          ],
+          "xy": [
+            1218,
+            427
+          ]
+        },
+        {
+          "observation_13_rgb": [
+            111,
+            111,
+            110
+          ],
+          "observation_18_rgb": [
+            70,
+            70,
+            70
+          ],
+          "xy": [
+            1218,
+            741
+          ]
+        }
+      ],
+      "changed_pixels": 5,
+      "dimensions": [
+        1219,
+        616
+      ],
+      "same_candidate_surface": false,
+      "surface_pixel_sha256_rgb_with_dimensions": "8cb87427c78e4856ac0909691db6e19f9d956b5893ac754859621562d9cee753"
+    },
+    "intended_exclusion": "window title, menus, toolbars, bottom tabs/status, horizontal and vertical scrollbars",
+    "interpretation": "exploratory only; both crop boundaries were selected after observing the mismatch",
+    "one_pixel_scrollbar_edge_refinement": {
+      "box": [
+        0,
+        126,
+        1218,
+        742
+      ],
+      "changed_pixel_details": [],
+      "changed_pixels": 0,
+      "dimensions": [
+        1218,
+        616
+      ],
+      "same_candidate_surface": true,
+      "surface_pixel_sha256_rgb_with_dimensions": "763a96fe2583b133ef10140122a440a9ab780c5cfbf447989287f38a78206350"
+    }
+  },
+  "classification": "POSTHOC_CROP_CANDIDATE_ONLY",
+  "full_frame": {
+    "different_pixel_fraction": 0.0005771484375,
+    "different_pixels": 591,
+    "dimensions": [
+      1280,
+      800
+    ],
+    "observation_13_sha256": "5c0cb9612471da938311170129bb2c1c8b5abfcce00d1b17d2c74fae7259f09f",
+    "observation_18_sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+    "total_pixels": 1024000
+  },
+  "inputs": {
+    "observation-13": {
+      "bytes": 57309,
+      "custody_disposition": "verified_original_bytes",
+      "custody_path": "server-output/0a20c05596a943b2a693da7413973d16/compiled/images/07df02ba4f1549428998f7c1393f2597.png",
+      "evidence_ref": "observation-13",
+      "sequence": 13,
+      "sha256": "5c0cb9612471da938311170129bb2c1c8b5abfcce00d1b17d2c74fae7259f09f"
+    },
+    "observation-18": {
+      "bytes": 57025,
+      "custody_disposition": "verified_original_bytes",
+      "custody_path": "server-output/0a20c05596a943b2a693da7413973d16/compiled/images/2c4f08317a264017bf2b42a7dfe6dbdb.png",
+      "evidence_ref": "observation-18",
+      "sequence": 18,
+      "sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2"
+    }
+  },
+  "original_failed_gates_unchanged": [
+    "same_digest_across_final_save_observation"
+  ],
+  "original_r87_outcome_unchanged": "FAIL_OR_UNKNOWN",
+  "prospective_gate_validated": false,
+  "retained_task_artifact": {
+    "bytes": 19140,
+    "compiled_effect_verification": {
+      "reason": "trusted_save_controller_unavailable",
+      "status": "not_configured",
+      "task_success": null
+    },
+    "compiled_result_task_success": null,
+    "custody_path": "server-output/3d4a3e8db6524f9cb241d6e90bfef079/task-artifact.fods",
+    "outer_audit_task_cells": {
+      "A1": "731",
+      "A2": "864"
+    },
+    "sha256": "20514fa067adcfc8a421f4586ed83ece7788c6a8e470c2638ee839da04e71f49"
+  },
+  "schema": "issue57-r87-task-surface-posthoc-audit-v1",
+  "scope_limits": [
+    "does not change the preregistered full-frame equality gate or FAIL_OR_UNKNOWN result",
+    "does not establish that the crop is a sufficient observation-validity contract",
+    "does not establish a same-frame pass, model/provider efficiency, or a new live result",
+    "the original packet still has seven unavailable log files and an unrecovered experiment.py source mismatch"
+  ],
+  "selection_was_posthoc": true
+}
