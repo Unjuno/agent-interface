@@ -1,24 +1,32 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-03, after PR #10168 merge
+## Current work-map pointer — 2026-11-04, after PRs #10211 and #10214
 
-**Last verified `origin/main` (2026-11-03):** `39120425c284e8bc01f5a85d27f9a546d955b91a`
-(PR #10168). The GitHub record for [Issue #57](https://github.com/Unjuno/agent-interface/issues/57)
-is currently **open**, updated 2026-11-03. Its fixed-task and varied-value Calc
-blocks remain scoped small-sample evidence; they are not a new allocation or a
-general efficiency result. Same-model cold/warm/invalidation/repair comparison,
-complete live provider/all-attempt accounting, and WSLc/MAP01 transfer remain
-unproven. The 2026-10-29 pointer and its measurements below are historical.
+**Last verified `origin/main` (2026-11-04):** `cc24af030e7e1024fb3ecdc5817ed5f411194789`
+(PR #10214). This is a directional pointer, not a complete Issue/PR census.
 
-[PR #10168](https://github.com/Unjuno/agent-interface/pull/10168) merged the
-registered owned-process Calc profile, call-owned saved-artifact verifier,
-parent process custody, and offline Fake App Server/provider-attempt composition.
-Its retained [r75 packet](../research/integration/issue57_calc_public_profile_plan_20261103/post-close-exit-wait-live-validation-20261103-r75/README.md)
-records one narrow live fixed-task result: saved cells A1=731/A2=864, verified
-release and exact target exit. The provider composition is synthetic and offline;
-r75 is not provider-efficiency evidence. Neither result completes Issue #57 or
-proves WSLc/MAP01 transfer. Do not replay prior allocations or promote these
-results beyond their recorded scope.
+[Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open.
+Merged PRs #10209 and #10210 add offline Fake App Server/FileSpool composition
+and a late-completion timeout fence; [PR #10211](https://github.com/Unjuno/agent-interface/pull/10211)
+replays a saved Calc answer through the Fake X guarded recovery composition.
+These are bounded synthetic integration results. Same-model
+cold/warm/invalidation/repair comparison, full live provider/all-attempt
+accounting, integrated efficiency, and WSLc/MAP01 transfer remain unproven.
+The latest issue update is 2026-11-04; do not rerun any consumed allocation.
+
+[Issue #59](https://github.com/Unjuno/agent-interface/issues/59) remains open
+after being reopened on 2026-11-04. [PR #10214](https://github.com/Unjuno/agent-interface/pull/10214)
+adds owner-generation recovery after eligible V39 cover cancellation and
+passes focused offline tests. This does not supply the required current-main
+live threat-exposure result or a separate MAP01 outcome. The next scientific
+gate remains a fresh, bounded threat exposure on the integrated path; keep the
+later MAP01 attempt distinct and preserve its first result.
+
+The WSLc migration hold in [Issue #7924](https://github.com/Unjuno/agent-interface/issues/7924)
+is separate from these code changes and grants no WSLc allocation. Do not treat
+the local Docker regression run recorded with PR #10214 as a GUI/game experiment,
+WSLc validation, provider-efficiency measurement, or MAP01 evidence. The
+2026-11-03 pointer and all measurements below remain historical.
 
 ## Historical work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
 
