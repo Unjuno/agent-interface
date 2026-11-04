@@ -102,9 +102,20 @@ Completed evidence paths are generally kept stable for provenance; navigation is
 
 Research harnesses can inject real input. Use an isolated session or disposable environment and follow the specific experiment's instructions.
 
+Research code has separate environment requirements. Installing them may download
+and execute third-party packages from package indexes; choose a task-specific
+environment and install them only when you intend to prepare that research setup:
+
 ```bash
 python -m pip install -r research/requirements.txt
 ```
+
+This command prepares research dependencies; it does not install Agent Interface
+as a runtime, download a model, or install a GUI application. The golden-demo
+runtime dependencies use the explicit opt-in setup described in
+[`runtime/README.md`](runtime/README.md). Model access and external application
+or runtime downloads are separate setup steps and should be clearly named by the
+workflow that needs them.
 
 Design ideas and analytical or empirical research proposals are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Idea issue form](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
 
