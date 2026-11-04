@@ -1,41 +1,42 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-04, after PR #10215
+## Current work-map pointer — 2026-11-05, after PR #10224
 
-**Last verified `origin/main` (2026-11-04):** `2d5931fb0fc273116d8b940034be759598db46f7`
-(documentation-only PR #10215). Its code parent includes PR #10214 at
-`cc24af030e7e1024fb3ecdc5817ed5f411194789`. This is a directional pointer,
+**Verified `origin/main` (2026-11-05):** `024f6fa16a0d4730d19e2f3c2b9542fca9e7721b`
+(PR #10224). This tree includes merged #10214 and #10216, plus runtime
+acquisition boundary updates in #10219/#10223. This is a directional pointer,
 not a complete Issue/PR census.
 
-[Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open.
-Merged PRs #10209 and #10210 add offline Fake App Server/FileSpool composition
-and a late-completion timeout fence; [PR #10211](https://github.com/Unjuno/agent-interface/pull/10211)
-replays a saved Calc answer through the Fake X guarded recovery composition.
-These are bounded synthetic integration results. Same-model
-cold/warm/invalidation/repair comparison, full live provider/all-attempt
-accounting, integrated efficiency, and WSLc/MAP01 transfer remain unproven.
-The latest issue update is 2026-11-04; do not rerun any consumed allocation.
+[Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open
+(last updated 2026-11-04). Its 2026-11-01 evidence adds two opposite-order
+fixed-task blocks and two opposite-order temporary-obstruction blocks across
+direct, compiled, and fresh-regrounding routes. All 12 fixed scripted Calc
+attempts scored the exact saved cells and recorded neutral X input. Each arm's
+median is based on two samples; route internals and provider/cache conditions
+differ. These blocks do not establish general speed/cost/reliability, persistent
+or partial-input recovery, all-attempt accounting, or MAP01.
 
-An unmerged local follow-up adds a positive regression for stable `lstat` and
-`fstat` samples whose ctime values differ across APIs while birthtime and file
-identity agree. The Calc effect-checker suite passes 6/6 in normal and
-optimized Python 3.11.9. This locks the intended cross-API comparison alongside
-the existing same-API ctime-change refusals; the synthetic stat records do not
-verify filesystem timestamp behavior or live Calc effects.
+Open Draft [PR #10218](https://github.com/Unjuno/agent-interface/pull/10218)
+adds bounded same-turn late-usage capture after timeout while preserving the
+timeout attempt and requiring task-score custody before explicit ingestion.
+Its local tests use synthetic App Server/Fake X streams; the PR itself states
+that every-runner integration, live provider/billing semantics, GUI effects,
+WSLc, MAP01, and integrated efficiency remain unproven. The reported 107-test
+serial rerun is retained in the author checkout; earlier broader failures did
+not reproduce, and their cause remains unknown.
 
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) remains open
-after being reopened on 2026-11-04. [PR #10214](https://github.com/Unjuno/agent-interface/pull/10214)
-adds owner-generation recovery after eligible V39 cover cancellation and
-passes focused offline tests. This does not supply the required current-main
-live threat-exposure result or a separate MAP01 outcome. The next scientific
-gate remains a fresh, bounded threat exposure on the integrated path; keep the
-later MAP01 attempt distinct and preserve its first result.
+(last updated 2026-11-04). Merged [PR #10214](https://github.com/Unjuno/agent-interface/pull/10214)
+repairs eligible V39 owner-generation recovery after cover cancellation; it is
+offline evidence only. No current-main integrated live threat-exposure result
+or separate MAP01 outcome is established. Keep the next threat-exposure test
+separate from any later MAP01 attempt and preserve the first result.
 
 The WSLc migration hold in [Issue #7924](https://github.com/Unjuno/agent-interface/issues/7924)
-is separate from these code changes and grants no WSLc allocation. Do not treat
-the local Docker regression run recorded with PR #10214 as a GUI/game experiment,
-WSLc validation, provider-efficiency measurement, or MAP01 evidence. The
-2026-11-03 pointer and all measurements below remain historical.
+remains open with client ownership and checkout unresolved; PC authorization
+alone does not release that shared lane or grant a WSLc allocation. The local
+Docker regression in #10214 is not GUI/game, WSLc, provider-efficiency, or MAP01
+evidence. All older work-map checkpoints below remain historical.
 
 **Open Calc lifecycle prototype:** [Draft PR #10144](https://github.com/Unjuno/agent-interface/pull/10144)
 was rechecked OPEN on 2026-11-04. Its Windows `JobHost` test uses an injected
