@@ -49,6 +49,15 @@ CI attempts that used different ACK-delay settings.
 ## Execution and retained raw data
 
 Run `run-local-abba.sh` from this checkout with the pinned test interpreter
-created in `/tmp/agent-interface-xvfb-pr10226-20261105/venv`. Raw reports and
-logs are retained under `raw/`; the summary and hashes are added only after the
-four fixed attempts finish.
+created in `/home/user/.cache/agent-interface-xvfb-pr10226-20261105/venv`. Raw
+reports and logs are retained under `raw/`; the summary and hashes are added
+only after the four fixed attempts finish.
+
+## Preflight correction (before any input trial)
+
+The first runner invocation stopped at dependency preflight because its venv
+had been placed in `/tmp`, which was cleared between WSL command invocations.
+It did not start Xvfb or dispatch input and is not counted among A1/B1/B2/A2.
+The failed preflight is retained as `raw/initial-preflight-failure.txt`. The
+interpreter location was changed to the WSL user's persistent cache; all frozen
+trial conditions, order, and outcome rules remain unchanged.

@@ -4,7 +4,7 @@ set -u
 packet_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "$packet_dir/../../.." && pwd)"
 raw_dir="$packet_dir/raw"
-python_bin="${AGENT_INTERFACE_TEST_PYTHON:-/tmp/agent-interface-xvfb-pr10226-20261105/venv/bin/python}"
+python_bin="${AGENT_INTERFACE_TEST_PYTHON:-/home/user/.cache/agent-interface-xvfb-pr10226-20261105/venv/bin/python}"
 mkdir -p "$raw_dir"
 
 if [[ ! -x "$python_bin" ]]; then
