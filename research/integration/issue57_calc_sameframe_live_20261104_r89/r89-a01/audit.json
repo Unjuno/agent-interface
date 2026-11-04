@@ -1,0 +1,69 @@
+{
+  "attempt_id": "issue57-r89-a01",
+  "audit_errors": [],
+  "details": {
+    "artifact_sha256": "9382705cdddce3bf70de1eea2e02b175b0b3883aa291ca30fbaa4abf58bd26d2",
+    "crop": [
+      0,
+      126,
+      1218,
+      742
+    ],
+    "crop_diagnostics": {
+      "frozen_crop_changed_pixels": 0,
+      "full_frame_changed_pixels": 691
+    },
+    "crop_observations": [
+      {
+        "crop_rgb_sha256": "3f0d0795dfc2a0f4a4d0f8e0d3f1d48d9220164a1dc561f2be3adf9ecab8e30a",
+        "crop_size": [
+          1218,
+          616
+        ],
+        "evidence_ref": "observation-13",
+        "full_png_sha256": "4f2433b866c4f74cd5d69a080494ab16f366750b05bac0e18dde21dbaa3817d4",
+        "sequence": 13
+      },
+      {
+        "crop_rgb_sha256": "3f0d0795dfc2a0f4a4d0f8e0d3f1d48d9220164a1dc561f2be3adf9ecab8e30a",
+        "crop_size": [
+          1218,
+          616
+        ],
+        "evidence_ref": "observation-18",
+        "full_png_sha256": "bdd648e1b2158b503e2e5b318b8552de0097627c71e11f7720309ce5783e9ac2",
+        "sequence": 18
+      }
+    ],
+    "limitations": [
+      "one scripted Docker/Xvfb Calc attempt; no provider/model usage",
+      "crop rectangle was selected from r87 posthoc review and tested only once prospectively",
+      "no integrated efficiency, broad reliability, WSLc, MAP01 or product completion claim"
+    ],
+    "method_outcome": "SAFE_YIELD",
+    "method_reason": "effect_unavailable",
+    "task_cells": {
+      "A1": "731",
+      "A2": "864"
+    }
+  },
+  "failed_gates": [
+    "live_container_exit_zero"
+  ],
+  "gates": {
+    "close_verified_neutral_release": true,
+    "exact_target_launcher_clean_exit": true,
+    "final_observations_have_expected_calc_predicates": true,
+    "live_container_exit_zero": false,
+    "no_replay_and_task_success": true,
+    "parent_verifier_matches_preclose_artifact_and_request": true,
+    "preclose_fods_exact_task": true,
+    "r87_candidate_crop_identical_with_full_frames_retained": true,
+    "raw_fods_matches_independent_parent_hash": true,
+    "save_effect_callback_and_request_timing": true,
+    "save_request_bound_to_call_attempt_and_generations": true,
+    "two_enter_save_transitions_released": true
+  },
+  "schema": "agent-interface/issue57-r89-crop-live-audit-v1",
+  "status": "FAIL_OR_UNKNOWN"
+}

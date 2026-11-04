@@ -1,0 +1,113 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 1089601354435,
+    "ended_ns": 1090136709188,
+    "emissions": 24,
+    "program_emissions": 4,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 1090136702229
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 2,
+        "requested_ms": 500,
+        "started_ns": 1089633716838,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 1090134019661
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 21,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "calc_exit",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "calc_exit",
+      "point": [
+        83,
+        51
+      ],
+      "observed_box": [
+        67,
+        39,
+        32,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 21,
+      "valid_until_ns": 1094567266836,
+      "patch_sha256": "227ca5f487c01f3d2a83da6dc2ebb95d98ad414332339ddc2fdf1910f1a65f83",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 22,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "calc_exit",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "calc_exit",
+      "point": [
+        83,
+        51
+      ],
+      "observed_box": [
+        67,
+        39,
+        32,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 22,
+      "valid_until_ns": 1094602326784,
+      "patch_sha256": "227ca5f487c01f3d2a83da6dc2ebb95d98ad414332339ddc2fdf1910f1a65f83",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}
