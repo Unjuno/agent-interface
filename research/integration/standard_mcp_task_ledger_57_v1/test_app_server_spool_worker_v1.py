@@ -3,6 +3,7 @@ from types import SimpleNamespace
 import tempfile
 import unittest
 from unittest.mock import patch
+import os
 
 from app_server_file_spool_v1 import (
     _canonical_json_sha256,
@@ -85,6 +86,34 @@ class AppServerSpoolWorkerTests(unittest.TestCase):
 
     def tearDown(self):
         self.temp.cleanup()
+
+    def test_command_disables_only_mcp_servers_present_in_codex_config(self):
+        home = self.root / "codex-home"
+        home.mkdir()
+        (home / "config.toml").write_text(
+            '[mcp_servers.node_repl]\ncommand = "node"\n'
+            '[mcp_servers."private.mcp"]\ncommand = "node"\n',
+            encoding="utf-8")
+        result = worker.command("codex.exe", codex_home=home)
+        overrides = [result[index + 1] for index, value in enumerate(result[:-1])
+                     if value == "-c" and result[index + 1].startswith("mcp_servers.")]
+        self.assertEqual(overrides, [
+            "mcp_servers.node_repl.enabled=false",
+            'mcp_servers."private.mcp".enabled=false',
+        ])
+        self.assertNotIn("mcp_servers.cua_repl.enabled=false", result)
+
+    def test_command_uses_codex_home_environment_and_does_not_add_absent_names(self):
+        home = self.root / "codex-home-env"
+        home.mkdir()
+        (home / "config.toml").write_text(
+            '[mcp_servers.openaiDeveloperDocs]\nurl = "https://example.invalid"\n',
+            encoding="utf-8")
+        with patch.dict(os.environ, {"CODEX_HOME": str(home)}):
+            result = worker.command("codex.exe")
+        overrides = [value for value in result if value.startswith("mcp_servers.")]
+        self.assertEqual(overrides, ["mcp_servers.openaiDeveloperDocs.enabled=false"])
+        self.assertNotIn("mcp_servers.blender.enabled=false", result)
 
     def run_worker(self, planner_type, client_type=FakeClient):
         with patch.object(worker, "CodexAppServerClient", client_type), \

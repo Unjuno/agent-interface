@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+import json
+import os
 from pathlib import Path
+import re
+import tomllib
 import time
 
 from app_server_file_spool_v1 import claim_next, publish_stage
@@ -175,8 +179,33 @@ def process_one_request(root: Path, *, command: list[str], cwd: str | Path,
     return record
 
 
-def command(cli_path: str | Path) -> list[str]:
-    """Start a local planner-only server with optional tools disabled."""
+def _configured_mcp_server_names(codex_home: str | Path | None = None) -> tuple[str, ...]:
+    """Return configured MCP names only; never read or expose their values."""
+    if codex_home is None:
+        configured_home = os.environ.get("CODEX_HOME")
+        codex_home = configured_home if configured_home else Path.home() / ".codex"
+    config_path = Path(codex_home) / "config.toml"
+    if not config_path.is_file():
+        return ()
+    with config_path.open("rb") as stream:
+        config = tomllib.load(stream)
+    servers = config.get("mcp_servers", {})
+    if not isinstance(servers, dict):
+        raise ValueError("mcp_servers must be a table in Codex config")
+    names = tuple(sorted(servers))
+    if any(not isinstance(name, str) or not name for name in names):
+        raise ValueError("Codex MCP server names must be nonempty strings")
+    return names
+
+
+def _mcp_override_key(name: str) -> str:
+    if re.fullmatch(r"[A-Za-z0-9_-]+", name):
+        return name
+    return json.dumps(name, ensure_ascii=False)
+
+
+def command(cli_path: str | Path, *, codex_home: str | Path | None = None) -> list[str]:
+    """Start a planner-only server with feature families and configured MCPs disabled."""
     args = [str(cli_path), "app-server", "--stdio"]
     for feature in (
         "apps", "plugins", "remote_plugin", "browser_use", "browser_use_external",
@@ -186,4 +215,9 @@ def command(cli_path: str | Path) -> list[str]:
         "web_search_cached", "web_search_request", "browser_use_full_cdp_access",
     ):
         args.extend(("--disable", feature))
+    # An App Server thread's mcp_servers override does not clear configured
+    # servers. Disable only names that exist: adding unknown partial tables can
+    # make newer CLI versions reject startup as an invalid transport.
+    for name in _configured_mcp_server_names(codex_home):
+        args.extend(("-c", f"mcp_servers.{_mcp_override_key(name)}.enabled=false"))
     return args
