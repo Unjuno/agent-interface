@@ -1089,7 +1089,8 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         nonlocal latest_calc_source_sequence
         response = await submit('guarded_review_window',{'window_id':window_id},False,False)
         receipt = _json_tool_result(response)
-        source = receipt.get('source') if isinstance(receipt,dict) else None
+        review = receipt.get('review') if isinstance(receipt,dict) else None
+        source = review.get('source') if isinstance(review,dict) else None
         sequence = source.get('sequence') if isinstance(source,dict) else None
         if (isinstance(receipt,dict) and receipt.get('status') == 'reviewed'
                 and type(sequence) is int and sequence > 0):

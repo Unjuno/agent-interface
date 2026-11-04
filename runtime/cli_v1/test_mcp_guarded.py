@@ -384,8 +384,8 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
         async def submit(operation, arguments, compact, report_refs, **kwargs):
             calls.append((operation,arguments))
             if operation == 'guarded_review_window':
-                row={'status':'reviewed','source':{'sequence':7,
-                    'native':{'artifact':{'sha256':'7'*64}}}}
+                row={'status':'reviewed','review':{'source':{'sequence':7,
+                    'native':{'artifact':{'sha256':'7'*64}}}}}
             elif operation == 'guarded_mint':
                 row={'status':'minted','alias':arguments['alias'],'offset':[12,7]}
             elif operation == 'guarded_calc_compiled':
@@ -400,7 +400,7 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
             window_lifecycle_enabled=True)
         reviewed=metadata(await server.call_tool('interface_guarded_review_window',
             {'window_id':456}))
-        self.assertEqual(reviewed['source']['sequence'],7)
+        self.assertEqual(reviewed['review']['source']['sequence'],7)
         bindings={}
         for name,point in (('calc_entry',[16,16]),('calc_save',[40,16])):
             minted=metadata(await server.call_tool('interface_guarded_mint',{
