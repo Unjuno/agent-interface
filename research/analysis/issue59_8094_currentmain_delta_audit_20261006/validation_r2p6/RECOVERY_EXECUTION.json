@@ -1,0 +1,63 @@
+{
+  "schema": "agent-interface/issue59-verifier-r2p6-recovery-execution-v1",
+  "source_branch": "fix/8243-verifier-r2p6-20261006",
+  "source_commit": "44f4d99480344e50f504fe5c92f5f2cd58c5dec1",
+  "source_package": {
+    "archive_bytes": 16316,
+    "archive_sha256": "28e93f798721d661b9ec3ab52626f5eb7998e9c063fe8e547f7677430c427a28",
+    "members_expected": 87,
+    "manifest_files_verified": 86,
+    "manifest_failures": []
+  },
+  "preserved_freeze": {
+    "identity": "8243-source-verifier-engineering-r2p6-20261006",
+    "original_matrix_invocations_at_freeze": 0,
+    "frozen_subject_scripts_unchanged": true,
+    "new_run_is_not_the_original_linux_run": true
+  },
+  "recovery_run": {
+    "scope": "SYNTHETIC_GIT_ENGINEERING_ONLY",
+    "environment": {
+      "platform": "macOS-27.0.1-arm64",
+      "python": "3.14.5",
+      "git": "2.54.0",
+      "container": "STOP_ORBSTACK_IMAGE_STORE_OPERATION_NOT_SUPPORTED"
+    },
+    "commands": [
+      "python3 -S -B supervise.py supervisor python3 -S -B run_matrix.py",
+      "python3 -S -B audit_matrix.py /tmp/unjuno-8243-r2p6-run-vIIAr6"
+    ],
+    "matrix": {
+      "records": 80,
+      "end_returncode": 0,
+      "source_unchanged": true,
+      "auditor_checks": 718,
+      "auditor_errors": [],
+      "v1_normal": {"cases": 20, "positive_accept": 3, "negative_reject": 7, "false_accept": 10, "false_reject": 0},
+      "v1_optimized": {"cases": 20, "positive_accept": 3, "negative_reject": 1, "false_accept": 16, "false_reject": 0},
+      "v2_normal": {"cases": 20, "positive_accept": 3, "negative_reject": 17, "false_accept": 0, "false_reject": 0},
+      "v2_optimized": {"cases": 20, "positive_accept": 3, "negative_reject": 17, "false_accept": 0, "false_reject": 0}
+    },
+    "sha256": {
+      "audit": "365f372e987e1374b8cc1e898fde185356d3e371734556774cb0949d27df0bf9",
+      "records": "0046a026dce92c71fc3b3e107e4c7064a18acab231033cc38f912b41d988a338",
+      "fixture_bundle": "2e68e9e383728d8b96dba253da864e9558174fd56bc480ca44a942fa9c52943b"
+    }
+  },
+  "retained_attempts_archive": {
+    "path": "recovery-artifacts-macos-arm64-20261008.tar.xz",
+    "bytes": 51968,
+    "sha256": "f2605ad22d496a89da6cb5226c98b8cb242d6407ab9477061860980966bcf701",
+    "contains": [
+      "attempt-01-supervisor-name-collision/matrix/",
+      "attempt-02-independent-macos-reproduction/matrix/",
+      "attempt-02-independent-macos-reproduction/supervisor/"
+    ]
+  },
+  "limitations": [
+    "This is an independently repeated finite synthetic-Git engineering matrix, not a live/scientific experiment or evidence of #8094 semantic/runtime compatibility.",
+    "The run used macOS ARM64 CPython 3.14.5 and Git 2.54.0, not the frozen Linux x86_64 CPython 3.13.5 environment.",
+    "OrbStack reported an unsupported content-store operation when inspecting images; no container test was claimed or run.",
+    "The historical worker's reported 80-row run is preserved only as a GitHub comment; this new run does not authenticate or replace missing historical raw receipts."
+  ]
+}
