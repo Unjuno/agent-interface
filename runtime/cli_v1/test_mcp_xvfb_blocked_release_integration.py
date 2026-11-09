@@ -46,7 +46,8 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 )
 
 
-_DELAY_MS = 8000
+_DELAY_MS = int(os.environ.get(
+    'AGENT_INTERFACE_MCP_XVFB_DELAY_MS', '8000'))
 _CANCEL_BOUND_MS = 3000
 _CANCEL_ACK_WITHHOLD_S = float(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S', '1.0'))
@@ -63,6 +64,8 @@ _TERMINAL_BOUND_MS = 5000
 
 if not 0 <= _CANCEL_ACK_WITHHOLD_S <= 2:
     raise ValueError('cancel acknowledgement hold must be between 0 and 2 seconds')
+if not 1 <= _DELAY_MS <= 8000:
+    raise ValueError('delayed XTEST request must be between 1 and 8000 ms')
 if not 0 <= _SERVER_PAUSE_MS <= 5000:
     raise ValueError('Xvfb pause must be between 0 and 5000 ms')
 if not math.isfinite(_TRANSACTION_TIMEOUT_S) or not 0 < _TRANSACTION_TIMEOUT_S <= 30:
