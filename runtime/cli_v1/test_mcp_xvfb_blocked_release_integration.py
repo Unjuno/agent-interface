@@ -1404,9 +1404,15 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 cancel_returned_ns = report['timing_ns']['cancel_returned']
                 cancellation = terminal.get('cancellation', {})
                 cancel_completed_ns = cancellation.get('completed_monotonic_ns')
+                execution = terminal.get('result', {}).get('execution', {})
+                execution_ended_ns = execution.get('ended_ns')
+                cancel_admitted_ns = cancellation.get('admitted_monotonic_ns')
                 cancellation_result = cancellation.get('result', {})
                 self.assertIsInstance(liveness_observed_ns, int, terminal)
                 self.assertIsInstance(cancel_completed_ns, int, terminal)
+                if terminal.get('status') == 'completed':
+                    self.assertIsInstance(execution_ended_ns, int, terminal)
+                    self.assertIsInstance(cancel_admitted_ns, int, terminal)
                 if terminal.get('status') != 'completed':
                     self.assertTrue(cancellation_result.get('owner_process_retired'), terminal)
                     self.assertIsInstance(cancellation_result.get('owner_process_exitcode'),
@@ -1418,13 +1424,21 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'cancellation_claimed_retired':cancellation_result.get(
                         'owner_process_retired'),
                     'terminal_status':terminal.get('status'),
-                    'completion_raced_cancel':terminal.get('status') == 'completed',
-                    'cancel_receipt_conflicts_with_live_snapshot':(
-                        terminal.get('status') == 'completed'
+                    'operation_ended_monotonic_ns':execution_ended_ns,
+                    'cancellation_admitted_monotonic_ns':cancel_admitted_ns,
+                    'cancellation_completed_monotonic_ns':cancel_completed_ns,
+                    'operation_completed_after_cancel_admission':(
+                        execution_ended_ns > cancel_admitted_ns
+                        if isinstance(execution_ended_ns, int)
+                        and isinstance(cancel_admitted_ns, int) else None),
+                    'operation_completed_before_cancel_terminal':(
+                        execution_ended_ns < cancel_completed_ns
+                        if isinstance(execution_ended_ns, int) else None),
+                    'owner_snapshot_conflicts_with_retirement_at_observation':(
+                        liveness_observed_ns >= cancel_completed_ns
                         and owner_process.get('alive') is True
                         and cancellation_result.get('owner_process_retired') is True),
                     'cancel_returned_monotonic_ns':cancel_returned_ns,
-                    'cancellation_completed_monotonic_ns':cancel_completed_ns,
                     'snapshot_precedes_cancel_terminal':(
                         liveness_observed_ns < cancel_completed_ns),
                     'alive':owner_process.get('alive'),
@@ -1440,7 +1454,6 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(terminal.get('release_confirmed'), terminal)
                 self.assertFalse(terminal.get('replay_allowed'), terminal)
                 if terminal.get('status') == 'completed':
-                    execution = terminal.get('result', {}).get('execution', {})
                     report['completion_after_cancel'] = {
                         'completed_ops':execution.get('completed_ops'),
                         'program_emissions':execution.get('program_emissions'),
@@ -1482,8 +1495,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     }
 
                 report['status'] = (
-                    'OBSERVED_XVFB_COMPLETION_RACED_CANCEL_RECEIPT_CONFLICT'
-                    if terminal.get('status') == 'completed' else
+                    'OBSERVED_XVFB_OPERATION_COMPLETED_AFTER_CANCEL_ADMISSION'
+                    if (isinstance(execution_ended_ns, int)
+                        and isinstance(cancel_admitted_ns, int)
+                        and execution_ended_ns > cancel_admitted_ns) else
                     'OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN')
             except BaseException as error:
                 report.update(status='FAIL', error_type=type(error).__name__,
