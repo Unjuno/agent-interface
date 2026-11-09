@@ -10,6 +10,8 @@ The next useful checks are fresh-target recovery and evidence-based resolution o
 
 The 2026-11-10 delayed-request follow-up in the design record found a bounded Xvfb failure for an out-of-band request injected directly by the fixture. It did not capture a late request emitted by the public runtime. The next discriminating check must delay a captured runtime request at the socket/server boundary and verify actual server state, recovery, and fresh-task effect before fixture cleanup.
 
+The subsequent [R04 Fake X discriminator](../../research/integration/public_mcp_fake_x_runtime_wire_late_down_r04_20261110/RESULTS.md) now derives the modeled late state transition from the exact request bytes captured through the public MCP caller. It strengthens request lineage while keeping delivery order and server state explicitly modeled. A server-backed delayed arrival is still unverified.
+
 The separate Win32 operation-owner candidate is a reviewable proposal in
 [`../superpowers/specs/2026-10-22-win32-prestarted-supervisor-design.md`](../superpowers/specs/2026-10-22-win32-prestarted-supervisor-design.md).
 It is not the X11 supervisor implementation and does not authorize native
