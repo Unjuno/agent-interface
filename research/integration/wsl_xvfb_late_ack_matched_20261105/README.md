@@ -2,7 +2,7 @@
 
 ## Status
 
-Preregistered before execution. The final execution environment is one
+Preregistered before execution. The completed execution used one
 ephemeral Linux container on the user's Docker Desktop engine, using the
 already-cached Xvfb test image pinned by its image ID below. The container has
 network disabled, a read-only root filesystem, a private tmpfs for Xvfb, a
@@ -57,10 +57,11 @@ CI attempts that used different ACK-delay settings.
 
 ## Execution and retained raw data
 
-Run `run-local-abba.sh` inside the pinned container with
-`AGENT_INTERFACE_TEST_PYTHON=/usr/bin/python3`. Raw reports and logs are
-retained under `raw/`; the summary and hashes are added only after the four
-fixed attempts finish.
+`run-local-abba.sh` ran inside the pinned container with
+`AGENT_INTERFACE_TEST_PYTHON=/usr/bin/python3`. All four fixed attempts
+completed once. Results and interpretation are in [`RESULTS.md`](RESULTS.md);
+raw reports and logs are retained under `raw/`, with per-file SHA-256 values in
+[`SHA256SUMS`](SHA256SUMS).
 
 ## Preflight correction (before any input trial)
 
@@ -78,5 +79,7 @@ showed `/tmp/.X11-unix` is read-only and mode 0777; restoring its standard 1777
 mode was refused by the filesystem. The test uses only display `:88`, now fixed
 in the runner. The already-cached Docker image gives a writable isolated tmpfs
 without changing the WSL system directory. The preflight records are retained
-in `raw/`; no task input was dispatched and the A1/B1/B2/A2 scored sequence has
-not begun.
+in `raw/`; no task input was dispatched in those setup attempts. The four
+scored attempts were subsequently run once as preregistered. See
+[`RESULTS.md`](RESULTS.md); setup failures remain preserved and are not counted
+as scored trials.
