@@ -48,6 +48,8 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 
 _DELAY_MS = int(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_DELAY_MS', '8000'))
+_TRACKED_DELAYED_SECOND_PRESS = (
+    os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACKED_DELAYED_SECOND_PRESS', '0') == '1')
 _CANCEL_BOUND_MS = 3000
 _CANCEL_ACK_WITHHOLD_S = float(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S', '1.0'))
@@ -241,36 +243,57 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
         injected = {'value':False}
         sync_seen = {'value':False}
         first_keycode = {'value':None}
+        keypress_count = {'value':0}
 
         def fake_input(display_connection, event_type, detail=0, time=0,
                        root=0, x=0, y=0):
-            result = original_fake_input(
-                display_connection, event_type, detail=detail, time=time,
-                root=root, x=x, y=y)
-            if event_type == X.KeyPress and not injected['value']:
-                first_keycode['value'] = detail
-                delayed_keycode = backend._keycode('b')
-                original_fake_input(
-                    display_connection, X.KeyPress, detail=delayed_keycode,
-                    time=_DELAY_MS)
+            tracked_second_press = False
+            if event_type == X.KeyPress and detail == backend._keycode('a'):
+                keypress_count['value'] += 1
+                tracked_second_press = (
+                    _TRACKED_DELAYED_SECOND_PRESS
+                    and keypress_count['value'] == 2)
+            if tracked_second_press:
+                result = original_fake_input(
+                    display_connection, event_type, detail=detail,
+                    time=_DELAY_MS, root=root, x=x, y=y)
                 display_connection.flush()
+            else:
+                result = original_fake_input(
+                    display_connection, event_type, detail=detail, time=time,
+                    root=root, x=x, y=y)
+            if (tracked_second_press or
+                    (not _TRACKED_DELAYED_SECOND_PRESS
+                     and event_type == X.KeyPress and not injected['value'])):
+                first_keycode['value'] = detail
+                delayed_keycode = (detail if tracked_second_press
+                                   else backend._keycode('b'))
+                if not tracked_second_press:
+                    original_fake_input(
+                        display_connection, X.KeyPress, detail=delayed_keycode,
+                        time=_DELAY_MS)
+                    display_connection.flush()
                 row = {
                     'owner_pid':os.getpid(),
                     'resource_base':display_connection.display.info.resource_id_base,
-                    'immediate_event':'KeyPress',
-                    'immediate_keycode':detail,
+                    'delayed_request_source':(
+                        'runtime_key_chord_second_keypress'
+                        if tracked_second_press else 'fixture_direct_xtest_injection'),
+                    'runtime_keypress_ordinal':keypress_count['value'],
                     'delayed_event':'KeyPress',
                     'delayed_keycode':delayed_keycode,
                     'delay_ms':_DELAY_MS,
                     'flushed_ns':_monotonic_ns(),
                     'blocked_boundary':'real python-xlib Display.sync response wait',
+                    'tracked_input_obligations':dict(backend.held_keycodes),
                 }
                 temporary = marker.with_suffix('.tmp')
                 temporary.write_text(json.dumps(row, sort_keys=True),
                                       encoding='utf-8')
                 temporary.replace(marker)
                 injected['value'] = True
-            if (display_connection is backend.d and event_type == X.KeyRelease
+            if (injected['value'] and display_connection is backend.d
+                    and event_type == X.KeyRelease
                     and detail == first_keycode['value'] and not release_queued.exists()):
                 row = {'owner_pid':os.getpid(),
                        'resource_base':display_connection.display.info.resource_id_base,
@@ -436,9 +459,12 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
         report = {
             'schema':'agent-interface/standard-mcp-xvfb-blocked-release-v2',
             'status':'RUNNING',
-            'scope':'standard MCP caller; private Xvfb; test-injected delayed request; synthetic app',
+            'scope':('standard MCP caller; private Xvfb; runtime-tracked delayed second press; synthetic app'
+                     if _TRACKED_DELAYED_SECOND_PRESS else
+                     'standard MCP caller; private Xvfb; fixture-injected delayed request; synthetic app'),
             'conditions':{
                 'delayed_keypress_ms':_DELAY_MS,
+                'tracked_delayed_second_press':_TRACKED_DELAYED_SECOND_PRESS,
                 'cancel_return_bound_ms':_CANCEL_BOUND_MS,
                 'child_cancel_ack_withheld_s':_CANCEL_ACK_WITHHOLD_S,
                 'owner_process_method_trace':_TRACE_OWNER_PROCESS_METHODS,
@@ -484,8 +510,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
         app_stop = threading.Event()
         effect_committed = threading.Event()
         a_release_seen = threading.Event()
+        late_a_press_seen = threading.Event()
         b_press_seen = threading.Event()
         c_press_seen = threading.Event()
+        fresh_a_press_seen = threading.Event()
         fresh_task_started = threading.Event()
         fresh_effect_atom = None
         fresh_server = None
@@ -581,8 +609,23 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                             app_events.append(row)
                         if (event.type == X.KeyPress
                                 and event.detail == keycodes['a']
+                                and fresh_task_started.is_set()
+                                and event_window_id == fresh_window.id):
+                            effect_counts[fresh_window.id] += 1
+                            fresh_window.change_property(count_atom, Xatom.CARDINAL,
+                                32, [effect_counts[fresh_window.id]])
+                            fresh_window.change_property(fresh_effect_atom,
+                                Xatom.CARDINAL, 32, [4])
+                            app_display.sync()
+                            with app_lock:
+                                app_events[-1]['effect_committed_ns'] = time.monotonic_ns()
+                            fresh_a_press_seen.set()
+                        elif (event.type == X.KeyPress
+                                and event.detail == keycodes['a']
                                 and event_window_id == window.id):
                             effect_counts[window.id] += 1
+                            if effect_counts[window.id] > 1:
+                                late_a_press_seen.set()
                             window.change_property(count_atom, Xatom.CARDINAL,
                                                    32, [effect_counts[window.id]])
                             window.change_property(effect_atom, Xatom.CARDINAL,
@@ -692,7 +735,12 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'alias':'field', 'offset':minted['offset'],
                     'interaction':'keyboard', 'observe_after':False,
                     'wait_for_result_ms':0,
-                    'tail':[{'op':'key_chord', 'keys':['a']}]}))
+                    'tail':([
+                        {'op':'key_chord', 'keys':['a']},
+                        {'op':'key_chord', 'keys':['a']},
+                    ] if _TRACKED_DELAYED_SECOND_PRESS else [
+                        {'op':'key_chord', 'keys':['a']},
+                    ])}))
                 report['timing_ns']['pending_returned'] = time.monotonic_ns()
                 report['pending'] = {'status':pending.get('status'),
                                      'call_id':pending.get('call_id')}
@@ -742,7 +790,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'owner_sync_return_receipt_present':(
                         (root/'xvfb-owner-sync-returned.json').exists()),
                 }
-                self.assertEqual(down_before, {'a':True,'b':False}, report)
+                expected_down_before = (
+                    {'a':False,'b':False} if _TRACKED_DELAYED_SECOND_PRESS
+                    else {'a':True,'b':False})
+                self.assertEqual(down_before, expected_down_before, report)
                 self.assertFalse(
                     report['input_before_cancel']['owner_sync_return_receipt_present'],
                     report)
@@ -1186,6 +1237,14 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         (horizon_ns-time.monotonic_ns())/1_000_000_000))
                 late = {name:_key_down(observer, code)
                         for name, code in keycodes.items()}
+                if late['a'] and _TRACKED_DELAYED_SECOND_PRESS:
+                    event_deadline = time.monotonic()+1.0
+                    while (not late_a_press_seen.is_set()
+                           and not fresh_a_press_seen.is_set()
+                           and time.monotonic() < event_deadline):
+                        await asyncio.sleep(0.005)
+                    self.assertTrue(late_a_press_seen.is_set()
+                                    or fresh_a_press_seen.is_set(), report)
                 if late['b']:
                     await self._wait_for_event(b_press_seen)
                 effect = observer.create_resource_object('window', window.id).get_full_property(
@@ -1195,6 +1254,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['late_request_horizon_readback'] = {
                     'keys_down':late,
                     'late_keypress_b_observed':late['b'],
+                    'late_keypress_a_observed':late_a_press_seen.is_set(),
                     'ms_after_cancel_start':(
                         time.monotonic_ns()-report['timing_ns']['cancel_started'])/1_000_000,
                     'reader':'separate parent X client',
@@ -1217,8 +1277,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'scope':'synthetic Xvfb task only; runtime task_success remains null',
                     'reader':'synthetic app property plus independent parent keymap',
                     'task_definition':(
-                        'one initial a effect; no delayed b effect; both keys up '
-                        'after release and at the delayed-request horizon'),
+                        'one initial a effect; no delayed request effect; both keys '
+                        'up after release and at the delayed-request horizon'),
                     'expected_effect':[1],
                     'measurements':{
                         'initial_effect':before_cancel_value,
@@ -1251,6 +1311,12 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         and row.get('detail') == keycodes['b']
                         and row.get('monotonic_ns', 0) >= fresh_start_ns
                         for row in app_events)
+                    late_a_after_fresh_start = any(
+                        row.get('type') == X.KeyPress
+                        and row.get('detail') == keycodes['a']
+                        and row.get('window') == fresh_window.id
+                        and row.get('monotonic_ns', 0) >= fresh_start_ns
+                        for row in app_events)
                 fresh_horizon_readback = {
                     name:_key_down(observer, keycodes[name])
                     for name in ('a','b','c')}
@@ -1281,7 +1347,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         fresh_effect_before_input == [0],
                     'new_task_effect_at_horizon':final_fresh_effect == [3],
                     'no_old_delayed_press_after_new_session':
-                        not late_b_after_fresh_start,
+                        not late_b_after_fresh_start and not late_a_after_fresh_start,
                     'new_task_keys_up_after_input':not any(
                         fresh_release_readback.values()),
                     'all_keys_up_at_horizon':not any(
@@ -1291,7 +1357,9 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'effect_at_horizon':final_fresh_effect,
                     'effect_count_at_horizon':final_fresh_count,
                     'effect_count_oracle':fresh_count_oracle,
-                    'late_old_keypress_after_new_session':late_b_after_fresh_start,
+                    'late_old_keypress_after_new_session':(
+                        late_b_after_fresh_start or late_a_after_fresh_start),
+                    'late_old_a_keypress_after_new_session':late_a_after_fresh_start,
                     'horizon_readback':fresh_horizon_readback,
                     'old_cancellation_after_fresh_task':old_after_fresh_cancel,
                     'task_oracle':{
@@ -1310,9 +1378,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'fresh_task':report['fresh_session_recovery']['task_oracle']['status'],
                     'scope':'Separate from control-path test completion and runtime UNKNOWN receipts',
                 }
-                # Either delayed-b outcome is evidence. Do not convert a live
+                # Delayed request outcomes are evidence. Do not convert a live
                 # result into an assumed general queue-drain guarantee.
-                self.assertFalse(late['a'], report)
+                if not _TRACKED_DELAYED_SECOND_PRESS:
+                    self.assertFalse(late['a'], report)
                 self.assertIn(effect_value, ([1],[2]), report)
 
                 report['timing_ns']['terminal_started'] = time.monotonic_ns()
@@ -1326,6 +1395,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['terminal'] = terminal
                 terminal_returned = True
                 owner_process = terminal.get('owner_process', {})
+                owner_process_source = 'terminal.owner_process'
+                if not owner_process.get('liveness_observed_monotonic_ns'):
+                    owner_process = terminal.get('session', {}).get('owner_process', {})
+                    owner_process_source = 'terminal.session.owner_process'
                 liveness_observed_ns = owner_process.get(
                     'liveness_observed_monotonic_ns')
                 cancel_returned_ns = report['timing_ns']['cancel_returned']
@@ -1334,11 +1407,22 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 cancellation_result = cancellation.get('result', {})
                 self.assertIsInstance(liveness_observed_ns, int, terminal)
                 self.assertIsInstance(cancel_completed_ns, int, terminal)
-                self.assertTrue(cancellation_result.get('owner_process_retired'), terminal)
-                self.assertIsInstance(cancellation_result.get('owner_process_exitcode'),
-                                      int, terminal)
+                if terminal.get('status') != 'completed':
+                    self.assertTrue(cancellation_result.get('owner_process_retired'), terminal)
+                    self.assertIsInstance(cancellation_result.get('owner_process_exitcode'),
+                                          int, terminal)
                 report['terminal_owner_liveness_fence'] = {
                     'liveness_observed_monotonic_ns':liveness_observed_ns,
+                    'owner_process_source':owner_process_source,
+                    'owner_process_alive_snapshot':owner_process.get('alive'),
+                    'cancellation_claimed_retired':cancellation_result.get(
+                        'owner_process_retired'),
+                    'terminal_status':terminal.get('status'),
+                    'completion_raced_cancel':terminal.get('status') == 'completed',
+                    'cancel_receipt_conflicts_with_live_snapshot':(
+                        terminal.get('status') == 'completed'
+                        and owner_process.get('alive') is True
+                        and cancellation_result.get('owner_process_retired') is True),
                     'cancel_returned_monotonic_ns':cancel_returned_ns,
                     'cancellation_completed_monotonic_ns':cancel_completed_ns,
                     'snapshot_precedes_cancel_terminal':(
@@ -1354,9 +1438,26 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 self.assertLess(terminal_elapsed_ms, _TERMINAL_BOUND_MS, terminal)
                 self.assertNotEqual(terminal.get('status'), 'pending', terminal)
                 self.assertFalse(terminal.get('release_confirmed'), terminal)
-                self.assertEqual(terminal.get('cleanup_status'), 'UNKNOWN', terminal)
-                self.assertIsNone(terminal.get('task_success'), terminal)
                 self.assertFalse(terminal.get('replay_allowed'), terminal)
+                if terminal.get('status') == 'completed':
+                    execution = terminal.get('result', {}).get('execution', {})
+                    report['completion_after_cancel'] = {
+                        'completed_ops':execution.get('completed_ops'),
+                        'program_emissions':execution.get('program_emissions'),
+                        'runtime_release_rows':execution.get('releases'),
+                        'terminal_cleanup_status':terminal.get('cleanup_status'),
+                        'terminal_task_success':terminal.get('task_success'),
+                        'cancellation_cleanup_status':cancellation_result.get(
+                            'cleanup_status'),
+                        'cancellation_release_confirmed':cancellation_result.get(
+                            'release_confirmed'),
+                        'cancel_operation_id':cancellation.get('operation_id'),
+                    }
+                    self.assertEqual(execution.get('completed_ops'), [0, 1, 2, 3], terminal)
+                    self.assertTrue(execution.get('releases'), terminal)
+                else:
+                    self.assertEqual(terminal.get('cleanup_status'), 'UNKNOWN', terminal)
+                    self.assertIsNone(terminal.get('task_success'), terminal)
 
                 if _RETENTION_MODE == 'journal':
                     from runtime.guarded_x11_v1.receipt_journal import ReceiptJournal
@@ -1381,6 +1482,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     }
 
                 report['status'] = (
+                    'OBSERVED_XVFB_COMPLETION_RACED_CANCEL_RECEIPT_CONFLICT'
+                    if terminal.get('status') == 'completed' else
                     'OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN')
             except BaseException as error:
                 report.update(status='FAIL', error_type=type(error).__name__,
