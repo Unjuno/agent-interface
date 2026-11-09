@@ -1,0 +1,4 @@
+command: docker run --rm --network none --read-only --tmpfs /tmp:rw,exec,nosuid,size=256m --mount type=bind,source=<source>,target=/src,readonly --mount type=bind,source=<raw>,target=/out --workdir /src --env AGENT_INTERFACE_FRONTIER_OUTPUT=/out agent-interface-xvfb-mcp:late-input-r19 /src/research/integration/wsl_xvfb_autorepeat_release_frontier_20261110/run-frontier.sh
+exit_code: 1
+stdout: output directory is not empty: /out
+scope: runner rejected pre-populated output directory before dependency preflight, Xvfb startup, or input dispatch; no scored attempt began.
