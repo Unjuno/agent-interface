@@ -53,6 +53,11 @@ _CANCEL_ACK_WITHHOLD_S = float(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S', '1.0'))
 _TRACE_OWNER_PROCESS_METHODS = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS', '1') == '1')
+_CONTINUE_AFTER_NONNEUTRAL_RELEASE = (
+    os.environ.get(
+        'AGENT_INTERFACE_MCP_XVFB_CONTINUE_AFTER_NONNEUTRAL_RELEASE', '0') == '1')
+_OBLIGATION_PUBLISHER_TRACE = os.environ.get(
+    'AGENT_INTERFACE_MCP_XVFB_OBLIGATION_PUBLISHER_TRACE', '')
 _PRESTARTED_CANCEL_SUPERVISOR = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR', '0') == '1')
 _RETENTION_MODE = os.environ.get('AGENT_INTERFACE_MCP_XVFB_RETENTION_MODE', 'files')
@@ -209,6 +214,30 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
             raise RuntimeError('fixture backend changed after instrumentation')
         original_fake_input = xtest.fake_input
         original_sync = backend.d.sync
+        if _OBLIGATION_PUBLISHER_TRACE:
+            original_set_publisher = backend.set_input_obligation_publisher
+
+            def traced_set_publisher(publisher):
+                if publisher is None:
+                    return original_set_publisher(None)
+
+                def traced_publisher(keys, buttons):
+                    started_ns = time.monotonic_ns()
+                    publisher(keys, buttons)
+                    row = {
+                        'pid':os.getpid(),
+                        'started_monotonic_ns':started_ns,
+                        'completed_monotonic_ns':time.monotonic_ns(),
+                        'keys':dict(keys),
+                        'buttons':list(buttons),
+                    }
+                    with open(_OBLIGATION_PUBLISHER_TRACE, 'a',
+                              encoding='utf-8') as trace:
+                        trace.write(json.dumps(row, sort_keys=True) + '\n')
+
+                return original_set_publisher(traced_publisher)
+
+            backend.set_input_obligation_publisher = traced_set_publisher
         injected = {'value':False}
         sync_seen = {'value':False}
         first_keycode = {'value':None}
@@ -414,6 +443,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'child_cancel_ack_withheld_s':_CANCEL_ACK_WITHHOLD_S,
                 'owner_process_method_trace':_TRACE_OWNER_PROCESS_METHODS,
                 'prestarted_cancel_supervisor':_PRESTARTED_CANCEL_SUPERVISOR,
+                'continue_after_nonneutral_release':(
+                    _CONTINUE_AFTER_NONNEUTRAL_RELEASE),
+                'input_obligation_publisher_trace':bool(
+                    _OBLIGATION_PUBLISHER_TRACE),
                 'terminal_result_bound_ms':_TERMINAL_BOUND_MS,
                 'late_keypress_outcome':'record either result; do not assume queue cancellation',
                 'fresh_session_same_x_server':True,
@@ -675,6 +708,13 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['blocked_owner_sync'] = sync_marker
                 self.assertEqual(sync_marker['owner_pid'], owner_marker['owner_pid'])
                 self.assertEqual(sync_marker['resource_base'], owner_marker['resource_base'])
+                if _OBLIGATION_PUBLISHER_TRACE:
+                    trace_path = Path(_OBLIGATION_PUBLISHER_TRACE)
+                    if trace_path.exists():
+                        report['input_obligation_publisher_trace_before_cancel'] = [
+                            json.loads(line) for line in
+                            trace_path.read_text(encoding='utf-8').splitlines()
+                            if line.strip()]
                 report['owner_target_release_queued'] = await self._wait_for_file(
                     owner_output_root/'xvfb-target-release-queued.json')
                 self.assertLessEqual(report['owner_target_release_queued']['queued_ns'],
@@ -990,8 +1030,19 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'owner_release_attempt':cancel['owner_release_attempt'],
                     'reader':'separate parent X client',
                     'observed_ns':time.monotonic_ns(),
+                    'neutral':release_readback == {'a':False,'b':False},
                 }
-                self.assertEqual(release_readback, {'a':False,'b':False}, report)
+                if (not _CONTINUE_AFTER_NONNEUTRAL_RELEASE
+                        or release_readback == {'a':False,'b':False}):
+                    self.assertEqual(release_readback,
+                                     {'a':False,'b':False}, report)
+                elif _OBLIGATION_PUBLISHER_TRACE:
+                    trace_path = Path(_OBLIGATION_PUBLISHER_TRACE)
+                    if trace_path.exists():
+                        report['input_obligation_publisher_trace_after_cancel'] = [
+                            json.loads(line) for line in
+                            trace_path.read_text(encoding='utf-8').splitlines()
+                            if line.strip()]
 
                 # Probe recovery on the same X server while the old call still
                 # truthfully carries late_server_request_possible=true.  The
