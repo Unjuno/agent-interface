@@ -292,6 +292,60 @@ def _effect_count(observer, window_id, atom):
     return list(row.value) if row is not None else None
 
 
+def _assert_cancel_release_attempt(test_case, cancel, *, prestarted_supervisor):
+    """Check the arm's receipt contract without conflating it with task effects."""
+    attempt = cancel.get('owner_release_attempt')
+    test_case.assertIsInstance(attempt, dict, cancel)
+    status = attempt.get('status')
+    if prestarted_supervisor:
+        test_case.assertEqual(status, 'readback_verified', cancel)
+        test_case.assertIsInstance(attempt.get('release'), dict, cancel)
+        test_case.assertIs(attempt['release'].get('verified'), True, cancel)
+        return status
+
+    test_case.assertIn(status, ('readback_verified', 'unknown'), cancel)
+    if status == 'readback_verified':
+        test_case.assertIsInstance(attempt.get('release'), dict, cancel)
+        test_case.assertIs(attempt['release'].get('verified'), True, cancel)
+    else:
+        test_case.assertFalse(cancel.get('release_confirmed'), cancel)
+        test_case.assertEqual(cancel.get('cleanup_status'), 'UNKNOWN', cancel)
+    return status
+
+
+class CancellationReleaseAttemptAssertionTests(unittest.TestCase):
+    def test_prestarted_supervisor_requires_verified_release_receipt(self):
+        cancel = {'owner_release_attempt':{
+            'status':'readback_verified', 'release':{'verified':True}}}
+        self.assertEqual(_assert_cancel_release_attempt(
+            self, cancel, prestarted_supervisor=True), 'readback_verified')
+
+    def test_prestarted_supervisor_rejects_unknown_release_receipt(self):
+        cancel = {'owner_release_attempt':{'status':'unknown'}}
+        with self.assertRaises(AssertionError):
+            _assert_cancel_release_attempt(
+                self, cancel, prestarted_supervisor=True)
+
+    def test_standard_caller_preserves_unknown_without_claiming_release(self):
+        cancel = {'owner_release_attempt':{'status':'unknown'},
+                  'release_confirmed':False, 'cleanup_status':'UNKNOWN'}
+        self.assertEqual(_assert_cancel_release_attempt(
+            self, cancel, prestarted_supervisor=False), 'unknown')
+
+    def test_standard_caller_accepts_a_verified_release_receipt(self):
+        cancel = {'owner_release_attempt':{
+            'status':'readback_verified', 'release':{'verified':True}}}
+        self.assertEqual(_assert_cancel_release_attempt(
+            self, cancel, prestarted_supervisor=False), 'readback_verified')
+
+    def test_standard_caller_rejects_unknown_upgraded_to_confirmed(self):
+        cancel = {'owner_release_attempt':{'status':'unknown'},
+                  'release_confirmed':True, 'cleanup_status':'UNKNOWN'}
+        with self.assertRaises(AssertionError):
+            _assert_cancel_release_attempt(
+                self, cancel, prestarted_supervisor=False)
+
+
 @unittest.skipUnless(
     sys.platform == 'linux' and os.environ.get('DISPLAY') == ':88'
     and os.environ.get('AGENT_INTERFACE_MCP_XVFB_TEST') == '1',
@@ -916,14 +970,14 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(cancel.get('owner_process_retired'), cancel)
                 self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
                                  'disconnected', cancel)
-                self.assertEqual(cancel.get('owner_release_attempt', {}).get('status'),
-                                 'readback_verified', cancel)
+                _assert_cancel_release_attempt(
+                    self, cancel,
+                    prestarted_supervisor=_PRESTARTED_CANCEL_SUPERVISOR)
                 self.assertFalse(cancel.get('release_confirmed'), cancel)
                 self.assertEqual(cancel.get('cleanup_status'), 'UNKNOWN', cancel)
                 self.assertIsNone(cancel.get('task_success'), cancel)
                 self.assertFalse(cancel.get('replay_allowed'), cancel)
                 self.assertTrue(cancel.get('late_server_request_possible'), cancel)
-                self.assertTrue(cancel['owner_release_attempt']['release']['verified'])
 
                 await self._wait_for_event(a_release_seen)
                 release_readback = {
