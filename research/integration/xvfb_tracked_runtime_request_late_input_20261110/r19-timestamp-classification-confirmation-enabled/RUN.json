@@ -1,0 +1,24 @@
+{
+  "run_id": "r19",
+  "source_commit": "1f041b86ebf622f7fa71706885fc6bcee318928f",
+  "source_sha256": "dfe70183d72c5a80d87ff1b800e1768c963cd47d5e973921b2a760e0acb28410",
+  "preregistration_sha256": "b608183e71b8ac82b81dd9da8d26c82fbed4050acfd9ec39ecbeb1348befabba",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "model_calls": 0,
+  "delay_ms": 250,
+  "tracked_delayed_second_press": true,
+  "supervisor": false,
+  "display": ":88",
+  "integration_test_enabled": true,
+  "test_command": "python3 -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "container_limits": {
+    "cpus": 2,
+    "memory": "4g",
+    "memory_swap": "4g",
+    "pids_limit": 256
+  },
+  "source_mount": "/workspace:ro",
+  "evidence_mount": "/evidence"
+}
