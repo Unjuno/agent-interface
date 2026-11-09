@@ -87,6 +87,12 @@ runtime release in this research-preview path. The CI workflow only builds and u
 retrieving and placing one is a separate user action. The v3 setup script implements only the
 dependency-install action above. Missing external executables remain explicit `doctor` failures.
 
+This is also the boundary for any future installer: acquiring or installing the Agent Interface
+runtime must be a separately named, affirmative user action. Model/provider setup and Python
+dependency preparation must remain separate choices; selecting either must not implicitly download
+or install the runtime package. A combined first-run flow is acceptable only when each acquisition
+is independently disclosed and selected before it starts.
+
 `doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
 `audit-retained` verifies source hashes and the published fixed comparison without
 making a model call or opening a GUI. `run` creates a new timestamped directory
