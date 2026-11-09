@@ -1,0 +1,77 @@
+{
+  "abandoning_child": {
+    "wait_name": "object",
+    "wait_result": 0
+  },
+  "contender_after_release": {
+    "released": true,
+    "wait_name": "object",
+    "wait_result": 0
+  },
+  "contender_while_held": {
+    "wait_name": "timeout",
+    "wait_result": 258
+  },
+  "first_snapshot": {
+    "active_input_desktop": "Default",
+    "active_input_desktop_flag": true,
+    "current_thread_desktop": "Default",
+    "current_thread_matches_active_input_desktop": true,
+    "input_namespace_sha256": "15d74804025589edd3b322194edcd4c23b7627582d88d40d6f42899284ab424f",
+    "limitations": [
+      "one observation on one current logon; no cross-session collision test",
+      "does not identify an X11 server reached through a proxy",
+      "does not prove late-input horizon, release, or task effect"
+    ],
+    "logon_authentication_id_sha256": "45a3062321392236ffacbc10bdde94e28816bfdbc18552238111c798ea001ad1",
+    "namespace_fields": [
+      "session_id",
+      "logon_authentication_id (SHA-256 only)",
+      "window_station name"
+    ],
+    "observed_monotonic_ns": 10302031000000,
+    "process_id": 28600,
+    "process_window_station": "WinSta0",
+    "schema": "agent-interface/win32-interactive-input-namespace-r32-v1",
+    "scope": "read-only OS namespace query; no window input or app launch",
+    "session_id": 1,
+    "status": "observed"
+  },
+  "limitation": "Mutex exclusion/abandonment does not itself preserve UNKNOWN custody; a durable journal is still required.",
+  "mutex_scope": "Local namespace; ephemeral random names; no persistent state",
+  "namespace_key_equal_across_processes": true,
+  "namespace_key_sha256": "15d74804025589edd3b322194edcd4c23b7627582d88d40d6f42899284ab424f",
+  "observed_monotonic_ns": 10302484000000,
+  "parent_after_child_exit": {
+    "released": true,
+    "wait_name": "abandoned",
+    "wait_result": 128
+  },
+  "schema": "agent-interface/win32-cross-process-mutex-r34-v1",
+  "scope": "same-user same-session process coordination only; no desktop input",
+  "second_snapshot": {
+    "active_input_desktop": "Default",
+    "active_input_desktop_flag": true,
+    "current_thread_desktop": "Default",
+    "current_thread_matches_active_input_desktop": true,
+    "input_namespace_sha256": "15d74804025589edd3b322194edcd4c23b7627582d88d40d6f42899284ab424f",
+    "limitations": [
+      "one observation on one current logon; no cross-session collision test",
+      "does not identify an X11 server reached through a proxy",
+      "does not prove late-input horizon, release, or task effect"
+    ],
+    "logon_authentication_id_sha256": "45a3062321392236ffacbc10bdde94e28816bfdbc18552238111c798ea001ad1",
+    "namespace_fields": [
+      "session_id",
+      "logon_authentication_id (SHA-256 only)",
+      "window_station name"
+    ],
+    "observed_monotonic_ns": 10302078000000,
+    "process_id": 26672,
+    "process_window_station": "WinSta0",
+    "schema": "agent-interface/win32-interactive-input-namespace-r32-v1",
+    "scope": "read-only OS namespace query; no window input or app launch",
+    "session_id": 1,
+    "status": "observed"
+  }
+}
