@@ -16,6 +16,8 @@ claim. Raw artifacts remain in local private custody.
 
 ## Composition path
 
+The [Xvfb delayed-request frontier sweep](wsl_xvfb_autorepeat_release_frontier_20261110/RESULTS.md) and [custody/horizon follow-up](wsl_xvfb_latepress_oracle_followup_20261110/RESULTS.md) retained twelve and eight trials, respectively, comparing the standard and prestarted routes. All eight follow-up trials failed the independent old-task horizon and fresh-task composite oracle after the fixture injected a delayed `b` XTEST request between the runtime's tracked `a` press and release. The publisher trace confirms the runtime's tracked `a` obligation was subsequently cleared; the `b` request is outside that ledger. Readback-verified early release therefore did not establish a future same-server input horizon in this synthetic schedule, while the runtime correctly kept cancellation UNKNOWN. This is not an observed public-runtime `b` request or a production-frequency estimate. The next gate is a captured runtime request delayed at the socket/server boundary, with actual server-side transition and bounded recovery observed before cleanup.
+
 The [Win32 Notepad task-oracle packet](win32_notepad_task_oracle_20261024_r04/README.md)
 retains matched text-entry trials and one native SHIFT-down hold/cancel/recovery
 run through the supervised MCP implementation. R10 confirms recovery and

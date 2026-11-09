@@ -8,6 +8,8 @@ This directory holds architecture proposals and design records. Each entry state
 
 The next useful checks are fresh-target recovery and evidence-based resolution of the delayed-request/late-effect boundary. The design does not qualify general release safety, physical desktop control, MAP01, WSLc, integrated efficiency, or reliability. Keep Issues #17 and #57 open for their remaining questions; WSLc stays on HOLD under #7924.
 
+The 2026-11-10 delayed-request follow-up in the design record found a bounded Xvfb failure for an out-of-band request injected directly by the fixture. It did not capture a late request emitted by the public runtime. The next discriminating check must delay a captured runtime request at the socket/server boundary and verify actual server state, recovery, and fresh-task effect before fixture cleanup.
+
 The separate Win32 operation-owner candidate is a reviewable proposal in
 [`../superpowers/specs/2026-10-22-win32-prestarted-supervisor-design.md`](../superpowers/specs/2026-10-22-win32-prestarted-supervisor-design.md).
 It is not the X11 supervisor implementation and does not authorize native
