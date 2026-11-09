@@ -1,0 +1,1 @@
+The proxy self-check was invoked, but the test stopped before creating sockets because X11_PROXY_TEST_EVIDENCE_DIR was not supplied. The failure is retained and excluded as a harness invocation miss; no retry was performed under r22. R23 separately preregisters the corrected evidence-directory environment.

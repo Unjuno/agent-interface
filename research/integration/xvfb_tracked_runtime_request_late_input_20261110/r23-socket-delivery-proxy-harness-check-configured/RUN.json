@@ -1,0 +1,22 @@
+{
+  "run_id": "r23",
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "preregistration_sha256": "127cdae65e522bd682686578308bdacba14ca5b6df2cde85713bb6295142fb62",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "model_calls": 0,
+  "container_limits": {
+    "cpus": 1,
+    "memory": "512m",
+    "memory_swap": "512m",
+    "pids_limit": 128
+  },
+  "source_mount": "/workspace:ro",
+  "evidence_mount": "/evidence",
+  "test_command": "X11_PROXY_TEST_EVIDENCE_DIR=/evidence python3 -B /workspace/research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py"
+}

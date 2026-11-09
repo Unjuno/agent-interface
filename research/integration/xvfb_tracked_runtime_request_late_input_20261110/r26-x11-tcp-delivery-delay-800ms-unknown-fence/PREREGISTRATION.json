@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/xvfb-x11-tcp-delivery-delay-prereg-v1",
+  "study_id": "xvfb-x11-tcp-delivery-delay-800ms-unknown-fence-20261110",
+  "purpose": "Continue observation after a TCP-relayed owner process is retired while XRes process attribution remains UNKNOWN; measure whether held bytes reach Xvfb and affect the old or fresh synthetic task.",
+  "attempt_history": "r25 confirmed the proxy armed and saw EOF while holding bytes, then the existing assertion stopped the test on XRes query_failed/missing-or-ambiguous process identity. Its 800 ms forwarding horizon was not observed. r25 remains unchanged and excluded. This new preregistration permits only that exact UNKNOWN identity outcome, preserves release_confirmed=false/replay_allowed=false assertions, and continues to the same delayed-request horizon; it is not a retry of an executed complete experiment.",
+  "hypothesis": "When the relay retains the X server TCP connection beyond owner process exit and XRes cannot uniquely identify it, bytes may be forwarded after cancellation completion; the application effect and fresh-task oracle decide whether the stale request causes observable harm.",
+  "primary_discriminator": "Proxy delivery_forwarded or client_to_server_error time vs cancellation completed_monotonic_ns; owner_process_retired; old/fresh effect counts and keymaps; runtime remains UNKNOWN and replay denied.",
+  "condition": {
+    "display": "parent :88 Unix; runtime owner 127.0.0.1:89 TCP proxy",
+    "xvfb": "private :88 with TCP listener",
+    "proxy": "6089 -> Xvfb 6088",
+    "tracked_second_keypress": true,
+    "delay_ms": 800,
+    "cancel_ack_withheld_s": 1.0,
+    "supervisor": false,
+    "network": "Docker network none; loopback only",
+    "model_calls": 0
+  },
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "5349daac53ceb27a842e59faea54634d63c11baa600f8d501535920cb8e63d61",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "stop_rule": "Run once, no retry. Do not upgrade UNKNOWN or allow replay. Preserve any late task contamination, cleanup failure, or test assertion failure as evidence.",
+  "scope": "Synthetic Xvfb only; authored user-space TCP relay delay, not natural network jitter, WSLc, MAP01, provider/model, or production GUI."
+}

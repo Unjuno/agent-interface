@@ -25,6 +25,7 @@ from pathlib import Path
 import platform
 import shutil
 import signal
+import socket
 import subprocess
 import sys
 import tempfile
@@ -50,6 +51,8 @@ _DELAY_MS = int(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_DELAY_MS', '8000'))
 _TRACKED_DELAYED_SECOND_PRESS = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACKED_DELAYED_SECOND_PRESS', '0') == '1')
+_SOCKET_DELIVERY_DELAY = (
+    os.environ.get('AGENT_INTERFACE_MCP_XVFB_SOCKET_DELIVERY_DELAY', '0') == '1')
 _CANCEL_BOUND_MS = 3000
 _CANCEL_ACK_WITHHOLD_S = float(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S', '1.0'))
@@ -175,6 +178,30 @@ def _pause_owned_xvfb_for_test(duration_ms):
         raise
 
 
+def _arm_x11_socket_delivery_proxy(display_connection, delay_ms):
+    control_path = os.environ.get('AGENT_INTERFACE_MCP_XVFB_PROXY_CONTROL')
+    if not control_path:
+        raise RuntimeError('socket-delivery proxy control path is not configured')
+    local = display_connection.display.socket.getsockname()
+    if not isinstance(local, tuple) or len(local) < 2:
+        raise RuntimeError(f'X11 connection is not a TCP socket: {local!r}')
+    request = {'source_port':int(local[1]), 'delay_ms':int(delay_ms)}
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as control:
+        control.settimeout(2.0)
+        control.connect(control_path)
+        control.sendall(json.dumps(request, sort_keys=True).encode() + b'\n')
+        response = bytearray()
+        while b'\n' not in response and len(response) < 4096:
+            chunk = control.recv(1024)
+            if not chunk:
+                break
+            response.extend(chunk)
+    row = json.loads(bytes(response).split(b'\n', 1)[0])
+    if row.get('status') != 'armed':
+        raise RuntimeError(f'X11 socket-delivery proxy refused delay: {row!r}')
+    return row
+
+
 def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
     """Inject blocked X I/O and optionally delay the child cancel acknowledgement."""
     from Xlib.ext import xtest
@@ -254,11 +281,24 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                     _TRACKED_DELAYED_SECOND_PRESS
                     and keypress_count['value'] == 2)
             if tracked_second_press:
-                result = original_fake_input(
-                    display_connection, event_type, detail=detail,
-                    time=_DELAY_MS, root=root, x=x, y=y)
+                proxy_arm = None
+                if _SOCKET_DELIVERY_DELAY:
+                    # Drain earlier X11 requests before arming the external
+                    # proxy, so only this delayed press and its following tail
+                    # are withheld before reaching the X server.
+                    original_sync()
+                    proxy_arm = _arm_x11_socket_delivery_proxy(
+                        display_connection, _DELAY_MS)
+                    result = original_fake_input(
+                        display_connection, event_type, detail=detail,
+                        time=0, root=root, x=x, y=y)
+                else:
+                    result = original_fake_input(
+                        display_connection, event_type, detail=detail,
+                        time=_DELAY_MS, root=root, x=x, y=y)
                 display_connection.flush()
             else:
+                proxy_arm = None
                 result = original_fake_input(
                     display_connection, event_type, detail=detail, time=time,
                     root=root, x=x, y=y)
@@ -283,6 +323,14 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                     'delayed_event':'KeyPress',
                     'delayed_keycode':delayed_keycode,
                     'delay_ms':_DELAY_MS,
+                    'delivery_boundary':(
+                        'user_space_tcp_proxy_before_xvfb_receive'
+                        if _SOCKET_DELIVERY_DELAY else
+                        'xtest_server_side_delay'),
+                    'proxy_arm':proxy_arm,
+                    'owner_tcp_local_address':(
+                        list(display_connection.display.socket.getsockname())
+                        if _SOCKET_DELIVERY_DELAY else None),
                     'flushed_ns':_monotonic_ns(),
                     'blocked_boundary':'real python-xlib Display.sync response wait',
                     'tracked_input_obligations':dict(backend.held_keycodes),
@@ -347,7 +395,8 @@ def _effect_count(observer, window_id, atom):
     return list(row.value) if row is not None else None
 
 
-def _assert_cancel_release_attempt(test_case, cancel, *, prestarted_supervisor):
+def _assert_cancel_release_attempt(test_case, cancel, *, prestarted_supervisor,
+                                   allow_not_attempted=False):
     """Check the arm's receipt contract without conflating it with task effects."""
     attempt = cancel.get('owner_release_attempt')
     test_case.assertIsInstance(attempt, dict, cancel)
@@ -356,6 +405,11 @@ def _assert_cancel_release_attempt(test_case, cancel, *, prestarted_supervisor):
         test_case.assertEqual(status, 'readback_verified', cancel)
         test_case.assertIsInstance(attempt.get('release'), dict, cancel)
         test_case.assertIs(attempt['release'].get('verified'), True, cancel)
+        return status
+
+    if allow_not_attempted and status == 'not_attempted':
+        test_case.assertEqual(attempt.get('reason'),
+                              'owner_disconnect_not_confirmed', cancel)
         return status
 
     test_case.assertIn(status, ('readback_verified', 'unknown'), cancel)
@@ -465,6 +519,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
             'conditions':{
                 'delayed_keypress_ms':_DELAY_MS,
                 'tracked_delayed_second_press':_TRACKED_DELAYED_SECOND_PRESS,
+                'socket_delivery_delay':_SOCKET_DELIVERY_DELAY,
+                'socket_proxy_display':os.environ.get(
+                    'AGENT_INTERFACE_MCP_XVFB_PROXY_DISPLAY')
+                    if _SOCKET_DELIVERY_DELAY else None,
                 'cancel_return_bound_ms':_CANCEL_BOUND_MS,
                 'child_cancel_ack_withheld_s':_CANCEL_ACK_WITHHOLD_S,
                 'owner_process_method_trace':_TRACE_OWNER_PROCESS_METHODS,
@@ -676,7 +734,11 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 owner_output_root = root/'mcp'
                 report['owner_marker_directory'] = str(owner_output_root)
                 server = create_server(
-                    {'app':window.id}, owner_output_root, session_mode='guarded-x11',
+                    {'app':window.id}, owner_output_root,
+                    display_name=(os.environ.get(
+                        'AGENT_INTERFACE_MCP_XVFB_PROXY_DISPLAY')
+                        if _SOCKET_DELIVERY_DELAY else None),
+                    session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
                     guarded_window_lifecycle=True, guarded_owned_process=True,
                     guarded_retention_mode=_RETENTION_MODE,
@@ -1062,11 +1124,22 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 else:
                     self.assertEqual(process_calls, [], cancel_internal_trace)
                 self.assertTrue(cancel.get('owner_process_retired'), cancel)
-                self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
-                                 'disconnected', cancel)
+                owner_disconnect = cancel.get('owner_client_disconnect', {})
+                if _SOCKET_DELIVERY_DELAY:
+                    # XRes process identity can be ambiguous when the X server
+                    # sees the relay as the TCP peer. Keep this UNKNOWN and do
+                    # not claim cleanup or release confirmation.
+                    self.assertEqual(owner_disconnect.get('status'), 'unknown', cancel)
+                    self.assertEqual(owner_disconnect.get('reason'), 'query_failed', cancel)
+                    self.assertIn('missing or ambiguous X-Resource process identity',
+                                  owner_disconnect.get('error', ''), cancel)
+                else:
+                    self.assertEqual(owner_disconnect.get('status'),
+                                     'disconnected', cancel)
                 _assert_cancel_release_attempt(
                     self, cancel,
-                    prestarted_supervisor=_PRESTARTED_CANCEL_SUPERVISOR)
+                    prestarted_supervisor=_PRESTARTED_CANCEL_SUPERVISOR,
+                    allow_not_attempted=_SOCKET_DELIVERY_DELAY)
                 self.assertFalse(cancel.get('release_confirmed'), cancel)
                 self.assertEqual(cancel.get('cleanup_status'), 'UNKNOWN', cancel)
                 self.assertIsNone(cancel.get('task_success'), cancel)
@@ -1309,14 +1382,25 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     late_b_after_fresh_start = any(
                         row.get('type') == X.KeyPress
                         and row.get('detail') == keycodes['b']
-                        and row.get('monotonic_ns', 0) >= fresh_start_ns
+                        and row.get('monotonic_ns', 0) >= fresh_session_started_ns
                         for row in app_events)
                     late_a_after_fresh_start = any(
                         row.get('type') == X.KeyPress
                         and row.get('detail') == keycodes['a']
                         and row.get('window') == fresh_window.id
-                        and row.get('monotonic_ns', 0) >= fresh_start_ns
+                        and row.get('monotonic_ns', 0) >= fresh_session_started_ns
                         for row in app_events)
+                    old_input_events_before_fresh_action = [
+                        {key:row.get(key) for key in
+                         ('type','detail','window','monotonic_ns',
+                          'effect_committed_ns')}
+                        for row in app_events
+                        if row.get('type') == X.KeyPress
+                        and row.get('detail') in (keycodes['a'], keycodes['b'])
+                        and row.get('window') == fresh_window.id
+                        and fresh_session_started_ns
+                            <= row.get('monotonic_ns', 0)
+                            < fresh_input_started_ns]
                 fresh_horizon_readback = {
                     name:_key_down(observer, keycodes[name])
                     for name in ('a','b','c')}
@@ -1348,6 +1432,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'new_task_effect_at_horizon':final_fresh_effect == [3],
                     'no_old_delayed_press_after_new_session':
                         not late_b_after_fresh_start and not late_a_after_fresh_start,
+                    'no_old_input_before_fresh_action':
+                        not old_input_events_before_fresh_action,
                     'new_task_keys_up_after_input':not any(
                         fresh_release_readback.values()),
                     'all_keys_up_at_horizon':not any(
@@ -1360,6 +1446,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'late_old_keypress_after_new_session':(
                         late_b_after_fresh_start or late_a_after_fresh_start),
                     'late_old_a_keypress_after_new_session':late_a_after_fresh_start,
+                    'old_input_events_before_fresh_action':
+                        old_input_events_before_fresh_action,
                     'horizon_readback':fresh_horizon_readback,
                     'old_cancellation_after_fresh_task':old_after_fresh_cancel,
                     'task_oracle':{
@@ -1594,6 +1682,14 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 if result_path:
                     output = Path(result_path)
                     output.parent.mkdir(parents=True, exist_ok=True)
+                    proxy_events = os.environ.get(
+                        'AGENT_INTERFACE_MCP_XVFB_PROXY_EVENTS')
+                    if _SOCKET_DELIVERY_DELAY and proxy_events:
+                        proxy_path = Path(proxy_events)
+                        report['socket_delivery_proxy_events'] = (
+                            [json.loads(line) for line in
+                             proxy_path.read_text(encoding='utf-8').splitlines()
+                             if line.strip()] if proxy_path.exists() else [])
                     if report.get('status') == 'FAIL':
                         with app_lock:
                             report['partial_application_event_trace'] = list(

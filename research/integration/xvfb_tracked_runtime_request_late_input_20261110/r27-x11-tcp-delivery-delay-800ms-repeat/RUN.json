@@ -1,0 +1,26 @@
+{
+  "run_id": "r27",
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "d0f15a8d9a4891f7592198a83962c5ea50255935a812ef36af256e230cbc2fa4",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "preregistration_sha256": "968015accebe81fa181f92d7f042e928f0ff3d3cb97a704ba0c2f0c521865a82",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "network": "none",
+  "model_calls": 0,
+  "delay_ms": 800,
+  "transport": "TCP proxy delay before Xvfb receive",
+  "container_limits": {
+    "cpus": 2,
+    "memory": "4g",
+    "memory_swap": "4g",
+    "pids_limit": 256
+  },
+  "source_mount": "/workspace:ro",
+  "evidence_mount": "/evidence",
+  "xvfb_display": ":88",
+  "proxy_display": "127.0.0.1:89"
+}
