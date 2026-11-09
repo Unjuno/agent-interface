@@ -2,6 +2,8 @@
 
 Status: the opt-in supervisor and public-MCP integration are merged on `main` by PRs #9320 and #9321. This document records the design and qualification boundary; it does not claim release safety or product qualification.
 
+Repository-state check (2026-11-10): GitHub currently reports Issue #17 closed/completed, although retrieved comments still request that it remain open and state that the telemetry-independence hypothesis is unresolved. Issue #57 is open/reopened for integrated token-efficiency work. Issue #7924 remains STOP/HOLD for WSLc ownership/readiness. Treat issue lifecycle, comment intent and technical evidence as separate facts; the Xvfb delayed-input packets below do not resolve #17 or #57, and no WSLc claim follows from them.
+
 Architecture status: the design below is implemented as an opt-in path. Treat the sections titled “Proposed architecture” and “Original implementation order” as the design rationale and historical build sequence, not as a statement that implementation is still pending. Current qualification gaps are listed in “Qualification boundary (current)”.
 
 ## Design review checkpoint (2026-10-22)

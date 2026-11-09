@@ -10,6 +10,13 @@ Date: 2026-11-10. This packet investigates whether a delayed KeyPress issued thr
 - Image reports Linux under WSL2. This is a Docker/Xvfb experiment, not a WSLc validation.
 - Every run has its own prospective registration, raw JSON, X-obligation trace where available, test log, Xvfb log, and observation PNG. Exact file hashes are in `MANIFEST.sha256`.
 
+## Current repository/issue context checked for this continuation
+
+- Remote `main` still resolves to `0ac46b03f291ec5805d4ab54b70d8e7b7bad5e99`; this experiment source is an additive research branch based on that snapshot.
+- GitHub currently reports Issue #17 as closed with reason `completed` (closed 2026-10-28), while retrieved comments still say to keep it open and describe the telemetry-independence question as unresolved. This state/comment mismatch needs separate reconciliation; these Xvfb runs do not test a blocked journal/stdout/telemetry plane.
+- Issue #57 remains open/reopened (updated 2026-11-04) for integrated token-efficiency evaluation. Synthetic cancellation mechanics do not satisfy its Chromium/Calc matched economics milestone.
+- Issue #7924 remains open with STOP/HOLD for WSLc ownership/current-main readiness. No WSLc state or allocation was used here.
+
 ## Outcomes
 
 | Run | Condition | Observed outcome | Interpretation |
@@ -24,16 +31,42 @@ Date: 2026-11-10. This packet investigates whether a delayed KeyPress issued thr
 | R08 | Same runtime-tracked condition as R06; prestarted supervisor; 250 ms | The operation again completed all four emissions after cancellation admission; old-task effect count was 2 and its oracle failed. The supervisor's XRes readback was `verified` but sent zero release requests because the delayed key had already gone up. Terminal/cancellation retirement claims conflicted with the live owner snapshot; runtime cleanup remained UNKNOWN. Fresh task passed. | The supervisor did not prevent an already-arriving old-task effect at this timing. It cannot turn the raced terminal into confirmed cancellation. |
 | R09 | Same runtime-tracked condition as R07; prestarted supervisor; 500 ms | Supervisor issued one KeyRelease request, verified a neutral keymap, and both old/fresh task oracles passed; no late `a` appeared at the 1003 ms horizon. Runtime receipt still stayed UNKNOWN, release unconfirmed and replay denied. Cancellation transaction completed 342 ms after delayed-request flush versus 879 ms in standard R07; caller response was 257 ms versus 260 ms. | One sequential pair suggests lower end-to-end custody completion time with the supervisor in this condition. It does not establish a speedup; the caller response itself was similar and the sample is n=1 per arm. |
 
-R01, R02, R06, R07, R08 and R09 each ran all six module tests successfully. R03 intentionally retained the positive-control assertion failure. R04 and R05 retained recorder assertion failures; R06 added fields for the observed completed-after-cancel terminal and receipt conflict. R08 and R09 used the same amended source and both passed the six-test module.
+### Randomized matched repeats (R10–R17)
+
+The preregistered schedule uses two replicates per cell and a fixed shuffled order (seed `29112026`). All runs use source commit `9c062eb380`, the same cached image, task, cancellation hold and readback procedure. Each run executes the one target Xvfb integration test exactly once; all eight returned exit 0.
+
+| Run | Cell | Result |
+|---|---|---|
+| R10 | supervisor, 250 ms, rep 2 | Operation completed after cancel; old effect count 2/oracle fail; supervisor readback verified with zero release requests; fresh task pass. |
+| R11 | supervisor, 500 ms, rep 2 | Old/fresh tasks pass; no late `a`; one supervisor KeyRelease and verified readback; runtime remains UNKNOWN. |
+| R12 | standard, 500 ms, rep 2 | Old/fresh tasks pass; no late `a`; readback verified; standard worker does not expose a comparable release-request count; runtime remains UNKNOWN. |
+| R13 | standard, 250 ms, rep 2 | Operation completed after cancel; old effect count 2/oracle fail; cancellation release remains unknown; fresh task pass. |
+| R14 | supervisor, 500 ms, rep 1 | Same scoped outcome as R11. |
+| R15 | standard, 500 ms, rep 1 | Same scoped outcome as R12. |
+| R16 | standard, 250 ms, rep 1 | Same scoped outcome as R13. |
+| R17 | supervisor, 250 ms, rep 1 | Same scoped outcome as R10. |
+
+Per-cell summaries (`n=2`, in randomized interleaving):
+
+| Delay | Path | Old task | Fresh task | Cancel response median (range) | Transaction completion from request flush (median, range) |
+|---:|---|---|---|---:|---:|
+| 250 ms | Standard | 2/2 late effects; 2/2 fail | 2/2 pass | 261.65 ms (256.93–266.37) | 351.07 ms (323.87–378.28) |
+| 250 ms | Supervisor | 2/2 late effects; 2/2 fail | 2/2 pass | 258.91 ms (258.38–259.43) | 352.20 ms (351.18–353.22) |
+| 500 ms | Standard | 2/2 exact effect; 2/2 pass | 2/2 pass | 256.93 ms (255.83–258.03) | 754.79 ms (725.56–784.01) |
+| 500 ms | Supervisor | 2/2 exact effect; 2/2 pass | 2/2 pass | 258.21 ms (257.90–258.52) | 346.40 ms (344.25–348.56) |
+
+At 250 ms, the supervisor did not prevent completion or the extra effect, and its verified empty-state readback did not resolve the cancellation receipt. At 500 ms, both paths passed the independent synthetic task/keymap oracles while remaining runtime-UNKNOWN. The observed transaction-completion distributions favor the supervisor in these two 500 ms pairs, but caller-response medians are effectively similar and `n=2` cannot establish a reliable latency benefit. No release-confirmed receipt was produced in any repeated cell.
+
+R01, R02, R06–R09 each ran all six module tests successfully. R10–R17 each ran the targeted Xvfb integration test once successfully. R03 intentionally retained the positive-control assertion failure. R04 and R05 retained recorder assertion failures; R06 added fields for the observed completed-after-cancel terminal and receipt conflict.
 
 ## What this narrows
 
 Across these single-run timing points, a tracked delayed second `a` completed and added a second old-task effect at 100 and 250 ms, while at 500 and 8000 ms the owner retired before that effect was observed. The observed transition lies between the tested 250 and 500 ms points on this host/image/schedule; this is not a calibrated deadline or a reliability estimate. The 100 ms direct-injection positive control separately shows that an untracked `b` can remain down at cleanup readback.
 
-The strongest unresolved issue is the 100–250 ms completion race: the caller accepted a cancellation request, but a delayed tracked action could finish afterward. The same race occurred with the prestarted supervisor in R08; its verified readback found no key down, but the second task effect had already happened. At 500 ms, R09's supervisor issued a release and produced neutral readback, but the receipt still remained UNKNOWN. In R06/R08, the execution record showed a verified release while cancellation/terminal authority remained unknown, and the terminal owner snapshot conflicted with the cancellation retirement claim. Product policy should keep replay denied and not promote UNKNOWN to confirmed based on these observations.
+The strongest unresolved issue is the 100–250 ms completion race: the caller accepted a cancellation request, but a delayed tracked action could finish afterward. The same occurred in both R10/R17 supervisor and R13/R16 standard repeats. At 250 ms the supervisor's verified empty-state readback did not erase the extra task effect or reconcile the terminal/cancel receipt conflict. At 500 ms both paths preserved task effects and neutral state; supervisor transaction completion was faster in two sequential pairs, but the cancellation receipt still remained UNKNOWN. Product policy should keep replay denied and not promote UNKNOWN to confirmed based on these observations.
 
 ## Limits and next experiment
 
 All effects were synthetic Xvfb window effects. XTEST's injected delay is not a real socket/network delay, application-native behavior, WSLc experiment, MAP01 task, or model-mediated task. The tested task/action schedule is narrow and the runs are single attempts, sequential, not randomized, and host-specific. No speed, token, provider, or general task-success claim is supported.
 
-Next, repeat the matched standard/supervisor timing conditions in randomized order, independently audit the completion/cancel receipt conflict, and make cancellation admission semantics explicit: whether already-admitted input may finish, which receipt owns release truth, and what keeps a fresh attempt fenced. Then add a real server/socket delivery boundary before changing the horizon rule. Keep this packet and all failures intact.
+Next, increase the matched standard/supervisor repetitions without changing the task or outcomes, independently audit the completion/cancel receipt conflict, and make cancellation admission semantics explicit: whether already-admitted input may finish, which receipt owns release truth, and what keeps a fresh attempt fenced. Then add a real server/socket delivery boundary before changing the horizon rule. Keep this packet and all failures intact.

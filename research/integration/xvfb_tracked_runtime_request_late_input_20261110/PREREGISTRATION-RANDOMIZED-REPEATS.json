@@ -1,0 +1,113 @@
+{
+  "analysis": "Report each arm descriptively; summarize median/range only after all preregistered attempts. No causal speedup claim at n=2/cell; no retries or exclusion.",
+  "cached_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "design": {
+    "arms": [
+      "standard caller",
+      "prestarted supervisor"
+    ],
+    "continue_after_failure": true,
+    "delay_ms": [
+      250,
+      500
+    ],
+    "no_retry": true,
+    "order": [
+      {
+        "delay_ms": 250,
+        "folder": "r10-repeat-250ms-supervisor-rep2",
+        "replicate": 2,
+        "run_id": "r10",
+        "supervisor": true
+      },
+      {
+        "delay_ms": 500,
+        "folder": "r11-repeat-500ms-supervisor-rep2",
+        "replicate": 2,
+        "run_id": "r11",
+        "supervisor": true
+      },
+      {
+        "delay_ms": 500,
+        "folder": "r12-repeat-500ms-standard-rep2",
+        "replicate": 2,
+        "run_id": "r12",
+        "supervisor": false
+      },
+      {
+        "delay_ms": 250,
+        "folder": "r13-repeat-250ms-standard-rep2",
+        "replicate": 2,
+        "run_id": "r13",
+        "supervisor": false
+      },
+      {
+        "delay_ms": 500,
+        "folder": "r14-repeat-500ms-supervisor-rep1",
+        "replicate": 1,
+        "run_id": "r14",
+        "supervisor": true
+      },
+      {
+        "delay_ms": 500,
+        "folder": "r15-repeat-500ms-standard-rep1",
+        "replicate": 1,
+        "run_id": "r15",
+        "supervisor": false
+      },
+      {
+        "delay_ms": 250,
+        "folder": "r16-repeat-250ms-standard-rep1",
+        "replicate": 1,
+        "run_id": "r16",
+        "supervisor": false
+      },
+      {
+        "delay_ms": 250,
+        "folder": "r17-repeat-250ms-supervisor-rep1",
+        "replicate": 1,
+        "run_id": "r17",
+        "supervisor": true
+      }
+    ],
+    "randomization": "single fixed order shuffled by Python random.Random seed",
+    "replicates_per_cell": 2,
+    "seed": 29112026
+  },
+  "fixed_conditions": {
+    "cancel_ack_withhold_s": 1.0,
+    "cancel_return_bound_ms": 3000,
+    "fixture_extra_key_injection": false,
+    "fresh_target_distinct_window": true,
+    "fresh_task_expected_effect": [
+      3
+    ],
+    "runtime_actions": [
+      "key_chord a",
+      "key_chord a"
+    ],
+    "terminal_result_bound_ms": 5000,
+    "tracked_delayed_second_press": true
+  },
+  "host_runtime": "Docker Desktop cached Xvfb image on WSL2; not WSLc",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "primary_outcomes": [
+    "cancel response elapsed ms",
+    "cancellation terminal completion ms from request flush",
+    "operation terminal status",
+    "owner retirement/liveness receipt consistency",
+    "release request count and verification",
+    "independent keymap at release and horizon",
+    "old task effect count and oracle",
+    "fresh task effect and oracle"
+  ],
+  "schema": "agent-interface/xvfb-tracked-runtime-randomized-repeat-prereg-v1",
+  "scope_limit": "Synthetic private Xvfb only; XTEST delay is not a real socket/network delay, app behavior, WSLc result, MAP01 evidence, or general reliability.",
+  "source_commit": "9c062eb380",
+  "source_sha256": "987215f513c285389f8550baab21ea55ed2d8c4976c35f2415e383c2bf269e47",
+  "stop_rule": "Run each listed cell exactly once in this order. On failure retain all output and continue unchanged through remaining listed cells. No retries.",
+  "study_id": "tracked-runtime-press-supervisor-repeat-20261110",
+  "test_command": "python3 -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb"
+}
