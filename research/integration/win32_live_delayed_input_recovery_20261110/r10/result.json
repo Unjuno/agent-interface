@@ -1,19 +1,20 @@
 {
   "task_success": null,
-  "horizon_end_ns": null,
-  "input_dispatched": null,
+  "horizon_end_ns": 77662968000000,
+  "input_dispatched": true,
   "mcp_session": "closed",
   "deferred_message_ns": 77660937000000,
-  "max_sample_gap_ms": 0.0,
+  "max_sample_gap_ms": 32.0,
   "dispatch_ns": 77663078000000,
-  "release_confirmed": null,
+  "release_confirmed": true,
   "result": "three actual fixture queue messages (WM_KEYDOWN A, WM_KEYUP A x2) were deferred while servicing non-keyboard messages, then dispatched after verified 2s release horizon; independent WndProc effect absent",
   "classification": "SCOPED_POSTHORIZON_QUEUED_MESSAGE_DISPATCH_NO_APPLICATION_EFFECT",
-  "horizon_to_dispatch_ms": 77663078.0,
+  "horizon_to_dispatch_ms": 110.0,
   "keydown_effect": "absent",
   "fixture_process": "closed",
   "verified_horizon_ms": 2000,
-  "replay_allowed": null,
+  "replay_allowed": false,
   "limitation": "fixture deliberately removed/deferred native queue messages and later manually reconstructed MSG records; controlled fixture schedule, not spontaneous stale Windows delivery or GZDoom/MAP01",
-  "horizon_samples": null
+  "horizon_samples": 76,
+  "producer_id": 40256
 }

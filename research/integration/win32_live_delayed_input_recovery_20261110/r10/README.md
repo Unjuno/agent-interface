@@ -10,7 +10,7 @@ Can an independently observed task effect be separated from native key-state rel
 
 - The producer receipt reports `input_dispatched=true`, `release_confirmed=true`, `task_success=null`, and `replay_allowed=false`. The exact raw terminal is `mcp/6a40007f52314c1e9baccb7670724f64/report.json`; durable producer result is under `mcp/supervised-win32-producers/`.
 - Completion readback verified a neutral state over 2,000 ms with 76 samples, maximum sample gap 32 ms (100 ms allowed). Horizon end was monotonic 77,660,968,000,000 ns.
-- The fixture recorded an A `WM_KEYDOWN` and two A `WM_KEYUP` messages in its actual queue during the defer interval. After horizon completion, at 77,663,078,000,000 ns (about 211 ms later), it dispatched the reconstructed records to its WndProc.
+- The fixture recorded an A `WM_KEYDOWN` and two A `WM_KEYUP` messages in its actual queue during the defer interval. After horizon completion, at 77,663,078,000,000 ns (about 110 ms later), it dispatched the reconstructed records to its WndProc.
 - The added independent `keydown_effect` oracle did not fire and no effect file was created. Thus this is a post-horizon queued-message dispatch with **no observed task effect**, not a positive effect result. `interface_results` response snapshots in `timeline.json` include earlier `running` snapshots and a final nested completed action; use the raw durable MCP report as the terminal source.
 - The session was closed and fixture process exited. The main report is authoritative about release; `interface_close` itself has `release_confirmed=false` because it reports session close, not the already completed action release.
 
