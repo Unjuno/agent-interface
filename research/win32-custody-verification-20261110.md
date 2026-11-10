@@ -157,3 +157,19 @@ Authenticated Users, or Builtin Users ACE. The full custody/session/horizon/
 supervised-MCP regression set then passed again: **140 tests in 17.996 s**;
 `git diff --check` passed. This verifies the resulting local descriptors, not
 resistance to a process already running as the same user or privileged admin.
+
+### Competing first-admission race
+
+On main tree `0b1d442dfca624d5c08e8d16c7c690e4426480b8`, added a native
+Windows test that launches two independent Python server processes against one
+fresh journal and one named mutex, then opens a shared start barrier. The
+decision rule was exactly one `admit` succeeds, the other receives
+`ORPHAN_RECOVERY_UNRESOLVED`, and persisted state names the winner. The test
+passed (0.953 s). The first harness attempt failed with a parent-side
+`NameError` for missing `time` before the barrier opened; children remained
+behind the barrier and were reaped, so no admission occurred in that attempt.
+After correction, the full 141-test custody/session/horizon/supervised-MCP set
+passed normally (23.208 s) and under `python -O` (18.799 s); `py_compile` and
+`git diff --check` passed. This checks simultaneous first use on one Windows
+logon namespace; it does not test WSLc, multiple user sessions, or hostile
+same-user processes.
