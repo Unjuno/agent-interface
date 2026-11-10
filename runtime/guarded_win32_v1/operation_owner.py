@@ -325,15 +325,20 @@ class OperationOwner:
             and readback.get("late_input_horizon_verified") is True
             and type(readback.get("late_input_observation_count")) is int
             and readback["late_input_observation_count"] >= 2
+            and type(readback.get("late_input_max_sample_gap_ns")) is int
+            and readback["late_input_max_sample_gap_ns"] > 0
             and type(readback.get("late_input_observation_start_monotonic_ns")) is int
+            and readback["late_input_observation_start_monotonic_ns"]
+                == readback["producer_exit_confirmed_ns"]
+            and readback["observed_monotonic_ns"]
+                - readback["late_input_observation_start_monotonic_ns"]
+                <= readback["late_input_max_sample_gap_ns"]
             and type(readback.get("late_input_observation_end_monotonic_ns")) is int
             and readback["late_input_observation_end_monotonic_ns"]
                 - readback["late_input_observation_start_monotonic_ns"]
                 >= readback["late_input_horizon_ns"]
             and type(readback.get("late_input_max_observed_gap_ns")) is int
             and readback["late_input_max_observed_gap_ns"] >= 0
-            and type(readback.get("late_input_max_sample_gap_ns")) is int
-            and readback["late_input_max_sample_gap_ns"] > 0
             and readback["late_input_max_observed_gap_ns"]
                 <= readback["late_input_max_sample_gap_ns"]))
         readback_verified = (readback_bound and readback["neutral"] is True

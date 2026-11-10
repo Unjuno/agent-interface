@@ -1081,15 +1081,17 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 self.process, lambda: None))
             self.process.alive = False
             self.process.exitcode = 0
+            horizon_start_ns = self.clock()
+            completion_observed_ns = horizon_start_ns
             horizon_readback = {"operation_id": ACTION_ID,
                 "target_generation": GEN_A,
-                "producer_exit_confirmed_ns": 1,
-                "observed_monotonic_ns": self.clock(), "neutral": True,
+                "producer_exit_confirmed_ns": horizon_start_ns,
+                "observed_monotonic_ns": completion_observed_ns, "neutral": True,
                 "late_input_horizon_ns": 100,
                 "late_input_horizon_verified": True,
                 "late_input_observation_count": 3,
-                "late_input_observation_start_monotonic_ns": 100,
-                "late_input_observation_end_monotonic_ns": 200,
+                "late_input_observation_start_monotonic_ns": horizon_start_ns,
+                "late_input_observation_end_monotonic_ns": horizon_start_ns + 110,
                 "late_input_max_observed_gap_ns": 50,
                 "late_input_max_sample_gap_ns": 100}
 
@@ -1100,7 +1102,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
                     "buttons_down": [], "keys_unknown": [],
                     "buttons_unknown": []}, readback=horizon_readback)
 
-            self.assertEqual(row["action"]["status"], "completed")
+            self.assertEqual(row["action"]["status"], "completed", row)
             self.assertTrue(row["action"]["release_confirmed"])
             self.assertEqual(fence.snapshot()["state"]["status"], "clear")
             fence.close()
