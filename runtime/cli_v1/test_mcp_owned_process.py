@@ -4142,13 +4142,35 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     server, action['call_id'])
                 cleanup = result['cancellation']['result']
                 state = _read_json(root/'supervisor-fake-x.json', {})
-                self.assertEqual(cleanup['owner_client_disconnect']['reason'],
-                                 'stale_generation')
-                self.assertEqual(cleanup['owner_release_attempt']['status'],
-                                 'not_attempted')
+                # The Fake X refusal record is the independent oracle for the
+                # stale-generation decision. The enclosing supervisor receipt
+                # is usable only after its helper process exits; under scheduler
+                # delay the correct outcome is fail-closed UNKNOWN instead.
+                self.assertEqual(len(state['refused']), 1, state)
+                refusal = state['refused'][0]
+                self.assertEqual(refusal['reason'], 'stale_generation', state)
+                self.assertEqual(refusal['owner_release_attempt']['status'],
+                                 'not_attempted', state)
+                self.assertEqual(refusal['release_confirmed'], False, state)
+                self.assertIsNone(refusal['task_success'], state)
+                self.assertFalse(refusal['replay_allowed'], state)
+                disconnect = cleanup['owner_client_disconnect']
+                if disconnect.get('reason') == 'stale_generation':
+                    self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                     'not_attempted', cleanup)
+                else:
+                    self.assertEqual(disconnect.get('reason'),
+                                     'unretired_or_late_supervisor', cleanup)
+                    self.assertIs(disconnect.get('worker_retired'), False, cleanup)
+                    self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                     'unknown', cleanup)
+                    self.assertEqual(cleanup['cleanup_status'], 'UNKNOWN', cleanup)
+                    self.assertTrue(cleanup['late_server_request_possible'], cleanup)
+                self.assertFalse(cleanup['release_confirmed'], cleanup)
+                self.assertIsNone(cleanup['task_success'], cleanup)
+                self.assertFalse(cleanup['replay_allowed'], cleanup)
                 self.assertEqual(state['down'], [1])
                 self.assertEqual(state['effects'], [])
-                self.assertEqual(len(state['refused']), 1)
                 self.assertFalse(cancel['release_confirmed'])
                 self.assertIsNone(cancel['task_success'])
                 self.assertFalse(cancel['replay_allowed'])
@@ -4181,14 +4203,28 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 result = await self._wait_for_cancel_terminal(
                     server, action['call_id'], timeout_s=1.5)
                 cleanup = result['cancellation']['result']
-                self.assertEqual(cleanup['owner_release_attempt']['status'],
-                                 'readback_verified', cleanup)
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                # The independent Fake X state proves the delayed finite
+                # release executed once. Accept it as a public readback receipt
+                # only when the helper process also retired before the
+                # transaction deadline; otherwise custody remains UNKNOWN.
+                self.assertEqual(state['down'], [], state)
+                self.assertEqual(len(state['effects']), 1, state)
+                self.assertEqual(state['effects'][0]['kind'], 'KeyRelease', state)
+                release_attempt = cleanup['owner_release_attempt']
+                if release_attempt.get('status') == 'unknown':
+                    self.assertEqual(release_attempt.get('reason'),
+                                     'unretired_or_late_supervisor', cleanup)
+                    self.assertIs(release_attempt.get('worker_retired'), False,
+                                  cleanup)
+                    self.assertEqual(cleanup['cleanup_status'], 'UNKNOWN', cleanup)
+                    self.assertTrue(cleanup['late_server_request_possible'], cleanup)
+                else:
+                    self.assertEqual(release_attempt.get('status'),
+                                     'readback_verified', cleanup)
                 self.assertFalse(cleanup['release_confirmed'])
                 self.assertIsNone(cleanup['task_success'])
                 self.assertFalse(cleanup['replay_allowed'])
-                state = _read_json(root/'supervisor-fake-x.json', {})
-                self.assertEqual(state['down'], [])
-                self.assertEqual(len(state['effects']), 1)
             finally:
                 (root/'continue-cleanup-supervisor').write_text(
                     'continue', encoding='utf-8')
