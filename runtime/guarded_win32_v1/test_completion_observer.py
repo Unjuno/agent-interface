@@ -75,7 +75,7 @@ class CompletionObserverTests(unittest.TestCase):
 
     def test_configured_normal_completion_horizon_is_sampled_and_receipted(self):
         now = [500]
-        supervisor, owner = self.supervisor(now=30_000_500)
+        supervisor, owner = self.supervisor(now=500)
         supervisor._clock_ns = lambda: now[0]
         supervisor.late_input_horizon_ns = 30
         supervisor._late_input_sample_interval_s = 10 / 1_000_000_000
