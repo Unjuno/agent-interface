@@ -3,13 +3,19 @@ import copy
 import asyncio
 import hashlib
 import json
+import tempfile
+import threading
 import time
 import unittest
+from contextlib import contextmanager
 from unittest.mock import Mock, patch
 
 from runtime.guarded_win32_v1.operation_owner import OperationOwner, OwnerRefused
 from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
+from runtime.cli_v1.win32_custody_fence import (
+    CustodyFenceError, Win32CustodyFence,
+)
 from runtime.cli_v1.mcp_guarded import register_guarded_tools
 from runtime.backends.win32_v1.backend import Win32Backend
 
@@ -78,6 +84,18 @@ class FakeToolServer:
             self.tools[function.__name__] = function
             return function
         return register
+
+
+class SharedTestMutex:
+    locks = {}
+
+    def __init__(self, name):
+        self.lock = self.locks.setdefault(name, threading.Lock())
+
+    @contextmanager
+    def hold(self):
+        with self.lock:
+            yield False
 
 
 class OwnedWin32SessionTests(unittest.TestCase):
@@ -816,6 +834,276 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 binding["target_binding_id"],
                 operation_deadline_ns=self.clock() + 5_000_000_000,
                 obligations=["key:map01:W"])
+
+    def test_persistent_fence_blocks_fresh_owner_after_previous_owner_exit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            first_fence = Win32CustodyFence(directory, "c" * 64,
+                mutex_factory=SharedTestMutex)
+            first_owner = OperationOwner(clock_ns=self.clock,
+                process_identity_reader=lambda _handle: None)
+            first_session = OwnedWin32SessionOwner(first_owner,
+                FakeCancellationSupervisor(first_owner), synthetic_only=False,
+                custody_fence=first_fence)
+            first_session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+            first_fence.close()  # model the MCP owner process going away
+
+            second_fence = Win32CustodyFence(directory, "c" * 64,
+                mutex_factory=SharedTestMutex)
+            second_owner = OperationOwner(clock_ns=self.clock,
+                process_identity_reader=lambda _handle: None)
+            second_session = OwnedWin32SessionOwner(second_owner,
+                FakeCancellationSupervisor(second_owner), synthetic_only=False,
+                custody_fence=second_fence)
+            second_session.bind_target_generation_reader(lambda: GEN_B)
+            with self.assertRaisesRegex(CustodyFenceError,
+                    "ORPHAN_RECOVERY_UNRESOLVED"):
+                second_session.admit_action("3" * 32, "4" * 32, GEN_B,
+                    operation_deadline_ns=self.clock() + 5_000_000_000,
+                    obligations=["key:map01:W"])
+            recovery = Mock()
+            second_session._supervisor.recover_orphaned_input = recovery
+            refused = second_session.recover_orphaned_input(
+                source_operation_id=ACTION_ID,
+                source_target_generation=GEN_A,
+                obligations=["key:map01:W"],
+                source_custody_record=orphan_custody_record())
+            self.assertEqual(refused["reason"],
+                "persistent_custody_late_input_horizon_required")
+            recovery.assert_not_called()
+            self.assertEqual(second_fence.snapshot()["state"]["pending"][
+                "operation_id"], ACTION_ID)
+            second_fence.close()
+
+    def test_persistent_orphan_fence_clears_only_after_verified_horizon(self):
+        with tempfile.TemporaryDirectory() as directory:
+            first_fence = Win32CustodyFence(directory, "d" * 64,
+                mutex_factory=SharedTestMutex)
+            first_fence.admit(ACTION_ID, GEN_A, ["key:map01:W"])
+            first_fence.update(ACTION_ID, GEN_A, phase="unknown",
+                input_dispatched=True,
+                producer_identity={"pid": 4123, "creation_time_100ns": 9123},
+                gate_state="authorized")
+            first_fence.close()
+
+            fence = Win32CustodyFence(directory, "d" * 64,
+                mutex_factory=SharedTestMutex)
+            operation_owner = OperationOwner(clock_ns=self.clock,
+                process_identity_reader=lambda _handle: None)
+            supervisor = FakeCancellationSupervisor(operation_owner)
+            def recover(operation_id, generation, recovery_id, deadline_ns,
+                        obligations):
+                return {"status": "recovered", "release_confirmed": True,
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id,
+                    "late_input_horizon_verified": True,
+                    "late_input_horizon_ns": 100,
+                    "late_input_release_received_monotonic_ns": 200,
+                    "late_input_observation_end_monotonic_ns": 300,
+                    "late_input_observation_count": 2,
+                    "late_input_max_observed_gap_ns": 100,
+                    "late_input_max_sample_gap_ns": 200}
+            supervisor.recover_orphaned_input = Mock(side_effect=recover)
+            session = OwnedWin32SessionOwner(operation_owner, supervisor,
+                synthetic_only=False, custody_fence=fence)
+            fence.confirm_producer_absent = Mock(return_value=True)
+            generation = [GEN_A]
+            session.bind_target_generation_reader(lambda: generation[0])
+            custody_record = orphan_custody_record()
+            custody_record["late_server_request_possible"] = True
+            receipt = session.recover_orphaned_input(
+                source_operation_id=ACTION_ID,
+                source_target_generation=GEN_A,
+                obligations=["key:map01:W"],
+                source_custody_record=custody_record)
+            self.assertEqual(receipt["recovery_status"], "recovered")
+            self.assertEqual(fence.snapshot()["state"]["status"], "clear")
+
+            generation[0] = GEN_B
+            binding = session.bind_target_generation()
+            admitted = session.admit_action_from_binding("5" * 32, "6" * 32,
+                binding["target_binding_id"],
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+            self.assertEqual(admitted["action"]["status"], "admitted")
+            self.assertEqual(fence.snapshot()["state"]["pending"][
+                "operation_id"], "6" * 32)
+            fence.close()
+
+    def test_authorized_gate_recovers_when_dispatch_witness_is_false_or_unknown(self):
+        for durable_dispatch, source_dispatch in (
+                (None, False), (None, None), (True, False), (False, True)):
+            with self.subTest(durable_dispatch=durable_dispatch,
+                              source_dispatch=source_dispatch), \
+                    tempfile.TemporaryDirectory() as directory:
+                fence = Win32CustodyFence(directory, "7" * 64,
+                    mutex_factory=SharedTestMutex)
+                fence.admit(ACTION_ID, GEN_A, ["key:map01:W"])
+                transition = {"producer_identity": {"pid": 4224,
+                    "creation_time_100ns": 9224}, "gate_state": "authorized",
+                    "phase": "unknown"}
+                if durable_dispatch is not None:
+                    transition["input_dispatched"] = durable_dispatch
+                fence.update(ACTION_ID, GEN_A, **transition)
+                owner = OperationOwner(clock_ns=self.clock,
+                    process_identity_reader=lambda _handle: None)
+                supervisor = FakeCancellationSupervisor(owner)
+
+                def recovered(operation_id, generation, recovery_id,
+                              deadline_ns, obligations):
+                    return {"status": "recovered", "release_confirmed": True,
+                        "operation_id": operation_id,
+                        "target_generation": generation,
+                        "recovery_id": recovery_id,
+                        "late_input_horizon_verified": True,
+                        "late_input_horizon_ns": 100,
+                        "late_input_release_received_monotonic_ns": 200,
+                        "late_input_observation_end_monotonic_ns": 300,
+                        "late_input_observation_count": 2,
+                        "late_input_max_observed_gap_ns": 100,
+                        "late_input_max_sample_gap_ns": 200}
+
+                supervisor.recover_orphaned_input = Mock(side_effect=recovered)
+                fence.confirm_producer_absent = Mock(return_value=True)
+                session = OwnedWin32SessionOwner(owner, supervisor,
+                    synthetic_only=False, custody_fence=fence)
+                session.bind_target_generation_reader(lambda: GEN_A)
+                record = orphan_custody_record()
+                record["late_server_request_possible"] = True
+                record["dispatch"]["input_dispatched"] = source_dispatch
+
+                result = session.recover_orphaned_input(
+                    source_operation_id=ACTION_ID,
+                    source_target_generation=GEN_A,
+                    obligations=["key:map01:W"], source_custody_record=record)
+
+                self.assertEqual(result["recovery_status"], "recovered")
+                self.assertFalse(result["replay_allowed"])
+                self.assertIsNone(result["task_success"])
+                fence.confirm_producer_absent.assert_called_once_with(
+                    {"pid": 4224, "creation_time_100ns": 9224})
+                supervisor.recover_orphaned_input.assert_called_once()
+                self.assertEqual(fence.snapshot()["state"]["status"], "clear")
+                fence.close()
+
+    def test_persistent_closed_gate_and_absent_unopened_child_clear_without_release(self):
+        with tempfile.TemporaryDirectory() as directory:
+            first = Win32CustodyFence(directory, "e" * 64,
+                mutex_factory=SharedTestMutex)
+            first.admit(ACTION_ID, GEN_A, ["key:map01:W"])
+            first.close()
+            fence = Win32CustodyFence(directory, "e" * 64,
+                mutex_factory=SharedTestMutex)
+            owner = OperationOwner(clock_ns=self.clock,
+                process_identity_reader=lambda _handle: None)
+            supervisor = FakeCancellationSupervisor(owner)
+            supervisor.recover_orphaned_input = Mock()
+            supervisor.confirm_producer_absent = Mock(return_value=True)
+            session = OwnedWin32SessionOwner(owner, supervisor,
+                synthetic_only=False, custody_fence=fence)
+            session.bind_target_generation_reader(lambda: GEN_A)
+            record = orphan_custody_record()
+            record["late_server_request_possible"] = True
+            record["dispatch"]["input_dispatched"] = False
+
+            receipt = session.recover_orphaned_input(
+                source_operation_id=ACTION_ID,
+                source_target_generation=GEN_A,
+                obligations=["key:map01:W"], source_custody_record=record)
+
+            self.assertEqual(receipt["recovery_status"], "not_dispatched")
+            self.assertFalse(receipt["release_confirmed"])
+            self.assertIsNone(receipt["task_success"])
+            self.assertFalse(receipt["replay_allowed"])
+            supervisor.recover_orphaned_input.assert_not_called()
+            self.assertEqual(fence.snapshot()["state"]["status"], "clear")
+            fence.close()
+
+    def test_persistent_identity_only_gate_requires_exact_process_absence(self):
+        for absent, expected in ((False, "persistent_custody_producer_still_live"),
+                                 (True, "not_dispatched")):
+            with self.subTest(absent=absent), tempfile.TemporaryDirectory() as directory:
+                first = Win32CustodyFence(directory, "f" * 64,
+                    mutex_factory=SharedTestMutex)
+                first.admit(ACTION_ID, GEN_A, ["key:map01:W"])
+                identity = {"pid": 4107, "creation_time_100ns": 9007}
+                first.update(ACTION_ID, GEN_A,
+                    producer_identity=identity, gate_state="identity_verified")
+                first.close()
+                fence = Win32CustodyFence(directory, "f" * 64,
+                    mutex_factory=SharedTestMutex)
+                owner = OperationOwner(clock_ns=self.clock,
+                    process_identity_reader=lambda _handle: None)
+                supervisor = FakeCancellationSupervisor(owner)
+                supervisor.recover_orphaned_input = Mock()
+                fence.confirm_producer_absent = Mock(return_value=absent)
+                session = OwnedWin32SessionOwner(owner, supervisor,
+                    synthetic_only=False, custody_fence=fence)
+                session.bind_target_generation_reader(lambda: GEN_A)
+                record = orphan_custody_record()
+                record["late_server_request_possible"] = True
+                record["dispatch"]["input_dispatched"] = False
+
+                receipt = session.recover_orphaned_input(
+                    source_operation_id=ACTION_ID,
+                    source_target_generation=GEN_A,
+                    obligations=["key:map01:W"], source_custody_record=record)
+
+                if absent:
+                    self.assertEqual(receipt["recovery_status"], expected)
+                    self.assertFalse(receipt["release_confirmed"])
+                    self.assertEqual(fence.snapshot()["state"]["status"], "clear")
+                else:
+                    self.assertEqual(receipt["reason"], expected)
+                    self.assertEqual(fence.snapshot()["state"]["status"], "unresolved")
+                fence.confirm_producer_absent.assert_called_once_with(identity)
+                supervisor.recover_orphaned_input.assert_not_called()
+                fence.close()
+
+    def test_normal_completion_horizon_receipt_is_required_to_clear_persistent_fence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fence = Win32CustodyFence(directory, "9" * 64,
+                mutex_factory=SharedTestMutex)
+            owner = OperationOwner(clock_ns=self.clock,
+                process_identity_reader=lambda handle: self.identity
+                if handle is self.process else None)
+            supervisor = FakeCancellationSupervisor(owner)
+            session = OwnedWin32SessionOwner(owner, supervisor,
+                synthetic_only=False, custody_fence=fence)
+            session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+            self.assertTrue(session.producer_started(CALL_ID, self.process,
+                process_identity=self.identity))
+            self.assertTrue(owner.authorize_producer_start(ACTION_ID, GEN_A,
+                self.process, lambda: None))
+            self.process.alive = False
+            self.process.exitcode = 0
+            horizon_readback = {"operation_id": ACTION_ID,
+                "target_generation": GEN_A,
+                "producer_exit_confirmed_ns": 1,
+                "observed_monotonic_ns": self.clock(), "neutral": True,
+                "late_input_horizon_ns": 100,
+                "late_input_horizon_verified": True,
+                "late_input_observation_count": 3,
+                "late_input_observation_start_monotonic_ns": 100,
+                "late_input_observation_end_monotonic_ns": 200,
+                "late_input_max_observed_gap_ns": 50,
+                "late_input_max_sample_gap_ns": 100}
+
+            row = session.complete_action(CALL_ID, self.process,
+                {"status": "completed", "task_success": None,
+                 "replay_allowed": False},
+                release_receipt={"verified": True, "keys_down": [],
+                    "buttons_down": [], "keys_unknown": [],
+                    "buttons_unknown": []}, readback=horizon_readback)
+
+            self.assertEqual(row["action"]["status"], "completed")
+            self.assertTrue(row["action"]["release_confirmed"])
+            self.assertEqual(fence.snapshot()["state"]["status"], "clear")
+            fence.close()
 
     def test_late_request_risk_requires_verified_horizon_before_new_generation(self):
         supervisor = FakeCancellationSupervisor(self.owner)

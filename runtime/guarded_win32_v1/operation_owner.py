@@ -292,8 +292,17 @@ class OperationOwner:
         )
         readback_bound = (
             type(readback) is dict
-            and set(readback) == {"operation_id", "target_generation",
+            and {"operation_id", "target_generation",
                 "producer_exit_confirmed_ns", "observed_monotonic_ns", "neutral"}
+                <= set(readback)
+            and set(readback) <= {"operation_id", "target_generation",
+                "producer_exit_confirmed_ns", "observed_monotonic_ns", "neutral",
+                "late_input_horizon_ns", "late_input_horizon_verified",
+                "late_input_observation_count",
+                "late_input_observation_start_monotonic_ns",
+                "late_input_observation_end_monotonic_ns",
+                "late_input_max_observed_gap_ns",
+                "late_input_max_sample_gap_ns"}
             and readback.get("operation_id") == operation_id
             and readback.get("target_generation") == target_generation
             and type(readback.get("producer_exit_confirmed_ns")) is int
@@ -303,7 +312,32 @@ class OperationOwner:
             and readback["observed_monotonic_ns"] <= now_ns
             and type(readback.get("neutral")) is bool
         )
-        readback_verified = readback_bound and readback["neutral"] is True
+        horizon_fields = {"late_input_horizon_ns", "late_input_horizon_verified",
+            "late_input_observation_count",
+            "late_input_observation_start_monotonic_ns",
+            "late_input_observation_end_monotonic_ns",
+            "late_input_max_observed_gap_ns", "late_input_max_sample_gap_ns"}
+        horizon_present = type(readback) is dict and bool(horizon_fields & set(readback))
+        horizon_verified = (not horizon_present or (
+            horizon_fields <= set(readback)
+            and type(readback.get("late_input_horizon_ns")) is int
+            and readback["late_input_horizon_ns"] > 0
+            and readback.get("late_input_horizon_verified") is True
+            and type(readback.get("late_input_observation_count")) is int
+            and readback["late_input_observation_count"] >= 2
+            and type(readback.get("late_input_observation_start_monotonic_ns")) is int
+            and type(readback.get("late_input_observation_end_monotonic_ns")) is int
+            and readback["late_input_observation_end_monotonic_ns"]
+                - readback["late_input_observation_start_monotonic_ns"]
+                >= readback["late_input_horizon_ns"]
+            and type(readback.get("late_input_max_observed_gap_ns")) is int
+            and readback["late_input_max_observed_gap_ns"] >= 0
+            and type(readback.get("late_input_max_sample_gap_ns")) is int
+            and readback["late_input_max_sample_gap_ns"] > 0
+            and readback["late_input_max_observed_gap_ns"]
+                <= readback["late_input_max_sample_gap_ns"]))
+        readback_verified = (readback_bound and readback["neutral"] is True
+                             and horizon_verified)
         if readback_verified:
             readback_outcome = "verified"
         elif readback_bound:
@@ -379,6 +413,20 @@ class OperationOwner:
                     record["release_confirmed"] = True
                     record["completion_release_receipt"] = copy.deepcopy(release_receipt)
                     record["completion_readback"] = copy.deepcopy(readback)
+                    if horizon_present:
+                        record["late_input_horizon_ns"] = readback[
+                            "late_input_horizon_ns"]
+                        record["late_input_max_sample_gap_ns"] = readback[
+                            "late_input_max_sample_gap_ns"]
+                        record["late_input_observation_count"] = readback[
+                            "late_input_observation_count"]
+                        record["late_input_observation_start_ns"] = readback[
+                            "late_input_observation_start_monotonic_ns"]
+                        record["late_input_observation_end_ns"] = readback[
+                            "late_input_observation_end_monotonic_ns"]
+                        record["late_input_max_observed_gap_ns"] = readback[
+                            "late_input_max_observed_gap_ns"]
+                        record["late_input_validation_error"] = None
                     record["status"] = "completed"
                 else:
                     record["status"] = "unknown"

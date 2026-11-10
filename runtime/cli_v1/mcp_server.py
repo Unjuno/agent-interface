@@ -2128,6 +2128,9 @@ def main():
     parser.add_argument('--display')
     parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11', 'guarded-x11',
                                                    'supervised-win32'), default='one-shot')
+    parser.add_argument('--supervised-win32-late-input-horizon-ms', type=int,
+                        default=0, metavar='MS',
+                        help='sample neutral Win32 input after cancellation for 1..60000 ms; zero disables sampling and leaves unknown cancellation custody fenced')
     parser.add_argument('--guarded-process-identity', action='store_true',
                         help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
     parser.add_argument('--guarded-query-worker',action='store_true',
@@ -2149,6 +2152,12 @@ def main():
     parser.add_argument('--calc-window-title-hint', default='task-artifact.fods')
     parser.add_argument('--calc-discovery-deadline-s', type=float, default=20.0)
     args = parser.parse_args()
+    if (args.supervised_win32_late_input_horizon_ms < 0
+            or args.supervised_win32_late_input_horizon_ms > 60_000):
+        parser.error('--supervised-win32-late-input-horizon-ms must be between 0 and 60000')
+    if (args.supervised_win32_late_input_horizon_ms
+            and args.session_mode != 'supervised-win32'):
+        parser.error('--supervised-win32-late-input-horizon-ms requires --session-mode supervised-win32')
     if args.guarded_process_identity and args.session_mode != 'guarded-x11':
         parser.error('--guarded-process-identity requires --session-mode guarded-x11')
     if args.guarded_query_worker and (args.session_mode != 'guarded-x11' or not args.guarded_process_identity):
@@ -2180,6 +2189,9 @@ def main():
                 or not 0 < args.calc_discovery_deadline_s <= 60):
             parser.error('Calc window discovery hint or deadline is invalid')
     options = {'guarded_process_identity':args.guarded_process_identity}
+    if args.supervised_win32_late_input_horizon_ms:
+        options['supervised_win32_late_input_horizon_ns'] = (
+            args.supervised_win32_late_input_horizon_ms * 1_000_000)
     if args.guarded_query_worker: options['guarded_query_worker'] = True
     if args.guarded_observation_worker: options['guarded_observation_worker'] = True
     if args.guarded_window_lifecycle: options['guarded_window_lifecycle'] = True

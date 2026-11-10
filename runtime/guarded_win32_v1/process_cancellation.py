@@ -44,7 +44,7 @@ class OperationCancellationSupervisor:
                  observer_process_factory, process_identity_reader,
                  clock_ns=time.monotonic_ns, terminate_grace_s=0.1,
                  kill_grace_s=0.1, poll_interval_s=0.005,
-                 startup_timeout_s=2.0, late_input_horizon_ns=0,
+                 startup_timeout_s=5.0, late_input_horizon_ns=0,
                  late_input_sample_interval_s=0.025):
         required = (
             "request_cancel", "producer_handle_for_retirement", "producer_retired",
@@ -222,18 +222,90 @@ class OperationCancellationSupervisor:
             and receipt["observed_monotonic_ns"] <= now_ns
             and now_ns < deadline_ns
         )
+        horizon_ns = getattr(self, "late_input_horizon_ns", 0)
+        if valid and horizon_ns:
+            valid = _consistent_neutral_observation(receipt,
+                operation["obligations"])
         if not valid:
             self._invalidate_helper("observer", deadline_ns)
             self._owner.mark_unknown(operation_id, target_generation,
                 "normal_completion_observer_receipt_invalid_or_late")
             return None
-        return {
+        result = {
             "operation_id": operation_id,
             "target_generation": target_generation,
             "producer_exit_confirmed_ns": producer_exit_confirmed_ns,
             "observed_monotonic_ns": receipt["observed_monotonic_ns"],
             "neutral": receipt["neutral"],
         }
+        if horizon_ns:
+            observations = [receipt]
+            horizon_end_ns = receipt["observed_monotonic_ns"] + horizon_ns
+            max_gap_ns = max(25_000_000,
+                int(getattr(self, "_late_input_sample_interval_s", 0.025)
+                    * 4 * 1_000_000_000))
+            while self._clock_ns() < horizon_end_ns:
+                remaining_ns = min(horizon_end_ns - self._clock_ns(),
+                    deadline_ns - self._clock_ns())
+                if remaining_ns <= 0:
+                    break
+                time.sleep(min(getattr(self, "_late_input_sample_interval_s", 0.025),
+                    remaining_ns / 1_000_000_000))
+                request["request_id"] = uuid.uuid4().hex
+                request["recovery_id"] = request["request_id"]
+                request["after_observed_monotonic_ns"] = observations[-1][
+                    "observed_monotonic_ns"]
+                try:
+                    sample = self._exchange_helper("observer", request, deadline_ns)
+                except Exception as error:
+                    self._owner.mark_unknown(operation_id, target_generation,
+                        "normal_completion_horizon_unconfirmed: "
+                        + type(error).__name__)
+                    return None
+                now_ns = self._clock_ns()
+                if (type(sample) is not dict
+                        or sample.get("operation_id") != operation_id
+                        or sample.get("target_generation") != target_generation
+                        or sample.get("recovery_id") != request["recovery_id"]
+                        or sample.get("neutral") is not True
+                        or type(sample.get("observed_monotonic_ns")) is not int
+                        or sample["observed_monotonic_ns"] < observations[-1][
+                            "observed_monotonic_ns"]
+                        or sample["observed_monotonic_ns"] > now_ns
+                        or now_ns >= deadline_ns):
+                    self._invalidate_helper("observer", deadline_ns)
+                    self._owner.mark_unknown(operation_id, target_generation,
+                        "normal_completion_horizon_receipt_invalid_or_late")
+                    return None
+                if not _consistent_neutral_observation(sample,
+                        operation["obligations"]):
+                    self._owner.mark_unknown(operation_id, target_generation,
+                        "normal_completion_horizon_state_inconsistent")
+                    return None
+                gap = sample["observed_monotonic_ns"] - observations[-1][
+                    "observed_monotonic_ns"]
+                if gap > max_gap_ns:
+                    self._owner.mark_unknown(operation_id, target_generation,
+                        "normal_completion_horizon_observation_gap_exceeded")
+                    return None
+                observations.append(sample)
+            if (observations[-1]["observed_monotonic_ns"]
+                    - observations[0]["observed_monotonic_ns"] < horizon_ns):
+                self._owner.mark_unknown(operation_id, target_generation,
+                    "normal_completion_horizon_duration_uncovered")
+                return None
+            gaps = [right["observed_monotonic_ns"] - left["observed_monotonic_ns"]
+                for left, right in zip(observations, observations[1:])]
+            result.update(late_input_horizon_ns=horizon_ns,
+                late_input_horizon_verified=True,
+                late_input_observation_count=len(observations),
+                late_input_observation_start_monotonic_ns=observations[0][
+                    "observed_monotonic_ns"],
+                late_input_observation_end_monotonic_ns=observations[-1][
+                    "observed_monotonic_ns"],
+                late_input_max_observed_gap_ns=max(gaps, default=0),
+                late_input_max_sample_gap_ns=max_gap_ns)
+        return result
 
     def _schedule(self, operation_id, target_generation):
         with self._lock:
