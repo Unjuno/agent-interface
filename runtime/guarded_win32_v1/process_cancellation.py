@@ -223,9 +223,14 @@ class OperationCancellationSupervisor:
             and now_ns < deadline_ns
         )
         horizon_ns = getattr(self, "late_input_horizon_ns", 0)
+        max_gap_ns = (max(25_000_000,
+            int(getattr(self, "_late_input_sample_interval_s", 0.025)
+                * 4 * 1_000_000_000)) if horizon_ns else None)
         if valid and horizon_ns:
             valid = _consistent_neutral_observation(receipt,
                 operation["obligations"])
+            valid = (valid and receipt["observed_monotonic_ns"]
+                - producer_exit_confirmed_ns <= max_gap_ns)
         if not valid:
             self._invalidate_helper("observer", deadline_ns)
             self._owner.mark_unknown(operation_id, target_generation,
@@ -240,17 +245,19 @@ class OperationCancellationSupervisor:
         }
         if horizon_ns:
             observations = [receipt]
-            horizon_end_ns = receipt["observed_monotonic_ns"] + horizon_ns
-            max_gap_ns = max(25_000_000,
-                int(getattr(self, "_late_input_sample_interval_s", 0.025)
-                    * 4 * 1_000_000_000))
-            while self._clock_ns() < horizon_end_ns:
-                remaining_ns = min(horizon_end_ns - self._clock_ns(),
-                    deadline_ns - self._clock_ns())
-                if remaining_ns <= 0:
+            horizon_end_ns = producer_exit_confirmed_ns + horizon_ns
+            while (self._clock_ns() < horizon_end_ns
+                    or len(observations) < 2):
+                remaining_ns = horizon_end_ns - self._clock_ns()
+                if remaining_ns > 0:
+                    remaining_ns = min(remaining_ns,
+                        deadline_ns - self._clock_ns())
+                if remaining_ns <= 0 and self._clock_ns() >= deadline_ns:
                     break
-                time.sleep(min(getattr(self, "_late_input_sample_interval_s", 0.025),
-                    remaining_ns / 1_000_000_000))
+                if remaining_ns > 0:
+                    time.sleep(min(
+                        getattr(self, "_late_input_sample_interval_s", 0.025),
+                        remaining_ns / 1_000_000_000))
                 request["request_id"] = uuid.uuid4().hex
                 request["recovery_id"] = request["request_id"]
                 request["after_observed_monotonic_ns"] = observations[-1][
@@ -290,17 +297,22 @@ class OperationCancellationSupervisor:
                     return None
                 observations.append(sample)
             if (observations[-1]["observed_monotonic_ns"]
-                    - observations[0]["observed_monotonic_ns"] < horizon_ns):
+                    - producer_exit_confirmed_ns < horizon_ns):
                 self._owner.mark_unknown(operation_id, target_generation,
                     "normal_completion_horizon_duration_uncovered")
                 return None
             gaps = [right["observed_monotonic_ns"] - left["observed_monotonic_ns"]
                 for left, right in zip(observations, observations[1:])]
+            gaps.append(observations[0]["observed_monotonic_ns"]
+                - producer_exit_confirmed_ns)
             result.update(late_input_horizon_ns=horizon_ns,
                 late_input_horizon_verified=True,
                 late_input_observation_count=len(observations),
-                late_input_observation_start_monotonic_ns=observations[0][
-                    "observed_monotonic_ns"],
+                # This is the conservative coverage start, not the first
+                # sample timestamp; the exit-to-first-sample gap is bounded
+                # by max_gap_ns above.
+                late_input_observation_start_monotonic_ns=(
+                    producer_exit_confirmed_ns),
                 late_input_observation_end_monotonic_ns=observations[-1][
                     "observed_monotonic_ns"],
                 late_input_max_observed_gap_ns=max(gaps, default=0),
