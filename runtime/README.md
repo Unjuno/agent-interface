@@ -139,3 +139,58 @@ changed-state refusals and explicit recovery. The direct route returned all six 
 cues through optional post-release capture. Extra observations, preview failures and
 the prior input-free STOP remain recorded. Provider model/settings, useful feedback,
 semantic latency, tokens/cost and human-tempo benefit remain unverified.
+
+## Runtime acquisition and consent boundaries
+
+Agent Interface does not automatically download or install its runtime, model
+weights, GUI applications, or container images. Each acquisition or execution
+is a separate user action. A command that prepares one category does not grant
+consent for another.
+
+| Action | What it does | What it does not do |
+|---|---|---|
+| Clone/fetch this repository | Downloads source files when the user runs Git. | Does not install the runtime, Python dependencies, model weights, applications, or containers. |
+| Build the portable runtime | `python -m runtime.distribution_v2.build` writes a `.pyz`, manifest, and checksum locally from committed source. | Does not download an artifact, install it, install backend dependencies, publish a release, or contact a model provider. See [`distribution_v2/README.md`](distribution_v2/README.md). |
+| Install runtime Python dependencies | A user-run `pip install` or the golden-demo opt-in downloads packages from configured indexes and executes package installation code. | Does not download Agent Interface source/runtime as a separate package, model weights, Chrome/Codex, or a container image. |
+| Download a runtime package | Requires a separate, explicit user action naming the package source and destination. Verify the artifact and checksum before running it. | No automatic runtime-package downloader is provided by the repository setup scripts. |
+| Run a model/provider-backed demonstration | Requires its own explicit invocation and configured provider/client. It may send prompts/images to a provider and may consume account quota. | Is not authorized by source checkout, runtime build, or Python dependency installation. The runtime setup scripts do not download model weights. |
+| Install a GUI application or acquire a container image | Requires a separate explicit install/pull action and target-specific review. | Is not authorized by any runtime/dependency setup option. |
+
+The GitHub Release assets currently describe research snapshots, not the
+portable runnable runtime package. Inspect a release's asset names and
+checksums before treating it as an installable runtime. A source archive is
+not a runtime installer.
+
+[`setup-golden-demo.sh`](setup-golden-demo.sh) and
+[`setup-golden-demo-v3.sh`](setup-golden-demo-v3.sh) require the explicit
+`--install-dependencies` argument. That option creates `runtime/.venv` and
+installs the pinned packages in [`requirements-golden.txt`](requirements-golden.txt),
+then runs the local `doctor` command. It does not execute the demo's `run`
+command or make a model/provider call. Without the exact option, each script
+exits before creating the environment or contacting the package index.
+
+There is no repository-wide `research/requirements.txt` on current main.
+Research experiments may have their own dependency files and setup instructions;
+review those instructions and the configured package index before a user-run
+package installation. Such a command prepares only that experiment's environment.
+
+To build the `.pyz` from a checkout, use the documented local builder:
+
+```sh
+python -m runtime.distribution_v2.build \
+  --out results-local/my-runtime/agent-interface-runtime.pyz \
+  --manifest results-local/my-runtime/manifest.json \
+  --sums results-local/my-runtime/sha256.txt
+```
+
+This is a local build from committed source; it is not a package download or
+installation. Running the archive is another explicit user action and requires
+the selected Python/backend dependencies to already be available. See the
+[portable runtime guide](distribution_v2/README.md) and
+[CLI guide](cli_v1/README.md) for supported commands and runtime limits.
+
+Keep setup commands narrow and fail closed when an acquisition scope is
+ambiguous. Before adding an automatic package, model, application, or image
+download, expose it as a separate explicit option with its source, destination,
+version/checksum, and side effects. Never infer authorization for a runtime
+download from model setup, or model/provider use from runtime setup.

@@ -102,21 +102,16 @@ Completed evidence paths are generally kept stable for provenance; navigation is
 
 Research harnesses can inject real input. Use an isolated session or disposable environment and follow the specific experiment's instructions.
 
-Research code has separate environment requirements. Installing them may download
-and execute third-party packages from package indexes; choose a task-specific
-environment and install them only when you intend to prepare that research setup:
-
-```bash
-python -m pip install -r research/requirements.txt
-```
-
-This command prepares research dependencies; it does not install Agent Interface
-as a runtime, download a model, or install a GUI application. The golden-demo
-setup has a separate explicit opt-in for its pinned Python dependencies. Runtime
-source checkout, portable package build/acquisition, model/provider use, and
-external application installation are independent actions; the setup flag does
-not authorize those other acquisitions. See [`runtime/README.md`](runtime/README.md)
-for the exact current boundaries and supported paths.
+Research experiments declare their environment requirements in their own
+instructions. Start with the selected experiment's README and do not assume a
+repository-wide `research/requirements.txt` exists. Installing packages may
+download and execute third-party code, so run the experiment-specific setup
+only when you intend to prepare that environment. The golden-demo setup has a
+separate explicit opt-in for its pinned Python dependencies. Runtime source
+checkout, portable package build/acquisition, model/provider use, and external
+application installation are independent actions; the setup flag does not
+authorize those other acquisitions. See [`runtime/README.md`](runtime/README.md)
+for the acquisition/consent boundaries and supported runtime paths.
 
 Design ideas and analytical or empirical research proposals are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Idea issue form](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
 
