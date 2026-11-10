@@ -1,0 +1,12 @@
+{
+  "target": "repo-owned native Win32 fixture; fresh HWND",
+  "block_trigger": "after interface_observe returns matched target generation",
+  "route": "supervised-win32",
+  "max_actions": 1,
+  "block_mode": "nested message loop defers WM_KEYFIRST..WM_KEYLAST while dispatching other window messages",
+  "horizon_ms": 2000,
+  "source_commit": "85849d1f0384f58e55a0c34abacae5797e002a31",
+  "no_replay": true,
+  "fallback": "30s auto-unblock; one cancel max; then no replay",
+  "purpose": "Capture real Win32 A key messages in the target queue while focus messages remain serviced; hold A messages until after native release and verified two-second horizon, then dispatch queue"
+}

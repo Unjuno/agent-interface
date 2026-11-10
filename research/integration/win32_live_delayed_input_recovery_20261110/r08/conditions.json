@@ -1,0 +1,13 @@
+{
+  "fallback": "30s auto-unblock; no second action",
+  "target": "repo-owned native Win32 fixture; known HWND",
+  "route": "supervised-win32",
+  "no_replay": true,
+  "max_actions": 1,
+  "source_commit": "85849d1f0384f58e55a0c34abacae5797e002a31",
+  "block_trigger": "only after successful public interface_observe and target generation capture",
+  "horizon_ms": 2000,
+  "blocked_until": "after terminal action/horizon, explicit unblock request",
+  "purpose": "Observe real SendInput A queued while target WNDPROC is blocked after public observation; wait until native release and verified two-second horizon; then resume GUI and check for translated WM_CHAR",
+  "message": "A"
+}
