@@ -1,0 +1,27 @@
+{
+  "condition": {
+    "external_actions": "no input, GUI activation, app launch, capture, network, or model call",
+    "mutex_checks": [
+      "contender times out while parent owns mutex",
+      "contender acquires after parent ReleaseMutex",
+      "child owns mutex and exits without releasing; parent observes WAIT_ABANDONED"
+    ],
+    "mutex_names": "ephemeral UUID suffixes under Local namespace",
+    "namespace_snapshots": 2,
+    "persistent_state": "none created or read",
+    "processes": "fresh same-user Python subprocesses in current Windows session"
+  },
+  "decision_rule": "All three mutex state results must match expected wait semantics, and two namespace digests must match. WAIT_ABANDONED establishes process-owner death only; do not infer operation resolution or clear UNKNOWN without a durable custody journal.",
+  "prior_local_namespace_evidence": "r33-win32-interactive-input-namespace-handle-types",
+  "purpose": "Verify that the R33 Windows logon namespace digest is stable across separate processes and that a Local named mutex serializes same-session processes and signals owner-process death as WAIT_ABANDONED.",
+  "schema": "agent-interface/win32-cross-process-mutex-prereg-v1",
+  "scope": "Same-user/current Windows logon only; no cross-logon uniqueness, no actual input, no late-input or task-effect claim.",
+  "source_commit": "a8fd214107e014156c20792cbc690bd0468c703c",
+  "source_sha256": {
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r33-win32-interactive-input-namespace-handle-types/probe.py": "69e2e8873ad873a37d2246c38412f53aa1924e677dc9eed44a2f5f49778642db",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r34-win32-cross-process-mutex-probe/mutex_probe.py": "341600336ddc5086fd49a9fce27fab64b823b7f2bea9fc7c00c8b759efb57003",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r34-win32-cross-process-mutex-probe/run.ps1": "6b46ff19f328f30c4bf0f7ae3cff866d407aa82fc3145408c7164ffc9f4ff945"
+  },
+  "stop_rule": "One orchestrated run with the registered two namespace reads and mutex cases; no retry.",
+  "study_id": "win32-cross-process-mutex-20261110-r34"
+}

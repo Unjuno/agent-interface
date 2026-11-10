@@ -1,0 +1,23 @@
+{
+  "allocation": "local-cached-image-construction-r05-tracked-250ms-20261110",
+  "condition": {
+    "delay_ms": 250,
+    "fixture_extra_key_injection": false,
+    "runtime_actions": [
+      "key_chord a",
+      "key_chord a"
+    ],
+    "runtime_key": "a",
+    "tracked_delayed_second_press": true
+  },
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "purpose": "Probe the boundary near the existing 250ms owner-retirement grace and record a completion/cancellation race if present. Instrumentation now preserves terminal.completed and contradictory cancellation/liveness receipts instead of aborting.",
+  "schema": "agent-interface/xvfb-tracked-runtime-cancel-race-prereg-v1",
+  "scope_limit": "Private Xvfb and synthetic app only. Timing is a fixture-controlled XTEST delay, not network or natural OS delivery.",
+  "source_sha256": "c96252d447a2fd0a403386005be6cf7af3f1b024e910b3155d7b2484ecfecd2d",
+  "stop_rule": "one attempt; retain all output; no retry.",
+  "working_diff_sha256": "bf7e1236f0acf7bcfffa3b94bae3924de9fb003199da4ee6e17a5f44d0331999"
+}

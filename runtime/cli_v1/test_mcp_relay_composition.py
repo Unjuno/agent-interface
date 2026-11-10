@@ -343,6 +343,7 @@ def _socket_owner_factory(targets, directory, display_name, options):
             write_record("fake-x-server-queue.json", {
                 "connection": "retired_owner_connection",
                 "event": "KeyPress", "keycode": KEYCODE,
+                "request_hex": press.hex(),
                 "state": "accepted_and_held_in_synthetic_queue",
                 "protocol_order_is_modeled_not_observed": True})
             release = _receive_exact(upstream_socket, 36)
@@ -891,22 +892,38 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(cancelled["replay_allowed"])
                 self.assertTrue(cancelled["late_server_request_possible"])
 
-                # This final delivery is deliberately injected into a synthetic
-                # server queue after the separate readback. It is not a claim
-                # about real X11 disconnect ordering.
+                # Deliver the captured runtime wire request into the synthetic
+                # server model after the separate readback. The delayed order
+                # remains modeled; no real X server is involved.
                 release_receipt = json.loads(
                     (root / "fake-x-release-readback.json").read_text(encoding="utf-8"))
                 self.assertEqual(release_state["down"], [])
+                accepted_press = json.loads(
+                    (root / "fake-x-accepted-press.json").read_text(encoding="utf-8"))
+                press_wire = bytes.fromhex(accepted_press["request_hex"])
+                self.assertEqual(len(press_wire), 36, accepted_press)
+                self.assertEqual(press_wire[:2], bytes((0xC8, 2)), accepted_press)
+                self.assertEqual(press_wire[4], X.KeyPress, accepted_press)
+                wire_keycode = press_wire[5]
+                self.assertEqual(wire_keycode, accepted_press["keycode"], accepted_press)
                 model_order.append("late_old_request_delivery")
-                release_state["down"].append(KEYCODE)
+                if press_wire[4] == X.KeyPress:
+                    release_state["down"].append(wire_keycode)
+                elif press_wire[4] == X.KeyRelease:
+                    release_state["down"] = [
+                        code for code in release_state["down"]
+                        if code != wire_keycode]
                 late_down = {
-                    "source": "synthetic_queued_old_connection_request",
-                    "event": "KeyPress", "keycode": KEYCODE,
+                    "source": "captured_runtime_wire_request_applied_to_fake_server_model",
+                    "request_hex": press_wire.hex(),
+                    "event": "KeyPress" if press_wire[4] == X.KeyPress else "KeyRelease",
+                    "keycode": wire_keycode,
                     "modeled_after_release_readback": True,
                     "event_index": len(model_order),
                     "monotonic_ns": time.monotonic_ns(),
                     "keys_down_after_delivery": sorted(release_state["down"]),
-                    "protocol_order_is_modeled_not_observed": True,
+                    "delivery_order_is_modeled_not_observed": True,
+                    "server_state_is_test_model_not_live_x_server": True,
                 }
                 self.assertLess(release_receipt["event_index"], late_down["event_index"])
                 self.assertEqual(model_order, [

@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
 
@@ -71,6 +72,78 @@ class CompletionObserverTests(unittest.TestCase):
         self.assertIsNone(result)
         self.assertEqual(len(owner.unknown), 1)
         self.assertIn("invalid_or_late", owner.unknown[0][2])
+
+    def test_configured_normal_completion_horizon_is_sampled_and_receipted(self):
+        now = [500]
+        supervisor, owner = self.supervisor(now=500)
+        supervisor._clock_ns = lambda: now[0]
+        supervisor.late_input_horizon_ns = 30
+        supervisor._late_input_sample_interval_s = 10 / 1_000_000_000
+        requests = []
+
+        def exchange(role, request, deadline):
+            requests.append((role, dict(request), deadline))
+            now[0] += 10
+            return {"operation_id": OPERATION,
+                "target_generation": GENERATION,
+                "recovery_id": request["recovery_id"],
+                "neutral": True, "key_button_states": [False],
+                "unicode_event_units": 0,
+                "observed_monotonic_ns": now[0]}
+
+        supervisor._exchange_helper = exchange
+        def advance(seconds):
+            now[0] += max(1, int(seconds * 1_000_000_000))
+
+        supervisor_sleep = advance
+        with patch("runtime.guarded_win32_v1.process_cancellation.time.sleep",
+                   side_effect=supervisor_sleep):
+            result = supervisor.observe_completed(OPERATION, GENERATION,
+                producer_exit_confirmed_ns=400, deadline_ns=600)
+
+        self.assertTrue(result["late_input_horizon_verified"])
+        self.assertEqual(result["late_input_horizon_ns"], 30)
+        self.assertGreaterEqual(result["late_input_observation_count"], 2)
+        self.assertGreaterEqual(
+            result["late_input_observation_end_monotonic_ns"]
+            - result["late_input_observation_start_monotonic_ns"], 30)
+        self.assertEqual(owner.unknown, [])
+        self.assertGreaterEqual(len(requests), 2)
+
+    def test_incomplete_horizon_at_deadline_is_unknown_not_success(self):
+        now = [500]
+        supervisor, owner = self.supervisor(now=500)
+        supervisor._clock_ns = lambda: now[0]
+        supervisor.late_input_horizon_ns = 100
+        supervisor._late_input_sample_interval_s = 10 / 1_000_000_000
+        calls = [0]
+        clock_values = iter((500, 500, 500, 500, 500, 560,
+                             560, 560, 560, 560, 601, 601))
+        supervisor._clock_ns = lambda: next(clock_values, 601)
+
+        def exchange(_role, request, _deadline):
+            calls[0] += 1
+            # Initial neutral sample at 500, then one sample at 560; the
+            # requested 100 ns horizon cannot fit before deadline 600.
+            observed = 500 if calls[0] == 1 else 560
+            now[0] = observed
+            return {"operation_id": OPERATION,
+                "target_generation": GENERATION,
+                "recovery_id": request["recovery_id"],
+                "neutral": True, "key_button_states": [False],
+                "unicode_event_units": 0,
+                "observed_monotonic_ns": observed}
+
+        supervisor._exchange_helper = exchange
+        with patch("runtime.guarded_win32_v1.process_cancellation.time.sleep",
+                   return_value=None):
+            result = supervisor.observe_completed(OPERATION, GENERATION,
+                producer_exit_confirmed_ns=400, deadline_ns=600)
+
+        self.assertIsNone(result)
+        self.assertEqual(calls[0], 3)
+        self.assertEqual(len(owner.unknown), 1)
+        self.assertIn("duration_uncovered", owner.unknown[0][2])
 
     def test_refuses_non_running_or_wrong_generation_operations(self):
         supervisor, owner = self.supervisor(receipt={})

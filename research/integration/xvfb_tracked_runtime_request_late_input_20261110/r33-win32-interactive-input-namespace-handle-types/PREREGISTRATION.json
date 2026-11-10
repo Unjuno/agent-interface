@@ -1,0 +1,30 @@
+{
+  "condition": {
+    "access": "READOBJECTS only; no input, window activation, app launch, capture, network, model call, or token output",
+    "api_calls": [
+      "ProcessIdToSessionId",
+      "OpenProcessToken/GetTokenInformation(TokenStatistics)",
+      "GetProcessWindowStation",
+      "GetThreadDesktop",
+      "OpenInputDesktop(DESKTOP_READOBJECTS)",
+      "GetUserObjectInformationW(UOI_NAME/UOI_IO)"
+    ],
+    "operation": "one local Windows OS identity query",
+    "python_path": "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "python_version": "3.11.9",
+    "raw_logon_authentication_id": "never written; SHA-256 only"
+  },
+  "decision_rule": "If any namespace component or active desktop witness is unavailable, do not derive a lock key and classify the result unknown. A single successful observation is only feasibility evidence, not cross-session collision proof or admission-fence acceptance.",
+  "primary_discriminator": "Return a stable, nonempty SHA-256 over current session ID, logon AuthenticationId and window-station name; separately report whether current thread desktop matches the active input desktop and UOI_IO confirms it is active.",
+  "prior_setup_failure": "r32-win32-interactive-input-namespace",
+  "purpose": "Read whether the current Windows process can identify its logon session, window station, current thread desktop, and active input desktop using read-only APIs, as a candidate host-side lock namespace.",
+  "schema": "agent-interface/win32-interactive-input-namespace-prereg-v1",
+  "scope": "Current Windows login only; no other session comparison, no producer, no input release, no late-input horizon, no task effect. R32 ctypes binding failure retained.",
+  "source_commit": "a8fd214107e014156c20792cbc690bd0468c703c",
+  "source_sha256": {
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r33-win32-interactive-input-namespace-handle-types/probe.py": "69e2e8873ad873a37d2246c38412f53aa1924e677dc9eed44a2f5f49778642db",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/r33-win32-interactive-input-namespace-handle-types/run.ps1": "ad44d1382c6fe3cf3e2929057396ec0b5296a59dd27a3a954cf4823452604bca"
+  },
+  "stop_rule": "One read-only host probe. No retries.",
+  "study_id": "win32-interactive-input-namespace-20261110-r33"
+}

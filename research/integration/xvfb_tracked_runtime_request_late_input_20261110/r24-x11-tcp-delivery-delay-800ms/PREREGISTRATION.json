@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface/xvfb-x11-tcp-delivery-delay-prereg-v1",
+  "study_id": "xvfb-x11-tcp-delivery-delay-800ms-20261110",
+  "hypothesis": "A request held in a user-space TCP proxy can remain pending after the local X11 owner process retires; the X server may reject the bytes after resource disconnection or process them as a late global input.",
+  "discriminator": "Compare proxy delivery_forwarded/client_to_server_error timestamps with cancellation terminal completion and owner retirement, plus old-task count, fresh-task contamination, and independent keymap reads.",
+  "condition": {
+    "display": "parent :88 Unix socket; runtime owner 127.0.0.1:89 TCP proxy",
+    "xvfb": "private :88 with TCP listen on 6088",
+    "proxy": "127.0.0.1:6089 to 127.0.0.1:6088",
+    "tracked_second_keypress": true,
+    "delay_ms": 800,
+    "cancel_ack_withheld_s": 1.0,
+    "supervisor": false,
+    "model_calls": 0,
+    "network": "Docker network none; loopback only"
+  },
+  "source_commit": "b60123017d2b4898de6ead38b87eee0ac951817a",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "209ebe165fe4fa002300b9d14e40d378f018aafc7afce5c3a309f420aa9171a0",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/x11_delivery_proxy.py": "d924329c86c0e058b9f09598f6b253cfe89c5abe665df6bc2b55c583f29e0f90",
+    "research/integration/xvfb_tracked_runtime_request_late_input_20261110/test_x11_delivery_proxy.py": "ea0be8d8c28869f857b9709e57eded7abd2a532efc62196ae7dbd8629a14bcc0"
+  },
+  "stop_rule": "One run only; no retry. Preserve any setup/runtime/assertion failure. Keep separate from server-side XTEST R01-R21 and from R10-R17 statistics.",
+  "interpretation": "This intentionally delays bytes at a user-space relay before Xvfb TCP receive. It is not natural packet loss/latency or WSLc. Finite recovery is not promoted from a green test alone; task effect, server-side disconnect, release proof and UNKNOWN/replay fence all remain separate gates.",
+  "scope": "Synthetic app in private Xvfb, cached Docker image, no model/provider, no external network."
+}

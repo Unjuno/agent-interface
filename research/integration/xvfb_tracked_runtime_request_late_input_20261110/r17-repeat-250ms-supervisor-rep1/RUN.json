@@ -1,0 +1,14 @@
+{
+  "delay_ms": 250,
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "preregistration_sha256": "70cbd9b4a377e6539401d9d9cc5da91fdaa0f486cd413be173b0ee5e48061e02",
+  "replicate": 1,
+  "run_id": "r17",
+  "source_commit": "9c062eb380",
+  "source_sha256": "987215f513c285389f8550baab21ea55ed2d8c4976c35f2415e383c2bf269e47",
+  "supervisor": true,
+  "test_command": "python3 -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb"
+}

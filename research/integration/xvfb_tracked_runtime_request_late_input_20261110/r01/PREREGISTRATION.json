@@ -1,0 +1,26 @@
+{
+  "allocation": "local-cached-image-construction-r01-20261110",
+  "comparators": "Prior R19 direct test-only b injection and R03/R04 Fake X are lineage/control context only; no matched-arm performance claim.",
+  "condition": {
+    "delay_ms": 8000,
+    "key": "a",
+    "test_injects_no_additional_keypress": true,
+    "tracked_delayed_second_runtime_press": true
+  },
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "outcomes_to_record": [
+    "X keymap after release",
+    "old synthetic task effect count",
+    "fresh task effect contamination",
+    "runtime release/cleanup receipts",
+    "terminal state"
+  ],
+  "schema": "agent-interface/xvfb-tracked-runtime-late-input-prereg-v1",
+  "scope_limit": "Private Xvfb and synthetic app only. XTEST server-time delay, not network transport or a natural late request. No MAP01 or live application claim.",
+  "source_sha256": "85eff51e95895284784daa49b06b33257b562b9b9d63210cd93ec9197bdc9716",
+  "stop_rule": "one attempt, no retry; preserve failure and all produced raw files.",
+  "working_diff_sha256": "dd0738f0614883327ecf8cf83f5578c520800e179cf08963d19a8716b642b6a6"
+}

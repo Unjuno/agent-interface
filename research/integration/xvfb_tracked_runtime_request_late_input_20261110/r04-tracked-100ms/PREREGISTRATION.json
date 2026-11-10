@@ -1,0 +1,23 @@
+{
+  "allocation": "local-cached-image-construction-r04-tracked-100ms-20261110",
+  "condition": {
+    "delay_ms": 100,
+    "fixture_extra_key_injection": false,
+    "runtime_actions": [
+      "key_chord a",
+      "key_chord a"
+    ],
+    "runtime_key": "a",
+    "tracked_delayed_second_press": true
+  },
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "model_calls": 0,
+  "network": "none",
+  "purpose": "Test whether a promptly arriving runtime-issued key press is covered by the live obligation and cancellation release path. Paired conceptually with r03 only; sequential, not randomized or performance matched.",
+  "schema": "agent-interface/xvfb-tracked-runtime-delay-positive-condition-prereg-v1",
+  "scope_limit": "Private Xvfb/synthetic app only. Does not establish a delayed-after-release arrival, MAP01, WSLc, live app, or provider behavior.",
+  "source_sha256": "85eff51e95895284784daa49b06b33257b562b9b9d63210cd93ec9197bdc9716",
+  "stop_rule": "one attempt; retain all output; no retry.",
+  "working_diff_sha256": "dd0738f0614883327ecf8cf83f5578c520800e179cf08963d19a8716b642b6a6"
+}

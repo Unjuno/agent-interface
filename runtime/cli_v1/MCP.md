@@ -341,6 +341,36 @@ application-configured oracle, the tool is not registered and `task_success`
 remains null. This mechanism proves only the application-specific effect
 checked by that oracle.
 
+Native supervised-Win32 admission also uses a per-logon durable custody fence
+under `%LOCALAPPDATA%\Unjuno\AgentInterface\custody-v1`, serialized by a
+session-local named mutex. An admitted action remains fenced across MCP server
+replacement until normal completion confirms release, a pre-start refusal
+proves the producer gate stayed closed, or orphan recovery confirms release.
+The fence retains only the operation ID, target generation, input obligations,
+and bounded phase fields; it stores a digest of the Windows logon namespace,
+not the raw logon identifier. Missing, corrupt, or mismatched state fails
+closed. Do not manually delete these files to clear a fence.
+
+The native fence applies a protected DACL to its journal directory, journal
+files, and registry marker key. The DACL grants full access to the current
+user, SYSTEM, and local Administrators. ACL setup failure prevents the fence
+from initializing or reading custody. This limits access by other Windows
+accounts; it is not tamper-resistant against another process running as the
+same user or an administrator. Protect the user profile with the host's normal
+account controls; use a dedicated profile for experiments that require a
+stronger custody boundary.
+
+The default late-input horizon remains zero because no finite horizon has been
+qualified against native Windows input. For a controlled experiment that needs
+normal-completion or cancel/restart horizon evidence, set
+`--supervised-win32-late-input-horizon-ms` to a positive value from 1 to 60000.
+The independent observer samples the input state for that interval after its
+first neutral post-exit readback on normal completion, or after confirmed
+release during recovery. This is bounded sampled evidence, not a proof of
+continuous neutrality or that no later OS/application effect can occur. With
+zero, an UNKNOWN cancellation remains persistently fenced, and normal
+completion release alone does not clear the persistent fence.
+
 `interface_close.release_confirmed` describes release performed by the close
 operation itself. A successful close retires the owned session but does not
 issue another input release, so this field remains false even when a retained

@@ -190,6 +190,7 @@ def create_native_win32_components(targets, output_directory, *, context=None,
         raise OSError("supervised Win32 mode requires Windows")
     from runtime.backends.win32_v1.backend import Win32Backend
     from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
+    from runtime.cli_v1.win32_custody_fence import Win32CustodyFence
     from runtime.cli_v1.win32_standard_producer import NativeWin32StandardProducerFactory
     from runtime.guarded_win32_v1.operation_owner import OperationOwner
     from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
@@ -203,16 +204,21 @@ def create_native_win32_components(targets, output_directory, *, context=None,
             or late_input_horizon_ns < 0):
         raise ValueError("late input horizon must be a nonnegative integer")
     process_identity_reader = process_identity_reader or Win32ProcessIdentityReader()
+    custody_fence = Win32CustodyFence.for_current_logon()
     operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
         process_identity_reader=process_identity_reader)
     helper_factory = NativeWin32SupervisorHelperFactory(targets, context=context)
-    supervisor = OperationCancellationSupervisor(operation_owner,
-        recovery_process_factory=lambda: helper_factory("recovery"),
-        observer_process_factory=lambda: helper_factory("observer"),
-        process_identity_reader=process_identity_reader,
-        late_input_horizon_ns=late_input_horizon_ns)
+    try:
+        supervisor = OperationCancellationSupervisor(operation_owner,
+            recovery_process_factory=lambda: helper_factory("recovery"),
+            observer_process_factory=lambda: helper_factory("observer"),
+            process_identity_reader=process_identity_reader,
+            late_input_horizon_ns=late_input_horizon_ns)
+    except BaseException:
+        custody_fence.close()
+        raise
     owner = OwnedWin32SessionOwner(operation_owner, supervisor,
-                                   synthetic_only=False)
+        synthetic_only=False, custody_fence=custody_fence)
 
     def current_generation():
         backend = Win32Backend(targets)
@@ -221,10 +227,14 @@ def create_native_win32_components(targets, output_directory, *, context=None,
         finally:
             backend.close()
 
-    owner.bind_target_generation_reader(current_generation)
-    producer = NativeWin32StandardProducerFactory(targets,
-        output_directory, context=context,
-        process_identity_reader=process_identity_reader)
+    try:
+        owner.bind_target_generation_reader(current_generation)
+        producer = NativeWin32StandardProducerFactory(targets,
+            output_directory, context=context,
+            process_identity_reader=process_identity_reader)
+    except BaseException:
+        owner.close()
+        raise
     return owner, producer
 
 

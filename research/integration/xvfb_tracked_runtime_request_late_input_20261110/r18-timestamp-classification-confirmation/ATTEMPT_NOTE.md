@@ -1,0 +1,1 @@
+The container exited 0, but unittest skipped the integration case because AGENT_INTERFACE_MCP_XVFB_TEST=1 was not set. This is a harness-activation miss, not an experimental outcome. The test.log preserves the skip. This attempt is excluded; no retry was performed under its preregistration. A new preregistration r19 records the corrected explicit activation and runs once.
