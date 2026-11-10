@@ -7,6 +7,7 @@ import os
 import subprocess
 import sys
 import threading
+import time
 import unittest
 import uuid
 from pathlib import Path
@@ -428,6 +429,77 @@ class Win32CustodyFenceTests(unittest.TestCase):
             first.close()
             self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
             self.assertIn("ORPHAN_RECOVERY_UNRESOLVED", result.stdout)
+
+    @unittest.skipUnless(os.name == "nt", "native named mutex requires Windows")
+    def test_native_mutex_serializes_competing_first_admissions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            go_path = Path(directory) / "go"
+            ready_paths = [Path(directory) / f"ready-{index}" for index in range(2)]
+            actions = [("3" * 32, "d" * 64), ("4" * 32, "e" * 64)]
+            script = r"""
+from pathlib import Path
+import sys, time
+from runtime.cli_v1.win32_custody_fence import Win32CustodyFence, CustodyFenceError
+directory, digest, operation_id, generation, ready, go = sys.argv[1:]
+f = Win32CustodyFence(directory, digest)
+try:
+    Path(ready).touch()
+    deadline = time.monotonic() + 5
+    while not Path(go).exists() and time.monotonic() < deadline:
+        time.sleep(0.001)
+    if not Path(go).exists():
+        raise SystemExit("start barrier timed out")
+    try:
+        f.admit(operation_id, generation, ["key:VK_A"])
+        print("ADMITTED:" + operation_id)
+    except CustodyFenceError as error:
+        print("BLOCKED:" + str(error))
+finally:
+    f.close()
+"""
+            children = []
+            try:
+                for index, (operation_id, generation) in enumerate(actions):
+                    children.append(subprocess.Popen([sys.executable, "-c", script,
+                        directory, self.digest, operation_id, generation,
+                        str(ready_paths[index]), str(go_path)],
+                        text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE))
+                ready_deadline = time.monotonic() + 10
+                while (not all(path.exists() for path in ready_paths)
+                        and time.monotonic() < ready_deadline):
+                    time.sleep(0.005)
+                self.assertTrue(all(path.exists() for path in ready_paths),
+                    "both server processes must reach the shared start barrier")
+                go_path.touch()
+                outcomes = []
+                for child in children:
+                    stdout, stderr = child.communicate(timeout=10)
+                    self.assertEqual(child.returncode, 0, stderr or stdout)
+                    outcomes.append(stdout.strip())
+                admitted = [item for item in outcomes
+                    if item.startswith("ADMITTED:")]
+                blocked = [item for item in outcomes
+                    if item == "BLOCKED:ORPHAN_RECOVERY_UNRESOLVED"]
+                self.assertEqual(len(admitted), 1, outcomes)
+                self.assertEqual(len(blocked), 1, outcomes)
+                winner = admitted[0].split(":", 1)[1]
+                self.assertIn(winner, [operation_id for operation_id, _ in actions])
+                final = Win32CustodyFence(directory, self.digest)
+                try:
+                    state = final.snapshot()["state"]
+                    self.assertEqual(state["status"], "unresolved")
+                    self.assertEqual(state["pending"]["operation_id"], winner)
+                finally:
+                    final.close()
+            finally:
+                for child in children:
+                    if child.poll() is None:
+                        child.kill()
+                        child.wait(timeout=2)
+                    if child.stdout is not None:
+                        child.stdout.close()
+                    if child.stderr is not None:
+                        child.stderr.close()
 
 
 if __name__ == "__main__":
