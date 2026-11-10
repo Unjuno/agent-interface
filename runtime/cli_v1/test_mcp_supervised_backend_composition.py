@@ -576,6 +576,23 @@ class SupervisedBackendCompositionTests(unittest.IsolatedAsyncioTestCase):
                     await server.call_tool("interface_close", {})
                 except Exception:
                     pass
+                # A terminal cancellation result can be published while the
+                # worker is still atomically persisting its public report.
+                # Do not let TemporaryDirectory race that owned write on
+                # Windows; other supervised tests use the same publication
+                # boundary before removing their run root.
+                if call_id is not None:
+                    report_path = Path(root) / call_id / "report.json"
+                    report_temp = report_path.with_name(".report.json.tmp")
+                    deadline = time.monotonic() + 2
+                    while time.monotonic() < deadline:
+                        if report_path.is_file() and not report_temp.exists():
+                            break
+                        await asyncio.sleep(0.01)
+                    self.assertTrue(report_path.is_file(),
+                        "dispatch report was not finalized before root cleanup")
+                    self.assertFalse(report_temp.exists(),
+                        "dispatch report was still being written at root cleanup")
                 if owner.state != "closed":
                     supervisor.close()
                 for process in producers:
