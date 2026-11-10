@@ -1,0 +1,14 @@
+{
+  "target": "repository-owned responsive Win32 GUI fixture; fresh HWND",
+  "action": "one A key_chord plus required release_all",
+  "no_replay": true,
+  "horizon_ms": 2000,
+  "oracle": "fixture WM_KEYDOWN receipt and delayed effect.json written by WNDPROC timer",
+  "application_effect_delay_ms": 6000,
+  "max_actions": 1,
+  "route": "supervised-win32",
+  "purpose": "Measure independent GUI task effect delayed by application timer after real A key input release",
+  "on_timeout": "no retry; wait once for timer then close",
+  "poll_interval_ms": 250,
+  "source_commit": "002947dcc55a9f7ebd56fcccc35af328cfabca04"
+}

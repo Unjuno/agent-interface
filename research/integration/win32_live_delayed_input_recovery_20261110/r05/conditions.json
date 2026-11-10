@@ -1,0 +1,14 @@
+{
+  "source_commit": "002947dcc55a9f7ebd56fcccc35af328cfabca04",
+  "route": "supervised-win32",
+  "poll_interval_ms": 250,
+  "action": "one A key_chord plus required release_all",
+  "target": "repository-owned Win32 queue-stall fixture; fresh HWND",
+  "independent_oracle": "WM_CHAR event timestamped by fixture WNDPROC after message pump resumes",
+  "purpose": "Test whether a real SendInput key event queued while target GUI message pump is blocked becomes application-visible after a verified 2s completion horizon",
+  "no_replay": true,
+  "on_timeout": "no retry; close only after GUI resumes, otherwise keep source UNKNOWN",
+  "max_actions": 1,
+  "message_pump_block_ms": 8000,
+  "horizon_ms": 2000
+}

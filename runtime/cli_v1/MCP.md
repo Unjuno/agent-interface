@@ -371,6 +371,16 @@ continuous neutrality or that no later OS/application effect can occur. With
 zero, an UNKNOWN cancellation remains persistently fenced, and normal
 completion release alone does not clear the persistent fence.
 
+A retained live fixture discriminator illustrates the distinction: after one
+real A keydown and confirmed release, the route completed a verified 2 s
+input-state horizon, while the fixture's own 6 s GUI timer produced its
+application effect 3.953 s after the horizon. The timer was scheduled by the
+pre-release keydown; this is application-level asynchronous work, not evidence
+that Windows delivered a stale key event after the horizon. The raw packet is
+in [r07](../../research/integration/win32_live_delayed_input_recovery_20261110/r07/README.md).
+The public action correctly retained `task_success=null`; input neutrality and
+application task completion remain separate signals.
+
 `interface_close.release_confirmed` describes release performed by the close
 operation itself. A successful close retires the owned session but does not
 issue another input release, so this field remains false even when a retained

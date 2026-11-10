@@ -1,9 +1,9 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-10, after PR #10241
+## Current work-map pointer — 2026-11-10, after PR #10242
 
-**Verified `origin/main` (2026-11-10):** `38e8d8e312dbdab04ef7d2950254ce83a6296cc6`
-(PR #10241, after #10240). This tree includes corrected supervised Win32 route documentation, the completion-horizon CLI help clarification, and the live-fixture recovery/normal-completion evidence packets. Runtime acquisition boundaries remain documented in
+**Verified `origin/main` (2026-11-10):** `002947dcc55a9f7ebd56fcccc35af328cfabca04`
+(PR #10242, after #10241). This tree includes corrected supervised Win32 route documentation, the completion-horizon CLI help clarification, and the live-fixture recovery/normal-completion evidence packets. Runtime acquisition boundaries remain documented in
 #10219/#10223 and `runtime/README.md`. This is a directional pointer, not a complete
 Issue/PR census.
 
@@ -19,6 +19,8 @@ This narrows the Windows delayed-input/recovery boundary on a repository-owned f
 It does not qualify GZDoom/MAP01, task success, broad reliability, or efficiency.
 
 **2026-11-10 normal-completion horizon follow-up:** Retained [r02](../research/integration/win32_live_delayed_input_recovery_20261110/r02/README.md) as a distinct probe/parser failure followed by exact-source bounded recovery; it is not counted as a normal-path pass. [r03](../research/integration/win32_live_delayed_input_recovery_20261110/r03/README.md) keeps one public stdio session open from pending through terminal completion and records a verified 2 s/76-sample post-completion horizon (maximum gap 32 ms of 100 ms allowed), release confirmation, neutral readback, and clear custody. The fixture observed one `a`; file mtime brackets the event roughly 3.23 s after pending but does not timestamp it exactly. Task success remains null, replay denied, and the fixture is not MAP01/GZDoom. This narrows the scoped normal-completion evidence gap only; it does not establish task success, a physical deadline, broad reliability, or efficiency.
+
+**2026-11-10 post-horizon application effect:** Preserve [r05](../research/integration/win32_live_delayed_input_recovery_20261110/r05/README.md) and [r06](../research/integration/win32_live_delayed_input_recovery_20261110/r06/README.md) as timing-window method failures. [r07](../research/integration/win32_live_delayed_input_recovery_20261110/r07/README.md) accepted one real A keydown, confirmed release and neutral input through a 2 s horizon, then observed the fixture's independently logged GUI effect 3.953 s after that horizon. The fixture deliberately scheduled its own timer on keydown: this demonstrates app-level asynchronous effect after input neutrality, not stale OS input delivered after the horizon. Public `task_success` remains null and replay denied. The actual r03/r07 persistent custody state and same-logon ACL were also read-only verified. This narrows the distinction between input custody and task effect, while GZDoom/MAP01 and true post-horizon OS-delivery remain open.
 
 [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open
 (last updated 2026-11-04). Its 2026-11-01 evidence adds two opposite-order
