@@ -1,5 +1,7 @@
 # 入力解放・割込み・証拠・回復の研究整理
 
+**2026-11-10 supervised Win32 live fixture r01:** The [retained packet](../../research/integration/win32_live_delayed_input_recovery_20261110/r01/README.md) records a public MCP dispatch that remained `pending` after 5 s, followed by one delayed fixture `WM_CHAR('a')` event. The durable producer result later showed completed execution and a verified release receipt, but no normal-completion horizon receipt; the public call registry was gone and persistent custody correctly remained unresolved. A fresh session matched the exact operation, generation, `key:fixture:A` obligation, and absent producer, then recovered with verified neutral readback and a 2 s/77-sample late-input horizon (maximum sample gap 32 ms of 100 ms allowed). Persistent custody is clear for that source generation; its action stays UNKNOWN, task success null, and replay denied. This is a successful bounded live-fixture delayed-effect/recovery discriminator, not MAP01/GZDoom, task-success, hard physical-release deadline, continuous-neutrality, general reliability, or efficiency evidence. The raw MCP request/result, producer receipt, event captures, conditions, cleanup, and SHA-256 manifest are retained separately. Keep the broader control objective open.
+
 2026-10-15〜2026-10-20更新。#2/#10/#14/#15/#16/#17の関連部分と#8909の独立した診断可能性仮説を、現行実装・保存結果・残る問いへ結ぶ。
 これは役割の異なるアイデアの見取り図であり、重複扱いや一括closureの根拠ではない。
 [原Issue本文のスナップショット](sources/safety-control-issues-20261015.json)を保存した。

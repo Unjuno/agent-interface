@@ -1,11 +1,19 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-05, after PR #10225
+## Current work-map pointer — 2026-11-10, after PR #10237
 
-**Verified `origin/main` (2026-11-05):** `f0b4bf11ba0f7387993efa71440c4d61e27a467a`
-(PR #10225). This tree includes merged #10214, #10216, #10223, and #10224.
-Runtime acquisition boundaries are documented in #10219/#10223 and
-`runtime/README.md`. This is a directional pointer, not a complete Issue/PR census.
+**Verified `origin/main` (2026-11-10):** `5c1af641d32f210df50a50358460a31226fffc62`
+(PR #10237, after #10236). This tree includes the supervised Win32 completion-horizon
+CLI help clarification. Runtime acquisition boundaries remain documented in
+#10219/#10223 and `runtime/README.md`. This is a directional pointer, not a complete
+Issue/PR census.
+
+The new [Win32 live-fixture recovery packet](../research/integration/win32_live_delayed_input_recovery_20261110/r01/README.md)
+observed one application-visible `a` after the public dispatch had returned `pending`.
+A fresh public recovery session then verified neutral state and a finite 2 s horizon;
+durable custody resolved while the source task remained UNKNOWN, null, and unreplayable.
+This narrows the Windows delayed-input/recovery boundary on a repository-owned fixture.
+It does not qualify GZDoom/MAP01, task success, broad reliability, or efficiency.
 
 [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open
 (last updated 2026-11-04). Its 2026-11-01 evidence adds two opposite-order
