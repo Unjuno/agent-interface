@@ -2130,7 +2130,7 @@ def main():
                                                    'supervised-win32'), default='one-shot')
     parser.add_argument('--supervised-win32-late-input-horizon-ms', type=int,
                         default=0, metavar='MS',
-                        help='sample neutral Win32 input after cancellation for 1..60000 ms; zero disables sampling and leaves unknown cancellation custody fenced')
+                        help='sample neutral Win32 input after normal completion or confirmed cancellation release for 1..60000 ms; zero disables horizon sampling')
     parser.add_argument('--guarded-process-identity', action='store_true',
                         help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
     parser.add_argument('--guarded-query-worker',action='store_true',
