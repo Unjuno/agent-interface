@@ -112,6 +112,42 @@ class Win32CustodyFenceTests(unittest.TestCase):
         finally:
             reopened.close()
 
+    def test_stale_updates_cannot_regress_custody_phase_or_witnesses(self):
+        identity = {"pid": 4026, "creation_time_100ns": 81}
+        self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+        self.fence.update(OPERATION, GENERATION, phase="cancel_pending",
+            input_dispatched=True, producer_identity=identity,
+            gate_state="authorized")
+
+        # This models a producer-start snapshot that was read before cancel
+        # won, then persisted after the newer cancellation state.
+        self.fence.update(OPERATION, GENERATION, phase="running",
+            input_dispatched=False, producer_identity=identity,
+            gate_state="identity_verified")
+
+        pending = self.fence.snapshot()["state"]["pending"]
+        self.assertEqual(pending["phase"], "cancel_pending")
+        self.assertIs(pending["input_dispatched"], True)
+        self.assertEqual(pending["producer_identity"], identity)
+        self.assertEqual(pending["gate_state"], "authorized")
+
+    def test_persisted_producer_identity_cannot_be_replaced(self):
+        identity = {"pid": 4027, "creation_time_100ns": 82}
+        replacement = {"pid": 4028, "creation_time_100ns": 83}
+        self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+        self.fence.update(OPERATION, GENERATION,
+            producer_identity=identity, gate_state="identity_verified")
+
+        with self.assertRaisesRegex(CustodyFenceError,
+                "PRODUCER_IDENTITY_MISMATCH"):
+            self.fence.update(OPERATION, GENERATION,
+                producer_identity=replacement,
+                gate_state="authorization_attempted")
+
+        pending = self.fence.snapshot()["state"]["pending"]
+        self.assertEqual(pending["producer_identity"], identity)
+        self.assertEqual(pending["gate_state"], "identity_verified")
+
     def test_release_and_required_late_horizon_gate_resolution(self):
         self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)
         with self.assertRaisesRegex(CustodyFenceError,

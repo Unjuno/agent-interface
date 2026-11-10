@@ -25,6 +25,11 @@ _SCHEMA = "win32-custody-fence-v1"
 _MAX_STATE_BYTES = 65536
 _MUTEX_WAIT_MS = 1000
 _PROCESS_WAIT_MS = 1000
+_CUSTODY_PHASE_ORDER = {"admitted": 0, "starting": 1, "running": 2,
+                        "cancel_pending": 3, "recovery_pending": 4,
+                        "unknown": 5}
+_PRODUCER_GATE_ORDER = {"closed": 0, "identity_verified": 1,
+                        "authorization_attempted": 2, "authorized": 3}
 _DACL_SECURITY_INFORMATION = 0x00000004
 _PROTECTED_DACL_SECURITY_INFORMATION = 0x80000000
 _WRITE_DAC = 0x00040000
@@ -647,6 +652,21 @@ class Win32CustodyFence:
             raise ValueError("a custody transition or witness is required")
         with self._state() as (state, _abandoned):
             pending = self._matching_pending(state, operation_id, target_generation)
+            if (producer_identity is not None
+                    and pending["producer_identity"] is not None
+                    and pending["producer_identity"] != producer_identity):
+                raise CustodyFenceError("CUSTODY_FENCE_PRODUCER_IDENTITY_MISMATCH")
+            if (phase is not None and _CUSTODY_PHASE_ORDER[phase]
+                    < _CUSTODY_PHASE_ORDER[pending["phase"]]):
+                phase = None  # A delayed snapshot must not roll custody backward.
+            if (gate_state is not None and _PRODUCER_GATE_ORDER[gate_state]
+                    < _PRODUCER_GATE_ORDER[pending["gate_state"]]):
+                gate_state = None
+            if input_dispatched is False and pending["input_dispatched"] is True:
+                input_dispatched = None
+            if (phase is None and input_dispatched is None
+                    and producer_identity is None and gate_state is None):
+                return
             if ((phase is None or pending["phase"] == phase)
                     and (input_dispatched is None
                          or pending["input_dispatched"] == input_dispatched)

@@ -173,3 +173,7 @@ passed normally (23.208 s) and under `python -O` (18.799 s); `py_compile` and
 `git diff --check` passed. This checks simultaneous first use on one Windows
 logon namespace; it does not test WSLc, multiple user sessions, or hostile
 same-user processes.
+
+### Monotonic custody journal updates
+
+On current main `25a5d53e363d8b5101b565dd175a90b5cb9f5668`, added regression cases for two journal-integrity violations: a delayed producer snapshot could regress `cancel_pending` to `running`, clear a recorded input-dispatch witness, and regress the producer gate; a later update could replace an already persisted producer PID/creation-time identity. Both cases reproduced before the fix. Updates now preserve monotonic phase/gate/input witnesses and reject producer identity replacement. The two focused tests passed after the fix. The full Win32 custody/session/horizon/supervised-MCP/helper regression set passed normally (143 tests, 25.401 s) and under `python -O` (143 tests, 20.092 s); `git diff --check` passed. This is local Windows same-host journal evidence; it does not establish hostile same-user protection, WSLc ownership, or live GZDoom/MAP01 behavior.
