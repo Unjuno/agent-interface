@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-10, after PR #10237
+## Current work-map pointer — 2026-11-10, after PR #10238
 
-**Verified `origin/main` (2026-11-10):** `5c1af641d32f210df50a50358460a31226fffc62`
-(PR #10237, after #10236). This tree includes the supervised Win32 completion-horizon
-CLI help clarification. Runtime acquisition boundaries remain documented in
+**Verified `origin/main` (2026-11-10):** `0d4f8e323af30df6b7cb17bdbb83563c4a17f6fc`
+(PR #10238, after #10237). This tree includes the supervised Win32 completion-horizon
+CLI help clarification and the first live-fixture recovery evidence packet. Runtime acquisition boundaries remain documented in
 #10219/#10223 and `runtime/README.md`. This is a directional pointer, not a complete
 Issue/PR census.
 
@@ -14,6 +14,8 @@ A fresh public recovery session then verified neutral state and a finite 2 s hor
 durable custody resolved while the source task remained UNKNOWN, null, and unreplayable.
 This narrows the Windows delayed-input/recovery boundary on a repository-owned fixture.
 It does not qualify GZDoom/MAP01, task success, broad reliability, or efficiency.
+
+**2026-11-10 normal-completion horizon follow-up:** Retained [r02](../research/integration/win32_live_delayed_input_recovery_20261110/r02/README.md) as a distinct probe/parser failure followed by exact-source bounded recovery; it is not counted as a normal-path pass. [r03](../research/integration/win32_live_delayed_input_recovery_20261110/r03/README.md) keeps one public stdio session open from pending through terminal completion and records a verified 2 s/76-sample post-completion horizon (maximum gap 32 ms of 100 ms allowed), release confirmation, neutral readback, and clear custody. The fixture observed one `a`; file mtime brackets the event roughly 3.23 s after pending but does not timestamp it exactly. Task success remains null, replay denied, and the fixture is not MAP01/GZDoom. This narrows the scoped normal-completion evidence gap only; it does not establish task success, a physical deadline, broad reliability, or efficiency.
 
 [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open
 (last updated 2026-11-04). Its 2026-11-01 evidence adds two opposite-order

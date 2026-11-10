@@ -1,0 +1,16 @@
+{
+  "route": "supervised-win32",
+  "source_commit": "0d4f8e323af30df6b7cb17bdbb83563c4a17f6fc",
+  "poll_deadline_ms": 20000,
+  "target": "fresh repo-owned fixture; HWND 34015396",
+  "purpose": "Public supervised Win32 normal completion with stdio kept open until terminal result, independently observe app event and configured two-second late-input horizon",
+  "max_actions": 1,
+  "dispatch_wait_ms": 10000,
+  "action": "A key_chord followed by release_all",
+  "no_replay": true,
+  "run_id": "win32-live-fixture-20261110-r03",
+  "oracle": "one fixture WM_CHAR code 97 in events.jsonl",
+  "poll_interval_ms": 250,
+  "horizon_ms": 2000,
+  "on_timeout": "one cancel then poll to terminal"
+}
