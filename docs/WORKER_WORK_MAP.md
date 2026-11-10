@@ -1,12 +1,14 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-10, after PR #10238
+## Current work-map pointer — 2026-11-10, after PR #10239
 
-**Verified `origin/main` (2026-11-10):** `0d4f8e323af30df6b7cb17bdbb83563c4a17f6fc`
-(PR #10238, after #10237). This tree includes the supervised Win32 completion-horizon
-CLI help clarification and the first live-fixture recovery evidence packet. Runtime acquisition boundaries remain documented in
+**Verified `origin/main` (2026-11-10):** `f98a408d525f4a0c6a5624d18dece61aa2eee842`
+(PR #10239, after #10238). This tree includes the supervised Win32 completion-horizon
+CLI help clarification and the live-fixture recovery and normal-completion evidence packets. Runtime acquisition boundaries remain documented in
 #10219/#10223 and `runtime/README.md`. This is a directional pointer, not a complete
 Issue/PR census.
+
+**Runtime setup consent check (2026-11-10):** The current `setup-golden-demo.sh` and `setup-golden-demo-v3.sh` refuse by default and make even pinned Python dependency installation require the explicit `--install-dependencies` flag. Their help states that this only creates `runtime/.venv` for the already-checked-out source and does not acquire runtime source/package, model weights, Chrome, Codex, or a container image. The opt-in tests assert no venv or install calls without the flag and verify the pinned pip/doctor order when opted in. This resolves the observed setup-script consent boundary; it does not audit every external runtime/model preparation path in the repository.
 
 The new [Win32 live-fixture recovery packet](../research/integration/win32_live_delayed_input_recovery_20261110/r01/README.md)
 observed one application-visible `a` after the public dispatch had returned `pending`.
