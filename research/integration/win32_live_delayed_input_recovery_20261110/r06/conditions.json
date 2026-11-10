@@ -1,0 +1,14 @@
+{
+  "max_actions": 1,
+  "source_commit": "002947dcc55a9f7ebd56fcccc35af328cfabca04",
+  "on_timeout": "no retry; close after GUI resumes, otherwise retain UNKNOWN",
+  "poll_interval_ms": 250,
+  "message_pump_block_ms": 10000,
+  "route": "supervised-win32",
+  "no_replay": true,
+  "horizon_ms": 2000,
+  "purpose": "Test if a real SendInput A event queued while the target GUI pump is blocked becomes app-visible only after a verified 2s completion horizon",
+  "oracle": "timestamped WM_CHAR after message pump resumes",
+  "target": "repository-owned Win32 queue-stall fixture; fresh HWND",
+  "action": "one A key_chord plus required release_all"
+}
