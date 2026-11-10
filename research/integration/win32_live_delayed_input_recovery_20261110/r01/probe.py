@@ -24,5 +24,3 @@ async def main():
             print(json.dumps({'initialize':dump(init),'tools':[t.name for t in tools.tools],
                 'observation_text':texts[:1]},indent=2))
 asyncio.run(main())
-
-
