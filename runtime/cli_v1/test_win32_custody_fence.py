@@ -75,6 +75,36 @@ def _custody_test_sleep_child():
     time.sleep(30)
 
 
+def _custody_fence_child_reopen(state_directory, namespace_digest, connection):
+    fence = Win32CustodyFence(state_directory, namespace_digest)
+    try:
+        snapshot = fence.snapshot()["state"]
+        try:
+            fence.admit(NEXT_OPERATION, NEXT_GENERATION, OBLIGATIONS)
+        except CustodyFenceError as error:
+            admission = str(error)
+        else:
+            admission = "unexpectedly_admitted"
+        connection.send({"status": snapshot["status"],
+            "pending": snapshot["pending"], "admission": admission})
+    finally:
+        fence.close()
+        connection.close()
+
+
+def _custody_fence_child_admit_unknown(state_directory, namespace_digest,
+                                       connection):
+    fence = Win32CustodyFence(state_directory, namespace_digest)
+    try:
+        fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+        fence.update(OPERATION, GENERATION, phase="unknown",
+            input_dispatched=True)
+        connection.send(fence.snapshot()["state"]["pending"])
+    finally:
+        fence.close()
+        connection.close()
+
+
 class Win32CustodyFenceTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -111,6 +141,53 @@ class Win32CustodyFenceTests(unittest.TestCase):
                 reopened.require_recovery_source(OPERATION, GENERATION, ["key:VK_B"])
         finally:
             reopened.close()
+
+    @unittest.skipUnless(os.name == "nt",
+        "cross-process custody journal requires native Windows mutex")
+    def test_unknown_fence_survives_owner_process_exit_and_blocks_new_admission(self):
+        context = multiprocessing.get_context("spawn")
+        directory = self.directory / "cross-process-fence"
+        directory.mkdir()
+        writer_parent, writer_child = context.Pipe(duplex=False)
+        writer = context.Process(target=_custody_fence_child_admit_unknown,
+            args=(str(directory), self.digest, writer_child))
+        writer.start()
+        writer_child.close()
+        try:
+            self.assertTrue(writer_parent.poll(5),
+                "custody writer did not report the persisted record")
+            before_exit = writer_parent.recv()
+            writer.join(5)
+            self.assertFalse(writer.is_alive())
+            self.assertEqual(writer.exitcode, 0)
+            self.assertEqual(before_exit["phase"], "unknown")
+            self.assertIs(before_exit["input_dispatched"], True)
+        finally:
+            if writer.is_alive():
+                writer.terminate()
+                writer.join(2)
+            writer_parent.close()
+
+        parent, child = context.Pipe(duplex=False)
+        process = context.Process(target=_custody_fence_child_reopen,
+            args=(str(directory), self.digest, child))
+        process.start()
+        child.close()
+        try:
+            self.assertTrue(parent.poll(5), "child did not report custody state")
+            reopened = parent.recv()
+            process.join(5)
+            self.assertFalse(process.is_alive())
+            self.assertEqual(process.exitcode, 0)
+            self.assertEqual(reopened["status"], "unresolved")
+            self.assertEqual(reopened["pending"], before_exit)
+            self.assertEqual(reopened["admission"],
+                "ORPHAN_RECOVERY_UNRESOLVED")
+        finally:
+            if process.is_alive():
+                process.terminate()
+                process.join(2)
+            parent.close()
 
     def test_stale_updates_cannot_regress_custody_phase_or_witnesses(self):
         identity = {"pid": 4026, "creation_time_100ns": 81}
