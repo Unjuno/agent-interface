@@ -210,6 +210,9 @@ class Win32CustodyFenceTests(unittest.TestCase):
                          + uuid.uuid4().hex)
         advapi = ctypes.WinDLL("advapi32", use_last_error=True)
         kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        advapi.GetFileSecurityW.argtypes = [ctypes.c_wchar_p, ctypes.c_uint32,
+            ctypes.c_void_p, ctypes.c_uint32, ctypes.POINTER(ctypes.c_uint32)]
+        advapi.GetFileSecurityW.restype = ctypes.c_int
         advapi.RegGetKeySecurity.argtypes = [ctypes.c_void_p, ctypes.c_uint32,
             ctypes.c_void_p, ctypes.POINTER(ctypes.c_uint32)]
         advapi.RegGetKeySecurity.restype = ctypes.c_long
@@ -218,6 +221,30 @@ class Win32CustodyFenceTests(unittest.TestCase):
             ctypes.POINTER(ctypes.c_wchar_p), ctypes.POINTER(ctypes.c_uint32)]
         advapi.ConvertSecurityDescriptorToStringSecurityDescriptorW.restype = ctypes.c_int
         kernel32.LocalFree.argtypes = [ctypes.c_void_p]
+        for secured_path in (directory, file_path):
+            needed = ctypes.c_uint32()
+            security_information = 0x00000004 | 0x80000000
+            self.assertFalse(advapi.GetFileSecurityW(str(secured_path),
+                security_information, None, 0, ctypes.byref(needed)))
+            self.assertEqual(ctypes.get_last_error(), 122)
+            descriptor = ctypes.create_string_buffer(needed.value)
+            self.assertTrue(advapi.GetFileSecurityW(str(secured_path),
+                security_information, descriptor, needed.value,
+                ctypes.byref(needed)))
+            sddl = ctypes.c_wchar_p()
+            self.assertTrue(advapi.ConvertSecurityDescriptorToStringSecurityDescriptorW(
+                descriptor, 1, security_information, ctypes.byref(sddl), None))
+            try:
+                self.assertTrue(sddl.value.startswith("D:P"),
+                    (secured_path, sddl.value))
+                self.assertIn("A;;FA;;;SY", sddl.value)
+                self.assertIn("A;;FA;;;BA", sddl.value)
+                self.assertIn(acl._sid, sddl.value)
+                self.assertNotIn(";;;WD", sddl.value)
+                self.assertNotIn(";;;AU", sddl.value)
+                self.assertNotIn(";;;BU", sddl.value)
+            finally:
+                kernel32.LocalFree(ctypes.cast(sddl, ctypes.c_void_p))
         try:
             with winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, registry_path, 0,
                     winreg.KEY_SET_VALUE | 0x00040000 | 0x00020000) as key:

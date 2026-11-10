@@ -144,3 +144,16 @@ above was rerun after the fix: **140 tests passed in 27.055 s**, followed by
 The new rejection case was also rerun by itself and passed. GitHub Issue #57
 was rechecked and remains open; its integrated efficiency, broader reliability,
 and MAP01 requirements remain unsatisfied by this Win32 work.
+
+### Native ACL readback audit follow-up
+
+The native ACL regression previously checked SYSTEM/Admin file ACE text and the
+registry key's protected DACL, but did not independently read the directory and
+journal file security descriptors. Extended it to call `GetFileSecurityW` and
+convert each readback to SDDL. On this Windows host the native test passed for
+both objects: each descriptor began with `D:P`, granted full access to SYSTEM,
+Administrators, and the current user SID, and contained no World,
+Authenticated Users, or Builtin Users ACE. The full custody/session/horizon/
+supervised-MCP regression set then passed again: **140 tests in 17.996 s**;
+`git diff --check` passed. This verifies the resulting local descriptors, not
+resistance to a process already running as the same user or privileged admin.
