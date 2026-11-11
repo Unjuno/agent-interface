@@ -1,6 +1,7 @@
 """Journaled synchronous client for the Codex app-server JSONL protocol."""
 from collections import deque
 import json
+import math
 import os
 import subprocess
 import threading
@@ -13,7 +14,7 @@ class AppServerError(RuntimeError):
 
 class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
-        self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
+        self._journal = None if journal_path is None else open(journal_path, "xb")
         self._journal_lock = threading.Lock()
         try:
             self.process = process_factory(
@@ -127,14 +128,18 @@ class CodexAppServerClient:
         try:
             for line in self.process.stdout:
                 message = json.loads(line)
-                self._record("received", message)
-                with self._condition:
-                    if ("id" in message and "method" not in message and
-                            type(message["id"]) in (int, float) and message["id"] in self._pending):
-                        self._responses[message["id"]] = message
-                    else:
-                        self._notifications.append(message)
-                    self._condition.notify_all()
+                # Keep journal custody and notification visibility atomic for
+                # terminal-boundary usage snapshots (journal lock first).
+                with self._journal_lock:
+                    self._record_locked("received", message)
+                    with self._condition:
+                        if ("id" in message and "method" not in message and
+                                type(message["id"]) in (int, float) and
+                                message["id"] in self._pending):
+                            self._responses[message["id"]] = message
+                        else:
+                            self._notifications.append(message)
+                        self._condition.notify_all()
         finally:
             with self._condition:
                 self._closed = True
@@ -149,11 +154,17 @@ class CodexAppServerClient:
     def _record(self, direction, message):
         if self._journal is None:
             return
+        with self._journal_lock:
+            self._record_locked(direction, message)
+
+    def _record_locked(self, direction, message):
+        if self._journal is None:
+            return
         row = {"direction": direction, "observed_ns": time.perf_counter_ns(),
                "message": message}
-        with self._journal_lock:
-            self._journal.write(json.dumps(row, separators=(",", ":")) + "\n")
-            self._journal.flush()
+        self._journal.write(json.dumps(
+            row, separators=(",", ":")).encode("utf-8") + b"\n")
+        self._journal.flush()
 
     def request(self, method, params=None, timeout=30):
         with self._condition:
@@ -237,6 +248,49 @@ class CodexAppServerClient:
                        row.get("params", {}).get("threadId") == thread_id and
                        row.get("params", {}).get("turnId") == turn_id]
         return None if not matches else matches[-1]["params"]["tokenUsage"]
+
+    def turn_usage_snapshot(self, thread_id, turn_id):
+        """Atomically mark the usage-notification and journal-byte boundary.
+
+        Incoming notifications are journaled before becoming visible in the
+        notification deque. Taking both locks in the reader's order lets a
+        caller distinguish messages already captured at a terminal boundary
+        from genuinely later updates.
+        """
+        with self._journal_lock:
+            with self._condition:
+                count = sum(
+                    1 for row in self._notifications
+                    if row.get("method") == "thread/tokenUsage/updated" and
+                    row.get("params", {}).get("threadId") == thread_id and
+                    row.get("params", {}).get("turnId") == turn_id)
+                offset = (0 if self._journal is None else self._journal.tell())
+                return count, offset
+
+    def wait_turn_usage_updated(self, thread_id, turn_id, *, after_count,
+                                timeout=5):
+        """Wait only for a new usage update; never consume turn/completed."""
+        if type(after_count) is not int or after_count < 0:
+            raise ValueError("usage cursor must be a nonnegative integer")
+        if (type(timeout) not in (int, float) or not math.isfinite(timeout) or
+                timeout < 0):
+            raise ValueError("usage wait timeout must be nonnegative")
+        deadline = time.monotonic() + timeout
+        with self._condition:
+            while True:
+                matches = [row for row in self._notifications
+                           if row.get("method") == "thread/tokenUsage/updated" and
+                           row.get("params", {}).get("threadId") == thread_id and
+                           row.get("params", {}).get("turnId") == turn_id]
+                if len(matches) > after_count:
+                    return matches[after_count]["params"]["tokenUsage"], after_count + 1
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    return None
+                if self._closed:
+                    raise AppServerError(
+                        "app-server closed while waiting for turn usage")
+                self._condition.wait(remaining)
 
     def close(self, timeout=5):
         if self.process.poll() is None:
