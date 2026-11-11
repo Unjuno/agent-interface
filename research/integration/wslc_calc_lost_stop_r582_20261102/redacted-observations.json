@@ -1,0 +1,77 @@
+{
+  "status": "UNKNOWN",
+  "error_type": "TimeoutError",
+  "run_id": "aa81876174974f138bc9481a09b6bf89",
+  "cid": "611ea82ed8074ceac40de7e5ae4e5c473a7a6f21da585fea25a555481c1b3a38",
+  "started_ns": 4755515000000,
+  "ended_ns": 4766078000000,
+  "script_sha256": "9972a7e3d95ada67d253f10098b03b3c2e57f8ed30f500b3fe6335d2c860a2fe",
+  "payload_sha256": "8482121492021486e56a04b4085e3e591ad5b15666d497d07e1440dc9ec5c594",
+  "helper_sha256": "1254e364115f63c1e241ba1a701519b7bad3080d5c85863eae8ac44e3c26a8ad",
+  "recovery_sha256": "b6bb2f4f12f0549937916651cf828b065a3d05206fd0a0ad6cc8418a8d660233",
+  "ready": {
+    "status": "window_observed",
+    "started_ns": 1973009128,
+    "window": {
+      "id": 6292258,
+      "title": "Untitled 1 - LibreOffice Calc"
+    },
+    "screenshot_sha256": "92ea595eb9c7786b1ee71e7fa269e1b7cf25545defc711d923ac9e3586ddf2a3"
+  },
+  "screenshot_hash_matches": true,
+  "injected_fault": {
+    "fault": "raised OSError after real stop helper returned",
+    "stop_status": "UNKNOWN"
+  },
+  "stop_observation": {
+    "status": "UNKNOWN",
+    "command_succeeded": true,
+    "inspect": {
+      "Id": "611ea82ed8074ceac40de7e5ae4e5c473a7a6f21da585fea25a555481c1b3a38",
+      "label": "aa81876174974f138bc9481a09b6bf89",
+      "State": {
+        "ExitCode": 0,
+        "FinishedAt": "0001-01-01T00:00:00Z",
+        "Health": null,
+        "Running": true,
+        "StartedAt": "2026-11-02T07:39:06.895419673Z",
+        "Status": "running"
+      }
+    },
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "reconcile_stop": {
+    "status": "UNKNOWN",
+    "error_type": "OSError"
+  },
+  "task_status": "UNKNOWN",
+  "remove": {
+    "status": "observed_absent",
+    "observed_exit_code": 137,
+    "command_succeeded": true,
+    "inspect": {
+      "Id": "611ea82ed8074ceac40de7e5ae4e5c473a7a6f21da585fea25a555481c1b3a38",
+      "label": "aa81876174974f138bc9481a09b6bf89",
+      "State": {
+        "ExitCode": 137,
+        "FinishedAt": "2026-11-02T07:39:15.136768715Z",
+        "Health": null,
+        "Running": false,
+        "StartedAt": "2026-11-02T07:39:06.895419673Z",
+        "Status": "exited"
+      }
+    },
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "post_stdout_bytes": 0
+  }
+}

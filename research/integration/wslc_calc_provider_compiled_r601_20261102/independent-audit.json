@@ -1,0 +1,87 @@
+{
+  "compiled_recovery": true,
+  "fods_sha256": "ce6ec7592d910737dd730ae2b7bcaf1e9b43c5f98dc38978971c5f4fcf2e0c95",
+  "independent_xml_values": [
+    [
+      0,
+      0,
+      "float",
+      "472",
+      "472",
+      null
+    ],
+    [
+      1,
+      0,
+      "float",
+      "615",
+      "615",
+      null
+    ]
+  ],
+  "expected_values": [
+    [
+      0,
+      0,
+      "float",
+      "472",
+      "472",
+      null
+    ],
+    [
+      1,
+      0,
+      "float",
+      "615",
+      "615",
+      null
+    ]
+  ],
+  "effect_pass": true,
+  "actions_released": {
+    "click-result.json": true,
+    "recovery-save.json": true,
+    "compiled-enter": true
+  },
+  "owner_close_verified": true,
+  "final_neutral": true,
+  "stale_difference_detected_before_mint": true,
+  "fixture_requests": [
+    {
+      "request_id": "pilot-1",
+      "sequence": 1,
+      "digest_matches": true,
+      "actual_attempted": true,
+      "call_id_present": true,
+      "usage": {
+        "input_tokens": 12173,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 78,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "request_id": "pilot-2",
+      "sequence": 3,
+      "digest_matches": true,
+      "actual_attempted": true,
+      "call_id_present": true,
+      "usage": {
+        "input_tokens": 13550,
+        "cached_input_tokens": 12160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ],
+  "fixture_sequence_increased": true,
+  "exit_code": 0,
+  "cleanup_status": "observed_absent",
+  "elapsed_seconds": 16.813,
+  "actual_model_single_compiled_not_benchmark": true,
+  "host_exit": 0,
+  "host_cleanup": "closed_scoped",
+  "compiled_entry_action_id_present": true
+}
