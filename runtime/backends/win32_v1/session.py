@@ -55,8 +55,15 @@ class Win32RuntimeSession:
             try:
                 release = self.backend.release_all()
             except Exception as error:
-                return {"status": "recovery_failed", "error": repr(error),
+                result = {"status": "recovery_failed", "error": repr(error),
                         "release_attempted": True, "recovery_required": True}
+                attempt_errors = getattr(error, "release_attempt_errors", None)
+                attempt_receipt = getattr(error, "release_attempt_receipt", None)
+                if type(attempt_errors) is list:
+                    result["release_attempt_errors"] = attempt_errors
+                if type(attempt_receipt) is dict:
+                    result["release_attempt_receipt"] = attempt_receipt
+                return result
             verified = self._record_release([release])
             with self._state_lock:
                 if verified:
@@ -152,12 +159,21 @@ class Win32RuntimeSession:
                 release = self.backend.release_all()
             except Exception as cleanup_error:
                 self.recovery_required = True
+                cleanup = {"type": type(cleanup_error).__name__,
+                           "detail": str(cleanup_error)}
+                attempt_errors = getattr(cleanup_error,
+                    "release_attempt_errors", None)
+                attempt_receipt = getattr(cleanup_error,
+                    "release_attempt_receipt", None)
+                if type(attempt_errors) is list:
+                    cleanup["release_attempt_errors"] = attempt_errors
+                if type(attempt_receipt) is dict:
+                    cleanup["release_attempt_receipt"] = attempt_receipt
                 return {
                     "status": "execution_failed",
                     "error": "BACKEND_CLEANUP",
                     "preflight_error": str(error),
-                    "cleanup_error": {"type": type(cleanup_error).__name__,
-                                      "detail": str(cleanup_error)},
+                    "cleanup_error": cleanup,
                     "required_capabilities": list(admission.required_capabilities),
                     "backend_emissions": self.backend.emissions,
                     "release": {"verified": False},
@@ -205,6 +221,15 @@ class Win32RuntimeSession:
                 # program emissions is useful count evidence but not a refusal.
                 if program_emissions > 0:
                     result["input_dispatched"] = True
+            attempt_source = getattr(error, "original_error", error)
+            attempt_errors = getattr(attempt_source,
+                "release_attempt_errors", None)
+            attempt_receipt = getattr(attempt_source,
+                "release_attempt_receipt", None)
+            if type(attempt_errors) is list:
+                result["release_attempt_errors"] = attempt_errors
+            if type(attempt_receipt) is dict:
+                result["release_attempt_receipt"] = attempt_receipt
             return result
         except Exception:
             self.recovery_required = True

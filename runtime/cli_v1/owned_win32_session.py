@@ -348,6 +348,12 @@ class OwnedWin32SessionOwner:
             record = self._calls.get(call_id)
             if record is None:
                 raise ValueError("unknown caller action")
+            action = record["action"]
+            if ("program_actions_lower_bound" in action
+                    or action.get("program_actions_capture_status")
+                    in ("capturing", "observed", "unavailable")):
+                return deepcopy(record)
+            action["program_actions_capture_status"] = "capturing"
             process_handle = self._producer_handles.get(call_id)
             operation_id = record["action"]["operation_id"]
             generation = record["action"]["target_generation"]
@@ -370,6 +376,9 @@ class OwnedWin32SessionOwner:
                 raise ValueError("program action lower bound cannot decrease")
             action["program_actions_lower_bound"] = count
             action["program_actions_observed_monotonic_ns"] = observed_ns
+            action["program_actions_capture_status"] = "observed"
+            action.pop("program_actions_capture_error_type", None)
+            action.pop("program_actions_capture_error_code", None)
             if count > 0:
                 action["input_dispatched"] = True
             result = action.get("result")
@@ -378,13 +387,40 @@ class OwnedWin32SessionOwner:
                 result["program_actions_observed_monotonic_ns"] = observed_ns
                 if count > 0:
                     result["input_dispatched"] = True
-        if self._custody_fence is not None:
+        if self._custody_fence is not None and count > 0:
             self._custody_fence.update(operation_id, generation,
-                input_dispatched=(True if count > 0 else None))
+                input_dispatched=True)
         with self._lock:
             record = self._calls.get(call_id)
             if record is None:
                 raise ValueError("caller action disappeared during progress capture")
+            return deepcopy(record)
+
+    def record_program_emission_progress_failure(self, call_id, error):
+        """Expose a bounded reason when the post-recovery counter is unavailable."""
+        if not isinstance(error, Exception):
+            raise TypeError("progress capture error must be an exception")
+        message_codes = {
+            "progress_reader_unavailable": "progress_reader_unavailable",
+            "caller action has no retained producer": "producer_handle_missing",
+            "unknown native producer process": "producer_registry_miss",
+            "native producer action counter is invalid": "counter_invalid",
+            "program action lower bound must be a nonnegative integer": "counter_value_invalid",
+            "program action lower bound cannot decrease": "counter_regressed",
+            "caller action changed during progress capture": "action_binding_changed",
+            "caller action disappeared during progress capture": "action_record_missing",
+            "CUSTODY_FENCE_NO_UNRESOLVED_ACTION": "persistent_fence_not_pending",
+        }
+        message = str(error)
+        code = message_codes.get(message, "capture_failed")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            action = record["action"]
+            action["program_actions_capture_status"] = "unavailable"
+            action["program_actions_capture_error_type"] = type(error).__name__
+            action["program_actions_capture_error_code"] = code
             return deepcopy(record)
 
     def start_producer(self, call_id, producer_factory):
@@ -477,8 +513,12 @@ class OwnedWin32SessionOwner:
                 phase = self._owner.result(action["operation_id"]).get("phase")
                 if not authorized and phase != "cancel_pending":
                     self._retire_gated_process(process)
+                    self._record_uncertain_start(call_id, action,
+                        "producer_start_gate_unconfirmed")
             elif phase != "cancel_pending":
-                self._retire_gated_process(process)
+                retired = self._retire_gated_process(process)
+                self._record_not_dispatched_after_expired_start(
+                    call_id, action, process_identity, retired)
             return self.interface_result(call_id)
         except Exception as error:
             try:
@@ -558,6 +598,75 @@ class OwnedWin32SessionOwner:
                 timing.setdefault("clock", "time.monotonic_ns")
                 timing[field] = time.monotonic_ns()
 
+    def _record_not_dispatched_after_expired_start(
+            self, call_id, action, process_identity, producer_retired):
+        """Expose a no-input result only for an expired, never-opened gate."""
+        if producer_retired is not True:
+            return
+        try:
+            custody = self._owner.result(action["operation_id"])
+        except Exception:
+            return
+        if (custody.get("phase") != "unknown"
+                or custody.get("uncertainty") != "producer_start_after_deadline"
+                or custody.get("producer_gate_state") != "closed"
+                or custody.get("producer_identity") != process_identity):
+            return
+        if self._custody_fence is not None:
+            try:
+                absent = self._custody_fence.confirm_producer_absent(
+                    process_identity)
+                if absent is not True:
+                    return
+                self._custody_fence.abort_unstarted(
+                    action["operation_id"], action["target_generation"],
+                    start_gate_verified_closed=True, input_dispatched=False,
+                    producer_absent_verified=True)
+            except Exception:
+                return
+        result = {
+            "status": "not_dispatched",
+            "reason": "authority_expired_before_start_gate",
+            "input_dispatched": False,
+            "release_confirmed": False,
+            "task_success": None,
+            "replay_allowed": False,
+        }
+        with self._lock:
+            record = self._calls.get(call_id)
+            if (record is None
+                    or record["action"].get("operation_id")
+                        != action.get("operation_id")):
+                return
+            record["action"].update(status="not_dispatched", result=result,
+                input_dispatched=False, release_confirmed=False,
+                task_success=None, replay_allowed=False)
+
+    def _record_uncertain_start(self, call_id, action, reason):
+        """Keep failed gated startup conservative when no no-input proof exists."""
+        try:
+            custody = self._owner.result(action["operation_id"])
+            if custody.get("phase") == "running":
+                custody = self._owner.mark_unknown(action["operation_id"],
+                    action["target_generation"], reason)
+            if self._custody_fence is not None:
+                self._custody_fence.update(action["operation_id"],
+                    action["target_generation"], phase="unknown")
+        except Exception:
+            custody = {}
+        result = {"status": "unknown", "error": reason,
+            "input_dispatched": None, "release_confirmed": False,
+            "task_success": None, "replay_allowed": False}
+        with self._lock:
+            record = self._calls.get(call_id)
+            if (record is None
+                    or record["action"].get("operation_id")
+                        != action.get("operation_id")):
+                return
+            record["action"].update(status="unknown", result=result,
+                input_dispatched=None, release_confirmed=False,
+                task_success=None, replay_allowed=False)
+
     @staticmethod
     def _close_unstarted_process(process):
         close = getattr(process, "close", None)
@@ -579,12 +688,14 @@ class OwnedWin32SessionOwner:
                 if callable(kill):
                     kill()
                     process.join(0.1)
-            if process.is_alive() is False:
-                process.close()
+            if process.is_alive() is not False or type(process.exitcode) is not int:
+                return False
+            process.close()
+            return True
         except Exception:
             # The start gate stays closed, so failure remains contained and
             # the operation's existing UNKNOWN receipt is preserved.
-            return
+            return False
 
     def cancel_guarded(self, call_id, *, cancellation_operation_id=None,
                        cleanup_deadline_ns=None):
@@ -697,25 +808,47 @@ class OwnedWin32SessionOwner:
                     "late_input_release_received_monotonic_ns")
                 observation_start_ns = custody.get(
                     "late_input_observation_start_ns")
+                if observation_start_ns is None:
+                    observation_start_ns = custody.get(
+                        "late_input_observation_start_monotonic_ns")
                 end_ns = custody.get("late_input_observation_end_monotonic_ns")
                 if end_ns is None:
                     end_ns = custody.get("late_input_observation_end_ns")
+                first_observation_ns = custody.get(
+                    "late_input_first_observation_monotonic_ns")
+                if first_observation_ns is None:
+                    first_observation_ns = observation_start_ns
+                horizon_start_ns = (release_ns if type(release_ns) is int
+                    else observation_start_ns)
                 count = custody.get("late_input_observation_count")
                 max_gap_ns = custody.get("late_input_max_observed_gap_ns")
                 allowed_gap_ns = custody.get("late_input_max_sample_gap_ns")
                 horizon_verified = (type(horizon_ns) is int
                     and 0 < horizon_ns <= _MAX_LATE_INPUT_HORIZON_NS
-                    and (type(release_ns) is int or type(observation_start_ns) is int)
+                    and type(observation_start_ns) is int
+                    and type(first_observation_ns) is int
+                    and first_observation_ns >= observation_start_ns
+                    and type(allowed_gap_ns) is int and allowed_gap_ns > 0
+                    and first_observation_ns - observation_start_ns <= allowed_gap_ns
                     and type(end_ns) is int
-                    and end_ns - (release_ns if type(release_ns) is int
-                                  else observation_start_ns) >= horizon_ns
+                    and end_ns - horizon_start_ns >= horizon_ns
                     and type(count) is int and count >= 2
                     and type(max_gap_ns) is int and max_gap_ns >= 0
                     and type(allowed_gap_ns) is int and allowed_gap_ns > 0
                     and max_gap_ns <= allowed_gap_ns)
-                self._custody_fence.resolve(operation_id, generation,
-                    release_confirmed=True, late_input_horizon_required=True,
-                    late_input_horizon_verified=horizon_verified)
+                if horizon_verified:
+                    self._custody_fence.resolve(operation_id, generation,
+                        release_confirmed=True,
+                        late_input_horizon_required=True,
+                        late_input_horizon_verified=True)
+                else:
+                    self._custody_fence.update(operation_id, generation,
+                        phase="unknown")
+                    custody = dict(custody)
+                    custody.update(phase="unknown", status="unknown",
+                        release_confirmed=True,
+                        late_input_horizon_validation_error=(
+                            "normal_completion_horizon_unverified"))
             else:
                 self._custody_fence.update(operation_id, generation,
                     phase="unknown")
@@ -924,12 +1057,15 @@ class OwnedWin32SessionOwner:
 
     def recover_orphaned_input(self, *, source_operation_id,
                                source_target_generation, obligations,
-                               source_custody_record):
+                               source_custody_record,
+                               recovery_target_generation=None):
         """Release one externally documented orphan without rewriting its action.
 
         This entry point is only for a fresh supervised-Win32 session. The
         supplied source action remains UNKNOWN; recovery is a separate bounded
-        transaction that is bound to the exact configured target generation.
+        transaction. Its separately observed recovery generation must match
+        the configured target used for release, while the source generation
+        remains bound to the durable unknown action.
         """
         try:
             self._validate_id(source_operation_id, "source_operation_id")
@@ -939,6 +1075,12 @@ class OwnedWin32SessionOwner:
         if (type(source_target_generation) is not str
                 or re.fullmatch(r"[0-9a-f]{64}", source_target_generation) is None):
             return self._orphan_recovery_refusal("target_generation_invalid")
+        if recovery_target_generation is None:
+            recovery_target_generation = source_target_generation
+        if (type(recovery_target_generation) is not str
+                or re.fullmatch(r"[0-9a-f]{64}", recovery_target_generation) is None):
+            return self._orphan_recovery_refusal(
+                "recovery_target_generation_invalid")
         if (not isinstance(obligations, (list, tuple)) or not obligations
                 or any(type(item) is not str or not item for item in obligations)
                 or len(set(obligations)) != len(obligations)):
@@ -1039,9 +1181,9 @@ class OwnedWin32SessionOwner:
                     except Exception:
                         return self._orphan_recovery_refusal(
                             "current_target_generation_unavailable")
-                    if current_generation != source_target_generation:
+                    if current_generation != recovery_target_generation:
                         return self._orphan_recovery_refusal(
-                            "target_generation_mismatch")
+                            "recovery_target_generation_mismatch")
                     try:
                         self._custody_fence.abort_unstarted(
                             source_operation_id, source_target_generation,
@@ -1057,6 +1199,7 @@ class OwnedWin32SessionOwner:
                     self._orphan_recovery_fenced_generations.add(
                         source_target_generation)
                 return {
+                    "status": "not_dispatched",
                     "recovery_status": "not_dispatched",
                     "source_operation_id": source_operation_id,
                     "source_target_generation": source_target_generation,
@@ -1104,9 +1247,9 @@ class OwnedWin32SessionOwner:
             except Exception:
                 return self._orphan_recovery_refusal(
                     "current_target_generation_unavailable")
-            if current_generation != source_target_generation:
+            if current_generation != recovery_target_generation:
                 return self._orphan_recovery_refusal(
-                    "target_generation_mismatch")
+                    "recovery_target_generation_mismatch")
             recovery_id = uuid.uuid4().hex
             deadline_ns = time.monotonic_ns() + _ORPHAN_RECOVERY_WINDOW_NS
             # Once a valid orphan recovery reaches the native supervisor, no
@@ -1114,8 +1257,14 @@ class OwnedWin32SessionOwner:
             self._orphan_recovery_unresolved = True
             try:
                 if callable(recover):
-                    receipt = recover(source_operation_id, source_target_generation,
-                        recovery_id, deadline_ns, list(obligations))
+                    recovery_args = (source_operation_id,
+                        source_target_generation, recovery_id, deadline_ns,
+                        list(obligations))
+                    if recovery_target_generation == source_target_generation:
+                        receipt = recover(*recovery_args)
+                    else:
+                        receipt = recover(*recovery_args,
+                            recovery_target_generation=recovery_target_generation)
                 else:
                     receipt = {"status": "unavailable"}
             except Exception as error:
@@ -1124,7 +1273,10 @@ class OwnedWin32SessionOwner:
             confirmed = (type(receipt) is dict
                 and receipt.get("status") == "recovered"
                 and receipt.get("operation_id") == source_operation_id
-                and receipt.get("target_generation") == source_target_generation
+                and receipt.get("source_target_generation",
+                    receipt.get("target_generation")) == source_target_generation
+                and receipt.get("recovery_target_generation",
+                    receipt.get("target_generation")) == recovery_target_generation
                 and receipt.get("recovery_id") == recovery_id
                 and receipt.get("release_confirmed") is True)
             if (confirmed and source_custody_record[
@@ -1132,6 +1284,8 @@ class OwnedWin32SessionOwner:
                 horizon_ns = receipt.get("late_input_horizon_ns")
                 release_ns = receipt.get(
                     "late_input_release_received_monotonic_ns")
+                start_ns = receipt.get(
+                    "late_input_observation_start_monotonic_ns")
                 end_ns = receipt.get("late_input_observation_end_monotonic_ns")
                 count = receipt.get("late_input_observation_count")
                 max_gap_ns = receipt.get("late_input_max_observed_gap_ns")
@@ -1140,10 +1294,12 @@ class OwnedWin32SessionOwner:
                     and type(horizon_ns) is int
                     and 0 < horizon_ns <= _MAX_LATE_INPUT_HORIZON_NS
                     and type(release_ns) is int and release_ns >= 0
+                    and type(start_ns) is int and start_ns >= release_ns
+                    and type(allowed_gap_ns) is int and allowed_gap_ns > 0
+                    and start_ns - release_ns <= allowed_gap_ns
                     and type(end_ns) is int and end_ns - release_ns >= horizon_ns
                     and type(count) is int and count >= 2
                     and type(max_gap_ns) is int and max_gap_ns >= 0
-                    and type(allowed_gap_ns) is int and allowed_gap_ns > 0
                     and max_gap_ns <= allowed_gap_ns)
             if confirmed and self._custody_fence is not None:
                 try:
@@ -1154,17 +1310,24 @@ class OwnedWin32SessionOwner:
                         late_input_horizon_verified=(
                             source_custody_record[
                                 "late_server_request_possible"] is False
-                            or receipt.get("late_input_horizon_verified") is True))
+                            or receipt.get("late_input_horizon_verified") is True),
+                        fence_generations=list(dict.fromkeys((
+                            source_target_generation,
+                            recovery_target_generation))))
                 except Exception:
                     confirmed = False
             if confirmed:
                 self._orphan_recovery_fenced_generations.add(
                     source_target_generation)
+                self._orphan_recovery_fenced_generations.add(
+                    recovery_target_generation)
                 self._orphan_recovery_unresolved = False
             return {
+                "status": "recovered" if confirmed else "unknown",
                 "recovery_status": "recovered" if confirmed else "unknown",
                 "source_operation_id": source_operation_id,
                 "source_target_generation": source_target_generation,
+                "recovery_target_generation": recovery_target_generation,
                 "source_custody_canonical_sha256": source_custody_sha256,
                 "source_action_status": "unknown",
                 "release_confirmed": bool(confirmed),
@@ -1177,7 +1340,8 @@ class OwnedWin32SessionOwner:
 
     @staticmethod
     def _orphan_recovery_refusal(reason, detail=None):
-        result = {"recovery_status": "refused", "reason": reason,
+        result = {"status": "refused", "recovery_status": "refused",
+                  "reason": reason,
                   "source_action_status": "unknown",
                   "release_confirmed": False, "task_success": None,
                   "replay_allowed": False}
@@ -1214,6 +1378,15 @@ class OwnedWin32SessionOwner:
             task_success=None, replay_allowed=False,
             result=deepcopy(result))
         action = record.get("action") or {}
+        # Keep the recovery send diagnostics on the retained action as well as
+        # on the cancellation owner snapshot. These rows describe API attempts;
+        # they do not upgrade release confirmation or task effect.
+        attempts = result.get("recovery_release_key_up_attempts")
+        if type(attempts) is list:
+            action_result = action.get("result")
+            if type(action_result) is dict:
+                action_result["recovery_release_key_up_attempts"] = deepcopy(attempts)
+            action["recovery_release_key_up_attempts"] = deepcopy(attempts)
         confirmed = (status == "recovered"
             and cancellation.get("action_operation_id") == action.get("operation_id")
             and cancellation.get("target_generation") == action.get("target_generation")
@@ -1222,14 +1395,35 @@ class OwnedWin32SessionOwner:
             and result.get("phase") == "recovered"
             and result.get("status") == "recovered"
             and result.get("release_confirmed") is True)
+        if confirmed and record.get("standard_program") is None:
+            action["status"] = "recovered"
+            action["release_confirmed"] = True
+            action["task_success"] = None
+            action["replay_allowed"] = False
+            action_result = action.get("result")
+            if type(action_result) is not dict:
+                action_result = {"status": "recovered",
+                    "release_confirmed": True, "task_success": None,
+                    "replay_allowed": False}
+                action["result"] = action_result
+            if type(attempts) is list:
+                action_result["recovery_release_key_up_attempts"] = deepcopy(attempts)
         if (record.get("standard_program") is not None
                 and action.get("status") in ("running", "cancel_pending")
                 and status in ("recovered", "unknown")):
             action_status = "recovered" if confirmed else "unknown"
             action.update(status=action_status, release_confirmed=confirmed,
                 task_success=None, replay_allowed=False,
+                obligations=(deepcopy(result.get("obligations", []))
+                    if confirmed and type(result.get("obligations")) is list
+                    else []),
                 result={"status": action_status, "input_dispatched": None,
                     "release_confirmed": confirmed,
+                    "obligations": (deepcopy(result.get("obligations", []))
+                        if confirmed and type(result.get("obligations")) is list
+                        else []),
+                    "recovery_release_key_up_attempts": deepcopy(attempts)
+                        if type(attempts) is list else None,
                     "effect_status": "unknown", "task_success": None,
                     "replay_allowed": False})
         if self._custody_fence is not None:
@@ -1237,18 +1431,32 @@ class OwnedWin32SessionOwner:
             generation = action.get("target_generation")
             try:
                 if confirmed:
+                    progress_captured = (
+                        "program_actions_lower_bound" in action
+                        or action.get("program_actions_capture_status")
+                        in ("observed", "unavailable"))
+                    if not progress_captured:
+                        # Keep the durable pending row until the caller has
+                        # attempted its one-shot producer progress read. A
+                        # later exact-results readback can finish this step
+                        # after asynchronous recovery has retired the child.
+                        return
                     horizon_ns = result.get("late_input_horizon_ns")
                     release_ns = result.get("late_input_release_received_ns")
+                    start_ns = result.get("late_input_observation_start_ns")
                     end_ns = result.get("late_input_observation_end_ns")
                     count = result.get("late_input_observation_count")
                     max_gap_ns = result.get("late_input_max_observed_gap_ns")
                     allowed_gap_ns = result.get("late_input_max_sample_gap_ns")
                     horizon_verified = (type(horizon_ns) is int
-                        and horizon_ns > 0 and type(release_ns) is int
+                        and 0 < horizon_ns <= _MAX_LATE_INPUT_HORIZON_NS
+                        and type(release_ns) is int
+                        and type(start_ns) is int and start_ns >= release_ns
+                        and type(allowed_gap_ns) is int and allowed_gap_ns > 0
+                        and start_ns - release_ns <= allowed_gap_ns
                         and type(end_ns) is int and end_ns - release_ns >= horizon_ns
                         and type(count) is int and count >= 2
                         and type(max_gap_ns) is int and max_gap_ns >= 0
-                        and type(allowed_gap_ns) is int and allowed_gap_ns > 0
                         and max_gap_ns <= allowed_gap_ns
                         and result.get("late_input_validation_error") is None)
                     self._custody_fence.resolve(operation_id, generation,

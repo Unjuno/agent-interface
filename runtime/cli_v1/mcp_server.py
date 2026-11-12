@@ -163,6 +163,9 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             'status': 'recovered' if confirmed else 'unknown',
             'input_dispatched': None,
             'release_confirmed': confirmed,
+            'obligations': (list(custody.get('obligations', []))
+                if isinstance(custody, dict)
+                and isinstance(custody.get('obligations'), list) else []),
             'effect_status': 'unknown', 'task_success': None,
             'replay_allowed': False})
         action = row['action']
@@ -174,10 +177,25 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             row = owner.capture_program_emission_progress(call_id,
                 progress_reader)
             action = row['action']
-        except Exception:
+        except Exception as error:
             # Recovery custody remains authoritative. Missing progress evidence
             # leaves delivery unknown; it must not undo a verified release.
+            try:
+                row = owner.record_program_emission_progress_failure(
+                    call_id, error)
+                action = row['action']
+            except Exception:
+                pass
+    elif action.get('status') in ('recovered', 'unknown'):
+        try:
+            row = owner.record_program_emission_progress_failure(call_id,
+                RuntimeError('progress_reader_unavailable'))
+            action = row['action']
+        except Exception:
             pass
+    if action.get('status') in ('recovered', 'unknown'):
+        row = owner.interface_result(call_id)
+        action = row['action']
     result = action.get('result') or {'status': action.get('status', 'unknown'),
         'task_success': None, 'replay_allowed': False}
     cancellation = row.get('cancellation')
@@ -1123,7 +1141,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) else
+            # Orphan recovery is a control receipt, not an image observation.
+            # Passing it through review_bytes requires a `records` batch and
+            # masks a successful release as image_status=needs_review. Preserve
+            # the exact recovery fields in the public response instead.
+            result = (dict(report) if operation == 'recover_orphaned_input' else
+                      present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
@@ -1156,8 +1179,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 and report['review_request'].get('tool') == 'interface_review_target'
                 and (kwargs.get('screen_region') is None or result.get('image_status') == 'image'))
             return content(result, error=persistence_error is not None or (
-                (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) and
+                (operation.startswith('guarded_') or operation in (
+                    'close', 'inspect_target', 'review_target', 'recover_input',
+                    'recover_orphaned_input')) and
                 (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','recovery_failed')
+                 or (operation == 'recover_orphaned_input'
+                     and report.get('status') == 'unknown')
                  or (report.get('status') == 'needs_review' and not inspection_ready)
                  or report.get('feedback_status') == 'observation_failed')))
         except BaseException as error:
@@ -1952,13 +1979,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         async def interface_recover_orphaned_input(
                 source_operation_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')],
                 source_target_generation: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{64}$')],
+                recovery_target_generation: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{64}$')],
                 obligations: list[StrictStr],
                 source_custody_record: dict[str, object]
                 ) -> CallToolResult:
             """Attempt one bounded native release for an audited prior-server custody record.
 
             Requires a fresh supervised-Win32 session with no admitted action,
-            the exact source target generation, frozen obligations, and the
+            the exact source target generation, a separately observed current
+            recovery target generation for the configured logical target,
+            frozen obligations, and the
             retained UNKNOWN custody record with the source producer observed
             absent, including the boolean `late_server_request_possible` from
             the terminal source receipt. If that flag is true, release/readback
@@ -1974,6 +2004,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return await submit('recover_orphaned_input', {
                 'source_operation_id': source_operation_id,
                 'source_target_generation': source_target_generation,
+                'recovery_target_generation': recovery_target_generation,
                 'obligations': obligations,
                 'source_custody_record': source_custody_record},
                 False, False, wait_for_result_ms=6000)
@@ -2041,6 +2072,38 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 # rejection). Let the ordinary exact-call receipt path below
                 # resolve it before declaring the ID unknown.
             else:
+                # Lease expiry may return the dispatch worker while native
+                # recovery is still pending. In that schedule the worker's
+                # one-shot progress read has ended before the producer is
+                # retired. A later exact-call readback can safely capture the
+                # retained lower bound after recovery becomes terminal. This
+                # diagnostic never upgrades release or task success.
+                action = row.get('action')
+                progress_reader = getattr(
+                    supervised_win32_producer_factory,
+                    'read_program_actions_lower_bound', None)
+                if (type(action) is dict
+                        and action.get('status') in ('recovered', 'unknown')
+                        and 'program_actions_capture_status' not in action
+                        and 'program_actions_lower_bound' not in action):
+                    if callable(progress_reader):
+                        try:
+                            owner.capture_program_emission_progress(call_id,
+                                progress_reader)
+                        except Exception as error:
+                            try:
+                                owner.record_program_emission_progress_failure(
+                                    call_id, error)
+                            except Exception:
+                                pass
+                    else:
+                        try:
+                            owner.record_program_emission_progress_failure(
+                                call_id,
+                                RuntimeError('progress_reader_unavailable'))
+                        except Exception:
+                            pass
+                    row = owner.interface_result(call_id)
                 row = deepcopy(row)
                 row['operation_invoked'] = False
                 row['input_dispatched'] = False

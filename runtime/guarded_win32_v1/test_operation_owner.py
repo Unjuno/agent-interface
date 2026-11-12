@@ -123,6 +123,29 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertFalse(result["release_confirmed"])
         self.assertFalse(result["replay_allowed"])
 
+    def test_expired_authorization_keeps_gate_closed_and_records_reason(self):
+        clock = FakeClock()
+        owner = OperationOwner(clock_ns=clock,
+            process_identity_reader=lambda process: PROCESS_IDENTITIES.get(process.pid))
+        owner.admit("op-start-expired", GEN_A, 200, ["key:a"],
+            start_gate_required=True)
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(owner.producer_started("op-start-expired", GEN_A,
+            process, process_identity=PRODUCER))
+        clock.now = 200
+        gate = threading.Event()
+
+        self.assertFalse(owner.authorize_producer_start("op-start-expired",
+            GEN_A, process, gate.set))
+
+        result = owner.result("op-start-expired")
+        self.assertFalse(gate.is_set())
+        self.assertEqual(result["phase"], "unknown")
+        self.assertEqual(result["producer_gate_state"], "closed")
+        self.assertEqual(result["uncertainty"], "producer_start_after_deadline")
+        self.assertFalse(result["release_confirmed"])
+        self.assertFalse(result["replay_allowed"])
+
     def test_cancel_closes_admission_until_exact_producer_retirement_and_readback(self):
         pending = self.start_cancelled_operation()
         self.assertEqual(pending["status"], "pending")
@@ -154,14 +177,29 @@ class OperationOwnerTests(unittest.TestCase):
         recovery = self.owner.claim_recovery("op-1", GEN_A)
         self.assertEqual(recovery["obligations"], ["key:a", "button:left"])
         self.assertFalse(self.owner.claim_recovery("op-1", GEN_A))
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+                     "status": "returned"}]
+        self.owner.recovery_release_attempted("op-1", GEN_A,
+            recovery["recovery_id"], attempts)
+        attempts[0]["encoding"] = "virtual_key"
+        self.assertEqual(self.owner.result("op-1")['recovery_release_key_up_attempts'], [
+            {"virtual_key": 0x57, "encoding": "scan_code",
+             "status": "returned"}])
+        readback = {"operation_id": "op-1", "target_generation": GEN_A,
+                    "recovery_id": recovery["recovery_id"], "neutral": True,
+                    "observed_monotonic_ns": 800}
         self.assertTrue(self.owner.recovery_completed(
             "op-1", GEN_A, recovery["recovery_id"], release_accepted=True,
-            readback={"operation_id": "op-1", "target_generation": GEN_A,
-                      "recovery_id": recovery["recovery_id"], "neutral": True}))
+            readback=readback))
+        readback["neutral"] = False
+        self.assertTrue(self.owner.result("op-1")["readback"]["neutral"])
         terminal = self.owner.request_cancel(
             "op-1", GEN_A, cleanup_deadline_ns=850)
         self.assertTrue(terminal["release_confirmed"])
         self.assertEqual(terminal["recovery_id"], recovery["recovery_id"])
+        self.assertEqual(terminal["readback"]["recovery_id"],
+                         recovery["recovery_id"])
+        self.assertEqual(terminal["readback"]["target_generation"], GEN_A)
 
         with self.assertRaises(OwnerRefused):
             self.owner.admit("op-2", GEN_A, 1_000, ["key:a"])
@@ -192,6 +230,22 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertEqual(recovered["phase"], "recovered")
         self.assertEqual(recovered["recovery_completed_monotonic_ns"], 250)
         self.assertEqual(recovered["cleanup_latency_ns"], 150)
+
+    def test_failed_release_receipt_retains_attempted_encoding(self):
+        self.start_cancelled_operation()
+        self.process.alive = False
+        self.process.exitcode = 17
+        self.assertTrue(self.owner.producer_retired("op-1", GEN_A, self.process))
+        recovery = self.owner.claim_recovery("op-1", GEN_A)
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+            "status": "raised", "error_type": "OSError"}]
+        self.owner.recovery_release_attempted("op-1", GEN_A,
+            recovery["recovery_id"], attempts)
+        self.assertFalse(self.owner.recovery_completed("op-1", GEN_A,
+            recovery["recovery_id"], release_accepted=False, readback=None))
+        result = self.owner.result("op-1")
+        self.assertEqual(result["phase"], "unknown")
+        self.assertEqual(result["recovery_release_key_up_attempts"], attempts)
 
     def test_late_input_horizon_rejects_unobserved_initial_gap(self):
         self.start_cancelled_operation()

@@ -5,11 +5,13 @@ import os
 import time
 import traceback
 import unittest
+from unittest.mock import patch
 
 from runtime.guarded_win32_v1.operation_owner import OperationOwner, OwnerRefused
 from runtime.guarded_win32_v1.process_cancellation import (
     OperationCancellationSupervisor,
 )
+from runtime.guarded_win32_v1 import process_cancellation
 
 
 GENERATION = "a" * 64
@@ -39,6 +41,7 @@ def _fake_recovery_worker(down, neutral, start_gate, result_send, request):
         "target_generation": request["target_generation"],
         "recovery_id": request["recovery_id"],
         "release_accepted": True,
+        "release_key_up_attempts": [],
     })
     result_send.close()
 
@@ -64,6 +67,9 @@ class _BlockedNativeReleaseBackend:
 
     def target_generation(self, _target):
         return GENERATION
+
+    def _send_key(self, _vk, _down, _encoding=None):
+        return None
 
     def release_all(self):
         self.release_started.set()
@@ -267,6 +273,7 @@ def _recovery_with_wrong_receipt(start_gate, result_send, request):
             "target_generation": request["target_generation"],
             "recovery_id": request["recovery_id"],
             "release_accepted": True,
+            "release_key_up_attempts": [],
         })
     result_send.close()
 
@@ -294,6 +301,376 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_failed_release_attempts_are_retained_by_owner_before_unknown(self):
+        class Owner:
+            def __init__(self):
+                self.attempts = None
+                self.unknown = []
+            def recovery_release_attempted(self, operation_id, generation,
+                                          recovery_id, attempts):
+                self.attempts = (operation_id, generation, recovery_id,
+                                 list(attempts))
+            def mark_unknown(self, operation_id, generation, reason):
+                self.unknown.append((operation_id, generation, reason))
+
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: 10
+        supervisor._invalidate_helper = lambda *_args: None
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_id = "c" * 32
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}]
+        supervisor._exchange_helper = lambda *_args: {
+            "status": "unknown", "operation_id": operation_id,
+            "target_generation": generation, "recovery_id": recovery_id,
+            "release_accepted": False,
+            "release_receipt": {"verified": True},
+            "release_key_up_attempts": attempts}
+
+        supervisor._run_recovery(operation_id, generation, {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery_id, "deadline_ns": 100,
+            "obligations": ["key:fixture:W"]})
+
+        self.assertEqual(owner.attempts,
+            (operation_id, generation, recovery_id, attempts))
+        self.assertEqual(owner.unknown, [(operation_id, generation,
+            "recovery_receipt_invalid_or_late")])
+
+    def test_mismatched_recovery_identity_cannot_bind_key_up_attempts(self):
+        class Owner:
+            def __init__(self):
+                self.attempts = None
+                self.unknown = []
+            def recovery_release_attempted(self, *_args):
+                self.attempts = _args
+            def mark_unknown(self, operation_id, generation, reason):
+                self.unknown.append((operation_id, generation, reason))
+
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: 10
+        supervisor._invalidate_helper = lambda *_args: None
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_id = "c" * 32
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}]
+        supervisor._exchange_helper = lambda *_args: {
+            "status": "unknown", "operation_id": operation_id,
+            "target_generation": "f" * 64, "recovery_id": recovery_id,
+            "release_accepted": False,
+            "release_key_up_attempts": attempts}
+
+        supervisor._run_recovery(operation_id, generation, {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery_id, "deadline_ns": 100,
+            "obligations": ["key:fixture:W"]})
+
+        self.assertIsNone(owner.attempts)
+        self.assertEqual(owner.unknown, [(operation_id, generation,
+            "recovery_key_up_attempt_receipt_identity_mismatch")])
+
+    def test_positive_recovery_requires_a_list_of_key_up_attempts(self):
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_id = "c" * 32
+
+        for attempt_field in ("missing", None, ()):
+            with self.subTest(attempt_field=attempt_field):
+                class Owner:
+                    def __init__(self):
+                        self.unknown = []
+                        self.attempts = []
+                    def recovery_release_attempted(self, *_args):
+                        self.attempts.append(_args)
+                    def mark_unknown(self, op, gen, reason):
+                        self.unknown.append((op, gen, reason))
+
+                owner = Owner()
+                supervisor = object.__new__(OperationCancellationSupervisor)
+                supervisor._owner = owner
+                supervisor._clock_ns = lambda: 10
+                invalidated = []
+                supervisor._invalidate_helper = lambda *args: invalidated.append(args)
+                observed = []
+                supervisor._run_observer = lambda *_args: observed.append(True)
+                receipt = {"operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id, "release_accepted": True}
+                if attempt_field != "missing":
+                    receipt["release_key_up_attempts"] = attempt_field
+                supervisor._exchange_helper = lambda *_args: receipt
+
+                supervisor._run_recovery(operation_id, generation, {
+                    "operation_id": operation_id, "target_generation": generation,
+                    "recovery_id": recovery_id, "deadline_ns": 100,
+                    "obligations": ["key:fixture:W"]})
+
+                self.assertEqual(owner.unknown, [(operation_id, generation,
+                    "recovery_key_up_attempt_receipt_missing_or_invalid")])
+                self.assertEqual(owner.attempts, [])
+                self.assertEqual(observed, [])
+                self.assertEqual(invalidated, [("recovery", 100)])
+
+    def test_positive_recovery_accepts_an_explicit_empty_attempt_list(self):
+        class Owner:
+            def __init__(self):
+                self.attempts = None
+                self.completed = None
+                self.unknown = []
+            def recovery_release_attempted(self, op, gen, recovery_id, attempts):
+                self.attempts = (op, gen, recovery_id, attempts)
+            def recovery_completed(self, *args, **kwargs):
+                self.completed = (args, kwargs)
+            def mark_unknown(self, *args):
+                self.unknown.append(args)
+
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_id = "c" * 32
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: 10
+        supervisor.late_input_horizon_ns = 0
+        supervisor._invalidate_helper = lambda *_args: None
+        supervisor._exchange_helper = lambda *_args: {
+            "operation_id": operation_id,
+            "target_generation": generation,
+            "recovery_id": recovery_id,
+            "release_accepted": True,
+            "release_key_up_attempts": []}
+        supervisor._run_observer = lambda *_args: {
+            "operation_id": operation_id,
+            "target_generation": generation,
+            "recovery_id": recovery_id,
+            "neutral": True,
+            "key_button_states": [False],
+            "unicode_event_units": 0,
+            "observed_monotonic_ns": 10}
+
+        supervisor._run_recovery(operation_id, generation, {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery_id, "deadline_ns": 100,
+            "obligations": ["key:fixture:W"]})
+
+        self.assertEqual(owner.attempts,
+            (operation_id, generation, recovery_id, []))
+        self.assertIsNotNone(owner.completed)
+        self.assertEqual(owner.unknown, [])
+
+    def test_real_owner_keeps_missing_positive_attempt_receipt_unknown(self):
+        class Clock:
+            now = 10
+        class Producer:
+            pid = 7432
+            alive = True
+            exitcode = None
+            def is_alive(self):
+                return self.alive
+
+        clock = Clock()
+        producer = Producer()
+        operation_id = "d" * 32
+        generation = "e" * 64
+        owner = OperationOwner(clock_ns=lambda: clock.now,
+            process_identity_reader=_identity)
+        owner.admit(operation_id, generation, 1_000_000,
+            ["key:fixture:W"])
+        owner.producer_started(operation_id, generation, producer,
+            process_identity=_identity(producer))
+        owner.request_cancel(operation_id, generation,
+            cleanup_deadline_ns=1_000_000)
+        producer.alive = False
+        producer.exitcode = -15
+        self.assertTrue(owner.producer_retired(operation_id, generation,
+            producer))
+        recovery = owner.claim_recovery(operation_id, generation)
+
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: clock.now
+        invalidated = []
+        supervisor._invalidate_helper = lambda *args: invalidated.append(args)
+        supervisor._exchange_helper = lambda *_args: {
+            "operation_id": operation_id,
+            "target_generation": generation,
+            "recovery_id": recovery["recovery_id"],
+            "release_accepted": True}
+        supervisor._run_recovery(operation_id, generation, recovery)
+
+        result = owner.result(operation_id)
+        self.assertEqual(result["phase"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertIsNone(result["recovery_release_key_up_attempts"])
+        self.assertEqual(result["uncertainty"],
+            "recovery_key_up_attempt_receipt_missing_or_invalid")
+        self.assertEqual(invalidated,
+            [("recovery", recovery["deadline_ns"])])
+
+    def test_release_attempt_receipt_survives_real_owner_recovery_to_unknown(self):
+        class Clock:
+            now = 10
+        class Producer:
+            pid = 7431
+            alive = True
+            exitcode = None
+            def is_alive(self):
+                return self.alive
+
+        clock = Clock()
+        producer = Producer()
+        operation_id = "d" * 32
+        generation = "e" * 64
+        owner = OperationOwner(clock_ns=lambda: clock.now,
+            process_identity_reader=_identity)
+        owner.admit(operation_id, generation, 1_000_000,
+            ["key:fixture:W"])
+        identity = _identity(producer)
+        self.assertTrue(owner.producer_started(operation_id, generation,
+            producer, process_identity=identity))
+        owner.request_cancel(operation_id, generation,
+            cleanup_deadline_ns=1_000_000)
+        producer.alive = False
+        producer.exitcode = -15
+        self.assertTrue(owner.producer_retired(operation_id, generation,
+            producer))
+        recovery = owner.claim_recovery(operation_id, generation)
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}]
+
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: clock.now
+        supervisor._invalidate_helper = lambda *_args: None
+        supervisor._exchange_helper = lambda *_args: {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery["recovery_id"],
+            "release_accepted": False,
+            "release_receipt": {"verified": True},
+            "release_key_up_attempts": attempts}
+        supervisor._run_recovery(operation_id, generation, recovery)
+
+        result = owner.result(operation_id)
+        self.assertEqual(result["phase"], "unknown")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["recovery_release_key_up_attempts"], attempts)
+        self.assertEqual(result["uncertainty"],
+            "recovery_receipt_invalid_or_late")
+
+    def test_orphan_horizon_observer_exception_returns_unknown_and_invalidates_helper(self):
+        class Clock:
+            now = 1_000_000_000
+
+        clock = Clock()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = lambda: clock.now
+        supervisor._late_input_sample_interval_s = 0.005
+        supervisor.late_input_horizon_ns = 100_000_000
+        invalidated = []
+        supervisor._invalidate_helper = lambda name, deadline: invalidated.append(
+            (name, deadline))
+        recovery_id = "c" * 32
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_generation = "f" * 64
+        observer_calls = 0
+
+        def exchange(role, request, _deadline_ns):
+            nonlocal observer_calls
+            if role == "recovery":
+                return {"operation_id": operation_id,
+                    "source_target_generation": generation,
+                    "target_generation": recovery_generation,
+                    "recovery_id": recovery_id, "release_accepted": True,
+                    "release_key_up_attempts": []}
+            observer_calls += 1
+            if observer_calls == 1:
+                return {"operation_id": operation_id,
+                    "source_target_generation": generation,
+                    "target_generation": recovery_generation,
+                    "recovery_id": request["recovery_id"], "neutral": True,
+                    "key_button_states": [False], "unicode_event_units": 0,
+                    "observed_monotonic_ns": clock.now}
+            raise OSError("observer helper disconnected during horizon")
+
+        supervisor._exchange_helper = exchange
+        deadline_ns = clock.now + 1_000_000_000
+
+        def advance(seconds):
+            clock.now += int(seconds * 1_000_000_000)
+
+        with patch.object(process_cancellation.time, "sleep", advance):
+            result = supervisor.recover_orphaned_input(operation_id, generation,
+                recovery_id, deadline_ns, ["key:fixture:W"],
+                recovery_target_generation=recovery_generation)
+
+        self.assertEqual(result["status"], "unknown")
+        self.assertEqual(result["reason"], "late_input_horizon_unconfirmed")
+        self.assertEqual(result["error_type"], "OSError")
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["late_input_observation_count"], 1)
+        self.assertEqual(result["readback"]["observed_monotonic_ns"],
+                         result["late_input_observation_start_monotonic_ns"])
+        self.assertEqual(invalidated, [("observer", deadline_ns)])
+
+    def test_orphan_recovery_bounds_release_to_first_readback_gap(self):
+        class Clock:
+            now = 1_000_000_000
+
+        clock = Clock()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = lambda: clock.now
+        supervisor._late_input_sample_interval_s = 0.005
+        supervisor.late_input_horizon_ns = 100_000_000
+        supervisor._invalidate_helper = lambda *_args: None
+        recovery_id = "c" * 32
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_generation = "f" * 64
+        first_read = True
+
+        def exchange(role, request, _deadline_ns):
+            nonlocal first_read
+            if role == "recovery":
+                return {"operation_id": operation_id,
+                    "source_target_generation": generation,
+                    "target_generation": recovery_generation,
+                    "recovery_id": recovery_id, "release_accepted": True,
+                    "release_key_up_attempts": []}
+            if first_read:
+                first_read = False
+                clock.now += 30_000_000
+            else:
+                clock.now += 5_000_000
+            return {"operation_id": operation_id,
+                "source_target_generation": generation,
+                "target_generation": recovery_generation,
+                "recovery_id": request["recovery_id"], "neutral": True,
+                "key_button_states": [False], "unicode_event_units": 0,
+                "observed_monotonic_ns": clock.now}
+
+        supervisor._exchange_helper = exchange
+
+        def advance(seconds):
+            clock.now += int(seconds * 1_000_000_000)
+
+        with patch.object(process_cancellation.time, "sleep", advance):
+            result = supervisor.recover_orphaned_input(operation_id, generation,
+                recovery_id, clock.now + 1_000_000_000, ["key:fixture:W"],
+                recovery_target_generation=recovery_generation)
+
+        self.assertEqual(result["status"], "unknown", result)
+        self.assertFalse(result["release_confirmed"])
+        self.assertEqual(result["late_input_observation_start_monotonic_ns"],
+            result["late_input_release_received_monotonic_ns"] + 30_000_000)
+        self.assertEqual(result["late_input_max_observed_gap_ns"], 30_000_000)
+
     def test_late_input_horizon_has_a_hard_finite_configuration_limit(self):
         owner = OperationOwner(clock_ns=time.monotonic_ns,
             process_identity_reader=_identity)
@@ -1327,7 +1704,8 @@ class ProcessCancellationTests(unittest.TestCase):
                 time.sleep(0.005)
                 result = owner.result("operation-wrong-receipt")
             self.assertEqual(result["status"], "unknown", result)
-            self.assertEqual(result["uncertainty"], "recovery_receipt_invalid_or_late")
+            self.assertEqual(result["uncertainty"],
+                "recovery_key_up_attempt_receipt_identity_mismatch")
             self.assertFalse(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])

@@ -22,6 +22,7 @@ from runtime.backends.win32_v1.backend import Win32Backend
 
 GEN_A = "a" * 64
 GEN_B = "b" * 64
+GEN_C = "c" * 64
 CALL_ID = "1" * 32
 ACTION_ID = "2" * 32
 
@@ -117,6 +118,36 @@ class OwnedWin32SessionTests(unittest.TestCase):
                                                       process_identity=self.identity))
         self.assertTrue(self.owner.authorize_producer_start(
             ACTION_ID, GEN_A, self.process, lambda: None))
+
+    def test_zero_progress_capture_is_retained_without_false_fence_update(self):
+        from unittest.mock import Mock
+        self.start_action()
+        fence = Mock()
+        self.session._custody_fence = fence
+
+        row = self.session.capture_program_emission_progress(
+            CALL_ID, lambda _process: 0)
+
+        self.assertEqual(row["action"]["program_actions_lower_bound"], 0)
+        self.assertEqual(row["action"]["program_actions_capture_status"],
+                         "observed")
+        fence.update.assert_not_called()
+
+    def test_progress_capture_failure_reason_is_retained_on_the_action(self):
+        self.start_action()
+        self.session.record_action_result(CALL_ID, {
+            "status": "recovered", "release_confirmed": True,
+            "task_success": None, "replay_allowed": False})
+
+        row = self.session.record_program_emission_progress_failure(
+            CALL_ID, ValueError("unknown native producer process"))
+
+        self.assertEqual(row["action"]["program_actions_capture_status"],
+                         "unavailable")
+        self.assertEqual(row["action"]["program_actions_capture_error_type"],
+                         "ValueError")
+        self.assertEqual(row["action"]["program_actions_capture_error_code"],
+                         "producer_registry_miss")
 
     def test_results_view_projects_dispatch_flag_onto_original_action(self):
         self.start_action()
@@ -257,8 +288,17 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.start_action()
         self.process.alive = False
         self.process.exitcode = 0
-        result = {"status": "completed", "task_success": None,
-                  "replay_allowed": False, "effect_status": "unknown"}
+        result = {"status": "execution_failed", "task_success": None,
+                  "replay_allowed": False, "effect_status": "unknown",
+                  "release_attempt_errors": [{"domain": "key_up",
+                      "virtual_key": 81, "encoding": None,
+                      "error_type": "Win32BackendError"}],
+                  "release_attempt_receipt": {"verified": False,
+                      "keys_down": ["Q"], "buttons_down": [],
+                      "keys_unknown": [], "buttons_unknown": [],
+                      "release_errors": [{"domain": "key_up",
+                          "virtual_key": 81, "encoding": None,
+                          "error_type": "Win32BackendError"}]}}
         release = {"verified": True, "keys_down": [], "buttons_down": [],
                    "keys_unknown": [], "buttons_unknown": []}
 
@@ -283,7 +323,16 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.process.alive = False
         self.process.exitcode = 0
         reads = []
-        backend_result = {"status": "completed", "effect_status": "unknown"}
+        backend_result = {"status": "execution_failed", "effect_status": "unknown",
+            "release_attempt_errors": [{"domain": "key_up",
+                "virtual_key": 81, "encoding": None,
+                "error_type": "Win32BackendError"}],
+            "release_attempt_receipt": {"verified": False,
+                "keys_down": ["Q"], "buttons_down": [],
+                "keys_unknown": [], "buttons_unknown": [],
+                "release_errors": [{"domain": "key_up",
+                    "virtual_key": 81, "encoding": None,
+                    "error_type": "Win32BackendError"}]}}
         release = {"verified": True, "keys_down": [], "buttons_down": [],
                    "keys_unknown": [], "buttons_unknown": []}
 
@@ -371,7 +420,8 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(row["action"]["target_generation"], GEN_A)
         self.assertEqual(self.session._calls[CALL_ID]["standard_program"], program)
         self.assertEqual(self.owner.result(ACTION_ID)["obligations"], [
-            "key:fixture:CTRL", "key:fixture:S", "unicode:0041",
+            "key:fixture:CTRL:virtual_key", "key:fixture:S:virtual_key",
+            "unicode:0041",
             "unicode:D83D", "unicode:DE00",
         ])
         self.assertEqual(row["action"]["metadata"]["source"], "interface_dispatch")
@@ -413,6 +463,76 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertFalse(retained["action"]["release_confirmed"])
         self.assertIsNone(retained["action"]["task_success"])
         self.assertFalse(retained["action"]["replay_allowed"])
+
+    def test_expired_startup_reports_not_dispatched_only_after_gated_exit(self):
+        clock_value = [10]
+        process_ref = {}
+        identity = {"pid": 4102, "creation_time_100ns": 9002}
+        owner = OperationOwner(clock_ns=lambda: clock_value[0],
+            process_identity_reader=lambda handle: identity
+            if handle is process_ref.get("process") else None)
+        session = OwnedWin32SessionOwner(owner,
+            FakeCancellationSupervisor(owner))
+        custody_fence = Mock()
+        custody_fence.confirm_producer_absent.return_value = True
+        session._custody_fence = custody_fence
+        session.bind_target_generation_reader(lambda: GEN_A)
+        binding = session.bind_target_generation()
+
+        class ExpiringGatedProcess(StartableFakeProcess):
+            def start(self):
+                super().start()
+                clock_value[0] = 100
+
+            def terminate(self):
+                self.alive = False
+                self.exitcode = -15
+
+            def join(self, _timeout):
+                return None
+
+            def close(self):
+                return None
+
+        process = ExpiringGatedProcess(identity["pid"])
+        process_ref["process"] = process
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "expired-before-authorized-start",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": GEN_A}},
+            "authority": {"lease_id": "expires-during-startup",
+                "expires_at_ns": 100},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                    {"op": "key_state", "key": "A", "down": True},
+                    {"op": "release_all"}]}
+        session.admit_standard_action(CALL_ID, ACTION_ID,
+            binding["target_binding_id"], program,
+            operation_deadline_ns=100, current_observation_seq=1,
+            current_binding_revision=1)
+        gate_opened = []
+
+        result = session.start_producer(CALL_ID, lambda _action: (
+            process, lambda: identity,
+            lambda: gate_opened.append(True)))
+
+        self.assertEqual(result["action"]["status"], "not_dispatched")
+        self.assertEqual(result["action"]["result"]["reason"],
+                         "authority_expired_before_start_gate")
+        self.assertIs(result["action"]["input_dispatched"], False)
+        self.assertIs(result["action"]["release_confirmed"], False)
+        self.assertIsNone(result["action"]["task_success"])
+        self.assertFalse(result["action"]["replay_allowed"])
+        self.assertEqual(gate_opened, [])
+        custody = owner.result(ACTION_ID)
+        self.assertEqual(custody["phase"], "unknown")
+        self.assertEqual(custody["producer_gate_state"], "closed")
+        self.assertEqual(custody["uncertainty"],
+                         "producer_start_after_deadline")
+        custody_fence.confirm_producer_absent.assert_called_once_with(identity)
+        custody_fence.abort_unstarted.assert_called_once_with(ACTION_ID, GEN_A,
+            start_gate_verified_closed=True, input_dispatched=False,
+            producer_absent_verified=True)
 
     def test_standard_program_is_forwarded_to_the_supervised_producer(self):
         self.session.bind_target_generation_reader(lambda: GEN_A)
@@ -741,40 +861,81 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.process.exitcode = 0
         self.assertTrue(self.owner.producer_retired(ACTION_ID, GEN_A, self.process))
         recovery = self.owner.claim_recovery(ACTION_ID, GEN_A)
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+                     "status": "returned"}]
+        self.owner.recovery_release_attempted(ACTION_ID, GEN_A,
+            recovery["recovery_id"], attempts)
         self.assertTrue(self.owner.recovery_completed(ACTION_ID, GEN_A,
             recovery["recovery_id"], release_accepted=True,
             readback={"operation_id":ACTION_ID, "target_generation":GEN_A,
                       "recovery_id":recovery["recovery_id"], "neutral":True}))
         result = self.session.interface_result(CALL_ID)
-        self.assertEqual(result["action"]["status"], "running")
-        self.assertIsNone(result["action"]["result"])
+        self.assertEqual(result["action"]["status"], "recovered")
+        self.assertEqual(result["action"]["result"]["status"], "recovered")
         self.assertEqual(result["cancellation"]["status"], "recovered")
         self.assertTrue(result["cancellation"]["release_confirmed"])
+        self.assertEqual(result["action"]["recovery_release_key_up_attempts"],
+                         attempts)
+        self.assertEqual(result["action"]["result"][
+            "recovery_release_key_up_attempts"], attempts)
         self.assertIsNone(result["cancellation"]["task_success"])
         self.assertFalse(result["cancellation"]["replay_allowed"])
 
+    def test_standard_recovery_attempts_are_exposed_on_retained_action_result(self):
+        self.start_action()
+        record = self.session._calls[CALL_ID]
+        record["standard_program"] = {"program_id": "fixture"}
+        self.session.cancel_guarded(CALL_ID, cancellation_operation_id="3" * 32,
+            cleanup_deadline_ns=self.clock() + 3_000_000_000)
+        self.process.alive = False
+        self.process.exitcode = 0
+        self.assertTrue(self.owner.producer_retired(ACTION_ID, GEN_A, self.process))
+        recovery = self.owner.claim_recovery(ACTION_ID, GEN_A)
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+                     "status": "returned"}]
+        self.owner.recovery_release_attempted(ACTION_ID, GEN_A,
+            recovery["recovery_id"], attempts)
+        self.assertTrue(self.owner.recovery_completed(ACTION_ID, GEN_A,
+            recovery["recovery_id"], release_accepted=True,
+            readback={"operation_id": ACTION_ID, "target_generation": GEN_A,
+                "recovery_id": recovery["recovery_id"], "neutral": True}))
+
+        result = self.session.interface_result(CALL_ID)
+        self.assertEqual(result["action"]["status"], "recovered")
+        self.assertEqual(result["action"]["result"][
+            "recovery_release_key_up_attempts"], attempts)
+        self.assertTrue(result["cancellation"]["release_confirmed"])
+        self.assertIsNone(result["action"]["result"]["task_success"])
+
     def test_orphan_recovery_is_generation_bound_and_keeps_source_action_unknown(self):
         recovery_receipt = {"status": "recovered", "release_confirmed": True,
-            "operation_id": ACTION_ID, "target_generation": GEN_A,
+            "operation_id": ACTION_ID, "target_generation": GEN_B,
+            "source_target_generation": GEN_A,
+            "recovery_target_generation": GEN_B,
             "recovery_id": "3" * 32, "readback": {"neutral": True}}
         supervisor = FakeCancellationSupervisor(self.owner)
         def recover_orphaned_input(operation_id, generation, recovery_id,
-                                   deadline_ns, obligations):
+                                   deadline_ns, obligations, *,
+                                   recovery_target_generation=None):
             return {**recovery_receipt, "operation_id": operation_id,
                     "target_generation": generation,
+                    "source_target_generation": generation,
+                    "recovery_target_generation": recovery_target_generation,
                     "recovery_id": recovery_id}
         supervisor.recover_orphaned_input = Mock(
             side_effect=recover_orphaned_input)
         session = OwnedWin32SessionOwner(self.owner, supervisor,
                                          synthetic_only=False)
-        session.bind_target_generation_reader(lambda: GEN_A)
+        session.bind_target_generation_reader(lambda: GEN_B)
 
         result = session.recover_orphaned_input(
             source_operation_id=ACTION_ID,
             source_target_generation=GEN_A,
             obligations=["key:map01:W"],
-            source_custody_record=orphan_custody_record())
+            source_custody_record=orphan_custody_record(),
+            recovery_target_generation=GEN_B)
 
+        self.assertEqual(result["status"], "recovered")
         self.assertEqual(result["recovery_status"], "recovered")
         self.assertEqual(result["source_action_status"], "unknown")
         self.assertIsNone(result["task_success"])
@@ -802,7 +963,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 operation_deadline_ns=self.clock() + 5_000_000_000,
                 obligations=["key:map01:W"])
 
-        session.bind_target_generation_reader(lambda: GEN_B)
+        session.bind_target_generation_reader(lambda: GEN_C)
         fresh_generation = session.bind_target_generation()
         admitted = session.admit_action_from_binding("6" * 32, "7" * 32,
             fresh_generation["target_binding_id"],
@@ -893,14 +1054,17 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 process_identity_reader=lambda _handle: None)
             supervisor = FakeCancellationSupervisor(operation_owner)
             def recover(operation_id, generation, recovery_id, deadline_ns,
-                        obligations):
+                        obligations, *, recovery_target_generation=None):
                 return {"status": "recovered", "release_confirmed": True,
                     "operation_id": operation_id,
-                    "target_generation": generation,
+                    "target_generation": recovery_target_generation or generation,
+                    "source_target_generation": generation,
+                    "recovery_target_generation": recovery_target_generation or generation,
                     "recovery_id": recovery_id,
                     "late_input_horizon_verified": True,
                     "late_input_horizon_ns": 100,
                     "late_input_release_received_monotonic_ns": 200,
+                    "late_input_observation_start_monotonic_ns": 210,
                     "late_input_observation_end_monotonic_ns": 300,
                     "late_input_observation_count": 2,
                     "late_input_max_observed_gap_ns": 100,
@@ -909,7 +1073,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
             session = OwnedWin32SessionOwner(operation_owner, supervisor,
                 synthetic_only=False, custody_fence=fence)
             fence.confirm_producer_absent = Mock(return_value=True)
-            generation = [GEN_A]
+            generation = [GEN_B]
             session.bind_target_generation_reader(lambda: generation[0])
             custody_record = orphan_custody_record()
             custody_record["late_server_request_possible"] = True
@@ -917,11 +1081,20 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 source_operation_id=ACTION_ID,
                 source_target_generation=GEN_A,
                 obligations=["key:map01:W"],
-                source_custody_record=custody_record)
+                source_custody_record=custody_record,
+                recovery_target_generation=GEN_B)
             self.assertEqual(receipt["recovery_status"], "recovered")
             self.assertEqual(fence.snapshot()["state"]["status"], "clear")
 
-            generation[0] = GEN_B
+            binding = session.bind_target_generation()
+            with self.assertRaisesRegex(ValueError,
+                    "FRESH_TARGET_GENERATION_REQUIRED"):
+                session.admit_action_from_binding("4" * 32, "5" * 32,
+                    binding["target_binding_id"],
+                    operation_deadline_ns=self.clock() + 5_000_000_000,
+                    obligations=["key:map01:W"])
+
+            generation[0] = GEN_C
             binding = session.bind_target_generation()
             admitted = session.admit_action_from_binding("5" * 32, "6" * 32,
                 binding["target_binding_id"],
@@ -960,6 +1133,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
                         "late_input_horizon_verified": True,
                         "late_input_horizon_ns": 100,
                         "late_input_release_received_monotonic_ns": 200,
+                        "late_input_observation_start_monotonic_ns": 210,
                         "late_input_observation_end_monotonic_ns": 300,
                         "late_input_observation_count": 2,
                         "late_input_max_observed_gap_ns": 100,
@@ -1003,7 +1177,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
             supervisor.confirm_producer_absent = Mock(return_value=True)
             session = OwnedWin32SessionOwner(owner, supervisor,
                 synthetic_only=False, custody_fence=fence)
-            session.bind_target_generation_reader(lambda: GEN_A)
+            session.bind_target_generation_reader(lambda: GEN_B)
             record = orphan_custody_record()
             record["late_server_request_possible"] = True
             record["dispatch"]["input_dispatched"] = False
@@ -1011,7 +1185,8 @@ class OwnedWin32SessionTests(unittest.TestCase):
             receipt = session.recover_orphaned_input(
                 source_operation_id=ACTION_ID,
                 source_target_generation=GEN_A,
-                obligations=["key:map01:W"], source_custody_record=record)
+                obligations=["key:map01:W"], source_custody_record=record,
+                recovery_target_generation=GEN_B)
 
             self.assertEqual(receipt["recovery_status"], "not_dispatched")
             self.assertFalse(receipt["release_confirmed"])
@@ -1041,7 +1216,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 fence.confirm_producer_absent = Mock(return_value=absent)
                 session = OwnedWin32SessionOwner(owner, supervisor,
                     synthetic_only=False, custody_fence=fence)
-                session.bind_target_generation_reader(lambda: GEN_A)
+                session.bind_target_generation_reader(lambda: GEN_B)
                 record = orphan_custody_record()
                 record["late_server_request_possible"] = True
                 record["dispatch"]["input_dispatched"] = False
@@ -1049,9 +1224,11 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 receipt = session.recover_orphaned_input(
                     source_operation_id=ACTION_ID,
                     source_target_generation=GEN_A,
-                    obligations=["key:map01:W"], source_custody_record=record)
+                    obligations=["key:map01:W"], source_custody_record=record,
+                    recovery_target_generation=GEN_B)
 
                 if absent:
+                    self.assertEqual(receipt["status"], "not_dispatched")
                     self.assertEqual(receipt["recovery_status"], expected)
                     self.assertFalse(receipt["release_confirmed"])
                     self.assertEqual(fence.snapshot()["state"]["status"], "clear")
@@ -1107,6 +1284,81 @@ class OwnedWin32SessionTests(unittest.TestCase):
             self.assertEqual(fence.snapshot()["state"]["status"], "clear")
             fence.close()
 
+    def test_normal_completion_rejects_overlong_exit_to_first_observation_gap(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fence = Win32CustodyFence(directory, "7" * 64,
+                mutex_factory=SharedTestMutex)
+            owner = OperationOwner(clock_ns=self.clock,
+                process_identity_reader=lambda handle: self.identity
+                if handle is self.process else None)
+            session = OwnedWin32SessionOwner(owner,
+                FakeCancellationSupervisor(owner), synthetic_only=False,
+                custody_fence=fence)
+            session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=["key:map01:W"])
+            self.assertTrue(session.producer_started(CALL_ID, self.process,
+                process_identity=self.identity))
+            self.assertTrue(owner.authorize_producer_start(ACTION_ID, GEN_A,
+                self.process, lambda: None))
+            self.process.alive = False
+            self.process.exitcode = 0
+            exit_ns = self.clock()
+            owner._clock_ns = lambda: exit_ns + 2000
+            readback = {"operation_id": ACTION_ID,
+                "target_generation": GEN_A,
+                "producer_exit_confirmed_ns": exit_ns,
+                "observed_monotonic_ns": exit_ns + 1000,
+                "neutral": True, "late_input_horizon_ns": 100,
+                "late_input_horizon_verified": True,
+                "late_input_observation_count": 3,
+                "late_input_observation_start_monotonic_ns": exit_ns,
+                "late_input_observation_end_monotonic_ns": exit_ns + 1200,
+                "late_input_max_observed_gap_ns": 1000,
+                "late_input_max_sample_gap_ns": 100}
+            row = session.complete_action(CALL_ID, self.process,
+                {"status": "completed", "task_success": None,
+                 "replay_allowed": False},
+                release_receipt={"verified": True, "keys_down": [],
+                    "buttons_down": [], "keys_unknown": [],
+                    "buttons_unknown": []}, readback=readback)
+            self.assertEqual(row["action"]["status"], "unknown", row)
+            self.assertFalse(row["action"]["release_confirmed"], row)
+            self.assertEqual(fence.snapshot()["state"]["status"], "unresolved")
+            fence.close()
+
+    def test_async_recovery_rejects_horizon_above_configured_maximum(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fence = Win32CustodyFence(directory, "8" * 64,
+                mutex_factory=SharedTestMutex)
+            fence.admit(ACTION_ID, GEN_A, ["key:map01:W"])
+            fence.update(ACTION_ID, GEN_A, phase="unknown", input_dispatched=True)
+            session = OwnedWin32SessionOwner(self.owner, self.supervisor,
+                synthetic_only=False, custody_fence=fence)
+            session._owner.result = Mock(return_value={
+                "phase": "recovered", "status": "recovered",
+                "release_confirmed": True, "operation_id": ACTION_ID,
+                "target_generation": GEN_A,
+                "late_input_horizon_ns": 60_000_000_001,
+                "late_input_release_received_ns": 100,
+                "late_input_observation_start_ns": 110,
+                "late_input_observation_end_ns": 60_000_000_101,
+                "late_input_observation_count": 2,
+                "late_input_max_observed_gap_ns": 100,
+                "late_input_max_sample_gap_ns": 100,
+                "late_input_validation_error": None})
+            record = {"action": {"operation_id": ACTION_ID,
+                    "target_generation": GEN_A, "status": "running",
+                    "program_actions_lower_bound": 1},
+                "standard_program": {"program_id": "fixture"},
+                "cancellation": {"action_operation_id": ACTION_ID,
+                    "target_generation": GEN_A}}
+
+            session._refresh(record)
+
+            self.assertEqual(fence.snapshot()["state"]["status"], "unresolved")
+            fence.close()
+
     def test_late_request_risk_requires_verified_horizon_before_new_generation(self):
         supervisor = FakeCancellationSupervisor(self.owner)
         supervisor.recover_orphaned_input = Mock(return_value={
@@ -1147,6 +1399,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 "recovery_id": recovery_id, "late_input_horizon_verified": True,
                 "late_input_horizon_ns": 100,
                 "late_input_release_received_monotonic_ns": 200,
+                "late_input_observation_start_monotonic_ns": 210,
                 "late_input_observation_end_monotonic_ns": 300,
                 "late_input_observation_count": 2,
                 "late_input_max_observed_gap_ns": 100,
@@ -1175,7 +1428,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
             obligations=["key:map01:W"])
         self.assertEqual(admitted["action"]["status"], "admitted")
 
-    def test_late_request_overlong_observation_gap_keeps_new_generation_fenced(self):
+    def test_late_request_overlong_release_to_first_sample_gap_keeps_fenced(self):
         supervisor = FakeCancellationSupervisor(self.owner)
         def recovered(operation_id, generation, recovery_id, deadline_ns,
                       obligations):
@@ -1184,9 +1437,10 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 "recovery_id": recovery_id, "late_input_horizon_verified": True,
                 "late_input_horizon_ns": 100,
                 "late_input_release_received_monotonic_ns": 200,
-                "late_input_observation_end_monotonic_ns": 300,
+                "late_input_observation_start_monotonic_ns": 401,
+                "late_input_observation_end_monotonic_ns": 600,
                 "late_input_observation_count": 2,
-                "late_input_max_observed_gap_ns": 201,
+                "late_input_max_observed_gap_ns": 100,
                 "late_input_max_sample_gap_ns": 200}
         supervisor.recover_orphaned_input = Mock(side_effect=recovered)
         session = OwnedWin32SessionOwner(self.owner, supervisor,
@@ -1272,10 +1526,14 @@ class OwnedWin32SessionTests(unittest.TestCase):
             with self.subTest(input_dispatched=dispatched):
                 supervisor = FakeCancellationSupervisor(self.owner)
                 def recover_orphaned_input(operation_id, generation,
-                                           recovery_id, deadline_ns, obligations):
+                                           recovery_id, deadline_ns, obligations,
+                                           *, recovery_target_generation=None):
                     return {"status": "recovered", "release_confirmed": True,
                         "operation_id": operation_id,
-                        "target_generation": generation,
+                        "target_generation": recovery_target_generation,
+                        "source_target_generation": generation,
+                        "recovery_target_generation": (recovery_target_generation
+                            or generation),
                         "recovery_id": recovery_id,
                         "readback": {"neutral": True}}
                 supervisor.recover_orphaned_input = Mock(
@@ -1314,7 +1572,8 @@ class OwnedWin32SessionTests(unittest.TestCase):
             source_custody_record=orphan_custody_record())
 
         self.assertEqual(result["recovery_status"], "refused")
-        self.assertEqual(result["reason"], "target_generation_mismatch")
+        self.assertEqual(result["reason"],
+                         "recovery_target_generation_mismatch")
         supervisor.recover_orphaned_input.assert_not_called()
 
     def test_inconsistent_orphan_record_refuses_before_release(self):

@@ -2,10 +2,34 @@ import time
 import unittest
 
 from runtime.cli_v1.supervised_win32_compiled import (
-    _terminal, run_public_compiled)
+    _recovery_attempts_match_obligations, _terminal, run_public_compiled)
 
 
 class SupervisedWin32CompiledCallerTests(unittest.TestCase):
+    def test_recovery_attempt_receipt_matches_key_obligations(self):
+        self.assertTrue(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], [{"virtual_key": 0x57,
+                "encoding": "scan_code", "status": "returned"}]))
+        self.assertTrue(_recovery_attempts_match_obligations(
+            ["key:fixture:W"], [{"virtual_key": 0x57,
+                "encoding": "virtual_key", "status": "raised",
+                "error_type": "OSError"}]))
+        self.assertTrue(_recovery_attempts_match_obligations(
+            ["button:fixture:left", "unicode:0041"], []))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], None))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], []))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], [{"virtual_key": 0x57,
+                "encoding": "virtual_key", "status": "returned"}]))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:scan_code"], [{"virtual_key": 0x41,
+                "encoding": "scan_code", "status": "returned"}]))
+        self.assertFalse(_recovery_attempts_match_obligations(
+            ["key:fixture:W:invalid"], [{"virtual_key": 0x57,
+                "encoding": "scan_code", "status": "returned"}]))
+
     def test_retrieved_dispatch_requires_exact_call_and_generation(self):
         call_id = "a" * 32
         generation = "b" * 64
@@ -50,12 +74,152 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIs(wrong_generation["release"]["verified"], False)
 
         recovered = {**retrieved, "action": {**retrieved["action"],
-            "status": "recovered", "result": {"status": "recovered",
+            "status": "recovered", "completion_custody": None,
+            "result": {"status": "recovered",
                 "input_dispatched": True, "release_confirmed": True}}}
         recovered_terminal = _terminal(recovered, "move",
             expected_call_id=call_id, expected_generation=generation)
-        self.assertEqual(recovered_terminal["status"], "delivery_uncertain")
-        self.assertIs(recovered_terminal["release"]["verified"], True)
+        self.assertEqual(recovered_terminal["status"], "uncertain")
+        self.assertIs(recovered_terminal["release"]["verified"], False)
+
+    def test_recovered_dispatch_requires_joined_complete_cancellation_horizon(self):
+        call_id = "a" * 32
+        operation_id = "c" * 32
+        recovery_id = "d" * 32
+        generation = "b" * 64
+        release_ns = 10_000_000_000
+        horizon_ns = 2_000_000_000
+        result = {"operation_id": operation_id,
+            "target_generation": generation, "status": "recovered",
+            "phase": "recovered", "release_confirmed": True,
+            "replay_allowed": False, "producer_exit_code": -15,
+            "producer_identity": {"pid": 1234,
+                "creation_time_100ns": 987654321},
+            "late_input_horizon_ns": horizon_ns,
+            "late_input_max_sample_gap_ns": 100_000_000,
+            "late_input_max_observed_gap_ns": 32_000_000,
+            "late_input_observation_count": 77,
+            "late_input_release_received_ns": release_ns,
+            "late_input_observation_start_ns": release_ns,
+            "late_input_observation_end_ns": release_ns + horizon_ns,
+            "late_input_validation_error": None, "recovery_id": recovery_id,
+            "recovery_release_key_up_attempts": [{"virtual_key": 0x57,
+                "encoding": "virtual_key", "status": "returned"}],
+            "obligations": ["key:fixture:W"],
+            "readback": {"operation_id": operation_id,
+                "target_generation": generation, "recovery_id": recovery_id,
+                "neutral": True,
+                "observed_monotonic_ns": release_ns + horizon_ns,
+                "key_button_states": [False], "unicode_event_units": 0}}
+        recovered = {"call_id": call_id, "input_dispatched": False,
+            "action": {"operation_id": operation_id,
+                "target_generation": generation, "status": "recovered",
+                "obligations": ["key:fixture:W"],
+                "release_confirmed": True,
+                "result": {"status": "recovered",
+                    "input_dispatched": None,
+                    "release_confirmed": True}},
+            "cancellation": {"operation_id": "e" * 32,
+                "action_operation_id": operation_id,
+                "target_generation": generation, "status": "recovered",
+                "owner_phase": "recovered", "release_confirmed": True,
+                "replay_allowed": False, "result": result}}
+
+        accepted = _terminal(recovered, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(accepted["status"], "delivery_uncertain")
+        self.assertIs(accepted["release"]["verified"], True)
+        self.assertNotIn("input_dispatched", accepted)
+
+        invalid_receipts = []
+        wrong_call = {**recovered, "call_id": "e" * 32}
+        invalid_receipts.append(wrong_call)
+        wrong_operation = {**recovered, "cancellation": {
+            **recovered["cancellation"], "action_operation_id": "f" * 32}}
+        invalid_receipts.append(wrong_operation)
+        wrong_generation = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "target_generation": "e" * 64}}}
+        invalid_receipts.append(wrong_generation)
+        short_horizon = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "late_input_observation_end_ns":
+                    release_ns + horizon_ns - 1}}}
+        invalid_receipts.append(short_horizon)
+        unobserved_initial_gap = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result,
+                "late_input_observation_start_ns": release_ns +
+                    result["late_input_max_sample_gap_ns"] + 1,
+                "late_input_observation_end_ns": release_ns +
+                    result["late_input_max_sample_gap_ns"] + 1 + horizon_ns}}}
+        invalid_receipts.append(unobserved_initial_gap)
+        bad_sampling = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "late_input_max_observed_gap_ns":
+                    result["late_input_max_sample_gap_ns"] + 1}}}
+        invalid_receipts.append(bad_sampling)
+        for field, value in (
+                ("operation_id", "f" * 32),
+                ("target_generation", "e" * 64),
+                ("recovery_id", "f" * 32),
+                ("neutral", False),
+                ("observed_monotonic_ns", release_ns + horizon_ns - 1),
+                ("key_button_states", [True]),
+                ("unicode_event_units", 1)):
+            invalid_readback = {**recovered, "cancellation": {
+                **recovered["cancellation"], "result": {
+                    **result, "readback": {**result["readback"], field: value}}}}
+            invalid_receipts.append(invalid_readback)
+        for obligations in (["unknown:fixture"],
+                            ["key:fixture:W", "key:fixture:W"]):
+            invalid_obligations = {**recovered, "cancellation": {
+                **recovered["cancellation"], "result": {
+                    **result, "obligations": obligations}}}
+            invalid_receipts.append(invalid_obligations)
+        boolean_unicode_count = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "obligations": ["unicode:A"],
+                "readback": {**result["readback"],
+                    "key_button_states": [],
+                    "unicode_event_units": True}}}}
+        invalid_receipts.append(boolean_unicode_count)
+        missing_action_obligations = {**recovered, "action": {
+            key: value for key, value in recovered["action"].items()
+            if key != "obligations"}}
+        invalid_receipts.append(missing_action_obligations)
+        mismatched_action_obligations = {**recovered, "action": {
+            **recovered["action"], "obligations": ["key:fixture:A"]}}
+        invalid_receipts.append(mismatched_action_obligations)
+        empty_obligations = {**recovered,
+            "action": {**recovered["action"], "obligations": []},
+            "cancellation": {**recovered["cancellation"], "result": {
+                **result, "obligations": [],
+                "recovery_release_key_up_attempts": [],
+                "readback": {**result["readback"],
+                    "key_button_states": [],
+                    "unicode_event_units": 0}}}}
+        empty_terminal = _terminal(empty_obligations, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(empty_terminal["status"], "delivery_uncertain")
+        self.assertIs(empty_terminal["release"]["verified"], True)
+        missing_readback = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                key: value for key, value in result.items()
+                if key != "readback"}}}
+        invalid_receipts.append(missing_readback)
+        custody_only = {**recovered, "cancellation": None, "action": {
+            **recovered["action"], "completion_custody": {
+                "release_confirmed": True,
+                "completion_readback_outcome": "verified"}}}
+        invalid_receipts.append(custody_only)
+        for invalid in invalid_receipts:
+            with self.subTest(invalid=invalid):
+                terminal = _terminal(invalid, "move",
+                    expected_call_id=call_id,
+                    expected_generation=generation)
+                self.assertEqual(terminal["status"], "uncertain")
+                self.assertIs(terminal["release"]["verified"], False)
 
     def test_pending_dispatch_joins_same_call_id_readback_before_task_verification(self):
         generation = "b" * 64
@@ -169,6 +333,155 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(dispatch_evidence["call_id"], dispatch_id)
         self.assertEqual(dispatch_evidence["action_id"], operation_id)
         self.assertTrue(dispatch_evidence["release_verified"])
+
+    def test_recovered_dispatch_scores_task_effect_without_completing_graph(self):
+        generation = "b" * 64
+        dispatch_id = "a" * 32
+        operation_id = "c" * 32
+        verify_calls = []
+        include_attempt_receipt = [True]
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "recovered-effect-is-independent-of-graph",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready", "moved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"moved": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True},
+                        "outcome": "action", "action": "move",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"moved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": generation}},
+            "authority": {"lease_id": "template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"},
+                {"op": "release_all"}]}
+
+        def observe(target, frame, region):
+            return {"status": "returned", "call_id": "1" * 32,
+                "target": target, "target_generation": generation,
+                "target_generation_consistency": "matched",
+                "observation": {"target": target,
+                    "capture_started_ns": time.monotonic_ns()},
+                "observation_id": "recovered-observation",
+                "predicates": {"ready": True, "moved": False}}
+
+        def dispatch(_program, _sequence, _binding_revision):
+            return {"status": "pending", "call_id": dispatch_id,
+                "operation_invoked": True, "input_dispatched": None,
+                "release_confirmed": False, "replay_allowed": False}
+
+        def resolve_pending(call_id, _pending_reply):
+            self.assertEqual(call_id, dispatch_id)
+            release_ns = time.monotonic_ns() - 2_100_000_000
+            observation_start_ns = release_ns + 10_000_000
+            observation_end_ns = observation_start_ns + 2_000_000_000
+            cancellation_result = {"operation_id": operation_id,
+                "target_generation": generation, "status": "recovered",
+                "phase": "recovered", "release_confirmed": True,
+                "replay_allowed": False, "producer_exit_code": -15,
+                "producer_identity": {"pid": 1234,
+                    "creation_time_100ns": 987654321},
+                "recovery_id": "d" * 32,
+                "late_input_horizon_ns": 2_000_000_000,
+                "late_input_max_sample_gap_ns": 100_000_000,
+                "late_input_max_observed_gap_ns": 32_000_000,
+                "late_input_observation_count": 77,
+                "late_input_release_received_ns": release_ns,
+                "late_input_observation_start_ns": observation_start_ns,
+                "late_input_observation_end_ns": observation_end_ns,
+                "late_input_validation_error": None,
+                **({"recovery_release_key_up_attempts": [{
+                    "virtual_key": 0x57, "encoding": "scan_code",
+                    "status": "returned"}]}
+                    if include_attempt_receipt[0] else {}),
+                "obligations": ["key:fixture:W:scan_code"],
+                "readback": {"operation_id": operation_id,
+                    "target_generation": generation,
+                    "recovery_id": "d" * 32, "neutral": True,
+                    "observed_monotonic_ns": observation_end_ns,
+                    "key_button_states": [False],
+                    "unicode_event_units": 0}}
+            return {"call_id": call_id, "input_dispatched": False,
+                "action": {"operation_id": operation_id,
+                    "target_generation": generation, "status": "recovered",
+                    "obligations": ["key:fixture:W:scan_code"],
+                    "release_confirmed": True,
+                    "result": {"status": "recovered",
+                        "input_dispatched": None,
+                        "release_confirmed": True}},
+                "cancellation": {"operation_id": "e" * 32,
+                    "action_operation_id": operation_id,
+                    "target_generation": generation, "status": "recovered",
+                    "owner_phase": "recovered", "release_confirmed": True,
+                    "replay_allowed": False, "result": cancellation_result}}
+
+        def verify_task(call_id):
+            verify_calls.append(call_id)
+            requested_ns = time.monotonic_ns()
+            observed_ns = time.monotonic_ns()
+            received_ns = time.monotonic_ns()
+            task_receipt = {"call_id": call_id, "operation_id": operation_id,
+                "target_generation": generation, "oracle_id": "f" * 32,
+                "outcome": "success", "observed_monotonic_ns": observed_ns,
+                "evidence_ref": "saved-effect-proof"}
+            return {"status": "verified", "call_id": call_id,
+                "task_success": True, "operation_invoked": False,
+                "input_dispatched": False, "replay_allowed": False,
+                "scope": "supervised_win32",
+                "task_effect": {"status": "verified", "task_success": True,
+                    "receipt": task_receipt,
+                    "requested_monotonic_ns": requested_ns,
+                    "receipt_received_monotonic_ns": received_ns}}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+
+        self.assertEqual(result["outcome"], "SAFE_YIELD", result)
+        self.assertEqual(result["reason"], "delivery_uncertain")
+        self.assertEqual(result["completed_transitions"], 0)
+        self.assertEqual(verify_calls, [dispatch_id])
+        self.assertTrue(result["task_verification"]["valid"], result)
+        self.assertIs(result["task_success"], True)
+
+        include_attempt_receipt[0] = False
+        receipt_missing_attempt = run_public_compiled(interface,
+            {"move": program}, target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(receipt_missing_attempt["outcome"], "RUNTIME_FAILED")
+        self.assertIsNone(receipt_missing_attempt["task_verification"])
+        self.assertFalse(receipt_missing_attempt["standard_target_evidence"][1][
+            "release_verified"])
+        self.assertEqual(verify_calls, [dispatch_id])
 
     def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
         generation = "c" * 64

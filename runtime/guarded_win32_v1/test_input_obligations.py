@@ -21,13 +21,43 @@ class InputObligationTests(unittest.TestCase):
 
         self.assertEqual(self.derive(program), [
             "button:fixture:left",
-            "key:fixture:A",
-            "key:fixture:CTRL",
-            "key:fixture:S",
+            "key:fixture:A:virtual_key",
+            "key:fixture:CTRL:virtual_key",
+            "key:fixture:S:virtual_key",
             "unicode:0041",
             "unicode:D83D",
             "unicode:DE00",
         ])
+
+    def test_preserves_scan_code_encoding_for_orphan_release(self):
+        program = {"ops": [
+            {"op": "focus", "target": "fixture"},
+            {"op": "key_state", "key": "W", "down": True,
+             "encoding": "scan_code"},
+            {"op": "release_all"},
+        ]}
+
+        self.assertEqual(self.derive(program), [
+            "key:fixture:W:scan_code",
+        ])
+
+    def test_rejects_unknown_or_falsey_key_encodings_before_admission(self):
+        for encoding in ("", "hardware", False, 0):
+            with self.subTest(encoding=encoding):
+                with self.assertRaisesRegex(ValueError,
+                        "unsupported key encoding"):
+                    self.derive({"ops": [
+                        {"op": "focus", "target": "fixture"},
+                        {"op": "key_state", "key": "W", "down": True,
+                         "encoding": encoding},
+                    ]})
+
+    def test_explicit_null_encoding_matches_backend_default(self):
+        self.assertEqual(self.derive({"ops": [
+            {"op": "focus", "target": "fixture"},
+            {"op": "key_state", "key": "W", "down": True,
+             "encoding": None},
+        ]}), ["key:fixture:W:virtual_key"])
 
     def test_refuses_a_focused_input_without_a_target(self):
         with self.assertRaisesRegex(ValueError, "focused target"):

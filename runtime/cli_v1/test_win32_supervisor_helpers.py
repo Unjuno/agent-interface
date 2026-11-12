@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from runtime.cli_v1.win32_supervisor_helpers import (
     _helper_main, _observe, _parse_obligations, _recover)
+from runtime.cli_v1 import win32_supervisor_helpers as supervisor_helpers
 from runtime.guarded_win32_v1.process_cancellation import (
     OperationCancellationSupervisor, _consistent_neutral_observation)
 
@@ -21,6 +22,7 @@ class FakeBackend:
         self.states = dict(states or {})
         self.release_verified = release_verified
         self.held_keys = {}
+        self.held_key_encodings = {}
         self.held_key_targets = {}
         self.held_buttons = set()
         self.held_button_targets = {}
@@ -29,6 +31,7 @@ class FakeBackend:
         self.release_snapshot = None
         self.closed = False
         self.events = []
+        self.key_up_calls = []
 
     def target_generation(self, target):
         if target not in self.targets:
@@ -38,9 +41,14 @@ class FakeBackend:
     def release_all(self):
         self.events.append("release")
         self.release_calls += 1
-        self.release_snapshot = (dict(self.held_keys), set(self.held_buttons),
+        for key, vk in list(self.held_keys.items()):
+            encoding = self.held_key_encodings.get(key)
+            self._send_key(vk, False, encoding)
+        self.release_snapshot = (dict(self.held_keys),
+                                 dict(self.held_key_encodings), set(self.held_buttons),
                                  set(self.pending_unicode_ups))
         self.held_keys.clear()
+        self.held_key_encodings.clear()
         self.held_key_targets.clear()
         self.held_buttons.clear()
         self.held_button_targets.clear()
@@ -54,6 +62,9 @@ class FakeBackend:
 
     def _key_down_state(self, vk, target):
         return self.states.get((vk, target), False)
+
+    def _send_key(self, vk, down, encoding=None):
+        self.key_up_calls.append((vk, down, encoding))
 
     def close(self):
         self.closed = True
@@ -69,17 +80,86 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         request.update(changes)
         return request
 
+    def test_supervisor_retains_key_up_encoding_before_readback(self):
+        class Owner:
+            def __init__(self):
+                self.attempts = None
+                self.completed = []
+                self.unknown = []
+            def recovery_release_attempted(self, _op, _gen, _recovery_id,
+                                           attempts):
+                self.attempts = attempts
+            def recovery_completed(self, *args, **kwargs):
+                self.completed.append((args, kwargs))
+                return True
+            def mark_unknown(self, _op, _gen, reason):
+                self.unknown.append(reason)
+
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: 10
+        supervisor.late_input_horizon_ns = 0
+        supervisor._invalidate_helper = lambda *_: None
+        recovery_id = "3" * 32
+        attempts = [{"virtual_key": 0x57, "encoding": "scan_code",
+                     "status": "returned"}]
+        def exchange(role, request, _deadline):
+            if role == "recovery":
+                return {"operation_id": OPERATION,
+                    "target_generation": GENERATION,
+                    "recovery_id": recovery_id, "release_accepted": True,
+                    "release_key_up_attempts": attempts}
+            return {"operation_id": OPERATION,
+                "target_generation": GENERATION,
+                "recovery_id": recovery_id, "neutral": True,
+                "observed_monotonic_ns": 10,
+                "key_button_states": [False], "unicode_event_units": 0}
+        supervisor._exchange_helper = exchange
+        request = {"operation_id": OPERATION,
+            "target_generation": GENERATION, "recovery_id": recovery_id,
+            "deadline_ns": 100, "obligations": ["key:fixture:W"]}
+        supervisor._run_recovery(OPERATION, GENERATION, request)
+        self.assertEqual(owner.attempts, attempts)
+        self.assertEqual(len(owner.completed), 1)
+        self.assertEqual(owner.unknown, [])
+
     def test_parse_obligations_retains_each_input_domain(self):
         result = _parse_obligations(self.request()["obligations"])
-        self.assertEqual(result, {"keys": [("fixture", "CTRL")],
+        self.assertEqual(result, {"keys": [("fixture", "CTRL", "virtual_key")],
             "buttons": [("fixture", "left")], "unicode": [0x41]})
+
+    def test_parse_obligations_preserves_colons_in_configured_target_names(self):
+        result = _parse_obligations([
+            "key:desk:game:W:scan_code",
+            "button:desk:game:left",
+        ])
+        self.assertEqual(result, {
+            "keys": [("desk:game", "W", "scan_code")],
+            "buttons": [("desk:game", "left")],
+            "unicode": [],
+        })
+
+    def test_orphan_recovery_releases_key_for_colon_target_name(self):
+        backend = FakeBackend({"desk:game": 44})
+        result = _recover(self.request(obligations=[
+                "key:desk:game:W:scan_code"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"desk:game": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(backend.targets, {"desk:game": 44})
+        self.assertEqual(backend.release_snapshot[1], {"W": "scan_code"})
+        self.assertEqual(result["release_key_up_attempts"], [{
+            "virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}])
 
     def test_cancel_recovery_rejects_stale_or_invalid_readback_time(self):
         for observed in (9, 11, None, True):
             with self.subTest(observed=observed):
                 class Owner:
-                    def __init__(self): self.unknown = []; self.completed = []
+                    def __init__(self): self.unknown = []; self.completed = []; self.attempts = []
                     def mark_unknown(self, operation_id, generation, reason): self.unknown.append(reason)
+                    def recovery_release_attempted(self, *args): self.attempts.append(args)
                     def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
                 owner = Owner()
                 supervisor = object.__new__(OperationCancellationSupervisor)
@@ -90,7 +170,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 def exchange(role, request, deadline):
                     row = {"operation_id": OPERATION, "target_generation": GENERATION,
                            "recovery_id": recovery_id}
-                    if role == "recovery": row["release_accepted"] = True
+                    if role == "recovery":
+                        row["release_accepted"] = True
+                        row["release_key_up_attempts"] = []
                     else: row.update(neutral=True, observed_monotonic_ns=observed,
                         key_button_states=[False for item in request["obligations"] if item.startswith(("key:", "button:"))],
                         unicode_event_units=sum(item.startswith("unicode:") for item in request["obligations"]))
@@ -104,8 +186,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
 
     def test_cancel_recovery_rejects_contradictory_neutral_state(self):
         class Owner:
-            def __init__(self): self.unknown = []; self.completed = []
+            def __init__(self): self.unknown = []; self.completed = []; self.attempts = []
             def mark_unknown(self, op, generation, reason): self.unknown.append(reason)
+            def recovery_release_attempted(self, *args): self.attempts.append(args)
             def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
         owner = Owner()
         supervisor = object.__new__(OperationCancellationSupervisor)
@@ -115,7 +198,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         def exchange(role, request, deadline):
             row = {"operation_id": OPERATION, "target_generation": GENERATION,
                    "recovery_id": recovery_id}
-            if role == "recovery": row["release_accepted"] = True
+            if role == "recovery":
+                row["release_accepted"] = True
+                row["release_key_up_attempts"] = []
             else: row.update(neutral=True, observed_monotonic_ns=10,
                 key_button_states=[True], unicode_event_units=0)
             return row
@@ -135,6 +220,8 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         def exchange(role, request, deadline):
             requests.append((role, request, deadline))
             row = {"operation_id": OPERATION,
+                "source_target_generation": request.get(
+                    "source_target_generation", GENERATION),
                 "target_generation": GENERATION,
                 "recovery_id": recovery_id}
             if role == "recovery":
@@ -174,7 +261,10 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         recovery_id = "3" * 32
         def exchange(role, request, deadline):
             calls.append((role, list(request["obligations"])))
-            row = {"operation_id": OPERATION, "target_generation": GENERATION,
+            row = {"operation_id": OPERATION,
+                   "source_target_generation": request.get(
+                       "source_target_generation", GENERATION),
+                   "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
             if role == "observer":
@@ -191,6 +281,45 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                                  ("observer", ["key:fixture:W"])])
         self.assertEqual(obligations, ["key:fixture:CTRL"])
 
+    def test_orphan_recovery_binds_release_to_new_generation_and_keeps_source(self):
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = lambda: 10
+        recovery_id = "4" * 32
+        recovery_generation = "b" * 64
+        requests = []
+
+        def exchange(role, request, deadline):
+            requests.append((role, dict(request)))
+            row = {"operation_id": OPERATION,
+                "source_target_generation": request[
+                    "source_target_generation"],
+                "target_generation": request["target_generation"],
+                "recovery_id": recovery_id}
+            if role == "recovery":
+                row["release_accepted"] = True
+            else:
+                row.update(neutral=True, observed_monotonic_ns=10,
+                    key_button_states=[False], unicode_event_units=0)
+            return row
+
+        supervisor._exchange_helper = exchange
+        supervisor._invalidate_helper = lambda *_: self.fail(
+            "valid new-generation recovery must preserve helpers")
+        result = supervisor.recover_orphaned_input(OPERATION, GENERATION,
+            recovery_id, 100, ["key:fixture:W"],
+            recovery_target_generation=recovery_generation)
+
+        self.assertEqual(result["status"], "recovered")
+        self.assertEqual(result["target_generation"], GENERATION)
+        self.assertEqual(result["source_target_generation"], GENERATION)
+        self.assertEqual(result["recovery_target_generation"],
+                         recovery_generation)
+        self.assertEqual(requests[0][1]["source_target_generation"], GENERATION)
+        self.assertEqual(requests[0][1]["target_generation"],
+                         recovery_generation)
+        self.assertEqual(requests[1][1]["target_generation"],
+                         recovery_generation)
+
     def test_orphan_recovery_retains_bound_late_input_horizon(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
         now = [10]
@@ -202,6 +331,8 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         def exchange(role, request, deadline):
             requests.append(role)
             row = {"operation_id": OPERATION,
+                "source_target_generation": request.get(
+                    "source_target_generation", GENERATION),
                 "target_generation": GENERATION, "recovery_id": recovery_id}
             if role == "recovery":
                 row["release_accepted"] = True
@@ -239,6 +370,8 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         observer_count = [0]
         def exchange(role, request, deadline):
             row = {"operation_id": OPERATION,
+                "source_target_generation": request.get(
+                    "source_target_generation", GENERATION),
                 "target_generation": GENERATION, "recovery_id": recovery_id}
             if role == "recovery":
                 row["release_accepted"] = True
@@ -269,7 +402,10 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         supervisor._clock_ns = lambda: next(times)
         recovery_id = "3" * 32
         def exchange(role, request, deadline):
-            row = {"operation_id": OPERATION, "target_generation": GENERATION,
+            row = {"operation_id": OPERATION,
+                   "source_target_generation": request.get(
+                       "source_target_generation", GENERATION),
+                   "target_generation": GENERATION,
                    "recovery_id": recovery_id}
             row["release_accepted" if role == "recovery" else "neutral"] = True
             if role == "observer":
@@ -400,7 +536,151 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertIs(result["release_accepted"], True)
         self.assertEqual(result["operation_id"], "1" * 32)
         self.assertEqual(instances[0].release_snapshot,
-            ({"CTRL": 0x11}, {"left"}, {0x41}))
+            ({"CTRL": 0x11}, {"CTRL": "virtual_key"}, {"left"}, {0x41}))
+
+    def test_orphan_recovery_restores_original_scan_code_encoding(self):
+        backend = FakeBackend({"fixture": 44})
+        result = _recover(self.request(obligations=[
+                "key:fixture:W:scan_code"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(backend.release_snapshot[0], {"W": 0x57})
+        self.assertEqual(backend.release_snapshot[1], {"W": "scan_code"})
+        self.assertEqual(result["release_key_up_attempts"], [{
+            "virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}])
+
+    def test_post_release_deadline_keeps_release_and_up_attempt_receipts(self):
+        backend = FakeBackend({"fixture": 44})
+        clock_values = iter((10, 10, 100))
+        result = _recover(self.request(obligations=[
+                "key:fixture:W:scan_code"]),
+            backend_factory=lambda _targets: backend,
+            clock_ns=lambda: next(clock_values),
+            configured_targets={"fixture": 44})
+
+        self.assertEqual(result["status"], "unknown")
+        self.assertEqual(result["reason"], "deadline_expired_after_release")
+        self.assertEqual(result["error_type"], "TimeoutError")
+        self.assertFalse(result["release_accepted"])
+        self.assertEqual(result["release_receipt"], {
+            "verified": True, "keys_down": [], "buttons_down": [],
+            "keys_unknown": [], "buttons_unknown": []})
+        self.assertEqual(result["release_key_up_attempts"], [{
+            "virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}])
+        self.assertEqual(backend.release_calls, 1)
+
+    def test_helper_main_transmits_post_release_unknown_receipt_without_loss(self):
+        class Connection:
+            def __init__(self, request):
+                self.incoming = iter((request, None))
+                self.sent = []
+            def send(self, value):
+                self.sent.append(value)
+            def recv(self):
+                return next(self.incoming)
+
+        backend = FakeBackend({"fixture": 44})
+        request = self.request(obligations=["key:fixture:W:scan_code"])
+        connection = Connection(request)
+        clock_values = iter((10, 10, 100))
+        original_recover = supervisor_helpers._recover
+
+        def recover_with_inert_backend(row, *, configured_targets):
+            return original_recover(row,
+                backend_factory=lambda _targets: backend,
+                clock_ns=lambda: next(clock_values),
+                configured_targets=configured_targets)
+
+        with patch.object(supervisor_helpers, "_recover",
+                          side_effect=recover_with_inert_backend):
+            _helper_main("recovery", {"fixture": 44}, connection)
+
+        self.assertEqual(connection.sent[0], {
+            "status": "ready", "helper": "recovery"})
+        response = connection.sent[1]
+        self.assertEqual(response["status"], "unknown")
+        self.assertEqual(response["reason"], "deadline_expired_after_release")
+        self.assertEqual(response["operation_id"], request["operation_id"])
+        self.assertFalse(response["release_accepted"])
+        self.assertIsInstance(response["release_receipt"], dict)
+        self.assertEqual(response["release_key_up_attempts"], [{
+            "virtual_key": 0x57, "encoding": "scan_code",
+            "status": "returned"}])
+
+    def test_orphan_recovery_releases_each_encoding_for_one_logical_key(self):
+        backend = FakeBackend({"fixture": 44})
+        sent = []
+        backend._send_key = lambda vk, down, encoding=None: sent.append(
+            (vk, down, encoding))
+        result = _recover(self.request(obligations=[
+                "key:fixture:W:scan_code", "key:fixture:W:virtual_key"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(sent, [(0x57, False, "scan_code"),
+                                (0x57, False, "virtual_key")])
+        self.assertEqual(result["release_key_up_attempts"], [
+            {"virtual_key": 0x57, "encoding": "scan_code",
+             "status": "returned"},
+            {"virtual_key": 0x57, "encoding": "virtual_key",
+             "status": "returned"}])
+        self.assertEqual(backend.release_snapshot[1], {"W": "virtual_key"})
+
+    def test_orphan_recovery_preserves_failed_key_up_attempt(self):
+        backend = FakeBackend({"fixture": 44})
+        def fail_send(_vk, down, _encoding=None):
+            if down is False:
+                raise OSError("injected failure")
+        backend._send_key = fail_send
+        result = _recover(self.request(obligations=[
+                "key:fixture:W:scan_code"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+        self.assertFalse(result["release_accepted"])
+        self.assertEqual(result["release_error_type"], "OSError")
+        self.assertEqual(result["release_key_up_attempts"], [{
+            "virtual_key": 0x57, "encoding": "scan_code",
+            "status": "raised", "error_type": "OSError"}])
+
+    def test_orphan_recovery_continues_after_one_encoding_up_raises(self):
+        backend = FakeBackend({"fixture": 44})
+        sent = []
+        def fail_scan_code(vk, down, encoding=None):
+            sent.append((vk, down, encoding))
+            if down is False and encoding == "scan_code":
+                raise OSError("scan-code UP rejected")
+        backend._send_key = fail_scan_code
+        result = _recover(self.request(obligations=[
+                "key:fixture:W:scan_code", "key:fixture:W:virtual_key"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(sent, [(0x57, False, "scan_code"),
+                                (0x57, False, "virtual_key")])
+        self.assertEqual(result["release_key_up_attempts"], [
+            {"virtual_key": 0x57, "encoding": "scan_code",
+             "status": "raised", "error_type": "OSError"},
+            {"virtual_key": 0x57, "encoding": "virtual_key",
+             "status": "returned"}])
+        self.assertEqual(backend.release_snapshot[1], {"W": "virtual_key"})
+
+    def test_orphan_release_helper_checks_new_target_generation(self):
+        recovery_generation = "b" * 64
+        backend = FakeBackend({"fixture": 44}, generation=recovery_generation)
+        request = self.request(obligations=["key:fixture:W"],
+            source_target_generation=GENERATION,
+            target_generation=recovery_generation,
+            focus_target_before_release=True)
+        result = _recover(request, backend_factory=lambda _targets: backend,
+            clock_ns=lambda: 10, configured_targets={"fixture": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(result["source_target_generation"], GENERATION)
+        self.assertEqual(result["target_generation"], recovery_generation)
+        self.assertEqual(backend.events, [("focus", "fixture"), "release"])
+        self.assertTrue(backend.closed)
 
     def test_recovery_rejects_contradictory_or_incomplete_release_receipts(self):
         for field, value in (("keys_down", ["CTRL"]), ("buttons_down", ["left"]),
@@ -419,8 +699,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
 
     def test_contradictory_native_release_stops_supervisor_before_readback(self):
         class Owner:
-            def __init__(self): self.unknown = []; self.completed = []
+            def __init__(self): self.unknown = []; self.completed = []; self.attempts = []
             def mark_unknown(self, op, generation, reason): self.unknown.append(reason)
+            def recovery_release_attempted(self, *args): self.attempts.append(args)
             def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
         class ContradictoryBackend(FakeBackend):
             def release_all(self):
@@ -476,12 +757,19 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 clock_ns=lambda: 100, configured_targets={"fixture": 44})
         self.assertEqual(opened, [])
 
-    def test_recovery_does_not_accept_release_returned_at_deadline(self):
+    def test_recovery_preserves_release_receipt_when_returned_at_deadline(self):
         backend = FakeBackend({"fixture": 44})
         times = iter((10, 10, 100))
-        with self.assertRaisesRegex(TimeoutError, "expired after release"):
-            _recover(self.request(), backend_factory=lambda targets: backend,
-                clock_ns=lambda: next(times), configured_targets={"fixture": 44})
+        result = _recover(self.request(),
+            backend_factory=lambda targets: backend,
+            clock_ns=lambda: next(times), configured_targets={"fixture": 44})
+        self.assertEqual(result["status"], "unknown")
+        self.assertEqual(result["reason"], "deadline_expired_after_release")
+        self.assertFalse(result["release_accepted"])
+        self.assertIsInstance(result["release_receipt"], dict)
+        self.assertEqual(result["release_key_up_attempts"], [{
+            "virtual_key": 0x11, "encoding": "virtual_key",
+            "status": "returned"}])
         self.assertEqual(backend.release_calls, 1)
         self.assertTrue(backend.closed)
 
@@ -496,7 +784,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             configured_targets={"fixture": 44})
         self.assertTrue(result["release_accepted"])
         self.assertEqual(instances[0].release_snapshot,
-            ({}, set(), {0x41}))
+            ({}, {}, set(), {0x41}))
 
     def test_unicode_only_observer_binds_readback_to_configured_generation(self):
         backend = FakeBackend({"fixture": 44})

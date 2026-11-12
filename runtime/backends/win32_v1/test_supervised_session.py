@@ -98,11 +98,23 @@ def _recovery_observer_server(connection, role, state, events):
             backend.pending_unicode_ups = set()
             backend.emissions = 0
             release = backend.release_all()
+            key_up_attempts = []
+            for attempt in release["release_attempts"]:
+                if attempt["domain"] != "key_up":
+                    continue
+                row = {"virtual_key": attempt["virtual_key"],
+                    "encoding": attempt["encoding"] or "virtual_key",
+                    "status": ("returned" if attempt["outcome"] == "returned"
+                        else "raised")}
+                if row["status"] == "raised":
+                    row["error_type"] = attempt.get("error_type") or "RuntimeError"
+                key_up_attempts.append(row)
             receipt = {
                 "operation_id": request["operation_id"],
                 "target_generation": request["target_generation"],
                 "recovery_id": request["recovery_id"],
                 "release_accepted": release["verified"] is True,
+                "release_key_up_attempts": key_up_attempts,
             }
         else:
             receipt = {

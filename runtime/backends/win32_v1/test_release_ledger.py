@@ -111,20 +111,143 @@ class ReleaseLedgerTests(unittest.TestCase):
         self.assertEqual(obj.held_buttons, set())
         self.assertEqual(len(obj.user32.sends), 4)
 
-    def test_query_exception_preserves_precheck_ledger(self):
+    def test_query_exception_preserves_only_unknown_obligations(self):
         obj = self.make_backend({"Q": 81}, {"left"}, down=(81, 1), query_failure=1)
-        with self.assertRaisesRegex(RuntimeError, "query unavailable"):
+        with self.assertRaisesRegex(native.Win32BackendError,
+                                    "key state query failed"):
             self.row(obj, obj.release_all)
+        self.assertEqual(obj.user32.queries, [81, 1])
         self.assertEqual(obj.held_keys, {"Q": 81})
-        self.assertEqual(obj.held_buttons, {"left"})
+        self.assertEqual(obj.held_buttons, set())
 
     def test_send_exception_preserves_precheck_ledger(self):
         obj = self.make_backend({"Q": 81, "R": 82}, {"left"},
                                 down=(81, 82, 1), send_failure=2)
-        with self.assertRaisesRegex(native.Win32BackendError, "send failure"):
+        with self.assertRaisesRegex(native.Win32BackendError, "send failure") as caught:
             self.row(obj, obj.release_all)
-        self.assertEqual(obj.held_keys, {"Q": 81, "R": 82})
-        self.assertEqual(obj.held_buttons, {"left"})
+        self.assertEqual([row["vk"] for row in obj.user32.sends], [81, 82, 1])
+        self.assertEqual(set(obj.user32.queries), {81, 82, 1})
+        self.assertEqual(caught.exception.release_attempt_errors, [{
+            "domain": "key_up", "virtual_key": 82,
+            "encoding": None, "error_type": "Win32BackendError"}])
+        self.assertEqual(caught.exception.release_attempt_receipt["keys_down"], ["R"])
+        attempts = caught.exception.release_attempt_receipt["release_attempts"]
+        self.assertEqual([row["outcome"] for row in attempts],
+                         ["returned", "raised", "returned"])
+        self.assertTrue(attempts[1]["sendinput_call_started"])
+        self.assertIsNone(attempts[1]["sendinput_return_count"])
+        self.assertEqual(attempts[1]["sendinput_error_type"],
+                         "Win32BackendError")
+        self.assertEqual(obj.held_keys, {"R": 82})
+        self.assertEqual(obj.held_buttons, set())
+        sends_after_first_attempt = len(obj.user32.sends)
+        retry = self.row(obj, obj.release_all)
+        self.assertTrue(retry["verified"])
+        self.assertEqual(obj.held_keys, {})
+        self.assertEqual(obj.held_buttons, set())
+        # Q and the button had neutral readbacks already, so retry only sends R.
+        self.assertEqual(len(obj.user32.sends), sends_after_first_attempt + 1)
+
+    def test_session_projects_failed_release_attempt_receipt(self):
+        obj = self.make_backend({"Q": 81}, down=(81,), send_failure=1)
+        session = Win32RuntimeSession(obj)
+        program = {"schema": SCHEMA_PROGRAM, "program_id": "release-fails-once",
+            "source": {"observation_seq": 7, "binding_revision": 3},
+            "authority": {"lease_id": "inert-lease", "expires_at_ns": 100},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "release_all"}]}
+        result = session.dispatch(program, current_observation_seq=7,
+            current_binding_revision=3, now_ns=1)
+        self.assertEqual(result["status"], "execution_failed")
+        self.assertEqual(result["release_attempt_errors"], [{
+            "domain": "key_up", "virtual_key": 81,
+            "encoding": None, "error_type": "Win32BackendError"}])
+        self.assertEqual(result["release_attempt_receipt"]["keys_down"], ["Q"])
+        self.assertTrue(result["release"]["verified"])
+        self.assertFalse(result["recovery_required"])
+
+    def test_session_completion_keeps_successful_release_attempts(self):
+        obj = self.make_backend({"Q": 81}, down=(81,))
+        session = Win32RuntimeSession(obj)
+        program = {"schema": SCHEMA_PROGRAM, "program_id": "release-receipt",
+            "source": {"observation_seq": 7, "binding_revision": 3},
+            "authority": {"lease_id": "inert-lease", "expires_at_ns": 100},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "release_all"}]}
+        result = session.dispatch(program, current_observation_seq=7,
+            current_binding_revision=3, now_ns=1)
+        self.assertEqual(result["status"], "completed")
+        release = result["execution"]["releases"][0]
+        self.assertTrue(release["verified"])
+        self.assertEqual(release["release_attempts"][0]["domain"], "key_up")
+        self.assertTrue(release["release_attempts"][0]["sendinput_call_started"])
+        self.assertEqual(release["release_attempts"][0]["sendinput_return_count"], 1)
+
+    def test_session_recovery_returns_release_attempt_receipt(self):
+        obj = self.make_backend({"Q": 81}, down=(81,), send_failure=1)
+        session = Win32RuntimeSession(obj)
+        session.recovery_required = True
+        result = session.recover_input()
+        self.assertEqual(result["status"], "recovery_failed")
+        self.assertEqual(result["release_attempt_errors"], [{
+            "domain": "key_up", "virtual_key": 81,
+            "encoding": None, "error_type": "Win32BackendError"}])
+        self.assertEqual(result["release_attempt_receipt"]["keys_down"], ["Q"])
+        self.assertTrue(result["recovery_required"])
+
+    def test_readback_error_does_not_skip_later_obligations(self):
+        obj = self.make_backend({"Q": 81, "R": 82}, {"left"},
+                                down=(81, 82, 1), query_failure=1)
+        with self.assertRaisesRegex(native.Win32BackendError,
+                                    "key state query failed") as caught:
+            self.row(obj, obj.release_all)
+        self.assertEqual(obj.user32.queries, [81, 82, 1])
+        self.assertEqual(set(obj.user32.queries), {81, 82, 1})
+        attempts = caught.exception.release_attempt_receipt["release_attempts"]
+        self.assertEqual([row["outcome"] for row in attempts],
+                         ["returned", "returned", "returned"])
+        self.assertEqual([row["sendinput_return_count"] for row in attempts],
+                         [1, 1, 1])
+        self.assertEqual(obj.held_keys, {"Q": 81})
+        self.assertEqual(obj.held_buttons, set())
+
+    def test_query_error_does_not_replay_other_confirmed_neutral_keys(self):
+        obj = self.make_backend({"Q": 81, "R": 82}, down=(81, 82),
+                                query_failure=2)
+        with self.assertRaisesRegex(native.Win32BackendError,
+                                    "key state query failed"):
+            self.row(obj, obj.release_all)
+        self.assertEqual(obj.held_keys, {"R": 82})
+        sends_after_first_attempt = len(obj.user32.sends)
+        retry = self.row(obj, obj.release_all)
+        self.assertTrue(retry["verified"])
+        self.assertEqual(len(obj.user32.sends), sends_after_first_attempt + 1)
+        self.assertEqual(obj.held_keys, {})
+
+    def test_successful_unicode_up_is_not_replayed_after_state_query_error(self):
+        obj = self.make_backend({"Q": 81}, down=(81,), query_failure=1)
+        obj.pending_unicode_ups = set()
+        obj.pending_unicode_ups.add(65)
+        with self.assertRaisesRegex(native.Win32BackendError,
+                                    "key state query failed") as caught:
+            self.row(obj, obj.release_all)
+        self.assertEqual(obj.pending_unicode_ups, set())
+        attempts = caught.exception.release_attempt_receipt["release_attempts"]
+        self.assertEqual([row["domain"] for row in attempts],
+                         ["unicode_up", "key_up"])
+        self.assertEqual(attempts[0]["outcome"], "returned")
+        self.assertEqual(attempts[0]["sendinput_return_count"], 1)
+        unicode_up_sends = [row for row in obj.user32.sends
+            if row["vk"] == 0]
+        self.assertEqual(len(unicode_up_sends), 1)
+
+        obj.user32.query_failure = None
+        recovered = self.row(obj, obj.release_all)
+        self.assertTrue(recovered["verified"])
+        self.assertEqual(obj.pending_unicode_ups, set())
+        self.assertEqual(sum(row["vk"] == 0 for row in obj.user32.sends), 1)
+        self.assertEqual([row["domain"]
+            for row in recovered["release_attempts"]], ["key_up"])
 
     def test_session_does_not_complete_after_previous_unverified_release(self):
         obj = self.make_backend({"Q": 81}, {"left"}, down=(81, 1), stubborn=(81, 1))
@@ -155,6 +278,44 @@ class ReleaseLedgerTests(unittest.TestCase):
         second = self.row(obj, obj.release_all)
         self.assertTrue(second["verified"])
         self.assertEqual(obj.user32.queries, [])
+
+    def test_successful_release_retains_each_sendinput_up_receipt(self):
+        obj = self.make_backend({"Q": 81, "R": 82}, {"left"},
+                                down=(81, 82, 1))
+        receipt = self.row(obj, obj.release_all)
+        self.assertTrue(receipt["verified"])
+        self.assertEqual(receipt["release_attempts"], [
+            {"ordinal": 0, "domain": "key_up", "virtual_key": 81,
+             "key_names": ["Q"], "encoding": None,
+             "sendinput_call_started": True, "sendinput_return_count": 1,
+             "sendinput_error_type": None, "outcome": "returned",
+             "error_type": None},
+            {"ordinal": 1, "domain": "key_up", "virtual_key": 82,
+             "key_names": ["R"], "encoding": None,
+             "sendinput_call_started": True, "sendinput_return_count": 1,
+             "sendinput_error_type": None, "outcome": "returned",
+             "error_type": None},
+            {"ordinal": 2, "domain": "button_up", "button": "left",
+             "sendinput_call_started": True, "sendinput_return_count": 1,
+             "sendinput_error_type": None, "outcome": "returned",
+             "error_type": None},
+        ])
+
+    def test_zero_sendinput_return_is_retained_as_a_failed_attempt(self):
+        obj = self.make_backend({"Q": 81}, down=(81,))
+        obj.user32.SendInput = lambda _count, _items, _size: 0
+        with patch.object(native.ctypes, "get_last_error", return_value=0,
+                          create=True):
+            with self.assertRaisesRegex(native.Win32BackendError,
+                                        "SendInput failed") as caught:
+                obj.release_all()
+        attempts = caught.exception.release_attempt_receipt["release_attempts"]
+        self.assertEqual(len(attempts), 1)
+        self.assertEqual(attempts[0]["outcome"], "raised")
+        self.assertTrue(attempts[0]["sendinput_call_started"])
+        self.assertEqual(attempts[0]["sendinput_return_count"], 0)
+        self.assertIsNone(attempts[0]["sendinput_error_type"])
+        self.assertEqual(attempts[0]["error_type"], "Win32BackendError")
 
 
 if __name__ == "__main__":

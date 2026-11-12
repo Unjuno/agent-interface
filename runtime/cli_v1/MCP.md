@@ -323,6 +323,50 @@ attempt, when present, is retained in `completion_readback_attempt`. Only the
 accepted `completion_readback` alongside completed custody confirms neutral
 state. A retained attempt by itself never confirms release.
 
+An `unknown` action status is **not** proof that producer custody has finished.
+If its completion custody is unresolved, do not close the fixture window or
+reuse the session. First preserve the exact action and producer records and
+verify that the recorded producer identity is absent. Then stop the old MCP
+server without deleting its protected journal, and start a fresh
+supervised-Win32 session against the same configured logical target name. Keep
+the recovery target alive and obtain its current generation from a fresh
+observation.
+Call `interface_recover_orphaned_input` once with the source operation ID,
+source target generation, frozen obligations, an audited `source_custody_record`,
+and the fresh observation generation as `recovery_target_generation`. The
+source generation remains the generation of the unknown action; the recovery
+generation identifies only the currently configured target used for bounded
+release, neutral readback, and horizon. New key obligations retain the original
+Win32 input encoding as `key:<target>:<key>:<virtual_key|scan_code>` so orphan
+recovery emits a matching key-up. Historical three-part key obligations remain
+readable and mean `virtual_key`. The record must identify
+`UNKNOWN_RELEASE_UNCONFIRMED_STOPPED`, set `do_not_replay=true`,
+`observed_producer_live=false`, preserve the dispatch evidence and retain
+`task_success=null` and `replay_allowed=false`. Set
+`late_server_request_possible=true` whenever the source lacks a valid finite
+late-input horizon. These fields must come from retained receipts and a fresh
+process-identity check; do not synthesize them to bypass validation.
+
+The fresh server requires the source operation, source generation, and
+obligations to match the durable fence, confirms the exact producer is absent,
+and checks that the configured target still has the separately supplied
+recovery generation before it issues one bounded release and neutral readback.
+When a late request remains possible, it also requires the configured horizon.
+The recovery receipt includes `late_input_observation_start_monotonic_ns` and
+counts the release-to-first-readback interval in
+`late_input_max_observed_gap_ns`; both that initial interval and later sampling
+gaps must satisfy `late_input_max_sample_gap_ns` before the horizon can resolve
+the persistent fence.
+Recovery is a separate attempt: it does not change the source action from
+`unknown`, infer task success, or authorize replay. A successful recovery
+resolves the old source fence and consumes the recovery generation too; any
+subsequent task action requires another fresh target generation. A generation
+mismatch, missing source evidence, live producer, failed release/readback, or
+missing horizon leaves the persistent fence unresolved. Keep the fixture alive
+for diagnosis and do not manually clear the journal. A replacement HWND cannot
+prove source task success; it is accepted only as a distinct, freshly observed
+recovery target for the bounded release path.
+
 `task_success` remains null unless an independent task-effect certificate is
 integrated for that task. An embedding application may configure a
 server-side task oracle with the public `supervised_win32_task_oracle=`
@@ -346,10 +390,41 @@ under `%LOCALAPPDATA%\Unjuno\AgentInterface\custody-v1`, serialized by a
 session-local named mutex. An admitted action remains fenced across MCP server
 replacement until normal completion confirms release, a pre-start refusal
 proves the producer gate stayed closed, or orphan recovery confirms release.
-The fence retains only the operation ID, target generation, input obligations,
-and bounded phase fields; it stores a digest of the Windows logon namespace,
-not the raw logon identifier. Missing, corrupt, or mismatched state fails
-closed. Do not manually delete these files to clear a fence.
+If the authority deadline expires during gated producer startup, the initial
+dispatch result is `not_dispatched` only when process identity was verified,
+the owner confirms the start gate stayed closed, the gated producer is retired,
+and the persistent fence confirms that exact producer is absent. The receipt
+keeps `input_dispatched=false`, `release_confirmed=false`, `task_success=null`,
+and `replay_allowed=false`; it does not claim an input release or task effect.
+That proven no-dispatch clears the pending fence and retires the target
+generation. If any witness is missing or authorization was attempted, preserve
+`unknown` and the unresolved fence for explicit recovery.
+After verified orphan recovery or proven no-dispatch cleanup, its source and
+recovery target generations remain retired across MCP server replacement;
+admission rejects them and requires a fresh target generation. Ordinary
+successful actions do not retire their generation. The journal retains the
+unresolved operation ID, target generation, input obligations, bounded phase
+fields, and at most 512 retired generation digests; it stores a digest of the
+Windows logon namespace, not the raw logon identifier. Missing, corrupt,
+mismatched, or full state fails closed. Do not manually delete these files to
+clear a fence.
+
+After recovered native dispatch, the exact `interface_results(call_id=...)`
+readback may retrieve `action.program_actions_lower_bound`, a lower-bound
+count of producer input calls, plus `program_actions_capture_status` and a
+bounded `program_actions_capture_error_code` when capture is unavailable.
+When recovery finishes asynchronously after the dispatch worker returns, this
+readback performs the one-shot capture. The durable dispatch witness is updated
+before the custody fence resolves. These fields do not prove task effect,
+continuous neutrality, or non-delivery beyond the retained counter's scope.
+Automatic Win32 recovery also retains
+`action.recovery_release_key_up_attempts` in `interface_results` and in the
+cancellation owner result when the supervisor receives the native helper
+receipt. Each row identifies the virtual-key value, the exact `virtual_key` or
+`scan_code` encoding passed to the UP send routine, and whether that routine
+returned or raised. A `returned` row means `SendInput` reported one event
+inserted. It does not prove delivery to the intended app, app consumption, or
+neutral input state. Those remain separate release/readback/horizon evidence.
 
 The native fence applies a protected DACL to its journal directory, journal
 files, and registry marker key. The DACL grants full access to the current
