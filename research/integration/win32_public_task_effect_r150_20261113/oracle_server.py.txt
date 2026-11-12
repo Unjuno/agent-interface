@@ -1,0 +1,32 @@
+"""Explicit experiment entry point; no invocation without a frozen config.
+
+The generation binding must be produced by the server-side experiment setup,
+not supplied as a success receipt by the MCP client.
+"""
+import argparse
+import json
+from pathlib import Path
+import sys
+from counter_oracle import make_counter_oracle
+
+def build_server(repo,packet,nonce,generation,targets):
+    sys.path.insert(0,str(Path(repo).resolve()))
+    from runtime.cli_v1.mcp_server import create_server
+    return create_server(targets,Path(packet)/'mcp',session_mode='supervised-win32',
+      supervised_win32_late_input_horizon_ns=2_000_000_000,
+      supervised_win32_task_oracle=make_counter_oracle(packet,nonce,generation))
+
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--config',type=Path,required=True)
+    args=parser.parse_args()
+    with args.config.open('rb') as source:raw=source.read(65537)
+    if len(raw)>65536:raise ValueError('config exceeds bound')
+    c=json.loads(raw)
+    required={'repo','packet','nonce','generation','targets'}
+    if type(c) is not dict or set(c)!=required:raise ValueError('config fields mismatch')
+    if type(c['generation']) is not str or len(c['generation'])!=64 or any(x not in '0123456789abcdef' for x in c['generation']):
+        raise ValueError('observed target generation required')
+    build_server(**c).run(transport='stdio')
+
+if __name__=='__main__':main()
