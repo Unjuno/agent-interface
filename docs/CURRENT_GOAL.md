@@ -1,3 +1,5 @@
+**Calc reuse and bounded repair (2026-11-13):** [D25–D28](../research/integration/calc_reuse_repair_d25_d28_20261113/README.md) retain the original selection-repaint failure, two-phase correction, one-call location reuse and a known-obstruction refusal/repair/reuse result. These sequential qualifications do not establish compiled-plan reuse or matched efficiency.
+
 **Calc phase qualification (2026-11-13):** [D24](../research/integration/calc_phase_lifecycle_d24_20261113/README.md) completed one parameterized compiled phase with independently checked numeric saved effect and neutral terminal release. Same-session reuse, invalidation/repair and matched full-lifecycle economics remain open.
 
 **MAP01 capture freshness (2026-11-13):** [R151/R152](../research/integration/map01_capture_freshness_r151_r152_20261113/README.md) retain both the 22.3277 ms failed release bracket and the 12.2353 ms scoped pass. The cause of the long R151 interval, general reliability and matched efficiency remain open.
