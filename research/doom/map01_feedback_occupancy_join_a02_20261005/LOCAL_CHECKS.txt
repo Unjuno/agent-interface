@@ -1,0 +1,5 @@
+Source/code checks: `python -m py_compile analyze.py audit.py` PASS; repository `git diff --check` PASS.
+Frozen candidate execution: exit 0, one run.
+Independent audit: exit 0, 3 plans / 3 exact event pairs / 2 endpoint ties / zero errors.
+Current-main v7 occupancy test: 1/1 PASS. Control-telemetry evidence package: six-file manifest PASS.
+No live game/model/GUI/input, Docker, or WSLc calls.

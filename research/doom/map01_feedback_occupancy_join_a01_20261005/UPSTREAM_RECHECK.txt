@@ -1,0 +1,5 @@
+# Upstream evidence recheck attempts
+
+1. `python research/doom/test_map01_held_input_occupancy_audit_v5.py` — PASS, 2 construction tests.
+2. `python research/doom/map01_first_useful_feedback_posthoc_v1/test_audit.py` — invocation error: the script requires result and repository arguments; no evidence was evaluated.
+3. `python research/doom/map01_first_useful_feedback_posthoc_v1/test_audit.py <decoded-full-result.json> <repo-root>` — STOP before audit because `vizdoom` is not installed (`ModuleNotFoundError`). The WAD is not present in this checkout. No dependency was installed and the upstream package was not changed. Its retained publication manifest/ZIP/audit member hashes were verified by A01; this does not substitute for rerunning the independent WAD/pixel auditor.
