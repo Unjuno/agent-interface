@@ -26,6 +26,7 @@ _MAX_STATE_BYTES = 65536
 _MAX_FENCED_GENERATIONS = 512
 _MUTEX_WAIT_MS = 1000
 _PROCESS_WAIT_MS = 1000
+_MAX_PACKAGE_STORE_ENTRIES = 2048
 _CUSTODY_PHASE_ORDER = {"admitted": 0, "starting": 1, "running": 2,
                         "cancel_pending": 3, "recovery_pending": 4,
                         "unknown": 5}
@@ -154,6 +155,51 @@ class _WindowsCustodyAcl:
 
 class CustodyFenceError(RuntimeError):
     """The persistent Win32 input fence is unavailable or unresolved."""
+
+
+def _guard_native_first_use(local_app_data, namespace_digest):
+    """Do not initialize an empty view over a journal in a known MSIX view.
+
+    Package identity alone does not identify filesystem/registry visibility:
+    unpackaged children can inherit a launcher's redirected AppData view.
+    This bounded, read-only check protects first use, not general store
+    discovery or migration. Existing journals retain their normal hot path.
+    """
+    local_app_data = Path(local_app_data)
+    relative = Path("Unjuno") / "AgentInterface" / "custody-v1" / (namespace_digest + ".json")
+    try:
+        (local_app_data / relative).stat()
+        return
+    except FileNotFoundError:
+        pass
+    except OSError as error:
+        raise CustodyFenceError("CUSTODY_FENCE_STORE_VIEW_UNAVAILABLE") from error
+
+    try:
+        packages = os.scandir(local_app_data / "Packages")
+    except FileNotFoundError:
+        return
+    except OSError as error:
+        raise CustodyFenceError("CUSTODY_FENCE_STORE_VIEW_UNAVAILABLE") from error
+    try:
+        with packages:
+            for index, entry in enumerate(packages):
+                if index >= _MAX_PACKAGE_STORE_ENTRIES:
+                    raise CustodyFenceError("CUSTODY_FENCE_STORE_VIEW_LIMIT")
+                if entry.is_symlink():
+                    raise CustodyFenceError("CUSTODY_FENCE_STORE_VIEW_UNAVAILABLE")
+                if not entry.is_dir(follow_symlinks=False):
+                    continue
+                peer = Path(entry.path) / "LocalCache" / "Local" / relative
+                try:
+                    peer.stat()
+                except FileNotFoundError:
+                    continue
+                # Even a clear peer contains generation history. Do not
+                # parse, reset, merge, or silently adopt it in a new view.
+                raise CustodyFenceError("CUSTODY_FENCE_PEER_STORE_PRESENT")
+    except OSError as error:
+        raise CustodyFenceError("CUSTODY_FENCE_STORE_VIEW_UNAVAILABLE") from error
 
 
 class _WindowsNamedMutex:
@@ -415,7 +461,7 @@ class Win32CustodyFence:
     """Persistent, cross-process fail-closed gate for one Win32 logon namespace."""
 
     def __init__(self, state_directory, namespace_digest, *, mutex_factory=None,
-                 initialization_store=None, acl=None):
+                 initialization_store=None, acl=None, initialization_guard=None):
         if type(namespace_digest) is not str or not _SHA256.fullmatch(namespace_digest):
             raise ValueError("namespace_digest must be a SHA-256 digest")
         self.namespace_digest = namespace_digest
@@ -427,6 +473,7 @@ class Win32CustodyFence:
         self._state_path = self.state_directory / (namespace_digest + ".json")
         self._marker_path = self.state_directory / (namespace_digest + ".initialized")
         self._initialization_store = initialization_store
+        self._initialization_guard = initialization_guard
         name = "Local\\Unjuno.AgentInterface.InputCustody." + namespace_digest
         self._mutex = (mutex_factory or _WindowsNamedMutex)(name)
         self._closed = False
@@ -456,11 +503,16 @@ class Win32CustodyFence:
         if not local_app_data or not Path(local_app_data).is_absolute():
             raise CustodyFenceError("CUSTODY_FENCE_LOCAL_APP_DATA_UNAVAILABLE")
         digest = _win32_logon_namespace_digest()
+        def guard_first_use():
+            _guard_native_first_use(local_app_data, digest)
+        # Catch the observed split view before mkdir, ACL or marker changes.
+        # Recheck under the namespace mutex immediately before initialization.
+        guard_first_use()
         acl = _WindowsCustodyAcl()
         return cls(Path(local_app_data) / "Unjuno" / "AgentInterface"
                    / "custody-v1", digest,
                    initialization_store=_RegistryInitializationStore(digest, acl),
-                   acl=acl)
+                   acl=acl, initialization_guard=guard_first_use)
 
     @contextmanager
     def _state(self):
@@ -482,6 +534,8 @@ class Win32CustodyFence:
                 and self._acl is not None):
             self._acl.protect_file(self._marker_path)
         if not marker_exists and not state_exists:
+            if self._initialization_guard is not None:
+                self._initialization_guard()
             if self._initialization_store is not None:
                 self._initialization_store.create()
             else:
