@@ -1,0 +1,197 @@
+from __future__ import annotations
+import asyncio
+import base64
+import ctypes
+from ctypes import wintypes as W
+from datetime import datetime,timezone,timedelta
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import threading
+import time
+from mcp import ClientSession
+from mcp.client.stdio import StdioServerParameters,stdio_client
+from protocol import public_body,exact_terminal,program,walk
+from verify_receipt import verify_join
+
+P=Path(__file__).resolve().parent
+C=json.loads((P/'conditions.json').read_text(encoding='utf-8'))
+R=Path(C['repo'])
+sys.path.insert(0,str(R))
+from runtime.cli_v1.win32_custody_fence import _win32_logon_namespace_digest
+U=ctypes.WinDLL('user32',use_last_error=True)
+U.GetAsyncKeyState.argtypes=[ctypes.c_int];U.GetAsyncKeyState.restype=W.SHORT
+U.GetForegroundWindow.argtypes=[];U.GetForegroundWindow.restype=W.HWND
+U.GetWindowThreadProcessId.argtypes=[W.HWND,ctypes.POINTER(W.DWORD)];U.GetWindowThreadProcessId.restype=W.DWORD
+U.IsWindow.argtypes=[W.HWND];U.IsWindow.restype=W.BOOL
+def save(name,value):
+    with (P/name).open('x',encoding='utf-8') as f:
+        json.dump(value,f,indent=2,sort_keys=True,allow_nan=False);f.write('\n');f.flush();os.fsync(f.fileno())
+def custody():
+    ns=_win32_logon_namespace_digest()
+    path=Path(os.environ['LOCALAPPDATA'])/'Unjuno/AgentInterface/custody-v1'/(ns+'.json')
+    with path.open('rb') as f:b=f.read(65537);stat=os.fstat(f.fileno())
+    if len(b)>65536:raise RuntimeError('custody journal too large')
+    state=json.loads(b)
+    return {'namespace':ns,'logical_path':str(path),'physical_path':str(path.resolve()),
+            'inode':stat.st_ino,'device':stat.st_dev,'sha256':hashlib.sha256(b).hexdigest(),'state':state}
+def events():
+    path=P/'events.jsonl'
+    return [json.loads(s) for s in path.read_text(encoding='utf-8').splitlines() if s] if path.exists() else []
+def a_down():return bool(U.GetAsyncKeyState(0x41)&0x8000)
+
+async def main():
+    started=time.monotonic_ns()
+    if subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True).strip()!=C['source_commit']:
+        raise RuntimeError('frozen main changed')
+    if subprocess.check_output(['git','status','--porcelain'],cwd=R).strip():raise RuntimeError('main checkout dirty')
+    for relative,sha in C['file_hashes'].items():
+        if hashlib.sha256((P/relative).read_bytes()).hexdigest()!=sha:raise RuntimeError('probe source changed: '+relative)
+    if sys.executable!=C['python_executable'] or sys.version!=C['python_version']:
+        raise RuntimeError('interpreter changed')
+    before=custody()
+    if before!=C['custody_before'] or before['state']['status']!='clear':raise RuntimeError('custody changed before dispatch')
+    meta=json.loads((P/'fixture-meta.json').read_text(encoding='utf-8'))
+    if meta['nonce']!=C['nonce'] or meta['source_sha256']!=C['file_hashes']['fixture_app.py']:
+        raise RuntimeError('fixture provenance mismatch')
+    hwnd=meta['hwnd'];pid=W.DWORD()
+    U.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
+    if not U.IsWindow(hwnd) or pid.value!=meta['pid'] or int(U.GetForegroundWindow() or 0)!=hwnd:
+        raise RuntimeError('exact owned foreground gate failed')
+    if any(U.GetAsyncKeyState(k)&0x8000 for k in (0x41,0x10,0x11,0x12,0x01)):
+        raise RuntimeError('A/modifier/mouse neutral gate failed')
+    if any(e['kind'] in ('task_effect','wndproc_keyboard') for e in events()):
+        raise RuntimeError('fixture received pretrial keyboard input')
+    if not (P/'CUA_READY.json').is_file():raise RuntimeError('visible target inspection missing')
+    save('runner-start.json',{'utc':datetime.now(timezone.utc).isoformat(),'monotonic_ns':started,
+                            'fixture':meta,'custody':before})
+    save('targets.json',{'fixture':hwnd})
+    sampler_stop=threading.Event();samples=[]
+    def sample():
+        while not sampler_stop.is_set() and len(samples)<20000:
+            begin=time.monotonic_ns();down=a_down();end=time.monotonic_ns()
+            samples.append({'begin_ns':begin,'end_ns':end,'a_down':down,
+                            'foreground':int(U.GetForegroundWindow() or 0)})
+            sampler_stop.wait(.002)
+    sampler=threading.Thread(target=sample,daemon=True);sampler.start()
+    # The configuration is prepared by a separate trusted preflight, before
+    # this runner. It binds the fresh observed target generation to the oracle.
+    config=json.loads((P/'oracle-server-config.json').read_text(encoding='utf-8'))
+    if config['targets']!={'fixture':hwnd} or config['nonce']!=C['nonce'] or config['repo']!=str(R) or config['packet']!=str(P):
+        raise RuntimeError('server oracle configuration does not bind this fixture')
+    args=[str(P/'oracle_server.py'),'--config',str(P/'oracle-server-config.json')]
+    timeline=[];call_id=None;terminal=None;dispatched=False
+    async def request(session,label,tool,payload):
+        request_at=time.monotonic_ns()
+        save(label+'-request.json',{'tool':tool,'arguments':payload,'monotonic_ns':request_at})
+        response=await session.call_tool(tool,payload)
+        received=time.monotonic_ns()
+        save(label+'-raw.json',response.model_dump(mode='json',exclude_none=True))
+        for index,block in enumerate(response.content):
+            if getattr(block,'type',None)=='image':
+                with (P/(label+'-'+str(index)+'.png')).open('xb') as f:f.write(base64.b64decode(block.data,validate=True))
+        body=public_body(response)
+        timeline.append({'tool':tool,'label':label,'requested_ns':request_at,'received_ns':received,
+                         'status':body.get('status'),'call_id':body.get('call_id'),
+                         'action_status':(body.get('action') or {}).get('status')})
+        return body
+    try:
+        with (P/'mcp-stderr.log').open('x',encoding='utf-8') as errors:
+            async with stdio_client(StdioServerParameters(command=sys.executable,args=args,cwd=str(R)),errlog=errors) as (reader,writer):
+                async with ClientSession(reader,writer,read_timeout_seconds=timedelta(seconds=20)) as session:
+                    await session.initialize()
+                    rect=meta['rect'];region=[rect[0],rect[1],rect[2]-rect[0],rect[3]-rect[1]]
+                    observed=await request(session,'observe-before','interface_observe',{'target':'fixture','frame':'screen_physical_px','region':region})
+                    raw=observed.get('receipt',{}).get('source',{}).get('raw_report')
+                    if not isinstance(raw,dict) or raw.get('status')!='returned' or raw.get('target_generation_consistency')!='matched':
+                        raise RuntimeError('generation-bound observation failed')
+                    generation=raw['target_generation']
+                    if generation!=config['generation']:raise RuntimeError('oracle generation differs from current observation')
+                    save('hold.flag',{'requested_ns':time.monotonic_ns()})
+                    end=time.monotonic()+3
+                    while not (P/'hold-entered.json').exists() and time.monotonic()<end:await asyncio.sleep(.01)
+                    if not (P/'hold-entered.json').exists():raise RuntimeError('hold gate absent')
+                    clock=await request(session,'clock','interface_clock',{})
+                    if clock.get('clock_info',{}).get('implementation')!='QueryPerformanceCounter()':
+                        raise RuntimeError('QPC clock not established')
+                    draft=program(generation,clock['monotonic_ns'],C['nonce'])
+                    save('submission.json',{'program':draft,'submitted_ns':time.monotonic_ns()})
+                    dispatched=True
+                    row=await request(session,'dispatch','interface_dispatch',{'program':draft,
+                        'current_observation_seq':1,'current_binding_revision':1,'wait_for_result_ms':750})
+                    call_id=row.get('call_id')
+                    if not isinstance(call_id,str) or len(call_id)!=32:raise RuntimeError('dispatch call id missing; no replay')
+                    # Query the exact action until its owned recovery is terminal.
+                    end=time.monotonic()+12;index=0
+                    while not exact_terminal(row,call_id) and time.monotonic()<end:
+                        await asyncio.sleep(.1);index+=1
+                        row=await request(session,f'result-{index:03d}','interface_results',{'call_id':call_id,'include_image':False})
+                    if not exact_terminal(row,call_id):
+                        await request(session,'fallback-cancel','interface_cancel',{'call_id':call_id})
+                        end=time.monotonic()+8
+                        while not exact_terminal(row,call_id) and time.monotonic()<end:
+                            await asyncio.sleep(.1);index+=1
+                            row=await request(session,f'result-{index:03d}','interface_results',{'call_id':call_id,'include_image':False})
+                    save('terminal-before-resume.json',{'observed_ns':time.monotonic_ns(),'call_id':call_id,'row':row})
+                    if not exact_terminal(row,call_id):raise RuntimeError('no exact terminal; do not replay')
+                    terminal=row
+                    await asyncio.sleep(.650)
+                    save('events-before-resume.json',events())
+                    if a_down():raise RuntimeError('A still down at terminal')
+                    if (row.get('action') or {}).get('release_confirmed') is not True:
+                        raise RuntimeError('release not confirmed at terminal')
+                    save('resume.flag',{'requested_ns':time.monotonic_ns(),'call_id':call_id})
+                    end=time.monotonic()+3
+                    while not any(e['kind']=='task_effect' for e in events()) and time.monotonic()<end:
+                        await asyncio.sleep(.01)
+                    # Keep enough tail to detect an extra down/repeat; do not stop at first success.
+                    await asyncio.sleep(.5)
+                    save('events-after-resume.json',events())
+                    await request(session,'observe-after','interface_observe',{'target':'fixture','frame':'screen_physical_px','region':region})
+                    after=await request(session,'result-after-effect','interface_results',{'call_id':call_id,'include_image':False})
+                    save('terminal-after-effect.json',after)
+                    verified=await request(session,'verify-task','interface_verify_task',{'call_id':call_id,'wait_for_result_ms':2000})
+                    save('task-verification.json',verified)
+                    retained=await request(session,'result-after-verification','interface_results',{'call_id':call_id,'include_image':False})
+                    save('terminal-after-verification.json',retained)
+                    effect=verified.get('task_effect') or {}
+                    receipt=effect.get('receipt') or {}
+                    artifact_path=Path(receipt.get('evidence_ref','')).resolve()
+                    if artifact_path.parent!=P or artifact_path.name!='oracle-evidence-'+str(receipt.get('oracle_id'))+'.json':
+                        raise RuntimeError('oracle artifact is not bound to this packet')
+                    with artifact_path.open('rb') as artifact_file:artifact_bytes=artifact_file.read(65537)
+                    with (P/'effects.jsonl').open('rb') as effect_file:effect_bytes=effect_file.read(65537)
+                    if max(len(artifact_bytes),len(effect_bytes))>65536:raise RuntimeError('oracle evidence exceeds audit bound')
+                    joined=verify_join(json.loads((P/'terminal-before-resume.json').read_text()),
+                        verified,retained,json.loads(artifact_bytes),effect_bytes)
+                    save('public-effect-join.json',joined)
+                    if not all(joined.values()):raise RuntimeError('public task evidence join failed')
+                    if not (verified.get('status')=='verified' and effect.get('task_success') is True
+                        and receipt.get('call_id')==call_id
+                        and receipt.get('operation_id')==terminal['action']['operation_id']
+                        and receipt.get('target_generation')==generation
+                        and retained['action']['task_success'] is None
+                        and retained['action']['status']=='recovered'
+                        and retained['replay_allowed'] is False):
+                        raise RuntimeError('public task-effect composition failed')
+                    await request(session,'close','interface_close',{})
+        save('runner-result.json',{'status':'finished','call_id':call_id,'terminal_action_status':terminal['action']['status'],
+             'input_attempts':1,'task_success':terminal.get('task_success'),'replay_allowed':terminal.get('replay_allowed')})
+    except BaseException as error:
+        save('runner-error.json',{'error_type':type(error).__name__,'error':str(error),
+             'call_id':call_id,'dispatch_sent_or_uncertain':dispatched,'replay_allowed':False})
+        raise
+    finally:
+        sampler_stop.set();sampler.join(2)
+        save('key-state-samples.json',{'samples':samples,'sample_limit_reached':len(samples)>=20000,
+                                     'claim':'sampled asynchronous A state only'})
+        save('timeline.json',timeline)
+        after=custody();save('custody-after.json',after)
+        # Close only our fixture after no input, or a clear native custody journal plus neutral A.
+        if not dispatched or (after['state']['status']=='clear' and not a_down()):
+            save('stop.flag',{'requested_ns':time.monotonic_ns(),'owned_pid':meta['pid']})
+
+if __name__=='__main__':asyncio.run(main())

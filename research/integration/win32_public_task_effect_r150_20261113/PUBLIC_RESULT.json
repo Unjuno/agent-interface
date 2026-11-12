@@ -1,0 +1,265 @@
+{
+  "custody_final_revision": 384,
+  "custody_final_status": "clear",
+  "fixture_exit": {
+    "input_generated": false,
+    "monotonic_ns": 264266616000500,
+    "nonce": "755cf62b9ca37478",
+    "state": {
+      "alive": false,
+      "callback_error": null,
+      "effects": 1,
+      "phase": "resumed"
+    },
+    "utc_ns": 1794499657984511200
+  },
+  "oracle_artifact": {
+    "call_id": "4cd2974193e54f9381aea76f6966a9f1",
+    "observed_monotonic_ns": 264266448084900,
+    "operation_id": "538e390d5fde4c7986760ae47682eca9",
+    "scope": "one observed counter effect; no application quiescence claim",
+    "source_rows": [
+      {
+        "counter": 1,
+        "first_transition": true,
+        "key_event_ns": 264265834488400,
+        "kind": "task_effect",
+        "monotonic_ns": 264265834681200,
+        "nonce": "755cf62b9ca37478",
+        "phase": "resumed"
+      }
+    ],
+    "source_sha256": "a5e2dcf60c5b76347fd5ae8961364398d4ef6718803e3ae6c597868008454d7b",
+    "target_generation": "0c43b575aed23de2444a2c0c8c21c297403013af42cf8635603af9f9795d362d"
+  },
+  "original_action": {
+    "input_dispatched": true,
+    "metadata": {
+      "program_id": "r150-native-queue-755cf62b9ca37478",
+      "source": "interface_dispatch"
+    },
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "operation_id": "538e390d5fde4c7986760ae47682eca9",
+    "producer_timing": {
+      "clock": "time.monotonic_ns",
+      "factory_requested_monotonic_ns": 264259041805700,
+      "factory_returned_monotonic_ns": 264259046287700,
+      "identity_verified_monotonic_ns": 264259056832200,
+      "process_start_called_monotonic_ns": 264259046308200,
+      "process_start_returned_monotonic_ns": 264259050469700,
+      "start_gate_authorized_monotonic_ns": 264259069002000
+    },
+    "program_actions_capture_status": "observed",
+    "program_actions_lower_bound": 2,
+    "program_actions_observed_monotonic_ns": 264265157542300,
+    "recovery_release_key_up_attempts": [
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 65
+      }
+    ],
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "effect_status": "unknown",
+      "input_dispatched": true,
+      "obligations": [
+        "key:fixture:A:virtual_key"
+      ],
+      "program_actions_lower_bound": 2,
+      "program_actions_observed_monotonic_ns": 264265157542300,
+      "recovery_release_key_up_attempts": [
+        {
+          "encoding": "virtual_key",
+          "status": "returned",
+          "virtual_key": 65
+        }
+      ],
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "recovered",
+      "task_success": null
+    },
+    "status": "recovered",
+    "target_generation": "0c43b575aed23de2444a2c0c8c21c297403013af42cf8635603af9f9795d362d",
+    "task_success": null
+  },
+  "public_join_checks": {
+    "action_scope_unchanged": true,
+    "effect_precedes_fresh_observation": true,
+    "effect_retained": true,
+    "fresh_observation": true,
+    "identity_join": true,
+    "public_success": true,
+    "replay_denied": true,
+    "source_bytes": true
+  },
+  "queue_audit": {
+    "call_id": "4cd2974193e54f9381aea76f6966a9f1",
+    "checks": {
+      "A_down_independently_sampled": true,
+      "automatic_expiry_no_fallback": true,
+      "custody_clear_after": true,
+      "exact_recovered_terminal": true,
+      "expiry_from_live_clock": true,
+      "fixture_callbacks_healthy": true,
+      "fixture_exited": true,
+      "fresh_source_and_nonce": true,
+      "frozen_source_unchanged": true,
+      "native_A_UP_record_dequeued": true,
+      "no_keyboard_consumption_or_effect_while_held": true,
+      "no_unexpected_keyboard_key": true,
+      "normal_resume": true,
+      "one_dispatch": true,
+      "one_late_task_effect": true,
+      "original_native_record_dequeued": true,
+      "post_terminal_A_neutral": true,
+      "queued_A_after_horizon": true,
+      "queued_A_before_expiry": true,
+      "recovery_UP_evidence_retained": true,
+      "release_confirmed": true,
+      "task_authority_not_upgraded": true,
+      "two_second_horizon": true
+    },
+    "effects": [
+      {
+        "counter": 1,
+        "first_transition": true,
+        "key_event_ns": 264265834488400,
+        "kind": "task_effect",
+        "monotonic_ns": 264265834681200,
+        "nonce": "755cf62b9ca37478",
+        "phase": "resumed"
+      }
+    ],
+    "expiry_ns": 264263027785900,
+    "horizon_end_ns": 264265067785900,
+    "limits": "One deliberately filtered native fixture; not spontaneous late OS delivery, MAP01, continuous neutrality or efficiency.",
+    "recovery_UP_attempts": [
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 65
+      },
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 65
+      },
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 65
+      }
+    ],
+    "schema": "r150-queued-effect-audit-v1",
+    "status": "PASS_SCOPED_QUEUED_EFFECT",
+    "terminal_observed_ns": 264265167527400
+  },
+  "retained_action": {
+    "input_dispatched": true,
+    "metadata": {
+      "program_id": "r150-native-queue-755cf62b9ca37478",
+      "source": "interface_dispatch"
+    },
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "operation_id": "538e390d5fde4c7986760ae47682eca9",
+    "producer_timing": {
+      "clock": "time.monotonic_ns",
+      "factory_requested_monotonic_ns": 264259041805700,
+      "factory_returned_monotonic_ns": 264259046287700,
+      "identity_verified_monotonic_ns": 264259056832200,
+      "process_start_called_monotonic_ns": 264259046308200,
+      "process_start_returned_monotonic_ns": 264259050469700,
+      "start_gate_authorized_monotonic_ns": 264259069002000
+    },
+    "program_actions_capture_status": "observed",
+    "program_actions_lower_bound": 2,
+    "program_actions_observed_monotonic_ns": 264265157542300,
+    "recovery_release_key_up_attempts": [
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 65
+      }
+    ],
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "effect_status": "unknown",
+      "input_dispatched": true,
+      "obligations": [
+        "key:fixture:A:virtual_key"
+      ],
+      "program_actions_lower_bound": 2,
+      "program_actions_observed_monotonic_ns": 264265157542300,
+      "recovery_release_key_up_attempts": [
+        {
+          "encoding": "virtual_key",
+          "status": "returned",
+          "virtual_key": 65
+        }
+      ],
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "recovered",
+      "task_success": null
+    },
+    "status": "recovered",
+    "target_generation": "0c43b575aed23de2444a2c0c8c21c297403013af42cf8635603af9f9795d362d",
+    "task_success": null
+  },
+  "retained_task_effect": {
+    "receipt": {
+      "call_id": "4cd2974193e54f9381aea76f6966a9f1",
+      "evidence_ref": "oracle-evidence-0786d9c9509d4ffa85b77ad24169d645.json",
+      "observed_monotonic_ns": 264266448084900,
+      "operation_id": "538e390d5fde4c7986760ae47682eca9",
+      "oracle_id": "0786d9c9509d4ffa85b77ad24169d645",
+      "outcome": "success",
+      "target_generation": "0c43b575aed23de2444a2c0c8c21c297403013af42cf8635603af9f9795d362d"
+    },
+    "receipt_received_monotonic_ns": 264266448631700,
+    "requested_monotonic_ns": 264266443976300,
+    "status": "verified",
+    "task_success": true
+  },
+  "runner_exit": {
+    "exit_code": 0,
+    "utc": "2026-11-12T16:07:38.0661758Z"
+  },
+  "runtime_tree": "24c84540abb65d56ed0646ea9a0889b51c4a7e67",
+  "schema": "r150-public-effect-composition-selection-v1",
+  "scope": "One controlled native fixture with configured server oracle; no MAP01 completion, quiescence, reliability or efficiency claim.",
+  "selection": "Host paths and session envelopes omitted. evidence_ref reduced to filename; original unchanged privately.",
+  "source_commit": "a0e695fe8193e708e2f60accb2bd3c6c351d7d4a",
+  "task_verification": {
+    "call_id": "4cd2974193e54f9381aea76f6966a9f1",
+    "input_dispatched": false,
+    "operation_invoked": false,
+    "replay_allowed": false,
+    "scope": "supervised_win32",
+    "status": "verified",
+    "task_effect": {
+      "receipt": {
+        "call_id": "4cd2974193e54f9381aea76f6966a9f1",
+        "evidence_ref": "oracle-evidence-0786d9c9509d4ffa85b77ad24169d645.json",
+        "observed_monotonic_ns": 264266448084900,
+        "operation_id": "538e390d5fde4c7986760ae47682eca9",
+        "oracle_id": "0786d9c9509d4ffa85b77ad24169d645",
+        "outcome": "success",
+        "target_generation": "0c43b575aed23de2444a2c0c8c21c297403013af42cf8635603af9f9795d362d"
+      },
+      "receipt_received_monotonic_ns": 264266448631700,
+      "requested_monotonic_ns": 264266443976300,
+      "status": "verified",
+      "task_success": true
+    },
+    "task_success": true
+  }
+}
