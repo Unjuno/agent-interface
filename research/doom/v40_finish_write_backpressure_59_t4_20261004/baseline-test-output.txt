@@ -1,0 +1,14 @@
+test_finish_write_backpressure_is_bounded_and_retires_owned_child (research.doom.test_map01_overlap_controller_v40_unknown_source.Map01V40UnknownSourceTests.test_finish_write_backpressure_is_bounded_and_retires_owned_child) ... FAIL
+
+======================================================================
+FAIL: test_finish_write_backpressure_is_bounded_and_retires_owned_child (research.doom.test_map01_overlap_controller_v40_unknown_source.Map01V40UnknownSourceTests.test_finish_write_backpressure_is_bounded_and_retires_owned_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-5\work\review-pr7586-59\research\doom\test_map01_overlap_controller_v40_unknown_source.py", line 512, in test_finish_write_backpressure_is_bounded_and_retires_owned_child
+    self.assertTrue(
+AssertionError: False is not true : finish_timeout must bound delivery to a non-reading child
+
+----------------------------------------------------------------------
+Ran 1 test in 0.728s
+
+FAILED (failures=1)

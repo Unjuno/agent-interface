@@ -1,0 +1,22 @@
+{
+  "candidate_sha256": "79033d42786d5c1327727dfd57e0cda5e6d08bc9f5f931241c4b4ae4a33f94c9",
+  "checks": {
+    "acceptance_wait_forwards_monitor": false,
+    "initial_invalidation_cancels_and_continues_before_planner": false,
+    "not_started_admission_is_accounted": false,
+    "renewal_invalidation_uses_planner_cancel_path": false,
+    "submit_path_uses_selected_validity_monitor": false,
+    "unplanned_cancel_requires_verified_empty_release": false
+  },
+  "decision": "FAIL_ADMISSION_PATH_STRUCTURE",
+  "failed_checks": [
+    "acceptance_wait_forwards_monitor",
+    "submit_path_uses_selected_validity_monitor",
+    "initial_invalidation_cancels_and_continues_before_planner",
+    "renewal_invalidation_uses_planner_cancel_path",
+    "unplanned_cancel_requires_verified_empty_release",
+    "not_started_admission_is_accounted"
+  ],
+  "schema": "map01-v40-admission-path-audit-v1",
+  "scope": "read-only AST/source audit; no child session, game, model, GUI, input, or task-effect validation"
+}
