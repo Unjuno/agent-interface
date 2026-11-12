@@ -1,0 +1,8 @@
+{
+  "schema": "v16-source-epoch-probe-a01-validation-attempt-v1",
+  "status": "STOP_BEFORE_TEST_EXECUTION",
+  "command": "python -m unittest research.doom.test_acknowledged_scorer_v1 research.doom.test_session_map01_v16_finalization -v",
+  "failure": "ImportError because the command omitted research/doom from PYTHONPATH; both modules failed import before any test ran.",
+  "candidate_tests_run": 0,
+  "disposition": "Rerun the same frozen main suites with PYTHONPATH=research/doom."
+}
