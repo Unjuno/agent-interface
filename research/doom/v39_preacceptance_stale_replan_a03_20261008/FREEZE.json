@@ -1,0 +1,23 @@
+{
+  "experiment_id": "v39-preacceptance-stale-replan-a03-20261008",
+  "classification": "source-bound synthetic executor-boundary composition",
+  "main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "sources": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "research/live_control/executor_v11.py": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+    "research/doom/v39_preacceptance_stale_replan_a02_20261008/RESULT.json at PR #8501 head 5494e1c74365174f335c0c65d5416e863934c492": {
+      "sha256": "6a04c8262eb3dc578d549507a07e478a6c61c3a31d9a71827e033da4ce98117e",
+      "path": "A02_RESULT.json"
+    }
+  },
+  "question": "After the exact current-main Executor rejects a stale pre-acceptance sequence, does one fresh planner turn based on a matching newer observation compile and pass through the exact Executor.submit admission boundary, while a second sequence advance still fails closed?",
+  "limits": [
+    "no game, model service, GUI, OS input, live allocation, input release, task effect, or task progress",
+    "Executor worker start is replaced with an inert stub after exact admission publication",
+    "lease eligibility and backend program validation are stubbed at their input-free boundaries",
+    "synthetic fresh observation pair; prior PR #8501 A02 is cited as the separate exact-producer pair result",
+    "does not establish current-runtime recovery or live threat-control efficacy"
+  ]
+}
