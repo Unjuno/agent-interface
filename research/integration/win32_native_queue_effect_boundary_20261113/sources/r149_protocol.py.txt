@@ -1,0 +1,41 @@
+"""Pure R149 program and terminal discrimination."""
+import json
+
+def public_body(reply):
+    if type(reply) is dict:
+        return reply
+    texts=[b.text for b in reply.content if getattr(b,'type',None)=='text']
+    if len(texts)!=1:raise ValueError('expected one JSON text block')
+    value=json.loads(texts[0])
+    if type(value) is not dict:raise ValueError('public result is not an object')
+    return value
+
+def exact_terminal(row,call_id):
+    if type(row) is not dict or row.get('call_id')!=call_id:return False
+    if row.get('status')=='pending':return False
+    action=row.get('action')
+    return type(action) is dict and action.get('status') in ('completed','recovered','unknown')
+
+def program(generation,clock_ns,nonce):
+    if type(clock_ns) is not int or clock_ns<=0:raise ValueError('execution clock required')
+    return {'schema':'agent-interface/program-v1','program_id':'r149-native-queue-'+nonce,
+      'source':{'observation_seq':1,'binding_revision':1,'target_generations':{'fixture':generation}},
+      'authority':{'lease_id':'r149-'+nonce,'expires_at_ns':clock_ns+4_000_000_000},
+      'terminal':{'release_all_required':True},
+      'ops':[{'op':'focus','target':'fixture'},
+             {'op':'key_state','key':'A','down':True,'encoding':'virtual_key'},
+             {'op':'wait_update','timeout_ms':50},
+             {'op':'key_state','key':'A','down':False,'encoding':'virtual_key'},
+             {'op':'wait_update','timeout_ms':15000},{'op':'release_all'}]}
+
+def walk(value):
+    if isinstance(value,dict):
+        yield value
+        for child in value.values():yield from walk(child)
+    elif isinstance(value,list):
+        for child in value:yield from walk(child)
+
+def horizon_rows(row):
+    return [r for r in walk(row) if r.get('late_input_horizon_ns')==2_000_000_000 and
+            isinstance(r.get('late_input_observation_end_ns',
+                       r.get('late_input_observation_end_monotonic_ns')),int)]

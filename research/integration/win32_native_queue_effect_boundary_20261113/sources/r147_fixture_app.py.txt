@@ -1,0 +1,161 @@
+"""Owned Win32 queue-residency fixture. Never sends or reconstructs input."""
+from __future__ import annotations
+import ctypes
+from ctypes import wintypes as W
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+import time
+
+P=Path(__file__).resolve().parent
+C={}
+U=ctypes.WinDLL('user32',use_last_error=True)
+G=ctypes.WinDLL('gdi32',use_last_error=True)
+K=ctypes.WinDLL('kernel32',use_last_error=True)
+LPARAM=ctypes.c_ssize_t; WPARAM=ctypes.c_size_t; LRESULT=ctypes.c_ssize_t
+WNDPROC=ctypes.WINFUNCTYPE(LRESULT,W.HWND,W.UINT,WPARAM,LPARAM)
+class WNDCLASS(ctypes.Structure):
+ _fields_=[('style',W.UINT),('proc',WNDPROC),('class_extra',ctypes.c_int),
+ ('window_extra',ctypes.c_int),('instance',W.HINSTANCE),('icon',W.HICON),
+ ('cursor',W.HANDLE),('background',W.HBRUSH),('menu',W.LPCWSTR),('name',W.LPCWSTR)]
+def bind(dll,name,args,result):
+ f=getattr(dll,name);f.argtypes=args;f.restype=result;return f
+bind(K,'GetModuleHandleW',[W.LPCWSTR],W.HMODULE)
+bind(K,'GetCurrentProcess',[],W.HANDLE)
+bind(K,'GetProcessTimes',[W.HANDLE]+[ctypes.POINTER(W.FILETIME)]*4,W.BOOL)
+bind(U,'DefWindowProcW',[W.HWND,W.UINT,WPARAM,LPARAM],LRESULT)
+bind(U,'RegisterClassW',[ctypes.POINTER(WNDCLASS)],W.ATOM)
+bind(U,'CreateWindowExW',[W.DWORD,W.LPCWSTR,W.LPCWSTR,W.DWORD,
+ ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,W.HWND,W.HMENU,W.HINSTANCE,W.LPVOID],W.HWND)
+bind(U,'ShowWindow',[W.HWND,ctypes.c_int],W.BOOL)
+bind(U,'UpdateWindow',[W.HWND],W.BOOL)
+bind(U,'GetWindowRect',[W.HWND,ctypes.POINTER(W.RECT)],W.BOOL)
+bind(U,'GetForegroundWindow',[],W.HWND)
+bind(U,'GetAsyncKeyState',[ctypes.c_int],W.SHORT)
+bind(U,'GetQueueStatus',[W.UINT],W.DWORD)
+bind(U,'PeekMessageW',[ctypes.POINTER(W.MSG),W.HWND,W.UINT,W.UINT,W.UINT],W.BOOL)
+bind(U,'TranslateMessage',[ctypes.POINTER(W.MSG)],W.BOOL)
+bind(U,'DispatchMessageW',[ctypes.POINTER(W.MSG)],LRESULT)
+bind(U,'DestroyWindow',[W.HWND],W.BOOL)
+bind(U,'InvalidateRect',[W.HWND,ctypes.c_void_p,W.BOOL],W.BOOL)
+bind(U,'GetDC',[W.HWND],W.HDC)
+bind(U,'ReleaseDC',[W.HWND,W.HDC],ctypes.c_int)
+bind(U,'ValidateRect',[W.HWND,ctypes.c_void_p],W.BOOL)
+bind(U,'SetProcessDpiAwarenessContext',[ctypes.c_void_p],W.BOOL)
+bind(G,'TextOutW',[W.HDC,ctypes.c_int,ctypes.c_int,W.LPCWSTR,ctypes.c_int],W.BOOL)
+bind(G,'SetBkColor',[W.HDC,W.COLORREF],W.COLORREF)
+bind(G,'SetTextColor',[W.HDC,W.COLORREF],W.COLORREF)
+
+state={'phase':'ready','effects':0,'alive':True,'callback_error':None}
+def save(name,data):
+ with (P/name).open('x',encoding='utf-8') as f:
+  json.dump(data,f,indent=2,sort_keys=True);f.write('\n')
+def event(kind,**kw):
+ row={'kind':kind,'monotonic_ns':time.monotonic_ns(),'nonce':C['nonce'],**kw}
+ with (P/'events.jsonl').open('a',encoding='utf-8') as f:
+  f.write(json.dumps(row,sort_keys=True)+'\n')
+ return row
+def paint(dc):
+ G.SetBkColor(dc,0x00F0F0F0);G.SetTextColor(dc,0)
+ lines=['Agent Interface R147: native queue residency',
+        'Phase: '+state['phase'], 'A keydown task counter: '+str(state['effects']),
+        'Owned test window. No typing is needed.']
+ for i,line in enumerate(lines):G.TextOutW(dc,18,30+i*40,line,len(line))
+
+@WNDPROC
+def window_proc(hwnd,message,wparam,lparam):
+ try:
+  if message==0x10:
+   event('close_requested');U.DestroyWindow(hwnd);return 0
+  if message==0x02:
+   state['alive']=False;event('destroyed');return 0
+  if message==0x100 or message==0x101 or message==0x102:
+   row=event('wndproc_keyboard',message=message,wparam=int(wparam),lparam=int(lparam),
+             phase=state['phase'],a_async_down=bool(U.GetAsyncKeyState(0x41)&0x8000),
+             foreground=int(U.GetForegroundWindow() or 0))
+   if message==0x100 and wparam==0x41:
+    state['effects']+=1
+    effect=event('task_effect',counter=state['effects'],phase=state['phase'],
+                 first_transition=not bool(lparam&(1<<30)),key_event_ns=row['monotonic_ns'])
+    with (P/'effects.jsonl').open('a',encoding='utf-8') as f:f.write(json.dumps(effect,sort_keys=True)+'\n')
+    U.InvalidateRect(hwnd,None,True)
+   return 0
+  if message==0x0F:
+   dc=U.GetDC(hwnd)
+   if dc:paint(dc);U.ReleaseDC(hwnd,dc)
+   U.ValidateRect(hwnd,None);return 0
+  if message==0x318:paint(W.HDC(wparam));return 0
+  return U.DefWindowProcW(hwnd,message,wparam,lparam)
+ except BaseException as error:
+  state['callback_error']=repr(error)
+  event('callback_error',error=repr(error));return 0
+
+def remove_and_dispatch(low,high):
+ # Each message is used directly from the OS-returned MSG, immediately.
+ # No deferred message list, synthetic MSG, PostMessage or SendInput exists.
+ for _ in range(64):
+  msg=W.MSG()
+  if not U.PeekMessageW(ctypes.byref(msg),None,low,high,1):return
+  if msg.message==0x12:state['alive']=False;return
+  if 0x100<=msg.message<=0x109:
+   if state['phase']=='holding':raise RuntimeError('keyboard removed during hold')
+   event('native_keyboard_removed',message=int(msg.message),wparam=int(msg.wParam),
+         lparam=int(msg.lParam),os_time_ms=int(msg.time),hwnd=int(msg.hwnd or 0),phase=state['phase'])
+  U.TranslateMessage(ctypes.byref(msg));U.DispatchMessageW(ctypes.byref(msg))
+
+def service_nonkeyboard():
+ remove_and_dispatch(0,0xFF)
+ remove_and_dispatch(0x10A,0xFFFF)
+
+def main():
+ global C
+ C=json.loads((P/'conditions.json').read_text(encoding='utf-8'))
+ if (P/'fixture-meta.json').exists():raise RuntimeError('fixture already launched; no replay')
+ dpi=bool(U.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4)))
+ instance=K.GetModuleHandleW(None);name='AgentInterfaceR147_'+C['nonce']
+ wc=WNDCLASS();wc.proc=window_proc;wc.instance=instance;wc.background=6;wc.name=name
+ if not U.RegisterClassW(ctypes.byref(wc)):raise ctypes.WinError(ctypes.get_last_error())
+ hwnd=U.CreateWindowExW(0,name,C['window_title'],0x10CF0000,100,100,660,280,None,None,instance,None)
+ if not hwnd:raise ctypes.WinError(ctypes.get_last_error())
+ U.ShowWindow(hwnd,5);U.UpdateWindow(hwnd)
+ rect=W.RECT()
+ if not U.GetWindowRect(hwnd,ctypes.byref(rect)):raise ctypes.WinError(ctypes.get_last_error())
+ times=[W.FILETIME() for _ in range(4)]
+ if not K.GetProcessTimes(K.GetCurrentProcess(),*[ctypes.byref(t) for t in times]):raise ctypes.WinError(ctypes.get_last_error())
+ meta={'pid':os.getpid(),'hwnd':int(hwnd),'rect':[rect.left,rect.top,rect.right,rect.bottom],
+       'created_filetime_100ns':(times[0].dwHighDateTime<<32)|times[0].dwLowDateTime,
+       'nonce':C['nonce'],'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+       'executable':sys.executable,'python':sys.version,'clock_info':vars(time.get_clock_info('monotonic')),
+       'dpi_v2_set':dpi,'input_generation_api_used':False}
+ save('fixture-meta.json',meta);event('ready',**meta)
+ started=time.monotonic();hold_start=None;last_preview=0;previous_preview=None
+ while state['alive'] and time.monotonic()-started<C['fixture_lifetime_s']:
+  if (P/'stop.flag').exists():event('self_stop');U.DestroyWindow(hwnd);break
+  if state['phase']=='ready' and (P/'hold.flag').exists():
+   state['phase']='holding';hold_start=time.monotonic()
+   row=event('hold_entered');save('hold-entered.json',row);U.InvalidateRect(hwnd,None,True)
+  if state['phase']=='holding':
+   expired=time.monotonic()-hold_start>=C['max_hold_s']
+   if expired or (P/'resume.flag').exists():
+    state['phase']='resumed';event('hold_resumed',timeout=expired);U.InvalidateRect(hwnd,None,True)
+   else:
+    preview=W.MSG()
+    if U.PeekMessageW(ctypes.byref(preview),None,0x100,0x109,0):
+     identity=(int(preview.hwnd or 0),int(preview.message),int(preview.wParam),int(preview.lParam),int(preview.time))
+     if identity!=previous_preview or time.monotonic()-last_preview>=.5:
+      event('native_keyboard_peek_no_remove',hwnd=identity[0],message=identity[1],wparam=identity[2],
+            lparam=identity[3],os_time_ms=identity[4],a_async_down=bool(U.GetAsyncKeyState(0x41)&0x8000),
+            foreground=int(U.GetForegroundWindow() or 0),queue_status=int(U.GetQueueStatus(1)))
+      previous_preview=identity;last_preview=time.monotonic()
+    service_nonkeyboard()
+  if state['phase']!='holding':remove_and_dispatch(0,0)
+  if state['callback_error']:raise RuntimeError(state['callback_error'])
+  time.sleep(.002)
+ if state['alive']:event('lifetime_timeout');U.DestroyWindow(hwnd)
+ save('fixture-exit.json',{'utc_ns':time.time_ns(),'monotonic_ns':time.monotonic_ns(),
+      'state':state,'input_generated':False,'nonce':C['nonce']})
+ return 0
+
+if __name__=='__main__':raise SystemExit(main())
