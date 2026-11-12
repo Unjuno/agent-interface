@@ -1,0 +1,48 @@
+{
+  "disposition": "HOLD_NO_INDEPENDENT_FEEDBACK_STREAM",
+  "gate_invocation": {
+    "disposition": "NOT_EVALUABLE_NO_INPUT_EVENTS",
+    "invoked": true,
+    "output": [],
+    "output_rows": 0
+  },
+  "input_counts": {
+    "effect_receipt_rows": 4,
+    "input_admission_rows": 39,
+    "input_released_rows": 1,
+    "keys_held_rows": 28,
+    "occupancy_hold_rows": 29,
+    "pixel_only_receipt_rows": 4,
+    "post_control_score_rows": 1,
+    "runtime_event_rows": 634,
+    "typed_observation_rows": 218,
+    "verified_owner_release_rows": 13
+  },
+  "interpretation": "The retained record supports terminal task outcome and per-key admission events, but has no independently sampled positive feedback stream using T0 schemas and no explicit verified per-key release interval rows. Controller-visible health/ammo and viewport-only pixel receipts were not promoted. No event-to-intent attribution was attempted.",
+  "observed_gaps": {
+    "controller_visible_typed_observations_excluded": 218,
+    "input_admissions_without_id_step_intent_token": 39,
+    "input_admissions_without_per_key_verified_release": 39,
+    "pixel_only_receipts_excluded": 4,
+    "terminal_score_has_timestamped_progress_sample": 0
+  },
+  "per_key_disposition": "HOLD_NO_COMPLETE_EXPLICIT_PER_KEY_RELEASE_INTERVALS",
+  "qualifying_data": {
+    "complete_explicit_per_key_intervals": 0,
+    "independent_scorer_events": 0,
+    "independent_scorer_samples": 0,
+    "per_key_owner_release_rows": 0
+  },
+  "schema": "map01-v39-feedback-sufficiency-t1-v1",
+  "terminal_score": [
+    {
+      "death_count": 0,
+      "emit_ns": 55552248511367,
+      "episode_finished": false,
+      "kill_count": 1,
+      "map_exit": false,
+      "player_dead": false,
+      "reward": 0.0
+    }
+  ]
+}
