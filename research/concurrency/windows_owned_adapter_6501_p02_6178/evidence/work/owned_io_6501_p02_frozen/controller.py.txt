@@ -1,0 +1,110 @@
+"""Experimental pure controller, serialized owner and exclusive one-read worker assumed.
+
+No Windows API, input, native handle authentication or wall-time guarantee.
+"""
+from dataclasses import dataclass
+from copy import deepcopy
+
+@dataclass(frozen=True)
+class Context:
+    operation:str
+    worker:str
+    generation:int
+    def __post_init__(self):
+        if any(type(v) is not str or not v or len(v)>96 for v in (self.operation,self.worker)) or type(self.generation) is not int or self.generation<=0:raise ValueError('invalid context')
+
+class Controller:
+    def __init__(self,context,*,max_observations=4):
+        if type(context) is not Context or type(max_observations) is not int or not 1<=max_observations<=64:raise ValueError('invalid construction')
+        self.context=context;self.budget=max_observations;self.observations=0;self.intent=False;self.admission='NEW';self.cancel_phase='NONE';self.cancel_ticket=None;self.cancel_requests=0;self.cancel_result=None;self.completion=None;self.joined=False;self.caller=None;self.resources={x:'HELD' for x in ('thread_handle','read_fd','write_fd')};self.close_tickets={};self.close_seq=0
+    def _context(self,ctx):
+        if type(ctx) is not Context or ctx!=self.context:raise ValueError('stale or foreign context')
+    def request_cancel(self,ctx):self._context(ctx);self.intent=True
+    def admit(self,ctx):
+        self._context(ctx)
+        if self.admission!='NEW':raise ValueError('admission already decided')
+        self.admission='REFUSED' if self.intent else 'ADMITTED';return self.admission=='ADMITTED'
+    def observe_pending(self,ctx,pending):
+        self._context(ctx)
+        if type(pending) is not bool:raise ValueError('pending must be bool')
+        if self.cancel_phase=='UNKNOWN':return 'UNCERTAIN_CANCEL_OUTCOME'
+        if self.completion is not None:return 'WORKER_TERMINAL'
+        if self.admission!='ADMITTED':return 'WAIT_ADMISSION_OR_REFUSED_WORKER'
+        if self.observations>=self.budget:return 'UNCERTAIN_OBSERVATION_BUDGET'
+        self.observations+=1
+        if self.intent and pending and self.cancel_phase=='NONE':
+            self.cancel_ticket='cancel:'+self.context.operation;self.cancel_phase='TICKET';return self.cancel_ticket
+        if self.cancel_phase!='NONE':return 'WAIT_COMPLETION'
+        return 'UNCERTAIN_OBSERVATION_BUDGET' if self.observations==self.budget else 'WAIT'
+    def _ticket(self,ctx,ticket):
+        self._context(ctx)
+        if type(ticket) is not str or ticket!=self.cancel_ticket:raise ValueError('invalid cancellation ticket')
+    def begin_cancel(self,ctx,ticket):
+        self._ticket(ctx,ticket)
+        if self.cancel_phase!='TICKET' or self.completion is not None:raise ValueError('cannot start native request')
+        self.cancel_phase='INFLIGHT';self.cancel_requests+=1
+    def withdraw_cancel_ticket(self,ctx,ticket):
+        self._ticket(ctx,ticket)
+        if self.cancel_phase!='TICKET':raise ValueError('only unsent ticket can be withdrawn')
+        self.cancel_phase='WITHDRAWN'
+    def cancel_outcome_unknown(self,ctx,ticket):
+        self._ticket(ctx,ticket)
+        if self.cancel_phase!='INFLIGHT':raise ValueError('no in-flight request')
+        self.cancel_phase='UNKNOWN'
+    def cancel_reply(self,ctx,ticket,success,error):
+        self._ticket(ctx,ticket)
+        if type(success) is not bool or type(error) is not int or error<0:raise ValueError('typed API result required')
+        row=(success,error)
+        if self.cancel_result is not None:
+            if self.cancel_result!=row:raise ValueError('conflicting duplicate reply')
+            return
+        if self.cancel_phase not in {'INFLIGHT','UNKNOWN'}:raise ValueError('request not started')
+        self.cancel_result=row;self.cancel_phase='ACCEPTED' if success else ('NO_PENDING_REPORTED' if error==1168 else 'API_FAILED')
+    def worker_terminal(self,ctx,success,error,count,payload):
+        self._context(ctx)
+        if self.admission!='ADMITTED' or type(success) is not bool or type(error) is not int or error<0 or type(count) is not int or not 0<=count<=4096 or type(payload) is not str or len(payload)>8192:raise ValueError('invalid terminal evidence')
+        try:data=bytes.fromhex(payload)
+        except ValueError as e:raise ValueError('invalid data image') from e
+        if len(data)!=count or data.hex()!=payload:raise ValueError('payload/count mismatch')
+        row=dict(success=success,error=error,count=count,hex=payload,kind='NORMAL' if success else ('ABORTED' if error==995 else 'FAILED'))
+        if self.completion is not None and self.completion!=row:raise ValueError('conflicting terminal evidence')
+        self.completion=row
+    def thread_joined(self,ctx):
+        self._context(ctx)
+        if self.completion is None:raise ValueError('worker terminal evidence missing')
+        self.joined=True
+    def worker_not_issued(self,ctx):
+        self._context(ctx)
+        if self.admission!='REFUSED':raise ValueError('no-I/O evidence contradicts admission')
+        row={'kind':'NOT_ISSUED'}
+        if self.completion is not None and self.completion!=row:raise ValueError('conflicting terminal evidence')
+        self.completion=row
+    def caller_terminal(self,ctx,status):
+        self._context(ctx)
+        if type(status) is not str or status not in {'CANCELLED','DELIVERED','FAILED'}:raise ValueError('invalid caller status')
+        if status=='DELIVERED' and self.completion is None:raise ValueError('worker result not available')
+        if self.caller is not None and self.caller!=status:raise ValueError('conflicting caller terminal receipt')
+        self.caller=status
+    def prepare_retirement(self,ctx,resource):
+        self._context(ctx)
+        if type(resource) is not str or resource not in self.resources:raise ValueError('unknown resource')
+        if self.completion is None or not self.joined or self.cancel_phase in {'TICKET','INFLIGHT','UNKNOWN'}:raise ValueError('resource still potentially in use')
+        if self.resources[resource] not in {'HELD','CLOSE_FAILED'}:raise ValueError('cannot issue another close')
+        self.close_seq+=1;ticket='close:'+resource+':'+str(self.close_seq);self.close_tickets[ticket]=dict(resource=resource,result=None);self.resources[resource]='CLOSE_INFLIGHT';return ticket
+    def retirement_unknown(self,ctx,ticket):
+        self._context(ctx)
+        if ticket not in self.close_tickets:raise ValueError('unknown close request')
+        row=self.close_tickets[ticket]
+        if row['result'] is not None:raise ValueError('close already resolved')
+        self.resources[row['resource']]='CLOSE_UNKNOWN'
+    def retirement_reply(self,ctx,ticket,success):
+        self._context(ctx)
+        if type(success) is not bool or ticket not in self.close_tickets:raise ValueError('invalid close result')
+        row=self.close_tickets[ticket]
+        if row['result'] is not None:
+            if row['result'] is not success:raise ValueError('conflicting close reply')
+            return
+        row['result']=success;self.resources[row['resource']]='RETIRED' if success else 'CLOSE_FAILED'
+    def snapshot(self):
+        released=all(v=='RETIRED' for v in self.resources.values());settled=released and self.completion is not None and self.joined and self.caller is not None and self.cancel_phase not in {'TICKET','INFLIGHT','UNKNOWN'}
+        return deepcopy(dict(context=dict(operation=self.context.operation,worker=self.context.worker,generation=self.context.generation),cancel_intent=self.intent,admission=self.admission,cancel_phase=self.cancel_phase,cancel_requests=self.cancel_requests,observations=self.observations,worker_completion=self.completion,thread_joined=self.joined,caller_terminal=self.caller,resources=self.resources,resources_released=released,settled=settled))

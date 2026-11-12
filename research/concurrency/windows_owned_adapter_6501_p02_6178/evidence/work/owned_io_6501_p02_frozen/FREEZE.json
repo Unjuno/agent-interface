@@ -1,0 +1,64 @@
+{
+  "allocation": "6501-P02-OWNED-ADAPTER-6178",
+  "worker": "01a0ff58-6178-7ea1-a6d5-cf09260b91e3",
+  "created": "2026-10-03T19:17:00.354089+00:00",
+  "sources": [
+    {
+      "name": "controller.py",
+      "bytes": 7782,
+      "sha256": "8d2fa097add799bd3dc9d50a9e2954ce2320080e5681f98a04bbfb975180416d"
+    },
+    {
+      "name": "pending_adapter.py",
+      "bytes": 2878,
+      "sha256": "3171f7fc8c8c2ba629193222ca8b8d5b4345b919f6b39c29363af6d26defd836"
+    },
+    {
+      "name": "native_driver_p02.py",
+      "bytes": 6741,
+      "sha256": "02499409db56069cc4763ddd379d0b4f0a82989e6160c60972baa126f10ebda2"
+    },
+    {
+      "name": "audit_p02.py",
+      "bytes": 5060,
+      "sha256": "1e8714fb9697dd185cd2f40b689d268efe5b1743017c13d858862944d4dd7b82"
+    },
+    {
+      "name": "supervisor_p02.py",
+      "bytes": 3081,
+      "sha256": "3e58d7334ae0215de52a6f39c08543f73fe3bdd181c4ac6eca6aeb0c92d2e8d0"
+    }
+  ],
+  "output": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\owned_io_6501_p02_native",
+  "python": {
+    "executable": "C:\\Users\\user\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "exe_sha256": "372c2eae555b344520bf147be0096e009069aeca4e7f78d6aecea6d53158056a"
+  },
+  "platform": "Windows-11-10.0.26300-SP0",
+  "cells": [
+    "precancel",
+    "pending_cancel"
+  ],
+  "native_cells_consumed": 0,
+  "public_freeze_comment": 5972625355,
+  "H": "End-to-end own exclusive one-read native operation joins explicit caller cancellation, advisory pending witness, native API reply, worker terminal, join and actual closes through pure controller; no completion inferred from API success.",
+  "T": "Two distinct P02 cells once each; precancel zero ReadFile/Cancel; pending_cancel one ReadFile/Cancel; independent data auditor. Strong existing T03 saved-data baseline retained separately, no native baseline replay.",
+  "D": "PASS only if independent frozen audit passes both exact cell predicates and source/module paths/byte identities, supervisor actual exit0, no cleanup write/live worker/unknown resources. Any failure STOP or FAIL retained; no retries, threshold changes or consumed-root reuse. Nonzero cell stops remaining cells.",
+  "C": "Simple pending API success or driver PRIMARY_COMPLETE cannot establish completion; failed pending API, API success without995 worker result, close-before-join, bool aliases, missing caller and contradictory terminal summary are frozen negatives.",
+  "U": "One anonymous pipe/one nonpooled worker, trusted serialized owner. Pending sample can change before cancel; no kernel fencing/pool/screen/physical input/general task/economy guarantee. Source paths plus adjacent bytes are not Python loaded-bytecode attestation.",
+  "resources": "Own host CPU one child at a time/new anonymous pipe/new thread; no GUI/GPU/shared file handles or existing allocations. Peak planned source+raw <5MiB, child expected <64MiB; not enforced memory limits.",
+  "bounds": {
+    "supervisor_timeout_seconds": 10,
+    "stream_limit_bytes": 1048576,
+    "stream_poll_seconds": 0.01,
+    "worker_start_seconds": 2,
+    "pending_seconds": 1,
+    "observations": 64,
+    "primary_completion_seconds": 1,
+    "cleanup_join_seconds": 2
+  },
+  "ownership": "Own direct native child producer has no subprocess creation; child kill terminates its threads and closes own process handle table. This is no generic descendant containment assertion. All partial files retained, no silent truncation; stream-limit polling overshoot unknown.",
+  "intake": "Bounded current all-state issue search6501+adapter returned6501/57/6957/672; original T01/T02/T03 consumed and distinct. No global absence claim. P02 connection hypothesis new, not rerunning same old producer.",
+  "policy": "Human FINAL-v5 governs; private native Windows backend residual requires host OS. No main/source publication or GUI lease involved."
+}
