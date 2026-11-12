@@ -1,0 +1,100 @@
+{
+  "arms": [
+    {
+      "admission_keycodes": [
+        null,
+        null
+      ],
+      "admissions": [
+        {
+          "admitted_ns": 114820358956600,
+          "event": "input_admission",
+          "input_ack_ns": 114820358959300,
+          "key": "W",
+          "valid_until_ns": 114825358919100
+        },
+        {
+          "admitted_ns": 114820359002100,
+          "event": "input_admission",
+          "input_ack_ns": 114820359004700,
+          "key": "A",
+          "valid_until_ns": 114825358919100
+        }
+      ],
+      "mapping": {
+        "65": 65,
+        "87": 87
+      },
+      "reason": "cancelled",
+      "release_interval_count": 2,
+      "release_intervals": [
+        {
+          "interval_ns": [
+            114820364660100,
+            114820364664800
+          ],
+          "keycode": 87
+        },
+        {
+          "interval_ns": [
+            114820364663600,
+            114820364664800
+          ],
+          "keycode": 65
+        }
+      ],
+      "release_keycodes": [
+        87,
+        65
+      ],
+      "release_verified": true
+    },
+    {
+      "admission_keycodes": [
+        null,
+        null
+      ],
+      "admissions": [
+        {
+          "admitted_ns": 114820366030000,
+          "event": "input_admission",
+          "input_ack_ns": 114820366032200,
+          "key": "W",
+          "valid_until_ns": 114825366000900
+        },
+        {
+          "admitted_ns": 114820366070800,
+          "event": "input_admission",
+          "input_ack_ns": 114820366072200,
+          "key": "A",
+          "valid_until_ns": 114825366000900
+        }
+      ],
+      "mapping": {
+        "65": 77,
+        "87": 77
+      },
+      "reason": "cancelled",
+      "release_interval_count": 1,
+      "release_intervals": [
+        {
+          "interval_ns": [
+            114820380819700,
+            114820380824500
+          ],
+          "keycode": 77
+        }
+      ],
+      "release_keycodes": [
+        77
+      ],
+      "release_verified": true
+    }
+  ],
+  "candidate_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "candidate_git_blob": "da1a0b496572f3b853a84a94451e6824369a49b0",
+  "candidate_path": "research/live_control/batch_fixture_composition_59_4d74_20261004/source/input_owner_v12.py",
+  "environment": "synthetic Xlib with two controlled keysym-to-keycode maps",
+  "schema": "map01-cancel-keycode-identity-probe-v1",
+  "scope": "construction only; no real X server, physical input, game, model, or live allocation"
+}
