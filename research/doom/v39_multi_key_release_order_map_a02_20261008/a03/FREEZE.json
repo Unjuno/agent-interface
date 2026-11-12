@@ -1,0 +1,18 @@
+{
+  "schema": "issue59-pr7692-release-order-map-a03-freeze-v1",
+  "status": "offline candidate audit",
+  "base_main_sha": "e37ae63b88a456816598a51887cf0b3e1ef44265",
+  "pr7692_head_sha": "7ec4e3ef405919bf5f1bfd9eeddbe630f3a5b32e",
+  "source_sha256": {
+    "session_map01_v19.py": "2c5304bd246118f8124d5f7b50b81f869fb35ea3ee76887f4682748fdf95618a",
+    "map01_scorer_stdio_adapter_v3.py": "48518dd27d8271c2b9be271b0e48bd2827240a53883d07713563faa6e7e731cc",
+    "INPUT_EVENTS.jsonl": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "result": {
+    "schedules": 41,
+    "production_validator_passes": 41,
+    "malformed_or_mismatched_controls": 6,
+    "candidate": "PASS_SCHEMA_AND_VALIDATOR_CANDIDATE"
+  },
+  "limits": ["synthetic schedule wrapper", "does not execute V19 backend", "does not execute scorer tail", "no controller, OS input, GUI, model, or game"]
+}

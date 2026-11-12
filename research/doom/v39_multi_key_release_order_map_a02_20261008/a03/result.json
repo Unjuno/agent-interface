@@ -1,0 +1,1319 @@
+{
+  "schema": "issue59-pr7692-release-order-map-a03-v1",
+  "kind": "offline_real_schema_candidate_and_production_validator_construction",
+  "source": {
+    "pr": 7692,
+    "head": "7ec4e3ef405919bf5f1bfd9eeddbe630f3a5b32e",
+    "v19_path": "research/doom/session_map01_v19.py",
+    "v19_sha256": "2c5304bd246118f8124d5f7b50b81f869fb35ea3ee76887f4682748fdf95618a",
+    "scorer_path": "research/doom/map01_scorer_stdio_adapter_v3.py",
+    "scorer_sha256": "48518dd27d8271c2b9be271b0e48bd2827240a53883d07713563faa6e7e731cc",
+    "raw_path": "research/doom/map01_v39_perkey_measurement_consumer_a03_20261005/INPUT_EVENTS.jsonl",
+    "raw_event_count": 2,
+    "raw_down_actuation_id_location": "physical_key_measurement.actuation_id"
+  },
+  "identity": [
+    "id",
+    "step",
+    "owner_id",
+    "intent_token",
+    "key",
+    "physical_key_measurement.actuation_id"
+  ],
+  "candidate_schema_compatible": true,
+  "cases": [
+    {
+      "key_count": 1,
+      "schedule_count": 1,
+      "valid_scorer_boundaries": 1,
+      "invalid_or_censored": 0,
+      "schedules": [
+        {
+          "admission_order": [
+            "A"
+          ],
+          "release_order": [
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000010,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        }
+      ]
+    },
+    {
+      "key_count": 2,
+      "schedule_count": 4,
+      "valid_scorer_boundaries": 4,
+      "invalid_or_censored": 0,
+      "schedules": [
+        {
+          "admission_order": [
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000110,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000110,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000110,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000110,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        }
+      ]
+    },
+    {
+      "key_count": 3,
+      "schedule_count": 36,
+      "valid_scorer_boundaries": 36,
+      "invalid_or_censored": 0,
+      "schedules": [
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "B",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "A",
+            "C",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "A",
+            "C"
+          ],
+          "candidate_down_key": "C",
+          "candidate_up_key": "C",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 2,
+            "key": "C",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-C",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "B",
+            "C",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "A",
+            "B"
+          ],
+          "candidate_down_key": "B",
+          "candidate_up_key": "B",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 1,
+            "key": "B",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-B",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        },
+        {
+          "admission_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "release_order": [
+            "C",
+            "B",
+            "A"
+          ],
+          "candidate_down_key": "A",
+          "candidate_up_key": "A",
+          "candidate_has_event_actuation_id": false,
+          "scorer_boundary": {
+            "schema": "map01-v39-perkey-tail-boundary-v1",
+            "program_id": "program-0",
+            "step": 0,
+            "key": "A",
+            "owner_id": "owner-0",
+            "intent_token": "intent-0",
+            "actuation_id": "act-A",
+            "release_after_ns": 2000210,
+            "source_event_types": [
+              "input_admission",
+              "input_release_measurement"
+            ]
+          },
+          "scorer_boundary_valid": true,
+          "held_after": []
+        }
+      ]
+    }
+  ],
+  "mutation_checks": {
+    "missing_nested_id_has_no_map_identity": true,
+    "conflicting_edge_id_has_no_map_identity": true,
+    "bool_step_has_no_map_identity": true,
+    "duplicate_admission_censored": true,
+    "mismatched_release_censored": true,
+    "production_validator_rejects_edge_key_mismatch": true
+  },
+  "limits": "Candidate wrapper uses synthetic schedules cloned from the exact retained producer event shape and calls the exact scorer pair validator. It does not execute the V19 backend class, sample scorer tail, controller, OS input, GUI, model, or game.",
+  "decision": "PASS_SCHEMA_AND_VALIDATOR_CANDIDATE iff all 41 schedules pass the frozen production pair validator and all malformed/mismatched identity controls fail closed."
+}
