@@ -1,0 +1,17 @@
+{
+  "schema": "issue59-pr7692-release-order-probe-a01-freeze",
+  "repo": "Unjuno/agent-interface",
+  "repo_main_at_intake": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "target_pr": 7692,
+  "pr_head": "7ec4e3ef405919bf5f1bfd9eeddbe630f3a5b32e",
+  "pr_base": "7625764b70bd328e49b8f8f0d1e0c9d911e0c716",
+  "source_path": "research/doom/session_map01_v19.py",
+  "source_git_blob_sha1": "93acee5927751fcf3b4eabadc24efe3dc4483b80",
+  "source_sha256": "2c5304bd246118f8124d5f7b50b81f869fb35ea3ee76887f4682748fdf95618a",
+  "hypothesis": "For simultaneous N-key holds, the V19 wrapper matches the final release to the most recent admission only; success is contingent on last-down == last-up.",
+  "test": "AST-extract exact _capture_backend; enumerate all admission and release permutations for N=1,2,3 using an inert fake backend; require exact identity and empty-held boundary.",
+  "decision": "PASS_SCOPED if all N!^2 schedules are present, the match fraction is exactly 1/N, every candidate is empty-held, and mismatched identities never match.",
+  "counterhypothesis": "Canonical V39 action compilation may not produce overlapping multi-key holds, or optional-tail censoring may be acceptable for its purpose.",
+  "uncertainty": "No live-frequency, physical actuation, GUI, application effect, feedback, recovery, or task-result evidence.",
+  "retry_policy": "No live allocation or code mutation. The one-time offline permutation enumeration is complete."
+}
