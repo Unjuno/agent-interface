@@ -1,0 +1,26 @@
+{
+  "C": "The retained candidate raw may be valid despite A01's weaker audit; A02 strengthens its audit only.",
+  "D": "PASS only when down/up brackets reconstruct and all fourteen malformed-evidence controls are rejected.",
+  "H": "An independent raw-only auditor can confirm A01's cancellation bracket and reject malformed sample/state/timing evidence.",
+  "T": "Replay the exact retained A01 raw once through the A02 auditor; apply fourteen in-memory mutations; do not invoke the candidate.",
+  "U": "One key and one fake-display cancellation trace; no live OS input, GUI/game, application effect, useful feedback, recovery, or MAP01 progress.",
+  "a01_freeze_sha256": "bfff8fba8f9656c8186f090be3ca542decd347fefc475e2502453e268330f020",
+  "a01_raw_sha256": "94efe76f23a3136d14c2df5242290a939e1f8c5adc59cf7d1da06aaf16c64392",
+  "a01_run_id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A01-20261005",
+  "candidate_invocations": 0,
+  "new_gui_or_game": false,
+  "new_model_call": false,
+  "new_os_input": false,
+  "predecessor": "A01 retained fake-display candidate; read-only audit successor",
+  "run_id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A02-20261005",
+  "schema": "map01_v39_cleanup_telemetry_bridge_a02_freeze_v1",
+  "scope": "independent raw-only verification of A01 cleanup sample and operation brackets",
+  "source_sha256": {
+    "SOURCE/A01/FREEZE.json": "bfff8fba8f9656c8186f090be3ca542decd347fefc475e2502453e268330f020",
+    "SOURCE/A01/RAW.json": "94efe76f23a3136d14c2df5242290a939e1f8c5adc59cf7d1da06aaf16c64392",
+    "SOURCE/A01/audit.py": "7747bbffe5de25e1e781e2f44583765a551d42bce9bf83bc3627d0d94f06932d",
+    "audit_a02.py": "542fef84e080fba019e0b33733bac2e22eff63bb9d871aa5dd191f8dac7dea75",
+    "build_freeze_a02.py": "0cf530e1898256f1479ae7c339baef82a8eef1db51d300d0581160a20ae2a799",
+    "test_a02.py": "eb9b32ea7d435fe424c9dfbae91195fbe59aee0851ab9bd925e67c6e8f15d4b7"
+  }
+}

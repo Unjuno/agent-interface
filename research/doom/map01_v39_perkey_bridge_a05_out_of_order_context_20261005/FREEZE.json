@@ -1,0 +1,24 @@
+{
+  "base_commit": "794fca066ce9fecc52c26cdc0b536eef9ae4abf8",
+  "candidate_command": "python3 run_candidate.py --out /results/a05",
+  "container_mounts": {
+    "output": "/results:rw",
+    "source": "/src:ro"
+  },
+  "decision": "PASS only if baseline misattributes at least one release and A04 emits exactly two correctly bound confirmed release rows in cleanup order, with empty held/active/context state and authority false; otherwise FAIL.",
+  "hypothesis": "A04 preserves each actuation's original program/step context when two distinct key cleanup records arrive in reverse admission order; a last-context bridge misattributes the earlier admission.",
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "input_sha256": "5a09fb721fd99f8915324ba8ae3c2d0db85048dc13bf422cb982e02875d043e3",
+  "prior_main_commit": "dccf55e264f434ca27f2948fe53be09919047819",
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005",
+  "schema": "map01-v39-perkey-bridge-a05-freeze-v1",
+  "scope": "In-memory deterministic source-composition construction only; no owner thread, display, OS input, GUI, game, model, application effect, latency, or live allocation.",
+  "source_git_blob": "f20d0cde1c62a419a8ceee3b2ecda743e2351be9",
+  "source_sha256": {
+    "SOURCE/bridge_a04.py": "fc1706e5950925adbf1ff47f7d75b34d01287af28158b5afe394026e03fed6d4",
+    "audit.py": "da17d4e4ecb9a4614eaac5b963c3407383c6d00ce8732b19beec3d9e21347281",
+    "run_candidate.py": "3076c2b4bbe9653c8785edc55da691396f86f4527b8b21bc831aa185a2f27a63",
+    "scenario.json": "5a09fb721fd99f8915324ba8ae3c2d0db85048dc13bf422cb982e02875d043e3"
+  },
+  "test": "One candidate process; two distinct key acts and contexts; owner cleanup order act-b then act-a; compare frozen A04 output with explicit last-context baseline."
+}

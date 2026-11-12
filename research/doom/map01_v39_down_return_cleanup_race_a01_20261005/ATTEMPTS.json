@@ -1,0 +1,13 @@
+{
+  "schema": "map01_v39_down_return_cleanup_race_a01_attempts_v1",
+  "attempts": [
+    {
+      "id": "PACKAGING-STOP-01",
+      "outcome": "STOP_SETUP_MISSING_FROZEN_DEPENDENCY",
+      "exit_code": 1,
+      "first_error": "ModuleNotFoundError: No module named 'executor_v3'",
+      "tests_started": 0,
+      "disposition": "Setup-only failure retained; exact frozen executor_v3.py and lease.py were then included before the successful runs."
+    }
+  ]
+}

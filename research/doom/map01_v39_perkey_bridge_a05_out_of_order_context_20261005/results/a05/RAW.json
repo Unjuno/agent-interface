@@ -1,0 +1,281 @@
+{
+  "a04": {
+    "active": {},
+    "cleanup_order": [
+      "act-b",
+      "act-a"
+    ],
+    "contexts": {},
+    "events": [
+      {
+        "application_consumption_observed": false,
+        "event": "input_release_measurement",
+        "grants_input_authority": false,
+        "id": "cover-22",
+        "intent_token": "intent-22",
+        "key": "F9",
+        "owner_cleanup_record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "actuation_id": "act-b",
+              "bracket": {
+                "grants_input_authority": false,
+                "intent_token": "intent-22",
+                "key": "F9",
+                "owner_id": "owner-5",
+                "physical_up_interval": [
+                  100,
+                  102
+                ],
+                "status": "CONFIRMED_PHYSICAL_UP"
+              },
+              "classification": "CONFIRMED_PHYSICAL_UP",
+              "edge": "up",
+              "intent_token": "intent-22",
+              "key": "F9",
+              "owner_id": "owner-5"
+            }
+          ],
+          "verified": true
+        },
+        "owner_id": "owner-5",
+        "physical_key_measurement": {
+          "actuation_id": "act-b",
+          "adapter_edge": {
+            "actuation_id": "act-b",
+            "edge": "up",
+            "grants_input_authority": false,
+            "intent_token": "intent-22",
+            "interval": [
+              100,
+              102
+            ],
+            "key": "F9",
+            "owner_id": "owner-5",
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "bracket": {
+            "grants_input_authority": false,
+            "intent_token": "intent-22",
+            "key": "F9",
+            "owner_id": "owner-5",
+            "physical_up_interval": [
+              100,
+              102
+            ],
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "edge": "up",
+          "intent_token": "intent-22",
+          "key": "F9",
+          "owner_id": "owner-5"
+        },
+        "step": 4
+      },
+      {
+        "application_consumption_observed": false,
+        "event": "input_release_measurement",
+        "grants_input_authority": false,
+        "id": "cover-21",
+        "intent_token": "intent-21",
+        "key": "F8",
+        "owner_cleanup_record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "actuation_id": "act-a",
+              "bracket": {
+                "grants_input_authority": false,
+                "intent_token": "intent-21",
+                "key": "F8",
+                "owner_id": "owner-5",
+                "physical_up_interval": [
+                  110,
+                  112
+                ],
+                "status": "CONFIRMED_PHYSICAL_UP"
+              },
+              "classification": "CONFIRMED_PHYSICAL_UP",
+              "edge": "up",
+              "intent_token": "intent-21",
+              "key": "F8",
+              "owner_id": "owner-5"
+            }
+          ],
+          "verified": true
+        },
+        "owner_id": "owner-5",
+        "physical_key_measurement": {
+          "actuation_id": "act-a",
+          "adapter_edge": {
+            "actuation_id": "act-a",
+            "edge": "up",
+            "grants_input_authority": false,
+            "intent_token": "intent-21",
+            "interval": [
+              110,
+              112
+            ],
+            "key": "F8",
+            "owner_id": "owner-5",
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "bracket": {
+            "grants_input_authority": false,
+            "intent_token": "intent-21",
+            "key": "F8",
+            "owner_id": "owner-5",
+            "physical_up_interval": [
+              110,
+              112
+            ],
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "edge": "up",
+          "intent_token": "intent-21",
+          "key": "F8",
+          "owner_id": "owner-5"
+        },
+        "step": 2
+      }
+    ],
+    "held": [],
+    "source_records": [
+      {
+        "actuation_id": "act-b",
+        "record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "actuation_id": "act-b",
+              "bracket": {
+                "grants_input_authority": false,
+                "intent_token": "intent-22",
+                "key": "F9",
+                "owner_id": "owner-5",
+                "physical_up_interval": [
+                  100,
+                  102
+                ],
+                "status": "CONFIRMED_PHYSICAL_UP"
+              },
+              "classification": "CONFIRMED_PHYSICAL_UP",
+              "edge": "up",
+              "intent_token": "intent-22",
+              "key": "F9",
+              "owner_id": "owner-5"
+            }
+          ],
+          "verified": true
+        }
+      },
+      {
+        "actuation_id": "act-a",
+        "record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "actuation_id": "act-a",
+              "bracket": {
+                "grants_input_authority": false,
+                "intent_token": "intent-21",
+                "key": "F8",
+                "owner_id": "owner-5",
+                "physical_up_interval": [
+                  110,
+                  112
+                ],
+                "status": "CONFIRMED_PHYSICAL_UP"
+              },
+              "classification": "CONFIRMED_PHYSICAL_UP",
+              "edge": "up",
+              "intent_token": "intent-21",
+              "key": "F8",
+              "owner_id": "owner-5"
+            }
+          ],
+          "verified": true
+        }
+      }
+    ]
+  },
+  "baseline": {
+    "active": {},
+    "contexts": {},
+    "events": [
+      {
+        "event": "input_release_measurement",
+        "grants_input_authority": false,
+        "id": "cover-22",
+        "intent_token": "intent-22",
+        "key": "F9",
+        "owner_id": "owner-5",
+        "physical_key_measurement": {
+          "actuation_id": "act-b",
+          "adapter_edge": {
+            "grants_input_authority": false,
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP"
+        },
+        "step": 4
+      },
+      {
+        "event": "input_release_measurement",
+        "grants_input_authority": false,
+        "id": "cover-22",
+        "intent_token": "intent-21",
+        "key": "F8",
+        "owner_id": "owner-5",
+        "physical_key_measurement": {
+          "actuation_id": "act-a",
+          "adapter_edge": {
+            "grants_input_authority": false,
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP"
+        },
+        "step": 4
+      }
+    ],
+    "held": []
+  },
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005",
+  "scenario": {
+    "admissions": [
+      {
+        "actuation_id": "act-a",
+        "intent_token": "intent-21",
+        "key": "F8",
+        "owner_id": "owner-5",
+        "program_id": "cover-21",
+        "step": 2
+      },
+      {
+        "actuation_id": "act-b",
+        "intent_token": "intent-22",
+        "key": "F9",
+        "owner_id": "owner-5",
+        "program_id": "cover-22",
+        "step": 4
+      }
+    ],
+    "cleanup_order": [
+      "act-b",
+      "act-a"
+    ],
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005"
+  }
+}

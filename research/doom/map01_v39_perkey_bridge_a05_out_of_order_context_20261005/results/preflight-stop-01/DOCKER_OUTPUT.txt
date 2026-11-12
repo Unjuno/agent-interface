@@ -1,0 +1,9 @@
+{"freeze_sha256": "64702e96f8d80b97411a735480380c9130ba4630e91d633651f18d3630799386", "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f", "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005"}
+Traceback (most recent call last):
+  File "/src/run_candidate.py", line 155, in <module>
+    main()
+  File "/src/run_candidate.py", line 116, in main
+    out.mkdir(parents=True, exist_ok=False)
+  File "/usr/local/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+OSError: [Errno 30] Read-only file system: 'results/a05'

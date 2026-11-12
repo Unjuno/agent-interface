@@ -1,0 +1,27 @@
+{
+  "run_id": "map01-v39-mutable-cleanup-custody-a01-run01",
+  "classification": "PASS_REPRODUCED_SYNTHETIC_CUSTODY_RACE",
+  "question": "Can bridge draining miss final fields when InputOwner mutates an appended cleanup record after drain?",
+  "candidate": "PR #7829 head 70c76483c46108bdd70bf2fb90679d948a5f156f; base PR #7805 head 311f834bf63111b344297f947f8546128c7a1844",
+  "comparison": "Deterministic owner-thread append, bridge drain, then in-place verified-neutral mutation",
+  "observation": "_owner_record_cursor advanced to 1 while the record was partial; after the owner set verified=true, keys_down=[], and buttons_down=[], the bridge held set remained {'F8'}.",
+  "execution": {
+    "runtime": "OrbStack Docker",
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512m",
+    "source_mount": "read-only",
+    "command": "python research/doom/map01_v39_mutable_cleanup_custody_a01_20261005/test_mutable_cleanup_custody.py",
+    "exit_code": 0
+  },
+  "limits": [
+    "Synthetic synchronization probe; fake X11 component harness only.",
+    "Does not exercise a live display, game, model, application feedback, or user-visible control effect.",
+    "Does not establish frequency, timing probability, or production impact.",
+    "No candidate source was modified and no consumed live allocation was rerun."
+  ],
+  "source_hash_manifest": "source.sha256",
+  "exit_code_file": "exit.code",
+  "log_file": "container.log"
+}

@@ -1,0 +1,1 @@
+Run 03 candidate raw: `candidate.json`; raw-only audit: `audit.json`. Exact container invocations: `COMMAND.txt`, `AUDIT_COMMAND.txt`. Exit receipts: `candidate.exit`, `audit.exit`. Candidate stdout is JSON; stderr files are retained. Source identities are recorded in `SOURCE_LOCK.json`; base and PR source commit IDs are in `base.sha` and `pr7602.sha`.

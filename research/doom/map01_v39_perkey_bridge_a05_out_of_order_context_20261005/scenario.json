@@ -1,0 +1,9 @@
+{
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005",
+  "admissions": [
+    {"program_id": "cover-21", "step": 2, "owner_id": "owner-5", "intent_token": "intent-21", "key": "F8", "actuation_id": "act-a"},
+    {"program_id": "cover-22", "step": 4, "owner_id": "owner-5", "intent_token": "intent-22", "key": "F9", "actuation_id": "act-b"}
+  ],
+  "cleanup_order": ["act-b", "act-a"],
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f"
+}

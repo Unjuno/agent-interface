@@ -1,0 +1,77 @@
+{
+  "schema": "map01_v39_perkey_bridge_a03_audit_seal_correction_result_v1",
+  "status": "PASS_AUDIT_SEAL_CORRECTION_A01",
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A03-AUDIT-SEAL-CORRECTION-A01-20261005",
+  "validated_at_utc": "2026-10-04T22:39:24Z",
+  "predecessor_pr": 7774,
+  "predecessor_head": "535254f816eff34755722067e646f9071d69b22a",
+  "current_main_at_recheck": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "finding": {
+    "file": "../map01_v39_perkey_bridge_a03_down_cleanup_race_20261005/FREEZE-AUDIT-V2.json",
+    "test_file": "../map01_v39_perkey_bridge_a03_down_cleanup_race_20261005/test_a03_v2.py",
+    "declared_sha256": "7fda2f70d5406cb9ad6317ce58456a582cda42932005a4a8feeb76be5e57b0a6",
+    "actual_sha256": "14ececdbeb241c953fa2986edfda4f5cecf12fb1c94f89ef47c4c3b450d67ddd",
+    "actual_bytes": 1212,
+    "outcome": "Mismatch independently confirmed from exact GitHub base64 file bytes; prior V2 freeze was left unchanged."
+  },
+  "preserved_inputs": {
+    "predecessor_audit_freeze_sha256": "4873e71ece66f5aa24be08c350085364d222a6b53170a433908e9093cf88354a",
+    "a03_freeze_sha256": "53af7c12deb776759774376cb404703bdf37f87a52deae960084088329aa2b70",
+    "raw_sha256": "38daf1220b9fcfb06a239b5f34a3bfa7b6a51403059f58b7b4a05e5e0653501d",
+    "result_sha256": "644bc30b17752d27d7017f7eb4a52df64ffcf4cd2634df88c1ca6a1b0492d763"
+  },
+  "tests": [
+    {
+      "command": "python -B -m unittest -v test_a03_v2",
+      "directory": "map01_v39_perkey_bridge_a03_down_cleanup_race_20261005",
+      "passed": 3,
+      "failed": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "python -B -m unittest -v test_seal_correction_v3",
+      "directory": "map01_v39_perkey_bridge_a03_audit_seal_correction_a01_20261005",
+      "passed": 2,
+      "failed": 0,
+      "exit_code": 0
+    }
+  ],
+  "environment": {
+    "runner": "WSLc 3.0.1.0",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "python": "3.12.15",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory_limit_mib": 512,
+    "resource_note": "WSL kernel reports swap-limit/cgroup support unavailable; memory limited without swap.",
+    "source_mount": "read-only"
+  },
+  "setup_stops": [
+    {
+      "attempt": 1,
+      "status": "STOP_BEFORE_CONTAINER",
+      "detail": "PowerShell parsed $root: in the --volume argument; corrected by delimiting the variable. No container started."
+    },
+    {
+      "attempt": 2,
+      "status": "STOP_INCOMPLETE_FROZEN_COPY",
+      "detail": "Retained audit loader stopped because frozen README.md (and other pinned A03 support files) were not yet staged. Zero tests; no candidate."
+    },
+    {
+      "attempt": 3,
+      "status": "STOP_INVALID_V3_FREEZE_JSON",
+      "detail": "Correction suite detected a literal \\\\n suffix in locally authored V3 JSON. The V3 file was normalized; predecessor files remained unchanged."
+    },
+    {
+      "attempt": 4,
+      "status": "STOP_MISSING_SCOPE_FIELD",
+      "detail": "Retained A03 tests passed 3/3; one correction assertion found the explicit scope key missing. Scope was added to V3 freeze, then both suites passed."
+    }
+  ],
+  "candidate_invocations": 0,
+  "model_calls": 0,
+  "gui_or_os_input": false,
+  "live_game_or_allocation": false,
+  "scope": "Audit-seal correction and retained-data audit tests only. Does not reproduce the one-shot A03 candidate or establish current-main integration, live runtime, useful feedback, recovery, threat response, or MAP01 progress."
+}
