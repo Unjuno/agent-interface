@@ -1,0 +1,104 @@
+{
+  "id": "M01",
+  "frozen_utc": "2026-11-12T17:30:04.948470+00:00",
+  "trials": [
+    {
+      "id": "01-fresh",
+      "route": "fresh",
+      "model_call_cap": 6,
+      "materialization_ns": 237044700,
+      "input_manifest_sha256": "9419d7bc53216de0b9539fa6ad476f02c1056528759221a173a210db816fa8e9"
+    },
+    {
+      "id": "02-ordinary",
+      "route": "ordinary",
+      "model_call_cap": 2,
+      "materialization_ns": 189710200,
+      "input_manifest_sha256": "2a716db949a70485fb408c0cad4f54b6249c9115253be2b9ecf48197fb59f7d4"
+    },
+    {
+      "id": "03-compiled",
+      "route": "compiled",
+      "model_call_cap": 2,
+      "materialization_ns": 177922000,
+      "input_manifest_sha256": "1e9333ad8f68b47bf91bb3c7f705657e721aac7d96ede19419082845c1fe7412"
+    },
+    {
+      "id": "04-compiled",
+      "route": "compiled",
+      "model_call_cap": 2,
+      "materialization_ns": 179178400,
+      "input_manifest_sha256": "16cdde2a349beefa3dd9fd35d838c9e56bf006e5b7fa3796ca56fd3262230f06"
+    },
+    {
+      "id": "05-ordinary",
+      "route": "ordinary",
+      "model_call_cap": 2,
+      "materialization_ns": 182014900,
+      "input_manifest_sha256": "3a7d2743571b768e46c185e7fe2b63dcd898e4846f8fb0535f018b35a8511b4e"
+    },
+    {
+      "id": "06-fresh",
+      "route": "fresh",
+      "model_call_cap": 6,
+      "materialization_ns": 171406000,
+      "input_manifest_sha256": "98c736192258b0151c4003910a472664846b0ac2fb365ff81886a72c4e100fb6"
+    }
+  ],
+  "shared_source_sha256": {
+    "blank.fods": "462beebbcb020ccf49af3cc49520f789a816cc3fb97597cefbd6940ffc26aeb1",
+    "calc_phase_adapter.py": "511824248c46003d20b87031e5b481589685b0f61012927d2cf6e4d846d059d9",
+    "config.json": "3747b5ebdc0e12cb76936df020fcbf8dc1a89a5ddc84f58e16508603f971b6f6",
+    "grounding_reuse.py": "e74e1790efe72a96b083deb2b16460dfadb6a11ba0a0876a09fe344e439c75e0",
+    "host.py": "35e3b69cec116b2b4df1de6627c07345867a9eb21b729a8fda97c4cdd003f3b5",
+    "launch.py": "f66038657caa2adbb9ec767028b62a9fb95644f5a19d90bc3d0215e125b89ab9",
+    "phases.json": "bdafe4dd7e81c31782dfa3d01a794843adcc758f00d784fe2cb4270b3fad3c61",
+    "phase_gate.py": "7bcb05f2e984d2544be7cf898bede16e31cb2f20362522b0ce45edc339f9b433",
+    "record_launch.py": "8f0cc1bd020081eb45fae2ac9fadb6ae9e32f3c56a9462826938ba33c589d0c7",
+    "release_check.py": "b896c7c54f31dbfa45d84a3aa865e25ced4ac1d0ccd504a8abfa504693ebffe1",
+    "runner.py": "5de49beeca4fe366fcd7223c7505036b63d12538d6f3a732eb4e1384ad030e0a",
+    "settle_selection.py": "2a4f0e991586bb84e2303939e8f0e20067f5d19f9c71614053f420b54ebe2a77",
+    "stages.json": "cc41da7f875a6d247450ca42edecac35d2cb9907b9003bb7bdc079b8b9d788c4",
+    "test_release_check.py": "54edd69dacc09eee773de2279b094f91a0169d787e887aee499ff544597dcdc6",
+    "model-source/codex_app_server_client_v2.py": "25e08a8620266168ac9f6087ebfbb3b4dcb9633ebbc2b78cdca9145fd3f94ca1",
+    "model-source/codex_app_server_command_v1.py": "127f96b5e4dfb39e565625070ada4315e1e712573e47bd72f23dbfcda83456ab",
+    "model-source/compiled_form_grounding_responder_v1.txt": "d641719d3cdac5e9a036c4bf7306ec1f91414aa4910da670a24d3edb20f9401d",
+    "model-source/compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f",
+    "model-source/compiled_form_grounding_v1.py": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+    "model-source/integrated_efficiency_app_server_model_v1.py": "5c06fc8ae8f4123aed0e0f4368594a629cdb989d7beb56735f4110e55c9838bc",
+    "model-source/persistent_planner_adapter_v2.py": "77b372cb3557501f16287a363fe687ec1089459df4baad4b6f5c862754173698",
+    "model-source/plain_form_points_responder_v1.txt": "7ca5369168fe878d7d446dc61a7b7a2ff260d72d390aa0468ff4d07bd86cc2dd",
+    "model-source/plain_form_points_schema_v1.json": "0631ab7b7ba0aaf77a4cbdf758a8dbfba557dfb5120a9d5aa789223c97944291",
+    "model-source/plain_form_points_v1.py": "8cb042960b7a6e3c6c89d1208bf1e653f4b28c77dd1983b08390b549d16a955b",
+    "study/cell_cue.py": "ec9ef340e6358c495c34c2a883a542e9cca7091cbe52a7c952fcbc5595be4270",
+    "study/composition.py": "1ad66f9839a08019b9cbacd88ff721678f3310a4ec2b7863bc9f99c1dc76088b",
+    "study/crop_pair_cue.py": "b23654d3484a674f8385417100c3b2aadf73a931ff180a0b1923ba49f23ab5e9",
+    "study/crop_pixel_cue.py": "6473af11e49d3c169346c08d3e29b0fede332531b944e7b0d9d8a5e1b1e81557",
+    "study/observation_cue.py": "7b9087eb2df000425a83dafe4e363498fde375d23d0c144749ffc23321c8b4d9",
+    "study/ocr_attempt_recorder_v1.py": "396e32e427236c3f2fa93a3409ab8f79ba531b064ae7efc90094ff55c060e09f",
+    "study/pair_saved_oracle.py": "55de18da761f3d72b9c13da89f8207f78a676c31d3a893953db7fab128219577",
+    "study/saved_effect.py": "78671d4dc0c5c46d1bd9f6f2d0f8772da83b6fe6db3884b32901892c467f1bcf",
+    "study/save_guard.py": "9b08bfebfda905326a7c4ec176507dea7756d6d5b5ce3739462954516c795fcf",
+    "study/task_values.py": "a1946b5c5bc8f008f8ad07f634c6d150fb4153e31aee81ed24800ae1ee3c46ad"
+  },
+  "runtime_base": "1bd8a3998fc6f1595b21455dc5fce3c10d76ff8d",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sample_limit": "2 per arm, 6 total; never extend after seeing results",
+  "total_model_call_cap": 20,
+  "task": "538/726, temporary obstruction refusal, harness removes obstruction, repair419/853, final682/947",
+  "primary_baseline": "optimized ordinary with same hint reuse; fresh is repeated-grounding reference",
+  "correctness": "all three independently parsed numeric effects; unchanged file and no backend emissions on refusal; same owner, neutral phase and final releases",
+  "primary_measure": "per-trial preparation + outer invocation; report shared preparation and audit separately; no overlap sums",
+  "stop": "each trial stops on first error or150s container timeout; continue remaining independent trials only after verified cleanup; no repeats",
+  "decision": "HOLD if correctness/cleanup/accounting incomplete; no speed claim from fresh comparison alone; report all failed rows",
+  "limitations": [
+    "two samples per arm, no broad reliability or significance claim",
+    "provider cache/load not controlled; retain actual usage",
+    "known-value OCR and harness obstruction removal shared",
+    "location reuse only, not compiled-plan reuse",
+    "formatting collateral not independently scored",
+    "prior development cost unavailable",
+    "internal route schedules differ; native admission/release rules and global150s cap shared"
+  ]
+}
