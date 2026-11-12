@@ -18,6 +18,7 @@ from unittest.mock import Mock, patch
 from runtime.cli_v1.win32_custody_fence import (
     CustodyFenceError, Win32CustodyFence,
     _WindowsCustodyAcl,
+    _guard_native_first_use,
     _terminate_or_confirm_process_absent,
 )
 
@@ -31,6 +32,65 @@ OBLIGATIONS = ["key:VK_A"]
 
 @unittest.skipUnless(os.name == "nt", "native Windows package identity")
 class PackagedCustodyTests(unittest.TestCase):
+    def test_peer_created_after_factory_is_refused_before_initialization(self):
+        with tempfile.TemporaryDirectory() as td:
+            local = Path(td) / "Local"
+            store = _FakeInitializationStore()
+            kernel = SimpleNamespace(GetCurrentPackageFullName=Mock(return_value=15700))
+            with patch.dict(os.environ, {"LOCALAPPDATA": str(local)}), patch(
+                    "runtime.cli_v1.win32_custody_fence.ctypes.WinDLL", return_value=kernel), patch(
+                    "runtime.cli_v1.win32_custody_fence._win32_logon_namespace_digest", return_value=GENERATION), patch(
+                    "runtime.cli_v1.win32_custody_fence._WindowsCustodyAcl", return_value=_FakeAcl()), patch(
+                    "runtime.cli_v1.win32_custody_fence._WindowsNamedMutex", _FakeMutex), patch(
+                    "runtime.cli_v1.win32_custody_fence._RegistryInitializationStore", return_value=store):
+                fence = Win32CustodyFence.for_current_logon()
+            peer = (local / "Packages" / "Fixture.Package_123" / "LocalCache"
+                    / "Local" / "Unjuno" / "AgentInterface" / "custody-v1")
+            old = Win32CustodyFence(peer, GENERATION, mutex_factory=_FakeMutex)
+            old.admit(OPERATION, GENERATION, OBLIGATIONS)
+            retained = (peer / (GENERATION + ".json")).read_bytes()
+            try:
+                with self.assertRaisesRegex(CustodyFenceError, "PEER_STORE_PRESENT"):
+                    fence.admit(NEXT_OPERATION, NEXT_GENERATION, OBLIGATIONS)
+                self.assertFalse(store.present)
+                self.assertFalse(fence._state_path.exists())
+                self.assertEqual((peer / (GENERATION + ".json")).read_bytes(), retained)
+            finally:
+                fence.close()
+
+    def test_empty_native_view_cannot_replace_peer_package_custody(self):
+        # Same namespace, two filesystem views, and an absent local registry
+        # marker reproduce D14 without touching the real logon journal.
+        for unresolved in (False, True):
+            with self.subTest(unresolved=unresolved), tempfile.TemporaryDirectory() as td:
+                local = Path(td) / "Local"
+                peer = (local / "Packages" / "Fixture.Package_123" / "LocalCache"
+                        / "Local" / "Unjuno" / "AgentInterface" / "custody-v1")
+                old = Win32CustodyFence(peer, GENERATION, mutex_factory=_FakeMutex)
+                old.snapshot()
+                if unresolved:
+                    old.admit(OPERATION, GENERATION, OBLIGATIONS)
+                state = peer / (GENERATION + ".json")
+                retained = state.read_bytes()
+                store = _FakeInitializationStore()
+                acl = _FakeAcl()
+                kernel = SimpleNamespace(GetCurrentPackageFullName=Mock(return_value=15700))
+                with patch.dict(os.environ, {"LOCALAPPDATA": str(local)}), patch(
+                        "runtime.cli_v1.win32_custody_fence.ctypes.WinDLL", return_value=kernel), patch(
+                        "runtime.cli_v1.win32_custody_fence._win32_logon_namespace_digest", return_value=GENERATION), patch(
+                        "runtime.cli_v1.win32_custody_fence._WindowsCustodyAcl", return_value=acl), patch(
+                        "runtime.cli_v1.win32_custody_fence._WindowsNamedMutex", _FakeMutex), patch(
+                        "runtime.cli_v1.win32_custody_fence._RegistryInitializationStore", return_value=store):
+                    with self.assertRaisesRegex(CustodyFenceError, "PEER_STORE_PRESENT"):
+                        fence = Win32CustodyFence.for_current_logon()
+                        try:
+                            fence.snapshot()
+                        finally:
+                            fence.close()
+                self.assertEqual(state.read_bytes(), retained)
+                self.assertFalse(store.present)
+                self.assertFalse((local / "Unjuno").exists())
+
     def test_packaged_or_unreadable_identity_refused_before_state_construction(self):
         # GetCurrentPackageFullName only reports identity here; no journal or
         # registry state is fabricated or modified by the simulated OS API.
@@ -106,6 +166,65 @@ class _FakeAcl:
 
     def protect_registry_key(self, key):
         self.registry_keys.append(key)
+
+
+class NativeFirstUseGuardTests(unittest.TestCase):
+    def test_fresh_namespace_initializes_under_lock_but_existing_journal_does_not_scan(self):
+        with tempfile.TemporaryDirectory() as td:
+            local = Path(td)
+            directory = local / "Unjuno" / "AgentInterface" / "custody-v1"
+            store = _FakeInitializationStore()
+            observed = []
+            def guard():
+                acquired = fence._mutex._lock.acquire(blocking=False)
+                if acquired:
+                    fence._mutex._lock.release()
+                observed.append(acquired)
+                _guard_native_first_use(local, GENERATION)
+            fence = Win32CustodyFence(directory, GENERATION, mutex_factory=_FakeMutex,
+                                     initialization_store=store, initialization_guard=guard)
+            self.assertEqual(fence.snapshot()["state"]["status"], "clear")
+            self.assertEqual(observed, [False])
+            # Existing-state polls do not add directory traversal to release.
+            with patch("runtime.cli_v1.win32_custody_fence.os.scandir",
+                       side_effect=AssertionError("existing state must not scan")):
+                _guard_native_first_use(local, GENERATION)
+                fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+                self.assertEqual(fence.snapshot()["state"]["status"], "unresolved")
+            self.assertEqual(observed, [False])
+
+    def test_different_namespace_does_not_block_first_use(self):
+        with tempfile.TemporaryDirectory() as td:
+            local = Path(td)
+            peer = (local / "Packages" / "Fixture.Package_123" / "LocalCache"
+                    / "Local" / "Unjuno" / "AgentInterface" / "custody-v1")
+            old = Win32CustodyFence(peer, NEXT_GENERATION, mutex_factory=_FakeMutex)
+            old.admit(OPERATION, GENERATION, OBLIGATIONS)
+            before = (peer / (NEXT_GENERATION + ".json")).read_bytes()
+            _guard_native_first_use(local, GENERATION)
+            self.assertEqual((peer / (NEXT_GENERATION + ".json")).read_bytes(), before)
+
+    def test_unreadable_or_excessive_package_inventory_cannot_initialize(self):
+        for failure in ("unreadable", "too_many"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as td:
+                local = Path(td)
+                (local / "Packages" / "one").mkdir(parents=True)
+                (local / "Packages" / "two").mkdir()
+                store = _FakeInitializationStore()
+                fence = Win32CustodyFence(local / "Unjuno" / "AgentInterface" / "custody-v1",
+                    GENERATION, mutex_factory=_FakeMutex, initialization_store=store,
+                    initialization_guard=lambda: _guard_native_first_use(local, GENERATION))
+                if failure == "unreadable":
+                    altered = patch("runtime.cli_v1.win32_custody_fence.os.scandir",
+                                    side_effect=PermissionError("retained diagnostic failure"))
+                    reason = "STORE_VIEW_UNAVAILABLE"
+                else:
+                    altered = patch("runtime.cli_v1.win32_custody_fence._MAX_PACKAGE_STORE_ENTRIES", 1)
+                    reason = "STORE_VIEW_LIMIT"
+                with altered, self.assertRaisesRegex(CustodyFenceError, reason):
+                    fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+                self.assertFalse(store.present)
+                self.assertFalse(fence._state_path.exists())
 
 
 def _custody_test_sleep_child():
