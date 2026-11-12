@@ -165,7 +165,12 @@ def install(output_dir):
     trace.patch(OperationCancellationSupervisor, "_retire_process", "producer.retire",
         details=lambda a, k: {"producer_pid": getattr(arg(a, k, 1, "process"), "pid", None)})
     trace.patch(OperationCancellationSupervisor, "_exchange_helper", "recovery.exchange",
+        scoped=True,
         predicate=lambda a, k: arg(a, k, 1, "name") == "recovery",
+        details=lambda a, k: {**_request_fields(arg(a, k, 2, "request")),
+                             "role": "recovery_exchange"})
+    trace.patch(OperationCancellationSupervisor, "_send_helper_request", "recovery.send",
+        predicate=lambda a, k: getattr(trace._local, "fields", {}).get("role") == "recovery_exchange",
         details=lambda a, k: _request_fields(arg(a, k, 2, "request")))
     trace.patch(OperationCancellationSupervisor, "_run_observer", "observer.first_exchange",
         predicate=lambda a, k: trace.first(("parent-observe", arg(a, k, 1, "operation_id"))),
