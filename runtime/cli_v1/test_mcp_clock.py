@@ -13,6 +13,7 @@ class ExecutionClockTests(unittest.IsolatedAsyncioTestCase):
    self.assertLessEqual(left,row['monotonic_ns']);self.assertLessEqual(row['monotonic_ns'],right)
    self.assertIs(row['input_dispatched'],False);self.assertIs(row['authority_granted'],False);self.assertIs(row['lease_issued'],False)
    self.assertEqual(row['clock'],'time.monotonic_ns');self.assertEqual(len(row['server_instance_id']),32)
+   self.assertEqual(row.get('clock_info'),vars(time.get_clock_info('monotonic')))
    self.assertEqual(list(Path(td).iterdir()),[])
  async def test_identity_is_stable_per_server_and_changes_on_replacement(self):
   with tempfile.TemporaryDirectory() as td:

@@ -33,6 +33,7 @@ _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S = 4.0
 _SUPERVISED_WIN32_CLEANUP_NS = 3_000_000_000
 _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
+_SUPERVISED_WIN32_DEADLINE_POLL_MAX_S = 0.002
 
 
 def _x11_root_window_id(display_name=None):
@@ -128,8 +129,11 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
                 cleanup_deadline_ns=now_ns + _SUPERVISED_WIN32_CLEANUP_NS)
             row = owner.interface_result(call_id)
             break
-        time.sleep(min(0.01, max(0.001,
-            (deadline_ns - now_ns) / 1_000_000_000)))
+        # Keep the cancellation monitor responsive near lease expiry. Windows
+        # monotonic_ns may still advance at the system-timer cadence, so this
+        # reduces avoidable sleep latency but is not a hard real-time bound.
+        time.sleep(min(_SUPERVISED_WIN32_DEADLINE_POLL_MAX_S,
+            (deadline_ns - now_ns) / 1_000_000_000))
     action = row['action']
     cancellation = row.get('cancellation')
     if (action.get('status') in ('running', 'cancel_pending')
@@ -1447,6 +1451,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         return content({'schema': 'agent-interface/execution-clock-v1',
                         'monotonic_ns': time.monotonic_ns(),
                         'clock': 'time.monotonic_ns',
+                        'clock_info': vars(time.get_clock_info('monotonic')),
                         'server_instance_id': server_instance_id,
                         'input_dispatched': False, 'authority_granted': False,
                         'lease_issued': False,

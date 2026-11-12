@@ -12,6 +12,8 @@ import time
 import unittest
 import uuid
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 from runtime.cli_v1.win32_custody_fence import (
     CustodyFenceError, Win32CustodyFence,
@@ -25,6 +27,41 @@ NEXT_OPERATION = "2" * 32
 GENERATION = "a" * 64
 NEXT_GENERATION = "b" * 64
 OBLIGATIONS = ["key:VK_A"]
+
+
+@unittest.skipUnless(os.name == "nt", "native Windows package identity")
+class PackagedCustodyTests(unittest.TestCase):
+    def test_packaged_or_unreadable_identity_refused_before_state_construction(self):
+        # GetCurrentPackageFullName only reports identity here; no journal or
+        # registry state is fabricated or modified by the simulated OS API.
+        for code, reason in ((122, "PACKAGED_PROCESS_UNSUPPORTED"),
+                             (0, "PACKAGED_PROCESS_UNSUPPORTED"),
+                             (5, "PACKAGE_IDENTITY_UNAVAILABLE")):
+            with self.subTest(code=code), tempfile.TemporaryDirectory() as td:
+                initialized = Path(td) / "constructed"
+                def construct(*args, **kwargs):
+                    initialized.touch()
+                kernel = SimpleNamespace(GetCurrentPackageFullName=Mock(return_value=code))
+                with patch("runtime.cli_v1.win32_custody_fence.ctypes.WinDLL", return_value=kernel), patch(
+                        "runtime.cli_v1.win32_custody_fence._win32_logon_namespace_digest", return_value=GENERATION), patch(
+                        "runtime.cli_v1.win32_custody_fence._WindowsCustodyAcl", return_value=_FakeAcl()), patch.object(
+                        Win32CustodyFence, "__init__", side_effect=construct):
+                    with self.assertRaisesRegex(CustodyFenceError, reason):
+                        Win32CustodyFence.for_current_logon()
+                self.assertFalse(initialized.exists())
+
+    def test_no_package_uses_existing_custody_namespace(self):
+        kernel = SimpleNamespace(GetCurrentPackageFullName=Mock(return_value=15700))
+        constructed = []
+        def construct(directory, namespace, **kwargs):
+            constructed.append((Path(directory), namespace))
+        with patch("runtime.cli_v1.win32_custody_fence.ctypes.WinDLL", return_value=kernel), patch(
+                "runtime.cli_v1.win32_custody_fence._win32_logon_namespace_digest", return_value=GENERATION), patch(
+                "runtime.cli_v1.win32_custody_fence._WindowsCustodyAcl", return_value=_FakeAcl()), patch.object(
+                Win32CustodyFence, "__init__", side_effect=construct):
+            Win32CustodyFence.for_current_logon()
+        self.assertEqual(constructed, [(Path(os.environ["LOCALAPPDATA"]) /
+            "Unjuno" / "AgentInterface" / "custody-v1", GENERATION)])
 
 
 class _FakeMutex:

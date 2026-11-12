@@ -1469,7 +1469,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
 
     def test_integrated_supervisor_late_down_keeps_new_generation_fenced(self):
         supervisor = object.__new__(OperationCancellationSupervisor)
-        now = [time.monotonic_ns()]
+        now = [1_000_000_000]
         supervisor._clock_ns = lambda: now[0]
         supervisor.late_input_horizon_ns = 20_000_000
         supervisor._late_input_sample_interval_s = 0.01
@@ -1501,14 +1501,19 @@ class OwnedWin32SessionTests(unittest.TestCase):
         def advance(seconds):
             now[0] += max(1, int(seconds * 1_000_000_000))
 
-        with patch("runtime.guarded_win32_v1.process_cancellation.time.sleep",
+        # The session constructs the absolute deadline that the supervisor
+        # checks. Both must use the same fake clock; a frozen supervisor clock
+        # plus a live session clock exceeds the fixed five-second bound.
+        with patch("runtime.cli_v1.owned_win32_session.time.monotonic_ns",
+                   side_effect=lambda: now[0]), patch(
+                   "runtime.guarded_win32_v1.process_cancellation.time.sleep",
                    side_effect=advance):
             result = session.recover_orphaned_input(
                 source_operation_id=ACTION_ID,
                 source_target_generation=GEN_A,
                 obligations=["key:map01:W"], source_custody_record=record)
 
-        self.assertEqual(observer_count[0], 2)
+        self.assertEqual(observer_count[0], 2, result)
         self.assertEqual(result["recovery_status"], "unknown")
         self.assertFalse(result["release_confirmed"])
         self.assertEqual(result["source_action_status"], "unknown")

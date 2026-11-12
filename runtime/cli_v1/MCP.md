@@ -390,6 +390,14 @@ under `%LOCALAPPDATA%\Unjuno\AgentInterface\custody-v1`, serialized by a
 session-local named mutex. An admitted action remains fenced across MCP server
 replacement until normal completion confirms release, a pre-start refusal
 proves the producer gate stayed closed, or orphan recovery confirms release.
+The native fence factory refuses packaged processes (including Microsoft Store
+Python) with `CUSTODY_FENCE_PACKAGED_PROCESS_UNSUPPORTED` before creating state
+or changing ACLs. Packaged processes can see a private filesystem/registry view
+under the same logon namespace and miss the existing shared custody journal.
+An unavailable package-identity query also refuses. Use an unpackaged Python
+installation; changing interpreter must not reset or migrate existing custody.
+Unpackaged identity alone does not prove that different launcher contexts see
+the same physical store. Qualify that continuity before changing contexts.
 If the authority deadline expires during gated producer startup, the initial
 dispatch result is `not_dispatched` only when process identity was verified,
 the owner confirms the start gate stayed closed, the gated producer is retired,
@@ -892,6 +900,14 @@ absolute `expires_at_ns` for a new program. The response contains a stable
 `server_instance_id` for this server's lifetime; a replacement server has a new
 ID. Compare and keep that identity in your caller. Do not translate Windows
 wall/monotonic time into the sample or reuse it across execution hosts.
+
+The additive `clock_info` object reports the underlying `implementation`,
+`resolution` in seconds, `monotonic`, and `adjustable` from `time.get_clock_info`.
+The function name alone does not identify the underlying timer: Windows Python
+3.11 uses GetTickCount64, while Python 3.13 uses QueryPerformanceCounter. When
+an experiment requires QPC, qualify the actual implementation in every process
+and use the same interpreter for caller, server and spawned helpers. Metadata
+does not synchronize clocks or grant a deadline or input authority.
 
 For example, an explicitly authorized five-second validity window can be authored
 as `expires_at_ns = sample.monotonic_ns + 5_000_000_000`. Receipt/presentation and

@@ -435,6 +435,23 @@ class Win32CustodyFence:
     def for_current_logon(cls):
         if os.name != "nt":
             raise OSError("the native Win32 custody fence requires Windows")
+        # Packaged runtimes can redirect LOCALAPPDATA and registry accesses
+        # into a private view while retaining the same logon/mutex namespace.
+        # An empty private view must never stand in for the shared journal.
+        # Refuse before creating directories, changing ACLs, or initializing
+        # either marker. Explicit-directory test fences remain independent.
+        try:
+            query = ctypes.WinDLL("kernel32", use_last_error=True).GetCurrentPackageFullName
+            query.argtypes = [ctypes.POINTER(ctypes.c_uint32), ctypes.c_wchar_p]
+            query.restype = ctypes.c_long
+            length = ctypes.c_uint32()
+            package_status = query(ctypes.byref(length), None)
+        except (AttributeError, OSError) as error:
+            raise CustodyFenceError("CUSTODY_FENCE_PACKAGE_IDENTITY_UNAVAILABLE") from error
+        if package_status in (0, 122):  # success / ERROR_INSUFFICIENT_BUFFER
+            raise CustodyFenceError("CUSTODY_FENCE_PACKAGED_PROCESS_UNSUPPORTED")
+        if package_status != 15700:  # APPMODEL_ERROR_NO_PACKAGE
+            raise CustodyFenceError("CUSTODY_FENCE_PACKAGE_IDENTITY_UNAVAILABLE")
         local_app_data = os.environ.get("LOCALAPPDATA")
         if not local_app_data or not Path(local_app_data).is_absolute():
             raise CustodyFenceError("CUSTODY_FENCE_LOCAL_APP_DATA_UNAVAILABLE")
