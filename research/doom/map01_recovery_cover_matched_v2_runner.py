@@ -411,6 +411,7 @@ def _run_arm(root: Path, pair_index: int, arm: str, fixture: Path) -> dict:
                     session.send({"op": "cancel", "id": fallback_id})
 
         timer.cancel()
+        planner_end_ns = session.runtime_clock()
         if fallback_terminal is None:
             session.send({"op": "cancel", "id": fallback_id})
             session.wait(lambda r: r.get("event") == "cancel_requested" and r.get("id") == fallback_id)
@@ -420,7 +421,6 @@ def _run_arm(root: Path, pair_index: int, arm: str, fixture: Path) -> dict:
                 pass
             fallback_terminal = session.wait(lambda r: r.get("event") == "terminal" and r.get("id") == fallback_id, timeout=5)
 
-        planner_end_ns = session.runtime_clock()
         window = Window(planner_start_ns, planner_end_ns)
         session.send({"op": "finish"})
         session.wait(lambda r: r.get("event") == "post_control_score", timeout=10)
@@ -442,7 +442,12 @@ def _run_arm(root: Path, pair_index: int, arm: str, fixture: Path) -> dict:
             "source_capture_ns": source_exact["capture_ns"],
             "source_health": source_health,
             "source_typed_frame_sha256": source_typed.get("frame_rgb_sha256"),
-            "planner_window": {"start_ns": planner_start_ns, "end_ns": planner_end_ns, "duration_ns": window.duration_ns},
+            "planner_window": {
+                "start_ns": planner_start_ns,
+                "end_ns": planner_end_ns,
+                "duration_ns": window.duration_ns,
+                "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup",
+            },
             "fallback_id": fallback_id,
             "fallback_terminal_status": fallback_terminal.get("status"),
             "guard_cancel_reason": guard_cancel_reason,
