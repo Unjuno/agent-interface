@@ -105,6 +105,8 @@ class OperationOwner:
                 "late_input_observation_end_ns": None,
                 "late_input_max_observed_gap_ns": None,
                 "late_input_validation_error": None,
+                "recovery_release_key_up_attempts": None,
+                "readback": None,
                 "release_confirmed": False,
                 "completion_release_receipt": None,
                 "completion_readback": None,
@@ -165,6 +167,7 @@ class OperationOwner:
                 return False
             if self._clock_ns() >= record["deadline_ns"]:
                 record["status"] = "unknown"
+                record["uncertainty"] = "producer_start_after_deadline"
                 return False
             if record["status"] == "admitted":
                 record["status"] = "running"
@@ -187,8 +190,11 @@ class OperationOwner:
         with self._lock:
             record = self._matching(operation_id, target_generation)
             if (record["status"] != "running"
-                    or self._producer_handles.get(operation_id) is not process_handle
-                    or self._clock_ns() >= record["deadline_ns"]):
+                    or self._producer_handles.get(operation_id) is not process_handle):
+                return False
+            if self._clock_ns() >= record["deadline_ns"]:
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_start_after_deadline"
                 return False
             try:
                 # A gate callback could open the gate and then raise. Never
@@ -449,6 +455,40 @@ class OperationOwner:
                 record["uncertainty"] = reason
             return self._public(record)
 
+    def recovery_release_attempted(self, operation_id, target_generation,
+                                   recovery_id, key_up_attempts):
+        """Retain exact key-up encoding attempts before readback can fail."""
+        if type(key_up_attempts) is not list or len(key_up_attempts) > 128:
+            raise OwnerRefused("recovery key-up attempt receipt is invalid")
+        validated=[]
+        for item in key_up_attempts:
+            if (type(item) is not dict
+                    or set(item) not in ({"virtual_key", "encoding", "status"},
+                        {"virtual_key", "encoding", "status", "error_type"})
+                    or type(item.get("virtual_key")) is not int
+                    or not 0 <= item["virtual_key"] <= 0xFFFF
+                    or item.get("encoding") not in ("virtual_key", "scan_code")
+                    or item.get("status") not in ("returned", "raised")):
+                raise OwnerRefused("recovery key-up attempt receipt is invalid")
+            row={"virtual_key":item["virtual_key"],
+                "encoding":item["encoding"],"status":item["status"]}
+            if item["status"] == "raised":
+                error_type=item.get("error_type")
+                if (type(error_type) is not str or not error_type
+                        or len(error_type)>64):
+                    raise OwnerRefused("recovery key-up error receipt is invalid")
+                row["error_type"]=error_type
+            elif "error_type" in item:
+                raise OwnerRefused("successful key-up attempt has an error type")
+            validated.append(row)
+        with self._lock:
+            record=self._matching(operation_id,target_generation)
+            if (record["status"] != "recovery_pending"
+                    or record["recovery_id"] != recovery_id):
+                raise OwnerRefused("stale recovery key-up attempt receipt")
+            record["recovery_release_key_up_attempts"] = validated
+            return self._public(record)
+
     def expire_cleanup(self, operation_id, target_generation):
         with self._lock:
             record = self._matching(operation_id, target_generation)
@@ -573,6 +613,11 @@ class OperationOwner:
             record["late_input_observation_end_ns"] = observation_ns[-1] if observation_ns else None
             record["late_input_max_observed_gap_ns"] = max(gaps) if gaps else None
             record["late_input_validation_error"] = horizon_error
+            # Preserve the exact same-generation observer result that gates
+            # recovery. A release boolean without its identity-bound readback
+            # cannot support downstream custody or application-command audits.
+            record["readback"] = (copy.deepcopy(readback)
+                if type(readback) is dict else None)
             if confirmed:
                 record["recovery_completed_monotonic_ns"] = completed_ns
                 record["cleanup_latency_ns"] = (

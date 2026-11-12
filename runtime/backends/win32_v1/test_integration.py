@@ -247,8 +247,8 @@ class PureWin32HelperTests(unittest.TestCase):
         self.assertTrue(result["verified"])
         self.assertEqual(backend.held_keys, {})
 
-    def test_release_all_state_query_exception_preserves_entire_ledger(self):
-        backend, _ = self._release_backend({17: False, 1: False})
+    def test_release_all_state_query_exception_preserves_only_unknown_obligations(self):
+        backend, events = self._release_backend({17: False, 1: False})
         def fail_second_query(vk):
             if vk == 1:
                 raise OSError("injected query failure")
@@ -257,17 +257,20 @@ class PureWin32HelperTests(unittest.TestCase):
         backend.user32.GetAsyncKeyState = fail_second_query
         with self.assertRaisesRegex(Win32BackendError, "key state query failed"):
             backend.release_all()
-        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        self.assertEqual(backend.held_keys, {})
         self.assertEqual(backend.held_buttons, {"left"})
 
-    def test_release_all_send_failure_preserves_ledger_without_state_query(self):
-        backend, _ = self._release_backend({17: False, 1: False})
+    def test_release_all_send_failure_continues_attempts_and_readback(self):
+        backend, events = self._release_backend({17: False, 1: False})
         backend._send_key = lambda vk, down: (_ for _ in ()).throw(OSError("injected send failure"))
         with self.assertRaisesRegex(OSError, "injected send failure"):
             backend.release_all()
-        self.assertEqual(backend.user32.sampled, [])
-        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
-        self.assertEqual(backend.held_buttons, {"left"})
+        self.assertEqual(backend.user32.sampled, [17, 1])
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, set())
+        events_after_first_attempt = list(events)
+        self.assertTrue(backend.release_all()["verified"])
+        self.assertEqual(events, events_after_first_attempt)
 
     def test_utf16_units(self):
         self.assertEqual(utf16_units("office"), tuple(ord(ch) for ch in "office"))

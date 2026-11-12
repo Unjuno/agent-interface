@@ -21,6 +21,8 @@ class UnboundInputPolicyTests(unittest.TestCase):
 
     def test_shared_runner_selects_public_composition_only_on_windows(self):
         path = Path(__file__).resolve().parents[2] / "integration_checks" / "native.py"
+        if not path.is_file():
+            self.skipTest("shared native runner is not materialized in this sparse checkout")
         test_name = "runtime.cli_v1.test_mcp_supervised_backend_composition"
         for platform in ("win32", "linux"):
             with self.subTest(platform=platform), patch.object(sys, "platform", platform):

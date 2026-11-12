@@ -13,10 +13,24 @@ def _parse_obligations(obligations):
         if type(item) is not str:
             raise ValueError("input obligation must be a string")
         parts = item.split(":")
-        if len(parts) == 3 and parts[0] == "key" and parts[1] and parts[2]:
-            parsed["keys"].append((parts[1], parts[2]))
-        elif len(parts) == 3 and parts[0] == "button" and parts[1] and parts[2]:
-            parsed["buttons"].append((parts[1], parts[2]))
+        if (len(parts) == 3 and parts[0] == "key"
+                and parts[1] and parts[2]):
+            # Historical three-part obligations mean the Win32 default.
+            target, key, encoding = parts[1], parts[2], "virtual_key"
+            parsed["keys"].append((target, key, encoding))
+        elif (len(parts) >= 4 and parts[0] == "key"
+                and parts[-1] in {"virtual_key", "scan_code"}):
+            # Target names are configured identifiers and may contain ':';
+            # the key and encoding are the two fixed trailing components.
+            target, key, encoding = ":".join(parts[1:-2]), parts[-2], parts[-1]
+            if not target or not key:
+                raise ValueError("unsupported input obligation")
+            parsed["keys"].append((target, key, encoding))
+        elif len(parts) >= 3 and parts[0] == "button" and parts[-1]:
+            target, button = ":".join(parts[1:-1]), parts[-1]
+            if not target:
+                raise ValueError("unsupported input obligation")
+            parsed["buttons"].append((target, button))
         elif len(parts) == 2 and parts[0] == "unicode":
             try:
                 unit = int(parts[1], 16)
@@ -48,7 +62,12 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
     if type(request) is not dict or not required <= set(request):
         raise ValueError("recovery request schema mismatch")
     parsed = _parse_obligations(request["obligations"])
-    targets = {target for target, _ in parsed["keys"] + parsed["buttons"]}
+    source_generation = request.get("source_target_generation",
+        request["target_generation"])
+    if (type(source_generation) is not str or len(source_generation) != 64
+            or any(char not in "0123456789abcdef" for char in source_generation)):
+        raise ValueError("source target generation is invalid")
+    targets = {item[0] for item in parsed["keys"] + parsed["buttons"]}
     configured_targets = configured_targets or {}
     if not targets and len(configured_targets) == 1 and parsed["unicode"]:
         targets = set(configured_targets)
@@ -77,9 +96,48 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
                 raise TimeoutError("recovery deadline expired after target focus")
             if not _generation_matches(backend, targets, request["target_generation"]):
                 raise RuntimeError("TARGET_GENERATION_CHANGED")
-        for target, key in parsed["keys"]:
-            from runtime.backends.win32_v1.backend import virtual_key
+        from runtime.backends.win32_v1.backend import virtual_key
+        key_encodings = {}
+        for target, key, encoding in parsed["keys"]:
+            key_encodings.setdefault((target, key), set()).add(encoding)
+        release_key_up_attempts = []
+        send_key = backend._send_key
+        def record_key_up(vk, down, encoding=None):
+            if down is False:
+                attempt = {"virtual_key": vk,
+                    "encoding": encoding or "virtual_key",
+                    "status": "attempting"}
+                release_key_up_attempts.append(attempt)
+                try:
+                    result = (send_key(vk, down) if encoding is None else
+                        send_key(vk, down, encoding))
+                except Exception as error:
+                    attempt["status"] = "raised"
+                    attempt["error_type"] = type(error).__name__
+                    raise
+                attempt["status"] = "returned"
+                return result
+            return (send_key(vk, down) if encoding is None else
+                send_key(vk, down, encoding))
+        backend._send_key = record_key_up
+        for (target, key), encodings in key_encodings.items():
+            ordered_encodings = sorted(encodings)
+            # The ordinary backend ledger has one slot per key name. If an
+            # interrupted program used one logical key with multiple encodings,
+            # emit each distinct UP and retain one for release_all's readback.
+            for encoding in ordered_encodings[:-1]:
+                try:
+                    backend._send_key(virtual_key(key), False, encoding)
+                except Exception:
+                    # One encoding's failed insertion must not prevent trying
+                    # the remaining encodings or the ledger-backed final UP.
+                    # Keep the raised attempt in the receipt; final neutral
+                    # readback decides whether recovery was actually accepted.
+                    continue
             backend.held_keys[key] = virtual_key(key)
+            if not hasattr(backend, "held_key_encodings"):
+                backend.held_key_encodings = {}
+            backend.held_key_encodings[key] = ordered_encodings[-1]
             backend.held_key_targets[key] = target
         for target, button in parsed["buttons"]:
             from runtime.backends.win32_v1.backend import BUTTON_FLAGS
@@ -90,21 +148,53 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
         backend.pending_unicode_ups.update(parsed["unicode"])
         if clock_ns() >= request["deadline_ns"]:
             raise TimeoutError("recovery deadline expired before release")
-        release = backend.release_all()
-        if clock_ns() >= request["deadline_ns"]:
-            raise TimeoutError("recovery deadline expired after release")
-        if not _generation_matches(backend, targets, request["target_generation"]):
-            raise RuntimeError("TARGET_GENERATION_CHANGED")
-        return {"operation_id": request["operation_id"],
+        release_error = None
+        try:
+            release = backend.release_all()
+        except Exception as error:
+            release = None
+            release_error = error
+        post_release_error = None
+        post_release_reason = None
+        try:
+            if clock_ns() >= request["deadline_ns"]:
+                post_release_error = TimeoutError(
+                    "recovery deadline expired after release")
+                post_release_reason = "deadline_expired_after_release"
+            elif not _generation_matches(backend, targets,
+                                         request["target_generation"]):
+                post_release_error = RuntimeError("TARGET_GENERATION_CHANGED")
+                post_release_reason = "target_generation_changed_after_release"
+        except Exception as error:
+            post_release_error = error
+            post_release_reason = "post_release_validation_failed"
+        if post_release_error is not None:
+            return {"status": "unknown", "reason": post_release_reason,
+                "error_type": type(post_release_error).__name__,
+                "operation_id": request["operation_id"],
+                "source_target_generation": source_generation,
                 "target_generation": request["target_generation"],
                 "recovery_id": request["recovery_id"],
-                "release_accepted": (type(release) is dict
+                "release_accepted": False,
+                "release_receipt": release,
+                "release_error_type": (type(release_error).__name__
+                    if release_error is not None else None),
+                "release_key_up_attempts": release_key_up_attempts,
+                "pending_unicode_ups": sorted(backend.pending_unicode_ups)}
+        return {"operation_id": request["operation_id"],
+                "source_target_generation": source_generation,
+                "target_generation": request["target_generation"],
+                "recovery_id": request["recovery_id"],
+                "release_accepted": (release_error is None and type(release) is dict
                     and release.get("verified") is True
                     and all(type(release.get(field)) is list and release[field] == []
                             for field in ("keys_down", "buttons_down",
                                           "keys_unknown", "buttons_unknown"))
                     and not backend.pending_unicode_ups),
                 "release_receipt": release,
+                "release_error_type": (type(release_error).__name__
+                    if release_error is not None else None),
+                "release_key_up_attempts": release_key_up_attempts,
                 "pending_unicode_ups": sorted(backend.pending_unicode_ups)}
     finally:
         backend.close()
@@ -117,7 +207,12 @@ def _observe(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
     if type(request) is not dict or not required <= set(request):
         raise ValueError("observer request schema mismatch")
     parsed = _parse_obligations(request["obligations"])
-    targets = {target for target, _ in parsed["keys"] + parsed["buttons"]}
+    source_generation = request.get("source_target_generation",
+        request["target_generation"])
+    if (type(source_generation) is not str or len(source_generation) != 64
+            or any(char not in "0123456789abcdef" for char in source_generation)):
+        raise ValueError("source target generation is invalid")
+    targets = {item[0] for item in parsed["keys"] + parsed["buttons"]}
     configured_targets = configured_targets or {}
     # An empty obligation set is still observable when there is exactly one
     # configured target: bind the neutral, empty state sample to its generation.
@@ -135,9 +230,14 @@ def _observe(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
         if not _generation_matches(backend, targets, request["target_generation"]):
             raise RuntimeError("TARGET_GENERATION_CHANGED")
         from runtime.backends.win32_v1.backend import BUTTON_FLAGS, virtual_key
-        states = []
-        for target, key in parsed["keys"]:
-            states.append(backend._key_down_state(virtual_key(key), target))
+        key_states = {}
+        for target, key, _encoding in parsed["keys"]:
+            identity = (target, key)
+            if identity not in key_states:
+                key_states[identity] = backend._key_down_state(
+                    virtual_key(key), target)
+        states = [key_states[(target, key)]
+                  for target, key, _encoding in parsed["keys"]]
         for target, button in parsed["buttons"]:
             if button not in BUTTON_FLAGS:
                 raise ValueError("unsupported button obligation")
@@ -148,6 +248,7 @@ def _observe(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
         if not _generation_matches(backend, targets, request["target_generation"]):
             raise RuntimeError("TARGET_GENERATION_CHANGED")
         return {"operation_id": request["operation_id"],
+                "source_target_generation": source_generation,
                 "target_generation": request["target_generation"],
                 "recovery_id": request["recovery_id"],
                 "neutral": all(state is False for state in states),

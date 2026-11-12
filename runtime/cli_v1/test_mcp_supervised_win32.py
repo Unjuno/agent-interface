@@ -5,12 +5,15 @@ import asyncio
 import threading
 from tempfile import TemporaryDirectory
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
 from runtime.guarded_win32_v1.operation_owner import OperationOwner
+from runtime.guarded_win32_v1.process_cancellation import (
+    OperationCancellationSupervisor,
+)
 
 
 GENERATION = "a" * 64
@@ -121,7 +124,13 @@ class RecoveringFakeSupervisor(FakeSupervisor):
             raise AssertionError("fake recovery was not admitted")
         readback = {"operation_id": operation_id,
             "target_generation": generation,
-            "recovery_id": recovery["recovery_id"], "neutral": True}
+            "recovery_id": recovery["recovery_id"], "neutral": True,
+            "observed_monotonic_ns": time.monotonic_ns(),
+            "key_button_states": [False], "unicode_event_units": 0}
+        self.operation_owner.recovery_release_attempted(operation_id,
+            generation, recovery["recovery_id"], [{
+                "virtual_key": 0x57, "encoding": "scan_code",
+                "status": "returned"}])
         if not self.operation_owner.recovery_completed(operation_id, generation,
                 recovery["recovery_id"], release_accepted=True,
                 readback=readback):
@@ -148,7 +157,9 @@ class DelayedRecoveringFakeSupervisor(RecoveringFakeSupervisor):
             raise AssertionError("fake recovery was not admitted")
         readback = {"operation_id": operation_id,
             "target_generation": generation,
-            "recovery_id": recovery["recovery_id"], "neutral": True}
+            "recovery_id": recovery["recovery_id"], "neutral": True,
+            "observed_monotonic_ns": time.monotonic_ns(),
+            "key_button_states": [False], "unicode_event_units": 0}
 
         def finish_recovery():
             time.sleep(0.05)
@@ -168,6 +179,36 @@ class UnknownAfterCancelSupervisor(FakeSupervisor):
             cleanup_deadline_ns=cleanup_deadline_ns)
         return self.operation_owner.mark_unknown(operation_id, generation,
             "test_cleanup_deadline_expired")
+
+
+class MissingAttemptReceiptSupervisor(FakeSupervisor):
+    def __init__(self, operation_owner, process):
+        super().__init__(operation_owner)
+        self.process = process
+
+    def cancel(self, operation_id, generation, *, cleanup_deadline_ns):
+        self.operation_owner.request_cancel(operation_id, generation,
+            cleanup_deadline_ns=cleanup_deadline_ns)
+        self.process.alive = False
+        self.process.exitcode = -15
+        if not self.operation_owner.producer_retired(
+                operation_id, generation, self.process):
+            raise AssertionError("fake producer retirement was not accepted")
+        recovery = self.operation_owner.claim_recovery(operation_id, generation)
+        if recovery is None:
+            raise AssertionError("fake recovery was not admitted")
+
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = self.operation_owner
+        supervisor._clock_ns = time.monotonic_ns
+        supervisor._invalidate_helper = lambda *_args: None
+        supervisor._exchange_helper = lambda *_args: {
+            "operation_id": operation_id,
+            "target_generation": generation,
+            "recovery_id": recovery["recovery_id"],
+            "release_accepted": True}
+        supervisor._run_recovery(operation_id, generation, recovery)
+        return self.operation_owner.result(operation_id)
 
 
 class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
@@ -201,14 +242,20 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 {"op": "release_all"}]}
 
     async def test_public_orphan_recovery_tool_is_bounded_and_keeps_source_unknown(self):
-        owner, producer, supervisor = self.make_components()
+        recovery_generation = "b" * 64
+        owner, producer, supervisor = self.make_components(recovery_generation)
         requests = []
         def recover(operation_id, generation, recovery_id, deadline_ns,
-                    obligations):
+                    obligations, *, recovery_target_generation=None):
             requests.append((operation_id, generation, recovery_id,
-                             deadline_ns, obligations))
+                             deadline_ns, obligations,
+                             recovery_target_generation))
             return {"status": "recovered", "release_confirmed": True,
-                "operation_id": operation_id, "target_generation": generation,
+                "operation_id": operation_id, "target_generation": (recovery_target_generation
+                    or generation),
+                "source_target_generation": generation,
+                "recovery_target_generation": (recovery_target_generation
+                    or generation),
                 "recovery_id": recovery_id,
                 "readback": {"neutral": True}}
         supervisor.recover_orphaned_input = recover
@@ -218,10 +265,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 tools = await server.list_tools()
                 self.assertIn("interface_recover_orphaned_input",
                               {tool.name for tool in tools})
-                row = self.row(await server.call_tool(
+                reply = await server.call_tool(
                     "interface_recover_orphaned_input", {
                         "source_operation_id": "2" * 32,
                         "source_target_generation": GENERATION,
+                        "recovery_target_generation": recovery_generation,
                         "obligations": ["key:fixture:W"],
                         "source_custody_record": {
                             "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
@@ -234,8 +282,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             "dispatch": {"input_dispatched": None,
                                 "release_confirmed": False,
                                 "task_success": None,
-                                "replay_allowed": False}}}))
-                row = row.get("raw_result", row)
+                                "replay_allowed": False}}})
+                public_report = json.loads(reply.content[0].text)
+                row = public_report
+                self.assertNotIn("image_status", row)
+                self.assertNotIn("image_error", row)
+                self.assertEqual(row.get("status"), "recovered", row)
                 self.assertEqual(row.get("recovery_status"), "recovered", row)
                 self.assertEqual(row["source_action_status"], "unknown")
                 self.assertTrue(row["release_confirmed"])
@@ -244,6 +296,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(len(requests), 1)
                 self.assertEqual(requests[0][0], "2" * 32)
                 self.assertEqual(requests[0][4], ["key:fixture:W"])
+                self.assertEqual(requests[0][1], GENERATION)
+                self.assertEqual(requests[0][5], recovery_generation)
                 self.assertLessEqual(requests[0][3] - time.monotonic_ns(),
                                      5_000_000_000)
                 refused = self.row(await server.call_tool(
@@ -255,9 +309,94 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(refused.get("status"), "invalid_request",
                                  refused)
                 self.assertEqual(refused.get("error"),
-                                 "FRESH_TARGET_GENERATION_REQUIRED")
+                                 "TARGET_GENERATION_CHANGED")
                 self.assertFalse(refused.get("operation_invoked"))
                 self.assertFalse(refused.get("input_dispatched"))
+                self.assertEqual(producer.started, 0)
+
+    async def test_public_orphan_recovery_refusal_is_an_mcp_error(self):
+        owner, producer, _supervisor = self.make_components()
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                reply = await server.call_tool(
+                    "interface_recover_orphaned_input", {
+                        "source_operation_id": "2" * 32,
+                        "source_target_generation": GENERATION,
+                        "recovery_target_generation": GENERATION,
+                        "obligations": ["key:fixture:W"],
+                        "source_custody_record": {}})
+                refusal = json.loads(reply.content[0].text)
+                self.assertEqual(refusal.get("status"), "refused", refusal)
+                self.assertFalse(refusal.get("release_confirmed"), refusal)
+                self.assertIsNone(refusal.get("task_success"), refusal)
+                self.assertFalse(refusal.get("replay_allowed"), refusal)
+                self.assertTrue(reply.isError)
+                self.assertEqual(producer.started, 0)
+
+    async def test_public_orphan_recovery_unknown_is_an_mcp_error(self):
+        owner, producer, supervisor = self.make_components()
+        def unknown_receipt(operation_id, source_generation, recovery_id,
+                            _deadline_ns, _obligations, *,
+                            recovery_target_generation=None):
+            recovery_generation = (recovery_target_generation
+                or source_generation)
+            return {"status": "unknown",
+                "reason": "late_input_horizon_unconfirmed",
+                "error_type": "OSError", "operation_id": operation_id,
+                "target_generation": source_generation,
+                "source_target_generation": source_generation,
+                "recovery_target_generation": recovery_generation,
+                "recovery_id": recovery_id, "release_confirmed": False,
+                "release_receipt": {"release_accepted": True},
+                "readback": {"neutral": True,
+                    "observed_monotonic_ns": 123456789},
+                "late_input_horizon_ns": 2_000_000_000,
+                "late_input_observation_count": 1,
+                "late_input_release_received_monotonic_ns": 123456700,
+                "late_input_observation_start_monotonic_ns": 123456789,
+                "late_input_observation_end_monotonic_ns": 123456789,
+                "late_input_max_observed_gap_ns": 89,
+                "late_input_max_sample_gap_ns": 100_000_000}
+        supervisor.recover_orphaned_input = Mock(side_effect=unknown_receipt)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                reply = await server.call_tool(
+                    "interface_recover_orphaned_input", {
+                        "source_operation_id": "2" * 32,
+                        "source_target_generation": GENERATION,
+                        "recovery_target_generation": GENERATION,
+                        "obligations": ["key:fixture:W"],
+                        "source_custody_record": {
+                            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+                            "operation_id": "2" * 32,
+                            "target_generation": GENERATION,
+                            "obligations": ["key:fixture:W"],
+                            "do_not_replay": True,
+                            "observed_producer_live": False,
+                            "late_server_request_possible": False,
+                            "dispatch": {"input_dispatched": None,
+                                "release_confirmed": False,
+                                "task_success": None,
+                                "replay_allowed": False}}})
+                result = json.loads(reply.content[0].text)
+                self.assertEqual(result.get("status"), "unknown", result)
+                self.assertFalse(result.get("release_confirmed"), result)
+                self.assertIsNone(result.get("task_success"), result)
+                self.assertFalse(result.get("replay_allowed"), result)
+                nested = result.get("recovery_receipt")
+                self.assertEqual(nested.get("reason"),
+                    "late_input_horizon_unconfirmed")
+                self.assertEqual(nested.get("error_type"), "OSError")
+                self.assertEqual(nested.get("operation_id"), "2" * 32)
+                self.assertEqual(nested.get("source_target_generation"), GENERATION)
+                self.assertEqual(nested.get("recovery_target_generation"), GENERATION)
+                self.assertEqual(nested.get("late_input_observation_count"), 1)
+                self.assertEqual(nested.get("readback", {}).get(
+                    "observed_monotonic_ns"), 123456789)
+                self.assertTrue(reply.isError)
+                self.assertEqual(supervisor.recover_orphaned_input.call_count, 1)
                 self.assertEqual(producer.started, 0)
 
     @staticmethod
@@ -788,6 +927,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "current_binding_revision": 1,
                 "wait_for_result_ms": 0}))
             self.assertEqual(pending["status"], "pending")
+            for _ in range(20):
+                self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if producer.started.is_set():
+                    break
+                await asyncio.sleep(0.01)
             self.assertTrue(await asyncio.wait_for(
                 asyncio.to_thread(producer.started.wait, 1), 1))
 
@@ -806,9 +951,30 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(retained["cancellation"]["status"], "recovered")
             self.assertTrue(retained["cancellation"]["release_confirmed"])
             self.assertEqual(retained["action"]["status"], "recovered", retained)
+            self.assertEqual(retained["action"]["obligations"],
+                             retained["cancellation"]["result"]["obligations"])
             action_result = retained["action"]["result"]
             self.assertEqual(action_result["status"], "recovered")
+            self.assertEqual(retained["action"][
+                "recovery_release_key_up_attempts"], [{
+                    "virtual_key": 0x57, "encoding": "scan_code",
+                    "status": "returned"}])
+            self.assertEqual(action_result[
+                "recovery_release_key_up_attempts"], [{
+                    "virtual_key": 0x57, "encoding": "scan_code",
+                    "status": "returned"}])
             cleanup = retained["cancellation"]["result"]
+            readback = cleanup["readback"]
+            self.assertEqual(readback["operation_id"],
+                             retained["action"]["operation_id"])
+            self.assertEqual(readback["target_generation"],
+                             retained["action"]["target_generation"])
+            self.assertEqual(readback["recovery_id"], cleanup["recovery_id"])
+            self.assertIs(readback["neutral"], True)
+            self.assertIsInstance(readback["observed_monotonic_ns"], int)
+            self.assertGreater(readback["observed_monotonic_ns"], 0)
+            self.assertEqual(readback["key_button_states"], [False])
+            self.assertEqual(readback["unicode_event_units"], 0)
             self.assertIsInstance(cleanup["cleanup_requested_monotonic_ns"], int)
             self.assertIsInstance(cleanup["recovery_completed_monotonic_ns"], int)
             self.assertEqual(cleanup["cleanup_latency_ns"],
@@ -855,6 +1021,67 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertLess(time.monotonic(), deadline, closed)
                 await asyncio.sleep(0.02)
 
+    async def test_recovered_progress_capture_failure_is_visible_in_public_receipt(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        op_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(op_owner, process)
+        owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = HeldProducerFactory(process, identity)
+
+        def fail_progress(_process):
+            raise ValueError("unknown native producer process")
+
+        producer.read_program_actions_lower_bound = fail_progress
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            program = self.valid_program()
+            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
+            pending = self.row(await server.call_tool("interface_dispatch", {
+                "program": program,
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 0}))
+            self.assertEqual(pending["status"], "pending")
+            for _ in range(20):
+                self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if producer.started.is_set():
+                    break
+                await asyncio.sleep(0.01)
+            self.assertTrue(await asyncio.wait_for(
+                asyncio.to_thread(producer.started.wait, 1), 1))
+
+            cancelled = self.row(await server.call_tool("interface_cancel", {
+                "call_id": pending["call_id"]}))
+            self.assertEqual(cancelled["status"], "recovered")
+            deadline = time.monotonic() + 2
+            while True:
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if retained["action"]["status"] == "recovered" and \
+                        retained["action"].get("program_actions_capture_status") == "unavailable":
+                    break
+                self.assertLess(time.monotonic(), deadline, retained)
+                await asyncio.sleep(0.01)
+
+            self.assertEqual(
+                retained["action"]["program_actions_capture_error_code"],
+                "producer_registry_miss")
+            self.assertTrue(retained["cancellation"]["release_confirmed"])
+            self.assertIsNone(retained["action"].get("program_actions_lower_bound"))
+            self.assertFalse(retained["replay_allowed"])
+            self.assertIsNone(retained["task_success"])
+            deadline = time.monotonic() + 2
+            while True:
+                close = self.row(await server.call_tool("interface_close", {}))
+                if close["status"] == "closed":
+                    break
+                self.assertLess(time.monotonic(), deadline, close)
+                await asyncio.sleep(0.02)
+
     async def test_late_recovery_after_dispatch_return_promotes_action_receipt(self):
         process = FakeProcess()
         identity = {"pid": 7101, "creation_time_100ns": 90101}
@@ -864,6 +1091,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
         owner.bind_target_generation_reader(lambda: GENERATION)
         producer = HeldProducerFactory(process, identity)
+        producer.program_actions_lower_bound = 2
+        fence_events = []
+        custody_fence = Mock()
+        custody_fence.update.side_effect = lambda *args, **kwargs: fence_events.append(
+            ("update", kwargs))
+        custody_fence.resolve.side_effect = lambda *args, **kwargs: fence_events.append(
+            ("resolve", kwargs))
+        owner._custody_fence = custody_fence
         oracle_calls = []
 
         def oracle(action):
@@ -889,6 +1124,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "current_binding_revision": 1,
                 "wait_for_result_ms": 0}))
             self.assertEqual(pending["status"], "pending")
+            for _ in range(20):
+                self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if producer.started.is_set():
+                    break
+                await asyncio.sleep(0.01)
             self.assertTrue(await asyncio.wait_for(
                 asyncio.to_thread(producer.started.wait, 1), 1))
 
@@ -901,7 +1142,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     "call_id": pending["call_id"]}))
                 cancellation = retained.get("cancellation")
                 if (isinstance(cancellation, dict)
-                        and cancellation.get("status") == "recovered"):
+                        and cancellation.get("status") == "recovered"
+                        and ("program_actions_lower_bound"
+                             in retained["action"]
+                             or retained["action"].get(
+                                 "program_actions_capture_status") == "unavailable")):
                     break
                 await asyncio.sleep(0.01)
 
@@ -909,6 +1154,17 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(retained["cancellation"]["status"], "recovered")
             self.assertTrue(retained["cancellation"]["release_confirmed"])
             self.assertEqual(retained["action"]["status"], "recovered", retained)
+            self.assertEqual(
+                retained["action"]["program_actions_lower_bound"], 2)
+            self.assertEqual(
+                retained["action"]["program_actions_capture_status"],
+                "observed")
+            input_update = next(index for index, (kind, fields)
+                in enumerate(fence_events)
+                if kind == "update" and fields.get("input_dispatched") is True)
+            resolution = next(index for index, (kind, _fields)
+                in enumerate(fence_events) if kind == "resolve")
+            self.assertLess(input_update, resolution)
             self.assertEqual(retained["action"]["result"]["status"], "recovered")
             self.assertIsNone(retained["action"]["result"]["task_success"])
             self.assertIsNone(retained["task_success"])
@@ -978,6 +1234,46 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     "phase"], "unknown")
                 self.assertEqual(owner.close()["status"], "busy")
                 self.assertEqual(owner.state, "open")
+
+    async def test_missing_positive_attempt_receipt_stays_unknown_in_public_results(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        op_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        supervisor = MissingAttemptReceiptSupervisor(op_owner, process)
+        owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = HeldProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                pending = self.row(await server.call_tool("interface_dispatch", {
+                    "program": self.valid_program(),
+                    "current_observation_seq": 1,
+                    "current_binding_revision": 1,
+                    "wait_for_result_ms": 0}))
+                self.assertEqual(pending["status"], "pending")
+                self.assertTrue(await asyncio.wait_for(
+                    asyncio.to_thread(producer.started.wait, 1), 1))
+
+                cancelled = self.row(await server.call_tool("interface_cancel", {
+                    "call_id": pending["call_id"]}))
+                self.assertEqual(cancelled["status"], "unknown", cancelled)
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+
+                self.assertEqual(retained["action"]["status"], "unknown")
+                self.assertFalse(retained["action"]["release_confirmed"])
+                self.assertFalse(retained["action"]["result"]["release_confirmed"])
+                self.assertEqual(retained["cancellation"]["status"], "unknown")
+                self.assertEqual(retained["cancellation"]["result"]["uncertainty"],
+                    "recovery_key_up_attempt_receipt_missing_or_invalid")
+                self.assertFalse(retained["cancellation"]["release_confirmed"])
+                self.assertIsNone(retained["task_success"])
+                self.assertFalse(retained["replay_allowed"])
+                self.assertEqual(op_owner.result(
+                    retained["action"]["operation_id"])["phase"], "unknown")
+                self.assertEqual(owner.close()["status"], "busy")
 
     async def test_stale_target_generation_is_refused_before_producer_start(self):
         owner, producer, _ = self.make_components(generation="b" * 64)

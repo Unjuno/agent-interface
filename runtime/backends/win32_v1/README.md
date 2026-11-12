@@ -21,11 +21,18 @@ The supervised native producer also keeps a shared monotonic lower bound of prog
 This path is not considered supported merely because it imports or compiles. Promotion requires the frozen native Windows integration block to pass on an actual Windows runner. Secure desktop, elevated/UIPI boundaries, IME behavior, mixed-DPI multi-monitor setups, and privileged applications remain outside v1 unless separately evidenced.
 
 The release ledger treats zero from `GetAsyncKeyState` as unknown, since Windows
-also returns zero on API failure. Tracked keys/buttons remain owned and release
-is unverified until a nonzero sample reports the high bit clear. Explicit UP
-with unknown state stops following task operations. A replacement session wrapper
+also returns zero on API failure. Each tracked key/button remains owned until
+its own readback reports the high bit clear; a query or release error for another
+obligation does not cause that confirmed-neutral input's UP to be sent again.
+Explicit UP with unknown state stops following task operations. A replacement session wrapper
 also refuses task input while backend key/button/Unicode custody remains; cleanup
 and explicit session recovery remain distinct from task success or replay.
+Each terminal `release_all` result also retains one `release_attempts` row per
+Unicode, key-encoding, or button UP helper call. The row distinguishes whether
+`SendInput` began, its returned count (one is required for helper success), and
+an exception. This records only OS API insertion outcome; it does not establish
+physical neutral state, application receipt, or task effect. The separate
+`verified` field still depends on independent key/button state readback.
 
 Zero may also occur for a healthy up key. Without an independent availability
 witness this conservative policy can quarantine the session indefinitely; it does

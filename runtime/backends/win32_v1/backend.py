@@ -21,6 +21,7 @@ from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate
 _execution_target = ContextVar("win32_execution_target", default=None)
 _cleanup_active = ContextVar("win32_cleanup_active", default=False)
 _program_emissions = ContextVar("win32_program_emissions", default=None)
+_release_attempt_context = ContextVar("win32_release_attempt_context", default=None)
 
 
 class Win32BackendError(RuntimeError):
@@ -539,7 +540,18 @@ class Win32Backend:
         if target is not None and not _cleanup_active.get() and not (is_key_up or is_mouse_up):
             Win32Backend._require_foreground(self, target)
         array = (INPUT * 1)(item)
-        sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
+        attempt = _release_attempt_context.get()
+        if isinstance(attempt, dict):
+            attempt["sendinput_call_started"] = True
+        try:
+            sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
+        except Exception as error:
+            if isinstance(attempt, dict):
+                attempt["sendinput_error_type"] = type(error).__name__
+            raise
+        if isinstance(attempt, dict):
+            attempt["sendinput_return_count"] = (
+                int(sent) if isinstance(sent, int) else None)
         if sent != 1:
             raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
         Win32Backend._record_emission(self)
@@ -987,12 +999,37 @@ class Win32Backend:
     def _release_all_unchecked(self) -> dict[str, Any]:
         # Compensate unmatched Unicode delivery once; failure retains the unit.
         # This acknowledges UP insertion, not physical or application state.
-        unicode_error = None
+        release_errors = []
+        release_exceptions = []
+        release_attempts = []
+
+        def send_release_attempt(details, sender):
+            attempt = {"ordinal": len(release_attempts), **details,
+                "sendinput_call_started": False,
+                "sendinput_return_count": None,
+                "sendinput_error_type": None,
+                "outcome": "in_progress", "error_type": None}
+            release_attempts.append(attempt)
+            token = _release_attempt_context.set(attempt)
+            try:
+                sender()
+            except Exception as error:
+                attempt["outcome"] = "raised"
+                attempt["error_type"] = type(error).__name__
+                raise
+            else:
+                attempt["outcome"] = "returned"
+            finally:
+                _release_attempt_context.reset(token)
+
         for unit in sorted(getattr(self, "pending_unicode_ups", ())):
             try:
-                self._send_unicode_unit(unit, False)
+                send_release_attempt({"domain": "unicode_up", "unit": unit},
+                    lambda unit=unit: self._send_unicode_unit(unit, False))
             except Exception as error:
-                unicode_error = unicode_error or error
+                release_exceptions.append(error)
+                release_errors.append({"domain": "unicode_up", "unit": unit,
+                    "error_type": type(error).__name__})
             else:
                 self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
@@ -1013,15 +1050,29 @@ class Win32Backend:
             if marker in sent_key_ups:
                 continue
             sent_key_ups.add(marker)
-            if encoding is None:
-                self._send_key(vk, False)
-            else:
-                self._send_key(vk, False, encoding)
+            try:
+                key_names = sorted(key for key, key_vk in tracked_keys.items()
+                    if key_vk == vk and key_encodings.get(key) == encoding)
+                send_release_attempt({"domain": "key_up", "virtual_key": vk,
+                    "key_names": key_names, "encoding": encoding},
+                    lambda vk=vk, encoding=encoding: (
+                        self._send_key(vk, False) if encoding is None else
+                        self._send_key(vk, False, encoding)))
+            except Exception as error:
+                release_exceptions.append(error)
+                release_errors.append({"domain": "key_up", "virtual_key": vk,
+                    "encoding": encoding, "error_type": type(error).__name__})
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
             item = INPUT(type=INPUT_MOUSE)
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
-            self._send(item)
+            try:
+                send_release_attempt({"domain": "button_up", "button": button},
+                    lambda item=item: self._send(item))
+            except Exception as error:
+                release_exceptions.append(error)
+                release_errors.append({"domain": "button_up", "button": button,
+                    "error_type": type(error).__name__})
         time.sleep(0.01)
         # Aliases share one sample: querying the same VK twice can consume the
         # unreliable legacy low bit and create an artificial zero ambiguity.
@@ -1031,22 +1082,36 @@ class Win32Backend:
         button_states = {}
         state_witnesses = {}
         for vk in sorted(set(tracked_keys.values())):
-            states[vk] = self._key_down_state(vk, state_targets.get(vk))
+            try:
+                states[vk] = self._key_down_state(vk, state_targets.get(vk))
+            except Exception as error:
+                release_exceptions.append(error)
+                states[vk] = None
+                release_errors.append({"domain": "key_state", "virtual_key": vk,
+                    "error_type": type(error).__name__})
             if self._last_state_query_witness:
                 state_witnesses[str(vk)] = self._last_state_query_witness
         for button in tracked_buttons:
             vk = BUTTON_FLAGS[button][2]
-            button_states[button] = self._key_down_state(vk, state_targets.get(vk))
+            try:
+                button_states[button] = self._key_down_state(
+                    vk, state_targets.get(vk))
+            except Exception as error:
+                release_exceptions.append(error)
+                button_states[button] = None
+                release_errors.append({"domain": "button_state", "button": button,
+                    "virtual_key": vk, "error_type": type(error).__name__})
             if self._last_state_query_witness:
                 state_witnesses[str(vk)] = self._last_state_query_witness
         keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is True)
         buttons = sorted(button for button in tracked_buttons if button_states[button] is True)
         unknown_keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is None)
         unknown_buttons = sorted(button for button in tracked_buttons if button_states[button] is None)
-        # A sent UP is not neutral-state evidence. Keep unverified obligations;
-        # an incomplete state read leaves the entire previous ledger intact.
-        if unicode_error is not None:
-            raise unicode_error
+        # UP insertion is not neutral-state evidence. Retire each key/button
+        # only from its own successful neutral readback, even when an unrelated
+        # obligation failed; retaining confirmed-neutral entries would send a
+        # duplicate UP on the next recovery attempt. Unicode has no state query,
+        # so its obligation is removed only when its own UP helper returned.
         for name in tracked_keys:
             if states[tracked_keys[name]] is False:
                 self.held_keys.pop(name, None)
@@ -1057,10 +1122,31 @@ class Win32Backend:
         for button in tracked_buttons:
             if button_states[button] is False:
                 getattr(self, "held_button_targets", {}).pop(button, None)
+        # Keep the established exception contract, but only after every finite
+        # release and readback attempt has run. The complete ledger remains
+        # available for retry whenever any attempt was inconclusive or failed.
+        if release_exceptions:
+            error = release_exceptions[0]
+            attempt_receipt = {"verified": False, "keys_down": keys,
+                "buttons_down": buttons, "keys_unknown": unknown_keys,
+                "buttons_unknown": unknown_buttons,
+                "state_query_witnesses": state_witnesses,
+                "release_errors": release_errors,
+                "release_attempts": release_attempts,
+                "monotonic_ns": time.monotonic_ns()}
+            try:
+                error.release_attempt_errors = release_errors
+                error.release_attempt_receipt = attempt_receipt
+            except Exception:
+                pass
+            raise error
         return {"keys_down": keys, "buttons_down": buttons,
                 "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
                 "state_query_witnesses": state_witnesses,
-                "verified": not keys and not buttons and not unknown_keys and not unknown_buttons,
+                "release_errors": release_errors,
+                "release_attempts": release_attempts,
+                "verified": (not release_errors and not keys and not buttons
+                    and not unknown_keys and not unknown_buttons),
                 "monotonic_ns": time.monotonic_ns()}
 
     def execute(self, program: dict[str, Any], *, bound_target=None, guard=None, preflight_guard=None) -> dict[str, Any]:
@@ -1155,10 +1241,19 @@ class Win32Backend:
             try:
                 release = self.release_all()
             except Exception as cleanup_error:
+                cleanup = {"type": type(cleanup_error).__name__,
+                            "detail": str(cleanup_error)}
+                attempt_errors = getattr(cleanup_error,
+                    "release_attempt_errors", None)
+                attempt_receipt = getattr(cleanup_error,
+                    "release_attempt_receipt", None)
+                if type(attempt_errors) is list:
+                    cleanup["release_attempt_errors"] = attempt_errors
+                if type(attempt_receipt) is dict:
+                    cleanup["release_attempt_receipt"] = attempt_receipt
                 if isinstance(error, Win32BackendError) or program_emissions > 0:
                     raise Win32ExecutionError(
-                        error, None, {"type": type(cleanup_error).__name__,
-                                      "detail": str(cleanup_error)},
+                        error, None, cleanup,
                         program_emissions=program_emissions,
                     ) from error
                 raise

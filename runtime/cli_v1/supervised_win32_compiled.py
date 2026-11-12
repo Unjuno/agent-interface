@@ -22,6 +22,169 @@ from runtime.core_v1.contract import validate_program
 
 _GENERATION = re.compile(r"^[0-9a-f]{64}$")
 _IDENTIFIER = re.compile(r"^[0-9a-f]{32}$")
+_MAX_RECOVERY_HORIZON_NS = 60_000_000_000
+
+
+def _recovery_attempts_match_obligations(obligations, attempts):
+    """Require a shape-valid UP attempt for each keyed release obligation."""
+    if type(obligations) not in (list, tuple) or type(attempts) is not list:
+        return False
+    from runtime.backends.win32_v1.backend import virtual_key
+    expected_attempts = []
+    for item in obligations:
+        if type(item) is not str:
+            return False
+        if not item.startswith("key:"):
+            continue
+        parts = item.split(":")
+        if len(parts) == 3 and parts[1] and parts[2]:
+            key, encoding = parts[2], "virtual_key"
+        elif (len(parts) >= 4 and parts[-1]
+                in ("virtual_key", "scan_code")
+                and ":".join(parts[1:-2]) and parts[-2]):
+            key, encoding = parts[-2], parts[-1]
+        else:
+            return False
+        try:
+            expected_attempts.append((virtual_key(key), encoding))
+        except Exception:
+            return False
+    if len(attempts) != len(expected_attempts):
+        return False
+    actual_attempts = []
+    for attempt in attempts:
+        if (type(attempt) is not dict
+                or set(attempt) not in (
+                    {"virtual_key", "encoding", "status"},
+                    {"virtual_key", "encoding", "status", "error_type"})
+                or type(attempt.get("virtual_key")) is not int
+                or not 0 <= attempt["virtual_key"] <= 0xFFFF
+                or attempt.get("encoding") not in ("virtual_key", "scan_code")
+                or attempt.get("status") not in ("returned", "raised")):
+            return False
+        if attempt["status"] == "raised":
+            error_type = attempt.get("error_type")
+            if type(error_type) is not str or not error_type or len(error_type) > 64:
+                return False
+        elif "error_type" in attempt:
+            return False
+        actual_attempts.append((attempt["virtual_key"], attempt["encoding"]))
+    return sorted(actual_attempts) == sorted(expected_attempts)
+
+
+def _verified_recovery_custody(row, action, call_id, operation_id,
+                               generation, expected_call_id,
+                               expected_generation):
+    """Validate the public cancellation receipt for a recovered dispatch.
+
+    A recovered call has no normal-completion custody row. Its release proof
+    lives in the cancellation result and is accepted only when the recovery
+    identity joins the original call/action/generation and its bounded
+    post-release observation horizon is complete.
+    """
+    cancellation = row.get("cancellation")
+    result = cancellation.get("result") if type(cancellation) is dict else None
+    producer = result.get("producer_identity") if type(result) is dict else None
+    readback = result.get("readback") if type(result) is dict else None
+    obligations = result.get("obligations") if type(result) is dict else None
+    action_obligations = action.get("obligations")
+    cancellation_id = (cancellation.get("operation_id")
+        if type(cancellation) is dict else None)
+    recovery_id = result.get("recovery_id") if type(result) is dict else None
+    horizon = result.get("late_input_horizon_ns") if type(result) is dict else None
+    sample_gap = (result.get("late_input_max_sample_gap_ns")
+        if type(result) is dict else None)
+    observed_gap = (result.get("late_input_max_observed_gap_ns")
+        if type(result) is dict else None)
+    count = (result.get("late_input_observation_count")
+        if type(result) is dict else None)
+    release_ns = (result.get("late_input_release_received_ns")
+        if type(result) is dict else None)
+    start_ns = (result.get("late_input_observation_start_ns")
+        if type(result) is dict else None)
+    end_ns = (result.get("late_input_observation_end_ns")
+        if type(result) is dict else None)
+    readback_states = (readback.get("key_button_states")
+        if type(readback) is dict else None)
+    obligations_valid = (
+        type(obligations) in (list, tuple)
+        and all(type(item) is str and any(item.startswith(prefix)
+            and len(item) > len(prefix)
+            for prefix in ("key:", "button:", "unicode:"))
+            for item in obligations)
+        and len(set(obligations)) == len(obligations))
+    unicode_units = (sum(item.startswith("unicode:") for item in obligations)
+        if obligations_valid else None)
+    key_button_units = (sum(item.startswith(("key:", "button:"))
+        for item in obligations) if obligations_valid else None)
+    recovery_attempts = (result.get("recovery_release_key_up_attempts")
+        if type(result) is dict else None)
+    attempts_valid = _recovery_attempts_match_obligations(
+        obligations, recovery_attempts)
+    return (
+        type(cancellation) is dict and type(result) is dict
+        and cancellation.get("status") == "recovered"
+        and cancellation.get("owner_phase") == "recovered"
+        and type(cancellation_id) is str
+        and _IDENTIFIER.fullmatch(cancellation_id) is not None
+        and cancellation.get("action_operation_id") == operation_id
+        and cancellation.get("target_generation") == expected_generation
+        and cancellation.get("release_confirmed") is True
+        and cancellation.get("replay_allowed") is False
+        and result.get("status") == "recovered"
+        and result.get("phase") == "recovered"
+        and type(recovery_id) is str
+        and _IDENTIFIER.fullmatch(recovery_id) is not None
+        and result.get("operation_id") == operation_id
+        and result.get("target_generation") == expected_generation
+        and result.get("release_confirmed") is True
+        and result.get("replay_allowed") is False
+        and result.get("late_input_validation_error") is None
+        and type(result.get("producer_exit_code")) is int
+        and type(producer) is dict
+        and type(producer.get("pid")) is int and producer["pid"] > 0
+        and type(producer.get("creation_time_100ns")) is int
+        and producer["creation_time_100ns"] > 0
+        and type(horizon) is int and 0 < horizon <= _MAX_RECOVERY_HORIZON_NS
+        and type(sample_gap) is int and sample_gap > 0
+        and type(observed_gap) is int and 0 <= observed_gap <= sample_gap
+        and type(count) is int and count >= 2
+        and type(release_ns) is int and release_ns > 0
+        and type(start_ns) is int and 0 <= start_ns - release_ns <= sample_gap
+        and type(end_ns) is int and end_ns >= start_ns
+        and end_ns - release_ns >= horizon
+        # A bounded horizon and release flag do not substitute for the
+        # independently identity-bound terminal neutral readback. Preserve
+        # that proof in the composed result before classifying custody.
+        and type(readback) is dict
+        and readback.get("operation_id") == operation_id
+        and readback.get("target_generation") == expected_generation
+        and readback.get("recovery_id") == recovery_id
+        and readback.get("neutral") is True
+        and type(readback.get("observed_monotonic_ns")) is int
+        and readback["observed_monotonic_ns"] == end_ns
+        and type(obligations) in (list, tuple)
+        and obligations_valid
+        and attempts_valid
+        and type(action_obligations) in (list, tuple)
+        and list(action_obligations) == list(obligations)
+        and type(readback_states) is list
+        and len(readback_states) == key_button_units
+        and all(state is False for state in readback_states)
+        and type(readback.get("unicode_event_units")) is int
+        and readback.get("unicode_event_units") == unicode_units
+        and call_id == expected_call_id
+        and generation == expected_generation
+        and row.get("call_id") == expected_call_id
+        and type(operation_id) is str
+        and _IDENTIFIER.fullmatch(operation_id) is not None
+        and type(generation) is str
+        and _GENERATION.fullmatch(generation) is not None
+        and action.get("status") == "recovered"
+        and action.get("release_confirmed") is True
+        and type(action.get("result")) is dict
+        and action["result"].get("status") == "recovered"
+    )
 
 
 def _content_object(reply):
@@ -124,7 +287,12 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         identity_valid = (same_call and same_generation
             and type(operation_id) is str
             and _IDENTIFIER.fullmatch(operation_id) is not None)
-        verified_release = identity_valid and custody_verified
+        recovery_custody_verified = (recovered and
+            _verified_recovery_custody(row, retrieved_action, call_id,
+                operation_id, generation, expected_call_id,
+                expected_generation))
+        verified_release = identity_valid and (
+            recovery_custody_verified if recovered else custody_verified)
         outer_delivery = retrieved_action.get("input_dispatched")
         inner_delivery = action_result.get("input_dispatched")
         delivery_conflict = (
@@ -316,7 +484,10 @@ def run_public_compiled(interface, program_templates, *, target,
     Pixel/perception predicates and effect verdicts are caller-owned. The
     optional ``verify_task(call_id)`` must call the configured standard public
     task oracle; its receipt is accepted only when bound to the exact final
-    dispatch call ID and its supervised-Win32 non-action fields validate.
+    dispatch call ID and its supervised-Win32 non-action fields validate. It
+    runs after graph success and after a release-verified recovered dispatch
+    that ends in ``SAFE_YIELD / delivery_uncertain``. In the latter case an
+    oracle verdict is recorded separately; it does not complete the graph.
 
     ``capture_frame`` selects the standard Win32 observation frame. Use
     ``screen_physical_px`` with an explicitly grounded screen-coordinate region
@@ -570,22 +741,42 @@ def run_public_compiled(interface, program_templates, *, target,
     receipt["task_verification"] = None
     final_transition = (receipt["transitions"][-1]
         if receipt["transitions"] else None)
+    terminal_events = [row for row in receipt["critical_events"]
+        if row.get("event") == "action_terminal"]
     final_dispatch = (next((row for row in reversed(target_evidence)
         if row["kind"] == "dispatch"
-        and final_transition is not None
-        and row["action_id"] == final_transition["action_id"]), None))
+        and any(event.get("action_id") == row["action_id"]
+            for event in terminal_events)), None))
     final_call_id = (final_dispatch.get("call_id")
         if final_dispatch is not None else None)
-    if (verify_task is not None and receipt.get("outcome") == "TASK_SUCCEEDED"
+    final_terminal_event = (next((event for event in reversed(terminal_events)
+        if final_dispatch is not None
+        and event.get("action_id") == final_dispatch["action_id"]), None))
+    graph_completed = (receipt.get("outcome") == "TASK_SUCCEEDED"
+        and final_transition is not None and final_dispatch is not None)
+    recovered_effect_candidate = (receipt.get("outcome") == "SAFE_YIELD"
+        and receipt.get("reason") == "delivery_uncertain"
+        and final_dispatch is not None
+        and final_dispatch.get("status") == "delivery_uncertain"
+        and final_dispatch.get("release_verified") is True
+        and final_terminal_event is not None
+        and final_terminal_event.get("status") == "delivery_uncertain"
+        and final_terminal_event.get("release_verified") is True
+        and type(final_terminal_event.get("execution_accepted_ns")) is int
+        and final_terminal_event["execution_accepted_ns"] > 0)
+    if (verify_task is not None and (graph_completed or recovered_effect_candidate)
             and type(final_call_id) is str
             and _IDENTIFIER.fullmatch(final_call_id) is not None):
         try:
             oracle_reply = verify_task(final_call_id)
             caller_received_ns = clock()
+            effect_not_before_ns = (final_transition["execution_accepted_ns"]
+                if graph_completed else
+                final_terminal_event.get("execution_accepted_ns"))
             task_evidence = _task_oracle_evidence(
                 oracle_reply, final_call_id,
                 final_dispatch["target_generation"], final_dispatch["action_id"],
-                final_transition["execution_accepted_ns"], caller_received_ns)
+                effect_not_before_ns, caller_received_ns)
             task_evidence["target_generation"] = final_dispatch["target_generation"]
             receipt["task_verification"] = task_evidence
             if task_evidence["valid"]:

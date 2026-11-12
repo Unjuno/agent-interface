@@ -8,7 +8,8 @@ from runtime.cli_v1 import test_mcp_xvfb_blocked_release_integration as fixture
 class FixtureIdempotenceTests(unittest.TestCase):
  def test_repeated_get_injects_only_one_delayed_key(self):
   raw=Mock();connection=SimpleNamespace(sync=Mock(),flush=Mock(),display=SimpleNamespace(info=SimpleNamespace(resource_id_base=123)))
-  backend=SimpleNamespace(d=connection,_keycode=lambda name:56)
+  backend=SimpleNamespace(d=connection,_keycode=lambda name:56,
+                          held_keycodes={},held_buttons=set())
   session=SimpleNamespace(backend=backend)
   owner=SimpleNamespace(get=lambda:session,cancel_guarded=lambda token:{'status':'not_active'})
   with tempfile.TemporaryDirectory() as directory,patch.object(fixture,'GuardedSessionOwner',return_value=owner),patch.object(xtest,'fake_input',raw):

@@ -492,6 +492,33 @@ class OperationCancellationSupervisor:
             self._owner.mark_unknown(operation_id, generation,
                 "recovery_process_or_readback_unconfirmed")
             return
+        if (type(receipt) is not dict
+                or type(receipt.get("release_key_up_attempts")) is not list):
+            self._invalidate_helper("recovery", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_key_up_attempt_receipt_missing_or_invalid")
+            return
+        record_release_attempts = getattr(
+            self._owner, "recovery_release_attempted", None)
+        if (receipt.get("operation_id") != operation_id
+                or receipt.get("target_generation") != generation
+                or receipt.get("recovery_id") != request["recovery_id"]):
+            self._invalidate_helper("recovery", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_key_up_attempt_receipt_identity_mismatch")
+            return
+        if not callable(record_release_attempts):
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_key_up_attempt_recorder_unavailable")
+            return
+        try:
+            record_release_attempts(operation_id,
+                generation, request["recovery_id"],
+                receipt["release_key_up_attempts"])
+        except Exception:
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_key_up_attempt_receipt_invalid")
+            return
         valid = (type(receipt) is dict
             and receipt.get("operation_id") == operation_id
             and receipt.get("target_generation") == generation
@@ -527,7 +554,8 @@ class OperationCancellationSupervisor:
             horizon_observations=horizon_observations)
 
     def recover_orphaned_input(self, operation_id, generation, recovery_id,
-                               deadline_ns, obligations):
+                               deadline_ns, obligations, *,
+                               recovery_target_generation=None):
         """Run one bounded release/readback for a custody record from a prior server.
 
         This transaction is deliberately separate from the source action owner:
@@ -537,10 +565,16 @@ class OperationCancellationSupervisor:
             raise ValueError("orphan recovery request schema mismatch")
         # Validate and dispatch the same immutable caller-supplied snapshot.
         obligations = tuple(obligations)
+        if recovery_target_generation is None:
+            recovery_target_generation = generation
         if (type(operation_id) is not str or len(operation_id) != 32
                 or any(char not in "0123456789abcdef" for char in operation_id)
                 or type(generation) is not str or len(generation) != 64
                 or any(char not in "0123456789abcdef" for char in generation)
+                or type(recovery_target_generation) is not str
+                or len(recovery_target_generation) != 64
+                or any(char not in "0123456789abcdef"
+                       for char in recovery_target_generation)
                 or type(recovery_id) is not str or len(recovery_id) != 32
                 or any(char not in "0123456789abcdef" for char in recovery_id)
                 or type(deadline_ns) is not int
@@ -559,7 +593,8 @@ class OperationCancellationSupervisor:
             raise ValueError("orphan recovery deadline exceeds the fixed bound")
 
         request = {"operation_id": operation_id,
-                   "target_generation": generation,
+                   "source_target_generation": generation,
+                   "target_generation": recovery_target_generation,
                    "recovery_id": recovery_id,
                    "request_id": recovery_id,
                    "deadline_ns": deadline_ns,
@@ -576,7 +611,9 @@ class OperationCancellationSupervisor:
                     "release_confirmed": False}
         release_matches = (type(release) is dict
             and release.get("operation_id") == operation_id
-            and release.get("target_generation") == generation
+            and release.get("source_target_generation",
+                release.get("target_generation")) == generation
+            and release.get("target_generation") == recovery_target_generation
             and release.get("recovery_id") == recovery_id
             and release.get("release_accepted") is True)
         release_received_ns = self._clock_ns() if release_matches else None
@@ -601,7 +638,9 @@ class OperationCancellationSupervisor:
                     "release_receipt": release}
         readback_matches = (type(readback) is dict
             and readback.get("operation_id") == operation_id
-            and readback.get("target_generation") == generation
+            and readback.get("source_target_generation",
+                readback.get("target_generation")) == generation
+            and readback.get("target_generation") == recovery_target_generation
             and readback.get("recovery_id") == recovery_id
             and readback.get("neutral") is True
             and _consistent_neutral_observation(readback, obligations)
@@ -620,8 +659,8 @@ class OperationCancellationSupervisor:
                     "release_receipt": release,
                     "readback": readback if type(readback) is dict else None}
         horizon_observations = [readback]
-        horizon_end_ns = release_received_ns + getattr(
-            self, "late_input_horizon_ns", 0)
+        horizon_ns = getattr(self, "late_input_horizon_ns", 0)
+        horizon_end_ns = release_received_ns + horizon_ns
         while True:
             remaining_ns = horizon_end_ns - self._clock_ns()
             if remaining_ns <= 0:
@@ -629,14 +668,47 @@ class OperationCancellationSupervisor:
             remaining_s = remaining_ns / 1_000_000_000
             time.sleep(min(getattr(self, "_late_input_sample_interval_s", 0.025),
                            remaining_s))
-            readback = self._exchange_helper("observer", dict(request,
-                request_id=uuid.uuid4().hex), deadline_ns)
+            try:
+                readback = self._exchange_helper("observer", dict(request,
+                    request_id=uuid.uuid4().hex), deadline_ns)
+            except BaseException as error:
+                self._invalidate_helper("observer", deadline_ns)
+                return {"status": "unknown",
+                    "reason": "late_input_horizon_unconfirmed",
+                    "error_type": type(error).__name__,
+                    "operation_id": operation_id,
+                    "target_generation": generation,
+                    "source_target_generation": generation,
+                    "recovery_target_generation": recovery_target_generation,
+                    "recovery_id": recovery_id,
+                    "release_confirmed": False,
+                    "release_receipt": release,
+                    "readback": horizon_observations[-1],
+                    "late_input_horizon_ns": horizon_ns,
+                    "late_input_observation_count": len(horizon_observations),
+                    "late_input_release_received_monotonic_ns": release_received_ns,
+                    "late_input_observation_start_monotonic_ns":
+                        horizon_observations[0]["observed_monotonic_ns"],
+                    "late_input_observation_end_monotonic_ns":
+                        horizon_observations[-1]["observed_monotonic_ns"],
+                    "late_input_max_observed_gap_ns": max(
+                        [horizon_observations[0]["observed_monotonic_ns"]
+                         - release_received_ns]
+                        + [right["observed_monotonic_ns"]
+                           - left["observed_monotonic_ns"]
+                           for left, right in zip(horizon_observations,
+                                                  horizon_observations[1:])]),
+                    "late_input_max_sample_gap_ns": max(25_000_000,
+                        int(getattr(self, "_late_input_sample_interval_s", 0.025)
+                            * 4 * 1_000_000_000))}
             observed_ns = (readback.get("observed_monotonic_ns")
                            if type(readback) is dict else None)
             completed_ns = self._clock_ns()
             valid_observation = (type(readback) is dict
                 and readback.get("operation_id") == operation_id
-                and readback.get("target_generation") == generation
+                and readback.get("source_target_generation",
+                    readback.get("target_generation")) == generation
+                and readback.get("target_generation") == recovery_target_generation
                 and readback.get("recovery_id") == recovery_id
                 and readback.get("neutral") is True
                 and _consistent_neutral_observation(readback, obligations)
@@ -654,14 +726,38 @@ class OperationCancellationSupervisor:
                         self, "late_input_horizon_ns", 0),
                     "late_input_observation_count": len(horizon_observations)}
             horizon_observations.append(readback)
-        horizon_ns = getattr(self, "late_input_horizon_ns", 0)
         max_gap_ns = (max(25_000_000,
             int(getattr(self, "_late_input_sample_interval_s", 0.025)
                 * 4 * 1_000_000_000)) if horizon_ns else None)
-        max_observed_gap_ns = max((right["observed_monotonic_ns"]
+        initial_observation_gap_ns = (
+            horizon_observations[0]["observed_monotonic_ns"]
+            - release_received_ns)
+        if initial_observation_gap_ns < 0:
+            return {"status": "unknown",
+                "reason": "late_input_observation_before_release",
+                "operation_id": operation_id,
+                "target_generation": generation,
+                "recovery_target_generation": recovery_target_generation,
+                "recovery_id": recovery_id,
+                "release_confirmed": False,
+                "release_receipt": release,
+                "readback": horizon_observations[0],
+                "late_input_horizon_ns": horizon_ns,
+                "late_input_observation_count": len(horizon_observations),
+                "late_input_release_received_monotonic_ns": release_received_ns,
+                "late_input_observation_start_monotonic_ns":
+                    horizon_observations[0]["observed_monotonic_ns"],
+                "late_input_observation_end_monotonic_ns":
+                    horizon_observations[-1]["observed_monotonic_ns"],
+                "late_input_max_observed_gap_ns": initial_observation_gap_ns,
+                "late_input_max_sample_gap_ns": max(25_000_000,
+                    int(getattr(self, "_late_input_sample_interval_s", 0.025)
+                        * 4 * 1_000_000_000))}
+        max_observed_gap_ns = max([initial_observation_gap_ns] + [
+            right["observed_monotonic_ns"]
             - left["observed_monotonic_ns"]
             for left, right in zip(horizon_observations,
-                                   horizon_observations[1:])), default=0)
+                                   horizon_observations[1:])])
         if (horizon_ns and (self._clock_ns() < horizon_end_ns
                 or horizon_observations[-1]["observed_monotonic_ns"]
                     - release_received_ns < horizon_ns
@@ -673,6 +769,8 @@ class OperationCancellationSupervisor:
                 "late_input_horizon_ns": horizon_ns,
                 "late_input_observation_count": len(horizon_observations),
                 "late_input_release_received_monotonic_ns": release_received_ns,
+                "late_input_observation_start_monotonic_ns":
+                    horizon_observations[0]["observed_monotonic_ns"],
                 "late_input_observation_end_monotonic_ns":
                     horizon_observations[-1]["observed_monotonic_ns"],
                 "late_input_max_observed_gap_ns": max_observed_gap_ns,
@@ -680,13 +778,18 @@ class OperationCancellationSupervisor:
         recovery_completed_ns = (self._clock_ns() if horizon_ns
                                  else completed_ns)
         return {"status": "recovered", "operation_id": operation_id,
-                "target_generation": generation, "recovery_id": recovery_id,
+                "target_generation": generation,
+                "source_target_generation": generation,
+                "recovery_target_generation": recovery_target_generation,
+                "recovery_id": recovery_id,
                 "release_confirmed": True, "release_receipt": release,
                 "readback": readback,
                 "recovery_completed_monotonic_ns": recovery_completed_ns,
                 "late_input_horizon_ns": horizon_ns,
                 "late_input_observation_count": len(horizon_observations),
                 "late_input_release_received_monotonic_ns": release_received_ns,
+                "late_input_observation_start_monotonic_ns":
+                    horizon_observations[0]["observed_monotonic_ns"],
                 "late_input_observation_end_monotonic_ns":
                     horizon_observations[-1]["observed_monotonic_ns"],
                 "late_input_max_observed_gap_ns": max_observed_gap_ns,

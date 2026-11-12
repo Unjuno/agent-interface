@@ -1,9 +1,9 @@
 """Durable per-logon admission fence for supervised Win32 input custody.
 
-The fence stores only the current unresolved action and its target-generation
-binding. It deliberately keeps UNKNOWN across MCP process replacement. The
-native mutex serializes state transitions between processes; the journal is
-atomically replaced while that mutex is held.
+The fence stores the current unresolved action, its target-generation binding,
+and generations retired by orphan recovery. The native mutex serializes state
+transitions between processes; the journal is atomically replaced while that
+mutex is held.
 """
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ _OPERATION_ID = re.compile(r"^[0-9a-f]{32}$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _SCHEMA = "win32-custody-fence-v1"
 _MAX_STATE_BYTES = 65536
+_MAX_FENCED_GENERATIONS = 512
 _MUTEX_WAIT_MS = 1000
 _PROCESS_WAIT_MS = 1000
 _CUSTODY_PHASE_ORDER = {"admitted": 0, "starting": 1, "running": 2,
@@ -434,6 +435,23 @@ class Win32CustodyFence:
     def for_current_logon(cls):
         if os.name != "nt":
             raise OSError("the native Win32 custody fence requires Windows")
+        # Packaged runtimes can redirect LOCALAPPDATA and registry accesses
+        # into a private view while retaining the same logon/mutex namespace.
+        # An empty private view must never stand in for the shared journal.
+        # Refuse before creating directories, changing ACLs, or initializing
+        # either marker. Explicit-directory test fences remain independent.
+        try:
+            query = ctypes.WinDLL("kernel32", use_last_error=True).GetCurrentPackageFullName
+            query.argtypes = [ctypes.POINTER(ctypes.c_uint32), ctypes.c_wchar_p]
+            query.restype = ctypes.c_long
+            length = ctypes.c_uint32()
+            package_status = query(ctypes.byref(length), None)
+        except (AttributeError, OSError) as error:
+            raise CustodyFenceError("CUSTODY_FENCE_PACKAGE_IDENTITY_UNAVAILABLE") from error
+        if package_status in (0, 122):  # success / ERROR_INSUFFICIENT_BUFFER
+            raise CustodyFenceError("CUSTODY_FENCE_PACKAGED_PROCESS_UNSUPPORTED")
+        if package_status != 15700:  # APPMODEL_ERROR_NO_PACKAGE
+            raise CustodyFenceError("CUSTODY_FENCE_PACKAGE_IDENTITY_UNAVAILABLE")
         local_app_data = os.environ.get("LOCALAPPDATA")
         if not local_app_data or not Path(local_app_data).is_absolute():
             raise CustodyFenceError("CUSTODY_FENCE_LOCAL_APP_DATA_UNAVAILABLE")
@@ -491,18 +509,29 @@ class Win32CustodyFence:
     def _empty_state(self):
         return {"schema": _SCHEMA, "namespace_digest": self.namespace_digest,
             "revision": 0, "status": "clear", "pending": None,
-            "last_resolved": None}
+            "last_resolved": None, "fenced_generations": []}
 
     def _validate_state(self, state):
+        legacy_keys = {"schema", "namespace_digest", "revision", "status",
+            "pending", "last_resolved"}
+        current_keys = legacy_keys | {"fenced_generations"}
         if (type(state) is not dict
-                or set(state) != {"schema", "namespace_digest", "revision",
-                    "status", "pending", "last_resolved"}
+                or set(state) not in (legacy_keys, current_keys)
                 or state.get("schema") != _SCHEMA
                 or state.get("namespace_digest") != self.namespace_digest
                 or type(state.get("revision")) is not int
                 or state["revision"] < 0
                 or state.get("status") not in ("clear", "unresolved")):
             raise CustodyFenceError("CUSTODY_FENCE_STATE_SCHEMA_INVALID")
+        # Additive upgrade for v1 journals created before generation fences
+        # were persisted. The next state transition writes the new field.
+        state.setdefault("fenced_generations", [])
+        fenced = state["fenced_generations"]
+        if (type(fenced) is not list or len(fenced) > _MAX_FENCED_GENERATIONS
+                or any(type(item) is not str or not _SHA256.fullmatch(item)
+                       for item in fenced)
+                or len(set(fenced)) != len(fenced)):
+            raise CustodyFenceError("CUSTODY_FENCE_GENERATION_HISTORY_INVALID")
         pending = state.get("pending")
         if state["status"] == "clear":
             if pending is not None:
@@ -606,6 +635,8 @@ class Win32CustodyFence:
                 raise CustodyFenceError("CUSTODY_FENCE_MUTEX_ABANDONED")
             if state["status"] != "clear":
                 raise CustodyFenceError("ORPHAN_RECOVERY_UNRESOLVED")
+            if target_generation in state["fenced_generations"]:
+                raise CustodyFenceError("CUSTODY_FENCE_TARGET_GENERATION_FENCED")
             state["revision"] += 1
             state["status"] = "unresolved"
             state["pending"] = {"operation_id": operation_id,
@@ -711,6 +742,7 @@ class Win32CustodyFence:
             state["pending"] = None
             state["last_resolved"] = {"operation_id": operation_id,
                 "target_generation": target_generation}
+            self._append_fenced_generation(state, target_generation)
             self._write_state(state)
 
     def require_recovery_source(self, operation_id, target_generation, obligations):
@@ -723,13 +755,35 @@ class Win32CustodyFence:
                 raise CustodyFenceError("CUSTODY_FENCE_OBLIGATIONS_MISMATCH")
             return {"pending": deepcopy(pending), "mutex_abandoned": abandoned}
 
+    def persist_resolved_generation_fence(self, operation_id, target_generation):
+        """Persist a fresh-generation requirement for the exact last resolution."""
+        self._validate_action(operation_id, target_generation, ["custody"])
+        with self._state() as (state, _abandoned):
+            resolved = state.get("last_resolved")
+            if (state["status"] != "clear" or type(resolved) is not dict
+                    or resolved.get("operation_id") != operation_id
+                    or resolved.get("target_generation") != target_generation):
+                raise CustodyFenceError("CUSTODY_FENCE_RESOLUTION_SOURCE_MISMATCH")
+            if target_generation in state["fenced_generations"]:
+                return False
+            self._append_fenced_generation(state, target_generation)
+            state["revision"] += 1
+            self._write_state(state)
+            return True
+
     def resolve(self, operation_id, target_generation, *, release_confirmed,
-                late_input_horizon_required=False, late_input_horizon_verified=False):
+                late_input_horizon_required=False, late_input_horizon_verified=False,
+                fence_generations=()):
         if type(release_confirmed) is not bool:
             raise ValueError("release_confirmed must be boolean")
         if (type(late_input_horizon_required) is not bool
                 or type(late_input_horizon_verified) is not bool):
             raise ValueError("late-input horizon evidence must be boolean")
+        if (type(fence_generations) not in (list, tuple)
+                or any(type(item) is not str or not _SHA256.fullmatch(item)
+                       for item in fence_generations)
+                or len(set(fence_generations)) != len(fence_generations)):
+            raise ValueError("fence_generations must contain unique SHA-256 digests")
         if not release_confirmed:
             raise CustodyFenceError("CUSTODY_FENCE_RELEASE_UNCONFIRMED")
         with self._state() as (state, _abandoned):
@@ -746,7 +800,18 @@ class Win32CustodyFence:
             state["pending"] = None
             state["last_resolved"] = {"operation_id": operation_id,
                 "target_generation": target_generation}
+            for generation in fence_generations:
+                self._append_fenced_generation(state, generation)
             self._write_state(state)
+
+    @staticmethod
+    def _append_fenced_generation(state, target_generation):
+        fenced = state["fenced_generations"]
+        if target_generation in fenced:
+            return
+        if len(fenced) >= _MAX_FENCED_GENERATIONS:
+            raise CustodyFenceError("CUSTODY_FENCE_GENERATION_HISTORY_FULL")
+        fenced.append(target_generation)
 
     @staticmethod
     def _matching_pending(state, operation_id, target_generation):

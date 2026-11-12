@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 import multiprocessing
+import json
 import tempfile
 import os
 import subprocess
@@ -11,6 +12,8 @@ import time
 import unittest
 import uuid
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 from runtime.cli_v1.win32_custody_fence import (
     CustodyFenceError, Win32CustodyFence,
@@ -24,6 +27,41 @@ NEXT_OPERATION = "2" * 32
 GENERATION = "a" * 64
 NEXT_GENERATION = "b" * 64
 OBLIGATIONS = ["key:VK_A"]
+
+
+@unittest.skipUnless(os.name == "nt", "native Windows package identity")
+class PackagedCustodyTests(unittest.TestCase):
+    def test_packaged_or_unreadable_identity_refused_before_state_construction(self):
+        # GetCurrentPackageFullName only reports identity here; no journal or
+        # registry state is fabricated or modified by the simulated OS API.
+        for code, reason in ((122, "PACKAGED_PROCESS_UNSUPPORTED"),
+                             (0, "PACKAGED_PROCESS_UNSUPPORTED"),
+                             (5, "PACKAGE_IDENTITY_UNAVAILABLE")):
+            with self.subTest(code=code), tempfile.TemporaryDirectory() as td:
+                initialized = Path(td) / "constructed"
+                def construct(*args, **kwargs):
+                    initialized.touch()
+                kernel = SimpleNamespace(GetCurrentPackageFullName=Mock(return_value=code))
+                with patch("runtime.cli_v1.win32_custody_fence.ctypes.WinDLL", return_value=kernel), patch(
+                        "runtime.cli_v1.win32_custody_fence._win32_logon_namespace_digest", return_value=GENERATION), patch(
+                        "runtime.cli_v1.win32_custody_fence._WindowsCustodyAcl", return_value=_FakeAcl()), patch.object(
+                        Win32CustodyFence, "__init__", side_effect=construct):
+                    with self.assertRaisesRegex(CustodyFenceError, reason):
+                        Win32CustodyFence.for_current_logon()
+                self.assertFalse(initialized.exists())
+
+    def test_no_package_uses_existing_custody_namespace(self):
+        kernel = SimpleNamespace(GetCurrentPackageFullName=Mock(return_value=15700))
+        constructed = []
+        def construct(directory, namespace, **kwargs):
+            constructed.append((Path(directory), namespace))
+        with patch("runtime.cli_v1.win32_custody_fence.ctypes.WinDLL", return_value=kernel), patch(
+                "runtime.cli_v1.win32_custody_fence._win32_logon_namespace_digest", return_value=GENERATION), patch(
+                "runtime.cli_v1.win32_custody_fence._WindowsCustodyAcl", return_value=_FakeAcl()), patch.object(
+                Win32CustodyFence, "__init__", side_effect=construct):
+            Win32CustodyFence.for_current_logon()
+        self.assertEqual(constructed, [(Path(os.environ["LOCALAPPDATA"]) /
+            "Unjuno" / "AgentInterface" / "custody-v1", GENERATION)])
 
 
 class _FakeMutex:
@@ -245,7 +283,9 @@ class Win32CustodyFenceTests(unittest.TestCase):
             late_input_horizon_required=True,
             late_input_horizon_verified=True)
         self.assertEqual(self.fence.snapshot()["state"]["status"], "clear")
-        self.fence.admit(NEXT_OPERATION, NEXT_GENERATION, OBLIGATIONS)
+        # Normal completion resolves this action but does not consume the
+        # stable target identity; a later action may use the same generation.
+        self.fence.admit(NEXT_OPERATION, GENERATION, OBLIGATIONS)
 
     def test_unstarted_abort_requires_closed_gate_and_no_emission(self):
         self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)
@@ -256,6 +296,69 @@ class Win32CustodyFenceTests(unittest.TestCase):
         self.fence.abort_unstarted(OPERATION, GENERATION,
             start_gate_verified_closed=True, input_dispatched=False)
         self.assertEqual(self.fence.snapshot()["state"]["status"], "clear")
+
+    def test_unstarted_recovery_generation_remains_fenced_after_owner_restart(self):
+        identity = {"pid": 4029, "creation_time_100ns": 84}
+        self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+        self.fence.update(OPERATION, GENERATION,
+            producer_identity=identity, gate_state="identity_verified")
+        self.fence.abort_unstarted(OPERATION, GENERATION,
+            start_gate_verified_closed=True, input_dispatched=False,
+            producer_absent_verified=True)
+        self.assertEqual(self.fence.snapshot()["state"]["fenced_generations"],
+            [GENERATION])
+
+        reopened = self.reopen()
+        try:
+            with self.assertRaisesRegex(CustodyFenceError,
+                    "TARGET_GENERATION_FENCED"):
+                reopened.admit(NEXT_OPERATION, GENERATION, OBLIGATIONS)
+            reopened.admit(NEXT_OPERATION, NEXT_GENERATION, OBLIGATIONS)
+            reopened.update(NEXT_OPERATION, NEXT_GENERATION,
+                phase="unknown", input_dispatched=True)
+            reopened.resolve(NEXT_OPERATION, NEXT_GENERATION,
+                release_confirmed=True, late_input_horizon_required=True,
+                late_input_horizon_verified=True,
+                fence_generations=[NEXT_GENERATION])
+        finally:
+            reopened.close()
+
+        reopened_again = self.reopen()
+        try:
+            self.assertEqual(reopened_again.snapshot()["state"]["fenced_generations"],
+                [GENERATION, NEXT_GENERATION])
+            with self.assertRaisesRegex(CustodyFenceError,
+                    "TARGET_GENERATION_FENCED"):
+                reopened_again.admit("3" * 32, GENERATION, OBLIGATIONS)
+            with self.assertRaisesRegex(CustodyFenceError,
+                    "TARGET_GENERATION_FENCED"):
+                reopened_again.admit("4" * 32, NEXT_GENERATION, OBLIGATIONS)
+        finally:
+            reopened_again.close()
+
+    def test_legacy_clear_resolution_can_be_upgraded_to_a_persistent_generation_fence(self):
+        self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)
+        self.fence.update(OPERATION, GENERATION,
+            producer_identity={"pid": 4030, "creation_time_100ns": 85},
+            gate_state="identity_verified")
+        self.fence.abort_unstarted(OPERATION, GENERATION,
+            start_gate_verified_closed=True, input_dispatched=False,
+            producer_absent_verified=True)
+
+        legacy = json.loads(self.fence._state_path.read_text(encoding="utf-8"))
+        legacy.pop("fenced_generations")
+        self.fence._state_path.write_text(json.dumps(legacy), encoding="utf-8")
+        reopened = self.reopen()
+        try:
+            self.assertTrue(reopened.persist_resolved_generation_fence(
+                OPERATION, GENERATION))
+            self.assertFalse(reopened.persist_resolved_generation_fence(
+                OPERATION, GENERATION))
+            with self.assertRaisesRegex(CustodyFenceError,
+                    "TARGET_GENERATION_FENCED"):
+                reopened.admit(NEXT_OPERATION, GENERATION, OBLIGATIONS)
+        finally:
+            reopened.close()
 
     def test_missing_or_corrupt_state_with_marker_fails_closed(self):
         self.fence.admit(OPERATION, GENERATION, OBLIGATIONS)

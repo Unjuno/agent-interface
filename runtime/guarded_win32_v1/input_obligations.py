@@ -8,6 +8,15 @@ def _utf16_units(value: str) -> tuple[int, ...]:
                  for index in range(0, len(encoded), 2))
 
 
+def _key_encoding(operation: dict, index: int) -> str:
+    encoding = operation.get("encoding")
+    if encoding is None:
+        return "virtual_key"
+    if type(encoding) is not str or encoding not in ("virtual_key", "scan_code"):
+        raise ValueError(f"operation {index} has unsupported key encoding")
+    return encoding
+
+
 def derive_input_obligations(program: dict) -> list[str]:
     """Return every key/button/Unicode unit that may need compensating release.
 
@@ -36,12 +45,15 @@ def derive_input_obligations(program: dict) -> list[str]:
                 if type(keys) is not list or any(type(key) is not str or not key
                                                   for key in keys):
                     raise ValueError(f"operation {index} keys must be nonempty strings")
-                obligations.update(f"key:{current_target}:{key}" for key in keys)
+                encoding = _key_encoding(operation, index)
+                obligations.update(
+                    f"key:{current_target}:{key}:{encoding}" for key in keys)
             elif kind == "key_state":
                 key = operation.get("key")
                 if type(key) is not str or not key:
                     raise ValueError(f"operation {index} key must be a nonempty string")
-                obligations.add(f"key:{current_target}:{key}")
+                encoding = _key_encoding(operation, index)
+                obligations.add(f"key:{current_target}:{key}:{encoding}")
             else:
                 button = operation.get("button")
                 if type(button) is not str or not button:

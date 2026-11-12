@@ -27,9 +27,9 @@ class UnicodeNeutralCase(unittest.TestCase):
         self.assertEqual(first['status'],'recovery_failed')
         self.assertEqual(sends,[['unicode',65,False],['key',17,False]])
         self.assertEqual(backend.pending_unicode_ups,{65})
-        # Current main retires ordinary ledger entries only after the complete
-        # Unicode release pass; a failed Unicode UP leaves all obligations.
-        self.assertEqual(backend.held_keys,{'CTRL':17})
+        # CTRL has its own positive neutral readback. The failed Unicode UP
+        # keeps recovery fenced, but must not replay the confirmed CTRL UP.
+        self.assertEqual(backend.held_keys,{})
         self.assertTrue(bridge.session.recovery_required)
         with self.assertRaisesRegex(ValueError,'recovery required'):bridge.prepare('button',[1,1])
         failed[0]=False
@@ -38,10 +38,33 @@ class UnicodeNeutralCase(unittest.TestCase):
         self.assertEqual(backend.held_keys,{})
         self.assertIsNone(second['task_success'])
         self.assertFalse(second['replay_allowed'])
-        self.assertEqual(sends,[['unicode',65,False],['key',17,False],['unicode',65,False],['key',17,False]])
+        self.assertEqual(sends,[['unicode',65,False],['key',17,False],['unicode',65,False]])
         self.assertFalse(backend.pending_unicode_ups)
         self.assertFalse(bridge.session.recovery_required)
         self.assertEqual(bridge.execute(permit['authorization'])['error'],'AUTHORIZATION_CONSUMED_OR_UNKNOWN')
+        self.assertFalse(bridge.lock.locked())
+
+    def test_failed_unicode_keeps_unknown_ordinary_key_owned(self):
+        backend,observer,bridge,raw,events=fixtures.Cases('test_exact_expiry_consumes_without_capture').fixture()
+        permit=bridge.prepare('button',[1,1])
+        backend.pending_unicode_ups={65};backend.held_keys={'CTRL':17}
+        self.assertEqual(bridge.execute(permit['authorization'])['status'],'refused')
+        backend.user32.GetAsyncKeyState.return_value=0
+        sends=[]
+        def unicode_up(unit,down):
+            sends.append(['unicode',unit,down])
+            raise Win32BackendError('injected Unicode UP failure')
+        backend._send_unicode_unit=unicode_up
+        backend._send_key=lambda vk,down:sends.append(['key',vk,down])
+        backend.release_all=Win32Backend.release_all.__get__(backend)
+        result=bridge.recover_input()
+        self.assertEqual(result['status'],'recovery_failed')
+        self.assertEqual(backend.pending_unicode_ups,{65})
+        self.assertEqual(backend.held_keys,{'CTRL':17})
+        self.assertEqual(sends,[['unicode',65,False],['key',17,False]])
+        self.assertTrue(bridge.session.recovery_required)
+        with self.assertRaisesRegex(ValueError,'recovery required'):
+            bridge.prepare('button',[1,1])
         self.assertFalse(bridge.lock.locked())
 
     def test_pending_after_movement_keeps_effect_unknown(self):
