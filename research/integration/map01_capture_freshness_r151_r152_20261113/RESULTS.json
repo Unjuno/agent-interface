@@ -1,0 +1,109 @@
+{
+  "scope": "selected derived evidence; full raw retained privately",
+  "attempts": [
+    {
+      "attempt": "R151",
+      "checks": {
+        "W_neutral_after_terminal": true,
+        "W_observed_down_before_terminal": true,
+        "compiled_task_remained_safe_yield": true,
+        "effective_deadline_matches_graph_budget": true,
+        "exact_call_numeric_effect_join": true,
+        "exactly_one_final_dispatch": true,
+        "expiry_key_boundary_verified": false,
+        "expiry_sampler_healthy": true,
+        "final_dispatch_id_matches_oracle": true,
+        "fresh_capture_in_public_verification_window": true,
+        "numeric_ammo_50_to_49": true,
+        "pending_result_join": true,
+        "recovery_horizon_verified": true,
+        "recovery_progress_retained": true,
+        "release_confirmed": true,
+        "same_generation_neutral_mouse_and_w": true,
+        "task_oracle_valid": true,
+        "task_success_true": true
+      },
+      "passed": false,
+      "outer_bracket_ns": 22327700,
+      "limit_ns": 20000000,
+      "demo_classification": "PASS_SCOPED_NO_RECORDED_FORWARD_COMMAND",
+      "raw_file_count": 83,
+      "manifest_sha256": "0328e41d462e76d24f5d33e3d9ad3782442e26490350ab91146c896c1a565519",
+      "custody_status": "clear",
+      "capture_timing_audit": {
+        "checks": {
+          "integer_timestamps": true,
+          "observation_join": true,
+          "ordered_within_public_window": true,
+          "receipt_join": true
+        },
+        "passed": true,
+        "timestamps": [
+          265286598707900,
+          265286598865200,
+          265286614195700,
+          265286643852100,
+          265286715891200,
+          265286776658500,
+          265286780271900
+        ]
+      }
+    },
+    {
+      "attempt": "R152",
+      "checks": {
+        "W_neutral_after_terminal": true,
+        "W_observed_down_before_terminal": true,
+        "compiled_task_remained_safe_yield": true,
+        "effective_deadline_matches_graph_budget": true,
+        "exact_call_numeric_effect_join": true,
+        "exactly_one_final_dispatch": true,
+        "expiry_key_boundary_verified": true,
+        "expiry_sampler_healthy": true,
+        "final_dispatch_id_matches_oracle": true,
+        "fresh_capture_in_public_verification_window": true,
+        "numeric_ammo_50_to_49": true,
+        "pending_result_join": true,
+        "recovery_horizon_verified": true,
+        "recovery_progress_retained": true,
+        "release_confirmed": true,
+        "same_generation_neutral_mouse_and_w": true,
+        "task_oracle_valid": true,
+        "task_success_true": true
+      },
+      "passed": true,
+      "outer_bracket_ns": 12235300,
+      "limit_ns": 20000000,
+      "demo_classification": "PASS_SCOPED_NO_RECORDED_FORWARD_COMMAND",
+      "raw_file_count": 83,
+      "manifest_sha256": "12285fd1a464a3ecfe39f0ad83e9a836179ff95c95b30c36886143cbacd45ceb",
+      "custody_status": "clear",
+      "capture_timing_audit": {
+        "checks": {
+          "integer_timestamps": true,
+          "observation_join": true,
+          "ordered_within_public_window": true,
+          "receipt_join": true
+        },
+        "passed": true,
+        "timestamps": [
+          265604561496800,
+          265604561619200,
+          265604571688400,
+          265604593200000,
+          265604618792500,
+          265604648352700,
+          265604649671900
+        ]
+      },
+      "send_timing": {
+        "status": "attributed",
+        "scope": "instrumented timing only; no action PASS override",
+        "pre_send_ns": 18700,
+        "send_ns": 2246500,
+        "signed_send_end_to_helper_ns": 104200,
+        "exchange_entry_to_helper_ns": 2369400
+      }
+    }
+  ]
+}
