@@ -1,0 +1,39 @@
+Freeze: main dae347cb8333f4469c89b076b0b466cc8bf6b960; branch research/59-unauthored-coast-typed-interrupt-v1; commit 89a13ffab5a25ecdcd858e03c9f21ba15ae94c69
+V39 main blob 0f3dfcada36520acb24fceaf26a4124c96e050b3
+V40 blob 58ab94bc9824b0e88c37c3a18bb448ea8dce6b0e
+Monitor blob 2a1934c8724a141dd0d959a6fc45562c30a526c6
+
+$ python --version
+exit_code=0
+Python 3.11.9
+
+$ python -m py_compile outputs\coast-interrupt-handoff-prototype\map01_overlap_controller_v40.py outputs\coast-interrupt-handoff-prototype\unauthored_coast_liveness_v1.py
+exit_code=0
+
+$ $env:PYTHONPATH='outputs\coast-interrupt-handoff-prototype'; python -m unittest discover -s outputs\coast-interrupt-handoff-prototype -p 'test_unauthored_coast_liveness_v1.py' -v
+exit_code=0
+test_boolean_sequence_is_rejected (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_boolean_sequence_is_rejected) ... ok
+test_malformed_invalidation_sequence_waits_for_next_frame (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_malformed_invalidation_sequence_waits_for_next_frame) ... ok
+test_old_low_sample_ages_out_of_three_sample_window (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_old_low_sample_ages_out_of_three_sample_window) ... ok
+test_one_low_health_sample_does_not_interrupt (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_one_low_health_sample_does_not_interrupt) ... ok
+test_small_health_change_coalesces_without_interrupt (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_small_health_change_coalesces_without_interrupt) ... ok
+test_two_of_latest_three_low_samples_invalidate_without_authority (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_two_of_latest_three_low_samples_invalidate_without_authority) ... ok
+test_unknown_health_fails_closed (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_unknown_health_fails_closed) ... ok
+test_uses_fresh_image_already_drained_while_waiting_for_release (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_uses_fresh_image_already_drained_while_waiting_for_release) ... ok
+test_waits_for_matching_or_newer_image_before_replan (test_unauthored_coast_liveness_v1.UnauthoredCoastLivenessTests.test_waits_for_matching_or_newer_image_before_replan) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK
+
+$ $env:PYTHONPATH='outputs\coast-interrupt-handoff-prototype'; python -m unittest discover -s outputs\coast-interrupt-handoff-prototype -p 'test_map01_overlap_controller_v40.py' -v
+exit_code=0
+test_authored_policy_guard_is_preserved (test_map01_overlap_controller_v40.Map01V40CoastTests.test_authored_policy_guard_is_preserved) ... ok
+test_cancel_does_not_return_until_fresh_observation_arrives (test_map01_overlap_controller_v40.Map01V40CoastTests.test_cancel_does_not_return_until_fresh_observation_arrives) ... ok
+test_only_unauthored_empty_coast_uses_typed_health_monitor (test_map01_overlap_controller_v40.Map01V40CoastTests.test_only_unauthored_empty_coast_uses_typed_health_monitor) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
