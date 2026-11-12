@@ -1,0 +1,50 @@
+{
+  "run_id": "map01-v39-cancel-cleanup-bracket-a03-20261005",
+  "base_commit": "8c45935e065ec36f8d42b7d4e59224900d5a83d2",
+  "sources": {
+    "input_owner_v13.py": {
+      "sha256": "9c07b5143cbce965be709202377a311f25986f59963257faa9ee345d87e341ef",
+      "git_blob": "374711a1b7d3cb94d6a43e238fc2c09b5b956b5e",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/input_owner_v13.py"
+    },
+    "run_a03.py": {
+      "sha256": "c5c1bb64a99e4613e8ec45f58637262b4701cf1da4c057ed089774e194c25959",
+      "git_blob": "9c973d7d814c6bc383b14297c2d807ca8f26c379",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/run_a03.py"
+    },
+    "audit_a03.py": {
+      "sha256": "b9b2bd5551be629a4ba949697aa5f9fa380df57c98a8c951f22c320925288a96",
+      "git_blob": "3e2ba06f9cf1f2f33afad92ec911e3c9e2cc9165",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a03.py"
+    },
+    "v12/test_input_owner_v12.py": {
+      "sha256": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+      "git_blob": "9c5aa19c76199eff9a3defc2e87912a226d92353",
+      "path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py"
+    },
+    "v12/input_owner_v12.py": {
+      "sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "git_blob": "82aae20cec847e3766df2eb6ff5269506a74a2e4",
+      "path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py"
+    },
+    "live_control/executor_v3.py": {
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "git_blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "path": "research/live_control/executor_v3.py"
+    },
+    "bridge/test_bridge.py": {
+      "sha256": "8e54af902f86803df6678c021de43daefcee04fbbc4e9f7b7227bc47977dcdae",
+      "git_blob": "503711bf2de39668955b2bae433c1917b9758ff8",
+      "path": "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py"
+    },
+    "bridge/bridge.py": {
+      "sha256": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+      "git_blob": "6c2f59d2c6e55d8fab2d5f43de96e333c7825ba5",
+      "path": "research/doom/map01_v39_perkey_bridge_a01/bridge.py"
+    }
+  },
+  "python_version": "3.11.9",
+  "protocol_change": "A03 freezes runtime and all imported fake-owner harness/control sources",
+  "method": "offline fake X display; one two-key cancellation cleanup",
+  "retries": 0
+}
