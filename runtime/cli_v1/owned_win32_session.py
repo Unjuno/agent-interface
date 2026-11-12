@@ -741,19 +741,22 @@ class OwnedWin32SessionOwner:
                 "result": None,
             }
             record["cancellation"] = cancellation
-            if self._custody_fence is not None:
-                try:
-                    self._custody_fence.update(action["operation_id"],
-                        action["target_generation"], phase="cancel_pending")
-                except Exception:
-                    # The prior admission is durably unresolved; keep trying
-                    # the bounded release path but never clear that fence here.
-                    pass
             try:
+                # Admission already persisted unresolved custody before the
+                # producer could start. Schedule bounded recovery before a
+                # phase-only disk write can delay producer retirement or UP.
                 result = self._supervisor.cancel(
                     action["operation_id"], action["target_generation"],
                     cleanup_deadline_ns=cleanup_deadline_ns)
                 cancellation["result"] = deepcopy(result)
+                if self._custody_fence is not None:
+                    try:
+                        self._custody_fence.update(action["operation_id"],
+                            action["target_generation"], phase="cancel_pending")
+                    except Exception:
+                        # The prior durable row remains unresolved. Only the
+                        # verified recovery path in _refresh may resolve it.
+                        pass
                 self._refresh(record)
             except BaseException as error:
                 cancellation.update(status="unknown", error=repr(error),

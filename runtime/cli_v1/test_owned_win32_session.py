@@ -197,6 +197,103 @@ class OwnedWin32SessionTests(unittest.TestCase):
                 obligations=['key:a'])
         self.assertEqual(self.owner._records, {})
 
+    def test_cancel_starts_while_phase_persistence_is_blocked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fence = Win32CustodyFence(directory, "d" * 64,
+                mutex_factory=SharedTestMutex)
+            self.session = OwnedWin32SessionOwner(self.owner, self.supervisor,
+                synthetic_only=False, custody_fence=fence)
+            self.start_action()
+            fence.update(ACTION_ID, GEN_A, gate_state="authorized",
+                input_dispatched=True)
+            persisted_before = fence._state_path.read_bytes()
+            entered, resume = threading.Event(), threading.Event()
+            original_write = fence._write_state
+            outcomes, errors = [], []
+
+            def blocked_write(state):
+                if state["pending"]["phase"] == "cancel_pending":
+                    entered.set()
+                    if not resume.wait(3):
+                        raise TimeoutError("test did not release phase write")
+                return original_write(state)
+
+            def cancel():
+                try:
+                    outcomes.append(self.session.cancel_guarded(CALL_ID,
+                        cleanup_deadline_ns=self.clock() + 5_000_000_000))
+                except BaseException as error:
+                    errors.append(error)
+
+            thread = threading.Thread(target=cancel)
+            with patch.object(fence, "_write_state", side_effect=blocked_write):
+                thread.start()
+                try:
+                    self.assertTrue(entered.wait(2), "phase write was not reached")
+                    self.assertTrue(thread.is_alive())
+                    self.assertEqual(len(self.supervisor.calls), 1,
+                        "disk persistence must not postpone supervisor cancellation")
+                    self.assertEqual(self.owner.result(ACTION_ID)["phase"],
+                        "cancel_pending")
+                    self.assertEqual(fence._state_path.read_bytes(),
+                        persisted_before)
+                    durable = json.loads(persisted_before)
+                    self.assertEqual(durable["status"], "unresolved")
+                    self.assertEqual(durable["pending"]["producer_identity"],
+                        self.identity)
+                    self.assertEqual(durable["pending"]["gate_state"], "authorized")
+                finally:
+                    resume.set()
+                    thread.join(3)
+            self.assertFalse(thread.is_alive())
+            self.assertEqual(errors, [])
+            self.assertFalse(outcomes[0]["release_confirmed"])
+            self.assertFalse(outcomes[0]["replay_allowed"])
+            fence.close()
+            reopened = Win32CustodyFence(directory, "d" * 64,
+                mutex_factory=SharedTestMutex)
+            try:
+                with self.assertRaisesRegex(CustodyFenceError,
+                        "ORPHAN_RECOVERY_UNRESOLVED"):
+                    reopened.admit("4" * 32, GEN_B, ["key:a"])
+            finally:
+                reopened.close()
+
+    def test_failed_cancel_phase_write_keeps_old_durable_custody(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fence = Win32CustodyFence(directory, "e" * 64,
+                mutex_factory=SharedTestMutex)
+            self.session = OwnedWin32SessionOwner(self.owner, self.supervisor,
+                synthetic_only=False, custody_fence=fence)
+            self.start_action()
+            fence.update(ACTION_ID, GEN_A, gate_state="authorized",
+                input_dispatched=True)
+            persisted_before = fence._state_path.read_bytes()
+            with patch.object(fence, "_write_state",
+                    side_effect=OSError("injected storage failure")):
+                first = self.session.cancel_guarded(CALL_ID)
+                second = self.session.cancel_guarded(CALL_ID)
+            self.assertEqual(len(self.supervisor.calls), 1)
+            self.assertEqual(first["operation_id"], second["operation_id"])
+            self.assertFalse(second["release_confirmed"])
+            self.assertFalse(second["replay_allowed"])
+            self.assertIsNone(second["task_success"])
+            self.assertEqual(fence._state_path.read_bytes(), persisted_before)
+            fence.close()
+            reopened = Win32CustodyFence(directory, "e" * 64,
+                mutex_factory=SharedTestMutex)
+            try:
+                state = reopened.snapshot()["state"]
+                self.assertEqual(state["status"], "unresolved")
+                self.assertEqual(state["pending"]["operation_id"], ACTION_ID)
+                self.assertEqual(state["pending"]["producer_identity"], self.identity)
+                with self.assertRaisesRegex(CustodyFenceError,
+                        "ORPHAN_RECOVERY_UNRESOLVED"):
+                    reopened.admit("4" * 32, GEN_B, ["key:a"])
+            finally:
+                reopened.close()
+
+
     def test_duplicate_cancel_keeps_action_and_cancellation_receipts_separate(self):
         self.start_action()
         action_before = self.session.interface_result(CALL_ID)["action"]
