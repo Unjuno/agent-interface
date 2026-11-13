@@ -943,10 +943,18 @@ class OwnedWin32SessionOwner:
                 operation_id = current["action"]["operation_id"]
                 generation = current["action"]["target_generation"]
             try:
-                phase = self._owner.result(operation_id).get("phase")
+                custody = self._owner.result(operation_id)
+                phase = custody.get("phase")
             except Exception:
                 return False
-            if phase != "running":
+            completion_observer_failed = (
+                phase == "unknown"
+                and type(custody.get("uncertainty")) is str
+                and custody["uncertainty"].startswith((
+                    "normal_completion_observer_",
+                    "normal_completion_horizon_"))
+            )
+            if phase != "running" and not completion_observer_failed:
                 return False
             try:
                 self.cancel_guarded(call_id,
@@ -1459,6 +1467,29 @@ class OwnedWin32SessionOwner:
             if type(action_result) is dict:
                 action_result["recovery_release_key_up_attempts"] = deepcopy(attempts)
             action["recovery_release_key_up_attempts"] = deepcopy(attempts)
+        automatic_completion_recovery = (
+            cancellation.get("automatic_completion_recovery") is True)
+        if automatic_completion_recovery:
+            action_result = action.get("result")
+            if type(action_result) is not dict:
+                action_result = {}
+            input_dispatched = action.get("input_dispatched")
+            if type(input_dispatched) is not bool:
+                input_dispatched = (action_result.get("input_dispatched")
+                    if type(action_result.get("input_dispatched")) is bool
+                    else None)
+            action.update(status="unknown", input_dispatched=input_dispatched,
+                release_confirmed=False, task_success=None,
+                replay_allowed=False)
+            action_result.update(status="unknown",
+                input_dispatched=input_dispatched, release_confirmed=False,
+                error="COMPLETION_EVIDENCE_UNCONFIRMED",
+                effect_status="unknown", task_success=None,
+                replay_allowed=False)
+            error_type = cancellation.get("completion_error_type")
+            if type(error_type) is str and error_type:
+                action_result["error_type"] = error_type
+            action["result"] = action_result
         confirmed = (status == "recovered"
             and cancellation.get("action_operation_id") == action.get("operation_id")
             and cancellation.get("target_generation") == action.get("target_generation")
@@ -1480,7 +1511,8 @@ class OwnedWin32SessionOwner:
                 action["result"] = action_result
             if type(attempts) is list:
                 action_result["recovery_release_key_up_attempts"] = deepcopy(attempts)
-        if (record.get("standard_program") is not None
+        if (not automatic_completion_recovery
+                and record.get("standard_program") is not None
                 and action.get("status") in ("running", "cancel_pending")
                 and status in ("recovered", "unknown")):
             action_status = "recovered" if confirmed else "unknown"

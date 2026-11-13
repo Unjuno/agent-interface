@@ -14,6 +14,10 @@ import uuid
 
 
 _GENERATION = re.compile(r"^[0-9a-f]{64}$")
+_NORMAL_COMPLETION_UNKNOWN_PREFIXES = (
+    "normal_completion_observer_",
+    "normal_completion_horizon_",
+)
 
 
 class OwnerRefused(ValueError):
@@ -218,12 +222,23 @@ class OperationOwner:
     def request_cancel(self, operation_id, target_generation, *, cleanup_deadline_ns):
         with self._lock:
             record = self._matching(operation_id, target_generation)
+            uncertainty = record.get("uncertainty")
+            observer_failed_after_exit = (
+                record["status"] == "unknown"
+                and record["cleanup_deadline_ns"] is None
+                and type(uncertainty) is str
+                and uncertainty.startswith(_NORMAL_COMPLETION_UNKNOWN_PREFIXES)
+                and record.get("producer_gate_state") == "authorization_attempted"
+                and record.get("producer_identity") is not None
+                and operation_id in self._producer_handles
+            )
             if (record["cleanup_deadline_ns"] is not None
                     and record["status"] in ("cancel_pending", "producer_retired",
                                               "recovery_pending", "recovered",
                                               "unknown")):
                 return self._public(record)
-            if record["status"] not in ("admitted", "running"):
+            if (record["status"] not in ("admitted", "running")
+                    and not observer_failed_after_exit):
                 raise OwnerRefused("operation has no cancellable producer")
             requested_ns = self._clock_ns()
             requested_perf_ns = self._perf_counter_ns()
