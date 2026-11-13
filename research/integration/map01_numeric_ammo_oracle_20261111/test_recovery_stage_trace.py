@@ -5,11 +5,12 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from recovery_stage_trace import StageTrace, install
+from recovery_stage_trace import StageTrace, TracedLock, install
 
 
 class StageTraceTests(unittest.TestCase):
@@ -41,6 +42,38 @@ class StageTraceTests(unittest.TestCase):
                 self.assertEqual(spans[1]['error_type'],'TimeoutError')
                 self.assertTrue(all(s['operation_id']==request['operation_id'] for s in spans))
             finally:
+                trace.uninstall()
+
+    def test_helper_lock_trace_preserves_acquire_release(self):
+        with tempfile.TemporaryDirectory() as td:
+            trace = StageTrace(td)
+            lock = TracedLock(threading.Lock(), trace)
+            with trace.scope({"role": "recovery_exchange", "operation_id": "1" * 32}):
+                self.assertTrue(lock.acquire(timeout=0.1))
+                lock.release()
+            spans = json.loads(trace.flush().read_text())["spans"]
+            self.assertEqual([row["stage"] for row in spans],
+                             ["helper.lock.acquire", "helper.lock.release"])
+            self.assertTrue(spans[0]["scalar_result"])
+            self.assertNotIn("scalar_result", spans[1])
+
+    def test_pipe_poll_and_recv_trace_preserve_message(self):
+        from multiprocessing import Pipe
+        from multiprocessing.connection import Connection
+        with tempfile.TemporaryDirectory() as td:
+            trace = install(td)
+            parent, child = Pipe(duplex=True)
+            try:
+                child.send({"request_id": "2" * 32})
+                with trace.scope({"role": "recovery_exchange", "operation_id": "1" * 32}):
+                    self.assertTrue(parent.poll(0.1))
+                    self.assertEqual(parent.recv(), {"request_id": "2" * 32})
+                spans = json.loads(trace.flush().read_text())["spans"]
+                self.assertEqual([row["stage"] for row in spans],
+                                 ["helper.pipe_poll", "helper.pipe_recv"])
+            finally:
+                parent.close()
+                child.close()
                 trace.uninstall()
 
     def test_wrapper_preserves_arguments_return_identity_and_has_no_early_file_write(self):
@@ -116,6 +149,7 @@ class StageTraceTests(unittest.TestCase):
             self.assertEqual(receipt["trace_files"], 2)
             self.assertFalse(receipt["backend_opened"])
             self.assertTrue(receipt["child_lifecycle_span_retained"])
+            self.assertTrue(receipt["child_pipe_receive_span_retained"])
 
     def test_sendinput_shim_calls_the_original_once_and_retains_its_return_count(self):
         from runtime.backends.win32_v1.backend import Win32Backend
