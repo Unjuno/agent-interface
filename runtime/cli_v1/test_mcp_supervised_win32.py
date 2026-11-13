@@ -1742,7 +1742,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             output = Path(root) / "child-receipts"
             params = StdioServerParameters(command=sys.executable,
                 args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
-                      "--output-directory", str(output), "--effect", "failure"],
+                      "--output-directory", str(output), "--mode", "delayed-expiry"],
                 cwd=str(Path(__file__).resolve().parents[2]))
             async with stdio_client(params) as (reader, writer):
                 async with ClientSession(reader, writer) as client:
@@ -1808,6 +1808,84 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(verified["task_effect"]["receipt"]["operation_id"],
                                      retained["action"]["operation_id"])
                     self.assertFalse(verified["replay_allowed"])
+
+    async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
+
+        recovery_generation = "b" * 64
+        with TemporaryDirectory() as root:
+            source_output = Path(root) / "source-receipts"
+            source_params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(source_output), "--mode", "exception"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(source_params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    program = self.valid_program()
+                    program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
+                    reply = await client.call_tool("interface_dispatch", {
+                        "program": program, "current_observation_seq": 1,
+                        "current_binding_revision": 1, "wait_for_result_ms": 0})
+                    pending = self.row(reply)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    deadline = time.monotonic() + 2
+                    retained = None
+                    while time.monotonic() < deadline:
+                        result = await client.call_tool("interface_results", {
+                            "call_id": pending["call_id"], "include_image": False})
+                        retained = self.row(result)
+                        action = retained.get("action")
+                        if isinstance(action, dict) and action.get("status") == "unknown":
+                            break
+                        await asyncio.sleep(0.01)
+                    self.assertEqual(retained["action"]["result"]["status"],
+                                     "runtime_failed", retained)
+                    self.assertFalse(retained["action"]["release_confirmed"])
+                    self.assertIsNone(retained["task_success"])
+                    self.assertFalse(retained["replay_allowed"])
+                    action = retained["action"]
+                    obligations = derive_input_obligations(program)
+                    custody = {
+                        "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+                        "operation_id": action["operation_id"],
+                        "target_generation": action["target_generation"],
+                        "obligations": obligations,
+                        "do_not_replay": True,
+                        "observed_producer_live": False,
+                        "late_server_request_possible": True,
+                        "dispatch": {"input_dispatched": None,
+                            "release_confirmed": False, "task_success": None,
+                            "replay_allowed": False}}
+
+            recovery_output = Path(root) / "recovery-receipts"
+            recovery_params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(recovery_output), "--mode", "recovery",
+                      "--recovery-generation", recovery_generation],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(recovery_params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool("interface_recover_orphaned_input", {
+                        "source_operation_id": action["operation_id"],
+                        "source_target_generation": action["target_generation"],
+                        "recovery_target_generation": recovery_generation,
+                        "obligations": obligations,
+                        "source_custody_record": custody})
+                    recovered = self.row(reply)
+                    self.assertEqual(recovered["status"], "recovered", recovered)
+                    self.assertEqual(recovered["source_action_status"], "unknown")
+                    self.assertTrue(recovered["release_confirmed"])
+                    self.assertTrue(recovered["recovery_receipt"][
+                        "late_input_horizon_verified"])
+                    self.assertEqual(recovered["recovery_receipt"][
+                        "late_input_horizon_ns"], 2_000_000_000)
+                    self.assertIsNone(recovered["task_success"])
+                    self.assertFalse(recovered["replay_allowed"])
+                    self.assertTrue(recovered["next_action_requires_fresh_generation"])
 
 
 if __name__ == "__main__":
