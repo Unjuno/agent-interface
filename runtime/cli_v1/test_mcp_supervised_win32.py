@@ -448,14 +448,18 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(retrieved["action"]["release_confirmed"])
         self.assertTrue(supervisor.closed)
 
-    async def test_public_dispatch_retains_producer_exception_as_unknown(self):
+    async def test_public_dispatch_exception_flows_to_fresh_session_recovery(self):
+        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
+
         owner, normal_producer, _supervisor = self.make_components()
         producer = ExceptionReceiptProducerFactory(
             normal_producer.process, normal_producer.identity)
-        with TemporaryDirectory() as root:
+        program = self.valid_program()
+        obligations = derive_input_obligations(program)
+        with TemporaryDirectory() as root, TemporaryDirectory() as fresh_root:
             server = self.make_server(root, owner, producer)
             reply = await server.call_tool("interface_dispatch", {
-                "program": self.valid_program(),
+                "program": program,
                 "current_observation_seq": 1,
                 "current_binding_revision": 1,
                 "wait_for_result_ms": 5000})
@@ -471,6 +475,17 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(action["release_confirmed"])
             self.assertIsNone(action["task_success"])
             self.assertFalse(action["replay_allowed"])
+            source_custody_record = {
+                "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "obligations": list(obligations),
+                "do_not_replay": True,
+                "observed_producer_live": False,
+                "late_server_request_possible": True,
+                "dispatch": {"input_dispatched": None,
+                    "release_confirmed": False, "task_success": None,
+                    "replay_allowed": False}}
             retained = self.row(await server.call_tool("interface_results", {
                 "call_id": result["call_id"]}))
             self.assertEqual(retained["action"]["status"], "unknown")
@@ -479,6 +494,69 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                              "runtime_failed")
             close = self.row(await server.call_tool("interface_close", {}))
             self.assertEqual(close["status"], "busy")
+
+            recovery_generation = "b" * 64
+            fresh_owner, fresh_producer, fresh_supervisor = self.make_components(
+                recovery_generation)
+            recover_calls = []
+            def recover(operation_id, source_generation, recovery_id,
+                        deadline_ns, obligations, *,
+                        recovery_target_generation=None):
+                recover_calls.append((operation_id, source_generation,
+                    recovery_id, deadline_ns, list(obligations),
+                    recovery_target_generation))
+                return {"status": "recovered", "release_confirmed": True,
+                    "operation_id": operation_id,
+                    "target_generation": recovery_target_generation,
+                    "source_target_generation": source_generation,
+                    "recovery_target_generation": recovery_target_generation,
+                    "recovery_id": recovery_id,
+                    "readback": {"neutral": True},
+                    "late_input_horizon_verified": True,
+                    "late_input_horizon_ns": 2_000_000_000,
+                    "late_input_release_received_monotonic_ns": 100,
+                    "late_input_observation_start_monotonic_ns": 100,
+                    "late_input_observation_end_monotonic_ns": 2_000_000_100,
+                    "late_input_observation_count": 3,
+                    "late_input_max_observed_gap_ns": 1_000_000,
+                    "late_input_max_sample_gap_ns": 100_000_000}
+            fresh_supervisor.recover_orphaned_input = recover
+            fresh_server = self.make_server(
+                fresh_root, fresh_owner, fresh_producer)
+            recovery_reply = await fresh_server.call_tool(
+                "interface_recover_orphaned_input", {
+                    "source_operation_id": action["operation_id"],
+                    "source_target_generation": action["target_generation"],
+                    "recovery_target_generation": recovery_generation,
+                    "obligations": list(obligations),
+                    "source_custody_record": source_custody_record})
+            recovered = json.loads(recovery_reply.content[0].text)
+            self.assertEqual(recovered["status"], "recovered", recovered)
+            self.assertEqual(recovered["recovery_status"], "recovered")
+            self.assertEqual(recovered["source_action_status"], "unknown")
+            self.assertTrue(recovered["release_confirmed"])
+            self.assertTrue(recovered["recovery_receipt"][
+                "late_input_horizon_verified"])
+            self.assertEqual(recovered["recovery_receipt"][
+                "late_input_horizon_ns"], 2_000_000_000)
+            self.assertIsNone(recovered["task_success"])
+            self.assertFalse(recovered["replay_allowed"])
+            self.assertTrue(recovered["next_action_requires_fresh_generation"])
+            self.assertEqual(len(recover_calls), 1)
+            self.assertEqual(recover_calls[0][0], action["operation_id"])
+            self.assertEqual(recover_calls[0][1], action["target_generation"])
+            self.assertEqual(recover_calls[0][4], obligations)
+            self.assertEqual(recover_calls[0][5], recovery_generation)
+
+            # The original session's action remains unchanged by fresh recovery.
+            original = self.row(await server.call_tool("interface_results", {
+                "call_id": result["call_id"]}))
+            self.assertEqual(original["action"]["status"], "unknown")
+            self.assertEqual(original["action"]["result"]["status"],
+                             "runtime_failed")
+            self.assertFalse(original["action"]["release_confirmed"])
+            self.assertIsNone(original["task_success"])
+            self.assertFalse(original["replay_allowed"])
 
     async def test_public_dispatch_keeps_child_release_unconfirmed_without_observer_readback(self):
         owner, producer, supervisor = self.make_components()
