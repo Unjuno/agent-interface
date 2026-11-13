@@ -8,12 +8,14 @@ shutdown; the server entry point must flush after transport shutdown. A killed
 helper may have no trace, which must be reported as missing diagnostics.
 
 Stages cover caller cancellation, the cancel-pending custody write, supervisor
-admission, producer retirement, recovery IPC, helper setup/generation checks,
-key-UP preparation, the original SendInput call, key readback and first
+admission, producer retirement, helper-lock wait, process liveness and identity
+checks, request send, pipe poll/receive on both processes, helper setup/generation
+checks, key-UP preparation, the original SendInput call, key readback and first
 independent observation. A SendInput return count is insertion evidence only.
-Join the API span to the containing key-UP span, exact operation/recovery IDs
-and thread to distinguish W-UP from another release. A public recovery receipt,
-independent neutral horizon and application effect remain separate evidence.
+Join spans by exact operation/recovery IDs and thread; distinguish helper
+receive from recovery entry and W-UP from another release. A public recovery
+receipt, independent neutral horizon and application effect remain separate
+evidence.
 
 The absolute timestamps are comparable only after the same-host QPC and child
 interpreter preflight passes. Require no dropped spans, valid intervals and all
@@ -29,7 +31,8 @@ supervisor cancellation. This motivates measuring the write directly. Do not
 relabel its request timestamp as SendInput or infer that moving the write is
 safe without checking durable fencing and crash semantics.
 
-The spawn probe starts a real observer helper, reads its ready message and sends
-shutdown without an operation. No backend is constructed or input emitted.
-Normal and optimized tests also check result identity, exception preservation,
-bounded retention, inert recovery receipt parity and an inert SendInput shim.
+The spawn probe starts a real recovery-kind helper, reads its ready message and
+sends shutdown without an operation. No backend is constructed or input emitted.
+Normal and optimized tests also check lock and pipe wrapper parity, result
+identity, exception preservation, bounded retention, inert recovery receipt
+parity and an inert SendInput shim.

@@ -134,6 +134,25 @@ class StageTrace:
             _active = None
 
 
+class TracedLock:
+    """Transparent lock proxy that times waits only inside recovery exchange."""
+    def __init__(self, lock, trace):
+        self._lock = lock
+        self._trace = trace
+
+    def acquire(self, *args, **kwargs):
+        if getattr(self._trace._local, "fields", {}).get("role") == "recovery_exchange":
+            return self._trace.invoke("helper.lock.acquire", self._lock.acquire,
+                                      args, kwargs)
+        return self._lock.acquire(*args, **kwargs)
+
+    def release(self):
+        if getattr(self._trace._local, "fields", {}).get("role") == "recovery_exchange":
+            return self._trace.invoke("helper.lock.release", self._lock.release,
+                                      (), {})
+        return self._lock.release()
+
+
 def install(output_dir):
     """Explicitly instrument the current interpreter before helper spawning."""
     global _active
@@ -148,6 +167,9 @@ def install(output_dir):
     from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor
     from runtime.guarded_win32_v1.operation_owner import OperationOwner
     from runtime.backends.win32_v1.backend import Win32Backend
+    from runtime.guarded_win32_v1.win32_process_identity import Win32ProcessIdentityReader
+    from multiprocessing.connection import _ConnectionBase
+    from multiprocessing.process import BaseProcess
 
     def arg(args, kwargs, index, name):
         return args[index] if len(args) > index else kwargs.get(name)
@@ -172,6 +194,19 @@ def install(output_dir):
     trace.patch(OperationCancellationSupervisor, "_send_helper_request", "recovery.send",
         predicate=lambda a, k: getattr(trace._local, "fields", {}).get("role") == "recovery_exchange",
         details=lambda a, k: _request_fields(arg(a, k, 2, "request")))
+    trace.patch(Win32ProcessIdentityReader, "__call__", "helper.identity",
+        predicate=lambda a, k: getattr(trace._local, "fields", {}).get("role") == "recovery_exchange",
+        details=lambda a, k: {"helper_pid": getattr(arg(a, k, 1, "process"), "pid", None)})
+    trace.patch(BaseProcess, "is_alive", "helper.process_alive",
+        predicate=lambda a, k: getattr(trace._local, "fields", {}).get("role") == "recovery_exchange",
+        details=lambda a, k: {"helper_pid": getattr(arg(a, k, 0, "self"), "pid", None)})
+    trace.patch(_ConnectionBase, "poll", "helper.pipe_poll",
+        predicate=lambda a, k: getattr(trace._local, "fields", {}).get("role")
+            in ("recovery_exchange", "recovery_helper"),
+        details=lambda a, k: {"timeout": arg(a, k, 1, "timeout")})
+    trace.patch(_ConnectionBase, "recv", "helper.pipe_recv",
+        predicate=lambda a, k: getattr(trace._local, "fields", {}).get("role")
+            in ("recovery_exchange", "recovery_helper"))
     trace.patch(OperationCancellationSupervisor, "_run_observer", "observer.first_exchange",
         predicate=lambda a, k: trace.first(("parent-observe", arg(a, k, 1, "operation_id"))),
         details=identity)
@@ -203,12 +238,25 @@ def install(output_dir):
     original_helper = helpers._helper_main
     @wraps(original_helper)
     def helper_main(*args, **kwargs):
-        try:
-            return trace.invoke("helper.lifecycle", original_helper, args, kwargs,
-                                {"helper_kind": arg(args, kwargs, 0, "kind")})
-        finally:
-            trace.flush()
+        kind = arg(args, kwargs, 0, "kind")
+        role = "recovery_helper" if kind == "recovery" else "observer_helper"
+        with trace.scope({"role": role, "helper_kind": kind}):
+            try:
+                return trace.invoke("helper.lifecycle", original_helper, args, kwargs,
+                                    {"helper_kind": kind})
+            finally:
+                trace.flush()
     helpers._helper_main = helper_main
     trace._patches.append((helpers, "_helper_main", original_helper, helper_main))
+    original_supervisor_init = OperationCancellationSupervisor.__init__
+    @wraps(original_supervisor_init)
+    def supervisor_init(supervisor, *args, **kwargs):
+        result = original_supervisor_init(supervisor, *args, **kwargs)
+        for helper in supervisor._helpers.values():
+            helper["lock"] = TracedLock(helper["lock"], trace)
+        return result
+    OperationCancellationSupervisor.__init__ = supervisor_init
+    trace._patches.append((OperationCancellationSupervisor, "__init__",
+                           original_supervisor_init, supervisor_init))
     _active = trace
     return trace

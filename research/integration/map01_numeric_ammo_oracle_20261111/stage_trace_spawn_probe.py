@@ -14,10 +14,10 @@ def main():
     context = multiprocessing.get_context("spawn")
     parent, child = context.Pipe(duplex=True)
     process = context.Process(target=helpers._helper_main,
-        args=("observer", {"inert-fixture": 1}, child))
+        args=("recovery", {"inert-fixture": 1}, child))
     process.start()
     child.close()
-    if not parent.poll(10) or parent.recv() != {"status": "ready", "helper": "observer"}:
+    if not parent.poll(10) or parent.recv() != {"status": "ready", "helper": "recovery"}:
         raise RuntimeError("inert helper startup failed")
     parent.send(None)
     process.join(5)
@@ -32,10 +32,15 @@ def main():
     child_rows = [r for r in rows if r["pid"] == child_pid]
     child_span = (len(child_rows) == 1 and any(s["stage"] == "helper.lifecycle"
                   for s in child_rows[0]["spans"]))
-    if len(rows) != 2 or not child_span:
+    child_recv_span = (len(child_rows) == 1 and any(
+        s["stage"] == "helper.pipe_recv" and s.get("role") == "recovery_helper"
+        for s in child_rows[0]["spans"]))
+    if len(rows) != 2 or not child_span or not child_recv_span:
         raise RuntimeError("spawned helper trace missing")
     print(json.dumps({"child_exit_code": 0, "trace_files": len(files),
-        "child_lifecycle_span_retained": child_span, "backend_opened": False}))
+        "child_lifecycle_span_retained": child_span,
+        "child_pipe_receive_span_retained": child_recv_span,
+        "backend_opened": False}))
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
