@@ -1410,7 +1410,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         identity = {"pid": 7101, "creation_time_100ns": 90101}
         op_owner = OperationOwner(clock_ns=time.monotonic_ns,
             process_identity_reader=lambda handle: identity if handle is process else None)
-        supervisor = DelayedRecoveringFakeSupervisor(op_owner, process)
+        supervisor = DelayedRecoveringFakeSupervisor(op_owner, process,
+            delay_s=0.25)
         owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
         owner.bind_target_generation_reader(lambda: GENERATION)
         producer = HeldProducerFactory(process, identity)
@@ -1465,6 +1466,25 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     "call_id": pending["call_id"]}))
                 cancellation = retained.get("cancellation")
                 if (isinstance(cancellation, dict)
+                        and cancellation.get("status") == "pending"):
+                    break
+                await asyncio.sleep(0.005)
+
+            self.assertIsNotNone(retained)
+            self.assertEqual(retained["cancellation"]["status"], "pending")
+            self.assertFalse(retained["cancellation"]["release_confirmed"])
+            self.assertEqual(retained["action"]["status"], "running", retained)
+            self.assertIsNone(retained["task_success"])
+            self.assertFalse(retained["replay_allowed"])
+            # This result lookup sends no new input; action and cancellation
+            # remain separate records with separate release state.
+            self.assertFalse(retained["input_dispatched"])
+
+            while time.monotonic() < deadline:
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                cancellation = retained.get("cancellation")
+                if (isinstance(cancellation, dict)
                         and cancellation.get("status") == "recovered"
                         and ("program_actions_lower_bound"
                              in retained["action"]
@@ -1489,6 +1509,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 in enumerate(fence_events) if kind == "resolve")
             self.assertLess(input_update, resolution)
             self.assertEqual(retained["action"]["result"]["status"], "recovered")
+            self.assertTrue(retained["action"]["result"]["release_confirmed"])
             self.assertIsNone(retained["action"]["result"]["task_success"])
             self.assertIsNone(retained["task_success"])
             verified = self.row(await server.call_tool("interface_verify_task", {
