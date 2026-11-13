@@ -1843,6 +1843,24 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         "automatic_completion_recovery"])
                     self.assertEqual(cancellation["status"], "recovered")
                     self.assertTrue(cancellation["release_confirmed"])
+                    # Exact-call interface_results returns the retained owner
+                    # row directly. Its result-query envelope lives outside
+                    # that row in the actual MCP call response.
+                    results_reply = await client.call_tool(
+                        "interface_results", {
+                            "call_id": result["call_id"],
+                            "include_image": False})
+                    retained = self.row(results_reply)
+                    self.assertEqual(retained["action"]["status"], "unknown")
+                    self.assertFalse(retained["action"][
+                        "release_confirmed"])
+                    self.assertTrue(retained["cancellation"][
+                        "automatic_completion_recovery"])
+                    self.assertEqual(retained["cancellation"]["status"],
+                                     "recovered")
+                    self.assertTrue(retained["cancellation"][
+                        "release_confirmed"])
+                    self.assertIsNone(retained["task_effect"])
                     await client.call_tool("interface_close", {})
 
 
