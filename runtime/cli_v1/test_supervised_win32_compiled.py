@@ -131,6 +131,50 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIs(accepted["release"]["verified"], True)
         self.assertNotIn("input_dispatched", accepted)
 
+        # A separately verified automatic cleanup keeps the source action
+        # UNKNOWN while still proving that its input obligations were released.
+        automatic_unknown = {**recovered,
+            "action": {**recovered["action"], "status": "unknown",
+                "release_confirmed": False, "input_dispatched": True,
+                "task_success": None, "replay_allowed": False,
+                "result": {"status": "unknown", "input_dispatched": True,
+                    "release_confirmed": False,
+                    "error": "COMPLETION_EVIDENCE_UNCONFIRMED",
+                    "error_type": "RuntimeError", "task_success": None,
+                    "replay_allowed": False}},
+            "cancellation": {**recovered["cancellation"],
+                "automatic_completion_recovery": True,
+                "completion_error_type": "RuntimeError"}}
+        automatic_terminal = _terminal(automatic_unknown, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(automatic_terminal["status"], "delivery_uncertain")
+        self.assertIs(automatic_terminal["release"]["verified"], True)
+        self.assertIs(automatic_terminal["input_dispatched"], True)
+
+        direct_dispatch = {"schema": "agent-interface/runtime-dispatch-result-v1",
+            "status": "returned", "call_id": call_id,
+            "operation_id": operation_id, "target_generation": generation,
+            "operation_invoked": True, "input_dispatched": True,
+            "release_confirmed": True, "task_success": None,
+            "replay_allowed": False,
+            "result": automatic_unknown["action"]["result"],
+            "supervision": {"call_id": call_id,
+                "action": automatic_unknown["action"],
+                "cancellation": automatic_unknown["cancellation"]}}
+        direct_terminal = _terminal(direct_dispatch, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(direct_terminal["status"], "delivery_uncertain")
+        self.assertIs(direct_terminal["release"]["verified"], True)
+        self.assertIs(direct_terminal["input_dispatched"], True)
+
+        invalid_automatic = {**automatic_unknown, "cancellation": {
+            **automatic_unknown["cancellation"],
+            "automatic_completion_recovery": False}}
+        invalid_automatic_terminal = _terminal(invalid_automatic, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(invalid_automatic_terminal["status"], "uncertain")
+        self.assertIs(invalid_automatic_terminal["release"]["verified"], False)
+
         invalid_receipts = []
         wrong_call = {**recovered, "call_id": "e" * 32}
         invalid_receipts.append(wrong_call)
@@ -340,6 +384,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         operation_id = "c" * 32
         verify_calls = []
         include_attempt_receipt = [True]
+        automatic_unknown_source = [False]
+        resolved_rows = []
         interface = {
             "format": "compiled-gui-interface-v1",
             "interface_id": "recovered-effect-is-independent-of-graph",
@@ -420,19 +466,35 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                     "observed_monotonic_ns": observation_end_ns,
                     "key_button_states": [False],
                     "unicode_event_units": 0}}
-            return {"call_id": call_id, "input_dispatched": False,
+            source_status = ("unknown" if automatic_unknown_source[0]
+                else "recovered")
+            source_release = not automatic_unknown_source[0]
+            source_result = {"status": source_status,
+                "input_dispatched": True if automatic_unknown_source[0] else None,
+                "release_confirmed": source_release,
+                "task_success": None, "replay_allowed": False}
+            if automatic_unknown_source[0]:
+                source_result.update(error="COMPLETION_EVIDENCE_UNCONFIRMED",
+                    error_type="RuntimeError")
+            resolved = {"call_id": call_id, "input_dispatched": False,
                 "action": {"operation_id": operation_id,
-                    "target_generation": generation, "status": "recovered",
+                    "target_generation": generation, "status": source_status,
+                    "input_dispatched": source_result["input_dispatched"],
                     "obligations": ["key:fixture:W:scan_code"],
-                    "release_confirmed": True,
-                    "result": {"status": "recovered",
-                        "input_dispatched": None,
-                        "release_confirmed": True}},
+                    "release_confirmed": source_release,
+                    "task_success": None, "replay_allowed": False,
+                    "result": source_result},
                 "cancellation": {"operation_id": "e" * 32,
                     "action_operation_id": operation_id,
                     "target_generation": generation, "status": "recovered",
                     "owner_phase": "recovered", "release_confirmed": True,
                     "replay_allowed": False, "result": cancellation_result}}
+            if automatic_unknown_source[0]:
+                resolved["cancellation"].update(
+                    automatic_completion_recovery=True,
+                    completion_error_type="RuntimeError")
+            resolved_rows.append(resolved)
+            return resolved
 
         def verify_task(call_id):
             verify_calls.append(call_id)
@@ -468,6 +530,29 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertTrue(result["task_verification"]["valid"], result)
         self.assertIs(result["task_success"], True)
 
+        automatic_unknown_source[0] = True
+        automatic_result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(automatic_result["outcome"], "SAFE_YIELD",
+            automatic_result)
+        self.assertEqual(automatic_result["reason"], "delivery_uncertain")
+        self.assertEqual(automatic_result["completed_transitions"], 0)
+        self.assertTrue(automatic_result["task_verification"]["valid"])
+        self.assertIs(automatic_result["task_success"], True)
+        self.assertEqual(resolved_rows[-1]["action"]["status"], "unknown")
+        self.assertFalse(resolved_rows[-1]["action"]["release_confirmed"])
+        self.assertTrue(resolved_rows[-1]["cancellation"]["release_confirmed"])
+        automatic_evidence = automatic_result["standard_target_evidence"][1]
+        self.assertEqual(automatic_evidence["status"], "delivery_uncertain")
+        self.assertTrue(automatic_evidence["release_verified"])
+
+        automatic_unknown_source[0] = False
         include_attempt_receipt[0] = False
         receipt_missing_attempt = run_public_compiled(interface,
             {"move": program}, target="fixture", current_binding_revision=1,
@@ -481,7 +566,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIsNone(receipt_missing_attempt["task_verification"])
         self.assertFalse(receipt_missing_attempt["standard_target_evidence"][1][
             "release_verified"])
-        self.assertEqual(verify_calls, [dispatch_id])
+        self.assertEqual(verify_calls, [dispatch_id, dispatch_id])
 
     def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
         generation = "c" * 64

@@ -121,6 +121,30 @@ def _verified_recovery_custody(row, action, call_id, operation_id,
         if type(result) is dict else None)
     attempts_valid = _recovery_attempts_match_obligations(
         obligations, recovery_attempts)
+    action_result = action.get("result")
+    automatic_unknown_source = (
+        type(cancellation) is dict and type(action_result) is dict
+        and cancellation.get("automatic_completion_recovery") is True
+        and action.get("status") == "unknown"
+        and action.get("release_confirmed") is False
+        and action_result.get("status") == "unknown"
+        and action_result.get("release_confirmed") is False
+        and action_result.get("error") == "COMPLETION_EVIDENCE_UNCONFIRMED"
+        and type(action_result.get("error_type")) is str
+        and bool(action_result["error_type"])
+        and cancellation.get("completion_error_type")
+            == action_result["error_type"]
+        and action.get("task_success") is None
+        and action.get("replay_allowed") is False
+        and action_result.get("task_success") is None
+        and action_result.get("replay_allowed") is False
+    )
+    recovered_source = (
+        action.get("status") == "recovered"
+        and action.get("release_confirmed") is True
+        and type(action_result) is dict
+        and action_result.get("status") == "recovered"
+    )
     return (
         type(cancellation) is dict and type(result) is dict
         and cancellation.get("status") == "recovered"
@@ -180,10 +204,7 @@ def _verified_recovery_custody(row, action, call_id, operation_id,
         and _IDENTIFIER.fullmatch(operation_id) is not None
         and type(generation) is str
         and _GENERATION.fullmatch(generation) is not None
-        and action.get("status") == "recovered"
-        and action.get("release_confirmed") is True
-        and type(action.get("result")) is dict
-        and action["result"].get("status") == "recovered"
+        and (recovered_source or automatic_unknown_source)
     )
 
 
@@ -284,15 +305,21 @@ def _terminal(reply, action_name, *, expected_call_id=None,
             and action_result.get("status") == "completed")
         recovered = (retrieved_action.get("status") == "recovered"
             and action_result.get("status") == "recovered")
+        automatic_unknown_source = (
+            retrieved_action.get("status") == "unknown"
+            and action_result.get("status") == "unknown"
+            and type(row.get("cancellation")) is dict
+            and row["cancellation"].get("automatic_completion_recovery") is True)
         identity_valid = (same_call and same_generation
             and type(operation_id) is str
             and _IDENTIFIER.fullmatch(operation_id) is not None)
-        recovery_custody_verified = (recovered and
+        recovery_custody_verified = ((recovered or automatic_unknown_source) and
             _verified_recovery_custody(row, retrieved_action, call_id,
                 operation_id, generation, expected_call_id,
                 expected_generation))
         verified_release = identity_valid and (
-            recovery_custody_verified if recovered else custody_verified)
+            recovery_custody_verified
+            if recovered or automatic_unknown_source else custody_verified)
         outer_delivery = retrieved_action.get("input_dispatched")
         inner_delivery = action_result.get("input_dispatched")
         delivery_conflict = (
@@ -304,7 +331,8 @@ def _terminal(reply, action_name, *, expected_call_id=None,
             and completed)
         terminal = {"status": ("uncertain" if delivery_conflict or no_input_completion
                 else "completed" if verified_release and completed
-                else "delivery_uncertain" if verified_release and recovered
+                else "delivery_uncertain" if verified_release and
+                    (recovered or automatic_unknown_source)
                 else "uncertain"),
             "action_id": (operation_id if identity_valid
                 else "unverified-interface-result"),
@@ -353,6 +381,37 @@ def _terminal(reply, action_name, *, expected_call_id=None,
         operation_invoked = outer.get("operation_invoked")
     action_delivery = action.get("input_dispatched") if type(action) is dict else None
     action_result = action.get("result") if type(action) is dict else None
+    cancellation = (supervision.get("cancellation")
+        if type(supervision) is dict else None)
+    automatic_unknown_source = (
+        type(action) is dict and type(action_result) is dict
+        and type(cancellation) is dict
+        and cancellation.get("automatic_completion_recovery") is True
+        and action.get("status") == "unknown"
+        and action.get("release_confirmed") is False
+        and action_result.get("status") == "unknown"
+        and action_result.get("release_confirmed") is False
+        and action_result.get("error") == "COMPLETION_EVIDENCE_UNCONFIRMED"
+        and type(action_result.get("error_type")) is str
+        and bool(action_result["error_type"])
+        and cancellation.get("completion_error_type")
+            == action_result["error_type"]
+        and action.get("task_success") is None
+        and action.get("replay_allowed") is False
+        and action_result.get("task_success") is None
+        and action_result.get("replay_allowed") is False
+        and type(expected_call_id) is str
+        and row.get("call_id") == expected_call_id
+        and type(expected_generation) is str
+        and action.get("target_generation") == expected_generation
+        and action.get("operation_id") == row.get("operation_id")
+        and type(row.get("operation_id")) is str
+        and _IDENTIFIER.fullmatch(row["operation_id"]) is not None
+        and _verified_recovery_custody(supervision, action,
+            row.get("call_id"), row.get("operation_id"),
+            action.get("target_generation"), expected_call_id,
+            expected_generation)
+    )
     nested_delivery = (action_result.get("input_dispatched")
         if type(action_result) is dict else None)
     # Preserve every explicit delivery claim before choosing a fallback; a
@@ -371,14 +430,15 @@ def _terminal(reply, action_name, *, expected_call_id=None,
     no_input_nonrefusal = (input_dispatched is False and
         (not refused_before_input or (confirmed and action.get("status") == "completed")))
     terminal = {"status": ("uncertain" if delivery_conflict or no_input_nonrefusal
+            else "delivery_uncertain" if automatic_unknown_source
             else "completed" if status in ("returned", "completed") and confirmed
             and action.get("status") == "completed"
             else "refused" if refused_before_input else "uncertain"),
         "action_id": action_id,
         "effect_ref": "standard-win32-" + action_name,
-        "release": {"verified": confirmed,
-            "keys_down": [] if confirmed else ["unknown"],
-            "buttons_down": [] if confirmed else ["unknown"]}}
+        "release": {"verified": confirmed or automatic_unknown_source,
+            "keys_down": [] if confirmed or automatic_unknown_source else ["unknown"],
+            "buttons_down": [] if confirmed or automatic_unknown_source else ["unknown"]}}
     if input_dispatched is not None and not delivery_conflict and not no_input_nonrefusal:
         terminal["input_dispatched"] = input_dispatched
     return terminal

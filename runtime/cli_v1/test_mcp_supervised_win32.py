@@ -2052,10 +2052,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(retained["cancellation"][
                         "release_confirmed"])
                     self.assertIsNone(retained["task_effect"])
-                    # Feed the exact public result-query reply through the
-                    # compiled caller's terminal projection. Safety recovery
-                    # proves release separately; it must not upgrade the
-                    # source action or imply that its task effect completed.
+                    # This fake supervisor omits the required bounded late
+                    # input horizon. The compiled caller must not treat its
+                    # release boolean alone as verified recovery custody.
                     from runtime.cli_v1.supervised_win32_compiled import _terminal
                     terminal = _terminal(results_reply, "move",
                         expected_call_id=result["call_id"],
