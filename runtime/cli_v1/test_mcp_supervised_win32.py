@@ -537,6 +537,114 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(action["replay_allowed"])
             await server.call_tool("interface_close", {})
 
+    async def test_failed_automatic_exception_recovery_allows_fresh_generation_recovery(self):
+        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
+
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = UnknownAfterCancelSupervisor(operation_owner)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = ExceptionReceiptProducerFactory(process, identity)
+        recovery_generation = "b" * 64
+        program = self.valid_program()
+        obligations = derive_input_obligations(program)
+
+        with TemporaryDirectory() as root, TemporaryDirectory() as fresh_root:
+            server = self.make_server(root, owner, producer)
+            result = self.row(await server.call_tool("interface_dispatch", {
+                "program": program,
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            self.assertEqual(result["result"]["status"], "unknown")
+            self.assertFalse(result["release_confirmed"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            action = result["supervision"]["action"]
+            cancellation = result["supervision"]["cancellation"]
+            self.assertEqual(action["status"], "unknown")
+            self.assertEqual(cancellation["status"], "unknown")
+            self.assertTrue(cancellation["automatic_completion_recovery"])
+            self.assertFalse(cancellation["release_confirmed"])
+            self.assertIsNone(action["task_success"])
+            self.assertFalse(action["replay_allowed"])
+            close = self.row(await server.call_tool("interface_close", {}))
+            self.assertEqual(close["status"], "busy")
+
+            fresh_owner, fresh_producer, fresh_supervisor = self.make_components(
+                recovery_generation)
+            recovery_calls = []
+            def recover(operation_id, source_generation, recovery_id,
+                        deadline_ns, input_obligations, *,
+                        recovery_target_generation=None):
+                recovery_calls.append((operation_id, source_generation,
+                    recovery_id, deadline_ns, list(input_obligations),
+                    recovery_target_generation))
+                return {"status": "recovered", "release_confirmed": True,
+                    "operation_id": operation_id,
+                    "target_generation": recovery_target_generation,
+                    "source_target_generation": source_generation,
+                    "recovery_target_generation": recovery_target_generation,
+                    "recovery_id": recovery_id,
+                    "readback": {"neutral": True},
+                    "late_input_horizon_verified": True,
+                    "late_input_horizon_ns": 2_000_000_000,
+                    "late_input_release_received_monotonic_ns": 100,
+                    "late_input_observation_start_monotonic_ns": 100,
+                    "late_input_observation_end_monotonic_ns": 2_000_000_100,
+                    "late_input_observation_count": 3,
+                    "late_input_max_observed_gap_ns": 1_000_000,
+                    "late_input_max_sample_gap_ns": 100_000_000}
+            fresh_supervisor.recover_orphaned_input = recover
+            fresh_server = self.make_server(
+                fresh_root, fresh_owner, fresh_producer)
+            source_custody_record = {
+                "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+                "operation_id": action["operation_id"],
+                "target_generation": action["target_generation"],
+                "obligations": obligations,
+                "do_not_replay": True,
+                "observed_producer_live": False,
+                "late_server_request_possible": True,
+                "dispatch": {"input_dispatched": None,
+                    "release_confirmed": False, "task_success": None,
+                    "replay_allowed": False}}
+            reply = await fresh_server.call_tool(
+                "interface_recover_orphaned_input", {
+                    "source_operation_id": action["operation_id"],
+                    "source_target_generation": action["target_generation"],
+                    "recovery_target_generation": recovery_generation,
+                    "obligations": obligations,
+                    "source_custody_record": source_custody_record})
+            recovered = self.row(reply)
+            self.assertEqual(recovered["status"], "recovered", recovered)
+            self.assertEqual(recovered["source_action_status"], "unknown")
+            self.assertTrue(recovered["release_confirmed"])
+            self.assertTrue(recovered["recovery_receipt"][
+                "late_input_horizon_verified"])
+            self.assertEqual(recovered["recovery_receipt"][
+                "late_input_horizon_ns"], 2_000_000_000)
+            self.assertIsNone(recovered["task_success"])
+            self.assertFalse(recovered["replay_allowed"])
+            self.assertTrue(recovered["next_action_requires_fresh_generation"])
+            self.assertEqual(len(recovery_calls), 1)
+            self.assertEqual(recovery_calls[0][0], action["operation_id"])
+            self.assertEqual(recovery_calls[0][1], action["target_generation"])
+            self.assertEqual(recovery_calls[0][4], obligations)
+            self.assertEqual(recovery_calls[0][5], recovery_generation)
+
+            original = self.row(await server.call_tool("interface_results", {
+                "call_id": result["call_id"]}))
+            self.assertEqual(original["action"]["status"], "unknown")
+            self.assertFalse(original["action"]["release_confirmed"])
+            self.assertIsNone(original["task_success"])
+            self.assertFalse(original["replay_allowed"])
+
     async def test_public_dispatch_keeps_child_release_unconfirmed_without_observer_readback(self):
         process = FakeProcess()
         identity = {"pid": 7101, "creation_time_100ns": 90101}
@@ -1807,6 +1915,89 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(verified["task_effect"]["receipt"]["operation_id"],
                                      retained["action"]["operation_id"])
                     self.assertFalse(verified["replay_allowed"])
+
+    async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
+
+        recovery_generation = "b" * 64
+        with TemporaryDirectory() as root:
+            source_output = Path(root) / "source-receipts"
+            source_params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(source_output), "--mode", "exception-unknown"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(source_params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    program = self.valid_program()
+                    program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
+                    reply = await client.call_tool("interface_dispatch", {
+                        "program": program, "current_observation_seq": 1,
+                        "current_binding_revision": 1, "wait_for_result_ms": 0})
+                    pending = self.row(reply)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    deadline = time.monotonic() + 2
+                    retained = None
+                    while time.monotonic() < deadline:
+                        result = await client.call_tool("interface_results", {
+                            "call_id": pending["call_id"], "include_image": False})
+                        retained = self.row(result)
+                        action = retained.get("action")
+                        if isinstance(action, dict) and action.get("status") == "unknown":
+                            break
+                        await asyncio.sleep(0.01)
+                    self.assertEqual(retained["action"]["result"]["status"],
+                                     "unknown", retained)
+                    self.assertFalse(retained["action"]["release_confirmed"])
+                    self.assertEqual(retained["cancellation"]["status"],
+                                     "unknown")
+                    self.assertTrue(retained["cancellation"][
+                        "automatic_completion_recovery"])
+                    self.assertIsNone(retained["task_success"])
+                    self.assertFalse(retained["replay_allowed"])
+                    action = retained["action"]
+                    obligations = derive_input_obligations(program)
+                    custody = {
+                        "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+                        "operation_id": action["operation_id"],
+                        "target_generation": action["target_generation"],
+                        "obligations": obligations,
+                        "do_not_replay": True,
+                        "observed_producer_live": False,
+                        "late_server_request_possible": True,
+                        "dispatch": {"input_dispatched": None,
+                            "release_confirmed": False, "task_success": None,
+                            "replay_allowed": False}}
+
+            recovery_output = Path(root) / "recovery-receipts"
+            recovery_params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(recovery_output), "--mode", "recovery",
+                      "--recovery-generation", recovery_generation],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(recovery_params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool("interface_recover_orphaned_input", {
+                        "source_operation_id": action["operation_id"],
+                        "source_target_generation": action["target_generation"],
+                        "recovery_target_generation": recovery_generation,
+                        "obligations": obligations,
+                        "source_custody_record": custody})
+                    recovered = self.row(reply)
+                    self.assertEqual(recovered["status"], "recovered", recovered)
+                    self.assertEqual(recovered["source_action_status"], "unknown")
+                    self.assertTrue(recovered["release_confirmed"])
+                    self.assertTrue(recovered["recovery_receipt"][
+                        "late_input_horizon_verified"])
+                    self.assertEqual(recovered["recovery_receipt"][
+                        "late_input_horizon_ns"], 2_000_000_000)
+                    self.assertIsNone(recovered["task_success"])
+                    self.assertFalse(recovered["replay_allowed"])
+                    self.assertTrue(recovered["next_action_requires_fresh_generation"])
+
 
     async def test_stdio_exception_auto_recovers_and_keeps_action_unknown(self):
         from mcp import ClientSession, StdioServerParameters
