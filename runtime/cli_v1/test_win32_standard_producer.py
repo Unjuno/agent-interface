@@ -165,6 +165,54 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "identity or schema mismatch"):
                 factory.read_result(process)
 
+    def test_dispatch_exception_persists_unknown_receipt_for_parent_reader(self):
+        from unittest.mock import patch
+        from runtime.cli_v1.win32_standard_producer import _run_standard_program
+
+        class OpenGate:
+            def wait(self):
+                return True
+
+        class FakeBackend:
+            def __init__(self, targets, *, program_emission_counter):
+                self.targets = targets
+                self.program_emission_counter = program_emission_counter
+
+            def close(self):
+                return {"status": "closed"}
+
+        class RaisingSession:
+            def __init__(self, _backend):
+                pass
+
+            def dispatch(self, _program, *, current_observation_seq,
+                         current_binding_revision):
+                raise RuntimeError("controlled dispatch exception")
+
+        with tempfile.TemporaryDirectory() as root:
+            factory = self.factory_type({"fixture": 42}, root,
+                context=Context(), process_identity_reader=lambda _process: {
+                    "pid": 41, "creation_time_100ns": 99})
+            process, _, _ = factory(self.make_action())
+            with patch("runtime.backends.win32_v1.backend.Win32Backend",
+                       FakeBackend), patch(
+                    "runtime.backends.win32_v1.session.Win32RuntimeSession",
+                    RaisingSession):
+                _run_standard_program(OpenGate(), {"fixture": 42},
+                    self.make_action(), process.args[3], process.args[4])
+
+            process.alive, process.exitcode = False, 0
+            result = factory.read_result(process)
+
+        self.assertEqual(result["result"], {
+            "status": "runtime_failed", "error_type": "RuntimeError",
+            "detail": "controlled dispatch exception"})
+        self.assertEqual(result["release_receipt"], {
+            "verified": False, "keys_down": [], "buttons_down": [],
+            "keys_unknown": ["producer_exception"], "buttons_unknown": []})
+        self.assertEqual(result["producer_timing"]["clock"],
+                         "time.monotonic_ns")
+
 
 if __name__ == "__main__":
     unittest.main()
