@@ -31,6 +31,8 @@ median is based on two samples; route internals and provider/cache conditions
 differ. These blocks do not establish general speed/cost/reliability, persistent
 or partial-input recovery, all-attempt accounting, or MAP01.
 
+**2026-11-13 finite Calc comparison (PR #10258, main `fdf9dc2a1165314dd407c9ffc9f3ae4699a3d2ab`):** A preregistered six-attempt batch compared repeated fresh grounding (2), optimized ordinary control with location-hint reuse (2), and compiled graph execution (2), with all attempts and usage retained. All six passed the scoped three-effect task, known-obstruction refusal/no-emission check, release checks, and cleanup. Prepared-invocation medians were 33.4765 s fresh, 16.5815 s ordinary, and 19.4015 s compiled; compiled was about 17% slower than ordinary in this batch. Each arm has only two observations, provider/cache load was uncontrolled, and the harness supplied known-value OCR and removed the obstruction. Thus this is a finite Calc finding, not broad reliability or a causal estimate of reuse. Retain guarded location-hint reuse/refusal/repair; HOLD compiled economic promotion for this task. Raw private packet: `private-packets/calc_matched_20261113_m01` (manifest SHA-256 `32387149a6b460adad7460cc81ec84547884769a85f2c30875cef0c1070cd414`). This advances the integrated comparison but does not complete #57: MAP01, independent task semantics, broader matched attempts, and the remaining recovery/custody boundaries remain open.
+
 Open Draft [PR #10218](https://github.com/Unjuno/agent-interface/pull/10218)
 adds bounded same-turn late-usage capture after timeout while preserving the
 timeout attempt and requiring task-score custody before explicit ingestion.
