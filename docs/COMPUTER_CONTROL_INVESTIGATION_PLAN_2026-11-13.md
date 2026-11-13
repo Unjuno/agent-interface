@@ -38,7 +38,9 @@ Move the computer-control goal forward by closing the currently visible gap betw
 - A task-effect pass requires independent same-run numeric change 50→49, exact final dispatch/call linkage, valid public task-oracle receipt, and the preregistered demo audit.
 - No speed claim from this single instrumented run. Report local checks separately from live evidence and any optional CI.
 
-## Current next action
+## Status and next action
 
-Run the focused checks and repair the preflight script's tautological comparison. If frozen verification succeeds and custody remains clear with no GZDoom process, proceed with exactly one R157 run under its preregistration.
+R157 completed one native run. Its 18 release/task checks and scoped demo audit passed; the raw packet's 105-file post-run manifest and four-file adjudication addendum verify with no hash mismatches. The frozen source was a docs-only task-branch commit atop main, so the report records that provenance deviation. The run exercised normal pending resolution, not the exception-only result-reconciliation branch.
+
+Next, add a deterministic local integration test that injects pending terminal/result-query failures and proves the exception branch remains exact-call-only, non-replaying, and UNKNOWN when receipts are missing. Then decide whether another live attempt is necessary. Do not repeat a live allocation solely to obtain the same already-passed normal-path result.
 
