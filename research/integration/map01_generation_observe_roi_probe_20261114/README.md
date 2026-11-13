@@ -25,4 +25,4 @@ This probe does not test expiry, delayed input, physical input release, recovery
 
 In a separately frozen native exception-recovery attempt, replace only the recovery-time generation revalidation capture with the 1×1 public observation. Keep the original full-resolution independent effect captures, exact-generation binding, UNKNOWN/no-replay policy, release readback, and both two-second horizons. Accept only if the integrated timing meets its unchanged bound and all release/effect gates pass; otherwise preserve the failure.
 
-Public conditions, all 16 timing/image-hash rows, summary, and their hashes are in this directory. Full raw MCP receipts and PNGs remain in the task-local packet.
+Public conditions, all 16 timing/image-hash rows, summary, and their hashes are in this directory. `SHA256SUMS.json` hashes the committed Git blob bytes (Git normalizes these text files to LF); the task-local manifest independently hashes exact private-packet bytes. Full raw MCP receipts and PNGs remain in the task-local packet.
