@@ -1133,7 +1133,8 @@ class Win32Backend:
                 "state_query_witnesses": state_witnesses,
                 "release_errors": release_errors,
                 "release_attempts": release_attempts,
-                "monotonic_ns": time.monotonic_ns()}
+                "monotonic_ns": time.monotonic_ns(),
+                "perf_counter_ns": time.perf_counter_ns()}
             try:
                 error.release_attempt_errors = release_errors
                 error.release_attempt_receipt = attempt_receipt
@@ -1147,7 +1148,8 @@ class Win32Backend:
                 "release_attempts": release_attempts,
                 "verified": (not release_errors and not keys and not buttons
                     and not unknown_keys and not unknown_buttons),
-                "monotonic_ns": time.monotonic_ns()}
+                "monotonic_ns": time.monotonic_ns(),
+                "perf_counter_ns": time.perf_counter_ns()}
 
     def execute(self, program: dict[str, Any], *, bound_target=None, guard=None, preflight_guard=None) -> dict[str, Any]:
         if bound_target is None:

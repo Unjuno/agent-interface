@@ -90,6 +90,14 @@ class ReleaseLedgerTests(unittest.TestCase):
         self.assertEqual(obj.held_keys, {"Q": 81})
         self.assertEqual(obj.held_buttons, {"left"})
 
+    def test_release_receipt_keeps_deadline_and_elapsed_clocks_distinct(self):
+        obj = self.make_backend()
+        with patch.object(native.time, "monotonic_ns", return_value=111), \
+             patch.object(native.time, "perf_counter_ns", return_value=222):
+            receipt = self.row(obj, obj.release_all)
+        self.assertEqual(receipt["monotonic_ns"], 111)
+        self.assertEqual(receipt["perf_counter_ns"], 222)
+
     def test_mixed_up_down_retires_only_confirmed_up_obligations(self):
         obj = self.make_backend({"Q": 81, "R": 82}, {"left", "right"},
                                 down=(81, 82, 1, 2), stubborn=(81, 1))
@@ -131,6 +139,8 @@ class ReleaseLedgerTests(unittest.TestCase):
             "domain": "key_up", "virtual_key": 82,
             "encoding": None, "error_type": "Win32BackendError"}])
         self.assertEqual(caught.exception.release_attempt_receipt["keys_down"], ["R"])
+        self.assertIsInstance(
+            caught.exception.release_attempt_receipt["perf_counter_ns"], int)
         attempts = caught.exception.release_attempt_receipt["release_attempts"]
         self.assertEqual([row["outcome"] for row in attempts],
                          ["returned", "raised", "returned"])
