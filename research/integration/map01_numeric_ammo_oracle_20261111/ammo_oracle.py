@@ -67,6 +67,30 @@ def classify_ammo_frame(image: Image.Image, template_dir: Path) -> dict:
     return classify_ammo_image(image.crop(AMMO_DIGIT_BOX), template_dir)
 
 
+def verify_ammo_frame_transition(before_path: Path, after_path: Path,
+                                 template_dir: Path,
+                                 expected_before: str = "50",
+                                 expected_after: str = "49") -> dict:
+    """Verify an ammo transition from two complete frozen-geometry frames.
+
+    Full-frame capture is the public observation shape. Keep ROI cropping at
+    this boundary so callers cannot accidentally feed a 1520x825 frame into
+    the patch-only classifier or silently change the frozen crop.
+    """
+    with Image.open(before_path) as image:
+        before = classify_ammo_frame(image, template_dir)
+    with Image.open(after_path) as image:
+        after = classify_ammo_frame(image, template_dir)
+    if before["status"] != "classified" or after["status"] != "classified":
+        return {"status": "unknown", "before": before, "after": after}
+    if before["value"] != expected_before:
+        return {"status": "unknown", "reason": "baseline_value_mismatch",
+                "before": before, "after": after}
+    status = "success" if after["value"] == expected_after else "failure"
+    return {"status": status, "before": before, "after": after,
+            "expected_transition": [expected_before, expected_after]}
+
+
 def verify_ammo_transition(before_path: Path, after_path: Path,
                            template_dir: Path, expected_before: str = "50",
                            expected_after: str = "49") -> dict:
