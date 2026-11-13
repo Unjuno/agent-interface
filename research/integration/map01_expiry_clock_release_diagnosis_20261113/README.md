@@ -47,8 +47,32 @@ remain unchanged. See [corrected derivation](R142_CORRECTED_ADJUDICATION.json).
 
 The 59-test `map01_numeric_ammo_oracle_20261111` suite passes in CPython 3.11.9
 normal and optimized (`-O`) modes after the fix. This verifies the offline
-adjudicator contract only; it does not qualify a live release or resolve the
-cross-domain deadline comparison.
+adjudicator contract; the separate R158 section records the live QPC-native
+release qualification and its limits.
+
+## Fresh integrated replication R158
+
+R158 then exercised one fresh public compiled-supervised Win32 MAP01 attempt
+from source `3170337504f69051c79e3279352b7dee4504e7ac`, with the runtime tree
+matching `origin/main` at freeze. Its QPC clock preflight qualified before
+dispatch. All 19 runtime gates passed without retry, replay, or relaxing the
+10 s graph budget / 20 ms boundary. The conservative expiry bracket was
+10.4057 ms; first W-up was read 8.3652 ms after expiry. Two traced native
+`SendInput` calls began +7.3236/+7.9675 ms after expiry. The exact public call
+produced an independently verified ammo transition 50→49, recovery confirmed
+same-generation all-up, and the two-second neutral horizon passed over 183
+samples (maximum gap 11.5357 ms). Same-run demo analysis found no recorded
+forward command after expiry/release through the scoped horizon. The owned
+process exited normally without forced termination.
+
+This is a scoped positive replication, not reliability, MAP01 completion,
+proof against every queued Windows message, or an efficiency comparison. The
+packet's preregistration `Attempt` string differs from the frozen conditions
+ID; that clerical mismatch is preserved in the result summary and was not
+corrected after the attempt. The local R158 packet is
+`private-packets/map01_native_windows_deep_trace_20261113_r158`; its post-exit
+manifest verified 81/81 files and its final additive manifest verified 87/87.
+See `R158_RESULT_SUMMARY.md` in that packet.
 
 ## Reproduction and custody
 

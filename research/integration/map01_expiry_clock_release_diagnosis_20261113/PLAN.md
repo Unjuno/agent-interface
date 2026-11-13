@@ -64,44 +64,64 @@ result was not rewritten.
 
 ## Research plan
 
-1. **Close the clock-domain ambiguity in the integrated path.** Retain the
-   paired-clock probe and strict-equality fix. In the next runner candidate, record
+1. **Close the clock-domain ambiguity in the integrated path.** **Done for the
+   QPC route:** retain the paired-clock probe and strict-equality fix. R158's
+   public MCP preflight required same-host QPC and its deadline, sampler, and
+   stage trace all used QPC. Python 3.11 `GetTickCount64` versus QPC remains an
+   unqualified mixed-domain route. In any later runner, record
    `get_clock_info`, process/runtime identity, and paired `monotonic_ns` /
    `perf_counter_ns` readings in every process that contributes to a deadline
    or boundary decision. A sample is pre/post-deadline only when all timestamps
    used for the comparison are in one verified domain; do not infer an epoch
    conversion from nominal resolution. Equality with the deadline is not
    “fully after.”
-2. **Keep latency stages distinct.** Capture the same QPC clock at serialized
-   expiry, monitor wake, cancellation admission, helper request/response,
-   `SendInput` entry/return, and independent key readback. Keep release request
-   timestamps distinct from API insertion and observed neutral state.
-3. **Run one fresh native MAP01 attempt** from a clean current-main source and
-   fresh packet, after verifying assets, process/window isolation, target
-   generation, passive CUA gate, and packet/source hashes. Preserve the fixed
-   20 ms bracket, 10 s graph budget, one dispatch, exact 50→49 oracle,
-   same-generation release, two-second neutral horizon, demo adjudication,
-   first-outcome-only rule, and no replay. Do not reuse R142/R157 IDs or raw.
-4. **Decide from the evidence.** If same-domain sampling shows the API call
-   begins promptly but neutral readback is late, investigate OS/application
-   delivery. If monitor/helper/API entry itself is late, investigate that stage
-   without relaxing the contract. If R142's wide bracket disappears only when
-   clocks are aligned, classify its timing attribution as unresolved and keep
-   its original FAIL unchanged. Any missing identity, clock metadata, recovery
-   receipt, task effect, or horizon remains FAIL/UNKNOWN.
+2. **Keep latency stages distinct.** **Done for R158:** its QPC trace retained
+   serialized expiry, recovery exchange, recovery send, both native
+   `SendInput` entry/return spans, helper recovery entry and independent
+   readback. The two native calls began +7.3236/+7.9675 ms after expiry; no
+   span was dropped. Release request, API insertion, and neutral observation
+   remain distinct evidence.
+3. **Run one fresh native MAP01 attempt.** **Done as R158:** clean pinned
+   source, unique process/window, passive CUA gate, one public dispatch, fixed
+   10 s budget and 20 ms boundary, exact 50→49 task oracle, same-generation
+   release, two-second neutral horizon and same-run demo analysis. All 19
+   runtime gates passed; no retry or replay. Preserve the clerical prereg
+   attempt-label mismatch as an explicit deviation; do not edit frozen files.
+4. **Decide from the evidence.** R158 shows the QPC-native integrated route
+   can meet the 20 ms gate in one attempt, while R142 remains a real
+   conservative 41.941 ms bracket miss and its release-call latency is unknown.
+   The clock mismatch and equality bug explain why R142's intermediate timing
+   attribution was unreliable; they do not erase its gate failure or prove the
+   sole physical cause. Any missing identity, clock metadata, recovery receipt,
+   task effect, or horizon remains FAIL/UNKNOWN.
+
+## Next unresolved boundary
+
+The present diagnosis step is complete. The full computer-control goal is
+still open. R158 exercised automatic public lease-expiry recovery, but it did
+not force the exception-only native continuation path or prove absence of all
+queued OS/application effects. The next discriminating live step is one fresh,
+isolated native exception-path attempt using the same QPC stage tracing, exact
+call/task oracle, same-generation release and two-second neutral horizon. Keep
+the original terminal UNKNOWN and replay denial semantics. Follow with
+delayed-effect observation beyond the horizon before broadening reliability
+or #57 economics claims.
 
 ## Completion criteria for this diagnosis step
 
 - The R142 failure is described without conflating the exact task effect,
-  eventual neutral state, and strict timing gate.
+  eventual neutral state, and strict timing gate. **Done.**
 - The clock-coordinate mismatch and missing SendInput-stage timestamps are
-  directly evidenced and the uncertainty is explicit.
+  directly evidenced and the uncertainty is explicit. **Done.**
 - The shared boundary adjudicator rejects deadline equality, its regression
   passes, and the corrected R142 derivation is retained separately from the
   original result. **Done:** 59 tests pass normally and under `-O`.
 - A fresh attempt uses a single verified time domain for all deadline
   adjudication and retains raw conditions/results with no weakened gates.
+  **Done for one scoped sample:** R158, all 19 gates passed; raw and final
+  packet manifests verified.
 
-This plan and the clock probe advance diagnosis; they do not complete computer
-control, prove a cause for R142, establish reliability, or provide an efficiency
-comparison for Issue #57.
+The clock/adjudication diagnosis and one QPC-native integrated attempt are now
+recorded. They do not prove a cause for R142, establish reliability, clear
+MAP01, exclude every queued effect, or provide an efficiency comparison for
+Issue #57.
