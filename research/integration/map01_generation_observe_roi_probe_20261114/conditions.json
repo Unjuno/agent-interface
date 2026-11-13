@@ -1,0 +1,85 @@
+{
+  "schema": "map01-generation-observe-roi-probe-v1",
+  "attempt_id": "map01-generation-observe-roi-probe-20261114-01",
+  "frozen_utc": "2026-11-13T15:08:01Z",
+  "question": "Does a 1x1 screen_physical_px interface_observe preserve exact target-generation consistency while reducing observation latency versus the full 1520x825 capture on the same MAP01 process?",
+  "hypothesis": "The capture cost dominates recovery generation revalidation; 1x1 screen region will reduce p50 and p90 public observation latency without generation mismatch.",
+  "source": {
+    "head": "bb7ea3546cde9b6a2bb51cfb11e002ae5d1d6a4d",
+    "tree": "bee6da37915ff79f781fe83a0ab9318b813d58f7",
+    "origin_main_head": "b47312bba2799c2ffebdb713b2c45deb0c3cfabc",
+    "origin_main_tree": "bee6da37915ff79f781fe83a0ab9318b813d58f7",
+    "same_tree_as_merged_main": true,
+    "mcp_server_sha256": "46aa8814ad15bed11931fd32f553f744c98e36c35ec57465198310638a81fed4",
+    "backend_sha256": "c728fdca5c8d766ba269a5c4acd1aa6358cb0858f1015c9dbe88c684297883d3"
+  },
+  "runtime": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "monotonic_clock": {
+      "implementation": "GetTickCount64()",
+      "monotonic": true,
+      "adjustable": false,
+      "resolution": 0.015625
+    },
+    "perf_counter_clock": {
+      "implementation": "QueryPerformanceCounter()",
+      "monotonic": true,
+      "adjustable": false,
+      "resolution": 1e-07
+    }
+  },
+  "assets": {
+    "gzdoom_sha256": "ec706c2ea1ef946eec13be7b1b461df8d52efcd47caa6c056ed0e0257f7f9ffa",
+    "iwad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "seed_config_sha256": "57c7ada9ad0ce10d51b338c39a851c1e53bc0a5a5d8f058302581a7693f98711",
+    "instance_config_sha256": "57c7ada9ad0ce10d51b338c39a851c1e53bc0a5a5d8f058302581a7693f98711"
+  },
+  "target": {
+    "window_title": "Hydroelectric Plant - Freedoom: Phase 2",
+    "client_geometry": [
+      1520,
+      825
+    ],
+    "frame": "screen_physical_px"
+  },
+  "protocol": {
+    "acceptance": "all calls returned; target generation identical across all calls; exact expected PNG dimensions; pixel arm median and p90 lower than full arm",
+    "arms": [
+      "full_client_roi_1520x825",
+      "top_left_interior_pixel_1x1"
+    ],
+    "input_dispatches": 0,
+    "order": "alternating; full then pixel",
+    "pairs": 8,
+    "primary_metrics": [
+      "QPC elapsed per complete stdio interface_observe call",
+      "target_generation consistency and value",
+      "returned PNG dimensions"
+    ],
+    "scope": "read-only native public MCP observation; not release/recovery/task effect or safety/efficiency qualification"
+  },
+  "arms": {
+    "full": {
+      "region_origin_relative_to_client": [
+        0,
+        0
+      ],
+      "dimensions": [
+        1520,
+        825
+      ]
+    },
+    "pixel": {
+      "region_origin_relative_to_client": [
+        2,
+        2
+      ],
+      "dimensions": [
+        1,
+        1
+      ]
+    }
+  },
+  "timing": "time.perf_counter_ns/QPC around complete public stdio interface_observe call"
+}

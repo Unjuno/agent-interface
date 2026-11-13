@@ -1,0 +1,50 @@
+{
+  "schema": "map01-generation-observe-roi-probe-result-v1",
+  "attempt_id": "map01-generation-observe-roi-probe-20261114-01",
+  "outcome": "PASS",
+  "calls": 16,
+  "generation_unique_count": 1,
+  "generation": "80865a2111617e376f222f912be16dacc15fcb179f3d7ac410cef419c920e4dd",
+  "arms_ms": {
+    "full": {
+      "samples": [
+        350.008,
+        341.8967,
+        337.7111,
+        348.028,
+        336.7151,
+        346.3713,
+        340.026,
+        349.0382
+      ],
+      "median": 344.134,
+      "p90_nearest_rank": 350.008
+    },
+    "pixel": {
+      "samples": [
+        32.4049,
+        22.8606,
+        28.3207,
+        21.2812,
+        14.3174,
+        22.2748,
+        15.7179,
+        28.0127
+      ],
+      "median": 22.567700000000002,
+      "p90_nearest_rank": 32.4049
+    }
+  },
+  "all_status_returned": true,
+  "exact_dimensions": true,
+  "input_dispatches": 0,
+  "scope": "read-only capture timing only; does not test input, expiry, recovery, task effect, reliability, or efficiency",
+  "overall_attempt_outcome": "DEVIATION_AFTER_MEASURED_CALLS",
+  "captured_call_window_outcome": "PASS",
+  "deviation": "All 16 public interface_observe calls completed and raw observations were saved before a later Computer Use window-close click. The click landed in the game client; refreshed screenshot showed ammo 49 versus pre-probe ammo 50. Therefore the frozen overall zero-input condition is not a clean PASS. Do not use the run to claim a zero-input whole-session result.",
+  "causal_attribution": "One UI click is temporally associated with the observed ammo decrement; exact OS event internals were not captured. No interface_dispatch was called by the probe.",
+  "source_packet_manifest": {
+    "file_count": 96,
+    "sha256": "af56926eadf1b1c362811840d1d83dbaf22e3c0134f7931fbb953f274776178e"
+  }
+}
