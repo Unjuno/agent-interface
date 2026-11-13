@@ -1,6 +1,6 @@
 # MAP01 expiry clock and release diagnosis
 
-Date: 2026-11-13  
+Date: 2026-11-13
 Goal: identify whether the MAP01 20 ms expiry-boundary miss reflects a real
 late release, a clock-domain/adjudication defect, or both, then run a fresh
 integrated attempt without weakening any acceptance gate.
