@@ -1,0 +1,18 @@
+{
+  "experiment_id": "v39-soft-feedback-routing-a02-auditor-repair-20261005",
+  "main_base": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "a01_result_path": "research/doom/v39_soft_feedback_routing_a01_20261005/RESULT.json",
+  "a01_result_sha256": "32cebb61307ce093d0e3b1202bd1b60d77f185c888da60a444c835b03be24e47",
+  "a01_candidate_sha256": "c46d2db3768e1036bda9c36076d66d1870501c720e54208d567331d91996f1ab",
+  "a01_original_audit_outcome": "exit 1 at planner timeline anchor count; retained unchanged",
+  "controller_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "sha256": {
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "guard_source_copy": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "audit": "16346eacaa816c695036edf5fc5a2618fe68da6244614e11841b98264b960eb9"
+  },
+  "decision_gate": "Pass raw/source reconstruction only if the unchanged A01 result and current-main source order validate; no candidate, model, game, GUI, OS input, container, or live allocation is rerun.",
+  "invocation_limit": {"auditor": 1, "candidate": 0},
+  "allocation": "offline posthoc auditor repair only"
+}

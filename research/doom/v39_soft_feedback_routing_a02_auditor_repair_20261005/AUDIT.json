@@ -1,0 +1,25 @@
+{
+  "a01_candidate_rerun": false,
+  "a01_original_audit_status": "FAIL_TIMELINE_ANCHORS_MISSING",
+  "a01_result_sha256": "32cebb61307ce093d0e3b1202bd1b60d77f185c888da60a444c835b03be24e47",
+  "checks": {
+    "planner_summary_and_prompt_precede_current_wait": true,
+    "production_monitor_soft_ammo_change_has_no_invalidation": true,
+    "soft_event_is_recorded_on_decision_after_future_result": true,
+    "soft_observation_is_monitored_inside_pending_turn_loop": true,
+    "soft_summary_route_is_later_decision_only": true
+  },
+  "disposition": "PASS_SOURCE_RAW_RECONSTRUCTION; FAIL_NO_INDEPENDENT_IN_FLIGHT_FEEDBACK",
+  "line_evidence": {
+    "begin_model_turn_line": 858,
+    "future_result_line": 888,
+    "monitored_wait_line": 869,
+    "pending_loop_line": 867,
+    "pool_submit_await_method_reference_line": 864,
+    "post_turn_record_line": 914,
+    "prior_summary_line": 852
+  },
+  "main_base": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "schema": "v39-soft-event-routing-a02-audit-v1",
+  "scope": "offline synthetic typed-observation and source-composition only"
+}

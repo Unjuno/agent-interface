@@ -1,0 +1,6 @@
+Run from repository root:
+
+python -B research/doom/v39_soft_feedback_routing_a05_cancelled_turn_carry_20261005/candidate.py
+python -B research/doom/v39_soft_feedback_routing_a05_cancelled_turn_carry_20261005/audit.py
+
+The candidate ran once. Independent auditor v1 failed because it compared JSON serialization byte order rather than structural content; preserve that failure under `audit_v1/`. Auditor successor v2 compares parsed JSON structures and passes without rerunning the candidate.

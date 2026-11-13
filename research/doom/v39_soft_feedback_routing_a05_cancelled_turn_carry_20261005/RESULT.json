@@ -1,0 +1,59 @@
+{
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "main_base": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "prompt_contains_exact_summary": true,
+  "schema": "v39-soft-feedback-a05-cancel-carry-v1",
+  "scope": "offline current-source AST and helper composition only; no model, game, GUI, OS input, container, or live allocation",
+  "source": {
+    "continue_after_append": true,
+    "decision_append_line": 914,
+    "invalidation_branch_line": 913,
+    "next_prompt_builder_call_line": 858,
+    "next_summary_call_line": 852,
+    "soft_event_fields_retained": true
+  },
+  "stub_next_prompt": "Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 96.\nCurrent locally verified ammo: 37.\nNewest typed soft event from the preceding control interval: {\"signal_id\":\"ammo\",\"source_value\":46,\"current_value\":37,\"hard_minimum\":1,\"soft_event_count\":1,\"sequence\":2,\"observed_during_iteration\":1,\"cover_policy_source_iteration\":0,\"effect\":\"prior_cover_preserved\",\"grants_input_authority\":false}\nPrevious no-visible-effect actions: []\n",
+  "summary_after_cancel": {
+    "cover_policy_source_iteration": 0,
+    "current_value": 37,
+    "effect": "prior_cover_preserved",
+    "grants_input_authority": false,
+    "hard_minimum": 1,
+    "observed_during_iteration": 1,
+    "sequence": 2,
+    "signal_id": "ammo",
+    "soft_event_count": 1,
+    "source_value": 46
+  },
+  "summary_grants_input_authority": false,
+  "synthetic_canceled_decision": {
+    "cover_policy_source_iteration": 0,
+    "cover_validity_latest_soft_event": {
+      "outcome": {
+        "current_value": 37,
+        "grants_input_authority": false,
+        "hard_minimum": 1,
+        "keep_existing_policy": true,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "signal_id": "ammo",
+        "source_value": 46,
+        "status": "SOFT_CHANGED"
+      },
+      "sequence": 2,
+      "signal": {
+        "sequence": 2,
+        "signal_id": "ammo",
+        "value": 37
+      }
+    },
+    "cover_validity_soft_events": 1,
+    "iteration": 1,
+    "model_action_discarded": true,
+    "plan_terminal": "not_admitted",
+    "policy_invalidation": {
+      "reason": "health:below_hard_minimum"
+    }
+  }
+}
