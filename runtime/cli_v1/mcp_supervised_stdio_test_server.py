@@ -12,6 +12,7 @@ from runtime.cli_v1.test_mcp_supervised_win32 import (
     FakeSupervisor,
     GENERATION,
     HeldProducerFactory,
+    RecoveringFakeSupervisor,
 )
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.guarded_win32_v1.operation_owner import OperationOwner
@@ -58,9 +59,15 @@ def main():
                 "late_input_max_sample_gap_ns": max_sample_gap_ns}
         supervisor.recover_orphaned_input = recover
         target_generation = args.recovery_generation
+    elif args.mode == "delayed-expiry":
+        supervisor = DelayedRecoveringFakeSupervisor(operation_owner, process)
+        target_generation = GENERATION
+    elif args.mode == "exception":
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        target_generation = GENERATION
     else:
-        supervisor = (DelayedRecoveringFakeSupervisor(operation_owner, process)
-            if args.mode == "delayed-expiry" else FakeSupervisor(operation_owner))
+        supervisor = FakeSupervisor(operation_owner)
+        target_generation = GENERATION
         target_generation = GENERATION
     owner = OwnedWin32SessionOwner(operation_owner, supervisor,
         synthetic_only=False)

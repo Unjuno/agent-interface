@@ -698,7 +698,15 @@ class OwnedWin32SessionOwner:
             return False
 
     def cancel_guarded(self, call_id, *, cancellation_operation_id=None,
-                       cleanup_deadline_ns=None):
+                       cleanup_deadline_ns=None,
+                       _automatic_completion_recovery=False,
+                       _completion_error_type=None):
+        if type(_automatic_completion_recovery) is not bool:
+            raise ValueError("automatic completion recovery marker must be boolean")
+        if (_completion_error_type is not None
+                and (type(_completion_error_type) is not str
+                     or not _completion_error_type)):
+            raise ValueError("completion error type must be a nonempty string")
         if cleanup_deadline_ns is None:
             cleanup_deadline_ns = time.monotonic_ns() + _CANCEL_TRANSACTION_NS
         if type(cleanup_deadline_ns) is not int:
@@ -740,6 +748,9 @@ class OwnedWin32SessionOwner:
                 "replay_allowed": False,
                 "result": None,
             }
+            if _automatic_completion_recovery:
+                cancellation["automatic_completion_recovery"] = True
+                cancellation["completion_error_type"] = _completion_error_type
             record["cancellation"] = cancellation
             try:
                 # Admission already persisted unresolved custody before the
@@ -776,6 +787,9 @@ class OwnedWin32SessionOwner:
             action = record["action"]
             action["result"] = deepcopy(result)
             action["status"] = result.get("status", "unknown")
+            for field in ("release_confirmed", "task_success", "replay_allowed"):
+                if field in result:
+                    action[field] = deepcopy(result[field])
             return self.interface_result(call_id)
 
     def complete_action(self, call_id, process_handle, result, *, release_receipt,
@@ -910,6 +924,39 @@ class OwnedWin32SessionOwner:
                     release_confirmed=False, task_success=None,
                     replay_allowed=False)
             return self.interface_result(call_id)
+
+        def recover_unconfirmed_completion(error_type):
+            """Schedule bounded release while the action is still UNKNOWN-capable.
+
+            A dead native producer with no trustworthy completion packet may
+            have left OS input down. Start the existing cancellation recovery
+            before marking the operation UNKNOWN so the supervisor can retire
+            the exact producer and release its frozen obligations. The action
+            and release receipt remain separate in the public result.
+            """
+            with self._lock:
+                current = self._calls.get(call_id)
+                if (current is None or current.get("standard_program") is None
+                        or current.get("cancellation") is not None
+                        or current["action"].get("status") != "running"):
+                    return False
+                operation_id = current["action"]["operation_id"]
+                generation = current["action"]["target_generation"]
+            try:
+                phase = self._owner.result(operation_id).get("phase")
+            except Exception:
+                return False
+            if phase != "running":
+                return False
+            try:
+                self.cancel_guarded(call_id,
+                    cleanup_deadline_ns=(time.monotonic_ns()
+                        + _CANCEL_TRANSACTION_NS),
+                    _automatic_completion_recovery=True,
+                    _completion_error_type=error_type)
+            except Exception:
+                return False
+            return True
         try:
             alive = process_handle.is_alive()
             exit_code = process_handle.exitcode
@@ -929,6 +976,16 @@ class OwnedWin32SessionOwner:
                     or type(packet["result"]) is not dict
                     or type(packet["release_receipt"]) is not dict):
                 raise ValueError("producer result packet schema mismatch")
+            release_receipt = packet["release_receipt"]
+            release_verified = (release_receipt.get("verified") is True
+                and release_receipt.get("keys_down") == []
+                and release_receipt.get("buttons_down") == []
+                and release_receipt.get("keys_unknown") == []
+                and release_receipt.get("buttons_unknown") == [])
+            if (not release_verified
+                    and recover_unconfirmed_completion(
+                        "UnverifiedProducerReleaseReceipt")):
+                return self.interface_result(call_id)
             producer_timing = packet.get("producer_timing")
             if producer_timing is not None and (
                     type(producer_timing) is not dict
@@ -949,10 +1006,22 @@ class OwnedWin32SessionOwner:
                 "target_generation": action["target_generation"],
                 "producer_exit_confirmed_ns": exit_confirmed_ns,
             })
+            readback_verified = (type(readback) is dict
+                and readback.get("operation_id") == action["operation_id"]
+                and readback.get("target_generation")
+                    == action["target_generation"]
+                and readback.get("producer_exit_confirmed_ns")
+                    == exit_confirmed_ns
+                and readback.get("neutral") is True)
+            if (not readback_verified
+                    and recover_unconfirmed_completion(
+                        "UnverifiedProducerNeutralReadback")):
+                return self.interface_result(call_id)
             return self.complete_action(call_id, process_handle,
                 packet["result"], release_receipt=packet["release_receipt"],
                 readback=readback, producer_timing=producer_timing)
         except Exception as error:
+            recover_unconfirmed_completion(type(error).__name__)
             return retain_unknown("COMPLETION_EVIDENCE_UNCONFIRMED",
                                  type(error).__name__)
 

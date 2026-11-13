@@ -147,6 +147,19 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             'release_confirmed': False, 'effect_status': 'unknown',
             'task_success': None, 'replay_allowed': False})
         action = row['action']
+    elif (isinstance(cancellation, dict)
+            and cancellation.get('automatic_completion_recovery') is True
+            and cancellation.get('status') == 'recovered'):
+        # Release confirmation is carried by the separate cancellation
+        # transaction. The failed producer's action itself stays UNKNOWN.
+        row = owner.record_action_result(call_id, {
+            'status': 'unknown', 'input_dispatched': None,
+            'release_confirmed': False,
+            'error': 'COMPLETION_EVIDENCE_UNCONFIRMED',
+            'error_type': cancellation.get('completion_error_type'),
+            'effect_status': 'unknown', 'task_success': None,
+            'replay_allowed': False})
+        action = row['action']
     elif (action.get('status') in ('running', 'cancel_pending')
             and isinstance(cancellation, dict)
             and cancellation.get('status') == 'recovered'):

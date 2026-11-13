@@ -98,6 +98,20 @@ class ExceptionReceiptProducerFactory(FakeProducerFactory):
                 "buttons_unknown": []}}
 
 
+class AbruptExitProducerFactory(FakeProducerFactory):
+    def __call__(self, _action):
+        self.started += 1
+        def exit_without_receipt():
+            self.process.alive = False
+            self.process.exitcode = 86
+        return self.process, lambda: self.identity, exit_without_receipt
+
+    def read_result(self, process):
+        if process is not self.process or process.is_alive():
+            raise RuntimeError("producer has not exited")
+        raise EOFError("producer exited without a completion packet")
+
+
 class HeldProducerFactory:
     def __init__(self, process, identity):
         self.process = process
@@ -127,8 +141,9 @@ class RecoveringFakeSupervisor(FakeSupervisor):
     def cancel(self, operation_id, generation, *, cleanup_deadline_ns):
         self.operation_owner.request_cancel(operation_id, generation,
             cleanup_deadline_ns=cleanup_deadline_ns)
-        self.process.alive = False
-        self.process.exitcode = -15
+        if self.process.alive:
+            self.process.alive = False
+            self.process.exitcode = -15
         if not self.operation_owner.producer_retired(
                 operation_id, generation, self.process):
             raise AssertionError("fake producer retirement was not accepted")
@@ -449,118 +464,90 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(retrieved["action"]["release_confirmed"])
         self.assertTrue(supervisor.closed)
 
-    async def test_public_dispatch_exception_flows_to_fresh_session_recovery(self):
-        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
-
-        owner, normal_producer, _supervisor = self.make_components()
-        producer = ExceptionReceiptProducerFactory(
-            normal_producer.process, normal_producer.identity)
-        program = self.valid_program()
-        obligations = derive_input_obligations(program)
-        with TemporaryDirectory() as root, TemporaryDirectory() as fresh_root:
+    async def test_abrupt_standard_producer_exit_automatically_recovers_without_rewriting_action(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = AbruptExitProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
             server = self.make_server(root, owner, producer)
-            reply = await server.call_tool("interface_dispatch", {
-                "program": program,
+            result = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
                 "current_observation_seq": 1,
                 "current_binding_revision": 1,
-                "wait_for_result_ms": 5000})
-            result = self.row(reply)
+                "wait_for_result_ms": 5000}))
             self.assertEqual(result["status"], "returned", result)
-            self.assertEqual(result["result"]["status"], "runtime_failed")
-            self.assertFalse(result["release_confirmed"])
+            self.assertEqual(result["result"]["status"], "unknown")
+            self.assertIsNone(result["input_dispatched"])
+            self.assertTrue(result["release_confirmed"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
             action = result["supervision"]["action"]
+            cancellation = result["supervision"]["cancellation"]
             self.assertEqual(action["status"], "unknown")
-            self.assertEqual(action["result"]["status"], "runtime_failed")
-            self.assertFalse(action["release_confirmed"])
+            self.assertFalse(action["release_confirmed"], result)
             self.assertIsNone(action["task_success"])
             self.assertFalse(action["replay_allowed"])
-            source_custody_record = {
-                "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
-                "operation_id": action["operation_id"],
-                "target_generation": action["target_generation"],
-                "obligations": list(obligations),
-                "do_not_replay": True,
-                "observed_producer_live": False,
-                "late_server_request_possible": True,
-                "dispatch": {"input_dispatched": None,
-                    "release_confirmed": False, "task_success": None,
-                    "replay_allowed": False}}
-            retained = self.row(await server.call_tool("interface_results", {
-                "call_id": result["call_id"]}))
-            self.assertEqual(retained["action"]["status"], "unknown")
-            self.assertFalse(retained["action"]["release_confirmed"])
-            self.assertEqual(retained["action"]["result"]["status"],
-                             "runtime_failed")
-            close = self.row(await server.call_tool("interface_close", {}))
-            self.assertEqual(close["status"], "busy")
+            self.assertTrue(cancellation["automatic_completion_recovery"])
+            self.assertEqual(cancellation["status"], "recovered")
+            self.assertTrue(cancellation["release_confirmed"])
+            self.assertEqual(process.exitcode, 86)
+            await server.call_tool("interface_close", {})
 
-            recovery_generation = "b" * 64
-            fresh_owner, fresh_producer, fresh_supervisor = self.make_components(
-                recovery_generation)
-            recover_calls = []
-            def recover(operation_id, source_generation, recovery_id,
-                        deadline_ns, obligations, *,
-                        recovery_target_generation=None):
-                recover_calls.append((operation_id, source_generation,
-                    recovery_id, deadline_ns, list(obligations),
-                    recovery_target_generation))
-                return {"status": "recovered", "release_confirmed": True,
-                    "operation_id": operation_id,
-                    "target_generation": recovery_target_generation,
-                    "source_target_generation": source_generation,
-                    "recovery_target_generation": recovery_target_generation,
-                    "recovery_id": recovery_id,
-                    "readback": {"neutral": True},
-                    "late_input_horizon_verified": True,
-                    "late_input_horizon_ns": 2_000_000_000,
-                    "late_input_release_received_monotonic_ns": 100,
-                    "late_input_observation_start_monotonic_ns": 100,
-                    "late_input_observation_end_monotonic_ns": 2_000_000_100,
-                    "late_input_observation_count": 3,
-                    "late_input_max_observed_gap_ns": 1_000_000,
-                    "late_input_max_sample_gap_ns": 100_000_000}
-            fresh_supervisor.recover_orphaned_input = recover
-            fresh_server = self.make_server(
-                fresh_root, fresh_owner, fresh_producer)
-            recovery_reply = await fresh_server.call_tool(
-                "interface_recover_orphaned_input", {
-                    "source_operation_id": action["operation_id"],
-                    "source_target_generation": action["target_generation"],
-                    "recovery_target_generation": recovery_generation,
-                    "obligations": list(obligations),
-                    "source_custody_record": source_custody_record})
-            recovered = json.loads(recovery_reply.content[0].text)
-            self.assertEqual(recovered["status"], "recovered", recovered)
-            self.assertEqual(recovered["recovery_status"], "recovered")
-            self.assertEqual(recovered["source_action_status"], "unknown")
-            self.assertTrue(recovered["release_confirmed"])
-            self.assertTrue(recovered["recovery_receipt"][
-                "late_input_horizon_verified"])
-            self.assertEqual(recovered["recovery_receipt"][
-                "late_input_horizon_ns"], 2_000_000_000)
-            self.assertIsNone(recovered["task_success"])
-            self.assertFalse(recovered["replay_allowed"])
-            self.assertTrue(recovered["next_action_requires_fresh_generation"])
-            self.assertEqual(len(recover_calls), 1)
-            self.assertEqual(recover_calls[0][0], action["operation_id"])
-            self.assertEqual(recover_calls[0][1], action["target_generation"])
-            self.assertEqual(recover_calls[0][4], obligations)
-            self.assertEqual(recover_calls[0][5], recovery_generation)
-
-            # The original session's action remains unchanged by fresh recovery.
-            original = self.row(await server.call_tool("interface_results", {
-                "call_id": result["call_id"]}))
-            self.assertEqual(original["action"]["status"], "unknown")
-            self.assertEqual(original["action"]["result"]["status"],
-                             "runtime_failed")
-            self.assertFalse(original["action"]["release_confirmed"])
-            self.assertIsNone(original["task_success"])
-            self.assertFalse(original["replay_allowed"])
+    async def test_public_dispatch_exception_auto_recovers_and_preserves_unknown_action(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = ExceptionReceiptProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            result = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            self.assertEqual(result["status"], "returned", result)
+            self.assertEqual(result["result"]["status"], "unknown")
+            self.assertIsNone(result["input_dispatched"])
+            self.assertTrue(result["release_confirmed"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            action = result["supervision"]["action"]
+            cancellation = result["supervision"]["cancellation"]
+            self.assertEqual(action["status"], "unknown")
+            self.assertFalse(action["release_confirmed"])
+            self.assertEqual(action["result"]["error"],
+                             "COMPLETION_EVIDENCE_UNCONFIRMED")
+            self.assertEqual(cancellation["status"], "recovered")
+            self.assertTrue(cancellation["automatic_completion_recovery"])
+            self.assertTrue(cancellation["release_confirmed"])
+            self.assertIsNone(action["task_success"])
+            self.assertFalse(action["replay_allowed"])
+            await server.call_tool("interface_close", {})
 
     async def test_public_dispatch_keeps_child_release_unconfirmed_without_observer_readback(self):
-        owner, producer, supervisor = self.make_components()
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = FakeProducerFactory(process, identity)
         supervisor.observe_completed = lambda *_args, **_kwargs: None
         with TemporaryDirectory() as root:
             server = self.make_server(root, owner, producer)
@@ -572,22 +559,31 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             result = self.row(reply)
             self.assertEqual(result.get("status"), "returned", result)
             action = result["supervision"]["action"]
-            self.assertEqual(action["result"]["status"], "completed")
             self.assertEqual(action["status"], "unknown")
-            self.assertFalse(result["release_confirmed"])
+            self.assertEqual(action["result"]["status"], "unknown")
+            self.assertTrue(result["release_confirmed"])
             self.assertFalse(action["release_confirmed"])
-            self.assertEqual(action["completion_custody"]["completion_readback_outcome"],
-                             "missing")
-            self.assertIsNone(action["completion_custody"]["completion_readback"])
+            self.assertEqual(result["supervision"]["cancellation"]["status"],
+                             "recovered")
+            self.assertTrue(result["supervision"]["cancellation"][
+                "automatic_completion_recovery"])
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
             close = self.row(await server.call_tool("interface_close", {}))
-            self.assertEqual(close["status"], "busy")
-            self.assertFalse(close["release_confirmed"])
-        self.assertFalse(supervisor.closed)
+            self.assertEqual(close["status"], "closed")
+        self.assertTrue(supervisor.closed)
 
     async def test_task_oracle_is_not_invoked_for_unknown_public_custody(self):
-        owner, producer, supervisor = self.make_components()
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = FakeProducerFactory(process, identity)
 
         def non_neutral_readback(operation_id, generation, *,
                                  producer_exit_confirmed_ns, deadline_ns):
@@ -628,14 +624,17 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "wait_for_result_ms": 1000})).content[0].text)
             self.assertEqual(verified["status"], "unknown", verified)
             action = dispatched["supervision"]["action"]
-            self.assertEqual(action["completion_custody"]["completion_readback_outcome"],
-                             "non_neutral")
+            self.assertEqual(action["status"], "unknown")
+            self.assertFalse(action["release_confirmed"])
+            self.assertEqual(dispatched["supervision"]["cancellation"]["status"],
+                             "recovered")
+            self.assertTrue(dispatched["release_confirmed"])
             self.assertIsNone(verified["task_success"])
             self.assertFalse(verified["replay_allowed"])
             self.assertEqual(oracle_calls, [])
             close = self.row(await server.call_tool("interface_close", {}))
-            self.assertEqual(close["status"], "busy")
-        self.assertFalse(supervisor.closed)
+            self.assertEqual(close["status"], "closed")
+        self.assertTrue(supervisor.closed)
 
     async def test_supervised_task_oracle_certifies_exact_completed_action_once(self):
         owner, producer, _ = self.make_components()
@@ -1809,83 +1808,42 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                                      retained["action"]["operation_id"])
                     self.assertFalse(verified["replay_allowed"])
 
-    async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
+    async def test_stdio_exception_auto_recovers_and_keeps_action_unknown(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
-        from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
 
-        recovery_generation = "b" * 64
         with TemporaryDirectory() as root:
-            source_output = Path(root) / "source-receipts"
-            source_params = StdioServerParameters(command=sys.executable,
+            output = Path(root) / "source-receipts"
+            params = StdioServerParameters(command=sys.executable,
                 args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
-                      "--output-directory", str(source_output), "--mode", "exception"],
+                      "--output-directory", str(output), "--mode", "exception"],
                 cwd=str(Path(__file__).resolve().parents[2]))
-            async with stdio_client(source_params) as (reader, writer):
+            async with stdio_client(params) as (reader, writer):
                 async with ClientSession(reader, writer) as client:
                     await client.initialize()
-                    program = self.valid_program()
-                    program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
                     reply = await client.call_tool("interface_dispatch", {
-                        "program": program, "current_observation_seq": 1,
-                        "current_binding_revision": 1, "wait_for_result_ms": 0})
-                    pending = self.row(reply)
-                    self.assertEqual(pending["status"], "pending", pending)
-                    deadline = time.monotonic() + 2
-                    retained = None
-                    while time.monotonic() < deadline:
-                        result = await client.call_tool("interface_results", {
-                            "call_id": pending["call_id"], "include_image": False})
-                        retained = self.row(result)
-                        action = retained.get("action")
-                        if isinstance(action, dict) and action.get("status") == "unknown":
-                            break
-                        await asyncio.sleep(0.01)
-                    self.assertEqual(retained["action"]["result"]["status"],
-                                     "runtime_failed", retained)
-                    self.assertFalse(retained["action"]["release_confirmed"])
-                    self.assertIsNone(retained["task_success"])
-                    self.assertFalse(retained["replay_allowed"])
-                    action = retained["action"]
-                    obligations = derive_input_obligations(program)
-                    custody = {
-                        "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
-                        "operation_id": action["operation_id"],
-                        "target_generation": action["target_generation"],
-                        "obligations": obligations,
-                        "do_not_replay": True,
-                        "observed_producer_live": False,
-                        "late_server_request_possible": True,
-                        "dispatch": {"input_dispatched": None,
-                            "release_confirmed": False, "task_success": None,
-                            "replay_allowed": False}}
-
-            recovery_output = Path(root) / "recovery-receipts"
-            recovery_params = StdioServerParameters(command=sys.executable,
-                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
-                      "--output-directory", str(recovery_output), "--mode", "recovery",
-                      "--recovery-generation", recovery_generation],
-                cwd=str(Path(__file__).resolve().parents[2]))
-            async with stdio_client(recovery_params) as (reader, writer):
-                async with ClientSession(reader, writer) as client:
-                    await client.initialize()
-                    reply = await client.call_tool("interface_recover_orphaned_input", {
-                        "source_operation_id": action["operation_id"],
-                        "source_target_generation": action["target_generation"],
-                        "recovery_target_generation": recovery_generation,
-                        "obligations": obligations,
-                        "source_custody_record": custody})
-                    recovered = self.row(reply)
-                    self.assertEqual(recovered["status"], "recovered", recovered)
-                    self.assertEqual(recovered["source_action_status"], "unknown")
-                    self.assertTrue(recovered["release_confirmed"])
-                    self.assertTrue(recovered["recovery_receipt"][
-                        "late_input_horizon_verified"])
-                    self.assertEqual(recovered["recovery_receipt"][
-                        "late_input_horizon_ns"], 2_000_000_000)
-                    self.assertIsNone(recovered["task_success"])
-                    self.assertFalse(recovered["replay_allowed"])
-                    self.assertTrue(recovered["next_action_requires_fresh_generation"])
+                        "program": self.valid_program(),
+                        "current_observation_seq": 1,
+                        "current_binding_revision": 1,
+                        "wait_for_result_ms": 5000})
+                    result = self.row(reply)
+                    self.assertEqual(result["status"], "returned", result)
+                    self.assertEqual(result["result"]["status"], "unknown")
+                    self.assertTrue(result["release_confirmed"])
+                    self.assertIsNone(result["input_dispatched"])
+                    self.assertIsNone(result["task_success"])
+                    self.assertFalse(result["replay_allowed"])
+                    action = result["supervision"]["action"]
+                    cancellation = result["supervision"]["cancellation"]
+                    self.assertEqual(action["status"], "unknown")
+                    self.assertFalse(action["release_confirmed"])
+                    self.assertEqual(action["result"]["error"],
+                                     "COMPLETION_EVIDENCE_UNCONFIRMED")
+                    self.assertTrue(cancellation[
+                        "automatic_completion_recovery"])
+                    self.assertEqual(cancellation["status"], "recovered")
+                    self.assertTrue(cancellation["release_confirmed"])
+                    await client.call_tool("interface_close", {})
 
 
 if __name__ == "__main__":
