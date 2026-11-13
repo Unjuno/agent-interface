@@ -35,11 +35,20 @@ not establish that it caused the R142 41.941 ms sample interval. The state
 samples themselves were separated by that QPC interval; the missing fact is
 where the serialized expiry and actual release-call entry fall on a verified
 common clock. Source inspection also found that the shared boundary auditor
-uses `monotonic_before_ns >= deadline_ns` for “fully after.” R142's first
+used `monotonic_before_ns >= deadline_ns` for “fully after.” R142's first
 post-deadline W-down sample equals the deadline on both monotonic endpoints,
-so that row is not proven post-expiry. This weakens its intermediate
-post-deadline duration attribution, while preserving the original conservative
-41.941 ms gate failure.
+so that row is not proven post-expiry. The shared auditor now requires strict
+`>` and has an equality regression. Applying it read-only to retained R142
+excluded seven equality rows; the first strictly post-deadline sample still
+saw W down, but the attributed post-deadline down duration changed from
+39.9998 ms to 24 ms. The strict audit remains `not_verified`, with the same
+41.941 ms QPC gap and 42.1552 ms outer bracket. The original packet and audit
+remain unchanged. See [corrected derivation](R142_CORRECTED_ADJUDICATION.json).
+
+The 59-test `map01_numeric_ammo_oracle_20261111` suite passes in CPython 3.11.9
+normal and optimized (`-O`) modes after the fix. This verifies the offline
+adjudicator contract only; it does not qualify a live release or resolve the
+cross-domain deadline comparison.
 
 ## Reproduction and custody
 

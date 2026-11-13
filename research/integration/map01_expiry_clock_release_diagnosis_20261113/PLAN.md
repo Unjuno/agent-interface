@@ -45,7 +45,7 @@ difference of 21.75755 ms (range 21.5453–21.977 ms); Python 3.14.2, where
 both clocks use QPC, reported median 0 ns (range −1,950 to 550 ns). The
 persisted raw samples are in `clock-correlation-r01/`.
 
-The current shared adjudicator also has a strictness defect: in
+The shared adjudicator had a strictness defect: in
 `research/integration/map01_numeric_ammo_oracle_20261111/input_boundary.py`,
 it selects a fully post-deadline sample when
 `monotonic_before_ns >= deadline_ns`. Equality only means the pre-read clock
@@ -53,24 +53,25 @@ value rounded to the deadline; it does not prove the read started after
 expiry. R142's first down sample has both monotonic endpoints exactly equal to
 the deadline, so it cannot be promoted as fully post-expiry. This does not
 erase R142's conservative 41.941 ms last-down to first-up bracket or turn its
-20 ms gate into a pass; it means the intermediate post-expiry-duration
-attribution is ambiguous. The next offline repair must require strict `>` (or
-an equivalent verified common-clock interval), add a boundary-equality
-regression, and apply the corrected adjudicator read-only to retained R142
-without rewriting its original result.
+20 ms gate into a pass; the equality rows had inflated the intermediate
+post-expiry-duration attribution. The helper now requires strict `>`, a
+boundary-equality regression passes, and the corrected adjudicator was applied
+read-only to retained R142. It excludes seven equality rows, changes the
+post-expiry-down attribution from 39.9998 ms to 24 ms, and leaves the QPC gap
+41.941 ms, outer bracket 42.1552 ms, and overall `not_verified` result
+unchanged. The corrected output is retained separately; R142's original
+result was not rewritten.
 
 ## Research plan
 
-1. **Close the clock-domain ambiguity offline.** Retain the paired-clock probe
-   as an independent diagnostic. In the next runner candidate, record
+1. **Close the clock-domain ambiguity in the integrated path.** Retain the
+   paired-clock probe and strict-equality fix. In the next runner candidate, record
    `get_clock_info`, process/runtime identity, and paired `monotonic_ns` /
    `perf_counter_ns` readings in every process that contributes to a deadline
    or boundary decision. A sample is pre/post-deadline only when all timestamps
    used for the comparison are in one verified domain; do not infer an epoch
-   conversion from nominal resolution. Fix the adjudicator's equality case,
-   add the regression, and preserve its corrected read-only result separately
-   from R142's original outcome. Equality with the deadline is not “fully
-   after.”
+   conversion from nominal resolution. Equality with the deadline is not
+   “fully after.”
 2. **Keep latency stages distinct.** Capture the same QPC clock at serialized
    expiry, monitor wake, cancellation admission, helper request/response,
    `SendInput` entry/return, and independent key readback. Keep release request
@@ -95,8 +96,9 @@ without rewriting its original result.
   eventual neutral state, and strict timing gate.
 - The clock-coordinate mismatch and missing SendInput-stage timestamps are
   directly evidenced and the uncertainty is explicit.
-- The shared boundary adjudicator no longer labels equality as fully after,
-  with a regression and a separately retained corrected R142 derivation.
+- The shared boundary adjudicator rejects deadline equality, its regression
+  passes, and the corrected R142 derivation is retained separately from the
+  original result. **Done:** 59 tests pass normally and under `-O`.
 - A fresh attempt uses a single verified time domain for all deadline
   adjudication and retains raw conditions/results with no weakened gates.
 

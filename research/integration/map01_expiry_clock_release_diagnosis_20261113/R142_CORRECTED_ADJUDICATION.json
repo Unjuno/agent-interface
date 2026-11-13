@@ -1,0 +1,33 @@
+{
+  "schema": "map01-r142-corrected-adjudication-v1",
+  "source_packet": "map01_native_windows_delayed_cancel_20261112_r142_poll10ms_baseline",
+  "source_files": {
+    "raw": {
+      "path": "trials/r142_native_win32_scan_code_demo_expiry_map01/expiry-boundary-key-samples.json",
+      "sha256": "85ad95038d077ecc7b92a6ca9064ab18f632f9ad9a1dc09f5e4eb2300c3e0110"
+    },
+    "original_audit": {
+      "path": "trials/r142_native_win32_scan_code_demo_expiry_map01/expiry-boundary-audit.json",
+      "sha256": "6dda982f359acc9749dfc014f8633934ce303c9c9898290deaa6bfe6cbc83103"
+    }
+  },
+  "original_audit": {
+    "status": "not_verified",
+    "qpc_bracket_gap_ns": 41941000,
+    "post_deadline_down_duration_ns": 39999800
+  },
+  "corrected_audit": {
+    "status": "not_verified",
+    "qpc_bracket_gap_ns": 41941000,
+    "qpc_bracket_outer_ns": 42155200,
+    "post_deadline_down_duration_ns": 24000000,
+    "first_strictly_post_deadline_sample": {
+      "monotonic_before_ns": 244043546000000,
+      "monotonic_after_ns": 244043546000000,
+      "perf_counter_start_ns": 244043568920300,
+      "w_key_down": true
+    },
+    "equal_deadline_rows_excluded": 7
+  },
+  "interpretation": "Read-only re-adjudication; original R142 result and raw are unchanged. The corrected strict timing gate remains not_verified; this does not change the task-effect, recovery, horizon, or demo adjudications."
+}
