@@ -2,6 +2,7 @@ import json
 import asyncio
 import threading
 import io
+import time
 from contextlib import redirect_stdout
 from pathlib import Path
 import tempfile
@@ -13,6 +14,45 @@ from runtime.cli_v1.mcp_server import create_server, main
 
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
+
+    async def test_stdio_clock_is_parent_bracketed_and_issues_no_authority(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            targets = root / 'targets.json'
+            targets.write_text('{"fixture":123}')
+            output = root / 'receipts'
+            params = StdioServerParameters(command=sys.executable, args=[
+                '-m', 'runtime.cli_v1.mcp_server', '--targets', str(targets),
+                '--output-directory', str(output), '--display', 'not-a-valid-display'])
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    listed = await client.list_tools()
+                    clock_tool = next(tool for tool in listed.tools
+                                      if tool.name == 'interface_clock')
+                    self.assertFalse(clock_tool.inputSchema['additionalProperties'])
+                    self.assertEqual(clock_tool.inputSchema.get('properties'), {})
+                    rows = []
+                    for _ in range(2):
+                        before = time.monotonic_ns()
+                        reply = await client.call_tool('interface_clock', {})
+                        after = time.monotonic_ns()
+                        self.assertFalse(reply.isError)
+                        row = json.loads(reply.content[0].text)
+                        self.assertLessEqual(before, row['monotonic_ns'])
+                        self.assertLessEqual(row['monotonic_ns'], after)
+                        self.assertEqual(row['clock'], 'time.monotonic_ns')
+                        self.assertIs(row['input_dispatched'], False)
+                        self.assertIs(row['authority_granted'], False)
+                        self.assertIs(row['lease_issued'], False)
+                        rows.append(row)
+                    self.assertEqual(rows[0]['server_instance_id'],
+                                     rows[1]['server_instance_id'])
+                    self.assertLessEqual(rows[0]['monotonic_ns'],
+                                         rows[1]['monotonic_ns'])
+            self.assertEqual(list(output.iterdir()), [])
 
     async def test_journal_retention_requires_guarded_x11_and_is_forwarded_to_owned_process(self):
         with tempfile.TemporaryDirectory() as td:
