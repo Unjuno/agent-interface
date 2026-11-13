@@ -82,8 +82,13 @@ class StageTrace:
                 "error_type": error_type}
             if type(result) in (bool, int):
                 span["scalar_result"] = result
-            if type(result) is dict and type(result.get("release_accepted")) is bool:
-                span["release_accepted"] = result["release_accepted"]
+            if type(result) is dict:
+                for key in ("operation_id", "target_generation", "recovery_id",
+                            "request_id", "control", "status", "helper"):
+                    if type(result.get(key)) is str:
+                        span[key] = result[key]
+                if type(result.get("release_accepted")) is bool:
+                    span["release_accepted"] = result["release_accepted"]
             with self._lock:
                 if len(self._spans) < self._limit:
                     self._spans.append(span)

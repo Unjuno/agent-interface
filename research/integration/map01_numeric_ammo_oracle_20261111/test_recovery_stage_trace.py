@@ -71,6 +71,7 @@ class StageTraceTests(unittest.TestCase):
                 spans = json.loads(trace.flush().read_text())["spans"]
                 self.assertEqual([row["stage"] for row in spans],
                                  ["helper.pipe_poll", "helper.pipe_recv"])
+                self.assertEqual(spans[1]["request_id"], "2" * 32)
             finally:
                 parent.close()
                 child.close()
