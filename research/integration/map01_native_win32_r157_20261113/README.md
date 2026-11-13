@@ -1,7 +1,7 @@
 # MAP01 native Win32 R157 — independent neutral horizon
 
-Date: 2026-11-13  
-Classification: **PASS for the preregistered single-run release/task gates; PASS_SCOPED_NO_RECORDED_FORWARD_COMMAND for the retained demo audit.**  
+Date: 2026-11-13
+Classification: **PASS for the preregistered single-run release/task gates; PASS_SCOPED_NO_RECORDED_FORWARD_COMMAND for the retained demo audit.**
 This is one instrumented native-Windows observation. It is not a reliability estimate, MAP01 completion, application-queue quiescence proof, or a speed comparison.
 
 ## Question and frozen conditions
@@ -37,4 +37,3 @@ The R157 freeze script had a tautological runtime comparison and attempted to pa
 ## Evidence
 
 Raw trial data, exact conditions, source/asset pins, execution logs, reports, and manifests are retained in the task-local packet above. The commit tested/frozen and the live-run source pins are recorded in `conditions.json`; the repository-facing source tree and this result summary do not replace those raw files.
-
