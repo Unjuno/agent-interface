@@ -12,7 +12,7 @@ Move the computer-control goal forward by closing the currently visible gap betw
 - R156's runner then failed on missing `expiry-held-w-samples.json` while the server reported a pending-call resolution error. The target was kept open for one state read, but not for the required continuous two-second post-run horizon. The click/task effect therefore remains unknown.
 - A separate, exact-source orphan recovery later released W and left mouse on a fresh target generation, verified neutral readback and a two-second horizon (77 observations, max gap 30.018 ms), kept the original action UNKNOWN and replay denied, and cleared durable custody (revision 428). This is recovery evidence, not R156 task-success evidence.
 - R157 preregisters the focused correction: keep expiry samples separate from pending resolver records, use exact call-id reconciliation, observe a bounded independent two-second same-generation neutral horizon on normal and exception paths, and require every existing task/effect gate before close.
-- The R157 packet is not yet frozen or run. Its freeze script contains a tautological runtime-tree comparison, which provides no assurance; remove that check and retain only the comparison against the frozen authoritative commit.
+- At planning time the R157 packet was not yet frozen or run. Its freeze script's tautological runtime-tree comparison and bytes/path hash mismatch were corrected before freezing; the outcome and remaining untested branch are recorded below and in the R157 report.
 
 ## Investigation questions
 
