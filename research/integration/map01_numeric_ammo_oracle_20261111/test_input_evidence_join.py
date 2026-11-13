@@ -31,8 +31,8 @@ class HeldInputEvidenceJoinTests(unittest.TestCase):
             trial = Path(directory)
             (trial / "expiry-boundary-key-samples.json").write_text(
                 json.dumps({"samples": [
-                    {"after_ns": 12, "w_key_down": True},
-                    {"after_ns": 13, "w_key_down": False},
+                    {"monotonic_after_ns": 12, "w_key_down": True},
+                    {"monotonic_after_ns": 13, "w_key_down": False},
                 ]}), encoding="utf-8")
             held, join = load_held_input_evidence(trial)
 
@@ -70,7 +70,8 @@ class HeldInputEvidenceJoinTests(unittest.TestCase):
             trial = Path(directory)
             (trial / "expiry-held-w-samples.json").write_text("{", encoding="utf-8")
             (trial / "expiry-boundary-key-samples.json").write_text(
-                json.dumps({"samples": [{"after_ns": 12, "w_key_down": True}]}),
+                json.dumps({"samples": [{"monotonic_after_ns": 12,
+                    "w_key_down": True}]}),
                 encoding="utf-8")
             held, join = load_held_input_evidence(trial)
 

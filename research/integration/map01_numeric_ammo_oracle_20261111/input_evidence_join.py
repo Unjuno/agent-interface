@@ -95,7 +95,13 @@ def load_held_input_evidence(trial_directory):
         source = "pending-resolver-poll-samples"
         classification = "RESOLVER_SAMPLES_PRESENT"
     elif expiry_samples is not None:
-        if any(type(row) is not dict or type(row.get("after_ns")) is not int
+        def expiry_timestamp(row):
+            if type(row) is not dict:
+                return None
+            value = row.get("monotonic_after_ns")
+            return value if type(value) is int else row.get("after_ns")
+
+        if any(type(row) is not dict or type(expiry_timestamp(row)) is not int
                or type(row.get("w_key_down")) is not bool for row in expiry_samples):
             held = {
                 "samples": [], "observed_w_down_before_terminal": None,
@@ -107,7 +113,7 @@ def load_held_input_evidence(trial_directory):
         else:
             held = {
                 "samples": [
-                    {"observed_monotonic_ns": row["after_ns"],
+                    {"observed_monotonic_ns": expiry_timestamp(row),
                      "action_status": "not_sampled_by_resolver",
                      "w_key_down": row["w_key_down"]}
                     for row in expiry_samples
