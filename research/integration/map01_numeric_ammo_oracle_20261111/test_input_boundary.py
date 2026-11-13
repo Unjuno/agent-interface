@@ -19,11 +19,20 @@ def row(lease_before, lease_after, qpc_start, qpc_end, down):
 
 
 class InputBoundaryTests(unittest.TestCase):
+    def test_deadline_equality_is_not_fully_after(self):
+        result = audit_expiry_key_release([
+            row(DEADLINE - 1, DEADLINE - 1, QPC, QPC + 1_000, True),
+            row(DEADLINE, DEADLINE, QPC + 2_000, QPC + 3_000, False)],
+            DEADLINE)
+        self.assertIsNone(result["first_sample_fully_after_deadline"])
+        self.assertIsNone(result["first_up_read_fully_after_deadline"])
+        self.assertEqual(result["status"], "not_verified")
+
     def test_verifies_tightly_bracketed_down_to_up_across_coarse_tick(self):
         result = audit_expiry_key_release([
             row(DEADLINE - 15_625_000, DEADLINE - 15_625_000,
                 QPC, QPC + 1_000, True),
-            row(DEADLINE, DEADLINE, QPC + 11_001_000,
+            row(DEADLINE + 1, DEADLINE + 1, QPC + 11_001_000,
                 QPC + 11_002_000, False)], DEADLINE)
         self.assertEqual(result["status"], "verified")
         self.assertEqual(result["qpc_bracket_gap_ns"], 11_000_000)
@@ -32,7 +41,7 @@ class InputBoundaryTests(unittest.TestCase):
         result = audit_expiry_key_release([
             row(DEADLINE - 15_625_000, DEADLINE - 15_625_000,
                 QPC, QPC + 1_000, True),
-            row(DEADLINE, DEADLINE, QPC + 24_001_000,
+            row(DEADLINE + 1, DEADLINE + 1, QPC + 24_001_000,
                 QPC + 24_002_000, False)], DEADLINE)
         self.assertEqual(result["status"], "not_verified")
 
@@ -55,7 +64,7 @@ class InputBoundaryTests(unittest.TestCase):
                 result = audit_expiry_key_release([
                     row(DEADLINE - 10_000, DEADLINE - 1_000,
                         QPC, QPC + 7_000, True),
-                    row(DEADLINE, DEADLINE + 10_000,
+                    row(DEADLINE + 1, DEADLINE + 10_000,
                         QPC + 19_995_000, QPC + end_ns, False)], DEADLINE)
                 self.assertEqual(result["status"], expected)
 
@@ -63,14 +72,16 @@ class InputBoundaryTests(unittest.TestCase):
         result = audit_expiry_key_release([
             row(DEADLINE - 15_625_000, DEADLINE - 15_625_000,
                 QPC, QPC + 1_000, True),
-            row(DEADLINE, DEADLINE, QPC + 2_000_000,
-                QPC + 2_001_000, True),
+            row(DEADLINE, DEADLINE, QPC + 1_900_000,
+                QPC + 1_950_000, True),
+            row(DEADLINE + 1, DEADLINE + 1, QPC + 2_001_000,
+                QPC + 2_002_000, True),
             row(DEADLINE + 15_625_000, DEADLINE + 15_625_000,
                 QPC + 12_000_000, QPC + 12_001_000, False)], DEADLINE)
         self.assertEqual(result["status"], "verified")
         self.assertEqual(result["qpc_bracket_gap_ns"], 11_999_000)
         self.assertEqual(result["post_deadline_down_duration_ns"],
-                         10_000_000)
+                         9_999_000)
         self.assertTrue(result["first_sample_fully_after_deadline"][
             "w_key_down"])
         self.assertFalse(result["first_up_read_fully_after_deadline"][
@@ -82,12 +93,14 @@ class InputBoundaryTests(unittest.TestCase):
                 QPC, QPC + 8_800, True),
             row(DEADLINE, DEADLINE, QPC + 1_991_200,
                 QPC + 2_000_000, True),
+            row(DEADLINE + 1, DEADLINE + 1, QPC + 2_000_000,
+                QPC + 2_000_100, True),
             row(DEADLINE + 15_625_000, DEADLINE + 15_625_000,
                 QPC + 22_000_000, QPC + 22_008_800, False)], DEADLINE)
         self.assertEqual(result["status"], "not_verified")
         self.assertEqual(result["qpc_bracket_gap_ns"], 21_991_200)
         self.assertEqual(result["post_deadline_down_duration_ns"],
-                         20_008_800)
+                         20_000_000)
 
     def test_rejects_missing_down_or_post_deadline_up(self):
         cases = [
@@ -106,7 +119,7 @@ class InputBoundaryTests(unittest.TestCase):
                 QPC, QPC + 10, True),
             row(DEADLINE - 15_625_000, DEADLINE - 15_625_000,
                 QPC + 20, QPC + 30, True),
-            row(DEADLINE, DEADLINE, QPC + 40, QPC + 50, False),
+            row(DEADLINE + 1, DEADLINE + 1, QPC + 40, QPC + 50, False),
         ]
         result = audit_expiry_key_release(samples, DEADLINE)
         self.assertEqual(result["status"], "verified")

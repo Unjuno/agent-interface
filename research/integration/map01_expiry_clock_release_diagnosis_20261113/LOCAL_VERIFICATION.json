@@ -1,0 +1,32 @@
+{
+  "schema": "map01-expiry-clock-diagnosis-local-verification-v1",
+  "verified_at_utc": "2026-11-13T09:20Z",
+  "python": "CPython 3.11.9",
+  "source_files": {
+    "research/integration/map01_numeric_ammo_oracle_20261111/input_boundary.py": "81eaf96e00befdc396d02c0be70870df55de4558aa598b404e6ca0923d29bb91",
+    "research/integration/map01_numeric_ammo_oracle_20261111/test_input_boundary.py": "17c89fa0d2b02b1d460e66d4b31af3a1698ef493cf4e664157d99918961a6fad"
+  },
+  "local_suite": {
+    "command": "python -m unittest discover -s research/integration/map01_numeric_ammo_oracle_20261111",
+    "tests": 59,
+    "exit_code": 0,
+    "output": "local-tests-normal.log",
+    "sha256": "5910fe0c3a425f658e807ed34d7eabda767001d79c99d228ae83949e58a8f9e3"
+  },
+  "optimized_suite": {
+    "command": "python -O -m unittest discover -s research/integration/map01_numeric_ammo_oracle_20261111",
+    "tests": 59,
+    "exit_code": 0,
+    "output": "local-tests-optimized.log",
+    "sha256": "e579f34518a6b0751a1934a1956fcaa62e18a4e7b0ecf44329ada0428e60fc4e"
+  },
+  "retained_r142": {
+    "raw_sha256": "85ad95038d077ecc7b92a6ca9064ab18f632f9ad9a1dc09f5e4eb2300c3e0110",
+    "original_audit_sha256": "6dda982f359acc9749dfc014f8633934ce303c9c9898290deaa6bfe6cbc83103",
+    "derived_raw_sha256": "85ad95038d077ecc7b92a6ca9064ab18f632f9ad9a1dc09f5e4eb2300c3e0110",
+    "derived_original_audit_sha256": "6dda982f359acc9749dfc014f8633934ce303c9c9898290deaa6bfe6cbc83103",
+    "corrected_status": "not_verified",
+    "original_packet_modified": false
+  },
+  "live_input_or_application": false
+}

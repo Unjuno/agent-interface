@@ -137,8 +137,10 @@ def audit_expiry_key_release(samples, deadline_ns, *, max_bracket_ns=20_000_000)
         valid.append(row)
     before = [row for row in valid
         if row["monotonic_after_ns"] < deadline_ns]
+    # Equality does not prove the read began after expiry. Coarse monotonic
+    # clocks can report the deadline for a read that straddles the boundary.
     after = [row for row in valid
-        if row["monotonic_before_ns"] >= deadline_ns]
+        if row["monotonic_before_ns"] > deadline_ns]
     last_before = before[-1] if before else None
     first_after = after[0] if after else None
     post_deadline_up = [row for row in after
