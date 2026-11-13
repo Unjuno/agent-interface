@@ -85,6 +85,18 @@ class FakeProducerFactory:
                 "buttons_down": [], "keys_unknown": [], "buttons_unknown": []}}
 
 
+class ExceptionReceiptProducerFactory(FakeProducerFactory):
+    def read_result(self, process):
+        if process is not self.process or process.is_alive():
+            raise RuntimeError("producer has not exited")
+        return {"result": {"status": "runtime_failed",
+                "error_type": "RuntimeError",
+                "detail": "controlled producer dispatch exception"},
+            "release_receipt": {"verified": False, "keys_down": [],
+                "buttons_down": [], "keys_unknown": ["producer_exception"],
+                "buttons_unknown": []}}
+
+
 class HeldProducerFactory:
     def __init__(self, process, identity):
         self.process = process
@@ -435,6 +447,38 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(close["release_confirmed"])
             self.assertTrue(retrieved["action"]["release_confirmed"])
         self.assertTrue(supervisor.closed)
+
+    async def test_public_dispatch_retains_producer_exception_as_unknown(self):
+        owner, normal_producer, _supervisor = self.make_components()
+        producer = ExceptionReceiptProducerFactory(
+            normal_producer.process, normal_producer.identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            reply = await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000})
+            result = self.row(reply)
+            self.assertEqual(result["status"], "returned", result)
+            self.assertEqual(result["result"]["status"], "runtime_failed")
+            self.assertFalse(result["release_confirmed"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            action = result["supervision"]["action"]
+            self.assertEqual(action["status"], "unknown")
+            self.assertEqual(action["result"]["status"], "runtime_failed")
+            self.assertFalse(action["release_confirmed"])
+            self.assertIsNone(action["task_success"])
+            self.assertFalse(action["replay_allowed"])
+            retained = self.row(await server.call_tool("interface_results", {
+                "call_id": result["call_id"]}))
+            self.assertEqual(retained["action"]["status"], "unknown")
+            self.assertFalse(retained["action"]["release_confirmed"])
+            self.assertEqual(retained["action"]["result"]["status"],
+                             "runtime_failed")
+            close = self.row(await server.call_tool("interface_close", {}))
+            self.assertEqual(close["status"], "busy")
 
     async def test_public_dispatch_keeps_child_release_unconfirmed_without_observer_readback(self):
         owner, producer, supervisor = self.make_components()
