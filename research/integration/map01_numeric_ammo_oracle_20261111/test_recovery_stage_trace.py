@@ -13,6 +13,36 @@ from recovery_stage_trace import StageTrace, install
 
 
 class StageTraceTests(unittest.TestCase):
+    def test_send_trace_preserves_return_exception_and_deadline(self):
+        from runtime.guarded_win32_v1.process_cancellation import OperationCancellationSupervisor as Supervisor
+        calls=[]
+        result=object()
+        failure=TimeoutError('unchanged cutoff')
+        request={'operation_id':'1'*32,'target_generation':'a'*64,'request_id':'2'*32}
+        connection=object()
+        def send(owner, conn, req, cutoff):
+            calls.append((conn,req,cutoff))
+            if cutoff==0: raise failure
+            return result
+        with tempfile.TemporaryDirectory() as td, patch.object(Supervisor,'_send_helper_request',send):
+            trace=install(td)
+            try:
+                owner=object.__new__(Supervisor)
+                with trace.scope({'role':'recovery_exchange'}):
+                    self.assertIs(owner._send_helper_request(connection,request,123),result)
+                    with self.assertRaises(TimeoutError) as caught:
+                        owner._send_helper_request(connection,request,0)
+                    self.assertIs(caught.exception,failure)
+                self.assertIs(owner._send_helper_request(connection,request,456),result)
+                self.assertEqual(calls,[(connection,request,123),(connection,request,0),(connection,request,456)])
+                self.assertEqual(list(Path(td).iterdir()),[])
+                spans=json.loads(trace.flush().read_text())['spans']
+                self.assertEqual([s['stage'] for s in spans],['recovery.send']*2)
+                self.assertEqual(spans[1]['error_type'],'TimeoutError')
+                self.assertTrue(all(s['operation_id']==request['operation_id'] for s in spans))
+            finally:
+                trace.uninstall()
+
     def test_wrapper_preserves_arguments_return_identity_and_has_no_early_file_write(self):
         with tempfile.TemporaryDirectory() as td:
             trace = StageTrace(td, clock_ns=iter((10, 20)).__next__)
