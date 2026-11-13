@@ -44,6 +44,8 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                         self.assertLessEqual(before, row['monotonic_ns'])
                         self.assertLessEqual(row['monotonic_ns'], after)
                         self.assertEqual(row['clock'], 'time.monotonic_ns')
+                        self.assertEqual(row['clock_info'],
+                                         vars(time.get_clock_info('monotonic')))
                         self.assertIs(row['input_dispatched'], False)
                         self.assertIs(row['authority_granted'], False)
                         self.assertIs(row['lease_issued'], False)
