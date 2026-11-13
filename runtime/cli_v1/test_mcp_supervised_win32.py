@@ -3,6 +3,7 @@ import time
 import unittest
 import asyncio
 import threading
+import sys
 from tempfile import TemporaryDirectory
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -1732,6 +1733,81 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(producer.started, 1)
             finally:
                 await server.call_tool("interface_close", {})
+
+    async def test_stdio_expiry_delayed_recovery_and_exact_call_effect(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        with TemporaryDirectory() as root:
+            output = Path(root) / "child-receipts"
+            params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(output), "--effect", "failure"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    listed = await client.list_tools()
+                    names = {tool.name for tool in listed.tools}
+                    self.assertTrue({"interface_dispatch", "interface_results",
+                                     "interface_verify_task"}.issubset(names))
+                    program = {
+                        "schema": "agent-interface/program-v1",
+                        "program_id": "stdio-expiry-recovery",
+                        "source": {"observation_seq": 1,
+                            "binding_revision": 1,
+                            "target_generations": {"fixture": GENERATION}},
+                        "authority": {"lease_id": "stdio-expiry-lease",
+                            "expires_at_ns": time.monotonic_ns() + 1_500_000_000},
+                        "terminal": {"release_all_required": True},
+                        "ops": [{"op": "focus", "target": "fixture"},
+                            {"op": "key_chord", "keys": ["CTRL", "S"]},
+                            {"op": "release_all"}]}
+                    dispatched = await client.call_tool("interface_dispatch", {
+                        "program": program, "current_observation_seq": 1,
+                        "current_binding_revision": 1, "wait_for_result_ms": 0})
+                    pending = self.row(dispatched)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    call_id = pending["call_id"]
+                    expiry_ns = program["authority"]["expires_at_ns"]
+                    while time.monotonic_ns() < expiry_ns:
+                        await asyncio.sleep(0.01)
+                    self.assertGreaterEqual(time.monotonic_ns(), expiry_ns)
+
+                    deadline = time.monotonic() + 3
+                    retained = None
+                    while time.monotonic() < deadline:
+                        reply = await client.call_tool("interface_results", {
+                            "call_id": call_id, "include_image": False})
+                        retained = self.row(reply)
+                        cancellation = retained.get("cancellation")
+                        action = retained.get("action")
+                        if (isinstance(cancellation, dict)
+                                and cancellation.get("status") == "recovered"
+                                and isinstance(action, dict)
+                                and action.get("status") == "recovered"):
+                            break
+                        await asyncio.sleep(0.01)
+                    self.assertIsNotNone(retained)
+                    self.assertEqual(retained["call_id"], call_id)
+                    self.assertEqual(retained["cancellation"]["status"],
+                                     "recovered", retained)
+                    self.assertTrue(retained["cancellation"]["release_confirmed"])
+                    self.assertEqual(retained["action"]["status"], "recovered")
+                    self.assertEqual(retained["action"]["program_actions_lower_bound"], 2)
+                    self.assertIsNone(retained["task_success"])
+                    self.assertFalse(retained["replay_allowed"])
+
+                    verified_reply = await client.call_tool(
+                        "interface_verify_task", {"call_id": call_id,
+                            "wait_for_result_ms": 1000})
+                    verified = self.row(verified_reply)
+                    self.assertEqual(verified["call_id"], call_id)
+                    self.assertEqual(verified["status"], "verified", verified)
+                    self.assertFalse(verified["task_success"])
+                    self.assertEqual(verified["task_effect"]["receipt"]["operation_id"],
+                                     retained["action"]["operation_id"])
+                    self.assertFalse(verified["replay_allowed"])
 
 
 if __name__ == "__main__":
