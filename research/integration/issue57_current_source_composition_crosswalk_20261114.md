@@ -58,29 +58,42 @@ shape and custody only. They cannot provide a fresh task effect, the frozen #57
 telemetry fields (for example `durable_calls` and per-input feedback), or live
 Calc comparison rows.
 
+The form-specific compiled grounding contract is now also exercised through the
+actual `runtime.core_v1.compiled_gui` runtime, public v3 caller, detached compiled
+receipt, and append-only Issue #57 ledger in
+`test_issue57_v3_form_caller_composition_v1.py`. Five synthetic rows cover
+unchanged reuse, a stale cached handle refused before any input, one bounded
+model reacquisition with post-model revalidation, a dispatched action with
+release unknown, and completed input with independent task effect unknown. The
+repair row retains the model attempt's usage; every row retains source evidence
+hashes, and successful release is derived from the actual returned core receipt.
+These are source-bound offline adapter checks: observations, target handles,
+input, provider envelope, and saved-form artifact are synthetic. They do not
+connect the live grounding runner, App Server, native GUI, or a fresh durable
+task scorer.
+
 The missing composed-path check is now narrower and concrete: no current
-comparison runner joins that provider/preflight path to the v3 compiled core,
-actual GUI attempt/evidence, durable independent task scorer, and all three
-matched arms in one frozen lifecycle record. The historical live runner remains
-v2; no claim of a v3 live comparison follows from the synthetic transport and
-FakeX cells. The new projection adapter validates old-protocol compatibility
-and preserves HOLD evidence, but it consumes v3 results rather than executing
-the provider/GUI/scorer path itself. Do not add a new primitive or runtime for
-this gap.
+comparison runner joins the live form grounding/acquisition and provider
+preflight path to the v3 compiled core, native GUI attempt/evidence, durable
+independent task scorer, and all three matched arms in one frozen lifecycle
+record. The historical live runner remains v2; no claim of a v3 live comparison
+follows from the synthetic transport, FakeX, or new form rows. The projection
+adapter validates old-protocol compatibility and preserves HOLD evidence, but
+it consumes v3 results rather than executing the provider/GUI/scorer path
+itself. Do not add a new primitive or runtime for this gap.
 
 ## Next finite work
 
-Next, connect the existing independently scored form task adapters to the v3
-compiled-caller entry while retaining the actual terminal receipts and task
-history. Reuse the existing schema preflight and App Server adapter above; do
-not start from another benchmark implementation. A new candidate must cover
-one unchanged reuse, one stale-target refusal with zero old-target input, one
-bounded repair with post-model revalidation, one release-unknown result and one
-effect-unknown result. Its audit must reconcile all assigned attempts, model
-usage, caller output, core receipt, release/effect references and raw hashes
-without dropping failures. Only after that candidate passes normal and `-O`
-checks should a newly frozen live block be considered; do not recycle the old
-allocation, conditions, or results.
+Next, carry the same form-specific cases into a prospective live candidate by
+reusing the existing schema preflight and App Server adapter, then retain actual
+terminal receipts, independent saved-effect evidence, and all assigned
+attempts. The offline composed check now covers unchanged reuse, stale-target
+refusal with zero input, bounded post-model repair, release unknown, and effect
+unknown. Do not start another benchmark implementation or edit/rerun a frozen
+runner. A live candidate still needs a newly verified allocation/host and a
+fresh freeze; its audit must reconcile preflight and every model attempt, caller
+output, core receipt, real release/effect evidence, and raw hashes without
+dropping failures. Do not recycle an old allocation, condition, or result.
 
 ## Local verification of the mapped seams
 
@@ -116,6 +129,12 @@ terminal event in the returned compiled receipt. Unknown release/effect is
 explicitly unavailable in the new failure rows. The application
 transport/effect is synthetic, and the historical FODS is not a post-action
 artifact.
+
+`research.integration.test_issue57_v3_form_caller_composition_v1`: 1/1 each
+mode. Five assigned synthetic outcomes pass through the compiled GUI core, v3
+caller and append-only ledger, including the current form grounding validator,
+usage retention for repair, stale zero-input refusal, release/effect unknown
+states, and raw source digest checks. This is offline integration evidence only.
 
 `test_grounding_appserver_usage_transport.py`: Python 3.11.9 skips 1/1 because
 the App Server pipe transport needs Python 3.12+. The available Python 3.13.14
