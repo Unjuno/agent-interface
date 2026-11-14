@@ -2090,38 +2090,39 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 # rejection). Let the ordinary exact-call receipt path below
                 # resolve it before declaring the ID unknown.
             else:
-                # Lease expiry may return the dispatch worker while native
-                # recovery is still pending. In that schedule the worker's
-                # one-shot progress read has ended before the producer is
-                # retired. A later exact-call readback can safely capture the
-                # retained lower bound after recovery becomes terminal. This
-                # diagnostic never upgrades release or task success.
-                action = row.get('action')
-                progress_reader = getattr(
-                    supervised_win32_producer_factory,
-                    'read_program_actions_lower_bound', None)
-                if (type(action) is dict
-                        and action.get('status') in ('recovered', 'unknown')
-                        and 'program_actions_capture_status' not in action
-                        and 'program_actions_lower_bound' not in action):
-                    if callable(progress_reader):
-                        try:
-                            owner.capture_program_emission_progress(call_id,
-                                progress_reader)
-                        except Exception as error:
+                if supervised_win32:
+                    # Lease expiry may return the dispatch worker while native
+                    # recovery is still pending. In that schedule the worker's
+                    # one-shot progress read has ended before the producer is
+                    # retired. A later exact-call readback can safely capture
+                    # the retained lower bound after recovery becomes terminal.
+                    # This diagnostic never upgrades release or task success.
+                    action = row.get('action')
+                    progress_reader = getattr(
+                        supervised_win32_producer_factory,
+                        'read_program_actions_lower_bound', None)
+                    if (type(action) is dict
+                            and action.get('status') in ('recovered', 'unknown')
+                            and 'program_actions_capture_status' not in action
+                            and 'program_actions_lower_bound' not in action):
+                        if callable(progress_reader):
+                            try:
+                                owner.capture_program_emission_progress(call_id,
+                                    progress_reader)
+                            except Exception as error:
+                                try:
+                                    owner.record_program_emission_progress_failure(
+                                        call_id, error)
+                                except Exception:
+                                    pass
+                        else:
                             try:
                                 owner.record_program_emission_progress_failure(
-                                    call_id, error)
+                                    call_id,
+                                    RuntimeError('progress_reader_unavailable'))
                             except Exception:
                                 pass
-                    else:
-                        try:
-                            owner.record_program_emission_progress_failure(
-                                call_id,
-                                RuntimeError('progress_reader_unavailable'))
-                        except Exception:
-                            pass
-                    row = owner.interface_result(call_id)
+                        row = owner.interface_result(call_id)
                 row = deepcopy(row)
                 row['operation_invoked'] = False
                 row['input_dispatched'] = False

@@ -1498,7 +1498,11 @@ class OwnedWin32SessionOwner:
             and result.get("phase") == "recovered"
             and result.get("status") == "recovered"
             and result.get("release_confirmed") is True)
-        if confirmed and record.get("standard_program") is None:
+        task_effect = record.get("task_effect")
+        task_effect_verified = (type(task_effect) is dict
+            and task_effect.get("status") == "verified")
+        if (confirmed and record.get("standard_program") is None
+                and not task_effect_verified):
             action["status"] = "recovered"
             action["release_confirmed"] = True
             action["task_success"] = None
