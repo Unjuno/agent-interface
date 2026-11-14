@@ -34,4 +34,3 @@ Each arm must independently show: exactly one pre-expiry attack accepted; exact 
 ## Preflight blockers
 
 Before allocating: verify the pinned current source commit and asset hashes, live target installation and launch route, current custody clear, exclusive fresh allocation identity, same-host clock-domain proof, caller scheduling implementation, oracle calibration, and local collector space. The live target prerequisite presently fails. No Docker action, runtime download, installation, launch, input, or allocation claim is part of this freeze.
-
