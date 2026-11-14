@@ -2155,6 +2155,15 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         "interface_results", {
                             "call_id": result["call_id"],
                             "include_image": False})
+                    self.assertFalse(results_reply.isError)
+                    self.assertEqual(len(results_reply.content), 1)
+                    self.assertEqual(results_reply.content[0].type, "text")
+                    public_result_body = json.loads(
+                        results_reply.content[0].text)
+                    self.assertEqual(public_result_body["call_id"],
+                                     result["call_id"])
+                    self.assertEqual(public_result_body["action"]["status"],
+                                     "unknown")
                     retained = self.row(results_reply)
                     self.assertEqual(retained["action"]["status"], "unknown")
                     self.assertFalse(retained["action"][
@@ -2170,12 +2179,19 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     # input horizon. The compiled caller must not treat its
                     # release boolean alone as verified recovery custody.
                     from runtime.cli_v1.supervised_win32_compiled import _terminal
-                    terminal = _terminal(results_reply, "move",
+                    terminal = _terminal(public_result_body, "move",
                         expected_call_id=result["call_id"],
                         expected_generation=result["target_generation"])
                     self.assertEqual(terminal["status"], "uncertain")
                     self.assertIs(terminal["release"]["verified"], False)
                     self.assertNotIn("input_dispatched", terminal)
+                    # The public caller consumes the decoded text body. Passing
+                    # the MCP SDK response object is not the caller contract.
+                    sdk_terminal = _terminal(results_reply, "move",
+                        expected_call_id=result["call_id"],
+                        expected_generation=result["target_generation"])
+                    self.assertEqual(sdk_terminal["status"], "uncertain")
+                    self.assertFalse(sdk_terminal["release"]["verified"])
                     await client.call_tool("interface_close", {})
 
 
