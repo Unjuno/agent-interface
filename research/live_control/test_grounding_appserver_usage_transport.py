@@ -11,6 +11,13 @@ from research.live_control.codex_app_server_client_v2 import CodexAppServerClien
 from research.live_control.integrated_efficiency_app_server_model_v1 import (
     PersistentGroundingModel,
 )
+from research.live_control.v3_persistent_grounding_adapter_v1 import (
+    V3PersistentGroundingAdapter,
+)
+from research.live_control.issue57_v3_attempt_ledger_v1 import (
+    AppendOnlyAttemptLedger, make_row,
+)
+from research.live_control.issue57_v3_trace_adapter_v1 import project_task
 
 
 PEER = r'''
@@ -67,21 +74,13 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                     root / "session", workspace, node="unused", cli="unused",
                     client=client, path_converter=str,
                     model="synthetic-model", effort="medium")
+                v3_model = V3PersistentGroundingAdapter(model)
                 events = []
                 execute_calls = []
 
                 def anchor(_payload):
-                    value = model.call(root / "call", "synthetic request", image,
-                                       "compiled", workspace)
-                    return {"call_id": value["call_id"],
-                            "output": {"status": "target_reference",
-                                       "target": value["grounding"]},
-                            "usage": value["usage"],
-                            "requested_model": value["requested_model"],
-                            "requested_effort": value["requested_effort"],
-                            "cost": value["cost"],
-                            "visible_images_submitted": 1,
-                            "wait_ns": value["runner_ns"]}
+                    return v3_model(root / "call", "synthetic request", image,
+                                    "compiled", workspace)
 
                 result = caller.run({
                     "target": "synthetic form", "route": "cold",
@@ -99,6 +98,20 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                      "journal": events.append})
 
                 attempt, = result["attempt_ledger"]
+                comparison_row = make_row("provider-failure-arm-task-01", result,
+                    {"status": "unavailable", "verified": False,
+                     "keys_down": None, "buttons_down": None,
+                     "evidence_ref": None, "evidence_digest": None},
+                    {"status": "unavailable", "evidence_ref": None,
+                     "evidence_digest": None})
+                ledger = AppendOnlyAttemptLedger(
+                    root / "issue57-attempts.jsonl",
+                    ["provider-failure-arm-task-01"])
+                ledger.append(comparison_row)
+                ledger_audit = ledger.audit()
+                self.assertEqual(ledger_audit["rows"], 1)
+                self.assertEqual(ledger_audit["attempts"], 1)
+                self.assertIsNone(comparison_row["task_effect"])
                 self.assertEqual(result["outcome"], "CALLER_FAILED")
                 self.assertEqual(result["accounting"]["attempted_calls"], 1)
                 self.assertEqual(result["accounting"]["completed_calls"], 0)
@@ -117,6 +130,19 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                 self.assertEqual(failure_receipt["requested_effort"],
                                  attempt["requested_effort"])
                 self.assertEqual(result["accounting"]["usage_totals"]["input_tokens"], 1234)
+                projected = project_task("plain", 0, result,
+                    {"submission_count": 0, "exact_submission": False},
+                    {"local_observations": 1, "durable_calls": 1,
+                     "pointer_admissions": 0, "old_target_pointer_admissions": 0,
+                     "releases_verified": False, "elapsed_ns": 1,
+                     "source_to_completion_ns": None, "input_feedback_ns": [],
+                     "repair": {"required": False, "old_reference_status": None,
+                         "old_reference_pointer_admissions": 0,
+                         "attempted": False, "succeeded": False}})
+                self.assertEqual(projected["status"], "HOLD")
+                self.assertEqual(projected["reason"],
+                    "failed_attempt_not_representable_in_v1")
+                self.assertEqual(projected["caller_result"], result)
                 self.assertEqual(execute_calls, [])
                 self.assertIsNone(result["task_effect"])
                 self.assertIsNone(result["accounting"]["cost"])

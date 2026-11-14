@@ -26,3 +26,19 @@ The before and post-recovery full-resolution images were classified by the froze
 An offline R181 private-runner terminal-gate candidate now wires public horizon projection together with source/cancellation scopes, the button-up receipt, producer witness, and exception-to-release bound. Ten fixture tests passed under CPython 3.11.9 normally and under `-O`, including the retained R180 terminal/fault result; short horizon, excessive gap, explicit false flag, mismatched generation/scope, wrong producer exit, and excess latency fail closed. The candidate is local-only at `private-packets/map01_native_windows_current_main_r180_abnormal_exit_20261114/runner-candidates/r181-horizon-projection/`; its 20-entry manifest is verified. No live evidence or new allocation is claimed.
 
 The offline R181 terminal-gate candidate integrates scope, release-attempt, producer-witness, latency, and horizon checks. Ten fixture tests pass under normal and optimized CPython 3.11.9. Its 20-entry manifest SHA-256 is `21479e7ce7d1d5887f00419dcef72508323f10dab727c9dfda40aab3f0e61695`. Next, wire this candidate into a complete copied runner and fixture-check every frozen gate; no live attempt is authorized or claimed here. Preserve the frozen R180 runner, conditions, and raw.
+
+### Public cancellation projection candidate
+
+On candidate branch `research/issue57-v3-integration-crosswalk-20261114`,
+`OwnedWin32SessionOwner._refresh` now writes the bounded-horizon verdict it
+already uses for custody resolution into the retained cancellation result as
+`late_input_horizon_verified`. The exact `interface_results(call_id=...)`
+MCP text response is covered by a regression: with a fully joined recovery
+receipt, the v3 caller reports verified release and `delivery_uncertain`; with
+the horizon missing or its readback unbound, the caller stays uncertain. In
+both cases the original action stays UNKNOWN, task effect stays unset, and
+replay stays denied. This is a Fake producer/supervisor result-shape check; it
+does not change R180's partial classification or prove a live horizon. Owner,
+MCP, and compiled-caller suites pass 95/95 in normal and optimized CPython
+3.11.9. A new native attempt is still needed to validate the projection
+against a current Win32 recovery receipt and complete the frozen runner audit.

@@ -1530,6 +1530,32 @@ class OwnedWin32SessionOwner:
                         if type(attempts) is list else None,
                     "effect_status": "unknown", "task_success": None,
                     "replay_allowed": False})
+        horizon_verified = None
+        if confirmed and "late_input_horizon_ns" in result:
+            horizon_ns = result.get("late_input_horizon_ns")
+            release_ns = result.get("late_input_release_received_ns")
+            start_ns = result.get("late_input_observation_start_ns")
+            end_ns = result.get("late_input_observation_end_ns")
+            count = result.get("late_input_observation_count")
+            max_gap_ns = result.get("late_input_max_observed_gap_ns")
+            allowed_gap_ns = result.get("late_input_max_sample_gap_ns")
+            horizon_verified = (type(horizon_ns) is int
+                and 0 < horizon_ns <= _MAX_LATE_INPUT_HORIZON_NS
+                and type(release_ns) is int
+                and type(start_ns) is int and start_ns >= release_ns
+                and type(allowed_gap_ns) is int and allowed_gap_ns > 0
+                and start_ns - release_ns <= allowed_gap_ns
+                and type(end_ns) is int and end_ns - release_ns >= horizon_ns
+                and type(count) is int and count >= 2
+                and type(max_gap_ns) is int and max_gap_ns >= 0
+                and max_gap_ns <= allowed_gap_ns
+                and result.get("late_input_validation_error") is None)
+            # Publish the same bounded-horizon decision that is used to
+            # resolve durable custody. Exact-call result readers must not
+            # have to infer a private owner decision from release alone.
+            result = dict(result)
+            result["late_input_horizon_verified"] = horizon_verified
+            cancellation["result"] = deepcopy(result)
         if self._custody_fence is not None:
             operation_id = action.get("operation_id")
             generation = action.get("target_generation")
@@ -1545,24 +1571,8 @@ class OwnedWin32SessionOwner:
                         # later exact-results readback can finish this step
                         # after asynchronous recovery has retired the child.
                         return
-                    horizon_ns = result.get("late_input_horizon_ns")
-                    release_ns = result.get("late_input_release_received_ns")
-                    start_ns = result.get("late_input_observation_start_ns")
-                    end_ns = result.get("late_input_observation_end_ns")
-                    count = result.get("late_input_observation_count")
-                    max_gap_ns = result.get("late_input_max_observed_gap_ns")
-                    allowed_gap_ns = result.get("late_input_max_sample_gap_ns")
-                    horizon_verified = (type(horizon_ns) is int
-                        and 0 < horizon_ns <= _MAX_LATE_INPUT_HORIZON_NS
-                        and type(release_ns) is int
-                        and type(start_ns) is int and start_ns >= release_ns
-                        and type(allowed_gap_ns) is int and allowed_gap_ns > 0
-                        and start_ns - release_ns <= allowed_gap_ns
-                        and type(end_ns) is int and end_ns - release_ns >= horizon_ns
-                        and type(count) is int and count >= 2
-                        and type(max_gap_ns) is int and max_gap_ns >= 0
-                        and max_gap_ns <= allowed_gap_ns
-                        and result.get("late_input_validation_error") is None)
+                    if type(horizon_verified) is not bool:
+                        horizon_verified = False
                     self._custody_fence.resolve(operation_id, generation,
                         release_confirmed=True,
                         late_input_horizon_required=True,
