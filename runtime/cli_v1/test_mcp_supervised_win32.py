@@ -2584,6 +2584,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(pending["status"], "pending", pending)
                     call_id = pending["call_id"]
                     self.assertEqual(len(call_id), 32)
+                    self.assertLess(time.monotonic_ns(), expiry_ns,
+                        "stdio dispatch must return the exact call ID before lease expiry")
 
                     # The client retains expiry from its exact request instead
                     # of querying it later from the owner result projection.
