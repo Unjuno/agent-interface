@@ -62,15 +62,20 @@ result returned to the graph in the graph clock domain.
 
 ## Local verification performed
 
-An additional Fake producer integration now drives
-`run_public_compiled` through the actual MCP server tools: public observe,
-pending dispatch, same-call-ID result query, a transient busy observation,
-bounded read-only retry, a fresh task-effect predicate, and the exact-call
-independent task oracle. It verifies one producer start, same-call result
-joining, successful effect verification, and retained busy-attempt evidence.
-An adjacent unit test exhausts the retry budget and proves no dispatch occurs.
+The in-process Fake producer integration drives `run_public_compiled` through
+the MCP server tools: public observe, pending dispatch, same-call-ID result
+query, transient-busy retry, task-effect verification, and the exact-call task
+oracle. It also makes a second controlled producer call that returns an
+exception with unverified release; the caller retains uncertainty and skips the
+effect verifier and task oracle. A separate stdio MCP test runs
+`run_public_compiled` against a child server over the MCP stdio transport. It
+joins the pending result by exact call ID, accepts the nested `call.call_id`
+shape while the query is pending, and preserves UNKNOWN action delivery even
+when the separate recovery receipt reports release but lacks the bounded late-
+input horizon. An adjacent unit test exhausts the retry budget and proves no
+dispatch occurs.
 
-The public caller and MCP server integration modules pass 42 tests in both
+The public caller and MCP server integration modules pass 43 tests in both
 normal and optimized Python mode:
 
 ```text
