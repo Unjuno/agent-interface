@@ -701,6 +701,53 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(process.exitcode, 86)
             await server.call_tool("interface_close", {})
 
+    async def test_public_caller_policy_preserves_abrupt_completion_recovery_route(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = AbruptExitProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture":123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                _supervised_win32_deadline_cancel_policy="public_caller",
+                _supervised_win32_deadline_cancel_grace_ns=250_000_000)
+            program = self.valid_program()
+            program["authority"]["expires_at_ns"] = time.monotonic_ns()+5_000_000_000
+            result = self.row(await server.call_tool("interface_dispatch", {
+                "program":program,"current_observation_seq":1,
+                "current_binding_revision":1,"wait_for_result_ms":5000}))
+            self.assertEqual(result["status"],"returned",result)
+            self.assertEqual(result["deadline_cancel_policy"],"public_caller")
+            self.assertIsNone(result["deadline_cancel_route"],result)
+            self.assertEqual(result["result"]["status"],"unknown")
+            self.assertIsNone(result["input_dispatched"])
+            self.assertIsNone(result["task_success"])
+            self.assertFalse(result["replay_allowed"])
+            action = result["supervision"]["action"]
+            cancellation = result["supervision"]["cancellation"]
+            self.assertEqual(action["status"],"unknown")
+            self.assertFalse(action["release_confirmed"])
+            self.assertTrue(cancellation["automatic_completion_recovery"])
+            self.assertEqual(cancellation["status"],"recovered")
+            self.assertTrue(cancellation["release_confirmed"])
+            retained = self.row(await server.call_tool("interface_results", {
+                "call_id":result["call_id"]}))
+            self.assertIsNone(retained.get("deadline_cancel_requested_ns"),retained)
+            self.assertNotEqual(retained.get("deadline_cancel_route"),
+                "public_interface_cancel",retained)
+            self.assertEqual(process.exitcode,86)
+            self.assertEqual(self.row(await server.call_tool(
+                "interface_close",{}))["status"],"closed")
+        self.assertTrue(supervisor.closed)
+
     async def test_public_dispatch_exception_auto_recovers_and_preserves_unknown_action(self):
         process = FakeProcess()
         identity = {"pid": 7101, "creation_time_100ns": 90101}
