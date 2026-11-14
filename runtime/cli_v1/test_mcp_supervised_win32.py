@@ -10,6 +10,7 @@ from tempfile import TemporaryDirectory
 from pathlib import Path
 from unittest.mock import Mock, patch
 
+from runtime.cli_v1 import mcp_server as mcp_server_module
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
@@ -2528,8 +2529,24 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "predicates": {"ready": True, "saved": bool(effects)},
                 "side_effect_authority": False, "input_dispatched": False}
 
+        original_write_json = mcp_server_module._write_json
+        delayed_dispatch_report_writes = []
+
+        def delay_dispatch_report_write(path, report):
+            report_path = Path(path)
+            request_path = report_path.parent / "request.json"
+            if (report_path.name == "report.json" and request_path.is_file()
+                    and not delayed_dispatch_report_writes):
+                request = json.loads(request_path.read_text(encoding="utf-8"))
+                if request.get("operation") == "dispatch":
+                    delayed_dispatch_report_writes.append(str(report_path))
+                    time.sleep(0.1)
+            return original_write_json(path, report)
+
         with TemporaryDirectory() as root, patch(
-                "runtime.cli_v1.mcp_server.observe", fake_observe):
+                "runtime.cli_v1.mcp_server.observe", fake_observe), patch(
+                "runtime.cli_v1.mcp_server._write_json",
+                side_effect=delay_dispatch_report_write):
             server = create_server({"fixture": 123}, root,
                 session_mode="supervised-win32",
                 _supervised_win32_owner_factory=lambda *_args: owner,
@@ -2587,21 +2604,20 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         if (isinstance(action, dict)
                                 and action.get("status") in (
                                     "completed", "unknown", "recovered")):
-                            # `interface_results` may expose the terminal
-                            # owner row just before the dispatch worker finishes
-                            # atomically publishing its raw report. Wait for
-                            # that bounded file-finalization step before the
-                            # caller starts another observation or the fixture
-                            # removes its temporary receipt directory.
-                            report_temps = list(Path(root).glob(
-                                "*/.report.json.tmp"))
+                            # This fixture delays the exact dispatch report
+                            # writer before it creates its temp file. Require the
+                            # final report, not only absence of an observed temp.
+                            report_path = Path(root) / call_id / "report.json"
+                            report_temp = report_path.with_name(".report.json.tmp")
                             finalize_deadline = time.monotonic() + 2
-                            while (report_temps
-                                    and time.monotonic() < finalize_deadline):
+                            while (
+                                    not report_path.is_file() or report_temp.exists()
+                            ) and time.monotonic() < finalize_deadline:
                                 time.sleep(0.01)
-                                report_temps = list(Path(root).glob(
-                                    "*/.report.json.tmp"))
-                            self.assertFalse(report_temps, report_temps)
+                            self.assertTrue(report_path.is_file(),
+                                f"exact call report was not finalized: {call_id}")
+                            self.assertFalse(report_temp.exists(),
+                                f"exact call report temp remains: {call_id}")
                             return reply
                         time.sleep(0.01)
                     self.fail("exact-call interface_results did not reach completed")
@@ -2653,6 +2669,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     result["transitions"][-1]["action_id"])
                 self.assertEqual(len(effects), 1)
                 self.assertEqual(producer.started, 1)
+                self.assertEqual(len(delayed_dispatch_report_writes), 1)
 
                 # A second exact-call readback carries an exception/unknown
                 # action plus release-only recovery. Without a verified late
