@@ -20,6 +20,7 @@ from .calc_task_artifact_v1 import _stable_directory, CalcTaskArtifact
 PROFILE_ID = 'calc-g10-two-save-v1'
 _DESCRIPTOR_SCHEMA = 'agent-interface/calc-g10-two-save-descriptor-v1'
 _SAVE_REQUEST_SCHEMA = 'agent-interface/calc-g10-save-request-v1'
+_SAVE_CONTROLLER_SCHEMA = 'agent-interface/calc-g10-save-controller-v1'
 _ARTIFACT_NAME = 'task-artifact.fods'
 _SNAPSHOT_NAMES = {'first': 'g10-first.fods', 'second': 'g10-second.fods'}
 _CASES = {'first': (29, 31), 'second': (43, 47)}
@@ -43,6 +44,91 @@ _G10_BLANK = (
     b'<table:table-cell table:number-columns-repeated="20"/>'
     b'</table:table-row></table:table></office:spreadsheet></office:body>'
     b'</office:document>')
+
+
+def _canonical_sha256(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode('utf-8')).hexdigest()
+
+
+def make_registered_calc_g10_save_controller_receipt(*, descriptor,
+                                                       method_receipt,
+                                                       save_receipts):
+    """Mint the parent-held receipt joining both released saves to the graph.
+
+    This receipt is an in-memory server value. It proves that the two snapshots
+    retained by the parent correspond, in order, to the exact completed graph
+    transitions and their save requests. It does not by itself prove the
+    persisted bytes' task effect or the target's exit; those are checked later.
+    """
+    if (type(descriptor) is not dict or type(method_receipt) is not dict
+            or type(save_receipts) is not list or len(save_receipts) != 2):
+        return None
+    identity = (descriptor.get('call_id'), descriptor.get('attempt_id'),
+        descriptor.get('process_generation'), descriptor.get('window_generation'))
+    if (descriptor.get('schema') != _DESCRIPTOR_SCHEMA
+            or descriptor.get('profile_id') != PROFILE_ID
+            or any(type(value) is not str or not value for value in identity)):
+        return None
+    transitions = method_receipt.get('transitions')
+    if (method_receipt.get('format') != 'compiled-gui-runtime-receipt-v1'
+            or method_receipt.get('outcome') != 'TASK_SUCCEEDED'
+            or method_receipt.get('reason') != 'method_complete'
+            or method_receipt.get('completed_transitions') != 2
+            or type(transitions) is not list or len(transitions) != 2):
+        return None
+    receipt_rows = []
+    for action, transition, row in zip(('first', 'second'), transitions,
+                                       save_receipts):
+        if type(transition) is not dict or type(row) is not dict:
+            return None
+        request_ns = row.get('save_request_monotonic_ns')
+        accepted_ns = transition.get('execution_accepted_ns')
+        if (row.get('schema') != 'agent-interface/calc-g10-save-receipt-v1'
+                or (row.get('call_id'), row.get('attempt_id'),
+                    row.get('profile_id'), row.get('action'),
+                    row.get('process_generation'), row.get('window_generation'))
+                    != (*identity[:2], PROFILE_ID, action, *identity[2:])
+                or transition.get('action') != action
+                or transition.get('action_id') != row.get('action_id')
+                or transition.get('release_verified') is not True
+                or row.get('action_release_verified') is not True
+                or type(row.get('action_id')) is not str
+                or not row['action_id'] or len(row['action_id']) > 128
+                or type(row.get('save_request_id')) is not str
+                or not re.fullmatch(r'[0-9a-f]{32}', row['save_request_id'])
+                or type(request_ns) is not int or request_ns <= 0
+                or type(accepted_ns) is not int or accepted_ns < request_ns
+                or type(row.get('artifact_sha256')) is not str
+                or not re.fullmatch(r'[0-9a-f]{64}', row['artifact_sha256'])
+                or type(row.get('artifact_bytes')) is not int
+                or row['artifact_bytes'] <= 0
+                or type(row.get('artifact_identity')) is not list):
+            return None
+        receipt_rows.append({
+            'action': action,
+            'action_id': row['action_id'],
+            'save_request_id': row['save_request_id'],
+            'save_request_monotonic_ns': request_ns,
+            'transition_execution_accepted_ns': accepted_ns,
+            'artifact_sha256': row['artifact_sha256'],
+            'artifact_bytes': row['artifact_bytes'],
+            'artifact_identity': list(row['artifact_identity']),
+        })
+    try:
+        method_digest = _canonical_sha256(method_receipt)
+        save_digest = _canonical_sha256(receipt_rows)
+    except (TypeError, ValueError):
+        return None
+    return {
+        'schema': _SAVE_CONTROLLER_SCHEMA,
+        'call_id': identity[0], 'attempt_id': identity[1],
+        'profile_id': PROFILE_ID,
+        'process_generation': identity[2], 'window_generation': identity[3],
+        'method_receipt_sha256': method_digest,
+        'save_receipts_sha256': save_digest,
+        'saved_actions': receipt_rows,
+    }
 
 
 class CalcG10ArtifactCustody:
@@ -218,7 +304,8 @@ class CalcG10ArtifactCustody:
         return dict(row)
 
     def verify_after_close(self, *, method_receipt, close_receipt,
-                           target_exit_receipt):
+                           target_exit_receipt,
+                           trusted_save_controller_receipt=None):
         """Promote effect to task success only after both saves and exact exit."""
         if self._verified is not None:
             return dict(self._verified)
@@ -256,6 +343,13 @@ class CalcG10ArtifactCustody:
                     or transition.get('action_id') != record['action_id']
                     or transition.get('release_verified') is not True):
                 return dict(unknown, reason='g10_transition_receipt_mismatch')
+        expected_controller_receipt = make_registered_calc_g10_save_controller_receipt(
+            descriptor=descriptor, method_receipt=method_receipt,
+            save_receipts=[self._records['first'], self._records['second']])
+        if (expected_controller_receipt is None
+                or type(trusted_save_controller_receipt) is not dict
+                or trusted_save_controller_receipt != expected_controller_receipt):
+            return dict(unknown, reason='trusted_g10_save_controller_receipt_required')
         exit_common = {'status', 'verified', 'process_generation', 'xid',
                        'pid', 'start_ticks', 'exit_code',
                        'observed_monotonic_ns'}

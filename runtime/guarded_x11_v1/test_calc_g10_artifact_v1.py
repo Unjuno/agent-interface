@@ -5,6 +5,7 @@ from pathlib import Path
 
 from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
     CalcG10ArtifactCustody, PROFILE_ID,
+    make_registered_calc_g10_save_controller_receipt,
 )
 from runtime.guarded_x11_v1.process_identity import process_generation_from_identity
 
@@ -59,11 +60,24 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
             'reason': 'method_complete', 'completed_transitions': 2,
             'transitions': [
                 {'action': 'first', 'action_id': first_id,
-                 'release_verified': True},
+                 'release_verified': True, 'execution_accepted_ns': 11},
                 {'action': 'second', 'action_id': second_id,
-                 'release_verified': True},
+                 'release_verified': True, 'execution_accepted_ns': 21},
             ],
         }
+
+    def _verify(self, method=None, *, receipt=True, close=CLOSE, exit_ns=30):
+        method = self._method() if method is None else method
+        controller = None
+        if receipt:
+            rows = ([self.custody._records[name] for name in ('first', 'second')]
+                    if set(self.custody._records) == {'first', 'second'} else [])
+            controller = make_registered_calc_g10_save_controller_receipt(
+                descriptor=self.custody.descriptor, method_receipt=method,
+                save_receipts=rows)
+        return self.custody.verify_after_close(method_receipt=method,
+            trusted_save_controller_receipt=controller, close_receipt=close,
+            target_exit_receipt=self._exit(observed_ns=exit_ns))
 
     def _exit(self, observed_ns=30):
         return {
@@ -96,8 +110,7 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
     def test_both_archived_g10_saves_and_same_target_exit_verify(self):
         first, second = self._two_saves()
         self.assertNotEqual(first['artifact_sha256'], second['artifact_sha256'])
-        result = self.custody.verify_after_close(method_receipt=self._method(),
-            close_receipt=CLOSE, target_exit_receipt=self._exit())
+        result = self._verify()
         self.assertEqual(result['status'], 'verified')
         self.assertIs(result['task_success'], True)
         self.assertIs(result['replay_allowed'], False)
@@ -109,8 +122,7 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
 
     def test_missing_second_save_never_promotes_success(self):
         self._save('first', 'action-first', '1' * 32, 10, 'first.fods')
-        result = self.custody.verify_after_close(method_receipt=self._method(),
-            close_receipt=CLOSE, target_exit_receipt=self._exit())
+        result = self._verify()
         self.assertEqual(result['status'], 'unknown')
         self.assertIsNone(result['task_success'])
         self.assertEqual(result['reason'], 'both_g10_save_receipts_required')
@@ -118,8 +130,7 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
     def test_transition_mismatch_refuses_to_join_saved_effects(self):
         self._two_saves()
         method = self._method(second_id='different-action-id')
-        result = self.custody.verify_after_close(method_receipt=method,
-            close_receipt=CLOSE, target_exit_receipt=self._exit())
+        result = self._verify(method)
         self.assertEqual(result['status'], 'unknown')
         self.assertIsNone(result['task_success'])
         self.assertEqual(result['reason'], 'g10_transition_receipt_mismatch')
@@ -127,16 +138,55 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
     def test_snapshot_mutation_after_receipt_is_unknown(self):
         self._two_saves()
         (self.root / 'g10-first.fods').write_bytes(b'changed')
-        result = self.custody.verify_after_close(method_receipt=self._method(),
-            close_receipt=CLOSE, target_exit_receipt=self._exit())
+        result = self._verify()
         self.assertEqual(result['status'], 'unknown')
         self.assertIsNone(result['task_success'])
         self.assertEqual(result['reason'], 'g10_snapshot_custody_mismatch')
 
+    def test_missing_or_mutated_parent_save_controller_receipt_is_unknown(self):
+        self._two_saves()
+        result = self._verify(receipt=False)
+        self.assertEqual(result['status'], 'unknown')
+        self.assertIsNone(result['task_success'])
+        self.assertEqual(result['reason'],
+            'trusted_g10_save_controller_receipt_required')
+        method = self._method()
+        receipt = make_registered_calc_g10_save_controller_receipt(
+            descriptor=self.custody.descriptor, method_receipt=method,
+            save_receipts=[self.custody._records['first'],
+                           self.custody._records['second']])
+        receipt['saved_actions'][1]['action_id'] = 'forged'
+        result = self.custody.verify_after_close(method_receipt=method,
+            trusted_save_controller_receipt=receipt, close_receipt=CLOSE,
+            target_exit_receipt=self._exit())
+        self.assertEqual(result['status'], 'unknown')
+        self.assertIsNone(result['task_success'])
+        self.assertEqual(result['reason'],
+            'trusted_g10_save_controller_receipt_required')
+
+    def test_save_after_transition_acceptance_cannot_mint_controller_receipt(self):
+        self._two_saves()
+        method = self._method()
+        method['transitions'][0]['execution_accepted_ns'] = 9
+        receipt = make_registered_calc_g10_save_controller_receipt(
+            descriptor=self.custody.descriptor, method_receipt=method,
+            save_receipts=[self.custody._records['first'],
+                           self.custody._records['second']])
+        self.assertIsNone(receipt)
+
+    def test_non_json_method_receipt_cannot_mint_controller_receipt(self):
+        self._two_saves()
+        method = self._method()
+        method['unexpected'] = float('nan')
+        receipt = make_registered_calc_g10_save_controller_receipt(
+            descriptor=self.custody.descriptor, method_receipt=method,
+            save_receipts=[self.custody._records['first'],
+                           self.custody._records['second']])
+        self.assertIsNone(receipt)
+
     def test_exit_before_both_save_requests_is_unknown(self):
         self._two_saves()
-        result = self.custody.verify_after_close(method_receipt=self._method(),
-            close_receipt=CLOSE, target_exit_receipt=self._exit(observed_ns=20))
+        result = self._verify(exit_ns=20)
         self.assertEqual(result['status'], 'unknown')
         self.assertIsNone(result['task_success'])
         self.assertEqual(result['reason'], 'target_process_exit_invalid')
@@ -144,8 +194,7 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
     def test_wrong_saved_effect_is_a_scoped_failure_after_valid_custody(self):
         self._save('first', 'action-first', '1' * 32, 10, 'second.fods')
         self._save('second', 'action-second', '2' * 32, 20, 'second.fods')
-        result = self.custody.verify_after_close(method_receipt=self._method(),
-            close_receipt=CLOSE, target_exit_receipt=self._exit())
+        result = self._verify()
         self.assertEqual(result['status'], 'failed')
         self.assertIs(result['task_success'], False)
         self.assertIs(result['replay_allowed'], False)
