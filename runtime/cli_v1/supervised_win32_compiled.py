@@ -141,6 +141,12 @@ def _verified_recovery_custody(row, action, call_id, operation_id,
         if type(result) is dict else None)
     attempts_valid = _recovery_attempts_match_obligations(
         obligations, recovery_attempts)
+    sample_count_covers_span = (
+        type(count) is int and count >= 2
+        and type(observed_gap) is int and observed_gap >= 0
+        and type(start_ns) is int and type(end_ns) is int
+        and end_ns >= start_ns
+        and end_ns - start_ns <= (count - 1) * observed_gap)
     action_result = action.get("result")
     automatic_unknown_source = (
         type(cancellation) is dict and type(action_result) is dict
@@ -193,6 +199,7 @@ def _verified_recovery_custody(row, action, call_id, operation_id,
         and type(sample_gap) is int and sample_gap > 0
         and type(observed_gap) is int and 0 <= observed_gap <= sample_gap
         and type(count) is int and count >= 2
+        and sample_count_covers_span
         and type(release_ns) is int and release_ns > 0
         and type(start_ns) is int and 0 <= start_ns - release_ns <= sample_gap
         and type(end_ns) is int and end_ns >= start_ns

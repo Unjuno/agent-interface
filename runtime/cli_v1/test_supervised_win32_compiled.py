@@ -243,6 +243,10 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                 **result, "late_input_max_observed_gap_ns":
                     result["late_input_max_sample_gap_ns"] + 1}}}
         invalid_receipts.append(bad_sampling)
+        insufficient_sampling = {**recovered, "cancellation": {
+            **recovered["cancellation"], "result": {
+                **result, "late_input_observation_count": 2}}}
+        invalid_receipts.append(insufficient_sampling)
         for field, value in (
                 ("operation_id", "f" * 32),
                 ("target_generation", "e" * 64),
