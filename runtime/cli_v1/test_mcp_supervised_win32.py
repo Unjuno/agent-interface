@@ -2669,9 +2669,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
 
         with TemporaryDirectory() as root:
             output = Path(root) / "child-receipts"
+            targets = Path(root) / "targets.json"
+            targets.write_text('{"fixture":123}',encoding="utf-8")
             params = StdioServerParameters(command=sys.executable,
                 args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
                       "--output-directory", str(output), "--mode", "delayed-expiry",
+                      "--targets", str(targets), "--production-cli",
                       "--public-caller", "--deadline-cancel-grace-ms", "250"],
                 cwd=str(Path(__file__).resolve().parents[2]))
             async with stdio_client(params) as (reader, writer):

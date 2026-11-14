@@ -1,6 +1,7 @@
 """Test-only stdio server for expiry/recovery protocol integration tests."""
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
@@ -22,6 +23,9 @@ from runtime.guarded_win32_v1.operation_owner import OperationOwner
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-directory", type=Path, required=True)
+    parser.add_argument("--targets", type=Path)
+    parser.add_argument("--production-cli", action="store_true",
+        help="Run the production mcp_server.main parser/stdio entrypoint with fake owners.")
     parser.add_argument("--mode", choices=("delayed-expiry", "exception",
         "exception-unknown", "recovery"),
         default="delayed-expiry")
@@ -92,6 +96,29 @@ def main():
             "oracle_id": "f" * 32, "outcome": "failure",
             "observed_monotonic_ns": time.monotonic_ns(),
             "evidence_ref": "stdio-fake-oracle:delayed-expiry"}
+
+    if args.production_cli:
+        if not args.public_caller or args.targets is None:
+            parser.error("--production-cli requires --public-caller and --targets")
+        from runtime.cli_v1 import mcp_server
+        real_create_server = mcp_server.create_server
+
+        def create_fake_backed_server(targets, output_directory, **options):
+            return real_create_server(targets, output_directory,
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                supervised_win32_task_oracle=oracle,
+                **options)
+
+        mcp_server.create_server = create_fake_backed_server
+        sys.argv = ["mcp_server", "--targets", str(args.targets),
+            "--output-directory", str(args.output_directory),
+            "--session-mode", "supervised-win32",
+            "--supervised-win32-deadline-cancel-policy", "public-caller",
+            "--supervised-win32-deadline-cancel-grace-ms",
+            str(args.deadline_cancel_grace_ms)]
+        mcp_server.main()
+        return
 
     server_options = {}
     if args.public_caller:
