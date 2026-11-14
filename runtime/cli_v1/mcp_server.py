@@ -77,7 +77,10 @@ def _normalize_supervised_win32_program(program):
 
 
 def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
-                                   cancel_requested=lambda: False):
+                                   cancel_requested=lambda: False,
+                                   deadline_cancel_policy='automatic',
+                                   deadline_cancel_grace_ns=0,
+                                   record_deadline_cancel_route=lambda *_args: None):
     """Run one standard program through native producer and custody receipts."""
     from copy import deepcopy
     program, normalization, compilation = _normalize_supervised_win32_program(
@@ -110,6 +113,7 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             'replay_allowed': False}
     owner.start_producer(call_id, producer_factory)
     deadline_ns = authority['expires_at_ns']
+    deadline_cancel_route = None
     while True:
         row = owner.complete_exited_action(call_id, result_reader=read_result,
             readback_reader=lambda request: owner.observe_completed_producer(
@@ -119,14 +123,59 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
                     time.monotonic_ns() + _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS)))
         action = row['action']
         cancellation = row.get('cancellation')
+        if (deadline_cancel_policy == 'public_caller'
+                and deadline_cancel_route is None
+                and isinstance(cancellation, dict)
+                and cancellation.get('automatic_completion_recovery') is not True
+                and time.monotonic_ns() >= deadline_ns):
+            deadline_cancel_route = 'public_interface_cancel'
+            record_deadline_cancel_route(deadline_cancel_route,
+                None)
         if (action.get('status') != 'running'
                 or (isinstance(cancellation, dict)
                     and cancellation.get('status') in ('recovered', 'unknown'))):
             break
         now_ns = time.monotonic_ns()
         if now_ns >= deadline_ns:
-            owner.cancel_guarded(call_id,
-                cleanup_deadline_ns=now_ns + _SUPERVISED_WIN32_CLEANUP_NS)
+            if deadline_cancel_policy == 'public_caller':
+                handoff_deadline_ns = deadline_ns + deadline_cancel_grace_ns
+                while time.monotonic_ns() < handoff_deadline_ns:
+                    row = owner.complete_exited_action(call_id,
+                        result_reader=read_result,
+                        readback_reader=lambda request: owner.observe_completed_producer(
+                            request['operation_id'], request['target_generation'],
+                            producer_exit_confirmed_ns=request[
+                                'producer_exit_confirmed_ns'],
+                            deadline_ns=max(deadline_ns,
+                                time.monotonic_ns()
+                                + _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS)))
+                    cancellation = (row.get('cancellation')
+                        if isinstance(row, dict) else None)
+                    if isinstance(cancellation, dict):
+                        deadline_cancel_route = (
+                            'automatic_completion_recovery'
+                            if cancellation.get('automatic_completion_recovery') is True
+                            else 'public_interface_cancel')
+                        break
+                    if (not isinstance(row, dict)
+                            or not isinstance(row.get('action'), dict)
+                            or row['action'].get('status') != 'running'):
+                        deadline_cancel_route = 'producer_terminal_during_handoff'
+                        break
+                    time.sleep(min(_SUPERVISED_WIN32_DEADLINE_POLL_MAX_S,
+                        max(0, handoff_deadline_ns-time.monotonic_ns())
+                        / 1_000_000_000))
+                if deadline_cancel_route is None:
+                    deadline_cancel_route = 'monitor_fallback_after_grace'
+                    record_deadline_cancel_route(deadline_cancel_route, None)
+                    owner.cancel_guarded(call_id,
+                        cleanup_deadline_ns=(time.monotonic_ns()
+                            + _SUPERVISED_WIN32_CLEANUP_NS))
+            else:
+                deadline_cancel_route = 'deadline_monitor'
+                record_deadline_cancel_route(deadline_cancel_route, None)
+                owner.cancel_guarded(call_id,
+                    cleanup_deadline_ns=now_ns + _SUPERVISED_WIN32_CLEANUP_NS)
             row = owner.interface_result(call_id)
             break
         # Keep the cancellation monitor responsive near lease expiry. Windows
@@ -231,7 +280,7 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
     else:
         emissions = execution.get('emissions') if type(execution) is dict else None
         input_dispatched = emissions > 0 if type(emissions) is int else None
-    return {'schema': 'agent-interface/runtime-dispatch-result-v1',
+    report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
         'status': 'returned', 'result': deepcopy(result),
         'normalization': normalization, 'compilation': compilation,
         'supervision': row, 'target_generation': action['target_generation'],
@@ -240,6 +289,10 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
         'input_dispatched': input_dispatched,
         'release_confirmed': release_confirmed,
         'task_success': None, 'replay_allowed': False}
+    if deadline_cancel_policy == 'public_caller':
+        report.update(deadline_cancel_policy=deadline_cancel_policy,
+            deadline_cancel_route=deadline_cancel_route)
+    return report
 
 
 # Documentation metadata only: the public compiler and core remain the validators.
@@ -432,12 +485,25 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _supervised_win32_producer_factory=None,
                   _supervised_win32_task_oracle=None,
                   supervised_win32_task_oracle=None,
-                  supervised_win32_late_input_horizon_ns=0):
+                  supervised_win32_late_input_horizon_ns=0,
+                  _supervised_win32_deadline_cancel_policy='automatic',
+                  _supervised_win32_deadline_cancel_grace_ns=0):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11",
                             "guarded-win32", "supervised-win32"):
         raise ValueError("unknown session mode")
     guarded_win32 = session_mode == 'guarded-win32'
     supervised_win32 = session_mode == 'supervised-win32'
+    if (_supervised_win32_deadline_cancel_policy not in
+            ('automatic', 'public_caller')
+            or type(_supervised_win32_deadline_cancel_grace_ns) is not int
+            or _supervised_win32_deadline_cancel_grace_ns < 0
+            or _supervised_win32_deadline_cancel_grace_ns > 2_000_000_000
+            or (_supervised_win32_deadline_cancel_policy == 'automatic'
+                and _supervised_win32_deadline_cancel_grace_ns != 0)
+            or (_supervised_win32_deadline_cancel_policy == 'public_caller'
+                and (not supervised_win32
+                    or _supervised_win32_deadline_cancel_grace_ns <= 0))):
+        raise ValueError('invalid supervised Win32 deadline cancellation policy')
     if (type(supervised_win32_late_input_horizon_ns) is not int
             or supervised_win32_late_input_horizon_ns < 0
             or (supervised_win32_late_input_horizon_ns and not supervised_win32)):
@@ -544,6 +610,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     def _supervised_cancel_requested(call_id):
         with calls_lock:
             return call_id in supervised_cancel_requests
+
+    def _record_deadline_cancel_route(call_id, route, requested_ns):
+        with calls_lock:
+            record = calls.get(call_id)
+            if record is not None:
+                record['deadline_cancel_policy'] = (
+                    _supervised_win32_deadline_cancel_policy)
+                record.setdefault('deadline_cancel_route', route)
+                if requested_ns is not None:
+                    record.setdefault('deadline_cancel_requested_ns', requested_ns)
 
     async def load_cancellation_record(call_id, call_record):
         cancellation = call_record.get('cancellation')
@@ -1062,7 +1138,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     try:
                         report = _run_supervised_win32_dispatch(owner,
                             supervised_win32_producer_factory, call_id, kwargs,
-                            cancel_requested=lambda: _supervised_cancel_requested(call_id))
+                            cancel_requested=lambda: _supervised_cancel_requested(call_id),
+                            deadline_cancel_policy=(
+                                _supervised_win32_deadline_cancel_policy),
+                            deadline_cancel_grace_ns=(
+                                _supervised_win32_deadline_cancel_grace_ns),
+                            record_deadline_cancel_route=lambda route, requested_ns:
+                                _record_deadline_cancel_route(call_id, route,
+                                    requested_ns))
                     except (RuntimeError, ValueError) as error:
                         report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
                             'status': 'invalid_request', 'error': str(error),
@@ -1978,8 +2061,46 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if call.get('state') == 'finished':
                     return content({'status': 'not_cancellable', 'call_id': call_id,
                         'operation_invoked': False, 'replay_allowed': False})
+                if (call.get('deadline_cancel_route') ==
+                        'monitor_fallback_after_grace'):
+                    return content({'status':'deadline_cancel_window_closed',
+                        'call_id':call_id,'operation_invoked':False,
+                        'input_dispatched':False,'task_success':None,
+                        'replay_allowed':False,'scope':'supervised_win32'})
+                if (_supervised_win32_deadline_cancel_policy == 'public_caller'
+                        and call.get('operation') == 'dispatch'):
+                    authority_deadline_ns = (((call.get('arguments') or {})
+                        .get('program') or {}).get('authority') or {}).get(
+                            'expires_at_ns')
+                    if (type(authority_deadline_ns) is not int
+                            or time.monotonic_ns() < authority_deadline_ns):
+                        return content({'status':'cancel_not_due',
+                            'call_id':call_id,
+                            'deadline_monotonic_ns':authority_deadline_ns,
+                            'operation_invoked':False,'input_dispatched':False,
+                            'release_confirmed':False,'task_success':None,
+                            'replay_allowed':False,
+                            'scope':'supervised_win32'})
                 supervised_cancel_requests.add(call_id)
+                if (_supervised_win32_deadline_cancel_policy == 'public_caller'
+                        and call.get('operation') == 'dispatch'):
+                    call['deadline_cancel_policy'] = 'public_caller'
+                    call.setdefault('deadline_cancel_route',
+                        'public_interface_cancel')
+                    call.setdefault('deadline_cancel_requested_ns',
+                        time.monotonic_ns())
             existing = owner.interface_result(call_id)
+            if (_supervised_win32_deadline_cancel_policy == 'public_caller'
+                    and isinstance(existing, dict)
+                    and isinstance(existing.get('cancellation'), dict)
+                    and existing['cancellation'].get(
+                        'automatic_completion_recovery') is True):
+                with calls_lock:
+                    current = calls.get(call_id)
+                    if isinstance(current, dict):
+                        current['deadline_cancel_route'] = (
+                            'automatic_completion_recovery')
+                        current.pop('deadline_cancel_requested_ns', None)
             if existing is None:
                 return content({'status': 'cancel_pending', 'call_id': call_id,
                     'release_confirmed': False, 'task_success': None,
@@ -2124,6 +2245,15 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 pass
                         row = owner.interface_result(call_id)
                 row = deepcopy(row)
+                if (supervised_win32
+                        and _supervised_win32_deadline_cancel_policy == 'public_caller'):
+                    with calls_lock:
+                        call_record = calls.get(call_id)
+                        route_fields = ({key: call_record[key] for key in (
+                            'deadline_cancel_policy', 'deadline_cancel_route',
+                            'deadline_cancel_requested_ns') if key in call_record}
+                            if isinstance(call_record, dict) else {})
+                    row.update(route_fields)
                 row['operation_invoked'] = False
                 row['input_dispatched'] = False
                 effect = row.get('task_effect')
@@ -2213,6 +2343,12 @@ def main():
     parser.add_argument('--supervised-win32-late-input-horizon-ms', type=int,
                         default=0, metavar='MS',
                         help='sample neutral Win32 input after normal completion or confirmed cancellation release for 1..60000 ms; zero disables horizon sampling')
+    parser.add_argument('--supervised-win32-deadline-cancel-policy',
+                        choices=('automatic', 'public-caller'), default='automatic',
+                        help='expiry recovery trigger; public-caller is an opt-in research arm with bounded automatic fallback')
+    parser.add_argument('--supervised-win32-deadline-cancel-grace-ms', type=int,
+                        default=0, metavar='MS',
+                        help='finite public-caller handoff window (1..2000 ms); only valid with public-caller policy')
     parser.add_argument('--guarded-process-identity', action='store_true',
                         help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
     parser.add_argument('--guarded-query-worker',action='store_true',
@@ -2240,6 +2376,13 @@ def main():
     if (args.supervised_win32_late_input_horizon_ms
             and args.session_mode != 'supervised-win32'):
         parser.error('--supervised-win32-late-input-horizon-ms requires --session-mode supervised-win32')
+    if (args.supervised_win32_deadline_cancel_policy == 'public-caller'
+            and (args.session_mode != 'supervised-win32'
+                or not 1 <= args.supervised_win32_deadline_cancel_grace_ms <= 2000)):
+        parser.error('--supervised-win32-deadline-cancel-policy public-caller requires supervised-win32 and a 1..2000 ms grace')
+    if (args.supervised_win32_deadline_cancel_policy == 'automatic'
+            and args.supervised_win32_deadline_cancel_grace_ms != 0):
+        parser.error('deadline-cancel grace requires the public-caller policy')
     if args.guarded_process_identity and args.session_mode != 'guarded-x11':
         parser.error('--guarded-process-identity requires --session-mode guarded-x11')
     if args.guarded_query_worker and (args.session_mode != 'guarded-x11' or not args.guarded_process_identity):
@@ -2274,6 +2417,11 @@ def main():
     if args.supervised_win32_late_input_horizon_ms:
         options['supervised_win32_late_input_horizon_ns'] = (
             args.supervised_win32_late_input_horizon_ms * 1_000_000)
+    if args.supervised_win32_deadline_cancel_policy != 'automatic':
+        options['_supervised_win32_deadline_cancel_policy'] = (
+            args.supervised_win32_deadline_cancel_policy)
+        options['_supervised_win32_deadline_cancel_grace_ns'] = (
+            args.supervised_win32_deadline_cancel_grace_ms * 1_000_000)
     if args.guarded_query_worker: options['guarded_query_worker'] = True
     if args.guarded_observation_worker: options['guarded_observation_worker'] = True
     if args.guarded_window_lifecycle: options['guarded_window_lifecycle'] = True
