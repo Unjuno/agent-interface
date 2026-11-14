@@ -598,7 +598,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(automatic_evidence["status"], "delivery_uncertain")
         self.assertTrue(automatic_evidence["release_verified"])
 
-        automatic_unknown_source[0] = False
+        automatic_unknown_source[0] = True
         omit_action_obligations[0] = True
         projected_result = run_public_compiled(interface,
             {"move": program}, target="fixture", current_binding_revision=1,
@@ -614,6 +614,11 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertTrue(projected_result["task_verification"]["valid"])
         self.assertIs(projected_result["task_success"], True)
         projected_row = resolved_rows[-1]
+        self.assertEqual(projected_row["action"]["status"], "unknown")
+        self.assertFalse(projected_row["action"]["release_confirmed"])
+        self.assertIsNone(projected_row["action"]["task_success"])
+        self.assertFalse(projected_row["action"]["replay_allowed"])
+        self.assertTrue(projected_row["cancellation"]["release_confirmed"])
         self.assertNotIn("obligations", projected_row["action"])
         self.assertEqual(projected_row["standard_program"],
             dispatched_programs[-1])
@@ -621,6 +626,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(projected_evidence["status"], "delivery_uncertain")
         self.assertTrue(projected_evidence["release_verified"])
 
+        automatic_unknown_source[0] = False
         omit_action_obligations[0] = False
         include_attempt_receipt[0] = False
         receipt_missing_attempt = run_public_compiled(interface,
