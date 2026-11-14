@@ -2587,6 +2587,21 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         if (isinstance(action, dict)
                                 and action.get("status") in (
                                     "completed", "unknown", "recovered")):
+                            # `interface_results` may expose the terminal
+                            # owner row just before the dispatch worker finishes
+                            # atomically publishing its raw report. Wait for
+                            # that bounded file-finalization step before the
+                            # caller starts another observation or the fixture
+                            # removes its temporary receipt directory.
+                            report_temps = list(Path(root).glob(
+                                "*/.report.json.tmp"))
+                            finalize_deadline = time.monotonic() + 2
+                            while (report_temps
+                                    and time.monotonic() < finalize_deadline):
+                                time.sleep(0.01)
+                                report_temps = list(Path(root).glob(
+                                    "*/.report.json.tmp"))
+                            self.assertFalse(report_temps, report_temps)
                             return reply
                         time.sleep(0.01)
                     self.fail("exact-call interface_results did not reach completed")
