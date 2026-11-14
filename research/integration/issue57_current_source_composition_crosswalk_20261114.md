@@ -29,7 +29,7 @@ classified; no result is promoted to the current integrated milestone.
 | Release, no replay, typed recovery | core/bridge/InputOwner plus Win32 and X11 public paths | current focused runtime suites; MAP01 R175-R197 records | Keep native input/release/recovery separated from synthetic caller composition; finish the selected live task gate. |
 | Independent application effect | v3 `verify_effect` and evidence reference; fixture scorers | local/FakeX composition tests plus selected live packets | Connect the domain's independent durable scorer; successful core execution alone remains insufficient. |
 | #12/#46/#56 comparison integrity | frozen #57 protocol/result v1; existing cold/warm/invalidation/repair design | three-arm mechanics/protocol controls; finite historical result | Candidate must freeze same task/model/settings/order/budget and report cold cost, reuse, invalidation, repair and all failures together. |
-| v3 result to frozen #57 task row | `issue57_v3_trace_adapter_v1.py` projects only representable complete attempts and calls the unchanged v1 evaluator once all 18 rows and preflights exist; HOLD retains assigned rows and original preflight/discovery inputs, and caller success must agree with the independent exact-submission score | `test_issue57_v3_trace_adapter_v1.py`, including frozen historical trace round-trip, malformed/missing preflight retention and conflicting-score HOLD | Live v3 task adapters, provider preflight accounting and independent scorer are still not connected. |
+| v3 result to frozen #57 task row | `issue57_v3_trace_adapter_v1.py` projects only representable complete attempts, reconciles attempt rows against `model_call_ledger` and every public accounting aggregate, and calls the unchanged v1 evaluator once all 18 rows and preflights exist; HOLD retains assigned rows and original preflight/discovery inputs, and caller success must agree with the independent exact-submission score | `test_issue57_v3_trace_adapter_v1.py`, including frozen historical trace round-trip, malformed/missing preflight retention, conflicting-score, aggregate-usage, call-ledger, bool-as-count mismatch HOLD and explicit attempt-id validation | Live v3 task adapters, provider preflight accounting and independent scorer are still not connected. |
 
 ## Concrete missing composed-path check
 
@@ -91,9 +91,10 @@ On Windows Python 3.11.9, normal and optimized runs passed:
 success projection, preservation of provider failure metadata and accounting
 retention when output projection fails.
 
-`test_issue57_v3_trace_adapter_v1.py`: 12/12 each mode. It checks exact v3→v1
+`test_issue57_v3_trace_adapter_v1.py`: 16/16 each mode. It checks exact v3→v1
 task projection, failed/unknown-usage HOLD with source retention, assigned-call
-count enforcement, accounting and caller/scorer disagreement,
+count enforcement, attempt/call-ledger and accounting aggregate reconciliation,
+accounting and caller/scorer disagreement,
 all-18-row preservation,
 missing/malformed-preflight HOLD with original input retention, arm-order
 rejection and exact round-trip of the saved historical trace through the

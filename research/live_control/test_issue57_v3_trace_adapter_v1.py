@@ -15,12 +15,47 @@ USAGE = {"input_tokens": 100, "cached_input_tokens": 20,
 
 def caller(*, status="completed", usage=USAGE, outcome="TASK_SUCCEEDED"):
     effect = "succeeded" if outcome == "TASK_SUCCEEDED" else "failed"
-    return {"outcome": outcome, "task_effect": effect,
-        "attempt_ledger": [{"attempt_id": "attempt-1", "call_id": "call-1",
+    attempt = {"attempt_id": "attempt-1", "call_id": "call-1" if status == "completed" else None,
             "stage": "anchor_model", "status": status,
             "requested_model": "model-x", "requested_effort": "low",
-            "usage": usage}],
-        "accounting": {"attempted_calls": 1, "visible_images_submitted": 1}}
+            "usage": usage if status == "completed" else None,
+            "cost": None, "visible_images_submitted": 1 if status == "completed" else None,
+            "wait_ns": 100 if status == "completed" else None}
+    attempts = [attempt]
+    return {"outcome": outcome, "task_effect": effect,
+        "attempt_ledger": attempts,
+        "model_call_ledger": ([{"attempt_id": attempt["attempt_id"],
+            **{key: attempt[key] for key in ("call_id", "stage", "requested_model",
+               "requested_effort", "usage", "cost", "visible_images_submitted", "wait_ns")}}]
+            if status == "completed" else []),
+        "accounting": accounting_for(attempts)}
+
+
+def accounting_for(attempts):
+    coverage = {field: sum(type(row.get("usage")) is dict and field in row["usage"]
+                           for row in attempts)
+                for field in ("input_tokens", "cached_input_tokens",
+                    "cache_write_input_tokens", "output_tokens", "reasoning_output_tokens")}
+    totals = {field: (sum(row["usage"][field] for row in attempts
+                          if type(row.get("usage")) is dict and field in row["usage"])
+                      if coverage[field] == len(attempts) else None)
+              for field in coverage}
+    image_coverage = sum(row.get("visible_images_submitted") is not None for row in attempts)
+    wait_coverage = sum(row.get("wait_ns") is not None for row in attempts)
+    costs = [row["cost"] for row in attempts if row.get("cost") is not None]
+    return {"attempted_calls": len(attempts),
+        "completed_calls": sum(row.get("status") == "completed" for row in attempts),
+        "duplicate_call_ids": [], "usage_totals": totals,
+        "usage_coverage": coverage,
+        "visible_images_submitted": (sum(row["visible_images_submitted"] for row in attempts)
+            if image_coverage == len(attempts) else None),
+        "visible_image_coverage": image_coverage,
+        "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
+            if wait_coverage == len(attempts) else None),
+        "model_wait_coverage": wait_coverage,
+        "cost_coverage": len(costs),
+        "cost": (sum(costs) if len(costs) == len(attempts) else None),
+        "cached_input_semantics": "subset of input_tokens; never added to input total"}
 
 
 def telemetry(arm="plain", index=0):
@@ -45,11 +80,15 @@ def scheduled_row(arm, index):
     count = EXPECTED_MODEL_CALLS[arm][index]
     public = caller()
     public["attempt_ledger"] *= count
-    public["accounting"] = {"attempted_calls": count,
-                            "visible_images_submitted": count}
     for attempt_index, attempt in enumerate(public["attempt_ledger"]):
         attempt.update(attempt_id=f"{arm}-{index}-{attempt_index}",
                        call_id=f"call-{arm}-{index}-{attempt_index}")
+    public["model_call_ledger"] = [
+        {"attempt_id": attempt["attempt_id"],
+         **{key: attempt[key] for key in ("call_id", "stage", "requested_model",
+            "requested_effort", "usage", "cost", "visible_images_submitted", "wait_ns")}}
+        for attempt in public["attempt_ledger"]]
+    public["accounting"] = accounting_for(public["attempt_ledger"])
     return project_task(arm, index, public, score(), telemetry(arm, index))
 
 
@@ -84,8 +123,13 @@ class Issue57V3TraceAdapterTests(unittest.TestCase):
         public = caller()
         public["attempt_ledger"].append({"attempt_id": "attempt-2", "call_id": "call-2",
             "stage": "expanded_model", "status": "completed",
-            "requested_model": "model-x", "requested_effort": "low", "usage": USAGE})
-        public["accounting"]["attempted_calls"] = 2
+            "requested_model": "model-x", "requested_effort": "low", "usage": USAGE,
+            "cost": None, "visible_images_submitted": 1, "wait_ns": 100})
+        public["model_call_ledger"].append({"attempt_id": "attempt-2", "call_id": "call-2",
+            "stage": "expanded_model", "requested_model": "model-x",
+            "requested_effort": "low", "usage": USAGE, "cost": None,
+            "visible_images_submitted": 1, "wait_ns": 100})
+        public["accounting"] = accounting_for(public["attempt_ledger"])
         projected = project_task("plain", 0, public, score(), telemetry())
         self.assertEqual(projected["status"], "HOLD")
         self.assertEqual(projected["reason"], "assigned_model_attempt_count_mismatch")
@@ -100,6 +144,40 @@ class Issue57V3TraceAdapterTests(unittest.TestCase):
                          "independent_score_caller_failure_disagreement")
         self.assertEqual(projected["caller_result"], public)
         self.assertEqual(projected["independent_score"], independent)
+
+    def test_aggregate_usage_mismatch_is_held_with_source_attempt(self):
+        public = caller()
+        public["accounting"]["usage_totals"]["input_tokens"] += 1
+        projected = project_task("plain", 0, public, score(), telemetry())
+        self.assertEqual(projected["status"], "HOLD")
+        self.assertEqual(projected["reason"],
+                         "caller_accounting_mismatch:usage_totals")
+        self.assertEqual(projected["caller_result"], public)
+
+    def test_model_call_ledger_mismatch_is_held_with_both_rows(self):
+        public = caller()
+        public["model_call_ledger"][0]["requested_effort"] = "high"
+        projected = project_task("plain", 0, public, score(), telemetry())
+        self.assertEqual(projected["status"], "HOLD")
+        self.assertEqual(projected["reason"],
+                         "caller_accounting_mismatch:model_call_attempt_disagreement:requested_effort")
+        self.assertEqual(projected["caller_result"], public)
+
+    def test_boolean_is_not_accepted_as_numeric_accounting_count(self):
+        public = caller()
+        public["accounting"]["completed_calls"] = True
+        projected = project_task("plain", 0, public, score(), telemetry())
+        self.assertEqual(projected["status"], "HOLD")
+        self.assertEqual(projected["reason"],
+                         "caller_accounting_mismatch:accounting_invalid:completed_calls")
+
+    def test_missing_attempt_id_is_held_with_source_result(self):
+        public = caller()
+        del public["attempt_ledger"][0]["attempt_id"]
+        projected = project_task("plain", 0, public, score(), telemetry())
+        self.assertEqual(projected["status"], "HOLD")
+        self.assertEqual(projected["reason"], "attempt_identity_incomplete")
+        self.assertEqual(projected["caller_result"], public)
 
     def test_v3_attempt_count_disagreement_is_held_without_rewriting_ledger(self):
         public = caller()
