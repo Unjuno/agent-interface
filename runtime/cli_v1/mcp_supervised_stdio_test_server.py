@@ -7,6 +7,7 @@ from pathlib import Path
 
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_supervised_win32 import (
+    AbruptExitProducerFactory,
     DelayedRecoveringFakeSupervisor,
     ExceptionReceiptProducerFactory,
     FakeProcess,
@@ -27,6 +28,7 @@ def main():
     parser.add_argument("--production-cli", action="store_true",
         help="Run the production mcp_server.main parser/stdio entrypoint with fake owners.")
     parser.add_argument("--mode", choices=("delayed-expiry", "exception",
+        "abrupt-exit",
         "exception-unknown", "recovery"),
         default="delayed-expiry")
     parser.add_argument("--public-caller", action="store_true",
@@ -77,6 +79,9 @@ def main():
     elif args.mode == "exception-unknown":
         supervisor = UnknownAfterCancelSupervisor(operation_owner)
         target_generation = GENERATION
+    elif args.mode == "abrupt-exit":
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        target_generation = GENERATION
     else:
         supervisor = FakeSupervisor(operation_owner)
         target_generation = GENERATION
@@ -85,6 +90,8 @@ def main():
     owner.bind_target_generation_reader(lambda: target_generation)
     if args.mode in ("exception", "exception-unknown"):
         producer = ExceptionReceiptProducerFactory(process, identity)
+    elif args.mode == "abrupt-exit":
+        producer = AbruptExitProducerFactory(process, identity)
     else:
         producer = HeldProducerFactory(process, identity)
         producer.program_actions_lower_bound = 2
