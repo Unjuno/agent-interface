@@ -18,6 +18,7 @@ from runtime.core_v1.compiled_gui import (
     validate,
 )
 from runtime.core_v1.contract import validate_program
+from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
 
 
 _GENERATION = re.compile(r"^[0-9a-f]{64}$")
@@ -88,6 +89,25 @@ def _verified_recovery_custody(row, action, call_id, operation_id,
     readback = result.get("readback") if type(result) is dict else None
     obligations = result.get("obligations") if type(result) is dict else None
     action_obligations = action.get("obligations")
+    if "obligations" not in action:
+        # The public results projection may omit this redundant action field
+        # while retaining the original accepted program and cancellation
+        # obligations. Re-derive from that exact program and require the
+        # cancellation receipt to match; never infer from input_dispatched.
+        program = row.get("standard_program")
+        source = program.get("source") if type(program) is dict else None
+        target_generations = (source.get("target_generations")
+            if type(source) is dict else None)
+        if (type(program) is not dict
+                or program.get("schema") != "agent-interface/program-v1"
+                or type(target_generations) is not dict
+                or generation not in target_generations.values()):
+            action_obligations = None
+        else:
+            try:
+                action_obligations = derive_input_obligations(program)
+            except (TypeError, ValueError):
+                action_obligations = None
     cancellation_id = (cancellation.get("operation_id")
         if type(cancellation) is dict else None)
     recovery_id = result.get("recovery_id") if type(result) is dict else None

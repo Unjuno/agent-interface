@@ -151,6 +151,46 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIs(automatic_terminal["release"]["verified"], True)
         self.assertIs(automatic_terminal["input_dispatched"], True)
 
+        # The native results projection can omit action.obligations while
+        # retaining standard_program and the cancellation receipt. Re-derive
+        # the exact button obligation and join it before trusting recovery.
+        button_program = {"schema": "agent-interface/program-v1",
+            "source": {"target_generations": {"fixture": generation}},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "pointer_button", "button": "left", "down": True},
+                {"op": "pointer_button", "button": "left", "down": False}]}
+        button_result = {**result, "obligations": ["button:fixture:left"],
+            "recovery_release_key_up_attempts": [],
+            "readback": {**result["readback"],
+                "key_button_states": [False], "unicode_event_units": 0}}
+        button_action = {key: value for key, value
+            in automatic_unknown["action"].items() if key != "obligations"}
+        button_receipt = {**automatic_unknown,
+            "standard_program": button_program,
+            "action": button_action,
+            "cancellation": {**automatic_unknown["cancellation"],
+                "result": button_result}}
+        button_terminal = _terminal(button_receipt, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(button_terminal["status"], "delivery_uncertain")
+        self.assertIs(button_terminal["release"]["verified"], True)
+        self.assertIs(button_terminal["input_dispatched"], True)
+
+        wrong_program = {**button_receipt, "standard_program": {
+            **button_program, "ops": [button_program["ops"][0],
+                {"op": "pointer_button", "button": "right", "down": True}]}}
+        wrong_program_terminal = _terminal(wrong_program, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(wrong_program_terminal["status"], "uncertain")
+        self.assertIs(wrong_program_terminal["release"]["verified"], False)
+        stale_program = {**button_receipt, "standard_program": {
+            **button_program, "source": {"target_generations": {
+                "fixture": "e" * 64}}}}
+        stale_program_terminal = _terminal(stale_program, "move",
+            expected_call_id=call_id, expected_generation=generation)
+        self.assertEqual(stale_program_terminal["status"], "uncertain")
+        self.assertIs(stale_program_terminal["release"]["verified"], False)
+
         direct_dispatch = {"schema": "agent-interface/runtime-dispatch-result-v1",
             "status": "returned", "call_id": call_id,
             "operation_id": operation_id, "target_generation": generation,
