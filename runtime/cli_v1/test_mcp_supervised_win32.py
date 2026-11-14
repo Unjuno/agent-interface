@@ -2587,21 +2587,22 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         if (isinstance(action, dict)
                                 and action.get("status") in (
                                     "completed", "unknown", "recovered")):
-                            # `interface_results` may expose the terminal
-                            # owner row just before the dispatch worker finishes
-                            # atomically publishing its raw report. Wait for
-                            # that bounded file-finalization step before the
-                            # caller starts another observation or the fixture
-                            # removes its temporary receipt directory.
-                            report_temps = list(Path(root).glob(
-                                "*/.report.json.tmp"))
+                            # `interface_results` can expose the terminal owner
+                            # row before the dispatch worker atomically persists
+                            # the exact call report. Wait for that report, not
+                            # merely for a temporary file that may not exist yet.
+                            call_directory = Path(root) / call_id
+                            report_path = call_directory / "report.json"
+                            report_temp = call_directory / ".report.json.tmp"
                             finalize_deadline = time.monotonic() + 2
-                            while (report_temps
-                                    and time.monotonic() < finalize_deadline):
+                            while (
+                                    not report_path.is_file() or report_temp.exists()
+                            ) and time.monotonic() < finalize_deadline:
                                 time.sleep(0.01)
-                                report_temps = list(Path(root).glob(
-                                    "*/.report.json.tmp"))
-                            self.assertFalse(report_temps, report_temps)
+                            self.assertTrue(report_path.is_file(),
+                                f"exact call report was not finalized: {call_id}")
+                            self.assertFalse(report_temp.exists(),
+                                f"exact call report temp remains: {call_id}")
                             return reply
                         time.sleep(0.01)
                     self.fail("exact-call interface_results did not reach completed")
