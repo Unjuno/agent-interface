@@ -1,0 +1,63 @@
+=== WSLc version ===
+wslc 3.0.5.0
+=== pinned image inspection ===
+[
+  {
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "buildkit.dockerfile.v0",
+    "Config": {
+      "Cmd": null,
+      "Entrypoint": [
+        "/bin/bash"
+      ],
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.3",
+        "PYTHON_PIP_VERSION=24.0",
+        "PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/dbf0c85f76fb6e1ab42aa672ffca6f0a675d9ee4/public/get-pip.py",
+        "PYTHON_GET_PIP_SHA256=dfe9fd5c28dc98b5ac17979a953ea550cec37ae1b47a5116007395bfacff2ab9",
+        "DEBIAN_FRONTEND=noninteractive",
+        "LIBGL_ALWAYS_SOFTWARE=1",
+        "PYTHONDONTWRITEBYTECODE=1"
+      ],
+      "ExposedPorts": null,
+      "Labels": null,
+      "StopSignal": "",
+      "User": "",
+      "Volumes": null,
+      "WorkingDir": "/study/SOURCE"
+    },
+    "Created": "2026-10-15T04:24:45.366356476Z",
+    "Id": "sha256:f439b660f68c58b01dba6bf28b0e55f4df3cd8ed55570fe026b1df760d8f7063",
+    "Metadata": {
+      "LastTagTime": "2026-10-15T04:24:45.69684182Z"
+    },
+    "Os": "linux",
+    "Parent": "",
+    "RepoDigests": [],
+    "RepoTags": [
+      "vizdoom-x11-visible-a01:20261015"
+    ],
+    "RootFS": {
+      "Layers": [
+        "sha256:5d4427064ecc46e3c2add169e9b5eafc7ed2be7861081ec925938ab628ac0e25",
+        "sha256:146826fa3ca090520765c1cee50f779ead1662bfd94d413cff5b9ba519b23a7a",
+        "sha256:b3232f6d8e2e151357179f44d5db1c01771d9dc6062171638bce130ac7ad4745",
+        "sha256:a9435642a9e345ccd40f519eb9ce194fab252fbf2af7d526afefb4471f51d4cd",
+        "sha256:2eb7c5261c956b64b3d1de7cfdd31b6a54999a4ab80acabccf9f2171d0796b60",
+        "sha256:c38f6e84be471180f111533bc237cd5e317d75dbb0ccb6609fe00cdf0a933ebd",
+        "sha256:3bc50298de490e3d9cd7a4bfb13ae2c2e8d68e32154f5b800ba91d4b6d2e7e24",
+        "sha256:3ec71c3dc6907eaee24968aeda66cd0f86aa8eae38be391d248abcaed97727a8"
+      ],
+      "Type": "layers"
+    },
+    "Size": 572017615
+  }
+]
+=== session inventory summary ===
+WSL バージョン: 3.0.5.0
+セッション マネージャーのバージョン: 3.0.5
+セッション: 1

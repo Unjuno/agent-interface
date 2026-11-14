@@ -1,0 +1,10 @@
+A01 (exit 1; read-only mount covered image workdir):
+wslc run --rm --network none --name map01-target-capability-20261115-a01 --pull never --cpus 1 --volume <evidence-dir>:/study:ro --entrypoint /usr/bin/xvfb-run sha256:f439b660f68c58b01dba6bf28b0e55f4df3cd8ed55570fe026b1df760d8f7063 -a python /study/smoke_map01.py
+
+A02 (exit 137 after an externally requested stop escalated after 3 s; no command timeout):
+wslc run --rm --network none --name map01-visible-target-smoke-20261115-a02 --pull never --cpus 1 --volume <evidence-dir>:/evidence:ro --entrypoint /usr/bin/xvfb-run sha256:f439b660f68c58b01dba6bf28b0e55f4df3cd8ed55570fe026b1df760d8f7063 -a python /evidence/smoke_map01.py
+
+A03 (exit 0; timeout bounded the process):
+wslc run --rm --network none --name map01-visible-target-smoke-20261115-a03 --pull never --cpus 1 --volume <evidence-dir>:/evidence:ro --entrypoint /usr/bin/timeout sha256:f439b660f68c58b01dba6bf28b0e55f4df3cd8ed55570fe026b1df760d8f7063 --signal=TERM --kill-after=2s 12s /usr/bin/xvfb-run -a python -u /evidence/diagnostic_smoke_map01.py
+
+`<evidence-dir>` was the absolute path to this directory at execution. A01 and A02 logs and exit codes are retained separately; A03 retained phase stdout/stderr and exit code.
