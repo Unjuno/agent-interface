@@ -7,8 +7,10 @@ from pathlib import Path
 
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_supervised_win32 import (
+    AbruptExitProducerFactory,
     DelayedRecoveringFakeSupervisor,
     ExceptionReceiptProducerFactory,
+    FakeProducerFactory,
     FakeProcess,
     FakeSupervisor,
     GENERATION,
@@ -27,12 +29,15 @@ def main():
     parser.add_argument("--production-cli", action="store_true",
         help="Run the production mcp_server.main parser/stdio entrypoint with fake owners.")
     parser.add_argument("--mode", choices=("delayed-expiry", "exception",
+        "abrupt-exit",
         "exception-unknown", "recovery"),
         default="delayed-expiry")
     parser.add_argument("--public-caller", action="store_true",
         help="Enable the opt-in expiry caller policy for stdio protocol tests.")
     parser.add_argument("--deadline-cancel-grace-ms", type=int, default=1000)
     parser.add_argument("--recovery-generation", default="b" * 64)
+    parser.add_argument("--oracle-success", action="store_true",
+        help="Return a positive fake task-oracle receipt for caller integration tests.")
     args = parser.parse_args()
     process = FakeProcess()
     identity = {"pid": 7101, "creation_time_100ns": 90101}
@@ -77,14 +82,21 @@ def main():
     elif args.mode == "exception-unknown":
         supervisor = UnknownAfterCancelSupervisor(operation_owner)
         target_generation = GENERATION
+    elif args.mode == "abrupt-exit":
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        target_generation = GENERATION
     else:
         supervisor = FakeSupervisor(operation_owner)
         target_generation = GENERATION
     owner = OwnedWin32SessionOwner(operation_owner, supervisor,
         synthetic_only=False)
     owner.bind_target_generation_reader(lambda: target_generation)
-    if args.mode in ("exception", "exception-unknown"):
+    if args.mode == "recovery":
+        producer = FakeProducerFactory(process, identity)
+    elif args.mode in ("exception", "exception-unknown"):
         producer = ExceptionReceiptProducerFactory(process, identity)
+    elif args.mode == "abrupt-exit":
+        producer = AbruptExitProducerFactory(process, identity)
     else:
         producer = HeldProducerFactory(process, identity)
         producer.program_actions_lower_bound = 2
@@ -93,13 +105,14 @@ def main():
         return {"call_id": action["call_id"],
             "operation_id": action["operation_id"],
             "target_generation": action["target_generation"],
-            "oracle_id": "f" * 32, "outcome": "failure",
+            "oracle_id": "f" * 32,
+            "outcome": "success" if args.oracle_success else "failure",
             "observed_monotonic_ns": time.monotonic_ns(),
             "evidence_ref": "stdio-fake-oracle:delayed-expiry"}
 
     if args.production_cli:
-        if not args.public_caller or args.targets is None:
-            parser.error("--production-cli requires --public-caller and --targets")
+        if args.targets is None:
+            parser.error("--production-cli requires --targets")
         from runtime.cli_v1 import mcp_server
         real_create_server = mcp_server.create_server
 
@@ -113,10 +126,12 @@ def main():
         mcp_server.create_server = create_fake_backed_server
         sys.argv = ["mcp_server", "--targets", str(args.targets),
             "--output-directory", str(args.output_directory),
-            "--session-mode", "supervised-win32",
-            "--supervised-win32-deadline-cancel-policy", "public-caller",
-            "--supervised-win32-deadline-cancel-grace-ms",
-            str(args.deadline_cancel_grace_ms)]
+            "--session-mode", "supervised-win32"]
+        if args.public_caller:
+            sys.argv.extend([
+                "--supervised-win32-deadline-cancel-policy", "public-caller",
+                "--supervised-win32-deadline-cancel-grace-ms",
+                str(args.deadline_cancel_grace_ms)])
         mcp_server.main()
         return
 
