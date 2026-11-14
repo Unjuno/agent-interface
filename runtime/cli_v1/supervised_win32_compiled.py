@@ -550,6 +550,7 @@ def run_public_compiled(interface, program_templates, *, target,
         capture_frame="window_client",
         expected_generation=None,
         verify_task=None, resolve_pending=None, cancelled=lambda: False,
+        observation_busy_retries=3, observation_busy_retry_delay_ms=10,
         clock=time.monotonic_ns,
         journal=None):
     """Run one compiled graph using standard supervised Win32 MCP calls.
@@ -574,6 +575,11 @@ def run_public_compiled(interface, program_templates, *, target,
     when the target client-area capture cannot render its surface (for example,
     some GPU-backed applications); the pixels still require caller perception
     and target-generation association.
+
+    A transient ``busy`` from a read-only observation is retried at most three
+    times by default, with a 10 ms delay. Both the retry count and delay are
+    bounded caller options. Each busy attempt is retained in
+    ``standard_target_evidence``; dispatch is never retried by this policy.
     """
     spec = validate(interface)
     if (type(target) is not str or not target
@@ -590,6 +596,11 @@ def run_public_compiled(interface, program_templates, *, target,
             or not 1 <= region[2] <= 8192 or not 1 <= region[3] <= 8192
             or region[2] * region[3] > 16_777_216):
         raise ValueError("bounded explicit [x,y,width,height] region required")
+    if (type(observation_busy_retries) is not int
+            or not 0 <= observation_busy_retries <= 8
+            or type(observation_busy_retry_delay_ms) is not int
+            or not 0 <= observation_busy_retry_delay_ms <= 100):
+        raise ValueError("bounded read-only observation busy retry policy required")
     if capture_frame not in ("window_client", "screen_physical_px"):
         raise ValueError("capture_frame must be a supported Win32 observation frame")
     if any(symbol["target_reference"] != target
@@ -634,8 +645,23 @@ def run_public_compiled(interface, program_templates, *, target,
 
     def observe_adapter(_request):
         nonlocal generation, sequence, latest_report, latest_reply
-        reply = observe(target, capture_frame, deepcopy(region))
-        report = _raw_report(reply)
+        busy_attempt = 0
+        while True:
+            reply = observe(target, capture_frame, deepcopy(region))
+            envelope = _content_object(reply)
+            report = _raw_report(reply)
+            if report.get("status") != "busy" and envelope.get("status") != "busy":
+                break
+            target_evidence.append({"kind": "observation_busy",
+                "target": target, "attempt": busy_attempt + 1,
+                "status": "busy", "operation_invoked": False,
+                "input_dispatched": False})
+            if busy_attempt >= observation_busy_retries:
+                raise ObservationAssociationChanged(
+                    "standard Win32 observation remained busy after bounded read-only retries")
+            busy_attempt += 1
+            if observation_busy_retry_delay_ms:
+                time.sleep(observation_busy_retry_delay_ms / 1000)
         observe_call_id = report.get("call_id") or _content_object(reply).get("call_id")
         if type(observe_call_id) is str and observe_call_id:
             observation_call_ids.append(observe_call_id)

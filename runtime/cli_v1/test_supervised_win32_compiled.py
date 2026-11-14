@@ -425,6 +425,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         verify_calls = []
         include_attempt_receipt = [True]
         automatic_unknown_source = [False]
+        omit_action_obligations = [False]
+        dispatched_programs = []
         resolved_rows = []
         interface = {
             "format": "compiled-gui-interface-v1",
@@ -471,6 +473,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                 "predicates": {"ready": True, "moved": False}}
 
         def dispatch(_program, _sequence, _binding_revision):
+            dispatched_programs.append(_program)
             return {"status": "pending", "call_id": dispatch_id,
                 "operation_invoked": True, "input_dispatched": None,
                 "release_confirmed": False, "replay_allowed": False}
@@ -516,19 +519,22 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             if automatic_unknown_source[0]:
                 source_result.update(error="COMPLETION_EVIDENCE_UNCONFIRMED",
                     error_type="RuntimeError")
+            action_receipt = {"operation_id": operation_id,
+                "target_generation": generation, "status": source_status,
+                "input_dispatched": source_result["input_dispatched"],
+                "release_confirmed": source_release, "task_success": None,
+                "replay_allowed": False, "result": source_result}
+            if not omit_action_obligations[0]:
+                action_receipt["obligations"] = ["key:fixture:W:scan_code"]
             resolved = {"call_id": call_id, "input_dispatched": False,
-                "action": {"operation_id": operation_id,
-                    "target_generation": generation, "status": source_status,
-                    "input_dispatched": source_result["input_dispatched"],
-                    "obligations": ["key:fixture:W:scan_code"],
-                    "release_confirmed": source_release,
-                    "task_success": None, "replay_allowed": False,
-                    "result": source_result},
+                "action": action_receipt,
                 "cancellation": {"operation_id": "e" * 32,
                     "action_operation_id": operation_id,
                     "target_generation": generation, "status": "recovered",
                     "owner_phase": "recovered", "release_confirmed": True,
                     "replay_allowed": False, "result": cancellation_result}}
+            if omit_action_obligations[0]:
+                resolved["standard_program"] = dispatched_programs[-1]
             if automatic_unknown_source[0]:
                 resolved["cancellation"].update(
                     automatic_completion_recovery=True,
@@ -592,7 +598,36 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(automatic_evidence["status"], "delivery_uncertain")
         self.assertTrue(automatic_evidence["release_verified"])
 
+        automatic_unknown_source[0] = True
+        omit_action_obligations[0] = True
+        projected_result = run_public_compiled(interface,
+            {"move": program}, target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(projected_result["outcome"], "SAFE_YIELD",
+            projected_result)
+        self.assertEqual(projected_result["reason"], "delivery_uncertain")
+        self.assertTrue(projected_result["task_verification"]["valid"])
+        self.assertIs(projected_result["task_success"], True)
+        projected_row = resolved_rows[-1]
+        self.assertEqual(projected_row["action"]["status"], "unknown")
+        self.assertFalse(projected_row["action"]["release_confirmed"])
+        self.assertIsNone(projected_row["action"]["task_success"])
+        self.assertFalse(projected_row["action"]["replay_allowed"])
+        self.assertTrue(projected_row["cancellation"]["release_confirmed"])
+        self.assertNotIn("obligations", projected_row["action"])
+        self.assertEqual(projected_row["standard_program"],
+            dispatched_programs[-1])
+        projected_evidence = projected_result["standard_target_evidence"][1]
+        self.assertEqual(projected_evidence["status"], "delivery_uncertain")
+        self.assertTrue(projected_evidence["release_verified"])
+
         automatic_unknown_source[0] = False
+        omit_action_obligations[0] = False
         include_attempt_receipt[0] = False
         receipt_missing_attempt = run_public_compiled(interface,
             {"move": program}, target="fixture", current_binding_revision=1,
@@ -606,7 +641,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIsNone(receipt_missing_attempt["task_verification"])
         self.assertFalse(receipt_missing_attempt["standard_target_evidence"][1][
             "release_verified"])
-        self.assertEqual(verify_calls, [dispatch_id, dispatch_id])
+        self.assertEqual(verify_calls, [dispatch_id, dispatch_id, dispatch_id])
 
     def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
         generation = "c" * 64
@@ -870,6 +905,66 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertEqual(task_calls, [call_id(102), call_id(103), call_id(104),
             call_id(105), call_id(106), call_id(107), call_id(108), call_id(109),
             call_id(110)])
+
+    def test_observation_busy_retries_are_bounded_and_never_dispatch(self):
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "bounded-observation-busy",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"ready": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {"before": {"branches": [{"when": {"ready": True},
+                    "outcome": "action", "action": "move",
+                    "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"ready": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "busy-template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": "b" * 64}},
+            "authority": {"lease_id": "busy-template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"}, {"op": "release_all"}]}
+        observe_calls, dispatch_calls = [], []
+
+        def observe(*_args):
+            observe_calls.append(True)
+            return {"status": "busy", "operation_invoked": False,
+                "input_dispatched": False}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe,
+            dispatch=lambda *_args: dispatch_calls.append(True),
+            perceive=lambda *_args: {"ready": True},
+            verify_effect=lambda *_args: {"status": "succeeded",
+                "evidence_ref": "unused"}, cancelled=lambda: False,
+            observation_busy_retries=2, observation_busy_retry_delay_ms=0)
+
+        self.assertEqual(result["outcome"], "SAFE_YIELD")
+        self.assertEqual(result["reason"], "association_changed")
+        self.assertEqual(len(observe_calls), 3)
+        self.assertEqual(dispatch_calls, [])
+        busy = result["standard_target_evidence"]
+        self.assertEqual([row["kind"] for row in busy],
+            ["observation_busy"] * 3)
+        self.assertEqual([row["attempt"] for row in busy], [1, 2, 3])
+        self.assertTrue(all(row["operation_invoked"] is False
+            and row["input_dispatched"] is False for row in busy))
 
     def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
         generation = "a" * 64
