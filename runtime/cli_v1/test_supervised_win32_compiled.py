@@ -425,6 +425,8 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         verify_calls = []
         include_attempt_receipt = [True]
         automatic_unknown_source = [False]
+        omit_action_obligations = [False]
+        dispatched_programs = []
         resolved_rows = []
         interface = {
             "format": "compiled-gui-interface-v1",
@@ -471,6 +473,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
                 "predicates": {"ready": True, "moved": False}}
 
         def dispatch(_program, _sequence, _binding_revision):
+            dispatched_programs.append(_program)
             return {"status": "pending", "call_id": dispatch_id,
                 "operation_invoked": True, "input_dispatched": None,
                 "release_confirmed": False, "replay_allowed": False}
@@ -516,19 +519,22 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             if automatic_unknown_source[0]:
                 source_result.update(error="COMPLETION_EVIDENCE_UNCONFIRMED",
                     error_type="RuntimeError")
+            action_receipt = {"operation_id": operation_id,
+                "target_generation": generation, "status": source_status,
+                "input_dispatched": source_result["input_dispatched"],
+                "release_confirmed": source_release, "task_success": None,
+                "replay_allowed": False, "result": source_result}
+            if not omit_action_obligations[0]:
+                action_receipt["obligations"] = ["key:fixture:W:scan_code"]
             resolved = {"call_id": call_id, "input_dispatched": False,
-                "action": {"operation_id": operation_id,
-                    "target_generation": generation, "status": source_status,
-                    "input_dispatched": source_result["input_dispatched"],
-                    "obligations": ["key:fixture:W:scan_code"],
-                    "release_confirmed": source_release,
-                    "task_success": None, "replay_allowed": False,
-                    "result": source_result},
+                "action": action_receipt,
                 "cancellation": {"operation_id": "e" * 32,
                     "action_operation_id": operation_id,
                     "target_generation": generation, "status": "recovered",
                     "owner_phase": "recovered", "release_confirmed": True,
                     "replay_allowed": False, "result": cancellation_result}}
+            if omit_action_obligations[0]:
+                resolved["standard_program"] = dispatched_programs[-1]
             if automatic_unknown_source[0]:
                 resolved["cancellation"].update(
                     automatic_completion_recovery=True,
@@ -593,6 +599,29 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertTrue(automatic_evidence["release_verified"])
 
         automatic_unknown_source[0] = False
+        omit_action_obligations[0] = True
+        projected_result = run_public_compiled(interface,
+            {"move": program}, target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+            resolve_pending=resolve_pending,
+            perceive=lambda _report, reply: reply["predicates"],
+            verify_effect=lambda _request, _report, _reply: {
+                "status": "unknown", "evidence_ref": "no-graph-transition"},
+            verify_task=verify_task, cancelled=lambda: False)
+        self.assertEqual(projected_result["outcome"], "SAFE_YIELD",
+            projected_result)
+        self.assertEqual(projected_result["reason"], "delivery_uncertain")
+        self.assertTrue(projected_result["task_verification"]["valid"])
+        self.assertIs(projected_result["task_success"], True)
+        projected_row = resolved_rows[-1]
+        self.assertNotIn("obligations", projected_row["action"])
+        self.assertEqual(projected_row["standard_program"],
+            dispatched_programs[-1])
+        projected_evidence = projected_result["standard_target_evidence"][1]
+        self.assertEqual(projected_evidence["status"], "delivery_uncertain")
+        self.assertTrue(projected_evidence["release_verified"])
+
+        omit_action_obligations[0] = False
         include_attempt_receipt[0] = False
         receipt_missing_attempt = run_public_compiled(interface,
             {"move": program}, target="fixture", current_binding_revision=1,
@@ -606,7 +635,7 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
         self.assertIsNone(receipt_missing_attempt["task_verification"])
         self.assertFalse(receipt_missing_attempt["standard_target_evidence"][1][
             "release_verified"])
-        self.assertEqual(verify_calls, [dispatch_id, dispatch_id])
+        self.assertEqual(verify_calls, [dispatch_id, dispatch_id, dispatch_id])
 
     def test_standard_success_binds_fresh_effect_observation_and_call_receipts(self):
         generation = "c" * 64

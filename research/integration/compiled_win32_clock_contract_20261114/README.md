@@ -88,13 +88,16 @@ the MCP server tools: public observe, pending dispatch, same-call-ID result
 query, transient-busy retry, task-effect verification, and the exact-call task
 oracle. It also makes a second controlled producer call that returns an
 exception with unverified release; the caller retains uncertainty and skips the
-effect verifier and task oracle. A separate stdio MCP test runs
-`run_public_compiled` against a child server over the MCP stdio transport. It
-joins the pending result by exact call ID, accepts the nested `call.call_id`
-shape while the query is pending, and preserves UNKNOWN action delivery even
-when the separate recovery receipt reports release but lacks the bounded late-
-input horizon. An adjacent unit test exhausts the retry budget and proves no
-dispatch occurs.
+effect verifier and task oracle. The recovered-dispatch caller test additionally
+exercises the R180 result projection through `run_public_compiled`: the exact
+accepted program supplies omitted action obligations, and a matching bounded
+cancellation receipt yields `SAFE_YIELD / delivery_uncertain` plus a separately
+valid exact-call task-oracle result. Removing the native release-attempt proof
+still fails closed. A separate stdio MCP test runs `run_public_compiled` against
+a child server over MCP stdio. It joins the pending result by exact call ID,
+accepts nested `call.call_id` while the query is pending, and preserves UNKNOWN
+action delivery when the recovery receipt lacks a bounded late-input horizon.
+An adjacent unit test exhausts the retry budget and proves no dispatch occurs.
 
 The public caller and MCP server integration modules pass 43 tests in both
 normal and optimized Python mode:
