@@ -110,6 +110,7 @@ class OperationOwner:
                 "late_input_max_observed_gap_ns": None,
                 "late_input_validation_error": None,
                 "recovery_release_key_up_attempts": None,
+                "recovery_release_attempts": None,
                 "readback": None,
                 "release_confirmed": False,
                 "completion_release_receipt": None,
@@ -471,8 +472,9 @@ class OperationOwner:
             return self._public(record)
 
     def recovery_release_attempted(self, operation_id, target_generation,
-                                   recovery_id, key_up_attempts):
-        """Retain exact key-up encoding attempts before readback can fail."""
+                                   recovery_id, key_up_attempts, *,
+                                   release_attempts=None):
+        """Retain exact native release attempts before readback can fail."""
         if type(key_up_attempts) is not list or len(key_up_attempts) > 128:
             raise OwnerRefused("recovery key-up attempt receipt is invalid")
         validated=[]
@@ -496,12 +498,68 @@ class OperationOwner:
             elif "error_type" in item:
                 raise OwnerRefused("successful key-up attempt has an error type")
             validated.append(row)
+        validated_release_attempts = None
+        if release_attempts is not None:
+            if type(release_attempts) is not list or len(release_attempts) > 128:
+                raise OwnerRefused("native release attempt receipt is invalid")
+            validated_release_attempts = []
+            allowed = {"ordinal", "domain", "virtual_key", "key_names",
+                "encoding", "button", "unit", "sendinput_call_started",
+                "sendinput_return_count", "sendinput_error_type", "outcome",
+                "error_type"}
+            for ordinal, item in enumerate(release_attempts):
+                if (type(item) is not dict or not set(item) <= allowed
+                        or type(item.get("ordinal")) is not int
+                        or item["ordinal"] != ordinal
+                        or item.get("domain") not in
+                            ("key_up", "button_up", "unicode_up")
+                        or type(item.get("sendinput_call_started")) is not bool
+                        or item.get("outcome") not in ("returned", "raised")):
+                    raise OwnerRefused("native release attempt receipt is invalid")
+                returned = item.get("sendinput_return_count")
+                if (returned is not None and
+                        (type(returned) is not int or not 0 <= returned <= 65535)):
+                    raise OwnerRefused("native release return count is invalid")
+                row = {"ordinal": ordinal, "domain": item["domain"],
+                    "sendinput_call_started": item["sendinput_call_started"],
+                    "sendinput_return_count": returned,
+                    "outcome": item["outcome"]}
+                for name in ("virtual_key", "unit"):
+                    if name in item:
+                        value = item[name]
+                        if type(value) is not int or not 0 <= value <= 0xFFFF:
+                            raise OwnerRefused("native release numeric field is invalid")
+                        row[name] = value
+                for name in ("encoding", "button"):
+                    if name in item:
+                        value = item[name]
+                        if type(value) is not str or not value or len(value) > 32:
+                            raise OwnerRefused("native release label is invalid")
+                        row[name] = value
+                if "key_names" in item:
+                    names = item["key_names"]
+                    if (type(names) is not list or len(names) > 128
+                            or any(type(name) is not str or not name or len(name) > 32
+                                   for name in names)):
+                        raise OwnerRefused("native release key names are invalid")
+                    row["key_names"] = list(names)
+                for name in ("sendinput_error_type", "error_type"):
+                    if name in item:
+                        value = item[name]
+                        if value is not None and (type(value) is not str
+                                or not value or len(value) > 64):
+                            raise OwnerRefused("native release error type is invalid")
+                        row[name] = value
+                if item["outcome"] == "returned" and item.get("error_type"):
+                    raise OwnerRefused("returned native release attempt has an error")
+                validated_release_attempts.append(row)
         with self._lock:
             record=self._matching(operation_id,target_generation)
             if (record["status"] != "recovery_pending"
                     or record["recovery_id"] != recovery_id):
                 raise OwnerRefused("stale recovery key-up attempt receipt")
             record["recovery_release_key_up_attempts"] = validated
+            record["recovery_release_attempts"] = validated_release_attempts
             return self._public(record)
 
     def expire_cleanup(self, operation_id, target_generation):
