@@ -431,6 +431,93 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(close["status"],"closed",close)
         self.assertTrue(supervisor.closed)
 
+    async def test_held_operation_deadline_trigger_pair_has_same_safety_outcomes(self):
+        """Compare only the expiry trigger with an otherwise held Fake action."""
+        rows = {}
+        for policy in ("automatic", "public_caller"):
+            owner, producer, supervisor = self.make_held_recovering_components()
+            with TemporaryDirectory() as root:
+                options = {}
+                if policy == "public_caller":
+                    options = {
+                        "_supervised_win32_deadline_cancel_policy": policy,
+                        "_supervised_win32_deadline_cancel_grace_ns": 500_000_000,
+                    }
+                server = create_server({"fixture":123}, root,
+                    session_mode="supervised-win32",
+                    _supervised_win32_owner_factory=lambda *_args: owner,
+                    _supervised_win32_producer_factory=lambda *_args: producer,
+                    **options)
+                program = self.valid_program()
+                program["program_id"] = f"expiry-pair-{policy}"
+                program["authority"]["lease_id"] = f"expiry-pair-{policy}-lease"
+                deadline_ns = time.monotonic_ns()+5_000_000_000
+                program["authority"]["expires_at_ns"] = deadline_ns
+                pending = self.row(await server.call_tool("interface_dispatch", {
+                    "program":program,"current_observation_seq":1,
+                    "current_binding_revision":1,"wait_for_result_ms":0}))
+                self.assertEqual(pending["status"],"pending",pending)
+                self.assertTrue(await asyncio.wait_for(
+                    asyncio.to_thread(producer.started.wait,3),3),pending)
+
+                caller_reply = {}
+                async def exact_deadline_caller():
+                    while time.monotonic_ns() < deadline_ns:
+                        await asyncio.sleep(0.001)
+                    caller_reply.update(self.row(await server.call_tool(
+                        "interface_cancel", {"call_id":pending["call_id"]})))
+
+                caller_task = (asyncio.create_task(exact_deadline_caller())
+                    if policy == "public_caller" else None)
+                terminal = None
+                end = time.monotonic()+8
+                while time.monotonic() < end:
+                    terminal = self.row(await server.call_tool("interface_results", {
+                        "call_id":pending["call_id"]}))
+                    if (isinstance(terminal.get("cancellation"),dict)
+                            and terminal["cancellation"].get("status")
+                            in ("recovered","unknown")):
+                        break
+                    await asyncio.sleep(0.005)
+                self.assertEqual(terminal["cancellation"]["status"],"recovered",
+                    terminal)
+                if caller_task is not None:
+                    await asyncio.wait_for(caller_task,1)
+                    self.assertEqual(caller_reply.get("status"),"recovered",
+                        caller_reply)
+                    self.assertEqual(terminal["deadline_cancel_route"],
+                        "public_interface_cancel",terminal)
+                    self.assertGreaterEqual(
+                        terminal["deadline_cancel_requested_ns"],deadline_ns,
+                        terminal)
+                else:
+                    # Automatic-policy route metadata is deliberately not
+                    # projected by interface_results; the public-caller arm
+                    # exposes its route as part of that opt-in policy.
+                    self.assertEqual(caller_reply,{})
+                self.assertTrue(terminal["cancellation"]["release_confirmed"],
+                    terminal)
+                self.assertEqual(supervisor.cancel_calls,1)
+                self.assertIsNone(terminal["task_success"],terminal)
+                self.assertFalse(terminal["replay_allowed"],terminal)
+                rows[policy] = {
+                    "status":terminal["cancellation"]["status"],
+                    "release_confirmed":terminal["cancellation"][
+                        "release_confirmed"],
+                    "task_success":terminal["task_success"],
+                    "replay_allowed":terminal["replay_allowed"],
+                    "cancel_calls":supervisor.cancel_calls,
+                }
+                close = self.row(await server.call_tool("interface_close",{}))
+                end = time.monotonic()+10
+                while close.get("status")=="busy" and time.monotonic()<end:
+                    await asyncio.sleep(0.01)
+                    close = self.row(await server.call_tool("interface_close",{}))
+                self.assertEqual(close["status"],"closed",close)
+            self.assertTrue(supervisor.closed)
+
+        self.assertEqual(rows["automatic"],rows["public_caller"])
+
     async def test_public_caller_schedules_from_dispatch_request_and_exact_call_id(self):
         owner, producer, supervisor = self.make_held_recovering_components()
         with TemporaryDirectory() as root:
@@ -2751,7 +2838,127 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertFalse(effect["replay_allowed"], effect)
 
                     close_reply = await client.call_tool("interface_close", {})
-                    self.assertEqual(self.row(close_reply)["status"], "closed")
+                    closed = self.row(close_reply)
+                    deadline = time.monotonic()+2
+                    while closed.get("status")=="busy" and time.monotonic()<deadline:
+                        await asyncio.sleep(0.01)
+                        close_reply = await client.call_tool(
+                            "interface_close", {})
+                        closed = self.row(close_reply)
+                    self.assertEqual(closed["status"], "closed", closed)
+
+    async def test_stdio_production_cli_deadline_policy_pair_preserves_same_safety_outcomes(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        outcomes = {}
+        for policy in ("automatic", "public_caller"):
+            with TemporaryDirectory() as root:
+                output = Path(root)/"child-receipts"
+                targets = Path(root)/"targets.json"
+                targets.write_text('{"fixture":123}',encoding="utf-8")
+                args = ["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                    "--output-directory", str(output), "--mode", "delayed-expiry",
+                    "--targets", str(targets), "--production-cli"]
+                if policy == "public_caller":
+                    args.extend(["--public-caller", "--deadline-cancel-grace-ms",
+                        "500"])
+                params = StdioServerParameters(command=sys.executable, args=args,
+                    cwd=str(Path(__file__).resolve().parents[2]))
+                async with stdio_client(params) as (reader, writer):
+                    async with ClientSession(reader, writer) as client:
+                        await client.initialize()
+                        program = {
+                            "schema":"agent-interface/program-v1",
+                            "program_id":f"stdio-expiry-pair-{policy}",
+                            "source":{"observation_seq":1,"binding_revision":1,
+                                "target_generations":{"fixture":GENERATION}},
+                            "authority":{"lease_id":f"stdio-expiry-pair-{policy}-lease",
+                                "expires_at_ns":time.monotonic_ns()+5_000_000_000},
+                            "terminal":{"release_all_required":True},
+                            "ops":[{"op":"focus","target":"fixture"},
+                                {"op":"key_chord","keys":["CTRL","S"]},
+                                {"op":"release_all"}]}
+                        expiry_ns = program["authority"]["expires_at_ns"]
+                        dispatched = self.row(await client.call_tool(
+                            "interface_dispatch", {"program":program,
+                                "current_observation_seq":1,
+                                "current_binding_revision":1,
+                                "wait_for_result_ms":0}))
+                        self.assertEqual(dispatched["status"],"pending",dispatched)
+                        call_id = dispatched["call_id"]
+                        self.assertLess(time.monotonic_ns(),expiry_ns,dispatched)
+
+                        if policy == "public_caller":
+                            while time.monotonic_ns() < expiry_ns:
+                                await asyncio.sleep(0.005)
+                            cancel = self.row(await client.call_tool(
+                                "interface_cancel", {"call_id":call_id}))
+                            self.assertIn(cancel["status"],("pending","recovered"),
+                                cancel)
+                            self.assertFalse(cancel["replay_allowed"],cancel)
+
+                        retained = None
+                        deadline = time.monotonic()+10
+                        while time.monotonic() < deadline:
+                            retained = self.row(await client.call_tool(
+                                "interface_results", {"call_id":call_id,
+                                    "include_image":False}))
+                            cancellation = retained.get("cancellation")
+                            action = retained.get("action")
+                            if (isinstance(cancellation,dict)
+                                    and cancellation.get("status")=="recovered"
+                                    and isinstance(action,dict)
+                                    and action.get("status")=="recovered"):
+                                break
+                            await asyncio.sleep(0.01)
+                        self.assertIsNotNone(retained)
+                        self.assertEqual(retained["call_id"],call_id)
+                        self.assertEqual(retained["cancellation"]["status"],
+                            "recovered",retained)
+                        self.assertTrue(retained["cancellation"][
+                            "release_confirmed"],retained)
+                        self.assertEqual(retained["action"]["status"],
+                            "recovered",retained)
+                        self.assertEqual(retained["action"][
+                            "program_actions_lower_bound"],2,retained)
+                        self.assertIsNone(retained["task_success"],retained)
+                        self.assertFalse(retained["replay_allowed"],retained)
+                        if policy == "public_caller":
+                            self.assertEqual(retained["deadline_cancel_policy"],
+                                "public_caller",retained)
+                            self.assertEqual(retained["deadline_cancel_route"],
+                                "public_interface_cancel",retained)
+                            self.assertGreaterEqual(retained[
+                                "deadline_cancel_requested_ns"],expiry_ns,retained)
+                            self.assertLessEqual(retained[
+                                "deadline_cancel_requested_ns"],
+                                expiry_ns+500_000_000,retained)
+
+                        verified = self.row(await client.call_tool(
+                            "interface_verify_task", {"call_id":call_id,
+                                "wait_for_result_ms":1000}))
+                        self.assertEqual(verified["status"],"verified",verified)
+                        self.assertFalse(verified["task_success"],verified)
+                        self.assertEqual(verified["task_effect"]["receipt"][
+                            "operation_id"],retained["action"]["operation_id"])
+                        self.assertFalse(verified["replay_allowed"],verified)
+                        outcomes[policy] = (retained["action"]["status"],
+                            retained["action"]["program_actions_lower_bound"],
+                            retained["cancellation"]["status"],
+                            retained["cancellation"]["release_confirmed"],
+                            retained["task_success"],verified["task_success"],
+                            retained["replay_allowed"])
+                        closed = self.row(await client.call_tool(
+                            "interface_close", {}))
+                        end = time.monotonic()+2
+                        while closed.get("status")=="busy" and time.monotonic()<end:
+                            await asyncio.sleep(0.01)
+                            closed = self.row(await client.call_tool(
+                                "interface_close", {}))
+                        self.assertEqual(closed["status"],"closed",closed)
+
+        self.assertEqual(outcomes["automatic"],outcomes["public_caller"])
 
     async def test_stdio_public_compiled_caller_preserves_unknown_exception(self):
         from mcp import ClientSession, StdioServerParameters

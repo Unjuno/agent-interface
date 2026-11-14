@@ -98,8 +98,8 @@ def main():
             "evidence_ref": "stdio-fake-oracle:delayed-expiry"}
 
     if args.production_cli:
-        if not args.public_caller or args.targets is None:
-            parser.error("--production-cli requires --public-caller and --targets")
+        if args.targets is None:
+            parser.error("--production-cli requires --targets")
         from runtime.cli_v1 import mcp_server
         real_create_server = mcp_server.create_server
 
@@ -113,10 +113,12 @@ def main():
         mcp_server.create_server = create_fake_backed_server
         sys.argv = ["mcp_server", "--targets", str(args.targets),
             "--output-directory", str(args.output_directory),
-            "--session-mode", "supervised-win32",
-            "--supervised-win32-deadline-cancel-policy", "public-caller",
-            "--supervised-win32-deadline-cancel-grace-ms",
-            str(args.deadline_cancel_grace_ms)]
+            "--session-mode", "supervised-win32"]
+        if args.public_caller:
+            sys.argv.extend([
+                "--supervised-win32-deadline-cancel-policy", "public-caller",
+                "--supervised-win32-deadline-cancel-grace-ms",
+                str(args.deadline_cancel_grace_ms)])
         mcp_server.main()
         return
 
