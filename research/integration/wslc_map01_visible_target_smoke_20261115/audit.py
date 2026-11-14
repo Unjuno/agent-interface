@@ -45,7 +45,7 @@ require(result["screen_shape"] == [3, 480, 640],
 
 expected = {}
 for line in (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
-    digest, name = line.split("  ", 1)
+    digest, name = line.split(":", 1)
     expected[name] = digest
 actual_names = {path.name for path in ROOT.iterdir()
                 if path.is_file() and path.name != "SHA256SUMS"}
