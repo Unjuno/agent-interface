@@ -85,8 +85,11 @@ verdict does not complete the compiled graph or rewrite the original action.
 
 The in-process Fake producer integration drives `run_public_compiled` through
 the MCP server tools: public observe, pending dispatch, same-call-ID result
-query, transient-busy retry, task-effect verification, and the exact-call task
-oracle. It also makes a second controlled producer call that returns an
+query, task-effect verification, and the exact-call task oracle. Server lock
+contention is scheduler-dependent, so this integration does not require a busy
+response on every run. A deterministic caller unit test covers read-only busy
+retry exhaustion and proves no dispatch occurs. The integration also makes a
+second controlled producer call that returns an
 exception with unverified release; the caller retains uncertainty and skips the
 effect verifier and task oracle. The recovered-dispatch caller test additionally
 exercises the R180 result projection through `run_public_compiled`: the source
@@ -99,7 +102,6 @@ closed. A separate stdio MCP test runs `run_public_compiled` against
 a child server over MCP stdio. It joins the pending result by exact call ID,
 accepts nested `call.call_id` while the query is pending, and preserves UNKNOWN
 action delivery when the recovery receipt lacks a bounded late-input horizon.
-An adjacent unit test exhausts the retry budget and proves no dispatch occurs.
 
 The public caller and MCP server integration modules pass 43 tests in both
 normal and optimized Python mode:
