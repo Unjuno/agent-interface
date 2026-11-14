@@ -9,22 +9,120 @@ The earlier #57 search and two-cell/modal integration plan overlooked the archiv
 - [G10](calc_current_shared_3311_4d74_20261004/calc-compiled-ocrlive-4d74/REPORT.md) records two guarded Calc saves, three capture-time-bound graph observations, OCR of two rows and independent saved-XML scoring, under fixed geometry and font. Primary usage remains unknown; no same-model matched economic comparison follows. Source labels include inherited G09 wording, as its report explains.
 - The newer `calc_compiled_method_v1.py` graph represents a different two-cell and modal-save workflow; its tests use supplied synthetic observations and targets. It neither replaces G10 nor proves an integrated live adapter.
 
-## Pinned implementation versus current main
+## Pinned implementation versus current main (current hashes refreshed 2026-11-14)
 
 At current main as of this crosswalk, SHA-256 of the archived G10 source blob and current path was compared directly, without executing either or touching a live runtime:
 
 | Source | Archived SHA-256 | Current SHA-256 | Match |
 |---|---|---|---|
-| `runtime/core_v1/compiled_gui.py` | `d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014` | `a00ca311ce80a9cc691f25b24569f95715f6051991b59578861f8d5b9b48d68f` | no |
-| `runtime/guarded_x11_v1/bridge.py` | `0a0675709f2f2e7210ba92fb657c61e860ac1fef2126ef4006bf88699d556e71` | `153a65bd450b4903449f882bf1821f36c23578536db50e6c87c9aed87cfc4910` | no |
+| `runtime/core_v1/compiled_gui.py` | `d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014` | `6e3cbc4ef3951388169d09970fa3d9817527f83e9c110725669b5eec3ee5a529` | no |
+| `runtime/guarded_x11_v1/bridge.py` | `0a0675709f2f2e7210ba92fb657c61e860ac1fef2126ef4006bf88699d556e71` | `9855d537598d497182107d8dddcad53496ad7abe813d45ce106ce6d5c91b23b1` | no |
 | `runtime/guarded_x11_v1/handles.py` | `b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7` | `b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7` | yes |
-| `runtime/backends/x11_v1/backend.py` | `6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db` | `7218eb2a2f80b7a09fcf355b718d97fb2c31b372346f014a334e948f132cac11` | no |
+| `runtime/backends/x11_v1/backend.py` | `6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db` | `7004c4f2a91cef423d60e6911a795b47e44479ef5408857935df3c099c18a720` | no |
 
-Seven G10 packet files (`compiled_ocr.py`, `effect_predicate.py`, `ocr_reader.py`, `saved_oracle.py`, `AUDIT.json`, `PLAN.json`, `REPORT.md`) match the sizes and hashes in `FILES.json`; this is not a complete package or raw-frame audit.
+### Exact-current-main recheck (2026-11-14)
 
-## Next integration decision
+The current column above was refreshed from exact `origin/main`/HEAD
+`68ee780c2822e8e99b09a23244c3fb6a75b970c6`. The archived G10 copies still
+match only `handles.py`; `compiled_gui.py`, the guarded bridge and X11 backend
+remain different. Relevant post-G10 main changes include compiled verifier
+deadlines (`cf3ddf2f`), an owned Calc public profile/task-verifier path
+(`2d830c0f`), and X11 input-obligation publication/custody fencing
+(`565ed101`). These are stricter current mechanisms, not proof that the old G10
+caller is source-compatible or semantically equivalent. The production Calc
+profile is fixed to literal A1/A2 values 731/864; its saved-FODS parser refuses
+formula cells, and the parent-held artifact helper remains `unknown` when a
+trusted save controller receipt is unavailable. It therefore cannot score
+G10's two formula-bearing rows (29×31 and 43×47) as-is. Keep the G10 workflow
+separate; any reuse needs a distinct profile/scorer and parent-held save
+custody, with the existing fixed-profile semantics unchanged.
 
-Compare the archived G10 guarded bridge, semantic recognizer and source-capture clock contract against current-main interfaces and the chosen task, including stale/unknown, releases and bounded recovery. Select and test a reproducible adapter based on existing qualified code when applicable. Then prospectively freeze the matched same-model cold/warm/invalidation/repair comparison, its all-attempt model/OCR/native costs and independent effects. A fixed offline method graph and an archived positive do not alone satisfy that comparison. No existing allocation or historical auditor is rerun by this crosswalk.
+The offline G10 current-caller composition already exposes the other concrete
+gap: G10's custom admission remints `a1_second` after the first action, while
+the shared current adapter resolves the graph-declared symbol and safely
+refuses the old alias when stale. Existing fresh-proposal helpers bridge this
+shape only in offline/Fake X tests; OCR-driven semantic proposal, current
+native bridge, exact formula-profile effect and parent-held save custody have
+not been composed in a live Calc run. Selected current-main tests for the
+profile, task-artifact custody, G10 native-caller, fresh-admission and
+tri-state seams pass 50/50 normally and 50/50 under `-O` on CPython 3.11.9.
+These checks confirm the offline boundaries only; they neither consume nor
+rerun G10's historical allocation or auditor.
+
+## G10 formula effect scorer construction (2026-11-14)
+
+`runtime/guarded_x11_v1/calc_g10_formula_effect_v1.py` adds a separate pure
+bytes scorer for only the two retained cases (29/31 and 43/47). It requires the
+exact three-cell header/value row and cached product plus the exact ODF formula
+`of:=[.A2]*[.B2]`, rejects extra populated cells and ambiguous/unsafe XML, and
+always returns `task_success: null`. Tests score the actual archived
+`runs/compiled_ocrlive10/first.fods` and `second.fods` bytes; the scorer,
+existing literal profile and artifact-custody tests pass 41/41 normally and
+under `-O`. This proves the parser handles those saved bytes only. The scorer
+is not wired to `CalcTaskArtifact`, public `interface_verify_task`, a parent-held
+save-controller receipt, live OCR, or the native bridge; it cannot certify a
+Calc save or task success. The next concrete integration is to expose it only
+under a distinct G10 profile identity and carry exact task values, call,
+process/window generation, save request, close and save-controller receipts
+through the existing parent-held custody path, preserving the 731/864 profile
+unchanged. Then compose it with fresh observation/reference acquisition and
+test refusal on stale/unknown inputs before any live allocation.
+
+This is not a scorer-only switch in the current public path. `mcp_server.py`
+binds `calc-ocr-save-v1` when reserving the task artifact and again when
+accepting `interface_verify_task`; `CalcTaskArtifact` fixes the descriptor
+profile and blank FODS identity; and `_plan_save_receipt_contract` accepts only
+the current enter-pair → request-save → effect-unavailable receipt shape.
+Therefore a G10 profile needs a profile-bound artifact descriptor/blank
+template, an explicit caller plan contract and a parent-side verification
+dispatch. Merely allowing the G10 profile string in the public verifier would
+not establish its action or save custody. Keep results unknown and deny replay
+until all exact bindings agree.
+
+The cardinality differs too: the retained G10 call writes and scores two
+separate artifacts (`first.fods`, `second.fods`) after two distinct graph
+transitions. `CalcTaskArtifact` retains one `task-artifact.fods` identity and
+one save request; the public call record also carries one `task_save_request`.
+Replacing that file between transitions would lose evidence and could bind the
+wrong result to the final close. The local candidate
+`CalcG10ArtifactCustody` now implements the parent-side two-snapshot rule:
+each immutable save receipt binds its transition/action ID, call and
+process/window generation, save request, digest and file identity. It scores
+both only after the exact target exit and release-verified close. Synthetic
+receipt tests include the archived FODS bytes and reject missing, reordered,
+mutated, mismatched or unreleased evidence; the focused candidate suite passes
+34/34 normally and under `-O`. This remains an offline internal seam: it is
+not registered in MCP, called by the live G10 graph, or evidence of a live
+Calc run. Public profile/plan integration, per-action parent receipt plumbing,
+fresh OCR/reference composition and a prospectively frozen live trial remain
+open. The final
+effect may be true only when both artifact scores and both trusted save
+controller receipts validate. The present API does not yet implement this
+two-artifact contract.
+
+The exact-current-main recheck verified all 106 G10-folder entries in the shared `FILES.json` (zero missing/hash/size mismatches) and all 33 archived source pins in G10's `PLAN.json` (zero mismatches). This verifies the copied packet and pinned source bytes; it does not independently re-score historical raw frames or reproduce the original task execution.
+
+## Integration decision after the current-main comparison
+
+The archived G10 bridge, OCR/effect predicates and monotonic capture binding
+have now been compared against exact current main, and the existing offline
+fresh-reference/current-bridge seams have been rechecked. Reuse remains
+scoped: keep the tri-state OCR predicate and exact capture clock association;
+use current-main target identity, custody fencing, release and effect
+verification; do not carry G10's custom remint through an unchecked old graph
+symbol. The historical G10 call also has two separate saved effects, unlike
+the current one-artifact/one-save public profile. The next runtime seam must
+therefore add a distinct two-save profile whose immutable per-action artifact
+records, release-verified action receipts, and save requests share the exact
+call and process/window generation, then require both saved-byte scores after
+the same verified target exit. Keep the existing 731/864 flow unchanged.
+
+Only after that path has offline malformed/stale/partial receipt rejection and
+live correctness evidence should it enter a prospective same-model
+cold/warm/invalidation/repair comparison with all model/OCR/native costs and
+full lifecycle timing. No existing G10 allocation or historical auditor was
+rerun for this crosswalk; the archived positive and local scorer do not alone
+satisfy #57.
 
 ## Current-core offline construction check
 

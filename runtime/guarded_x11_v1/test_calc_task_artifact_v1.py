@@ -79,7 +79,7 @@ def successful_registered_profile_receipt():
             {'event':'action_terminal','action':'save','action_id':save_id,
              'status':'completed','release_verified':True},
             {'event':'effect_checked','action':'save','action_id':save_id,
-             'status':'unavailable','effect_verification_started_ns':100,
+             'status':'unavailable','effect_verification_started_ns':150,
              'effect_verification_accepted_ns':200},
             {'event':'runtime_finished','outcome':'SAFE_YIELD',
              'reason':'effect_unavailable'}]}
@@ -292,8 +292,15 @@ class CalcTaskArtifactTests(unittest.TestCase):
             bad_effect = make_registered_calc_save_controller_receipt(
                 descriptor=artifact.descriptor,method_receipt=method,
                 save_request=request)
+            method = successful_registered_profile_receipt()
+            method['critical_events'][5]['effect_verification_started_ns'] = 149
+            verification_started_before_save = (
+                make_registered_calc_save_controller_receipt(
+                    descriptor=artifact.descriptor,method_receipt=method,
+                    save_request=request))
         self.assertIsNone(bad_release)
         self.assertIsNone(bad_effect)
+        self.assertIsNone(verification_started_before_save)
 
     def test_parent_plan_binds_planner_named_save_receipt_and_rejects_substitution(self):
         with tempfile.TemporaryDirectory() as directory:

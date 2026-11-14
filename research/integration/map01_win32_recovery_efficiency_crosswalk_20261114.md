@@ -152,6 +152,22 @@ Pre-register the counter as pointer move + first DOWN = 2; bind cancellation via
 
 **Attempt denominator and custody audit (2026-11-14):** The retained Docker/Xvfb source contains 20 recorded arm attempts across R10–R14: 12 passing measured arms (six matched pairs) and eight pre-input harness failures (pairs 3, 4, 7, 8; R11/R13). The metric recomputation uses the 12 extant passing `result.json` records. Custody is incomplete: the existing posttrial manifests expect 16 wrapper logs that are absent (R11: 4 Docker logs; R12: 4 Docker logs; R13: 4 stdout logs; R14: 4 stdout logs). Targeted filename search found no recoverable copies under the task's private-packets directory. The 8 R11/R13 attempts remain counted as failures from their matrices, but their wrapper logs are absent; the 12 successful arms retain result/bridge measurements but their wrapper logs are also absent. Thus the descriptive timing values reproduce from surviving records, while all-attempt packet custody is incomplete and is not a fully preserved 20-arm dataset. Do not regenerate historical logs or infer their contents. The audit script reports `PASS_METRICS_WITH_CUSTODY_GAPS`, 20 attempts, 12 passing, 8 pre-input failures, 16 missing manifest-listed logs, and `all_attempt_evidence_complete=false`. This still does not close #57's same-condition native Win32 recovery comparison or model/token/resource accounting.
 
+## Current-main public caller ABBA result (2026-11-14)
+
+The frozen R237/R238/R239/R240 ABBA packet compares direct public dispatch with
+the public compiled caller under the same native MAP01 producer-exit recovery
+condition. All four attempts passed the scoped release, late-input, neutral,
+independent 50→49 HUD-effect and normal-close gates. The exact attempt ledger,
+trial artifacts and manifest hashes are retained in the task-local packet
+`private-packets/map01_native_windows_current_main_r217_exception_recovery_20261114/runner-candidates/r225-spawn-phase-profile/`;
+see `REPORT.md` and `block-ledger.json` there. Direct interval median was
+3.0800423 s (n=2) and compiled was 3.4401911 s (n=2), a descriptive 11.7%
+compiled slowdown. The interval excludes common startup and manual visibility
+gates; precise outer lifecycle timing is missing. Both routes made zero
+provider/model calls, so token cost is not applicable. The result establishes
+neither savings nor population reliability and remains a route-path comparison,
+not an isolated recovery-policy comparison. Keep #57 open.
+
 ## Next #57 MAP01 matched recovery comparison — no supported paired arm yet
 
 The earlier automatic-recovery versus fresh-generation orphan-recovery proposal is not callable through the current public server: `complete_exited_action` starts bounded automatic cancellation recovery when producer completion evidence is untrusted. The proposed `interface_cancel` alternative is also not a valid post-expiry arm. In `_run_supervised_win32_standard_program`, the dispatch monitor itself invokes bounded cancellation at the authority deadline (2 ms maximum polling interval). A caller request at or after the same deadline races with, or follows, this existing automatic cancellation. A request before expiry changes the input-validity window and therefore is a different task condition. The current public API exposes no policy selector that allows otherwise identical expiry handling to be assigned to both arms.
