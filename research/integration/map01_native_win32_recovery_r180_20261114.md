@@ -23,4 +23,6 @@ The before and post-recovery full-resolution images were classified by the froze
 
 ## Next
 
-For a new candidate packet, correct the private runner to derive the horizon gate from the public receipt fields using the existing owner contract, then fixture-check both exact two-second coverage and a short horizon. Do not alter the frozen R180 runner, conditions, or raw. Use a fresh, independently authorized attempt only after the candidate runner preserves the separate UNKNOWN source action, recovered cancellation, release-attempt receipt, no-replay rule, both horizons, foreground-bound image pair, and bounded cleanup.
+An offline R181 private-runner gate candidate now validates the retained R180 public cancellation result without the missing convenience boolean. Five fixture tests passed under CPython 3.11.9 normally and under `-O`: exact two-second coverage passes; a 1 ns shortfall, excessive sample gap, explicit false flag, and wrong terminal generation fail closed. The candidate packet is local-only at `private-packets/map01_native_windows_current_main_r180_abnormal_exit_20261114/runner-candidates/r181-horizon-projection/`; its nine-entry manifest has no claimed live evidence.
+
+The offline R181 horizon projection now passes five fixture cases under normal and optimized Python. Next, integrate it into a full candidate runner and fixture-check every frozen gate before any fresh live attempt. Preserve the frozen R180 runner, conditions, and raw.
