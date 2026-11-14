@@ -38,6 +38,11 @@ retained `PersistentGroundingModel`, the new v3 adapter projects its result or
 typed failure into `adaptive_acquisition_caller_v3`, and the public caller result
 is appended and re-audited by the Issue #57 attempt ledger. This retains call and
 thread IDs, usage, image count, wait, missing usage and unattempted task effect.
+The provider fixture now also runs through the frozen task projector: its
+attempt, model-call row and usage/image/wait/cost aggregates reconcile, then the
+record is retained as HOLD because the provider attempt failed and no task
+effect is available. This verifies the actual App Server result shape against
+the projection boundary without treating a failed call as a comparable task.
 A separate public v3 compiled-caller/FakeX test joins the returned core receipt,
 release records and effect status in one row. The ledger rejects misleading
 release/effect receipts, post-write receipt tampering and deleted row fields.
@@ -110,7 +115,10 @@ and the historical FODS is not a post-action artifact.
 `test_grounding_appserver_usage_transport.py`: Python 3.11.9 skips 1/1 because
 the App Server pipe transport needs Python 3.12+. The available Python 3.13.14
 then passed 1/1 normally and under `-O`, now including App Server JSONL → v3
-adapter → adaptive caller → Issue #57 append-only ledger → re-audit. An initial invocation used an
+adapter → adaptive caller → Issue #57 append-only ledger → re-audit → frozen
+task projector. Its provider attempt's usage, wait and image aggregates
+reconcile before the failed attempt is preserved as HOLD for the frozen row.
+An initial invocation used an
 incomplete import path and failed before tests; it was corrected and is not
 counted as test evidence. The full provider-to-scorer three-arm candidate remains
 unimplemented and unverified.

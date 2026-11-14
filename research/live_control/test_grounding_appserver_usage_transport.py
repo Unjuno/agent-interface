@@ -17,6 +17,7 @@ from research.live_control.v3_persistent_grounding_adapter_v1 import (
 from research.live_control.issue57_v3_attempt_ledger_v1 import (
     AppendOnlyAttemptLedger, make_row,
 )
+from research.live_control.issue57_v3_trace_adapter_v1 import project_task
 
 
 PEER = r'''
@@ -129,6 +130,19 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                 self.assertEqual(failure_receipt["requested_effort"],
                                  attempt["requested_effort"])
                 self.assertEqual(result["accounting"]["usage_totals"]["input_tokens"], 1234)
+                projected = project_task("plain", 0, result,
+                    {"submission_count": 0, "exact_submission": False},
+                    {"local_observations": 1, "durable_calls": 1,
+                     "pointer_admissions": 0, "old_target_pointer_admissions": 0,
+                     "releases_verified": False, "elapsed_ns": 1,
+                     "source_to_completion_ns": None, "input_feedback_ns": [],
+                     "repair": {"required": False, "old_reference_status": None,
+                         "old_reference_pointer_admissions": 0,
+                         "attempted": False, "succeeded": False}})
+                self.assertEqual(projected["status"], "HOLD")
+                self.assertEqual(projected["reason"],
+                    "failed_attempt_not_representable_in_v1")
+                self.assertEqual(projected["caller_result"], result)
                 self.assertEqual(execute_calls, [])
                 self.assertIsNone(result["task_effect"])
                 self.assertIsNone(result["accounting"]["cost"])

@@ -77,6 +77,20 @@ def _accounting_error(attempts, accounting, model_calls):
             or type(cost_value) not in (int, float)
             or (type(cost_value) is float and not math.isfinite(cost_value)))):
         return "accounting_invalid:cost"
+    for attempt in attempts:
+        usage = attempt.get("usage")
+        if usage is not None and (type(usage) is not dict or set(usage) != set(USAGE_FIELDS)
+                or any(type(usage[field]) is not int or usage[field] < 0
+                       for field in USAGE_FIELDS)):
+            return "attempt_usage_invalid"
+        for field in ("visible_images_submitted", "wait_ns"):
+            value = attempt.get(field)
+            if value is not None and (type(value) is not int or value < 0):
+                return "attempt_accounting_invalid:" + field
+        cost = attempt.get("cost")
+        if (cost is not None and (type(cost) is bool or type(cost) not in (int, float)
+                or (type(cost) is float and not math.isfinite(cost)))):
+            return "attempt_accounting_invalid:cost"
     if type(model_calls) is not list:
         return "model_call_ledger_missing"
     if accounting["attempted_calls"] != len(attempts):
@@ -84,7 +98,8 @@ def _accounting_error(attempts, accounting, model_calls):
     completed = [row for row in attempts if row.get("status") == "completed"]
     if accounting["completed_calls"] != len(completed) or len(model_calls) != len(completed):
         return "completed_calls"
-    call_ids = [row.get("call_id") for row in completed]
+    call_ids = [row.get("call_id") for row in attempts
+                if row.get("call_id") is not None]
     duplicate_ids = sorted({value for value in call_ids
                             if type(value) is str and call_ids.count(value) > 1})
     if accounting["duplicate_call_ids"] != duplicate_ids:
@@ -177,6 +192,26 @@ def project_task(arm, index, caller_result, independent_score, telemetry):
     if type(accounting) is not dict or accounting.get("attempted_calls") != len(attempts):
         return _hold(arm, index, task_id, route, caller_result,
                      independent_score, telemetry, "caller_attempt_count_mismatch")
+    if any(type(attempt) is not dict for attempt in attempts):
+        return _hold(arm, index, task_id, route, caller_result,
+                     independent_score, telemetry, "malformed_attempt_row")
+    if any(type(attempt.get("attempt_id")) is not str or not attempt["attempt_id"]
+           for attempt in attempts):
+        return _hold(arm, index, task_id, route, caller_result,
+                     independent_score, telemetry, "attempt_identity_incomplete")
+    for attempt in attempts:
+        usage = attempt.get("usage")
+        if usage is not None and (type(usage) is not dict or set(usage) != set(USAGE_FIELDS)
+                or any(type(usage[field]) is not int or usage[field] < 0
+                       for field in USAGE_FIELDS)):
+            return _hold(arm, index, task_id, route, caller_result,
+                         independent_score, telemetry, "usage_incomplete_or_invalid")
+    accounting_error = _accounting_error(attempts, accounting,
+                                          caller_result.get("model_call_ledger"))
+    if accounting_error is not None:
+        return _hold(arm, index, task_id, route, caller_result,
+                     independent_score, telemetry,
+                     "caller_accounting_mismatch:" + accounting_error)
     expected_calls = EXPECTED_MODEL_CALLS[arm][index]
     if len(attempts) != expected_calls:
         return _hold(arm, index, task_id, route, caller_result,
@@ -225,13 +260,6 @@ def project_task(arm, index, caller_result, independent_score, telemetry):
         calls.append({"call_id": attempt["call_id"], "stage": attempt["stage"],
             "requested_model": attempt["requested_model"],
             "requested_effort": attempt["requested_effort"], "usage": copy.deepcopy(usage)})
-
-    accounting_error = _accounting_error(attempts, accounting,
-                                          caller_result.get("model_call_ledger"))
-    if accounting_error is not None:
-        return _hold(arm, index, task_id, route, caller_result,
-                     independent_score, telemetry,
-                     "caller_accounting_mismatch:" + accounting_error)
 
     outcome = caller_result.get("outcome")
     if type(outcome) is not str or outcome not in TERMINAL_MAP:
