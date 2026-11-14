@@ -2253,6 +2253,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             'deadline_cancel_policy', 'deadline_cancel_route',
                             'deadline_cancel_requested_ns') if key in call_record}
                             if isinstance(call_record, dict) else {})
+                        if (isinstance(call_record, dict)
+                                and call_record.get('operation') == 'dispatch'):
+                            route_fields.setdefault(
+                                'deadline_cancel_policy',
+                                _supervised_win32_deadline_cancel_policy)
                     row.update(route_fields)
                 row['operation_invoked'] = False
                 row['input_dispatched'] = False

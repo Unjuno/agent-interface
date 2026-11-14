@@ -1199,18 +1199,18 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             synthetic_only=False)
         owner.bind_target_generation_reader(lambda: GENERATION)
         producer = DelayedExceptionReceiptProducerFactory(process, identity,
-            delay_s=0.7)
+            delay_s=3.5)
         with TemporaryDirectory() as root:
             server = self.make_server(root, owner, producer)
             program = self.valid_program()
-            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 500_000_000
+            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 3_000_000_000
             pending = self.row(await server.call_tool("interface_dispatch", {
                 "program": program,
                 "current_observation_seq": 1,
                 "current_binding_revision": 1,
                 "wait_for_result_ms": 0}))
             self.assertEqual(pending["status"], "pending", pending)
-            deadline = time.monotonic() + 3
+            deadline = time.monotonic() + 8
             retained = None
             while time.monotonic() < deadline:
                 retained = self.row(await server.call_tool("interface_results", {
@@ -1230,7 +1230,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(retained["action"]["result"]["status"], "unknown")
             self.assertIsNone(retained["action"]["task_success"])
             self.assertFalse(retained["replay_allowed"])
-            await server.call_tool("interface_close", {})
+            close = self.row(await server.call_tool("interface_close", {}))
+            end = time.monotonic()+2
+            while close.get("status")=="busy" and time.monotonic()<end:
+                await asyncio.sleep(0.01)
+                close = self.row(await server.call_tool("interface_close", {}))
+            self.assertEqual(close["status"],"closed",close)
 
     async def test_task_oracle_is_not_invoked_for_unknown_public_custody(self):
         process = FakeProcess()
@@ -2899,6 +2904,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         await asyncio.sleep(0.01)
                     self.assertIsNotNone(retained)
                     self.assertEqual(retained["call_id"],call_id)
+                    self.assertEqual(retained["deadline_cancel_policy"],
+                        "public_caller",retained)
                     self.assertNotEqual(retained.get("deadline_cancel_route"),
                         "public_interface_cancel",retained)
                     self.assertNotIn("deadline_cancel_requested_ns",retained)
