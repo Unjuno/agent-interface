@@ -49,11 +49,14 @@ release/effect receipts, post-write receipt tampering and deleted row fields.
 
 The retained G10-shaped caller/scorer fixture is now also connected to the same
 ledger: its public v3 caller result, compiled receipt, terminal release flags,
-independent saved-FODS score and raw FODS digest join in one audited row. The
-fixture is FakeX and the FODS predates the simulated actions; it proves result
-shape and custody only. It cannot provide a fresh task effect, the frozen #57
-telemetry fields (for example `durable_calls` and per-input feedback), or a live
-Calc comparison row.
+independent saved-FODS score and raw FODS digest join in one audited row. Two
+additional outcome rows verify that an effect-unknown one-transition prefix is
+retained with unavailable release/effect receipts, and that an independent
+score failure retains its failed score and raw FODS digest. The fixture is
+FakeX and the FODS predates the simulated actions; these rows prove result
+shape and custody only. They cannot provide a fresh task effect, the frozen #57
+telemetry fields (for example `durable_calls` and per-input feedback), or live
+Calc comparison rows.
 
 The missing composed-path check is now narrower and concrete: no current
 comparison runner joins that provider/preflight path to the v3 compiled core,
@@ -105,12 +108,14 @@ missing/malformed-preflight HOLD with original input retention, arm-order
 rejection and exact round-trip of the saved historical trace through the
 unchanged frozen evaluator.
 
-`research.integration.test_issue57_v3_g10_composition_v1`: 3/3 each mode,
-including the retained independent-score caller cases and one joined Issue #57
-ledger row. The raw saved FODS digest is checked against the independent score
-receipt before append; release evidence is derived from each terminal event in
-the returned compiled receipt. The application transport/effect is synthetic,
-and the historical FODS is not a post-action artifact.
+`research.integration.test_issue57_v3_g10_composition_v1`: 5/5 each mode,
+including the success row, effect-unknown prefix row, and independent-score
+failure row. The raw saved FODS digest is checked against the independent score
+receipt before append; successful release evidence is derived from each
+terminal event in the returned compiled receipt. Unknown release/effect is
+explicitly unavailable in the new failure rows. The application
+transport/effect is synthetic, and the historical FODS is not a post-action
+artifact.
 
 `test_grounding_appserver_usage_transport.py`: Python 3.11.9 skips 1/1 because
 the App Server pipe transport needs Python 3.12+. The available Python 3.13.14
