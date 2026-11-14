@@ -2245,16 +2245,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 pass
                         row = owner.interface_result(call_id)
                 row = deepcopy(row)
-                if (supervised_win32
-                        and _supervised_win32_deadline_cancel_policy == 'public_caller'):
+                if supervised_win32:
                     with calls_lock:
                         call_record = calls.get(call_id)
+                        is_dispatch = (isinstance(call_record, dict)
+                            and call_record.get('operation') == 'dispatch')
                         route_fields = ({key: call_record[key] for key in (
                             'deadline_cancel_policy', 'deadline_cancel_route',
                             'deadline_cancel_requested_ns') if key in call_record}
-                            if isinstance(call_record, dict) else {})
-                        if (isinstance(call_record, dict)
-                                and call_record.get('operation') == 'dispatch'):
+                            if is_dispatch else {})
+                        if is_dispatch:
                             route_fields.setdefault(
                                 'deadline_cancel_policy',
                                 _supervised_win32_deadline_cancel_policy)

@@ -491,9 +491,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         terminal["deadline_cancel_requested_ns"],deadline_ns,
                         terminal)
                 else:
-                    # Automatic-policy route metadata is deliberately not
-                    # projected by interface_results; the public-caller arm
-                    # exposes its route as part of that opt-in policy.
+                    self.assertEqual(terminal["deadline_cancel_policy"],
+                        "automatic",terminal)
+                    self.assertEqual(terminal["deadline_cancel_route"],
+                        "deadline_monitor",terminal)
+                    self.assertNotIn("deadline_cancel_requested_ns",terminal)
                     self.assertEqual(caller_reply,{})
                 self.assertTrue(terminal["cancellation"]["release_confirmed"],
                     terminal)
@@ -3023,6 +3025,13 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             self.assertLessEqual(retained[
                                 "deadline_cancel_requested_ns"],
                                 expiry_ns+500_000_000,retained)
+                        else:
+                            self.assertEqual(retained["deadline_cancel_policy"],
+                                "automatic",retained)
+                            self.assertEqual(retained["deadline_cancel_route"],
+                                "deadline_monitor",retained)
+                            self.assertNotIn("deadline_cancel_requested_ns",
+                                retained)
 
                         verified = self.row(await client.call_tool(
                             "interface_verify_task", {"call_id":call_id,
