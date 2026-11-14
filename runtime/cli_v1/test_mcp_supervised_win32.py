@@ -2550,6 +2550,78 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                                      retained["action"]["operation_id"])
                     self.assertFalse(verified["replay_allowed"])
 
+    async def test_stdio_public_caller_uses_retained_deadline_and_exact_call_id(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        with TemporaryDirectory() as root:
+            output = Path(root) / "child-receipts"
+            params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(output), "--mode", "delayed-expiry",
+                      "--public-caller"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    program = {
+                        "schema": "agent-interface/program-v1",
+                        "program_id": "stdio-public-caller-expiry",
+                        "source": {"observation_seq": 1,
+                            "binding_revision": 1,
+                            "target_generations": {"fixture": GENERATION}},
+                        "authority": {"lease_id": "stdio-public-caller-lease",
+                            "expires_at_ns": time.monotonic_ns() + 1_500_000_000},
+                        "terminal": {"release_all_required": True},
+                        "ops": [{"op": "focus", "target": "fixture"},
+                            {"op": "key_chord", "keys": ["CTRL", "S"]},
+                            {"op": "release_all"}]}
+                    expiry_ns = program["authority"]["expires_at_ns"]
+                    dispatched = await client.call_tool("interface_dispatch", {
+                        "program": program, "current_observation_seq": 1,
+                        "current_binding_revision": 1, "wait_for_result_ms": 0})
+                    pending = self.row(dispatched)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    call_id = pending["call_id"]
+                    self.assertEqual(len(call_id), 32)
+
+                    # The client retains expiry from its exact request instead
+                    # of querying it later from the owner result projection.
+                    while time.monotonic_ns() < expiry_ns:
+                        await asyncio.sleep(0.005)
+                    cancel_reply = await client.call_tool("interface_cancel", {
+                        "call_id": call_id})
+                    cancel = self.row(cancel_reply)
+                    self.assertIn(cancel["status"], ("pending", "recovered"), cancel)
+                    self.assertFalse(cancel["replay_allowed"], cancel)
+
+                    retained = None
+                    deadline = time.monotonic() + 3
+                    while time.monotonic() < deadline:
+                        result = await client.call_tool("interface_results", {
+                            "call_id": call_id, "include_image": False})
+                        retained = self.row(result)
+                        cancellation = retained.get("cancellation")
+                        if (isinstance(cancellation, dict)
+                                and cancellation.get("status") == "recovered"):
+                            break
+                        await asyncio.sleep(0.01)
+                    self.assertEqual(retained["call_id"], call_id)
+                    self.assertEqual(retained["deadline_cancel_policy"],
+                        "public_caller", retained)
+                    self.assertEqual(retained["deadline_cancel_route"],
+                        "public_interface_cancel", retained)
+                    self.assertGreaterEqual(
+                        retained["deadline_cancel_requested_ns"], expiry_ns,
+                        retained)
+                    self.assertTrue(retained["cancellation"]["release_confirmed"])
+                    self.assertFalse(retained["cancellation"]["replay_allowed"])
+                    self.assertIsNone(retained["task_success"])
+                    self.assertFalse(retained["replay_allowed"])
+
+                    close_reply = await client.call_tool("interface_close", {})
+                    self.assertEqual(self.row(close_reply)["status"], "closed")
+
     async def test_stdio_public_compiled_caller_preserves_unknown_exception(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client

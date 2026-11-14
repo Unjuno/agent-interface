@@ -25,6 +25,8 @@ def main():
     parser.add_argument("--mode", choices=("delayed-expiry", "exception",
         "exception-unknown", "recovery"),
         default="delayed-expiry")
+    parser.add_argument("--public-caller", action="store_true",
+        help="Enable the opt-in expiry caller policy for stdio protocol tests.")
     parser.add_argument("--recovery-generation", default="b" * 64)
     args = parser.parse_args()
     process = FakeProcess()
@@ -90,11 +92,17 @@ def main():
             "observed_monotonic_ns": time.monotonic_ns(),
             "evidence_ref": "stdio-fake-oracle:delayed-expiry"}
 
+    server_options = {}
+    if args.public_caller:
+        server_options.update(
+            _supervised_win32_deadline_cancel_policy="public_caller",
+            _supervised_win32_deadline_cancel_grace_ns=1_000_000_000)
     server = create_server({"fixture": 123}, args.output_directory,
         session_mode="supervised-win32",
         _supervised_win32_owner_factory=lambda *_args: owner,
         _supervised_win32_producer_factory=lambda *_args: producer,
-        supervised_win32_task_oracle=oracle)
+        supervised_win32_task_oracle=oracle,
+        **server_options)
     server.run(transport="stdio")
 
 
