@@ -2293,6 +2293,144 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                                      retained["action"]["operation_id"])
                     self.assertFalse(verified["replay_allowed"])
 
+    async def test_stdio_public_compiled_caller_preserves_unknown_exception(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "stdio-exception-result-query",
+            "session_scope": "supervised-win32-fixture",
+            "surface": "fixture",
+            "predicates": ["ready", "saved"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"save": {"target_symbol": "fixture",
+                "operation": "save", "expected_effect": {"saved": True}}},
+            "method": {"name": "save-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 3000,
+                "states": {
+                    "before": {"branches": [{"when": {"ready": True},
+                        "outcome": "action", "action": "save",
+                        "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"saved": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        with TemporaryDirectory() as root:
+            params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                      "--output-directory", str(Path(root) / "receipts"),
+                      "--mode", "exception"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    loop = asyncio.get_running_loop()
+                    dispatch_call_ids = []
+                    queried_rows = []
+                    effect_checks = []
+                    task_checks = []
+                    observation_seq = 0
+
+                    def call_tool(name, arguments):
+                        return asyncio.run_coroutine_threadsafe(
+                            client.call_tool(name, arguments), loop).result(timeout=10)
+
+                    def observe(target, frame, region):
+                        nonlocal observation_seq
+                        observation_seq += 1
+                        now = time.monotonic_ns()
+                        return {"status": "returned", "target": target,
+                            "target_generation": GENERATION,
+                            "target_generation_consistency": "matched",
+                            "observation_id": f"stdio-fixture-{observation_seq}",
+                            "observation": {"frame": frame, "region": region,
+                                "capture_started_ns": now, "capture_ended_ns": now},
+                            "predicates": {"ready": True, "saved": False},
+                            "side_effect_authority": False,
+                            "input_dispatched": False}
+
+                    def dispatch(program, sequence, revision):
+                        reply = call_tool("interface_dispatch", {
+                            "program": program,
+                            "current_observation_seq": sequence,
+                            "current_binding_revision": revision,
+                            "wait_for_result_ms": 0})
+                        pending = self.row(reply)
+                        self.assertEqual(pending["status"], "pending", pending)
+                        dispatch_call_ids.append(pending["call_id"])
+                        return reply
+
+                    def resolve_pending(call_id, pending_reply):
+                        pending = self.row(pending_reply)
+                        self.assertEqual(pending["call_id"], call_id, pending)
+                        deadline = time.monotonic() + 3
+                        while time.monotonic() < deadline:
+                            reply = call_tool("interface_results", {
+                                "call_id": call_id, "include_image": False})
+                            row = self.row(reply)
+                            queried_rows.append(row)
+                            call_row = row.get("call")
+                            retrieved_call_id = (row.get("call_id") or
+                                (call_row.get("call_id")
+                                 if isinstance(call_row, dict) else None))
+                            self.assertEqual(retrieved_call_id, call_id, row)
+                            action = row.get("action")
+                            if isinstance(action, dict) and action.get(
+                                    "status") == "unknown":
+                                return reply
+                            time.sleep(0.01)
+                        self.fail("stdio exact-call result query did not reach unknown")
+
+                    def verify_effect(_request, _report, _reply):
+                        effect_checks.append(True)
+                        return {"status": "succeeded", "evidence_ref": "must-not-score"}
+
+                    def verify_task(_call_id):
+                        task_checks.append(True)
+                        return call_tool("interface_verify_task", {
+                            "call_id": _call_id, "wait_for_result_ms": 1000})
+
+                    receipt = await asyncio.to_thread(run_public_compiled,
+                        interface, {"save": self.valid_program()},
+                        target="fixture", current_binding_revision=1,
+                        region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+                        resolve_pending=resolve_pending,
+                        perceive=lambda report, _reply: report["predicates"],
+                        verify_effect=verify_effect, verify_task=verify_task,
+                        cancelled=lambda: False)
+                    try:
+                        self.assertEqual(receipt["outcome"], "RUNTIME_FAILED", receipt)
+                        self.assertEqual(len(dispatch_call_ids), 1)
+                        self.assertEqual(receipt["standard_action_call_ids"],
+                            dispatch_call_ids)
+                        dispatch_evidence = next(row for row in receipt[
+                            "standard_target_evidence"] if row["kind"] == "dispatch")
+                        self.assertEqual(dispatch_evidence["call_id"],
+                            dispatch_call_ids[0])
+                        self.assertEqual(dispatch_evidence[
+                            "pending_result_resolution"], "same_call_id",
+                            {"receipt": receipt, "queried_rows": queried_rows})
+                        self.assertEqual(dispatch_evidence["status"], "uncertain")
+                        self.assertFalse(dispatch_evidence["release_verified"])
+                        retained = queried_rows[-1]
+                        self.assertEqual(retained["action"]["status"], "unknown")
+                        self.assertFalse(retained["action"]["release_confirmed"])
+                        self.assertEqual(retained["cancellation"]["status"],
+                            "recovered")
+                        self.assertTrue(retained["cancellation"]["release_confirmed"])
+                        self.assertFalse(retained["replay_allowed"])
+                        self.assertIsNone(dispatch_evidence["input_dispatched"])
+                        self.assertIsNone(receipt["task_success"])
+                        self.assertIsNone(receipt["task_verification"])
+                        self.assertEqual(effect_checks, [])
+                        self.assertEqual(task_checks, [])
+                    finally:
+                        await asyncio.to_thread(call_tool, "interface_close", {})
+
     async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
