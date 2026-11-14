@@ -33,12 +33,12 @@ On candidate branch `research/issue57-v3-integration-crosswalk-20261114`,
 `OwnedWin32SessionOwner._refresh` now writes the bounded-horizon verdict it
 already uses for custody resolution into the retained cancellation result as
 `late_input_horizon_verified`. The exact `interface_results(call_id=...)`
-MCP text response is covered by a regression: the v3 caller parses that exact
-JSON body, but still returns uncertain when the independent recovery readback
-does not bind to the horizon end. The original action stays UNKNOWN, task effect
-stays unset, and replay stays denied. This is a Fake producer/supervisor result
-shape check; it does not change R180's partial classification or prove a live
-horizon. Owner, MCP, and compiled-caller suites pass 95/95 in normal and
-optimized CPython 3.11.9. A new native attempt is still needed to validate the
-projection against a current Win32 recovery receipt and complete the frozen
-runner audit.
+MCP text response is covered by a regression: with a fully joined recovery
+receipt, the v3 caller reports verified release and `delivery_uncertain`; with
+the horizon missing or its readback unbound, the caller stays uncertain. In
+both cases the original action stays UNKNOWN, task effect stays unset, and
+replay stays denied. This is a Fake producer/supervisor result-shape check; it
+does not change R180's partial classification or prove a live horizon. Owner,
+MCP, and compiled-caller suites pass 95/95 in normal and optimized CPython
+3.11.9. A new native attempt is still needed to validate the projection
+against a current Win32 recovery receipt and complete the frozen runner audit.

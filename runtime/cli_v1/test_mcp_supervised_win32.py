@@ -562,14 +562,22 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             result = raw_result(operation_id)
             if result.get("phase") == "recovered":
                 release_ns = time.monotonic_ns() - 2_100_000_000
+                horizon_end_ns = release_ns + 2_000_000_000
                 result.update(late_input_horizon_ns=2_000_000_000,
                     late_input_release_received_ns=release_ns,
                     late_input_observation_start_ns=release_ns + 10_000_000,
-                    late_input_observation_end_ns=release_ns + 2_010_000_000,
+                    late_input_observation_end_ns=horizon_end_ns,
                     late_input_observation_count=77,
                     late_input_max_observed_gap_ns=32_000_000,
                     late_input_max_sample_gap_ns=100_000_000,
-                    late_input_validation_error=None)
+                    late_input_validation_error=None,
+                    recovery_release_key_up_attempts=[
+                        {"virtual_key": 0x11, "encoding": "virtual_key",
+                         "status": "returned"},
+                        {"virtual_key": 0x53, "encoding": "virtual_key",
+                         "status": "returned"}])
+                result["readback"]["observed_monotonic_ns"] = horizon_end_ns
+                result["readback"]["key_button_states"] = [False, False]
             return result
         operation_owner.result = result_with_horizon
         owner = OwnedWin32SessionOwner(operation_owner, supervisor,
@@ -603,8 +611,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             terminal = _terminal(body, "move",
                 expected_call_id=dispatched["call_id"],
                 expected_generation=dispatched["target_generation"])
-            self.assertEqual(terminal["status"], "uncertain")
-            self.assertIs(terminal["release"]["verified"], False)
+            self.assertEqual(terminal["status"], "delivery_uncertain")
+            self.assertIs(terminal["release"]["verified"], True)
             self.assertNotIn("input_dispatched", terminal)
             await server.call_tool("interface_close", {})
 
