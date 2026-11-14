@@ -310,6 +310,32 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         _supervised_win32_deadline_cancel_policy=policy,
                         _supervised_win32_deadline_cancel_grace_ns=grace)
 
+    def test_server_cli_forwards_public_caller_policy_to_stdio_server(self):
+        from runtime.cli_v1 import mcp_server
+        with TemporaryDirectory() as root:
+            targets = Path(root)/"targets.json"
+            targets.write_text('{"fixture":123}',encoding="utf-8")
+            output = Path(root)/"receipts"
+            fake_server = Mock()
+            argv = ["mcp_server", "--targets", str(targets),
+                "--output-directory", str(output),
+                "--session-mode", "supervised-win32",
+                "--supervised-win32-deadline-cancel-policy", "public-caller",
+                "--supervised-win32-deadline-cancel-grace-ms", "250"]
+            with patch.object(sys,"argv",argv), patch.object(
+                    mcp_server,"create_server",return_value=fake_server) as factory:
+                mcp_server.main()
+            factory.assert_called_once()
+            args, kwargs = factory.call_args
+            self.assertEqual(args[0],{"fixture":123})
+            self.assertEqual(args[1],output)
+            self.assertEqual(kwargs["session_mode"],"supervised-win32")
+            self.assertEqual(kwargs["_supervised_win32_deadline_cancel_policy"],
+                "public_caller")
+            self.assertEqual(kwargs["_supervised_win32_deadline_cancel_grace_ns"],
+                250_000_000)
+            fake_server.run.assert_called_once_with(transport="stdio")
+
     async def test_public_caller_deadline_policy_rejects_early_cancel_and_recovers_once(self):
         owner, producer, supervisor = self.make_held_recovering_components()
         with TemporaryDirectory() as root:

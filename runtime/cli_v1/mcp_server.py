@@ -2419,7 +2419,7 @@ def main():
             args.supervised_win32_late_input_horizon_ms * 1_000_000)
     if args.supervised_win32_deadline_cancel_policy != 'automatic':
         options['_supervised_win32_deadline_cancel_policy'] = (
-            args.supervised_win32_deadline_cancel_policy)
+            args.supervised_win32_deadline_cancel_policy.replace('-', '_'))
         options['_supervised_win32_deadline_cancel_grace_ns'] = (
             args.supervised_win32_deadline_cancel_grace_ms * 1_000_000)
     if args.guarded_query_worker: options['guarded_query_worker'] = True
