@@ -48,6 +48,27 @@ graph timestamps. The raw native `capture_ns` remains retained for freshness
 and forensic timing; the graph timestamp records when the synchronous capture
 result returned to the graph in the graph clock domain.
 
+## R180 retained-result caller correction
+
+The exact retained R180 public result omitted the redundant
+`action.obligations` field while preserving the accepted `standard_program` and
+the separate cancellation recovery receipt. Main commit
+`1af9fef9e47f6a97433d50b8246ea3fcd12bc131` re-derives obligations from that
+same stored program, checks the source generation, and joins the exact
+cancellation obligations before accepting release custody. The same retained
+row now classifies as `delivery_uncertain` with verified release and
+`input_dispatched=true`; task success remains unknown and replay remains
+forbidden. Wrong-button and stale-generation controls remain fail-closed.
+
+The retained R180 strict-runner attempt itself remains
+`PARTIAL_EVIDENCE_STRICT_RUNNER_GATE_STOP`; this is a caller projection repair,
+not a new live run or a retrospective change to the frozen attempt. In
+particular, the separate stdio exception test in this branch has no complete
+late-input horizon and therefore remains `uncertain`, even when the recovery
+receipt contains a release boolean. The caller may invoke an independent task
+oracle only for a release-verified `delivery_uncertain` result; that oracle
+verdict does not complete the compiled graph or rewrite the original action.
+
 ## Requirement-to-evidence crosswalk
 
 | Requirement | Existing implementation/evidence | Remaining boundary |
