@@ -4,6 +4,8 @@ import unittest
 import asyncio
 import threading
 import sys
+from contextlib import redirect_stderr
+from io import StringIO
 from tempfile import TemporaryDirectory
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -335,6 +337,44 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(kwargs["_supervised_win32_deadline_cancel_grace_ns"],
                 250_000_000)
             fake_server.run.assert_called_once_with(transport="stdio")
+
+    def test_server_cli_keeps_automatic_default_and_rejects_invalid_policy_combinations(self):
+        from runtime.cli_v1 import mcp_server
+        with TemporaryDirectory() as root:
+            targets = Path(root)/"targets.json"
+            targets.write_text('{"fixture":123}',encoding="utf-8")
+            output = Path(root)/"receipts"
+            base = ["mcp_server", "--targets", str(targets),
+                "--output-directory", str(output)]
+
+            default_server = Mock()
+            with patch.object(sys,"argv",base), patch.object(
+                    mcp_server,"create_server",return_value=default_server) as factory:
+                mcp_server.main()
+            _, default_kwargs = factory.call_args
+            self.assertEqual(default_kwargs["session_mode"],"one-shot")
+            self.assertNotIn("_supervised_win32_deadline_cancel_policy",
+                default_kwargs)
+            self.assertNotIn("_supervised_win32_deadline_cancel_grace_ns",
+                default_kwargs)
+            default_server.run.assert_called_once_with(transport="stdio")
+
+            invalid = (
+                ["--session-mode","guarded-x11",
+                 "--supervised-win32-deadline-cancel-policy","public-caller",
+                 "--supervised-win32-deadline-cancel-grace-ms","250"],
+                ["--session-mode","supervised-win32",
+                 "--supervised-win32-deadline-cancel-policy","public-caller",
+                 "--supervised-win32-deadline-cancel-grace-ms","0"],
+                ["--supervised-win32-deadline-cancel-grace-ms","1"])
+            for extra in invalid:
+                with self.subTest(extra=extra):
+                    with patch.object(sys,"argv",base+extra), patch.object(
+                            mcp_server,"create_server") as factory:
+                        with redirect_stderr(StringIO()), self.assertRaises(SystemExit) as exit_info:
+                            mcp_server.main()
+                    self.assertEqual(exit_info.exception.code,2)
+                    factory.assert_not_called()
 
     async def test_public_caller_deadline_policy_rejects_early_cancel_and_recovers_once(self):
         owner, producer, supervisor = self.make_held_recovering_components()
