@@ -365,6 +365,64 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(close["status"],"closed",close)
         self.assertTrue(supervisor.closed)
 
+    async def test_public_caller_schedules_from_dispatch_request_and_exact_call_id(self):
+        owner, producer, supervisor = self.make_held_recovering_components()
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture":123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                _supervised_win32_deadline_cancel_policy="public_caller",
+                _supervised_win32_deadline_cancel_grace_ns=1_000_000_000)
+            program = self.valid_program()
+            deadline_ns = time.monotonic_ns()+5_000_000_000
+            program["authority"]["expires_at_ns"] = deadline_ns
+            dispatch = self.row(await server.call_tool("interface_dispatch", {
+                "program":program,"current_observation_seq":1,
+                "current_binding_revision":1,"wait_for_result_ms":0}))
+            self.assertEqual(dispatch["status"],"pending",dispatch)
+            self.assertTrue(await asyncio.wait_for(
+                asyncio.to_thread(producer.started.wait,3),3))
+
+            owner_result = self.row(await server.call_tool("interface_results", {
+                "call_id":dispatch["call_id"]}))
+            self.assertEqual(owner_result["call_id"],dispatch["call_id"])
+            # Once owner admission creates an action receipt, result lookup
+            # does not repeat dispatch arguments. The caller must retain the
+            # request's absolute deadline and bind it to the returned call ID.
+            self.assertNotIn("arguments",owner_result)
+            self.assertNotIn("deadline_monotonic_ns",owner_result)
+
+            while time.monotonic_ns() < deadline_ns:
+                await asyncio.sleep(0.001)
+            caller_cancel = self.row(await server.call_tool("interface_cancel", {
+                "call_id":dispatch["call_id"]}))
+            self.assertEqual(caller_cancel["status"],"recovered",caller_cancel)
+            self.assertTrue(caller_cancel["release_confirmed"],caller_cancel)
+            self.assertEqual(supervisor.cancel_calls,1)
+            terminal = None
+            end = time.monotonic()+2
+            while time.monotonic()<end:
+                terminal = self.row(await server.call_tool("interface_results", {
+                    "call_id":dispatch["call_id"]}))
+                if isinstance(terminal.get("cancellation"),dict) and terminal[
+                        "cancellation"].get("status")=="recovered":
+                    break
+                await asyncio.sleep(0.005)
+            self.assertEqual(terminal["deadline_cancel_route"],
+                "public_interface_cancel",terminal)
+            self.assertGreaterEqual(terminal["deadline_cancel_requested_ns"],
+                deadline_ns,terminal)
+            self.assertIsNone(terminal["task_success"])
+            self.assertFalse(terminal["replay_allowed"])
+            close = self.row(await server.call_tool("interface_close",{}))
+            end = time.monotonic()+2
+            while close.get("status")=="busy" and time.monotonic()<end:
+                await asyncio.sleep(0.01)
+                close = self.row(await server.call_tool("interface_close",{}))
+            self.assertEqual(close["status"],"closed",close)
+        self.assertTrue(supervisor.closed)
+
     async def test_public_caller_deadline_policy_has_finite_monitor_fallback(self):
         owner, producer, supervisor = self.make_held_recovering_components()
         with TemporaryDirectory() as root:
