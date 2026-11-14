@@ -2739,10 +2739,24 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
 
                     deadline = time.monotonic() + 3
                     retained = None
+                    last_result = None
+                    result_errors = []
                     while time.monotonic() < deadline:
-                        reply = await client.call_tool("interface_results", {
-                            "call_id": call_id, "include_image": False})
-                        retained = self.row(reply)
+                        try:
+                            reply = await client.call_tool("interface_results", {
+                                "call_id": call_id, "include_image": False})
+                            last_result = self.row(reply)
+                        except Exception as error:
+                            result_errors.append(
+                                f"{type(error).__name__}: {error}")
+                            await asyncio.sleep(0.01)
+                            continue
+                        if (not isinstance(last_result, dict)
+                                or last_result.get("call_id") != call_id):
+                            result_errors.append(repr(last_result))
+                            await asyncio.sleep(0.01)
+                            continue
+                        retained = last_result
                         cancellation = retained.get("cancellation")
                         action = retained.get("action")
                         if (isinstance(cancellation, dict)
@@ -2752,7 +2766,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             break
                         await asyncio.sleep(0.01)
                     self.assertIsNotNone(retained)
-                    self.assertEqual(retained["call_id"], call_id)
+                    self.assertEqual(
+                        retained.get("call_id") if isinstance(retained, dict)
+                        else None, call_id,
+                        f"exact result did not reach a retained row for {call_id}; "
+                        f"last_result={last_result!r}; "
+                        f"recent_query_errors={result_errors[-5:]!r}")
                     self.assertEqual(retained["cancellation"]["status"],
                                      "recovered", retained)
                     self.assertTrue(retained["cancellation"]["release_confirmed"])
