@@ -16,6 +16,8 @@ The engine and IWAD are available inside WSLc, so this host can run a new isolat
 
 A03 differs from A02 by moving the read-only mount away from the image workdir, adding unbuffered phase records, and imposing a 12-second timeout. The A02 container was never restarted or reused. All three attempts used network `none` and one CPU; no Docker command or old container was used for this WSLc smoke.
 
+The conditions record the default WSLc CLI context observed before the attempt; commands did not pass `--session`. A later read-only `wslc info` snapshot reported session 1, so the packet does not claim a stable numeric session identity. It also does not claim isolation from concurrent WSLc users beyond the observed empty running-container set before launch.
+
 ## Scope and next discriminating step
 
 This is an environment/target construction result only. The test bypassed agent-interface and used no external input. It proves neither a key-down/key-up pair nor input release, delayed-input exclusion, expiry cancellation, bounded runtime recovery, HUD effect after a task action, task success, provider cost, nor efficiency. It is not native Win32 evidence and does not close the open computer-control objective. A next WSLc experiment should use the exact current-main caller against this fresh MAP01 target, capture full-resolution before/after frames and a separate release receipt, and retain a hard process bound. The independent native Win32 path still requires a Windows GZDoom target; none was found in the inspected Windows/Steam paths or current process inventory.
