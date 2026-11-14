@@ -3278,6 +3278,105 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertFalse(recovered["replay_allowed"])
                     self.assertTrue(recovered["next_action_requires_fresh_generation"])
 
+            # Recovery is a separate bounded operation. The next compiled
+            # attempt runs in a fresh server/session and must bind its task
+            # oracle to that attempt's own exact dispatch call ID.
+            from runtime.cli_v1.supervised_win32_compiled import run_public_compiled
+            targets = Path(root) / "targets.json"
+            targets.write_text('{"fixture":123}', encoding="utf-8")
+            caller_output = Path(root) / "fresh-caller-receipts"
+            caller_params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                    "--output-directory", str(caller_output), "--targets",
+                    str(targets), "--production-cli", "--mode", "recovery",
+                    "--recovery-generation", recovery_generation,
+                    "--oracle-success"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            interface = {
+                "format": "compiled-gui-interface-v1",
+                "interface_id": "post-recovery-fresh-attempt",
+                "session_scope": "supervised-win32-fixture", "surface": "fixture",
+                "predicates": ["ready", "saved"],
+                "symbols": {"fixture": {"kind": "target_reference",
+                    "target_reference": "fixture", "identity_predicate": "ready",
+                    "dependencies": ["ready"]}},
+                "actions": {"save": {"target_symbol": "fixture",
+                    "operation": "save", "expected_effect": {"saved": True}}},
+                "method": {"name": "fresh-save", "version": "1",
+                    "initial_state": "before", "max_transitions": 1,
+                    "max_runtime_ms": 5000, "states": {
+                        "before": {"branches": [{"when": {"ready": True},
+                            "outcome": "action", "action": "save",
+                            "next_state": "after", "reason": None}]},
+                        "after": {"branches": [{"when": {"saved": True},
+                            "outcome": "complete", "action": None,
+                            "next_state": None, "reason": None}]}}},
+            }
+            async with stdio_client(caller_params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    loop = asyncio.get_running_loop()
+                    seq = 0
+                    fresh_call_ids = []
+
+                    def caller_tool(name, arguments):
+                        return asyncio.run_coroutine_threadsafe(
+                            client.call_tool(name, arguments), loop).result(timeout=10)
+
+                    def observe_fresh(target, frame, region):
+                        nonlocal seq
+                        seq += 1
+                        captured = time.monotonic_ns()
+                        return {"status": "returned", "target": target,
+                            "target_generation": recovery_generation,
+                            "target_generation_consistency": "matched",
+                            "observation_id": f"post-recovery-{seq}",
+                            "observation": {"frame": frame, "region": region,
+                                "capture_started_ns": captured,
+                                "capture_ended_ns": captured},
+                            "predicates": {"ready": True, "saved": True},
+                            "side_effect_authority": False,
+                            "input_dispatched": False}
+
+                    def dispatch_fresh(program, observation_seq, revision):
+                        program["authority"]["expires_at_ns"] = (
+                            time.monotonic_ns() + 10_000_000_000)
+                        result = caller_tool("interface_dispatch", {
+                            "program": program,
+                            "current_observation_seq": observation_seq,
+                            "current_binding_revision": revision,
+                            "wait_for_result_ms": 5000})
+                        row = self.row(result)
+                        fresh_call_ids.append(row["call_id"])
+                        return result
+
+                    def verify_fresh_task(call_id):
+                        return caller_tool("interface_verify_task", {
+                            "call_id": call_id, "wait_for_result_ms": 1000})
+
+                    receipt = await asyncio.to_thread(run_public_compiled,
+                        interface, {"save": self.valid_program()},
+                        target="fixture", current_binding_revision=1,
+                        expected_generation=recovery_generation,
+                        region=[0, 0, 1, 1], observe=observe_fresh,
+                        dispatch=dispatch_fresh,
+                        perceive=lambda report, _reply: report["predicates"],
+                        verify_effect=lambda *_: {"status": "succeeded",
+                            "evidence_ref": "fresh-attempt-effect"},
+                        verify_task=verify_fresh_task,
+                        cancelled=lambda: False)
+                    self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED", receipt)
+                    self.assertEqual(len(fresh_call_ids), 1, fresh_call_ids)
+                    self.assertEqual(receipt["standard_action_call_ids"],
+                        fresh_call_ids)
+                    self.assertTrue(receipt["task_verification"]["valid"], receipt)
+                    self.assertTrue(receipt["task_success"], receipt)
+                    self.assertEqual(receipt["task_verification"]["action_call_id"],
+                        fresh_call_ids[0])
+                    self.assertEqual(receipt["task_verification"][
+                        "target_generation"], recovery_generation)
+                    await client.call_tool("interface_close", {})
+
 
     async def test_stdio_exception_auto_recovers_and_keeps_action_unknown(self):
         from mcp import ClientSession, StdioServerParameters

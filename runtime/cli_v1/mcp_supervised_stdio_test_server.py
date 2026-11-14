@@ -10,6 +10,7 @@ from runtime.cli_v1.test_mcp_supervised_win32 import (
     AbruptExitProducerFactory,
     DelayedRecoveringFakeSupervisor,
     ExceptionReceiptProducerFactory,
+    FakeProducerFactory,
     FakeProcess,
     FakeSupervisor,
     GENERATION,
@@ -35,6 +36,8 @@ def main():
         help="Enable the opt-in expiry caller policy for stdio protocol tests.")
     parser.add_argument("--deadline-cancel-grace-ms", type=int, default=1000)
     parser.add_argument("--recovery-generation", default="b" * 64)
+    parser.add_argument("--oracle-success", action="store_true",
+        help="Return a positive fake task-oracle receipt for caller integration tests.")
     args = parser.parse_args()
     process = FakeProcess()
     identity = {"pid": 7101, "creation_time_100ns": 90101}
@@ -88,7 +91,9 @@ def main():
     owner = OwnedWin32SessionOwner(operation_owner, supervisor,
         synthetic_only=False)
     owner.bind_target_generation_reader(lambda: target_generation)
-    if args.mode in ("exception", "exception-unknown"):
+    if args.mode == "recovery":
+        producer = FakeProducerFactory(process, identity)
+    elif args.mode in ("exception", "exception-unknown"):
         producer = ExceptionReceiptProducerFactory(process, identity)
     elif args.mode == "abrupt-exit":
         producer = AbruptExitProducerFactory(process, identity)
@@ -100,7 +105,8 @@ def main():
         return {"call_id": action["call_id"],
             "operation_id": action["operation_id"],
             "target_generation": action["target_generation"],
-            "oracle_id": "f" * 32, "outcome": "failure",
+            "oracle_id": "f" * 32,
+            "outcome": "success" if args.oracle_success else "failure",
             "observed_monotonic_ns": time.monotonic_ns(),
             "evidence_ref": "stdio-fake-oracle:delayed-expiry"}
 
