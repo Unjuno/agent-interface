@@ -604,6 +604,17 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(cancellation["status"], "recovered")
             self.assertTrue(cancellation["result"][
                 "late_input_horizon_verified"], cancellation["result"])
+            retained_recovery = cancellation["result"]
+            repeated_reply = await server.call_tool("interface_results", {
+                "call_id": dispatched["call_id"], "include_image": False})
+            self.assertFalse(repeated_reply.isError)
+            repeated_body = json.loads(repeated_reply.content[0].text)
+            self.assertEqual(repeated_body["cancellation"]["result"],
+                             retained_recovery)
+            self.assertEqual(repeated_body["action"]["status"], "unknown")
+            self.assertFalse(repeated_body["action"]["release_confirmed"])
+            self.assertIsNone(repeated_body["task_success"])
+            self.assertFalse(repeated_body["replay_allowed"])
             self.assertEqual(body["action"]["status"], "unknown")
             self.assertFalse(body["action"]["release_confirmed"])
             self.assertIsNone(body["task_effect"])
