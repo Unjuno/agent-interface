@@ -194,6 +194,7 @@ class GuardedSessionOwner(MCPSessionOwner):
     def run_compiled(self, interface, bindings, *, call_root, perceive,
                      verify_effect, cancelled=lambda: False,
                      guard_perceive=None, verify_unchanged_effect=None,
+                     on_action_completed=None,
                      post_release_settle_ms=0):
         """Run one explicit graph on this already-open Python owner.
 
@@ -217,6 +218,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise ValueError('guard_perceive must be callable when supplied')
         if verify_unchanged_effect is not None and not callable(verify_unchanged_effect):
             raise ValueError('verify_unchanged_effect must be callable when supplied')
+        if on_action_completed is not None and not callable(on_action_completed):
+            raise ValueError('on_action_completed must be callable when supplied')
         if type(post_release_settle_ms) is not int or not 0 <= post_release_settle_ms <= 1000:
             raise ValueError('post_release_settle_ms must be an integer from 0 to 1000')
         from runtime.guarded_x11_v1 import compiled
@@ -255,6 +258,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                                    verify_effect=verify_effect, cancelled=cancelled,
                                    guard_perceive=guard_perceive,
                                    verify_unchanged_effect=verify_unchanged_effect,
+                                   on_action_completed=on_action_completed,
                                    post_release_settle_ms=post_release_settle_ms)
         except BaseException as error:
             bridge.review_required = True
