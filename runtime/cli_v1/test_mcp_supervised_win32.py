@@ -2195,6 +2195,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(failed["task_verification"])
                 failed_dispatch = next(row for row in failed[
                     "standard_target_evidence"] if row["kind"] == "dispatch")
+                self.assertEqual(len(dispatch_call_ids), 2)
+                self.assertNotEqual(dispatch_call_ids[0], dispatch_call_ids[1])
+                self.assertEqual(failed_dispatch["call_id"], dispatch_call_ids[1])
+                self.assertEqual(result_queries[-1]["call_id"],
+                    dispatch_call_ids[1])
                 self.assertEqual(failed_dispatch["pending_result_resolution"],
                     "same_call_id")
                 self.assertEqual(failed_dispatch["status"], "uncertain")
