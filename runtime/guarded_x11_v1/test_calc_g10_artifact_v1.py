@@ -81,6 +81,18 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
                             'second.fods')
         return first, second
 
+    def test_close_verification_without_target_binding_is_unknown(self):
+        call_id = 'e' * 32
+        root = Path(self.temp.name) / call_id
+        root.mkdir()
+        custody = CalcG10ArtifactCustody(
+            root, call_id=call_id, attempt_id=ATTEMPT_ID)
+        result = custody.verify_after_close(method_receipt=self._method(),
+            close_receipt=CLOSE, target_exit_receipt=self._exit())
+        self.assertEqual(result['status'], 'unknown')
+        self.assertIsNone(result['task_success'])
+        self.assertEqual(result['reason'], 'target_identity_unavailable')
+
     def test_both_archived_g10_saves_and_same_target_exit_verify(self):
         first, second = self._two_saves()
         self.assertNotEqual(first['artifact_sha256'], second['artifact_sha256'])

@@ -231,6 +231,12 @@ class CalcG10ArtifactCustody:
                 or close_receipt.get('owner_process_retired') is not True
                 or close_receipt.get('release_confirmed') is not True):
             return dict(unknown, reason='verified_close_required')
+        if (self._process_generation is None
+                or self._window_generation is None
+                or self._target_xid is None
+                or self._target_pid is None
+                or self._target_start_ticks is None):
+            return dict(unknown, reason='target_identity_unavailable')
         descriptor = self.descriptor
         if set(self._records) != {'first', 'second'}:
             return dict(unknown, reason='both_g10_save_receipts_required')
