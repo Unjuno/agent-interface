@@ -26,6 +26,13 @@ The current composition is:
 5. The caller's outer verifier decides task effect independently of graph
    completion.
 
+The public Win32 caller now bounds read-only `interface_observe` retries when
+the server returns transient `busy` immediately after a pending action's exact
+`interface_results` readback. It makes at most three additional calls, waits
+10 ms between them by default, records each refusal in
+`standard_target_evidence`, and never retries input. Persistent busy yields
+`SAFE_YIELD / association_changed` without dispatching a suffix.
+
 The existing native composition tests failed on this Windows host because the
 adapter mixed clock domains. The caller-facing core uses
 `time.perf_counter_ns`; the guarded adapter had supplied observations and graph
@@ -54,6 +61,24 @@ result returned to the graph in the graph clock domain.
 | Comparison integrity | existing integrated-efficiency harness records task attempts and stage timings | No frozen matched baseline/optimized/integrated Win32 sample set exists |
 
 ## Local verification performed
+
+An additional Fake producer integration now drives
+`run_public_compiled` through the actual MCP server tools: public observe,
+pending dispatch, same-call-ID result query, a transient busy observation,
+bounded read-only retry, a fresh task-effect predicate, and the exact-call
+independent task oracle. It verifies one producer start, same-call result
+joining, successful effect verification, and retained busy-attempt evidence.
+An adjacent unit test exhausts the retry budget and proves no dispatch occurs.
+
+The public caller and MCP server integration modules pass 42 tests in both
+normal and optimized Python mode:
+
+```text
+runtime.cli_v1.test_supervised_win32_compiled
+runtime.cli_v1.test_mcp_supervised_win32
+```
+
+The earlier five-module selection below also passes 39 tests in each mode.
 
 On the Windows host and candidate branch, the following five modules pass in
 both normal and optimized Python mode (39 tests each):

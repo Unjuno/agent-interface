@@ -511,6 +511,12 @@ for each action where configured. Its graph outcome is not task success:
 `task_success` remains null in this adapter's result; only the separate
 independent tool can return a verified task effect.
 
+After a pending dispatch result is joined by its exact `call_id`, the server
+may briefly remain busy while the dispatch response finishes. The caller
+retries read-only `interface_observe` on `busy` at most three times by default
+(10 ms between attempts), records those attempts, and yields if the bounded
+retry budget is exhausted. It never retries the dispatch.
+
 Callbacks are synchronous and trusted. A blocked observation, perception,
 dispatch transport, or effect verifier can block the caller; the compiled graph
 deadline cannot preempt it. This caller adapter does not add cancellation or

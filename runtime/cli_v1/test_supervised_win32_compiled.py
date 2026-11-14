@@ -871,6 +871,66 @@ class SupervisedWin32CompiledCallerTests(unittest.TestCase):
             call_id(105), call_id(106), call_id(107), call_id(108), call_id(109),
             call_id(110)])
 
+    def test_observation_busy_retries_are_bounded_and_never_dispatch(self):
+        interface = {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "bounded-observation-busy",
+            "session_scope": "test-session", "surface": "fixture-window",
+            "predicates": ["ready"],
+            "symbols": {"fixture": {"kind": "target_reference",
+                "target_reference": "fixture", "identity_predicate": "ready",
+                "dependencies": ["ready"]}},
+            "actions": {"move": {"target_symbol": "fixture",
+                "operation": "move", "expected_effect": {"ready": True}}},
+            "method": {"name": "move-once", "version": "1",
+                "initial_state": "before", "max_transitions": 1,
+                "max_runtime_ms": 1000,
+                "states": {"before": {"branches": [{"when": {"ready": True},
+                    "outcome": "action", "action": "move",
+                    "next_state": "after", "reason": None}]},
+                    "after": {"branches": [{"when": {"ready": True},
+                        "outcome": "complete", "action": None,
+                        "next_state": None, "reason": None}]}}},
+        }
+        program = {"schema": "agent-interface/program-v1",
+            "program_id": "busy-template",
+            "source": {"observation_seq": 1, "binding_revision": 1,
+                "target_generations": {"fixture": "b" * 64}},
+            "authority": {"lease_id": "busy-template-lease",
+                "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
+            "terminal": {"release_all_required": True},
+            "ops": [{"op": "focus", "target": "fixture"},
+                {"op": "key_state", "key": "W", "down": True,
+                    "encoding": "scan_code"},
+                {"op": "key_state", "key": "W", "down": False,
+                    "encoding": "scan_code"}, {"op": "release_all"}]}
+        observe_calls, dispatch_calls = [], []
+
+        def observe(*_args):
+            observe_calls.append(True)
+            return {"status": "busy", "operation_invoked": False,
+                "input_dispatched": False}
+
+        result = run_public_compiled(interface, {"move": program},
+            target="fixture", current_binding_revision=1,
+            region=[0, 0, 1, 1], observe=observe,
+            dispatch=lambda *_args: dispatch_calls.append(True),
+            perceive=lambda *_args: {"ready": True},
+            verify_effect=lambda *_args: {"status": "succeeded",
+                "evidence_ref": "unused"}, cancelled=lambda: False,
+            observation_busy_retries=2, observation_busy_retry_delay_ms=0)
+
+        self.assertEqual(result["outcome"], "SAFE_YIELD")
+        self.assertEqual(result["reason"], "association_changed")
+        self.assertEqual(len(observe_calls), 3)
+        self.assertEqual(dispatch_calls, [])
+        busy = result["standard_target_evidence"]
+        self.assertEqual([row["kind"] for row in busy],
+            ["observation_busy"] * 3)
+        self.assertEqual([row["attempt"] for row in busy], [1, 2, 3])
+        self.assertTrue(all(row["operation_invoked"] is False
+            and row["input_dispatched"] is False for row in busy))
+
     def test_missing_final_dispatch_call_id_cannot_verify_prior_dispatch(self):
         generation = "a" * 64
         interface = {
