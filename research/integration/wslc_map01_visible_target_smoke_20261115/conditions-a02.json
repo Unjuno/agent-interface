@@ -1,0 +1,31 @@
+{
+  "experiment_id": "WSLC-MAP01-VISIBLE-TARGET-SMOKE-20261115-A02",
+  "supersedes_setup_only_attempt": "WSLC-MAP01-VISIBLE-TARGET-SMOKE-20261115-A01",
+  "question": "Can the locally cached pinned ViZDoom image start the installed Freedoom MAP01 target under a fresh WSLc container with a private Xvfb display?",
+  "change_from_a01": "Mount the read-only evidence directory at /evidence instead of /study. The image declares /study/SOURCE as its working directory, so read-only mounting /study prevented container initialization before the application ran.",
+  "claim_boundary": "Target construction smoke only. No agent-interface dispatch, external input, release, expiry, recovery, task-success, or efficiency claim.",
+  "runtime": {
+    "wsl_version": "3.0.5.0",
+    "wslc_version": "3.0.5.0",
+    "wslc_session": 0,
+    "image": "sha256:f439b660f68c58b01dba6bf28b0e55f4df3cd8ed55570fe026b1df760d8f7063",
+    "image_architecture": "amd64",
+    "image_os": "linux",
+    "network": "none",
+    "cpus": 1,
+    "pull_policy": "never",
+    "container_name": "map01-visible-target-smoke-20261115-a02",
+    "remove_after_exit": true,
+    "read_only_mount": "/evidence"
+  },
+  "target": {
+    "engine": "ViZDoom Python package bundled in pinned image",
+    "iwad": "/usr/local/lib/python3.12/site-packages/vizdoom/freedoom2.wad",
+    "map": "MAP01",
+    "display": "fresh xvfb-run virtual X11 display",
+    "window_visible": true
+  },
+  "procedure": "Run smoke_map01.py exactly once using xvfb-run. Initialize a new game on MAP01, record initial screen dimensions and SHA-256 plus initial HUD game variables, close normally, and retain stdout/stderr and exit status. No input event is sent.",
+  "allocation": "Fresh uniquely named transient WSLc container; no existing container restarted or reused.",
+  "created_at": "2026-11-15"
+}
