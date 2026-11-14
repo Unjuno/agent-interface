@@ -1456,6 +1456,40 @@ class OwnedWin32SessionTests(unittest.TestCase):
             self.assertEqual(fence.snapshot()["state"]["status"], "unresolved")
             fence.close()
 
+    def test_exact_result_cancellation_projects_horizon_verdict_used_for_custody(self):
+        self.start_action()
+        valid = {"phase": "recovered", "status": "recovered",
+            "release_confirmed": True, "operation_id": ACTION_ID,
+            "target_generation": GEN_A, "producer_exit_code": 86,
+            "late_input_horizon_ns": 2_000_000_000,
+            "late_input_release_received_ns": 10_000,
+            "late_input_observation_start_ns": 20_000,
+            "late_input_observation_end_ns": 2_010_000_000,
+            "late_input_observation_count": 77,
+            "late_input_max_observed_gap_ns": 32_000_000,
+            "late_input_max_sample_gap_ns": 100_000_000,
+            "late_input_validation_error": None}
+        for receipt, expected in ((valid, True),
+                ({**valid, "late_input_max_observed_gap_ns": 100_000_001}, False)):
+            with self.subTest(expected=expected):
+                fence = Mock()
+                session = OwnedWin32SessionOwner(self.owner, self.supervisor,
+                    synthetic_only=False, custody_fence=fence)
+                session._owner.result = Mock(return_value=receipt)
+                record = {"action": {"operation_id": ACTION_ID,
+                        "target_generation": GEN_A, "status": "unknown",
+                        "program_actions_lower_bound": 1},
+                    "standard_program": {"program_id": "fixture"},
+                    "cancellation": {"action_operation_id": ACTION_ID,
+                        "target_generation": GEN_A}}
+
+                session._refresh(record)
+
+                self.assertIs(record["cancellation"]["result"][
+                    "late_input_horizon_verified"], expected)
+                self.assertEqual(fence.resolve.call_args.kwargs[
+                    "late_input_horizon_verified"], expected)
+
     def test_late_request_risk_requires_verified_horizon_before_new_generation(self):
         supervisor = FakeCancellationSupervisor(self.owner)
         supervisor.recover_orphaned_input = Mock(return_value={

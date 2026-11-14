@@ -548,6 +548,66 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(action["replay_allowed"])
             await server.call_tool("interface_close", {})
 
+    async def test_exact_results_projects_owner_horizon_verdict_without_promoting_action(self):
+        from runtime.cli_v1.supervised_win32_compiled import _terminal
+
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        raw_result = operation_owner.result
+        def result_with_horizon(operation_id):
+            result = raw_result(operation_id)
+            if result.get("phase") == "recovered":
+                release_ns = time.monotonic_ns() - 2_100_000_000
+                result.update(late_input_horizon_ns=2_000_000_000,
+                    late_input_release_received_ns=release_ns,
+                    late_input_observation_start_ns=release_ns + 10_000_000,
+                    late_input_observation_end_ns=release_ns + 2_010_000_000,
+                    late_input_observation_count=77,
+                    late_input_max_observed_gap_ns=32_000_000,
+                    late_input_max_sample_gap_ns=100_000_000,
+                    late_input_validation_error=None)
+            return result
+        operation_owner.result = result_with_horizon
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner._custody_fence = Mock()
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = ExceptionReceiptProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            dispatched = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            self.assertEqual(dispatched["result"]["status"], "unknown")
+            self.assertIsNone(dispatched["task_success"])
+            self.assertFalse(dispatched["replay_allowed"])
+
+            reply = await server.call_tool("interface_results", {
+                "call_id": dispatched["call_id"], "include_image": False})
+            self.assertFalse(reply.isError)
+            body = json.loads(reply.content[0].text)
+            cancellation = body["cancellation"]
+            self.assertEqual(cancellation["status"], "recovered")
+            self.assertTrue(cancellation["result"][
+                "late_input_horizon_verified"], cancellation["result"])
+            self.assertEqual(body["action"]["status"], "unknown")
+            self.assertFalse(body["action"]["release_confirmed"])
+            self.assertIsNone(body["task_effect"])
+            self.assertFalse(body["replay_allowed"])
+            terminal = _terminal(body, "move",
+                expected_call_id=dispatched["call_id"],
+                expected_generation=dispatched["target_generation"])
+            self.assertEqual(terminal["status"], "uncertain")
+            self.assertIs(terminal["release"]["verified"], False)
+            self.assertNotIn("input_dispatched", terminal)
+            await server.call_tool("interface_close", {})
+
     async def test_failed_automatic_exception_recovery_allows_fresh_generation_recovery(self):
         from runtime.guarded_win32_v1.input_obligations import derive_input_obligations
 
