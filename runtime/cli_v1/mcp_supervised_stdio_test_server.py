@@ -1,6 +1,7 @@
 """Test-only stdio server for expiry/recovery protocol integration tests."""
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
@@ -22,9 +23,15 @@ from runtime.guarded_win32_v1.operation_owner import OperationOwner
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-directory", type=Path, required=True)
+    parser.add_argument("--targets", type=Path)
+    parser.add_argument("--production-cli", action="store_true",
+        help="Run the production mcp_server.main parser/stdio entrypoint with fake owners.")
     parser.add_argument("--mode", choices=("delayed-expiry", "exception",
         "exception-unknown", "recovery"),
         default="delayed-expiry")
+    parser.add_argument("--public-caller", action="store_true",
+        help="Enable the opt-in expiry caller policy for stdio protocol tests.")
+    parser.add_argument("--deadline-cancel-grace-ms", type=int, default=1000)
     parser.add_argument("--recovery-generation", default="b" * 64)
     args = parser.parse_args()
     process = FakeProcess()
@@ -90,11 +97,43 @@ def main():
             "observed_monotonic_ns": time.monotonic_ns(),
             "evidence_ref": "stdio-fake-oracle:delayed-expiry"}
 
+    if args.production_cli:
+        if not args.public_caller or args.targets is None:
+            parser.error("--production-cli requires --public-caller and --targets")
+        from runtime.cli_v1 import mcp_server
+        real_create_server = mcp_server.create_server
+
+        def create_fake_backed_server(targets, output_directory, **options):
+            return real_create_server(targets, output_directory,
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=lambda *_args: producer,
+                supervised_win32_task_oracle=oracle,
+                **options)
+
+        mcp_server.create_server = create_fake_backed_server
+        sys.argv = ["mcp_server", "--targets", str(args.targets),
+            "--output-directory", str(args.output_directory),
+            "--session-mode", "supervised-win32",
+            "--supervised-win32-deadline-cancel-policy", "public-caller",
+            "--supervised-win32-deadline-cancel-grace-ms",
+            str(args.deadline_cancel_grace_ms)]
+        mcp_server.main()
+        return
+
+    server_options = {}
+    if args.public_caller:
+        if not 1 <= args.deadline_cancel_grace_ms <= 2000:
+            parser.error("--deadline-cancel-grace-ms must be in [1, 2000]")
+        server_options.update(
+            _supervised_win32_deadline_cancel_policy="public_caller",
+            _supervised_win32_deadline_cancel_grace_ns=(
+                args.deadline_cancel_grace_ms * 1_000_000))
     server = create_server({"fixture": 123}, args.output_directory,
         session_mode="supervised-win32",
         _supervised_win32_owner_factory=lambda *_args: owner,
         _supervised_win32_producer_factory=lambda *_args: producer,
-        supervised_win32_task_oracle=oracle)
+        supervised_win32_task_oracle=oracle,
+        **server_options)
     server.run(transport="stdio")
 
 
