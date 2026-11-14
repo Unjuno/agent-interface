@@ -105,6 +105,12 @@ class _Adapter:
     def _observe(self, request):
         # Every graph iteration captures through the ordinary retained bridge.
         native = self.bridge.observe()
+        # The core and bridge exchange this receipt synchronously, so this
+        # perf-counter timestamp (the core's clock) marks when the completed capture became
+        # available to the graph. Keep native['capture_ns'] untouched for
+        # handle freshness and forensic timing; clocks from isolated capture
+        # backends are not the graph's post-action ordering clock.
+        capture_returned_ns = time.perf_counter_ns()
         _, image = self.bridge.history[native['sequence']]
         self.native, self.image = copy.deepcopy(native), image.copy()
         associated = (self.associated(native) and native['pointer_binding']['surface'] ==
@@ -116,7 +122,7 @@ class _Adapter:
         associated = associated and self.associated() and self.bridge.sequence == native['sequence']
         if not associated:
             predicates = {}
-        self.latest = {'sequence':native['sequence'],'captured_ns':native['capture_ns'],
+        self.latest = {'sequence':native['sequence'],'captured_ns':capture_returned_ns,
             'surface':self.surface if associated else 'association_changed',
             'predicates':copy.deepcopy(predicates),'evidence_ref':'observation-' + str(native['sequence']),
             'evidence_digest':native['native']['artifact']['sha256']}
@@ -246,7 +252,7 @@ class _Adapter:
         # No waiting is permitted outside execute_method.
         if self._method_deadline_ns is None:
             return
-        start = time.monotonic_ns()
+        start = time.perf_counter_ns()
         end = min(start + self.post_release_settle_ms * 1_000_000,
                   self._method_deadline_ns)
         status = 'settled'
@@ -258,7 +264,7 @@ class _Adapter:
                 self._settle_cancelled = True
                 status = 'cancelled'
                 break
-            remaining = end - time.monotonic_ns()
+            remaining = end - time.perf_counter_ns()
             if remaining <= 0:
                 if end == self._method_deadline_ns:
                     status = 'budget_limited'
@@ -266,7 +272,7 @@ class _Adapter:
             time.sleep(min(0.025, remaining / 1_000_000_000))
         self.retain('post-release-settle', {
             'status':status, 'requested_ms':self.post_release_settle_ms,
-            'started_ns':start, 'ended_ns':time.monotonic_ns(),
+            'started_ns':start, 'ended_ns':time.perf_counter_ns(),
         })
 
     def verify_effect(self, request):
@@ -319,7 +325,10 @@ class _Adapter:
     def execute_method(self):
         self._method_deadline_ns = None
         def graph_clock():
-            now = time.monotonic_ns()
+            # Match compiled_gui.run's default clock and the caller-facing
+            # observation timestamp in _observe. Native lease deadlines stay
+            # on monotonic_ns; only this graph's relative timing uses perf.
+            now = time.perf_counter_ns()
             if self._method_deadline_ns is None:
                 self._method_deadline_ns = now + self.interface['method']['max_runtime_ms'] * 1_000_000
             return now
