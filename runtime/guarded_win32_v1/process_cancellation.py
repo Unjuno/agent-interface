@@ -514,7 +514,10 @@ class OperationCancellationSupervisor:
         try:
             record_release_attempts(operation_id,
                 generation, request["recovery_id"],
-                receipt["release_key_up_attempts"])
+                receipt["release_key_up_attempts"],
+                release_attempts=(receipt.get("release_receipt", {}).get(
+                    "release_attempts")
+                    if type(receipt.get("release_receipt")) is dict else None))
         except Exception:
             self._owner.mark_unknown(operation_id, generation,
                 "recovery_key_up_attempt_receipt_invalid")

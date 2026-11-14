@@ -301,13 +301,64 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_recovery_forwards_native_button_up_attempts_to_owner(self):
+        class Owner:
+            def __init__(self):
+                self.release_receipt = None
+                self.completed = None
+                self.unknown = []
+            def recovery_release_attempted(self, operation_id, generation,
+                    recovery_id, key_up_attempts, *, release_attempts=None):
+                self.release_receipt = (operation_id, generation, recovery_id,
+                    key_up_attempts, release_attempts)
+            def recovery_completed(self, *args, **kwargs):
+                self.completed = (args, kwargs)
+            def mark_unknown(self, operation_id, generation, reason):
+                self.unknown.append((operation_id, generation, reason))
+
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_id = "c" * 32
+        release_attempts = [{"ordinal": 0, "domain": "button_up",
+            "button": "left", "sendinput_call_started": True,
+            "sendinput_return_count": 1, "sendinput_error_type": None,
+            "outcome": "returned", "error_type": None}]
+        owner = Owner()
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._owner = owner
+        supervisor._clock_ns = lambda: 10
+        supervisor.late_input_horizon_ns = 0
+        supervisor._invalidate_helper = lambda *_args: None
+        supervisor._run_observer = lambda *_args: {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery_id, "neutral": True,
+            "observed_monotonic_ns": 10}
+        supervisor._exchange_helper = lambda *_args: {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery_id, "release_accepted": True,
+            "release_receipt": {"verified": True,
+                "keys_down": [], "buttons_down": [],
+                "keys_unknown": [], "buttons_unknown": [],
+                "release_attempts": release_attempts},
+            "release_key_up_attempts": []}
+
+        supervisor._run_recovery(operation_id, generation, {
+            "operation_id": operation_id, "target_generation": generation,
+            "recovery_id": recovery_id, "deadline_ns": 100,
+            "obligations": ["button:fixture:left"]})
+
+        self.assertEqual(owner.release_receipt,
+            (operation_id, generation, recovery_id, [], release_attempts))
+        self.assertIsNotNone(owner.completed)
+        self.assertEqual(owner.unknown, [])
+
     def test_failed_release_attempts_are_retained_by_owner_before_unknown(self):
         class Owner:
             def __init__(self):
                 self.attempts = None
                 self.unknown = []
             def recovery_release_attempted(self, operation_id, generation,
-                                          recovery_id, attempts):
+                    recovery_id, attempts, *, release_attempts=None):
                 self.attempts = (operation_id, generation, recovery_id,
                                  list(attempts))
             def mark_unknown(self, operation_id, generation, reason):
@@ -345,7 +396,7 @@ class ProcessCancellationTests(unittest.TestCase):
             def __init__(self):
                 self.attempts = None
                 self.unknown = []
-            def recovery_release_attempted(self, *_args):
+            def recovery_release_attempted(self, *_args, **_kwargs):
                 self.attempts = _args
             def mark_unknown(self, operation_id, generation, reason):
                 self.unknown.append((operation_id, generation, reason))
@@ -386,7 +437,7 @@ class ProcessCancellationTests(unittest.TestCase):
                     def __init__(self):
                         self.unknown = []
                         self.attempts = []
-                    def recovery_release_attempted(self, *_args):
+                    def recovery_release_attempted(self, *_args, **_kwargs):
                         self.attempts.append(_args)
                     def mark_unknown(self, op, gen, reason):
                         self.unknown.append((op, gen, reason))
@@ -423,7 +474,8 @@ class ProcessCancellationTests(unittest.TestCase):
                 self.attempts = None
                 self.completed = None
                 self.unknown = []
-            def recovery_release_attempted(self, op, gen, recovery_id, attempts):
+            def recovery_release_attempted(self, op, gen, recovery_id, attempts,
+                    *, release_attempts=None):
                 self.attempts = (op, gen, recovery_id, attempts)
             def recovery_completed(self, *args, **kwargs):
                 self.completed = (args, kwargs)

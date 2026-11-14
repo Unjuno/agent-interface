@@ -247,6 +247,45 @@ class OperationOwnerTests(unittest.TestCase):
         self.assertEqual(result["phase"], "unknown")
         self.assertEqual(result["recovery_release_key_up_attempts"], attempts)
 
+    def test_recovered_result_retains_native_button_up_sendinput_receipt(self):
+        self.start_cancelled_operation()
+        self.process.alive = False
+        self.process.exitcode = 86
+        self.assertTrue(self.owner.producer_retired(
+            "op-1", GEN_A, self.process))
+        recovery = self.owner.claim_recovery("op-1", GEN_A)
+        release_attempts = [{
+            "ordinal": 0, "domain": "button_up", "button": "left",
+            "sendinput_call_started": True, "sendinput_return_count": 1,
+            "sendinput_error_type": None, "outcome": "returned",
+            "error_type": None}]
+
+        self.owner.recovery_release_attempted("op-1", GEN_A,
+            recovery["recovery_id"], [], release_attempts=release_attempts)
+        release_attempts[0]["outcome"] = "raised"
+
+        result = self.owner.result("op-1")
+        self.assertEqual(result["recovery_release_attempts"], [{
+            "ordinal": 0, "domain": "button_up", "button": "left",
+            "sendinput_call_started": True, "sendinput_return_count": 1,
+            "sendinput_error_type": None, "outcome": "returned",
+            "error_type": None}])
+
+    def test_native_release_attempt_rejects_boolean_ordinal(self):
+        self.start_cancelled_operation()
+        self.process.alive = False
+        self.process.exitcode = 86
+        self.assertTrue(self.owner.producer_retired(
+            "op-1", GEN_A, self.process))
+        recovery = self.owner.claim_recovery("op-1", GEN_A)
+
+        with self.assertRaises(OwnerRefused):
+            self.owner.recovery_release_attempted("op-1", GEN_A,
+                recovery["recovery_id"], [], release_attempts=[{
+                    "ordinal": False, "domain": "button_up",
+                    "button": "left", "sendinput_call_started": True,
+                    "sendinput_return_count": 1, "outcome": "returned"}])
+
     def test_late_input_horizon_rejects_unobserved_initial_gap(self):
         self.start_cancelled_operation()
         self.process.alive = False

@@ -87,7 +87,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 self.completed = []
                 self.unknown = []
             def recovery_release_attempted(self, _op, _gen, _recovery_id,
-                                           attempts):
+                                           attempts, *, release_attempts=None):
                 self.attempts = attempts
             def recovery_completed(self, *args, **kwargs):
                 self.completed.append((args, kwargs))
@@ -159,7 +159,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
                 class Owner:
                     def __init__(self): self.unknown = []; self.completed = []; self.attempts = []
                     def mark_unknown(self, operation_id, generation, reason): self.unknown.append(reason)
-                    def recovery_release_attempted(self, *args): self.attempts.append(args)
+                    def recovery_release_attempted(self, *args, **kwargs): self.attempts.append(args)
                     def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
                 owner = Owner()
                 supervisor = object.__new__(OperationCancellationSupervisor)
@@ -188,7 +188,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         class Owner:
             def __init__(self): self.unknown = []; self.completed = []; self.attempts = []
             def mark_unknown(self, op, generation, reason): self.unknown.append(reason)
-            def recovery_release_attempted(self, *args): self.attempts.append(args)
+            def recovery_release_attempted(self, *args, **kwargs): self.attempts.append(args)
             def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
         owner = Owner()
         supervisor = object.__new__(OperationCancellationSupervisor)
@@ -701,7 +701,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         class Owner:
             def __init__(self): self.unknown = []; self.completed = []; self.attempts = []
             def mark_unknown(self, op, generation, reason): self.unknown.append(reason)
-            def recovery_release_attempted(self, *args): self.attempts.append(args)
+            def recovery_release_attempted(self, *args, **kwargs): self.attempts.append(args)
             def recovery_completed(self, *args, **kwargs): self.completed.append((args, kwargs))
         class ContradictoryBackend(FakeBackend):
             def release_all(self):
