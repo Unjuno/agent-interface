@@ -1961,23 +1961,44 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         effects = []
         operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
             process_identity_reader=lambda handle: identity if handle is process else None)
-        supervisor = FakeSupervisor(operation_owner)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
         owner = OwnedWin32SessionOwner(operation_owner, supervisor,
             synthetic_only=False)
         owner.bind_target_generation_reader(lambda: GENERATION)
 
         class EffectfulProducer(FakeProducerFactory):
+            fail_next = False
+
             def __call__(self, action):
                 self.started += 1
+                if self.process.pid is not None:
+                    self.process.pid = None
+                    self.process.exitcode = None
+                    self.process.alive = False
                 def authorize_start():
                     # Keep the public dispatch pending long enough for the
                     # caller to exercise exact-call result retrieval.
                     time.sleep(0.04)
-                    effects.append({"operation_id": action["operation_id"],
-                        "target_generation": action["target_generation"]})
+                    if not self.fail_next:
+                        effects.append({"operation_id": action["operation_id"],
+                            "target_generation": action["target_generation"]})
                     self.process.alive = False
                     self.process.exitcode = 0
                 return self.process, lambda: self.identity, authorize_start
+
+            def read_result(self, process):
+                if self.fail_next:
+                    self.fail_next = False
+                    if process is not self.process or process.is_alive():
+                        raise RuntimeError("failure fixture did not exit")
+                    return {"result": {"status": "runtime_failed",
+                            "error_type": "RuntimeError",
+                            "detail": "controlled result exception"},
+                        "release_receipt": {"verified": False,
+                            "keys_down": [], "buttons_down": [],
+                            "keys_unknown": ["producer_exception"],
+                            "buttons_unknown": []}}
+                return super().read_result(process)
 
         producer = EffectfulProducer(process, identity)
         oracle_calls = []
@@ -2022,6 +2043,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         observed_call_ids = []
         dispatch_call_ids = []
         result_queries = []
+        task_client_calls = []
         callback_errors = []
         observation_envelopes = []
         loop = asyncio.get_running_loop()
@@ -2097,7 +2119,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             if isinstance(row.get("call"), dict) else None)
                         self.assertEqual(retrieved_call, call_id, row)
                         action = row.get("action")
-                        if isinstance(action, dict) and action.get("status") == "completed":
+                        if (isinstance(action, dict)
+                                and action.get("status") in (
+                                    "completed", "unknown", "recovered")):
                             return reply
                         time.sleep(0.01)
                     self.fail("exact-call interface_results did not reach completed")
@@ -2106,6 +2130,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     raise
 
             def verify_task(call_id):
+                task_client_calls.append(call_id)
                 return call_tool("interface_verify_task", {
                     "call_id": call_id, "wait_for_result_ms": 1000})
 
@@ -2149,6 +2174,42 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     result["transitions"][-1]["action_id"])
                 self.assertEqual(len(effects), 1)
                 self.assertEqual(producer.started, 1)
+
+                # A second exact-call readback carries an exception/unknown
+                # action plus release-only recovery. Without a verified late
+                # input horizon, the caller must retain uncertainty and skip
+                # task-effect verification.
+                effects.clear()
+                producer.fail_next = True
+                failed = await asyncio.to_thread(run_public_compiled,
+                    interface, {"save": self.valid_program()},
+                    target="fixture", current_binding_revision=1,
+                    region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
+                    resolve_pending=resolve_pending,
+                    perceive=lambda report, _reply: report["predicates"],
+                    verify_effect=lambda _request, _report, _reply: {
+                        "status": "succeeded", "evidence_ref": "must-not-score"},
+                    verify_task=verify_task, cancelled=lambda: False)
+                self.assertEqual(failed["outcome"], "RUNTIME_FAILED", failed)
+                self.assertIsNone(failed["task_success"])
+                self.assertIsNone(failed["task_verification"])
+                failed_dispatch = next(row for row in failed[
+                    "standard_target_evidence"] if row["kind"] == "dispatch")
+                self.assertEqual(failed_dispatch["pending_result_resolution"],
+                    "same_call_id")
+                self.assertEqual(failed_dispatch["status"], "uncertain")
+                self.assertFalse(failed_dispatch["release_verified"])
+                self.assertEqual(task_client_calls, [dispatch_call_ids[0]])
+                self.assertEqual(len(oracle_calls), 1)
+                self.assertEqual(producer.started, 2)
+                # The public result can become readable just before the
+                # producer's atomic report replacement finishes.
+                report_temps = list(Path(root).glob("*/.report.json.tmp"))
+                deadline = time.monotonic() + 2
+                while report_temps and time.monotonic() < deadline:
+                    await asyncio.sleep(0.01)
+                    report_temps = list(Path(root).glob("*/.report.json.tmp"))
+                self.assertFalse(report_temps, report_temps)
             finally:
                 await server.call_tool("interface_close", {})
 
