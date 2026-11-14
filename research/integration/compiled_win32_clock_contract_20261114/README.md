@@ -89,11 +89,13 @@ query, transient-busy retry, task-effect verification, and the exact-call task
 oracle. It also makes a second controlled producer call that returns an
 exception with unverified release; the caller retains uncertainty and skips the
 effect verifier and task oracle. The recovered-dispatch caller test additionally
-exercises the R180 result projection through `run_public_compiled`: the exact
-accepted program supplies omitted action obligations, and a matching bounded
-cancellation receipt yields `SAFE_YIELD / delivery_uncertain` plus a separately
-valid exact-call task-oracle result. Removing the native release-attempt proof
-still fails closed. A separate stdio MCP test runs `run_public_compiled` against
+exercises the R180 result projection through `run_public_compiled`: the source
+action remains `unknown` with no release, task-success, or replay claim; the
+exact accepted program supplies omitted action obligations, and a matching
+bounded cancellation receipt confirms release. The public caller yields
+`SAFE_YIELD / delivery_uncertain` while recording a separately valid exact-call
+task-oracle result. Removing the native release-attempt proof still fails
+closed. A separate stdio MCP test runs `run_public_compiled` against
 a child server over MCP stdio. It joins the pending result by exact call ID,
 accepts nested `call.call_id` while the query is pending, and preserves UNKNOWN
 action delivery when the recovery receipt lacks a bounded late-input horizon.
