@@ -2624,6 +2624,16 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertIsNone(retained["task_success"])
                     self.assertFalse(retained["replay_allowed"])
 
+                    effect_reply = await client.call_tool("interface_verify_task", {
+                        "call_id": call_id, "wait_for_result_ms": 1000})
+                    effect = self.row(effect_reply)
+                    self.assertEqual(effect["call_id"], call_id)
+                    self.assertEqual(effect["status"], "verified", effect)
+                    self.assertFalse(effect["task_success"], effect)
+                    self.assertEqual(effect["task_effect"]["receipt"][
+                        "operation_id"], retained["action"]["operation_id"])
+                    self.assertFalse(effect["replay_allowed"], effect)
+
                     close_reply = await client.call_tool("interface_close", {})
                     self.assertEqual(self.row(close_reply)["status"], "closed")
 
