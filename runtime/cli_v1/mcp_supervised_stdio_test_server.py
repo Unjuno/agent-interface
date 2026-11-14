@@ -27,6 +27,7 @@ def main():
         default="delayed-expiry")
     parser.add_argument("--public-caller", action="store_true",
         help="Enable the opt-in expiry caller policy for stdio protocol tests.")
+    parser.add_argument("--deadline-cancel-grace-ms", type=int, default=1000)
     parser.add_argument("--recovery-generation", default="b" * 64)
     args = parser.parse_args()
     process = FakeProcess()
@@ -94,9 +95,12 @@ def main():
 
     server_options = {}
     if args.public_caller:
+        if not 1 <= args.deadline_cancel_grace_ms <= 2000:
+            parser.error("--deadline-cancel-grace-ms must be in [1, 2000]")
         server_options.update(
             _supervised_win32_deadline_cancel_policy="public_caller",
-            _supervised_win32_deadline_cancel_grace_ns=1_000_000_000)
+            _supervised_win32_deadline_cancel_grace_ns=(
+                args.deadline_cancel_grace_ms * 1_000_000))
     server = create_server({"fixture": 123}, args.output_directory,
         session_mode="supervised-win32",
         _supervised_win32_owner_factory=lambda *_args: owner,

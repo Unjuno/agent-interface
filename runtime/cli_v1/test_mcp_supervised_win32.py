@@ -2559,7 +2559,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             params = StdioServerParameters(command=sys.executable,
                 args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
                       "--output-directory", str(output), "--mode", "delayed-expiry",
-                      "--public-caller"],
+                      "--public-caller", "--deadline-cancel-grace-ms", "250"],
                 cwd=str(Path(__file__).resolve().parents[2]))
             async with stdio_client(params) as (reader, writer):
                 async with ClientSession(reader, writer) as client:
@@ -2616,6 +2616,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertGreaterEqual(
                         retained["deadline_cancel_requested_ns"], expiry_ns,
                         retained)
+                    self.assertLessEqual(
+                        retained["deadline_cancel_requested_ns"],
+                        expiry_ns + 250_000_000, retained)
                     self.assertTrue(retained["cancellation"]["release_confirmed"])
                     self.assertFalse(retained["cancellation"]["replay_allowed"])
                     self.assertIsNone(retained["task_success"])
