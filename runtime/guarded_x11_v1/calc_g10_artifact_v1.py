@@ -152,6 +152,7 @@ class CalcG10ArtifactCustody:
         self._target_start_ticks = None
         self._records = {}
         self._verified = None
+        self._save_request_id = None
         self.workbook_path = self.call_root / _ARTIFACT_NAME
         flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_BINARY', 0)
         flags |= getattr(os, 'O_NOFOLLOW', 0)
@@ -171,6 +172,23 @@ class CalcG10ArtifactCustody:
         if blank != _G10_BLANK:
             raise ValueError('G10 blank workbook reservation changed')
         self._blank_sha256 = hashlib.sha256(blank).hexdigest()
+
+    @property
+    def path(self):
+        """Artifact path consumed by the shared Calc launch supervisor."""
+        return self.workbook_path
+
+    @property
+    def reserved_blank_bytes(self):
+        return _G10_BLANK
+
+    @property
+    def process_generation(self):
+        return self._process_generation
+
+    @property
+    def window_generation(self):
+        return self._window_generation
 
     def bind_target(self, *, process_generation, window_generation,
                     target_xid, target_pid, target_start_ticks):

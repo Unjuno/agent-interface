@@ -7,6 +7,7 @@ from unittest.mock import patch
 from pathlib import Path
 
 from runtime.guarded_x11_v1.calc_launcher_v1 import CalcLaunchSupervisor
+from runtime.guarded_x11_v1.calc_g10_artifact_v1 import CalcG10ArtifactCustody
 from runtime.guarded_x11_v1.calc_task_artifact_v1 import CalcTaskArtifact
 from runtime.guarded_x11_v1.process_identity import process_generation_from_identity
 
@@ -77,6 +78,49 @@ class CalcLaunchSupervisorTests(unittest.TestCase):
             'mapped':True,'focused_before':True,'focused_after':True}
         self.supervisor.bind_xres_target(metadata)
         return result
+
+    def test_g10_artifact_launch_uses_its_exact_reserved_blank(self):
+        call_id = '2' * 32
+        root = self.root / call_id
+        root.mkdir()
+        artifact = CalcG10ArtifactCustody(root, call_id=call_id,
+            attempt_id='g10-launch-test')
+        factory = _Factory()
+        supervisor = CalcLaunchSupervisor(self.executable,
+            popen_factory=factory,
+            start_ticks_reader=lambda pid: START_TICKS,
+            cmdline_reader=lambda pid: tuple(supervisor.argv),
+            clock=lambda: 123456789)
+        try:
+            result = supervisor.launch(artifact)
+            self.assertEqual(result['status'], 'launched')
+            self.assertEqual(result['artifact_path'], str(artifact.path))
+            self.assertEqual(len(factory.calls), 1)
+            self.assertIsNone(artifact.process_generation)
+            self.assertIsNone(artifact.window_generation)
+        finally:
+            supervisor.close()
+
+    def test_g10_artifact_launch_rejects_changed_reserved_blank_before_spawn(self):
+        call_id = '3' * 32
+        root = self.root / call_id
+        root.mkdir()
+        artifact = CalcG10ArtifactCustody(root, call_id=call_id,
+            attempt_id='g10-launch-test')
+        artifact.path.write_bytes(b'changed')
+        factory = _Factory()
+        supervisor = CalcLaunchSupervisor(self.executable,
+            popen_factory=factory,
+            start_ticks_reader=lambda pid: START_TICKS,
+            cmdline_reader=lambda pid: tuple(supervisor.argv),
+            clock=lambda: 123456789)
+        try:
+            with self.assertRaisesRegex(ValueError,
+                                        'reserved Calc artifact is not the original blank file'):
+                supervisor.launch(artifact)
+            self.assertEqual(factory.calls, [])
+        finally:
+            supervisor.close()
 
     def _make_oosplash_owner(self, artifact, *, replacement=False):
         factory = _Factory()
