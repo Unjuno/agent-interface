@@ -14,7 +14,7 @@ On CPython 3.11.9, the combined cancellation + native-helper core suite passed 7
 
 An earlier combined three-module run passed 120/120 normally. Its `-O` run had one failure in the existing timing-sensitive `test_blocked_independent_observer_expires_unknown` at its 2-second observer-start wait. The test passed individually in normal and optimized mode and the later core/public split suites passed both modes. The initial failure is retained as a timing flake signal; no test thresholds were changed.
 
-Logs are preserved in `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\`: `core-normal.log`, `core-optimized.log`, `public-query-normal.log`, `public-query-optimized.log`, plus earlier `win32-focus-free-recovery-20261115.normal.log` and `.optimized.log` from the combined run.
+The current-main rerun's complete raw logs, exact commands, environment and SHA-256 values are preserved in [the verification packet](win32_focus_free_recovery_20261115/README.md). The earlier combined-run logs and their timing-flake note remain local to the follow-up workspace.
 
 ## Scope and next gate
 
