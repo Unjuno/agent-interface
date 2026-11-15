@@ -2808,7 +2808,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     deadline = time.monotonic() + 10
                     while time.monotonic() < deadline:
                         reply = call_tool("interface_results", {
-                            "call_id": call_id, "include_image": False})
+                            "call_id": call_id, "include_image": False,
+                            "compact": True, "report_refs": True,
+                            "detail": "brief"})
                         row = self.row(reply)
                         result_queries.append(row)
                         retrieved_call = row.get("call_id") or (

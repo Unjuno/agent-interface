@@ -101,6 +101,16 @@ SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py F98D9DEAC2F41B794DFF10B9B68
 
 Compiled caller source SHA-256: `runtime/cli_v1/supervised_win32_compiled.py` FD1478A424585956ECA2CA62F54D485E778D5688C2D3E2504181151B2231ED98. These checks make the selected handoff path reviewable; they do not satisfy #57's all-attempt lifecycle/economics report or replace R175's narrower native HUD result.
 
+## Actual compiled caller exact-result query in compact presentation modes
+
+Extended `test_public_compiled_caller_joins_exact_result_query_and_task_oracle` so the caller's own `resolve_pending` callback retrieves both the normal completed dispatch and the later producer-exception UNKNOWN dispatch using `compact=true`, `report_refs=true`, `detail=brief`. The successful attempt still joins exact call/generation and reaches its one positive task oracle. The exception attempt still classifies as uncertain with release unverified and does not call effect or task verification. This exercises `_terminal` over actual retained public dispatch result shapes through the server, rather than only testing recovery-tool result presentation.
+
+Focused caller integration: 1/1 passed normally (1.427 s) and 1/1 under `-O` (0.840 s), Python 3.11.9. Raw logs: `compiled-caller-compact-result-normal.log` and `compiled-caller-compact-result-optimized.log`.
+
+Scope: Fake process/input/effect and task oracle through the public caller/server path. It verifies result classification and oracle suppression; no native input, MAP01 HUD outcome, or efficiency claim.
+
+SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py 3B4FD2FB0F108E8ED7B690F0A011E36CBCE6A4DA59DE841C7E19139270CD9094; compiled-caller-compact-result-normal.log 484377055B71513BECE8383E4888945CA0DC53B36FB6180098DE5BB700807652; compiled-caller-compact-result-optimized.log 2F85F36C54811C7BFB212E2B61F02DE35B74752FC773C3482448AC67A2A579D0.
+
 ## Read-only native custody gate (2026-11-15)
 
 GZDoom PID 41580 remained responsive with title `Hydroelectric Plant - Freedoom: Phase 2`. The authoritative custody fence remained `unresolved`, revision 888, with pending `button:map01:left` and `key:map01:SHIFT:virtual_key`, operation `bb1c1f207e34407db20c28703713ae6a`, source generation `3b8649...f393c6f`, and no `last_resolved` entry. No focus, input, recovery, or process-close operation was performed. Native MAP01 remains gated.
