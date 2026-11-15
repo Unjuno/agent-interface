@@ -597,6 +597,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     calls = {}
     calls_lock = threading.Lock()
     calc_artifacts = {}
+    calc_g10_artifacts = {}
     calc_launches = {}
     calc_preparation_slot = None
     calc_preparation_deadline_ns = None
@@ -884,6 +885,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         and time.monotonic_ns()>=calc_preparation_deadline_ns)
                     if expired:
                         calc_artifacts.pop(prepared_call_id,None)
+                        calc_g10_artifacts.pop(prepared_call_id,None)
                         calc_preparation_slot=None
                         calc_preparation_deadline_ns=None
                         if prepared is not None:
@@ -908,7 +910,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     launch_entry={'prepared_call_id':prepared_call_id,
                         'attempt_id':prepared.get('attempt_id'),
                         'supervisor':None,'launch':None,'discovery':None,
-                        'binding':None,'cleanup':None}
+                        'binding':None,'g10_parent_artifact_bound':False,
+                        'cleanup':None}
                     calc_launches[prepared_call_id]=launch_entry
                 try:
                     owner.get()
@@ -989,6 +992,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             and time.monotonic_ns() >= calc_preparation_deadline_ns):
                         expired_id = calc_preparation_slot
                         calc_artifacts.pop(expired_id,None)
+                        calc_g10_artifacts.pop(expired_id,None)
                         expired_record = calls.get(expired_id)
                         if expired_record is not None:
                             expired_record['reservation_expired'] = True
@@ -1003,24 +1007,37 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             'call_id':call_id,'operation_invoked':False,
                             'input_dispatched':False,'task_success':None,
                             'replay_allowed':False},error=True)
-                from runtime.guarded_x11_v1.calc_task_artifact_v1 import CalcTaskArtifact
-                artifact = CalcTaskArtifact(call_root, call_id=call_id,
-                    attempt_id=kwargs['attempt_id'],
-                    expected_values=kwargs.get('task_values'),
-                    task_plan=kwargs.get('task_plan'))
+                profile_id = kwargs.get('profile_id', 'calc-ocr-save-v1')
+                if profile_id == 'calc-g10-two-save-v1':
+                    from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                        CalcG10ArtifactCustody)
+                    artifact = CalcG10ArtifactCustody(call_root,
+                        call_id=call_id, attempt_id=kwargs['attempt_id'])
+                elif profile_id == 'calc-ocr-save-v1':
+                    from runtime.guarded_x11_v1.calc_task_artifact_v1 import CalcTaskArtifact
+                    artifact = CalcTaskArtifact(call_root, call_id=call_id,
+                        attempt_id=kwargs['attempt_id'],
+                        expected_values=kwargs.get('task_values'),
+                        task_plan=kwargs.get('task_plan'))
+                else:
+                    raise ValueError('unregistered Calc profile')
                 with calls_lock:
                     calc_artifacts[call_id] = artifact
+                    if profile_id == 'calc-g10-two-save-v1':
+                        calc_g10_artifacts[call_id] = artifact
                     calc_preparation_deadline_ns = (
                         time.monotonic_ns() + _calc_preparation_ttl_ns)
                     calls[call_id].update(state='finished', prepared=True,
-                        profile_id='calc-ocr-save-v1',
+                        profile_id=profile_id,
                         attempt_id=kwargs['attempt_id'],
                         reservation_expires_monotonic_ns=calc_preparation_deadline_ns)
                     calc_preparation_slot = call_id
                 result = {'status':'prepared','call_id':call_id,
                     'attempt_id':kwargs['attempt_id'],
-                    'task_values':dict(artifact.expected_values),
-                    'task_plan_sha256':artifact.task_plan_sha256,
+                    'profile_id':profile_id,
+                    'task_values':(dict(artifact.expected_values)
+                        if profile_id == 'calc-ocr-save-v1' else None),
+                    'task_plan_sha256':getattr(artifact,'task_plan_sha256',None),
                     'expires_in_ms':_calc_preparation_ttl_ns // 1_000_000,
                     'artifact_path':str(artifact.path),
                     'artifact_name':'task-artifact.fods',
@@ -1037,7 +1054,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     launch_entry=calc_launches.get(prepared_call_id)
                     if (prepared_call_id is None or launch_entry is None
                             or not isinstance(launch_entry.get('binding'),dict)
-                            or launch_entry['binding'].get('status')!='reviewed'):
+                            or launch_entry['binding'].get('status')!='reviewed'
+                            or (kwargs.get('profile_id')=='calc-g10-two-save-v1'
+                                and launch_entry.get('g10_parent_artifact_bound') is not True)):
                         calls[call_id].update(state='finished',
                             backend_attempted=False,
                             predispatch_rejection='launched_calc_window_review_and_bind_required')
@@ -1055,6 +1074,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             and time.monotonic_ns() >= calc_preparation_deadline_ns)
                         if expired:
                             calc_artifacts.pop(prepared_call_id,None)
+                            calc_g10_artifacts.pop(prepared_call_id,None)
                             calc_preparation_slot = None
                             calc_preparation_deadline_ns = None
                             if prepared is not None:
@@ -1062,6 +1082,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         if (calc_preparation_slot != prepared_call_id
                                 or prepared is None
                                 or prepared.get('operation') != 'guarded_calc_prepare'
+                                or prepared.get('profile_id') != kwargs.get('profile_id')
                                 or prepared.get('state') != 'finished'
                                 or prepared.get('attempt_id') != kwargs.get('attempt_id')
                                 or candidate is None
@@ -1080,9 +1101,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         calc_preparation_deadline_ns = None
                         prepared['artifact_consumed_by'] = call_id
                         calls[call_id]['task_artifact_root_call_id'] = prepared_call_id
-                        calls[call_id]['parent_task_plan'] = task_artifact.task_plan
+                        calls[call_id]['parent_task_plan'] = getattr(
+                            task_artifact,'task_plan',None)
                         calls[call_id]['parent_task_plan_sha256'] = (
-                            task_artifact.task_plan_sha256)
+                            getattr(task_artifact,'task_plan_sha256',None))
+                        calls[call_id]['profile_id'] = prepared.get('profile_id')
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
             inspect_after = options.pop('inspect_after', None)
@@ -1121,8 +1144,52 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         report=supervisor.review_and_bind_owned_window(owner,
                             kwargs['window_id'],call_root=call_root/'calc-review')
                         if report.get('status')=='reviewed':
+                            prepared_record=calls.get(prepared_call_id,{})
+                            if prepared_record.get('profile_id')=='calc-g10-two-save-v1':
+                                try:
+                                    fresh=report.get('fresh_metadata')
+                                    binding=report.get('binding')
+                                    expected_fields={
+                                        'xid':kwargs['window_id'],
+                                        'process_generation':(fresh.get('process_generation')
+                                            if isinstance(fresh,dict) else None),
+                                        'window_generation':(fresh.get('window_incarnation')
+                                            if isinstance(fresh,dict) else None)}
+                                    if (not isinstance(fresh,dict)
+                                            or not isinstance(binding,dict)
+                                            or any(binding.get(key)!=value
+                                                for key,value in expected_fields.items())
+                                            or fresh.get('xid')!=kwargs['window_id']
+                                            or binding.get('pid')!=fresh.get('process_pid')
+                                            or binding.get('start_ticks')
+                                                !=fresh.get('process_start_ticks')
+                                            or fresh.get('mapped') is not True
+                                            or fresh.get('focused_before') is not True
+                                            or fresh.get('focused_after') is not True
+                                            or type(fresh.get('process_pid')) is not int
+                                            or type(fresh.get('process_start_ticks')) is not int):
+                                        raise ValueError('parent-reviewed G10 target identity unavailable')
+                                    with calls_lock:
+                                        parent_artifact=calc_g10_artifacts.get(
+                                            prepared_call_id)
+                                    if parent_artifact is None:
+                                        raise ValueError('parent G10 artifact custody unavailable')
+                                    parent_artifact.bind_target(
+                                        process_generation=binding['process_generation'],
+                                        window_generation=binding['window_generation'],
+                                        target_xid=binding['xid'],
+                                        target_pid=fresh['process_pid'],
+                                        target_start_ticks=fresh['process_start_ticks'])
+                                    launch_entry['g10_parent_artifact_bound']=True
+                                except (KeyError, OSError, TypeError, ValueError) as error:
+                                    report={'operation':operation,'status':'needs_review',
+                                        'reason':'g10_parent_target_bind_failed',
+                                        'error':str(error)[:300],
+                                        'input_dispatched':False,'authority_granted':False,
+                                        'task_success':None,'replay_allowed':False}
                             launch_entry['binding']=deepcopy(report)
-                            launch_entry['bound_prepared_call_id']=prepared_call_id
+                            if report.get('status')=='reviewed':
+                                launch_entry['bound_prepared_call_id']=prepared_call_id
                 elif operation == 'guarded_calc_compiled':
                     report = owner.run_registered_calc_profile(
                         kwargs['profile_id'], kwargs['bindings'],
@@ -1210,14 +1277,50 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 report.setdefault('replay_allowed', False)
                 report.setdefault('task_success', None)
             if operation == 'guarded_calc_compiled':
+                parent_adoption={'status':'not_applicable'}
+                if report.get('profile_id')=='calc-g10-two-save-v1':
+                    root_call_id=report.get('task_artifact_root_call_id',call_id)
+                    with calls_lock:
+                        parent_artifact=calc_g10_artifacts.get(root_call_id)
+                    transitions=(report.get('method_receipt',{}).get('transitions')
+                        if isinstance(report.get('method_receipt'),dict) else None)
+                    requests=report.get('task_save_requests')
+                    receipts=report.get('task_save_receipts')
+                    if isinstance(requests,dict):
+                        requests=[requests.get('first'),requests.get('second')]
+                    try:
+                        if (parent_artifact is None or type(transitions) is not list
+                                or len(transitions)!=2 or type(requests) is not list
+                                or len(requests)!=2 or type(receipts) is not list
+                                or len(receipts)!=2):
+                            raise ValueError('parent G10 save custody inputs unavailable: '
+                                f'artifact={parent_artifact is not None},'
+                                f'transitions={len(transitions) if type(transitions) is list else "missing"},'
+                                f'requests={len(requests) if type(requests) is list else "missing"},'
+                                f'receipts={len(receipts) if type(receipts) is list else "missing"}')
+                        for action,transition,request,receipt in zip(
+                                ('first','second'),transitions,requests,receipts):
+                            parent_artifact.adopt_saved_action_receipt(action,
+                                receipt=receipt,save_request=request,
+                                transition=transition)
+                        parent_adoption={'status':'adopted','actions':['first','second']}
+                    except (OSError,TypeError,ValueError) as error:
+                        parent_adoption={'status':'unknown','reason':str(error)[:300]}
                 # These exact child-returned values are copied into the parent
                 # ledger before any client can tamper with report.json. They
                 # describe admission and a save request, not a GUI save proof.
                 with calls_lock:
+                    calls[call_id]['task_save_custody_adoption']=parent_adoption
                     calls[call_id]['task_artifact_admission'] = deepcopy(
                         report.get('task_artifact_admission'))
                     calls[call_id]['task_save_request'] = deepcopy(
                         report.get('task_save_request'))
+                    calls[call_id]['task_save_requests'] = deepcopy(
+                        report.get('task_save_requests'))
+                    calls[call_id]['task_save_receipts'] = deepcopy(
+                        report.get('task_save_receipts'))
+                    calls[call_id]['task_save_controller_receipt'] = deepcopy(
+                        report.get('task_save_controller_receipt'))
                     calls[call_id]['task_method_receipt'] = deepcopy(
                         report.get('method_receipt'))
                     calls[call_id]['target_process_exit_receipt'] = deepcopy(
@@ -1225,6 +1328,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     calls[call_id]['task_artifact_root_call_id'] = report.get(
                         'task_artifact_root_call_id', calls[call_id].get(
                             'task_artifact_root_call_id', call_id))
+                report['parent_task_save_custody_adoption']=deepcopy(parent_adoption)
             if operation == 'guarded_window_metadata':
                 with calls_lock:
                     calls[call_id]['window_metadata'] = deepcopy(
@@ -1629,7 +1733,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 with calls_lock:
                     record = deepcopy(calls.get(call_id))
                 if (record is None or record.get('operation') != 'guarded_calc_compiled'
-                        or record.get('profile_id') != 'calc-ocr-save-v1'):
+                        or record.get('profile_id') not in (
+                            'calc-ocr-save-v1','calc-g10-two-save-v1')):
                     return content({'status':'unknown_call','call_id':call_id,
                         'task_success':None,'operation_invoked':False,
                         'input_dispatched':False,'replay_allowed':False,
@@ -1656,7 +1761,52 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 descriptor = record.get('task_artifact_admission')
                 save_request = record.get('task_save_request')
                 artifact_root_call_id = record.get('task_artifact_root_call_id',call_id)
-                if (not isinstance(descriptor, dict)
+                if record.get('profile_id') == 'calc-g10-two-save-v1':
+                    with calls_lock:
+                        g10_artifact = calc_g10_artifacts.get(artifact_root_call_id)
+                    g10_descriptor = None
+                    if g10_artifact is not None:
+                        try:
+                            g10_descriptor = g10_artifact.descriptor
+                        except (OSError, ValueError, TypeError):
+                            pass
+                    adoption=record.get('task_save_custody_adoption')
+                    from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                        make_registered_calc_g10_save_controller_receipt)
+                    saves = record.get('task_save_receipts')
+                    method_receipt = record.get('task_method_receipt')
+                    parent_controller = (make_registered_calc_g10_save_controller_receipt(
+                        descriptor=descriptor, method_receipt=method_receipt,
+                        save_receipts=saves) if isinstance(descriptor,dict) else None)
+                    if g10_artifact is None:
+                        custody_reason = 'g10_parent_artifact_unavailable'
+                    elif (not isinstance(adoption,dict)
+                            or adoption.get('status')!='adopted'):
+                        custody_reason = 'g10_parent_save_custody_unavailable'
+                    elif descriptor != g10_descriptor:
+                        custody_reason = 'g10_parent_descriptor_mismatch'
+                    elif (not isinstance(descriptor,dict)
+                            or descriptor.get('profile_id') != 'calc-g10-two-save-v1'
+                            or descriptor.get('attempt_id') != attempt_id):
+                        custody_reason = 'g10_parent_attempt_mismatch'
+                    elif parent_controller is None:
+                        custody_reason = 'g10_parent_controller_unavailable'
+                    elif record.get('task_save_controller_receipt') != parent_controller:
+                        custody_reason = 'g10_parent_controller_mismatch'
+                    else:
+                        custody_reason = None
+                    if custody_reason is not None:
+                        effect = {'status':'unknown','task_success':None,
+                            'replay_allowed':False,
+                            'reason':custody_reason}
+                    else:
+                        effect = g10_artifact.verify_after_close(
+                            method_receipt=method_receipt,
+                            close_receipt=close_receipt,
+                            target_exit_receipt=record.get(
+                                'target_process_exit_receipt'),
+                            trusted_save_controller_receipt=parent_controller)
+                elif (not isinstance(descriptor, dict)
                         or descriptor.get('profile_id') != 'calc-ocr-save-v1'
                         or descriptor.get('attempt_id') != attempt_id):
                     effect = {'status':'unknown','task_success':None,

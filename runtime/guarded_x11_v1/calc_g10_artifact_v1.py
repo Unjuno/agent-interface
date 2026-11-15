@@ -334,6 +334,66 @@ class CalcG10ArtifactCustody:
         self._records[action] = row
         return dict(row)
 
+    def adopt_saved_action_receipt(self, action, *, receipt, save_request,
+                                   transition):
+        """Join one child-produced receipt to its retained snapshot in parent custody."""
+        expected_actions=('first','second')
+        if (len(self._records) >= len(expected_actions)
+                or action != expected_actions[len(self._records)]
+                or action not in _CASES
+                or self._process_generation is None):
+            raise ValueError('G10 parent receipt adoption is out of order')
+        if (type(transition) is not dict
+                or transition.get('action') != action
+                or transition.get('release_verified') is not True):
+            raise ValueError('G10 parent receipt lacks the matching released transition')
+        required_request={'schema','call_id','attempt_id','profile_id','action',
+            'action_id','process_generation','window_generation','save_request_id',
+            'save_request_monotonic_ns','dispatch_evidence_ref'}
+        if (type(save_request) is not dict or set(save_request)!=required_request
+                or save_request.get('schema')!=_SAVE_REQUEST_SCHEMA
+                or save_request.get('call_id')!=self.call_id
+                or save_request.get('attempt_id')!=self.attempt_id
+                or save_request.get('profile_id')!=PROFILE_ID
+                or save_request.get('action')!=action
+                or save_request.get('action_id')!=transition.get('action_id')
+                or save_request.get('process_generation')!=self._process_generation
+                or save_request.get('window_generation')!=self._window_generation
+                or type(save_request.get('save_request_id')) is not str
+                or not re.fullmatch(r'[0-9a-f]{32}',save_request['save_request_id'])
+                or type(save_request.get('save_request_monotonic_ns')) is not int
+                or save_request['save_request_monotonic_ns']<=0
+                or type(save_request.get('dispatch_evidence_ref')) is not str
+                or not 1<=len(save_request['dispatch_evidence_ref'])<=128):
+            raise ValueError('G10 parent save request identity mismatch')
+        if (type(receipt) is not dict
+                or receipt.get('schema')!='agent-interface/calc-g10-save-receipt-v1'
+                or receipt.get('call_id')!=self.call_id
+                or receipt.get('attempt_id')!=self.attempt_id
+                or receipt.get('profile_id')!=PROFILE_ID
+                or receipt.get('action')!=action
+                or receipt.get('action_id')!=save_request['action_id']
+                or receipt.get('action_release_verified') is not True
+                or receipt.get('process_generation')!=self._process_generation
+                or receipt.get('window_generation')!=self._window_generation
+                or receipt.get('save_request_id')!=save_request['save_request_id']
+                or receipt.get('dispatch_evidence_ref')
+                    !=save_request['dispatch_evidence_ref']
+                or receipt.get('save_request_monotonic_ns')
+                    !=save_request['save_request_monotonic_ns']
+                or receipt.get('artifact_name')!=_SNAPSHOT_NAMES[action]):
+            raise ValueError('G10 parent save receipt identity mismatch')
+        data,identity=_read_regular(self.call_root/_SNAPSHOT_NAMES[action],
+            max_bytes=64*1024*1024)
+        digest=hashlib.sha256(data).hexdigest()
+        if (receipt.get('artifact_sha256')!=digest
+                or receipt.get('artifact_bytes')!=len(data)
+                or receipt.get('artifact_identity')!=list(identity)):
+            raise ValueError('G10 parent snapshot does not match child receipt')
+        row=dict(receipt)
+        self._records[action]=row
+        return dict(row)
+
     def verify_after_close(self, *, method_receipt, close_receipt,
                            target_exit_receipt,
                            trusted_save_controller_receipt=None):
