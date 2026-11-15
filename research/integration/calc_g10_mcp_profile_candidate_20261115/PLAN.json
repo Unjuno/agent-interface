@@ -1,0 +1,34 @@
+{
+  "schema": "agent-interface-local-integration-candidate-v1",
+  "created_utc": "2026-11-15",
+  "branch": "codex/g10-public-profile-20261115",
+  "base_commit": "b046c90d6ab80cedb47fcd1be85fac5111dfce0b",
+  "goal": "Wire the retained two-save G10 formula task through the current public guarded Calc profile, preserving per-action dispatch/release/artifact custody and only verifying after exact target exit and owner release.",
+  "scope": "Offline local regression only. Fake X and archived FODS fixtures; no live Calc, MAP01, Docker, WSLc, or allocation consumed.",
+  "cases": [
+    "G10 profile callback, generation, anchor, and bounded OCR contract",
+    "G10 two-action/two-snapshot composition and formula scorer",
+    "MCP G10 prepare reservation and fixed-task rejection",
+    "Win32 exception caller result lookup and fresh-generation recovery response shape",
+    "Public G10 launch-review-compile-close-exact-exit-verify caller composition",
+    "Parent refuses a child save receipt with a tampered snapshot hash",
+    "Parent adopts save receipts after release/request joins and snapshot stat/hash recheck",
+    "Parent-owned Calc launch-review binding copied to child and revalidated there",
+    "Existing Calc public caller stale-alias refusal and supported freshness-bound fixture",
+    "Existing owned-process MCP regression suite in normal and optimized Python",
+    "Parent launch-review binding mismatch blocks public compiled dispatch before operation/input"
+  ],
+  "commands": [
+    "python -m unittest runtime.guarded_x11_v1.test_calc_g10_profile_v1 runtime.guarded_x11_v1.test_calc_g10_action_custody_composition runtime.guarded_x11_v1.test_calc_g10_artifact_v1 runtime.guarded_x11_v1.test_calc_g10_formula_effect_v1 -q",
+    "python -O -m unittest runtime.guarded_x11_v1.test_calc_g10_profile_v1 runtime.guarded_x11_v1.test_calc_g10_action_custody_composition runtime.guarded_x11_v1.test_calc_g10_artifact_v1 runtime.guarded_x11_v1.test_calc_g10_formula_effect_v1 -q",
+    "python -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_g10_prepare_reserves_fixed_parent_two_save_artifact runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_runs_through_owned_mcp_and_releases -q",
+    "python -m unittest runtime.cli_v1.test_mcp_owned_process -q",
+    "python -O -m unittest runtime.cli_v1.test_mcp_owned_process -q",
+    "python -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_runs_through_owned_mcp_and_releases",
+    "python -O -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_runs_through_owned_mcp_and_releases",
+    "python -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier",
+    "python -O -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier",
+    "python -m unittest runtime.guarded_x11_v1.test_calc_g10_artifact_v1",
+    "python -O -m unittest runtime.guarded_x11_v1.test_calc_g10_artifact_v1"
+  ]
+}

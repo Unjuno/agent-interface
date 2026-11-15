@@ -1,0 +1,13 @@
+G10 public MCP production stdio follow-up — 2026-11-16
+
+Attempt 1 — default production owner startup budget (5 s): the MCP stdio client initialized and listed tools; public prepare was accepted; public launch returned UNKNOWN / CALC_LAUNCH_OR_DISCOVERY_FAILED with detail `owned guarded process startup timed out`, `parent_process_custody=unknown`, `authority_granted=false`, and `input_dispatched=false`. This was before any target launch or input. The first unittest console output is retained in the task transcript, not as a separate raw file.
+
+Attempt 2 — omitted `--guarded-owned-process`: parser/constructor refused Calc launch because the trusted launch factory requires guarded-owned X11 with an owned process. No task input ran.
+
+Attempt 3 — test-only 20 s startup wait: launch returned pending at the caller's 10 s response wait; exact `interface_results(call_id)` polling reached candidate_found. Parent effect verification returned UNKNOWN because the fake target-exit package version did not satisfy the fixed production receipt contract.
+
+Attempt 4 — exact fake package version: the G10 task verifier returned verified/true; the assertion then failed because this compiled graph stub persists FODS snapshots and does not create a separate synthetic pixel-effect receipt. `normal.log` preserves this run.
+
+Final corrected timing runs — the test asserts the two prepared-path FODS files instead of expecting the unrelated pixel-effect marker. `normal-timed-final.log` passed 1/1 in 14.013 s with owner.get 10.860 s; `optimized-timed-final.log` passed 1/1 in 14.377 s with owner.get 11.031 s.
+
+The 20 s change exists only in `mcp_calc_g10_stdio_test_server.py` for transport/custody shape. It does not qualify the production 5 s startup boundary; the successful nested Windows-spawn startup durations exceed five seconds. The production environment is Linux X11, and its process-start method was not exercised here. Attempt 1 remains a real fixture outcome and is not overwritten.

@@ -1,0 +1,31 @@
+test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier)
+Stub graph executor; exercise real profile callbacks and MCP custody only. ... FAIL
+
+======================================================================
+FAIL: test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier)
+Stub graph executor; exercise real profile callbacks and MCP custody only.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\pr10303-current-main-reconcile\runtime\cli_v1\test_mcp_owned_process.py", line 1304, in test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier
+    self.assertEqual(verified['status'],'verified',verified)
+AssertionError: 'unknown' != 'verified'
+- unknown
++ verified
+ : {'status': 'unknown', 'call_id': '3e2ecf7b5b844327a0beacfeb25359ec', 'attempt_id': 'g10-public-parent-join', 'task_effect': {'status': 'unknown', 'task_success': None, 'replay_allowed': False, 'reason': 'g10_parent_descriptor_mismatch'}, 'task_success': None, 'operation_invoked': False, 'input_dispatched': False, 'replay_allowed': False, 'scope': 'guarded_x11_calc'}
+
+----------------------------------------------------------------------
+Ran 1 test in 8.663s
+
+FAILED (failures=1)
