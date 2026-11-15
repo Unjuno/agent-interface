@@ -90,6 +90,17 @@ Scope: production CLI/stdio and public compiled caller composition with Fake tar
 
 SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py F98D9DEAC2F41B794DFF10B9B68E513E9A79E8C9442B0B56A36A6F9886A9AF79; exception-recovery-compact-caller-normal.log 4C01929BA96C13551F35CB11F615A3CF3EBA05B53E848E7E1333DC9801035C83; exception-recovery-compact-caller-optimized.log B6B2B6FDC3B8B4EEC4F232CACC751DE0F37C778B7E469388DF427C335DCE1705.
 
+## Recovery query to compiled caller requirement crosswalk
+
+| Requirement | Enforcement / evidence | Verification | Scope limit |
+| --- | --- | --- | --- |
+| A delayed recovery remains pending under its own call ID; unrelated IDs cannot receive its receipt. | `interface_results(call_id=...)` exact-call lookup. | `test_production_stdio_orphan_recovery_pending_exact_query`; includes unrelated-ID query and terminal compact/brief lookup. | Fake supervisor/readback via production CLI/stdio. |
+| Impossible or incomplete horizon evidence must stay UNKNOWN and block same-generation public input. | Owned-session recovery receipt validation and owner admission gate. | `test_production_stdio_invalid_recovery_horizon_exact_query_stays_unknown`; verifies exact receipt remains UNKNOWN and dispatcher refuses before input. | Fake failure injection; not an OS race proof. |
+| Exception UNKNOWN custody must be carried into separate recovery; only verified release/horizon permits a later fresh-generation attempt, whose task oracle binds to its own call ID. | Public recovery receipt fields plus `run_public_compiled` dispatch/task-oracle join. | `test_stdio_exception_unknown_then_fresh_generation_recovery`; now retrieves recovery using compact/brief flags before the fresh attempt. | Composed Fake target/provider/oracle; not live MAP01 effect. |
+| A retained pending dispatch is classified as delivery-uncertain only when exact call, generation, operation, release custody, neutral readback and recovery evidence match. | `supervised_win32_compiled._terminal` / `_verified_recovery_custody`; public caller exact-result join. | `test_public_compiled_caller_joins_exact_result_query_and_task_oracle`. | Contract regression; does not independently establish physical input state. |
+
+Compiled caller source SHA-256: `runtime/cli_v1/supervised_win32_compiled.py` FD1478A424585956ECA2CA62F54D485E778D5688C2D3E2504181151B2231ED98. These checks make the selected handoff path reviewable; they do not satisfy #57's all-attempt lifecycle/economics report or replace R175's narrower native HUD result.
+
 ## Read-only native custody gate (2026-11-15)
 
 GZDoom PID 41580 remained responsive with title `Hydroelectric Plant - Freedoom: Phase 2`. The authoritative custody fence remained `unresolved`, revision 888, with pending `button:map01:left` and `key:map01:SHIFT:virtual_key`, operation `bb1c1f207e34407db20c28703713ae6a`, source generation `3b8649...f393c6f`, and no `last_resolved` entry. No focus, input, recovery, or process-close operation was performed. Native MAP01 remains gated.
