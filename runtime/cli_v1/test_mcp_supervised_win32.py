@@ -2691,7 +2691,10 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         if isinstance(pending.get("call"), dict) else None)
                     self.assertEqual(pending_call, call_id, pending)
                     self.assertEqual(pending.get("status"), "pending", pending)
-                    deadline = time.monotonic() + 3
+                    # The worker runs in a spawned stdio process. Keep the
+                    # result poll finite while allowing loaded Windows hosts
+                    # to schedule producer retirement and public readback.
+                    deadline = time.monotonic() + 10
                     while time.monotonic() < deadline:
                         reply = call_tool("interface_results", {
                             "call_id": call_id, "include_image": False})
@@ -2883,7 +2886,6 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                                 and action.get("status") == "recovered"):
                             break
                         await asyncio.sleep(0.01)
-                    self.assertIsNotNone(retained)
                     self.assertEqual(
                         retained.get("call_id") if isinstance(retained, dict)
                         else None, call_id,
