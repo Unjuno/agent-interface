@@ -849,6 +849,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result["recovery_status"], "recovered", result)
                 self.assertEqual(result["call_id"], call_id)
                 self.assertEqual(result["recovery_id"], recovery_id)
+                self.assertNotIn("image_status", result)
                 self.assertEqual(result["source_action_status"], "unknown")
                 self.assertTrue(result["release_confirmed"], result)
                 self.assertTrue(result["next_action_requires_fresh_generation"], result)

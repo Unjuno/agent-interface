@@ -22,14 +22,14 @@ python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MC
 git diff --check
 ~~~
 
-Results: 3/3 passed normally (14.008 s) and 3/3 passed under `-O` (13.956 s). Captured output: `normal.log` and `optimized.log`.
+Results: 3/3 passed normally (15.054 s) and 3/3 passed under `-O` (13.829 s). Captured output: `normal.log` and `optimized.log`.
 
 ## SHA-256
 
-- `normal.log`: `CF294762AF6AE3D364A916171142EE45F46C3B745116D6D1A9717C4D15E01C0C`
-- `optimized.log`: `5FA6EEE98BEA87C4D3DAABB968A28C734A46CBA80CFA6A716CB62C9E35B4CBE0`
+- `normal.log`: `33E611C4EB704DA9869788E4098A3C693379409169852CD21ADB2DCE92426929`
+- `optimized.log`: `99645057063B8E94442691B09CFAAEA7C1DDCC981A823009A57D1C7FCDA25751`
 - `runtime/cli_v1/mcp_server.py`: `B9616D40A9D559F9A7477CC9DB070C5C9009BE95B9E6CB6B95D40AC95F45376E`
-- `runtime/cli_v1/test_mcp_supervised_win32.py`: `04FBBA6AE08A1586EDE65B2A9B49D63C5A198AB44D4C39682DF6573BE25AB254`
+- `runtime/cli_v1/test_mcp_supervised_win32.py`: `5633344567D741FE33F39A63BE51B1872B592CCE894F02E57E51D290F0CB25E9`
 - `docs/CURRENT_GOAL.md`: `0DFEE20AC246821A7DF70732B262DD5A752D6F92209391EC7FC8AB52E53781AE`
 
 Candidate changes have not been pushed or merged to main. The broader candidate suite has the previously recorded intermittent failures; this focused check does not clear that status, establish native recovery, or prove MAP01 effect.
