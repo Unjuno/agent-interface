@@ -60,9 +60,11 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
             'reason': 'method_complete', 'completed_transitions': 2,
             'transitions': [
                 {'action': 'first', 'action_id': first_id,
-                 'release_verified': True, 'execution_accepted_ns': 11},
+                 'release_verified': True, 'execution_started_ns': 5,
+                 'execution_accepted_ns': 11},
                 {'action': 'second', 'action_id': second_id,
-                 'release_verified': True, 'execution_accepted_ns': 21},
+                 'release_verified': True, 'execution_started_ns': 15,
+                 'execution_accepted_ns': 21},
             ],
         }
 
@@ -164,10 +166,10 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
         self.assertEqual(result['reason'],
             'trusted_g10_save_controller_receipt_required')
 
-    def test_save_after_transition_acceptance_cannot_mint_controller_receipt(self):
+    def test_save_at_transition_acceptance_cannot_mint_controller_receipt(self):
         self._two_saves()
         method = self._method()
-        method['transitions'][0]['execution_accepted_ns'] = 9
+        method['transitions'][0]['execution_accepted_ns'] = 10
         receipt = make_registered_calc_g10_save_controller_receipt(
             descriptor=self.custody.descriptor, method_receipt=method,
             save_receipts=[self.custody._records['first'],

@@ -5,6 +5,7 @@ and receipt joins, not a live Calc launch or save.
 """
 import copy
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -39,6 +40,7 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                 window_generation=WINDOW_GENERATION, target_xid=XID,
                 target_pid=PID, target_start_ticks=START_TICKS)
 
+            bridge = Bridge()
             interface = copy.deepcopy(spec())
             interface['interface_id'] = PROFILE_ID
             interface['actions'] = {
@@ -57,6 +59,15 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                 'second': old_bindings['save'],
             }
             save_receipts = []
+            save_request_times = {}
+            original_click = bridge.click
+
+            def capture_save_request_time(*args, **kwargs):
+                action = 'first' if bridge.phase == 0 else 'second'
+                save_request_times[action] = time.perf_counter_ns()
+                return original_click(*args, **kwargs)
+
+            bridge.click = capture_save_request_time
 
             def retain_completed(transition):
                 action = transition['action']
@@ -65,7 +76,11 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                     set() if action == 'first' else {'first'})
                 (custody.workbook_path).write_bytes(
                     (FIXTURES / f'{action}.fods').read_bytes())
-                request_ns = transition['execution_accepted_ns']
+                request_ns = save_request_times[action]
+                self.assertGreaterEqual(request_ns,
+                    transition['execution_started_ns'])
+                self.assertLess(request_ns,
+                    transition['execution_accepted_ns'])
                 request = {
                     'schema': 'agent-interface/calc-g10-save-request-v1',
                     'call_id': CALL_ID, 'attempt_id': ATTEMPT_ID,
@@ -82,10 +97,10 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                         'status': 'completed', 'release_verified': True},
                     save_request=request))
 
-            result = run(Bridge(), interface, action_bindings,
+            result = run(bridge, interface, action_bindings,
                 perceive=perceive, verify_effect=verify,
                 on_action_completed=retain_completed)
-            self.assertEqual(result['outcome'], 'TASK_SUCCEEDED')
+            self.assertEqual(result['outcome'], 'TASK_SUCCEEDED', result)
             self.assertEqual([row['action'] for row in result['transitions']],
                              ['first', 'second'])
             controller = make_registered_calc_g10_save_controller_receipt(

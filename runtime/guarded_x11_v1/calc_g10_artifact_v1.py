@@ -83,6 +83,7 @@ def make_registered_calc_g10_save_controller_receipt(*, descriptor,
         if type(transition) is not dict or type(row) is not dict:
             return None
         request_ns = row.get('save_request_monotonic_ns')
+        started_ns = transition.get('execution_started_ns')
         accepted_ns = transition.get('execution_accepted_ns')
         if (row.get('schema') != 'agent-interface/calc-g10-save-receipt-v1'
                 or (row.get('call_id'), row.get('attempt_id'),
@@ -98,7 +99,9 @@ def make_registered_calc_g10_save_controller_receipt(*, descriptor,
                 or type(row.get('save_request_id')) is not str
                 or not re.fullmatch(r'[0-9a-f]{32}', row['save_request_id'])
                 or type(request_ns) is not int or request_ns <= 0
-                or type(accepted_ns) is not int or accepted_ns < request_ns
+                or type(started_ns) is not int or started_ns <= 0
+                or type(accepted_ns) is not int
+                or not started_ns <= request_ns < accepted_ns
                 or type(row.get('artifact_sha256')) is not str
                 or not re.fullmatch(r'[0-9a-f]{64}', row['artifact_sha256'])
                 or type(row.get('artifact_bytes')) is not int
@@ -110,6 +113,7 @@ def make_registered_calc_g10_save_controller_receipt(*, descriptor,
             'action_id': row['action_id'],
             'save_request_id': row['save_request_id'],
             'save_request_monotonic_ns': request_ns,
+            'transition_execution_started_ns': started_ns,
             'transition_execution_accepted_ns': accepted_ns,
             'artifact_sha256': row['artifact_sha256'],
             'artifact_bytes': row['artifact_bytes'],
