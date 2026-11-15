@@ -750,6 +750,29 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(backend.release_calls, 1)
         self.assertTrue(backend.closed)
 
+    def test_orphan_recovery_reports_unknown_if_generation_changes_after_release(self):
+        class GenerationChangesOnRelease(FakeBackend):
+            def release_all(self):
+                receipt = super().release_all()
+                self.generation = "b" * 64
+                return receipt
+
+        backend = GenerationChangesOnRelease({"fixture": 44})
+        result = _recover(self.request(obligations=[
+                "key:fixture:SHIFT:virtual_key"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+
+        self.assertEqual(result["status"], "unknown", result)
+        self.assertEqual(result["reason"],
+            "target_generation_changed_after_release")
+        self.assertFalse(result["release_accepted"])
+        self.assertTrue(result["release_receipt"]["verified"])
+        self.assertEqual(backend.events, ["release"])
+        self.assertEqual(backend.key_up_calls, [(0x10, False, "virtual_key")])
+        self.assertEqual(backend.release_calls, 1)
+        self.assertTrue(backend.closed)
+
     def test_orphan_recovery_focus_refusal_sends_no_global_key_up(self):
         class FocusDeniedBackend(FakeBackend):
             def focus(self, target):
