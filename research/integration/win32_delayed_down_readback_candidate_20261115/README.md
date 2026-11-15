@@ -59,3 +59,13 @@ Focused case: 1/1 passed normally and 1/1 under `-O` (10.775 s / 10.850 s). Full
 Scope: test-only Fake supervisor/readback through the production CLI/stdio result path. This confirms conservative receipt validation and retrieval shape only; it is not native input/recovery proof.
 
 SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py e86237f851622efcc38d69a9d18da2c385fcd826debb8f02a9e76fbfd44f58a5; runtime/cli_v1/mcp_supervised_stdio_test_server.py 537b09ce5ca20ca373db255a306c900d9791ae613709c507df97dc4edc70d798; invalid-horizon-exact-query-normal.log b22f951ae773ac331f06adb893694faa45a67e159b209628faea94da3a8bce71; invalid-horizon-exact-query-optimized.log f5aee400f27945e1de245a6d09eab0e3b0f5ed9cb69b895198d7334e3b9138fb; mcp-supervised-win32-invalid-horizon-normal.log 19b03993e2fca487e339bb9fe5a872f4e357fcc1cf43487721666ec52e003e7d; mcp-supervised-win32-invalid-horizon-optimized.log 49efc2952578d1a66b026c220fbbec24b06ae7a32c95cf595a3c62a8eba456dd.
+
+## Failed recovery blocks the next same-generation public dispatch
+
+Extended the invalid-horizon production-stdio case: after exact-call retrieval remains UNKNOWN, the test invokes the public standard dispatcher with the recovery generation. It is refused with ORPHAN_RECOVERY_UNRESOLVED, operation_invoked=false, input_dispatched=false, task_success=null, and replay_allowed=false. This directly checks the live owner admission fence after a failed bounded recovery; no producer/input operation is admitted.
+
+Focused test: 1/1 normal (10.939 s), 1/1 optimized (10.497 s). Full runtime.cli_v1.test_mcp_supervised_win32: 50/50 normal (102.091 s), 50/50 optimized (102.877 s), Python 3.11.9.
+
+Scope remains Fake-backed production stdio and owner gate only; no native Win32 or MAP01 proof.
+
+SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py CD4B078E98E36ECBF24BFFDB8AD223AC931EEAA88579F8F1DDEE9FC879ADDC75; invalid-horizon-gate-normal.log 7EC14A6D33236FB58FD2C155C0CC631F450CC9EB1CF1DDD6938111D188E0C451; invalid-horizon-gate-optimized.log 337415DC19B1E6C3F70A30998A95CC99A26DCC38DC2B197E219D4C4F700A6002; mcp-supervised-win32-recovery-gate-normal.log 9035A8E1E9AA6174CC96B1698D8874C32DC1C8CA96D4AAAD85EDCD3BC99F9B24; mcp-supervised-win32-recovery-gate-optimized.log 4F6FC1FD66A38C2CC359E448424016F851A54F0D0F3E4F196095FF65BF60D298.

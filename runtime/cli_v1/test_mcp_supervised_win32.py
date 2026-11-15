@@ -3644,6 +3644,28 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         2_000_000_000)
                     self.assertEqual(receipt["late_input_observation_count"], 1)
 
+                    blocked_program = self.valid_program()
+                    blocked_program["source"]["target_generations"][
+                        "fixture"] = recovery_generation
+                    blocked = await client.call_tool("interface_dispatch", {
+                        "program": blocked_program,
+                        "current_observation_seq": 1,
+                        "current_binding_revision": 1,
+                        "wait_for_result_ms": 5000})
+                    blocked_result = self.row(blocked)
+                    self.assertEqual(blocked_result["status"],
+                        "invalid_request", blocked_result)
+                    self.assertEqual(blocked_result["error"],
+                        "ORPHAN_RECOVERY_UNRESOLVED", blocked_result)
+                    self.assertFalse(blocked_result["operation_invoked"],
+                        blocked_result)
+                    self.assertFalse(blocked_result["input_dispatched"],
+                        blocked_result)
+                    self.assertIsNone(blocked_result["task_success"],
+                        blocked_result)
+                    self.assertFalse(blocked_result["replay_allowed"],
+                        blocked_result)
+
     async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
