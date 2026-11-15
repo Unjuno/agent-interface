@@ -34,3 +34,12 @@ The success, pending-result query, refusal, and UNKNOWN public recovery paths we
 | --- | --- | --- | --- |
 | Normal | `python -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_tool_is_bounded_and_keeps_source_unknown runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_pending_result_is_queryable runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_refusal_is_an_mcp_error runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_unknown_is_an_mcp_error` | 4/4 PASS (9.374 s) | `303EE1A4A6F4A07495A1A798A5D40932479239C48BC278BD91739DC45893E502` |
 | Optimized | `python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_tool_is_bounded_and_keeps_source_unknown runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_pending_result_is_queryable runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_refusal_is_an_mcp_error runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_unknown_is_an_mcp_error` | 4/4 PASS (8.227 s) | `528D35E1CE55C5BC5FF93B923EC01CD8C950F177BF016AE841AE023450945FF2` |
+
+## Post-release target-generation change regression (candidate)
+
+A fake backend performs the obligation-bound key UP, then changes target generation before the helper's post-release check. The helper must preserve the release receipt but report UNKNOWN, with no focus request or success claim. Full helper module results:
+
+| Mode | Command | Result | Raw log SHA-256 |
+| --- | --- | --- | --- |
+| Normal | `python -m unittest runtime.cli_v1.test_win32_supervisor_helpers` | 44/44 PASS (0.244 s) | `43D8A372B94452D26A2CADB688C9FC7F31A986ECEB0B7FB972776D5AB44BD878` |
+| Optimized | `python -O -m unittest runtime.cli_v1.test_win32_supervisor_helpers` | 44/44 PASS (0.237 s) | `BB6311BDBE3B3610E898A505DA81F8F1997B073056D1945B03AE939523F31117` |
