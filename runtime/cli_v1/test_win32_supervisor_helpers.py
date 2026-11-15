@@ -738,6 +738,24 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual(backend.release_calls, 1)
         self.assertTrue(backend.closed)
 
+    def test_orphan_recovery_focus_refusal_sends_no_global_key_up(self):
+        class FocusDeniedBackend(FakeBackend):
+            def focus(self, target):
+                self.events.append(("focus", target))
+                raise RuntimeError("foreground focus verification failed")
+
+        backend = FocusDeniedBackend({"fixture": 44})
+        with self.assertRaisesRegex(RuntimeError,
+                                    "foreground focus verification failed"):
+            _recover(self.request(obligations=["key:fixture:SHIFT:virtual_key",
+                    "button:fixture:left"], focus_target_before_release=True),
+                backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+                configured_targets={"fixture": 44})
+        self.assertEqual(backend.events, [("focus", "fixture")])
+        self.assertEqual(backend.release_calls, 0)
+        self.assertEqual(backend.key_up_calls, [])
+        self.assertTrue(backend.closed)
+
     def test_recovery_generation_mismatch_sends_no_up(self):
         instances = []
         def factory(targets):
