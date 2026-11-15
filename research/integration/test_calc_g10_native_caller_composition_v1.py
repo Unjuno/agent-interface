@@ -338,6 +338,16 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
         self.assertEqual(state["allocation_result"]["accounting"]["attempted_calls"], 2)
         self.assertEqual(state["allocation_result"]["accounting"]["usage_totals"][
             "input_tokens"], 240)
+        self.assertEqual(state["allocation_result"]["accounting"]["usage_totals"][
+            "cached_input_tokens"], 40)
+        self.assertEqual(state["allocation_result"]["accounting"]["usage_totals"][
+            "output_tokens"], 24)
+        self.assertEqual(state["allocation_result"]["accounting"]["usage_totals"][
+            "reasoning_output_tokens"], 8)
+        self.assertEqual(state["allocation_result"]["accounting"][
+            "visible_images_submitted"], 2)
+        self.assertEqual(state["allocation_result"]["accounting"]["model_wait_ns"], 100)
+        self.assertEqual(state["allocation_result"]["accounting"]["cost_coverage"], 2)
         self.assertEqual(state["allocation_result"]["accounting"]["cost"], 0.02)
         self.assertEqual(state["allocation_conditions"]["conditions"]["transport"], "Fake X")
         self.assertEqual(result["compiled_execution_receipt"]["completed_transitions"], 2)
