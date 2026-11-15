@@ -950,20 +950,48 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 _supervised_win32_deadline_cancel_grace_ns=250_000_000)
             program = self.valid_program()
             program["authority"]["expires_at_ns"] = time.monotonic_ns()+5_000_000_000
-            result = self.row(await server.call_tool("interface_dispatch", {
+            dispatch = self.row(await server.call_tool("interface_dispatch", {
                 "program":program,"current_observation_seq":1,
-                "current_binding_revision":1,"wait_for_result_ms":5000}))
-            self.assertEqual(result["status"],"returned",result)
-            self.assertEqual(result["deadline_cancel_policy"],"public_caller")
-            self.assertIsNone(result["deadline_cancel_route"],result)
-            self.assertEqual(result["result"]["status"],"unknown")
-            self.assertIsNone(result["input_dispatched"])
+                "current_binding_revision":1,"wait_for_result_ms":0}))
+            self.assertIn(dispatch["status"], ("pending", "returned"), dispatch)
+            result = dispatch
+            if dispatch["status"] == "pending":
+                call_id = dispatch["call_id"]
+                deadline = time.monotonic()+10
+                report_path = Path(root)/call_id/"report.json"
+                report_temp = report_path.with_name(".report.json.tmp")
+                while time.monotonic() < deadline:
+                    retained = self.row(await server.call_tool("interface_results", {
+                        "call_id":call_id, "include_image":False}))
+                    action = retained.get("action")
+                    cancellation = retained.get("cancellation")
+                    if (isinstance(action, dict)
+                            and action.get("status") == "unknown"
+                            and isinstance(cancellation, dict)
+                            and cancellation.get("status") == "recovered"
+                            and report_path.is_file() and not report_temp.exists()):
+                        result = retained
+                        break
+                    await asyncio.sleep(0.01)
+                self.assertEqual(result.get("call_id"), call_id, result)
+                self.assertEqual(result["deadline_cancel_policy"], "public_caller")
+                self.assertIsNone(result.get("deadline_cancel_route"), result)
+                action = result["action"]
+                cancellation = result["cancellation"]
+            else:
+                self.assertEqual(result["status"],"returned",result)
+                self.assertEqual(result["deadline_cancel_policy"],"public_caller")
+                self.assertIsNone(result["deadline_cancel_route"],result)
+                self.assertEqual(result["result"]["status"],"unknown")
+                self.assertIsNone(result["input_dispatched"])
+                action = result["supervision"]["action"]
+                cancellation = result["supervision"]["cancellation"]
             self.assertIsNone(result["task_success"])
             self.assertFalse(result["replay_allowed"])
-            action = result["supervision"]["action"]
-            cancellation = result["supervision"]["cancellation"]
             self.assertEqual(action["status"],"unknown")
             self.assertFalse(action["release_confirmed"])
+            if dispatch["status"] == "pending":
+                self.assertIsNone(action["result"]["input_dispatched"])
             self.assertTrue(cancellation["automatic_completion_recovery"])
             self.assertEqual(cancellation["status"],"recovered")
             self.assertTrue(cancellation["release_confirmed"])
