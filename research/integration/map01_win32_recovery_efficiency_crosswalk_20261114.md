@@ -154,6 +154,7 @@ Pre-register the counter as pointer move + first DOWN = 2; bind cancellation via
 
 ## Current-main public caller ABBA result (2026-11-14)
 
+
 The frozen R237/R238/R239/R240 ABBA packet compares direct public dispatch with
 the public compiled caller under the same native MAP01 producer-exit recovery
 condition. All four attempts passed the scoped release, late-input, neutral,

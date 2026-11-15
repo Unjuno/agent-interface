@@ -1129,6 +1129,46 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool('interface_close',{})
 
+    async def test_g10_profile_is_refused_without_consuming_single_save_reservation(self):
+        """The offline G10 artifact helper is not a registered public profile."""
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'g10-attempt',
+                        'task_values':{'A1':'29','A2':'31'}}))
+                self.assertEqual(prepared['status'],'prepared',prepared)
+                rejected=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-g10-two-save-v1',
+                        'bindings':{'entry':{'alias':'entry','offset':[0,0]},
+                                    'save':{'alias':'save','offset':[0,0]}},
+                        'reviewed_sequence':1,
+                        'reviewed_artifact_sha256':'a'*64,
+                        'blank_reviewed':True,'attempt_id':'g10-attempt',
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(rejected['status'],'invalid_request',rejected)
+                self.assertFalse(rejected['operation_invoked'],rejected)
+                self.assertFalse(rejected['input_dispatched'],rejected)
+                self.assertIsNone(rejected['task_success'],rejected)
+                self.assertFalse(rejected['replay_allowed'],rejected)
+                self.assertFalse(list(root.glob('*/compiled/')))
+                self.assertFalse(list(root.glob('calls/*/request.json')))
+                second=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'g10-second-attempt'}))
+                self.assertEqual(second['status'],'busy',second)
+                self.assertEqual(second['error'],
+                    'CALC_PREPARATION_ALREADY_RESERVED',second)
+            finally:
+                await server.call_tool('interface_close',{})
+
     async def test_registered_calc_profile_runs_through_owned_mcp_and_releases(self):
         from runtime.guarded_x11_v1.test_calc_symbolic_plan_v1 import (
             plan as calc_symbolic_plan)

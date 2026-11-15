@@ -82,6 +82,58 @@ def verify(payload,native,image): return {'status':'succeeded','evidence_ref':pa
 
 class CompiledX11Tests(unittest.TestCase):
 
+    def test_action_completion_callback_receives_ordered_release_verified_rows(self):
+        b = Bridge()
+        completed = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify, on_action_completed=lambda row:
+                completed.append((copy.deepcopy(row), b.sequence)))
+        self.assertEqual(result['outcome'], 'TASK_SUCCEEDED')
+        self.assertEqual([row['action'] for row, _ in completed],
+                         ['enter', 'save'])
+        self.assertEqual([sequence for _, sequence in completed], [1, 2])
+        for row, _ in completed:
+            self.assertTrue(row['release_verified'])
+            self.assertIsInstance(row['action_id'], str)
+            self.assertIsInstance(row['execution_accepted_ns'], int)
+
+    def test_action_completion_callback_is_skipped_when_release_is_unknown(self):
+        b = Bridge()
+        b.release = False
+        completed = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify,
+            on_action_completed=lambda row: completed.append(row))
+        self.assertEqual((result['outcome'], result['reason']),
+                         ('RUNTIME_FAILED', 'execution_failed'))
+        self.assertEqual(result['completed_transitions'], 0)
+        self.assertEqual(completed, [])
+        self.assertEqual(len(b.inputs), 1)
+
+    def test_action_completion_callback_failure_stops_before_next_action(self):
+        b = Bridge()
+        completed = []
+
+        def fail_after_record(row):
+            completed.append(row['action'])
+            raise OSError('custody snapshot failed')
+
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify, on_action_completed=fail_after_record)
+        self.assertEqual((result['outcome'], result['reason']),
+                         ('RUNTIME_FAILED', 'execution_failed'))
+        self.assertEqual(result['completed_transitions'], 1)
+        self.assertEqual(completed, ['enter'])
+        self.assertEqual(len(b.inputs), 1)
+
+    def test_invalid_action_completion_callback_is_rejected_before_dispatch(self):
+        b = Bridge()
+        with self.assertRaisesRegex(ValueError,
+                                    'on_action_completed must be callable'):
+            run(b, spec(), bindings(), perceive=perceive,
+                verify_effect=verify, on_action_completed=object())
+        self.assertEqual(b.inputs, [])
+
     def test_reused_semantic_plan_requires_fresh_scope_binding(self):
         first_bridge=Bridge()
         first=validate_and_bind_calc_plan(calc_plan(),
