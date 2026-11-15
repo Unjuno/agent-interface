@@ -5,6 +5,7 @@ guarded compiled adapter and caller are real; only the X transport/application
 effect are simulated. It is not live Calc or an independent effect result.
 """
 import copy
+import hashlib
 import json
 import tempfile
 import threading
@@ -23,11 +24,17 @@ from research.integration.test_calc_g10_fresh_admission_v1 import (
 )
 from research.live_control import calc_g10_fresh_admission_v1 as fresh_admission
 from research.live_control.calc_bounded_proposal_v1 import BoundedProposal
-from research.live_control.calc_g10_caller_v1 import run_g10_in_caller
+from research.live_control.calc_durable_allocation_v1 import (
+    DurableCalcAllocation, audit_allocation,
+)
+from research.live_control.calc_g10_caller_v1 import (
+    run_g10_in_caller, run_g10_in_durable_allocation,
+)
 
 
 class G10NativeCallerCompositionTests(unittest.TestCase):
-    def run_case(self, *, unknown_first_effect=False, delay_proposal=False):
+    def run_case(self, *, unknown_first_effect=False, delay_proposal=False,
+                 durable=False):
         fake = FakeX(self)
         buttons, pointer = set(), [0, 0]
         fake.backend.root.query_pointer = lambda: type("Pointer", (), {
@@ -50,6 +57,7 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
         x11_backend.xtest.fake_input.side_effect = emit
         state = {"clicks": 0, "old_alias_status": None, "outer_score": 0,
                  "published": [], "target_builds": []}
+        allocation = None
         proposal_entered, release_proposal, proposal_completed = (
             threading.Event(), threading.Event(), threading.Event())
         cancelled = lambda: False
@@ -124,6 +132,9 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
 
                 def outer_effect(_request):
                     state["outer_score"] += 1
+                    if allocation is not None:
+                        state["receipt_present_before_outer_score"] = (
+                            allocation.path / "compiled_receipt.json").is_file()
                     return {"status": "succeeded", "evidence_ref": "synthetic-outer-effect"}
 
                 spec = {"target": "calc", "route": "reuse", "coarse_origin": "caller_provided",
@@ -136,6 +147,50 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
                     "verify_effect": outer_effect,
                     "journal": lambda _: None,
                 }
+                if durable:
+                    spec = {"target": "calc", "route": "cold",
+                        "coarse_origin": "model_produced", "provided_coarse": None,
+                        "cached_target": None, "repair_on": [], "local_repair_on": [],
+                        "session_id": "native-fake-x-durable"}
+                    def model_result(call_id, output):
+                        return {"call_id": call_id, "output": output,
+                            "usage": {"input_tokens": 120, "cached_input_tokens": 20,
+                                "output_tokens": 12, "reasoning_output_tokens": 4},
+                            "requested_model": "fixture-model", "requested_effort": "low",
+                            "cost": 0.01, "visible_images_submitted": 1, "wait_ns": 50}
+                    caller_adapters.update({
+                        "observe_source": lambda _payload: {
+                            "sequence": 1, "capture_ns": 100,
+                            "evidence_ref": "synthetic-source"},
+                        "coarse_model": lambda _payload: model_result(
+                            "coarse-call-1", {"status": "candidate", "point": [8, 8]}),
+                        "acquire_anchor": lambda _payload: {"image_ref": "synthetic-anchor"},
+                        "anchor_model": lambda _payload: model_result(
+                            "anchor-call-1", {"status": "target_reference",
+                                "target": {"id": "old"}}),
+                    })
+                    archive = (Path(__file__).parent /
+                        "calc_current_shared_3311_4d74_20261004" /
+                        "calc-compiled-ocrlive-4d74")
+                    raw_path = archive / "runs" / "compiled_ocrlive10" / "raw.json"
+                    source_hashes = {
+                        "retained_g10_raw": hashlib.sha256(
+                            raw_path.read_bytes()).hexdigest(),
+                        "g10_caller": hashlib.sha256(
+                            Path(__file__).parents[1].joinpath(
+                                "live_control", "calc_g10_caller_v1.py"
+                            ).read_bytes()).hexdigest(),
+                    }
+                    allocation_root = Path(tmp) / "allocations"
+                    allocation_root.mkdir()
+                    allocation = DurableCalcAllocation(
+                        allocation_root, "fake-x-g10-attempt-001",
+                        source_sha256=source_hashes["retained_g10_raw"],
+                        observation_ids=["fake-x-seed-frame-01"],
+                        source_hashes=source_hashes,
+                        conditions={"domain": "Calc", "workflow": "G10-two-save",
+                            "transport": "Fake X", "provider_usage": "synthetic-envelope-only",
+                            "effect_oracle": "synthetic-callback"})
                 # The strict post-action capture gate compares monotonic
                 # timestamps. Advance the fixture clock between calls so the
                 # intended fresh-capture case is deterministic on hosts whose
@@ -154,11 +209,19 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
                 with patch("time.monotonic_ns", side_effect=advance_clock), patch.object(
                         fresh_admission, "mint_from_proposal",
                         side_effect=record_freshness_gate):
-                    result = run_g10_in_caller(
-                        spec, caller_adapters, build_for_final_target, bridge, action_bindings,
-                        perceive=perceive, verify_effect=compiled_effect,
-                        proposal_worker=proposal_worker, cancelled=cancelled,
-                        on_receipt=lambda receipt: state["published"].append(copy.deepcopy(receipt)))
+                    if allocation is None:
+                        result = run_g10_in_caller(
+                            spec, caller_adapters, build_for_final_target, bridge, action_bindings,
+                            perceive=perceive, verify_effect=compiled_effect,
+                            proposal_worker=proposal_worker, cancelled=cancelled,
+                            on_receipt=lambda receipt: state["published"].append(copy.deepcopy(receipt)))
+                    else:
+                        result = run_g10_in_durable_allocation(
+                            spec, caller_adapters, build_for_final_target, bridge,
+                            action_bindings, allocation, perceive=perceive,
+                            verify_effect=compiled_effect,
+                            proposal_worker=proposal_worker, cancelled=cancelled,
+                            on_receipt=lambda receipt: state["published"].append(copy.deepcopy(receipt)))
                 if proposal_worker.thread is not None and not delay_proposal:
                     proposal_worker.thread.join(1)
                 state["worker"] = proposal_worker.snapshot()
@@ -174,6 +237,15 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
                 state["physical_down"] = sorted(fake.down)
                 state["emissions"] = list(fake.emissions)
                 state["used_aliases"] = sorted(bridge.used_aliases)
+                if allocation is not None:
+                    state["allocation_audit"] = audit_allocation(allocation.path)
+                    state["allocation_result"] = json.loads(
+                        (allocation.path / "result.json").read_text(encoding="utf-8"))
+                    state["allocation_conditions"] = json.loads(
+                        (allocation.path / "conditions.json").read_text(encoding="utf-8"))
+                    state["allocation_events"] = [json.loads(line)["event_type"]
+                        for line in (allocation.path / "events.jsonl").read_text(
+                            encoding="utf-8").splitlines()]
                 return bridge, state, result
             finally:
                 bridge.close()
@@ -251,6 +323,36 @@ class G10NativeCallerCompositionTests(unittest.TestCase):
             release.set()
             if worker.thread is not None:
                 worker.thread.join(1)
+
+    def test_positive_fake_x_path_persists_g10_receipt_before_independent_effect(self):
+        _, state, result = self.run_case(durable=True)
+        self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(state["receipt_present_before_outer_score"])
+        self.assertEqual(state["allocation_audit"]["status"], "audited")
+        self.assertEqual(state["allocation_audit"]["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(state["allocation_audit"]["receipt_persisted"])
+        self.assertTrue(state["allocation_audit"]["effect_receipt_persisted"])
+        self.assertLess(state["allocation_events"].index("compiled_receipt_persisted"),
+                        state["allocation_events"].index("effect_receipt_persisted"))
+        self.assertEqual(len(state["allocation_result"]["model_call_cost_ledger"]), 2)
+        self.assertEqual(state["allocation_result"]["accounting"]["attempted_calls"], 2)
+        self.assertEqual(state["allocation_result"]["accounting"]["usage_totals"][
+            "input_tokens"], 240)
+        self.assertEqual(state["allocation_result"]["accounting"]["cost"], 0.02)
+        self.assertEqual(state["allocation_conditions"]["conditions"]["transport"], "Fake X")
+        self.assertEqual(result["compiled_execution_receipt"]["completed_transitions"], 2)
+        self.assertEqual(state["physical_down"], [])
+
+    def test_unknown_effect_persists_partial_g10_receipt_without_success_or_outer_score(self):
+        _, state, result = self.run_case(unknown_first_effect=True, durable=True)
+        self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+        self.assertEqual(state["allocation_audit"]["status"], "audited")
+        self.assertEqual(state["allocation_audit"]["outcome"], "EXECUTION_INCOMPLETE")
+        self.assertTrue(state["allocation_audit"]["receipt_persisted"])
+        self.assertFalse(state["allocation_audit"]["effect_receipt_persisted"])
+        self.assertEqual(result["compiled_execution_receipt"]["completed_transitions"], 1)
+        self.assertEqual((state["clicks"], state["outer_score"]), (1, 0))
+        self.assertEqual(state["physical_down"], [])
 
 
 if __name__ == "__main__":
