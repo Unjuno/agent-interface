@@ -90,7 +90,7 @@ def _handle_blocked_native_recovery(request, response, release_started):
 
 
 def _fake_readback_worker(neutral, request, result_send):
-    result_send.send({
+    result = {
         "operation_id": request["operation_id"],
         "target_generation": request["target_generation"],
         "recovery_id": request["recovery_id"],
@@ -99,8 +99,10 @@ def _fake_readback_worker(neutral, request, result_send):
                               if item.startswith(("key:", "button:"))],
         "unicode_event_units": sum(item.startswith("unicode:") for item in request["obligations"]),
         "observed_monotonic_ns": time.monotonic_ns(),
-    })
+    }
+    result_send.send(result)
     result_send.close()
+    return result
 
 
 def _blocked_readback_worker(started, result_send):
@@ -218,12 +220,13 @@ def _handle_fake_observation(request, response, neutral):
 
 def _handle_delayed_down_observation(request, response, neutral, down,
                                     observer_calls, delayed_down_seen,
-                                    neutral_readback_seen, event_counter,
-                                    event_order):
+                                    neutral_readback_seen,
+                                    delayed_down_readback_seen,
+                                    event_counter, event_order):
     with observer_calls.get_lock():
         observer_calls.value += 1
         call_number = observer_calls.value
-    _fake_readback_worker(neutral, request, response)
+    readback = _fake_readback_worker(neutral, request, response)
     if call_number == 1:
         neutral_readback_seen.set()
         with event_counter.get_lock():
@@ -239,6 +242,11 @@ def _handle_delayed_down_observation(request, response, neutral, down,
         timer = threading.Timer(0.01, deliver_old_down)
         timer.daemon = True
         timer.start()
+    elif delayed_down_seen.is_set() and readback["key_button_states"] == [True]:
+        delayed_down_readback_seen.set()
+        with event_counter.get_lock():
+            event_counter.value += 1
+            event_order[3] = event_counter.value
 
 
 def _handle_blocked_recovery(_request, response, started):
@@ -776,9 +784,10 @@ class ProcessCancellationTests(unittest.TestCase):
         producer_started = context.Event()
         neutral = context.Event()
         delayed_down_seen = context.Event()
+        delayed_down_readback_seen = context.Event()
         neutral_readback_seen = context.Event()
         event_counter = context.Value("i", 0)
-        event_order = context.Array("q", [0, 0, 0])
+        event_order = context.Array("q", [0, 0, 0, 0])
         observer_calls = context.Value("i", 0)
         producer = context.Process(target=_blocked_fake_producer,
                                    args=(down, producer_started))
@@ -801,7 +810,8 @@ class ProcessCancellationTests(unittest.TestCase):
             observer_factory = _persistent_helper_factory(context, "observer",
                 _handle_delayed_down_observation,
                 (neutral, down, observer_calls, delayed_down_seen,
-                 neutral_readback_seen, event_counter, event_order), observer_handles)
+                 neutral_readback_seen, delayed_down_readback_seen,
+                 event_counter, event_order), observer_handles)
             supervisor = OperationCancellationSupervisor(owner,
                 recovery_process_factory=recovery_factory,
                 observer_process_factory=observer_factory,
@@ -819,6 +829,8 @@ class ProcessCancellationTests(unittest.TestCase):
                     time.monotonic_ns() + 5_000_000_000, ["key:b"])
             self.assertTrue(delayed_down_seen.wait(2),
                             "delayed old DOWN was not injected")
+            self.assertTrue(delayed_down_readback_seen.wait(2),
+                            "observer did not read back the delayed DOWN")
             terminal_deadline = time.monotonic() + 2
             while time.monotonic() < terminal_deadline:
                 result = owner.result("operation-delayed")
@@ -833,6 +845,7 @@ class ProcessCancellationTests(unittest.TestCase):
             self.assertTrue(all(event_order))
             self.assertLess(event_order[0], event_order[1])
             self.assertLess(event_order[1], event_order[2])
+            self.assertLess(event_order[2], event_order[3])
             with self.assertRaises(OwnerRefused):
                 owner.admit("operation-next", "b" * 64,
                     time.monotonic_ns() + 5_000_000_000, ["key:b"])

@@ -38,6 +38,8 @@ def main():
     parser.add_argument("--recovery-generation", default="b" * 64)
     parser.add_argument("--recovery-result-delay-ms", type=int, default=0,
         help="test-only delay after a completed recovery horizon and before its terminal receipt returns")
+    parser.add_argument("--recovery-invalid-horizon", action="store_true",
+        help="test-only: return a recovery receipt whose sample count cannot cover its claimed horizon")
     parser.add_argument("--oracle-success", action="store_true",
         help="Return a positive fake task-oracle receipt for caller integration tests.")
     args = parser.parse_args()
@@ -75,6 +77,8 @@ def main():
                 "late_input_observation_count": len(sample_times),
                 "late_input_max_observed_gap_ns": max_sample_gap_ns,
                 "late_input_max_sample_gap_ns": max_sample_gap_ns}
+            if args.recovery_invalid_horizon:
+                receipt["late_input_observation_count"] = 1
             if args.recovery_result_delay_ms:
                 time.sleep(args.recovery_result_delay_ms / 1000)
             return receipt
