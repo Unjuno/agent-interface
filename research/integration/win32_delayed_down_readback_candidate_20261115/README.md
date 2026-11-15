@@ -111,6 +111,16 @@ Scope: Fake process/input/effect and task oracle through the public caller/serve
 
 SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py 3B4FD2FB0F108E8ED7B690F0A011E36CBCE6A4DA59DE841C7E19139270CD9094; compiled-caller-compact-result-normal.log 484377055B71513BECE8383E4888945CA0DC53B36FB6180098DE5BB700807652; compiled-caller-compact-result-optimized.log 2F85F36C54811C7BFB212E2B61F02DE35B74752FC773C3482448AC67A2A579D0.
 
+## Compiled caller retains UNKNOWN when exact result includes recovery release
+
+Strengthened `test_stdio_public_compiled_caller_preserves_unknown_exception` so its public `resolve_pending` callback reads the exact result with `compact=true`, `report_refs=true`, `detail=brief`. The retained exception action stays UNKNOWN even though its cancellation record reports recovered/release-confirmed. The compiled caller classifies delivery as uncertain with release unverified and does not call its effect verifier or task oracle.
+
+Focused production-stdio caller regression: 1/1 passed normally (1.481 s) and 1/1 under `-O` (1.192 s), Python 3.11.9. Raw logs: `compiled-caller-unknown-recovery-compact-normal.log` and `compiled-caller-unknown-recovery-compact-optimized.log`.
+
+Scope: Fake-backed public caller/server classification. Release recovery alone does not establish task effect; no native MAP01 or #57 efficiency claim.
+
+SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py 57EC76D4017C1AB3081C084A8ADE7916E0F3C79E70E069409D225B08E4E6A06A; compiled-caller-unknown-recovery-compact-normal.log CCF012FEAAECC1716B977AFCA94DAF593ACD807EB7833BE641DB9E3142D5FA00; compiled-caller-unknown-recovery-compact-optimized.log 3E727791EBC16B32EC6B8A64DABBDE7B619AA93F6CE91F6220847EBE1702B8BC.
+
 ## Read-only native custody gate (2026-11-15)
 
 GZDoom PID 41580 remained responsive with title `Hydroelectric Plant - Freedoom: Phase 2`. The authoritative custody fence remained `unresolved`, revision 888, with pending `button:map01:left` and `key:map01:SHIFT:virtual_key`, operation `bb1c1f207e34407db20c28703713ae6a`, source generation `3b8649...f393c6f`, and no `last_resolved` entry. No focus, input, recovery, or process-close operation was performed. Native MAP01 remains gated.
