@@ -3506,6 +3506,13 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertFalse(pending["release_confirmed"], pending)
                     self.assertFalse(pending["replay_allowed"], pending)
 
+                    unrelated = await client.call_tool("interface_results", {
+                        "call_id": "0" * 32, "include_image": False})
+                    unrelated_result = json.loads(unrelated.content[0].text)
+                    self.assertEqual(unrelated_result["status"], "unknown_call",
+                                     unrelated_result)
+                    self.assertNotIn("recovery_receipt", unrelated_result)
+
                     end = time.monotonic() + 5
                     result = None
                     while time.monotonic() < end:
