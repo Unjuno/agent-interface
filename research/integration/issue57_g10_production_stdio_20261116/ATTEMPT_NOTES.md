@@ -24,5 +24,8 @@
    1/1 (15.107 s / 15.359 s); owner startup measured 10.890 s / 11.578 s.
    Complete raw logs are `raw/rerun-normal.log` and
    `raw/rerun-optimized.log`. This repeats only the Fake X/archived-FODS
-   receipt-shape check, and the production 5 s startup boundary still fails
-   in this Windows nested-spawn fixture.
+   receipt-shape check. These end-to-end `get()` times are not comparable to
+   `_STARTUP_TIMEOUT_S`: source inspection shows that 5 s is only the RPC
+   readiness poll after `process.start()` returns. The original default-budget
+   attempt shows readiness was not received within that poll; phase timing and
+   the cause remain unresolved.

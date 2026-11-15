@@ -23,7 +23,9 @@ the same committed test was rerun from that main commit. Both normal and
 measurements were 10.890 s and 11.578 s. Full raw captures are
 `raw/rerun-normal.log` and `raw/rerun-optimized.log`, included in the manifest.
 This independently reproduces the stdio receipt join and also confirms that
-this Windows nested-spawn owner startup remains above the 5 s production gate.
+the nested Windows-spawn `get()` duration is 10.890 s / 11.578 s. These are
+end-to-end `get()` timings, not direct measurements of the production readiness
+wait.
 
 ## Startup boundary
 
@@ -37,12 +39,16 @@ captured as a raw file; the failed outcome is preserved in `ATTEMPT_NOTES.md`.
 For the stdio receipt-shape test only, the test server changes its fixture
 startup wait to 20 s. It does not modify the production constant. Instrumented
 `OwnedGuardedSessionOwner.get()` took 10.860 s normally and 11.031 s under
-`-O` (two observations; median 10.946 s). These measurements exceed the
-production 5 s value in this Windows nested-spawn fixture. Linux X11 startup
-and its process-start method were not exercised, so the timeout cannot be
-generalized to deployment Linux. The positive run validates transport and
-receipt joining under the test-only startup wait; it does not pass the
-production 5 s startup gate.
+`-O` (two observations; median 10.946 s). The production `_STARTUP_TIMEOUT_S`
+is applied by `rpc_parent.poll()` **after** `process.start()` returns; that
+constant does not bound total `get()` wall time. The timed wrapper measures the
+whole `get()` and does not split process-start time from the readiness poll.
+The initial default-budget attempt establishes only that no readiness message
+arrived within the 5 s poll after `process.start()` returned. Thus the positive
+run validates transport and receipt joining under the test-only 20 s readiness
+wait, while the exact source of the default readiness timeout is unresolved.
+Linux X11 and process-start timing were not measured; no conclusion about Linux
+deployment follows.
 
 ## Limits
 
