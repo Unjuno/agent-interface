@@ -97,6 +97,29 @@ class CompiledX11Tests(unittest.TestCase):
             self.assertIsInstance(row['action_id'], str)
             self.assertIsInstance(row['execution_accepted_ns'], int)
 
+    def test_before_dispatch_hook_receives_bridge_action_identity(self):
+        b = Bridge()
+        dispatched = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            verify_effect=verify, before_action_dispatch=lambda row:
+                dispatched.append((copy.deepcopy(row), b.sequence)))
+        self.assertEqual(result['outcome'], 'TASK_SUCCEEDED')
+        self.assertEqual([row['action'] for row, _ in dispatched], ['enter', 'save'])
+        self.assertEqual([sequence for _, sequence in dispatched], [1, 2])
+        for (dispatch, _), transition in zip(dispatched, result['transitions']):
+            self.assertEqual(dispatch['action_id'], transition['action_id'])
+            self.assertGreaterEqual(dispatch['dispatch_started_ns'],
+                                    transition['execution_started_ns'])
+            self.assertLess(dispatch['dispatch_started_ns'],
+                            transition['execution_accepted_ns'])
+            self.assertEqual(dispatch['process_generation'], b.process_generation)
+            self.assertEqual(dispatch['window_generation'], b.window_generation)
+
+    def test_before_dispatch_hook_must_be_trusted_callable(self):
+        with self.assertRaisesRegex(ValueError, 'before_action_dispatch must be callable'):
+            run(Bridge(), spec(), bindings(), perceive=perceive,
+                verify_effect=verify, before_action_dispatch=object())
+
     def test_action_completion_callback_is_skipped_when_release_is_unknown(self):
         b = Bridge()
         b.release = False

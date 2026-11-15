@@ -5,7 +5,6 @@ and receipt joins, not a live Calc launch or save.
 """
 import copy
 import tempfile
-import time
 import unittest
 from pathlib import Path
 
@@ -59,15 +58,12 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                 'second': old_bindings['save'],
             }
             save_receipts = []
-            save_request_times = {}
-            original_click = bridge.click
+            save_dispatches = {}
 
-            def capture_save_request_time(*args, **kwargs):
-                action = 'first' if bridge.phase == 0 else 'second'
-                save_request_times[action] = time.perf_counter_ns()
-                return original_click(*args, **kwargs)
-
-            bridge.click = capture_save_request_time
+            def record_save_dispatch(dispatch):
+                action = dispatch['action']
+                self.assertEqual(action, 'first' if len(save_dispatches) == 0 else 'second')
+                save_dispatches[action] = copy.deepcopy(dispatch)
 
             def retain_completed(transition):
                 action = transition['action']
@@ -76,11 +72,13 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                     set() if action == 'first' else {'first'})
                 (custody.workbook_path).write_bytes(
                     (FIXTURES / f'{action}.fods').read_bytes())
-                request_ns = save_request_times[action]
+                dispatch = save_dispatches[action]
+                request_ns = dispatch['dispatch_started_ns']
                 self.assertGreaterEqual(request_ns,
                     transition['execution_started_ns'])
                 self.assertLess(request_ns,
                     transition['execution_accepted_ns'])
+                self.assertEqual(dispatch['action_id'], transition['action_id'])
                 request = {
                     'schema': 'agent-interface/calc-g10-save-request-v1',
                     'call_id': CALL_ID, 'attempt_id': ATTEMPT_ID,
@@ -99,7 +97,8 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
 
             result = run(bridge, interface, action_bindings,
                 perceive=perceive, verify_effect=verify,
-                on_action_completed=retain_completed)
+                on_action_completed=retain_completed,
+                before_action_dispatch=record_save_dispatch)
             self.assertEqual(result['outcome'], 'TASK_SUCCEEDED', result)
             self.assertEqual([row['action'] for row in result['transitions']],
                              ['first', 'second'])

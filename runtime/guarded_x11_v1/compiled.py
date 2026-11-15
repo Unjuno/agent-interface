@@ -15,7 +15,7 @@ def surface(bridge):
 
 
 class _Adapter:
-    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, verify_unchanged_effect=None, on_action_completed=None, post_release_settle_ms=0):
+    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, verify_unchanged_effect=None, on_action_completed=None, before_action_dispatch=None, post_release_settle_ms=0):
         self.interface = validate(interface)
         # Symbol labels belong to the graph language; target references name
         # the existing native registry and must obey its actual alias contract.
@@ -34,6 +34,8 @@ class _Adapter:
             raise ValueError('verify_unchanged_effect must be callable when supplied')
         if on_action_completed is not None and not callable(on_action_completed):
             raise ValueError('on_action_completed must be callable when supplied')
+        if before_action_dispatch is not None and not callable(before_action_dispatch):
+            raise ValueError('before_action_dispatch must be callable when supplied')
         if not callable(getattr(bridge,'input_guard',None)):
             raise ValueError('bridge input guard capability required')
         if type(bindings) is not dict or set(bindings) != set(self.interface['actions']):
@@ -55,6 +57,7 @@ class _Adapter:
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
         self.unchanged_verifier = verify_unchanged_effect
         self.action_completed = on_action_completed
+        self.before_action_dispatch = before_action_dispatch
         self.guard_perceive = perceive if guard_perceive is None else guard_perceive
         self.post_release_settle_ms = post_release_settle_ms
         self._method_deadline_ns = None
@@ -210,8 +213,19 @@ class _Adapter:
                     raise
                 finally:
                     self.retain('input_dependency',row)
+            # The bridge owns the action identity and creates it before the
+            # guarded input path. Trusted profile code may bind a request
+            # receipt to that exact action at dispatch time; public graph
+            # inputs cannot supply or replace this hook.
+            before_dispatch = getattr(self, 'before_action_dispatch', None)
             with self.bridge.input_guard(authorization['target_reference'],binding['offset'],
                     tail=copy.deepcopy(binding['tail']),interaction=binding['interaction'],verify=verify_input):
+                if before_dispatch is not None:
+                    before_dispatch({'action':request['action'], 'action_id':action_id,
+                        'operation':request['operation'],
+                        'process_generation':self.target_generation.get('process_generation'),
+                        'window_generation':self.target_generation.get('window_generation'),
+                        'dispatch_started_ns':time.perf_counter_ns()})
                 raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
                     tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
         effect_ref = self.retain('execution', {'request':request,'action_id':action_id,'result':raw})
@@ -389,7 +403,8 @@ class _Adapter:
 
 def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False,
         guard_perceive=None, verify_unchanged_effect=None,
-        on_action_completed=None, post_release_settle_ms=0):
+        on_action_completed=None, before_action_dispatch=None,
+        post_release_settle_ms=0):
     """Run the existing graph once against freshly grounded bridge aliases.
 
     Symbols name existing aliases; bindings specify each guarded interaction,
@@ -407,4 +422,5 @@ def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambd
                     guard_perceive=guard_perceive,
                     verify_unchanged_effect=verify_unchanged_effect,
                     on_action_completed=on_action_completed,
+                    before_action_dispatch=before_action_dispatch,
                     post_release_settle_ms=post_release_settle_ms).execute_method()
