@@ -1014,7 +1014,10 @@ class PublicCompiledOwnerTests(unittest.TestCase):
     def test_actual_graph_owner_stops_after_second_guard_refusal(self):
         self._actual_graph_guard_case(refuse_second=True)
 
-    def _actual_graph_guard_case(self, refuse_second):
+    def test_actual_graph_owner_does_not_publish_dispatch_before_first_guard(self):
+        self._actual_graph_guard_case(refuse_first=True)
+
+    def _actual_graph_guard_case(self, refuse_second=False, refuse_first=False):
         """Compose the real graph, X11 adapter and public Python owner on Fake X."""
         import hashlib
         import time
@@ -1104,7 +1107,7 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             spec['method']['max_runtime_ms']=1000
             bindings={name:{'interaction':'click','offset':[2,2],'tail':[]}
                       for name in ('enter','save')}
-            verified=[]; guard_calls=[]
+            verified=[]; guard_calls=[]; dispatches=[]
             clock=[time.monotonic_ns()]
 
             def perceive(native, image):
@@ -1113,7 +1116,11 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             def guard_perceive(native, image):
                 guard_calls.append(native['sequence'])
                 return {'phase':image.getpixel((0,0))[0],
-                        'present':not (refuse_second and len(guard_calls)==2)}
+                        'present':not ((refuse_first and len(guard_calls)==1)
+                                       or (refuse_second and len(guard_calls)==2))}
+
+            def before_action_dispatch(receipt):
+                dispatches.append(receipt)
 
             def verify_effect(request, native, image):
                 if not verified:
@@ -1124,16 +1131,27 @@ class PublicCompiledOwnerTests(unittest.TestCase):
 
             with (patch('runtime.cli_v1.mcp_guarded.monotonic_ns',
                         side_effect=lambda:clock[0]),
-                  patch('time.monotonic_ns',side_effect=lambda:clock[0])):
+                  patch('time.monotonic_ns',side_effect=lambda:clock[0]),
+                  patch('time.perf_counter_ns',side_effect=lambda:clock[0])):
                 row=owner.run_compiled(spec,bindings,call_root=root/'method',
                     perceive=perceive,verify_effect=verify_effect,
-                    guard_perceive=guard_perceive)
-            self.assertEqual(len(guard_calls),2)
+                    guard_perceive=guard_perceive,
+                    before_action_dispatch=before_action_dispatch)
+            self.assertEqual(len(guard_calls),1 if refuse_first else 2)
             receipt=row['method_receipt']
+            if refuse_first:
+                self.assertNotEqual(receipt['outcome'],'TASK_SUCCEEDED')
+                self.assertEqual(receipt['completed_transitions'],0)
+                self.assertEqual(len(bridge.inputs),0)
+                self.assertEqual(dispatches,[])
+                self.assertEqual(verified,[])
+                return
             if refuse_second:
                 self.assertNotEqual(receipt['outcome'],'TASK_SUCCEEDED')
                 self.assertEqual(receipt['completed_transitions'],1)
                 self.assertEqual(len(bridge.inputs),1)
+                self.assertEqual(len(dispatches),1)
+                self.assertEqual(dispatches[0]['action'],'enter')
                 self.assertEqual([action for action,_ in verified],['enter'])
                 return
             transitions=receipt['transitions']
@@ -1148,6 +1166,9 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertEqual(len(receipt['observations']),3)
             self.assertEqual(bridge.sequence,4)
             self.assertEqual(len(bridge.inputs),2)
+            self.assertEqual([row['action'] for row in dispatches],['enter','save'])
+            self.assertEqual([row['action_id'] for row in dispatches],
+                             [transition['action_id'] for transition in transitions])
             self.assertEqual(row['feedback']['image_status'],'image',row)
             self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-4')
             timing=row['owner_timing']
