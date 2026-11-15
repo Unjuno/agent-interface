@@ -15,6 +15,16 @@ verification; after close, the parent verifier returns `verified` and
 CPython 3.11.9 on Windows: 1/1 normal (14.013 s) and 1/1 under `-O`
 (14.377 s). Raw runner captures are under `raw/`.
 
+## Main rerun (2026-11-16)
+
+After PR #10327 merged as `156fd8fad2c94e8ece74e2f6ae4885f9cd998636`,
+the same committed test was rerun from that main commit. Both normal and
+`-O` passed 1/1 (15.107 s and 15.359 s). The instrumented owner startup
+measurements were 10.890 s and 11.578 s. Full raw captures are
+`raw/rerun-normal.log` and `raw/rerun-optimized.log`, included in the manifest.
+This independently reproduces the stdio receipt join and also confirms that
+this Windows nested-spawn owner startup remains above the 5 s production gate.
+
 ## Startup boundary
 
 The first nested Windows stdio/owned-process attempt used the production 5 s
