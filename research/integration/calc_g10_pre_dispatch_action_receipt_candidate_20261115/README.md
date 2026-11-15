@@ -33,3 +33,11 @@ Raw output: `normal.log`, `optimized.log`, `native-guard-normal.log`, and `nativ
 - `runtime/guarded_x11_v1/test_calc_g10_action_custody_composition.py`: `29841a1339b4af53af091c88d7c27716fc6b453ae330988d1622323796e4fa60`
 
 Candidate-only; no push or main modification.
+
+## Final reconciled candidate verification (2026-11-15)
+
+Re-ran the G10/compiled-X11 integration set at candidate HEAD `5fadd3bc86f93b9e8dd6ef4561fa57ade8b27d82`: six modules (`test_compiled`, `test_calc_g10_action_custody_composition`, `test_calc_g10_artifact_v1`, `test_calc_g10_formula_effect_v1`, `test_calc_launcher_v1`, `test_calc_task_artifact_v1`) pass 113/113 normally (4.047 s) and 113/113 under `-O` (3.751 s), Python 3.11.9. The additional three cases relative to the earlier 110 count come from current candidate suite composition. `test_compiled_native_dependencies` passes 12/12 normally (0.218 s) and 12/12 under `-O` (0.226 s).
+
+Raw logs: `final-candidate-g10-six-suites-normal-20261115.log` SHA-256 `577ACDE156C7A71F277C7727B9745C1267E4AB8D54512947DB1CB88734153830`; `final-candidate-g10-six-suites-optimized-20261115.log` `61364638034F86D51D44E92F2B9FDB8C65C976362177BA0C178C07C7A8876603`; `final-candidate-x11-native-deps-normal-20261115.log` `D156564F287232BE78A289122C75B303EEF48A39CE9FFC3E692477E2245D1044`; `final-candidate-x11-native-deps-optimized-20261115.log` `42E6223ED005C5945BAD15AB09C304114351175C479E7EE0037DB57133173814`. Source hashes at tested HEAD: `runtime/guarded_x11_v1/compiled.py` `10AB04D437B99F9685C49F6D3FC2BCD1C1ABB412112B18A5DBC73070E4A56FF6`; `runtime/guarded_x11_v1/calc_g10_artifact_v1.py` `B6556DBBDE886E69CE8E00365976AC1B353035A20947589C96B448FFE6FDA893`.
+
+Scope remains offline fixture/caller and native dependency contract. These checks do not establish live Calc, X11 GUI effects, or #57 integrated economics.
