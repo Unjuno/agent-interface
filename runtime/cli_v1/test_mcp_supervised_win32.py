@@ -3559,6 +3559,21 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertIsNone(result["task_success"], result)
                     self.assertFalse(result["replay_allowed"], result)
                     self.assertFalse(result["operation_invoked"], result)
+                    compact_query = await client.call_tool("interface_results", {
+                        "call_id": call_id, "include_image": False,
+                        "compact": True, "report_refs": True, "detail": "brief"})
+                    compact_result = json.loads(compact_query.content[0].text)
+                    self.assertEqual(compact_result["status"], "recovered",
+                                     compact_result)
+                    self.assertEqual(compact_result["recovery_status"], "recovered")
+                    self.assertTrue(compact_result["release_confirmed"])
+                    self.assertEqual(compact_result["recovery_receipt"][
+                        "late_input_horizon_ns"], 2_000_000_000)
+                    self.assertEqual(compact_result["source_action_status"], "unknown")
+                    self.assertIsNone(compact_result["task_success"])
+                    self.assertFalse(compact_result["replay_allowed"])
+                    self.assertFalse(compact_result["operation_invoked"])
+                    self.assertNotIn("image_status", compact_result)
                     closed = await client.call_tool("interface_close", {})
                     self.assertEqual(json.loads(closed.content[0].text)["status"],
                         "closed")
