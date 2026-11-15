@@ -151,3 +151,7 @@ Added `test_public_orphan_recovery_rejects_stale_recovery_generation_before_rele
 SHA-256: `runtime/cli_v1/test_mcp_supervised_win32.py` 6DF44B738033F3A2C86E51B6D872230D821C976F26AE283B5D697A75730D365E; paired normal log F84F9B510B987CD8F059B5E8DE9BA2312C51C1F6790410B7E41DA4104F7AC39A; paired optimized log BE1E0CFE2FAE95862D3429A593FEE2DDCCD54F32D14A698919847D0C9D619F3C; full normal module log B307B5F5671D600A2A65AED5F9380FD5962113FC9CEF753BC7F66630F6FC36FF; full optimized module log 1D17F5CC6C676CB0DBE7F04F057749EAB3A93C2FA54F046CF6438DA042F15BB7.
 
 This narrows the offline integration boundary: stale generation rejection occurs before release dispatch, while correct generation identity is necessary but not sufficient for native recovery. It does not authorize R269 retry or establish physical input release, late-input behavior, MAP01 task effect, or #57 efficiency. Current durable R269 custody is still unresolved at revision 888; its saved host gate says the source target generation is unchanged and no recovery admission exists. No live input, focus, close, Docker, or WSLc operation was performed.
+
+## Current integration/public-state checkpoint (2026-11-15)
+
+The negative stale-generation test and paired valid fresh-generation recovery pass in normal and optimized modes, and the full public Win32 MCP module passes 51/51 in each mode. Current GitHub read: #57 OPEN, updated 2026-11-14; PR #10303 OPEN, draft, mergeable `CONFLICTING`. These states do not authorize updating or merging that unrelated PR. Candidate changes remain isolated.
