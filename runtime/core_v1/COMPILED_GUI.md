@@ -195,3 +195,14 @@ capture bound is sampled after local validation, so it is a consistency check
 against that sample rather than an authenticated instant of adapter return.
 Malformed observations keep their existing refusal/validation semantics; a
 validation exception can occur before the clock callback is invoked.
+
+An optional trusted `on_action_completed` adapter may receive a deep copy of
+each transition after the core has accepted its completed terminal and verified
+all-up release, and after the core samples `execution_accepted_ns`. It runs
+before the next observation or action, so parent custody code can snapshot a
+per-action artifact without relying on a later mutable file. The callback does
+not alter the transition retained by the core. If it raises, the core returns
+`RUNTIME_FAILED/execution_failed` with the completed prefix and dispatches no
+later action; this is not a retry or a task-success signal. This callback is
+trusted synchronous adapter code, not durable storage or an independent effect
+oracle.

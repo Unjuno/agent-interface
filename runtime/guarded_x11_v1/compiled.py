@@ -15,7 +15,7 @@ def surface(bridge):
 
 
 class _Adapter:
-    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, verify_unchanged_effect=None, post_release_settle_ms=0):
+    def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled, *, guard_perceive=None, verify_unchanged_effect=None, on_action_completed=None, before_action_dispatch=None, post_release_settle_ms=0):
         self.interface = validate(interface)
         # Symbol labels belong to the graph language; target references name
         # the existing native registry and must obey its actual alias contract.
@@ -32,6 +32,10 @@ class _Adapter:
             raise ValueError('guard_perceive must be callable when supplied')
         if verify_unchanged_effect is not None and not callable(verify_unchanged_effect):
             raise ValueError('verify_unchanged_effect must be callable when supplied')
+        if on_action_completed is not None and not callable(on_action_completed):
+            raise ValueError('on_action_completed must be callable when supplied')
+        if before_action_dispatch is not None and not callable(before_action_dispatch):
+            raise ValueError('before_action_dispatch must be callable when supplied')
         if not callable(getattr(bridge,'input_guard',None)):
             raise ValueError('bridge input guard capability required')
         if type(bindings) is not dict or set(bindings) != set(self.interface['actions']):
@@ -52,6 +56,8 @@ class _Adapter:
         self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
         self.unchanged_verifier = verify_unchanged_effect
+        self.action_completed = on_action_completed
+        self.before_action_dispatch = before_action_dispatch
         self.guard_perceive = perceive if guard_perceive is None else guard_perceive
         self.post_release_settle_ms = post_release_settle_ms
         self._method_deadline_ns = None
@@ -201,12 +207,29 @@ class _Adapter:
                         native['binding_revision'] == self.revision and
                         native['pointer_binding']['surface'] == self.bridge.backend.targets[self.bridge.target].id and
                         all(predicates.get(name) is True for name in authorization['required_predicates']))
+                    if row['eligible'] and self.before_action_dispatch is not None:
+                        dispatch_receipt = {
+                            'action':request['action'], 'action_id':action_id,
+                            'operation':request['operation'],
+                            'process_generation':self.target_generation.get('process_generation'),
+                            'window_generation':self.target_generation.get('window_generation'),
+                            'dispatch_started_ns':time.perf_counter_ns()}
+                        dispatch_receipt['evidence_ref'] = (
+                            self.run_id + '-' + str(self.event_index + 1)
+                            + '-pre-dispatch')
+                        self.retain('pre-dispatch', dispatch_receipt)
+                        self.before_action_dispatch(copy.deepcopy(dispatch_receipt))
                     return row['eligible']
                 except Exception as error:
                     row['error_type'],row['error'] = type(error).__name__,repr(error)
                     raise
                 finally:
                     self.retain('input_dependency',row)
+            # The bridge owns the action identity and creates it before the
+            # guarded input path. Trusted profile code may bind a request
+            # receipt to that exact action at dispatch time; public graph
+            # inputs cannot supply or replace this hook.
+            before_dispatch = getattr(self, 'before_action_dispatch', None)
             with self.bridge.input_guard(authorization['target_reference'],binding['offset'],
                     tail=copy.deepcopy(binding['tail']),interaction=binding['interaction'],verify=verify_input):
                 raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
@@ -338,6 +361,8 @@ class _Adapter:
             adapters = {'observe':self.observe,'admit':self.admit,
                 'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self._cancellation_state,
                 'journal':lambda event:self.retain('event',event)}
+            if self.action_completed is not None:
+                adapters['on_action_completed'] = self.action_completed
             if self.unchanged_verifier is not None:
                 adapters['verify_unchanged_effect'] = self.verify_unchanged_effect
             result = run_graph(self.interface, adapters, clock=graph_clock)
@@ -383,7 +408,9 @@ class _Adapter:
 
 
 def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambda:False,
-        guard_perceive=None, verify_unchanged_effect=None, post_release_settle_ms=0):
+        guard_perceive=None, verify_unchanged_effect=None,
+        on_action_completed=None, before_action_dispatch=None,
+        post_release_settle_ms=0):
     """Run the existing graph once against freshly grounded bridge aliases.
 
     Symbols name existing aliases; bindings specify each guarded interaction,
@@ -400,4 +427,6 @@ def run(bridge, interface, bindings, *, perceive, verify_effect, cancelled=lambd
     return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled,
                     guard_perceive=guard_perceive,
                     verify_unchanged_effect=verify_unchanged_effect,
+                    on_action_completed=on_action_completed,
+                    before_action_dispatch=before_action_dispatch,
                     post_release_settle_ms=post_release_settle_ms).execute_method()

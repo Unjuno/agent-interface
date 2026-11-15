@@ -699,6 +699,47 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(refused.get("input_dispatched"))
                 self.assertEqual(producer.started, 0)
 
+    async def test_public_orphan_recovery_rejects_stale_recovery_generation_before_release(self):
+        owner, producer, supervisor = self.make_components(GENERATION)
+        recovery_calls = []
+        supervisor.recover_orphaned_input = Mock(
+            side_effect=lambda *args, **kwargs: recovery_calls.append(
+                (args, kwargs)))
+        source_operation_id = "2" * 32
+        source_generation = "c" * 64
+        recovery_generation = "b" * 64
+        custody = {
+            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+            "operation_id": source_operation_id,
+            "target_generation": source_generation,
+            "obligations": ["key:fixture:W"],
+            "do_not_replay": True,
+            "observed_producer_live": False,
+            "late_server_request_possible": False,
+            "dispatch": {"input_dispatched": True,
+                "release_confirmed": False, "task_success": None,
+                "replay_allowed": False}}
+
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                reply = await server.call_tool(
+                    "interface_recover_orphaned_input", {
+                        "source_operation_id": source_operation_id,
+                        "source_target_generation": source_generation,
+                        "recovery_target_generation": recovery_generation,
+                        "obligations": ["key:fixture:W"],
+                        "source_custody_record": custody})
+                refusal = self.row(reply)
+                self.assertEqual(refusal.get("status"), "refused", refusal)
+                self.assertEqual(refusal.get("reason"),
+                    "recovery_target_generation_mismatch", refusal)
+                self.assertFalse(refusal.get("release_confirmed"), refusal)
+                self.assertIsNone(refusal.get("task_success"), refusal)
+                self.assertFalse(refusal.get("replay_allowed"), refusal)
+                self.assertEqual(recovery_calls, [])
+                self.assertEqual(producer.started, 0)
+
     async def test_public_orphan_recovery_pending_result_is_queryable(self):
         recovery_generation = "b" * 64
         owner, producer, supervisor = self.make_components(recovery_generation)
@@ -771,6 +812,98 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(query_envelope["operation_invoked"],
                     query_envelope)
                 self.assertEqual(requests, [("2" * 32, retained["recovery_id"])])
+
+    async def test_public_orphan_recovery_late_success_result_is_queryable_once(self):
+        recovery_generation = "b" * 64
+        owner, producer, supervisor = self.make_components(recovery_generation)
+        requests = []
+
+        def slow_recovered(operation_id, source_generation, recovery_id,
+                           _deadline_ns, _obligations, *,
+                           recovery_target_generation=None):
+            requests.append((operation_id, recovery_id))
+            # Cross the public tool's bounded response wait while preserving a
+            # successful terminal receipt for exact-call retrieval.
+            time.sleep(6.5)
+            generation = (recovery_target_generation or source_generation)
+            return {"status": "recovered", "release_confirmed": True,
+                "operation_id": operation_id,
+                "target_generation": generation,
+                "source_target_generation": source_generation,
+                "recovery_target_generation": generation,
+                "recovery_id": recovery_id,
+                "release_receipt": {"accepted": True,
+                    "keys_up": ["W"], "buttons_up": []},
+                "readback": {"neutral": True},
+                "late_input_horizon_verified": True,
+                "late_input_horizon_ns": 2_000_000_000,
+                "late_input_release_received_monotonic_ns": 100,
+                "late_input_observation_count": 21,
+                "late_input_observation_start_monotonic_ns": 100,
+                "late_input_observation_end_monotonic_ns": 2_000_000_100,
+                "late_input_max_observed_gap_ns": 100_000_000,
+                "late_input_max_sample_gap_ns": 100_000_000}
+
+        supervisor.recover_orphaned_input = slow_recovered
+        custody = {
+            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+            "operation_id": "2" * 32,
+            "target_generation": GENERATION,
+            "obligations": ["key:fixture:W"],
+            "do_not_replay": True,
+            "observed_producer_live": False,
+            "late_server_request_possible": True,
+            "dispatch": {"input_dispatched": None,
+                "release_confirmed": False, "task_success": None,
+                "replay_allowed": False}}
+
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                pending = self.row(await server.call_tool(
+                    "interface_recover_orphaned_input", {
+                        "source_operation_id": "2" * 32,
+                        "source_target_generation": GENERATION,
+                        "recovery_target_generation": recovery_generation,
+                        "obligations": ["key:fixture:W"],
+                        "source_custody_record": custody}))
+                self.assertEqual(pending["status"], "pending", pending)
+                call_id = pending["call_id"]
+                self.assertEqual(len(requests), 1, requests)
+                recovery_id = requests[0][1]
+                self.assertFalse(pending["release_confirmed"])
+                self.assertFalse(pending["replay_allowed"])
+
+                end = time.monotonic() + 4
+                result = None
+                query_envelope = None
+                while time.monotonic() < end:
+                    reply = await server.call_tool("interface_results", {
+                        "call_id": call_id, "include_image": False})
+                    query_envelope = json.loads(reply.content[0].text)
+                    result = self.row(reply)
+                    if result.get("status") != "pending":
+                        break
+                    await asyncio.sleep(0.01)
+
+                self.assertEqual(result["status"], "recovered", result)
+                self.assertEqual(result["recovery_status"], "recovered", result)
+                self.assertEqual(result["call_id"], call_id)
+                self.assertEqual(result["recovery_id"], recovery_id)
+                self.assertNotIn("image_status", result)
+                self.assertEqual(result["source_action_status"], "unknown")
+                self.assertTrue(result["release_confirmed"], result)
+                self.assertTrue(result["next_action_requires_fresh_generation"], result)
+                self.assertIsNone(result["task_success"], result)
+                self.assertFalse(result["replay_allowed"], result)
+                receipt = result["recovery_receipt"]
+                self.assertTrue(receipt["late_input_horizon_verified"], receipt)
+                self.assertEqual(receipt["late_input_horizon_ns"], 2_000_000_000)
+                self.assertEqual(receipt["release_receipt"]["keys_up"], ["W"])
+                self.assertFalse(query_envelope["operation_invoked"],
+                    query_envelope)
+                self.assertEqual(requests, [("2" * 32, recovery_id)])
+                self.assertEqual(producer.started, 0)
 
     async def test_public_orphan_recovery_refusal_is_an_mcp_error(self):
         owner, producer, _supervisor = self.make_components()
@@ -1052,26 +1185,34 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             if handle is process else None)
         supervisor = RecoveringFakeSupervisor(operation_owner, process)
         raw_result = operation_owner.result
+        retained_horizon = {}
+
         def result_with_horizon(operation_id):
             result = raw_result(operation_id)
             if result.get("phase") == "recovered":
-                release_ns = time.monotonic_ns() - 2_100_000_000
-                horizon_end_ns = release_ns + 2_000_000_000
-                result.update(late_input_horizon_ns=2_000_000_000,
-                    late_input_release_received_ns=release_ns,
-                    late_input_observation_start_ns=release_ns + 10_000_000,
-                    late_input_observation_end_ns=horizon_end_ns,
-                    late_input_observation_count=77,
-                    late_input_max_observed_gap_ns=32_000_000,
-                    late_input_max_sample_gap_ns=100_000_000,
-                    late_input_validation_error=None,
-                    recovery_release_key_up_attempts=[
-                        {"virtual_key": 0x11, "encoding": "virtual_key",
-                         "status": "returned"},
-                        {"virtual_key": 0x53, "encoding": "virtual_key",
-                         "status": "returned"}])
-                result["readback"]["observed_monotonic_ns"] = horizon_end_ns
-                result["readback"]["key_button_states"] = [False, False]
+                if not retained_horizon:
+                    release_ns = time.monotonic_ns() - 2_100_000_000
+                    horizon_end_ns = release_ns + 2_000_000_000
+                    retained_horizon.update(
+                        late_input_horizon_ns=2_000_000_000,
+                        late_input_release_received_ns=release_ns,
+                        late_input_observation_start_ns=release_ns + 10_000_000,
+                        late_input_observation_end_ns=horizon_end_ns,
+                        late_input_observation_count=77,
+                        late_input_max_observed_gap_ns=32_000_000,
+                        late_input_max_sample_gap_ns=100_000_000,
+                        late_input_validation_error=None,
+                        recovery_release_key_up_attempts=[
+                            {"virtual_key": 0x11, "encoding": "virtual_key",
+                             "status": "returned"},
+                            {"virtual_key": 0x53, "encoding": "virtual_key",
+                             "status": "returned"}])
+                    retained_horizon["readback"] = {
+                        "observed_monotonic_ns": horizon_end_ns,
+                        "key_button_states": [False, False]}
+                result.update({key: value for key, value in retained_horizon.items()
+                    if key != "readback"})
+                result["readback"].update(retained_horizon["readback"])
             return result
         operation_owner.result = result_with_horizon
         owner = OwnedWin32SessionOwner(operation_owner, supervisor,
@@ -1091,13 +1232,26 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(dispatched["replay_allowed"])
 
             reply = await server.call_tool("interface_results", {
-                "call_id": dispatched["call_id"], "include_image": False})
+                "call_id": dispatched["call_id"], "include_image": False,
+                "compact": True, "report_refs": True, "detail": "brief"})
             self.assertFalse(reply.isError)
             body = json.loads(reply.content[0].text)
             cancellation = body["cancellation"]
             self.assertEqual(cancellation["status"], "recovered")
             self.assertTrue(cancellation["result"][
                 "late_input_horizon_verified"], cancellation["result"])
+            retained_recovery = cancellation["result"]
+            repeated_reply = await server.call_tool("interface_results", {
+                "call_id": dispatched["call_id"], "include_image": False,
+                "compact": True, "report_refs": True, "detail": "brief"})
+            self.assertFalse(repeated_reply.isError)
+            repeated_body = json.loads(repeated_reply.content[0].text)
+            self.assertEqual(repeated_body["cancellation"]["result"],
+                             retained_recovery)
+            self.assertEqual(repeated_body["action"]["status"], "unknown")
+            self.assertFalse(repeated_body["action"]["release_confirmed"])
+            self.assertIsNone(repeated_body["task_success"])
+            self.assertFalse(repeated_body["replay_allowed"])
             self.assertEqual(body["action"]["status"], "unknown")
             self.assertFalse(body["action"]["release_confirmed"])
             self.assertIsNone(body["task_effect"])
@@ -2697,7 +2851,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     deadline = time.monotonic() + 10
                     while time.monotonic() < deadline:
                         reply = call_tool("interface_results", {
-                            "call_id": call_id, "include_image": False})
+                            "call_id": call_id, "include_image": False,
+                            "compact": True, "report_refs": True,
+                            "detail": "brief"})
                         row = self.row(reply)
                         result_queries.append(row)
                         retrieved_call = row.get("call_id") or (
@@ -2821,6 +2977,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_stdio_expiry_delayed_recovery_and_exact_call_effect(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
+        from runtime.cli_v1.supervised_win32_compiled import _terminal
 
         with TemporaryDirectory() as root:
             output = Path(root) / "child-receipts"
@@ -2899,6 +3056,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(retained["action"]["program_actions_lower_bound"], 2)
                     self.assertIsNone(retained["task_success"])
                     self.assertFalse(retained["replay_allowed"])
+                    caller_terminal = _terminal(retained, "save",
+                        expected_call_id=call_id,
+                        expected_generation=GENERATION)
+                    self.assertEqual(caller_terminal["status"],
+                        "uncertain", caller_terminal)
+                    self.assertFalse(caller_terminal["release"]["verified"],
+                        caller_terminal)
+                    self.assertTrue(caller_terminal["input_dispatched"])
 
                     verified_reply = await client.call_tool(
                         "interface_verify_task", {"call_id": call_id,
@@ -3289,7 +3454,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         deadline = time.monotonic() + 3
                         while time.monotonic() < deadline:
                             reply = call_tool("interface_results", {
-                                "call_id": call_id, "include_image": False})
+                                "call_id": call_id, "include_image": False,
+                                "compact": True, "report_refs": True,
+                                "detail": "brief"})
                             row = self.row(reply)
                             queried_rows.append(row)
                             call_row = row.get("call")
@@ -3350,6 +3517,226 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     finally:
                         await asyncio.to_thread(call_tool, "interface_close", {})
 
+    async def test_production_stdio_orphan_recovery_pending_exact_query(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        recovery_generation = "b" * 64
+        operation_id = "2" * 32
+        custody = {
+            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+            "operation_id": operation_id,
+            "target_generation": GENERATION,
+            "obligations": ["key:fixture:W"],
+            "do_not_replay": True,
+            "observed_producer_live": False,
+            "late_server_request_possible": True,
+            "dispatch": {"input_dispatched": None,
+                "release_confirmed": False, "task_success": None,
+                "replay_allowed": False}}
+
+        with TemporaryDirectory() as root:
+            output = Path(root) / "receipts"
+            targets = Path(root) / "targets.json"
+            targets.write_text('{"fixture":123}', encoding="utf-8")
+            params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                    "--output-directory", str(output), "--targets", str(targets),
+                    "--production-cli", "--mode", "recovery",
+                    "--recovery-generation", recovery_generation,
+                    "--recovery-result-delay-ms", "5000"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool(
+                        "interface_recover_orphaned_input", {
+                            "source_operation_id": operation_id,
+                            "source_target_generation": GENERATION,
+                            "recovery_target_generation": recovery_generation,
+                            "obligations": ["key:fixture:W"],
+                            "source_custody_record": custody})
+                    pending = json.loads(reply.content[0].text)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    call_id = pending["call_id"]
+                    self.assertFalse(pending["release_confirmed"], pending)
+                    self.assertEqual(pending["effect_status"], "unknown", pending)
+                    self.assertIsNone(pending["task_success"], pending)
+                    self.assertFalse(pending["replay_allowed"], pending)
+                    pending_call = pending["call"]
+                    self.assertEqual(pending_call["call_id"], call_id)
+                    self.assertEqual(pending_call["operation"],
+                                     "recover_orphaned_input")
+                    self.assertIn(pending_call["state"], ("queued", "running"))
+                    pending_arguments = pending_call["arguments"]
+                    self.assertEqual(pending_arguments["source_operation_id"],
+                                     operation_id)
+                    self.assertEqual(pending_arguments["source_target_generation"],
+                                     GENERATION)
+                    self.assertEqual(pending_arguments["source_custody_record"],
+                                     custody)
+
+                    unrelated = await client.call_tool("interface_results", {
+                        "call_id": "0" * 32, "include_image": False})
+                    unrelated_result = json.loads(unrelated.content[0].text)
+                    self.assertEqual(unrelated_result["status"], "unknown_call",
+                                     unrelated_result)
+                    self.assertNotIn("recovery_receipt", unrelated_result)
+
+                    end = time.monotonic() + 5
+                    result = None
+                    while time.monotonic() < end:
+                        queried = await client.call_tool("interface_results", {
+                            "call_id": call_id, "include_image": False})
+                        result = json.loads(queried.content[0].text)
+                        if result.get("status") != "pending":
+                            break
+                        pending_record = result["call"]
+                        self.assertEqual(pending_record["call_id"], call_id)
+                        self.assertEqual(pending_record["operation"],
+                                         "recover_orphaned_input")
+                        self.assertEqual(
+                            pending_record["arguments"]["source_custody_record"],
+                            custody)
+                        self.assertFalse(result["operation_invoked"])
+                        await asyncio.sleep(0.01)
+
+                    self.assertEqual(result["status"], "recovered", result)
+                    self.assertEqual(result["recovery_status"], "recovered", result)
+                    self.assertEqual(result["call_id"], call_id)
+                    self.assertNotIn("image_status", result)
+                    self.assertEqual(result["source_action_status"], "unknown")
+                    self.assertTrue(result["release_confirmed"], result)
+                    self.assertTrue(result["recovery_receipt"][
+                        "late_input_horizon_verified"], result)
+                    self.assertEqual(result["recovery_receipt"][
+                        "late_input_horizon_ns"], 2_000_000_000)
+                    self.assertTrue(result["next_action_requires_fresh_generation"])
+                    self.assertIsNone(result["task_success"], result)
+                    self.assertFalse(result["replay_allowed"], result)
+                    self.assertFalse(result["operation_invoked"], result)
+                    compact_query = await client.call_tool("interface_results", {
+                        "call_id": call_id, "include_image": False,
+                        "compact": True, "report_refs": True, "detail": "brief"})
+                    compact_result = json.loads(compact_query.content[0].text)
+                    self.assertEqual(compact_result["status"], "recovered",
+                                     compact_result)
+                    self.assertEqual(compact_result["recovery_status"], "recovered")
+                    self.assertTrue(compact_result["release_confirmed"])
+                    self.assertEqual(compact_result["recovery_receipt"][
+                        "late_input_horizon_ns"], 2_000_000_000)
+                    self.assertEqual(compact_result["source_action_status"], "unknown")
+                    self.assertIsNone(compact_result["task_success"])
+                    self.assertFalse(compact_result["replay_allowed"])
+                    self.assertFalse(compact_result["operation_invoked"])
+                    self.assertNotIn("image_status", compact_result)
+                    closed = await client.call_tool("interface_close", {})
+                    self.assertEqual(json.loads(closed.content[0].text)["status"],
+                        "closed")
+
+    async def test_production_stdio_invalid_recovery_horizon_exact_query_stays_unknown(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        recovery_generation = "b" * 64
+        operation_id = "2" * 32
+        custody = {
+            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+            "operation_id": operation_id,
+            "target_generation": GENERATION,
+            "obligations": ["key:fixture:W"],
+            "do_not_replay": True,
+            "observed_producer_live": False,
+            "late_server_request_possible": True,
+            "dispatch": {"input_dispatched": None,
+                "release_confirmed": False, "task_success": None,
+                "replay_allowed": False}}
+
+        with TemporaryDirectory() as root:
+            output = Path(root) / "receipts"
+            targets = Path(root) / "targets.json"
+            targets.write_text('{"fixture":123}', encoding="utf-8")
+            params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                    "--output-directory", str(output), "--targets", str(targets),
+                    "--production-cli", "--mode", "recovery",
+                    "--recovery-generation", recovery_generation,
+                    "--recovery-result-delay-ms", "7000",
+                    "--recovery-invalid-horizon"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool(
+                        "interface_recover_orphaned_input", {
+                            "source_operation_id": operation_id,
+                            "source_target_generation": GENERATION,
+                            "recovery_target_generation": recovery_generation,
+                            "obligations": ["key:fixture:W"],
+                            "source_custody_record": custody})
+                    pending = self.row(reply)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    call_id = pending["call_id"]
+                    self.assertFalse(pending["release_confirmed"], pending)
+                    self.assertIsNone(pending["task_success"], pending)
+                    self.assertFalse(pending["replay_allowed"], pending)
+                    self.assertEqual(pending["call"]["operation"],
+                        "recover_orphaned_input")
+                    self.assertEqual(pending["call"]["arguments"][
+                        "source_custody_record"], custody)
+
+                    deadline = time.monotonic() + 5
+                    terminal = None
+                    while time.monotonic() < deadline:
+                        queried = await client.call_tool("interface_results", {
+                            "call_id": call_id, "include_image": False})
+                        terminal = self.row(queried)
+                        if terminal.get("status") != "pending":
+                            break
+                        self.assertFalse(terminal["operation_invoked"], terminal)
+                        await asyncio.sleep(0.02)
+
+                    self.assertEqual(terminal["status"], "unknown", terminal)
+                    self.assertEqual(terminal["recovery_status"], "unknown",
+                        terminal)
+                    self.assertEqual(terminal["call_id"], call_id)
+                    self.assertFalse(terminal["operation_invoked"], terminal)
+                    self.assertFalse(terminal["release_confirmed"], terminal)
+                    self.assertEqual(terminal["source_action_status"], "unknown")
+                    self.assertIsNone(terminal["task_success"], terminal)
+                    self.assertFalse(terminal["replay_allowed"], terminal)
+                    self.assertTrue(terminal[
+                        "next_action_requires_fresh_generation"], terminal)
+                    receipt = terminal["recovery_receipt"]
+                    self.assertEqual(receipt["status"], "recovered", receipt)
+                    self.assertTrue(receipt["release_confirmed"], receipt)
+                    self.assertTrue(receipt["late_input_horizon_verified"], receipt)
+                    self.assertEqual(receipt["late_input_horizon_ns"],
+                        2_000_000_000)
+                    self.assertEqual(receipt["late_input_observation_count"], 1)
+
+                    blocked_program = self.valid_program()
+                    blocked_program["source"]["target_generations"][
+                        "fixture"] = recovery_generation
+                    blocked = await client.call_tool("interface_dispatch", {
+                        "program": blocked_program,
+                        "current_observation_seq": 1,
+                        "current_binding_revision": 1,
+                        "wait_for_result_ms": 5000})
+                    blocked_result = self.row(blocked)
+                    self.assertEqual(blocked_result["status"],
+                        "invalid_request", blocked_result)
+                    self.assertEqual(blocked_result["error"],
+                        "ORPHAN_RECOVERY_UNRESOLVED", blocked_result)
+                    self.assertFalse(blocked_result["operation_invoked"],
+                        blocked_result)
+                    self.assertFalse(blocked_result["input_dispatched"],
+                        blocked_result)
+                    self.assertIsNone(blocked_result["task_success"],
+                        blocked_result)
+                    self.assertFalse(blocked_result["replay_allowed"],
+                        blocked_result)
+
     async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
@@ -3409,7 +3796,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             recovery_params = StdioServerParameters(command=sys.executable,
                 args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
                       "--output-directory", str(recovery_output), "--mode", "recovery",
-                      "--recovery-generation", recovery_generation],
+                      "--recovery-generation", recovery_generation,
+                      "--recovery-result-delay-ms", "8000"],
                 cwd=str(Path(__file__).resolve().parents[2]))
             async with stdio_client(recovery_params) as (reader, writer):
                 async with ClientSession(reader, writer) as client:
@@ -3420,8 +3808,48 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         "recovery_target_generation": recovery_generation,
                         "obligations": obligations,
                         "source_custody_record": custody})
-                    recovered = self.row(reply)
+                    recovery_pending = self.row(reply)
+                    self.assertEqual(recovery_pending["status"], "pending",
+                        recovery_pending)
+                    recovery_call_id = recovery_pending["call_id"]
+                    self.assertFalse(recovery_pending["release_confirmed"],
+                        recovery_pending)
+                    self.assertIsNone(recovery_pending["task_success"],
+                        recovery_pending)
+                    self.assertFalse(recovery_pending["replay_allowed"],
+                        recovery_pending)
+                    recovery_call = recovery_pending["call"]
+                    self.assertEqual(recovery_call["call_id"], recovery_call_id)
+                    self.assertEqual(recovery_call["operation"],
+                        "recover_orphaned_input")
+                    self.assertEqual(recovery_call["arguments"][
+                        "source_custody_record"], custody)
+
+                    query_deadline = time.monotonic() + 6
+                    recovered = None
+                    while time.monotonic() < query_deadline:
+                        query_reply = await client.call_tool("interface_results", {
+                            "call_id": recovery_call_id, "include_image": False,
+                            "compact": True, "report_refs": True,
+                            "detail": "brief"})
+                        recovered = self.row(query_reply)
+                        if recovered.get("status") != "pending":
+                            break
+                        retained_call = recovered["call"]
+                        self.assertEqual(retained_call["call_id"],
+                            recovery_call_id)
+                        self.assertEqual(retained_call["operation"],
+                            "recover_orphaned_input")
+                        self.assertEqual(retained_call["arguments"][
+                            "source_custody_record"], custody)
+                        self.assertFalse(recovered["operation_invoked"],
+                            recovered)
+                        await asyncio.sleep(0.02)
+
                     self.assertEqual(recovered["status"], "recovered", recovered)
+                    self.assertEqual(recovered["call_id"], recovery_call_id)
+                    self.assertFalse(recovered["operation_invoked"], recovered)
+                    self.assertNotIn("image_status", recovered)
                     self.assertEqual(recovered["source_action_status"], "unknown")
                     self.assertTrue(recovered["release_confirmed"])
                     self.assertTrue(recovered["recovery_receipt"][

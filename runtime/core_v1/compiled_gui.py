@@ -166,6 +166,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     required = {"observe", "admit", "execute", "verify_effect", "cancelled"}
     if type(adapters) is not dict or any(not callable(adapters.get(k)) for k in required):
         raise ValueError("observe/admit/execute/verify_effect/cancelled adapters required")
+    action_completed = adapters.get("on_action_completed")
+    if action_completed is not None and not callable(action_completed):
+        raise ValueError("on_action_completed adapter must be callable")
     journal = adapters.get("journal", lambda event: None)
     if not callable(journal):
         raise ValueError("journal adapter must be callable")
@@ -578,6 +581,15 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         effect_not_before_ns = execution_accepted_ns
         previous_digest = observation["evidence_digest"]
         state = branch["next_state"]
+        if action_completed is not None:
+            try:
+                action_completed(copy.deepcopy(transitions[-1]))
+            except Exception as error:
+                emit({"event": "action_completion_callback_failed",
+                      "action": action_name,
+                      "error_type": type(error).__name__,
+                      "completed_transitions": len(transitions)})
+                return finish("RUNTIME_FAILED", "execution_failed")
         if journal_failure_type is not None:
             return finish("RUNTIME_FAILED", "execution_failed")
         if expired():

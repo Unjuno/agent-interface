@@ -14,6 +14,7 @@ import subprocess
 import time
 
 from .calc_task_artifact_v1 import CalcTaskArtifact, _BLANK_FODS, _read_regular
+from .calc_g10_artifact_v1 import CalcG10ArtifactCustody
 from .process_identity import process_generation_from_identity
 
 
@@ -191,14 +192,18 @@ class CalcLaunchSupervisor:
             self._package_version = self._package_version_reader()
             if self._package_version != _LIBREOFFICE_PACKAGE_VERSION:
                 raise ValueError('LibreOffice child-exit contract package version mismatch')
-        if not isinstance(artifact, CalcTaskArtifact):
-            raise TypeError('a server-created CalcTaskArtifact is required')
+        if isinstance(artifact, CalcTaskArtifact):
+            reserved_blank = _BLANK_FODS
+        elif isinstance(artifact, CalcG10ArtifactCustody):
+            reserved_blank = artifact.reserved_blank_bytes
+        else:
+            raise TypeError('a server-created registered Calc artifact is required')
         if (artifact.process_generation is not None
                 or artifact.window_generation is not None
                 or artifact._save_request_id is not None):
             raise ValueError('Calc artifact must be fresh and unbound before launch')
         data, identity = _read_regular(artifact.path, max_bytes=64 * 1024 * 1024)
-        if (data != _BLANK_FODS
+        if (data != reserved_blank
                 or identity != artifact._blank_identity
                 or artifact.path.name != 'task-artifact.fods'
                 or artifact.path.parent != artifact.call_root):

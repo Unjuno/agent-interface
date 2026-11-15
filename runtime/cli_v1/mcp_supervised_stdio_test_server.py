@@ -36,9 +36,15 @@ def main():
         help="Enable the opt-in expiry caller policy for stdio protocol tests.")
     parser.add_argument("--deadline-cancel-grace-ms", type=int, default=1000)
     parser.add_argument("--recovery-generation", default="b" * 64)
+    parser.add_argument("--recovery-result-delay-ms", type=int, default=0,
+        help="test-only delay after a completed recovery horizon and before its terminal receipt returns")
+    parser.add_argument("--recovery-invalid-horizon", action="store_true",
+        help="test-only: return a recovery receipt whose sample count cannot cover its claimed horizon")
     parser.add_argument("--oracle-success", action="store_true",
         help="Return a positive fake task-oracle receipt for caller integration tests.")
     args = parser.parse_args()
+    if not 0 <= args.recovery_result_delay_ms <= 10000:
+        parser.error("--recovery-result-delay-ms must be in [0, 10000]")
     process = FakeProcess()
     identity = {"pid": 7101, "creation_time_100ns": 90101}
     operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
@@ -57,7 +63,7 @@ def main():
             max_sample_gap_ns = max(
                 later - earlier
                 for earlier, later in zip(sample_times, sample_times[1:]))
-            return {"status": "recovered", "release_confirmed": True,
+            receipt = {"status": "recovered", "release_confirmed": True,
                 "operation_id": operation_id,
                 "target_generation": recovery_target_generation,
                 "source_target_generation": generation,
@@ -71,6 +77,11 @@ def main():
                 "late_input_observation_count": len(sample_times),
                 "late_input_max_observed_gap_ns": max_sample_gap_ns,
                 "late_input_max_sample_gap_ns": max_sample_gap_ns}
+            if args.recovery_invalid_horizon:
+                receipt["late_input_observation_count"] = 1
+            if args.recovery_result_delay_ms:
+                time.sleep(args.recovery_result_delay_ms / 1000)
+            return receipt
         supervisor.recover_orphaned_input = recover
         target_generation = args.recovery_generation
     elif args.mode == "delayed-expiry":
