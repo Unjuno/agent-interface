@@ -69,3 +69,13 @@ Focused test: 1/1 normal (10.939 s), 1/1 optimized (10.497 s). Full runtime.cli_
 Scope remains Fake-backed production stdio and owner gate only; no native Win32 or MAP01 proof.
 
 SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py CD4B078E98E36ECBF24BFFDB8AD223AC931EEAA88579F8F1DDEE9FC879ADDC75; invalid-horizon-gate-normal.log 7EC14A6D33236FB58FD2C155C0CC631F450CC9EB1CF1DDD6938111D188E0C451; invalid-horizon-gate-optimized.log 337415DC19B1E6C3F70A30998A95CC99A26DCC38DC2B197E219D4C4F700A6002; mcp-supervised-win32-recovery-gate-normal.log 9035A8E1E9AA6174CC96B1698D8874C32DC1C8CA96D4AAAD85EDCD3BC99F9B24; mcp-supervised-win32-recovery-gate-optimized.log 4F6FC1FD66A38C2CC359E448424016F851A54F0D0F3E4F196095FF65BF60D298.
+
+## Exact recovery lookup keeps the control receipt under compact presentation flags
+
+Extended the delayed-success production-stdio exact-call recovery test to repeat the terminal lookup with `compact=true`, `report_refs=true`, and `detail=brief`. The lookup retains `recovered`, `release_confirmed`, the verified 2 s horizon, source UNKNOWN, null task success, replay denial, and `operation_invoked=false`; it does not acquire generic image-review fields. This confirms unsupported presentation modes preserve the full control receipt as documented for failures/unsupported reports.
+
+Focused test: 1/1 passed normally (9.621 s) and 1/1 under `-O` (8.999 s), Python 3.11.9. The complete `runtime.cli_v1.test_mcp_supervised_win32` module passed 50/50 normally (102.253 s) and 50/50 under `-O` (115.469 s). Raw focused logs: `exact-recovery-presentation-normal.log` and `exact-recovery-presentation-optimized.log`; full module logs: `mcp-supervised-win32-exact-presentation-normal.log` and `mcp-supervised-win32-exact-presentation-optimized.log`.
+
+Scope: Fake-backed production CLI/stdio presentation contract only; no native recovery, MAP01 effect or efficiency result.
+
+SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py F46EFAF1DAF62FA2C3F729991AD2AC94A0BD85F33915F85D013678FDD72D2BD4; exact-recovery-presentation-normal.log B2E690A835FA50223DE4680FB74D8462BB9EF6A9A830123E7E66A9BC990C0625; exact-recovery-presentation-optimized.log EE80FBBD2612900A0F12A6DD118348CEECDB84164AE71FD1D8117B3B5E5D657A; mcp-supervised-win32-exact-presentation-normal.log 9D97A21028A066CE883546BA488AE9B8C509E80D9B2509D6DA19AD310ED57F54; mcp-supervised-win32-exact-presentation-optimized.log 50E09F4B3D7D9BE8C4EC48B4CB48AB3886D490B8D050CB627D9EF4D232D45DB8.
