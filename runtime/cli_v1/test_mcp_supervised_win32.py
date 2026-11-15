@@ -699,6 +699,47 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(refused.get("input_dispatched"))
                 self.assertEqual(producer.started, 0)
 
+    async def test_public_orphan_recovery_rejects_stale_recovery_generation_before_release(self):
+        owner, producer, supervisor = self.make_components(GENERATION)
+        recovery_calls = []
+        supervisor.recover_orphaned_input = Mock(
+            side_effect=lambda *args, **kwargs: recovery_calls.append(
+                (args, kwargs)))
+        source_operation_id = "2" * 32
+        source_generation = "c" * 64
+        recovery_generation = "b" * 64
+        custody = {
+            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+            "operation_id": source_operation_id,
+            "target_generation": source_generation,
+            "obligations": ["key:fixture:W"],
+            "do_not_replay": True,
+            "observed_producer_live": False,
+            "late_server_request_possible": False,
+            "dispatch": {"input_dispatched": True,
+                "release_confirmed": False, "task_success": None,
+                "replay_allowed": False}}
+
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            async with server.settings.lifespan(server):
+                reply = await server.call_tool(
+                    "interface_recover_orphaned_input", {
+                        "source_operation_id": source_operation_id,
+                        "source_target_generation": source_generation,
+                        "recovery_target_generation": recovery_generation,
+                        "obligations": ["key:fixture:W"],
+                        "source_custody_record": custody})
+                refusal = self.row(reply)
+                self.assertEqual(refusal.get("status"), "refused", refusal)
+                self.assertEqual(refusal.get("reason"),
+                    "recovery_target_generation_mismatch", refusal)
+                self.assertFalse(refusal.get("release_confirmed"), refusal)
+                self.assertIsNone(refusal.get("task_success"), refusal)
+                self.assertFalse(refusal.get("replay_allowed"), refusal)
+                self.assertEqual(recovery_calls, [])
+                self.assertEqual(producer.started, 0)
+
     async def test_public_orphan_recovery_pending_result_is_queryable(self):
         recovery_generation = "b" * 64
         owner, producer, supervisor = self.make_components(recovery_generation)
