@@ -3461,6 +3461,79 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     finally:
                         await asyncio.to_thread(call_tool, "interface_close", {})
 
+    async def test_production_stdio_orphan_recovery_pending_exact_query(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+
+        recovery_generation = "b" * 64
+        operation_id = "2" * 32
+        custody = {
+            "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+            "operation_id": operation_id,
+            "target_generation": GENERATION,
+            "obligations": ["key:fixture:W"],
+            "do_not_replay": True,
+            "observed_producer_live": False,
+            "late_server_request_possible": True,
+            "dispatch": {"input_dispatched": None,
+                "release_confirmed": False, "task_success": None,
+                "replay_allowed": False}}
+
+        with TemporaryDirectory() as root:
+            output = Path(root) / "receipts"
+            targets = Path(root) / "targets.json"
+            targets.write_text('{"fixture":123}', encoding="utf-8")
+            params = StdioServerParameters(command=sys.executable,
+                args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
+                    "--output-directory", str(output), "--targets", str(targets),
+                    "--production-cli", "--mode", "recovery",
+                    "--recovery-generation", recovery_generation,
+                    "--recovery-result-delay-ms", "5000"],
+                cwd=str(Path(__file__).resolve().parents[2]))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool(
+                        "interface_recover_orphaned_input", {
+                            "source_operation_id": operation_id,
+                            "source_target_generation": GENERATION,
+                            "recovery_target_generation": recovery_generation,
+                            "obligations": ["key:fixture:W"],
+                            "source_custody_record": custody})
+                    pending = json.loads(reply.content[0].text)
+                    self.assertEqual(pending["status"], "pending", pending)
+                    call_id = pending["call_id"]
+                    self.assertFalse(pending["release_confirmed"], pending)
+                    self.assertFalse(pending["replay_allowed"], pending)
+
+                    end = time.monotonic() + 5
+                    result = None
+                    while time.monotonic() < end:
+                        queried = await client.call_tool("interface_results", {
+                            "call_id": call_id, "include_image": False})
+                        result = json.loads(queried.content[0].text)
+                        if result.get("status") != "pending":
+                            break
+                        await asyncio.sleep(0.01)
+
+                    self.assertEqual(result["status"], "recovered", result)
+                    self.assertEqual(result["recovery_status"], "recovered", result)
+                    self.assertEqual(result["call_id"], call_id)
+                    self.assertNotIn("image_status", result)
+                    self.assertEqual(result["source_action_status"], "unknown")
+                    self.assertTrue(result["release_confirmed"], result)
+                    self.assertTrue(result["recovery_receipt"][
+                        "late_input_horizon_verified"], result)
+                    self.assertEqual(result["recovery_receipt"][
+                        "late_input_horizon_ns"], 2_000_000_000)
+                    self.assertTrue(result["next_action_requires_fresh_generation"])
+                    self.assertIsNone(result["task_success"], result)
+                    self.assertFalse(result["replay_allowed"], result)
+                    self.assertFalse(result["operation_invoked"], result)
+                    closed = await client.call_tool("interface_close", {})
+                    self.assertEqual(json.loads(closed.content[0].text)["status"],
+                        "closed")
+
     async def test_stdio_exception_unknown_then_fresh_generation_recovery(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client

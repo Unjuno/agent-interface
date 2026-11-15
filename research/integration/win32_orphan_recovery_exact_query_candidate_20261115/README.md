@@ -2,14 +2,15 @@
 
 ## Scope
 
-On candidate base `a2ccc3a8df2ba7753e439f9c8457b79f32f7a1cc` (branch `candidate/pr10303-current-main-reconcile-20261115`), add exact-call retrieval coverage for a successful orphan-recovery control receipt that completes after the public tool's 6 s response wait. The regression checks UNKNOWN source-action preservation, verified recovery release and 2 s horizon fields, `task_success=null`, replay denial, fresh-generation requirement, and exactly one supervisor invocation. Delayed UNKNOWN and immediate UNKNOWN results remain covered alongside it.
+On candidate base `a2ccc3a8df2ba7753e439f9c8457b79f32f7a1cc` (branch `candidate/pr10303-current-main-reconcile-20261115`), verify a successful orphan-recovery receipt that completes after the public tool's 6 s response wait. The composed checks cover both direct MCP server calls and the production CLI stdio transport. They assert that the original action remains UNKNOWN; recovery release and the 2 s horizon remain visible; `task_success=null`; replay is denied; a fresh generation is required; and recovery is invoked once.
 
 The live R269 source was not replayed. No native input, game interaction, Docker, or WSLc operation was part of these tests. This is Fake-backed protocol integration evidence only.
 
 ## Change
 
-- `runtime/cli_v1/mcp_server.py` now sends retained `recover_orphaned_input` reports through the management/control receipt path in `interface_results(call_id)`. This preserves recovery status and release fields rather than wrapping the control receipt as a generic image review.
-- `runtime/cli_v1/test_mcp_supervised_win32.py` adds a delayed-success exact-call query regression. Its 2 s horizon fixture is internally consistent: 21 observations span 2 s with a maximum sample gap of 100 ms.
+- `runtime/cli_v1/mcp_server.py` sends retained `recover_orphaned_input` reports through the management/control receipt path in `interface_results(call_id)`, preserving control fields instead of wrapping them as a generic image review.
+- `runtime/cli_v1/mcp_supervised_stdio_test_server.py` provides a bounded test-only delay after the fake release and 2 s horizon, before returning its terminal receipt. It models delayed receipt availability, not delayed OS input.
+- `runtime/cli_v1/test_mcp_supervised_win32.py` tests delayed-success, delayed-UNKNOWN and immediate-UNKNOWN query cases, plus pending-to-recovered retrieval through the production CLI stdio entrypoint. The 2 s horizon fixture uses 21 samples at up to 100 ms intervals.
 - `docs/CURRENT_GOAL.md` records the candidate-only result and limitations.
 
 ## Reproduction
@@ -17,19 +18,20 @@ The live R269 source was not replayed. No native input, game interaction, Docker
 Environment: Python 3.11.9, Microsoft Windows 11 Pro, Windows PowerShell, local candidate worktree. No provider/model call or live GUI was involved.
 
 ~~~powershell
-python -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_late_success_result_is_queryable_once runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_pending_result_is_queryable runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_unknown_is_an_mcp_error
-python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_late_success_result_is_queryable_once runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_pending_result_is_queryable runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_unknown_is_an_mcp_error
+python -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_late_success_result_is_queryable_once runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_pending_result_is_queryable runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_unknown_is_an_mcp_error runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
+python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_late_success_result_is_queryable_once runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_pending_result_is_queryable runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_orphan_recovery_unknown_is_an_mcp_error runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
 git diff --check
 ~~~
 
-Results: 3/3 passed normally (15.054 s) and 3/3 passed under `-O` (13.829 s). Captured output: `normal.log` and `optimized.log`.
+Results: 4/4 passed normally (23.530 s) and 4/4 under `-O` (23.599 s). Captured output: `normal.log` and `optimized.log`.
 
 ## SHA-256
 
-- `normal.log`: `33E611C4EB704DA9869788E4098A3C693379409169852CD21ADB2DCE92426929`
-- `optimized.log`: `99645057063B8E94442691B09CFAAEA7C1DDCC981A823009A57D1C7FCDA25751`
+- `normal.log`: `DA8300E0A972E482E85FDDDFCB09655BD00BE3BC3926BB43BCE7B94F5AD02406`
+- `optimized.log`: `DB0F843E4336DE551205ECB062F94594EBA53CF75132DE0FCA5F1EC92CFE4D75`
 - `runtime/cli_v1/mcp_server.py`: `B9616D40A9D559F9A7477CC9DB070C5C9009BE95B9E6CB6B95D40AC95F45376E`
-- `runtime/cli_v1/test_mcp_supervised_win32.py`: `5633344567D741FE33F39A63BE51B1872B592CCE894F02E57E51D290F0CB25E9`
-- `docs/CURRENT_GOAL.md`: `0DFEE20AC246821A7DF70732B262DD5A752D6F92209391EC7FC8AB52E53781AE`
+- `runtime/cli_v1/mcp_supervised_stdio_test_server.py`: `DDED6889C81DA9596836CBE59BACA4C1425B6E252E8D63AEE7EBD44F6D082D2C`
+- `runtime/cli_v1/test_mcp_supervised_win32.py`: `5913EAB3A6B94F6CF77CC143A8791158F0BDF759DD24F50DBA7F51F11443E02A`
+- `docs/CURRENT_GOAL.md`: `8E26064A1D2ADEB34FA79CFEF04F269FA8AA02F5FC3E07B36D8777C654929E5A`
 
 Candidate changes have not been pushed or merged to main. The broader candidate suite has the previously recorded intermittent failures; this focused check does not clear that status, establish native recovery, or prove MAP01 effect.
