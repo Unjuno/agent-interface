@@ -349,14 +349,25 @@ def _fake_owner_factory(targets, directory, display_name, options):
     cleanup.addCleanup(patcher.stop)
     owner = GuardedSessionOwner(targets, directory, display_name, **options)
     owner._owned_process_test_cleanup = cleanup
+    if (root/'fake-window-metadata-revalidation-fresh-source').exists():
+        original_revalidate=owner.revalidate_window_metadata
+        def revalidate_fresh_source(source_metadata):
+            source=dict(source_metadata)
+            source['observed_monotonic_ns']=time.monotonic_ns()
+            return original_revalidate(source)
+        owner.revalidate_window_metadata=revalidate_fresh_source
     if (root/'calc-profile-mode').exists():
         _configure_calc_profile_fake(owner, fake, root, options.get('test_input_obligations_state'))
+    if (root/'g10-stub-compiled').exists():
+        _configure_g10_public_owner_stub(owner, root)
     if (root/'fake-target-exit-receipt').exists():
         original_calc_profile = owner.run_registered_calc_profile
         def profile_with_exact_exit_receipt(*args, **kwargs):
             report = original_calc_profile(*args, **kwargs)
             descriptor = report['task_artifact_admission']
-            save_request = report['task_save_request']
+            save_request_ns = (max(row['save_request_monotonic_ns'] for row in
+                report['task_save_receipts']) if 'task_save_receipts' in report
+                else report['task_save_request']['save_request_monotonic_ns'])
             target_pid = descriptor['target_pid']
             report['target_process_exit_receipt'] = {
                 'schema':'agent-interface/calc-target-exit-receipt-v2',
@@ -366,7 +377,7 @@ def _fake_owner_factory(targets, directory, display_name, options):
                 'start_ticks':descriptor['target_start_ticks'],
                 'exit_code':0,
                 'observed_monotonic_ns':max(time.monotonic_ns(),
-                    save_request['save_request_monotonic_ns'] + 1),
+                    save_request_ns + 1),
                 'custody':'libreoffice-oosplash-direct-child-v1',
                 'launcher_pid':target_pid+100,
                 'launcher_start_ticks':123456,
@@ -376,6 +387,49 @@ def _fake_owner_factory(targets, directory, display_name, options):
             return report
         owner.run_registered_calc_profile = profile_with_exact_exit_receipt
     return owner
+
+
+def _configure_g10_public_owner_stub(owner, root):
+    """Stub graph execution, retaining real G10 callbacks and MCP custody."""
+    fixture_root=(Path(__file__).resolve().parents[2] / 'research' / 'integration'
+        / 'calc_current_shared_3311_4d74_20261004' / 'calc-compiled-ocrlive-4d74'
+        / 'runs' / 'compiled_ocrlive10')
+    def run_compiled(interface, _bindings, *, call_root, on_action_completed,
+                     before_action_dispatch, **_kwargs):
+        transitions=[]
+        for index, action in enumerate(('first','second'),start=1):
+            started=time.perf_counter_ns()
+            action_id=f'g10-stub-action-{index}'
+            dispatch={'action':action,'action_id':action_id,
+                'process_generation':owner.bridge.history[1][0]['pointer_binding'][
+                    'process_generation'],
+                'window_generation':owner.bridge.history[1][0]['pointer_binding'][
+                    'window_generation'],
+                'dispatch_started_ns':started,
+                'evidence_ref':f'g10-stub-pre-dispatch-{index}'}
+            before_action_dispatch(dispatch)
+            artifact_paths=list(root.rglob('task-artifact.fods'))
+            if len(artifact_paths)!=1:
+                raise AssertionError('expected one reserved parent G10 workbook')
+            artifact_paths[0].write_bytes((fixture_root/f'{action}.fods').read_bytes())
+            accepted=time.perf_counter_ns()
+            transition={'action':action,'action_id':action_id,
+                'release_verified':True,'execution_started_ns':started,
+                'execution_accepted_ns':accepted}
+            on_action_completed(transition)
+            transitions.append({'from_state':'first_saved' if index==2 else 'blank',
+                'to_state':'first_saved' if index==1 else 'second_saved',
+                **transition})
+        return {'method_receipt':{
+            'format':'compiled-gui-runtime-receipt-v1',
+            'interface_id':interface['interface_id'],
+            'method':interface['method']['name'],
+            'method_version':interface['method']['version'],
+            'session_scope':interface['session_scope'],
+            'outcome':'TASK_SUCCEEDED','reason':'method_complete',
+            'completed_transitions':2,'transitions':transitions,
+            'observations':[],'critical_events':[]}}
+    owner.run_compiled=run_compiled
 
 
 def _configure_calc_profile_fake(owner, fake, root, obligation_state=None):
@@ -845,6 +899,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 retained=json.loads(report_path.read_text(encoding='utf-8'))
                 retained['window_metadata']['title_cue']='forged on disk'
                 report_path.write_text(json.dumps(retained),encoding='utf-8')
+                (root/'fake-window-metadata-revalidation-fresh-source').write_text(
+                    'yes',encoding='utf-8')
                 stable=metadata(await server.call_tool(
                     'interface_guarded_window_metadata_revalidate',
                     {'metadata_call_id':result['call_id']}))
@@ -854,10 +910,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(stable['input_dispatched'],stable)
                 self.assertFalse(stable['authority_granted'],stable)
                 self.assertIsNone(stable['task_success'],stable)
+                changed_source=metadata(await server.call_tool(
+                    'interface_guarded_window_metadata',{'window_id':20}))
+                self.assertEqual(changed_source['status'],'inspected',changed_source)
                 (root/'fake-window-metadata-changed').write_text('yes',encoding='utf-8')
                 changed=metadata(await server.call_tool(
                     'interface_guarded_window_metadata_revalidate',
-                    {'metadata_call_id':result['call_id']}))
+                    {'metadata_call_id':changed_source['call_id']}))
                 self.assertEqual(changed['status'],'needs_review',changed)
                 self.assertFalse(changed['same_window'],changed)
                 self.assertFalse(changed['authority_granted'],changed)
@@ -1129,8 +1188,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool('interface_close',{})
 
-    async def test_g10_profile_is_refused_without_consuming_single_save_reservation(self):
-        """The offline G10 artifact helper is not a registered public profile."""
+    async def test_g10_prepare_reserves_fixed_parent_two_save_artifact(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
             server=create_server({'app':20},root,session_mode='guarded-x11',
@@ -1141,31 +1199,276 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 prepared=metadata(await server.call_tool(
                     'interface_guarded_calc_prepare',{
                         'attempt_id':'g10-attempt',
-                        'task_values':{'A1':'29','A2':'31'}}))
+                        'profile_id':'calc-g10-two-save-v1'}))
                 self.assertEqual(prepared['status'],'prepared',prepared)
-                rejected=metadata(await server.call_tool(
-                    'interface_guarded_calc_compiled',{
+                self.assertEqual(prepared['profile_id'],'calc-g10-two-save-v1')
+                self.assertIsNone(prepared['task_values'])
+                from runtime.guarded_x11_v1.calc_g10_artifact_v1 import _G10_BLANK
+                artifact=Path(prepared['artifact_path'])
+                self.assertEqual(artifact.read_bytes(),_G10_BLANK)
+                bad_values=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'g10-values-forbidden',
                         'profile_id':'calc-g10-two-save-v1',
-                        'bindings':{'entry':{'alias':'entry','offset':[0,0]},
-                                    'save':{'alias':'save','offset':[0,0]}},
-                        'reviewed_sequence':1,
-                        'reviewed_artifact_sha256':'a'*64,
-                        'blank_reviewed':True,'attempt_id':'g10-attempt',
-                        'prepared_call_id':prepared['call_id'],
-                        'wait_for_result_ms':10000}))
-                self.assertEqual(rejected['status'],'invalid_request',rejected)
-                self.assertFalse(rejected['operation_invoked'],rejected)
-                self.assertFalse(rejected['input_dispatched'],rejected)
-                self.assertIsNone(rejected['task_success'],rejected)
-                self.assertFalse(rejected['replay_allowed'],rejected)
-                self.assertFalse(list(root.glob('*/compiled/')))
-                self.assertFalse(list(root.glob('calls/*/request.json')))
+                        'task_values':{'A1':'29','A2':'31'}}))
+                self.assertEqual(bad_values['status'],'invalid_request',bad_values)
+                self.assertEqual(bad_values['error'],'G10_TASK_IS_FIXED')
                 second=metadata(await server.call_tool(
                     'interface_guarded_calc_prepare',{
                         'attempt_id':'g10-second-attempt'}))
                 self.assertEqual(second['status'],'busy',second)
                 self.assertEqual(second['error'],
                     'CALC_PREPARATION_ALREADY_RESERVED',second)
+            finally:
+                await server.call_tool('interface_close',{})
+
+    async def test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier(self):
+        """Stub graph executor; exercise real profile callbacks and MCP custody only."""
+        class FakeG10Launch:
+            launched=False
+            def launch(self, _artifact):
+                self.launched=True
+                return {'status':'launched','pid':4400,'start_ticks':123456,
+                    'input_dispatched':False,'task_success':None,
+                    'replay_allowed':False}
+            def retain_initial_process_group_custody(self, owner):
+                owner._calc_process_group_custody={'fixture':'g10-parent-custody'}
+                return {'status':'retained','custody':{'fixture':'g10-parent-custody'},
+                    'input_dispatched':False,'task_success':None,
+                    'replay_allowed':False}
+            def discover_owned_window(self, _owner, **_kwargs):
+                return {'status':'candidate_found','candidate':{
+                    'xid':20,'process_pid':_CALC_TEST_PID,
+                    'process_start_ticks':_CALC_TEST_START_TICKS,
+                    'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                    'window_incarnation':'c'*64,'mapped':True},
+                    'input_dispatched':False,'task_success':None,
+                    'replay_allowed':False}
+            def review_and_bind_owned_window(self, _owner, window_id, **_kwargs):
+                binding={'xid':window_id,'pid':_CALC_TEST_PID,
+                    'start_ticks':_CALC_TEST_START_TICKS,
+                    'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                    'window_generation':'c'*64}
+                fresh={'xid':window_id,'process_pid':_CALC_TEST_PID,
+                    'process_start_ticks':_CALC_TEST_START_TICKS,
+                    'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                    'window_incarnation':'c'*64,'mapped':True,
+                    'focused_before':True,'focused_after':True}
+                return {'status':'reviewed','candidate':{'xid':window_id},
+                    'fresh_metadata':fresh,'binding':binding,
+                    'input_dispatched':False,'task_success':None,
+                    'replay_allowed':False}
+            def wait_for_verified_exit(self, *, timeout_s):
+                return {'schema':'agent-interface/calc-target-exit-receipt-v2',
+                    'status':'exited','verified':True,
+                    'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                    'xid':20,'pid':_CALC_TEST_PID,
+                    'start_ticks':_CALC_TEST_START_TICKS,'exit_code':0,
+                    'observed_monotonic_ns':time.monotonic_ns(),
+                    'custody':'libreoffice-oosplash-direct-child-v1',
+                    'launcher_pid':4400,'launcher_start_ticks':123456,
+                    'launcher_executable':'/usr/lib/libreoffice/program/oosplash',
+                    'launcher_package_version':'4:7.4.7-1+deb12u14',
+                    'launcher_exit_code':0,'replacement_observed':False}
+            def cleanup_owned_process_group(self, custody):
+                return {'status':'terminated','verified_empty':True,
+                    'clean_exit_verified':False,'custody':custody}
+            def close(self):
+                return None
+
+        with tempfile.TemporaryDirectory() as td, patch(
+                'runtime.cli_v1.mcp_server._x11_root_window_id',return_value=20), patch(
+                'runtime.cli_v1.mcp_server.os',SimpleNamespace(name='posix')):
+            root=Path(td)
+            for marker in ('calc-profile-mode','g10-stub-compiled',
+                           'fake-target-exit-receipt'):
+                (root/marker).write_text('enabled',encoding='ascii')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+                _calc_launch_factory=lambda _artifact:FakeG10Launch())
+            try:
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'g10-public-parent-join',
+                        'profile_id':'calc-g10-two-save-v1'}))
+                self.assertEqual(prepared['status'],'prepared',prepared)
+                launched=metadata(await server.call_tool(
+                    'interface_guarded_calc_launch',{
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(launched['status'],'candidate_found',launched)
+                reviewed=metadata(await server.call_tool(
+                    'interface_guarded_review_window',{'window_id':20}))
+                self.assertEqual(reviewed['status'],'reviewed',reviewed)
+                observed=metadata(await server.call_tool(
+                    'interface_guarded_observe',{}))
+                self.assertEqual(observed['status'],'observed',observed)
+                source=observed['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',{
+                    'alias':'g10_parent_entry','source_sequence':source['sequence'],
+                    'point':[16,31],'region_size':[24,16],
+                    'freshness_ms':5000}))
+                save=metadata(await server.call_tool('interface_guarded_mint',{
+                    'alias':'g10_parent_save','source_sequence':source['sequence'],
+                    'point':[16,31],'region_size':[24,16],
+                    'freshness_ms':5000}))
+                self.assertEqual(entry['status'],'minted',entry)
+                self.assertEqual(save['status'],'minted',save)
+                result=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-g10-two-save-v1',
+                        'bindings':{
+                            'entry':{'alias':'g10_parent_entry','offset':entry['offset']},
+                            'save':{'alias':'g10_parent_save','offset':save['offset']}},
+                        'reviewed_sequence':source['sequence'],
+                        'reviewed_artifact_sha256':source['native']['artifact']['sha256'],
+                        'blank_reviewed':True,
+                        'attempt_id':'g10-public-parent-join',
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(result['profile_id'],'calc-g10-two-save-v1',result)
+                self.assertEqual(result.get('parent_task_save_custody_adoption',{}).get(
+                    'status'),'adopted',result)
+                self.assertEqual(result['method_receipt']['outcome'],'TASK_SUCCEEDED',result)
+                self.assertEqual(result['method_receipt']['completed_transitions'],2,result)
+                self.assertEqual([row['action'] for row in result['task_save_receipts']],
+                                 ['first','second'],result)
+                self.assertTrue(all(row['release_verified'] is True
+                    for row in result['method_receipt']['transitions']),result)
+                self.assertIsNone(result['task_success'],result)
+                self.assertFalse(result['replay_allowed'],result)
+                from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                    make_registered_calc_g10_save_controller_receipt)
+                rebuilt=make_registered_calc_g10_save_controller_receipt(
+                    descriptor=result['task_artifact_admission'],
+                    method_receipt=result['method_receipt'],
+                    save_receipts=result['task_save_receipts'])
+                self.assertIsNotNone(rebuilt,result)
+                self.assertEqual(rebuilt,result['task_save_controller_receipt'],result)
+                self.assertEqual(result['task_artifact_root_call_id'],
+                                 prepared['call_id'],result)
+                self.assertEqual([Path(prepared['artifact_path']).parent.joinpath(name).is_file()
+                    for name in ('g10-first.fods','g10-second.fods')],[True,True],result)
+                # A separate harmless Fake X chord gives close an actual
+                # tracked-input release receipt; it is not part of G10 task effect.
+                neutral_source=metadata(await server.call_tool(
+                    'interface_guarded_observe',{}))
+                neutral=metadata(await server.call_tool(
+                    'interface_guarded_mint',{
+                        'alias':'g10_neutral_release',
+                        'source_sequence':neutral_source['source']['sequence'],
+                        'point':[16,31],'region_size':[24,16],
+                        'freshness_ms':5000}))
+                self.assertEqual(neutral['status'],'minted',neutral)
+                release_probe=metadata(await server.call_tool(
+                    'interface_guarded_input',{
+                        'alias':'g10_neutral_release','offset':neutral['offset'],
+                        'interaction':'keyboard','observe_after':False,
+                        'tail':[{'op':'key_chord','keys':['CTRL','a']}],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(release_probe['status'],'completed',release_probe)
+                releases=release_probe['result']['execution']['releases']
+                self.assertTrue(releases[-1]['verified'],release_probe)
+                self.assertEqual(releases[-1]['keys_down'],[],release_probe)
+            finally:
+                closed=metadata(await server.call_tool('interface_close',{}))
+                self.assertEqual(closed['status'],'closed',closed)
+                self.assertTrue(closed['verified'],closed)
+            verified=metadata(await server.call_tool('interface_verify_task',{
+                'call_id':result['call_id']}))
+            self.assertEqual(verified['status'],'verified',verified)
+            self.assertIs(verified['task_success'],True,verified)
+            self.assertEqual(verified['task_effect']['reason'],
+                'both_g10_saved_effects_verified',verified)
+            self.assertEqual(set(verified['task_effect']['saved_effects']),
+                             {'first','second'},verified)
+            self.assertFalse(verified['operation_invoked'],verified)
+
+    async def test_g10_parent_bind_failure_blocks_compiled_dispatch(self):
+        class BadParentBindingLaunch:
+            launched=False
+            def launch(self,_artifact):
+                self.launched=True
+                return {'status':'launched','pid':4400,'start_ticks':123456}
+            def retain_initial_process_group_custody(self,owner):
+                owner._calc_process_group_custody={'fixture':'g10-bind-failure'}
+                owner._calc_process_group_cleanup_target=self.cleanup_owned_process_group
+                return {'status':'retained','custody':{'fixture':'g10-bind-failure'}}
+            def discover_owned_window(self,_owner,**_kwargs):
+                return {'status':'candidate_found','candidate':{'xid':20,
+                    'process_pid':_CALC_TEST_PID,
+                    'process_start_ticks':_CALC_TEST_START_TICKS,'mapped':True}}
+            def review_and_bind_owned_window(self,_owner,window_id,**_kwargs):
+                fresh={'xid':window_id,'process_pid':_CALC_TEST_PID,
+                    'process_start_ticks':_CALC_TEST_START_TICKS,
+                    'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                    'window_incarnation':'c'*64,'mapped':True,
+                    'focused_before':True,'focused_after':True}
+                return {'status':'reviewed','candidate':{'xid':window_id},
+                    'fresh_metadata':fresh,'binding':{'xid':window_id,
+                        'pid':_CALC_TEST_PID+1,
+                        'start_ticks':_CALC_TEST_START_TICKS,
+                        'process_generation':_CALC_TEST_PROCESS_GENERATION,
+                        'window_generation':'c'*64}}
+            def wait_for_verified_exit(self,*,timeout_s):
+                return {'status':'unknown','verified':False,
+                    'reason':'synthetic_target_remains'}
+            def cleanup_owned_process_group(self,custody):
+                return {'status':'terminated','verified_empty':True,
+                    'clean_exit_verified':False,'custody':custody}
+            def close(self):
+                return None
+
+        with tempfile.TemporaryDirectory() as td, patch(
+                'runtime.cli_v1.mcp_server._x11_root_window_id',return_value=20), patch(
+                'runtime.cli_v1.mcp_server.os',SimpleNamespace(name='posix')):
+            root=Path(td)
+            (root/'calc-profile-mode').write_text('enabled',encoding='ascii')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_window_lifecycle=True,guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+                _calc_launch_factory=lambda _artifact:BadParentBindingLaunch())
+            try:
+                prepared=metadata(await server.call_tool(
+                    'interface_guarded_calc_prepare',{
+                        'attempt_id':'g10-parent-bind-failure',
+                        'profile_id':'calc-g10-two-save-v1'}))
+                launched=metadata(await server.call_tool(
+                    'interface_guarded_calc_launch',{
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(launched['status'],'candidate_found',launched)
+                reviewed=metadata(await server.call_tool(
+                    'interface_guarded_review_window',{'window_id':20}))
+                self.assertEqual(reviewed['status'],'needs_review',reviewed)
+                source=metadata(await server.call_tool(
+                    'interface_guarded_observe',{}))
+                entry=metadata(await server.call_tool('interface_guarded_mint',{
+                    'alias':'g10_bad_entry','source_sequence':source['source']['sequence'],
+                    'point':[16,31],'region_size':[24,16],'freshness_ms':5000}))
+                save=metadata(await server.call_tool('interface_guarded_mint',{
+                    'alias':'g10_bad_save','source_sequence':source['source']['sequence'],
+                    'point':[16,31],'region_size':[24,16],'freshness_ms':5000}))
+                result=metadata(await server.call_tool(
+                    'interface_guarded_calc_compiled',{
+                        'profile_id':'calc-g10-two-save-v1',
+                        'bindings':{
+                            'entry':{'alias':'g10_bad_entry','offset':entry['offset']},
+                            'save':{'alias':'g10_bad_save','offset':save['offset']}},
+                        'reviewed_sequence':source['source']['sequence'],
+                        'reviewed_artifact_sha256':source['source']['native'][
+                            'artifact']['sha256'],'blank_reviewed':True,
+                        'attempt_id':'g10-parent-bind-failure',
+                        'prepared_call_id':prepared['call_id'],
+                        'wait_for_result_ms':10000}))
+                self.assertEqual(result['status'],'needs_review',result)
+                self.assertEqual(result['error'],'CALC_LAUNCH_REVIEW_BIND_REQUIRED',result)
+                self.assertFalse(result['operation_invoked'],result)
+                self.assertFalse(result['input_dispatched'],result)
+                self.assertFalse((root/result['call_id']/'compiled').exists())
             finally:
                 await server.call_tool('interface_close',{})
 
@@ -1233,10 +1536,10 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 source=observed['source']
                 entry=metadata(await server.call_tool('interface_guarded_mint',dict(
                     alias='calc_entry',source_sequence=source['sequence'],
-                    point=[16,31],region_size=[24,16])))
+                    point=[16,31],region_size=[24,16],freshness_ms=5000)))
                 save=metadata(await server.call_tool('interface_guarded_mint',dict(
                     alias='calc_save',source_sequence=source['sequence'],
-                    point=[200,205],region_size=[16,12])))
+                    point=[200,205],region_size=[16,12],freshness_ms=5000)))
                 self.assertEqual(entry['status'],'minted',entry)
                 self.assertEqual(save['status'],'minted',save)
                 result=metadata(await server.call_tool('interface_guarded_calc_compiled',{
@@ -3213,7 +3516,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(observed['session']['retention_mode'],'journal')
                 minted=metadata(await server.call_tool('interface_guarded_mint',dict(
                     alias='field',source_sequence=observed['source']['sequence'],
-                    point=[8,8],region_size=[12,12])))
+                    point=[8,8],region_size=[12,12],freshness_ms=5000)))
                 payload=_compiled_profile_payload(observed['session']['compiled_scope'],
                     observed['session']['compiled_surface'],minted['offset'])
                 payload['wait_for_result_ms']=10000

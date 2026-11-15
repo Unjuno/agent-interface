@@ -1,6 +1,7 @@
 """Offline tests for parent-held two-save G10 artifact custody."""
 import tempfile
 import unittest
+import copy
 from pathlib import Path
 
 from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
@@ -92,6 +93,74 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
             'xid': XID, 'pid': PID, 'start_ticks': START_TICKS,
             'exit_code': 0, 'observed_monotonic_ns': observed_ns,
         }
+
+    def test_parent_adopts_child_receipts_after_snapshot_identity_recheck(self):
+        child=copy.deepcopy(self.custody)
+        receipts=[]
+        requests=[]
+        transitions=[]
+        for index,(action,filename) in enumerate((
+                ('first','first.fods'),('second','second.fods')),1):
+            receipt=self._save_with(child,action,f'action-{action}',
+                f'{index:032x}',index*10,filename)
+            receipts.append(receipt)
+            requests.append(child._records[action] and {
+                'schema':'agent-interface/calc-g10-save-request-v2',
+                'call_id':CALL_ID,'attempt_id':ATTEMPT_ID,
+                'profile_id':PROFILE_ID,'action':action,
+                'action_id':f'action-{action}',
+                'process_generation':PROCESS_GENERATION,
+                'window_generation':WINDOW_GENERATION,
+                'save_request_id':f'{index:032x}',
+                'save_request_monotonic_ns':index*10,
+                'dispatch_evidence_ref':
+                    f'compiled-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-3-pre-dispatch'})
+            transitions.append({'action':action,'action_id':f'action-{action}',
+                'release_verified':True})
+        adopted=[]
+        for action,receipt,request,transition in zip(
+                ('first','second'),receipts,requests,transitions):
+            adopted.append(self.custody.adopt_saved_action_receipt(action,
+                receipt=receipt,save_request=request,transition=transition))
+        self.assertEqual([row['action'] for row in adopted],['first','second'])
+        self.assertEqual(set(self.custody._records),{'first','second'})
+
+    def test_parent_rejects_child_receipt_when_snapshot_hash_differs(self):
+        child=copy.deepcopy(self.custody)
+        receipt=self._save_with(child,'first','action-first','1'*32,10,
+            'first.fods')
+        receipt['artifact_sha256']='0'*64
+        request={'schema':'agent-interface/calc-g10-save-request-v2',
+            'call_id':CALL_ID,'attempt_id':ATTEMPT_ID,'profile_id':PROFILE_ID,
+            'action':'first','action_id':'action-first',
+            'process_generation':PROCESS_GENERATION,
+            'window_generation':WINDOW_GENERATION,'save_request_id':'1'*32,
+            'save_request_monotonic_ns':10,
+            'dispatch_evidence_ref':
+                'compiled-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-3-pre-dispatch'}
+        transition={'action':'first','action_id':'action-first',
+            'release_verified':True}
+        with self.assertRaisesRegex(ValueError,'snapshot does not match'):
+            self.custody.adopt_saved_action_receipt('first',receipt=receipt,
+                save_request=request,transition=transition)
+
+    def _save_with(self, custody, action, action_id, request_id, requested_ns,
+                   filename):
+        custody.workbook_path.write_bytes((FIXTURES/filename).read_bytes())
+        dispatch_ref='compiled-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-3-pre-dispatch'
+        request={'schema':'agent-interface/calc-g10-save-request-v2',
+            'call_id':CALL_ID,'attempt_id':ATTEMPT_ID,'profile_id':PROFILE_ID,
+            'action':action,'action_id':action_id,
+            'process_generation':PROCESS_GENERATION,
+            'window_generation':WINDOW_GENERATION,
+            'save_request_id':request_id,
+            'save_request_monotonic_ns':requested_ns,
+            'dispatch_evidence_ref':dispatch_ref}
+        action_receipt={'action':action,'action_id':action_id,
+            'status':'completed','release_verified':True,
+            'dispatch_evidence_ref':dispatch_ref}
+        return custody.record_saved_action(action,
+            action_receipt=action_receipt,save_request=request)
 
     def _two_saves(self):
         first = self._save('first', 'action-first', '1' * 32, 10,

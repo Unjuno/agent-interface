@@ -339,7 +339,9 @@ class GuardedSessionOwner(MCPSessionOwner):
         """Run the one server-owned Calc profile; requests contain data only."""
         from runtime.guarded_x11_v1.calc_profile_v1 import (
             PROFILE_ID, CalcPrimaryProfile)
-        if profile_id != PROFILE_ID:
+        from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+            PROFILE_ID as G10_PROFILE_ID)
+        if profile_id not in (PROFILE_ID, G10_PROFILE_ID):
             raise ValueError('unregistered compiled profile')
         if not self.query_worker:
             raise RuntimeError('registered compiled calls require the owned query worker')
@@ -349,24 +351,40 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise ValueError('attempt_id must be printable ASCII, 1..128 characters')
         self.get()
         root = Path(call_root)
-        profile = CalcPrimaryProfile(self.bridge, bindings, root,
-            reviewed_sequence=reviewed_sequence,
-            reviewed_artifact_sha256=reviewed_artifact_sha256,
-            blank_reviewed=blank_reviewed,
-            call_id=(task_artifact.call_id if task_artifact is not None
-                     else cancel_token),
-            attempt_id=attempt_id, task_artifact=task_artifact)
+        if profile_id == G10_PROFILE_ID:
+            if task_artifact is None:
+                raise ValueError('G10 requires its parent-created two-save artifact')
+            from runtime.guarded_x11_v1.calc_g10_profile_v1 import CalcG10Profile
+            profile = CalcG10Profile(self.bridge, bindings, root,
+                reviewed_sequence=reviewed_sequence,
+                reviewed_artifact_sha256=reviewed_artifact_sha256,
+                blank_reviewed=blank_reviewed,
+                call_id=task_artifact.call_id, attempt_id=attempt_id,
+                task_artifact=task_artifact)
+        else:
+            profile = CalcPrimaryProfile(self.bridge, bindings, root,
+                reviewed_sequence=reviewed_sequence,
+                reviewed_artifact_sha256=reviewed_artifact_sha256,
+                blank_reviewed=blank_reviewed,
+                call_id=(task_artifact.call_id if task_artifact is not None
+                         else cancel_token),
+                attempt_id=attempt_id, task_artifact=task_artifact)
         with self.bridge.cancellation_scope(cancel_token, cancel_when_idle=True):
             result = self.run_compiled(profile.interface, profile.bindings,
                 call_root=root/'compiled', perceive=profile.perceive,
                 guard_perceive=profile.guard_perceive,
                 verify_effect=profile.verify_effect,
-                verify_unchanged_effect=profile.verify_unchanged_effect,
+                verify_unchanged_effect=getattr(profile,
+                    'verify_unchanged_effect', None),
+                on_action_completed=getattr(profile,
+                    'on_action_completed', None),
+                before_action_dispatch=getattr(profile,
+                    'before_action_dispatch', None),
                 post_release_settle_ms=250,
                 cancelled=self.bridge._cancel_requested)
-        result['profile_id'] = PROFILE_ID
+        result['profile_id'] = profile_id
         result['attempt_id'] = attempt_id
-        if profile.symbolic_plan_binding is not None:
+        if getattr(profile, 'symbolic_plan_binding', None) is not None:
             result['task_plan_sha256'] = profile.symbolic_plan_binding['plan_sha256']
             result['task_plan_interface'] = deepcopy(
                 profile.symbolic_plan_binding['interface'])
@@ -377,7 +395,17 @@ class GuardedSessionOwner(MCPSessionOwner):
         result['task_effect_verification'] = {
             'status':'not_configured', 'task_success':None,
             'reason':'trusted_save_controller_unavailable'}
-        if profile.task_artifact is not None:
+        if profile_id == G10_PROFILE_ID:
+            controller = profile.controller_receipt(result.get('method_receipt'))
+            result['task_effect_verification'] = {
+                'status':'unknown', 'task_success':None,
+                'reason':'verified_close_and_target_exit_required'}
+            result['task_artifact_admission'] = profile.artifact.descriptor
+            result['task_save_requests'] = deepcopy(profile.save_requests)
+            result['task_save_receipts'] = deepcopy(profile.save_receipts)
+            result['task_save_controller_receipt'] = deepcopy(controller)
+            result['task_artifact_root_call_id'] = profile.artifact.call_id
+        elif profile.task_artifact is not None:
             result['task_artifact_admission'] = profile.task_artifact.descriptor
             result['task_save_request'] = deepcopy(profile.task_save_request)
             result['task_artifact_root_call_id'] = profile.task_artifact.call_id
@@ -729,7 +757,8 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
         async def interface_guarded_calc_prepare(
                 attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
                 task_values: dict | None = None,
-                task_plan: dict | None = None) -> CallToolResult:
+                task_plan: dict | None = None,
+                profile_id: StrictStr = 'calc-ocr-save-v1') -> CallToolResult:
             """Reserve one blank server-owned FODS and retain task inputs/plan.
 
             The call ID is the unguessable reservation handle. This operation
@@ -744,17 +773,37 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             `task_plan` is a bounded declarative graph without values, aliases,
             coordinates, code or callbacks. The parent retains it and binds it
             to fresh reviewed aliases at execution.
+            `profile_id='calc-g10-two-save-v1'` selects the fixed two-save
+            formula task; that profile accepts no caller task values or plan.
             """
-            from runtime.guarded_x11_v1.calc_profile_v1 import validate_calc_task_values
-            try:
-                validated_values = validate_calc_task_values(task_values)
-            except (TypeError,ValueError) as error:
-                row={'status':'invalid_request','error':'CALC_TASK_VALUES_INVALID',
-                    'detail':str(error),'operation_invoked':False,
-                    'input_dispatched':False,'task_success':None,'replay_allowed':False}
+            from runtime.guarded_x11_v1.calc_profile_v1 import (
+                PROFILE_ID as OCR_PROFILE_ID, validate_calc_task_values)
+            from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                PROFILE_ID as G10_PROFILE_ID)
+            if profile_id == G10_PROFILE_ID:
+                if task_values is not None or task_plan is not None:
+                    row={'status':'invalid_request','error':'G10_TASK_IS_FIXED',
+                        'operation_invoked':False,'input_dispatched':False,
+                        'task_success':None,'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+                validated_values = None
+            elif profile_id == OCR_PROFILE_ID:
+                try:
+                    validated_values = validate_calc_task_values(task_values)
+                except (TypeError,ValueError) as error:
+                    row={'status':'invalid_request','error':'CALC_TASK_VALUES_INVALID',
+                        'detail':str(error),'operation_invoked':False,
+                        'input_dispatched':False,'task_success':None,'replay_allowed':False}
+                    return CallToolResult(content=[TextContent(
+                        type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            else:
+                row={'status':'invalid_request','error':'CALC_PROFILE_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
                 return CallToolResult(content=[TextContent(
                     type='text',text=json.dumps(row,allow_nan=False))],isError=True)
-            if task_plan is not None:
+            if task_plan is not None and profile_id == OCR_PROFILE_ID:
                 try:
                     from runtime.guarded_x11_v1.calc_symbolic_plan_v1 import (
                         validate_and_bind_calc_plan)
@@ -784,7 +833,8 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
                 return CallToolResult(content=[TextContent(
                     type='text',text=json.dumps(row,allow_nan=False))],isError=True)
             return await submit('guarded_calc_prepare',{'attempt_id':attempt_id,
-                'task_values':validated_values,'task_plan':task_plan},
+                'profile_id':profile_id,'task_values':validated_values,
+                'task_plan':task_plan},
                 False,False,wait_for_result_ms=10000)
 
         if calc_launch_enabled:
@@ -817,7 +867,7 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
                 blank_reviewed: StrictBool, attempt_id: Annotated[StrictStr, Field(min_length=1,max_length=128)],
                 prepared_call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')] | None = None,
                 wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
-            """Run the registered two-cell Calc profile through the owned process.
+            """Run a registered Calc profile through the owned process.
 
             This request selects only a registered server profile; it cannot
             supply code, OCR commands, callbacks, interface graphs, input tails,
@@ -828,8 +878,10 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             review of that exact image. The profile rechecks current OCR inside
             the existing native input guard before Save keystrokes. A Save key
             is only a request. This profile does not score persisted workbook
-            bytes; graph `task_success` remains null until the separate
-            parent-side post-close verifier proves saved effect. `attempt_id` joins this
+            bytes for the OCR profile; graph `task_success` remains null until
+            the parent-side post-close verifier proves saved effect. The fixed
+            G10 profile records two distinct formula-row saves and also requires
+            both exact saved-byte scores after close. `attempt_id` joins this
             local call to an outer provider ledger and carries no token claims.
             `interface_verify_task(call_id)` is available only on this owned
             guarded-X11 route and after a verified owner close plus a parent-held
@@ -851,7 +903,10 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             establish parent pre-launch custody. This profile still does not
             prove a trusted saved workbook effect.
             """
-            from runtime.guarded_x11_v1.calc_profile_v1 import PROFILE_ID
+            from runtime.guarded_x11_v1.calc_profile_v1 import (
+                PROFILE_ID as OCR_PROFILE_ID)
+            from runtime.guarded_x11_v1.calc_g10_artifact_v1 import (
+                PROFILE_ID as G10_PROFILE_ID)
             valid_bindings = (isinstance(bindings,dict) and set(bindings)=={'entry','save'}
                 and all(isinstance(bindings[name],dict)
                     and set(bindings[name])=={'alias','offset'}
@@ -861,8 +916,15 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
                     and all(type(value) is int and value>=0
                             for value in bindings[name]['offset'])
                     for name in ('entry','save')))
-            if profile_id != PROFILE_ID or not valid_bindings:
+            if profile_id not in (OCR_PROFILE_ID, G10_PROFILE_ID) or not valid_bindings:
                 row={'status':'invalid_request','error':'CALC_PROFILE_INVALID',
+                    'operation_invoked':False,'input_dispatched':False,
+                    'task_success':None,'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            if profile_id == G10_PROFILE_ID and prepared_call_id is None:
+                row={'status':'invalid_request',
+                    'error':'G10_PARENT_ARTIFACT_REQUIRED',
                     'operation_invoked':False,'input_dispatched':False,
                     'task_success':None,'replay_allowed':False}
                 return CallToolResult(content=[TextContent(
