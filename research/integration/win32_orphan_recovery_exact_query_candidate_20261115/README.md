@@ -46,3 +46,14 @@ python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MC
 ~~~
 
 Raw output and hashes: `current-head-stdio-normal.log` (`355968e1d2f89bbd8cf5746732d83962f092bf6fd9cf7525c2b67e74cbe920b1`) and `current-head-stdio-optimized.log` (`e130b782695541bd72011b978085d3974abc82a3a7a24410ebeae4d9005d4368`). Test source `runtime/cli_v1/test_mcp_supervised_win32.py`: `293b0ecaf44afe24c95f4df51957b23d1e11e2efab938c23196f1c859f40198d`.
+
+## Pending and terminal receipt consistency recheck
+
+Re-ran the same production-stdio case against candidate HEAD `d420a45dea9c52e522b3a058ec22bef3697aaf50`, with additional pending-presentation assertions in the working tree. Both commands passed 1/1: normal (9.134 s) and `-O` (9.010 s). The test checks the initial pending receipt has exact call ID, recovery operation, original source custody, release false, effect unknown, task success null, and replay denied. While pending, exact `interface_results` also preserves that call and source custody. An unrelated unknown call ID gets `unknown_call` without a recovery receipt; exact query of the real call returns the terminal recovery receipt. This checks caller/result association, not native recovery.
+
+~~~powershell
+python -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
+python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
+~~~
+
+Raw output and hashes: `current-head-stdio-normal.log` (`5a9264ce1a17c1df26ad5071a423f852a25f27059ad8553251e19ce567267992`) and `current-head-stdio-optimized.log` (`cc35ddcf5e6f492c3314a729b37e8c3f6243297607369d373a778a2757665acb`). Test source `runtime/cli_v1/test_mcp_supervised_win32.py`: `163b3148a55c58f9e580d7974c819d361d2c7b25c5b671b53845cd083b10528a`.

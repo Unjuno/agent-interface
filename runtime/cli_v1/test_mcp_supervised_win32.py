@@ -3504,7 +3504,21 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(pending["status"], "pending", pending)
                     call_id = pending["call_id"]
                     self.assertFalse(pending["release_confirmed"], pending)
+                    self.assertEqual(pending["effect_status"], "unknown", pending)
+                    self.assertIsNone(pending["task_success"], pending)
                     self.assertFalse(pending["replay_allowed"], pending)
+                    pending_call = pending["call"]
+                    self.assertEqual(pending_call["call_id"], call_id)
+                    self.assertEqual(pending_call["operation"],
+                                     "recover_orphaned_input")
+                    self.assertIn(pending_call["state"], ("queued", "running"))
+                    pending_arguments = pending_call["arguments"]
+                    self.assertEqual(pending_arguments["source_operation_id"],
+                                     operation_id)
+                    self.assertEqual(pending_arguments["source_target_generation"],
+                                     GENERATION)
+                    self.assertEqual(pending_arguments["source_custody_record"],
+                                     custody)
 
                     unrelated = await client.call_tool("interface_results", {
                         "call_id": "0" * 32, "include_image": False})
@@ -3521,6 +3535,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         result = json.loads(queried.content[0].text)
                         if result.get("status") != "pending":
                             break
+                        pending_record = result["call"]
+                        self.assertEqual(pending_record["call_id"], call_id)
+                        self.assertEqual(pending_record["operation"],
+                                         "recover_orphaned_input")
+                        self.assertEqual(
+                            pending_record["arguments"]["source_custody_record"],
+                            custody)
+                        self.assertFalse(result["operation_invoked"])
                         await asyncio.sleep(0.01)
 
                     self.assertEqual(result["status"], "recovered", result)
