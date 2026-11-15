@@ -25,14 +25,19 @@ Commands and results:
 
 ```text
 python -m unittest runtime.cli_v1.test_mcp_guarded
-Ran 56 tests in 13.635s — OK
+Ran 56 tests in 14.144s — OK
 
 python -O -m unittest runtime.cli_v1.test_mcp_guarded
-Ran 56 tests in 14.382s — OK
+Ran 56 tests in 13.379s — OK
 
 git diff --check
 OK
 ```
+
+Raw output: [`public-owner-normal.log`](public-owner-normal.log), SHA-256
+`CCBAABB52D20C60D5145E813AB5FF59094FCD1380AD31C55952D8964CC7E270C`; and
+[`public-owner-optimized.log`](public-owner-optimized.log), SHA-256
+`50BD4DFA9D42FA89C32B793572F892BAE961BB04FD5005E08EDDD67E66932C52`.
 
 Changed-source SHA-256:
 
