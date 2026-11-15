@@ -3,7 +3,7 @@
 ## Fixed source and environment
 
 - Repository: `Unjuno/agent-interface`
-- Main baseline: `fc15701d25427f74e96ca5ac97fa06685a1182de`; the pending-result regression is the candidate test added on this branch
+- Main baseline: `17f9b05bbe99d83ec4910dd46981826f63d685b7`; the post-release generation regression is the candidate test added on this branch
 - Runtime: CPython 3.11.9 on the attached Windows host
 - No native input, Docker/WSLc command, or replay of R269 was performed.
 
