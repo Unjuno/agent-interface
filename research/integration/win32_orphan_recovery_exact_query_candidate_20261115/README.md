@@ -35,3 +35,14 @@ Results: 4/4 passed normally (23.530 s) and 4/4 under `-O` (23.599 s). Captured 
 - `docs/CURRENT_GOAL.md`: `8E26064A1D2ADEB34FA79CFEF04F269FA8AA02F5FC3E07B36D8777C654929E5A`
 
 Candidate changes have not been pushed or merged to main. The broader candidate suite has the previously recorded intermittent failures; this focused check does not clear that status, establish native recovery, or prove MAP01 effect.
+
+## Current candidate HEAD recheck (2026-11-15)
+
+Re-ran the production-stdio exact-query case on candidate HEAD `2b42c87bf18cf5cd91b11fd4719a5f2bc2b682ad` after the G10 custody updates. Both commands passed 1/1: normal (8.289 s) and `-O` (8.361 s). These focused reruns confirm the adjacent G10 edits did not alter the production Win32 caller's delayed-recovery result query. They do not broaden the Fake-backed scope or validate live native recovery.
+
+~~~powershell
+python -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
+python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
+~~~
+
+Raw output and hashes: `current-head-stdio-normal.log` (`dede9aefe576be98e1ffa9417af1bbf2b0c8cfed16aa2926c33f8d1d8f71ac0f`) and `current-head-stdio-optimized.log` (`e875649053ffac9fa7668e7587645458626770517c86e865b3a930cc3c603e67`).
