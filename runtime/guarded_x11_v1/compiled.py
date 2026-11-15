@@ -207,6 +207,13 @@ class _Adapter:
                         native['binding_revision'] == self.revision and
                         native['pointer_binding']['surface'] == self.bridge.backend.targets[self.bridge.target].id and
                         all(predicates.get(name) is True for name in authorization['required_predicates']))
+                    if row['eligible'] and self.before_action_dispatch is not None:
+                        self.before_action_dispatch({
+                            'action':request['action'], 'action_id':action_id,
+                            'operation':request['operation'],
+                            'process_generation':self.target_generation.get('process_generation'),
+                            'window_generation':self.target_generation.get('window_generation'),
+                            'dispatch_started_ns':time.perf_counter_ns()})
                     return row['eligible']
                 except Exception as error:
                     row['error_type'],row['error'] = type(error).__name__,repr(error)
@@ -220,12 +227,6 @@ class _Adapter:
             before_dispatch = getattr(self, 'before_action_dispatch', None)
             with self.bridge.input_guard(authorization['target_reference'],binding['offset'],
                     tail=copy.deepcopy(binding['tail']),interaction=binding['interaction'],verify=verify_input):
-                if before_dispatch is not None:
-                    before_dispatch({'action':request['action'], 'action_id':action_id,
-                        'operation':request['operation'],
-                        'process_generation':self.target_generation.get('process_generation'),
-                        'window_generation':self.target_generation.get('window_generation'),
-                        'dispatch_started_ns':time.perf_counter_ns()})
                 raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
                     tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
         effect_ref = self.retain('execution', {'request':request,'action_id':action_id,'result':raw})

@@ -120,6 +120,18 @@ class CompiledX11Tests(unittest.TestCase):
             run(Bridge(), spec(), bindings(), perceive=perceive,
                 verify_effect=verify, before_action_dispatch=object())
 
+    def test_before_dispatch_hook_is_skipped_when_input_guard_refuses(self):
+        b = Bridge()
+        dispatched = []
+        result = run(b, spec(), bindings(), perceive=perceive,
+            guard_perceive=lambda native, image: {'present':False},
+            verify_effect=verify,
+            before_action_dispatch=lambda row: dispatched.append(row))
+        self.assertEqual((result['outcome'], result['reason']),
+                         ('SAFE_YIELD', 'execution_refused'))
+        self.assertEqual(dispatched, [])
+        self.assertEqual(b.inputs, [])
+
     def test_action_completion_callback_is_skipped_when_release_is_unknown(self):
         b = Bridge()
         b.release = False
