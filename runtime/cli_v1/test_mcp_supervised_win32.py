@@ -2999,7 +2999,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             "binding_revision": 1,
                             "target_generations": {"fixture": GENERATION}},
                         "authority": {"lease_id": "stdio-expiry-lease",
-                            "expires_at_ns": time.monotonic_ns() + 1_500_000_000},
+                            # Leave enough startup/admission time for the stdio
+                            # child before the deliberate expiry path begins.
+                            "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
                         "terminal": {"release_all_required": True},
                         "ops": [{"op": "focus", "target": "fixture"},
                             {"op": "key_chord", "keys": ["CTRL", "S"]},
@@ -3100,7 +3102,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             "binding_revision": 1,
                             "target_generations": {"fixture": GENERATION}},
                         "authority": {"lease_id": "stdio-public-caller-lease",
-                            "expires_at_ns": time.monotonic_ns() + 1_500_000_000},
+                            # Keep setup latency separate from the expiry
+                            # caller behavior under test.
+                            "expires_at_ns": time.monotonic_ns() + 5_000_000_000},
                         "terminal": {"release_all_required": True},
                         "ops": [{"op": "focus", "target": "fixture"},
                             {"op": "key_chord", "keys": ["CTRL", "S"]},
@@ -3825,7 +3829,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(recovery_call["arguments"][
                         "source_custody_record"], custody)
 
-                    query_deadline = time.monotonic() + 6
+                    # Recovery first samples a 2 s neutral horizon, then this
+                    # fixture withholds the terminal receipt for another 8 s.
+                    # The initial MCP request only waits 6 s, so leave a full
+                    # 12 s query window for the delayed receipt and stdio
+                    # scheduling after that pending response.
+                    query_deadline = time.monotonic() + 12
                     recovered = None
                     while time.monotonic() < query_deadline:
                         query_reply = await client.call_tool("interface_results", {
