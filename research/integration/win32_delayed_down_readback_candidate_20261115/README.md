@@ -121,6 +121,19 @@ Scope: Fake-backed public caller/server classification. Release recovery alone d
 
 SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py 57EC76D4017C1AB3081C084A8ADE7916E0F3C79E70E069409D225B08E4E6A06A; compiled-caller-unknown-recovery-compact-normal.log CCF012FEAAECC1716B977AFCA94DAF593ACD807EB7833BE641DB9E3142D5FA00; compiled-caller-unknown-recovery-compact-optimized.log 3E727791EBC16B32EC6B8A64DABBDE7B619AA93F6CE91F6220847EBE1702B8BC.
 
+## Compiled caller horizon acceptance boundary
+
+Paired two existing public-result shapes at `_terminal`:
+
+- `test_exact_results_projects_owner_horizon_verdict_without_promoting_action` retrieves the exact producer-exception UNKNOWN action with a complete identity-bound owner recovery horizon, using compact/report_refs/brief presentation. The compiled caller returns `delivery_uncertain` and verified neutral release, while the original action and task outcome remain UNKNOWN/null.
+- `test_stdio_expiry_delayed_recovery_and_exact_call_effect` runs the production CLI/stdio delayed-expiry fixture. Its cancellation says release recovered, but its owner receipt explicitly has `late_input_horizon_verified=false` and horizon 0. Passing that exact row to `_terminal` returns `uncertain` with release unverified; input delivery may be true, so the status remains conservative.
+
+Both tests pass together 2/2 normally (2.788 s) and under `-O` (2.717 s), Python 3.11.9. Raw logs: `compiled-terminal-recovery-horizon-boundary-normal.log` and `compiled-terminal-recovery-horizon-boundary-optimized.log`.
+
+The stdio test initially expected `delivery_uncertain`; inspection showed the fixture did not provide a verified late-input horizon. That expectation was corrected to `uncertain`. This is useful integration evidence that a release boolean cannot substitute for the horizon contract. The positive verified-horizon path uses an in-process Fake owner; the delayed stdio path remains a Fake process and proves conservative classification only, not native timing or physical release.
+
+SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py C721912FD8F02BF8DC54B5F718A58E872B5048F943D136EA6CE1006BA8295F34; compiled-terminal-recovery-horizon-boundary-normal.log 1DB27BDF7AA50BF402EAE968E8BADA4FCB662E30EBF4709E3768AE0D66A04395; compiled-terminal-recovery-horizon-boundary-optimized.log 79B98096D69F5C62B43B6912C3E1EE69931D5DE09CF6A4BA2B26057EAD70FC1E.
+
 ## Read-only native custody gate (2026-11-15)
 
 GZDoom PID 41580 remained responsive with title `Hydroelectric Plant - Freedoom: Phase 2`. The authoritative custody fence remained `unresolved`, revision 888, with pending `button:map01:left` and `key:map01:SHIFT:virtual_key`, operation `bb1c1f207e34407db20c28703713ae6a`, source generation `3b8649...f393c6f`, and no `last_resolved` entry. No focus, input, recovery, or process-close operation was performed. Native MAP01 remains gated.

@@ -1191,7 +1191,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(dispatched["replay_allowed"])
 
             reply = await server.call_tool("interface_results", {
-                "call_id": dispatched["call_id"], "include_image": False})
+                "call_id": dispatched["call_id"], "include_image": False,
+                "compact": True, "report_refs": True, "detail": "brief"})
             self.assertFalse(reply.isError)
             body = json.loads(reply.content[0].text)
             cancellation = body["cancellation"]
@@ -1200,7 +1201,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "late_input_horizon_verified"], cancellation["result"])
             retained_recovery = cancellation["result"]
             repeated_reply = await server.call_tool("interface_results", {
-                "call_id": dispatched["call_id"], "include_image": False})
+                "call_id": dispatched["call_id"], "include_image": False,
+                "compact": True, "report_refs": True, "detail": "brief"})
             self.assertFalse(repeated_reply.isError)
             repeated_body = json.loads(repeated_reply.content[0].text)
             self.assertEqual(repeated_body["cancellation"]["result"],
@@ -2934,6 +2936,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_stdio_expiry_delayed_recovery_and_exact_call_effect(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
+        from runtime.cli_v1.supervised_win32_compiled import _terminal
 
         with TemporaryDirectory() as root:
             output = Path(root) / "child-receipts"
@@ -3012,6 +3015,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(retained["action"]["program_actions_lower_bound"], 2)
                     self.assertIsNone(retained["task_success"])
                     self.assertFalse(retained["replay_allowed"])
+                    caller_terminal = _terminal(retained, "save",
+                        expected_call_id=call_id,
+                        expected_generation=GENERATION)
+                    self.assertEqual(caller_terminal["status"],
+                        "uncertain", caller_terminal)
+                    self.assertFalse(caller_terminal["release"]["verified"],
+                        caller_terminal)
+                    self.assertTrue(caller_terminal["input_dispatched"])
 
                     verified_reply = await client.call_tool(
                         "interface_verify_task", {"call_id": call_id,
