@@ -38,11 +38,11 @@ Candidate changes have not been pushed or merged to main. The broader candidate 
 
 ## Current candidate HEAD recheck (2026-11-15)
 
-Re-ran the production-stdio exact-query case on candidate HEAD `2b42c87bf18cf5cd91b11fd4719a5f2bc2b682ad` after the G10 custody updates. Both commands passed 1/1: normal (8.289 s) and `-O` (8.361 s). These focused reruns confirm the adjacent G10 edits did not alter the production Win32 caller's delayed-recovery result query. They do not broaden the Fake-backed scope or validate live native recovery.
+Re-ran the production-stdio exact-query case against candidate HEAD `5918ffcc38addc501eb5c99e4a21a48f4e58068a`, with the new cross-call isolation assertion in the working tree. Both commands passed 1/1: normal (10.027 s) and `-O` (9.678 s). The test now queries an unrelated unknown call ID while recovery is pending and asserts it receives `unknown_call` without the recovery receipt; exact query of the real call still returns the terminal recovery receipt. This checks caller/result association, not native recovery.
 
 ~~~powershell
 python -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
 python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query
 ~~~
 
-Raw output and hashes: `current-head-stdio-normal.log` (`dede9aefe576be98e1ffa9417af1bbf2b0c8cfed16aa2926c33f8d1d8f71ac0f`) and `current-head-stdio-optimized.log` (`e875649053ffac9fa7668e7587645458626770517c86e865b3a930cc3c603e67`).
+Raw output and hashes: `current-head-stdio-normal.log` (`355968e1d2f89bbd8cf5746732d83962f092bf6fd9cf7525c2b67e74cbe920b1`) and `current-head-stdio-optimized.log` (`e130b782695541bd72011b978085d3974abc82a3a7a24410ebeae4d9005d4368`). Test source `runtime/cli_v1/test_mcp_supervised_win32.py`: `293b0ecaf44afe24c95f4df51957b23d1e11e2efab938c23196f1c859f40198d`.
