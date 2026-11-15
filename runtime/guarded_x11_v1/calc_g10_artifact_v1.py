@@ -19,7 +19,7 @@ from .calc_task_artifact_v1 import _stable_directory, CalcTaskArtifact
 
 PROFILE_ID = 'calc-g10-two-save-v1'
 _DESCRIPTOR_SCHEMA = 'agent-interface/calc-g10-two-save-descriptor-v1'
-_SAVE_REQUEST_SCHEMA = 'agent-interface/calc-g10-save-request-v1'
+_SAVE_REQUEST_SCHEMA = 'agent-interface/calc-g10-save-request-v2'
 _SAVE_CONTROLLER_SCHEMA = 'agent-interface/calc-g10-save-controller-v1'
 _ARTIFACT_NAME = 'task-artifact.fods'
 _SNAPSHOT_NAMES = {'first': 'g10-first.fods', 'second': 'g10-second.fods'}
@@ -98,6 +98,8 @@ def make_registered_calc_g10_save_controller_receipt(*, descriptor,
                 or not row['action_id'] or len(row['action_id']) > 128
                 or type(row.get('save_request_id')) is not str
                 or not re.fullmatch(r'[0-9a-f]{32}', row['save_request_id'])
+                or type(row.get('dispatch_evidence_ref')) is not str
+                or not 1 <= len(row['dispatch_evidence_ref']) <= 128
                 or type(request_ns) is not int or request_ns <= 0
                 or type(started_ns) is not int or started_ns <= 0
                 or type(accepted_ns) is not int
@@ -112,6 +114,7 @@ def make_registered_calc_g10_save_controller_receipt(*, descriptor,
             'action': action,
             'action_id': row['action_id'],
             'save_request_id': row['save_request_id'],
+            'dispatch_evidence_ref': row['dispatch_evidence_ref'],
             'save_request_monotonic_ns': request_ns,
             'transition_execution_started_ns': started_ns,
             'transition_execution_accepted_ns': accepted_ns,
@@ -264,7 +267,8 @@ class CalcG10ArtifactCustody:
             raise ValueError('G10 action receipt is not completed and released')
         required = {'schema', 'call_id', 'attempt_id', 'profile_id', 'action',
                     'action_id', 'process_generation', 'window_generation',
-                    'save_request_id', 'save_request_monotonic_ns'}
+                    'save_request_id', 'save_request_monotonic_ns',
+                    'dispatch_evidence_ref'}
         if (type(save_request) is not dict or set(save_request) != required
                 or save_request.get('schema') != _SAVE_REQUEST_SCHEMA
                 or save_request.get('call_id') != self.call_id
@@ -274,6 +278,10 @@ class CalcG10ArtifactCustody:
                 or save_request.get('action_id') != action_receipt['action_id']
                 or save_request.get('process_generation') != self._process_generation
                 or save_request.get('window_generation') != self._window_generation
+                or type(save_request.get('dispatch_evidence_ref')) is not str
+                or not 1 <= len(save_request['dispatch_evidence_ref']) <= 128
+                or action_receipt.get('dispatch_evidence_ref')
+                    != save_request['dispatch_evidence_ref']
                 or type(save_request.get('save_request_id')) is not str
                 or not re.fullmatch(r'[0-9a-f]{32}', save_request['save_request_id'])
                 or type(save_request.get('save_request_monotonic_ns')) is not int
@@ -316,6 +324,7 @@ class CalcG10ArtifactCustody:
             'process_generation': self._process_generation,
             'window_generation': self._window_generation,
             'save_request_id': save_request['save_request_id'],
+            'dispatch_evidence_ref': save_request['dispatch_evidence_ref'],
             'save_request_monotonic_ns': save_request['save_request_monotonic_ns'],
             'artifact_name': _SNAPSHOT_NAMES[action],
             'artifact_sha256': digest,

@@ -208,12 +208,17 @@ class _Adapter:
                         native['pointer_binding']['surface'] == self.bridge.backend.targets[self.bridge.target].id and
                         all(predicates.get(name) is True for name in authorization['required_predicates']))
                     if row['eligible'] and self.before_action_dispatch is not None:
-                        self.before_action_dispatch({
+                        dispatch_receipt = {
                             'action':request['action'], 'action_id':action_id,
                             'operation':request['operation'],
                             'process_generation':self.target_generation.get('process_generation'),
                             'window_generation':self.target_generation.get('window_generation'),
-                            'dispatch_started_ns':time.perf_counter_ns()})
+                            'dispatch_started_ns':time.perf_counter_ns()}
+                        dispatch_receipt['evidence_ref'] = (
+                            self.run_id + '-' + str(self.event_index + 1)
+                            + '-pre-dispatch')
+                        self.retain('pre-dispatch', dispatch_receipt)
+                        self.before_action_dispatch(copy.deepcopy(dispatch_receipt))
                     return row['eligible']
                 except Exception as error:
                     row['error_type'],row['error'] = type(error).__name__,repr(error)

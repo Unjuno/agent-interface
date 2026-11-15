@@ -4,9 +4,9 @@ Base `origin/main`: `f0d5fa202de83f39012bf4a914369b21f8e98a41`; candidate HEAD b
 
 ## Change and scope
 
-`runtime/guarded_x11_v1/compiled.py` exposes an optional trusted-caller `before_action_dispatch` hook. After fresh admission, the actual bridge invokes it only when input-guard verification succeeds. The adapter supplies its own action name, minted action ID, operation, last observed process/window generations, and `time.perf_counter_ns()` timestamp immediately before guarded input dispatch. Public graph input cannot choose this callback. The existing post-release callback remains the source of transition acceptance and release evidence.
+`runtime/guarded_x11_v1/compiled.py` exposes an optional trusted-caller `before_action_dispatch` hook. After fresh admission, the actual bridge invokes it only when input-guard verification succeeds. The adapter supplies its own action name, minted action ID, operation, last observed process/window generations, same-clock timestamp, and a `bridge._save` evidence reference before guarded input dispatch. The dispatch receipt is persisted before calling profile code; persistence failure therefore prevents input. Public graph input cannot choose this callback. The existing post-release callback remains the source of transition acceptance and release evidence.
 
-The G10 offline composition now joins the pre-dispatch record to the completed transition by exact action ID and checks timestamp ordering. The saved FODS payloads and X11 bridge remain fixtures. This does not implement a public G10 profile and does not establish live Calc, OCR/reference grounding, native GUI effect, or #57 efficiency.
+The G10 offline composition now joins the pre-dispatch record to the completed transition by exact action ID and checks timestamp ordering. Its save-request contract is v2 and requires the persisted dispatch evidence reference; the later action receipt and save request must carry the same reference. Saved FODS payloads and X11 bridge remain fixtures. This does not implement a public G10 profile and does not establish live Calc, OCR/reference grounding, native GUI effect, or #57 efficiency.
 
 ## Verification
 
@@ -20,10 +20,12 @@ Raw output: `normal.log`, `optimized.log` in this directory.
 
 ## SHA-256
 
-- `normal.log`: `7465b3272eb7dc08a65e78f0b185cd63bc87cc80ef1b70e7b35eecefa82016f5`
-- `optimized.log`: `4182d513e1066700573de77a948ff623412f2d68114e3cf64037af8942e903da`
-- `runtime/guarded_x11_v1/compiled.py`: `a2e194148b3b5f184af1ba30f01c29e0fbda0ed5d3468eb7721ddefed11fbce3`
-- `runtime/guarded_x11_v1/test_compiled.py`: `e28439ac055871b1c2adb819fa201536d85d907972d1926733457b8684acd0f0`
-- `runtime/guarded_x11_v1/test_calc_g10_action_custody_composition.py`: `c911ce9420a05b3933ada1f1b0cd2694bfc7b431da5ffb27f8c5444f32892d69`
+- `normal.log`: `443fc0bce262198afb1bd2229a1872cc81d94a7b181a8c83ec04c6856167b660`
+- `optimized.log`: `83861c3f9d9626de66366deb2a93c9757e7c5cf825fc1dd738cc6fc5c333885a`
+- `runtime/guarded_x11_v1/compiled.py`: `10ab04d437b99f9685c49f6d3fc2bcd1c1abb412112b18a5dbc73070e4a56ff6`
+- `runtime/guarded_x11_v1/test_compiled.py`: `fa20e28a3085c6483268bb9bedd1000482e6c81e4f86e51eb3682ec57389a331`
+- `runtime/guarded_x11_v1/calc_g10_artifact_v1.py`: `b6556dbbde886e69ce8e00365976ac1b353035a20947589c96b448ffe6fda893`
+- `runtime/guarded_x11_v1/test_calc_g10_artifact_v1.py`: `904b693badb0b5e0f9768179a45900b32bd3cfc02062caca9133eee19b7a1374`
+- `runtime/guarded_x11_v1/test_calc_g10_action_custody_composition.py`: `29841a1339b4af53af091c88d7c27716fc6b453ae330988d1622323796e4fa60`
 
 Candidate-only; no push or main modification.

@@ -80,7 +80,7 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                     transition['execution_accepted_ns'])
                 self.assertEqual(dispatch['action_id'], transition['action_id'])
                 request = {
-                    'schema': 'agent-interface/calc-g10-save-request-v1',
+                    'schema': 'agent-interface/calc-g10-save-request-v2',
                     'call_id': CALL_ID, 'attempt_id': ATTEMPT_ID,
                     'profile_id': PROFILE_ID, 'action': action,
                     'action_id': transition['action_id'],
@@ -88,11 +88,13 @@ class G10ActionCustodyCompositionTests(unittest.TestCase):
                     'window_generation': WINDOW_GENERATION,
                     'save_request_id': ('1' if action == 'first' else '2') * 32,
                     'save_request_monotonic_ns': request_ns,
+                    'dispatch_evidence_ref': dispatch['evidence_ref'],
                 }
                 save_receipts.append(custody.record_saved_action(action,
                     action_receipt={'action': action,
                         'action_id': transition['action_id'],
-                        'status': 'completed', 'release_verified': True},
+                        'status': 'completed', 'release_verified': True,
+                        'dispatch_evidence_ref': dispatch['evidence_ref']},
                     save_request=request))
 
             result = run(bridge, interface, action_bindings,

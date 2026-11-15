@@ -40,16 +40,19 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
 
     def _save(self, action, action_id, request_id, requested_ns, filename):
         self.custody.workbook_path.write_bytes((FIXTURES / filename).read_bytes())
+        dispatch_ref = 'compiled-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-3-pre-dispatch'
         action_receipt = {'action': action, 'action_id': action_id,
-                          'status': 'completed', 'release_verified': True}
+                          'status': 'completed', 'release_verified': True,
+                          'dispatch_evidence_ref': dispatch_ref}
         save_request = {
-            'schema': 'agent-interface/calc-g10-save-request-v1',
+            'schema': 'agent-interface/calc-g10-save-request-v2',
             'call_id': CALL_ID, 'attempt_id': ATTEMPT_ID,
             'profile_id': PROFILE_ID, 'action': action,
             'action_id': action_id, 'process_generation': PROCESS_GENERATION,
             'window_generation': WINDOW_GENERATION,
             'save_request_id': request_id,
             'save_request_monotonic_ns': requested_ns,
+            'dispatch_evidence_ref': dispatch_ref,
         }
         return self.custody.record_saved_action(
             action, action_receipt=action_receipt, save_request=save_request)
@@ -206,12 +209,13 @@ class CalcG10ArtifactCustodyTests(unittest.TestCase):
             (FIXTURES / 'first.fods').read_bytes())
         receipt = {'action': 'first', 'action_id': 'action-first',
                    'status': 'completed', 'release_verified': False}
-        request = {'schema': 'agent-interface/calc-g10-save-request-v1',
+        request = {'schema': 'agent-interface/calc-g10-save-request-v2',
             'call_id': CALL_ID, 'attempt_id': ATTEMPT_ID,
             'profile_id': PROFILE_ID, 'action': 'first',
             'action_id': 'action-first', 'process_generation': PROCESS_GENERATION,
             'window_generation': WINDOW_GENERATION,
-            'save_request_id': '1' * 32, 'save_request_monotonic_ns': 10}
+            'save_request_id': '1' * 32, 'save_request_monotonic_ns': 10,
+            'dispatch_evidence_ref': 'compiled-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-3-pre-dispatch'}
         with self.assertRaises(ValueError):
             self.custody.record_saved_action(
                 'first', action_receipt=receipt, save_request=request)

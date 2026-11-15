@@ -100,9 +100,15 @@ class CompiledX11Tests(unittest.TestCase):
     def test_before_dispatch_hook_receives_bridge_action_identity(self):
         b = Bridge()
         dispatched = []
+
+        def record_dispatch(row):
+            self.assertEqual(len(b.inputs), len(dispatched))
+            retained = dict(b.saved)[row['evidence_ref'] + '.json']
+            self.assertEqual(retained, row)
+            dispatched.append((copy.deepcopy(row), b.sequence))
+
         result = run(b, spec(), bindings(), perceive=perceive,
-            verify_effect=verify, before_action_dispatch=lambda row:
-                dispatched.append((copy.deepcopy(row), b.sequence)))
+            verify_effect=verify, before_action_dispatch=record_dispatch)
         self.assertEqual(result['outcome'], 'TASK_SUCCEEDED')
         self.assertEqual([row['action'] for row, _ in dispatched], ['enter', 'save'])
         self.assertEqual([sequence for _, sequence in dispatched], [1, 2])
@@ -131,6 +137,8 @@ class CompiledX11Tests(unittest.TestCase):
                          ('SAFE_YIELD', 'execution_refused'))
         self.assertEqual(dispatched, [])
         self.assertEqual(b.inputs, [])
+        self.assertFalse(any(name.endswith('-pre-dispatch.json')
+                             for name, _ in b.saved))
 
     def test_action_completion_callback_is_skipped_when_release_is_unknown(self):
         b = Bridge()
