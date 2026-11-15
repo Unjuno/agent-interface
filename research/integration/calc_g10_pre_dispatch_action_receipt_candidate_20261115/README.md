@@ -41,3 +41,30 @@ Re-ran the G10/compiled-X11 integration set at candidate HEAD `5fadd3bc86f93b9e8
 Raw logs: `final-candidate-g10-six-suites-normal-20261115.log` SHA-256 `577ACDE156C7A71F277C7727B9745C1267E4AB8D54512947DB1CB88734153830`; `final-candidate-g10-six-suites-optimized-20261115.log` `61364638034F86D51D44E92F2B9FDB8C65C976362177BA0C178C07C7A8876603`; `final-candidate-x11-native-deps-normal-20261115.log` `D156564F287232BE78A289122C75B303EEF48A39CE9FFC3E692477E2245D1044`; `final-candidate-x11-native-deps-optimized-20261115.log` `42E6223ED005C5945BAD15AB09C304114351175C479E7EE0037DB57133173814`. Source hashes at tested HEAD: `runtime/guarded_x11_v1/compiled.py` `10AB04D437B99F9685C49F6D3FC2BCD1C1ABB412112B18A5DBC73070E4A56FF6`; `runtime/guarded_x11_v1/calc_g10_artifact_v1.py` `B6556DBBDE886E69CE8E00365976AC1B353035A20947589C96B448FFE6FDA893`.
 
 Scope remains offline fixture/caller and native dependency contract. These checks do not establish live Calc, X11 GUI effects, or #57 integrated economics.
+
+## Public owner pre-dispatch hook wiring (2026-11-15)
+
+Candidate commit `25edfca74ed3da752ae8f2f233e22ed010be6417` passes the
+registered-runtime `before_action_dispatch` callback through
+`GuardedSessionOwner.run_compiled` to the existing compiled graph. The public
+MCP request schema remains unchanged and does not accept callbacks. This adds
+the owner-wrapper link needed for a trusted registered profile to retain
+per-action pre-dispatch evidence.
+
+The regression composes the actual compiled graph and guarded X11 adapter over
+Fake X. It verifies dispatch receipts join to completed transitions by action
+ID, a first-action guard refusal produces no receipt or input, and a
+second-action refusal records only the first action. Its clock fixture uses
+one virtual monotonic clock for owner and graph timing assertions.
+
+On CPython 3.11.9 / Windows, the full `runtime.cli_v1.test_mcp_guarded` module
+passed 56/56 normally (14.144 s) and 56/56 under `-O` (13.379 s). Raw output:
+[`public-owner-normal.log`](public-owner-normal.log), SHA-256
+`CCBAABB52D20C60D5145E813AB5FF59094FCD1380AD31C55952D8964CC7E270C`; and
+[`public-owner-optimized.log`](public-owner-optimized.log), SHA-256
+`50BD4DFA9D42FA89C32B793572F892BAE961BB04FD5005E08EDDD67E66932C52`.
+
+This is Fake X wrapper/caller evidence only. It does not register public G10,
+implement its two-save task/controller custody or post-close scorer, establish
+live Calc/MAP01 effects or native Win32 recovery, or close the #57 efficiency
+comparison. Those requirements remain open.
