@@ -247,7 +247,7 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertEqual([row[0] for row in requests], ["recovery", "observer"])
         self.assertEqual(requests[0][1]["obligations"], ["key:fixture:W"])
         self.assertEqual(requests[0][1]["request_id"], recovery_id)
-        self.assertTrue(requests[0][1]["focus_target_before_release"])
+        self.assertFalse(requests[0][1]["focus_target_before_release"])
         self.assertEqual(requests[1][1]["request_id"], recovery_id)
 
     def test_orphan_recovery_uses_validated_obligation_snapshot(self):
@@ -735,6 +735,18 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             configured_targets={"fixture": 44})
         self.assertTrue(result["release_accepted"])
         self.assertEqual(backend.events, [("focus", "fixture"), "release"])
+        self.assertEqual(backend.release_calls, 1)
+        self.assertTrue(backend.closed)
+
+    def test_orphan_recovery_releases_without_foregrounding_target(self):
+        backend = FakeBackend({"fixture": 44})
+        result = _recover(self.request(obligations=[
+                "key:fixture:SHIFT:virtual_key", "button:fixture:left"]),
+            backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+            configured_targets={"fixture": 44})
+        self.assertTrue(result["release_accepted"])
+        self.assertEqual(backend.events, ["release"])
+        self.assertEqual(backend.key_up_calls, [(0x10, False, "virtual_key")])
         self.assertEqual(backend.release_calls, 1)
         self.assertTrue(backend.closed)
 

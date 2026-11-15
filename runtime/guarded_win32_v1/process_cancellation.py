@@ -601,7 +601,10 @@ class OperationCancellationSupervisor:
                    "recovery_id": recovery_id,
                    "request_id": recovery_id,
                    "deadline_ns": deadline_ns,
-                   "focus_target_before_release": True,
+                   # Release is a global key/button UP operation. Do not
+                   # foreground the target to recover: foreground refusal
+                   # must not prevent a generation-checked cleanup attempt.
+                   "focus_target_before_release": False,
                    "obligations": list(obligations)}
         try:
             release = self._exchange_helper("recovery", request, deadline_ns)

@@ -301,6 +301,43 @@ def _identity(process):
 
 
 class ProcessCancellationTests(unittest.TestCase):
+    def test_automatic_orphan_recovery_does_not_require_target_foreground(self):
+        operation_id = "d" * 32
+        generation = "e" * 64
+        recovery_id = "c" * 32
+        requests = []
+        supervisor = object.__new__(OperationCancellationSupervisor)
+        supervisor._clock_ns = lambda: 10
+        supervisor.late_input_horizon_ns = 0
+        supervisor._invalidate_helper = lambda *_args: None
+
+        def exchange(role, request, _deadline):
+            requests.append(request)
+            if role == "recovery":
+                return {"operation_id": operation_id,
+                    "source_target_generation": generation,
+                    "target_generation": generation,
+                    "recovery_id": recovery_id, "release_accepted": True,
+                    "release_receipt": {"verified": True,
+                        "keys_down": [], "buttons_down": [],
+                        "keys_unknown": [], "buttons_unknown": []},
+                    "release_key_up_attempts": []}
+            return {"operation_id": operation_id,
+                "source_target_generation": generation,
+                "target_generation": generation,
+                "recovery_id": recovery_id, "neutral": True,
+                "key_button_states": [False, False],
+                "unicode_event_units": 0, "observed_monotonic_ns": 10}
+
+        supervisor._exchange_helper = exchange
+        result = supervisor.recover_orphaned_input(operation_id, generation,
+            recovery_id, 100, ["key:fixture:SHIFT:virtual_key",
+                "button:fixture:left"])
+
+        self.assertEqual(result["status"], "recovered", result)
+        self.assertEqual([request.get("focus_target_before_release", False)
+                          for request in requests], [False, False])
+
     def test_recovery_forwards_native_button_up_attempts_to_owner(self):
         class Owner:
             def __init__(self):
