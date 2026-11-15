@@ -20,16 +20,18 @@ Existing contracts are documented in [`calc_g10_current_main_crosswalk_20261027.
 
 ## Added integration result
 
-The positive case runs the full Fake X composition through cold-route caller accounting, the G10 graph adapter, bounded fresh proposal, actual current `NativeHandleBridge`/shared guarded X11 adapter, durable ledger, compiled receipt publication, and synthetic independent effect callback. Its two model-call rows each report fixture usage of 120 input tokens, 20 cached-input subset tokens, 12 output tokens, 4 reasoning-output subset tokens, a fixture cost of 0.01, and a fixture wait of 50 ns. The auditor recomputes two attempts, 240 input tokens, and 0.02 fixture cost. Cached input remains a subset of input and is not added again.
+The positive case runs the full Fake X composition through cold-route caller accounting, the G10 graph adapter, bounded fresh proposal, actual current `NativeHandleBridge`/shared guarded X11 adapter, durable ledger, compiled receipt publication, and synthetic independent effect callback. Its two model-call rows each report fixture usage of 120 input tokens, 20 cached-input subset tokens, 12 output tokens, 4 reasoning-output subset tokens, one visible image, a fixture cost of 0.01, and a fixture wait of 50 ns. The auditor recomputes two attempts, 240 input tokens, 40 cached-input subset tokens, 24 output tokens, 8 reasoning-output subset tokens, two visible images, 100 ns wait, full two-attempt cost coverage, and 0.02 fixture cost. Cached/reasoning token dimensions remain subsets and are not added again.
 
 The unknown-effect companion retains one completed transition and its compiled receipt, produces no outer effect receipt, records no task success, and audits as `EXECUTION_INCOMPLETE`. Both cases assert all Fake X button state is up at return. These fixture numbers are not benchmark measurements.
 
 ## Verification
 
-All nine `test_calc_g10*.py` integration modules passed **32/32** in normal mode and **32/32** under `-O`. `git diff --check` passed.
+All nine `test_calc_g10*.py` integration modules passed **32/32** in normal mode and **32/32** under `-O**. The durable allocation module passed **8/8** in normal mode and **8/8** under `-O**. `git diff --check` passed.
 
-- Normal log: `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\verification\calc-g10-durable-fakex.normal.log` — SHA-256 `40C814DD7668156F620461DAD9DC15FAF6C8B81B1643973D5E874D60A9590156`
-- Optimized log: `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\verification\calc-g10-durable-fakex.optimized.log` — SHA-256 `5B2C14226513234FF939B3DFE0054BFCB4B97096AF5288E6D514E62781631111`
+- G10 normal log: `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\calc-g10-durable-fakex-20261115-rerun.normal.log` — SHA-256 `DF4C9E4F348C0B6C5A60C17786CA1E0FD9AC66258682892C655C52D45D4D8465`
+- G10 optimized log: `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\calc-g10-durable-fakex-20261115-rerun.optimized.log` — SHA-256 `5B9514C6B7677C068E29F3F2FCA85C4257761EB21FBBAF2D08C9A32F33A7AE2F`
+- Durable allocation normal log: `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\calc-durable-allocation-20261115.normal.log` — SHA-256 `B251F809735AE66B135397FA3FAAFBA18CE74C47C015649D449B948D1ACE2CED`
+- Durable allocation optimized log: `D:\CodexData\Workspaces\2026-11-15-agent-interface-followup\calc-durable-allocation-20261115.optimized.log` — SHA-256 `21E7123A86EF8523E9F1944840A6B3BF35D55776A2CF8C6D4A0520944B1A0613`
 
 ## Next gate
 
