@@ -3773,7 +3773,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     recovered = None
                     while time.monotonic() < query_deadline:
                         query_reply = await client.call_tool("interface_results", {
-                            "call_id": recovery_call_id, "include_image": False})
+                            "call_id": recovery_call_id, "include_image": False,
+                            "compact": True, "report_refs": True,
+                            "detail": "brief"})
                         recovered = self.row(query_reply)
                         if recovered.get("status") != "pending":
                             break

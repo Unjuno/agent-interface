@@ -79,3 +79,17 @@ Focused test: 1/1 passed normally (9.621 s) and 1/1 under `-O` (8.999 s), Python
 Scope: Fake-backed production CLI/stdio presentation contract only; no native recovery, MAP01 effect or efficiency result.
 
 SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py F46EFAF1DAF62FA2C3F729991AD2AC94A0BD85F33915F85D013678FDD72D2BD4; exact-recovery-presentation-normal.log B2E690A835FA50223DE4680FB74D8462BB9EF6A9A830123E7E66A9BC990C0625; exact-recovery-presentation-optimized.log EE80FBBD2612900A0F12A6DD118348CEECDB84164AE71FD1D8117B3B5E5D657A; mcp-supervised-win32-exact-presentation-normal.log 9D97A21028A066CE883546BA488AE9B8C509E80D9B2509D6DA19AD310ED57F54; mcp-supervised-win32-exact-presentation-optimized.log 50E09F4B3D7D9BE8C4EC48B4CB48AB3886D490B8D050CB627D9EF4D232D45DB8.
+
+## Compact exact recovery query composed with the public fresh caller
+
+Strengthened `test_stdio_exception_unknown_then_fresh_generation_recovery`: the producer-exception source remains UNKNOWN, separate recovery remains pending until exact-call lookup, and the terminal lookup now requests `compact=true`, `report_refs=true`, `detail=brief`. The same path checks retained source custody, verified 2 s release horizon, `task_success=null`, replay denial, and fresh-generation requirement before `run_public_compiled` dispatches a separate attempt. Its task oracle remains bound to that fresh dispatch call ID and expected generation.
+
+Focused composition test: 1/1 passed normally (13.394 s) and 1/1 under `-O` (13.306 s), Python 3.11.9. Raw logs: `exception-recovery-compact-caller-normal.log` and `exception-recovery-compact-caller-optimized.log`.
+
+Scope: production CLI/stdio and public compiled caller composition with Fake target, supervisor, observations and task oracle. This closes a presentation-to-caller integration assertion only; no live Win32, MAP01 task effect or #57 efficiency claim.
+
+SHA-256: runtime/cli_v1/test_mcp_supervised_win32.py F98D9DEAC2F41B794DFF10B9B68E513E9A79E8C9442B0B56A36A6F9886A9AF79; exception-recovery-compact-caller-normal.log 4C01929BA96C13551F35CB11F615A3CF3EBA05B53E848E7E1333DC9801035C83; exception-recovery-compact-caller-optimized.log B6B2B6FDC3B8B4EEC4F232CACC751DE0F37C778B7E469388DF427C335DCE1705.
+
+## Read-only native custody gate (2026-11-15)
+
+GZDoom PID 41580 remained responsive with title `Hydroelectric Plant - Freedoom: Phase 2`. The authoritative custody fence remained `unresolved`, revision 888, with pending `button:map01:left` and `key:map01:SHIFT:virtual_key`, operation `bb1c1f207e34407db20c28703713ae6a`, source generation `3b8649...f393c6f`, and no `last_resolved` entry. No focus, input, recovery, or process-close operation was performed. Native MAP01 remains gated.
