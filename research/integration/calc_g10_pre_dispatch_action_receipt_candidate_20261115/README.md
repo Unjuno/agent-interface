@@ -14,7 +14,7 @@ Python 3.11.9, Windows host. Commands:
 
 - `python -m unittest runtime.guarded_x11_v1.test_compiled runtime.guarded_x11_v1.test_calc_g10_action_custody_composition runtime.guarded_x11_v1.test_calc_g10_artifact_v1` — 68/68 passed.
 - `python -O -m unittest runtime.guarded_x11_v1.test_compiled runtime.guarded_x11_v1.test_calc_g10_action_custody_composition runtime.guarded_x11_v1.test_calc_g10_artifact_v1` — 68/68 passed.
-- `git diff --check` — passed.
+- `git -c core.whitespace=cr-at-eol diff origin/main..HEAD --check` — passed; the retained raw test logs use Windows CRLF line endings.
 
 Raw output: `normal.log`, `optimized.log` in this directory.
 
