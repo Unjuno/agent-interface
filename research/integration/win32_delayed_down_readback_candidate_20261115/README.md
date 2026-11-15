@@ -155,3 +155,7 @@ This narrows the offline integration boundary: stale generation rejection occurs
 ## Current integration/public-state checkpoint (2026-11-15)
 
 The negative stale-generation test and paired valid fresh-generation recovery pass in normal and optimized modes, and the full public Win32 MCP module passes 51/51 in each mode. Current GitHub read: #57 OPEN, updated 2026-11-14; PR #10303 OPEN, draft, mergeable `CONFLICTING`. These states do not authorize updating or merging that unrelated PR. Candidate changes remain isolated.
+
+## Read-only desktop checkpoint (2026-11-15T13:03:14Z)
+
+CUA listed the running GZDoom target (PID 41580/HWND 250546256) and obtained a screenshot-backed observation without activation or input. Ammo `50` was visible in the MAP01 HUD, partially occluded by a foreground Lightbrowse window displaying voice-task controls. The additive machine-readable observation is `read-only-desktop-checkpoint-20261115T130314Z.json`, SHA-256 `4A201E66478BBACB5B67ED5BF3ADFE0447B06C18ED119C6625CA4183C09585D7`. This is not an exact target-only capture, task-effect verdict, recovery receipt, or custody resolution. No input, recovery, foreground change, microphone/security interaction, or process close was performed. The foreground UI makes the host unsuitable for a global UP release attempt at this observation point.
