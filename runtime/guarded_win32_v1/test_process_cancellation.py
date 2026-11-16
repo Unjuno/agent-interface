@@ -68,6 +68,10 @@ class _BlockedNativeReleaseBackend:
     def target_generation(self, _target):
         return GENERATION
 
+    def _require_foreground(self, target):
+        if target not in self.targets:
+            raise RuntimeError("foreground target mismatch")
+
     def _send_key(self, _vk, _down, _encoding=None):
         return None
 

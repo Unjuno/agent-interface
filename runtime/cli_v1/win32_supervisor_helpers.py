@@ -85,9 +85,10 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
         focus_required = request.get("focus_target_before_release", False)
         if type(focus_required) is not bool:
             raise ValueError("focus requirement must be boolean")
+        if len(targets) != 1:
+            raise ValueError("orphan recovery requires one attributable target")
+        recovery_target = next(iter(targets))
         if focus_required:
-            if len(targets) != 1:
-                raise ValueError("orphan recovery requires one attributable target")
             focus = getattr(backend, "focus", None)
             if not callable(focus):
                 raise RuntimeError("FOREGROUND_FOCUS_UNAVAILABLE")
@@ -96,6 +97,14 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
                 raise TimeoutError("recovery deadline expired after target focus")
             if not _generation_matches(backend, targets, request["target_generation"]):
                 raise RuntimeError("TARGET_GENERATION_CHANGED")
+        # Do not focus a window during automatic recovery, but require the
+        # exact target to already own the foreground before any global UP.
+        # Win32Backend repeats this check immediately before each SendInput.
+        require_foreground = getattr(backend, "_require_foreground", None)
+        if not callable(require_foreground):
+            raise RuntimeError("FOREGROUND_RECEIVER_CHECK_UNAVAILABLE")
+        require_foreground(recovery_target)
+        backend._recovery_target = recovery_target
         from runtime.backends.win32_v1.backend import virtual_key
         key_encodings = {}
         for target, key, encoding in parsed["keys"]:
@@ -104,6 +113,7 @@ def _recover(request, backend_factory=_new_backend, clock_ns=time.monotonic_ns,
         send_key = backend._send_key
         def record_key_up(vk, down, encoding=None):
             if down is False:
+                require_foreground(recovery_target)
                 attempt = {"virtual_key": vk,
                     "encoding": encoding or "virtual_key",
                     "status": "attempting"}

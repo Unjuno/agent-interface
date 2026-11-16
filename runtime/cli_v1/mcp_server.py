@@ -2389,7 +2389,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         supervised_win32_producer_factory,
                         'read_program_actions_lower_bound', None)
                     if (type(action) is dict
-                            and action.get('status') in ('recovered', 'unknown')
+                            and action.get('status') in (
+                                'recovered', 'unknown', 'not_dispatched')
                             and 'program_actions_capture_status' not in action
                             and 'program_actions_lower_bound' not in action):
                         if callable(progress_reader):

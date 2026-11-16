@@ -593,7 +593,9 @@ class Win32Backend:
                 int(sent) if isinstance(sent, int) else None)
         if sent != 1:
             _program_operation_set_phase(7)
-            raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
+            get_last_error = getattr(ctypes, "get_last_error", None)
+            error_code = get_last_error() if callable(get_last_error) else None
+            raise Win32BackendError(f"SendInput failed error={error_code}")
         Win32Backend._record_emission(self)
 
     def _record_emission(self) -> None:
@@ -1205,6 +1207,9 @@ class Win32Backend:
         authority = authority if isinstance(authority, dict) else {}
         deadline_ns = authority.get("expires_at_ns")
         if type(deadline_ns) is not int:
+            # Public dispatch preflight rejects malformed authority. Keep the
+            # backend's isolated operation fixtures usable when they bypass
+            # that contract deliberately.
             deadline_ns = None
         expected_generations = source.get("target_generations")
         expected_generations = expected_generations if isinstance(expected_generations, dict) else {}
@@ -1240,7 +1245,7 @@ class Win32Backend:
                 # absolute lease at every operation boundary. Terminal release
                 # is cleanup and must remain available after task authority ends.
                 if (deadline_ns is not None and kind != "release_all"
-                        and time.monotonic_ns() >= deadline_ns):
+                        and self.monotonic_ns() >= deadline_ns):
                     _program_operation_set_phase(6)
                     raise Win32BackendError("LEASE_EXPIRED_DURING_EXECUTION")
                 if bound_target is not None and kind != "release_all" and guard() is not True:

@@ -1,9 +1,8 @@
-"""Parent-held two-save custody for the fixed G10 Calc formula task.
+"""Parent-held two-save custody for the registered G10 Calc formula task.
 
-This is an internal candidate seam. It is deliberately not registered in the
-public MCP server yet. The parent snapshots each save immediately after its
-release-verified action, then scores both immutable files only after exact
-target exit and a verified close.
+The guarded Calc MCP server creates this custody before target launch. The
+parent snapshots each save immediately after its release-verified action, then
+scores both immutable files only after exact target exit and a verified close.
 """
 import hashlib
 import json
