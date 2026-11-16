@@ -35,16 +35,23 @@ efficiency benefit.
 - Probe: 10/10 measurements completed; 10/10 children retired; 0 gates opened.
 - `python -m py_compile .../run_probe.py`: passed.
 - `git diff --check`: passed.
-- Full 123-test normal suite: 119 passed, 2 failed and 2 errored in 257.808 s.
-  The failures include existing `producer_started` receipt assertions; errors
-  include a Windows `PermissionError` and timing-sensitive stdio expectations.
-- Full 123-test `-O` suite: 121 passed and 2 errored in 159.598 s. The errors
-  were `test_production_stdio_invalid_recovery_horizon_exact_query_stays_unknown`
-  (observed `pending` instead of `unknown`) and
-  `test_stdio_mid_program_expiry_blocks_late_input_and_releases_held_key`
-  (observed `recovered` instead of `unknown`). Complete `-O` output is retained
-  in [`test-opt.log`](test-opt.log). No production source was changed by this
-  probe.
+- Initial full-suite runs exposed fixed-window test instability: normal mode had
+  119/123 pass, 2 failures and 2 errors; `-O` had 121/123 pass and 2 errors.
+  The deadline fixture expected automatic completion recovery with only 500 ms
+  before its 1.8 s caller-grace expired, while another test polled a deliberately
+  delayed 7 s recovery result for only 5 s. The initial `-O` log is retained in
+  [`test-opt.log`](test-opt.log).
+- The deadline fixture now completes 200 ms after its 3 s lease, leaving 1.6 s
+  for automatic recovery before fallback. The delayed-result poll now derives
+  its deadline from the 7 s injected delay plus a 3 s startup/scheduling margin.
+  Neither change alters runtime recovery semantics or expected custody/action
+  classifications.
+- After those test-fixture corrections, all 123 tests passed normally in
+  152.549 s and under `-O` in 146.562 s. Full output is retained in
+  [`test-normal-final2.log`](test-normal-final2.log) and
+  [`test-opt-final2.log`](test-opt-final2.log). The two corrected tests also
+  passed together under both modes. No production runtime source was changed by
+  the probe or the test stabilization.
 
 ## Decision
 
