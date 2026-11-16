@@ -593,7 +593,9 @@ class Win32Backend:
                 int(sent) if isinstance(sent, int) else None)
         if sent != 1:
             _program_operation_set_phase(7)
-            raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
+            get_last_error = getattr(ctypes, "get_last_error", None)
+            error_code = get_last_error() if callable(get_last_error) else None
+            raise Win32BackendError(f"SendInput failed error={error_code}")
         Win32Backend._record_emission(self)
 
     def _record_emission(self) -> None:
