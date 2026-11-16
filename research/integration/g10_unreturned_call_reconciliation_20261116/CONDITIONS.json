@@ -1,0 +1,110 @@
+{
+  "base_main": "036a6b8d405fc4b618d522045104154be1556c42",
+  "evidence_scope": "Fake X/process stdio fixture; no model/provider, live GUI, or efficiency comparison. Server-side receipt is diagnostic only and never promoted into caller task success.",
+  "host_platform": "win32",
+  "join_rule": "Reconstruct caller arguments by moving persisted response_wait_ms back to wait_for_result_ms, then require one guarded_calc_compiled request with exact canonical argument SHA-256. Zero/multiple matches do not join.",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "runs": {
+    "module_normal": {
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio"
+      ],
+      "exit_code": 0,
+      "result": "3/3 PASS",
+      "stdout_bytes": 33294,
+      "stdout_path": "research/integration/g10_unreturned_call_reconciliation_20261116/final_verification/normal.log",
+      "stdout_sha256": "d61f5aad3cbb582d794871553881f6290ca810929157e2b1b32dee3d6e74cd14"
+    },
+    "module_optimized": {
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio"
+      ],
+      "exit_code": 0,
+      "result": "3/3 PASS",
+      "stdout_bytes": 28975,
+      "stdout_path": "research/integration/g10_unreturned_call_reconciliation_20261116/final_verification/optimized.log",
+      "stdout_sha256": "866e501babac407352a35f2fd1f675d5f21d541976ce59c6031e32bc474165a4"
+    },
+    "success": {
+      "caller_receipt_recorded": true,
+      "caller_report_sha256": "a3e00a3e38d798ce02671d34e15eed2dcd619c66c694a4aba69e3cee27148e75",
+      "caller_request_sha256": "598ea2a8d5475c085fc980c1f92cfb41fa3b539885d767e14a5487f7ca270dec",
+      "caller_response_sha256": "d52170f963bc89a94652efe77c92ae9b498e2cafa8851f92e43ba22c499e2e3a",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio.PublicG10ProductionStdioTests.test_public_g10_receipt_and_parent_effect_cross_stdio_transport"
+      ],
+      "compiled_caller_call_id": "a3a115792e07437b9e21773234fe3efd",
+      "compiled_server_call_id": null,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "input_release_status": "verified",
+      "invocation_started": true,
+      "ledger_path": "research/integration/g10_unreturned_call_reconciliation_20261116/success/attempt/attempt-ledger.json",
+      "ledger_sha256": "d361d59cb00dd329a981e433025a239f39cdff3b8912bb3aa5d761e2af80e95a",
+      "mcp_call_count": 37,
+      "owner_close_status": "closed",
+      "server_reconciliation_status": null,
+      "server_replay_allowed": null,
+      "server_report_sha256": null,
+      "server_request_sha256": null,
+      "server_task_success": null,
+      "stdout_path": "research/integration/g10_unreturned_call_reconciliation_20261116/success/stdout.log",
+      "stdout_sha256": "1cd17182f83f2d986ec84bdc2f610ecc223947bae67db331de9c750899f9f58f",
+      "task_effect_status": "verified",
+      "task_success": true,
+      "terminal_error_type": null,
+      "terminal_phase": "completed",
+      "terminal_status": "completed",
+      "transport_response_received": true
+    },
+    "timeout": {
+      "caller_receipt_recorded": false,
+      "caller_report_sha256": null,
+      "caller_request_sha256": "443eb865b4c4ec84797eb0104df8b9ea4863c4cc0f9bd5cd7b7a6124bd2b550c",
+      "caller_response_sha256": null,
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_g10_production_stdio.PublicG10ProductionStdioTests.test_public_g10_receipt_and_parent_effect_cross_stdio_transport"
+      ],
+      "compiled_caller_call_id": null,
+      "compiled_server_call_id": "0b9e09ba490e40a9be32d2551577f83b",
+      "exit_code": 1,
+      "expected_exit": "nonzero (1 ms client read timeout)",
+      "input_release_status": "unknown",
+      "invocation_started": true,
+      "ledger_path": "research/integration/g10_unreturned_call_reconciliation_20261116/timeout/attempt/attempt-ledger.json",
+      "ledger_sha256": "416d3da851ede2d64a9271113f530ef0e5eade3e516d0ea22c0d3eeb1f207398",
+      "mcp_call_count": 31,
+      "owner_close_status": "unknown",
+      "server_reconciliation_status": "unique_exact_request_match",
+      "server_replay_allowed": false,
+      "server_report_sha256": "be2bcc9aa8c1b61a1b5d3ba5002235f16afe559e09690407ffdd0a067a19ff7f",
+      "server_request_sha256": "032b4b6f54e44fff9f1f0e053c4600e49fcca2b5272aa1336826a12c0cfbe826",
+      "server_task_success": null,
+      "stdout_path": "research/integration/g10_unreturned_call_reconciliation_20261116/timeout/stdout.log",
+      "stdout_sha256": "d25498c510897b519dc3ee94e5db8781c85c00b23850ac8488216dd9c2963bf2",
+      "task_effect_status": "unknown",
+      "task_success": null,
+      "terminal_error_type": "McpError",
+      "terminal_phase": "interface_guarded_calc_compiled",
+      "terminal_status": "failed",
+      "transport_response_received": false
+    }
+  },
+  "schema": "agent-interface.g10-unreturned-call-reconciliation-v1",
+  "source": "runtime/cli_v1/test_mcp_g10_production_stdio.py",
+  "source_sha256": "23819b697b2f67dcf56cabd3a23bc13e898ca8b884ef07a900c9e99ba602056b",
+  "timeout": "MCP ClientSession read_timeout_seconds=1ms on interface_guarded_calc_compiled only"
+}
