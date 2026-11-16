@@ -49,6 +49,14 @@ It is based on main `5cada635a25e0d220500221f485211ea52eca996`.
   X11 integration, native Win32, native MCP, replay gate, and evidence checks.
   A subsequent local rerun of those two transport tests passed 2/2 normally and
   2/2 under `-O`; `git diff --check` also passed.
+- A separate five-pair startup-cost probe on Windows 10 / CPython 3.11.9
+  measured ordinary factory setup plus `Process.start()` at median 17.962 ms,
+  versus 176.396 ms for prestarted factory initialization through ready receipt.
+  All ten children retired and no input gate opened. This does not reproduce
+  R273's 90.047 s startup tail; it shows that prestarting shifts work into
+  initialization and adds readiness cost on this host. Full conditions, raw,
+  local suite outcomes, and interpretation are in
+  [`win32_prestarted_startup_cost_probe_20261117`](win32_prestarted_startup_cost_probe_20261117/REPORT.md).
 
 ## Limits
 
