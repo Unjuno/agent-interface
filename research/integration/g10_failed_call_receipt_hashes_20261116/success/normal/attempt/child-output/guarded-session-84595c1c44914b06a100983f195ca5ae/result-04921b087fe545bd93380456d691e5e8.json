@@ -1,0 +1,67 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 584394765000000,
+    "ended_ns": 584394765000000,
+    "emissions": 4,
+    "program_emissions": 4,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 584394765000000
+      }
+    ],
+    "waits": [],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "g10_stdio_neutral",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "g10_stdio_neutral",
+      "point": [
+        16,
+        31
+      ],
+      "observed_box": [
+        4,
+        23,
+        24,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 584399718000000,
+      "patch_sha256": "0e052866b7968065a003aac494e8fbf96ec6859245dd251348be5caee967ec9d",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

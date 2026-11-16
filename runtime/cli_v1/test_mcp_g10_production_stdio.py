@@ -3,6 +3,7 @@ import json
 import hashlib
 import os
 import sys
+import subprocess
 import tempfile
 import time
 import unittest
@@ -12,6 +13,37 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 from runtime.cli_v1.test_mcp_process_identity import metadata
+
+
+class G10FailureLedgerTests(unittest.TestCase):
+    def test_failed_compiled_call_retains_request_and_report_hashes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)
+            output=root/'attempt'
+            env=os.environ.copy()
+            env['AGENT_INTERFACE_G10_LEDGER_OUTPUT']=str(output)
+            env['AGENT_INTERFACE_G10_FAIL_AFTER_CALL']=(
+                'interface_guarded_calc_compiled')
+            completed=subprocess.run([sys.executable,'-m','unittest',
+                'runtime.cli_v1.test_mcp_g10_production_stdio.'
+                'PublicG10ProductionStdioTests.'
+                'test_public_g10_receipt_and_parent_effect_cross_stdio_transport'],
+                cwd=str(Path(__file__).resolve().parents[2]),env=env,
+                stdout=subprocess.PIPE,stderr=subprocess.STDOUT,check=False)
+            self.assertNotEqual(completed.returncode,0,completed.stdout.decode(
+                'utf-8',errors='replace'))
+            ledger=json.loads((output/'attempt-ledger.json').read_text(
+                encoding='utf-8'))
+            self.assertEqual(ledger['terminal_status'],'failed',ledger)
+            self.assertEqual(ledger['terminal_phase'],
+                'interface_guarded_calc_compiled',ledger)
+            self.assertEqual(ledger['task_effect_status'],'unknown',ledger)
+            self.assertIsNone(ledger['task_success'],ledger)
+            compiled=next(row for row in ledger['mcp_calls']
+                if row['tool']=='interface_guarded_calc_compiled')
+            self.assertTrue(compiled['call_id'],compiled)
+            for digest in ('request_sha256','response_sha256','report_sha256'):
+                self.assertRegex(compiled[digest],r'^[0-9a-f]{64}$',compiled)
 
 
 class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
@@ -68,7 +100,7 @@ class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
                                 'ended_monotonic_ns':call_ended_ns,
                                 'elapsed_ns':call_ended_ns-call_started_ns})
                         if retained_root is not None:
-                            _write_attempt_snapshot(ledger_path,root,call_trace,
+                            _write_attempt_snapshot(ledger_path,output,call_trace,
                                 attempt_started_ns,attempt_phase,
                                 'in_progress',None)
                         if (os.environ.get('AGENT_INTERFACE_G10_FAIL_AFTER_CALL')
@@ -257,7 +289,7 @@ class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
                 prior.update(terminal_status=('failed' if attempt_error else 'completed'),
                     terminal_phase=attempt_phase,terminal_error=attempt_error,
                     attempt_ended_monotonic_ns=time.monotonic_ns(),
-                    mcp_calls=_attempt_receipts(call_trace,root),
+                    mcp_calls=_attempt_receipts(call_trace,output),
                     task_effect_status=(prior.get('task_effect') or {}).get(
                         'status','unknown'),
                     task_success=(prior.get('task_success')
