@@ -293,4 +293,10 @@ The attempt transcript and frozen condition are retained in
 synthetic local form effect using an offline test double and the older v2 path,
 without provider usage, matched arms, full raw HTTP/capture retention, Calc, or
 MAP01. It is a narrow live positive with a teardown failure, not Issue #57
-efficiency evidence or a claim of integrated completion.
+efficiency evidence or a claim of integrated completion. The test harness now
+uses a scope-checked bounded cleanup retry and terminates only the Edge process
+tree started by that test when its root process remains alive. A separate
+cleanup-helper regression passes 1/1 normally and 1/1 under `-O`; the live Edge
+run was not repeated, so the fix's behavior under an actual Edge-held lock is
+not yet verified. The original failed-cleanup attempt and leftover temp profile
+remain preserved.
