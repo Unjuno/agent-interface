@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from research.live_control.integrated_efficiency_protocol_v1 import ARMS, TASKS
+from research.live_control.calc_durable_allocation_v1 import audit_allocation
 from research.live_control.issue57_v3_trace_adapter_v1 import (
     assemble_complete_trace, project_task,
 )
@@ -92,6 +93,9 @@ class ProspectiveRun:
         self._rows = {arm: [None] * len(TASKS) for arm in ARMS}
         self._preflights = {}
         self._finished = False
+        self._task_custodians = {}
+        self._task_custody_root = self.evidence_root / "task-custody"
+        self._task_custody_root.mkdir()
         self._journal_path = self.evidence_root / "lifecycle.jsonl"
         manifest = {
             "schema": SCHEMA,
@@ -118,6 +122,11 @@ class ProspectiveRun:
             "research/live_control/v3_persistent_grounding_adapter_v1.py",
             "research/live_control/issue57_v3_trace_adapter_v1.py",
             "research/live_control/issue57_v3_prospective_run_v1.py",
+            "research/live_control/calc_durable_allocation_v1.py",
+            "research/live_control/calc_g10_caller_v1.py",
+            "research/live_control/calc_g10_fresh_admission_v1.py",
+            "research/live_control/calc_g10_interface_adapter_v1.py",
+            "research/live_control/calc_fresh_reference_v1.py",
             "research/live_control/integrated_efficiency_protocol_v1.py",
         )
         return {name: _sha256(self.source_root / name) for name in names}
@@ -158,7 +167,116 @@ class ProspectiveRun:
         self._preflights[arm] = retained
         self.append("preflight", {"arm": arm, "envelope": retained})
 
-    def record_task(self, arm, index, caller_result, independent_score, telemetry):
+    def create_task_custodian(self, arm, index, *, source_sha256,
+                              observation_ids, conditions):
+        """Start the existing G10 hash-linked custodian before a task attempt."""
+        if self._finished:
+            raise ValueError("run is already finalized")
+        if arm not in ARMS or type(index) is not int or not 0 <= index < len(TASKS):
+            raise ValueError("unknown frozen arm/task assignment")
+        key = (arm, index)
+        if key in self._seen or key in self._task_custodians:
+            raise ValueError("task custody already started or task already recorded")
+        if type(conditions) is not dict:
+            raise ValueError("task conditions object required")
+        from research.live_control.calc_durable_allocation_v1 import DurableCalcAllocation
+
+        allocation_id = "issue57-" + hashlib.sha256(
+            (self.allocation["allocation_id"] + "\0" + arm + "\0" + str(index)).encode()
+        ).hexdigest()[:32]
+        bound_conditions = {
+            "comparison_allocation_id": self.allocation["allocation_id"],
+            "arm": arm, "task_index": index, "task_id": TASKS[index],
+            "model": self.allocation["model"],
+            "settings": copy.deepcopy(self.allocation["settings"]),
+            "order_seed": self.allocation["order_seed"],
+            "task_conditions": copy.deepcopy(conditions),
+        }
+        source_hashes = dict(self._source_hashes())
+        if source_hashes != self._source_hashes_from_manifest():
+            raise RuntimeError("comparison source changed after run creation")
+        source_hashes["task_source_sha256"] = source_sha256
+        custodian = DurableCalcAllocation(
+            self._task_custody_root, allocation_id, source_sha256=source_sha256,
+            observation_ids=observation_ids, source_hashes=source_hashes,
+            conditions=bound_conditions)
+        self._task_custodians[key] = custodian.path
+        self.append("task_custody_started", {"arm": arm, "task_index": index,
+            "task_id": TASKS[index], "allocation_id": allocation_id,
+            "source_sha256": source_sha256, "observation_ids": observation_ids,
+            "conditions_sha256": _sha256(custodian.path / "conditions.json")})
+        return custodian
+
+    def _audit_task_custody(self, arm, index, caller_result, custodian_path):
+        if custodian_path is None:
+            return {"status": "UNKNOWN", "reason": "task_custody_missing"}
+        try:
+            root = Path(custodian_path).resolve(strict=True)
+        except (OSError, RuntimeError, TypeError):
+            return {"status": "UNKNOWN", "reason": "task_custody_path_unavailable"}
+        if not root.is_relative_to(self._task_custody_root.resolve(strict=True)):
+            raise ValueError("task custodian path escapes comparison evidence root")
+        expected = self._task_custodians.get((arm, index))
+        if expected is None or root != expected.resolve(strict=True):
+            return {"status": "UNKNOWN", "reason": "task_custody_not_registered"}
+        try:
+            result = audit_allocation(root)
+            manifest = json.loads((root / "conditions.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            return {"status": "UNKNOWN", "reason": "task_custody_audit_failed",
+                    "error_type": type(error).__name__}
+        conditions = manifest.get("conditions")
+        if type(conditions) is not dict:
+            return {"status": "UNKNOWN", "reason": "task_custody_conditions_missing"}
+        try:
+            pinned_sources = self._source_hashes_from_manifest()
+            current_sources = self._source_hashes()
+        except (OSError, RuntimeError, json.JSONDecodeError):
+            return {"status": "UNKNOWN", "reason": "comparison_source_manifest_unavailable",
+                    "audit": result}
+        expected_sources = dict(pinned_sources)
+        expected_sources["task_source_sha256"] = manifest.get("source_sha256")
+        if manifest.get("source_hashes") != expected_sources:
+            return {"status": "UNKNOWN", "reason": "task_custody_source_hash_mismatch",
+                    "audit": result}
+        if current_sources != pinned_sources:
+            return {"status": "UNKNOWN", "reason": "comparison_source_changed",
+                    "audit": result}
+        identity = {"comparison_allocation_id": self.allocation["allocation_id"],
+            "arm": arm, "task_index": index, "task_id": TASKS[index],
+            "model": self.allocation["model"],
+            "settings": self.allocation["settings"],
+            "order_seed": self.allocation["order_seed"]}
+        if any(conditions.get(key) != value for key, value in identity.items()):
+            return {"status": "UNKNOWN", "reason": "task_custodian_assignment_mismatch",
+                    "audit": result}
+        matches = (result["status"] == "audited"
+            and result["outcome"] == caller_result.get("outcome")
+            and result["attempt_ledger"] == caller_result.get("attempt_ledger")
+            and result["accounting"] == caller_result.get("accounting"))
+        if not matches:
+            return {"status": "UNKNOWN", "reason": "task_custody_caller_mismatch",
+                    "audit": result}
+        if caller_result.get("outcome") == "TASK_SUCCEEDED" and not (
+                result["receipt_persisted"] and result["effect_receipt_persisted"]):
+            return {"status": "UNKNOWN", "reason": "task_success_receipts_missing",
+                    "audit": result}
+        return {"status": "audited", "reason": None, "audit": result,
+                "conditions_sha256": _sha256(root / "conditions.json"),
+                "events_sha256": _sha256(root / "events.jsonl")}
+
+    def _source_hashes_from_manifest(self):
+        path = self.manifest_path
+        if not path.is_file():
+            raise RuntimeError("comparison manifest is missing")
+        value = json.loads(path.read_text(encoding="utf-8"))
+        hashes = value.get("source_files")
+        if type(hashes) is not dict:
+            raise RuntimeError("comparison source hashes are missing")
+        return hashes
+
+    def record_task(self, arm, index, caller_result, independent_score, telemetry,
+                    *, custodian_path=None):
         if self._finished:
             raise ValueError("run is already finalized")
         if arm not in ARMS or type(index) is not int or not 0 <= index < len(TASKS):
@@ -169,13 +287,19 @@ class ProspectiveRun:
         caller_result = copy.deepcopy(caller_result)
         independent_score = copy.deepcopy(independent_score)
         telemetry = copy.deepcopy(telemetry)
+        custody = self._audit_task_custody(arm, index, caller_result, custodian_path)
         projected = project_task(arm, index, caller_result,
                                  independent_score, telemetry)
+        if projected["status"] == "projected" and custody["status"] != "audited":
+            projected["status"] = "HOLD"
+            projected["reason"] = "durable_task_custody_" + custody["reason"]
+            projected["task_row"] = None
         self.append("task", {"arm": arm, "task_index": index,
                               "task_id": TASKS[index],
                               "caller_result": caller_result,
                               "independent_score": independent_score,
                               "telemetry": telemetry,
+                              "custody": custody,
                               "projection": projected})
         self._rows[arm][index] = projected
         self._seen.add(key)

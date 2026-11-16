@@ -37,6 +37,8 @@ def synthetic_caller(arm, index):
     wait = sum(row["wait_ns"] for row in attempts)
     return {"outcome": "TASK_SUCCEEDED", "task_effect": "succeeded",
         "attempt_ledger": attempts, "model_call_ledger": model_calls,
+        "effect_receipt": {"status": "succeeded", "evidence_ref": "synthetic-fods",
+                           "evidence_digest": "0" * 64},
         "accounting": {"attempted_calls": count, "completed_calls": count,
             "duplicate_call_ids": [], "usage_totals": totals,
             "usage_coverage": usage_coverage,
@@ -177,6 +179,41 @@ class ProspectiveRunTests(unittest.TestCase):
         self.assertIsNone(result["adjudication"]["trace"])
         self.assertEqual(len(result["adjudication"]["held_rows"]), 18)
 
+    def test_success_projection_requires_a_registered_g10_custody_record(self):
+        run = self.create()
+        projected = run.record_task("plain", 0, synthetic_caller("plain", 0),
+            {"submission_count": 1, "exact_submission": True},
+            synthetic_telemetry("plain", 0))
+        self.assertEqual(projected["status"], "HOLD")
+        self.assertEqual(projected["reason"],
+                         "durable_task_custody_task_custody_missing")
+
+    def test_corrupt_g10_hash_chain_is_retained_as_hold(self):
+        run = self.create()
+        arm, index = "plain", 0
+        caller = synthetic_caller(arm, index)
+        custodian = run.create_task_custodian(arm, index,
+            source_sha256=hashlib.sha256(b"corruption-test-source").hexdigest(),
+            observation_ids=["corruption-test-observation"],
+            conditions={"fixture": "synthetic"})
+        custodian.bind_interface({"interface_id": "corruption-test-interface"})
+        custodian.persist_execution_receipt({"outcome": "TASK_SUCCEEDED"})
+        custodian.persist_effect_receipt(caller["effect_receipt"])
+        custodian.finalize(caller)
+        event_log = custodian.path / "events.jsonl"
+        event_log.write_bytes(event_log.read_bytes().replace(
+            b"allocation_created", b"allocation_corrupt", 1))
+        projected = run.record_task(arm, index, caller,
+            {"submission_count": 1, "exact_submission": True},
+            synthetic_telemetry(arm, index), custodian_path=custodian.path)
+        self.assertEqual(projected["status"], "HOLD")
+        self.assertEqual(projected["reason"],
+                         "durable_task_custody_task_custody_audit_failed")
+        rows = [json.loads(line) for line in
+                (self.evidence / "lifecycle.jsonl").read_text(encoding="utf-8").splitlines()]
+        self.assertEqual(rows[-1]["payload"]["caller_result"], caller)
+        self.assertEqual(rows[-1]["payload"]["custody"]["status"], "UNKNOWN")
+
     def test_rejects_wrong_task_identity_without_consuming_assignment(self):
         run = self.create()
         projection = run.record_task("plain", 0, {"outcome": "UNKNOWN"}, None, None)
@@ -199,9 +236,20 @@ class ProspectiveRunTests(unittest.TestCase):
                 "requested_effort": "low", "usage": dict(USAGE),
                 "model_visible_images": 0})
             for index, task_id in enumerate(TASKS):
-                run.record_task(arm, index, synthetic_caller(arm, index),
+                caller = synthetic_caller(arm, index)
+                source_digest = hashlib.sha256(
+                    f"synthetic-source-{arm}-{index}".encode()).hexdigest()
+                custodian = run.create_task_custodian(arm, index,
+                    source_sha256=source_digest,
+                    observation_ids=[f"observation-{arm}-{index}-1"],
+                    conditions={"fixture": "synthetic"})
+                custodian.bind_interface({"interface_id": f"iface-{arm}-{index}"})
+                custodian.persist_execution_receipt({"outcome": "TASK_SUCCEEDED"})
+                custodian.persist_effect_receipt(caller["effect_receipt"])
+                custodian.finalize(caller)
+                run.record_task(arm, index, caller,
                     {"submission_count": 1, "exact_submission": True},
-                    synthetic_telemetry(arm, index))
+                    synthetic_telemetry(arm, index), custodian_path=custodian.path)
         discoveries = json.loads((self.repo /
             "research/live_control/integrated_efficiency_discoveries_v1.json")
             .read_text(encoding="utf-8"))
