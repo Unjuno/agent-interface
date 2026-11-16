@@ -297,6 +297,8 @@ efficiency evidence or a claim of integrated completion. The test harness now
 uses a scope-checked bounded cleanup retry and terminates only the Edge process
 tree started by that test when its root process remains alive. A separate
 cleanup-helper regression passes 1/1 normally and 1/1 under `-O`; the live Edge
-run was not repeated, so the fix's behavior under an actual Edge-held lock is
-not yet verified. The original failed-cleanup attempt and leftover temp profile
+run was repeated once under a new run ID and fresh profile. It passed the exact
+effect, release and transition assertions, and the fresh profile was removed.
+This verifies cleanup on that run but does not prove all Edge-held-lock states.
+The original failed-cleanup attempt and its distinct leftover temp profile
 remain preserved.
