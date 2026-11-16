@@ -169,3 +169,57 @@ fresh MAP01 effect or a matched #57 comparison.
 This crosswalk is offline engineering direction. It does not create a live
 allocation, claim a new task effect, supersede the historical result or close
 Issue #57.
+
+## 2026-11-16 current-main runner entry audit
+
+At `86a52662dc2bb690dd670d52ea8d97816aef2a26`, the persisted runner boundary
+was inspected without executing it or touching its result directory. The
+retained runner still imports `adaptive_acquisition_caller_v2` and defaults to
+the fixed `results/integrated-efficiency-live-01` path. Its model backend
+selector is only a v2 function seam: it calls
+`model_call(root, prompt, image, contract, workspace)` and expects the legacy
+grounding/result shape consumed directly by `run_task`. The public v3 path is
+different: `V3PersistentGroundingAdapter` emits attempt metadata for
+`adaptive_acquisition_caller_v3`, and the compiled composition additionally
+requires a current target-specific interface factory, execution adapters,
+receipt persistence and independent effect evidence. Selecting the existing
+`AGENT_INTERFACE_MODEL_BACKEND=module` therefore cannot by itself switch this
+runner to v3, even if the selected function is the v3 adapter.
+
+This inspection establishes a concrete integration gap and a safety issue for
+prospective execution: the current runner has no run-scoped output-root
+argument, so an ordinary invocation targets the retained historical output
+directory. Do not run it or configure its legacy backend as a v3 comparison.
+The next code change should be a separate prospective v3 runner entry that
+reuses the frozen protocol/evaluator and v3 trace adapter, requires an explicit
+new allocation manifest and a fresh non-existing evidence root, and records
+each task/preflight/caller/core/release/effect receipt before continuing. It
+must reject a missing independent scorer or missing host/allocation evidence
+before dispatch. This is not a live authorization: no allocation or exclusive
+host was established by this audit, and WSLc/Docker ownership remains
+unresolved. No live input, model call, or benchmark output was produced here.
+
+The prospective run journal now connects to the frozen v3 task projector and
+evaluator in
+`research/live_control/issue57_v3_prospective_run_v1.py` with focused coverage
+in `research/integration/test_issue57_v3_prospective_run_v1.py`. It requires a
+new evidence root, exact frozen arm/task allocation, an explicitly exclusive
+host, a future timezone-aware expiry, model/settings/order seed, and a required
+trusted caller-supplied allocation attestor before creating that root. The
+attestor must check an authoritative external allocation source; this module
+does not provide one, so no current host/allocation has been attested. It pins
+the allocation digest, current source commit and source-file hashes. It appends
+each preflight/task envelope to an fsynced lifecycle journal, projects each
+v3 caller result against its independent score and telemetry, and runs
+`assemble_complete_trace` against the unchanged frozen evaluator at finalization.
+It rejects duplicate assignments and post-finalization mutation; absent
+assignments, invalid rows, or invalid preflights preserve the evidence and
+produce HOLD with no comparison trace. Its manifest explicitly records
+`dispatch_enabled: false`: this is a tested custody/projector boundary, not a
+live-runner or authority grant. Nine focused journal tests pass normally and
+under `python -O`, including a complete synthetic 18-row path that reaches the
+unchanged frozen evaluator and a complete-assignment HOLD path with invalid
+caller evidence. Two existing projector/evaluator cases (valid task row and
+missing-preflight HOLD) also pass in both modes. Live provider, native GUI,
+release, durable scorer, and three-arm task adapters are still absent; no
+comparison or task effect is claimed.
