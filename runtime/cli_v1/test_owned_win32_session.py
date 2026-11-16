@@ -151,6 +151,58 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertNotIn("process_start_called_monotonic_ns",
                          row["action"]["producer_timing"])
 
+    def test_prestarted_producer_stays_gated_when_generation_changes_during_identity_check(self):
+        class AlreadyStartedProcess(FakeProcess):
+            def start(self):
+                raise AssertionError("prestarted producer must not be started again")
+
+            def terminate(self):
+                self.alive = False
+                self.exitcode = -15
+
+            def join(self, _timeout):
+                return None
+
+            def close(self):
+                return None
+
+        process = AlreadyStartedProcess(4103)
+        identity = {"pid": 4103, "creation_time_100ns": 9003}
+        current_generation = {"value": GEN_A}
+        owner = OperationOwner(clock_ns=self.clock,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        session = OwnedWin32SessionOwner(owner, FakeCancellationSupervisor(owner))
+        session.bind_target_generation_reader(
+            lambda: current_generation["value"])
+        session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            obligations=["key:map01:W"], action_metadata={"operation": "prestarted"})
+        gate_opened = []
+
+        class Factory:
+            prestarted = True
+
+            def __call__(self, _action):
+                return process, self.identity_after_target_change, lambda: gate_opened.append(True)
+
+            def identity_after_target_change(self):
+                current_generation["value"] = GEN_B
+                return identity
+
+        row = session.start_producer(CALL_ID, Factory())
+
+        self.assertEqual(row["action"]["status"], "unknown")
+        self.assertEqual(row["action"]["result"]["error"],
+                         "target_generation_changed_before_start")
+        self.assertFalse(gate_opened)
+        self.assertFalse(process.is_alive())
+        self.assertIsNone(row["action"]["task_success"])
+        self.assertFalse(row["action"]["release_confirmed"])
+        self.assertFalse(row["action"]["replay_allowed"])
+        custody = owner.result(ACTION_ID)
+        self.assertEqual(custody["phase"], "unknown")
+        self.assertEqual(custody["producer_gate_state"], "closed")
+
     def test_zero_progress_capture_is_retained_without_false_fence_update(self):
         from unittest.mock import Mock
         self.start_action()
