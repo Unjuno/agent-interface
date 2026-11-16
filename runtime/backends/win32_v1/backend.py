@@ -23,6 +23,7 @@ _cleanup_active = ContextVar("win32_cleanup_active", default=False)
 _program_emissions = ContextVar("win32_program_emissions", default=None)
 _program_operation_receipt = ContextVar("win32_program_operation_receipt", default=None)
 _release_attempt_context = ContextVar("win32_release_attempt_context", default=None)
+_task_authority_deadline = ContextVar("win32_task_authority_deadline", default=None)
 
 
 def _program_operation_set_phase(phase: int) -> None:
@@ -554,6 +555,7 @@ class Win32Backend:
 
     def _send(self, item: INPUT) -> None:
         target = _execution_target.get()
+        recovery_target = getattr(self, "_recovery_target", None)
         is_key_up = item.type == INPUT_KEYBOARD and bool(item.ki.dwFlags & KEYEVENTF_KEYUP)
         is_mouse_up = (item.type == INPUT_MOUSE and item.mi.dwFlags in
                        (MOUSEEVENTF_LEFTUP, MOUSEEVENTF_RIGHTUP, MOUSEEVENTF_MIDDLEUP))
@@ -1199,6 +1201,11 @@ class Win32Backend:
             self.preflight(program, bound_target=bound_target, guard=guard if preflight_guard is None else preflight_guard)
         source = program.get("source")
         source = source if isinstance(source, dict) else {}
+        authority = program.get("authority")
+        authority = authority if isinstance(authority, dict) else {}
+        deadline_ns = authority.get("expires_at_ns")
+        if type(deadline_ns) is not int:
+            deadline_ns = None
         expected_generations = source.get("target_generations")
         expected_generations = expected_generations if isinstance(expected_generations, dict) else {}
 

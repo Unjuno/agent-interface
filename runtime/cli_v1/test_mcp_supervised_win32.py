@@ -1962,6 +1962,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         producer = HeldProducerFactory(process, identity)
         producer.program_actions_lower_bound = 2
         program = self.valid_program()
+        program["ops"] = [
+            {"op": "focus", "target": "fixture"},
+            {"op": "key_chord", "keys": ["CTRL", "S"]},
+            {"op": "pointer_button", "button": "left", "down": True},
+            {"op": "release_all"}]
         receipt_ops = [
             {"operation_index": 0, "phase": "completed",
              "sendinput_attempts": 0, "sendinput_returned_count": 0,
@@ -1969,7 +1974,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             {"operation_index": 1, "phase": "sendinput_returned",
              "sendinput_attempts": 4, "sendinput_returned_count": 4,
              "local_action_count": 0},
-            {"operation_index": 2, "phase": "completed",
+            {"operation_index": 2,
+             "phase": "lease_refused_before_sendinput",
+             "sendinput_attempts": 0, "sendinput_returned_count": 0,
+             "local_action_count": 0},
+            {"operation_index": 3, "phase": "not_started",
              "sendinput_attempts": 0, "sendinput_returned_count": 0,
              "local_action_count": 0}]
         producer.read_program_operation_receipts = lambda _process: {
@@ -2018,6 +2027,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "operations"], receipt_ops)
             self.assertEqual(action_result["program_operation_receipts"][
                 "operations"], receipt_ops)
+            late_down = retained["action"]["program_operation_receipts"][
+                "operations"][2]
+            self.assertEqual(late_down["phase"],
+                             "lease_refused_before_sendinput")
+            self.assertEqual(late_down["sendinput_attempts"], 0)
+            self.assertEqual(late_down["sendinput_returned_count"], 0)
+            self.assertEqual(action_result["program_operation_receipts"][
+                "operations"][2], late_down)
             self.assertEqual(retained["action"][
                 "recovery_release_key_up_attempts"], [{
                     "virtual_key": 0x57, "encoding": "scan_code",
