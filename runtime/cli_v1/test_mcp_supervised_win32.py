@@ -309,6 +309,27 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 {"op": "key_chord", "keys": ["CTRL", "S"]},
                 {"op": "release_all"}]}
 
+    def test_unready_prestarted_worker_refuses_before_owner_admission(self):
+        owner, _producer, _supervisor = self.make_components()
+
+        class UnreadyFactory:
+            prestarted = True
+
+            def ensure_ready(self):
+                return False
+
+            def read_result(self, _process):
+                raise AssertionError("no producer should be assigned")
+
+        with self.assertRaisesRegex(RuntimeError,
+                "PRESTARTED_PRODUCER_UNAVAILABLE_BEFORE_ADMISSION"):
+            mcp_server_module._run_supervised_win32_dispatch(owner,
+                UnreadyFactory(), "1" * 32,
+                {"program": self.valid_program(),
+                 "current_observation_seq": 1,
+                 "current_binding_revision": 1})
+        self.assertEqual(owner.snapshot()["call_count"], 0)
+
     def test_deadline_cancel_policy_is_opt_in_and_bounded(self):
         for mode, policy, grace in (
                 ("supervised-win32","public_caller",0),
@@ -3907,12 +3928,13 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             output = Path(root) / "receipts"
             targets = Path(root) / "targets.json"
             targets.write_text('{"fixture":123}', encoding="utf-8")
+            recovery_result_delay_ms = 7000
             params = StdioServerParameters(command=sys.executable,
                 args=["-m", "runtime.cli_v1.mcp_supervised_stdio_test_server",
                     "--output-directory", str(output), "--targets", str(targets),
                     "--production-cli", "--mode", "recovery",
                     "--recovery-generation", recovery_generation,
-                    "--recovery-result-delay-ms", "7000",
+                    "--recovery-result-delay-ms", str(recovery_result_delay_ms),
                     "--recovery-invalid-horizon"],
                 cwd=str(Path(__file__).resolve().parents[2]))
             async with stdio_client(params) as (reader, writer):
@@ -3936,7 +3958,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(pending["call"]["arguments"][
                         "source_custody_record"], custody)
 
-                    deadline = time.monotonic() + 5
+                    deadline = (time.monotonic()
+                        + recovery_result_delay_ms / 1000 + 3)
                     terminal = None
                     while time.monotonic() < deadline:
                         queried = await client.call_tool("interface_results", {
@@ -4488,10 +4511,12 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 cwd=str(Path(__file__).resolve().parents[2]))
             program = self.valid_program()
             program["authority"]["lease_id"] = "stdio-mid-program-expiry"
+            # Finish shortly after expiry so automatic recovery has margin
+            # before the bounded caller-grace fallback under slow runners.
             program["ops"] = [
                 {"op": "focus", "target": "fixture"},
                 {"op": "key_state", "key": "SHIFT", "down": True},
-                {"op": "wait_update", "timeout_ms": 4200},
+                {"op": "wait_update", "timeout_ms": 3200},
                 {"op": "key_state", "key": "CTRL", "down": True},
                 {"op": "release_all"},
             ]

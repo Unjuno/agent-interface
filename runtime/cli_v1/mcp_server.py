@@ -88,6 +88,10 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
     read_result = getattr(producer_factory, 'read_result', None)
     if not callable(read_result):
         raise ValueError('NATIVE_PRODUCER_RESULT_READER_REQUIRED')
+    ensure_ready = getattr(producer_factory, 'ensure_ready', None)
+    if (getattr(producer_factory, 'prestarted', False) is True
+            and (not callable(ensure_ready) or ensure_ready() is not True)):
+        raise RuntimeError('PRESTARTED_PRODUCER_UNAVAILABLE_BEFORE_ADMISSION')
     authority = program.get('authority')
     if type(authority) is not dict or type(authority.get('expires_at_ns')) is not int:
         raise ValueError('INVALID_AUTHORITY_DEADLINE')
@@ -665,6 +669,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # Pay thread startup before the first safety-sensitive cancellation.
         cancellation_executor.submit(lambda: None).result(timeout=5)
     owner = MCPSessionOwner(targets, display_name) if session_mode == 'persistent-x11' else None
+    supervised_win32_producer_factory = None
     guarded = session_mode == 'guarded-x11'
     if guarded_win32:
         owner = _guarded_win32_owner_factory(deepcopy(targets), root, display_name)
@@ -748,6 +753,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     'release_attempted':True,'release_confirmed':False,
                     'cleanup_status':'UNKNOWN','verified':False,
                     'task_success':None,'replay_allowed':False}
+            producer_close = getattr(supervised_win32_producer_factory, 'close', None)
+            if callable(producer_close):
+                try:
+                    producer_close()
+                except Exception:
+                    pass
             for prepared_id,entry in list(calc_launches.items()):
                 supervisor=entry.get('supervisor')
                 if supervisor is None:

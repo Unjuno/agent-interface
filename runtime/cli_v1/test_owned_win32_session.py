@@ -119,6 +119,38 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertTrue(self.owner.authorize_producer_start(
             ACTION_ID, GEN_A, self.process, lambda: None))
 
+    def test_prestarted_producer_uses_exact_live_handle_without_second_start(self):
+        class AlreadyStartedProcess(FakeProcess):
+            def start(self):
+                raise AssertionError("prestarted producer must not be started again")
+
+        process = AlreadyStartedProcess(4102)
+        identity = {"pid": 4102, "creation_time_100ns": 9002}
+        owner = OperationOwner(clock_ns=self.clock,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        session = OwnedWin32SessionOwner(owner, FakeCancellationSupervisor(owner))
+        session.bind_target_generation_reader(lambda: GEN_A)
+        session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            obligations=["key:a"], action_metadata={"operation": "prestarted"})
+        opened = []
+
+        class Factory:
+            prestarted = True
+
+            def __call__(self, _action):
+                return process, lambda: identity, lambda: opened.append(True)
+
+        row = session.start_producer(CALL_ID, Factory())
+
+        self.assertEqual(row["action"]["status"], "running")
+        self.assertEqual(opened, [True])
+        self.assertIs(owner._producer_handles[ACTION_ID], process)
+        self.assertEqual(row["action"]["producer_timing"].get(
+            "prestarted_worker_assigned_monotonic_ns") is not None, True)
+        self.assertNotIn("process_start_called_monotonic_ns",
+                         row["action"]["producer_timing"])
+
     def test_zero_progress_capture_is_retained_without_false_fence_update(self):
         from unittest.mock import Mock
         self.start_action()
