@@ -220,6 +220,42 @@ live-runner or authority grant. Nine focused journal tests pass normally and
 under `python -O`, including a complete synthetic 18-row path that reaches the
 unchanged frozen evaluator and a complete-assignment HOLD path with invalid
 caller evidence. Two existing projector/evaluator cases (valid task row and
-missing-preflight HOLD) also pass in both modes. Live provider, native GUI,
-release, durable scorer, and three-arm task adapters are still absent; no
-comparison or task effect is claimed.
+missing-preflight HOLD) also pass in both modes. The live provider/native GUI/
+independent-score bindings are still absent from this comparison journal; the
+separately scoped G10 scorer and caller described below are not a matched
+three-arm comparison. No comparison or new task effect is claimed.
+## G10-to-current-main reuse audit (2026-11-16)
+
+The current-main Issue #57 body directs the next Calc step to compare archived
+G10 capture/recognition, release, effect and saved-byte scoring against current
+main before adding another adapter. This read-only audit used the archived G10
+report and read-only cost recount; it did not run the old actor, OCR, container,
+or auditor, and did not change or reinterpret the G10 allocation.
+
+| G10 evidence/contract | Current-main component | Scope boundary for #57 |
+|---|---|---|
+| G10 ran one fixed-geometry/font Calc construction, two guarded saves, and three capture-time-bound observations. Tesseract retained all seven subprocess outputs, including the initial blank. | Archived `calc-compiled-ocrlive-4d74/REPORT.md`, `compiled_ocr.py`, and the pinned run receipts. | OCR/graph success is a narrow live positive; primary model attempts and usage remain UNKNOWN. |
+| Two recorded native programs each have a verified-empty release. A fresh second target is requested only after first completion/release; `calc_fresh_reference_v1` checks current bridge sequence, source digest, scope/revision, capture age and no outstanding authority before mint. | `calc_g10_fresh_admission_v1.py` and `calc_fresh_reference_v1.py`; G10's offline adapter tests also exercise late proposal and unknown-effect suffix stopping. | These checks do not recover an earlier UNKNOWN operation and do not create independent task success. Preserve UNKNOWN/no-replay. |
+| The actual G10 graph's shared anchor is transformed into a distinct second alias while preserving the two-action graph contract. | `calc_g10_interface_adapter_v1.py` and `calc_g10_caller_v1.py`. | Interface-shape reuse is available; it does not itself select or ground the current target, execute OCR, or produce a matched arm. |
+| Saved `fods` bytes are independently parsed for exact six populated cells and formulas; scorer also checks saved digest, completed receipt, neutral physical state and final PNG digest. | Archived `saved_oracle.py` and original G10 audit. | The scorer's result timestamp is not joined to the host run, so end-to-end latency to independently scored effect is unavailable. |
+| Attempts, caller events, interface binding, compiled receipt, independent effect receipt and final caller outcome can be persisted before finalization. | Current `calc_g10_caller_v1.run_g10_in_durable_allocation` plus `calc_durable_allocation_v1.DurableCalcAllocation`; event rows are hash-linked and fsynced. | The local custodian explicitly has no independent post-crash custodian. It is a per-allocation G10 seam; it is not yet an 18-row #57 aggregator or external allocation attestor. |
+
+The independently stored read-only recount pins five historical source hashes.
+It reconstructs one run: host launcher 29.933 s, container 26.556 s, graph
+1.972 s, two native programs 0.569/0.566 s, and seven OCR subprocesses totalling
+0.494 s (1.906 s first-start-to-last-end span). These intervals have different
+and nested endpoints; do not subtract or add them to infer end-to-end time.
+The recount explicitly leaves primary model attempts/tokens/images/wait,
+time-to-independent-score, matched baseline, cold/warm/invalidation/repair and
+break-even unavailable. No speed or token-efficiency result follows.
+
+Implementation decision: keep the G10 graph/fresh-admission/saved-byte route as
+a candidate task adapter, and reuse its durable per-task caller/receipt
+integration if the selected comparison workload is this two-row Calc task.
+The current prospective run journal is only the comparison-level allocation
+and trace aggregator; it is not a substitute for that per-task hash-linked
+receipt custodian. Before a permitted fresh run, a trusted external allocation
+attestor and a timestamp-joined saved-byte scorer result must be supplied, and
+all model/OCR/native attempts must be retained under the same frozen arm,
+model, settings and task boundaries. The G10 result remains historical scoped
+evidence only; this audit adds no live attempt or task effect.
