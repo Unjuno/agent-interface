@@ -212,12 +212,15 @@ class OwnedWin32SessionOwner:
             if self.state == "closed":
                 return {"status": "closed", "release_confirmed": False,
                         "task_success": None, "replay_allowed": False}
-            for record in self._calls.values():
-                phase = self._owner.result(record["action"]["operation_id"]).get("phase")
-                if phase not in ("recovered", "completed"):
+            for call_id, record in self._calls.items():
+                action = record["action"]
+                operation = self._owner.result(action["operation_id"])
+                if (operation.get("phase") not in ("recovered", "completed")
+                        and not self._verified_unstarted_expiry(
+                            call_id, action, operation)):
                     return {"status": "busy", "release_confirmed": False,
                             "task_success": None, "replay_allowed": False,
-                            "unresolved_operation_id": record["action"]["operation_id"]}
+                            "unresolved_operation_id": action["operation_id"]}
             self.state = "closed"
             self._target_bindings.clear()
         try:
@@ -227,6 +230,37 @@ class OwnedWin32SessionOwner:
                 self._custody_fence.close()
         return {"status": "closed", "release_confirmed": False,
                 "task_success": None, "replay_allowed": False}
+
+    def _verified_unstarted_expiry(self, call_id, action, operation):
+        """Allow close only after an expired, never-opened producer is retired."""
+        result = action.get("result")
+        identity = operation.get("producer_identity")
+        if (action.get("status") != "not_dispatched"
+                or type(result) is not dict
+                or result.get("reason") != "authority_expired_before_start_gate"
+                or result.get("input_dispatched") is not False
+                or operation.get("phase") != "unknown"
+                or operation.get("uncertainty") != "producer_start_after_deadline"
+                or operation.get("producer_gate_state") != "closed"
+                or type(identity) is not dict
+                or action.get("producer_retired") is not True
+                or action.get("start_gate_verified_closed") is not True):
+            return False
+        if self._custody_fence is not None:
+            try:
+                snapshot = self._custody_fence.snapshot()
+                state = snapshot.get("state") if type(snapshot) is dict else None
+                resolved = state.get("last_resolved") if type(state) is dict else None
+                if (type(state) is not dict or state.get("status") != "clear"
+                        or state.get("pending") is not None
+                        or type(resolved) is not dict
+                        or resolved.get("operation_id") != action["operation_id"]
+                        or resolved.get("target_generation")
+                            != action["target_generation"]):
+                    return False
+            except Exception:
+                return False
+        return True
 
     def snapshot(self):
         """Return a small custody summary for standard MCP audit records."""
@@ -722,6 +756,7 @@ class OwnedWin32SessionOwner:
                 return
             record["action"].update(status="not_dispatched", result=result,
                 input_dispatched=False, release_confirmed=False,
+                producer_retired=True, start_gate_verified_closed=True,
                 task_success=None, replay_allowed=False)
 
     def _record_uncertain_start(self, call_id, action, reason):
@@ -1103,6 +1138,23 @@ class OwnedWin32SessionOwner:
                 and readback.get("producer_exit_confirmed_ns")
                     == exit_confirmed_ns
                 and readback.get("neutral") is True)
+            # A producer that exits after task authority expired may have
+            # emitted an operation before its terminal cleanup. Preserve the
+            # source action as UNKNOWN and route release through the separate
+            # bounded recovery transaction, even when its child packet and
+            # immediate readback look normal.
+            try:
+                operation_deadline_ns = self._owner.result(
+                    action["operation_id"]).get("deadline_ns")
+            except Exception:
+                operation_deadline_ns = None
+            completion_after_deadline = (
+                type(operation_deadline_ns) is int
+                and time.monotonic_ns() >= operation_deadline_ns)
+            if (completion_after_deadline
+                    and recover_unconfirmed_completion(
+                        "OperationDeadlineExpiredBeforeCompletionReceipt")):
+                return self.interface_result(call_id)
             if (not readback_verified
                     and recover_unconfirmed_completion(
                         "UnverifiedProducerNeutralReadback")):

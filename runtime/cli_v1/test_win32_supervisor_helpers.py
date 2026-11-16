@@ -32,6 +32,7 @@ class FakeBackend:
         self.closed = False
         self.events = []
         self.key_up_calls = []
+        self.foreground = True
 
     def target_generation(self, target):
         if target not in self.targets:
@@ -59,6 +60,11 @@ class FakeBackend:
 
     def focus(self, target):
         self.events.append(("focus", target))
+
+    def _require_foreground(self, target):
+        self.events.append(("foreground_check", target))
+        if not self.foreground:
+            raise RuntimeError("foreground focus changed")
 
     def _key_down_state(self, vk, target):
         return self.states.get((vk, target), False)
@@ -679,7 +685,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
         self.assertTrue(result["release_accepted"])
         self.assertEqual(result["source_target_generation"], GENERATION)
         self.assertEqual(result["target_generation"], recovery_generation)
-        self.assertEqual(backend.events, [("focus", "fixture"), "release"])
+        self.assertEqual(backend.events, [("focus", "fixture"),
+            ("foreground_check", "fixture"), "release",
+            ("foreground_check", "fixture")])
         self.assertTrue(backend.closed)
 
     def test_recovery_rejects_contradictory_or_incomplete_release_receipts(self):
@@ -734,7 +742,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
             configured_targets={"fixture": 44})
         self.assertTrue(result["release_accepted"])
-        self.assertEqual(backend.events, [("focus", "fixture"), "release"])
+        self.assertEqual(backend.events, [("focus", "fixture"),
+            ("foreground_check", "fixture"), "release",
+            ("foreground_check", "fixture")])
         self.assertEqual(backend.release_calls, 1)
         self.assertTrue(backend.closed)
 
@@ -745,9 +755,43 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
             configured_targets={"fixture": 44})
         self.assertTrue(result["release_accepted"])
-        self.assertEqual(backend.events, ["release"])
+        self.assertEqual(backend.events, [
+            ("foreground_check", "fixture"), "release",
+            ("foreground_check", "fixture")])
         self.assertEqual(backend.key_up_calls, [(0x10, False, "virtual_key")])
         self.assertEqual(backend.release_calls, 1)
+        self.assertTrue(backend.closed)
+
+    def test_orphan_recovery_refuses_unrelated_foreground_before_any_up(self):
+        backend = FakeBackend({"fixture": 44})
+        backend.foreground = False
+        with self.assertRaisesRegex(RuntimeError, "foreground focus changed"):
+            _recover(self.request(obligations=[
+                    "key:fixture:SHIFT:virtual_key", "button:fixture:left"]),
+                backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+                configured_targets={"fixture": 44})
+        self.assertEqual(backend.key_up_calls, [])
+        self.assertEqual(backend.release_calls, 0)
+        self.assertTrue(backend.closed)
+
+    def test_orphan_recovery_refuses_focus_drift_after_initial_gate(self):
+        class FocusDriftsAfterInitialGate(FakeBackend):
+            def release_all(self):
+                # Model a focus switch after the helper's pre-release gate,
+                # immediately before release_all emits its global UP event.
+                self.foreground = False
+                return super().release_all()
+
+        backend = FocusDriftsAfterInitialGate({"fixture": 44},
+            states={(0x10, "fixture"): True})
+        result = _recover(self.request(obligations=[
+                    "key:fixture:SHIFT:virtual_key", "button:fixture:left"]),
+                backend_factory=lambda _targets: backend, clock_ns=lambda: 10,
+                configured_targets={"fixture": 44})
+        self.assertFalse(result["release_accepted"])
+        self.assertEqual(backend.key_up_calls, [])
+        self.assertEqual(backend.release_calls, 1)
+        self.assertIn(("foreground_check", "fixture"), backend.events)
         self.assertTrue(backend.closed)
 
     def test_orphan_recovery_reports_unknown_if_generation_changes_after_release(self):
@@ -768,7 +812,9 @@ class NativeWin32SupervisorHelperTests(unittest.TestCase):
             "target_generation_changed_after_release")
         self.assertFalse(result["release_accepted"])
         self.assertTrue(result["release_receipt"]["verified"])
-        self.assertEqual(backend.events, ["release"])
+        self.assertEqual(backend.events, [
+            ("foreground_check", "fixture"), "release",
+            ("foreground_check", "fixture")])
         self.assertEqual(backend.key_up_calls, [(0x10, False, "virtual_key")])
         self.assertEqual(backend.release_calls, 1)
         self.assertTrue(backend.closed)

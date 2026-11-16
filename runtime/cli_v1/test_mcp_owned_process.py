@@ -1222,8 +1222,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool('interface_close',{})
 
-    async def test_g10_public_mcp_joins_profile_receipts_to_parent_effect_verifier(self):
-        """Stub graph executor; exercise real profile callbacks and MCP custody only."""
+    async def test_g10_public_mcp_preserves_unknown_parent_effect_after_snapshot_mismatch(self):
+        """Exercise public lookup when input/close pass but saved effect is unknown."""
         class FakeG10Launch:
             launched=False
             def launch(self, _artifact):
@@ -1328,7 +1328,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                         'attempt_id':'g10-public-parent-join',
                         'prepared_call_id':prepared['call_id'],
                         'wait_for_result_ms':10000}))
-                self.assertEqual(result['profile_id'],'calc-g10-two-save-v1',result)
+                self.assertEqual(result.get('profile_id'),'calc-g10-two-save-v1',result)
                 self.assertEqual(result.get('parent_task_save_custody_adoption',{}).get(
                     'status'),'adopted',result)
                 self.assertEqual(result['method_receipt']['outcome'],'TASK_SUCCEEDED',result)
@@ -1376,15 +1376,27 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 closed=metadata(await server.call_tool('interface_close',{}))
                 self.assertEqual(closed['status'],'closed',closed)
                 self.assertTrue(closed['verified'],closed)
+            # Make the retained saved bytes mismatch only after the compiled
+            # call, input-release receipt, and owner close have all completed.
+            artifact_root=Path(prepared['artifact_path']).parent
+            (artifact_root/'g10-first.fods').write_bytes(b'not the retained save')
             verified=metadata(await server.call_tool('interface_verify_task',{
                 'call_id':result['call_id']}))
-            self.assertEqual(verified['status'],'verified',verified)
-            self.assertIs(verified['task_success'],True,verified)
+            self.assertEqual(verified['status'],'unknown',verified)
+            self.assertEqual(verified['call_id'],result['call_id'],verified)
+            self.assertEqual(verified['attempt_id'],result['attempt_id'],verified)
+            self.assertIsNone(verified['task_success'],verified)
             self.assertEqual(verified['task_effect']['reason'],
-                'both_g10_saved_effects_verified',verified)
-            self.assertEqual(set(verified['task_effect']['saved_effects']),
-                             {'first','second'},verified)
+                'g10_snapshot_custody_mismatch',verified)
+            self.assertFalse(verified['replay_allowed'],verified)
             self.assertFalse(verified['operation_invoked'],verified)
+            repeated=metadata(await server.call_tool('interface_verify_task',{
+                'call_id':result['call_id']}))
+            self.assertEqual(repeated['status'],'unknown',repeated)
+            self.assertEqual(repeated['call_id'],result['call_id'],repeated)
+            self.assertIsNone(repeated['task_success'],repeated)
+            self.assertFalse(repeated['replay_allowed'],repeated)
+            self.assertFalse(repeated['operation_invoked'],repeated)
 
     async def test_g10_parent_bind_failure_blocks_compiled_dispatch(self):
         class BadParentBindingLaunch:
@@ -1826,6 +1838,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                             'blank_reviewed':True,'attempt_id':attempt_id,
                             'prepared_call_id':prepared['call_id'],
                             'wait_for_result_ms':10000}))
+                    self.assertIn('method_receipt',result,result)
                     self.assertEqual(result['method_receipt']['task_plan_sha256'],
                                      prepared['task_plan_sha256'],result)
                     self.assertEqual(prepared['task_plan_sha256'],

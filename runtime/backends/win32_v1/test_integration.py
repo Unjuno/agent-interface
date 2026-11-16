@@ -7,7 +7,6 @@ import sys
 import tempfile
 import time
 import unittest
-import unittest.mock
 from pathlib import Path
 
 from runtime.core_v1.contract import SCHEMA_PROGRAM, office_readiness
@@ -806,12 +805,8 @@ class Win32SessionRecoveryTests(unittest.TestCase):
                     if returned:
                         backend._send(INPUT())
                     else:
-                        # The fake backend runs on non-Windows CI too, where
-                        # ctypes does not expose the Win32 last-error helper.
-                        with unittest.mock.patch.object(ctypes,
-                                "get_last_error", return_value=0, create=True):
-                            with self.assertRaises(Win32BackendError):
-                                backend._send(INPUT())
+                        with self.assertRaises(Win32BackendError):
+                            backend._send(INPUT())
                 finally:
                     _program_operation_receipt.reset(token)
                 self.assertEqual(list(receipts),

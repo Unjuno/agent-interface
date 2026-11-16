@@ -1,6 +1,8 @@
 import unittest
 from unittest import mock
-from runtime.backends.win32_v1.backend import Win32Backend, Win32BackendError, Win32ExecutionError, INPUT, INPUT_KEYBOARD, KEYBDINPUT, KEYEVENTF_KEYUP, _execution_target
+from runtime.backends.win32_v1.backend import (Win32Backend, Win32BackendError,
+    Win32ExecutionError, INPUT, INPUT_KEYBOARD, INPUT_MOUSE, KEYBDINPUT,
+    MOUSEINPUT, KEYEVENTF_KEYUP, MOUSEEVENTF_LEFTUP, _execution_target)
 
 class FakeUser:
     def __init__(self): self.foreground=1; self.calls=0
@@ -49,6 +51,26 @@ class FocusTests(unittest.TestCase):
         token=_execution_target.set("target")
         try: b._send(item)
         finally: _execution_target.reset(token)
+        self.assertEqual(b.user32.calls, 1)
+
+    def test_recovery_key_up_requires_exact_foreground_receiver(self):
+        b=Inert(); b.user32.foreground=2; b._recovery_target="target"
+        item=INPUT(type=INPUT_KEYBOARD); item.ki=KEYBDINPUT(65, 0, KEYEVENTF_KEYUP, 0, 0)
+        with self.assertRaisesRegex(Win32BackendError, "foreground focus changed"):
+            b._send(item)
+        self.assertEqual(b.user32.calls, 0)
+        b.user32.foreground=1
+        b._send(item)
+        self.assertEqual(b.user32.calls, 1)
+
+    def test_recovery_button_up_requires_exact_foreground_receiver(self):
+        b=Inert(); b.user32.foreground=2; b._recovery_target="target"
+        item=INPUT(type=INPUT_MOUSE); item.mi=MOUSEINPUT(0, 0, 0, MOUSEEVENTF_LEFTUP, 0, 0)
+        with self.assertRaisesRegex(Win32BackendError, "foreground focus changed"):
+            b._send(item)
+        self.assertEqual(b.user32.calls, 0)
+        b.user32.foreground=1
+        b._send(item)
         self.assertEqual(b.user32.calls, 1)
 
     def test_missing_foreground_api_fails_closed(self):

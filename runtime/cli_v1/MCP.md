@@ -407,6 +407,13 @@ and `replay_allowed=false`; it does not claim an input release or task effect.
 That proven no-dispatch clears the pending fence and retires the target
 generation. If any witness is missing or authorization was attempted, preserve
 `unknown` and the unresolved fence for explicit recovery.
+After the producer starts, the Win32 backend also checks the absolute authority
+deadline before each task operation and each native input-down event. If a wait
+or earlier operation crosses expiry, later task operations are refused and
+verified input release still runs as cleanup. This is a cooperative boundary
+check; it cannot preempt a native call already in progress or make the clock
+check and `SendInput` atomic. A returned terminal result remains subject to the
+owner's completion and custody checks.
 After verified orphan recovery or proven no-dispatch cleanup, its source and
 recovery target generations remain retired across MCP server replacement;
 admission rejects them and requires a fresh target generation. Ordinary
@@ -425,9 +432,30 @@ When recovery finishes asynchronously after the dispatch worker returns, this
 readback performs the one-shot capture. The durable dispatch witness is updated
 before the custody fence resolves. These fields do not prove task effect,
 continuous neutrality, or non-delivery beyond the retained counter's scope.
-Automatic Win32 recovery also retains `action.recovery_release_key_up_attempts` in `interface_results` and in the cancellation owner result when the supervisor receives the native helper receipt. Each row identifies the virtual-key value, the exact `virtual_key` or `scan_code` encoding passed to the UP send routine, and whether that routine returned or raised. A `returned` row means `SendInput` reported one event inserted. It does not prove delivery to the intended app, app consumption, or neutral input state. Those remain separate release/readback/horizon evidence.
-
-The native producer also retains a bounded `action.program_operation_receipts` snapshot, projected in the same exact result row after producer retirement. It has one zero-based entry per frozen program operation, with the phase, number of `SendInput` attempts, returned event count, and local cursor-action count. `lease_refused_before_sendinput` identifies an operation whose deadline check refused it before that operation called `SendInput`. `sendinput_in_flight` means the child stopped after entering the call and before recording its return; delivery is UNKNOWN unless a positive returned count is already recorded. `sendinput_returned` records the most recent SendInput return, and `local_action_in_flight`/`local_action_returned` bracket cursor positioning. `completed` means the operation body returned. These are API receipts, not application delivery, consumption, or task effect. This diagnostic never upgrades UNKNOWN effect, release, task success, or replay eligibility. On an older/custom producer without this reader, capture is explicitly unavailable. Automatic Win32 recovery retains native helper receipts in the exact `interface_results` row's `cancellation.result.recovery_release_attempts`. Rows identify the release domain (`key_up`, `button_up`, or `unicode_up`), applicable key/button label, whether `SendInput` was called, its returned event count, and whether the call returned or raised. Keyboard recovery also exposes `action.recovery_release_key_up_attempts`, including the virtual-key value and the exact `virtual_key` or `scan_code` encoding. A returned native attempt means `SendInput` reported its event count; it does not prove delivery to the intended app, app consumption, or neutral input state. Those remain separate release/readback/horizon evidence.
+The native producer also retains a bounded `action.program_operation_receipts`
+snapshot, projected in the same exact result row after producer retirement. It
+has one zero-based entry per frozen program operation, with the phase, number
+of `SendInput` attempts, returned event count, and local cursor-action count.
+`lease_refused_before_sendinput` identifies an operation whose deadline check
+refused it before that operation called `SendInput`. `sendinput_in_flight`
+means the child stopped after entering the call and before recording its return;
+delivery is UNKNOWN unless a positive returned count is already recorded.
+`sendinput_returned` records the most recent SendInput return, and
+`local_action_in_flight`/`local_action_returned` bracket cursor positioning.
+`completed` means the operation body returned. These are API receipts, not
+application delivery, consumption, or task effect. This diagnostic never
+upgrades UNKNOWN effect, release, task success, or replay eligibility. On an
+older/custom producer without this reader, capture is explicitly unavailable.
+Automatic Win32 recovery retains native helper receipts in the exact
+`interface_results` row's `cancellation.result.recovery_release_attempts`.
+Rows identify the release domain (`key_up`, `button_up`, or `unicode_up`),
+applicable key/button label, whether `SendInput` was called, its returned event
+count, and whether the call returned or raised. Keyboard recovery also exposes
+`action.recovery_release_key_up_attempts`, including the virtual-key value and
+the exact `virtual_key` or `scan_code` encoding. A returned native attempt means
+`SendInput` reported its event count; it does not prove delivery to the intended
+app, app consumption, or neutral input state. Those remain separate
+release/readback/horizon evidence.
 
 The native fence applies a protected DACL to its journal directory, journal
 files, and registry marker key. The DACL grants full access to the current
