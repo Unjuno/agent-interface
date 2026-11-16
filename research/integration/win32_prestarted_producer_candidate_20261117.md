@@ -44,7 +44,11 @@ It is based on main `5cada635a25e0d220500221f485211ea52eca996`.
   candidate now initializes the optional factory to `None` before backend
   selection. After this fix, the existing X11 `test_stable_selected_worker_route`
   and queued-expiry transport cancellation case passed normally; both passed
-  under `-O` as well. The full GitHub workflows need a fresh run on this fix.
+  under `-O` as well. On fixed head `9ba0135d3abc2547df374bddf4f1a77e592856e3`,
+  all 18 GitHub check runs completed successfully, including Windows, macOS,
+  X11 integration, native Win32, native MCP, replay gate, and evidence checks.
+  A subsequent local rerun of those two transport tests passed 2/2 normally and
+  2/2 under `-O`; `git diff --check` also passed.
 
 ## Limits
 
