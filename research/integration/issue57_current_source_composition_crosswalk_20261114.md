@@ -216,12 +216,15 @@ It rejects duplicate assignments and post-finalization mutation; absent
 assignments, invalid rows, or invalid preflights preserve the evidence and
 produce HOLD with no comparison trace. Its manifest explicitly records
 `dispatch_enabled: false`: this is a tested custody/projector boundary, not a
-live-runner or authority grant. Eleven focused journal tests pass normally and
+live-runner or authority grant. Twelve focused journal tests pass normally and
 under `python -O`, including a complete synthetic 18-row path that reaches the
 unchanged frozen evaluator and a complete-assignment HOLD path with invalid
 caller evidence. They also exercise reuse of the existing G10 hash-linked task
 custodian, rejection of missing custody, and HOLD with raw caller output when
-the custodian event chain is corrupted. Two existing projector/evaluator cases
+the custodian event chain is corrupted. One test calls the public G10 durable
+allocation wrapper with only the compiled-core proposal boundary stubbed, then
+checks that the returned receipt and custody project through the v3 lifecycle;
+the source manifest now pins the exact imported runtime files. Two existing projector/evaluator cases
 (valid task row and missing-preflight HOLD) also pass in both modes. The live
 provider/native GUI/independent-score bindings are still absent from this
 comparison journal; the separately scoped G10 scorer and caller described

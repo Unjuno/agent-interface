@@ -128,6 +128,16 @@ class ProspectiveRun:
             "research/live_control/calc_g10_interface_adapter_v1.py",
             "research/live_control/calc_fresh_reference_v1.py",
             "research/live_control/integrated_efficiency_protocol_v1.py",
+            "runtime/core_v1/__init__.py",
+            "runtime/core_v1/contract.py",
+            "runtime/core_v1/platform_probe.py",
+            "runtime/core_v1/compiled_gui.py",
+            "runtime/guarded_x11_v1/__init__.py",
+            "runtime/guarded_x11_v1/compiled.py",
+            "runtime/guarded_x11_v1/handles.py",
+            "runtime/guarded_x11_v1/handles_texture.py",
+            "runtime/guarded_x11_v1/handles_base.py",
+            "runtime/guarded_x11_v1/frames.py",
         )
         return {name: _sha256(self.source_root / name) for name in names}
 
