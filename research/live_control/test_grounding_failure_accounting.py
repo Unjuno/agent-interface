@@ -167,6 +167,11 @@ class GroundingFailureAccounting(unittest.TestCase):
     def test_await_timeout_keeps_known_turn_but_not_invented_usage(self):
         self.assert_failed(cell('timeout'), known=False)
 
+    def test_await_timeout_retains_usage_already_observed_by_transport(self):
+        row = cell('timeout', usage(100, 20))
+        self.assert_failed(row, known=True)
+        self.assertIsNone(row['errors'][0]['usage_error'])
+
     def test_invalid_usage_keeps_other_known_metadata(self):
         for value in (usage(-1, 0), {'last': {}}):
             with self.subTest(usage=value):
