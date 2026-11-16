@@ -2,7 +2,10 @@
 import hashlib
 import json
 import tempfile
+import threading
+import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from unittest.mock import patch
 
@@ -100,6 +103,32 @@ class ProspectiveRunTests(unittest.TestCase):
                 (self.evidence / "lifecycle.jsonl").read_text(encoding="utf-8").splitlines()]
         self.assertEqual([row["event"] for row in rows], ["run_created"])
         self.assertEqual(rows[0]["sequence"], 1)
+
+    def test_concurrent_appends_keep_journal_sequences_unique(self):
+        run = self.create()
+        original_count = run._line_count
+
+        def slow_count():
+            count = original_count()
+            time.sleep(0.05)
+            return count
+
+        run._line_count = slow_count
+        start = threading.Barrier(3)
+
+        def append(index):
+            start.wait(timeout=5)
+            return run.append("concurrent_probe", {"writer": index})
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            futures = [pool.submit(append, index) for index in range(2)]
+            start.wait(timeout=5)
+            returned = [future.result(timeout=10) for future in futures]
+
+        self.assertEqual(sorted(row["sequence"] for row in returned), [2, 3])
+        rows = [json.loads(line) for line in
+                (self.evidence / "lifecycle.jsonl").read_text(encoding="utf-8").splitlines()]
+        self.assertEqual([row["sequence"] for row in rows], [1, 2, 3])
 
     def test_rejects_nonexclusive_incomplete_or_reused_allocation(self):
         self.value["exclusive"] = False

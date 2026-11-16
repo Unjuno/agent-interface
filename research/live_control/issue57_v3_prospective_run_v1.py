@@ -11,7 +11,9 @@ import copy
 import json
 import os
 import subprocess
+import threading
 import time
+from functools import wraps
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,6 +25,16 @@ from research.live_control.issue57_v3_trace_adapter_v1 import (
 
 
 SCHEMA = "issue57-v3-prospective-run-v1"
+
+
+def _synchronized(method):
+    """Serialize in-process lifecycle mutations and journal sequence assignment."""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self._state_lock:
+            return method(self, *args, **kwargs)
+    return wrapper
+
 REQUIRED_ALLOCATION = {
     "allocation_id", "host_id", "owner", "exclusive", "expires_at_utc",
     "task_ids", "arms", "model", "settings", "order_seed",
@@ -93,6 +105,7 @@ class ProspectiveRun:
         self._rows = {arm: [None] * len(TASKS) for arm in ARMS}
         self._preflights = {}
         self._finished = False
+        self._state_lock = threading.RLock()
         self._task_custodians = {}
         self._task_custody_root = self.evidence_root / "task-custody"
         self._task_custody_root.mkdir()
@@ -149,6 +162,7 @@ class ProspectiveRun:
         except (OSError, subprocess.SubprocessError):
             return "unavailable"
 
+    @_synchronized
     def append(self, event, payload):
         if type(event) is not str or not event or type(payload) is not dict:
             raise ValueError("event name and object payload required")
@@ -166,6 +180,7 @@ class ProspectiveRun:
         with self._journal_path.open("rb") as stream:
             return sum(1 for _ in stream)
 
+    @_synchronized
     def record_preflight(self, arm, envelope):
         if self._finished:
             raise ValueError("run is already finalized")
@@ -177,6 +192,7 @@ class ProspectiveRun:
         self._preflights[arm] = retained
         self.append("preflight", {"arm": arm, "envelope": retained})
 
+    @_synchronized
     def create_task_custodian(self, arm, index, *, source_sha256,
                               observation_ids, conditions):
         """Start the existing G10 hash-linked custodian before a task attempt."""
@@ -285,6 +301,7 @@ class ProspectiveRun:
             raise RuntimeError("comparison source hashes are missing")
         return hashes
 
+    @_synchronized
     def record_task(self, arm, index, caller_result, independent_score, telemetry,
                     *, custodian_path=None):
         if self._finished:
@@ -315,6 +332,7 @@ class ProspectiveRun:
         self._seen.add(key)
         return projected
 
+    @_synchronized
     def finish(self, integration_discoveries):
         if self._finished:
             raise ValueError("run is already finalized")
