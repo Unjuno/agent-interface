@@ -1,5 +1,7 @@
 # Integration research
 
+**MAP01 public-caller startup retry R273/R274 (2026-11-17, current main `c36be3f7`):** a fresh 90 s lease still failed before input: producer `Process.start()` took 90.047 s and returned 47 ms after expiry; all 11 operations were `not_started`, with zero program actions, SendInput returns, or local cursor actions. The public cancel response was 16 ms after expiry. Source action remains UNKNOWN and replay denied. Separate R274 orphan recovery verified the producer absent, returned `not_dispatched`, left source UNKNOWN, and cleared custody at revision 1006 with LEFT/W/SHIFT up. This adds no live task-effect or efficiency sample. Conditions and limits are in the [R273/R274 report](map01_r273_current_main_public_caller_start_20261117/REPORT.md); the private 106-file manifest SHA-256 is `d3b1d2d1e7b7b1dc527d58c6aa3dd222d110ea21c5828de54c1cf9817aabead2`. R270 (30 s) and R273 (90 s) both crossed expiry by 47 ms during startup; the next engineering question is prestarted producer readiness with a closed input gate until authority and generation validation. Keep #57 open.
+
 This directory contains experiments that compose previously isolated mechanisms across shared runtime, caller, recovery, effect, application, or domain boundaries.
 
 Child directories are retained integration studies. Their existence does not imply that the composed mechanism is globally promoted or production-ready.
