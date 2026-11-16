@@ -1,0 +1,98 @@
+{
+  "action_operation_id": "3fbf34a548fd4649a0e003e24cf64e3a",
+  "operation_id": "f2163fca20d4489fbab12fab6fc93be9",
+  "owner_phase": "recovered",
+  "release_confirmed": true,
+  "replay_allowed": false,
+  "result": {
+    "cleanup_deadline_ns": 596435328000000,
+    "cleanup_latency_ns": 2031000000,
+    "cleanup_latency_perf_counter_ns": 2033715200,
+    "cleanup_requested_monotonic_ns": 596430328000000,
+    "cleanup_requested_perf_counter_ns": 596430350411500,
+    "completion_readback": null,
+    "completion_readback_attempt": null,
+    "completion_readback_outcome": "not_attempted",
+    "completion_release_receipt": null,
+    "deadline_ns": 596430328000000,
+    "late_input_horizon_ns": 2000000000,
+    "late_input_horizon_verified": true,
+    "late_input_max_observed_gap_ns": 32000000,
+    "late_input_max_sample_gap_ns": 100000000,
+    "late_input_observation_count": 74,
+    "late_input_observation_end_ns": 596432359000000,
+    "late_input_observation_start_ns": 596430359000000,
+    "late_input_release_received_ns": 596430359000000,
+    "late_input_validation_error": null,
+    "obligations": [
+      "button:map01:left",
+      "key:map01:SHIFT:virtual_key"
+    ],
+    "operation_id": "3fbf34a548fd4649a0e003e24cf64e3a",
+    "phase": "recovered",
+    "producer_exit_code": -15,
+    "producer_gate_state": "authorization_attempted",
+    "producer_identity": {
+      "creation_time_100ns": 134393054259735606,
+      "pid": 53888
+    },
+    "readback": {
+      "key_button_states": [
+        false,
+        false
+      ],
+      "neutral": true,
+      "observed_monotonic_ns": 596432359000000,
+      "operation_id": "3fbf34a548fd4649a0e003e24cf64e3a",
+      "recovery_id": "9dd411b71a11450f818e686c341b06fd",
+      "source_target_generation": "4fb1a8934d4b5e5862e8e4705ca72f1a4b6fca9ac078c1097926671dfe9de518",
+      "target_generation": "4fb1a8934d4b5e5862e8e4705ca72f1a4b6fca9ac078c1097926671dfe9de518",
+      "unicode_event_units": 0
+    },
+    "recovery_completed_monotonic_ns": 596432359000000,
+    "recovery_completed_perf_counter_ns": 596432384126700,
+    "recovery_id": "9dd411b71a11450f818e686c341b06fd",
+    "recovery_release_attempts": [
+      {
+        "domain": "key_up",
+        "encoding": "virtual_key",
+        "error_type": null,
+        "key_names": [
+          "SHIFT"
+        ],
+        "ordinal": 0,
+        "outcome": "returned",
+        "sendinput_call_started": true,
+        "sendinput_error_type": null,
+        "sendinput_return_count": 1,
+        "virtual_key": 16
+      },
+      {
+        "button": "left",
+        "domain": "button_up",
+        "error_type": null,
+        "ordinal": 1,
+        "outcome": "returned",
+        "sendinput_call_started": true,
+        "sendinput_error_type": null,
+        "sendinput_return_count": 1
+      }
+    ],
+    "recovery_release_key_up_attempts": [
+      {
+        "encoding": "virtual_key",
+        "status": "returned",
+        "virtual_key": 16
+      }
+    ],
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "status": "recovered",
+    "target_generation": "4fb1a8934d4b5e5862e8e4705ca72f1a4b6fca9ac078c1097926671dfe9de518",
+    "task_success": null,
+    "uncertainty": null
+  },
+  "status": "recovered",
+  "target_generation": "4fb1a8934d4b5e5862e8e4705ca72f1a4b6fca9ac078c1097926671dfe9de518",
+  "task_success": null
+}

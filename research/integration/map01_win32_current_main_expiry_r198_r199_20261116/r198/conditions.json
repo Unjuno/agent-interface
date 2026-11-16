@@ -1,0 +1,308 @@
+{
+  "assets": {
+    "freedoom_iwad_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\private-packets\\map01_native_windows_20261026_r01\\portable\\freedoom\\freedoom-0.13.0\\freedoom2.wad",
+    "freedoom_iwad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "gzdoom_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\private-packets\\map01_native_windows_20261026_r01\\portable\\gzdoom\\gzdoom.exe",
+    "gzdoom_sha256": "ec706c2ea1ef946eec13be7b1b461df8d52efcd47caa6c056ed0e0257f7f9ffa",
+    "map": "MAP01",
+    "seed_config_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\private-packets\\map01_native_windows_20261026_r32\\live-r32\\gzdoom.ini",
+    "seed_config_sha256": "57c7ada9ad0ce10d51b338c39a851c1e53bc0a5a5d8f058302581a7693f98711",
+    "skill": 1
+  },
+  "attempt_id": "map01-native-expiry-delayed-input-r198-20261116",
+  "authorization": {
+    "allocation_id": null,
+    "basis": "User explicitly authorized this Windows PC for MAP01 testing and directed continued verification independently of allocation.",
+    "host": "current Windows PC",
+    "scope": "one fresh, unique R198 current-main native lease-expiry attempt; no replay"
+  },
+  "custody_preflight": {
+    "device": 346748985,
+    "inode": 67553994410624972,
+    "mutex_abandoned": false,
+    "path": "C:\\Users\\user\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\Unjuno\\AgentInterface\\custody-v1\\ad7f7502b88b793d99bdfdbcd05e2e11733e62e3e9a70faae5a7a5a890993c2b.json",
+    "pending": null,
+    "revision": 967,
+    "sha256": "c9faeefdda9bf4f959da38031e97265c30028d48116be4a4e9a53b4ecb567001",
+    "status": "clear"
+  },
+  "effect_calibration": {
+    "candidate_path": "effect-calibration",
+    "classification_thresholds_unchanged": {
+      "max_template_distance": 0.02,
+      "min_class_margin": 0.1
+    },
+    "labels": {
+      "47": "cross-run validated from R170/R171",
+      "48": "single R172 candidate; R173 is independent holdout",
+      "49": "pinned existing oracle",
+      "50": "pinned existing oracle"
+    },
+    "sha256": {
+      "ammo_47_template.png": "6bd5d7da76be9df74f4304fc5f2ca1aa3c54c8cc59f076c467339bb1b02264e1",
+      "ammo_48_template.png": "50235b2524e086b7a5dd3c72da69fea977a0fa2a83a8ce36eb2af0e15222e13b",
+      "ammo_49_template.png": "e6a93dd13e3f42e3864c5e59feb9abf63c97fe36e3af52a3d5a7b2a8983a48e6",
+      "ammo_50_template.png": "3183896d3014a0cd3ebe58e8dd03e4b29efabb42aea48dff927820652cc0227f",
+      "classifier.py": "ff2c01900cb7940278ab55efca10f83ebdb5d87daf61d5a7c4a233595a058372",
+      "template-provenance.json": "570715edadd91601175fee22457242f318876e6170aa56aca6a467989610a6d7"
+    }
+  },
+  "effect_oracle": {
+    "active_weapon_gate": "visually inspect preserved before/after frames; both must visibly show pistol",
+    "baseline": "50",
+    "classifier": "corrected narrow exact-template classifier; unsupported/ambiguous values remain UNKNOWN",
+    "expected_after": "49",
+    "frame_geometry": [
+      1520,
+      825
+    ],
+    "name": "map01-actual-ammo-panel-v1",
+    "replay_allowed": false,
+    "roi_xyxy": [
+      998,
+      758,
+      1017,
+      774
+    ],
+    "source_action_remains_unknown": true,
+    "template_source": "R94 corrected actual right-panel HUD; same seed and unmodified renderer settings"
+  },
+  "frozen_utc": "2026-11-16T12:21:37.340524+00:00",
+  "isolation": {
+    "display": [
+      1920,
+      1080
+    ],
+    "input_baseline": {
+      "W_down": false,
+      "mouse_left_down": false
+    },
+    "preserved_unknown_processes": [],
+    "prior_gzdoom_processes": [],
+    "target_client_geometry": [
+      1520,
+      825
+    ]
+  },
+  "positive_control": {
+    "attempt_id": "R94",
+    "manifest_file_count": 53,
+    "manifest_sha256": "4d710a48778cbf9cfc7bb0037bbacab18f316acba9881b3fe9ba18428f03abef",
+    "readback_report_sha256": "72adb02401e29bf073cef0d447efa2c86a1ced4cf7cf7bc3d53617b98d32eb7b"
+  },
+  "protocol": {
+    "click_hold_ms": 120,
+    "click_hold_rationale": "Add a bounded 120 ms wait between the initial LEFT DOWN and UP to test the immediate-click effect non-replication seen in R190; keep the 3 s lease, SHIFT-only expiry hold, delayed post-expiry UP/click, and four-event pre-expiry input lower bound unchanged.",
+    "computer_use_activation_sequence": [
+      "capture passive exact target screenshot and visible MAP01 HUD first",
+      "activate the uniquely selected returned target window",
+      "write attempt-bound receipt from the passive screenshot id and observed foreground identity",
+      "require independent Win32 foreground/HWND/PID match before input"
+    ],
+    "dispatch_response_wait_ms": 0,
+    "durable_input_dispatched_policy": {
+      "accepted_values": [
+        true,
+        null
+      ],
+      "null_requires": [
+        "exact_frozen_program_obligation",
+        "matching_unknown_action",
+        "accepted_native_input_witness",
+        "exact_durable_producer_identity",
+        "confirmed_producer_absence"
+      ],
+      "rejected_value": false
+    },
+    "fault": "one user32.SendInput LEFTDOWN returning count 1, wait 120 ms, then producer-only os._exit(86) without backend cleanup",
+    "generation_roi_candidate": "R173 preserves R172 recovery/release/horizon behavior. The preregistered task effect remains 50-to-49. A multiclass observer records 50-to-47/48 as verified effect mismatches only if independently classified; task success is never inferred from those repeated effects.",
+    "independent_horizon_ns": 2000000000,
+    "late_input_horizon_ns": 2000000000,
+    "latency_clock": "time.monotonic_ns / GetTickCount64",
+    "max_dispatches": 1,
+    "max_exception_to_release_ns": 750000000,
+    "max_expiry_to_release_ns": 1000000000,
+    "max_read_bracket_ns": 20000000,
+    "max_recoveries": 1,
+    "max_sample_gap_ns": 100000000,
+    "native_release_attempt_requirement": {
+      "button": "left",
+      "does_not_substitute_for_release_confirmation": true,
+      "domain": "button_up",
+      "outcome": "returned",
+      "record_field": "recovery_release_attempts",
+      "sendinput_call_started": true,
+      "sendinput_return_count": 1
+    },
+    "no_replay": true,
+    "obligations": [
+      "button:map01:left"
+    ],
+    "post_recovery_effect_capture": {
+      "capture_frame": "screen_physical_px",
+      "computer_use_stage": "after_recovery",
+      "require_foreground_hwnd_equals_target_before_and_after_capture": true,
+      "require_generation_match": true,
+      "require_visible_map01_hud": true
+    },
+    "query_projection": {
+      "outer_input_dispatched": false,
+      "outer_release_confirmed": "absent",
+      "separate_cancellation_release_confirmed": true,
+      "separate_cancellation_status": "recovered",
+      "source_action_release_confirmed": false,
+      "source_action_status": "unknown"
+    },
+    "r187_expected_preexpiry_sendinput_count": 4,
+    "r187_lease_duration_ms": 3000,
+    "r187_program_sequence": [
+      "pointer_move",
+      "left_down",
+      "left_up",
+      "SHIFT_down",
+      "wait_8000ms",
+      "SHIFT_up",
+      "delayed_left_down",
+      "left_up",
+      "release_all"
+    ],
+    "r187_program_sequence_rationale": "the first click is a brief tap before the wait; only SHIFT is held across expiry, avoiding FIRE auto-repeat; expiry must prevent the delayed modifier release and second click",
+    "r187_result_wait_seconds": 15,
+    "r187_second_click_delay_ms": 8000,
+    "r197_program_sequence": [
+      "focus MAP01",
+      "pointer move to fixed center",
+      "LEFT DOWN",
+      "wait_update 120 ms",
+      "LEFT UP",
+      "SHIFT DOWN",
+      "wait_update 8000 ms",
+      "SHIFT UP after expiry",
+      "delayed second click after expiry",
+      "release_all"
+    ],
+    "recovery_generation_observation": {
+      "frame": "screen_physical_px",
+      "full_resolution_effect_captures_preserved": true,
+      "purpose": "exact target-generation revalidation only",
+      "region": "target client origin + [2,2], size 1x1",
+      "target_generation_consistency_required": "matched"
+    },
+    "recovery_model": "same dispatch owner automatic bounded cancellation after producer completion evidence loss",
+    "recovery_session_prestarted_before_input": false,
+    "release_timestamp_semantics": "supervisor receives internally verified recovery receipt; raw SendInput release call timestamp is unavailable in the current cancellation receipt",
+    "result_poll_interval_ms": 20,
+    "task_success_claim": null
+  },
+  "question": "R198 current-main one-shot: Does one admitted short LEFT click produce the calibrated HUD 50-to-49 while SHIFT remains held across 3 s lease expiry, the delayed SHIFT-UP and second click are blocked, bounded recovery releases inputs within the frozen bound, and both 2 s neutral horizons pass? Source action remains UNKNOWN and task_success remains null.",
+  "runtime_environment": {
+    "clock_info": {
+      "adjustable": false,
+      "implementation": "GetTickCount64()",
+      "monotonic": true,
+      "resolution": 0.015625
+    },
+    "executable": "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "latency_clock": "time.perf_counter_ns / QueryPerformanceCounter",
+    "packages": {
+      "Pillow": "10.2.0",
+      "mcp": "1.30.0"
+    },
+    "perf_counter_clock_info": {
+      "adjustable": false,
+      "implementation": "QueryPerformanceCounter()",
+      "monotonic": true,
+      "resolution": 1e-07
+    },
+    "version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "schema": "map01-native-expiry-delayed-input-r198-v1",
+  "source": {
+    "head": "86a52662dc2bb690dd670d52ea8d97816aef2a26",
+    "nonruntime_checkout_differences": [],
+    "origin_main_head": "86a52662dc2bb690dd670d52ea8d97816aef2a26",
+    "origin_main_tree": "c35b16d1df4f2e7c6b70a09e2ec672043ace5335",
+    "packet_sha256": {
+      "conditions-r193-final.json": "36bc4b239ea876cc4acb5113cb1e6c767c2071c6a2be9a48ac49b89cb741507a",
+      "conditions-r194-final.json": "ee77ad060d69e4f9c0b667d76c0775c2b8466c460663d69d38bf3c6589ffe44e",
+      "conditions-r195-final.json": "15ee3f4de48dcbcb73986604c079eec7b985038acf5d31345f7eee75c9f98ff3",
+      "conditions-r196-final.json": "21bb769924410a1ad42de44e60ecd69881e469c0bc620e8bfcb573ec92cf35e7",
+      "effect-calibration/ammo_47_template.png": "6bd5d7da76be9df74f4304fc5f2ca1aa3c54c8cc59f076c467339bb1b02264e1",
+      "effect-calibration/ammo_48_template.png": "50235b2524e086b7a5dd3c72da69fea977a0fa2a83a8ce36eb2af0e15222e13b",
+      "effect-calibration/ammo_49_template.png": "e6a93dd13e3f42e3864c5e59feb9abf63c97fe36e3af52a3d5a7b2a8983a48e6",
+      "effect-calibration/ammo_50_template.png": "3183896d3014a0cd3ebe58e8dd03e4b29efabb42aea48dff927820652cc0227f",
+      "effect-calibration/classifier.py": "ff2c01900cb7940278ab55efca10f83ebdb5d87daf61d5a7c4a233595a058372",
+      "effect-calibration/template-provenance.json": "570715edadd91601175fee22457242f318876e6170aa56aca6a467989610a6d7",
+      "effect-calibration/test_classifier.py": "89a50c8d1b4a1bc62a8e06f3aeadbc76ca84b4dbea37db92a26cd65afb2597f9",
+      "exception_injection.py": "20e32fd8b701dd87b337c993f15f2d9dbd9efb08d0c421e6b49c2069d7ad46de",
+      "fixtures/r180-dispatch-terminal.json": "7964fae817c2d7e9514816ff1986ed23a58c62e5ae86ab122a2a9b22d9398d03",
+      "fixtures/r180-fault-injection.json": "f218e9614671d2ee940d45dc9e22d103185222bc6c08577240c60338b4f96e5f",
+      "fixtures/r180-public-cancellation-result.json": "1f2c1123b7a36f7e92c8b19e68a5d12226a7e3b5afa3c95d6f063f281fd72d53",
+      "freeze_conditions_r193.py": "8022e5eb58db1c9259ff06ed27f9c2960b7a00908c54a774a11aeb477bb84444",
+      "freeze_conditions_r194.py": "7fff4097caeb599ec09a686f6c69f3e2865934d15a9b077c9c53da26235f421a",
+      "freeze_conditions_r195.py": "3ea9667b0ed438c6418c38d4efcced462e61f9eaad16579e875ea7e0d5ec1f8b",
+      "freeze_conditions_r196.py": "6216978c5a8e48fd36ab77ada2b7c423dc836d0433b8764a378524d7b5ddb8a2",
+      "freeze_conditions_r197.py": "c9a9558947228d1bd80bd3bb65a0c7547e631127aaf40e78d4f1973b19547c65",
+      "horizon_projection.py": "1e9178e38d721a0f4bb36d112b846b6b63180d46640c736bb4ad0d33eed72ac3",
+      "independent_auto_effect.py": "e2b0c085143b97c7adb32f3b4a3c656f52459aa075f60f6fdb4f1f9e7d051187",
+      "mcp_session_owner.py": "557b2903a710fbbd84dc91959cc347f15aeebe2bab2500bb1a8b24d50e28f12d",
+      "observed_ammo_effect.py": "caf555430d5e4f307255a503bc2d1a7bcadc0ba65cd0d47a59bf3bab020f477c",
+      "oracle/research/integration/map01_numeric_ammo_oracle_20261111/actual_ammo_template_provenance.json": "0bcfe810052c11286c40eab76c038d964f235a52822dede4b0e3382c24d17e56",
+      "oracle/research/integration/map01_numeric_ammo_oracle_20261111/ammo_oracle.py": "9746139fae5259b3ffaa43d1d2ab9d4571293036af1fbc60d4d68eb2b55bdafe",
+      "oracle/research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_49_template.png": "e6a93dd13e3f42e3864c5e59feb9abf63c97fe36e3af52a3d5a7b2a8983a48e6",
+      "oracle/research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_50_template.png": "3183896d3014a0cd3ebe58e8dd03e4b29efabb42aea48dff927820652cc0227f",
+      "oracle/research/integration/map01_numeric_ammo_oracle_20261111/independent_neutral_horizon.py": "c216dd855d9dd377e081e2394ae34bda46c64a9aba475e3042081410ba9cfca0",
+      "oracle/research/integration/map01_numeric_ammo_oracle_20261111/orphan_recovery_effect_audit.py": "57cd8eb635b1a32c5b92b2360093f2b60349f73a66abc857a4c0fe7a0103ef33",
+      "r187_expiry_gate.py": "5a26eebecaa56e214336616510e213657323ee19acfa12d5e8f6f57df0acbc6e",
+      "r187_neutral.py": "f78aea2d20f1d8ebee5d457e78cb5ce8b83497f998469bdfe625e2b76492a32b",
+      "runner-candidate.py": "9886f81ff00d9f648677eed458b18abe53bb15d9fa4b04457942845a07a2eb23",
+      "runner_contract.py": "b7e6ec961d2c8802fea60263f28ad083658237a9ee963376e8cf82b52dad8c44",
+      "runner_expiry.py": "3d56d780747630fa9ea8590a937a9103cd6bd404137de18b638f2c15a700a3c7",
+      "runner_helpers.py": "7d8e7c26090c75323af8e1302039b70be8fd5e1775318561584adff8c9aa7c30",
+      "server_with_expiry.py": "b001af20c3878aab275c3e540bb7d03c73f49543e17b46d53ba2c7addf7b84d1",
+      "terminal_gate.py": "0503a127b0428ea62e515398593b87b79039c16292161260f49a31d56346c663"
+    },
+    "production_runtime_paths_match_origin_main": true,
+    "repo_path": "D:\\CodexData\\Scratch\\agent-interface-main-full-20261116",
+    "research_oracle_paths_pinned_in_candidate": [
+      "research/integration/map01_numeric_ammo_oracle_20261111/independent_neutral_horizon.py",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_oracle.py",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_49_template.png",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_50_template.png",
+      "research/integration/map01_numeric_ammo_oracle_20261111/orphan_recovery_effect_audit.py",
+      "research/integration/map01_numeric_ammo_oracle_20261111/actual_ammo_template_provenance.json"
+    ],
+    "research_oracle_paths_pinned_in_packet": [
+      "research/integration/map01_numeric_ammo_oracle_20261111/actual_ammo_template_provenance.json",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_oracle.py",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_49_template.png",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_50_template.png",
+      "research/integration/map01_numeric_ammo_oracle_20261111/independent_neutral_horizon.py",
+      "research/integration/map01_numeric_ammo_oracle_20261111/orphan_recovery_effect_audit.py"
+    ],
+    "research_sha256": {
+      "research/integration/map01_numeric_ammo_oracle_20261111/actual_ammo_template_provenance.json": "0bcfe810052c11286c40eab76c038d964f235a52822dede4b0e3382c24d17e56",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_oracle.py": "9746139fae5259b3ffaa43d1d2ab9d4571293036af1fbc60d4d68eb2b55bdafe",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_49_template.png": "e6a93dd13e3f42e3864c5e59feb9abf63c97fe36e3af52a3d5a7b2a8983a48e6",
+      "research/integration/map01_numeric_ammo_oracle_20261111/ammo_panel_50_template.png": "3183896d3014a0cd3ebe58e8dd03e4b29efabb42aea48dff927820652cc0227f",
+      "research/integration/map01_numeric_ammo_oracle_20261111/independent_neutral_horizon.py": "c216dd855d9dd377e081e2394ae34bda46c64a9aba475e3042081410ba9cfca0",
+      "research/integration/map01_numeric_ammo_oracle_20261111/orphan_recovery_effect_audit.py": "57cd8eb635b1a32c5b92b2360093f2b60349f73a66abc857a4c0fe7a0103ef33"
+    },
+    "runtime_candidate_diff_from_origin_main": "fresh current-main runtime hashes, exact HEAD and tree fixed for R198",
+    "runtime_sha256": {
+      "runtime/backends/win32_v1/backend.py": "d0581c9884de7202667f74740fd8a3e3f919ae047f07796baebf500393897070",
+      "runtime/cli_v1/mcp_server.py": "2afb2bb5c0be5541284010b2a62cd2e5e2183acd6d8469ec26b320e89628f6f4",
+      "runtime/cli_v1/owned_win32_session.py": "78f49bb095ef14473b80234e26906b9e1320e16437a108e493e8e60bfd9d455e",
+      "runtime/cli_v1/supervised_win32_compiled.py": "fd1478a424585956eca2ca62f54d485e778d5688c2d3e2504181151b2231ed98",
+      "runtime/cli_v1/test_supervised_win32_compiled.py": "a7e586780d4f12601b9f5101c5e08f5440d21852d4de95ee6fd009b910eae529",
+      "runtime/cli_v1/win32_custody_fence.py": "1338c443927e3fbe9122821e0724e3549c7187d7165cad293266435e9e1699bc",
+      "runtime/cli_v1/win32_standard_producer.py": "43350fa73910da6283375caf5ef0877b3550f905dddca11efd29a9d9c39d1bd6",
+      "runtime/cli_v1/win32_supervisor_helpers.py": "7c46408f71dece2c49605c2d7cccb99604752c85e0e17d5c61ca5d3b53f3b9d3",
+      "runtime/guarded_win32_v1/input_obligations.py": "9655353f3684ccf2fdb5c119cbf98c4779d09b41321d063d44f9cda9e32a4f6b",
+      "runtime/guarded_win32_v1/process_cancellation.py": "6f953b9070f9e07e3fad4b775059f1cce91c17e4ec60a78d6b9694eb0577fd45",
+      "runtime/guarded_win32_v1/win32_process_identity.py": "5412f9b71a4f8d1dd475a34b3c801d1e0e44bc5fd21d3337fd28a18343454647"
+    },
+    "tree": "c35b16d1df4f2e7c6b70a09e2ec672043ace5335"
+  },
+  "trial_directory": "r198_native_expiry_delayed_second_click_map01"
+}

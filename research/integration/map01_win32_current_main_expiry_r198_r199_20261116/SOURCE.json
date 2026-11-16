@@ -1,0 +1,36 @@
+{
+  "R198_adjudication": "QUALIFIED_PARTIAL_PROTOCOL_DEVIATION_NO_FULL_PASS",
+  "R198_conditions_sha256": "6be7e6d8aedd045b6b6eb01c0bdb042861274a38e6d98a02165b800dc9031ebc",
+  "R198_raw_count": 224,
+  "R199_adjudication": "PASS_FROZEN_SCOPED_CURRENT_MAIN_EXPIRY_EFFECT",
+  "R199_conditions_sha256": "a692285d1a4077e6db4e16198d0a40b5e20cfb670fbe85e2732291322b02885a",
+  "R199_raw_count": 225,
+  "closest_current_main_comparison": {
+    "compiled_median_s": 3.4401911,
+    "compiled_minus_direct_median_s": 0.3601488,
+    "compiled_n": 2,
+    "compiled_relative_slower_percent": 11.7,
+    "direct_median_s": 3.0800423,
+    "direct_n": 2,
+    "model_provider_calls": 0,
+    "order": "ABBA",
+    "outer_lifecycle_measured": false,
+    "runs": [
+      "R237",
+      "R238",
+      "R239",
+      "R240"
+    ],
+    "scope_note": "separate current-main native Windows local packet; no token comparison"
+  },
+  "main_head": "86a52662dc2bb690dd670d52ea8d97816aef2a26",
+  "main_tree": "c35b16d1df4f2e7c6b70a09e2ec672043ace5335",
+  "repo": "Unjuno/agent-interface",
+  "schema": "agent-interface-map01-r198-r199-source-v1",
+  "tests": {
+    "runtime.cli_v1.test_supervised_win32_compiled": {
+      "normal": "9/9 PASS",
+      "optimized": "9/9 PASS"
+    }
+  }
+}

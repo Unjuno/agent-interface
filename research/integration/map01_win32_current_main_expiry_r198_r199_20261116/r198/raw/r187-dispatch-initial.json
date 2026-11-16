@@ -1,0 +1,10 @@
+{
+  "content": [
+    {
+      "text": "{\"status\": \"pending\", \"call_id\": \"b7c74151a0f8440caf6573201eb1a78f\", \"call\": {\"call_id\": \"b7c74151a0f8440caf6573201eb1a78f\", \"operation\": \"dispatch\", \"state\": \"queued\", \"arguments\": {\"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"map01-native-expiry-delayed-input-r198-20261116-program\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1, \"target_generations\": {\"map01\": \"4fb1a8934d4b5e5862e8e4705ca72f1a4b6fca9ac078c1097926671dfe9de518\"}}, \"authority\": {\"lease_id\": \"map01-native-expiry-delayed-input-r198-20261116-lease\", \"expires_at_ns\": 596430328000000}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"map01\"}, {\"op\": \"pointer_move\", \"frame\": \"screen_physical_px\", \"x\": 960, \"y\": 551}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"wait_update\", \"timeout_ms\": 120}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"key_state\", \"key\": \"SHIFT\", \"down\": true, \"encoding\": \"virtual_key\"}, {\"op\": \"wait_update\", \"timeout_ms\": 8000}, {\"op\": \"key_state\", \"key\": \"SHIFT\", \"down\": false, \"encoding\": \"virtual_key\"}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": true}, {\"op\": \"pointer_button\", \"button\": \"left\", \"down\": false}, {\"op\": \"release_all\"}]}, \"current_observation_seq\": 1, \"current_binding_revision\": 1}, \"backend_attempted\": false, \"persistence_failure\": null, \"response_wait_ms\": 0}, \"scope\": \"current_server\", \"result_available\": false, \"release_confirmed\": false, \"effect_status\": \"unknown\", \"task_success\": null, \"replay_allowed\": false, \"note\": \"Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.\"}",
+      "type": "text"
+    }
+  ],
+  "images": [],
+  "isError": false
+}
