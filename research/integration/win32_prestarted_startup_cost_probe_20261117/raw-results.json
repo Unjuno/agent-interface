@@ -1,0 +1,140 @@
+{
+  "executable": "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+  "host_platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "repetitions_per_route": 5,
+  "schema": "win32-producer-startup-cost-probe-v1",
+  "source_commit": "8846fa3fd67c6b74a50cdcfa3589ca82071e0daa",
+  "started_at_utc": "2026-11-16T16:37:04.838782+00:00",
+  "summary": {
+    "ordinary": {
+      "median_startup_total_ms": 17.9615,
+      "n": 5,
+      "values_ms": [
+        17.9615,
+        20.667,
+        5.9169,
+        6.207,
+        20.451
+      ]
+    },
+    "prestarted": {
+      "median_startup_total_ms": 176.3963,
+      "n": 5,
+      "values_ms": [
+        181.1086,
+        181.9145,
+        175.8048,
+        176.3963,
+        175.187
+      ]
+    }
+  },
+  "trials": [
+    {
+      "cleanup_retired": true,
+      "factory_construction_ms": 0.2213,
+      "gate_opened": false,
+      "index": 1,
+      "process_start_ms": 9.4571,
+      "route": "ordinary",
+      "startup_total_ms": 17.9615
+    },
+    {
+      "cleanup": {
+        "status": "closed",
+        "worker_retired": true
+      },
+      "factory_ready_ms": 181.1086,
+      "gate_opened": false,
+      "index": 1,
+      "ready_receipt": true,
+      "route": "prestarted",
+      "startup_total_ms": 181.1086
+    },
+    {
+      "cleanup": {
+        "status": "closed",
+        "worker_retired": true
+      },
+      "factory_ready_ms": 181.9145,
+      "gate_opened": false,
+      "index": 2,
+      "ready_receipt": true,
+      "route": "prestarted",
+      "startup_total_ms": 181.9145
+    },
+    {
+      "cleanup_retired": true,
+      "factory_construction_ms": 0.2425,
+      "gate_opened": false,
+      "index": 2,
+      "process_start_ms": 20.2316,
+      "route": "ordinary",
+      "startup_total_ms": 20.667
+    },
+    {
+      "cleanup_retired": true,
+      "factory_construction_ms": 0.2461,
+      "gate_opened": false,
+      "index": 3,
+      "process_start_ms": 5.5031,
+      "route": "ordinary",
+      "startup_total_ms": 5.9169
+    },
+    {
+      "cleanup": {
+        "status": "closed",
+        "worker_retired": true
+      },
+      "factory_ready_ms": 175.8048,
+      "gate_opened": false,
+      "index": 3,
+      "ready_receipt": true,
+      "route": "prestarted",
+      "startup_total_ms": 175.8048
+    },
+    {
+      "cleanup": {
+        "status": "closed",
+        "worker_retired": true
+      },
+      "factory_ready_ms": 176.3963,
+      "gate_opened": false,
+      "index": 4,
+      "ready_receipt": true,
+      "route": "prestarted",
+      "startup_total_ms": 176.3963
+    },
+    {
+      "cleanup_retired": true,
+      "factory_construction_ms": 0.2187,
+      "gate_opened": false,
+      "index": 4,
+      "process_start_ms": 5.8139,
+      "route": "ordinary",
+      "startup_total_ms": 6.207
+    },
+    {
+      "cleanup_retired": true,
+      "factory_construction_ms": 0.2321,
+      "gate_opened": false,
+      "index": 5,
+      "process_start_ms": 20.0627,
+      "route": "ordinary",
+      "startup_total_ms": 20.451
+    },
+    {
+      "cleanup": {
+        "status": "closed",
+        "worker_retired": true
+      },
+      "factory_ready_ms": 175.187,
+      "gate_opened": false,
+      "index": 5,
+      "ready_receipt": true,
+      "route": "prestarted",
+      "startup_total_ms": 175.187
+    }
+  ]
+}
