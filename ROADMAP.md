@@ -10,6 +10,7 @@ The [native Win32 fixture UI trial](research/integration/win32_native_fixture_li
 adds one scoped current-main click/text/save effect and verified-release sample;
 MAP01/real-game transfer, standard-caller composition, blocked-I/O recovery,
 matched efficiency, and reliability remain open.
+The fresh current-main [MAP01 expiry pair R198/R199](research/integration/map01_win32_current_main_expiry_r198_r199_20261116/REPORT.md) now includes a corrected preregistered single-action effect/recovery result (R199: 50→49, confirmed release and neutral horizons). R198's stale source-projection expectation remains recorded as a condition deviation. This narrows the live-control boundary but does not satisfy #57's matched model/provider lifecycle accounting, reliability or task-completion gates.
 The separate [Freedoom MAP01 probes](research/integration/win32_freedoom_map01_live_20261026/README.md)
 show one scoped forward effect with a verified runtime release receipt. Two
 fresh input attempts showed material scene motion through the +2 s sample and
