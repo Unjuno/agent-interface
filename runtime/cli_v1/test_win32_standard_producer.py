@@ -1,6 +1,8 @@
 import ctypes
+import hashlib
 import json
 import multiprocessing
+from pathlib import Path
 import sys
 import tempfile
 import time
@@ -99,6 +101,61 @@ class SharedEmissionCounterProcessTests(unittest.TestCase):
                 process.terminate()
                 process.join(2)
 
+
+class PrestartedWorkerProtocolTests(unittest.TestCase):
+    def test_worker_requires_exact_authorization_before_native_dispatch(self):
+        from runtime.cli_v1.win32_standard_producer import (
+            _run_prestarted_standard_worker,
+        )
+
+        context = multiprocessing.get_context("spawn")
+        parent, child = context.Pipe(duplex=True)
+        action_counter = context.RawValue(ctypes.c_long, 0)
+        operation_receipts = context.RawArray(ctypes.c_long, 8)
+        with tempfile.TemporaryDirectory() as root:
+            packet_path = str(Path(root) / "result.json")
+            action = {"call_id": "1" * 32, "operation_id": "2" * 32,
+                "target_generation": "a" * 64,
+                "program": {"source": {"observation_seq": 1,
+                    "binding_revision": 1}, "ops": [{"op": "verify"}]}}
+            body = {"action": action, "packet_path": packet_path,
+                "operation_count": 1}
+            digest = hashlib.sha256(json.dumps(body, sort_keys=True,
+                separators=(",", ":"), ensure_ascii=False,
+                allow_nan=False).encode("utf-8")).hexdigest()
+            process = context.Process(target=_run_prestarted_standard_worker,
+                args=(child, {"fixture": 42}, action_counter,
+                      operation_receipts, 2), daemon=True)
+            process.start()
+            child.close()
+            try:
+                self.assertTrue(parent.poll(30), "worker did not become ready")
+                self.assertEqual(parent.recv(), {"status": "ready",
+                    "protocol": "win32-producer-v1"})
+                parent.send({**body, "request_sha256": digest})
+                self.assertTrue(parent.poll(5), "worker did not acknowledge request")
+                prepared = parent.recv()
+                self.assertEqual(prepared, {"status": "prepared",
+                    "call_id": action["call_id"],
+                    "operation_id": action["operation_id"],
+                    "target_generation": action["target_generation"],
+                    "request_sha256": digest})
+                parent.send({"status": "authorize", "call_id": action["call_id"],
+                    "operation_id": action["operation_id"],
+                    "target_generation": action["target_generation"],
+                    "request_sha256": "0" * 64})
+                process.join(5)
+                self.assertFalse(process.is_alive(), "refused worker did not retire")
+                self.assertEqual(process.exitcode, 0)
+                self.assertEqual(action_counter.value, 0)
+                self.assertEqual(list(operation_receipts), [0] * 8)
+                self.assertFalse(Path(packet_path).exists())
+            finally:
+                parent.close()
+                if process.is_alive():
+                    process.terminate()
+                    process.join(2)
+
     def test_inflight_sendinput_is_retained_as_unknown_after_child_termination(self):
         context = multiprocessing.get_context("spawn")
         receipts = context.RawArray(ctypes.c_long, 4)
@@ -137,6 +194,30 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
                                     "binding_revision": 3},
                         "ops": [{"op": "verify"}, {"op": "pointer_button",
                             "button": "left", "down": True}, {"op": "verify"}]}}
+
+    def test_prestarted_factory_is_ready_before_assignment_and_closes_idle_worker(self):
+        with tempfile.TemporaryDirectory() as root:
+            factory = self.factory_type({"fixture": 42}, root,
+                prestarted=True, worker_startup_timeout_s=30.0)
+            try:
+                self.assertTrue(factory.ensure_ready())
+                process = factory._worker
+                self.assertIsNotNone(process.pid)
+                self.assertTrue(process.is_alive())
+                self.assertTrue(factory._worker_ready)
+                process.terminate()
+                process.join(2)
+                self.assertFalse(process.is_alive())
+                factory._replenish_after_retirement(process)
+                deadline = time.monotonic() + 10
+                while time.monotonic() < deadline and not factory.ensure_ready():
+                    time.sleep(0.01)
+                self.assertTrue(factory.ensure_ready())
+                self.assertIsNot(factory._worker, process)
+            finally:
+                closed = factory.close()
+            self.assertEqual(closed["status"], "closed")
+            self.assertTrue(closed["worker_retired"])
 
     def test_factory_returns_an_unstarted_gated_child_bound_to_the_action(self):
         with tempfile.TemporaryDirectory() as root:

@@ -581,19 +581,32 @@ class OwnedWin32SessionOwner:
             if (not isinstance(produced, tuple) or len(produced) != 3):
                 raise ValueError("producer factory must return process, identity and start gate")
             process, process_identity, authorize_start = produced
+            prestarted = getattr(producer_factory, "prestarted", False) is True
             if (not callable(getattr(process, "start", None))
-                    or getattr(process, "pid", None) is not None
                     or not callable(authorize_start)):
-                raise ValueError("producer must be an unstarted process with a start gate")
+                raise ValueError("producer process and start gate are required")
+            if prestarted:
+                if (type(getattr(process, "pid", None)) is not int
+                        or process.is_alive() is not True):
+                    raise ValueError("prestarted producer must be alive and exact")
+            elif getattr(process, "pid", None) is not None:
+                raise ValueError("ordinary producer must be unstarted")
             phase = self._owner.result(action["operation_id"]).get("phase")
             if phase not in ("admitted", "cancel_pending"):
-                self._close_unstarted_process(process)
+                if prestarted:
+                    self._retire_gated_process(process)
+                else:
+                    self._close_unstarted_process(process)
                 return self.interface_result(call_id)
-            self._stamp_producer_timing(
-                call_id, "process_start_called_monotonic_ns")
-            process.start()
-            self._stamp_producer_timing(
-                call_id, "process_start_returned_monotonic_ns")
+            if not prestarted:
+                self._stamp_producer_timing(
+                    call_id, "process_start_called_monotonic_ns")
+                process.start()
+                self._stamp_producer_timing(
+                    call_id, "process_start_returned_monotonic_ns")
+            else:
+                self._stamp_producer_timing(
+                    call_id, "prestarted_worker_assigned_monotonic_ns")
             if callable(process_identity):
                 process_identity = process_identity()
             accepted = self.producer_started(call_id, process,

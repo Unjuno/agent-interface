@@ -232,6 +232,7 @@ def main():
                 self.result = None
                 self.events = None
                 self.program_emissions = 0
+                self.program_started_monotonic_ns = None
                 self._thread = None
 
             def start(self):
@@ -272,6 +273,7 @@ def main():
 
             def __call__(self, action):
                 def run_program():
+                    process.program_started_monotonic_ns = time.monotonic_ns()
                     backend = Win32Backend.__new__(Win32Backend)
                     backend.emissions = 0
                     backend._program_emission_counter = None
@@ -283,6 +285,7 @@ def main():
                     backend.preflight = lambda _program: None
                     backend.targets = {"fixture": 123}
                     backend.target_generation = lambda _target: GENERATION
+                    backend.monotonic_ns = time.monotonic_ns
                     backend.user32 = type("User32", (), {
                         "IsWindow": staticmethod(lambda hwnd: hwnd == 123),
                         "GetForegroundWindow": staticmethod(lambda: 123),
@@ -326,7 +329,9 @@ def main():
                         json.dumps({"events": events,
                             "result_status": result.get("status"),
                             "error": result.get("detail"),
-                            "program_emissions": process.program_emissions},
+                            "program_emissions": process.program_emissions,
+                            "program_started_monotonic_ns":
+                                process.program_started_monotonic_ns},
                             sort_keys=True), encoding="utf-8")
 
                 process.run_program = run_program

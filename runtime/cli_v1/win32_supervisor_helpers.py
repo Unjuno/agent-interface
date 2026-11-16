@@ -342,7 +342,8 @@ def create_native_win32_components(targets, output_directory, *, context=None,
         owner.bind_target_generation_reader(current_generation)
         producer = NativeWin32StandardProducerFactory(targets,
             output_directory, context=context,
-            process_identity_reader=process_identity_reader)
+            process_identity_reader=process_identity_reader,
+            prestarted=True)
     except BaseException:
         owner.close()
         raise

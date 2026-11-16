@@ -309,6 +309,27 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 {"op": "key_chord", "keys": ["CTRL", "S"]},
                 {"op": "release_all"}]}
 
+    def test_unready_prestarted_worker_refuses_before_owner_admission(self):
+        owner, _producer, _supervisor = self.make_components()
+
+        class UnreadyFactory:
+            prestarted = True
+
+            def ensure_ready(self):
+                return False
+
+            def read_result(self, _process):
+                raise AssertionError("no producer should be assigned")
+
+        with self.assertRaisesRegex(RuntimeError,
+                "PRESTARTED_PRODUCER_UNAVAILABLE_BEFORE_ADMISSION"):
+            mcp_server_module._run_supervised_win32_dispatch(owner,
+                UnreadyFactory(), "1" * 32,
+                {"program": self.valid_program(),
+                 "current_observation_seq": 1,
+                 "current_binding_revision": 1})
+        self.assertEqual(owner.snapshot()["call_count"], 0)
+
     def test_deadline_cancel_policy_is_opt_in_and_bounded(self):
         for mode, policy, grace in (
                 ("supervised-win32","public_caller",0),
