@@ -1,3 +1,15 @@
+# Current handoff — MAP01 recovery result and #57 boundary (2026-11-16)
+
+R199 passes its corrected current-main preregistration: confirmed recovery/release projection, one delayed MAP01 operation excluded, calibrated ammo 50→49, 32 ms expiry-to-release receipt, integrated and independent 2 s neutral horizons, normal target exit, custody clear. `task_success` remains null. R198's raw outcome is preserved as a partial observation because its frozen source-status projection was stale; R199 uses a distinct ID/conditions and does not rewrite or replay R198. Current-main `test_supervised_win32_compiled` passes 9/9 normal and `-O`, including the recovered-vs-unknown projection contract.
+
+The closest current-main route comparison remains R237-R240 (ABBA): direct median 3.080 s, compiled 3.440 s (+11.7% at n=2 descriptive arm medians); all four scoped effects/releases passed, but there were zero provider calls and precise outer lifecycle time was not measured. This is not token efficiency.
+
+The two attempts establish a current-main live effect/recovery slice only. They have no model/provider usage, tokens, billing, matched arms or whole-lifecycle costs. Historical R10/R12 direct/compiled timings are a separate small Docker/Xvfb caller comparison; compiled is descriptively slower by 4.934% median and no model/provider calls occurred. The currently open [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) still requires prospectively matched same-model cold/warm/invalidation/repair arms and all-attempt effect, release, latency and token/resource accounting. WSLc remains STOP/HOLD under [#7924](https://github.com/Unjuno/agent-interface/issues/7924); these new trials used the authorized Windows PC only.
+
+Complete R198/R199 conditions, raw files, adjudications and manifests: [research/integration/map01_win32_current_main_expiry_r198_r199_20261116/REPORT.md](../research/integration/map01_win32_current_main_expiry_r198_r199_20261116/REPORT.md). No runtime source changed.
+
+---
+
 # Worker governing invariant — 2026-09-18
 
 > **Preserve rich-model intent; localize the high-frequency refinement loop.**

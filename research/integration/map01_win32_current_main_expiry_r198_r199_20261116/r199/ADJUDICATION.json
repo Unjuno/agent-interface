@@ -1,0 +1,77 @@
+{
+  "attempt_id": "map01-native-expiry-delayed-input-r199-20261116",
+  "checks": {
+    "delayed_second_click_excluded": true,
+    "dispatches": 1,
+    "expiry_to_release_ns": 32000000,
+    "independent_neutral_status": "VERIFIED",
+    "integrated_horizon": {
+      "coverage_ns": 2015000000,
+      "errors": [],
+      "first_sample_delay_ns": 0,
+      "max_observed_gap_ns": 32000000,
+      "observation_count": 75,
+      "verified": true
+    },
+    "max_expiry_to_release_ns": 1000000000,
+    "normal_close": true,
+    "postflight_custody": {
+      "last_resolved_operation_matches": true,
+      "pending": null,
+      "revision": 985,
+      "status": "clear"
+    },
+    "query_projection": {
+      "expected_release_confirmed": true,
+      "expected_source_status": "recovered",
+      "observed_release_confirmed": true,
+      "observed_source_status": "recovered",
+      "outer_input_dispatched_expected": false,
+      "outer_input_dispatched_observed": false,
+      "outer_release_expected": "absent",
+      "outer_release_present": false,
+      "release_match": true,
+      "source_status_match": true
+    },
+    "recoveries": 1,
+    "release": {
+      "left_sendinput_count": 1,
+      "release_confirmed": true,
+      "shift_release_attempts": [
+        {
+          "domain": "key_up",
+          "encoding": "virtual_key",
+          "error_type": null,
+          "key_names": [
+            "SHIFT"
+          ],
+          "ordinal": 0,
+          "outcome": "returned",
+          "sendinput_call_started": true,
+          "sendinput_error_type": null,
+          "sendinput_return_count": 1,
+          "virtual_key": 16
+        }
+      ]
+    },
+    "replay_allowed": false,
+    "runner_label": "PASS_SCOPED_EXPIRY_DELAYED_OPERATION_BLOCKED",
+    "task_effect": {
+      "after": "49",
+      "before": "50",
+      "single_click_observed": true
+    },
+    "task_success": null
+  },
+  "classification": "PASS_FROZEN_SCOPED_CURRENT_MAIN_EXPIRY_EFFECT",
+  "conditions_sha256": "a692285d1a4077e6db4e16198d0a40b5e20cfb670fbe85e2732291322b02885a",
+  "full_preregistration_pass": true,
+  "limits": [
+    "one native Windows host and one task attempt",
+    "runtime effect_status is not the semantic task-success predicate",
+    "task_success remains null",
+    "not an integrated model/provider token or cost comparison"
+  ],
+  "raw_manifest_sha256": "847ef60ed0ba0c308b7ba36d7b5926c06df2484f31ccc16e672058de3234e264",
+  "schema": "agent-interface-r199-independent-adjudication-v1"
+}

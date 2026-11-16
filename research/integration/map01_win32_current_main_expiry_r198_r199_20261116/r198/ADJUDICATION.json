@@ -1,0 +1,35 @@
+{
+  "attempt_id": "map01-native-expiry-delayed-input-r198-20261116",
+  "contract_diagnosis": "Frozen query_projection was stale for current-main confirmed-recovery semantics; runtime behavior matches identity/generation/release-confirmed branch. This is an experiment-condition deviation, not a demonstrated runtime bug.",
+  "contract_sources": [
+    "runtime/cli_v1/owned_win32_session.py:1627-1649",
+    "runtime/cli_v1/owned_win32_session.py:1652-1670",
+    "runtime/cli_v1/test_supervised_win32_compiled.py:516-530"
+  ],
+  "deviation": {
+    "frozen_field": "protocol.query_projection",
+    "source_action_release_confirmed": {
+      "expected": false,
+      "matches": false,
+      "observed": true
+    },
+    "source_action_status": {
+      "expected": "unknown",
+      "matches": false,
+      "observed": "recovered"
+    }
+  },
+  "full_preregistration_pass": false,
+  "independent_classification": "QUALIFIED_PARTIAL_PROTOCOL_DEVIATION_NO_FULL_PASS",
+  "next_action": "For any distinct future attempt, freeze source status recovered/release_confirmed true only when the current-main joined recovery proof passes; keep task_success null without a separate semantic success predicate. Never replay R198.",
+  "observed_effect": {
+    "ammo_after": "49",
+    "ammo_before": "50",
+    "late_second_click_excluded": true,
+    "single_click_observed": true
+  },
+  "reason": "The run preserved a calibrated independent 50-to-49 ammo-panel effect, confirmed bounded release and excluded delayed operations, but the source-status/release projection contradicted the frozen query_projection contract. Retain the runner PASS label as raw output, but do not count this attempt as a full frozen-protocol pass. The runtime effect_status remained unknown and semantic task success was not evaluated.",
+  "runner_label_preserved": "PASS_SCOPED_EXPIRY_DELAYED_OPERATION_BLOCKED",
+  "schema": "agent-interface-r198-independent-adjudication-v1",
+  "task_success": null
+}
