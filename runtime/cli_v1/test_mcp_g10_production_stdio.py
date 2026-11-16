@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import time
 import unittest
+from datetime import timedelta
 from pathlib import Path
 
 from mcp import ClientSession, StdioServerParameters
@@ -22,7 +23,8 @@ class G10FailureLedgerTests(unittest.TestCase):
             output=root/'attempt'
             env=os.environ.copy()
             env['AGENT_INTERFACE_G10_LEDGER_OUTPUT']=str(output)
-            env['AGENT_INTERFACE_G10_FAIL_AFTER_CALL']=(
+            env.pop('AGENT_INTERFACE_G10_READ_TIMEOUT_TOOL',None)
+            env['AGENT_INTERFACE_G10_FAIL_AFTER_RESPONSE']=(
                 'interface_guarded_calc_compiled')
             completed=subprocess.run([sys.executable,'-m','unittest',
                 'runtime.cli_v1.test_mcp_g10_production_stdio.'
@@ -44,6 +46,51 @@ class G10FailureLedgerTests(unittest.TestCase):
             self.assertTrue(compiled['call_id'],compiled)
             for digest in ('request_sha256','response_sha256','report_sha256'):
                 self.assertRegex(compiled[digest],r'^[0-9a-f]{64}$',compiled)
+
+    def test_compiled_call_read_timeout_is_retained_as_unknown_attempt(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)
+            output=root/'attempt'
+            env=os.environ.copy()
+            env['AGENT_INTERFACE_G10_LEDGER_OUTPUT']=str(output)
+            env.pop('AGENT_INTERFACE_G10_FAIL_AFTER_RESPONSE',None)
+            env['AGENT_INTERFACE_G10_READ_TIMEOUT_TOOL']=(
+                'interface_guarded_calc_compiled')
+            completed=subprocess.run([sys.executable,'-m','unittest',
+                'runtime.cli_v1.test_mcp_g10_production_stdio.'
+                'PublicG10ProductionStdioTests.'
+                'test_public_g10_receipt_and_parent_effect_cross_stdio_transport'],
+                cwd=str(Path(__file__).resolve().parents[2]),env=env,
+                stdout=subprocess.PIPE,stderr=subprocess.STDOUT,check=False)
+            self.assertNotEqual(completed.returncode,0,completed.stdout.decode(
+                'utf-8',errors='replace'))
+            ledger=json.loads((output/'attempt-ledger.json').read_text(
+                encoding='utf-8'))
+            self.assertEqual(ledger['terminal_status'],'failed',ledger)
+            self.assertEqual(ledger['terminal_phase'],
+                'interface_guarded_calc_compiled',ledger)
+            self.assertEqual(ledger['task_effect_status'],'unknown',ledger)
+            self.assertIsNone(ledger['task_success'],ledger)
+            compiled=next(row for row in ledger['mcp_calls']
+                if row['tool']=='interface_guarded_calc_compiled')
+            self.assertIsNone(compiled['call_id'],compiled)
+            self.assertEqual(compiled['status'],'unknown',compiled)
+            self.assertIs(compiled['transport_response_received'],False,compiled)
+            self.assertIs(compiled['caller_receipt_recorded'],False,compiled)
+            self.assertEqual(compiled['terminal_error_type'],'McpError',compiled)
+            self.assertRegex(compiled['request_sha256'],r'^[0-9a-f]{64}$',compiled)
+            self.assertIsNone(compiled['response_sha256'],compiled)
+            self.assertIsNone(compiled['report_sha256'],compiled)
+            self.assertEqual(compiled['server_reconciliation_status'],
+                'unique_exact_request_match',compiled)
+            self.assertRegex(compiled['server_persisted_call_id'],
+                r'^[0-9a-f]{32}$',compiled)
+            self.assertRegex(compiled['server_request_sha256'],
+                r'^[0-9a-f]{64}$',compiled)
+            self.assertRegex(compiled['server_report_sha256'],
+                r'^[0-9a-f]{64}$',compiled)
+            self.assertIsNone(compiled['server_task_success'],compiled)
+            self.assertIs(compiled['server_replay_allowed'],False,compiled)
 
 
 class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
@@ -80,29 +127,73 @@ class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
                         nonlocal attempt_phase
                         attempt_phase=name
                         call_started_ns=time.monotonic_ns()
-                        row=metadata(await client.call_tool(name,arguments))
+                        request_sha256=hashlib.sha256(json.dumps(
+                            arguments,sort_keys=True,separators=(',', ':'),
+                            allow_nan=False).encode('utf-8')).hexdigest()
+                        call={'tool':name,'call_id':None,
+                            'queried_call_id':(arguments.get('call_id')
+                                if name in ('interface_results',
+                                    'interface_verify_task') else None),
+                            'status':'unknown','verified':None,
+                            'invocation_started':True,
+                            'transport_response_received':False,
+                            'caller_receipt_recorded':False,
+                            'request_sha256':request_sha256,
+                            'response_sha256':None,
+                            'started_monotonic_ns':call_started_ns,
+                            'ended_monotonic_ns':None,'elapsed_ns':None}
+                        call_trace.append(call)
+                        if retained_root is not None:
+                            _write_attempt_snapshot(ledger_path,output,
+                                call_trace,attempt_started_ns,attempt_phase,
+                                'in_progress',None)
+                        try:
+                            read_timeout_ms=os.environ.get(
+                                'AGENT_INTERFACE_G10_READ_TIMEOUT_MS','1')
+                            if (os.environ.get(
+                                    'AGENT_INTERFACE_G10_READ_TIMEOUT_TOOL')
+                                    ==name):
+                                response=await client.call_tool(name,arguments,
+                                    read_timeout_seconds=timedelta(
+                                        milliseconds=int(read_timeout_ms)))
+                            else:
+                                response=await client.call_tool(name,arguments)
+                            call['transport_response_received']=True
+                            row=metadata(response)
+                        except BaseException as error:
+                            call_ended_ns=time.monotonic_ns()
+                            if not call['caller_receipt_recorded']:
+                                call.update(status='unknown')
+                            call.update(
+                                terminal_error_type=type(error).__name__,
+                                ended_monotonic_ns=call_ended_ns,
+                                elapsed_ns=call_ended_ns-call_started_ns)
+                            if retained_root is not None:
+                                _write_attempt_snapshot(ledger_path,output,
+                                    call_trace,attempt_started_ns,attempt_phase,
+                                    'in_progress',None)
+                            raise
                         call_ended_ns=time.monotonic_ns()
                         call_id=row.get('call_id')
-                        call_trace.append({'tool':name,'call_id':call_id
-                                if isinstance(call_id,str) else None,
-                                'queried_call_id':(arguments.get('call_id')
-                                    if name in ('interface_results',
-                                        'interface_verify_task') else None),
-                                'status':row.get('status'),
-                                'verified':row.get('verified'),
-                                'request_sha256':hashlib.sha256(json.dumps(
-                                    arguments,sort_keys=True,separators=(',', ':'),
-                                    allow_nan=False).encode('utf-8')).hexdigest(),
-                                'response_sha256':hashlib.sha256(json.dumps(
-                                    row,sort_keys=True,separators=(',', ':'),
-                                    allow_nan=False).encode('utf-8')).hexdigest(),
-                                'started_monotonic_ns':call_started_ns,
-                                'ended_monotonic_ns':call_ended_ns,
-                                'elapsed_ns':call_ended_ns-call_started_ns})
+                        call.update(call_id=call_id if isinstance(call_id,str)
+                                else None,
+                            status=row.get('status'),
+                            verified=row.get('verified'),
+                            caller_receipt_recorded=True,
+                            response_sha256=hashlib.sha256(json.dumps(
+                                row,sort_keys=True,separators=(',', ':'),
+                                allow_nan=False).encode('utf-8')).hexdigest(),
+                            ended_monotonic_ns=call_ended_ns,
+                            elapsed_ns=call_ended_ns-call_started_ns)
                         if retained_root is not None:
                             _write_attempt_snapshot(ledger_path,output,call_trace,
                                 attempt_started_ns,attempt_phase,
                                 'in_progress',None)
+                        if (os.environ.get(
+                                'AGENT_INTERFACE_G10_FAIL_AFTER_RESPONSE')
+                                ==name):
+                            raise RuntimeError(
+                                'requested G10 post-response failpoint for '+name)
                         if (os.environ.get('AGENT_INTERFACE_G10_FAIL_AFTER_CALL')
                                 ==name):
                             raise RuntimeError('requested G10 ledger failpoint after '
@@ -224,6 +315,14 @@ class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
                                  'queried_call_id':item.get('queried_call_id')
                                     or (item['call_id'] if query else None),
                                  'status':item.get('status'),
+                                 'invocation_started':item.get(
+                                    'invocation_started'),
+                                 'transport_response_received':item.get(
+                                    'transport_response_received'),
+                                 'caller_receipt_recorded':item.get(
+                                    'caller_receipt_recorded'),
+                                 'terminal_error_type':item.get(
+                                    'terminal_error_type'),
                                  'started_monotonic_ns':item['started_monotonic_ns'],
                                  'ended_monotonic_ns':item['ended_monotonic_ns'],
                                  'elapsed_ns':item['elapsed_ns'],
@@ -289,6 +388,8 @@ class PublicG10ProductionStdioTests(unittest.IsolatedAsyncioTestCase):
                 prior.update(terminal_status=('failed' if attempt_error else 'completed'),
                     terminal_phase=attempt_phase,terminal_error=attempt_error,
                     attempt_ended_monotonic_ns=time.monotonic_ns(),
+                    server_reconciliation=_reconcile_unreturned_compiled_call(
+                        call_trace,output),
                     mcp_calls=_attempt_receipts(call_trace,output),
                     task_effect_status=(prior.get('task_effect') or {}).get(
                         'status','unknown'),
@@ -322,11 +423,23 @@ def _attempt_receipts(call_trace,output):
                 or (item['call_id'] if query else None)),
             'status':item.get('status'),
             'verified':item.get('verified'),
+            'invocation_started':item.get('invocation_started'),
+            'transport_response_received':item.get(
+                'transport_response_received'),
+            'caller_receipt_recorded':item.get('caller_receipt_recorded'),
+            'terminal_error_type':item.get('terminal_error_type'),
             'started_monotonic_ns':item['started_monotonic_ns'],
             'ended_monotonic_ns':item['ended_monotonic_ns'],
             'elapsed_ns':item['elapsed_ns'],
             'request_sha256':item.get('request_sha256'),
             'response_sha256':item.get('response_sha256'),
+            'server_reconciliation_status':item.get(
+                'server_reconciliation_status'),
+            'server_persisted_call_id':item.get('server_persisted_call_id'),
+            'server_request_sha256':item.get('server_request_sha256'),
+            'server_report_sha256':item.get('server_report_sha256'),
+            'server_task_success':item.get('server_task_success'),
+            'server_replay_allowed':item.get('server_replay_allowed'),
             'report_sha256':None}
         if not query and isinstance(item['call_id'],str):
             call_dir=output/item['call_id']
@@ -337,6 +450,74 @@ def _attempt_receipts(call_trace,output):
                     receipt[key]=hashlib.sha256(path.read_bytes()).hexdigest()
         receipts.append(receipt)
     return receipts
+
+
+def _reconcile_unreturned_compiled_call(call_trace,output):
+    result=[]
+    if not isinstance(output,Path):
+        return result
+    for item in call_trace:
+        if (item.get('tool')!='interface_guarded_calc_compiled'
+                or item.get('call_id') is not None
+                or item.get('caller_receipt_recorded') is True):
+            continue
+        matches=[]
+        for request_path in output.glob('*/request.json'):
+            try:
+                request=json.loads(request_path.read_text(encoding='utf-8'))
+                arguments=request.get('arguments')
+                if not isinstance(arguments,dict):
+                    continue
+                caller_arguments=dict(arguments)
+                if 'response_wait_ms' in request:
+                    caller_arguments['wait_for_result_ms']=(
+                        request['response_wait_ms'])
+                request_digest=hashlib.sha256(json.dumps(caller_arguments,
+                    sort_keys=True,separators=(',', ':'),allow_nan=False
+                    ).encode('utf-8')).hexdigest()
+            except (OSError,ValueError,TypeError):
+                continue
+            if (request.get('operation')!='guarded_calc_compiled'
+                    or request_digest!=item.get('request_sha256')):
+                continue
+            report_path=request_path.with_name('report.json')
+            if not report_path.is_file():
+                continue
+            try:
+                report=json.loads(report_path.read_text(encoding='utf-8'))
+            except (OSError,ValueError):
+                continue
+            matches.append((request_path,report_path,report))
+        if len(matches)!=1:
+            item['server_reconciliation_status']=(
+                'no_exact_request_match' if not matches
+                else 'ambiguous_exact_request_matches')
+            item['server_candidate_count']=len(matches)
+            result.append({'tool':item['tool'],
+                'request_sha256':item.get('request_sha256'),
+                'status':item['server_reconciliation_status'],
+                'candidate_count':len(matches)})
+            continue
+        request_path,report_path,report=matches[0]
+        item.update(server_reconciliation_status='unique_exact_request_match',
+            server_persisted_call_id=request_path.parent.name,
+            server_request_sha256=hashlib.sha256(
+                request_path.read_bytes()).hexdigest(),
+            server_report_sha256=hashlib.sha256(
+                report_path.read_bytes()).hexdigest(),
+            server_task_success=(report.get('task_success')
+                if type(report.get('task_success')) is bool else None),
+            server_replay_allowed=(report.get('replay_allowed')
+                if type(report.get('replay_allowed')) is bool else None))
+        result.append({'tool':item['tool'],
+            'request_sha256':item.get('request_sha256'),
+            'status':'unique_exact_request_match',
+            'server_persisted_call_id':item['server_persisted_call_id'],
+            'server_request_sha256':item['server_request_sha256'],
+            'server_report_sha256':item['server_report_sha256'],
+            'task_success':item['server_task_success'],
+            'replay_allowed':item['server_replay_allowed']})
+    return result
 
 
 def _observed_status(call_trace,tool):
