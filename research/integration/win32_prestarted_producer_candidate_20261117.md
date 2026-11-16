@@ -38,6 +38,13 @@ It is based on main `5cada635a25e0d220500221f485211ea52eca996`.
   expected `unknown`; a standalone rerun passed. The test depends on timing
   across the public client/server boundary, so the earlier failures remain part
   of the run history and are not hidden by the final passing run.
+- The first GitHub Actions run for PR #10350 found an additional integration
+  regression: `close_owner()` referenced the Win32 producer-factory local in
+  non-Win32 X11 server modes where that local had never been assigned. The
+  candidate now initializes the optional factory to `None` before backend
+  selection. After this fix, the existing X11 `test_stable_selected_worker_route`
+  and queued-expiry transport cancellation case passed normally; both passed
+  under `-O` as well. The full GitHub workflows need a fresh run on this fix.
 
 ## Limits
 

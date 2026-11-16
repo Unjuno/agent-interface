@@ -669,6 +669,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # Pay thread startup before the first safety-sensitive cancellation.
         cancellation_executor.submit(lambda: None).result(timeout=5)
     owner = MCPSessionOwner(targets, display_name) if session_mode == 'persistent-x11' else None
+    supervised_win32_producer_factory = None
     guarded = session_mode == 'guarded-x11'
     if guarded_win32:
         owner = _guarded_win32_owner_factory(deepcopy(targets), root, display_name)
