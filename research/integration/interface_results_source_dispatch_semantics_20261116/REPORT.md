@@ -19,6 +19,10 @@ Final-source focused public-caller tests cover both a source action that dispatc
 
 During exploratory broader module runs, the existing mid-program expiry stdio case varied with scheduling: the dispatch envelope could be captured as `unknown` or after the same bounded recovery had already completed as `recovered`. Both paths retained `task_success=null` and `replay_allowed=false`; the final reported test set therefore sticks to deterministic projection and zero-dispatch checks and does not claim a clean full-module pass.
 
+## R193 raw re-adjudication
+
+A read-only extraction of the retained R193 dispatch terminal confirms the motivating shape: the query envelope says no input, while the source action/result says input was dispatched; four source program emissions and 11 operation receipts are present, with operation 7 refused before SendInput. The independent same-generation HUD record is 50→49. The source action remains UNKNOWN, `task_success=null`, and replay is denied. A sanitized field-by-field projection and source-packet digest are in `R193_REINTERPRETATION.json`; no raw packet or historical adjudication was modified.
+
 ## Limits
 
 This clarifies result interpretation and preserves the source delivery fact. It does not establish native GUI task success, MAP01 effect, reliability, or the #57 matched-efficiency comparison.
