@@ -194,6 +194,17 @@ class PersistentGroundingModel:
         except Exception as error:
             # Publication/validation failure must not erase a returned turn or
             # its observed usage. No additional RPC, retry or input is issued.
+            if handle is not None and known_usage is None and usage_error is None:
+                # A turn wait can time out after the reader has already
+                # received tokenUsage/updated. Preserve that observed event;
+                # absent or malformed usage remains unavailable.
+                try:
+                    observed_usage = self.client.latest_turn_usage(
+                        handle.thread_id, handle.turn_id)
+                    if observed_usage is not None:
+                        known_usage = per_turn_usage(observed_usage)
+                except Exception as accounting_error:
+                    usage_error = str(accounting_error)
             cause = getattr(error, "publication_error", error)
             raise GroundingCallError(error,
                 call_id=handle.turn_id if handle is not None else None,
