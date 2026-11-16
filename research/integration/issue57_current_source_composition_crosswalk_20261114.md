@@ -216,14 +216,17 @@ It rejects duplicate assignments and post-finalization mutation; absent
 assignments, invalid rows, or invalid preflights preserve the evidence and
 produce HOLD with no comparison trace. Its manifest explicitly records
 `dispatch_enabled: false`: this is a tested custody/projector boundary, not a
-live-runner or authority grant. Nine focused journal tests pass normally and
+live-runner or authority grant. Eleven focused journal tests pass normally and
 under `python -O`, including a complete synthetic 18-row path that reaches the
 unchanged frozen evaluator and a complete-assignment HOLD path with invalid
-caller evidence. Two existing projector/evaluator cases (valid task row and
-missing-preflight HOLD) also pass in both modes. The live provider/native GUI/
-independent-score bindings are still absent from this comparison journal; the
-separately scoped G10 scorer and caller described below are not a matched
-three-arm comparison. No comparison or new task effect is claimed.
+caller evidence. They also exercise reuse of the existing G10 hash-linked task
+custodian, rejection of missing custody, and HOLD with raw caller output when
+the custodian event chain is corrupted. Two existing projector/evaluator cases
+(valid task row and missing-preflight HOLD) also pass in both modes. The live
+provider/native GUI/independent-score bindings are still absent from this
+comparison journal; the separately scoped G10 scorer and caller described
+below are not a matched three-arm comparison. No comparison or new task effect
+is claimed.
 ## G10-to-current-main reuse audit (2026-11-16)
 
 The current-main Issue #57 body directs the next Calc step to compare archived
@@ -252,9 +255,13 @@ break-even unavailable. No speed or token-efficiency result follows.
 Implementation decision: keep the G10 graph/fresh-admission/saved-byte route as
 a candidate task adapter, and reuse its durable per-task caller/receipt
 integration if the selected comparison workload is this two-row Calc task.
-The current prospective run journal is only the comparison-level allocation
-and trace aggregator; it is not a substitute for that per-task hash-linked
-receipt custodian. Before a permitted fresh run, a trusted external allocation
+The prospective run journal now creates a G10 `DurableCalcAllocation` before
+each task attempt, binds it to the comparison allocation/arm/task/model/settings
+and pinned source hashes, and requires its `audit_allocation` result to match
+the caller attempt ledger and accounting before a task can project. Missing or
+corrupt custody retains the raw caller/scorer/telemetry and forces HOLD. This
+reuses the hash-linked per-task receipt custodian rather than substituting the
+run-level journal. Before a permitted fresh run, a trusted external allocation
 attestor and a timestamp-joined saved-byte scorer result must be supplied, and
 all model/OCR/native attempts must be retained under the same frozen arm,
 model, settings and task boundaries. The G10 result remains historical scoped
