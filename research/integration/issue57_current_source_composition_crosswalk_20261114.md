@@ -269,3 +269,28 @@ attestor and a timestamp-joined saved-byte scorer result must be supplied, and
 all model/OCR/native attempts must be retained under the same frozen arm,
 model, settings and task boundaries. The G10 result remains historical scoped
 evidence only; this audit adds no live attempt or task effect.
+
+## 2026-11-16 local Edge effect smoke
+
+The existing `research/live_control/test_windows_compiled_gui_edge_live_v1.py`
+was run as a live local effect smoke with Edge 157, Windows OCR, a temporary
+browser profile, a localhost-only synthetic form, and the existing v2 compiled
+caller. The first harness invocation stopped before input because this sparse
+checkout omitted the tracked Windows OCR worker; that setup failure is
+preserved separately. After materializing the exact worker from current main,
+the fresh-profile run reached the test body's assertions: one exact synthetic
+form POST was independently accepted, the caller reported task success, and
+the compiled receipt showed one completed transition, verified release and no
+frontier-model resumption. The overall test nevertheless errored at teardown
+when Windows denied deletion of a locked Edge `collectionsSQLite` file
+(`WinError 32`). No second input attempt was made. The exact-profile process
+query found no running Edge command line matching the temporary profile. A
+workspace-bounded cleanup command was rejected by execution policy, so the
+residual test-created profile remains untouched.
+
+The attempt transcript and frozen condition are retained in
+`research/integration/issue57_edge_live_smoke_20261116/`. This is a single
+synthetic local form effect using an offline test double and the older v2 path,
+without provider usage, matched arms, full raw HTTP/capture retention, Calc, or
+MAP01. It is a narrow live positive with a teardown failure, not Issue #57
+efficiency evidence or a claim of integrated completion.
