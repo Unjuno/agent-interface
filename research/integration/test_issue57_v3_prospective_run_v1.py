@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from research.live_control.issue57_v3_prospective_run_v1 import (
     REQUIRED_ALLOCATION, ProspectiveRun,
@@ -213,6 +214,58 @@ class ProspectiveRunTests(unittest.TestCase):
                 (self.evidence / "lifecycle.jsonl").read_text(encoding="utf-8").splitlines()]
         self.assertEqual(rows[-1]["payload"]["caller_result"], caller)
         self.assertEqual(rows[-1]["payload"]["custody"]["status"], "UNKNOWN")
+
+    def test_public_g10_wrapper_persists_v3_task_into_issue57_projection(self):
+        from research.live_control.calc_g10_caller_v1 import run_g10_in_durable_allocation
+
+        run = self.create()
+        source_digest = hashlib.sha256(b"wrapper-source-frame").hexdigest()
+        custodian = run.create_task_custodian("plain", 0,
+            source_sha256=source_digest,
+            observation_ids=["wrapper-observation-1"],
+            conditions={"fixture": "synthetic-public-wrapper"})
+        effect_digest = hashlib.sha256(b"synthetic-independent-effect").hexdigest()
+        adapters = {
+            "observe_source": lambda payload: {"sequence": 1},
+            "acquire_anchor": lambda payload: {"image": "synthetic"},
+            "anchor_model": lambda payload: {"call_id": "wrapper-model-call",
+                "output": {"status": "target_reference", "target": {"handle": "synthetic"}},
+                "usage": dict(USAGE), "requested_model": "test-model",
+                "requested_effort": "low", "cost": None,
+                "visible_images_submitted": 1, "wait_ns": 1234},
+            "final_revalidate": lambda payload: {"status": "revalidated"},
+            "verify_effect": lambda payload: {"status": "succeeded",
+                "evidence_ref": "synthetic-saved-fods",
+                "evidence_digest": effect_digest, "effect_scope": "saved-workbook"},
+            "journal": lambda event: None,
+        }
+        spec = {"target": "synthetic Calc cells", "route": "cold",
+            "coarse_origin": "caller_provided", "provided_coarse": {"sequence": 1},
+            "cached_target": None, "local_repair_on": [], "repair_on": [],
+            "session_id": "synthetic-wrapper"}
+        core_receipt = {"outcome": "TASK_SUCCEEDED", "completed_transitions": 2,
+                        "reason": None, "critical_events": []}
+        with patch("research.live_control.calc_g10_caller_v1.run_with_bounded_fresh_proposal",
+                   return_value=core_receipt):
+            caller = run_g10_in_durable_allocation(spec, adapters,
+                lambda payload: {"interface_id": "synthetic-g10-interface"},
+                bridge=object(), bindings={}, durable_allocation=custodian,
+                perceive=lambda *args: None,
+                verify_effect=lambda *args: {"status": "succeeded"},
+                proposal_worker=object(), cancelled=lambda: False,
+                id_factory=iter(["wrapper-attempt-1"]).__next__)
+        self.assertEqual(caller["outcome"], "TASK_SUCCEEDED")
+        self.assertTrue(caller["compiled_execution_receipt"])
+        audited = run.record_task("plain", 0, caller,
+            {"submission_count": 1, "exact_submission": True},
+            synthetic_telemetry("plain", 0), custodian_path=custodian.path)
+        self.assertEqual(audited["status"], "projected")
+        self.assertTrue(audited["task_row"]["releases_verified"])
+        result = run.finish(json.loads((self.repo /
+            "research/live_control/integrated_efficiency_discoveries_v1.json")
+            .read_text(encoding="utf-8")))
+        self.assertEqual(result["status"], "HOLD")
+        self.assertEqual(len(result["adjudication"]["held_rows"]), 17)
 
     def test_rejects_wrong_task_identity_without_consuming_assignment(self):
         run = self.create()
