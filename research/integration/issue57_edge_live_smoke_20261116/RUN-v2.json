@@ -1,0 +1,52 @@
+{
+  "schema": "issue57-edge-live-smoke-v1",
+  "run_id": "edge-local-effect-v2-20261116-01",
+  "status": "passed",
+  "planned_utc": "2026-11-16T11:18:40.0212945Z",
+  "source_commit": "ce4926cdcf189546342e1f202a1efe09b914f05f",
+  "task": "Submit one synthetic visible form token through the existing Edge/OCR/compiled caller and independently verify the localhost result.",
+  "expected_token": "t991025-1",
+  "network_scope": "127.0.0.1 only",
+  "model_scope": "offline test double; no provider call",
+  "attempt_limit": 1,
+  "stop_rule": "No input retry; any ambiguous delivery or cleanup failure ends this run.",
+  "success_conditions": [
+    "caller TASK_SUCCEEDED and independent task_effect succeeded",
+    "exactly one server POST with value=t991025-1",
+    "one completed compiled transition with release verified",
+    "zero frontier model resumptions",
+    "Edge test process exits and its fresh temporary profile is removed"
+  ],
+  "implementation": {
+    "test": "research/live_control/test_windows_compiled_gui_edge_live_v1.py",
+    "test_sha256": "1762E835E0E7F7E0411101DB66695C619567AC77FE9D956AFA8E9B429B33A8EB",
+    "worker": "research/live_control/windows_ocr_worker_v1.ps1",
+    "worker_sha256": "9292982D55D698F0C341FEDDD399EE358F0DA2EF88BD20695890780F57610DA2"
+  },
+  "environment": {
+    "python": "Python 3.11.9",
+    "node": "v24.13.0",
+    "edge_file_version": "157.0.4341.60"
+  },
+  "raw_transcript": "attempt-03.log",
+  "result": {
+    "finished_utc": "2026-11-16T11:19:30Z",
+    "test_status": "PASS",
+    "input_attempts": 1,
+    "input_dispatched": true,
+    "task_effect": "succeeded",
+    "exact_post_count": 1,
+    "exact_expected_value": true,
+    "completed_transitions": 1,
+    "release_verified": true,
+    "frontier_model_resumptions": 0,
+    "edge_cleanup": "PASS; the fresh temporary profile was removed",
+    "replayed": false,
+    "transcript_sha256": "61FB2CF78E010EC7CA8D6703E669724D8754838B77A13C09E75C5BDD9556CD5E"
+  },
+  "limitations": [
+    "Single local synthetic form task through existing v2 caller.",
+    "No provider usage or efficiency comparison.",
+    "Existing test does not persist full screenshot or request-body raw records."
+  ]
+}
