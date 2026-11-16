@@ -259,6 +259,22 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             action = row['action']
         except Exception:
             pass
+    operation_receipt_reader = getattr(
+        producer_factory, 'read_program_operation_receipts', None)
+    if (callable(operation_receipt_reader)
+            and action.get('status') not in (
+                'admitted', 'starting', 'running', 'cancel_pending')):
+        try:
+            row = owner.capture_program_operation_receipts(call_id,
+                operation_receipt_reader)
+            action = row['action']
+        except Exception as error:
+            try:
+                row = owner.record_program_operation_receipt_failure(
+                    call_id, error)
+                action = row['action']
+            except Exception:
+                pass
     if action.get('status') in ('recovered', 'unknown'):
         row = owner.interface_result(call_id)
         action = row['action']
@@ -2391,6 +2407,32 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 owner.record_program_emission_progress_failure(
                                     call_id,
                                     RuntimeError('progress_reader_unavailable'))
+                            except Exception:
+                                pass
+                        row = owner.interface_result(call_id)
+                    operation_reader = getattr(
+                        supervised_win32_producer_factory,
+                        'read_program_operation_receipts', None)
+                    action = row.get('action') if type(row) is dict else None
+                    if (type(action) is dict
+                            and action.get('status') in (
+                                'recovered', 'unknown', 'not_dispatched')
+                            and 'program_operation_receipts_capture_status' not in action):
+                        if callable(operation_reader):
+                            try:
+                                owner.capture_program_operation_receipts(call_id,
+                                    operation_reader)
+                            except Exception as error:
+                                try:
+                                    owner.record_program_operation_receipt_failure(
+                                        call_id, error)
+                                except Exception:
+                                    pass
+                        else:
+                            try:
+                                owner.record_program_operation_receipt_failure(
+                                    call_id,
+                                    RuntimeError('operation_receipt_reader_unavailable'))
                             except Exception:
                                 pass
                         row = owner.interface_result(call_id)

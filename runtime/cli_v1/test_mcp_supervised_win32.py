@@ -1961,9 +1961,24 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         owner.bind_target_generation_reader(lambda: GENERATION)
         producer = HeldProducerFactory(process, identity)
         producer.program_actions_lower_bound = 2
+        program = self.valid_program()
+        receipt_ops = [
+            {"operation_index": 0, "phase": "completed",
+             "sendinput_attempts": 0, "sendinput_returned_count": 0,
+             "local_action_count": 0},
+            {"operation_index": 1, "phase": "sendinput_returned",
+             "sendinput_attempts": 4, "sendinput_returned_count": 4,
+             "local_action_count": 0},
+            {"operation_index": 2, "phase": "completed",
+             "sendinput_attempts": 0, "sendinput_returned_count": 0,
+             "local_action_count": 0}]
+        producer.read_program_operation_receipts = lambda _process: {
+            "schema": "win32-program-operation-receipts-v1",
+            "status": "observed", "operations": receipt_ops,
+            "observed_monotonic_ns": time.monotonic_ns(),
+            "counter_scope": "test fixture"}
         with TemporaryDirectory() as root:
             server = self.make_server(root, owner, producer)
-            program = self.valid_program()
             program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
             pending = self.row(await server.call_tool("interface_dispatch", {
                 "program": program,
@@ -1999,6 +2014,10 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                              retained["cancellation"]["result"]["obligations"])
             action_result = retained["action"]["result"]
             self.assertEqual(action_result["status"], "recovered")
+            self.assertEqual(retained["action"]["program_operation_receipts"][
+                "operations"], receipt_ops)
+            self.assertEqual(action_result["program_operation_receipts"][
+                "operations"], receipt_ops)
             self.assertEqual(retained["action"][
                 "recovery_release_key_up_attempts"], [{
                     "virtual_key": 0x57, "encoding": "scan_code",

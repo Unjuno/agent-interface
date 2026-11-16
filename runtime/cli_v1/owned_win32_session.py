@@ -423,6 +423,88 @@ class OwnedWin32SessionOwner:
             action["program_actions_capture_error_code"] = code
             return deepcopy(record)
 
+    def capture_program_operation_receipts(self, call_id, reader):
+        """Persist exact per-operation progress without upgrading task outcome."""
+        if not callable(reader):
+            raise ValueError("program operation receipt reader required")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            action = record["action"]
+            status = action.get("program_operation_receipts_capture_status")
+            if status in ("capturing", "observed", "unavailable"):
+                return deepcopy(record)
+            action["program_operation_receipts_capture_status"] = "capturing"
+            process_handle = self._producer_handles.get(call_id)
+            operation_id = action["operation_id"]
+            generation = action["target_generation"]
+            standard_program = record.get("standard_program")
+            expected_operation_count = (len(standard_program.get("ops", []))
+                if type(standard_program) is dict
+                and type(standard_program.get("ops")) is list else None)
+        if process_handle is None:
+            raise ValueError("caller action has no retained producer")
+        receipt = reader(process_handle)
+        phases = {"not_started", "boundary_check", "operation_running",
+            "sendinput_in_flight", "sendinput_returned", "completed",
+            "lease_refused_before_sendinput", "sendinput_raised_or_rejected",
+            "local_action_in_flight", "local_action_returned"}
+        if (type(receipt) is not dict
+                or receipt.get("schema") != "win32-program-operation-receipts-v1"
+                or receipt.get("status") != "observed"
+                or type(receipt.get("observed_monotonic_ns")) is not int
+                or receipt["observed_monotonic_ns"] <= 0
+                or type(receipt.get("operations")) is not list
+                or expected_operation_count is None
+                or len(receipt["operations"]) != expected_operation_count):
+            raise ValueError("program operation receipt schema is invalid")
+        operations = receipt["operations"]
+        for index, item in enumerate(operations):
+            if (type(item) is not dict
+                    or type(item.get("operation_index")) is not int
+                    or item["operation_index"] != index
+                    or item.get("phase") not in phases
+                    or any(type(item.get(field)) is not int or item[field] < 0
+                        for field in ("sendinput_attempts",
+                                      "sendinput_returned_count",
+                                      "local_action_count"))
+                    or item["sendinput_returned_count"]
+                        > item["sendinput_attempts"]):
+                raise ValueError("program operation receipt entry is invalid")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if (record is None
+                    or record["action"]["operation_id"] != operation_id
+                    or record["action"]["target_generation"] != generation
+                    or self._producer_handles.get(call_id) is not process_handle):
+                raise ValueError("caller action changed during operation receipt capture")
+            action = record["action"]
+            retained = deepcopy(receipt)
+            action["program_operation_receipts"] = retained
+            action["program_operation_receipts_capture_status"] = "observed"
+            result = action.get("result")
+            if type(result) is dict:
+                result["program_operation_receipts"] = deepcopy(retained)
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("caller action disappeared during operation receipt capture")
+            return deepcopy(record)
+
+    def record_program_operation_receipt_failure(self, call_id, error):
+        if not isinstance(error, Exception):
+            raise TypeError("program operation receipt error must be an exception")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            action = record["action"]
+            action["program_operation_receipts_capture_status"] = "unavailable"
+            action["program_operation_receipts_capture_error_type"] = type(error).__name__
+            action["program_operation_receipts_capture_error"] = str(error)[:256]
+            return deepcopy(record)
+
     def start_producer(self, call_id, producer_factory):
         """Start an injected gated producer only after custody admission.
 

@@ -443,6 +443,7 @@ class Win32SessionRecoveryTests(unittest.TestCase):
         backend = Win32Backend.__new__(Win32Backend)
         backend.emissions = 0
         backend._program_emission_counter = None
+        backend._program_operation_receipts = None
         backend.held_keys = {}
         backend.held_buttons = set()
         backend.pending_unicode_ups = set()
@@ -661,6 +662,155 @@ class Win32SessionRecoveryTests(unittest.TestCase):
         backend.preflight = lambda program: None
         backend.execute = lambda program: {"releases": [receipt]}
         self.assertEqual(self.dispatch(session, "dispatch-after-preflight-refusal")["status"], "completed")
+
+    def test_lease_expiring_during_wait_blocks_next_task_input_but_allows_release(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        events = []
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        backend.focus = lambda target: events.append(("focus", target))
+        backend.key_state = lambda *args, **kwargs: events.append(("input", args))
+        backend.release_all = lambda: (events.append(("release_all",)), receipt)[1]
+        program = make_program("expire-after-wait",
+            expires=time.monotonic_ns() + 100_000_000)
+        program["ops"] = [
+            {"op": "focus", "target": "fixture"},
+            {"op": "wait_update", "timeout_ms": 250},
+            {"op": "key_state", "key": "SHIFT", "down": True},
+            {"op": "release_all"},
+        ]
+
+        result = session.dispatch(program, current_observation_seq=7,
+            current_binding_revision=3)
+
+        self.assertEqual(result["status"], "execution_failed")
+        self.assertIn("LEASE_EXPIRED_DURING_EXECUTION", result["detail"])
+        self.assertEqual(events, [("focus", "fixture"), ("release_all",)])
+        self.assertEqual(result["program_emissions"], 0)
+        self.assertTrue(result["release"]["verified"])
+        self.assertFalse(session.recovery_required)
+
+    def test_lease_expiring_after_input_releases_held_key_and_blocks_next_down(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        events = []
+        receipt = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "buttons_unknown": []}
+        backend.focus = lambda target: events.append(("focus", target))
+        def send_key(key, down, **_kwargs):
+            if down:
+                events.append(("task_down", key))
+                backend._record_emission()
+                backend.held_keys[key] = 0x10
+            else:
+                events.append(("cleanup_up", key))
+                backend.held_keys.pop(key, None)
+        backend.key_state = send_key
+        def release_all():
+            events.append(("release_all", tuple(sorted(backend.held_keys))))
+            for key in list(backend.held_keys):
+                send_key(key, False)
+            return receipt
+        backend.release_all = release_all
+        program = make_program("expire-after-held-input",
+            expires=time.monotonic_ns() + 100_000_000)
+        program["ops"] = [
+            {"op": "focus", "target": "fixture"},
+            {"op": "key_state", "key": "SHIFT", "down": True},
+            {"op": "wait_update", "timeout_ms": 250},
+            {"op": "key_state", "key": "CTRL", "down": True},
+            {"op": "release_all"},
+        ]
+
+        result = session.dispatch(program, current_observation_seq=7,
+            current_binding_revision=3)
+
+        self.assertEqual(result["status"], "execution_failed")
+        self.assertIn("LEASE_EXPIRED_DURING_EXECUTION", result["detail"])
+        self.assertEqual(events, [("focus", "fixture"),
+            ("task_down", "SHIFT"), ("release_all", ("SHIFT",)),
+            ("cleanup_up", "SHIFT")])
+        self.assertEqual(result["program_emissions"], 1)
+        self.assertEqual(backend.held_keys, {})
+        self.assertTrue(result["release"]["verified"])
+        self.assertFalse(session.recovery_required)
+
+    def test_expired_task_deadline_blocks_later_down_but_cleanup_up_is_allowed(self):
+        from runtime.backends.win32_v1.backend import (
+            _cleanup_active, _task_authority_deadline, VK_SHIFT,
+        )
+
+        backend = self.backend()
+        sent_flags = []
+        class User32:
+            @staticmethod
+            def SendInput(_count, inputs, _size):
+                sent_flags.append(int(inputs[0].ki.dwFlags))
+                return 1
+        backend.user32 = User32()
+        deadline = time.monotonic_ns() - 1
+        deadline_token = _task_authority_deadline.set(deadline)
+        try:
+            with self.assertRaisesRegex(Win32BackendError,
+                    "LEASE_EXPIRED_DURING_EXECUTION"):
+                backend._send_key(VK_SHIFT, True)
+            cleanup_token = _cleanup_active.set(True)
+            try:
+                backend._send_key(VK_SHIFT, False)
+            finally:
+                _cleanup_active.reset(cleanup_token)
+        finally:
+            _task_authority_deadline.reset(deadline_token)
+        self.assertEqual(sent_flags, [2])
+
+    def test_expired_operation_receipt_identifies_late_down_refusal(self):
+        backend = self.backend()
+        receipts = (ctypes.c_long * 8)()
+        backend._program_operation_receipts = receipts
+        backend.preflight = lambda _program: None
+        backend.release_all = lambda: {"verified": True}
+        program = {"authority": {"expires_at_ns":
+                time.monotonic_ns() + 20_000_000},
+            "ops": [{"op": "wait_update", "timeout_ms": 50},
+                {"op": "pointer_button", "button": "left", "down": True}]}
+
+        with self.assertRaisesRegex(Win32ExecutionError,
+                "LEASE_EXPIRED_DURING_EXECUTION"):
+            backend.execute(program)
+
+        self.assertEqual(list(receipts[0:4]), [5, 0, 0, 0])
+        self.assertEqual(list(receipts[4:8]), [6, 0, 0, 0])
+
+    def test_operation_receipt_distinguishes_sendinput_return_from_inflight(self):
+        from runtime.backends.win32_v1.backend import (
+            INPUT, _program_operation_receipt,
+        )
+
+        class User32:
+            def __init__(self, result):
+                self.result = result
+
+            def SendInput(self, _count, _inputs, _size):
+                return self.result
+
+        for returned, expected_phase, expected_count in (
+                (1, 4, 1), (0, 7, 0)):
+            with self.subTest(returned=returned):
+                backend = self.backend()
+                backend.user32 = User32(returned)
+                receipts = (ctypes.c_long * 4)()
+                token = _program_operation_receipt.set((receipts, 0))
+                try:
+                    if returned:
+                        backend._send(INPUT())
+                    else:
+                        with self.assertRaises(Win32BackendError):
+                            backend._send(INPUT())
+                finally:
+                    _program_operation_receipt.reset(token)
+                self.assertEqual(list(receipts),
+                    [expected_phase, 1, expected_count, 0])
 
     def test_unverified_failure_cleanup_still_quarantines(self):
         backend = self.backend()

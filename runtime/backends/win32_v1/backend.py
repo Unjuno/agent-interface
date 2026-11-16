@@ -21,7 +21,25 @@ from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate
 _execution_target = ContextVar("win32_execution_target", default=None)
 _cleanup_active = ContextVar("win32_cleanup_active", default=False)
 _program_emissions = ContextVar("win32_program_emissions", default=None)
+_program_operation_receipt = ContextVar("win32_program_operation_receipt", default=None)
 _release_attempt_context = ContextVar("win32_release_attempt_context", default=None)
+
+
+def _program_operation_set_phase(phase: int) -> None:
+    context = _program_operation_receipt.get()
+    if context is None or _cleanup_active.get():
+        return
+    receipts, operation_index = context
+    receipts[operation_index * 4] = phase
+
+
+def _program_operation_increment(field: int, amount: int = 1) -> None:
+    context = _program_operation_receipt.get()
+    if context is None or _cleanup_active.get():
+        return
+    receipts, operation_index = context
+    slot = operation_index * 4 + field
+    receipts[slot] = int(receipts[slot]) + amount
 
 
 class Win32BackendError(RuntimeError):
@@ -188,7 +206,8 @@ def virtual_key(key: str) -> int:
 
 class Win32Backend:
     def __init__(self, targets: dict[str, int], *,
-                 program_emission_counter=None):
+                 program_emission_counter=None,
+                 program_operation_receipts=None):
         if sys.platform != "win32":
             raise Win32BackendError("Win32 backend requires Windows")
         self.user32 = ctypes.WinDLL("user32", use_last_error=True)
@@ -218,6 +237,7 @@ class Win32Backend:
                      or ctypes.addressof(program_emission_counter) % 4 != 0)):
             raise Win32BackendError("invalid program emission counter")
         self._program_emission_counter = program_emission_counter
+        self._program_operation_receipts = program_operation_receipts
         self.capture_artifacts = None
         self._target_incarnation_bindings: dict[tuple[str, int], dict[str, Any]] = {}
         self._closed = False
@@ -537,22 +557,40 @@ class Win32Backend:
         is_key_up = item.type == INPUT_KEYBOARD and bool(item.ki.dwFlags & KEYEVENTF_KEYUP)
         is_mouse_up = (item.type == INPUT_MOUSE and item.mi.dwFlags in
                        (MOUSEEVENTF_LEFTUP, MOUSEEVENTF_RIGHTUP, MOUSEEVENTF_MIDDLEUP))
-        if target is not None and not _cleanup_active.get() and not (is_key_up or is_mouse_up):
+        deadline_ns = _task_authority_deadline.get()
+        if (deadline_ns is not None and not _cleanup_active.get()
+                and not (is_key_up or is_mouse_up)
+                and time.monotonic_ns() >= deadline_ns):
+            _program_operation_set_phase(6)
+            raise Win32BackendError("LEASE_EXPIRED_DURING_EXECUTION")
+        if recovery_target is not None:
+            # Orphan recovery uses global SendInput. Verify its receiver for
+            # every event, including UP and cleanup events, because an UP can
+            # otherwise affect whichever unrelated window owns the foreground.
+            Win32Backend._require_foreground(self, recovery_target)
+        elif target is not None and not _cleanup_active.get() and not (is_key_up or is_mouse_up):
             Win32Backend._require_foreground(self, target)
         array = (INPUT * 1)(item)
+        _program_operation_set_phase(3)
+        _program_operation_increment(1)
         attempt = _release_attempt_context.get()
         if isinstance(attempt, dict):
             attempt["sendinput_call_started"] = True
         try:
             sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
         except Exception as error:
+            _program_operation_set_phase(7)
             if isinstance(attempt, dict):
                 attempt["sendinput_error_type"] = type(error).__name__
             raise
+        if isinstance(sent, int) and sent > 0:
+            _program_operation_increment(2, int(sent))
+        _program_operation_set_phase(4)
         if isinstance(attempt, dict):
             attempt["sendinput_return_count"] = (
                 int(sent) if isinstance(sent, int) else None)
         if sent != 1:
+            _program_operation_set_phase(7)
             raise Win32BackendError(f"SendInput failed error={ctypes.get_last_error()}")
         Win32Backend._record_emission(self)
 
@@ -572,6 +610,8 @@ class Win32Backend:
         """Count a confirmed OS input action, including SetCursorPos moves."""
         count = _program_emissions.get()
         if count is not None and not _cleanup_active.get():
+            _program_operation_increment(3)
+            _program_operation_set_phase(9)
             self.emissions += 1
             _program_emissions.set(count + 1)
             counter = getattr(self, "_program_emission_counter", None)
@@ -791,6 +831,7 @@ class Win32Backend:
         if not _cleanup_active.get():
             Win32Backend._require_foreground(self, target)
         rx, ry = self._root_point(target, frame, x, y)
+        _program_operation_set_phase(8)
         if not self.user32.SetCursorPos(rx, ry):
             raise Win32BackendError("SetCursorPos failed")
         Win32Backend._record_action(self)
@@ -1176,11 +1217,28 @@ class Win32Backend:
         started = time.monotonic_ns()
         execution_token = _execution_target.set(current_target)
         program_emissions_token = _program_emissions.set(0)
+        operation_receipt_token = _program_operation_receipt.set(None)
+        deadline_token = _task_authority_deadline.set(deadline_ns)
         try:
-            for op in program["ops"]:
+            operation_receipts = getattr(self, "_program_operation_receipts", None)
+            if operation_receipts is not None and len(operation_receipts) != len(program["ops"]) * 4:
+                raise Win32BackendError("invalid program operation receipt buffer")
+            for operation_index, op in enumerate(program["ops"]):
+                if operation_receipts is not None:
+                    _program_operation_receipt.set((operation_receipts, operation_index))
+                    _program_operation_set_phase(1)
                 kind = op["op"]
+                # Admission and the parent start gate may happen well before a
+                # delayed producer reaches its next task operation. Recheck the
+                # absolute lease at every operation boundary. Terminal release
+                # is cleanup and must remain available after task authority ends.
+                if (deadline_ns is not None and kind != "release_all"
+                        and time.monotonic_ns() >= deadline_ns):
+                    _program_operation_set_phase(6)
+                    raise Win32BackendError("LEASE_EXPIRED_DURING_EXECUTION")
                 if bound_target is not None and kind != "release_all" and guard() is not True:
                     raise Win32BackendError("bound execution guard refused before operation")
+                _program_operation_set_phase(2)
                 if kind == "focus":
                     next_target = op["target"]
                     check_target_generation(next_target)
@@ -1235,6 +1293,7 @@ class Win32Backend:
                     releases.append(self.release_all())
                 else:
                     raise Win32BackendError(f"unsupported op {kind}")
+                _program_operation_set_phase(5)
             program_emissions = _program_emissions.get()
         except Exception as error:
             # Snapshot before cleanup: release_all may itself emit UP events,
@@ -1267,6 +1326,8 @@ class Win32Backend:
                 ) from error
             raise
         finally:
+            _task_authority_deadline.reset(deadline_token)
+            _program_operation_receipt.reset(operation_receipt_token)
             _program_emissions.reset(program_emissions_token)
             _execution_target.reset(execution_token)
         return {"started_ns": started, "ended_ns": time.monotonic_ns(),

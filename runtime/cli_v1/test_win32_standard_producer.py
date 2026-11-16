@@ -38,6 +38,9 @@ class Context:
     def RawValue(self, *args, **kwargs):
         return multiprocessing.get_context("spawn").RawValue(*args, **kwargs)
 
+    def RawArray(self, *args, **kwargs):
+        return multiprocessing.get_context("spawn").RawArray(*args, **kwargs)
+
 
 def _record_emission_then_block(counter, recorded):
     from runtime.backends.win32_v1.backend import (
@@ -54,6 +57,26 @@ def _record_emission_then_block(counter, recorded):
     recorded.set()
     while True:
         time.sleep(1)
+
+
+def _sendinput_inflight_then_block(operation_receipts, entered):
+    from runtime.backends.win32_v1.backend import (
+        INPUT, Win32Backend, _program_operation_receipt,
+    )
+
+    class BlockingUser32:
+        def SendInput(self, _count, _inputs, _size):
+            entered.set()
+            while True:
+                time.sleep(1)
+
+    backend = Win32Backend.__new__(Win32Backend)
+    backend.user32 = BlockingUser32()
+    token = _program_operation_receipt.set((operation_receipts, 0))
+    try:
+        backend._send(INPUT())
+    finally:
+        _program_operation_receipt.reset(token)
 
 
 class SharedEmissionCounterProcessTests(unittest.TestCase):
@@ -76,6 +99,25 @@ class SharedEmissionCounterProcessTests(unittest.TestCase):
                 process.terminate()
                 process.join(2)
 
+    def test_inflight_sendinput_is_retained_as_unknown_after_child_termination(self):
+        context = multiprocessing.get_context("spawn")
+        receipts = context.RawArray(ctypes.c_long, 4)
+        entered = context.Event()
+        process = context.Process(target=_sendinput_inflight_then_block,
+            args=(receipts, entered), daemon=True)
+        process.start()
+        try:
+            self.assertTrue(entered.wait(2), "child did not enter SendInput")
+            self.assertEqual(list(receipts), [3, 1, 0, 0])
+            process.terminate()
+            process.join(2)
+            self.assertFalse(process.is_alive())
+            self.assertEqual(list(receipts), [3, 1, 0, 0])
+        finally:
+            if process.is_alive():
+                process.terminate()
+                process.join(2)
+
 
 @unittest.skipUnless(sys.platform == "win32", "native Win32 producer factory")
 class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
@@ -92,7 +134,9 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
         return {"call_id": call_id, "operation_id": "2" * 32,
             "target_generation": "a" * 64,
             "program": {"source": {"observation_seq": 7,
-                                    "binding_revision": 3}}}
+                                    "binding_revision": 3},
+                        "ops": [{"op": "verify"}, {"op": "pointer_button",
+                            "button": "left", "down": True}, {"op": "verify"}]}}
 
     def test_factory_returns_an_unstarted_gated_child_bound_to_the_action(self):
         with tempfile.TemporaryDirectory() as root:
@@ -124,6 +168,36 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
 
             self.assertEqual(
                 factory.read_program_actions_lower_bound(process), 2)
+
+    def test_operation_receipts_distinguish_completed_and_deadline_refused_ops(self):
+        with tempfile.TemporaryDirectory() as root:
+            factory = self.factory_type({"fixture": 42}, root,
+                context=Context(), process_identity_reader=lambda _process: {
+                    "pid": 41, "creation_time_100ns": 99})
+            process, _, _ = factory(self.make_action())
+            process.alive, process.exitcode = False, -15
+            buffer = process.args[5]
+            buffer[0:4] = (5, 1, 1, 0)
+            buffer[4:8] = (6, 0, 0, 0)
+            buffer[8:12] = (3, 1, 0, 0)
+
+            receipt = factory.read_program_operation_receipts(process)
+
+        self.assertEqual(receipt["schema"],
+                         "win32-program-operation-receipts-v1")
+        self.assertEqual(receipt["status"], "observed")
+        self.assertEqual(receipt["operations"][0], {
+            "operation_index": 0, "phase": "completed",
+            "sendinput_attempts": 1, "sendinput_returned_count": 1,
+            "local_action_count": 0})
+        self.assertEqual(receipt["operations"][1], {
+            "operation_index": 1, "phase": "lease_refused_before_sendinput",
+            "sendinput_attempts": 0, "sendinput_returned_count": 0,
+            "local_action_count": 0})
+        self.assertEqual(receipt["operations"][2], {
+            "operation_index": 2, "phase": "sendinput_in_flight",
+            "sendinput_attempts": 1, "sendinput_returned_count": 0,
+            "local_action_count": 0})
 
     def test_result_reader_checks_identity_and_consumes_one_packet_once(self):
         with tempfile.TemporaryDirectory() as root:
@@ -174,9 +248,11 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
                 return True
 
         class FakeBackend:
-            def __init__(self, targets, *, program_emission_counter):
+            def __init__(self, targets, *, program_emission_counter,
+                         program_operation_receipts):
                 self.targets = targets
                 self.program_emission_counter = program_emission_counter
+                self.program_operation_receipts = program_operation_receipts
 
             def close(self):
                 return {"status": "closed"}
@@ -199,7 +275,8 @@ class NativeWin32StandardProducerFactoryTests(unittest.TestCase):
                     "runtime.backends.win32_v1.session.Win32RuntimeSession",
                     RaisingSession):
                 _run_standard_program(OpenGate(), {"fixture": 42},
-                    self.make_action(), process.args[3], process.args[4])
+                    self.make_action(), process.args[3], process.args[4],
+                    process.args[5])
 
             process.alive, process.exitcode = False, 0
             result = factory.read_result(process)

@@ -149,6 +149,49 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(row["action"]["program_actions_capture_error_code"],
                          "producer_registry_miss")
 
+    def test_operation_receipts_are_bound_and_do_not_upgrade_unknown_action(self):
+        self.start_action()
+        self.session._calls[CALL_ID]["standard_program"] = {"ops": [{}, {}]}
+        self.session.record_action_result(CALL_ID, {
+            "status": "recovered", "release_confirmed": True,
+            "effect_status": "unknown", "task_success": None,
+            "replay_allowed": False})
+        receipt = {"schema": "win32-program-operation-receipts-v1",
+            "status": "observed", "observed_monotonic_ns": 123,
+            "operations": [
+                {"operation_index": 0, "phase": "completed",
+                 "sendinput_attempts": 1, "sendinput_returned_count": 1,
+                 "local_action_count": 0},
+                {"operation_index": 1,
+                 "phase": "lease_refused_before_sendinput",
+                 "sendinput_attempts": 0, "sendinput_returned_count": 0,
+                 "local_action_count": 0}]}
+
+        row = self.session.capture_program_operation_receipts(
+            CALL_ID, lambda handle: receipt if handle is self.process else None)
+
+        self.assertEqual(row["action"]["program_operation_receipts"], receipt)
+        self.assertEqual(row["action"]["status"], "recovered")
+        self.assertFalse(row["action"]["replay_allowed"])
+        self.assertIsNone(row["action"]["task_success"])
+
+    def test_operation_receipt_reader_rejects_malformed_index(self):
+        self.start_action()
+        self.session._calls[CALL_ID]["standard_program"] = {"ops": [{}]}
+        self.session.record_action_result(CALL_ID, {
+            "status": "unknown", "release_confirmed": False,
+            "task_success": None, "replay_allowed": False})
+        receipt = {"schema": "win32-program-operation-receipts-v1",
+            "status": "observed", "observed_monotonic_ns": 123,
+            "operations": [{"operation_index": 2, "phase": "completed",
+                "sendinput_attempts": 0, "sendinput_returned_count": 0,
+                "local_action_count": 0}]}
+
+        with self.assertRaisesRegex(ValueError,
+                "program operation receipt entry is invalid"):
+            self.session.capture_program_operation_receipts(
+                CALL_ID, lambda _handle: receipt)
+
     def test_results_view_projects_dispatch_flag_onto_original_action(self):
         self.start_action()
         cases = [

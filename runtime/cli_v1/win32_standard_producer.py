@@ -41,7 +41,7 @@ def _release_receipt(result):
 
 
 def _run_standard_program(start_gate, targets, action, packet_path,
-                         program_action_counter):
+                         program_action_counter, program_operation_receipts):
     if not start_gate.wait():
         return
     producer_ready_ns = time.monotonic_ns()
@@ -63,7 +63,8 @@ def _run_standard_program(start_gate, targets, action, packet_path,
         from runtime.backends.win32_v1.backend import Win32Backend
         from runtime.backends.win32_v1.session import Win32RuntimeSession
         backend = Win32Backend(targets,
-            program_emission_counter=program_action_counter)
+            program_emission_counter=program_action_counter,
+            program_operation_receipts=program_operation_receipts)
         session = Win32RuntimeSession(backend)
         result = session.dispatch(program,
             current_observation_seq=source["observation_seq"],
@@ -124,13 +125,20 @@ class NativeWin32StandardProducerFactory:
         program_action_counter = self._context.RawValue(ctypes.c_long, 0)
         if ctypes.addressof(program_action_counter) % 4 != 0:
             raise RuntimeError("native producer action counter is misaligned")
+        operations = program.get("ops")
+        if type(operations) is not list or not operations:
+            raise ValueError("standard Win32 program operations are invalid")
+        program_operation_receipts = self._context.RawArray(
+            ctypes.c_long, len(operations) * 4)
+        if ctypes.addressof(program_operation_receipts) % 4 != 0:
+            raise RuntimeError("native producer operation receipt buffer is misaligned")
         directory = self._root / call_id
         directory.mkdir(exist_ok=False)
         packet_path = directory / "producer-result.json"
         gate = self._context.Event()
         process = self._context.Process(target=_run_standard_program,
             args=(gate, self._targets, action, str(packet_path),
-                  program_action_counter), daemon=True)
+                  program_action_counter, program_operation_receipts), daemon=True)
         with self._lock:
             if id(process) in self._process_data:
                 raise RuntimeError("producer process identity collision")
@@ -140,6 +148,8 @@ class NativeWin32StandardProducerFactory:
                 "target_generation": action["target_generation"],
                 "packet_path": packet_path,
                 "program_action_counter": program_action_counter,
+                "program_operation_receipts": program_operation_receipts,
+                "program_operation_count": len(operations),
             }
         return process, lambda: self._identity_reader(process), gate.set
 
@@ -157,6 +167,39 @@ class NativeWin32StandardProducerFactory:
         if type(value) is not int or value < 0:
             raise RuntimeError("native producer action counter is invalid")
         return value
+
+    def read_program_operation_receipts(self, process):
+        """Read crash-tolerant per-operation boundary and native-input receipts."""
+        with self._lock:
+            data = self._process_data.get(id(process))
+            if data is None:
+                raise ValueError("unknown native producer process")
+            if process.is_alive() is not False or type(process.exitcode) is not int:
+                raise ValueError("native producer retirement is unconfirmed")
+            buffer = data["program_operation_receipts"]
+            count = data["program_operation_count"]
+        if len(buffer) != count * 4 or ctypes.addressof(buffer) % 4 != 0:
+            raise RuntimeError("native producer operation receipt buffer is invalid")
+        phases = {0: "not_started", 1: "boundary_check", 2: "operation_running",
+            3: "sendinput_in_flight", 4: "sendinput_returned", 5: "completed",
+            6: "lease_refused_before_sendinput", 7: "sendinput_raised_or_rejected",
+            8: "local_action_in_flight", 9: "local_action_returned"}
+        operations = []
+        for index in range(count):
+            offset = index * 4
+            phase, attempts, returned, local_actions = (
+                int(buffer[offset + part]) for part in range(4))
+            if (phase not in phases or min(attempts, returned, local_actions) < 0
+                    or returned > attempts):
+                raise RuntimeError("native producer operation receipt is invalid")
+            operations.append({"operation_index": index,
+                "phase": phases[phase], "sendinput_attempts": attempts,
+                "sendinput_returned_count": returned,
+                "local_action_count": local_actions})
+        return {"schema": "win32-program-operation-receipts-v1",
+            "status": "observed", "operations": operations,
+            "observed_monotonic_ns": time.monotonic_ns(),
+            "counter_scope": "per-operation SendInput returns and local SetCursorPos actions; not application effect"}
 
     def read_result(self, process):
         with self._lock:
