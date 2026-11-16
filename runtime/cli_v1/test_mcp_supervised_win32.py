@@ -489,6 +489,9 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(action.get("replay_allowed"), result)
             exact = self.row(await server.call_tool("interface_results", {
                 "call_id": result["call_id"]}))
+            self.assertIs(exact.get("query_input_dispatched"), False, exact)
+            self.assertIs(
+                exact.get("source_action_input_dispatched"), False, exact)
             exact_action = exact.get("action")
             self.assertEqual(exact_action.get("status"), "not_dispatched", exact)
             self.assertFalse(exact_action.get("input_dispatched"), exact)
@@ -4434,6 +4437,34 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertIsNone(retained["task_success"])
                     self.assertFalse(retained["replay_allowed"])
                     await client.call_tool("interface_close", {})
+
+    async def test_exact_result_lookup_separates_query_and_source_dispatch(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity
+            if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(operation_owner, process)
+        owner = OwnedWin32SessionOwner(operation_owner, supervisor,
+            synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = FakeProducerFactory(process, identity)
+
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            dispatched = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            self.assertTrue(dispatched["input_dispatched"], dispatched)
+            retained = self.row(await server.call_tool("interface_results", {
+                "call_id": dispatched["call_id"], "include_image": False}))
+            self.assertFalse(retained["operation_invoked"], retained)
+            self.assertFalse(retained["query_input_dispatched"], retained)
+            self.assertTrue(retained["source_action_input_dispatched"], retained)
+            self.assertTrue(retained["action"]["input_dispatched"], retained)
+            await server.call_tool("interface_close", {})
 
 
     async def test_stdio_mid_program_expiry_blocks_late_input_and_releases_held_key(self):

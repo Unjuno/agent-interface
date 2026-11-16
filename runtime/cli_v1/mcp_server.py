@@ -2326,6 +2326,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
         A finished worker is not proof of task success. Unknown calls are not replayed.
         This registry lasts only for this server process; no restart recovery is implied.
+        For supervised Win32 lookups, input_dispatched describes this read query;
+        source_action_input_dispatched separately reports the retained action's value.
         Set include_image=false to inspect metadata without resending a retained image.
         detail=brief projects normal guarded checks or supported successful paced
         public dispatches with compact/report_refs. detail=summary summarizes
@@ -2454,6 +2456,13 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     row.update(route_fields)
                 row['operation_invoked'] = False
                 row['input_dispatched'] = False
+                row['query_input_dispatched'] = False
+                action = row.get('action')
+                row['source_action_input_dispatched'] = (
+                    action.get('input_dispatched')
+                    if type(action) is dict
+                    and type(action.get('input_dispatched')) is bool
+                    else None)
                 effect = row.get('task_effect')
                 row['task_success'] = (effect.get('task_success')
                     if isinstance(effect, dict) and effect.get('status') == 'verified'
