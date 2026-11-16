@@ -47,11 +47,9 @@ efficiency benefit.
   Neither change alters runtime recovery semantics or expected custody/action
   classifications.
 - After those test-fixture corrections, all 123 tests passed normally in
-  152.549 s and under `-O` in 146.562 s. Full output is retained in
-  [`test-normal-final2.log`](test-normal-final2.log) and
-  [`test-opt-final2.log`](test-opt-final2.log). The two corrected tests also
-  passed together under both modes. No production runtime source was changed by
-  the probe or the test stabilization.
+  152.549 s and under `-O` in 146.562 s. The two corrected tests also passed
+  together under both modes. No production runtime source was changed by the
+  probe or the test stabilization.
 
 ## Decision
 
