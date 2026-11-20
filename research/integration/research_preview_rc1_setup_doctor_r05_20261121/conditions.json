@@ -1,0 +1,13 @@
+{
+  "attempt_id": "RP-RC1-SETUP-DOCTOR-20261121-05",
+  "frozen_at_utc": "2026-11-20T21:02:25Z",
+  "source_revision": "8e5052e04f8720fe89052ad01127114dd6852d88",
+  "canonical_branch": "release/research-preview-20260917-rc1",
+  "environment": "Ubuntu WSL2 WSLg ext4 checkout, Python 3.12.3, Git 2.43.0",
+  "checkout": "/home/user/agent-interface-rp-rc1-doctor-r05-20261121",
+  "command": "bash runtime/setup-golden-demo-v3.sh --install-dependencies",
+  "permitted_acquisition": "Only the nine exact Python distributions in the pinned runtime/requirements-golden.txt into this checkout runtime/.venv.",
+  "frozen_expected_status": "doctor.passed=true",
+  "decision_rule": "PASS only if the explicit setup and complete doctor return zero and every doctor check passes. Preserve any failure without changing pins or host configuration.",
+  "scope": "One clean RC1 setup and doctor. No runtime package retrieval, model/provider generation, GUI demo, input, golden task, Docker, or formal #57 allocation. The doctor may read local paths and invoke the Windows Codex CLI with --version only."
+}

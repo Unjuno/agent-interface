@@ -2,7 +2,10 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current checkpoint — 2026-11-21 (main `cfb691b3`)
+## Current checkpoint — 2026-11-21 (main `8c71a619`)
+**Research Preview RC1 setup and doctor (R05, 2026-11-21):** The frozen RC1 checkout installed its nine pinned Python dependencies successfully into an isolated WSL venv. Its doctor exited 1: 12/15 checks passed; the required Windows Codex CLI JS and WSL Chromium were absent, making the `codex_cli` check fail as a consequence. No app/runtime/model acquisition or GUI action occurred. This is a reproducible setup HOLD, not a golden run or preview acceptance. See [R05 evidence](research/integration/research_preview_rc1_setup_doctor_r05_20261121/RESULT.md). Issue #58 remains open.
+
+**Whole-repository membership refresh r154 (2026-11-21):** On main `8c71a6199bd51ca6b38aa02cb92d9833c3260a67`, the complete paginated open sets are still 1,643 Issues and 410 PRs, exactly matching r153/r152 membership; main was unchanged before and after. This is queue membership only, not semantic triage or merge readiness. The current organization plan records this comparison; no bulk closure follows. #5130 is the one-time six-task Mindustry three-arm economics allocation under #57, still gated on its frozen source/resource conditions; #7924 remains the explicit WSLc migration STOP.
 
 The active completion goal is to qualify the distributable runtime and the
 research gates below; this roadmap is a navigation/status summary, not a new
