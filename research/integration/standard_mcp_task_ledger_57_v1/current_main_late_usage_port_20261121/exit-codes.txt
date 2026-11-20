@@ -1,5 +1,8 @@
-normal 0
-optimized 0
-py_compile 0
-git diff --cached --check 0
-initial incomplete sparse-checkout attempt 1 (not counted)
+# Current-main exit codes (base 551cf28)
+
+- Focused late-usage tests, normal: 0.
+- Focused late-usage tests, optimized: 0.
+- py_compile of all 12 changed Python files: 0.
+- Full 107-test discovery, normal: unittest reported 2 failures; the runner remained blocked in cleanup and the exact owned test process tree was terminated (Windows subprocess code 4294967295). Not a pass.
+- Full-suite optimized mode was not run after the normal suite failed.
+- Previous-base 381a full discovery normal/-O: 0/0, 107/107 each; logs and conditions are archived under `base_main_381a21a/`.

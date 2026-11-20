@@ -1,24 +1,21 @@
-# Issue #57 late-usage port on current main — 2026-11-21
+# Issue #57 late-usage port — rechecked after current-main advance
 
-## What changed in this candidate
+## Candidate change
 
-PR #10218 contributes late same-turn usage retention from timed-out App Server turns and a post-score adapter that joins hash-bound sidecars into the existing provider-attempt ledger. Its code was absent from current main. The candidate was reconstructed on main `381a21ace42891c2cd1e9cff3e231bec763ec2ba`, applying the original PR's unique code/test changes with a three-way patch. All 13 code, test, and README paths applied without conflicts. The 28 original evidence and attribute paths were transferred as well; one custody discrepancy was corrected additively and is described below.
+Ports late same-turn App Server usage retention from PR #10218 plus a post-score adapter that joins hash-bound sidecars to the existing provider-attempt ledger. This remains an enabling research adapter; it does not automatically call `observe_late_usage` from every runner.
 
-## Current-main local verification
+## Current-main identity
 
-- 11-module discovery: **107/107 passed** normally in 81.641 s.
-- Same discovery: **107/107 passed** under `-O` in 77.290 s.
-- `py_compile` on all 12 changed Python files: passed.
-- `git diff --cached --check`: passed.
-- The first discovery attempt ran before the sparse checkout included `runtime/backends/x11_v1`; 90 tests ran and two test modules failed to import that missing local path. This run is retained separately and is not counted as candidate failure or success.
-- The two transferred historical manifests cover 25 files and now verify with zero size/hash mismatches.
+The candidate is rebased onto `main` `551cf28bb3ef3249af66d4c1ea33c2ca0b98882e`. Its only rebase conflict was additive `.gitattributes` custody rules; both R281 and task-ledger evidence rules were retained. The runtime tree is unchanged between `381a21a` and `551cf28`.
 
-## Custody correction
+## Verification
 
-The original PR #10218 head had `late_spool_usage_sidecar_20261104/commands.txt` at 738 bytes, SHA-256 `409af0a0e70852c2b2125c9e3f9b050980b870e2902738dc7406a1a4a809da55`; its manifest expected 739 bytes and SHA-256 `275ed1967585d05064c1cd7d6dc0c80706b518987d1a0b65155584105ad15750`. A one-byte CR insertion search found exactly one position matching the expected digest: offset 737, immediately before the final LF. That byte was restored in this candidate copy, and the historical manifest now verifies. The original PR/head was not altered. The additive [custody correction](../late_spool_usage_sidecar_20261104/CUSTODY_CORRECTION.md) preserves the discrepancy and recovery method.
+The four directly changed App Server/late-usage test modules pass normally and under `-O` on CPython 3.11.9. `py_compile` passes on all 12 changed Python files. The full 107-test discovery was also run on current main but is **not green**: two Calc/Fake X composition cases failed (stable-menu-anchor error; Save boundary/cancellation terminal timeout), and the test process tree then remained blocked in cleanup until the exact test PIDs were stopped. The full raw failure is retained in `full-normal-current-main.log`; no pass is claimed. Full 107/107 normal and optimized logs on prior base `381a21a` are preserved under `base_main_381a21a/`.
 
-## Limits and next gate
+## Evidence custody
 
-These are deterministic local App Server/spool/Fake X tests with synthetic provider streams. They do not establish real provider delivery/billing or prove that every runner calls `observe_late_usage`; the call remains explicit and post-score. They provide no GUI effect, MAP01 task success, matched efficiency, or recovery reliability result. Keep #57 open. The next runtime integration step is to wire this usage receipt path into a fresh prospective Issue #57 run without enabling dispatch until the trusted allocation and independent scorer gates are satisfied.
+The two transferred historical manifests cover 25 files. One missing CR in the original sidecar command file was uniquely recovered at byte offset 737 from its expected SHA-256 and recorded additively; the original PR #10218 head was not altered.
 
-The initial sparse-checkout failure log, both successful raw logs, commands, exit codes and environment conditions are retained in this directory.
+## Limits and disposition
+
+Evidence is deterministic App Server/spool/Fake X with synthetic provider streams. It does not prove real provider delivery/billing, integrated efficiency, GUI effects, MAP01 success, or recovery reliability. The four directly changed modules pass on current main, but the full suite failure needs reconciliation before integration. Keep the PR open and draft while tracing the two existing Calc/Fake X failures; do not relabel the full suite as pass.

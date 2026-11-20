@@ -1,6 +1,6 @@
 {
   "packet_id": "issue57_late_usage_current_main_port_20261121",
-  "base_main": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "base_main": "551cf28bb3ef3249af66d4c1ea33c2ca0b98882e",
   "source_pr": 10218,
   "source_pr_head": "b1e24401ca0817ed4504b62f9c7190a0c900735a",
   "source_pr_base": "78cef41de52911b47857d6a62326a0aeb2c91081",
@@ -8,10 +8,59 @@
   "host": "Windows",
   "python": "CPython 3.11.9",
   "tests": {
-    "normal": {"command": "python -m unittest discover -v -s research/integration/standard_mcp_task_ledger_57_v1 -p test_*.py", "count": 107, "exit_code": 0, "elapsed_seconds": 81.641},
-    "optimized": {"command": "python -O -m unittest discover -v -s research/integration/standard_mcp_task_ledger_57_v1 -p test_*.py", "count": 107, "exit_code": 0, "elapsed_seconds": 77.290}
+    "previous_base_381a": {
+      "normal": {
+        "count": 107,
+        "exit_code": 0
+      },
+      "optimized": {
+        "count": 107,
+        "exit_code": 0
+      },
+      "evidence": "base_main_381a21a/conditions.json and archived logs"
+    },
+    "current_main_full_normal": {
+      "count": 107,
+      "failures": 2,
+      "runner_exit_code": 4294967295,
+      "disposition": "FAIL; completed unittest suite but worker cleanup remained blocked until exact test process tree was stopped"
+    },
+    "current_main_focused_normal": {
+      "count": 26,
+      "elapsed_seconds": 5.853,
+      "exit_code": 0
+    },
+    "current_main_focused_optimized": {
+      "count": 26,
+      "elapsed_seconds": 5.102,
+      "exit_code": 0
+    },
+    "current_main_pycompile": {
+      "exit_code": 0,
+      "files": 12
+    }
   },
-  "additional_checks": {"py_compile": "pass", "git_diff_cached_check": "pass"},
-  "custody": {"transferred_manifest_entries": 25, "verified": 25, "mismatches": 0, "correction": "One missing CR was uniquely recovered at byte offset 737 from the original expected SHA-256; see the additive CUSTODY_CORRECTION.md."},
-  "scope": "Deterministic App Server/spool/Fake X adapters and synthetic provider streams only. No real provider billing/log, live GUI, GZDoom, MAP01, or efficiency trial. observe_late_usage remains an explicit post-score call and is not wired into every runner."
+  "additional_checks": {
+    "py_compile": "pass",
+    "git_diff_cached_check": "pass"
+  },
+  "custody": {
+    "transferred_manifest_entries": 25,
+    "verified": 25,
+    "mismatches": 0,
+    "correction": "One missing CR was uniquely recovered at byte offset 737 from the original expected SHA-256; see the additive CUSTODY_CORRECTION.md."
+  },
+  "scope": "The four App Server/late-usage test modules pass on current main. The full 107-test discovery is not green on current main; two unrelated existing Calc/Fake X composition cases failed, and the suite process tree required cleanup. No live provider, GUI, MAP01, matched efficiency, or recovery reliability claim.",
+  "previous_base_main": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "rebase_note": "Rebased the single candidate commit onto origin/main 551cf28bb3ef3249af66d4c1ea33c2ca0b98882e. The sole conflict was additive .gitattributes retention rules; both R281 and task-ledger rules were preserved.",
+  "current_main_full_suite_failures": [
+    {
+      "test": "test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+      "symptom": "Expected method_receipt; runtime_failed with ValueError: Calc entry must use the reviewed stable menu keyboard anchor."
+    },
+    {
+      "test": "test_cancel_after_first_transition_is_joined_without_replay",
+      "symptom": "Did not reach Save boundary; cancellation terminal was not observed before test deadline."
+    }
+  ]
 }
