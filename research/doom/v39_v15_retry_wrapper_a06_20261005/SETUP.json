@@ -1,0 +1,10 @@
+{
+  "schema": "v39-v15-retry-wrapper-a06-setup-v1",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "platform": "linux/amd64",
+  "preflight_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512m --tmpfs /tmp:rw,size=32m python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python --version",
+  "observed": "Python 3.12.15",
+  "wslc_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "container_running_after_preflight": false,
+  "network": false
+}
