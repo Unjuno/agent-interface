@@ -1,8 +1,19 @@
-COMMAND: C:\Users\user\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\outputs\portable-runtime-main-b0493167\agent-interface-runtime.pyz doctor
-CWD: D:\CodexData\Temp\agent-interface-runtime-b049-nxbv8j_d
-EXIT: 0
-
-STDOUT:
-{"note":"Selection is diagnostic only; backend manifest and core admission govern effect authority.","runtime_available":true,"schema":"agent-interface/runtime-doctor-v1","selection":{"available":true,"backend_id":"win32-v1","platform":"windows","reason":"promoted Win32 backend available","side_effect_authority":false,"target_kind":"hwnd"},"side_effect_authority":false}
-
-STDERR:
+{
+  "command": "py -3.13 <outside-checkout>/agent-interface-runtime.pyz doctor",
+  "cwd": "fresh directory outside checkout",
+  "exit": 0,
+  "stdout": {
+    "note": "Selection is diagnostic only; backend manifest and core admission govern effect authority.",
+    "runtime_available": true,
+    "schema": "agent-interface/runtime-doctor-v1",
+    "selection": {
+      "available": true,
+      "backend_id": "win32-v1",
+      "platform": "windows",
+      "reason": "promoted Win32 backend available",
+      "side_effect_authority": false,
+      "target_kind": "hwnd"
+    },
+    "side_effect_authority": false
+  }
+}
