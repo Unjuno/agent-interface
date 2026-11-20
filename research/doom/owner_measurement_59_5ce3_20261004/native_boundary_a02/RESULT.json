@@ -1,0 +1,815 @@
+{
+  "scope": "full-owner-post-close-bitmap-A02-component-only",
+  "cells": [
+    {
+      "index": 0,
+      "arm": "original",
+      "calls": [
+        {
+          "operation": "down",
+          "key": "a",
+          "started_ns": 71928172813596,
+          "completed_ns": 71928173048888,
+          "response": {
+            "event": "input_admission",
+            "key": "a",
+            "admitted_ns": 71928172886763,
+            "input_ack_ns": 71928172980513,
+            "valid_until_ns": 71933172802804
+          }
+        },
+        {
+          "operation": "up",
+          "key": "a",
+          "started_ns": 71928173050388,
+          "completed_ns": 71928173189389,
+          "response": null
+        },
+        {
+          "operation": "down",
+          "key": "b",
+          "started_ns": 71928173190514,
+          "completed_ns": 71928173412015,
+          "response": {
+            "event": "input_admission",
+            "key": "b",
+            "admitted_ns": 71928173291973,
+            "input_ack_ns": 71928173337764,
+            "valid_until_ns": 71933172802804
+          }
+        },
+        {
+          "operation": "down",
+          "key": "c",
+          "started_ns": 71928173412890,
+          "completed_ns": 71928173565724,
+          "response": {
+            "event": "input_admission",
+            "key": "c",
+            "admitted_ns": 71928173470432,
+            "input_ack_ns": 71928173510682,
+            "valid_until_ns": 71933172802804
+          }
+        }
+      ],
+      "received": [
+        {
+          "type": 2,
+          "code": 38,
+          "receipt_ns": 71928173969183,
+          "xserver_ms": 71928171
+        },
+        {
+          "type": 3,
+          "code": 38,
+          "receipt_ns": 71928173973517,
+          "xserver_ms": 71928172
+        },
+        {
+          "type": 2,
+          "code": 56,
+          "receipt_ns": 71928173976850,
+          "xserver_ms": 71928172
+        },
+        {
+          "type": 2,
+          "code": 54,
+          "receipt_ns": 71928173979558,
+          "xserver_ms": 71928172
+        },
+        {
+          "type": 3,
+          "code": 56,
+          "receipt_ns": 71928173982267,
+          "xserver_ms": 71928172
+        },
+        {
+          "type": 3,
+          "code": 54,
+          "receipt_ns": 71928173984850,
+          "xserver_ms": 71928172
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928173826933,
+          "valid_until_ns": 71933172802804
+        },
+        {
+          "event": "owner_release",
+          "reason": "close",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928174152309,
+          "valid_until_ns": null
+        }
+      ],
+      "foreign_up": {
+        "type": "ValueError",
+        "error": "key belongs to another intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 71928173826933,
+        "valid_until_ns": 71933172802804
+      },
+      "physical_down": [],
+      "owner_stopped": true,
+      "owner_error": null,
+      "post_close_bitmap": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "post_close_down": [],
+      "post_close_events": [],
+      "post_close_sample_ns": 71928174366518
+    },
+    {
+      "index": 1,
+      "arm": "measured",
+      "calls": [
+        {
+          "operation": "down",
+          "key": "a",
+          "started_ns": 71928178713242,
+          "completed_ns": 71928178893285,
+          "response": {
+            "event": "input_admission",
+            "key": "a",
+            "admitted_ns": 71928178786493,
+            "input_ack_ns": 71928178839535,
+            "valid_until_ns": 71933178704701
+          }
+        },
+        {
+          "operation": "up",
+          "key": "a",
+          "started_ns": 71928178894826,
+          "completed_ns": 71928179052494,
+          "response": null
+        },
+        {
+          "operation": "down",
+          "key": "b",
+          "started_ns": 71928179053160,
+          "completed_ns": 71928179230703,
+          "response": {
+            "event": "input_admission",
+            "key": "b",
+            "admitted_ns": 71928179140536,
+            "input_ack_ns": 71928179187286,
+            "valid_until_ns": 71933178704701
+          }
+        },
+        {
+          "operation": "down",
+          "key": "c",
+          "started_ns": 71928179231453,
+          "completed_ns": 71928179376161,
+          "response": {
+            "event": "input_admission",
+            "key": "c",
+            "admitted_ns": 71928179294120,
+            "input_ack_ns": 71928179332703,
+            "valid_until_ns": 71933178704701
+          }
+        }
+      ],
+      "received": [
+        {
+          "type": 2,
+          "code": 38,
+          "receipt_ns": 71928179819080,
+          "xserver_ms": 71928177
+        },
+        {
+          "type": 3,
+          "code": 38,
+          "receipt_ns": 71928179822830,
+          "xserver_ms": 71928177
+        },
+        {
+          "type": 2,
+          "code": 56,
+          "receipt_ns": 71928179825580,
+          "xserver_ms": 71928178
+        },
+        {
+          "type": 2,
+          "code": 54,
+          "receipt_ns": 71928179828163,
+          "xserver_ms": 71928178
+        },
+        {
+          "type": 3,
+          "code": 56,
+          "receipt_ns": 71928179830663,
+          "xserver_ms": 71928178
+        },
+        {
+          "type": 3,
+          "code": 54,
+          "receipt_ns": 71928179833163,
+          "xserver_ms": 71928178
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_key_press",
+          "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+          "intent": "a01-cell-1",
+          "keycode": 38,
+          "request_started_ns": 71928178787326,
+          "sync_completed_ns": 71928178838618,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_explicit_key_up",
+          "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+          "intent": "a01-cell-1",
+          "keycode": 38,
+          "request_started_ns": 71928178922077,
+          "sync_completed_ns": 71928179031452,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_key_press",
+          "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+          "intent": "a01-cell-1",
+          "keycode": 56,
+          "request_started_ns": 71928179141536,
+          "sync_completed_ns": 71928179186369,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_key_press",
+          "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+          "intent": "a01-cell-1",
+          "keycode": 54,
+          "request_started_ns": 71928179294661,
+          "sync_completed_ns": 71928179332161,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_release",
+          "reason": "release",
+          "key_release_brackets": [
+            {
+              "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+              "intent": "a01-cell-1",
+              "keycode": 56,
+              "request_started_ns": 71928179563454,
+              "sync_completed_ns": 71928179620787,
+              "grants_input_authority": false
+            },
+            {
+              "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+              "intent": "a01-cell-1",
+              "keycode": 54,
+              "request_started_ns": 71928179575037,
+              "sync_completed_ns": 71928179620787,
+              "grants_input_authority": false
+            }
+          ],
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928179685871,
+          "valid_until_ns": 71933178704701
+        },
+        {
+          "event": "owner_release",
+          "reason": "close",
+          "key_release_brackets": [],
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928180016497,
+          "valid_until_ns": null
+        }
+      ],
+      "foreign_up": {
+        "type": "ValueError",
+        "error": "key belongs to another intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "key_release_brackets": [
+          {
+            "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+            "intent": "a01-cell-1",
+            "keycode": 56,
+            "request_started_ns": 71928179563454,
+            "sync_completed_ns": 71928179620787,
+            "grants_input_authority": false
+          },
+          {
+            "owner_id": "d1a1713b0bda4069b146e9eef7b63cf3",
+            "intent": "a01-cell-1",
+            "keycode": 54,
+            "request_started_ns": 71928179575037,
+            "sync_completed_ns": 71928179620787,
+            "grants_input_authority": false
+          }
+        ],
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 71928179685871,
+        "valid_until_ns": 71933178704701
+      },
+      "physical_down": [],
+      "owner_stopped": true,
+      "owner_error": null,
+      "post_close_bitmap": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "post_close_down": [],
+      "post_close_events": [],
+      "post_close_sample_ns": 71928180202331
+    },
+    {
+      "index": 2,
+      "arm": "measured",
+      "calls": [
+        {
+          "operation": "down",
+          "key": "a",
+          "started_ns": 71928183821178,
+          "completed_ns": 71928183974553,
+          "response": {
+            "event": "input_admission",
+            "key": "a",
+            "admitted_ns": 71928183889761,
+            "input_ack_ns": 71928183930386,
+            "valid_until_ns": 71933183814761
+          }
+        },
+        {
+          "operation": "up",
+          "key": "a",
+          "started_ns": 71928183975428,
+          "completed_ns": 71928184122262,
+          "response": null
+        },
+        {
+          "operation": "down",
+          "key": "b",
+          "started_ns": 71928184122971,
+          "completed_ns": 71928184276429,
+          "response": {
+            "event": "input_admission",
+            "key": "b",
+            "admitted_ns": 71928184194679,
+            "input_ack_ns": 71928184235763,
+            "valid_until_ns": 71933183814761
+          }
+        },
+        {
+          "operation": "down",
+          "key": "c",
+          "started_ns": 71928184277221,
+          "completed_ns": 71928184425138,
+          "response": {
+            "event": "input_admission",
+            "key": "c",
+            "admitted_ns": 71928184345180,
+            "input_ack_ns": 71928184378596,
+            "valid_until_ns": 71933183814761
+          }
+        }
+      ],
+      "received": [
+        {
+          "type": 2,
+          "code": 38,
+          "receipt_ns": 71928184714639,
+          "xserver_ms": 71928182
+        },
+        {
+          "type": 3,
+          "code": 38,
+          "receipt_ns": 71928184717848,
+          "xserver_ms": 71928183
+        },
+        {
+          "type": 2,
+          "code": 56,
+          "receipt_ns": 71928184720389,
+          "xserver_ms": 71928183
+        },
+        {
+          "type": 2,
+          "code": 54,
+          "receipt_ns": 71928184722806,
+          "xserver_ms": 71928183
+        },
+        {
+          "type": 3,
+          "code": 56,
+          "receipt_ns": 71928184725181,
+          "xserver_ms": 71928183
+        },
+        {
+          "type": 3,
+          "code": 54,
+          "receipt_ns": 71928184727514,
+          "xserver_ms": 71928183
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_key_press",
+          "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+          "intent": "a01-cell-2",
+          "keycode": 38,
+          "request_started_ns": 71928183890428,
+          "sync_completed_ns": 71928183929595,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_explicit_key_up",
+          "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+          "intent": "a01-cell-2",
+          "keycode": 38,
+          "request_started_ns": 71928183990803,
+          "sync_completed_ns": 71928184071345,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_key_press",
+          "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+          "intent": "a01-cell-2",
+          "keycode": 56,
+          "request_started_ns": 71928184195346,
+          "sync_completed_ns": 71928184234971,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_key_press",
+          "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+          "intent": "a01-cell-2",
+          "keycode": 54,
+          "request_started_ns": 71928184345555,
+          "sync_completed_ns": 71928184378180,
+          "grants_input_authority": false
+        },
+        {
+          "event": "owner_release",
+          "reason": "release",
+          "key_release_brackets": [
+            {
+              "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+              "intent": "a01-cell-2",
+              "keycode": 56,
+              "request_started_ns": 71928184522680,
+              "sync_completed_ns": 71928184564680,
+              "grants_input_authority": false
+            },
+            {
+              "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+              "intent": "a01-cell-2",
+              "keycode": 54,
+              "request_started_ns": 71928184531097,
+              "sync_completed_ns": 71928184564680,
+              "grants_input_authority": false
+            }
+          ],
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928184620097,
+          "valid_until_ns": 71933183814761
+        },
+        {
+          "event": "owner_release",
+          "reason": "close",
+          "key_release_brackets": [],
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928184864223,
+          "valid_until_ns": null
+        }
+      ],
+      "foreign_up": {
+        "type": "ValueError",
+        "error": "key belongs to another intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "key_release_brackets": [
+          {
+            "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+            "intent": "a01-cell-2",
+            "keycode": 56,
+            "request_started_ns": 71928184522680,
+            "sync_completed_ns": 71928184564680,
+            "grants_input_authority": false
+          },
+          {
+            "owner_id": "1184a281a5a34ebfb79f55d84b7b7728",
+            "intent": "a01-cell-2",
+            "keycode": 54,
+            "request_started_ns": 71928184531097,
+            "sync_completed_ns": 71928184564680,
+            "grants_input_authority": false
+          }
+        ],
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 71928184620097,
+        "valid_until_ns": 71933183814761
+      },
+      "physical_down": [],
+      "owner_stopped": true,
+      "owner_error": null,
+      "post_close_bitmap": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "post_close_down": [],
+      "post_close_events": [],
+      "post_close_sample_ns": 71928184977224
+    },
+    {
+      "index": 3,
+      "arm": "original",
+      "calls": [
+        {
+          "operation": "down",
+          "key": "a",
+          "started_ns": 71928189075530,
+          "completed_ns": 71928189190656,
+          "response": {
+            "event": "input_admission",
+            "key": "a",
+            "admitted_ns": 71928189126239,
+            "input_ack_ns": 71928189171114,
+            "valid_until_ns": 71933189044030
+          }
+        },
+        {
+          "operation": "up",
+          "key": "a",
+          "started_ns": 71928189191406,
+          "completed_ns": 71928189277489,
+          "response": null
+        },
+        {
+          "operation": "down",
+          "key": "b",
+          "started_ns": 71928189278031,
+          "completed_ns": 71928189378073,
+          "response": {
+            "event": "input_admission",
+            "key": "b",
+            "admitted_ns": 71928189330698,
+            "input_ack_ns": 71928189362573,
+            "valid_until_ns": 71933189044030
+          }
+        },
+        {
+          "operation": "down",
+          "key": "c",
+          "started_ns": 71928189378490,
+          "completed_ns": 71928189543949,
+          "response": {
+            "event": "input_admission",
+            "key": "c",
+            "admitted_ns": 71928189481532,
+            "input_ack_ns": 71928189526782,
+            "valid_until_ns": 71933189044030
+          }
+        }
+      ],
+      "received": [
+        {
+          "type": 2,
+          "code": 38,
+          "receipt_ns": 71928189824825,
+          "xserver_ms": 71928188
+        },
+        {
+          "type": 3,
+          "code": 38,
+          "receipt_ns": 71928189827991,
+          "xserver_ms": 71928188
+        },
+        {
+          "type": 2,
+          "code": 56,
+          "receipt_ns": 71928189830616,
+          "xserver_ms": 71928188
+        },
+        {
+          "type": 2,
+          "code": 54,
+          "receipt_ns": 71928189832950,
+          "xserver_ms": 71928188
+        },
+        {
+          "type": 3,
+          "code": 56,
+          "receipt_ns": 71928189835408,
+          "xserver_ms": 71928188
+        },
+        {
+          "type": 3,
+          "code": 54,
+          "receipt_ns": 71928189837825,
+          "xserver_ms": 71928188
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928189739574,
+          "valid_until_ns": 71933189044030
+        },
+        {
+          "event": "owner_release",
+          "reason": "close",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 71928189957534,
+          "valid_until_ns": null
+        }
+      ],
+      "foreign_up": {
+        "type": "ValueError",
+        "error": "key belongs to another intent"
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 71928189739574,
+        "valid_until_ns": 71933189044030
+      },
+      "physical_down": [],
+      "owner_stopped": true,
+      "owner_error": null,
+      "post_close_bitmap": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "post_close_down": [],
+      "post_close_events": [],
+      "post_close_sample_ns": 71928190088701
+    }
+  ],
+  "source_commit": "96d39ca3855351b2501aab1da919941011190ac3",
+  "original_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+  "measured_sha256": "5d17dbac900c972498027a0e1ec3a39f25c143502283901da7ea45f5855c03be",
+  "runner_sha256": "36f868d8a1dbfb57ef8a2e41b81293f613d5d8d3bb1e13b30164a2fdbe449e9b",
+  "protocol_sha256": "442b935359ac770b63dcc11e55a196e2be2a14932594b76533148ec49a72a702",
+  "dependency_sha256": {
+    "/preparation/build_owner.py": "1d616039a663d9b4bc242e6d2e314012662b4df12c2a19651b8d619241a8ac00",
+    "/source/research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "/source/research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+  },
+  "disposition": "PASS_NATIVE_POST_CLOSE_COMPONENT",
+  "xvfb_exit": 0
+}
