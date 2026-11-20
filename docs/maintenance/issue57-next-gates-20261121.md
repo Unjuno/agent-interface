@@ -42,6 +42,14 @@ those gates.
 4. **Standard caller and recovery.** Keep the recovered-task success and
    repeated reliability tests separate from Mindustry economics. A single
    successful Edge form POST or one R281 input effect does not close either.
+   R149 shows a recovered/released Win32 action can be followed by a real
+   queued task effect 691 ms after the sampled neutral horizon. The
+   [`post_authority_effect_attribution_v1`](../../research/integration/standard_mcp_task_ledger_57_v1/post_authority_effect_attribution_v1/RESULT.md)
+   probe confirms the existing ledger collapses that case and an in-authority
+   effect to the same `task_success=true`. Before counting recovered task
+   success in a matched comparison, carry factual final-state score separately
+   from effect timing and authority eligibility; the research candidate is not
+   wired into the frozen comparison evaluator yet.
 5. **Product boundary.** Retain the Windows portable-runtime result as scoped
    packaging evidence. Public distribution, Linux/WSL startup, live input, and
    side-effect authorization remain separate acceptance checks.
