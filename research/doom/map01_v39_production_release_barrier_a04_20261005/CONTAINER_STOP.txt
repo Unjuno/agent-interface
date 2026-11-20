@@ -1,0 +1,6 @@
+STOP — container execution not performed.
+
+Environment check: `docker info --format '{{.ServerVersion}} {{.OperatingSystem}}'` reported `29.4.0 OrbStack`.
+Image inventory attempt: `docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}'` failed in the daemon while opening content blob `sha256:fb792b14e8901ca7c53c8582c602eb856081626d9d1833ba45f98331508b6b87`, with `operation not supported`.
+
+No container was started and no image was pulled. The identical daemon/image-store operation was not retried. The preserved passing and no-flush runs are local host-Python synthetic fake-Xlib evidence only. Re-run the container gate after OrbStack image-store recovery; do not treat local execution as satisfying that gate.

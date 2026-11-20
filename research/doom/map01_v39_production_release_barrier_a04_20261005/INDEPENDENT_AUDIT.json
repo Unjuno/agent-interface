@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "method": "stdlib-only raw-output parser; no imports from test package",
+  "cases": [
+    "exact_candidate_baseline",
+    "late_resample_retry_unavailable",
+    "late_resample_treatment"
+  ],
+  "assertions": [
+    "three cases and unittest OK",
+    "exact baseline stays unavailable",
+    "late-resample candidate confirms matching actuation and bounded interval",
+    "failed retry remains unavailable",
+    "owner release verified empty and terminal follows release",
+    "authority and application-consumption remain false"
+  ]
+}
