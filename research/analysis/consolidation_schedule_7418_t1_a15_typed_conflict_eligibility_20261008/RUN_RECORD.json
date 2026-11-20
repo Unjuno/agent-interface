@@ -1,0 +1,52 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A15-TYPED-CONFLICT-ELIGIBILITY-20261008",
+  "status": "FAIL_METHOD",
+  "created_utc": "2026-10-08",
+  "package": "research/analysis/consolidation_schedule_7418_t1_a15_typed_conflict_eligibility_20261008",
+  "fixture_source": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/model.json",
+  "model": "qwen3:8b",
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "private_base_url": "http://127.0.0.1:11435",
+  "private_store": "/tmp/unjuno-8406-t1-a15-ollama-store",
+  "seeds": [
+    5501,
+    5502,
+    5503
+  ],
+  "arms": [
+    "episodic_only",
+    "per_episode",
+    "batch_2",
+    "terminal"
+  ],
+  "checkpoints": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "queries_per_checkpoint": 5,
+  "planned_calls": {
+    "query": 360,
+    "consolidation": 30,
+    "total": 390
+  },
+  "single_intervention_vs_a14": "Explicit typed eligibility filter and four symbolic positive/negative cases for conflict derivation.",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "preflight_path": "results/FORMAL_T1_A15/PREFLIGHT.json",
+  "raw_path": "results/FORMAL_T1_A15/raw.jsonl",
+  "audit_path": "results/FORMAL_T1_A15/audit.json",
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6051902220",
+  "preflight_sha256": "7fe0ab30eea1cf9ecb7b9c6063992ec9904210d348090728c05776117e0d3922",
+  "raw_sha256": "dee102f3c78340985c9993c3b1c28172a5dbb480d38c72be1fc3e59dfe400fe1",
+  "audit_sha256": "078cae511d2d295484a95efb094d0cce3e1158de52cb138318f8bbfbcc38da89",
+  "raw_rows": 390,
+  "candidate_exit": "success; 390 model calls",
+  "auditor_status": "FAIL_METHOD",
+  "auditor_errors": 24,
+  "private_server_stopped": true,
+  "result_note": "Descriptive contrasts are not schedule conclusions because the transition auditor failed."
+}
