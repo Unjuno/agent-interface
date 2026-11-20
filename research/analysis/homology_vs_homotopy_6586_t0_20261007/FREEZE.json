@@ -1,0 +1,27 @@
+{
+  "allocation": "HOMOLOGY-HOMOTOPY-6586-T0-20261007-A01",
+  "base_commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "freeze_scope": "two-obstacle ordered crossing word vs abelianized homology vector; finite method boundary only",
+  "container": {
+    "image": "python:3.13-alpine",
+    "digest": "sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a",
+    "platform": "linux/aarch64",
+    "network": "none",
+    "source_mount": "read-only",
+    "memory_mib": 512,
+    "cpus": 1
+  },
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retries": 0},
+  "commands": [
+    "python -B -I research/analysis/homology_vs_homotopy_6586_t0_20261007/candidate.py",
+    "python -B -I research/analysis/homology_vs_homotopy_6586_t0_20261007/auditor.py research/analysis/homology_vs_homotopy_6586_t0_20261007/candidate-raw.json"
+  ],
+  "frozen_inputs_sha256": {
+    "research/analysis/homology_vs_homotopy_6586_t0_20261007/fixture.json": "6861497d15dea24f6f34f53995c4a313ca5d7825aabe7adfcb293478fb9e5227",
+    "research/analysis/homology_vs_homotopy_6586_t0_20261007/candidate.py": "9319d4a381b616c09dc9d0bbd28567213cc62b214b1bc5d5da742096cdc0060b",
+    "research/analysis/homology_vs_homotopy_6586_t0_20261007/auditor.py": "aca2f33be912ca39c5a60328c664713ec95e8fef991e713e1d1258341ba6702c",
+    "research/analysis/homology_vs_homotopy_6586_t0_20261007/test_package.py": "77caaffcfbcc044774083433628beaeda945e54b17c7443af03954922367e9f5",
+    "research/analysis/homology_vs_homotopy_6586_t0_20261007/PRE_REGISTRATION.md": "488d851637a0823354fa1507465a954fca648e249e95cbd1a4b86086983822b7"
+  },
+  "decision": "Any incomplete, missing, or stale ordered crossing receipt yields UNKNOWN. No controller or task-benefit claim."
+}

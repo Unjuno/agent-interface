@@ -1,0 +1,28 @@
+{
+  "allocation": "HOMOLOGY-HOMOTOPY-6586-T0-20261007-A01",
+  "topology_version": "two-obstacle-rectangles-v1",
+  "domain": [-7, -6, 7, 3],
+  "basepoint": [0, -4],
+  "goal": [0, -5],
+  "common_tail": [[0, -4], [0, -5]],
+  "obstacles": [[-5, -1, -3, 1], [3, -1, 5, 1]],
+  "cuts": [
+    {"generator":"a","x":-4,"y_min":1,"positive_direction":"right_to_left"},
+    {"generator":"b","x":4,"y_min":1,"positive_direction":"right_to_left"}
+  ],
+  "generator_loops": {
+    "a": [[0,-4],[-4,-4],[-4,-2],[-2,-2],[-2,2],[-6,2],[-6,-2],[-4,-2],[-4,-4],[0,-4]],
+    "b": [[0,-4],[4,-4],[4,-2],[6,-2],[6,2],[2,2],[2,-2],[4,-2],[4,-4],[0,-4]]
+  },
+  "alphabet": ["a", "A", "b", "B"],
+  "max_word_length": 6,
+  "rank1_max_word_length": 6,
+  "controls": [
+    {"id":"commutator_collision","left":"","right":"abAB","complete":true,"topology_version":"two-obstacle-rectangles-v1"},
+    {"id":"adjacent_inverse_cancellation","left":"","right":"aA","complete":true,"topology_version":"two-obstacle-rectangles-v1"},
+    {"id":"same_word_different_route_length","left":"a","right":"abB","complete":true,"topology_version":"two-obstacle-rectangles-v1"},
+    {"id":"unfinished_prefix","left":"a","right":"ab","complete":false,"topology_version":"two-obstacle-rectangles-v1"},
+    {"id":"missing_crossing_receipt","left":"abAB","right":null,"complete":true,"receipt_complete":false,"topology_version":"two-obstacle-rectangles-v1"},
+    {"id":"geometry_revision","left":"abAB","right":null,"complete":true,"receipt_complete":true,"topology_version":"two-obstacle-rectangles-v0"}
+  ]
+}
