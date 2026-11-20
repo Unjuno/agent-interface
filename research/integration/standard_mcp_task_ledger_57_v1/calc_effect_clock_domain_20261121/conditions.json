@@ -1,0 +1,101 @@
+{
+  "schema": "agent-interface/calc-effect-clock-domain-v1",
+  "base_revision": "338e2e8ac17cdccbe2fbe24d739a955134b9702c",
+  "candidate_branch": "codex/issue57-effect-clock-domain-r01",
+  "date": "2026-11-21",
+  "finding": {
+    "profile_and_artifact_clock": "time.monotonic_ns",
+    "compiled_graph_clock_before_fix": "time.perf_counter_ns",
+    "normal_windows": {
+      "pid": 7600,
+      "effect_verification_started_ns": 259317755510700,
+      "save_request_monotonic_ns": 259317734000000,
+      "effect_verification_accepted_ns": 259317759357500,
+      "request_precedes_verifier_by_ns": 21510700
+    },
+    "optimized_windows": {
+      "pid": 6996,
+      "effect_verification_started_ns": 259327674489700,
+      "save_request_monotonic_ns": 259327640000000,
+      "effect_verification_accepted_ns": 259327677105200,
+      "request_precedes_verifier_by_ns": 34489700
+    }
+  },
+  "fixed_behavior": {
+    "graph_clock_preserved": "time.perf_counter_ns-backed graph clock; method expiry checked on this clock",
+    "effect_verification_clock": "registered Calc profile.clock, shared with CalcTaskArtifact",
+    "effect_verification_clock_domain_receipt": "time.monotonic_ns",
+    "other_routes": "effect clock defaults to existing graph clock and domain graph"
+  },
+  "conditions": {
+    "windows_python": "CPython 3.11.9",
+    "docker_image": "agent-interface-xvfb-mcp:late-input-r19",
+    "docker_image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "docker_network": "none",
+    "docker_cpus": 2,
+    "docker_memory_bytes": 4294967296,
+    "docker_pids_limit": 256,
+    "source_mount": "read-only",
+    "evidence_mount": "separate read/write bind mount",
+    "source_hash_normalization": "UTF-8 with LF line endings; packet files retain exact bytes via packet-local .gitattributes"
+  },
+  "gates": [
+    {
+      "name": "core compiled GUI suite",
+      "windows": {
+        "normal": {"passed": 36, "failed": 0, "seconds": 0.008},
+        "optimized": {"passed": 36, "failed": 0, "seconds": 0.007}
+      },
+      "raw": ["raw/final-core-normal.log", "raw/final-core-optimized.log"]
+    },
+    {
+      "name": "Calc artifact suite",
+      "windows": {
+        "normal": {"passed": 20, "failed": 0, "seconds": 1.490},
+        "optimized": {"passed": 20, "failed": 0, "seconds": 0.492}
+      },
+      "raw": ["raw/final-artifact-normal.log", "raw/final-artifact-optimized.log"]
+    },
+    {
+      "name": "provider/public-MCP composed Calc path",
+      "windows": {
+        "normal": {"passed": 1, "failed": 0, "seconds": 28.048},
+        "optimized": {"passed": 1, "failed": 0, "seconds": 22.462}
+      },
+      "docker": {
+        "normal": {"passed": 1, "failed": 0, "seconds": 10.352},
+        "optimized": {"passed": 1, "failed": 0, "seconds": 10.585}
+      },
+      "raw": ["raw/final-windows-composition-normal.log", "raw/final-windows-composition-optimized.log", "raw/final-docker-composition-normal.log", "raw/final-docker-composition-optimized.log"]
+    },
+    {
+      "name": "registered Calc owner boundaries plus partial-input cancellation",
+      "selectors": 9,
+      "docker": {
+        "normal": {"passed": 9, "failed": 0, "seconds": 25.530},
+        "optimized": {"passed": 9, "failed": 0, "seconds": 24.526}
+      },
+      "raw": ["raw/final-docker-boundaries-normal.log", "raw/final-docker-boundaries-optimized.log"]
+    }
+  ],
+  "excluded_diagnostics": [
+    "Two older trace attempts failed from temporary diagnostic-only setup errors and remain separately retained under raw/pre-fix; excluded from all pass counts.",
+    "An initial fixed-Windows composition invocation used a relative PYTHONPATH after changing directories and failed import; corrected absolute-PYTHONPATH runs are the reported runs.",
+    "The first post-change deadline fixture calibrated graph-clock expiry from a run where effect timing also read the graph clock; the test fixture was corrected to use an independent effect clock. This was a test calibration issue, not a runtime failure, and is not counted as a pass."
+  ],
+  "excluded_claims": [
+    "live provider/model API",
+    "live GUI or physical input",
+    "MAP01 task success",
+    "recovery reliability estimate",
+    "integrated efficiency or token savings",
+    "Research Preview acceptance",
+    "distribution readiness"
+  ],
+  "source_files_sha256": {
+    "runtime/core_v1/compiled_gui.py": "f117733b583a381c871709525a21ecf370595c936cd1476bc80bd547165e549c",
+    "runtime/core_v1/test_compiled_gui.py": "016d614bdebcebf861ce874e28a6489abfb7ec014a23c27ceb7d596146891d55",
+    "runtime/guarded_x11_v1/compiled.py": "2fa44e0eca3cc08233752ed44d00c904782a82bbfb752e68fdd955f6bd0686fd",
+    "runtime/cli_v1/mcp_guarded.py": "0e81e24beaa856973646af4b4dfecf2c9c7610bee30c25f1810a4de3ea021d94"
+  }
+}
