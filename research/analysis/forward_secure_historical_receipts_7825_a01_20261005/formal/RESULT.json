@@ -1,0 +1,35 @@
+{
+  "allocation_id": "UNJUNO-7825-FSS-A01-20261005",
+  "issue": 7825,
+  "candidate_exit_code": 0,
+  "independent_auditor_exit_code": 0,
+  "retries": 0,
+  "candidate_status": "CANDIDATE_METHOD_RESULT",
+  "independent_audit_status": "PASS_METHOD_SCOPED",
+  "independent_case_match": true,
+  "errors": [],
+  "comparison_decision": "NO_DISTINCT_HISTORICAL_FORGERY_ADVANTAGE_OVER_ROTATING_KEYS_ON_THIS_FIXTURE",
+  "observations": {
+    "compromised_current_leaf_forges_prior_period": false,
+    "rotating_key_baseline_also_rejects_historical_forgery": true,
+    "unwitnessed_suffix_rewrite_fork_and_valid_prefix_rollback_accepted": true,
+    "independently_checkpointed_suffix_fork_and_prefix_rollback_rejected": true,
+    "authentic_signature_on_false_claim_remains_authentic": true,
+    "scorer_ground_truth_for_signed_false_claim": false
+  },
+  "limits": [
+    "Finite synthetic four-period SHA-256/Lamport fixture only; not a production FSS scheme or cryptographic proof.",
+    "Process-level pruning does not demonstrate physical secure erasure.",
+    "External checkpoint conclusions assume the independent witness and trusted head state represented by the fixture.",
+    "WSLc accepted --memory 512M but reported swap-limit/cgroup support unavailable; hard memory enforcement is unverified.",
+    "No runtime, GUI, model, input, effect, safety, or deployment claim."
+  ],
+  "raw_evidence": [
+    "formal/candidate.raw.json",
+    "formal/candidate.stderr",
+    "formal/candidate.exit.json",
+    "formal/audit.raw.json",
+    "formal/audit.stderr",
+    "formal/audit.exit.json"
+  ]
+}
