@@ -1,0 +1,42 @@
+{
+  "base_commit": "40f15b8b04fbdc33327fd18d52250930fb03aee1",
+  "checks": {
+    "761_scorer_rows_and_19_release_transitions": true,
+    "independent_scorer_event_matches_sample": true,
+    "kill_interval_after_space_xsync_and_during_a_hold": true,
+    "nested_keyrelease_xsync_receipts_and_non_authority": true,
+    "nine_run_sources_match_runtime_freeze_and_snapshots": true,
+    "outer_read_window_contains_saved_sample_bracket": true,
+    "prior_audit_disposition_and_final_score_reconciled": true,
+    "raw_hashes": true,
+    "run_release_and_scorer_use_perf_counter_ns": true,
+    "same_plan_owner_intent_identity": true,
+    "single_adjacent_zero_to_one_kill_transition": true
+  },
+  "raw_sha256": {
+    "events": "5407eaab7cc9f9d549c93a6407fc57f8d6252b52e9f2fb6e079eb27bb5004332",
+    "freeze": "150e3615dd4c88f0f40eecb5dbc6efbad1ed9a46e92dd6ec83ea619325550f60",
+    "report": "fef60b73d330cc99af461dac6e7f8e85e4b20ec87e74748223a98f794586e2a3",
+    "runtime_sources": "8bda4ff1f769b47357107b264523e887fcf88133d89ff929a952db1cdee3edc5",
+    "samples": "e113cca3c3f9635f76cb765e3d01f3c239110616c630db332b28058007476599",
+    "saved_interval_audit": "0425068900546eb74d5037ab9cee5455edda3098bc7cb00f23a481b57537cdf0",
+    "scorer_events": "1974b6e9e2c60740c51d627ca8c0b0f91d270cbaff0aff319c3a501f15a68228",
+    "scorer_summary": "f2b5016c327b40199e07786219da2d17bcb7548bef3d7c643a3a8f38c8583591"
+  },
+  "recomputed": {
+    "causal_attribution": "UNRESOLVED",
+    "delay_after_space_sync_ms": [
+      312.756361,
+      383.57549
+    ],
+    "kill_observation_interval_ns": [
+      28331791183,
+      28402303781
+    ],
+    "map_exit": false,
+    "physical_release_authority": false,
+    "recovery_efficacy": "NOT_TESTED"
+  },
+  "schema": "map01-feedback-release-alignment-independent-audit-v1",
+  "status": "PASS_RAW_ONLY_SCOPED_ALIGNMENT"
+}
