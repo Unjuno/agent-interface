@@ -1,0 +1,31 @@
+{
+  "schema": "doom-controller-finish-pipe-freeze-v1",
+  "source_commit": "8bcf6711cd24afe230236e54cb8a27987ecc092f",
+  "hypothesis": "A synchronous write+flush of finish blocks the cleanup context on a full child stdin pipe before its child wait and planner close stages.",
+  "discriminator": {
+    "barrier_seconds": 0.5,
+    "expected_blocked_at_barrier": true,
+    "expected_child_alive_at_barrier": true,
+    "expected_planner_open_at_barrier": true,
+    "external_action_after_barrier": "kill only the owned test child, then join the cleanup thread",
+    "scope": "constructed pipe-pressure boundary only"
+  },
+  "environment": {
+    "runtime": "WSLc 3.0.1.0",
+    "image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "network": "none",
+    "user": "65534:65534",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "gpu": false,
+    "kernel_swap_or_cgroup_enforcement": "not inferred from the requested limit"
+  },
+  "sha256": {
+    "cleanup_source": "7844cd558e453408a0b5aa46b860b53cf9afab9d47ccccaf7b61db2e90b42bb6",
+    "probe": "f3654bc3e04a9785fc15e11cdd4ff9a6c01862c2b04a0f82b8698d42d154081d",
+    "runner": "cd78318f2482acc4d0ba46334811f229ccbc14ee96d375605f952c3a10735045",
+    "report": "29f02321b3e2d26f7c82194dc3f4e05a8117919e5f7bf251a177ab1fedec503f",
+    "auditor": "477664f5ddc7a7e40e3e2602e290a5c2359b8a52de12aec30abcf0c1983d0a27"
+  },
+  "run_policy": "one baseline run; preserve its first exit/output; no retry"
+}
