@@ -1,0 +1,223 @@
+{
+  "study_id": "map01-v39-cleanup-admission-race-a03-20261005",
+  "candidate_invocations": 1,
+  "candidate_head": "39264f167f8f7541aaf10c43d287938b1317f520",
+  "down_receipt": {
+    "event": "input_admission",
+    "key": "F8",
+    "admitted_ns": 162108388062250,
+    "input_ack_ns": 162108388067083,
+    "valid_until_ns": 162118388023750,
+    "physical_key_measurement": {
+      "edge": "down",
+      "classification": "CONFIRMED_PHYSICAL_DOWN",
+      "bracket": {
+        "status": "CONFIRMED_PHYSICAL_DOWN",
+        "physical_down_interval": [
+          162108388064250,
+          162108388069208
+        ],
+        "press_id": "3901d3e0c60b47f0a51bfcc9b46a413c:r1:down:74",
+        "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+        "intent_token": "intent-cancel-fix",
+        "key": "F8",
+        "grants_input_authority": false,
+        "application_consumption_observed": false
+      },
+      "actuation_id": "3901d3e0c60b47f0a51bfcc9b46a413c:g1:F8",
+      "identity_status": "MINTED",
+      "pre_sample": {
+        "available": true,
+        "down": false,
+        "started_ns": 162108388062458,
+        "finished_ns": 162108388064250,
+        "error": null
+      },
+      "post_sample": {
+        "available": true,
+        "down": true,
+        "started_ns": 162108388067458,
+        "finished_ns": 162108388069208,
+        "error": null
+      },
+      "press_request_ns": 162108388065333,
+      "sync_return_ns": 162108388067083,
+      "adapter_edge": {
+        "edge": "down",
+        "status": "CONFIRMED_PHYSICAL_DOWN",
+        "actuation_id": "3901d3e0c60b47f0a51bfcc9b46a413c:g1:F8",
+        "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+        "intent_token": "intent-cancel-fix",
+        "key": "F8",
+        "interval": [
+          162108388064250,
+          162108388069208
+        ],
+        "grants_input_authority": false
+      },
+      "grants_input_authority": false,
+      "application_consumption_observed": false
+    },
+    "id": "race-a03",
+    "step": 9,
+    "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+    "intent_token": "intent-cancel-fix"
+  },
+  "release_receipts": [
+    {
+      "event": "input_release_measurement",
+      "key": "F8",
+      "id": "race-a03",
+      "step": 9,
+      "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+      "intent_token": "intent-cancel-fix",
+      "reason": "cancelled",
+      "physical_key_measurement": {
+        "edge": "up",
+        "classification": "CONFIRMED_PHYSICAL_UP",
+        "bracket": {
+          "status": "CONFIRMED_PHYSICAL_UP",
+          "physical_up_interval": [
+            162108388142708,
+            162108388146500
+          ],
+          "release_id": "3901d3e0c60b47f0a51bfcc9b46a413c:r2:cleanup-up:74",
+          "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+          "intent_token": "intent-cancel-fix",
+          "key": "F8",
+          "grants_input_authority": false,
+          "application_consumption_observed": false
+        },
+        "actuation_id": "3901d3e0c60b47f0a51bfcc9b46a413c:g1:F8",
+        "identity_status": "RETIRED",
+        "pre_sample": {
+          "available": true,
+          "down": true,
+          "started_ns": 162108388139875,
+          "finished_ns": 162108388142708,
+          "error": null
+        },
+        "post_sample": {
+          "available": true,
+          "down": false,
+          "started_ns": 162108388146041,
+          "finished_ns": 162108388146500,
+          "error": null
+        },
+        "release_attempted": true,
+        "release_request_ns": 162108388143208,
+        "sync_return_ns": 162108388145875,
+        "adapter_edge": {
+          "edge": "up",
+          "status": "CONFIRMED_PHYSICAL_UP",
+          "actuation_id": "3901d3e0c60b47f0a51bfcc9b46a413c:g1:F8",
+          "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+          "intent_token": "intent-cancel-fix",
+          "key": "F8",
+          "interval": [
+            162108388142708,
+            162108388146500
+          ],
+          "grants_input_authority": false
+        },
+        "grants_input_authority": false,
+        "application_consumption_observed": false
+      },
+      "grants_input_authority": false
+    }
+  ],
+  "events": [
+    "input_admission",
+    "input_release_measurement"
+  ],
+  "cleanup_completed_before_owner_call_return": true,
+  "owner_state_samples_at_injected_boundary": [
+    {
+      "owned_keycodes": [
+        74
+      ],
+      "owned_buttons": []
+    },
+    {
+      "owned_keycodes": [],
+      "owned_buttons": []
+    }
+  ],
+  "owner_cleanup_records_before_return": [
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 162108388158750,
+      "valid_until_ns": 162118388023750,
+      "per_key_release_measurements": [
+        {
+          "event": "input_release_measurement",
+          "key": "F8",
+          "id": "race-a03",
+          "step": 9,
+          "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+          "intent_token": "intent-cancel-fix",
+          "reason": "cancelled",
+          "physical_key_measurement": {
+            "edge": "up",
+            "classification": "CONFIRMED_PHYSICAL_UP",
+            "bracket": {
+              "status": "CONFIRMED_PHYSICAL_UP",
+              "physical_up_interval": [
+                162108388142708,
+                162108388146500
+              ],
+              "release_id": "3901d3e0c60b47f0a51bfcc9b46a413c:r2:cleanup-up:74",
+              "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+              "intent_token": "intent-cancel-fix",
+              "key": "F8",
+              "grants_input_authority": false,
+              "application_consumption_observed": false
+            },
+            "actuation_id": "3901d3e0c60b47f0a51bfcc9b46a413c:g1:F8",
+            "identity_status": "RETIRED",
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "started_ns": 162108388139875,
+              "finished_ns": 162108388142708,
+              "error": null
+            },
+            "post_sample": {
+              "available": true,
+              "down": false,
+              "started_ns": 162108388146041,
+              "finished_ns": 162108388146500,
+              "error": null
+            },
+            "release_attempted": true,
+            "release_request_ns": 162108388143208,
+            "sync_return_ns": 162108388145875,
+            "adapter_edge": {
+              "edge": "up",
+              "status": "CONFIRMED_PHYSICAL_UP",
+              "actuation_id": "3901d3e0c60b47f0a51bfcc9b46a413c:g1:F8",
+              "owner_id": "3901d3e0c60b47f0a51bfcc9b46a413c",
+              "intent_token": "intent-cancel-fix",
+              "key": "F8",
+              "interval": [
+                162108388142708,
+                162108388146500
+              ],
+              "grants_input_authority": false
+            },
+            "grants_input_authority": false,
+            "application_consumption_observed": false
+          },
+          "grants_input_authority": false
+        }
+      ]
+    }
+  ],
+  "poll_count": 2,
+  "fake_physical_keys_after_execute": [],
+  "bridge_held_after_execute": []
+}
