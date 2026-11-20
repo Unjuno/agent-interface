@@ -1,0 +1,48 @@
+"""Private pending-query boundary; trusted exclusive handle owner required.
+
+This does not create or authenticate a handle, provide kernel fencing, or make
+pending observation atomic with cancellation. No native calls at import time.
+"""
+from controller import Context,Controller
+
+class PendingAdapter:
+    def __init__(self,controller,context,handle,query):
+        if type(controller) is not Controller or type(context) is not Context or controller.context!=context or type(handle) is not int or handle<=0 or not callable(query):raise ValueError('invalid adapter binding')
+        self.controller=controller;self.context=context;self.handle=handle;self.query=query;self.query_attempts=0
+    def sample(self,context):
+        if type(context) is not Context or context!=self.context:raise ValueError('foreign context')
+        state=self.controller.snapshot()
+        if state['resources']['thread_handle']!='HELD':raise ValueError('thread handle retirement has begun')
+        reason=None
+        if state['worker_completion'] is not None:reason='WORKER_TERMINAL'
+        elif state['cancel_phase']=='UNKNOWN':reason='UNCERTAIN_CANCEL_OUTCOME'
+        elif state['admission']!='ADMITTED':reason='WAIT_ADMISSION_OR_REFUSED_WORKER'
+        elif self.query_attempts>=self.controller.budget or state['observations']>=self.controller.budget:reason='UNCERTAIN_OBSERVATION_BUDGET'
+        if reason is not None:return dict(action=reason,api_called=False)
+        # Count attempts before calling: failed or throwing adapters consume work too.
+        self.query_attempts+=1
+        row=self.query(self.handle)
+        if type(row) is not tuple or len(row)!=3:raise ValueError('query tuple required')
+        success,pending,error=row
+        if type(success) is not bool or type(pending) is not bool or type(error) is not int or error<0:raise ValueError('typed API evidence required')
+        action=self.controller.observe_pending(context,pending) if success else 'QUERY_FAILED'
+        return dict(api_success=success,pending=pending,last_error=error,action=action,scope='advisory pending sample, not atomic request identity')
+
+def win32_pending_query():
+    """Construct only when explicitly requested by an owned native driver.
+
+    Formal experiments must freeze this source and owner/handle lifetime first.
+    This constructor is not called by ordinary mock regression tests.
+    """
+    import ctypes
+    from ctypes import wintypes
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    query=kernel.GetThreadIOPendingFlag
+    query.argtypes=[wintypes.HANDLE,ctypes.POINTER(wintypes.BOOL)]
+    query.restype=wintypes.BOOL
+    def sample(handle):
+        pending=wintypes.BOOL();ctypes.set_last_error(0)
+        result=query(handle,ctypes.byref(pending))
+        error=ctypes.get_last_error()
+        return bool(result),bool(pending.value),int(error)
+    return sample

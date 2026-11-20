@@ -1,0 +1,12 @@
+from pathlib import Path
+import json,subprocess,hashlib
+W=Path(__file__).parent;S=W.parents[1]/'work/owned_io_6501_p02_frozen'
+GH='C:/Users/user/AppData/Local/Microsoft/WinGet/Packages/GitHub.cli_Microsoft.Winget.Source_8wekyb3d8bbwe/bin/gh.exe'
+p=subprocess.run([GH,'api','repos/Unjuno/agent-interface/issues/comments/5972625355'],capture_output=True,timeout=30);assert p.returncode==0,p.stderr
+(S/'PUBLIC_FREEZE.json').write_bytes(p.stdout);assert json.loads(p.stdout)['body']==(S/'FREEZE_COMMENT.txt').read_text(encoding='utf8').rstrip()
+f=json.loads((S/'FREEZE_UNSIGNED.json').read_text(encoding='utf8'))
+for row in f['sources']:
+    b=(S/row['name']).read_bytes();assert len(b)==row['bytes'] and hashlib.sha256(b).hexdigest()==row['sha256']
+assert not Path(f['output']).exists()
+f['public_freeze_comment']=5972625355;(S/'FREEZE.json').write_text(json.dumps(f,indent=2)+'\n',encoding='utf8',newline='\n')
+print('PASS_ACTUAL_PUBLIC_FREEZE_ALL_FIVE_SOURCE_IMAGES_BEFORE_NATIVE_COUNT_ZERO')

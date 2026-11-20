@@ -1,0 +1,9 @@
+# P02 owned Win32 read cancellation connection evidence
+
+Preserves all39 original images of two distinct prospectively frozen native cells. Freeze Issue6501 comment5972625355; original complete result/public readback5972646951. Capsule JSON SHA2566acd185ba2af7ead4986a4134410d212300368d5a6c1ecb207e8fd3ae507f541. Native allocation consumed2/2; no replay for archive checks or main refresh.
+
+Precancellation child9540 performed no ReadFile or native cancellation. Pending-cancellation child28484 used one positive pending observation and one native cancellation; ReadFile returned false/error995/count0. Both actual caller Future cancellation, worker terminal/join/CloseHandle and os.close returns were recorded. Primary cleanup write0, workers terminal, final modeled resources retired. Independent frozen data auditor13604 passed both cells and refused six whole saved contradictions. Full27 original events, both complete process receipts/streams, source images, frozen contract and saved controls are retained byte-for-byte.
+
+One owned anonymous pipe/one nonpooled worker/trusted serialized owner/synthetic Future cancellation channel only. This is not general caller/task/UI/input-release, pooled-thread/kernel fencing, hostile-producer, driver-wide efficacy, deadline/performance or success-rate evidence. Adjacent source bytes/module paths are not loaded-bytecode attestation; os.close normal return is not an independent EBADF-after-close witness. First ordinary P01 construction failures remain separately retained; this capsule is the executed P02 evidence, not every prior construction artifact.
+
+Source images end .py.txt and are inert data. No module initializer, executable producer, native test or workflow is added. Manifest hashes all41 nonmanifest files and maps the39 original capsule paths to archive paths without changing bytes. No runtime adoption, source-author vote, application certificate or main sender designation follows from this archive.
