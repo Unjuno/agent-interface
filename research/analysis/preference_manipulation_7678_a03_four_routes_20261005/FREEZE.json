@@ -1,0 +1,40 @@
+{
+  "allocation": "PREFERENCE-MANIPULATION-7678-A03-FOUR-ROUTES-20261005-01",
+  "auditor_invocations": 1,
+  "base_main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "candidate_invocations": 1,
+  "canonical_source_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "environment": {
+    "context": "orbstack",
+    "engine": "OrbStack",
+    "image": "docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3",
+    "network": "none",
+    "platform": "linux/arm64",
+    "pull": "never"
+  },
+  "expected": {
+    "control_families": 4,
+    "deviation_rows": 6624,
+    "reports": 92,
+    "true_profiles": 36
+  },
+  "issue": 7678,
+  "predecessor_a02_head": "b68685985152e0319cc29d7bc88b583f2c79a786",
+  "predecessor_a02_pr": "https://github.com/Unjuno/agent-interface/pull/7919",
+  "retry_count": 0,
+  "schema": "preference-manipulation-7678-a03-four-route-freeze-v1",
+  "sha256": {
+    "COMMANDS.txt": "1727e8d70559989cb3176f10448918394a4ea7c1b7a2d6e1e838747349926973",
+    "CONSTRUCTION.md": "ed262ace2f93fd34461027b961dd79465bafb6198744fc423985caa5881329c0",
+    "CONTAINER_LIMITS.txt": "e26422d893e03ace09b3d81e99fd57bda8453925302dfe160a3d445009b8d80d",
+    "PREDECESSOR_A02.md": "976ff611b5398f1d5594901337e34f46ffae064a9e17afb09d8f1687e8b87a41",
+    "PREREGISTRATION.md": "00f01e5cd0086ddf87f3ebf9f3f5f10062024d8f60390e68b3a44764cddf9577",
+    "auditor.py": "b8ae1d18ddd01d7faec4044525565a802f57873ababebae121a04745f2dd64d3",
+    "candidate.py": "904cb61e298378ac8837692c03034acb2703baf04b0f9296c86c9a7a22ad2ce4",
+    "canonical_sources/issue6274_candidate.py": "faf28cbc47ec6eff403a5a77fd05c126b7d0d161a172fa22a94f5ff109a59935",
+    "canonical_sources/issue6274_oracle.py": "48609a1f8ed9a62eab5f885aa11ea2a54d84ce0739ede24776088b903e9a1dd1",
+    "fixture.json": "a18a83b59fa0a588b99d2bc97c3e8d40e2bd924452861fbbc0dfd17ba00c6757",
+    "test_construction.py": "a3a7a4f9eae13bb344a4592c9659efef8ea18110629463e9e7241bf132cfca2a"
+  },
+  "status": "FROZEN_NOT_RUN"
+}
