@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-p8102-current-main\research\doom\v15_cleanup_lazy_pil_successor_a04_20261005\audit_a04.py", line 26, in <module>
+    err=base64.b64decode((root/run[mode]['stderr']['path']).read_text(encoding='ascii'),validate=True).decode('utf-8','replace'); checks[f'{mode}-pass-classification']=run['modes'][mode]['exit_code']==0 and run['modes'][mode]['tests']==47 and run['modes'][mode]['failures']==0 and run['modes'][mode]['errors']==0 and 'Ran 47 tests' in err and 'OK' in err and 'FAILED' not in err
+                               ~~~^^^^^^
+KeyError: 'normal'

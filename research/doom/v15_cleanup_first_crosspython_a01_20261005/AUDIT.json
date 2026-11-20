@@ -1,0 +1,38 @@
+{
+  "schema": "v15-cleanup-crosspython-independent-audit-v1",
+  "disposition": "PASS_AUDIT_STOP_ENVIRONMENT_DEPENDENCY",
+  "candidate_disposition": "STOP_CONTAINER_IMAGE_MISSING_PIL",
+  "source_tree": "2ce07e058ed6b868ea97799e9a7b65deff21da71",
+  "source_files_checked": 1996,
+  "source_bytes_checked": 11194822,
+  "check_count": 8,
+  "checks": [
+    "manifest-structure",
+    "materialized-source-hashes",
+    "source-file-set",
+    "run-plan",
+    "image-runtime",
+    "container-cleanup",
+    "normal-raw-stop",
+    "optimized-raw-stop"
+  ],
+  "modes": {
+    "normal": {
+      "exit_code": 1,
+      "tests": 47,
+      "errors": 8,
+      "error": "ModuleNotFoundError: No module named 'PIL'",
+      "stdout_sha256": "e9611eb5fa64345264cde012fc51f5bc3cc69e641a8686e362cc6039c2e02d40",
+      "stderr_sha256": "5a74595d426deea075eb4f876e38b136cadc3d336c0c84861edf862793bb16f5"
+    },
+    "optimized": {
+      "exit_code": 1,
+      "tests": 47,
+      "errors": 8,
+      "error": "ModuleNotFoundError: No module named 'PIL'",
+      "stdout_sha256": "d7ba8c18cf86c541aad3a7ae0eedbf0ffbd3897246788390899c9dcec321ca4b",
+      "stderr_sha256": "52b10a7653d4728a37363b9d5eff9e0c59752992314554a2f61aa9ae16a197d1"
+    }
+  },
+  "scope": "read-only source/raw audit; no candidate code executed"
+}

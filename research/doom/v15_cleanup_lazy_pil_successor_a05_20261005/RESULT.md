@@ -1,0 +1,3 @@
+# V15 lazy-Pillow import successor A05 — staging STOP
+
+A05 did not test the no-PIL hypothesis. Its staging validator detected that the copied A04 candidate file was already patched although SOURCE_MANIFEST names the unmodified virtual-merge blob. Staging aborted. Due to a runner fail-fast defect, both frozen unittest commands were nevertheless invoked once against an empty scratch root; each failed to import all seven test modules. The blocker marker is absent, no candidate code was imported, and no assertion ran. Preserve this STOP and do not rerun A05. A06 uses exact Git base blobs, applies the frozen patch after verification, and guards test launch on staging success. The installed runtime was not modified.
