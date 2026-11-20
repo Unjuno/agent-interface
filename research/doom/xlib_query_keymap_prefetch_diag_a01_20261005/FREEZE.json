@@ -1,0 +1,27 @@
+{
+  "allocation_id": "MAP01-V39-XLIB-QUERY-PREFETCH-A01-20261005-01",
+  "architecture": "arm64",
+  "auditor_invocations": "at most 1, only after candidate exit 0",
+  "candidate_invocations": 1,
+  "expected_packages": {
+    "python3-xlib": "0.33-2",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "expected_python": "3.12.3",
+  "freeze_time_utc": "2026-10-04T19:55:21Z",
+  "guest_image": "ubuntu:noble",
+  "main_sha": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+  "retries": 0,
+  "schema": "xlib-query-keymap-prefetch-freeze-a01-v1",
+  "source_sha256": {
+    "COMMANDS.txt": "b4de5c875e82891223c537a7cfa4f1fcfbeded13814d10461ab5676aa3df8315",
+    "PLAN.md": "3101fc6494dea23d3f984a794f169559fa0220667bc2a4e7d33126c4f76ec7a2",
+    "README.md": "bdad794181f7b24ac3629e7a84c2e673b9157520b2c45820200154d7f69e957d",
+    "audit.py": "806dfa24f71188b78740cb1a205b90688f29fb4aa076962f5c19f70f86b72177",
+    "probe.py": "39ae711fb30bcc80f087f58fe27637161510305ec61784ecf3e69db27a39a31f",
+    "run_candidate.sh": "b3914aab3bf0e8ec046336f923323a8242c726cb06427079fa077c01f2912c89",
+    "setup_guest.sh": "aee417d6cc59d5e35f536378aa6c92ba9ead53e3d0696369437b08fa66b334cb",
+    "test_audit.py": "e197dd816ad64a15657927c1640538378586d5ed48187e628e9f6fc672d776a7",
+    "verify_bundle.py": "9555264a51513268e04d8867d292bbe7e62c915986e035f753cd1f7c7bfb940d"
+  }
+}

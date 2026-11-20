@@ -1,0 +1,22 @@
+{
+  "allocation_id": "MAP01-V39-XLIB-QUERY-PREFETCH-A04-20261005-01",
+  "auditor_invocations": 0,
+  "bundle_sha256": "9be723182b3fc2cf7876c6354ba7cf5b6137692ade22503e9b6393b801c7c57c",
+  "candidate_invocations": 0,
+  "environment": {
+    "os": "Ubuntu 24.04.5 arm64",
+    "python": "3.12.3",
+    "python_xlib": "0.33-2",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "freeze_sha256": "a4a416b463d36f583645f8d71d0e4af587ea9a409f4c3354e7bd2221cfef63bc",
+  "live_map01_or_model_used": false,
+  "main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "reason": "Pre-run audit found the frozen candidate records queue depth but not queued event identities before select. Therefore it cannot establish that the expected key event itself was prefetched. Candidate was not invoked; no post-hoc protocol change was made.",
+  "schema": "xlib-query-keymap-prefetch-a04-outcome-v1",
+  "setup_exit": 0,
+  "setup_log_sha256": "a71dbb5a87cf80d286a35860dc304dc082418ffd25361a48b35653dfe527a5f4",
+  "status": "STOP_BEFORE_CANDIDATE",
+  "vm_id": "01M448RVJZRFKJPQRMVD2JCE21",
+  "vm_state": "stopped"
+}
