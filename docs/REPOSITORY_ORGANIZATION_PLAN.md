@@ -597,3 +597,43 @@ before any further branch/worktree disposition. Keep #57 open: this packet is on
 result and does not satisfy its matched three-arm token/latency/correctness
 comparison. Continue the Issue/PR inventory from the r151 ID sets in disjoint
 batches; do not convert the large open queue into a closure target.
+
+## Current whole-repository checkpoint r152 (2026-11-21)
+
+The paginated membership read is recorded in
+[`repository-inventory-recheck-20261121-r152.md`](maintenance/repository-inventory-recheck-20261121-r152.md)
+against main `bab0b6fd18a8c64fbc664476ebbf26ef2267f7d7`, read immediately
+before and after the Issue and PR enumeration. It contains the exact sorted ID
+sets and deltas from r151: 1,643 open Issues (zero added, 11 removed) and 410
+open PRs (11 added, 53 removed). This is a queue membership comparison, not
+semantic disposition, owner/custody validation, or merge readiness. The next
+organization wave must refresh selected records and route their distinct
+hypotheses into canonical families; no bulk closure follows from these counts.
+
+Three current-main candidates were verified and integrated during this wave:
+
+- [PR #10354](https://github.com/Unjuno/agent-interface/pull/10354) adds the
+  bounded R281 raw audit and expiry-release publication candidate. The live
+  trial confirms one task effect, not MAP01 completion, efficiency, or
+  reliability. Merge commit: `551cf28bb3ef3249af66d4c1ea33c2ca0b98882e`.
+- [PR #10352](https://github.com/Unjuno/agent-interface/pull/10352) adds the
+  late App Server usage receipt adapter. Its four changed modules pass 26/26
+  normal and 26/26 under `-O`; a broader 107-test local discovery exposed two
+  separate Calc/Fake X failures and is retained as nonpassing evidence. The
+  adapter is not wired automatically into every runner and proves no provider
+  billing or efficiency result. Merge commit: `b049316731b0c8ddf47ed22c3df28c37c9f5d396`.
+- [PR #10353](https://github.com/Unjuno/agent-interface/pull/10353) records a
+  Windows portable-runtime build on current main: 21/21 normal and `-O`,
+  checkout-outside `doctor` and `validate --help` both exit 0, and the
+  diagnostic explicitly grants no side-effect authority. Public distribution,
+  Linux/WSL startup, and live input remain unverified. Merge commit:
+  `bab0b6fd18a8c64fbc664476ebbf26ef2267f7d7`.
+
+Issue #57 remains open: matched integrated token/latency/correctness economics,
+standard-caller task success after recovery, repeated reliability, and trusted
+fresh comparison allocation are still outstanding. PR #10340 remains a draft
+on base `86a52662`; its local rebase could not establish a shared merge base
+with this main checkout and began replaying a broad history, so that attempt
+was aborted without modifying the PR. Audit its lineage and frozen source
+before choosing a bounded current-main port. No WSLc or Docker live allocation
+was used in this checkpoint.
