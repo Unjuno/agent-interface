@@ -708,3 +708,9 @@ CPU slot and WSLc ownership gates remain unresolved. Do not start or inspect
 Docker, launch Mindustry, or consume a formal comparison slot until the
 applicable conditions are satisfied. Do not bulk-close queue items based on
 the unchanged membership snapshot.
+
+## Current whole-repository checkpoint r154 (2026-11-21)
+
+On current main `8c71a6199bd51ca6b38aa02cb92d9833c3260a67`, a complete paginated REST reread found 1,643 open Issues and 410 open PRs. Both exact ID sets match r152/r153 (zero added, zero removed); main was the same SHA before and after the reads. Reuse the existing sorted ID CSVs. This confirms stable membership only, not item meaning, ownership, evidence custody, or merge readiness. No bulk state change follows.
+
+The active product/research map remains: #57 is open for standard-caller recovered task success, repeated reliability, and matched all-attempt provider/token/latency/correctness economics; #58 remains open for exact frozen RC1 host setup, retained audit, a fresh no-retry golden run, and `audit-live`. The new R05 setup/doctor packet records pinned Python dependency setup success but a doctor HOLD caused by missing expected Windows Codex CLI JS and WSL Chromium. #5130 is the one-time six-task Mindustry three-arm economics allocation under #57, still gated on its frozen source/resource conditions; #7924 remains the explicit WSLc migration STOP. PR #10340 is still a draft/prospective journal and does not authorize dispatch or supply a trusted allocation attestor. Keep these records open until their distinct gates have evidence; continue bounded family/PR triage from the existing work map instead of treating the unchanged queue as cleaned.
