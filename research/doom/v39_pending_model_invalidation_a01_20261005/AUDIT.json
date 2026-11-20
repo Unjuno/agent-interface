@@ -1,0 +1,97 @@
+{
+  "checks": [
+    {
+      "check": "frozen current main identity",
+      "passed": true
+    },
+    {
+      "check": "construction only",
+      "passed": true
+    },
+    {
+      "check": "frozen source/test manifest unchanged",
+      "passed": true
+    },
+    {
+      "check": "production import closure unchanged on latest origin/main",
+      "passed": true
+    },
+    {
+      "check": "normal: runtime source hash matches freeze",
+      "passed": true
+    },
+    {
+      "check": "normal: planner was actively pending",
+      "passed": true
+    },
+    {
+      "check": "normal: fresh paired health invalidated cover",
+      "passed": true
+    },
+    {
+      "check": "normal: race answer eligible after interruption",
+      "passed": true
+    },
+    {
+      "check": "normal: interrupt and matching cancel requested",
+      "passed": true
+    },
+    {
+      "check": "normal: cancellation terminal carries empty verified receipt",
+      "passed": true
+    },
+    {
+      "check": "normal: returned answer rejected before executor admission",
+      "passed": true
+    },
+    {
+      "check": "normal: no formal/live allocation",
+      "passed": true
+    },
+    {
+      "check": "optimized: runtime source hash matches freeze",
+      "passed": true
+    },
+    {
+      "check": "optimized: planner was actively pending",
+      "passed": true
+    },
+    {
+      "check": "optimized: fresh paired health invalidated cover",
+      "passed": true
+    },
+    {
+      "check": "optimized: race answer eligible after interruption",
+      "passed": true
+    },
+    {
+      "check": "optimized: interrupt and matching cancel requested",
+      "passed": true
+    },
+    {
+      "check": "optimized: cancellation terminal carries empty verified receipt",
+      "passed": true
+    },
+    {
+      "check": "optimized: returned answer rejected before executor admission",
+      "passed": true
+    },
+    {
+      "check": "optimized: no formal/live allocation",
+      "passed": true
+    },
+    {
+      "check": "both local test logs report one passing test",
+      "passed": true
+    },
+    {
+      "check": "retained normal/optimized source outcomes agree",
+      "passed": true
+    }
+  ],
+  "checks_passed": 22,
+  "checks_total": 22,
+  "schema": "v39-pending-model-invalidation-a01-audit-v1",
+  "scope": "independent file/hash/raw consistency audit; not live or physical-release audit",
+  "status": "PASS"
+}
