@@ -1,0 +1,195 @@
+{
+  "base_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "bytes_scanned": 346178738,
+  "disposition": "HOLD_NO_ELIGIBLE_LOOKUP",
+  "eligibility_rule": "source-bound artifact held by one worker + a distinct worker's genuine claim-dependent retrieval opportunity + observable discovery/reacquisition outcome or cost",
+  "files_scanned": 14157,
+  "files_size_skipped": 14,
+  "match_count": 16,
+  "matches": [
+    {
+      "line": 5,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "  \"eligibility_rule\": \"source-bound artifact held by one worker + a distinct worker's genuine claim-dependent retrieval opportunity + observable discovery/reacquisition outcome or cost\","
+    },
+    {
+      "line": 13,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"  \\\"eligibility_rule\\\": \\\"source-bound artifact held by one worker + a distinct worker's genuine claim-dependent retrieval opportunity + observable discovery/reacquisition outcome or cost\\\",\""
+    },
+    {
+      "line": 18,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"      \\\"snippet\\\": \\\"\\\\\\\"\\\\\\\"\\\\\\\"Read-only bounded search for retained cross-worker lookup traces in research.\\\\\\\"\\\\\\\"\\\\\\\"\\\"\""
+    },
+    {
+      "line": 23,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"      \\\"snippet\\\": \\\"    r\\\\\\\"broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast\\\\\\\",\\\"\""
+    },
+    {
+      "line": 28,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"      \\\"snippet\\\": \\\"    r\\\\\\\"who currently holds.{0,80}(evidence|artifact)\\\\\\\",\\\"\""
+    },
+    {
+      "line": 33,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"      \\\"broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast\\\",\""
+    },
+    {
+      "line": 38,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"      \\\"who currently holds.{0,80}(evidence|artifact)\\\"\""
+    },
+    {
+      "line": 43,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"\\\"\\\"\\\"Read-only bounded search for retained cross-worker lookup traces in research.\\\"\\\"\\\"\""
+    },
+    {
+      "line": 48,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"    r\\\"broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast\\\",\""
+    },
+    {
+      "line": 53,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"snippet\": \"    r\\\"who currently holds.{0,80}(evidence|artifact)\\\",\""
+    },
+    {
+      "line": 88,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast\","
+    },
+    {
+      "line": 89,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/results/ELIGIBILITY_A01/repository_search.json",
+      "snippet": "      \"who currently holds.{0,80}(evidence|artifact)\""
+    },
+    {
+      "line": 1,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/src/audit_scope.py",
+      "snippet": "\"\"\"Read-only bounded search for retained cross-worker lookup traces in research.\"\"\""
+    },
+    {
+      "line": 17,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/src/audit_scope.py",
+      "snippet": "    r\"broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast\","
+    },
+    {
+      "line": 18,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/src/audit_scope.py",
+      "snippet": "    r\"who currently holds.{0,80}(evidence|artifact)\","
+    },
+    {
+      "line": 42,
+      "path": "research/analysis/query_private_locator_8000_t0_eligibility_a01_20261005/src/audit_scope.py",
+      "snippet": "    result={\"disposition\":\"HOLD_NO_ELIGIBLE_LOOKUP\",\"scope\":{\"repository_subtree\":\"research/\",\"extensions\":sorted(INCLUDE),\"max_file_bytes\":MAX_FILE,\"max_total_bytes\":MAX_TOTAL,\"excluded_parts\":sorted(EXCLUDE_PARTS),\"patterns\":PATTERNS},\"ba"
+    }
+  ],
+  "note": "Matches are leads, not qualifying traces. Each possible record must be manually checked against the three-part eligibility rule; prior proposals/contracts do not establish an executed retrieval opportunity.",
+  "scope": {
+    "excluded_parts": [
+      ".git",
+      "__pycache__",
+      "decoded_material",
+      "images",
+      "node_modules",
+      "source_bundle"
+    ],
+    "extensions": [
+      ".csv",
+      ".json",
+      ".jsonl",
+      ".md",
+      ".py",
+      ".txt",
+      ".yaml",
+      ".yml"
+    ],
+    "max_file_bytes": 8388608,
+    "max_total_bytes": 524288000,
+    "patterns": [
+      "cross[- ]worker.{0,80}(retriev|lookup|holder|artifact)",
+      "(retriev|lookup|holder|artifact).{0,80}cross[- ]worker",
+      "claim[- ]dependent.{0,80}(retriev|lookup)",
+      "evidence[- ]location|artifact[- ]locator|query[- ]private",
+      "broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast",
+      "who currently holds.{0,80}(evidence|artifact)"
+    ],
+    "repository_subtree": "research/"
+  },
+  "skipped_files": [
+    {
+      "path": "research/analysis/action_class_error_budget_5424_t2_v1/raw/formal/outcomes.jsonl",
+      "reason": "size_cap",
+      "size": 20392581
+    },
+    {
+      "path": "research/analysis/adaptive_privacy_filter_5420_t1_v1/raw/formal/outcomes.jsonl",
+      "reason": "size_cap",
+      "size": 14022850
+    },
+    {
+      "path": "research/analysis/conformal_verifier_risk_contract_5315_v1/results/formal-01/raw.jsonl",
+      "reason": "size_cap",
+      "size": 23181407
+    },
+    {
+      "path": "research/analysis/confusion_adaptive_practice_8084_t0_a10_20261005/auditor/observed_counts.json",
+      "reason": "size_cap",
+      "size": 13600019
+    },
+    {
+      "path": "research/analysis/confusion_adaptive_practice_8084_t0_a10_20261005/candidate/observed_counts.json",
+      "reason": "size_cap",
+      "size": 13600019
+    },
+    {
+      "path": "research/analysis/epistemic_commit_5441_t4/raw/formal.jsonl",
+      "reason": "size_cap",
+      "size": 43353869
+    },
+    {
+      "path": "research/analysis/generalizability_budget_7889_t0_a01_20261005/raw-ledger.csv",
+      "reason": "size_cap",
+      "size": 8668624
+    },
+    {
+      "path": "research/analysis/latency_regime_coverage_7709_t0_20261005/raw_trials.jsonl",
+      "reason": "size_cap",
+      "size": 46930266
+    },
+    {
+      "path": "research/analysis/looming_yield_5905_t0_20261001_01/raw.json",
+      "reason": "size_cap",
+      "size": 12613025
+    },
+    {
+      "path": "research/analysis/map01_matched_causal_task_effect_r4_v1/results/formal-01/truth_table.jsonl",
+      "reason": "size_cap",
+      "size": 38207550
+    },
+    {
+      "path": "research/analysis/model_api_canary_6001_t0_a02_20261001/results/construction/raw.jsonl",
+      "reason": "size_cap",
+      "size": 10668464
+    },
+    {
+      "path": "research/analysis/spatial_block_position_6590_t1_orbstack_v1/results/formal-02/predictions.jsonl",
+      "reason": "size_cap",
+      "size": 15606339
+    },
+    {
+      "path": "research/analysis/spatial_block_position_6590_t1_orbstack_v2/results/formal-03/candidate/predictions.jsonl",
+      "reason": "size_cap",
+      "size": 15650768
+    },
+    {
+      "path": "research/analysis/stochastic_trace_reducer_8152_t0_20261005/results/candidate.raw.json",
+      "reason": "size_cap",
+      "size": 9393840
+    }
+  ]
+}
