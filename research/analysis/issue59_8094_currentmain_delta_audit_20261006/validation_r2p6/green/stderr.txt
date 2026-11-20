@@ -1,0 +1,94 @@
+test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) ... 
+  test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='modified_candidate_null', optimized=True) ... ERROR
+  test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='invalid_class', optimized=True) ... ERROR
+  test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='source_commit_missing', optimized=True) ... ERROR
+  test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='unknown_path', optimized=True) ... ERROR
+
+======================================================================
+ERROR: test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='modified_candidate_null', optimized=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/ai59_r2p6/test_verifier.py", line 32, in test_source_table_contract
+    p = subprocess.run(cmd, capture_output=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/pyvenv/bin/python', '-I', '-B', '-O', '/tmp/ai59-verifier-unit-zk2cqg0z/modified_candidate_nullTrue/subject.py', '--repo', '/tmp/ai59-verifier-unit-zk2cqg0z/repo', '--result', '/tmp/ai59-verifier-unit-zk2cqg0z/modified_candidate_nullTrue/RESULT.json']' timed out after 5 seconds
+
+======================================================================
+ERROR: test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='invalid_class', optimized=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/ai59_r2p6/test_verifier.py", line 32, in test_source_table_contract
+    p = subprocess.run(cmd, capture_output=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/pyvenv/bin/python', '-I', '-B', '-O', '/tmp/ai59-verifier-unit-zk2cqg0z/invalid_classTrue/subject.py', '--repo', '/tmp/ai59-verifier-unit-zk2cqg0z/repo', '--result', '/tmp/ai59-verifier-unit-zk2cqg0z/invalid_classTrue/RESULT.json']' timed out after 5 seconds
+
+======================================================================
+ERROR: test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='source_commit_missing', optimized=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/ai59_r2p6/test_verifier.py", line 32, in test_source_table_contract
+    p = subprocess.run(cmd, capture_output=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/pyvenv/bin/python', '-I', '-B', '-O', '/tmp/ai59-verifier-unit-zk2cqg0z/source_commit_missingTrue/subject.py', '--repo', '/tmp/ai59-verifier-unit-zk2cqg0z/repo', '--result', '/tmp/ai59-verifier-unit-zk2cqg0z/source_commit_missingTrue/RESULT.json']' timed out after 5 seconds
+
+======================================================================
+ERROR: test_source_table_contract (test_verifier.VerifierTests.test_source_table_contract) (case='unknown_path', optimized=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/ai59_r2p6/test_verifier.py", line 32, in test_source_table_contract
+    p = subprocess.run(cmd, capture_output=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/pyvenv/bin/python', '-I', '-B', '-O', '/tmp/ai59-verifier-unit-zk2cqg0z/unknown_pathTrue/subject.py', '--repo', '/tmp/ai59-verifier-unit-zk2cqg0z/repo', '--result', '/tmp/ai59-verifier-unit-zk2cqg0z/unknown_pathTrue/RESULT.json']' timed out after 5 seconds
+
+----------------------------------------------------------------------
+Ran 1 test in 94.911s
+
+FAILED (errors=4)
