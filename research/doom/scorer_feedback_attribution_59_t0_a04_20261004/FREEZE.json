@@ -1,0 +1,14 @@
+{
+  "schema": "scorer-feedback-attribution-a04-freeze-v1",
+  "parent_issue": 59,
+  "purpose": "Reject malformed positive useful scorer-event kind values found in review of PR 7537; retain A01-A03 unchanged",
+  "parent_candidate": "research/doom/scorer_feedback_attribution_59_t0_a03_20261004/scorer_feedback_attribution_v2.py",
+  "source": "scorer_feedback_attribution_v3.py",
+  "test": "test_attribution.py",
+  "runner": "run_a04.py",
+  "auditor": "audit.py",
+  "inputs": "fixed valid and malformed event-kind cases embedded in run_a04.py",
+  "decision": "Malformed positive useful event kinds reject; a valid event retains possible-envelope-only semantics",
+  "resource_scope": "local CPU construction only; no live lane, GUI, game, model, or input",
+  "formal_allocation": false
+}
