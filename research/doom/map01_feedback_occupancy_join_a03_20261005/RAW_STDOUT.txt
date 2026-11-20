@@ -1,0 +1,14 @@
+First completed candidate invocation (exit 0; recorded before post-run construction review):
+{
+  "schema": "map01-admission-hold-identity-ambiguity-a03-v1",
+  "status": "PASS_AMBIGUITY_FALSIFIED_RECONSTRUCTION_SCOPED",
+  "counts": {"events": 634, "admissions": 39, "aggregate_holds": 28},
+  "candidate_count_histogram": {"1": 6, "2": 4, "3": 5, "4": 4, "5": 4, "6": 4, "7": 4, "8": 4, "9": 3, "10": 1},
+  "uniquely_joinable": 6,
+  "ambiguous": 33,
+  "unmatched": 0,
+  "all_step_key_sets_consistent": false,
+  "checked_hold_steps": 28,
+  "greedy_counterexample": {"matches": [{"admission_ns": 10, "greedy_match": "A"}, {"admission_ns": 30, "greedy_match": "B"}], "misattributed": false}
+}
+This output is preserved as emitted. Its PASS label is withdrawn: the frozen consistency condition failed and the stated counterexample did not show misattribution.

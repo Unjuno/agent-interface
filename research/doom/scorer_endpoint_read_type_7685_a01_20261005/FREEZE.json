@@ -1,0 +1,19 @@
+{
+  "allocation_id": "SCORER-ENDPOINT-READ-TYPE-7685-A01-20261005",
+  "main_commit": "d12d451ae5e7661adc3b261403196b1af72e2851",
+  "subject_pr_head": "5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0",
+  "source_path": "research/doom/scorer_endpoint_composition_59_a01_20261005/checkpoint_candidate.py",
+  "source_sha256": "c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5",
+  "run_type": "deterministic_local_cpu_construction_regression",
+  "hypothesis": "The post-snapshot episode-tic stability check in the pinned scorer checkpoint candidate accepts non-integer endpoint reads when Python equality aliases them to the integer acknowledged endpoint.",
+  "test": "Execute pinned candidate code with three controlled stubs: integer 10→11 with integer readback 11; same endpoints with float readback 11.0; and 0→1 with boolean readback True. Retain candidate status and private log row for each case. Independent auditor validates raw case identities/statuses and source bytes without importing candidate code.",
+  "decision": "FAIL_OPEN_ENDPOINT_TYPE if either malformed float or bool readback gets REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING; PASS_FAIL_CLOSED if valid int is pending and both malformed readbacks are UNKNOWN with no values; HOLD for source mismatch, malformed raw, or auditor failure.",
+  "competing_explanation": "The real ViZDoom API may always return an integer. This test targets defensive contract behavior and does not establish an observed live API type violation.",
+  "uncertainty": "Small deterministic stubs against a non-integrated candidate on a PR branch. No actual game, scorer, X server, model, GUI, input, task progress, or recovery behavior is measured.",
+  "candidate_command": "python research/doom/scorer_endpoint_read_type_7685_a01_20261005/run.py",
+  "audit_command": "python research/doom/scorer_endpoint_read_type_7685_a01_20261005/audit.py",
+  "candidate_runs": 1,
+  "retry": false,
+  "live_calls": 0,
+  "container_calls": 0
+}
