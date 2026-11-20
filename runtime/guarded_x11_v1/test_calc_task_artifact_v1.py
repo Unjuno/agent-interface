@@ -226,11 +226,16 @@ class CalcTaskArtifactTests(unittest.TestCase):
 
     def test_parent_minted_registered_save_receipt_verifies_exact_closed_artifact(self):
         with tempfile.TemporaryDirectory() as directory:
-            artifact = new_artifact(directory, clock=lambda:150)
+            artifact = new_artifact(directory, clock=lambda:175)
             request = artifact.record_save_request(
                 process_generation=PROCESS_GENERATION,
                 window_generation=WINDOW_GENERATION)
             method = successful_registered_profile_receipt()
+            save_effect = method['critical_events'][5]
+            self.assertLess(save_effect['effect_verification_started_ns'],
+                            request['save_request_monotonic_ns'])
+            self.assertLess(request['save_request_monotonic_ns'],
+                            save_effect['effect_verification_accepted_ns'])
             controller = make_registered_calc_save_controller_receipt(
                 descriptor=artifact.descriptor,method_receipt=method,
                 save_request=request)
@@ -293,14 +298,21 @@ class CalcTaskArtifactTests(unittest.TestCase):
                 descriptor=artifact.descriptor,method_receipt=method,
                 save_request=request)
             method = successful_registered_profile_receipt()
-            method['critical_events'][5]['effect_verification_started_ns'] = 149
-            verification_started_before_save = (
+            method['critical_events'][5]['effect_verification_started_ns'] = 151
+            request_timestamp_before_verification = (
+                make_registered_calc_save_controller_receipt(
+                    descriptor=artifact.descriptor,method_receipt=method,
+                    save_request=request))
+            method = successful_registered_profile_receipt()
+            method['critical_events'][5]['effect_verification_accepted_ns'] = 149
+            verification_accepted_before_request = (
                 make_registered_calc_save_controller_receipt(
                     descriptor=artifact.descriptor,method_receipt=method,
                     save_request=request))
         self.assertIsNone(bad_release)
         self.assertIsNone(bad_effect)
-        self.assertIsNone(verification_started_before_save)
+        self.assertIsNone(request_timestamp_before_verification)
+        self.assertIsNone(verification_accepted_before_request)
 
     def test_parent_plan_binds_planner_named_save_receipt_and_rejects_substitution(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,0 +1,99 @@
+{
+  "schema": "agent-interface/calc-save-controller-order-check-v1",
+  "base_revision": "897f4896d23dd127a4523dc4955e573dace7d674",
+  "candidate_branch": "codex/issue57-calc-fixture-r01",
+  "date": "2026-11-21",
+  "python": "3.11 in agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "container_conditions": {
+    "network": "none",
+    "cpus": 2,
+    "memory_bytes": 4294967296,
+    "memory_swap_bytes": 4294967296,
+    "pids_limit": 256,
+    "source_mount": "read-only",
+    "evidence_mount": "separate writable path"
+  },
+  "finding": {
+    "previous_receipt_condition": "save_request_ns <= effect_verification_started_ns <= effect_verification_accepted_ns",
+    "observed_event_order": {
+      "effect_verification_started_ns": 250643070026352,
+      "save_request_monotonic_ns": 250643070895201,
+      "effect_verification_accepted_ns": 250643071183835
+    },
+    "correct_interval": "effect_verification_started_ns <= save_request_ns <= effect_verification_accepted_ns",
+    "task_effect_before_fix": "parsed FODS cells matched; trusted save-controller receipt rejected; task_success remained null"
+  },
+  "source_files": {
+    "runtime/guarded_x11_v1/calc_task_artifact_v1.py": "9538aa01b834c1d9a80a097ae99f2053131b7c5187068aa670355adeb247d81e",
+    "runtime/guarded_x11_v1/test_calc_task_artifact_v1.py": "d2e4573e0761df31603354b22ce7c5e07d6b7a6cf0f0c0448710919c94304855",
+    "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py": "446bb7baba9b2bf9e44a913d72bdc911cf6427fb6f20d9bb46cccb3615e519d5"
+  },
+  "gates": [
+    {
+      "name": "Calc task-artifact suite",
+      "command": "python3 -m unittest runtime.guarded_x11_v1.test_calc_task_artifact_v1 -v",
+      "normal": {
+        "passed": 20,
+        "failed": 0,
+        "seconds": 0.097
+      },
+      "optimized": {
+        "passed": 20,
+        "failed": 0,
+        "seconds": 0.049
+      }
+    },
+    {
+      "name": "registered Calc owned-process cases",
+      "count": 8,
+      "normal": {
+        "passed": 8,
+        "failed": 0,
+        "seconds": 23.649
+      },
+      "optimized": {
+        "passed": 8,
+        "failed": 0,
+        "seconds": 22.923
+      }
+    },
+    {
+      "name": "provider-to-public-MCP composition",
+      "count": 1,
+      "normal": {
+        "passed": 1,
+        "failed": 0,
+        "seconds": 12.147
+      },
+      "optimized": {
+        "passed": 1,
+        "failed": 0,
+        "seconds": 12.479
+      }
+    },
+    {
+      "name": "partial-input cancellation accounting",
+      "count": 1,
+      "normal": {
+        "passed": 1,
+        "failed": 0,
+        "seconds": 4.113
+      },
+      "optimized": {
+        "passed": 1,
+        "failed": 0,
+        "seconds": 3.661
+      }
+    }
+  ],
+  "excluded": [
+    "live GUI or physical input",
+    "external provider or model API",
+    "formal allocation",
+    "MAP01 task success or recovery reliability",
+    "integrated efficiency or token savings"
+  ],
+  "no_assertions_weakened": true,
+  "sha256sums_excludes_self": true
+}
