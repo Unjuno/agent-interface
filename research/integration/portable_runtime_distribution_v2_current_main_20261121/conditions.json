@@ -1,7 +1,7 @@
 {
   "packet_id": "portable_runtime_distribution_v2_current_main_20261121",
-  "source_revision": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
-  "base_main": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "source_revision": "b049316731b0c8ddf47ed22c3df28c37c9f5d396",
+  "base_main": "b049316731b0c8ddf47ed22c3df28c37c9f5d396",
   "runtime_source_files_identical_to_base": true,
   "host": {
     "os": "Microsoft Windows 11 Pro",
@@ -13,22 +13,23 @@
     "normal": {
       "count": 21,
       "exit_code": 0,
-      "elapsed_seconds": 29.988
+      "elapsed_seconds": 42.994
     },
     "optimized": {
       "count": 21,
       "exit_code": 0,
-      "elapsed_seconds": 32.811
+      "elapsed_seconds": 37.404
     }
   },
   "artifact": {
     "name": "agent-interface-runtime.pyz",
     "bytes": 784932,
-    "sha256": "0b8ebae5976cb103621c61f94cf6aa086a22faa7ab802c4aa3848e5bec29b579",
-    "source_revision": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+    "sha256": "b5d6a72aba1fe7ecd9238cf37432f8faf2f44279c031a8d239bc5c138933efa3",
+    "source_revision": "b049316731b0c8ddf47ed22c3df28c37c9f5d396",
     "doctor_exit_code": 0,
     "validate_help_exit_code": 0,
     "tested_from_checkout": false
   },
-  "scope": "Local deterministic packaging and command startup only; no native input, live GUI, permission prompt, provider, task effect, release, or public publication."
+  "scope": "Local deterministic packaging and command startup on Windows only; no native input, live GUI, permission prompt, provider, task effect, or public release.",
+  "runtime_source_files_identical_to_previous_base_381a21a": true
 }
