@@ -1,0 +1,19 @@
+import pathlib,tarfile,io,json,hashlib,copy
+w=pathlib.Path(__file__).resolve().parent;raw=(w/'linux-collect.stdout').read_bytes()
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as t:
+ ms=[m for m in t.getmembers() if m.isfile()];assert len(ms)<500 and sum(m.size for m in ms)<10485760
+ rows={m.name:t.extractfile(m).read() for m in ms};assert len(rows)==len(ms)
+r=json.loads(rows['actual/outcome.json']);ready=json.loads(rows['actual/ready.json']);h=[json.loads(x) for x in rows['actual/client/runtime/submission-history.jsonl'].splitlines()];events=[json.loads(x) for x in rows['actual/client/runtime/events.jsonl'].splitlines()];owners=json.loads(rows['actual/client/runtime/owner-events.json'])
+def effect(h):
+ tasks=ready['goal']['tasks'];return len(h)==6 and all(sum(x['task_id']==t['task_id'] and x['submitted_values']==[t['token']] and x['expected_token']==t['token'] and x['layout']==t['layout'] and x['exact'] is True for x in h)==1 for t in tasks)
+gates={'original_effects':effect(h),'original_oracle':r['independent']['success'] is True and r['independent']['record_count']==6,'oracle_join':r['independent'] in events,'programs':len(json.loads(rows['actual/programs.json']))==18,'model_zero':r['model_calls']==r['images_to_model']==0,'natural_exit':r['natural_exit']==0,'owner_record':bool(owners) and all(x.get('verified') is True and not x.get('keys_down') and not x.get('buttons_down') for x in owners if x.get('event')=='owner_release')}
+assert all(gates.values())
+controls=[]
+for label in ['wrong-token','duplicate','missing','wrong-layout']:
+ c=copy.deepcopy(h)
+ if label=='wrong-token':c[0]['submitted_values']=['wrong']
+ if label=='duplicate':c.append(copy.deepcopy(c[0]))
+ if label=='missing':c.pop()
+ if label=='wrong-layout':c[0]['layout']='B'
+ assert not effect(c);controls.append(label)
+print(json.dumps({'disposition':'PASS_KNOWN_AUTOFOCUS_KEYBOARD_REFERENCE_SCOPED','gates':gates,'rejected_copies':controls,'raw_members':len(rows),'guest_sha256':hashlib.sha256(raw).hexdigest(),'ready_to_oracle_ns':r['ready_to_oracle_ns'],'model_calls':0,'scope':'known fixture; no causal cross-run speedup/general GUI/physical-global certification'},indent=2))
