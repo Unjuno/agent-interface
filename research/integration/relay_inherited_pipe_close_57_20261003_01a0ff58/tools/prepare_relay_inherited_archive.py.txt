@@ -1,0 +1,68 @@
+import datetime,hashlib,json,pathlib
+ROOT=pathlib.Path(__file__).resolve().parent
+WT=ROOT/'relay-inherited-close-checkout'
+REL='research/integration/relay_inherited_pipe_close_57_20261003_01a0ff58'
+ARCHIVE=WT/REL;ARCHIVE.mkdir(parents=True,exist_ok=False)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def public(b):
+    for prefix in (b'C:\\\\Users\\\\user',b'<LOCAL_HOME>',b'<LOCAL_HOME>'):
+        b=b.replace(prefix,b'<LOCAL_HOME>')
+    return b
+rows=[]
+def include(name,path):
+    original=path.read_bytes();projected=public(original);target=ARCHIVE/name;target.parent.mkdir(parents=True,exist_ok=True)
+    with target.open('xb') as f:f.write(projected)
+    rows.append({'path':name,'bytes':len(projected),'sha256':sha(projected),
+                 'private_original_bytes':len(original),'private_original_sha256':sha(original),
+                 'custody':'exact original bytes' if projected==original else 'public home-prefix projection'})
+for label,folder in [('E01',ROOT/'relay-inherited-close-57-20261003'),
+                     ('E02',ROOT/'relay-inherited-close-detached-57-20261003')]:
+    for path in sorted(folder.rglob('*')):
+        if not path.is_file():continue
+        relative=path.relative_to(folder).as_posix()
+        if path.suffix=='.mjs':relative+='.txt'
+        include(label+'/'+relative,path)
+for name in ('relay_inherited_close_probe.mjs','capture_relay_inherited_close.py',
+             'prepare_relay_inherited_detached.py','capture_relay_inherited_close_detached.py',
+             'check_relay_inherited_close.py','prepare_relay_inherited_archive.py'):
+    include('tools/'+name+'.txt',ROOT/name)
+include('REPORT.md',ROOT.parent/'outputs/relay-inherited-close-20261003.md')
+diag={'source':'post-result actual tool transcript qualification, not captured stdout/stderr binary',
+      'saved_reader_command':'bundled CPython3.12.14 -B work/check_relay_inherited_close.py',
+      'actual_reader_tool_exit':0,'tool_chunk':'c1c3ff','reader_native_pid':'uncaptured',
+      'reader_exact_end_utc':'uncaptured','reader_complete_console_semantics':'identical RESULT.json object serialized by source print(json.dumps(report))',
+      'first_readonly_inspection':'after E02, one Python -c diagnostic had a mismatched-parenthesis SyntaxError/tool8f8136 exit1; no producer/test/source replay or result mutation',
+      'scope':'full actor streams/command/receipt and native rows are retained; reader stdout binary/own PID was not captured and not invented'}
+(ARCHIVE/'TOOL_QUALIFICATIONS.json').write_text(json.dumps(diag,indent=2),encoding='ascii',newline='\n')
+(ARCHIVE/'.gitattributes').write_bytes(b'* -text\n')
+readme='''# Relay parent exit vs inherited-pipe close — retained boundary evidence
+
+Evidence only; no runtime, workflow, test discovery or backend changes. [Report](REPORT.md).
+Existing parent[#57](https://github.com/Unjuno/agent-interface/issues/57), scientific recovery direction[#59](https://github.com/Unjuno/agent-interface/issues/59).
+
+Frozen base ba1c4d966bc098e8f9f7e9e6df85f1281daa1582; original Node module12829B/SHA2560a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b.
+Actual Windows/Node24.19.0/CPython3.12.14; no command/action/backend/GUI/model sent.
+
+First E01 driver32844exit1 retains healthy parent/host0, attached stdout parent+descendant native0 before release (holder precondition false), missing exit-intent error and unstarted stderr. Original files unchanged. New E02 detached:true is a material process-lifetime condition, not an ID-only retry; original healthy/attached cases were not repeated. Actual driver29956exit0 retains detached stdout/stderr descendants live after parent0; original close/terminal file remain pending at104405900/108503500ns after parent exit. One owned fixture release completes the same original close and receipt. All7 acquired OS process identities/generations terminal0, handles/capture threads retired. Fixture3s/driver12s/capture20s guards do not prove production hard bounds or input cleanup.
+
+Saved reader joins raw/protocol/native creation identity/exit/release/receipt/no-command history, retains first HOLD/error, refuses9 copied timeline/type/control changes after rebuilding raw/receipt identity. Original actors/producers/auditors were not replayed. Reader's actual toolexit0 is recorded; its own PID, exact end UTC and stdout binary were uncaptured and remain so ([qualification](TOOL_QUALIFICATIONS.json)).
+
+`E01/source` and `E02/source` code is archived as .txt and MUST NOT be run as a historical producer. All PLAN recorded producer_invocations=0 values are prospective freeze facts; actual outcomes live in first-01/first-02, not rewritten into those freezes. Fixtures are strictly private synthetic processes/files, not authentic native application/input/task evidence. Native observations do not authenticate execution against forgery; actual Job object identity was not queried. Default Windows deaths are consistent with the [versioned libuv implementation](https://github.com/nodejs/node/blob/v24.19.0/deps/uv/src/win/process.c#L1016), not a measured causal Job identity or universal containment guarantee.
+
+`CUSTODY.json` binds all original/public copies. Home prefixes are explicitly projected; original declared hashes are not publicly authenticated original bytes. `MANIFEST.json` covers every other package image. No source hash alone certifies release/task/performance. Archive adoption must retain first scientific/HOLD outcomes and requires genuine FINAL-v5 review/current application gates. Main send0.
+
+Reconstruction: read the files as data, verify MANIFEST bytes/SHA and CUSTODY joins, parse full stdout/protocol/native-handles alongside each original BEFORE/RECEIPT, then independently check ancestor/descendant lifetime and single release/close correspondence. Do not invoke frozen helpers, source/programs or original allocations. This source snapshot can be independently compared to the immutable base.
+'''
+(ARCHIVE/'README.md').write_text(readme,encoding='utf-8',newline='\n')
+(ARCHIVE/'CUSTODY.json').write_text(json.dumps({'schema':'agent-interface/relay-inherited-custody-v1',
+    'recorded_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'rows':rows},indent=2),encoding='ascii',newline='\n')
+files=[]
+for path in sorted(ARCHIVE.rglob('*')):
+    if path.is_file():files.append({'path':path.relative_to(ARCHIVE).as_posix(),'bytes':path.stat().st_size,'sha256':sha(path.read_bytes())})
+(ARCHIVE/'MANIFEST.json').write_text(json.dumps({'schema':'agent-interface/evidence-manifest-v1','entries':files},indent=2),encoding='ascii',newline='\n')
+for row in files:
+    require=ARCHIVE/row['path']
+    if len(require.read_bytes())!=row['bytes'] or sha(require.read_bytes())!=row['sha256']:raise RuntimeError('archive readback')
+print(json.dumps({'files':len(files)+1,'manifest_targets':len(files),'custody_rows':len(rows),
+                  'archive_bytes':sum(p.stat().st_size for p in ARCHIVE.rglob('*') if p.is_file()),
+                  'manifest_sha256':sha((ARCHIVE/'MANIFEST.json').read_bytes())}))
