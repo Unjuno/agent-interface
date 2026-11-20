@@ -1,0 +1,53 @@
+{
+  "classification": "offline-current-source-replay-of-retained-live-input",
+  "source_commit": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "controller_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+  "source_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+  "controller_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+  "events_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+  "input_row_count_including_source": 53,
+  "source": {
+    "sequence": 166,
+    "capture_ns": 55540748339900,
+    "health": 61,
+    "ammo": 40,
+    "health_floor": 51
+  },
+  "model_started_ns": 55541310338720,
+  "sequence_200": {
+    "sequence": 200,
+    "capture_ns": 55546847220240,
+    "health": 51,
+    "ammo": 38,
+    "invalidation": null,
+    "frame_rgb_sha256": "7731f923af45dce8dec01270372f18edce3633e626f3b02a0c43439eec745f1c"
+  },
+  "first_invalidation": {
+    "sequence": 218,
+    "capture_ns": 55550033032859,
+    "health": 48,
+    "ammo": 37,
+    "invalidation": {
+      "reason": "health:below_hard_minimum",
+      "requires_new_decision": true,
+      "grants_input_authority": false
+    },
+    "frame_rgb_sha256": "fd7f813b9b2c15d1c33c8e0d4514747697c62df515c8a1905b7492f5c16cc60b"
+  },
+  "model_terminal": {
+    "status": "interrupted",
+    "answer_eligible": false,
+    "terminal_observed_ns": 55550226108534
+  },
+  "timing_ms": {
+    "model_start_to_sequence_200_capture": 5536.88152,
+    "sequence_200_to_218_capture": 3185.812619,
+    "sequence_218_capture_to_planner_terminal": 193.075675
+  },
+  "counts": {
+    "processed_after_source": 52,
+    "no_invalidation_before_first": 51
+  },
+  "scope": "Historical-input replay through frozen main only; no live game, model, GUI, OS input, or efficacy claim."
+}
