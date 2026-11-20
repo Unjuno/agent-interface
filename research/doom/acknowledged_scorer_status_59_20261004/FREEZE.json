@@ -1,0 +1,15 @@
+{
+  "source_base_commit": "54009330859258ae59c5cd555c89058c00b68c81",
+  "hypothesis": "A successful advancing update followed by scorer failure is mislabeled as update unavailable and loses producer identity.",
+  "baseline_files": {
+    "research/doom/acknowledged_scorer_v1.py": "EDCA36213884A2F21542A3B1339E8B2D3B68B79EBCADD3D0067BDC80D9BF42F0",
+    "research/doom/test_acknowledged_scorer_v1.py": "5DB76914B5915B1F383E7ABE45964E6FD3253FE55B46F1D2B8C8A4903268C5F6"
+  },
+  "wslc_image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+  "wslc_flags": ["--rm", "--pull never", "--network none", "--user 65534:65534", "--cpus 1", "--memory 512m"],
+  "test": "python3 -B -m unittest test_acknowledged_scorer_v1 -v",
+  "source_mount": "research/doom:/source:ro",
+  "output_mount": "research/doom/acknowledged_scorer_status_59_20261004/out:/out:rw",
+  "environment": ["PYTHONPATH=/source", "PYTHONDONTWRITEBYTECODE=1", "HOME=/tmp"],
+  "scope": "Fake-game source construction only; no live engine, model, GUI, or input. Requested memory limit enforcement unverified."
+}
