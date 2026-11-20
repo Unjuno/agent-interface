@@ -24,10 +24,14 @@ experiment allocation.
   correctness accounting. Single MAP01 effects and the late-usage adapter do
   not close these gates.
 - **Research Preview:** Issue [#58](https://github.com/Unjuno/agent-interface/issues/58)
-  remains open. Its release-specific sequence is governed by
-  [`release/README.md`](release/README.md) and the latest Issue #58 acceptance
-  record; generic package tests do not satisfy supported-host setup, retained
-  audit, fresh persistent-only run, or `audit-live`.
+  remains open. A current-main read-only launcher preflight passed 19/19 on a
+  fresh sparse Ubuntu WSL ext4 checkout; the Windows-mounted checkout retained
+  four line-ending/worktree-byte failures. This is not the frozen RC1 host
+  acceptance. The release sequence in [`release/README.md`](release/README.md)
+  still requires setup/doctor, retained audit, one fresh no-retry persistent
+  run, and `audit-live`. See the
+  [preflight packet](research/integration/research_preview_preflight_current_main_20261121/RESULT.md)
+  and latest Issue #58 acceptance record.
 - **Allocation and queue:** #5130's named Docker CPU lane and #7924's WSLc
   client ownership remain unresolved; #908 is a consumed historical HOLD.
   PR #10340 remains a non-dispatching draft without an external allocation

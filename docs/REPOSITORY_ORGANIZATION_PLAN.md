@@ -688,6 +688,14 @@ task effects, permission flow, public release, or preview graduation. The
 current scoped gate wording is corrected in
 [`issue57-next-gates-20261121.md`](maintenance/issue57-next-gates-20261121.md).
 
+
+Issue #58's read-only first-run launcher boundary was also checked on current
+main: 19/19 pass in a fresh sparse Ubuntu WSL ext4 checkout, while the
+Windows-mounted checkout retains four CRLF/worktree-byte failures. The
+intermediate output-capture failure is preserved and excluded. This current-main
+preflight is not the frozen RC1 supported-host setup/doctor or golden run; see
+[the packet](../research/integration/research_preview_preflight_current_main_20261121/RESULT.md).
+
 Issue #57 remains open. #908 is a consumed, closed HOLD; #5130 and #7924 remain
 open with Docker/WSLc resource ownership unresolved. PR #10340 remains draft
 with its five checks green; it is a non-dispatching synthetic journal and has
