@@ -1,4 +1,5 @@
 """Audit the retained R281 expiry/release/recovery/effect event ordering."""
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -8,6 +9,10 @@ from effect_attribution_v1 import adjudicate_effect
 
 PACKET = (Path(__file__).resolve().parents[4] / "outputs"
           / "r281-audit-20261121" / "extracted" / "trial")
+RAW_SHA256 = {
+    "events.jsonl": "0dee2dcb92fb5d427c6d25f9aacaf641eacf60291e1312fbf7d6f5d23de52a9a",
+    "owner-events.json": "81df708b74daca2d7386931f68afd659556b5ca565c854426bf74d486cfe9b4f",
+}
 
 
 def events():
@@ -31,6 +36,10 @@ class R281IndependentAudit(unittest.TestCase):
         if not PACKET.is_dir():
             raise unittest.SkipTest(
                 "R281 raw packet is local-only; run the recorded audit where retained")
+        for name, expected in RAW_SHA256.items():
+            actual = hashlib.sha256((PACKET / name).read_bytes()).hexdigest()
+            if actual != expected:
+                raise AssertionError(f"R281 raw digest mismatch: {name}")
         cls.rows = events()
         cls.owners = owner_events()
 
