@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/src/research/live_control/owner_keyup_duplicate_down_5156_a04_20261005/audit.py", line 20, in <module>
+    if sha(path) != expected:
+       ^^^^^^^^^
+  File "/src/research/live_control/owner_keyup_duplicate_down_5156_a04_20261005/audit.py", line 16, in sha
+    return hashlib.sha256((HERE / path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/src/research/live_control/owner_keyup_duplicate_down_5156_a04_20261005/current_main:research/doom/doom_retained_input_backend_v4.py'
