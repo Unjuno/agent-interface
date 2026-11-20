@@ -651,3 +651,18 @@ effect with offline model double. A recheck of its journal suite was incomplete
 because the local shallow/sparse tree lacked pinned source files (3 allocation
 checks passed; 10 errored on file lookup), so old 12/12 claims are not
 reconfirmed for the rebased head. See the correction memo for exact detail.
+
+### #57 experimental work queue (2026-11-21)
+
+Do not close #57, #5130, or historical #908/#879 to make the queue look clean.
+Their evidence represents separate dependent gates. The current order is:
+(1) prepare an additive fresh successor to #908 for exact pinned v160.2 JAR and
+canonical-save setup-only smoke; (2) obtain the named Docker CPU lane and
+reconcile sibling ownership required by #5130; (3) execute the single frozen
+six-task Mindustry economics allocation and independent raw audit; (4)
+separately resolve #57's standard-caller recovered-task and repeated
+reliability gates; (5) run the provider-backed matched integrated
+token/latency/correctness comparison and verify distributable runtime
+boundaries. See
+[`issue57-next-gates-20261121.md`](maintenance/issue57-next-gates-20261121.md)
+for source and resource evidence. No live resource was touched in this wave.
