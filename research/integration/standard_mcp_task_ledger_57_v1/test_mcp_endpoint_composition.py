@@ -37,6 +37,14 @@ from runtime.cli_v1.test_mcp_owned_process import (
 )
 
 
+def _calc_profile_owner_factory(targets, directory, display_name, options):
+    """Pickleable owner factory matching Calc owner/query generations."""
+    marker = Path(directory, "calc-profile-mode")
+    if not marker.exists():
+        marker.write_text("enabled", encoding="utf-8")
+    return _fake_owner_factory(targets, directory, display_name, options)
+
+
 def _reviewable_fake_owner_factory(targets, directory, display_name, options):
     owner = _fake_owner_factory(targets, directory, display_name, options)
     owner.get()
@@ -1602,7 +1610,26 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             original_create_server = calc_tests.create_server
 
             def create_recording_server(*args, **kwargs):
+                owner_factory = kwargs.get("_guarded_owner_factory")
+                if owner_factory is _fake_owner_factory:
+                    kwargs["_guarded_owner_factory"] = _calc_profile_owner_factory
                 server = original_create_server(*args, **kwargs)
+                if owner_factory is _fake_owner_factory:
+                    server_root = Path(args[1])
+                    original_call_tool = server.call_tool
+                    async def create_mode_marker_for_attempt(name, arguments):
+                        attempt_id = arguments.get("attempt_id")
+                        if (name == "interface_guarded_calc_prepare" and
+                                attempt_id in {
+                                    "calc-offline-wrong-after-input",
+                                    "calc-offline-unknown-after-input",
+                                    "calc-offline-no-match-after-input",
+                                    "calc-offline-ambiguous-after-input"}):
+                            mode = attempt_id.removeprefix("calc-offline-")
+                            (server_root / "calc-profile-mode").write_text(
+                                mode, encoding="utf-8")
+                        return await original_call_tool(name, arguments)
+                    server.call_tool = create_mode_marker_for_attempt
                 caller = RecordedPublicMcpCaller(
                     Relay(ServerClient(server), tools={
                         "interface_guarded_calc_compiled", "interface_guarded_observe",
@@ -1896,10 +1923,16 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     calc_tests, "create_server", create_recording_server):
                 case = calc_tests.OwnedProcessMCPTests(
                     "test_registered_calc_profile_runs_through_owned_mcp_and_releases")
-                await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+                try:
+                    await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+                finally:
+                    case.doCleanups()
                 negative_case = calc_tests.OwnedProcessMCPTests(
                     "test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr")
-                await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr()
+                try:
+                    await negative_case.test_registered_calc_profile_stops_on_wrong_unknown_no_match_or_ambiguous_ocr()
+                finally:
+                    negative_case.doCleanups()
 
             # A malformed terminal provider result is an attempted generation,
             # but it must not be parsed into or dispatched as an MCP tool call.

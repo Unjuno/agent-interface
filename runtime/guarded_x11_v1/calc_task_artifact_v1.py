@@ -222,9 +222,11 @@ def make_registered_calc_save_controller_receipt(*, descriptor, method_receipt,
             and finished.get('reason') == 'effect_unavailable'):
         return None
     request_ns = save_request['save_request_monotonic_ns']
+    # The profile captures this request from inside its effect verifier, so
+    # its timestamp must fall within the verifier's measured interval.
     if (type(save_effect.get('effect_verification_started_ns')) is not int
             or type(save_effect.get('effect_verification_accepted_ns')) is not int
-            or not request_ns <= save_effect['effect_verification_started_ns']
+            or not save_effect['effect_verification_started_ns'] <= request_ns
                 <= save_effect['effect_verification_accepted_ns']):
         return None
     transitions = method_receipt.get('transitions')
