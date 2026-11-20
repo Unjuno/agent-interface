@@ -19,3 +19,7 @@ The two transferred historical manifests cover 25 files. One missing CR in the o
 ## Limits and disposition
 
 Evidence is deterministic App Server/spool/Fake X with synthetic provider streams. It does not prove real provider delivery/billing, integrated efficiency, GUI effects, MAP01 success, or recovery reliability. The four directly changed modules pass on current main, but the full suite failure needs reconciliation before integration. Keep the PR open and draft while tracing the two existing Calc/Fake X failures; do not relabel the full suite as pass.
+
+## Post-`551cf28` focused recheck (2026-11-21)
+
+Current main later advanced to `8207849ad0bd30b6b31ef4a9cee7eb95f5b4619a`, including changes to the late-usage modules and tests. A fresh four-module run found R01 normal-mode start-receipt timeout plus a publisher-thread cleanup race; `-O` passed. R02 passed both modes but is excluded because its freeze lost the source-hash map. A narrowly scoped test-fixture repair then passed R03 at 26/26 normal and 26/26 optimized, with exact hashes retained in [the recheck packet](../current_main_recheck_8207849_20261121/RESULT.md). The full 107-test Calc/Fake X failures in the prior audit remain unresolved; this focused test repair does not make PR #10218 merge-ready or establish live-provider economics.

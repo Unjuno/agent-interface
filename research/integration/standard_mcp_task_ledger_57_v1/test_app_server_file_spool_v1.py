@@ -117,13 +117,16 @@ class AppServerFileSpoolTests(unittest.TestCase):
 
     def test_file_planner_joins_start_and_terminal_receipts(self):
         planner = FileSpoolPlanner(self.root, model="gpt-6.1-sol", effort="medium",
-            expected_schema_sha256=self.schema_sha256, start_timeout=1)
+            expected_schema_sha256=self.schema_sha256, start_timeout=5)
         started = threading.Event()
         finish = threading.Event()
         failures = []
 
         def host_once():
-            deadline = time.monotonic() + 1
+            # This fake host runs in a thread. Give it more scheduling slack
+            # than the planner's receipt wait so host startup cannot race the
+            # test deadline under a busy runner.
+            deadline = time.monotonic() + 10
             request = None
             while request is None and time.monotonic() < deadline:
                 request = claim_next(self.root, expected_model="gpt-6.1-sol",
@@ -137,7 +140,7 @@ class AppServerFileSpoolTests(unittest.TestCase):
             publish_stage(self.root, attempt_id, "started", {
                 "thread_id": "thread-live", "turn_id": "turn-live"})
             started.set()
-            if not finish.wait(timeout=1):
+            if not finish.wait(timeout=5):
                 failures.append("consumer did not complete begin_turn")
                 return
             publish_stage(self.root, attempt_id, "completed", {
@@ -151,13 +154,18 @@ class AppServerFileSpoolTests(unittest.TestCase):
 
         host = threading.Thread(target=host_once)
         host.start()
-        handle = planner.begin_turn("Plan one action.", output_schema=self.schema,
-            image_path=self.image)
-        self.assertTrue(started.is_set())
-        self.assertEqual((handle.thread_id, handle.turn_id), ("thread-live", "turn-live"))
-        finish.set()
-        result = planner.await_turn(handle, timeout=1)
-        host.join(timeout=1)
+        try:
+            handle = planner.begin_turn("Plan one action.", output_schema=self.schema,
+                image_path=self.image)
+            self.assertTrue(started.is_set())
+            self.assertEqual((handle.thread_id, handle.turn_id), ("thread-live", "turn-live"))
+            finish.set()
+            result = planner.await_turn(handle, timeout=1)
+        finally:
+            # Never let a failed assertion leave the publisher racing with
+            # TemporaryDirectory cleanup on Windows.
+            finish.set()
+            host.join(timeout=10)
         self.assertFalse(host.is_alive())
         self.assertEqual(failures, [])
         self.assertTrue(result.answer_eligible)
