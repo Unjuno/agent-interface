@@ -1,0 +1,36 @@
+{
+  "audit_output_sha256": "72e07685848bf26b161e37992b717ed3c62fda7914435dbad804f3cfd7d34d23",
+  "audit_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "audit_stdout_sha256": "72e07685848bf26b161e37992b717ed3c62fda7914435dbad804f3cfd7d34d23",
+  "auditor_command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "audit.py"
+  ],
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "candidate_command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "candidate.py",
+    "--input",
+    "public_input.json",
+    "--output",
+    "formal_output.json"
+  ],
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_output_sha256": "fef44438659d94a5c604f982eaa15d9e68d40b691dbebcad357cf42e3f39bbe2",
+  "candidate_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "disposition": "PASS_METHOD_AND_HYPOTHESIS_SCOPED",
+  "driver_invocations": 1,
+  "environment": {
+    "machine": "arm64",
+    "network": false,
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "runtime": "native CPU"
+  },
+  "retries": 0
+}

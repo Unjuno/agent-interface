@@ -1,0 +1,33 @@
+{
+  "allocation": "UNJUNO-8004-JOINT-UNITIZATION-LINKAGE-T0-A02-20261005",
+  "auditor_invocations": 1,
+  "auditor_sha256": "be8c34d483227645a2b491b209a68e49a05458473626ab203c43e24120158daf",
+  "base_commit": "f7344ec753c9538255afb1c649e94740f81b55e6",
+  "candidate_invocations": 1,
+  "decision_gate": "PASS_METHOD_SCOPED requires exact independent reconstruction of all 9 assignments, clean unique-ID recovery, stable one-factor envelopes under both source-dependence strata, joint [2,3] threshold crossing to UNIDENTIFIED, correct missing/censored/common-blind-spot treatment, independent linkage-error diagnostics, and rejection of all six mutations. H_PASS_SCOPED only for this authored existence case.",
+  "environment": {
+    "dependencies": "Python standard library only",
+    "machine": "arm64",
+    "network": false,
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "runtime": "native CPU"
+  },
+  "formal_driver_command": "python3 -B run_formal.py",
+  "formal_driver_invocations": 1,
+  "issue": 8004,
+  "protocol": "issue-8004-t0-a02-v1",
+  "retries": 0,
+  "scope": "Finite authored sensitivity envelope; no probability model, unseen-population estimate, model/human behavior, or production claim.",
+  "source_sha256": {
+    "CONSTRUCTION.json": "65ab03b451dbddc54d5d4ec6cfaacf79b55490a8cbb07350d4fccf17c8f4b225",
+    "README.md": "277faf3328f1d172a09f89434456d4dd39db47ec47a3100c8c3ae56f0bb567a8",
+    "audit.py": "be8c34d483227645a2b491b209a68e49a05458473626ab203c43e24120158daf",
+    "auditor_truth.json": "be38c807fbda64f1c5e73ffee98a826173d7898ae3eac886987d2090965134a0",
+    "build_fixture.py": "2f0698079ddb2ed90404586378b46310a17b288d78155f6343af2382720874b3",
+    "candidate.py": "38d8d11154a9bb305d33a8e7491f58dcd100351e3154f5a91a6243a0153eaa99",
+    "public_input.json": "d8fea461967390ed50b1eba7259146ce8d667c45e22c1880f22bac0e8fe2701f",
+    "run_formal.py": "69f625101026a4daccdd5c8351c690e408c3e2951d07623d0c43e1fb3fe419b8",
+    "test_construction.py": "6c90280678161dcfc9c08f702f25819ce2381a894f52249971076a2c63fdeb0a"
+  }
+}
