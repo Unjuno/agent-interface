@@ -1,0 +1,112 @@
+{
+  "events": [
+    {
+      "admitted_ns": 120117797355700,
+      "event": "input_admission",
+      "id": "failure-retry-plan",
+      "input_ack_ns": 120117797359900,
+      "intent_token": "probe-intent",
+      "key": "W",
+      "keycode": 77,
+      "owner_id": "e7040ff7e3fb41498e3aec3916812faf",
+      "step": 0,
+      "valid_until_ns": 120122797315000
+    },
+    {
+      "application_consumption_observed": false,
+      "call_interval_ns": [
+        120117797380600,
+        120117797427900
+      ],
+      "call_returned_ns": 120117797427900,
+      "call_started_ns": 120117797380600,
+      "continuous_physical_state_sampled": false,
+      "error_type": "OSError",
+      "event": "input_release_rpc_error",
+      "grants_input_authority": false,
+      "id": "failure-retry-plan",
+      "intent_token": "probe-intent",
+      "operation": "up",
+      "outcome_uncertain": true,
+      "owner_id": "e7040ff7e3fb41498e3aec3916812faf",
+      "payload": "W",
+      "step": 1
+    },
+    {
+      "application_consumption_observed": false,
+      "button": null,
+      "call_interval_ns": [
+        120117797431900,
+        120117797465400
+      ],
+      "call_interval_width_ns": 33500,
+      "call_returned_ns": 120117797465400,
+      "call_started_ns": 120117797431900,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "id": "failure-retry-plan",
+      "intent_token": "probe-intent",
+      "interval_width_ns": 33500,
+      "keycode": 77,
+      "operation": "up",
+      "owner_id": "e7040ff7e3fb41498e3aec3916812faf",
+      "payload": "W",
+      "release_applied": true,
+      "release_transition_interval_ns": [
+        120117797431900,
+        120117797465400
+      ],
+      "step": 2,
+      "valid_until_ns": 120122797315000,
+      "x11_release_and_sync_completed_before_return": true,
+      "x11_release_request_issued": true,
+      "x11_sync_completed_before_return": true
+    },
+    {
+      "event": "input_released",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "owner_release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 120122797315000,
+        "verified": true,
+        "verified_ns": 120117797493100
+      }
+    }
+  ],
+  "reconciled": [
+    {
+      "ack_ns": 120117797359900,
+      "censored": true,
+      "exact_key_up_time": null,
+      "id": "failure-retry-plan",
+      "intent_token": "probe-intent",
+      "key": "W",
+      "occupancy_lower_ns": null,
+      "occupancy_upper_ns": 133200,
+      "owner_id": "e7040ff7e3fb41498e3aec3916812faf",
+      "release_transition_interval_ns": null,
+      "step": 0
+    }
+  ],
+  "release_trace": {
+    "injected": true,
+    "release_requests": 2,
+    "sync_attempts": 4
+  },
+  "schema": "map01-release-error-censor-integration-result-v1",
+  "scope": "actual checked-out V10/V11, typed backend raw, and oracle under pinned FakeDisplay only",
+  "state_after_retry": {
+    "fake_server_key_down": false,
+    "release_requests": 2
+  },
+  "state_after_unreceipted_failure": {
+    "fake_server_key_down": false,
+    "release_requests": 1
+  },
+  "status": "PASS_SCOPED"
+}
