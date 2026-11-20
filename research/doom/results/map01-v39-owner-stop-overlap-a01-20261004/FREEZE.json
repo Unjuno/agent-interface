@@ -1,0 +1,28 @@
+{
+  "schema": "map01-v39-owner-stop-overlap-freeze-v1",
+  "base_main": "8094af4631fc7bc5d92990e5151d5e89477ee39f",
+  "allocation_id": null,
+  "classification": "construction-only",
+  "source": {
+    "path": "research/live_control/input_owner_v10.py",
+    "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "snapshot": "dependencies/input_owner_v10.py"
+  },
+  "environment": {
+    "host": "macOS",
+    "python": "3.12",
+    "xlib": "deterministic fake module",
+    "xserver": false,
+    "physical_input": false,
+    "network": false
+  },
+  "cases": [
+    "explicit release with no overlapping stop signal",
+    "stop_requested set after explicit release dequeue and before operation branch"
+  ],
+  "decision": {
+    "pass_if": "one KeyPress and one KeyRelease per case, no remaining fake key, verified empty owner records, and the stop-overlap no-op record is distinguishable by valid_until_ns=null",
+    "fail_if": "duplicate input event, nonempty key state, unverified record, or missing expected release record"
+  }
+}
