@@ -1,0 +1,24 @@
+test_cancel_cleanup_emits_up_receipt_joined_to_admission_context (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_cancel_cleanup_emits_up_receipt_joined_to_admission_context) ... ok
+test_each_cancelled_key_keeps_its_own_admission_context (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_each_cancelled_key_keeps_its_own_admission_context) ... ok
+test_executor_cancel_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_executor_cancel_terminal_contains_one_verified_cleanup_receipt) ... ok
+test_executor_expiry_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt) ... FAIL
+test_expired_program_exit_drains_owner_cleanup_without_cancel_event (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_expired_program_exit_drains_owner_cleanup_without_cancel_event) ... ok
+test_ordinary_up_still_emits_one_matching_receipt (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_ordinary_up_still_emits_one_matching_receipt) ... ok
+test_reconciliation_error_does_not_drop_recorded_release_receipt (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_reconciliation_error_does_not_drop_recorded_release_receipt) ... ok
+test_unavailable_per_key_samples_never_claim_confirmed_up (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_unavailable_per_key_samples_never_claim_confirmed_up) ... ok
+test_verified_async_cleanup_reconciles_bridge_held_state (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_verified_async_cleanup_reconciles_bridge_held_state) ... ok
+test_aggregate_keymap_failure_preserves_confirmed_per_key_up_without_neutral_claim (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_release_record_durability.ReleaseRecordDurabilityTests.test_aggregate_keymap_failure_preserves_confirmed_per_key_up_without_neutral_claim) ... ok
+
+======================================================================
+FAIL: test_executor_expiry_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-7\a02work\research\doom\map01_v39_cancel_release_fix_a02_20261005\test_cancel_release.py", line 378, in test_executor_expiry_terminal_contains_one_verified_cleanup_receipt
+    self.assertEqual(len(ups), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.092s
+
+FAILED (failures=1)
+RAW_RESULT {"aggregate_query_number": 5, "bridge_held": [], "fake_physical": [], "owner_release": {"buttons_down": null, "keys_down": null, "verification_error": "RuntimeError", "verification_status": "UNAVAILABLE", "verified": false}, "release_errors": ["sample failure"], "release_rows": [{"classification": "CONFIRMED_PHYSICAL_UP", "key": "F8"}]}
