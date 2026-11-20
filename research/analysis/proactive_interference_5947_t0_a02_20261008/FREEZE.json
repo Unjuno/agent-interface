@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN_BEFORE_FORMAL_EXECUTION",
+  "allocation_id": "5947-MULTI-UPDATE-PROVENANCE-T0-A02-20261008",
+  "issue": 8341,
+  "parent_issue": 5947,
+  "predecessor_issue": 8313,
+  "predecessor_dispositions_preserved": [
+    "HOLD_AUDITOR_COVERAGE",
+    "HOLD_ISSUE_D_UNKNOWN_UNSUPPORTED_UNTESTED",
+    "HOLD_POST_FORMAL_CONSTRUCTION_RERUN",
+    "STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED"
+  ],
+  "source_base_main": "fc595c0693750e4214d8f02f393b71db64db8894",
+  "branch": "research/5947-matched-context-t0-a02-20261008",
+  "branch_tip_before_freeze_commit": "d0c974e3659c274d4aff9f8d59b9ed8f3271d211",
+  "freeze_time_utc": "2026-10-07T16:16:12Z",
+  "package_path": "research/analysis/proactive_interference_5947_t0_a02_20261008",
+  "protocol": {
+    "file": "PROTOCOL.md",
+    "sha256": "1f591b2e1c1e7047df7de20a0da5a73bab4dfd5cc4651ac1594c779f186a7580",
+    "github_blob_sha": "94e4e27eb8b53a892300fbd81a5b5510eb190f0e"
+  },
+  "environment": {
+    "os": "macOS Darwin 27.0.0",
+    "architecture": "arm64",
+    "python": "3.14.5",
+    "logical_cpus": 10,
+    "reported_host_memory_bytes": 68719476736,
+    "dependencies": "Python standard library only",
+    "execution_scope": "host-only, explicitly authorized by Issue #8341; no isolation claim",
+    "container": "not used or required for this finite no-model fixture method",
+    "model_network_gui_user_data_live_application": "none"
+  },
+  "sources": {
+    "candidate.py": {
+      "sha256": "336b0c9f12da7527f2f78e4cd75307532ea307ede73a452b58426ee3a80f27dc",
+      "github_blob_sha": "39a47e865f16c85eea629e808f8d3c9975b7354e"
+    },
+    "auditor.py": {
+      "sha256": "742068758eab3e4ca2f47cc18e491eeb073dee7ca16737d0a2ac0e99af5a0c6b",
+      "github_blob_sha": "d844905eece1ab04a93610d87fde6e5a840f3751"
+    },
+    "test_contract.py": {
+      "sha256": "cab9111cc41335142298e8fa41ba14cd82e53c7bdac6b301d1674f57d6f691e3",
+      "github_blob_sha": "ebd1cda1a8a2e390a07b5082b238e0fcef9c7a56"
+    },
+    "construction_runner.py": {
+      "sha256": "d05c207cd585928f12a6da0823e2b618217d37d7db323e38f768969ba197fc40",
+      "github_blob_sha": "51153ea3fea9b5e1e2c95f5a093114130c3e655f"
+    }
+  },
+  "formal_commands": {
+    "candidate": {
+      "command": "python3 -B research/analysis/proactive_interference_5947_t0_a02_20261008/candidate.py research/analysis/proactive_interference_5947_t0_a02_20261008/results/formal/candidate.json",
+      "max_invocations": 1,
+      "output": "results/formal/candidate.json"
+    },
+    "independent_auditor": {
+      "command": "python3 -B research/analysis/proactive_interference_5947_t0_a02_20261008/auditor.py research/analysis/proactive_interference_5947_t0_a02_20261008/results/formal/candidate.json research/analysis/proactive_interference_5947_t0_a02_20261008/results/formal/auditor.json",
+      "max_invocations": 1,
+      "precondition": "candidate exits 0 and nonempty output exists",
+      "output": "results/formal/auditor.json"
+    },
+    "retries": 0,
+    "occupied_output_precondition": "both formal output files absent before candidate invocation",
+    "construction_tests_after_first_formal_candidate_call": 0,
+    "candidate_or_auditor_imports_after_first_formal_candidate_call": 0
+  },
+  "construction_validation": {
+    "command": "python3 research/analysis/proactive_interference_5947_t0_a02_20261008/construction_runner.py",
+    "latest_result": "PASS",
+    "tests_passed": 7,
+    "tests_failed": 0,
+    "mutation_controls": [
+      "alter final truth",
+      "alter baseline bytes and source identity",
+      "flip a common serialized byte while preserving reconstruction",
+      "move cue offset in a matched arm",
+      "remove a serialized history episode without updating lineage",
+      "relabel inferred delta as observed",
+      "replace unsupported UNKNOWN with concrete answer",
+      "omit unsupported query stratum"
+    ],
+    "mutation_controls_rejected_by_auditor_function": "8/8",
+    "mutation_controls_rejected_by_auditor_cli": "8/8",
+    "cli_pass_fail_and_no_overwrite_contract": "passed"
+  },
+  "repository_validation_after_latest_main_merge": {
+    "analysis_index": "PASS: 768 retained result/failure directories indexed",
+    "analysis_index_tests": "PASS: 22/22",
+    "workspace_index": "PASS: 160 top-level research directories reachable",
+    "workspace_index_tests": "PASS: 1/1",
+    "git_diff_check": "PASS",
+    "latest_construction_suite_after_latest_main_merge": "PASS: 7/7"
+  },
+  "preformal_gate": {
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "model_calls": 0,
+    "formal_outputs_present": false,
+    "current_main": "fc595c0693750e4214d8f02f393b71db64db8894",
+    "compare_status": "ahead",
+    "ahead_by": 20,
+    "behind_by": 0,
+    "same_path_conflicts": 0,
+    "same_branch_pr_conflicts": 0,
+    "new_branch_collision": false
+  },
+  "stop_rule": "Any changed source hash, changed branch/base identity, newly occupied output, nonzero candidate exit, missing/empty candidate output, nonzero auditor exit, malformed/missing result, unexpected row/count, audit error, or gate disagreement preserves the first STOP/FAIL/HOLD; no retry, repair, overwrite, pool, or model escalation."
+}
