@@ -1,0 +1,51 @@
+{
+  "schema": "v39-repeated-same-key-identity-freeze-v1",
+  "run_id": "V39-REPEAT-SAME-KEY-A03-20261005",
+  "experiment_base_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "publication_base_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "candidate_blob": "b9dc7597916977538ef635043b6135301ef6e440",
+  "prior_stops": [
+    {
+      "run_id": "V39-REPEAT-SAME-KEY-A01-20261005",
+      "path": "results/previous_a01_STOP_RAW.json",
+      "sha256": "464F81D388744800BF4CB55D41F89C0386E9134FCD1CC0B342F30A554DB45849",
+      "classification": "STOP_BEFORE_CASE_ACTIONS_MISSING_BRIDGE_IMPORT"
+    },
+    {
+      "run_id": "V39-REPEAT-SAME-KEY-A02-20261005",
+      "path": "results/previous_a02_STOP_RAW.json",
+      "sha256": "F6669668096B9830BF66C51E70C35F1F45D9ECAE20A1BE8E1242E547BA40A6D5",
+      "classification": "STOP_AFTER_FIRST_FAKE_KEYDOWN_MISSING_BACKEND_EMIT_HARNESS_FIELD"
+    }
+  ],
+  "environment": {
+    "os": "Windows",
+    "python": "3.11.9",
+    "docker": false,
+    "fake_x_display": true,
+    "os_input": false,
+    "gui": false,
+    "model_calls": 0,
+    "vizdoom": false
+  },
+  "selected_sources": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "f249ef036a9ec56740961af4aee375a28d9e133f",
+    "research/doom/doom_typed_release_backend_v1.py": "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+    "research/doom/doom_typed_release_backend_v2.py": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "82aae20cec847e3766df2eb6ff5269506a74a2e4",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "9c5aa19c76199eff9a3defc2e87912a226d92353",
+    "research/doom/map01_overlap_controller_v39.py": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": "6c2f59d2c6e55d8fab2d5f43de96e333c7825ba5",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "f2bbae7e7ca436d28c42b18154a0bcfc19e809a0",
+    "research/doom/session_map01_v15.py": "f71ca01426a703e4160c9403395fed03416c772e",
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v12.py": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+    "research/live_control/input_transition_owner_v3.py": "7d990a654804ba3ed7d406baee40c31b6cb27375",
+    "research/live_control/input_transition_owner_v4.py": "02c23c34e9382650a46e80d75fe49d5409153b75"
+  },
+  "H": "For one repeated key on exact V39 opt-in V15 source closure, sequential down/up/down/up produces two distinct admissions and two distinct release receipts joined one-to-one while retaining zero inter-UP keymap queries. Overlapping duplicate down/down/up must be classified HOLD if one observed up cannot be uniquely assigned to each admission.",
+  "T": "Run current-main V39 selector, V15 V1 release batch, V4/V3/V12 production owner chain through the current-main fake-display harness. Run exactly two sequences: sequential F8 down/up/down/up; overlapping F8 down/down/up. Persist partial raw traces after each fake input, sync, query, and emitted event.",
+  "D": "PASS_REPEAT_JOIN only when the sequential case has two admissions, two explicit KeyRelease injections, two complete release rows, one distinct owner-thread receipt per row, unique ordered timestamp interval pairing by key/context, zero query_keymap between ups, and empty fake/backend held state. The overlap control must be HOLD_NON_BIJECTIVE when two admissions collapse to fewer distinct key-up receipts; it must never pair one release to two admissions. Any mismatch or candidate exception remains STOP/FAIL/HOLD as observed.",
+  "C": "Fake interpreter and fake Xlib only. Server key-state/coalescing, real X event delivery, game state, and wall-clock durations are unmeasured. perf_counter_ns values are synthetic seam timing.",
+  "U": "No X server, OS input, physical occupancy, application effect, useful feedback, live latency, threat control, bounded recovery, MAP01 outcome or human tempo is established; no live allocation is implied."
+}
