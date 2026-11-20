@@ -42,6 +42,14 @@ those gates.
 4. **Standard caller and recovery.** Keep the recovered-task success and
    repeated reliability tests separate from Mindustry economics. A single
    successful Edge form POST or one R281 input effect does not close either.
+   R149 shows a recovered/released Win32 action can be followed by a real
+   queued task effect 691 ms after the sampled neutral horizon. The
+   [`post_authority_effect_attribution_v1`](../../research/integration/standard_mcp_task_ledger_57_v1/post_authority_effect_attribution_v1/RESULT.md)
+   probe confirms the existing ledger collapses that case and an in-authority
+   effect to the same `task_success=true`. Before counting recovered task
+   success in a matched comparison, carry factual final-state score separately
+   from effect timing and authority eligibility; the research candidate is not
+   wired into the frozen comparison evaluator yet.
 5. **Product boundary.** Retain the Windows portable-runtime result as scoped
    packaging evidence. Public distribution, Linux/WSL startup, live input, and
    side-effect authorization remain separate acceptance checks.
@@ -51,15 +59,19 @@ those gates.
 The rebased PR head is `c47ae761ed7a8c47e6d5d6b16937b468145956cd`; all five
 GitHub checks passed. Its prospective journal is non-dispatching and does not
 connect an external allocation attestor. The archived Edge smoke is one local
-form task with an offline model double, not a matched comparison. A local
-replay of the journal suite on the rebased head was incomplete because the
-shallow/sparse checkout lacked its pinned source files. Three allocation
-boundary cases passed; ten cases errored while resolving source files, so the
-old 12/12 claim was not reconfirmed. The code hashes 23 required files after
-creating its evidence root; absent files make construction raise and can leave
-a partial, non-dispatchable root. Add a no-partial-root source-completeness
-regression and reproduce the suite in normal and `-O` on a complete pinned
-tree before considering this gate locally reverified. Keep PR #10340 draft.
+form task with an offline model double, not a matched comparison. The journal
+suite was reproduced in a complete temporary source tree against current-main
+pinned sources: 13/13 pass normally and 13/13 pass under `-O` on Windows
+Python 3.11.9. An earlier incomplete-tree attempt produced 3 passes / 10
+source-lookup errors; those errors were setup omissions, not code failures.
+The local pass establishes the synthetic journal composition only. It does
+not supply trusted external allocation custody, enable dispatch, or establish
+provider/live comparison results. Keep PR #10340 draft until those broader
+gates are separately satisfied.
+
+The test and source SHA-256 values, pinned main SHA, runner commands, and
+temporary tree location are recorded in
+[`pr10340-lineage-correction-20261121.md`](pr10340-lineage-correction-20261121.md).
 
 ## Disposition
 

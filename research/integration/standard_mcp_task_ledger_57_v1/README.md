@@ -325,3 +325,16 @@ generation receipts with actual provider request/response and usage logs. The
 bridge tests do not establish real provider retries or usage accounting. A live
 comparison still requires a separately verified eligible allocation; #7924
 remains STOP/HOLD.
+
+## Post-authority task-effect attribution probe (2026-11-21)
+
+[`post_authority_effect_attribution_v1`](post_authority_effect_attribution_v1/RESULT.md)
+reconstructs the saved R149 timing boundary through the current standard task
+ledger. The ledger currently produces the same factual `task_success=true`
+summary for an in-authority effect and an R149 effect observed after authority
+expiry, confirmed release, and the neutral horizon. A separate research
+adjudicator retains factual score but marks that late effect ineligible as
+authorized task success. Its six tests and the existing 13 ledger tests pass
+normally and under `-O`. This is a measurement-contract finding and candidate
+seam; it is not yet connected to the frozen comparator or public caller, and
+does not add live/provider/MAP01 evidence.

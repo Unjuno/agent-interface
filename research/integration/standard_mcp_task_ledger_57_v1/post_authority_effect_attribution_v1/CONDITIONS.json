@@ -1,0 +1,39 @@
+{
+  "schema": "issue57-post-authority-effect-attribution-v1",
+  "source_main": "cd4857dd3a2147d2dfa0c6109361760ba6e57518",
+  "ledger_blob": "dc358852bc9c72995f55d5f5ffb555091b479555",
+  "prior_experiment": {
+    "id": "R149",
+    "evidence_path": "research/integration/win32_native_queue_effect_boundary_20261113/EVIDENCE.json",
+    "evidence_blob": "a7ea3c16a043cafe9a7164c1f6b8c6c166483236",
+    "readme_blob": "80d3093ed0637745e5721c33783bf22c08764bed",
+    "evidence_status": "PASS_SCOPED_QUEUED_EFFECT",
+    "source_event_packet_manifest_sha256": "c1a161054fd24e45c85c1ae57f19c927387bd5f9c6202d609688fcd3a90b3017"
+  },
+  "conditions": {
+    "new_provider_calls": 0,
+    "new_gui_input": 0,
+    "new_live_session": 0,
+    "docker_or_wslc": false,
+    "ledger_cells": [
+      "independent effect at or before authority expiry",
+      "independent effect at R149 observed time after release horizon"
+    ],
+    "same_factual_score": true,
+    "state_digest_note": "The test derives a deterministic digest from task_counter=1; it is a reconstructed test fixture, not the original R149 final-state artifact digest."
+  },
+  "r149_monotonic_ns": {
+    "authority_expiry": 262847357442000,
+    "release_receipt": 262847380075400,
+    "neutral_horizon_end": 262849380883600,
+    "recovered_terminal_observed": 262849399688300,
+    "task_effect": 262850072367700
+  },
+  "python": "Windows CPython 3.11.9",
+  "commands": [
+    "python -m unittest discover -p test_ledger.py -v",
+    "python -O -m unittest discover -p test_ledger.py -v",
+    "python -m unittest discover -p test_post_authority_effect_attribution_v1.py -v",
+    "python -O -m unittest discover -p test_post_authority_effect_attribution_v1.py -v"
+  ]
+}
