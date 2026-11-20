@@ -1,0 +1,38 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A07-GENERIC-PROMPT-20261008",
+  "artifacts": {
+    "RAW.jsonl": {
+      "bytes": 245702,
+      "sha256": "83aa2bdcc9e815993b7f5296e6cd795f32392532069c3c92b32d618fa7ef77ea"
+    },
+    "candidate.stderr.txt": {
+      "bytes": 3560,
+      "sha256": "9b6f23d882f9621b4624d58b5a175388708554018abb9c725dfb55111bc97859"
+    },
+    "candidate.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "auditor_exit": null,
+  "auditor_invocations": 0,
+  "candidate_exit": 130,
+  "candidate_invocations": 1,
+  "consolidation_output_cap": 2048,
+  "expected_calls": 390,
+  "formal_model_calls_observed": 48,
+  "formal_retries": 0,
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "predecessor_stops": [
+    "T1 A01",
+    "T1 A02",
+    "T1 A03",
+    "T1 A04",
+    "T1 A06"
+  ],
+  "prior_result_holds": [
+    "T1 A05 answer endpoint scoped; transition audit failed"
+  ],
+  "raw_path": "results/FORMAL_T1_A07/RAW.jsonl",
+  "terminal_disposition": "STOP_OUTPUT_SCHEMA_VIOLATION"
+}
