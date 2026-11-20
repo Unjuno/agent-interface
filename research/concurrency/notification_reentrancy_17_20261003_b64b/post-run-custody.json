@@ -1,0 +1,100 @@
+{
+  "active_own_containers": 0,
+  "all14pins_unchanged": true,
+  "cells": [
+    {
+      "arm": "baseline",
+      "callback_calls": [
+        "A"
+      ],
+      "error": null,
+      "mode": "healthy",
+      "nested": [],
+      "outer": "A",
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "baseline",
+      "callback_calls": [
+        "A"
+      ],
+      "error": null,
+      "mode": "reentrant-true",
+      "nested": [
+        "A"
+      ],
+      "outer": "A",
+      "remaining": []
+    },
+    {
+      "arm": "baseline",
+      "callback_calls": [
+        "A"
+      ],
+      "error": "RuntimeError",
+      "mode": "reentrant-false",
+      "nested": [
+        "A"
+      ],
+      "outer": null,
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "outside",
+      "callback_calls": [
+        "A"
+      ],
+      "error": null,
+      "mode": "healthy",
+      "nested": [],
+      "outer": "A",
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "outside",
+      "callback_calls": [
+        "A",
+        "B"
+      ],
+      "error": "TimeoutError",
+      "mode": "reentrant-true",
+      "nested": [
+        "A"
+      ],
+      "outer": null,
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "outside",
+      "callback_calls": [
+        "A",
+        "B",
+        "B"
+      ],
+      "error": "TimeoutError",
+      "mode": "reentrant-false",
+      "nested": [
+        "A"
+      ],
+      "outer": null,
+      "remaining": [
+        "B"
+      ]
+    }
+  ],
+  "complete_process_streams_verified": true,
+  "correct_unchanged_method_count": 15,
+  "driver_rows_match_recorded_PID_UTC": true,
+  "first_source_pins": 14,
+  "freeze_before_child": true,
+  "status": "PASS_CUSTODY_ONLY",
+  "terminal_containers": 2
+}

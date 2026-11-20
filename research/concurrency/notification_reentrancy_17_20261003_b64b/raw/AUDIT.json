@@ -1,0 +1,100 @@
+{
+  "auditor_pid": 7,
+  "effective_copied_refusals": [
+    {
+      "case": "baseline-reentrant-true",
+      "changed": true,
+      "name": "unrelated-notification-restored",
+      "reason": "unrelated notification retained/lost",
+      "refused": true
+    },
+    {
+      "case": "baseline-reentrant-true",
+      "changed": true,
+      "name": "nested-return-hidden",
+      "reason": "nested exact return",
+      "refused": true
+    },
+    {
+      "case": "baseline-reentrant-true",
+      "changed": true,
+      "name": "duplicate-return-hidden",
+      "reason": "outer result or first exception",
+      "refused": true
+    },
+    {
+      "case": "baseline-reentrant-false",
+      "changed": true,
+      "name": "baseline-first-exception-relabelled",
+      "reason": "outer result or first exception",
+      "refused": true
+    },
+    {
+      "case": "outside-reentrant-true",
+      "changed": true,
+      "name": "outside-false-success",
+      "reason": "outer result or first exception",
+      "refused": true
+    },
+    {
+      "case": "outside-healthy",
+      "changed": true,
+      "name": "rich-payload-truncated",
+      "reason": "outer result or first exception",
+      "refused": true
+    },
+    {
+      "case": "outside-reentrant-false",
+      "changed": true,
+      "name": "unrelated-remaining-meaning-loss",
+      "reason": "full remaining payloads",
+      "refused": true
+    },
+    {
+      "case": "outside-reentrant-false",
+      "changed": true,
+      "name": "callback-order-loss",
+      "reason": "literal callback order",
+      "refused": true
+    },
+    {
+      "case": "baseline-reentrant-true",
+      "changed": true,
+      "name": "nested-queue-contradiction",
+      "reason": "complete ordered callback/nested trace",
+      "refused": true
+    },
+    {
+      "case": "outside-healthy",
+      "changed": true,
+      "name": "identity-alias",
+      "reason": "distinct object identities",
+      "refused": true
+    },
+    {
+      "case": "baseline-healthy",
+      "changed": true,
+      "name": "source-replaced",
+      "reason": "source pin",
+      "refused": true
+    },
+    {
+      "case": "outside-reentrant-true",
+      "changed": true,
+      "name": "leftover-reader",
+      "reason": "terminal owned condition/thread state",
+      "refused": true
+    }
+  ],
+  "positive_cells": [
+    "baseline-healthy",
+    "baseline-reentrant-true",
+    "baseline-reentrant-false",
+    "outside-healthy",
+    "outside-reentrant-true",
+    "outside-reentrant-false"
+  ],
+  "saved_only": true,
+  "source_or_collector_replay": false,
+  "status": "PASS_SAVED_REENTRANCY_BOUNDARY"
+}
