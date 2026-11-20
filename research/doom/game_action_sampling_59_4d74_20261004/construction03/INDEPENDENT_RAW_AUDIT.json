@@ -1,0 +1,53 @@
+{
+  "schema": "game-action-sampling-independent-raw-audit-v1",
+  "source_commit": "9c6b40dff7",
+  "method": "separate read-only reconstruction from retained raw JSONL; no runtime replay",
+  "inputs": {
+    "runtime/events.jsonl": "d0c81931ea5674a7c815fa3fbd423ecf0c4283464c50817355e8abb33e44dec5",
+    "scorer-last-action.jsonl": "7270cb19ff9f29533331b5cac05b3ffb29a5e069cb1c9cb5a00ea31f6b663f85",
+    "runtime/scorer-samples.jsonl": "22df0c14478a17f4007cded43e44b47e3094ae2ff782159a02f5e5e92998b2c7"
+  },
+  "findings": {
+    "last_action_samples": 717,
+    "coherent_tic_samples": 717,
+    "active_turn_left_samples": 8,
+    "active_interval_tics_inclusive": [1375, 1383],
+    "first_preceding_neutral_tic": 1374,
+    "first_subsequent_neutral_tic": 1384,
+    "input_admitted_ns": 9991200273,
+    "input_ack_ns": 9991397856,
+    "first_active_sample_ns": 10001550736,
+    "last_active_sample_ns": 10228995584,
+    "owner_release_transition_ns": 10246112869,
+    "owner_release_return_ns": 10246240188,
+    "first_subsequent_neutral_sample_ns": 10257661919,
+    "runtime_terminal": "completed",
+    "terminal_release_verified": true,
+    "subsequent_coast_command": "rejected: unsupported command",
+    "scorer_samples": 715,
+    "unique_progress": {
+      "kill_count": [0],
+      "death_count": [0],
+      "map_exit": [false],
+      "episode_finished": [false],
+      "player_dead": [false]
+    },
+    "scorer_samples_controller_visible": false,
+    "normal_probe_finish": false,
+    "external_rescue_used": true
+  },
+  "interpretation": {
+    "disposition": "PASS_RAW_TIMELINE_AUDIT_SCOPED; STOP_PROTOCOL_COMPLETION",
+    "supports": [
+      "raw rows contain one contiguous eight-sample TURN_LEFT interval bracketed by neutral samples",
+      "the event log records an owner release after the interval and a verified-empty terminal release",
+      "retained independent task-state samples report no kill, death, map exit, episode finish, or player death during the sampled run"
+    ],
+    "does_not_support": [
+      "exact engine transition onset or physical input state",
+      "action-caused game progress or causal benefit",
+      "the preregistered neutral-coast/finish protocol, because the coast command was rejected and the probe needed external rescue",
+      "bounded recovery, matched recovery benefit, or MAP01 completion"
+    ]
+  }
+}
