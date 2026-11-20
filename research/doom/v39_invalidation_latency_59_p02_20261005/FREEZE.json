@@ -1,0 +1,76 @@
+{
+  "schema": "issue59-v39-health-invalidation-timing-posthoc-p02-v1",
+  "classification": "posthoc reconstruction of one retained run; not a new or preregistered allocation",
+  "created_date": "2026-10-05",
+  "observed_main_at_worktree_creation": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "observed_main_recheck_commit": "ff13baf57d5f1c12819151e668b92cb6db4a7c1c",
+  "current_goal_record": "docs/CURRENT_GOAL.md r139",
+  "source_base_commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+  "source_blobs": {
+    "research/doom/results/map01-v39-coast-liveness-live-01/report.json": {
+      "git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687"
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl": {
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/166.png": {
+      "git_blob": "b3f0bff438d16ebc5b80e6d83c5f4b4fcc022ed8",
+      "sha256": "8c5e9c02dbc988693ec2126e92d9a2867d0f77ca9223e69356bcc6132b4b99d3"
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/200.png": {
+      "git_blob": "161066e6a469781adad9a07657cbd9198fa7aede",
+      "sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c"
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/217.png": {
+      "git_blob": "86f90a5e7649af5100d27e944756bb1ab68f6cbe",
+      "sha256": "69fea02f4ed5830f85eacc5f67e98b2c5171d822c7db0dd76ca6682dfd633091"
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/218.png": {
+      "git_blob": "c5a91fc0455a304873ef7c86981ab0de20401c08",
+      "sha256": "c711f3c36ff56778378a0f82275474615aac9879c2f61ce0d8d4ae8270e5a448"
+    },
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": {
+      "git_blob": "2b898a68d38e14ac1981985dc58f295f18a06eaa",
+      "sha256": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4"
+    }
+  },
+  "selection": {
+    "decision_iteration": 5,
+    "required_cover_action": "retreat_fire",
+    "required_invalidation": "HARD_INVALIDATED",
+    "required_signal_id": "health",
+    "typed_observation_sequence": 218,
+    "cover_program_id": "cover-5",
+    "reviewed_observation_sequences": [166, 200, 217, 218]
+  },
+  "runtime_source_comparison": {
+    "research/doom/map01_overlap_controller_v39.py": {
+      "run_blob": "008661a3d8fb0d4bda29b0c5d787ef12551275c9",
+      "run_sha256": "0a2234904adbbf29d881a381dc54f57037c489db5f40cf050142ad4fc391b32d",
+      "current_main_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+      "current_main_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca"
+    },
+    "research/doom/doom_typed_observation_v1.py": {
+      "run_blob": "86d5f5b3cd6ea099f775e6213cc608f92b37d1fd",
+      "run_sha256": "7268d2ccd291096f2372fe5d624165a55205ebaf7085ccc0daff7870579b30d8",
+      "current_main_blob": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+      "current_main_sha256": "038537fac0b155025bec50e92eaa9ca434cc3789498199634ded095b151ef555"
+    },
+    "research/live_control/input_owner_v12.py": {
+      "run_blob": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+      "run_sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+      "current_main_blob": "222039e7c1a18b0a25e2ba86cddf859da1b43c8f",
+      "current_main_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df"
+    },
+    "research/doom/session_map01_v15.py": {
+      "run_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "run_sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+      "current_main_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "current_main_sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+    }
+  },
+  "analysis_sha256": "ebf045e648fdc13a0d7415f074a4f1ac26565b87836907d614e67ee9ef85eb64",
+  "audit_sha256": "4b52d906a194726da2d87d6abad51d22d391ff803bb9d73461adc8337b289628"
+}
