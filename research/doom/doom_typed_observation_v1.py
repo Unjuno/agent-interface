@@ -123,7 +123,7 @@ def build_action_snapshot(event, contract):
             type(capture_ns) is not int or type(started_ns) is not int or
             type(ready_ns) is not int or not capture_ns <= started_ns <= ready_ns or
             type(elapsed_ms) not in (int, float) or
-            abs(elapsed_ms - (ready_ns - capture_ns) / 1e6) > 1e-9):
+            not abs(elapsed_ms - (ready_ns - capture_ns) / 1e6) <= 1e-9):
         raise ValueError("exact early typed observation and action contract required")
     required = set(contract["source"]["signals"])
     if not required or not required <= SUPPORTED or set(event.get("signals", {})) != SUPPORTED:
