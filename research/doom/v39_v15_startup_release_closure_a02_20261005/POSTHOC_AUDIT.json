@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "frozen_source_closure_matches": true,
+    "no_inter_up_keymap_query": true,
+    "no_real_io_claimed": true,
+    "two_identity_bound_receipts": true,
+    "two_reverse_order_up_injections": true,
+    "v15_manifest_matches_declared_source_list": true,
+    "v15_selected_executor_v13": true,
+    "v15_selected_release_batch_backend": true,
+    "verified_empty_batch": true
+  },
+  "failure_explanation": "The freeze pins executor_v3 and executor_v11 as import dependencies; V15's declared sources.json manifest omits those two paths. All paths declared by V15 match their frozen hashes.",
+  "frozen_auditor_failed_checks": [
+    "v15_recorded_exact_source_manifest"
+  ],
+  "frozen_auditor_status": "FAIL",
+  "runner_output_sha256": "191e5791b95110b566872523f5a831c2cc16c85f5eb829664a0c39d9f6ff35c8",
+  "schema": "v39-v15-startup-release-closure-a02-posthoc-audit-v1",
+  "source": "Captured RUNNER_OUTPUT.json only; candidate was not rerun.",
+  "status": "RAW_COMPOSITION_CONFIRMED_AUDITOR_SCOPE_MISMATCH"
+}
