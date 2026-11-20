@@ -1,0 +1,161 @@
+{
+  "schema": "map01_v39_perkey_bridge_a03_head_recheck_v1",
+  "checked_at_utc": "2026-10-04T22:40:00Z",
+  "pr": 7774,
+  "branch": "research/59-cleanup-telemetry-bridge-a01-20261005",
+  "observed_head": "b4e66975a2383f98c83d3b8d0c8947d2c1db39b6",
+  "current_main": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "predecessor_test_sha256_mismatch_still_present": true,
+  "all_v2_a03_frozen_sha256_values_match": true,
+  "candidate_rerun": false,
+  "retained_a03_tests_replayed_again": false,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 110,
+      "sha256": "5a01b12dc9a61cc9f8d5faa378ed7b93e3a5728f61dfff69e312748be08c99a4",
+      "git_blob": "458b1c35db7adc500da77beb49dad7bd83bf99c5",
+      "matches_previous": true
+    },
+    {
+      "path": "AUDIT-V2.md",
+      "bytes": 1103,
+      "sha256": "c5cf392202685f4162b437eb48955b0b473cba1e91f2919ccea88505d688ba59",
+      "git_blob": "a085c7ef851218b31fd6bbb8da6577b3fd79e91a",
+      "matches_previous": null
+    },
+    {
+      "path": "FREEZE-AUDIT-V2.json",
+      "bytes": 631,
+      "sha256": "4873e71ece66f5aa24be08c350085364d222a6b53170a433908e9093cf88354a",
+      "git_blob": "7d884d40886eab437471c6abe846736dcfb2702b",
+      "matches_previous": true
+    },
+    {
+      "path": "FREEZE.json",
+      "bytes": 2073,
+      "sha256": "53af7c12deb776759774376cb404703bdf37f87a52deae960084088329aa2b70",
+      "git_blob": "22bb68b44c8ab8180c2056b3ee6349de695feca4",
+      "matches_previous": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 1849,
+      "sha256": "f3e0ce5d164390b22d7dd7f008049ab97b8aab40a5353aa2234b9d1e4fb4b9ac",
+      "git_blob": "78a15cdaf1629881fcf1cc5aacea93f0f0c5cfef",
+      "matches_previous": true
+    },
+    {
+      "path": "VALIDATION-V2.json",
+      "bytes": 782,
+      "sha256": "7674aab729c58e459e4fec954c5bca096eafa98307d6aeb4a0de207f4dc63640",
+      "git_blob": "680e93763263e4ecc7de34314994ef592f9b64cc",
+      "matches_previous": null
+    },
+    {
+      "path": "audit_a03.py",
+      "bytes": 4313,
+      "sha256": "8f12ef66ba67f376aa7c6a7518dd1cee7885f735442db7218560ab063898aa1a",
+      "git_blob": "c749f805637a901c015ae2ffffd62200c5b62695",
+      "matches_previous": true
+    },
+    {
+      "path": "audit_a03_v2.py",
+      "bytes": 6176,
+      "sha256": "a7a66e2e328a7a299b8e3aa653720e9dfc78d455370b80de29e70ae3d031c877",
+      "git_blob": "2b670f066253f610d66e8c1f28cda1c6e251957b",
+      "matches_previous": true
+    },
+    {
+      "path": "bridge_a03.py",
+      "bytes": 5452,
+      "sha256": "a5395c000b7dcffb6379f738c78627fadbfd43eae4a8b45ade3ddc5be59488d3",
+      "git_blob": "0f81e0e5b7dae331cb9b0ea355515e6239f6f180",
+      "matches_previous": true
+    },
+    {
+      "path": "build_freeze.py",
+      "bytes": 1698,
+      "sha256": "3fc4cee7c8638174c3a384daf43b0d62478d81b42697c761c609e689b108e5db",
+      "git_blob": "b0be494ccf33edcea8bf5d5a23c4b529729624c6",
+      "matches_previous": true
+    },
+    {
+      "path": "probe_a03.py",
+      "bytes": 5042,
+      "sha256": "26cbc228c9b0db5fc8b7793da1f7b4d8c3f471c1c1c7ec842313c7bf102b2e84",
+      "git_blob": "a8526ec958efb2690960859c2ee7a112c6fd9d69",
+      "matches_previous": true
+    },
+    {
+      "path": "scenario.json",
+      "bytes": 433,
+      "sha256": "8b861280cfb36ef6388664d62a3fd9e36bf7808504ecd8d762d1d290d5eca09b",
+      "git_blob": "f4551cf841841d23b5ebde1a5a293e5330eec6b7",
+      "matches_previous": true
+    },
+    {
+      "path": "test_a03.py",
+      "bytes": 2395,
+      "sha256": "5a751b29f99affb7aed15154b0f4f3462c00764a733f427403b536d6fe5c261d",
+      "git_blob": "7d8295c23e888e81d7208c082b94d851b0b1c4db",
+      "matches_previous": true
+    },
+    {
+      "path": "test_a03_v2.py",
+      "bytes": 1212,
+      "sha256": "14ececdbeb241c953fa2986edfda4f5cecf12fb1c94f89ef47c4c3b450d67ddd",
+      "git_blob": "a724f1630e3c5fb312ed9beb446cf1701cdf3755",
+      "matches_previous": true
+    },
+    {
+      "path": "results/a03/AUDIT-CONTAINER-V2.json",
+      "bytes": 559,
+      "sha256": "e83401ca4659a6a2197a7d2d600f0da4ed8c6a3dda6c9ba1b6a53df261f46c44",
+      "git_blob": "24b1f435beab9ee9c40bc8dad9db4717e1ab2072",
+      "matches_previous": null
+    },
+    {
+      "path": "results/a03/AUDIT.json",
+      "bytes": 940,
+      "sha256": "c80341ca2353c5fa4f12a04379b5ace0a40ee27d9667d3698402ae7f75dc28a1",
+      "git_blob": "475c9445a4a20a8d31d2ca133d58435b8ce01665",
+      "matches_previous": null
+    },
+    {
+      "path": "results/a03/AUDIT_V1_STOP.json",
+      "bytes": 664,
+      "sha256": "f3f0da8098641837d121a6fcb0cab41a39b09b5d5cbb0255a98e7c69afe6e1d7",
+      "git_blob": "7a12c6cf5f78871def45b7c303227aef9a885ecd",
+      "matches_previous": null
+    },
+    {
+      "path": "results/a03/FREEZE.json",
+      "bytes": 2073,
+      "sha256": "53af7c12deb776759774376cb404703bdf37f87a52deae960084088329aa2b70",
+      "git_blob": "22bb68b44c8ab8180c2056b3ee6349de695feca4",
+      "matches_previous": null
+    },
+    {
+      "path": "results/a03/RAW.json",
+      "bytes": 12842,
+      "sha256": "38daf1220b9fcfb06a239b5f34a3bfa7b6a51403059f58b7b4a05e5e0653501d",
+      "git_blob": "4129d10250cf5e21e3c836531f5433e7ef877a4d",
+      "matches_previous": true
+    },
+    {
+      "path": "results/a03/RESULT.json",
+      "bytes": 695,
+      "sha256": "644bc30b17752d27d7017f7eb4a52df64ffcf4cd2634df88c1ca6a1b0492d763",
+      "git_blob": "713aaebab8fc5a755f10e9622d61da7f20eaafb3",
+      "matches_previous": true
+    },
+    {
+      "path": "SOURCE/A02/bridge.py",
+      "bytes": 4884,
+      "sha256": "b14ec37323ae3f2510538326011c63a5253745521724613b0b573e902aabe377",
+      "git_blob": "91c6749e2ce3353e7a1ff3c94c6aca8f1d98a0fe",
+      "matches_previous": true
+    }
+  ]
+}
