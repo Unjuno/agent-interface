@@ -51,15 +51,19 @@ those gates.
 The rebased PR head is `c47ae761ed7a8c47e6d5d6b16937b468145956cd`; all five
 GitHub checks passed. Its prospective journal is non-dispatching and does not
 connect an external allocation attestor. The archived Edge smoke is one local
-form task with an offline model double, not a matched comparison. A local
-replay of the journal suite on the rebased head was incomplete because the
-shallow/sparse checkout lacked its pinned source files. Three allocation
-boundary cases passed; ten cases errored while resolving source files, so the
-old 12/12 claim was not reconfirmed. The code hashes 23 required files after
-creating its evidence root; absent files make construction raise and can leave
-a partial, non-dispatchable root. Add a no-partial-root source-completeness
-regression and reproduce the suite in normal and `-O` on a complete pinned
-tree before considering this gate locally reverified. Keep PR #10340 draft.
+form task with an offline model double, not a matched comparison. The journal
+suite was reproduced in a complete temporary source tree against current-main
+pinned sources: 13/13 pass normally and 13/13 pass under `-O` on Windows
+Python 3.11.9. An earlier incomplete-tree attempt produced 3 passes / 10
+source-lookup errors; those errors were setup omissions, not code failures.
+The local pass establishes the synthetic journal composition only. It does
+not supply trusted external allocation custody, enable dispatch, or establish
+provider/live comparison results. Keep PR #10340 draft until those broader
+gates are separately satisfied.
+
+The test and source SHA-256 values, pinned main SHA, runner commands, and
+temporary tree location are recorded in
+[`pr10340-lineage-correction-20261121.md`](pr10340-lineage-correction-20261121.md).
 
 ## Disposition
 
