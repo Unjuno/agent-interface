@@ -1,0 +1,34 @@
+{
+  "schema": "v39-v15-release-identity-a07-audit-v1",
+  "scope": "retained synthetic raw admission-to-release identity only",
+  "identity_fields": [
+    "id",
+    "intent_token",
+    "owner_id",
+    "step",
+    "key"
+  ],
+  "passed": true,
+  "case_count": 2,
+  "cases": [
+    {
+      "case_index": 0,
+      "case": "normal",
+      "admission_count": 2,
+      "release_count": 2,
+      "matched_count": 2,
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_index": 1,
+      "case": "lost_space_keyrelease",
+      "admission_count": 2,
+      "release_count": 2,
+      "matched_count": 2,
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "v39-v15-release-identity-a07-stop-v1",
+  "allocation": "V39-V15-RELEASE-IDENTITY-A07-20261005-01",
+  "status": "STOP_AUDIT_RESULT_PROVENANCE_INCONSISTENT",
+  "base_sha": "aeed696ff756d68497faed39b92e3546cb144972",
+  "formal_invocations": {"candidate_or_runtime": 0, "a07_auditor": 1, "independent_reference_auditor": 1, "retries": 0},
+  "observations": [
+    {
+      "step": "a07_auditor",
+      "saved_audit_json": "formal/AUDIT.json",
+      "saved_audit_passed": true,
+      "saved_stdout_summary_passed": true,
+      "saved_exit_file": "formal/AUDIT.exit",
+      "saved_exit_value": "1",
+      "terminal_output_exit_value": "0",
+      "disposition": "STOP_CONFLICTING_EXIT_RECORDS"
+    },
+    {
+      "step": "independent_reference_auditor",
+      "exit_value": "0",
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "expected_output": "formal/INDEPENDENT_AUDIT.json",
+      "output_exists": false,
+      "disposition": "STOP_EXPECTED_AUDIT_OUTPUT_MISSING"
+    }
+  ],
+  "unit_tests_before_freeze": {"passed": 5, "failed": 0, "construction_only": true},
+  "retry": false,
+  "source_edit_after_freeze": false,
+  "scope": "synthetic fake-X audit-only; original A02 FAIL unchanged"
+}
