@@ -1,0 +1,21 @@
+{
+  "schema": "UNJUNO-7865-HCC-A01-v1",
+  "allocation_id": "UNJUNO-7865-HCC-A01-20261005",
+  "base_identity": "doc-1",
+  "base_state": {"a": "A", "b": "X"},
+  "agent_effect": {"field": "a", "before": "A", "after": "B", "footprint": ["a"]},
+  "post_effect_generation": 1,
+  "policies": ["BLIND_INVERSE", "WHOLE_OBJECT_VERSION_GUARD", "FIELD_SCOPED_COMPARE_AND_COMPENSATE", "NO_AUTO_COMPENSATION"],
+  "cases": [
+    {"id":"no_interleaving","identity":"doc-1","state":{"a":"B","b":"X"},"generation":1,"events":[],"history_complete":true,"ordering_known":true,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":true},
+    {"id":"disjoint_field_update","identity":"doc-1","state":{"a":"B","b":"Y"},"generation":2,"events":[{"field":"b","before":"X","after":"Y","generation_before":1,"generation_after":2}],"history_complete":true,"ordering_known":true,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":true},
+    {"id":"same_field_update","identity":"doc-1","state":{"a":"C","b":"X"},"generation":2,"events":[{"field":"a","before":"B","after":"C","generation_before":1,"generation_after":2}],"history_complete":true,"ordering_known":true,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":true},
+    {"id":"aba_write_away_back","identity":"doc-1","state":{"a":"B","b":"X"},"generation":3,"events":[{"field":"a","before":"B","after":"C","generation_before":1,"generation_after":2},{"field":"a","before":"C","after":"B","generation_before":2,"generation_after":3}],"history_complete":true,"ordering_known":true,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":true},
+    {"id":"object_replacement","identity":"doc-2","state":{"a":"B","b":"X"},"generation":1,"events":[{"kind":"object_replaced","old_identity":"doc-1","new_identity":"doc-2"}],"history_complete":true,"ordering_known":true,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":true},
+    {"id":"unknown_event_order","identity":"doc-1","state":{"a":"B","b":"Y"},"generation":2,"events":[{"field":"b","before":"X","after":"Y"}],"history_complete":false,"ordering_known":false,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":false},
+    {"id":"unknown_identity","identity":null,"state":{"a":"B","b":"X"},"generation":1,"events":[],"history_complete":false,"ordering_known":false,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":false},
+    {"id":"mutation_missing_version_increment","identity":"doc-1","state":{"a":"B","b":"Y"},"generation":1,"events":[{"field":"b","before":"X","after":"Y","generation_before":1,"generation_after":1}],"history_complete":true,"ordering_known":true,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":false},
+    {"id":"mutation_corrupt_footprint","identity":"doc-1","state":{"a":"B","b":"Y"},"generation":2,"events":[{"field":"b","before":"X","after":"Y","generation_before":1,"generation_after":2}],"history_complete":true,"ordering_known":true,"footprint_claim":["a","b"],"footprint_verified":false,"version_integrity":true},
+    {"id":"mutation_reordered_history","identity":"doc-1","state":{"a":"B","b":"Y"},"generation":2,"events":[{"field":"b","before":"X","after":"Y","generation_before":2,"generation_after":1}],"history_complete":true,"ordering_known":false,"footprint_claim":["a"],"footprint_verified":true,"version_integrity":false}
+  ]
+}
