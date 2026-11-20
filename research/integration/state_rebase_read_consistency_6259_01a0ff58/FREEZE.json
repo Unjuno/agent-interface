@@ -1,0 +1,9 @@
+{
+  "id": "6259-root-predicate-read-consistency-C01",
+  "H": "Separate fresh reads can synthesize a satisfied required+forbidden predicate although neither real state satisfies it; one snapshot or generation join refuses.",
+  "T": "Three policies x two schedules in six new WAL DBs; before state(target=X,collateral=1,generation=0); after(target=Y,collateral=0,generation=1); read target before mutation and collateral after. Stable control has no mutation.",
+  "D": "Split accepts fractured schedule; snapshot and generation join refuse; stable controls all refuse; no real state satisfies targetX and collateral0.",
+  "C": "Simple same-generation check or one read transaction suffices; no new runtime mechanism proposed.",
+  "U": "Private stdlib SQLite, serialized controlled writer; no GUI/model/native input/request-origin/task success or performance claim. Distinct from consumed eight-case6259 allocation and7083 single-counter stale-WAL assay.",
+  "source_sha256": "e565ff88d553c0e6ea49dc737469caf34488016825b98d78087de88491202553"
+}
