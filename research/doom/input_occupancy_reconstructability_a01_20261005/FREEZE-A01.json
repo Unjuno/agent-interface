@@ -1,0 +1,65 @@
+{
+  "run_id": "map01-held-input-reconstructability-a01-20261005",
+  "base_commit": "0613f66086094544a4342cb0cac7582eb22efa72",
+  "python_version": "3.11.9",
+  "sources": {
+    "analysis.json": {
+      "sha256": "7b7541174c39fac708ba6c28f371f40fb68bf71743e66c9fbcb517d45e78bf71",
+      "git_blob": "dc2286e956dfbc2481710cd6400cd58470bae4b7",
+      "path": "research/doom/results/map01-v38-v39-control-tempo-posthoc-v1/analysis.json"
+    },
+    "analyze_source.py": {
+      "sha256": "f43b089a7a92c74891b9809eddeb41368dfe889c1a119d4d202972de27f3571c",
+      "git_blob": "2de35af5a3e0ff7ac715c2d470eb2e25b0ed9238",
+      "path": "research/doom/analyze_map01_v38_v39_control_tempo_posthoc_v1.py"
+    },
+    "audit_source.py": {
+      "sha256": "65ef2efe4333738fabbd00f3e59b5f520313491fe4672f21ac47d9144142fa4b",
+      "git_blob": "af834d6c4499603c92becdc431e29dd9c36a79b3",
+      "path": "research/doom/audit_map01_v38_v39_control_tempo_posthoc_v1.py"
+    },
+    "candidate.py": {
+      "sha256": "10cce29abeabab402a106602362a021c7f991340f701de3aaf5fd2f92347cd61",
+      "git_blob": "3d7ccfe8a016e0b9deec6ae3cb0439ea4d81ca50",
+      "path": "research/doom/input_occupancy_reconstructability_a01_20261005/analyze_a01.py"
+    },
+    "auditor.py": {
+      "sha256": "98c8b9e7d26fe09d69a11bd23a3916d5819dc747a2ae3d46f502d65fa55f1271",
+      "git_blob": "df862f39c8e4a83ce6a5ae73bbce3867ab57dc1f",
+      "path": "research/doom/input_occupancy_reconstructability_a01_20261005/audit_a01.py"
+    },
+    "map01-v38-integrated-threat-live-01_report.json": {
+      "sha256": "7fa222f9b273ee10ad1ed3e24b8f7f234f46cc137265a90d70c6073981602f58",
+      "git_blob": "d96b9032c7f55645dde20a1f95d916c943713914",
+      "path": "research/doom/results/map01-v38-integrated-threat-live-01/report.json"
+    },
+    "map01-v38-integrated-threat-live-01_events.jsonl": {
+      "sha256": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3",
+      "git_blob": "02d65d49b61feadbdec2e051bd23d1ca845d5df1",
+      "path": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl"
+    },
+    "map01-v38-integrated-threat-live-01_owner_events.json": {
+      "sha256": "86ee4a086901a77e0034426de92ee167e020273490c994b1e3375d066bcdf032",
+      "git_blob": "ca04484feddadcbc49c7d7d7311e342f343b4904",
+      "path": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/owner-events.json"
+    },
+    "map01-v39-coast-liveness-live-01_report.json": {
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+      "git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/report.json"
+    },
+    "map01-v39-coast-liveness-live-01_events.jsonl": {
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl"
+    },
+    "map01-v39-coast-liveness-live-01_owner_events.json": {
+      "sha256": "cdf628825312e6eb0cd810f7d0b3a77e52c1c2f646099bc07a34b4e3a90c08b7",
+      "git_blob": "596daf6e8f42669bd022c8dbe2d047929242e94c",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/owner-events.json"
+    }
+  },
+  "method": "read-only event-schema census and cross-file consistency audit; no retained allocation reruns",
+  "retries": 0,
+  "scope": "whether retained v38/v39 outputs can reconstruct per-key physical held occupancy"
+}
