@@ -1,0 +1,30 @@
+{
+  "schema": "voi-prior-set-robustness-run-v1",
+  "allocation_id": "VOI-PRIORSET-5306-HOST-A01-20261009",
+  "freeze_file_sha256": "ca9ba49d9606d837a941df424e4e8f0726ced1d797cd26631113d7bc00d30f18",
+  "source_main_commit": "0621713407d42c5a3922572b2fe57222f175e9a2",
+  "frozen_worktree_commit": "ed77c82b478c94ae14a5f41939b33d545f06c593",
+  "recorded_at_utc": "2026-10-08T19:42:27Z",
+  "formal_invocations": {
+    "candidate_count": 1,
+    "candidate_shell_pipeline_exit_code": 1,
+    "candidate_exit_code": "inferred_0_from_complete_output_and_normal_script_return; not separately captured",
+    "candidate_raw_sha256": "4ae249ae28a403fb8f5711faf3d5665e02bb5f3cfd7bebd0511e673415ef533c",
+    "candidate_stdout_capture": "tee could not open its target before candidate created results directory; complete JSON was still returned by the tool and saved as raw JSON",
+    "auditor_count": 1,
+    "auditor_exit_code": 0,
+    "auditor_status": "PASS_METHOD_SCOPED",
+    "auditor_errors": [],
+    "retries": 0
+  },
+  "construction": {
+    "tests_normal": "7/7 PASS on Python 3.14.5",
+    "tests_optimized": "7/7 PASS on Python 3.14.5"
+  },
+  "disposition": {
+    "diagnostic": "PASS_METHOD_SCOPED",
+    "issue_level": "HOLD_PRIOR_SET_NOT_EMPIRICALLY_SUPPORTED",
+    "reason": "The prior set and utility weights are authored sensitivity fixtures, not calibrated or independently supported estimates; no empirical held-out outcomes or GUI/task measurements were collected."
+  },
+  "scope": "Six authored finite cases; exact rational logic only. No model, GUI, external application, game, container, physical timing, token use, latency, or cost measurements."
+}
