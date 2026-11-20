@@ -632,8 +632,22 @@ Three current-main candidates were verified and integrated during this wave:
 Issue #57 remains open: matched integrated token/latency/correctness economics,
 standard-caller task success after recovery, repeated reliability, and trusted
 fresh comparison allocation are still outstanding. PR #10340 remains a draft
-on base `86a52662`; its local rebase could not establish a shared merge base
-with this main checkout and began replaying a broad history, so that attempt
-was aborted without modifying the PR. Audit its lineage and frozen source
-before choosing a bounded current-main port. No WSLc or Docker live allocation
-was used in this checkpoint.
+on base `86a52662`. The initial local rebase failure was a property of this
+shallow clone, not unrelated PR history. GitHub's compare API confirms merge
+base `86a52662dc2bb690dd670d52ea8d97816aef2a26`, with the PR 10 commits ahead
+and current main 14 commits ahead; the API-reported changed-file sets have no
+path overlap. The broad local rebase was aborted without changing the PR. A
+lineage correction and exact file/test audit are recorded in
+[`pr10340-lineage-correction-20261121.md`](maintenance/pr10340-lineage-correction-20261121.md).
+No WSLc or Docker live allocation was used in this checkpoint.
+
+### PR #10340 follow-up after lineage correction
+
+GitHub updated the draft to current main successfully; new head is
+`c47ae761ed7a8c47e6d5d6b16937b468145956cd` and all five checks passed. The PR
+remains correctly draft: its own limits say no dispatch, external allocation
+attestor, or live comparison. The old Edge evidence is only a local one-form
+effect with offline model double. A recheck of its journal suite was incomplete
+because the local shallow/sparse tree lacked pinned source files (3 allocation
+checks passed; 10 errored on file lookup), so old 12/12 claims are not
+reconfirmed for the rebased head. See the correction memo for exact detail.
