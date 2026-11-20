@@ -59,27 +59,49 @@ The workflow logs show why green CI does not close the local journal gate:
 MAP01 scheduler replay; `audit` ran the golden adapter audit. None of these
 invoked `research/integration/test_issue57_v3_prospective_run_v1.py`.
 
-The journal's source manifest names 23 files. At least
-`research/live_control/run_integrated_efficiency_live_v1.py`,
-`research/live_control/calc_g10_caller_v1.py`, and
-`research/live_control/calc_g10_fresh_admission_v1.py` are absent from both
-current main and the PR's 12 changed paths. Thus the journal cannot attest
-those components as a fully present current-main composition. It computes
-hashes after creating the new evidence root, so a missing required source
-raises during construction and can leave a partial, non-dispatchable root. The
-current code therefore fails closed for dispatch, but lacks a focused test
-that this source-incomplete path leaves no ambiguous evidence root. Moving
-source validation before root creation and testing the no-partial-root result
-would improve the custody boundary; this is a robustness gate, not evidence
-that dispatch occurred or that an invalid run was accepted.
+The journal's source manifest names 23 files. A subsequent `origin/main` tree
+lookup established that 22 are already present in current main; the remaining
+one is the journal module added by this PR. The earlier statement that three
+runtime files were absent from main was caused by the local sparse checkout and
+was incorrect. The test also reads
+`research/live_control/integrated_efficiency_discoveries_v1.json`, which is
+present in both main and the PR but was omitted from the first temporary test
+tree.
 
-A local replay of the journal suite was attempted against the rebased SHA using
-Python 3.11. The incomplete shallow/sparse worktree prevented a faithful source
-checkout: the PR's source-hash manifest references 23 files, several of which
-were not present in the worktree. The test run reached 13 tests, with 3
-allocation-boundary tests passing and 10 errors at source-file lookup. The
-test run is incomplete; separately, inspection found the absent-source/partial
-root path described above. The old PR-body result of 12/12 normal and `-O` was
-not reproduced on the new head. Do not treat the PR as locally reverified
-until the complete pinned tree is available, the partial-root behavior has a
-focused regression, and both modes pass. Keep the PR draft.
+A local replay of the journal suite was first attempted in an incomplete
+shallow/sparse worktree: 3 allocation-boundary tests passed and 10 errored
+because pinned source files were not materialized. A second temporary tree
+contained all 23 pinned sources, the test, its adapters, and the discoveries
+fixture from current main. Against rebased journal/test SHA
+`c47ae761ed7a8c47e6d5d6b16937b468145956cd` and current-main pinned runtime
+sources at `cd4857dd3a2147d2dfa0c6109361760ba6e57518`, all 13 tests passed under
+Windows Python 3.11.9 in normal mode and all 13 passed under `-O`. This is
+local synthetic journal/composition evidence; it does not enable dispatch,
+attest a live allocation, or establish provider/live comparison results.
+PR #10340 remains draft because those broader gates remain open.
+
+The reconstructed source tree used for both successful test invocations was
+`D:\CodexData\Temp\issue57-pr10340-full-tree`. It contained 23/23 paths named
+by the prospective journal's source manifest plus its test and discovery
+fixture (24 files before unittest caches). The PR test SHA-256 was
+`f09cf956fd51cfdd55f162b63bc46dc2b86f6bbf0ddb80eb1ab379c77d271e7e`; journal
+module SHA-256 was
+`b31e42f226798b35b99b1498f82ed6eedec23f61ed6dfca23dcd582d5d48bbfc`; protocol
+SHA-256 was
+`556c04c19d19d2f87d26fdcce9a3206560593dbe4c4ab1cbe24360e72ccae1a3`;
+trace-adapter SHA-256 was
+`55e5e5c6f6288202ee603b096269aa5f1072eeaebed2baafe7f34399c1fa6f65`;
+durable-allocation SHA-256 was
+`2309b93d8f84c76eb1ced4f2b2a78f5b267d53eb30984147491fb39672ece37f`; and
+the discoveries fixture SHA-256 was
+`ea67ff6815da45740c194dfbf579ae1912770c8f56bedf4f1117586e58f7f335`. The
+runner used `python -m unittest ... -v` and `python -O -m unittest ... -v`.
+This is retained command/source identity metadata, not a live experiment raw
+packet.
+
+Exact console logs are retained outside the checkout at the same temporary
+tree: `normal.log` SHA-256
+`8dae4f6eb42018b492363d445ee4455c88215e48591fc5a695deafab1ca0adf5` and
+`optimized.log` SHA-256
+`36d8b5e716b54f2cef5f66daf4892408887e70913a374348ddaac534aec29732`. Both
+record exit 0 and `Ran 13 tests ... OK`.
