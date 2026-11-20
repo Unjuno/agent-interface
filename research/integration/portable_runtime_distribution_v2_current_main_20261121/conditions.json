@@ -1,0 +1,34 @@
+{
+  "packet_id": "portable_runtime_distribution_v2_current_main_20261121",
+  "source_revision": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "base_main": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+  "runtime_source_files_identical_to_base": true,
+  "host": {
+    "os": "Microsoft Windows 11 Pro",
+    "version": "10.0.26300",
+    "build": "26300",
+    "python": "Python 3.13.14"
+  },
+  "tests": {
+    "normal": {
+      "count": 21,
+      "exit_code": 0,
+      "elapsed_seconds": 29.988
+    },
+    "optimized": {
+      "count": 21,
+      "exit_code": 0,
+      "elapsed_seconds": 32.811
+    }
+  },
+  "artifact": {
+    "name": "agent-interface-runtime.pyz",
+    "bytes": 784932,
+    "sha256": "0b8ebae5976cb103621c61f94cf6aa086a22faa7ab802c4aa3848e5bec29b579",
+    "source_revision": "381a21ace42891c2cd1e9cff3e231bec763ec2ba",
+    "doctor_exit_code": 0,
+    "validate_help_exit_code": 0,
+    "tested_from_checkout": false
+  },
+  "scope": "Local deterministic packaging and command startup only; no native input, live GUI, permission prompt, provider, task effect, release, or public publication."
+}

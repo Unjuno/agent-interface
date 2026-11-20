@@ -1,0 +1,5 @@
+py -3.13 -m unittest discover -v -s runtime\distribution_v2 -p 'test_*.py'
+py -3.13 -O -m unittest discover -v -s runtime\distribution_v2 -p 'test_*.py'
+py -3.13 -m runtime.distribution_v2.build --out <fresh-dir>\agent-interface-runtime.pyz --manifest <fresh-dir>\manifest.json --sums <fresh-dir>\sha256.txt
+py -3.13 <absolute-agent-interface-runtime.pyz> doctor
+py -3.13 <absolute-agent-interface-runtime.pyz> validate --help
