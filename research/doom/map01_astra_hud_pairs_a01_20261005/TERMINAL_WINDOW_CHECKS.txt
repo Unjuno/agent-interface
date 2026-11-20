@@ -1,0 +1,14 @@
+Posthoc terminal-window reconstruction. This is not a new/live allocation.
+
+Commands and outcomes:
+- python terminal_window_reconstruction.py: PASS_POSTHOC_CLOCK_RECONSTRUCTION
+- python audit_terminal_window.py: PASS_AUDITED_POSTHOC_RECONSTRUCTION, 0 mismatches
+- python -m unittest discover -s . -p 'test_*.py' -v: 7 passed
+- python audit_stream_diagnostic.py: PASS_AUDITED_METADATA_ONLY, 0 mismatches
+- python audit_pairwise_result.py: PASS_AUDITED_SCOPED, 0 mismatches
+- python -m py_compile terminal_window_reconstruction.py audit_terminal_window.py test_terminal_window.py: pass
+- git diff --check: pass
+
+The terminal-window auditor recomputes raw event/report timestamp differences and
+checks receipt/sequence joins and selected-frame hashes. Manual HUD/visual reads
+are not independently validated. No candidate, model, game, GUI, or input ran.
