@@ -1,0 +1,6 @@
+Frozen base: c1074c4dc385bae5b94ce93a5870e92c2e6ab07d
+Preflight: python -m py_compile research/doom/v39_v15_keymap_after_batch_a05_20261005/candidate.py research/doom/v39_v15_keymap_after_batch_a05_20261005/run_candidate.py research/doom/v39_v15_keymap_after_batch_a05_20261005/build_freeze.py
+Candidate: python research/doom/v39_v15_keymap_after_batch_a05_20261005/run_candidate.py
+Outcome: one candidate invocation started; normal case returned in memory; second case failed at owner.close() because fake X wrapper dropped the explicit release and its cleanup retry. The third case did not start. See results/a01/RUN_FAILURE.json.
+Independent source/failure-retention check: python research/doom/v39_v15_keymap_after_batch_a05_20261005/audit_failure.py
+No retry: the preregistration requires one candidate invocation with no retries.
