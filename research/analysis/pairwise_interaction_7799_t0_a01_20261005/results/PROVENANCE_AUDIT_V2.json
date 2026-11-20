@@ -1,0 +1,46 @@
+{
+  "checks": {
+    "candidate_code_matches_a01_manifest": true,
+    "candidate_commit_matches_freeze": true,
+    "candidate_decision_is_preserved_hold": true,
+    "candidate_hashes_match_freeze": true,
+    "candidate_raw_matches_a01_manifest": true,
+    "checked_out_source_bytes_match_freeze": true,
+    "freeze_bytes_match_reviewed_package": true,
+    "freeze_commit_matches_reviewed_source": true,
+    "manifest_bytes_match_reviewed_package": true,
+    "manifest_pins_candidate_and_auditor_code": true,
+    "original_audit_binds_exact_candidate_raw": true,
+    "original_audit_raw_matches_a01_manifest": true,
+    "original_audit_result_is_preserved": true,
+    "original_auditor_code_matches_a01_manifest": true,
+    "source_paths_are_complete": true
+  },
+  "disposition": "PASS_SOURCE_BINDING_ONLY",
+  "exit_disposition": "PASS_SOURCE_BINDING_ONLY",
+  "mutation_checks": {
+    "audit_raw_binding_mutation_rejected": true,
+    "candidate_code_byte_mutation_rejected": true,
+    "candidate_source_hash_mutation_rejected": true,
+    "manifest_entry_mutation_rejected": true,
+    "original_audit_byte_mutation_rejected": true,
+    "original_auditor_code_byte_mutation_rejected": true,
+    "source_file_mutation_rejected": true
+  },
+  "mutation_checks_pass": true,
+  "observed_sha256": {
+    "SHA256SUMS": "373b0e835872c24fadc54eea1064d209eaa5fdf48c5336890f78f2c383f4f414",
+    "audit.py": "2b5c45b0d0681c05843c627de3df052555c2a5f1029e70fb5fd153f28840f67b",
+    "candidate.py": "acda86fdfdfc14a1f64339e06dfd134b9c62825a461112839a90e793bddaee3e",
+    "freeze.json": "86dc57641783cc43763f316bee3b6a5824195e3c24dbf6db1c63441f829710d9",
+    "results/formal-01/audit.json": "1a98b5f74582923d62a3502ae8ef0bd9a50444557d6dff5b45adfd0eccb94b1a",
+    "results/formal-01/candidate.json": "836fc1c302c8f1079c73c96c5f4cbf6400e3f8febeb30e54aedb6eb06de8db39",
+    "source:research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md": "1ea1ae7ed9bb99f89ed1d9e83bbe73527cd8d9450087bdeb7083385b801e27fc",
+    "source:research/live_control/integrated_efficiency_protocol_v1.py": "7bf02cd7bc3b2919ba81325f6026d8ce1110b0e18803e370707feac1a1c77c5a"
+  },
+  "passed": 15,
+  "schema": "issue-7799-source-provenance-audit-v2",
+  "scope": "post-hoc source, candidate-code, auditor-code, and retained-raw binding; no candidate, original auditor, or formal allocation invocation",
+  "source_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "total": 15
+}
