@@ -25,3 +25,5 @@ This is a reproducible environment-setup boundary, not an application/runtime fa
 - `raw/stdout.txt`, `raw/stderr.txt`, `raw/exit-code.txt`: captured setup/doctor output and process result.
 - `SHA256SUMS`: content hashes for the frozen conditions and raw files.
 - The source checkout remains at `/home/user/agent-interface-rp-rc1-doctor-r05-20261121` with its isolated venv; it was not removed.
+
+The subsequent scoped host-prerequisite lookup is retained separately in [the R05 host probe follow-up](host_probe_followup/RESULT.md), including the exact search script and raw output.
