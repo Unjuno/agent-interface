@@ -19,9 +19,13 @@ those gates.
    bytes; the older smoke records content SHA-256
    `8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed`). It
    must be zero-model, no controller input, disposable/private, and retain raw
-   readiness, oracle, process, hash, and cleanup evidence. The canonical save
-   is on current main; the JAR still needs exact materialization and checksum
-   verification.
+   readiness, oracle, process, hash, and cleanup evidence. Both canonical saves
+   on current main match the pinned size/hash. The official JAR is now locally
+   materialized and hash-verified, but Ubuntu WSL has no Java runtime; no game
+   launch or formal smoke occurred. See the bounded
+   [asset-readiness packet](../../research/integration/mindustry_asset_readiness_v1_20261121/RESULT.md).
+   The current disposition is `HOLD_LAUNCH_RUNTIME_MISSING`; the setup smoke
+   remains pending an available Java runtime.
 2. **Resource lane for #5130.** Issue
    [#5130](https://github.com/Unjuno/agent-interface/issues/5130) requests one
    serial Docker Desktop CPU-only slot and explicitly forbids starting,
@@ -50,9 +54,11 @@ those gates.
    success in a matched comparison, carry factual final-state score separately
    from effect timing and authority eligibility; the research candidate is not
    wired into the frozen comparison evaluator yet.
-5. **Product boundary.** Retain the Windows portable-runtime result as scoped
-   packaging evidence. Public distribution, Linux/WSL startup, live input, and
-   side-effect authorization remain separate acceptance checks.
+5. **Product boundary.** Retain Windows and Ubuntu WSL portable-runtime results
+   as scoped packaging and basic-startup evidence. Public distribution, live
+   X11/Win32 input, target permission flow, task effect, and side-effect
+   authorization remain separate acceptance checks. The WSL result does not
+   establish a live X11 target or native input.
 
 ## PR #10340 gate
 

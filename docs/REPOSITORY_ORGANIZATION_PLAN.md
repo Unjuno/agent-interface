@@ -666,3 +666,37 @@ token/latency/correctness comparison and verify distributable runtime
 boundaries. See
 [`issue57-next-gates-20261121.md`](maintenance/issue57-next-gates-20261121.md)
 for source and resource evidence. No live resource was touched in this wave.
+
+## Current whole-repository checkpoint r153 (2026-11-21)
+
+The membership was read from the paginated GitHub REST Issue and PR endpoints
+between `2026-11-20T20:19:58Z` and `2026-11-20T20:20:37Z`. Remote `main` was
+`cfb691b3b890d01c0b24fd1cd988609a62c4dd2a` immediately before and after the
+reads. The exact open sets are unchanged from r152: 1,643 Issues and 410 PRs;
+their sorted ID CSV byte hashes are unchanged (`9a2abc9b…e1f79` and
+`e45999de…3e64b`). The read receipt is
+[`repository-inventory-recheck-20261121-r153.md`](maintenance/repository-inventory-recheck-20261121-r153.md).
+
+PR [#10361](https://github.com/Unjuno/agent-interface/pull/10361) was merged
+as `cfb691b3b890d01c0b24fd1cd988609a62c4dd2a`. It adds the retained Ubuntu
+WSL portable-runtime result: Python 3.12.3 passes the 21-test distribution
+suite normally and under `-O`; outside-checkout `doctor` and `validate --help`
+exit 0, with the diagnostic granting no side-effect authority. The same
+zipapp's 64 Git-managed source hashes match the current-main blobs. This closes
+the basic Ubuntu WSL startup gap only; it does not establish live X11 input,
+task effects, permission flow, public release, or preview graduation. The
+current scoped gate wording is corrected in
+[`issue57-next-gates-20261121.md`](maintenance/issue57-next-gates-20261121.md).
+
+Issue #57 remains open. #908 is a consumed, closed HOLD; #5130 and #7924 remain
+open with Docker/WSLc resource ownership unresolved. PR #10340 remains draft
+with its five checks green; it is a non-dispatching synthetic journal and has
+no external allocation attestor. The pinned v160.2 JAR and canonical saves are now size/hash-verified, but
+Ubuntu WSL has no Java runtime; the game has not been launched and the
+setup-only smoke remains held. See the
+[asset-readiness packet](../research/integration/mindustry_asset_readiness_v1_20261121/RESULT.md).
+The next local prerequisite is an available Java runtime; the separate Docker
+CPU slot and WSLc ownership gates remain unresolved. Do not start or inspect
+Docker, launch Mindustry, or consume a formal comparison slot until the
+applicable conditions are satisfied. Do not bulk-close queue items based on
+the unchanged membership snapshot.
