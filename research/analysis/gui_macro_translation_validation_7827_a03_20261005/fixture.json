@@ -1,0 +1,476 @@
+{
+  "mutations": [
+    {
+      "id": "drop_freshness_guard",
+      "source_id": "guarded_save",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "effect": "save",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "note"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "change_effect_target",
+      "source_id": "guarded_save",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "save",
+            "op": "EMIT",
+            "target": "browser",
+            "value": "note"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "reorder_noncommuting_events",
+      "source_id": "wait_observe",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "channel": "screen",
+            "op": "OBSERVE"
+          },
+          {
+            "op": "WAIT",
+            "ticks": 1
+          },
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "remove_cancel_release",
+      "source_id": "guarded_save",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "save",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "note"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hide_forbidden_write_in_internal",
+      "source_id": "declared_stutter",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "INTERNAL",
+            "side_effect": {
+              "effect": "delete",
+              "target": "editor",
+              "value": "all"
+            }
+          },
+          {
+            "channel": "screen",
+            "op": "OBSERVE"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "yield_becomes_continue",
+      "source_id": "guarded_save",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "save",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "note"
+          },
+          {
+            "op": "CONTINUE"
+          },
+          {
+            "channel": "after_yield",
+            "op": "OBSERVE"
+          }
+        ]
+      }
+    },
+    {
+      "id": "alter_effect_postcondition",
+      "source_id": "guarded_save",
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "save",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "other_note"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    }
+  ],
+  "schema": "v1",
+  "unknown": {
+    "id": "repeat_exceeds_bound",
+    "source": {
+      "program": [
+        {
+          "body": [
+            {
+              "channel": "screen",
+              "op": "observe"
+            }
+          ],
+          "count": 3,
+          "op": "repeat"
+        }
+      ]
+    },
+    "target": {
+      "on_cancel": [
+        {
+          "op": "RELEASE"
+        },
+        {
+          "op": "ABORT_CANCEL"
+        }
+      ],
+      "program": [
+        {
+          "channel": "screen",
+          "op": "OBSERVE"
+        },
+        {
+          "channel": "screen",
+          "op": "OBSERVE"
+        },
+        {
+          "channel": "screen",
+          "op": "OBSERVE"
+        }
+      ]
+    }
+  },
+  "valid": [
+    {
+      "id": "guarded_save",
+      "source": {
+        "program": [
+          {
+            "op": "guard",
+            "target": "editor"
+          },
+          {
+            "effect": "save",
+            "op": "write",
+            "target": "editor",
+            "value": "note"
+          },
+          {
+            "op": "yield"
+          }
+        ]
+      },
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "save",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "note"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wait_observe",
+      "source": {
+        "program": [
+          {
+            "op": "wait",
+            "ticks": 1
+          },
+          {
+            "channel": "screen",
+            "op": "observe"
+          },
+          {
+            "op": "release"
+          },
+          {
+            "op": "yield"
+          }
+        ]
+      },
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "WAIT",
+            "ticks": 1
+          },
+          {
+            "channel": "screen",
+            "op": "OBSERVE"
+          },
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bounded_repeat",
+      "source": {
+        "program": [
+          {
+            "body": [
+              {
+                "op": "guard",
+                "target": "editor"
+              },
+              {
+                "effect": "type",
+                "op": "write",
+                "target": "editor",
+                "value": "x"
+              }
+            ],
+            "count": 2,
+            "op": "repeat"
+          },
+          {
+            "op": "release"
+          },
+          {
+            "op": "yield"
+          }
+        ]
+      },
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "type",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "x"
+          },
+          {
+            "op": "CHECK",
+            "target": "editor"
+          },
+          {
+            "effect": "type",
+            "op": "EMIT",
+            "target": "editor",
+            "value": "x"
+          },
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "explicit_abort",
+      "source": {
+        "program": [
+          {
+            "op": "abort",
+            "reason": "user_cancel"
+          }
+        ]
+      },
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "ABORT",
+            "reason": "user_cancel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "declared_stutter",
+      "source": {
+        "program": [
+          {
+            "channel": "screen",
+            "op": "observe"
+          },
+          {
+            "op": "yield"
+          }
+        ]
+      },
+      "target": {
+        "on_cancel": [
+          {
+            "op": "RELEASE"
+          },
+          {
+            "op": "ABORT_CANCEL"
+          }
+        ],
+        "program": [
+          {
+            "op": "INTERNAL"
+          },
+          {
+            "channel": "screen",
+            "op": "OBSERVE"
+          },
+          {
+            "op": "INTERNAL"
+          },
+          {
+            "op": "YIELD"
+          }
+        ]
+      }
+    }
+  ]
+}
