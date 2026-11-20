@@ -1,0 +1,19 @@
+test_mcp_endpoint_composition (unittest.loader._FailedTest.test_mcp_endpoint_composition) ... ERROR
+
+======================================================================
+ERROR: test_mcp_endpoint_composition (unittest.loader._FailedTest.test_mcp_endpoint_composition)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mcp_endpoint_composition
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-merged-main-20261121\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py", line 30, in <module>
+    from runtime.cli_v1.mcp_relay import Relay
+ModuleNotFoundError: No module named 'runtime'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

@@ -30,14 +30,37 @@ class Driver:
  def verify(self,p):
   self.record('verify_effect',p);return {'status':'succeeded','evidence_ref':p['observation']['evidence_ref']}
  def journal(self,p):self.record('journal',p)
- def run(self,spec=None,clock=None):
+ def run(self,spec=None,clock=None,effect_clock=None,effect_clock_domain="graph"):
   adapters={'observe':self.observe,'admit':self.admit,'execute':self.execute,
    'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal}
   unchanged=getattr(self,'verify_unchanged_effect',None)
   if unchanged is not None:adapters['verify_unchanged_effect']=unchanged
-  return run(spec or interface(),adapters,clock=clock or (lambda:self.now))
+  return run(spec or interface(),adapters,clock=clock or (lambda:self.now),
+             effect_clock=effect_clock,effect_clock_domain=effect_clock_domain)
 
 class CompiledBoundaryTests(unittest.TestCase):
+
+ def test_effect_verification_can_use_the_callback_clock_domain(self):
+  graph_time=[0];effect_time=[5000];request_times=[]
+  d=Driver()
+  def next_effect_time():
+   effect_time[0]+=1
+   return effect_time[0]
+  def verify(request):
+   request_times.append(next_effect_time())
+   return d.verify(request)
+  adapters={'observe':d.observe,'admit':d.admit,'execute':d.execute,
+   'verify_effect':verify,'cancelled':lambda:False,'journal':d.journal}
+  receipt=run(interface(),adapters,clock=lambda:graph_time[0],
+              effect_clock=next_effect_time,effect_clock_domain="synthetic-effect-clock")
+  checks=[event for event in receipt['critical_events']
+          if event.get('event')=='effect_checked']
+  self.assertEqual(len(checks),2)
+  self.assertEqual(checks[0]['effect_verification_clock_domain'],
+                   "synthetic-effect-clock")
+  self.assertLess(checks[0]['effect_verification_started_ns'],request_times[0])
+  self.assertLess(request_times[0],checks[0]['effect_verification_accepted_ns'])
+  self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED')
 
  def test_unchanged_frame_uses_explicit_nonvisual_effect_verifier(self):
   d=Driver();base=d.observe
@@ -74,7 +97,8 @@ class CompiledBoundaryTests(unittest.TestCase):
    reads_at_callback.append(calibration_reads[0])
    return calibration.verify(request)
   calibration.verify_unchanged_effect=calibrated_verifier
-  baseline=calibration.run(calibration_spec,clock=calibration_clock)
+  baseline=calibration.run(calibration_spec,clock=calibration_clock,
+                           effect_clock=lambda:0)
   self.assertEqual(baseline['outcome'],'TASK_SUCCEEDED')
   self.assertEqual(len(reads_at_callback),1)
 
@@ -83,7 +107,8 @@ class CompiledBoundaryTests(unittest.TestCase):
   def deadline_clock():
    reads[0]+=1
    return 1_000_000 if reads[0]==deadline_read else 0
-  receipt=d.run(spec,clock=deadline_clock)
+  receipt=d.run(spec,clock=deadline_clock,effect_clock=lambda:0,
+                effect_clock_domain="different-clock")
   self.assertEqual((receipt['outcome'],receipt['reason']),('SAFE_YIELD','budget_exhausted'))
   self.assertEqual(receipt['completed_transitions'],2)
   self.assertEqual(receipt['pending_effect']['action'],'save')

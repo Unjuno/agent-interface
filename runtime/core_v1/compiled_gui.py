@@ -160,12 +160,20 @@ def _matches(actual, expected):
     return type(actual) is type(expected) and actual == expected
 
 
-def run(interface, adapters, *, clock=time.perf_counter_ns):
+def run(interface, adapters, *, clock=time.perf_counter_ns, effect_clock=None,
+        effect_clock_domain="graph"):
     """Execute a bounded method locally; return an auditable compact receipt."""
     interface = validate(interface)
     required = {"observe", "admit", "execute", "verify_effect", "cancelled"}
     if type(adapters) is not dict or any(not callable(adapters.get(k)) for k in required):
         raise ValueError("observe/admit/execute/verify_effect/cancelled adapters required")
+    if effect_clock is None:
+        effect_clock = clock
+    if not callable(effect_clock):
+        raise ValueError("effect_clock must be callable when supplied")
+    if (type(effect_clock_domain) is not str or not effect_clock_domain
+            or len(effect_clock_domain) > 64):
+        raise ValueError("effect_clock_domain must be a bounded nonempty string")
     action_completed = adapters.get("on_action_completed")
     if action_completed is not None and not callable(action_completed):
         raise ValueError("on_action_completed adapter must be callable")
@@ -333,10 +341,11 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                       "status": status, "evidence_ref": observation["evidence_ref"],
                       "verifier": "compiled_predicate_condition", **effect_timing})
                 return finish("SAFE_YIELD", "effect_" + status)
-            verification_started_ns = clock()
-            if verification_started_ns >= deadline:
+            if clock() >= deadline:
                 return finish("SAFE_YIELD", "budget_exhausted")
+            verification_started_ns = effect_clock()
             effect_timing["effect_verification_started_ns"] = verification_started_ns
+            effect_timing["effect_verification_clock_domain"] = effect_clock_domain
             try:
                 effect = unchanged_verifier({
                     "expected_effect": copy.deepcopy(expected),
@@ -345,7 +354,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                     "observation": copy.deepcopy(observation),
                 })
             except Exception as error:
-                effect_timing["effect_verification_accepted_ns"] = clock()
+                effect_timing["effect_verification_accepted_ns"] = effect_clock()
                 emit({"event": "effect_verification_failed", "action": pending_effect["action"],
                       "error_type": type(error).__name__, **effect_timing})
                 return finish("RUNTIME_FAILED", "effect_unavailable")
@@ -355,7 +364,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 raise ValueError("typed effect status required")
             if effect["status"] == "succeeded":
                 _name(effect["evidence_ref"], "effect evidence reference")
-            effect_timing["effect_verification_accepted_ns"] = clock()
+            effect_timing["effect_verification_accepted_ns"] = effect_clock()
             emit({"event": "effect_checked", "action": pending_effect["action"],
                   "status": effect["status"], "evidence_ref": effect["evidence_ref"],
                   **effect_timing})

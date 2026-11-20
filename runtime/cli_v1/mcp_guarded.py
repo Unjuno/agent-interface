@@ -196,7 +196,8 @@ class GuardedSessionOwner(MCPSessionOwner):
                      guard_perceive=None, verify_unchanged_effect=None,
                      on_action_completed=None,
                      before_action_dispatch=None,
-                     post_release_settle_ms=0):
+                     post_release_settle_ms=0, effect_clock=None,
+                     effect_clock_domain="graph"):
         """Run one explicit graph on this already-open Python owner.
 
         Ground references first. Callbacks are trusted read-only caller code,
@@ -263,7 +264,9 @@ class GuardedSessionOwner(MCPSessionOwner):
                                    verify_unchanged_effect=verify_unchanged_effect,
                                    on_action_completed=on_action_completed,
                                    before_action_dispatch=before_action_dispatch,
-                                   post_release_settle_ms=post_release_settle_ms)
+                                   post_release_settle_ms=post_release_settle_ms,
+                                   effect_clock=effect_clock,
+                                   effect_clock_domain=effect_clock_domain)
         except BaseException as error:
             bridge.review_required = True
             self.error = repr(error)
@@ -381,6 +384,8 @@ class GuardedSessionOwner(MCPSessionOwner):
                 before_action_dispatch=getattr(profile,
                     'before_action_dispatch', None),
                 post_release_settle_ms=250,
+                effect_clock=profile.clock,
+                effect_clock_domain="time.monotonic_ns",
                 cancelled=self.bridge._cancel_requested)
         result['profile_id'] = profile_id
         result['attempt_id'] = attempt_id
