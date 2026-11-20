@@ -1,0 +1,68 @@
+--- a/research/integration/caps_text_check_to_xtest_successor_v2/audit_formal.py
++++ b/research/integration/caps_text_check_to_xtest_successor_v2/audit_formal.py
+@@ -69,9 +69,31 @@
+             "exact Entry character sequence")
+     pressed_codes = [e.get("keycode") for e in presses]
+     released_codes = [e.get("keycode") for e in key_releases]
+-    require(all(isinstance(code, int) for code in pressed_codes + released_codes) and
++    require(all(type(code) is int for code in pressed_codes + released_codes) and
+             Counter(pressed_codes) == Counter(released_codes),
+             "Entry KeyPress/KeyRelease keycode balance")
++    key_events = [e for e in events if e.get("event") in ("KeyPress", "KeyRelease")]
++    event_times = [e.get("ns") for e in key_events]
++    require(all(type(ns) is int for ns in event_times) and
++            event_times == sorted(event_times),
++            "Entry key-event monotonic timestamps")
++    held_codes: set[int] = set()
++    chronology_ok = True
++    for event in key_events:
++        code = event.get("keycode")
++        if type(code) is not int:
++            chronology_ok = False
++            continue
++        if event.get("event") == "KeyPress":
++            if code in held_codes:
++                chronology_ok = False
++            held_codes.add(code)
++        else:
++            if code not in held_codes:
++                chronology_ok = False
++            held_codes.discard(code)
++    require(chronology_ok and not held_codes,
++            "Entry per-key press/release chronology")
+     require(any(e.get("event") == "value" and e.get("value") == expected_value for e in events),
+             "Entry value-change journal")
+     require(any(e.get("event") == "exit" and e.get("value") == expected_value for e in events),
+
+--- a/research/integration/caps_text_check_to_xtest_successor_v2/test_audit_formal.py
++++ b/research/integration/caps_text_check_to_xtest_successor_v2/test_audit_formal.py
+@@ -79,6 +79,28 @@
+         self.assertIn("Entry KeyPress/KeyRelease keycode balance",
+                       audit_record("C01", "current", sample))
+ 
++    def test_rejects_boolean_keycodes_even_when_balanced(self):
++        sample = record("current")
++        press = next(e for e in sample["entry_events"]
++                     if e.get("event") == "KeyPress" and e.get("char") == "a")
++        release = next(e for e in sample["entry_events"]
++                       if e.get("event") == "KeyRelease" and e.get("keycode") == 38)
++        press["keycode"] = True
++        release["keycode"] = True
++        errors = audit_record("C01", "current", sample)
++        self.assertIn("Entry KeyPress/KeyRelease keycode balance", errors)
++        self.assertIn("Entry per-key press/release chronology", errors)
++
++    def test_rejects_release_timestamp_before_matching_press(self):
++        sample = record("current")
++        press = next(e for e in sample["entry_events"]
++                     if e.get("event") == "KeyPress" and e.get("char") == "a")
++        release = next(e for e in sample["entry_events"]
++                       if e.get("event") == "KeyRelease" and e.get("keycode") == 38)
++        press["ns"], release["ns"] = release["ns"], press["ns"]
++        errors = audit_record("C01", "current", sample)
++        self.assertIn("Entry key-event monotonic timestamps", errors)
++
+     def test_protocol_draft_cannot_start_formal_allocation(self):
+         study = Path(__file__).resolve().parent
+         repo = study.parents[3]
+
