@@ -6,7 +6,9 @@ must not be treated as exhaustive until reconciled with independent provider
 logs.
 """
 
+import asyncio
 import json
+import time
 
 
 def _json_bytes(value):
@@ -52,6 +54,14 @@ class RecordedPublicMcpCaller:
         if (not isinstance(generation, dict) or
                 generation.get("status") != "completed" or
                 not isinstance(generation.get("response_bytes"), bytes)):
+            source = (generation.get("late_usage_source")
+                      if isinstance(generation, dict) else None)
+            capture = getattr(source, "capture_terminal", None)
+            if callable(capture):
+                try:
+                    capture()
+                except Exception as exc:
+                    generation["late_usage_capture_error"] = type(exc).__name__
             return {"generation": generation, "tool_response": None,
                     "tool_call_submitted": False}
         arguments = prepare_arguments(generation)
@@ -61,6 +71,54 @@ class RecordedPublicMcpCaller:
             attempt_id, call_id, method, arguments)
         return {"generation": generation, "tool_response": response,
                 "tool_call_submitted": True}
+
+    async def observe_late_usage(self, attempt_id, generation, *, timeout=5):
+        """Explicitly harvest one late receipt after terminal score custody.
+
+        This method only reads same-turn usage through the attached provider
+        adapter. It never reads or submits a late answer or tool request.
+        """
+        if (type(timeout) not in (int, float) or timeout < 0 or timeout > 30):
+            raise ValueError("late usage timeout must be between 0 and 30 seconds")
+        if type(generation) is not dict or generation.get("status") not in (
+                "timeout", "failed", "cancelled"):
+            raise ValueError("late usage requires a failed terminal generation")
+        source = generation.get("late_usage_source")
+        if not callable(getattr(source, "read", None)):
+            return {"observed": False, "reason": "no_late_usage_source"}
+        receipt = self.recorder.reconcile()
+        attempts = [event for event in receipt["events"]
+                    if event.get("kind") == "model_attempt" and
+                    event.get("attempt_id") == attempt_id]
+        if (len(attempts) != 1 or attempts[0].get("status") !=
+                generation.get("status")):
+            raise ValueError("late usage source does not match a terminal attempt")
+        if not any(event.get("kind") == "task_score"
+                   for event in receipt["events"]):
+            raise ValueError("late usage may be observed only after task score custody")
+        deadline = time.monotonic() + timeout
+        observed = []
+        for index in range(128):
+            wait = max(0.0, deadline - time.monotonic()) if index == 0 else 0
+            value = await asyncio.to_thread(source.read, wait)
+            if value is None:
+                break
+            if (type(value) is not dict or
+                    not isinstance(value.get("usage"), dict) or
+                    not isinstance(value.get("usage_bytes"), bytes) or
+                    not isinstance(value.get("source_bytes"), bytes) or
+                    type(value.get("observed_ns")) is not int):
+                raise ValueError("late usage source returned a malformed receipt")
+            self.recorder.observe_late_usage(
+                attempt_id, usage=value["usage"],
+                usage_bytes=value["usage_bytes"], source_bytes=value["source_bytes"],
+                observed_ns=value["observed_ns"])
+            observed.append(value["usage"])
+        if not observed:
+            return {"observed": False, "reason": "no_new_usage"}
+        return {"observed": True, "observations": len(observed),
+                "usage": observed[-1],
+                "more_may_be_pending": len(observed) == 128}
 
     async def invoke_generation_to_tool_with_one_safe_recovery(
             self, attempt_id, request_bytes, provider_call, call_id, method,

@@ -151,6 +151,26 @@ request before `Relay.request` and retains the complete returned envelope. Its
 `invoke_generation_to_tool` path submits only completed generations with
 captured response bytes; a failed generation is durably recorded without a
 tool submission.
+On the App Server adapter path, a timeout can carry an explicit late-usage
+source. The standard caller captures its same-turn usage/journal boundary only
+after the timeout terminal row is durable; its separate
+`observe_late_usage` method requires task-score custody and waits only for new
+usage notifications. It retains the exact App Server JSONL usage row separately
+from the normalized ledger receipt. The wait does not consume `turn/completed`
+or make another public MCP call. This is a deterministic adapter composition;
+`app_server_spool_worker_v1.py` now publishes the immutable UNKNOWN receipt
+first, then holds the App Server client for a fixed five-second grace. During
+that window it waits only for fresh same-turn usage notifications and stores
+each exact JSONL row in an immutable `*.late-usage-NNNNNN.json` sidecar with
+thread/turn identity and SHA-256 custody. A late `turn/completed` answer is
+ignored and never returned, the timed-out request is not retried, and the client closes
+after the grace. The sidecar is retained evidence; automatic ingestion into
+the downstream task ledger/scorer is now connected through an explicit
+post-score `RecordedPublicMcpCaller.observe_late_usage` call. `FileSpoolPlanner`
+validates the immutable UNKNOWN boundary, sidecar identity/hash, and matching
+same-turn journal row before returning usage to the existing recorder. This is
+still a deterministic composition: worker and provider test streams are
+synthetic, so they do not establish real provider timing or billing.
 This is a research composition adapter, not an automatic hook in the frozen
 integrated-efficiency runner or every production provider/orchestrator. The
 [`recorded_integrated_efficiency_model_call_v1.py`](recorded_integrated_efficiency_model_call_v1.py)

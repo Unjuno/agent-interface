@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -214,6 +215,32 @@ def publish_stage(root: Path, attempt_id: str, stage: str, record: dict) -> None
     })
 
 
+def publish_late_usage(root: Path, attempt_id: str, sequence: int, record: dict) -> None:
+    """Publish one immutable, custody-bound usage row after UNKNOWN."""
+    attempt_id = _attempt_id(attempt_id)
+    if type(sequence) is not int or sequence < 1:
+        raise ValueError("late usage sequence must be a positive integer")
+    if not isinstance(record, dict):
+        raise TypeError("late usage record must be an object")
+    _, inflight, responses = _spool_dirs(Path(root))
+    if not (inflight / f"{attempt_id}.json").is_file():
+        raise SpoolError("cannot publish late usage without an inflight claim")
+    if not (responses / f"{attempt_id}.unknown.json").is_file():
+        raise SpoolError("late usage requires an immutable UNKNOWN receipt")
+    envelope = {
+        "schema": "agent-interface/app-server-spool-late-usage-v1",
+        "attempt_id": attempt_id,
+        "sequence": sequence,
+        "record": record,
+    }
+    encoded = json.dumps(envelope, sort_keys=True, separators=(",", ":"),
+                         allow_nan=False).encode("utf-8")
+    if len(encoded) > _MAX_RECORD_BYTES:
+        raise SpoolError("late usage record exceeds the bounded spool record size")
+    _write_json_atomic_once(
+        responses / f"{attempt_id}.late-usage-{sequence:06d}.json", envelope)
+
+
 def wait_for_stage(root: Path, attempt_id: str, stage: str, *, timeout: float) -> dict:
     """Wait without resubmitting; timeout is an explicit UNKNOWN outcome."""
     attempt_id = _attempt_id(attempt_id)
@@ -312,3 +339,58 @@ class FileSpoolPlanner:
             raise SpoolError("completion receipt has malformed terminal fields")
         self._active = None
         return result
+
+    def late_usage_source(self, handle, journal_path):
+        """Create a deferred sidecar reader for a timed-out file-spool turn."""
+        if handle != self._active:
+            raise SpoolError("spool turn handle is not active for late usage")
+        from app_server_provider_to_public_mcp_v1 import _LateSpoolUsageSource
+        return _LateSpoolUsageSource(self, handle, journal_path)
+
+    def wait_late_usage_sidecar(self, handle, sequence, timeout=5):
+        """Wait for one post-UNKNOWN sidecar; do not read terminal answers."""
+        if (handle != self._active or type(sequence) is not int or sequence < 1 or
+                type(timeout) not in (int, float) or not math.isfinite(timeout) or
+                timeout < 0 or timeout > 30):
+            raise ValueError("late-usage handle, sequence, or timeout is invalid")
+        unknown_path = self.root / "responses" / f"{handle.attempt_id}.unknown.json"
+        sidecar_path = (self.root / "responses" /
+                        f"{handle.attempt_id}.late-usage-{sequence:06d}.json")
+        deadline = time.monotonic() + timeout
+        while True:
+            if unknown_path.is_file():
+                response = _read_json(unknown_path)
+                terminal = response.get("record")
+                cursor = terminal.get("late_usage_cursor") if isinstance(terminal, dict) else None
+                if (response.get("schema") != "agent-interface/app-server-spool-response-v1" or
+                        response.get("attempt_id") != handle.attempt_id or
+                        response.get("stage") != "unknown" or not isinstance(terminal, dict) or
+                        terminal.get("thread_id") != handle.thread_id or
+                        terminal.get("turn_id") != handle.turn_id or
+                        not isinstance(cursor, list) or len(cursor) != 2 or
+                        any(type(value) is not int or value < 0 for value in cursor)):
+                    raise SpoolError("late-usage UNKNOWN identity or boundary is invalid")
+                if sidecar_path.is_file():
+                    sidecar = _read_json(sidecar_path)
+                    record = sidecar.get("record")
+                    if (sidecar.get("schema") != "agent-interface/app-server-spool-late-usage-v1" or
+                            sidecar.get("attempt_id") != handle.attempt_id or
+                            sidecar.get("sequence") != sequence or not isinstance(record, dict) or
+                            record.get("thread_id") != handle.thread_id or
+                            record.get("turn_id") != handle.turn_id or
+                            type(record.get("journal_offset")) is not int or
+                            record["journal_offset"] < cursor[1] or
+                            not isinstance(record.get("usage"), dict) or
+                            not isinstance(record.get("source_jsonl"), str) or
+                            not re.fullmatch(r"[0-9a-f]{64}",
+                                str(record.get("source_jsonl_sha256", "")))):
+                        raise SpoolError("late-usage sidecar identity or schema is invalid")
+                    source = record["source_jsonl"].encode("utf-8")
+                    if (not source.endswith(b"\n") or
+                            hashlib.sha256(source).hexdigest() != record["source_jsonl_sha256"]):
+                        raise SpoolError("late-usage sidecar source hash mismatch")
+                    return {"terminal_cursor": tuple(cursor), "record": record}
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return None
+            time.sleep(min(0.01, remaining))

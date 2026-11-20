@@ -183,6 +183,24 @@ class PersistentPlannerAdapter:
             error=error, usage=usage, cancellation_requested=cancelled,
             completed_agent_messages=len(messages))
 
+    def late_usage_cursor(self, handle):
+        """Capture a post-terminal usage/journal boundary for this active turn."""
+        with self._lock:
+            self._require_active(handle)
+        return self.client.turn_usage_snapshot(handle.thread_id, handle.turn_id)
+
+    def wait_late_usage(self, handle, cursor, timeout):
+        """Wait for new same-turn usage only; leave completion/answer untouched."""
+        if (type(cursor) is not tuple or len(cursor) != 2 or
+                type(cursor[0]) is not int or type(cursor[1]) is not int or
+                min(cursor) < 0):
+            raise ValueError("late usage cursor is invalid")
+        with self._lock:
+            self._require_active(handle)
+        return self.client.wait_turn_usage_updated(
+            handle.thread_id, handle.turn_id, after_count=cursor[0],
+            timeout=timeout)
+
     def _require_active(self, handle):
         if handle != self._active:
             raise PlannerProtocolError("turn handle is not active in this session")

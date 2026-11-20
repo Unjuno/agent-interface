@@ -35,6 +35,57 @@ _UNAVAILABLE_USAGE = {
 }
 
 
+def _validate_app_server_usage_source(source_bytes, usage):
+    if not isinstance(source_bytes, bytes):
+        raise AttemptJournalError("app-server usage source must be raw bytes")
+    lines = source_bytes.splitlines(keepends=True)
+    if len(lines) != 1 or not lines[0].endswith(b"\n"):
+        raise AttemptJournalError("app-server usage source must be one complete JSONL row")
+    try:
+        row = json.loads(lines[0])
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise AttemptJournalError("app-server usage source is malformed") from exc
+    if not isinstance(row, dict):
+        raise AttemptJournalError("app-server usage source row must be an object")
+    message = row.get("message") if isinstance(row, dict) else None
+    params = message.get("params") if isinstance(message, dict) else None
+    token_usage = params.get("tokenUsage") if isinstance(params, dict) else None
+    last = token_usage.get("last") if isinstance(token_usage, dict) else None
+    if (row.get("direction") != "received" or
+            not isinstance(message, dict) or
+            message.get("method") != "thread/tokenUsage/updated" or
+            type(row.get("observed_ns")) is not int or
+            row["observed_ns"] < 0 or
+            not isinstance(params, dict) or
+            not isinstance(params.get("threadId"), str) or
+            not params["threadId"] or
+            not isinstance(params.get("turnId"), str) or
+            not params["turnId"] or
+            not isinstance(last, dict)):
+        raise AttemptJournalError("app-server usage source has the wrong protocol identity")
+    mapping = {
+        "input_tokens": "inputTokens",
+        "output_tokens": "outputTokens",
+        "cached_input_tokens": "cachedInputTokens",
+        "cache_write_input_tokens": "cacheWriteInputTokens",
+        "reasoning_output_tokens": "reasoningOutputTokens",
+        "image_input_tokens": "imageInputTokens",
+    }
+    expected = {name: last.get(key) for name, key in mapping.items()}
+    for amount in expected.values():
+        if amount is not None and (type(amount) is not int or amount < 0):
+            raise AttemptJournalError("app-server usage source has invalid counters")
+    if expected["input_tokens"] is None and expected["output_tokens"] is None and not any(
+            value is not None for value in expected.values()):
+        raise AttemptJournalError("app-server usage source has no known counters")
+    expected["status"] = (
+        "reported" if expected["input_tokens"] is not None and
+        expected["output_tokens"] is not None else "partial")
+    if any(usage.get(name) != value for name, value in expected.items()):
+        raise AttemptJournalError("app-server raw usage does not match normalized usage")
+    return params["threadId"], params["turnId"]
+
+
 class ProviderAttemptRecorder:
     """Persist raw request/response bytes and reconcile attempts conservatively.
 
@@ -142,7 +193,7 @@ class ProviderAttemptRecorder:
             })
 
     def observe_late_usage(self, attempt_id, *, usage, usage_bytes,
-                           observed_ns=None):
+                           source_bytes=None, observed_ns=None):
         """Attach one cumulative attempt-usage receipt after terminal return.
 
         This is accounting evidence only: it cannot change the terminal status,
@@ -162,6 +213,11 @@ class ProviderAttemptRecorder:
             raise AttemptJournalError("late usage receipt does not match normalized usage")
         if usage.get("status") not in ("partial", "reported"):
             raise AttemptJournalError("late usage must contain reported counters")
+        source_identity = None
+        if source_bytes is not None:
+            thread_id, turn_id = _validate_app_server_usage_source(
+                source_bytes, usage)
+            source_identity = {"thread_id": thread_id, "turn_id": turn_id}
 
         with self._lock:
             current = self.reconcile(allow_incomplete=True)
@@ -208,7 +264,9 @@ class ProviderAttemptRecorder:
             observation_index = len(observations) + 1
             receipt_ref = self._write_raw(
                 attempt_id, f"late-usage-{observation_index:04d}", usage_bytes)
-            self._append({
+            source_ref = (None if source_bytes is None else self._write_raw(
+                attempt_id, f"late-source-{observation_index:04d}", source_bytes))
+            event = {
                 "event": "model_attempt_usage_observed",
                 "attempt_id": attempt_id,
                 "session_id": self.session_id,
@@ -217,7 +275,11 @@ class ProviderAttemptRecorder:
                 "usage_scope": "attempt_total",
                 "usage": usage,
                 "receipt_ref": receipt_ref,
-            })
+            }
+            if source_ref is not None:
+                event["source_ref"] = source_ref
+                event["source_identity"] = source_identity
+            self._append(event)
 
     def invoke(self, attempt_id, request_bytes, provider_call):
         """Record a call, including thrown failures, and return its raw result."""
@@ -560,6 +622,19 @@ class ProviderAttemptRecorder:
                         _validate_usage(row.get("usage"))
                         receipt_bytes = self._verify_raw_ref(row.get("receipt_ref"))
                         decoded = json.loads(receipt_bytes.decode("utf-8"))
+                        source_ref = row.get("source_ref")
+                        source_identity = row.get("source_identity")
+                        if (source_ref is None) != (source_identity is None):
+                            raise AttemptJournalError(
+                                "app-server usage raw reference and identity must pair")
+                        if source_ref is not None:
+                            source_bytes = self._verify_raw_ref(source_ref)
+                            thread_id, turn_id = _validate_app_server_usage_source(
+                                source_bytes, row.get("usage"))
+                            if source_identity != {
+                                    "thread_id": thread_id, "turn_id": turn_id}:
+                                raise AttemptJournalError(
+                                    "app-server usage source identity changed")
                     except (LedgerValidationError, UnicodeDecodeError,
                             json.JSONDecodeError) as exc:
                         raise AttemptJournalError("late usage receipt is malformed") from exc
@@ -680,6 +755,8 @@ class ProviderAttemptRecorder:
                     refs.append(terminal["response_ref"])
                 late = late_usage.get(attempt_id, [])
                 refs.extend(item["receipt_ref"] for item in late)
+                refs.extend(item["source_ref"] for item in late
+                            if item.get("source_ref") is not None)
                 event = {
                     "kind": "model_attempt", "attempt_id": attempt_id,
                     "session_id": start["session_id"], "status": terminal["status"],
