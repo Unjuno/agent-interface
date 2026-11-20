@@ -4,6 +4,8 @@ This directory is the research workspace and retained evidence record for Agent 
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
+- Closed PR #7148: [X11 input-custody safety HOLD](integration/x11_input_custody_7148/RECOVERY.md) — retained candidate tests do not establish safe release: source-supported wrong-ClientPointer and unreadable-button-state constructions can falsely clear custody. No runtime patch is adopted.
+
 ## Start here
 
 - Issue #57 / MAP01: [native Win32 recovery R180](integration/map01_native_win32_recovery_r180_20261114.md) — runtime release attempt, full two-second owner horizon, exception-to-release bound, and pinned 50-to-49 HUD effect are verified; the frozen private runner stopped on an absent public-result boolean, so the overall attempt remains partial. Raw is local-only; no matched #57 efficiency or general reliability claim.
