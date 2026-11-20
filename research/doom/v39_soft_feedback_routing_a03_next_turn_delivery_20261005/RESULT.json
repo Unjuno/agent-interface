@@ -1,0 +1,29 @@
+{
+  "a01_result_sha256": "32cebb61307ce093d0e3b1202bd1b60d77f185c888da60a444c835b03be24e47",
+  "candidate_sha256": "0a0d6554621df2ceded6b1f5edbf496f87144597c89e8ad1759b00bfc81d1beb",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "main_base": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "planner": {
+    "calls": [
+      "begin_turn"
+    ],
+    "current_ammo": 37,
+    "current_health": 100,
+    "prompt": "Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 100.\nCurrent locally verified ammo: 37.\nNewest typed soft event from the preceding control interval: {\"signal_id\":\"ammo\",\"source_value\":46,\"current_value\":37,\"hard_minimum\":1,\"soft_event_count\":1,\"sequence\":2,\"observed_during_iteration\":0,\"cover_policy_source_iteration\":0,\"effect\":\"prior_cover_preserved\",\"grants_input_authority\":false}\nPrevious no-visible-effect actions: []\n",
+    "prompt_contains_exact_summary": true
+  },
+  "schema": "v39-soft-next-turn-delivery-result-a03-v1",
+  "scope": "one offline next-turn prompt-builder construction with stub planner; no model/game/input/live allocation",
+  "summary": {
+    "cover_policy_source_iteration": 0,
+    "current_value": 37,
+    "effect": "prior_cover_preserved",
+    "grants_input_authority": false,
+    "hard_minimum": 1,
+    "observed_during_iteration": 0,
+    "sequence": 2,
+    "signal_id": "ammo",
+    "soft_event_count": 1,
+    "source_value": 46
+  }
+}
