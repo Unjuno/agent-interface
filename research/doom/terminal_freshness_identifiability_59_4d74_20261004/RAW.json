@@ -1,0 +1,130 @@
+{
+  "api_fields": [
+    "sample_ns",
+    "kill_count",
+    "death_count",
+    "episode_finished",
+    "player_dead",
+    "map_exit"
+  ],
+  "external_engine_or_input": false,
+  "plan_sha256": "fd880f066d5762f24ae65899a0122f062ccb871997c03d54e9c1074929f2b730",
+  "serialized_sample_fields": [
+    "death_count",
+    "episode_finished",
+    "kill_count",
+    "map_exit",
+    "player_dead",
+    "sample_ns",
+    "schema"
+  ],
+  "source_commit": "5489741c1efa2d25bedf5aa64e60a68fb2f74e3c",
+  "source_sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+  "status": "captured",
+  "traces": [
+    {
+      "case": "positive_kill",
+      "fresh": {
+        "events": [
+          {
+            "after": {
+              "delta": 1,
+              "kill_count": 1
+            },
+            "before": {
+              "kill_count": 0
+            },
+            "controller_visible": false,
+            "event_sequence": 1,
+            "kind": "KILL_COUNT_INCREASE",
+            "observed_ns": 2000000000,
+            "polarity": "positive",
+            "schema": "independent-progress-event-v2",
+            "useful": true
+          }
+        ],
+        "provenance": {
+          "producer_epoch": "current-episode-42",
+          "update_epoch": 74
+        }
+      },
+      "stale": {
+        "events": [
+          {
+            "after": {
+              "delta": 1,
+              "kill_count": 1
+            },
+            "before": {
+              "kill_count": 0
+            },
+            "controller_visible": false,
+            "event_sequence": 1,
+            "kind": "KILL_COUNT_INCREASE",
+            "observed_ns": 2000000000,
+            "polarity": "positive",
+            "schema": "independent-progress-event-v2",
+            "useful": true
+          }
+        ],
+        "provenance": {
+          "producer_epoch": "previous-episode-41",
+          "update_epoch": 74
+        }
+      }
+    },
+    {
+      "case": "terminal_no_exit",
+      "fresh": {
+        "events": [
+          {
+            "after": {
+              "episode_finished": true,
+              "map_exit": false,
+              "player_dead": false
+            },
+            "before": {
+              "episode_finished": false
+            },
+            "controller_visible": false,
+            "event_sequence": 1,
+            "kind": "EPISODE_FINISHED_NO_EXIT",
+            "observed_ns": 2000000000,
+            "polarity": "negative",
+            "schema": "independent-progress-event-v2",
+            "useful": false
+          }
+        ],
+        "provenance": {
+          "producer_epoch": "current-episode-42",
+          "update_epoch": 74
+        }
+      },
+      "stale": {
+        "events": [
+          {
+            "after": {
+              "episode_finished": true,
+              "map_exit": false,
+              "player_dead": false
+            },
+            "before": {
+              "episode_finished": false
+            },
+            "controller_visible": false,
+            "event_sequence": 1,
+            "kind": "EPISODE_FINISHED_NO_EXIT",
+            "observed_ns": 2000000000,
+            "polarity": "negative",
+            "schema": "independent-progress-event-v2",
+            "useful": false
+          }
+        ],
+        "provenance": {
+          "producer_epoch": "previous-episode-41",
+          "update_epoch": 74
+        }
+      }
+    }
+  ]
+}
