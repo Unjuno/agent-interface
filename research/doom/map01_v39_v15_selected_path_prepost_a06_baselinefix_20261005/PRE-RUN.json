@@ -1,0 +1,46 @@
+{
+  "schema": "v39-v15-prepost-a06-baseline-fix-freeze-v1",
+  "freeze_revision": "A06-prereg-v1",
+  "issue": 7933,
+  "allocation": "V39-V15-PREPOST-A06-BASELINE-FIX-20261005-01",
+  "repository": "Unjuno/agent-interface",
+  "main_context_at_freeze": "0db00a564daff64e47fd6931954ace0f71ab8f2b",
+  "main_gate": "not applicable: immutable historical raw/A02/A03 evidence plus a separately versioned audit implementation",
+  "scope": "Versioned audit-only baseline expectation correction after terminal A05; no candidate/runtime rerun",
+  "candidate_invocations_planned": 0,
+  "candidate_invocations_actual": 0,
+  "auditor_invocations_planned": 1,
+  "auditor_invocations_actual": 0,
+  "retries": 0,
+  "runtime": {
+    "name": "WSLc",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "network": "none",
+    "cpus": 1,
+    "code_mount": "read-only",
+    "input_mount": "read-only",
+    "output_mount": "dedicated-writable"
+  },
+  "inputs": {
+    "raw": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596",
+    "parent_a02_pre_run": "98581f50e8ccb3e3914aca454975e4dcd523575acf09023e42971dd1b3ce13e7",
+    "parent_a02_audit_v1": "9e44c3a1cfb34715ebcb551cf59fac35961afbf6363d9c31fbf648c541614ce2",
+    "parent_a03_audit_v2_stdout": "b1f3276ec3bd30ffbcc172a2d8cae39937ff631d61dfa1e5783cb4a2eba12a50",
+    "parent_a03_result": "076b9ac01d22beceeb177f53d084e1c6515a6771ceb57e777ebaa744b444a53e",
+    "parent_a03_auditor_source": "1be4485e149f944433f0af73c2b1e08c275434b7251e7b970e1240a2ab10efac"
+  },
+  "auditor_source": "code/audit_v5.py",
+  "auditor_source_sha256": "13a09f56278cc2d9ea91c022918d1c900756a0ab2749742c37b7fdf62b13f051",
+  "prior_audit_record": {
+    "allocation": "V39-V15-PREPOST-A05-AUDIT-FIX-20261005-01",
+    "disposition_sha256": "e88b9b3b4d1859feb7dd993a59d22f83b1332c0c85e2ee17b10bb75238e8aa29",
+    "result_sha256": "aa71aee28c51af4abf857f78d69618e15d07afcbfd4f14f737e0f6ef6c7e2118"
+  },
+  "correction": "A05 incorrectly expected normal-case pre_batch_sampler keycodes_down=[]; retained query and immediately following keymap_sample_result both contain [65,74]. A06 expects [65,74] for pre-samples in both cases and tests the full 52-check baseline before formal allocation.",
+  "decision": {
+    "pass": "Input hashes and parent provenance match; all reconstructed baseline checks pass; all 12 frozen trace mutations are rejected.",
+    "fail": "Any hash/provenance mismatch, baseline mismatch, or accepted mutation. Auditor error is terminal for this allocation.",
+    "promotion_limit": "Audit integrity only; no candidate rerun, real X11, physical input, GUI, application/game effect, latency, recovery, or safety claim."
+  },
+  "invocation": "python -B /src/audit_v5.py /input/a02_candidate.stdout /input/a02_PRE-RUN.json /input/a02_AUDIT.json /input/AUDIT_V2.stdout /input/RESULT.json /bundle/PRE-RUN.json /output/RESULT_A06.json"
+}

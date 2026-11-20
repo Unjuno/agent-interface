@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/src/audit_v3.py", line 251, in <module>
+    result=run(r.read(),f.read(),a.read(),s.read(),v.read(),p.read())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/audit_v3.py", line 217, in run
+    "parent_a02_pre_run":hashlib.sha256(pre_run).hexdigest(),
+                                        ^^^^^^^
+NameError: name 'pre_run' is not defined
