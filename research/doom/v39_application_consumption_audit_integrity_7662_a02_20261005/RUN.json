@@ -1,0 +1,24 @@
+{
+  "baseline": {
+    "audit_status": "PASS_SAVED_RESULT_AUDIT",
+    "directory": "cases/baseline",
+    "exit_code": 0,
+    "raw_sha256": "3f664d52a492ad9d0cbbbdb70880ffe16a4909d4bf2c2880d51891d523652363",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "8e5980da83ac1b0d8516bb12af8e52937825f2fc2f4781120765616e797b438e"
+  },
+  "experiment_id": "v39-application-consumption-audit-integrity-7662-a02-20261005",
+  "freeze_sha256": "6a9a02b558f64caa22c25f30ca14d718a5596d605ab0a8dcaf6c9bfb36af053c",
+  "frozen_raw_sha256": "3f664d52a492ad9d0cbbbdb70880ffe16a4909d4bf2c2880d51891d523652363",
+  "invocations": 2,
+  "mutated": {
+    "audit_status": "PASS_SAVED_RESULT_AUDIT",
+    "directory": "cases/label_swap",
+    "exit_code": 0,
+    "raw_sha256": "a383d783af3662ef4629cd41536bb18929bc38ca13e89243338d40741eac18e8",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "8e5980da83ac1b0d8516bb12af8e52937825f2fc2f4781120765616e797b438e"
+  },
+  "outcome": "FAIL_AUDITOR_ACCEPTS_LABEL_SWAP",
+  "scope": "One saved-result auditor invocation per frozen arm; no candidate or live allocation rerun."
+}
