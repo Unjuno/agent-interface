@@ -1,0 +1,15 @@
+{
+  "run_id": "59-selected-ammo-semantics-a03-20261004",
+  "issue": 59,
+  "scope": "current-main HUD-reader signal qualification construction only",
+  "created_utc": "2026-10-04T12:54:03Z",
+  "repository_main_sha": "fdbe5182c57102916833f489cd07c60927e3de28",
+  "H": "The exact current-main V3 HUD reader, applied to a 640x480 in-memory screen_buffer frame, reports health and ammo matching the same game-tic engine state and SELECTED_WEAPON_AMMO; AMMO1 remains an independently retained fixed-slot value.",
+  "T": "One fresh Freedoom2 MAP01 episode at 640x480; retain a same-tic initial state and a second state after 35 no-button tics; run the three source-pinned current-main HUD reader modules on those exact frames and compare against selected-weapon and every AMMO0..AMMO9 variable.",
+  "D": "Input-free local WSLc CPU construction; no model/planner/controller, no GPU, no action selection, and no feedback delivered to a controller.",
+  "C": "One source/image/output closure, image ID sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378, cached tag post-guard-game-59-4d74:20261004, network disabled; game variable direct-read tic bracket required equal before/after.",
+  "U": "PASS only if both HUD signals are observed, same-tic brackets hold, retained reader output equals a manual read of the frames, selected ammo agrees, and raw/hash audit passes. Otherwise preserve first outcome and HOLD; no retry. This cannot establish real pointer binding, threat response, per-key release, useful feedback onset, recovery, or task success.",
+  "source_paths": ["research/doom/doom_hud_signal_v1.py","research/doom/doom_hud_signal_v2.py","research/doom/doom_hud_signal_v3.py"],
+  "source_blobs": ["source/GIT_BLOBS.json"],
+  "argv_template": ["wslc","run","--rm","--network","none","--user","65534:65534","--cpus","1","--memory","512m","--workdir","/out","-v","<A03>/source:/study/source:ro","-v","<A03>/out:/out:rw","-e","PYTHONPATH=/study/source","post-guard-game-59-4d74:20261004","python3","-B","/study/source/probe.py"]
+}

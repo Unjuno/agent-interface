@@ -1,0 +1,305 @@
+{
+  "schema": "selected-ammo-hud-reader-a03-v1",
+  "run_id": "59-selected-ammo-semantics-a03-20261004",
+  "wad_path": "/usr/local/lib/python3.12/site-packages/vizdoom/freedoom2.wad",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "inputs_submitted": [],
+  "rows": [
+    {
+      "phase": "initial",
+      "episode_tic_before_state": 1,
+      "episode_tic_after_state": 1,
+      "episode_tic_before_direct_reads": 1,
+      "episode_tic_after_direct_reads": 1,
+      "state_number": 1,
+      "screen_size": [
+        640,
+        480
+      ],
+      "variables_order": [
+        "HEALTH",
+        "SELECTED_WEAPON",
+        "SELECTED_WEAPON_AMMO",
+        "AMMO0",
+        "AMMO1",
+        "AMMO2",
+        "AMMO3",
+        "AMMO4",
+        "AMMO5",
+        "AMMO6",
+        "AMMO7",
+        "AMMO8",
+        "AMMO9"
+      ],
+      "direct": {
+        "HEALTH": 100.0,
+        "SELECTED_WEAPON": 2.0,
+        "SELECTED_WEAPON_AMMO": 50.0,
+        "AMMO0": 0.0,
+        "AMMO1": 0.0,
+        "AMMO2": 50.0,
+        "AMMO3": 0.0,
+        "AMMO4": 50.0,
+        "AMMO5": 0.0,
+        "AMMO6": 0.0,
+        "AMMO7": 0.0,
+        "AMMO8": 0.0,
+        "AMMO9": 0.0
+      },
+      "state_game_variables": {
+        "HEALTH": 100.0,
+        "SELECTED_WEAPON": 2.0,
+        "SELECTED_WEAPON_AMMO": 50.0,
+        "AMMO0": 0.0,
+        "AMMO1": 0.0,
+        "AMMO2": 50.0,
+        "AMMO3": 0.0,
+        "AMMO4": 50.0,
+        "AMMO5": 0.0,
+        "AMMO6": 0.0,
+        "AMMO7": 0.0,
+        "AMMO8": 0.0,
+        "AMMO9": 0.0
+      },
+      "signals": {
+        "health": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 100,
+          "sequence": 0,
+          "capture_ns": 3972166832,
+          "binding": {
+            "focus": "not_applicable_in_memory",
+            "surface": "vizdoom_screen_buffer",
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": 1,
+              "best_digit": 1,
+              "best_score": 0.9591078066914498,
+              "second_score": 0.1736842105263158
+            },
+            {
+              "slot": 1,
+              "digit": 0,
+              "best_digit": 0,
+              "best_score": 0.9510869565217391,
+              "second_score": 0.29873417721518986
+            },
+            {
+              "slot": 2,
+              "digit": 0,
+              "best_digit": 0,
+              "best_score": 0.9483695652173914,
+              "second_score": 0.3291139240506329
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "ammo": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "ammo",
+          "value": 50,
+          "sequence": 0,
+          "capture_ns": 3972166832,
+          "binding": {
+            "focus": "not_applicable_in_memory",
+            "surface": "vizdoom_screen_buffer",
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 7,
+              "best_score": 0.060526315789473685,
+              "second_score": 0.05204460966542751
+            },
+            {
+              "slot": 1,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9217002237136466,
+              "second_score": 0.33157894736842103
+            },
+            {
+              "slot": 2,
+              "digit": 0,
+              "best_digit": 0,
+              "best_score": 0.9483695652173914,
+              "second_score": 0.30886075949367087
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "frame_png": "initial.png",
+      "frame_sha256": "f1cc603aab84620958f7c63d1bea85f573b054bddbad25a37098c795352cb797",
+      "binding_metadata_note": "synthetic in-memory binding metadata; this is not a live X11 pointer/focus identity"
+    },
+    {
+      "phase": "coast",
+      "episode_tic_before_state": 36,
+      "episode_tic_after_state": 36,
+      "episode_tic_before_direct_reads": 36,
+      "episode_tic_after_direct_reads": 36,
+      "state_number": 2,
+      "screen_size": [
+        640,
+        480
+      ],
+      "variables_order": [
+        "HEALTH",
+        "SELECTED_WEAPON",
+        "SELECTED_WEAPON_AMMO",
+        "AMMO0",
+        "AMMO1",
+        "AMMO2",
+        "AMMO3",
+        "AMMO4",
+        "AMMO5",
+        "AMMO6",
+        "AMMO7",
+        "AMMO8",
+        "AMMO9"
+      ],
+      "direct": {
+        "HEALTH": 100.0,
+        "SELECTED_WEAPON": 2.0,
+        "SELECTED_WEAPON_AMMO": 50.0,
+        "AMMO0": 0.0,
+        "AMMO1": 0.0,
+        "AMMO2": 50.0,
+        "AMMO3": 0.0,
+        "AMMO4": 50.0,
+        "AMMO5": 0.0,
+        "AMMO6": 0.0,
+        "AMMO7": 0.0,
+        "AMMO8": 0.0,
+        "AMMO9": 0.0
+      },
+      "state_game_variables": {
+        "HEALTH": 100.0,
+        "SELECTED_WEAPON": 2.0,
+        "SELECTED_WEAPON_AMMO": 50.0,
+        "AMMO0": 0.0,
+        "AMMO1": 0.0,
+        "AMMO2": 50.0,
+        "AMMO3": 0.0,
+        "AMMO4": 50.0,
+        "AMMO5": 0.0,
+        "AMMO6": 0.0,
+        "AMMO7": 0.0,
+        "AMMO8": 0.0,
+        "AMMO9": 0.0
+      },
+      "signals": {
+        "health": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 100,
+          "sequence": 1,
+          "capture_ns": 4006718375,
+          "binding": {
+            "focus": "not_applicable_in_memory",
+            "surface": "vizdoom_screen_buffer",
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": 1,
+              "best_digit": 1,
+              "best_score": 0.9591078066914498,
+              "second_score": 0.1736842105263158
+            },
+            {
+              "slot": 1,
+              "digit": 0,
+              "best_digit": 0,
+              "best_score": 0.9510869565217391,
+              "second_score": 0.29873417721518986
+            },
+            {
+              "slot": 2,
+              "digit": 0,
+              "best_digit": 0,
+              "best_score": 0.9483695652173914,
+              "second_score": 0.3291139240506329
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "ammo": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "ammo",
+          "value": 50,
+          "sequence": 1,
+          "capture_ns": 4006718375,
+          "binding": {
+            "focus": "not_applicable_in_memory",
+            "surface": "vizdoom_screen_buffer",
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 7,
+              "best_score": 0.060526315789473685,
+              "second_score": 0.05204460966542751
+            },
+            {
+              "slot": 1,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9217002237136466,
+              "second_score": 0.33157894736842103
+            },
+            {
+              "slot": 2,
+              "digit": 0,
+              "best_digit": 0,
+              "best_score": 0.9483695652173914,
+              "second_score": 0.30886075949367087
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "frame_png": "coast.png",
+      "frame_sha256": "e062af88cc00c876ff2369dcc588ed09ebcc7a4f8a956c7c4d16aefd2b06da3a",
+      "binding_metadata_note": "synthetic in-memory binding metadata; this is not a live X11 pointer/focus identity"
+    }
+  ]
+}
