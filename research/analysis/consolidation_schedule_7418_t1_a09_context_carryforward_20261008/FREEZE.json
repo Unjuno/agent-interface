@@ -1,0 +1,94 @@
+{
+  "a08_context": "A08 stopped on false cross-context exact-effect conflict and dropped prior claims; it also emitted history key without version. A09 makes these generic transition rules explicit.",
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A09-CONTEXT-CARRYFORWARD-20261008",
+  "base_main_sha": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "branch": "research/8406-schedule-t1-a09-context-carryforward-20261008",
+  "companion_to": 7418,
+  "construction_tests": "9/9 PASS before freeze; no A09 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED only for >=0.10 consistent paired contrast all seeds plus clean transition/raw audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED only within margin and all audits pass; failed method/transition => FAIL_METHOD; otherwise UNCERTAIN",
+  "delta_from_A08": [
+    "fresh allocation and seeds 4901/4902/4903",
+    "requires unchanged prior claims",
+    "conflict detection scoped only to same-key fact observations and same subject/applicability context",
+    "history key derives generically from version and field",
+    "no fixture IDs/keys/values; same transition auditor; no prior outputs reused"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 2048,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4901,
+      4902,
+      4903
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "8b1590fda83383a5ce0e3b9ce431e3c8c2fd25953a6c64b7bd82b4f60e7c501f",
+    "PROTOCOL.md": "e8128713b6e9b3e31ed6baece6f73faa7fef671fc98b8340fd3573762a59acaf",
+    "README.md": "9cf36057264e381ebb631d99ea1a60a65cc5c71f1652f1fa35e22e241d960066",
+    "auditor.py": "230f99bd07480a8d03b79d74c3a186f1d59586c18ae334b5b49a89aed0f572a4",
+    "candidate.py": "18003be55b9b2b6f836820fe8a407b2081882e71668be95f684acdbda9b5e574",
+    "episode_ledger.json": "d6cf58613bdd1c525876a3dc6788bbf7f5bc592dc1e308d071eab08c26b33c3c",
+    "prompts.json": "7f818f0491c19bd52de34939bf9dc6b59a2bd10209825c3a53346a06ead215ae",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "2588731b7afca68e3fe6db78850aa3112abd75b900aa1ef30ed325d95acfef19"
+  },
+  "identity_gate": "Exact private model tag digest and unique runner required before/after every call; runner may be unloaded before first call only.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a09-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a09_context_carryforward_20261008",
+  "pre_freeze_HEAD": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a09_context_carryforward_20261008/results/FORMAL_T1_A09/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  },
+  "transition_contract": [
+    "generic kind mapping; prior claims copied unchanged; no drops or invented claims",
+    "preserve exception effects and provenance",
+    "conflict only for same-key fact observations in same applicability context; UNKNOWN exact sources only after both visible",
+    "history key from version plus field; full baseline-to-current value and both sources"
+  ]
+}
