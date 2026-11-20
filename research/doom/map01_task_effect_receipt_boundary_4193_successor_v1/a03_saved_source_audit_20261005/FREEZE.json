@@ -1,0 +1,30 @@
+{
+  "schema": "map01-4193-a03-saved-source-audit-freeze-v1",
+  "kind": "read-only retained-source audit; no experiment allocation",
+  "freeze_commit": "84be79757c8bc18eea1ecaf5edb8f392e3e6e425",
+  "source_path": "research/doom/map01_v12_attack_task_effect_live_v1/RAW_USED.json.xz",
+  "source_sha256": "0d55f782f0e129738b422e52d8066f7fb69a02ebcf2c1691ee711e74a369a740",
+  "historical_result_path": "research/doom/map01_task_effect_receipt_boundary_4193_successor_v1/v3/RESULT.json",
+  "historical_result_sha256": "6f6188814bbbb5aea6bd791a096c1938c2a920da9a0f993d27b491bcb6bcdaf7",
+  "historical_result_disposition": "invalid JSON; preserved byte-for-byte; not used as audit oracle",
+  "expected_sessions": [
+    "p1-attack",
+    "p1-noinput",
+    "p2-attack",
+    "p2-noinput",
+    "p3-attack",
+    "p3-noinput"
+  ],
+  "expected_sample_counts": {
+    "p1-attack": 32,
+    "p1-noinput": 32,
+    "p2-attack": 34,
+    "p2-noinput": 32,
+    "p3-attack": 32,
+    "p3-noinput": 32
+  },
+  "network": "none",
+  "game_or_input": "none",
+  "original_allocation_replayed": false,
+  "historical_files_modified": false
+}
