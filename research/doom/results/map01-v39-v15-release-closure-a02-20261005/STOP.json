@@ -1,0 +1,18 @@
+{
+  "schema": "candidate-stop-v1",
+  "run_id": "MAP01-V39-V15-RELEASE-CLOSURE-A02-20261005",
+  "classification": "STOP",
+  "source_commit": "6f34c5c0c5bc3116d8e7c25f29aa1b92cc4a01b1",
+  "container_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "exit_code": 1,
+  "phase": "candidate startup before FROZEN_INPUTS load, imports, selector evaluation, fake display, or schedule",
+  "first_error": "FileNotFoundError: /src/FROZEN_INPUTS.json",
+  "root_cause": "The read-only source mount contained candidate.py and research sources but the candidate's required FROZEN_INPUTS.json remained at package root, outside /src.",
+  "raw_candidate_log": "CANDIDATE_CONTAINER.log",
+  "container_inspect": "CANDIDATE_CONTAINER_INSPECT.json",
+  "candidate_output_files": [],
+  "audit_invoked": false,
+  "retry": false,
+  "scientific_inference": "none; no source import or candidate schedule executed",
+  "next_step": "A separately frozen successor may mount the freeze file inside /src or use an explicit freeze path. Do not rerun A02."
+}
