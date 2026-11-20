@@ -175,13 +175,14 @@ class Executor(Previous):
             return
         record = cause.get("record")
         if (type(record) is not dict or record.get("event") != "owner_release" or
-                record.get("reason") not in ("cancelled", "stop_requested")):
+                record.get("reason") not in ("cancelled", "stop_requested", "expired")):
             return
         with self.lock:
             if self.active is None or self.active[0] != identifier:
                 return
-            # ExecutorV13 can publish the same interruption through its own
-            # watcher before this inherited terminal barrier runs.
+            # Expiry, like cancellation, must publish the independently
+            # verified owner release before this intent's terminal. ExecutorV13
+            # can publish the same interruption through its watcher first.
             if (identifier in self.release_publication_attempted_ids or
                     identifier in self.published_release_ids):
                 return

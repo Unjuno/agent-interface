@@ -106,6 +106,57 @@ class CancelReleasePublicationTest(unittest.TestCase):
         from input_owner_v13 import InputOwner
         cls.Executor, cls.InputOwner = Executor, InputOwner
 
+    def test_expiry_while_key_held_publishes_release_before_terminal(self):
+        SERVER["down"].clear()
+        owner = self.InputOwner(None)
+
+        class ExpiryReceiptOrderedBackend(Backend):
+            def release_all(self):
+                deadline = time.monotonic() + 2
+                while (not any(record.get("reason") == "expired"
+                                for record in self.owner.records) and
+                       time.monotonic() < deadline):
+                    time.sleep(.001)
+                if not any(record.get("reason") == "expired"
+                           for record in self.owner.records):
+                    raise AssertionError("owner did not record expiry release")
+                return super().release_all()
+
+        backend = ExpiryReceiptOrderedBackend(owner)
+        events = []
+        executor = self.Executor(backend, events.append)
+        identifier = "expiry-release-test"
+        try:
+            executor.submit(identifier, [{"op": "hold_w_until_cancel"}], 1,
+                            time.perf_counter_ns() + 500_000_000)
+            deadline = time.monotonic() + 2
+            while backend.admission is None and time.monotonic() < deadline:
+                time.sleep(.001)
+            self.assertIsNotNone(backend.admission)
+            worker = executor.active[2]
+            worker.join(3)
+            self.assertFalse(worker.is_alive())
+
+            release_events = [e for e in events if e.get("event") == "input_released"]
+            terminal = next((e for e in events if e.get("event") == "terminal"), None)
+            self.assertEqual(len(release_events), 1, events)
+            release = release_events[0]
+            self.assertIsNotNone(terminal, events)
+            self.assertLess(events.index(release), events.index(terminal))
+            self.assertEqual(release["id"], identifier)
+            self.assertEqual(release["owner_release"]["reason"], "expired")
+            self.assertIs(release["owner_release"]["verified"], True)
+            self.assertEqual(release["owner_release"]["buttons_down"], [])
+            self.assertEqual(release["owner_release"]["keys_down"], [])
+            self.assertEqual(release["owner_release"].get("keys_unknown", []), [])
+            self.assertEqual(terminal["status"], "expired")
+            self.assertEqual(terminal["interruption"]["record"],
+                             release["owner_release"])
+            self.assertFalse(release["grants_input_authority"])
+        finally:
+            executor.close()
+            owner.close()
+
     def test_cancel_while_key_held_publishes_receipt_before_terminal(self):
         SERVER["down"].clear()
         owner = self.InputOwner(None)
