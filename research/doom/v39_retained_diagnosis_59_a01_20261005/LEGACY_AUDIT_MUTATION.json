@@ -1,0 +1,43 @@
+{
+  "audit_git_blob": "5315e3d4a382c468f0e8735643ae29dd63c9ae70",
+  "audit_sha256": "20486da84818dad6414606c88dc914d04fc28a791bc2de43a9d3db6940edc763",
+  "classification": "LEGACY_AUDITOR_ACCEPTS_CORRUPTED_DERIVED_FIELDS",
+  "command": "python -B research/doom/v39_retained_diagnosis_59_a01_20261005/audit.py",
+  "environment": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "mutations": [
+    {
+      "exit_code": 0,
+      "mutation": "wrong_terminal_status",
+      "mutation_accepted": true,
+      "stderr": "",
+      "stdout": "AUDIT_PASS: source-bound six-turn diagnosis; aggregate-only score and effect limits preserved"
+    },
+    {
+      "exit_code": 0,
+      "mutation": "wrong_accept_timestamp",
+      "mutation_accepted": true,
+      "stderr": "",
+      "stdout": "AUDIT_PASS: source-bound six-turn diagnosis; aggregate-only score and effect limits preserved"
+    },
+    {
+      "exit_code": 0,
+      "mutation": "wrong_aggregate_deaths",
+      "mutation_accepted": true,
+      "stderr": "",
+      "stdout": "AUDIT_PASS: source-bound six-turn diagnosis; aggregate-only score and effect limits preserved"
+    },
+    {
+      "exit_code": 0,
+      "mutation": "overclaim_physical_occupancy",
+      "mutation_accepted": true,
+      "stderr": "",
+      "stdout": "AUDIT_PASS: source-bound six-turn diagnosis; aggregate-only score and effect limits preserved"
+    }
+  ],
+  "observed_at_utc": "2026-10-05T02:48:18.017847+00:00",
+  "result_git_blob": "92e86d63d09e172457120afbc7b6ba8fc4f1647c",
+  "result_sha256_restored_after_checks": "efa5b3eedfc149b91a02a95ca870fba22e1594d98db2faf418ba27bbb7524314",
+  "schema": "issue59-retained-result-legacy-audit-mutation-v1",
+  "scope": "Temporary edits to RESULT.json only; original bytes restored in finally; frozen report and event-stream inputs were not changed.",
+  "tested_commit": "2726897e3dfca6aff4cb6572d64d775962f57ce4"
+}
