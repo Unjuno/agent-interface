@@ -86,6 +86,27 @@ or eligible. Two raw-driven checks pass in normal and optimized Python. The
 retained raw packets are local and ignored; the test pins their hashes and will
 fail if they are missing or changed.
 
+## Comparison-measurement integration candidate
+
+`comparison_measurement_v1.validate_measured_run` now accepts an optional
+`measurement.effect_attribution` envelope containing the independently
+established effect observation time (or null), authority expiry, verified
+release receipt, and end of the separately measured neutral horizon. When
+present, the measurement output preserves the factual final-state score in
+`factual_task_success` and uses `task_success` for authority-eligible success.
+An effect after expiry cannot qualify; unknown timing remains null and blocks
+correctness-qualified token and elapsed break-even. Existing records without
+the envelope retain their previous output during this research-only transition.
+That means the validator still depends on the caller to supply credible,
+identity-bound evidence, and old records do not acquire retroactive attribution.
+
+The comparison suite passes 21/21 normal and 21/21 under `-O`; its added cases
+cover timely, post-horizon, unknown-time, malformed-clock, and cumulative
+correctness-qualified break-even behavior. The R281 raw-driven checks pass
+2/2 in each mode when the local packet is present and skip in clean clones
+where that ignored packet is absent. This is an integration candidate for the
+research comparison schema, not a public runtime change or live comparison.
+
 ## Local verification
 
 Using Windows CPython 3.11.9:

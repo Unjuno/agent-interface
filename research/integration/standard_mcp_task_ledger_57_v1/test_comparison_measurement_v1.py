@@ -134,6 +134,65 @@ class ComparisonMeasurementTests(unittest.TestCase):
             self.assertEqual(arm["local_observation_count"], 1)
             self.assertEqual(arm["task_success"], True)
 
+    def test_unknown_effect_time_keeps_fact_but_blocks_qualified_success(self):
+        value = run("A", 1)
+        value["measurement"]["effect_attribution"] = {
+            "effect_observed_ns": None,
+            "authority_expiry_ns": 25,
+            "release_received_ns": 26,
+            "horizon_end_ns": 28,
+        }
+        result = validate_measured_run(value)
+        self.assertTrue(result["factual_task_success"])
+        self.assertIsNone(result["task_success"])
+        self.assertIsNone(result["effect_attribution"]["eligible_task_success"])
+        self.assertEqual(result["effect_attribution"]["effect_timing"], "unknown")
+
+    def test_post_authority_effect_cannot_qualify_as_task_success(self):
+        value = run("A", 1)
+        value["measurement"]["effect_attribution"] = {
+            "effect_observed_ns": 29,
+            "authority_expiry_ns": 25,
+            "release_received_ns": 26,
+            "horizon_end_ns": 28,
+        }
+        result = validate_measured_run(value)
+        self.assertTrue(result["factual_task_success"])
+        self.assertFalse(result["task_success"])
+        self.assertEqual(result["effect_attribution"]["effect_timing"],
+                         "after_release_horizon")
+
+    def test_timely_effect_remains_qualified_and_invalid_attribution_fails_closed(self):
+        value = run("A", 1)
+        value["measurement"]["effect_attribution"] = {
+            "effect_observed_ns": 25,
+            "authority_expiry_ns": 25,
+            "release_received_ns": 26,
+            "horizon_end_ns": 28,
+        }
+        self.assertTrue(validate_measured_run(value)["task_success"])
+        value["measurement"]["effect_attribution"]["horizon_end_ns"] = 24
+        with self.assertRaisesRegex(LedgerValidationError, "invalid effect attribution"):
+            validate_measured_run(value)
+
+    def test_unknown_effect_time_blocks_horizon_correctness_qualified_break_even(self):
+        value = self.horizon()
+        c_run = value["blocks"][0]["runs"][2]
+        c_run["measurement"]["effect_attribution"] = {
+            "effect_observed_ns": None,
+            "authority_expiry_ns": 30,
+            "release_received_ns": 31,
+            "horizon_end_ns": 33,
+        }
+        result = validate_reuse_horizon(value)
+        self.assertTrue(result["cumulative"]["C"]["task_success"][0]
+                        is None)
+        self.assertEqual(result["correctness_qualified_token_break_even_task_index"],
+                         {"A": None, "B": None})
+        self.assertEqual(
+            result["correctness_qualified_elapsed_break_even_task_index"],
+            {"A": None, "B": None})
+
     def test_phase_gap_or_overlap_is_rejected(self):
         value = run("A", 1)
         value["measurement"]["phases"][2]["started_ns"] = 24

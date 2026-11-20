@@ -6,7 +6,8 @@ from pathlib import Path
 from effect_attribution_v1 import adjudicate_effect
 
 
-PACKET = Path(r"C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\outputs\r281-audit-20261121\extracted\trial")
+PACKET = (Path(__file__).resolve().parents[4] / "outputs"
+          / "r281-audit-20261121" / "extracted" / "trial")
 
 
 def events():
@@ -27,6 +28,9 @@ def first_event(rows, kind, *, event_id=None, reason=None):
 class R281IndependentAudit(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if not PACKET.is_dir():
+            raise unittest.SkipTest(
+                "R281 raw packet is local-only; run the recorded audit where retained")
         cls.rows = events()
         cls.owners = owner_events()
 

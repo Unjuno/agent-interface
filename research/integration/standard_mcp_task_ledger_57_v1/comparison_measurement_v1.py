@@ -12,6 +12,7 @@ from __future__ import annotations
 import re
 
 from ledger import LedgerValidationError, validate_record
+from effect_attribution_v1 import adjudicate_effect
 
 
 _HASH = re.compile(r"^[0-9a-f]{64}$")
@@ -54,9 +55,12 @@ def validate_measured_run(value):
     record = value["task_ledger"]
     summary = validate_record(record)
     measurement = value["measurement"]
-    if type(measurement) is not dict or set(measurement) != {
+    if type(measurement) is not dict or set(measurement) not in ({
             "started_ns", "ended_ns", "elapsed_ns", "phases",
-            "model_delivered_images", "local_observations"}:
+            "model_delivered_images", "local_observations"}, {
+            "started_ns", "ended_ns", "elapsed_ns", "phases",
+            "model_delivered_images", "local_observations",
+            "effect_attribution"}):
         _fail("measurement fields do not match the lifecycle schema")
 
     started, ended = measurement["started_ns"], measurement["ended_ns"]
@@ -142,13 +146,44 @@ def validate_measured_run(value):
                 or result_source.get("sequence") != observation["source_sequence"]):
             _fail("observation sequence does not match the public tool receipt")
 
-    return {
+    task_success = summary["task_success"]
+    attribution = measurement.get("effect_attribution")
+    if attribution is not None:
+        required = {"effect_observed_ns", "authority_expiry_ns",
+                    "release_received_ns", "horizon_end_ns"}
+        if type(attribution) is not dict or set(attribution) != required:
+            _fail("effect attribution needs effect, expiry, release, and horizon times")
+        if attribution["effect_observed_ns"] is not None and not _integer(
+                attribution["effect_observed_ns"]):
+            _fail("effect observation time must be a nonnegative integer or null")
+        try:
+            adjudicated = adjudicate_effect(
+                task_success=task_success, **attribution)
+        except ValueError as exc:
+            _fail(f"invalid effect attribution: {exc}")
+        task_success = adjudicated["eligible_task_success"]
+        effect_attribution = {
+            **adjudicated,
+            "effect_observed_ns": attribution["effect_observed_ns"],
+            "authority_expiry_ns": attribution["authority_expiry_ns"],
+            "release_received_ns": attribution["release_received_ns"],
+            "horizon_end_ns": attribution["horizon_end_ns"],
+        }
+    else:
+        effect_attribution = None
+
+    result = {
         **summary,
         "elapsed_ns": elapsed,
         "phase_durations_ns": phase_totals,
         "model_delivered_image_count": len(model_images),
         "local_observation_count": len(observations),
+        "task_success": task_success,
     }
+    if effect_attribution is not None:
+        result["factual_task_success"] = summary["task_success"]
+        result["effect_attribution"] = effect_attribution
+    return result
 
 
 def validate_matched_block(runs):
