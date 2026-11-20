@@ -1,0 +1,108 @@
+{
+  "schema": "agent_interface_first_run_preflight_v1",
+  "status": "FAIL_LAUNCHER_BOUNDARY",
+  "passed": false,
+  "root": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/.goal-main-381a21-20261120",
+  "revision": "cfb691b3b890d01c0b24fd1cd988609a62c4dd2a",
+  "mode_source": "committed_git_and_filesystem",
+  "checks": [
+    {
+      "name": "committed_tree",
+      "passed": true,
+      "detail": "cfb691b3b890d01c0b24fd1cd988609a62c4dd2a"
+    },
+    {
+      "name": "posix_execution",
+      "passed": true,
+      "detail": "Native Windows execution is outside this check."
+    },
+    {
+      "name": "bash_available",
+      "passed": true,
+      "detail": "Required by the existing launchers."
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:readable",
+      "passed": true,
+      "detail": "sha256:37c60abbfa6031bf1d9f06826b263c58f4361abd04cf574be66f02be8201e0e5"
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:committed_bytes",
+      "passed": true,
+      "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:committed_executable",
+      "passed": true,
+      "detail": "Expected committed Git mode 100755; local chmod alone is insufficient."
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:filesystem_executable",
+      "passed": true,
+      "detail": "Direct ./ invocation must be executable in this checkout."
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:bash_lf",
+      "passed": true,
+      "detail": "Expected LF bash shebang and no CR bytes."
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:readable",
+      "passed": true,
+      "detail": "sha256:5e47a05bb5cf9d5a3695996dfa870360b3fc507d941e4830778a67a91ac30157"
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:committed_bytes",
+      "passed": false,
+      "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:committed_executable",
+      "passed": true,
+      "detail": "Expected committed Git mode 100755; local chmod alone is insufficient."
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:filesystem_executable",
+      "passed": true,
+      "detail": "Direct ./ invocation must be executable in this checkout."
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:bash_lf",
+      "passed": false,
+      "detail": "Expected LF bash shebang and no CR bytes."
+    },
+    {
+      "name": "runtime/golden_desktop_demo_v3.py:readable",
+      "passed": true,
+      "detail": "sha256:06b42aa43517d72c595b793ea523c330a7eadc0be55957401cf9a3952bf43a12"
+    },
+    {
+      "name": "runtime/golden_desktop_demo_v3.py:committed_bytes",
+      "passed": false,
+      "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+    },
+    {
+      "name": "runtime/golden_desktop_demo_v3.py:syntax",
+      "passed": true,
+      "detail": "Parsed only, never imported."
+    },
+    {
+      "name": "runtime/requirements-golden.txt:readable",
+      "passed": true,
+      "detail": "sha256:467048bddcb8b695bc64be1d38fca80c62fe49a2225cff4fbd5b993f78d84aee"
+    },
+    {
+      "name": "runtime/requirements-golden.txt:committed_bytes",
+      "passed": false,
+      "detail": "Worktree bytes must match the frozen HEAD; uncommitted changes are not release evidence."
+    },
+    {
+      "name": "runtime/requirements-golden.txt:exact_pins",
+      "passed": true,
+      "detail": "Nonempty, unique exact version pins; wheel availability and transitive closure are not checked."
+    }
+  ],
+  "limitations": [
+    "Launcher boundary only: not dependency installation, doctor, GUI, model, or full source-closure validation."
+  ]
+}

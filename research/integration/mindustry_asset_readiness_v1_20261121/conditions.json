@@ -1,0 +1,45 @@
+{
+  "packet_id": "mindustry_asset_readiness_v1_20261121",
+  "audit_time_utc": "2026-11-20T20:28:39Z",
+  "source_revision": "cfb691b3b890d01c0b24fd1cd988609a62c4dd2a",
+  "source": "https://github.com/Anuken/Mindustry/releases/tag/v160.2",
+  "target_asset": {
+    "name": "Mindustry.jar",
+    "size_bytes": 87022576,
+    "sha256": "7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539",
+    "local_path": "outputs/mindustry-asset-prep-v160.2-20261121/Mindustry.jar",
+    "downloaded_and_hash_verified": true,
+    "zip_archive_entries": 5386,
+    "zip_crc_check": "pass",
+    "manifest_main_class": "mindustry.desktop.DesktopLauncher"
+  },
+  "canonical_save": {
+    "current_main_paths": [
+      "research/benchmark_discovery/results/mindustry-reset-01/canonical.msav",
+      "research/benchmark_discovery/results/mindustry-reset-02/canonical.msav"
+    ],
+    "git_blob": "7663b25633d853a257fbb407723fe85579120111",
+    "size_bytes": 23335,
+    "sha256": "8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed"
+  },
+  "environment": {
+    "platform": "Ubuntu WSL2",
+    "kernel": "6.18.58.1-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "java_available": false,
+    "xvfb_available": true,
+    "xvfb_run_available": true,
+    "uid": 1000
+  },
+  "actions": {
+    "asset_downloaded": true,
+    "runtime_installed": false,
+    "game_launched": false,
+    "controller_input": false,
+    "model_or_provider_calls": 0,
+    "docker_used": false,
+    "formal_allocation_consumed": false
+  },
+  "disposition": "ASSET_HASH_VERIFIED; HOLD_LAUNCH_RUNTIME_MISSING",
+  "scope": "Asset materialization and read-only runtime preflight only. No game launch, target input, task effect, or allocation result."
+}

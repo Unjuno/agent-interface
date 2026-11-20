@@ -2,6 +2,48 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+## Current checkpoint — 2026-11-21 (main `cfb691b3`)
+
+The active completion goal is to qualify the distributable runtime and the
+research gates below; this roadmap is a navigation/status summary, not a new
+experiment allocation.
+
+- **Portable package:** Windows and Ubuntu WSL deterministic package/startup
+  checks pass 21/21 normally and under `-O`; outside-checkout `doctor` and
+  `validate --help` pass with side-effect authority disabled. See the
+  [retained package packet](research/integration/portable_runtime_distribution_v2_current_main_20261121/RESULT.md).
+  This does not establish live X11/Win32 input, task effect, public release,
+  or research-preview acceptance.
+- **Mindustry setup:** the pinned v160.2 JAR and both canonical saves match
+  their recorded sizes and hashes. The full JAR archive CRC check passes, but
+  Ubuntu WSL has no Java runtime, so the game was not launched. See the
+  [asset-readiness packet](research/integration/mindustry_asset_readiness_v1_20261121/RESULT.md).
+- **Integrated control and efficiency:** Issue [#57](https://github.com/Unjuno/agent-interface/issues/57)
+  remains open for recovered-task success on the standard caller, repeated
+  reliability, and matched all-attempt model/provider token, latency, and
+  correctness accounting. Single MAP01 effects and the late-usage adapter do
+  not close these gates.
+- **Research Preview:** Issue [#58](https://github.com/Unjuno/agent-interface/issues/58)
+  remains open. A current-main read-only launcher preflight passed 19/19 on a
+  fresh sparse Ubuntu WSL ext4 checkout; the Windows-mounted checkout retained
+  four line-ending/worktree-byte failures. This is not the frozen RC1 host
+  acceptance. The release sequence in [`release/README.md`](release/README.md)
+  still requires setup/doctor, retained audit, one fresh no-retry persistent
+  run, and `audit-live`. See the
+  [preflight packet](research/integration/research_preview_preflight_current_main_20261121/RESULT.md)
+  and latest Issue #58 acceptance record.
+- **Allocation and queue:** #5130's named Docker CPU lane and #7924's WSLc
+  client ownership remain unresolved; #908 is a consumed historical HOLD.
+  PR #10340 remains a non-dispatching draft without an external allocation
+  attestor. The latest whole-repository membership snapshot is
+  [r153](docs/maintenance/repository-inventory-recheck-20261121-r153.md):
+  1,643 open Issues and 410 open PRs, unchanged from r152. This is not semantic
+  triage and does not justify bulk closure.
+
+The next work must advance one scoped gate at a time, retain failures and
+unknowns, and re-read current source and ownership before any live or shared
+resource action.
+
 For active task priority, use [CURRENT_GOAL](docs/CURRENT_GOAL.md) and the
 [worker work map](docs/WORKER_WORK_MAP.md). The current maintainer priority is
 repository convergence that enables independent research and verified integration;

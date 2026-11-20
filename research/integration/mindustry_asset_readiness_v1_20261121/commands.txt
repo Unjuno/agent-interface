@@ -1,0 +1,15 @@
+GitHub release metadata (read only):
+gh api repos/Anuken/Mindustry/releases/tags/v160.2 --jq '{tag_name,target_commitish,assets:[.assets[]|{name,size,digest,browser_download_url}]}'
+
+Download exact official asset into a new untracked output directory:
+gh release download v160.2 --repo Anuken/Mindustry --pattern Mindustry.jar --dir outputs/mindustry-asset-prep-v160.2-20261121
+
+Verify local bytes:
+(Get-Item outputs/mindustry-asset-prep-v160.2-20261121/Mindustry.jar).Length
+(Get-FileHash outputs/mindustry-asset-prep-v160.2-20261121/Mindustry.jar -Algorithm SHA256).Hash
+
+Read-only Ubuntu WSL runtime preflight:
+wsl.exe -d Ubuntu -- sh -lc 'python3 --version; (java -version 2>&1 || true); command -v Xvfb || true; command -v xvfb-run || true; command -v timeout || true; id -u; uname -a'
+
+Static archive integrity check (does not execute the game):
+python -c "import zipfile; z=zipfile.ZipFile('outputs/mindustry-asset-prep-v160.2-20261121/Mindustry.jar'); print(len(z.namelist()), z.testzip()); print(z.read('META-INF/MANIFEST.MF').decode())"
