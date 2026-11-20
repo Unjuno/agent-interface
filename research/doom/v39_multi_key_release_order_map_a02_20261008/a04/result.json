@@ -1,0 +1,2686 @@
+{
+  "schema": "issue59-pr7692-release-order-map-a04-v1",
+  "kind": "exact_backend_capture_and_tail_finalizer_with_exact_v3_scorer_adapter",
+  "source": {
+    "pr7692_head": "7ec4e3ef405919bf5f1bfd9eeddbe630f3a5b32e",
+    "v19_sha256": "2c5304bd246118f8124d5f7b50b81f869fb35ea3ee76887f4682748fdf95618a",
+    "v3_sha256": "48518dd27d8271c2b9be271b0e48bd2827240a53883d07713563faa6e7e731cc",
+    "support_sha256": {
+      "map01_scorer_stdio_adapter_v1.py": "ab0558555725644c940639bbb9577d5c37eda009edeb3f298149825981f2a481",
+      "main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+      "independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    },
+    "producer_row_count": 2,
+    "producer_actuation_id_location": "physical_key_measurement.actuation_id"
+  },
+  "cases": [
+    {
+      "capture": "exact_v19_single_slot",
+      "cases": [
+        {
+          "key_count": 1,
+          "schedule_count": 1,
+          "accepted_boundaries": 1,
+          "censored_or_mismatched": 0,
+          "schedules": [
+            {
+              "admission_order": [
+                "A"
+              ],
+              "release_order": [
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            }
+          ]
+        },
+        {
+          "key_count": 2,
+          "schedule_count": 4,
+          "accepted_boundaries": 2,
+          "censored_or_mismatched": 2,
+          "schedules": [
+            {
+              "admission_order": [
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            }
+          ]
+        },
+        {
+          "key_count": 3,
+          "schedule_count": 36,
+          "accepted_boundaries": 12,
+          "censored_or_mismatched": 24,
+          "schedules": [
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "no_matched_release_pair",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "reason": "program/step/owner/intent/key identities differ",
+                "error_type": "MeasuredReleaseError",
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": false
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capture": "candidate_nested_identity_map",
+      "cases": [
+        {
+          "key_count": 1,
+          "schedule_count": 1,
+          "accepted_boundaries": 1,
+          "censored_or_mismatched": 0,
+          "schedules": [
+            {
+              "admission_order": [
+                "A"
+              ],
+              "release_order": [
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            }
+          ]
+        },
+        {
+          "key_count": 2,
+          "schedule_count": 4,
+          "accepted_boundaries": 4,
+          "censored_or_mismatched": 0,
+          "schedules": [
+            {
+              "admission_order": [
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            }
+          ]
+        },
+        {
+          "key_count": 3,
+          "schedule_count": 36,
+          "accepted_boundaries": 36,
+          "censored_or_mismatched": 0,
+          "schedules": [
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "B",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "A",
+                "C",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "A",
+                "C"
+              ],
+              "candidate_down_key": "C",
+              "candidate_up_key": "C",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "C",
+                  "actuation_id": "act-C",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "B",
+                "C",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "A",
+                "B"
+              ],
+              "candidate_down_key": "B",
+              "candidate_up_key": "B",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "B",
+                  "actuation_id": "act-B",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            },
+            {
+              "admission_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "release_order": [
+                "C",
+                "B",
+                "A"
+              ],
+              "candidate_down_key": "A",
+              "candidate_up_key": "A",
+              "candidate_held_after": [],
+              "scorer": {
+                "schema": "map01-v19-perkey-post-release-tail-result-v1",
+                "disposition": "CENSORED",
+                "termination": "deadline",
+                "tail_samples": 0,
+                "controller_visible": false,
+                "grants_input_authority": false,
+                "tail": {
+                  "termination": "deadline",
+                  "disposition": "CENSORED",
+                  "release_evidence_schema": "map01-v39-perkey-tail-boundary-v1",
+                  "release_key": "A",
+                  "actuation_id": "act-A",
+                  "tail_samples": 0
+                },
+                "final_sample_called": true,
+                "samples_taken": 0
+              },
+              "boundary_accepted": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": "Executes exact V19 capture factory and tail finalizer plus exact V3 scorer adapter over synthetic schedules cloned from retained producer rows. Tail duration is deliberately zero: this validates boundary acceptance only and collects no progress samples. No V19 main, X server, physical input, controller, GUI, model, game, or live allocation.",
+  "decision": "PASS_COMPOSED_BOUNDARY_CANDIDATE iff exact single-slot yields 15/41 accepted identity boundaries and nested map yields 41/41, all with empty held-after state and zero scorer samples."
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "issue59-pr7692-release-order-map-a04-run-v1",
+  "python_version": "3.11.9",
+  "platform": "Windows",
+  "commands": [
+    "python run_composition.py",
+    "python verify.py",
+    "python -m py_compile run_candidate.py run_composition.py verify.py"
+  ],
+  "result": "PASS_COMPOSED_BOUNDARY_CANDIDATE",
+  "live_allocation": false
+}
