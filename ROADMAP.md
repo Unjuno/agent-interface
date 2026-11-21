@@ -2,7 +2,11 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Latest full inventory checkpoint r161 — 2026-11-22 JST (main `f75b34bc00b125c8cb6f106ea43835cea1401e2e` before/after)
+## Latest full inventory checkpoint r162 — 2026-11-22 JST
+
+Complete paginated comparison against r160, captured at main `ed0798d45d3bb7b839015619cd81f30e292a7583`, found 1,640 open Issues and 407 open PRs: no additions; Issues #7748/#7765/#7817 and PR #8181 are the only removals. A second full page sweep after docs PR #10423 merged, bracketed by main `8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2`, found the same counts and exact sets. The r160 semantic crosswalk remains the latest full routing analysis, while targeted dispositions are appended there. Issue #57's matched live efficiency, standard-caller task success, and repeated recovery reliability remain open, as do Research Preview graduation and distributable-runtime acceptance. This is membership evidence, not semantic triage or custody reconciliation. See the [r162 receipt](docs/maintenance/repository-inventory-recheck-20261122-r162.md), [the r160 crosswalk](docs/maintenance/idea-index-crosswalk-20261121-r160.md), and the [r162 work-map](docs/WORKER_WORK_MAP.md).
+
+## Prior full inventory checkpoint r161 — 2026-11-22 JST (main `f75b34bc00b125c8cb6f106ea43835cea1401e2e` before/after)
 
 Complete paginated comparison with r160 found 1,641 open Issues and 407 open PRs: no additions; #7748/#7765 and #8181 are the only removals. PR #10418 merged the targeted B13 dispositions and #8859 trace-classification feasibility result. R01 classified all six calls in one retained synthetic successful trace as required, but found no matched pair and no basis for a preference assay. The r160 semantic crosswalk remains the latest full routing analysis; its route counts are a dated snapshot. Issue #57's live matched efficiency, standard-caller task success and repeated recovery reliability gates remain open, as do Research Preview graduation and distributable-runtime acceptance. This membership check is not semantic triage or custody reconciliation. See the [r161 receipt](docs/maintenance/repository-inventory-recheck-20261122-r161.md), [R01 audit](research/integration/standard_mcp_task_ledger_57_v1/efficiency_trace_feasibility_r01_20261122/RESULT.md), and [r160 crosswalk](docs/maintenance/idea-index-crosswalk-20261121-r160.md).
 

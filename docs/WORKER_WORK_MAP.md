@@ -2,10 +2,11 @@
 
 ## Current membership and targeted organization update — 2026-11-22
 
-The latest complete membership sweep is r162 at main
-`ed0798d45d3bb7b839015619cd81f30e292a7583`: 1,640 open Issues and 407 open PRs,
-with no additions from r160, three Issue removals (#7748/#7765/#7817), and one
-PR removal (#8181). The frozen B13 cohort is now 22 open / three closed after
+The latest complete membership sweep is r162, captured at main
+`ed0798d45d3bb7b839015619cd81f30e292a7583` and rechecked at main
+`8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2` after PR #10423: both reads found
+1,640 open Issues and 407 open PRs. There were no additions from r160, three
+Issue removals (#7748/#7765/#7817), and one PR removal (#8181). The frozen B13 cohort is now 22 open / three closed after
 Issue #7817's finite-method disposition. Its merged #7938 evidence is
 `PASS_METHOD_SCOPED` only: ten authored contexts, five applied mutations, no
 authority change, and 17/17 current-main manifest digests. No real-policy,
