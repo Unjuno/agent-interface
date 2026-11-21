@@ -2,18 +2,18 @@
 
 ## Current membership and targeted organization update — 2026-11-22
 
-The latest complete membership sweep is r162, captured at main
-`ed0798d45d3bb7b839015619cd81f30e292a7583` and rechecked at main
-`8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2` after PR #10423: both reads found
-1,640 open Issues and 407 open PRs. There were no additions from r160, three
-Issue removals (#7748/#7765/#7817), and one PR removal (#8181). The frozen B13 cohort is now 22 open / three closed after
+The latest complete membership sweep is r163, bracketed by main
+`1afb532ea153f3da3906764753909fac074afce3`: it found 1,640 open Issues and
+407 open PRs, with no additions from r152/r157, three Issue removals
+(#7748/#7765/#7817), and one PR removal (#8181). These sets match r162. The
+frozen B13 cohort is now 22 open / three closed after
 Issue #7817's finite-method disposition. Its merged #7938 evidence is
 `PASS_METHOD_SCOPED` only: ten authored contexts, five applied mutations, no
 authority change, and 17/17 current-main manifest digests. No real-policy,
-runtime-safety, or action-authority claim follows. r162 is a membership result,
+runtime-safety, or action-authority claim follows. r163 is a membership result,
 not completed semantic triage or custody reconciliation. Continue the full
 review using the [organization plan](REPOSITORY_ORGANIZATION_PLAN.md),
-[r162 inventory](maintenance/repository-inventory-recheck-20261122-r162.md),
+[r163 inventory](maintenance/repository-inventory-recheck-20261122-r163.md),
 and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md); do not
 bulk-close from cohort or inventory counts.
 
@@ -77,15 +77,22 @@ Docker regression in #10214 is not GUI/game, WSLc, provider-efficiency, or MAP01
 evidence. All older work-map checkpoints below remain historical.
 
 **Open Calc lifecycle prototype:** [Draft PR #10144](https://github.com/Unjuno/agent-interface/pull/10144)
-was rechecked OPEN on 2026-11-04. Its Windows `JobHost` test uses an injected
-fake WSLc transport and synthetic release/task receipts; the adapter test is
-not evidence of a live WSLc/container or Calc run. The PR records unresolved
+was rechecked OPEN/Draft on 2026-11-22 (head `a17b7fe8`, base `22362cb7`;
+44 PR commits versus 445 current-main commits from their common base). Its only
+listed check is `replay-gate` PASS and GitHub reports `mergeable=UNKNOWN`. Its
+Windows `JobHost` test uses an injected fake WSLc transport and synthetic
+release/task receipts; the adapter test is not evidence of a live
+WSLc/container or Calc run. The PR records unresolved
 restart-safe custody, end-to-end bounds for synchronous operations, descendant
 ownership under interruption, independent release authentication and task
 scoring, and matched effect/recovery trials with full attempt accounting. Keep
 it Draft until those specific requirements are addressed or separately
 qualified. This lifecycle prototype is distinct from the R93 saved-plan replay
 through Fake X in PR #10211 and does not unblock #7924's STOP/HOLD.
+
+The [targeted organization recheck](maintenance/targeted-organization-recheck-20261122.md)
+also reconfirms #7773's `HOLD_NO_CANDIDATE_LIST_CONSUMER` on unchanged current
+runtime sources; do not run a proxy permutation experiment.
 
 ## Historical work-map pointer — 2026-10-29, after PR #9809 and matched repeat-control A-B-B-A
 
