@@ -33,6 +33,7 @@ def verify_manifest() -> int:
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*")
         if path.is_file() and path != manifest and path.name not in generated
+        and path.name != ".gitattributes"
         and "__pycache__" not in path.relative_to(ROOT).parts
         and path.suffix != ".pyc"
     }
@@ -48,6 +49,9 @@ def main() -> None:
     conditions = json.loads((ROOT / "conditions.json").read_text(encoding="utf-8"))
     if conditions["source_revision"] != SOURCE_REVISION:
         raise SystemExit("source pin mismatch")
+    attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8").splitlines()
+    if "runs/**/recorder/raw/*.bin -text" not in attributes:
+        raise SystemExit("raw recorder byte-preservation attribute is missing")
     for relative in conditions["source_files"]:
         committed_blob = subprocess.check_output(
             ["git", "rev-parse", f"{SOURCE_REVISION}:{relative}"],
