@@ -1,8 +1,8 @@
 {
   "snapshot": "r160",
   "snapshot_main": "f39e966b6478170a7a91f1eec7859d30046784bf",
-  "current_main": "83024145149dbccb31bb74f3c49d924ec1122830",
-  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only", "PR #10410: docs-only", "PR #10411: docs-only", "PR #10412: docs-only"],
+  "current_main": "17593f850bc425f9b25dc6c38f786dc3b08206da",
+  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only", "PR #10410: docs-only", "PR #10411: docs-only", "PR #10412: docs-only", "PR #10413: docs-only"],
   "captured_utc": "2026-11-21",
   "open_issue_count": 1643,
   "open_issue_ids_sha256_crlf": "2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad",
@@ -82,6 +82,19 @@
     "issue6664": "PASS_METHOD_SCOPED over 1,191 schedules and 3,573 decisions; zero false quiescence certificates. No GUI, OS/backend, model, input, or external effect exercised.",
     "issue6693": "Current migration record remains HOLD_SHARED_RUNTIME_AND_SOURCE_OWNERSHIP_UNVERIFIED; formal candidates, auditors, and paired blocks are zero. No WSLc availability or authorization follows.",
     "issue6678": "Static channel evidence is distinguished from the unverified adaptive/closed-loop extension."
+  },
+  "b11_queue_rows": 25,
+  "b11_current_open_issues_checked": 24,
+  "b11_current_closed_issues_checked": [6990],
+  "b11_queue_rows_with_exact_ideas_and_outcomes_url": 25,
+  "b11_no_issue_state_changes": true,
+  "b11_semantic_triage_complete": false,
+  "b11_issue_ids": [6809, 6838, 6841, 6843, 6875, 6932, 6957, 6975, 6990, 7042, 7059, 7078, 7160, 7161, 7162, 7163, 7164, 7165, 7166, 7167, 7269, 7304, 7327, 7361, 7363],
+  "b11_scoped_reviews": {
+    "issue6957": "Coordination note explicitly disclaims repository-wide concurrency or reviewer gates; no permission for shared resources follows.",
+    "issue6990": "Closed only after offline T8 receipt-schema audit; earlier WSLc T7/5309 STOPs and migration/performance questions remain unchanged.",
+    "issue6975": "Offline T11 publication audit PASS does not change T7 STOP_HOST_RECEIPT_SCHEMA_MISMATCH.",
+    "issue7165": "First retained outcome is HOLD_AUDITOR_RUNTIME_ERROR; later raw reconstruction audit does not replace it."
   },
   "issue57_latest_comment_read": {
     "id": 7062348464,
@@ -255,7 +268,7 @@
     {"number":1460,"state":"open","updated_at":"2026-09-28T04:26:50Z","comments":11}
   ],
   "limits": [
-    "Navigation coverage only for B01-B04 and B06-B10; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart. B08 and B10 additionally checked the bounded Issue records summarized above.",
+    "Navigation coverage only for B01-B04 and B06-B11; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart. B08, B10, and B11 additionally checked the bounded Issue records summarized above.",
     "No Issue state changes or closures.",
     "Open Issue membership is the immutable r160 snapshot; no claim that this file is a new paginated REST census."
   ]
