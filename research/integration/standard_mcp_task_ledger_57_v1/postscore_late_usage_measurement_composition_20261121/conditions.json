@@ -1,0 +1,20 @@
+{
+  "attempt_id": "ISSUE57-POSTSCORE-USAGE-MEASUREMENT-COMPOSITION-20261121-01",
+  "frozen_at_utc": "2026-11-21T04:56:16Z",
+  "source_revision": "d08596ee0590ba6a9531075a5769c0ac4abc1ec1",
+  "source_files": [
+    "research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_public_mcp_caller_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_comparison_adapter_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/comparison_measurement_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/ledger.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/effect_attribution_v1.py"
+  ],
+  "hypothesis": "A timed-out generation's same-turn usage, observed only after an independent task-score receipt, projects into the standard measured-run adapter as complete attempt tokens. With the same timeout and score but no usage receipt, totals remain incomplete and cannot qualify matched break-even.",
+  "treatment": "Synthetic timeout attempt with a hash-bound App Server usage JSONL row; record an UNKNOWN independent score; invoke the public caller's explicit post-score observe_late_usage; reconcile and project with build_measured_run.",
+  "control": "Identical synthetic timeout attempt and UNKNOWN score, with a late-usage source that returns no row; reconcile and project the same way.",
+  "dose": "One run per condition, no retries, no public Relay calls, no GUI or OS input, no provider/model call, no Docker or WSLc allocation.",
+  "decision_rule": "PASS only if treatment reports input=18 and output=3 with complete usage while control reports incomplete usage and null input/output totals; both scores must remain UNKNOWN and all raw references must hash-verify. Any mismatch is retained as a failure.",
+  "scope": "Synthetic accounting composition only. This does not test provider delivery/billing, task effect, live caller scheduling, matched A/B/C economics, or recovery reliability.",
+  "interpreter": "Windows CPython 3.11 (py -3.11), run normally and with -O"
+}
