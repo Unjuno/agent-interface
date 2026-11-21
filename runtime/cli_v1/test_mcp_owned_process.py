@@ -2295,6 +2295,13 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             plan as calc_symbolic_plan)
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
+            diagnostic=os.environ.get(
+                'AGENT_INTERFACE_RETAIN_CALC_CANCEL_DIAGNOSTIC')
+            if diagnostic:
+                (root/'fake-calc-record-point-resolution').write_text(
+                    'enabled',encoding='ascii')
+                (root/'calc-cancel-run-id').write_text(
+                    Path(diagnostic).name,encoding='utf-8')
             (root/'calc-profile-mode').write_text('enabled',encoding='utf-8')
             _write_json(root/'supervisor-fake-x.json',{'down':[1], 'effects':[], 'refused':[]})
             server=create_server({'app':20},root,session_mode='guarded-x11',
@@ -2304,20 +2311,20 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 _guarded_cancel_supervisor_target=_fake_prestarted_cancel_worker,
                 _guarded_owner_factory=_fake_owner_factory)
             try:
-                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
-                source=observed['source']
-                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
-                    alias='calc_entry',source_sequence=source['sequence'],
-                    point=[16,31],region_size=[24,16])))
-                save=metadata(await server.call_tool('interface_guarded_mint',dict(
-                    alias='calc_save',source_sequence=source['sequence'],
-                    point=[200,205],region_size=[16,12])))
                 prepared=metadata(await server.call_tool(
                     'interface_guarded_calc_prepare',{
                         'attempt_id':'calc-cancel-after-transition',
                         'task_values':{'A1':'731','A2':'864'},
                         'task_plan':calc_symbolic_plan()}))
                 self.assertEqual(prepared['status'],'prepared',prepared)
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                source=observed['source']
+                entry=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_entry',source_sequence=source['sequence'],
+                    point=[16,31],region_size=[24,16],freshness_ms=5000)))
+                save=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='calc_save',source_sequence=source['sequence'],
+                    point=[200,205],region_size=[16,12],freshness_ms=5000)))
                 pending=metadata(await server.call_tool('interface_guarded_calc_compiled',{
                     'profile_id':'calc-ocr-save-v1',
                     'bindings':{'entry':{'alias':'calc_entry','offset':entry['offset']},
@@ -2328,9 +2335,20 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     'prepared_call_id':prepared['call_id'],
                     'wait_for_result_ms':0}))
                 self.assertEqual(pending['status'],'pending',pending)
+                call_report_path=root/pending['call_id']/'report.json'
                 deadline=time.monotonic()+3
                 save_seen=False
                 while time.monotonic()<deadline:
+                    if call_report_path.exists():
+                        try:
+                            call_report=json.loads(call_report_path.read_text())
+                        except (OSError,json.JSONDecodeError):
+                            call_report=None
+                        if (isinstance(call_report,dict) and
+                                call_report.get('status') in {
+                                    'runtime_failed','completed','cancelled'}):
+                            self.fail('Calc call terminated before Save boundary: '
+                                      f'{call_report}')
                     states=list(root.rglob('calc-fake-state.json'))
                     if states:
                         try:
@@ -2378,9 +2396,64 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                                     'TASK_SUCCEEDED',report)
             finally:
                 (root/'resume-owner-io').write_text('resume',encoding='utf-8')
-                await self._wait_for_cancel_terminal(server,pending['call_id'])
-                await server.call_tool('interface_close',{})
-                _preserve_fake_x_run('calc-cancel-after-save-request',root)
+                try:
+                    pending_call_id=(pending.get('call_id')
+                        if isinstance(pending,dict) else None)
+                    call_report_path=(root/pending_call_id/'report.json'
+                        if isinstance(pending_call_id,str) else None)
+                    call_report=(json.loads(call_report_path.read_text())
+                        if call_report_path is not None
+                        and call_report_path.exists() else {})
+                    if (call_report_path is not None and
+                            call_report.get('status') not in {
+                            'runtime_failed','completed','cancelled'}):
+                        await self._wait_for_cancel_terminal(
+                            server,pending_call_id)
+                finally:
+                    try:
+                        if diagnostic:
+                            target=Path(diagnostic).resolve()
+                            target.mkdir(parents=True,exist_ok=False)
+                            shutil.copytree(root,target/'raw-runtime')
+                            states=list(root.rglob('calc-fake-state.json'))
+                            state_report={'save_state_files':len(states),
+                                'save_states':[],
+                                'owner_io_entered':(root/'owner-io-entered.json').exists(),
+                                'owner_io_blocked':(root/'block-owner-io').exists(),
+                                'resume_owner_io':(root/'resume-owner-io').exists()}
+                            for path in states:
+                                try:
+                                    state_report['save_states'].append(
+                                        json.loads(path.read_text()))
+                                except (OSError,json.JSONDecodeError) as error:
+                                    state_report['save_states'].append(
+                                        {'read_error':str(error),'path':str(path)})
+                            (target/'boundary-state.json').write_text(
+                                json.dumps(state_report,sort_keys=True,indent=2)+'\n',
+                                encoding='utf-8')
+                            supervisor=root/'supervisor-fake-x.json'
+                            if supervisor.exists():
+                                shutil.copy2(supervisor,
+                                    target/'supervisor-fake-x-final.json')
+                    finally:
+                        try:
+                            close_result=metadata(await server.call_tool(
+                                'interface_close',{}))
+                            if diagnostic:
+                                (target/'interface-close-result.json').write_text(
+                                    json.dumps(close_result,sort_keys=True,indent=2)+'\n',
+                                    encoding='utf-8')
+                        except Exception as error:
+                            if diagnostic and target.exists():
+                                (target/'interface-close-result.json').write_text(
+                                    json.dumps({'status':'exception',
+                                        'error_type':type(error).__name__,
+                                        'error':str(error)},sort_keys=True,indent=2)+'\n',
+                                    encoding='utf-8')
+                            raise
+                        finally:
+                            _preserve_fake_x_run(
+                                'calc-cancel-after-save-request',root)
 
     async def test_registered_calc_profile_refuses_changed_process_generation(self):
         with tempfile.TemporaryDirectory() as td:

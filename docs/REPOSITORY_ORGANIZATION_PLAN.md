@@ -1,5 +1,12 @@
 # Repository organization plan
 
+**Issue #57 evidence update (2026-11-21):** The latest current-main focused
+recheck after PR #10368 passes normal mode but fails under `-O` at the existing
+3 s Save boundary and terminal receipt wait. Preserve it as a scheduling
+sensitivity result; do not widen timeouts without boundary-state evidence.
+The raw logs and limits are in
+[the focused cancellation packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md).
+
 **Purpose:** make `Unjuno/agent-interface` understandable and safe for many
 independent workers while preserving every distinct research idea, result,
 owner, and recovery path. Organization enables computer-control research; it
@@ -714,3 +721,17 @@ the unchanged membership snapshot.
 On current main `8c71a6199bd51ca6b38aa02cb92d9833c3260a67`, a complete paginated REST reread found 1,643 open Issues and 410 open PRs. Both exact ID sets match r152/r153 (zero added, zero removed); main was the same SHA before and after the reads. Reuse the existing sorted ID CSVs. This confirms stable membership only, not item meaning, ownership, evidence custody, or merge readiness. No bulk state change follows.
 
 The active product/research map remains: #57 is open for standard-caller recovered task success, repeated reliability, and matched all-attempt provider/token/latency/correctness economics; #58 remains open for exact frozen RC1 host setup, retained audit, a fresh no-retry golden run, and `audit-live`. The new R05 setup/doctor packet records pinned Python dependency setup success but a doctor HOLD caused by missing expected Windows Codex CLI JS and WSL Chromium. #5130 is the one-time six-task Mindustry three-arm economics allocation under #57, still gated on its frozen source/resource conditions; #7924 remains the explicit WSLc migration STOP. PR #10340 is still a draft/prospective journal and does not authorize dispatch or supply a trusted allocation attestor. Keep these records open until their distinct gates have evidence; continue bounded family/PR triage from the existing work map instead of treating the unchanged queue as cleaned.
+
+## Issue #57 evidence update (2026-11-21)
+
+The current-main Calc cancellation recheck was corrected with retained failure-boundary evidence. In both normal and -O fail-fast runs, calc_entry resolves as STALE/expired_or_nonfresh_observation at the 1500 ms capture-freshness bound before owner I/O; zero Save states and no input/task effect are recorded. The prior scheduling explanation applies only to the preliminary runs and is superseded for these repros. Test cleanup receipts verify owner retirement/exit 0, without claiming input release. This evidence does not test cancellation recovery. Preserve #57 and the cancellation gate as open; next isolate safe fresh-observation reacquisition with renewed review/admission, and a changed-target negative control.
+
+## Issue #57 evidence update (2026-11-21)
+
+The current-main Calc cancellation recheck was corrected with retained failure-boundary evidence. In both normal and -O fail-fast runs, calc_entry resolves as STALE/expired_or_nonfresh_observation at the 1500 ms capture-freshness bound before owner I/O; zero Save states and no input/task effect are recorded. The prior scheduling explanation applies only to the preliminary runs and is superseded for these repros. Test cleanup receipts verify owner retirement/exit 0, without claiming input release. This evidence does not test cancellation recovery. Preserve #57 and the cancellation gate as open; next isolate safe fresh-observation reacquisition with renewed review/admission, and a changed-target negative control.
+
+
+The 2026-11-21 cancellation packet also corrected a false-green test wrapper: inner unittest assertions are now propagated. Corrected wrapper tests pass in normal and -O because UNKNOWN after cancel is their expected contract, but the optimized receipt shows a real recovery gap: cancel grace expiry retires the owner (-15), release remains unconfirmed, and close is cleanup_failed despite an independent empty Fake-X readback. Keep this as an explicit open defect/evidence gap, not a completed reliability gate.
+
+
+The corrected 2026-11-21 paired standard-caller cancellation recheck separates test PASS from product recovery: normal/-O each 1/1 pass and reach Save/cancel, but both custody receipts remain UNKNOWN with release unconfirmed, despite independent Fake-X readback showing empty keys/buttons; close is cleanup_failed. Keep the recovery/release gate open. The packet records excluded exploratory runs and invocation-linked raw, so do not pool historical stale and cancellation outcomes.
