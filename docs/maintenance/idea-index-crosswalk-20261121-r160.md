@@ -9,7 +9,7 @@ Recomputed against current-main blobs:
 - Primary rows were parsed only from the `Issue inventory` table in `docs/RESEARCH_ISSUE_INDEX.md`.
 - Exact canonical GitHub Issue URLs were counted in `docs/IDEAS_AND_OUTCOMES.md` and tracked `docs/ideas/*.md` files (`git ls-tree -r origin/main docs/ideas`: 153 Markdown files).
 - The immutable r51 queue `open-issues-missing-research-primary-row-20261019-r51.csv` was joined by numeric Issue ID to r160's current open set.
-- Batches B01–B05's queued Issues were rechecked for current open state with direct GitHub Issue reads and joined to exact URLs in the current `IDEAS_AND_OUTCOMES.md` blob. B03/B04 state reads occurred about 2026-11-21 13:23–13:24 UTC; B05 was checked shortly afterward. For B01–B04 the check was routing-only; comments and linked artifacts were not batch-reviewed, except for the latest #57 comment used to preserve its acceptance boundary. B05 additionally compares the specific #643 product-distribution requirement with merged #10377 and current #58 launch conditions.
+- Batches B01–B06's queued Issues were rechecked for current open state with direct GitHub Issue reads and joined to exact URLs in the current `IDEAS_AND_OUTCOMES.md` blob. B03/B04 state reads occurred about 2026-11-21 13:23–13:24 UTC; B05/B06 were checked shortly afterward. For B01–B04 and B06 the check was routing-only; comments and linked artifacts were not batch-reviewed, except for the latest #57 comment used to preserve its acceptance boundary. B05 additionally compares the specific #643 product-distribution requirement with merged #10377 and current #58 launch conditions.
 
 ## Current coverage
 
@@ -43,7 +43,7 @@ All 25 B02 IDs remain open and all 25 have an exact URL in the current `IDEAS_AN
 
 Issue #57 was fetched in its current open state (`updated_at=2026-11-21T12:07:41Z`, 1,270 comments). Its latest comment at this read, [#7062348464](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-7062348464), reports the offline dispatch-disabled #10340 journal integration and explicitly retains the live matched-efficiency, task-effect and recovery-reliability gates. This is a navigation cross-reference, not a new experiment result. No issue state changed.
 
-## B03–B05 current-route crosswalk
+## B03–B06 current-route crosswalk
 
 All 20 currently open B03 Issues were fetched and remain open; all 20 have exact `IDEAS_AND_OUTCOMES.md` URLs. Their route spans MAP01 acquisition/scoring and lifecycle questions, local control/terminal behavior, observation scheduling, compiled-runtime validation, and retained source provenance. All 23 currently open B04 Issues were fetched and remain open; all 23 have exact central URLs. Their route spans delayed Git delivery/CAS, Inkscape selection/readiness and cross-session identity, native accessibility/event setup, concurrent SVG writes, FFmpeg candidate identity, and correction/retention of earlier watcher claims. Preserve the counterexamples, corrections, and distinct effect domains separately; route overlap is not evidence of a shared resolution.
 
@@ -57,8 +57,10 @@ Issue #643's pass condition requires byte-identical artifacts built on Linux, Wi
 
 This is separate from #58's Research Preview launch gate. Its launch conditions include the pinned reproducible desktop demo, independent task scoring, reconstructible public measurements, clear claim boundaries and either a genuine real-time MAP01 clear or an honestly labeled unfinished experiment. PR #10377 establishes package integrity/basic startup only; it does not close #58. The [portable-runtime result](../research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/RESULT.md) records these limits. No Issue state changed.
 
+All 22 currently open B06 Issues were fetched and remain open; all 22 have exact `IDEAS_AND_OUTCOMES.md` URLs. Their routes cover temporal sampling and capture overhead, producer-readiness and X11 recovery identity, typed local decision engines, MAP01 sector/heading transfer, speculative and decision-cache proposals, actor attribution, acquisition ordering, and stale-generation ABA protection. These are different method and transfer gates; a central URL does not validate a live effect or promote a local policy. No B06 comments or linked experiment packets were reviewed as a batch, and no issue disposition or state change was made.
+
 ## Next finite step and limits
 
-Continue with B06 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
+Continue with B07 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
