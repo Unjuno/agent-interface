@@ -18,6 +18,13 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def manifest_sha256(path: Path, name: str) -> str:
+    payload = path.read_bytes()
+    if "/recorder/raw/" not in f"/{name}" or not name.endswith(".bin"):
+        payload = payload.replace(b"\r\n", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def verify_manifest() -> int:
     manifest = ROOT / "SHA256SUMS"
     if not manifest.exists():
@@ -40,7 +47,7 @@ def verify_manifest() -> int:
     if set(expected) != actual:
         raise SystemExit(f"manifest file set mismatch: missing={sorted(actual-set(expected))}, extra={sorted(set(expected)-actual)}")
     for name, digest in expected.items():
-        if sha256(ROOT / Path(*name.split("/"))) != digest:
+        if manifest_sha256(ROOT / Path(*name.split("/")), name) != digest:
             raise SystemExit(f"manifest checksum mismatch: {name}")
     return len(expected)
 
