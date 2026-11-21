@@ -45,6 +45,14 @@ function Confirm-ProbeContainerAbsent {
     $cleanupQuery = Invoke-ProbeCli -FilePath $wslc.Source `
         -Arguments @('container', 'list', '--all', '--filter', "id=$ContainerId", '--format', 'json') `
         -TimeoutSeconds $CleanupTimeoutSeconds -LogName 'wslc-cleanup-query'
+    $receipt = [ordered]@{
+        container_id = $ContainerId
+        exit_code = $cleanupQuery.ExitCode
+        stdout = $cleanupQuery.StandardOutput
+        stderr = $cleanupQuery.StandardError
+        observed_utc = [DateTimeOffset]::UtcNow.ToString('o')
+    }
+    Write-Output ('WSLc cleanup receipt: ' + ($receipt | ConvertTo-Json -Compress))
     $listing = ($cleanupQuery.StandardOutput -split "`r?`n" -join "`n").Trim()
     # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
     # PowerShell also unwraps ConvertFrom-Json's empty array to $null, so

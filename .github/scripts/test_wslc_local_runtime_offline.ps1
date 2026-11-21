@@ -100,6 +100,15 @@ try {
     if ($success.ExitCode -ne 0 -or $success.StandardOutput -notmatch 'WSLc local runtime probe: PASS') {
         throw "Offline success path failed: $($success | ConvertTo-Json -Compress)"
     }
+    $receiptMatch = [regex]::Match($success.StandardOutput, '(?m)^WSLc cleanup receipt: (?<json>\{.*\})\s*$')
+    if (-not $receiptMatch.Success) {
+        throw 'Offline successful cleanup did not emit its exact-CID receipt to retained stdout.'
+    }
+    $receipt = ConvertFrom-Json -InputObject $receiptMatch.Groups['json'].Value -ErrorAction Stop
+    if ($receipt.container_id -ne ('a' * 64) -or $receipt.exit_code -ne 0 -or
+            $receipt.stdout.Trim() -ne '[]' -or [string]::IsNullOrWhiteSpace($receipt.observed_utc)) {
+        throw "Offline cleanup receipt did not retain the exact CID and empty query result: $($receipt | ConvertTo-Json -Compress)"
+    }
     $probePathsAfterSuccess = @(
         Get-ChildItem -LiteralPath $tempRoot -Directory -Filter 'agent-interface-wslc-probe-*' -ErrorAction SilentlyContinue |
             ForEach-Object { $_.FullName })
