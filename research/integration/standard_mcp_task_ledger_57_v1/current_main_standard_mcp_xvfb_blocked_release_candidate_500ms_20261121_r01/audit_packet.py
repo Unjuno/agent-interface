@@ -162,7 +162,7 @@ def main() -> None:
             "task_oracle": r04.get("independent_task_oracle", {}).get("status"),
         },
         "candidate_runs": candidate_runs,
-        "interpretation": "The 500 ms bounded XRes wait allowed disconnect/release receipts in both modes and preserved a pending public response, but delayed old requests still caused the old task oracle to fail. The old generation remained UNKNOWN and unreplayable; a separate fresh-generation task passed.",
+        "interpretation": "The 500 ms bounded XRes wait allowed disconnect/release receipts in both modes and preserved a pending public response, but the deliberately withheld cancellation acknowledgement kept the old A key held long enough for repeated A KeyPress/KeyRelease effects; the scheduled delayed B KeyPress was not observed. The old generation remained UNKNOWN and unreplayable; a separate fresh-generation task passed.",
         "not_proven": ["old task success", "late-input exclusion on original task", "reliability rate", "MAP01", "matched efficiency", "research-preview acceptance"],
     }
     (ROOT / "audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")

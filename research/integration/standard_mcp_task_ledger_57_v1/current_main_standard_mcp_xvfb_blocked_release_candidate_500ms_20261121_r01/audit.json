@@ -60,7 +60,7 @@
       "xres_disconnect_ms": 174.37524895649403
     }
   },
-  "interpretation": "The 500 ms bounded XRes wait allowed disconnect/release receipts in both modes and preserved a pending public response, but delayed old requests still caused the old task oracle to fail. The old generation remained UNKNOWN and unreplayable; a separate fresh-generation task passed.",
+  "interpretation": "The 500 ms bounded XRes wait allowed disconnect/release receipts in both modes and preserved a pending public response, but the deliberately withheld cancellation acknowledgement kept the old A key held long enough for repeated A KeyPress/KeyRelease effects; the scheduled delayed B KeyPress was not observed. The old generation remained UNKNOWN and unreplayable; a separate fresh-generation task passed.",
   "manifest_files_verified": {
     "r01": 11,
     "r02": 18,

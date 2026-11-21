@@ -70,12 +70,15 @@ and [R02b packet](research/integration/standard_mcp_task_ledger_57_v1/current_ma
 **Issue #57 standard caller blocked-release result (2026-11-21):** The current
 public MCP/Xvfb path reproduced a 150 ms XRes supervision timeout in optimized
 mode 4/4 attempts; each remained UNKNOWN and skipped release. A one-second
-diagnostic returned XRes disconnect in 199.5 ms but still allowed old queued
-input to produce repeated application effects. The evidence-backed 500 ms
+diagnostic returned XRes disconnect in 199.5 ms. During the deliberately
+withheld cancel acknowledgement, the old A key remained held and generated
+repeated A KeyPress/KeyRelease effects; the scheduled delayed B KeyPress was
+not observed. The evidence-backed 500 ms
 candidate passed the exact standard-caller test and XRes unit suite in normal
 and `-O`: it returned a bounded pending response, verified release, retained
-the old operation as UNKNOWN/no-replay, and reported the old task as failed
-(effect count 1→4 normal, 1→19 optimized). A distinct fresh-generation task
+the old operation as UNKNOWN/no-replay, and reported the old task as failed from repeated effects while A remained
+held through the cancel acknowledgement (effect count 1→4 normal, 1→19
+optimized); the scheduled delayed B KeyPress was not observed. A distinct fresh-generation task
 passed exactly once with no old-input contamination. See the
 [R01–R04 baseline/diagnostic packets](research/integration/standard_mcp_task_ledger_57_v1/current_main_standard_mcp_xvfb_blocked_release_recheck_20261121_r01/RESULT.md)
 and the [500 ms candidate packet](research/integration/standard_mcp_task_ledger_57_v1/current_main_standard_mcp_xvfb_blocked_release_candidate_500ms_20261121_r01/RESULT.md).
