@@ -159,4 +159,16 @@ pass in normal and `-O`. Hosted checks are still running. The result remains
 a synthetic mechanism sensitivity finding, not evidence of human adoption,
 production queue load, or deployment harm. See [the T0d result](https://github.com/Unjuno/agent-interface/issues/7741#issuecomment-5993680943) and [PR #8181](https://github.com/Unjuno/agent-interface/pull/8181). This is the fourth targeted B13 disposition, not a full-batch review.
 
+### B13 targeted closure — Issue #7748 / PRs #7762 and #8182
+
+Issue #7748 was closed on 2026-11-22 JST after completing its declared finite
+synthetic-method question. Merged PR #7762 reports `PASS_METHOD_SCOPED` on six
+hash-frozen traces; merged PR #8182 preserves the A01 CLI STOP and separate A02
+`PASS_DUPLICATE_ID_BOUNDARY_SCOPED`. The closure comment records both results
+and explicitly excludes real workload bounds, host/WSL scheduling, GUI behavior,
+physical release, and product deadlines. This does not close related Issue
+#8061 or resolve #7722's consumed allocation. Keep the historical r160 batch
+counts as a dated baseline; the frozen 25-item B13 cohort now has 24 open Issues
+and one closed (#7748). See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7748#issuecomment-7064746136), [PR #7762](https://github.com/Unjuno/agent-interface/pull/7762), and [PR #8182](https://github.com/Unjuno/agent-interface/pull/8182).
+
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
