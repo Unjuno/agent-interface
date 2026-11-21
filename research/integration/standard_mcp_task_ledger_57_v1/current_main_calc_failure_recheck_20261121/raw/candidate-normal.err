@@ -1,0 +1,54 @@
+test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (research.integration.standard_mcp_task_ledger_57_v1.test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score. ... Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py:1916> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.359 seconds
+Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py:1916> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.141 seconds
+Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py:1916> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:908, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.375 seconds
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\multiprocessing\spawn.py", line 113, in spawn_main
+    new_handle = reduction.duplicate(pipe_handle,
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\multiprocessing\reduction.py", line 79, in duplicate
+    return _winapi.DuplicateHandle(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 6] ÉnÉìÉhÉãÇ™ñ≥å¯Ç≈Ç∑ÅB
+Executing <Task pending name='Task-2' coro=<ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py:1916> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:908, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.140 seconds
+ERROR
+
+======================================================================
+ERROR: test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (research.integration.standard_mcp_task_ledger_57_v1.test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\runtime\cli_v1\test_mcp_owned_process.py", line 1547, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertEqual(observed['status'],'observed',observed)
+AssertionError: 'backend_unavailable' != 'observed'
+- backend_unavailable
++ observed
+ : {'status': 'backend_unavailable', 'error': 'AttributeError("Can\'t pickle local object \'ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score.<locals>.create_recording_server.<locals>.recording_owner_factory\'")', 'operation': 'guarded_observe', 'operation_invoked': False, 'effect_status': 'none', 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'cleanup_status': 'UNKNOWN', 'owner_process': {'pid': None, 'alive': False, 'exitcode': None, 'retired': False, 'release_confirmed': None, 'liveness_observed_monotonic_ns': 255267500000000}, 'late_server_request_possible': True, 'failure_phase': 'session_initialization', 'input_dispatched': False, 'session': {'session_id': '9069f765b4f04ad6845e41ca8cf221d6', 'mode': 'guarded-x11-owned-process', 'state': 'failed', 'binding_revision': 0, 'targets': {'app': 20}, 'recovery_required': None, 'error': None, 'authority_granted': False, 'restart_allowed': False, 'process_identity': True, 'query_worker': True, 'observation_worker': False, 'window_lifecycle': True, 'retention_mode': 'files', 'observations': None, 'target_queries': None, 'target': 'app', 'observation_sequence': None, 'review_required': False, 'owner_process': {'pid': None, 'alive': False, 'exitcode': None, 'retired': False, 'release_confirmed': None, 'liveness_observed_monotonic_ns': 255267531000000}, 'owner_client_disconnect': None, 'owner_input_obligations': {'keys': {}, 'buttons': []}, 'owner_input_obligations_source': 'parent_initial_state', 'owner_input_obligations_live_read': {'status': 'not_read'}, 'owner_release_attempt': None, 'cleanup_status': None}, 'call_directory': 'D:\\CodexData\\Temp\\tmpdaw_xm8e\\f76cec1cf0504235bb5b7a1b509f1f22', 'call_id': 'f76cec1cf0504235bb5b7a1b509f1f22'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py", line 1916, in test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+    await case.test_registered_calc_profile_runs_through_owned_mcp_and_releases()
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\runtime\cli_v1\test_mcp_owned_process.py", line 1664, in test_registered_calc_profile_runs_through_owned_mcp_and_releases
+    self.assertTrue(closed['owner_process_retired'],closed)
+                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'owner_process_retired'
+
+----------------------------------------------------------------------
+Ran 1 test in 1.431s
+
+FAILED (errors=1)

@@ -1,0 +1,50 @@
+mode=normal test=runtime.cli_v1.test_mcp_owned_process.OwnedProcessTests.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown start=2026-11-21T06:50:55.8219659+09:00 exit=1
+mode=normal test=research.integration.standard_mcp_task_ledger_57_v1.test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay start=2026-11-21T06:50:56.8897516+09:00 exit=1
+mode=optimized test=runtime.cli_v1.test_mcp_owned_process.OwnedProcessTests.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown start=2026-11-21T06:50:57.6829085+09:00 exit=1
+mode=optimized test=research.integration.standard_mcp_task_ledger_57_v1.test_partial_input_cancel_accounting.PartialInputCancelAccountingTests.test_cancel_after_first_transition_is_joined_without_replay start=2026-11-21T06:50:58.7730380+09:00 exit=1
+mode=normal test=runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown start=2026-11-21T06:51:25.4222023+09:00 exit=0
+mode=optimized test=runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown start=2026-11-21T06:53:25.2099082+09:00 exit=0
+mode=normal exit=-1 start=2026-11-21T06:54:29.6416406+09:00
+mode=optimized exit=-1 start=2026-11-21T06:55:56.3217463+09:00
+mode=normal exit=-1 start=2026-11-21T06:57:24.3701318+09:00
+mode=optimized exit=-1 start=2026-11-21T06:59:16.0280315+09:00
+target=provider-calc-composition mode=normal exit=1 start=2026-11-21T07:04:20.1665395+09:00
+candidate=calc-target-query-generation-marker mode=normal exit=1 start=2026-11-21T07:09:18.5246936+09:00
+candidate=pickleable Calc generation factory mode=normal exit=1 start=2026-11-21T07:10:28.4898466+09:00
+candidate=pickleable Calc fixture and per-attempt OCR mode mode=normal exit=1 start=2026-11-21T07:11:41.0143720+09:00
+candidate=pickleable Calc fixture and per-attempt OCR mode mode=normal exit=-1 start=2026-11-21T07:12:12.6492341+09:00
+candidate=pickleable generation modes and nested-test cleanup mode=normal exit=1 start=2026-11-21T07:15:16.9464134+09:00
+candidate=anchor-diagnostic mode=normal exit=1 start=20261121-072122 command=python -m unittest research.integration.standard_mcp_task_ledger_57_v1.test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+candidate=anchor-diagnostic mode=normal exit=1 start=20261121-072132 command=python -m unittest research.integration.standard_mcp_task_ledger_57_v1.test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+candidate=anchor-diagnostic mode=normal exit=0 start=20261121-072205 command=python -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+candidate=anchor-diagnostic mode=optimized exit=0 start=20261121-072303 command=python -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+candidate=anchor-diagnostic-confirm mode=normal status=STOPPED after >100s no output; exact unittest PID 41556 stopped with its owning PowerShell session; no test result counted.
+positive direct mode=normal exit=1 start=20261121-072951 command=python  -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_registered_calc_profile_runs_through_owned_mcp_and_releases
+docker candidate wrapper mode=normal exit=1 start=20261121-073313; container candidate volume read-only; network disabled; 2 CPU; 4 GiB memory; evidence output mounted separately
+docker main cancellation-accounting wrapper mode=normal exit=0 start=20261121-073701 timeout=90s; exact current main source read-only
+docker main cancellation-accounting wrapper mode=optimized exit=0 start=20261121-073728 timeout=90s; exact current main source read-only
+docker candidate save-controller diagnostic mode=normal exit=1 start=20261121-073936; inputs captured by read-only monkeypatch; assertions unchanged
+docker candidate save-controller diagnostic r02 mode=normal exit=1 start=20261121-074042; main-guarded diagnostic monkeypatch; assertions unchanged
+artifact candidate-v3 mode=normal exit=1 start=20261121-074306 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+artifact candidate-v4 mode=normal exit=0 start=20261121-074339 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+composition candidate-v4 mode=normal exit=0 start=20261121-074341 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+artifact candidate-v4 mode=optimized exit=0 start=20261121-074359 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+composition candidate-v4 mode=optimized exit=0 start=20261121-074400 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+artifact candidate-v5 mode=normal exit=0 start=20261121-074541 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree; no runtime diagnostic override
+composition candidate-v5 mode=normal exit=0 start=20261121-074542 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree; no runtime diagnostic override
+artifact candidate-v5 mode=optimized exit=0 start=20261121-074555 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree; no runtime diagnostic override
+composition candidate-v5 mode=optimized exit=0 start=20261121-074556 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree; no runtime diagnostic override
+owned MCP candidate mode=normal case=positive exit=0 start=20261121-074642 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+owned MCP candidate mode=normal case=negative exit=0 start=20261121-074646 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+owned MCP candidate mode=optimized case=positive exit=0 start=20261121-074656 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+owned MCP candidate mode=optimized case=negative exit=0 start=20261121-074701 container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate worktree
+Calc owned-process 8-case gate mode=normal exit=0 start=20261121-074759; container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate
+Calc owned-process 8-case gate mode=optimized exit=0 start=20261121-074824; container=agent-interface-xvfb-mcp:late-input-r19 network=none source=read-only candidate
+integrated main code gate=artifact mode=normal exit=0 start=20261121-075025 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=owned-eight mode=normal exit=0 start=20261121-075026 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=composition mode=normal exit=0 start=20261121-075051 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=accounting mode=normal exit=0 start=20261121-075105 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=artifact mode=optimized exit=0 start=20261121-075110 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=owned-eight mode=optimized exit=0 start=20261121-075111 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=composition mode=optimized exit=0 start=20261121-075136 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
+integrated main code gate=accounting mode=optimized exit=0 start=20261121-075151 container=agent-interface-xvfb-mcp:late-input-r19 network=none readonly-main
