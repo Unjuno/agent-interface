@@ -1,8 +1,8 @@
 {
   "snapshot": "r160",
   "snapshot_main": "f39e966b6478170a7a91f1eec7859d30046784bf",
-  "current_main": "8719919ab01db547c08d816e1884a115f25cecab",
-  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only", "PR #10410: docs-only", "PR #10411: docs-only"],
+  "current_main": "83024145149dbccb31bb74f3c49d924ec1122830",
+  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only", "PR #10410: docs-only", "PR #10411: docs-only", "PR #10412: docs-only"],
   "captured_utc": "2026-11-21",
   "open_issue_count": 1643,
   "open_issue_ids_sha256_crlf": "2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad",
@@ -72,6 +72,17 @@
   "b09_no_issue_state_changes": true,
   "b09_semantic_triage_complete": false,
   "b09_issue_ids": [3961, 3963, 4065, 4158, 4342, 4348, 4369, 4399, 4405, 4428, 4432, 4434, 4588, 4666, 4695, 5206, 5215, 5260, 5276, 5280, 6586, 6590, 6593, 6600, 6604],
+  "b10_open_issues_checked": 25,
+  "b10_checked_states": "open for all 25",
+  "b10_open_issues_with_exact_ideas_and_outcomes_url": 25,
+  "b10_no_issue_state_changes": true,
+  "b10_semantic_triage_complete": false,
+  "b10_issue_ids": [6610, 6611, 6613, 6615, 6616, 6617, 6619, 6624, 6640, 6650, 6655, 6657, 6664, 6668, 6678, 6680, 6684, 6686, 6689, 6691, 6693, 6695, 6767, 6774, 6803],
+  "b10_scoped_reviews": {
+    "issue6664": "PASS_METHOD_SCOPED over 1,191 schedules and 3,573 decisions; zero false quiescence certificates. No GUI, OS/backend, model, input, or external effect exercised.",
+    "issue6693": "Current migration record remains HOLD_SHARED_RUNTIME_AND_SOURCE_OWNERSHIP_UNVERIFIED; formal candidates, auditors, and paired blocks are zero. No WSLc availability or authorization follows.",
+    "issue6678": "Static channel evidence is distinguished from the unverified adaptive/closed-loop extension."
+  },
   "issue57_latest_comment_read": {
     "id": 7062348464,
     "created_at": "2026-11-21T12:07:41Z",
@@ -244,7 +255,7 @@
     {"number":1460,"state":"open","updated_at":"2026-09-28T04:26:50Z","comments":11}
   ],
   "limits": [
-    "Navigation coverage only for B01-B04 and B06-B09; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart. B08 additionally checked the bounded #2679/#3382 records summarized above.",
+    "Navigation coverage only for B01-B04 and B06-B10; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart. B08 and B10 additionally checked the bounded Issue records summarized above.",
     "No Issue state changes or closures.",
     "Open Issue membership is the immutable r160 snapshot; no claim that this file is a new paginated REST census."
   ]

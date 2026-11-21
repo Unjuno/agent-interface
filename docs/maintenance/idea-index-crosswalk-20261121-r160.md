@@ -2,7 +2,7 @@
 
 ## Baseline and method
 
-The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `8719919ab01db547c08d816e1884a115f25cecab`; after r160, PRs #10404–#10411 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
+The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `83024145149dbccb31bb74f3c49d924ec1122830`; after r160, PRs #10404–#10412 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
 
 Recomputed against current-main blobs:
 
@@ -69,6 +69,8 @@ All 24 currently open B07 Issues were fetched and remain open; all 24 have exact
 
 All 25 B09 Issues were fetched and remain open; all 25 have exact `IDEAS_AND_OUTCOMES.md` URLs. Their routes cover retained execution/custody records, shared System-1 design proposals, source-level input/effect receipt work, procedural-control benchmarks, known-defect guardrails, and user-centered evaluation. This remains a routing/state pass: no batch-wide comments or linked artifacts were semantically reviewed, and no Issue state changed.
 
-Continue with B10 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
+All 25 B10 Issues were fetched and remain open; all 25 have exact central URLs. Selective evidence checks found #6664's finite protocol-model PASS covers 1,191 schedules and 3,573 policy/snapshot decisions with zero false quiescence certificates, but exercises no GUI, OS/backend, model, input, or external effect. The latest #6693 migration note remains `HOLD_SHARED_RUNTIME_AND_SOURCE_OWNERSHIP_UNVERIFIED`; its paired Docker/WSLc comparison has zero formal candidates, auditors, or blocks. Do not use that note as WSLc availability or authorization. #6678's current comment explicitly separates static observation-channel evidence from an unverified adaptive/closed-loop extension. These are bounded evidence reads; no Issue state changed.
+
+Continue with B11 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
