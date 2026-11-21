@@ -1,0 +1,154 @@
+{
+  "date": "2026-11-21",
+  "repository": "Unjuno/agent-interface",
+  "frozen_head": "069aa17599f6f640403fda29f09f521f8c8efd7d",
+  "host": "Windows; CPython 3.11.9",
+  "scope": "Current-main stdio Win32 recovery protocol regression rechecks with synthetic supervisor/backend; no native GUI/input",
+  "source_hashes_sha256": {
+    "runtime/cli_v1/supervised_win32_compiled.py": "440c705c50bb79c0797f24ee8bc7f1e1cbc53abf668ee5e707979df11f21d89f",
+    "runtime/cli_v1/mcp_supervised_stdio_test_server.py": "5b4c144bd33a2e7c64e922ac560b9c4d46eee0a7bb9457025b1975adf3d82e21",
+    "run_retained_invalid_case.py": "9501f22a3711f74918546b473609204b83d63e64f4578b4fb8ed38cc60fcb52b",
+    "runtime/guarded_win32_v1/process_cancellation.py": "1d0587b76a79a8e719816f547a34de90a9c02f77c542011c44b9a913b944031c",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "92a7c73588d9c62ce3f0b8f0233ad6473aeb73dd3e0499fe1bdac76a996fc642",
+    "run_retained_case.py": "24e6e98339ddb940a2655c2125362f82448a2bcfa06c14f8be24647c778ac3db",
+    "runtime/guarded_win32_v1/test_process_cancellation.py": "82f39d74a225d51fbe928b4aaeb97399cf579bc145b6ca83b49d8fa4a45021e4"
+  },
+  "artifacts": [
+    "artifacts-normal",
+    "artifacts-optimized",
+    "orphan-recovery-normal",
+    "orphan-recovery-optimized",
+    "invalid-horizon-normal",
+    "invalid-horizon-optimized"
+  ],
+  "runs": [
+    {
+      "duration_seconds": 4.077,
+      "mode": "normal",
+      "command": "python -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_stdio_mid_program_expiry_blocks_late_input_and_releases_held_key",
+      "log": "win32-recovery-normal.log",
+      "result": "PASS 1/1",
+      "test": "SupervisedWin32MCPTests.test_stdio_mid_program_expiry_blocks_late_input_and_releases_held_key"
+    },
+    {
+      "duration_seconds": 3.948,
+      "mode": "-O",
+      "command": "python -O -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_stdio_mid_program_expiry_blocks_late_input_and_releases_held_key",
+      "log": "win32-recovery-optimized.log",
+      "result": "PASS 1/1",
+      "test": "SupervisedWin32MCPTests.test_stdio_mid_program_expiry_blocks_late_input_and_releases_held_key"
+    },
+    {
+      "duration_seconds": 7.844,
+      "retention_wrapper": "Only redirects the test temporary-directory root to preserve raw receipt files; test and runtime source unchanged.",
+      "mode": "normal",
+      "command": "python run_retained_case.py",
+      "log": "orphan-recovery-normal.log",
+      "result": "PASS 1/1",
+      "test": "SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query"
+    },
+    {
+      "duration_seconds": 7.847,
+      "retention_wrapper": "Only redirects the test temporary-directory root to preserve raw receipt files; test and runtime source unchanged.",
+      "mode": "-O",
+      "command": "python -O run_retained_case.py",
+      "log": "orphan-recovery-optimized.log",
+      "result": "PASS 1/1",
+      "test": "SupervisedWin32MCPTests.test_production_stdio_orphan_recovery_pending_exact_query"
+    },
+    {
+      "duration_seconds": 9.876,
+      "retention_wrapper": "Only redirects the test temporary-directory root to preserve raw receipt files; test and runtime source unchanged.",
+      "mode": "normal",
+      "command": "python run_retained_invalid_case.py",
+      "log": "invalid-horizon-normal.log",
+      "result": "PASS 1/1",
+      "test": "SupervisedWin32MCPTests.test_production_stdio_invalid_recovery_horizon_exact_query_stays_unknown"
+    },
+    {
+      "duration_seconds": 9.865,
+      "retention_wrapper": "Only redirects the test temporary-directory root to preserve raw receipt files; test and runtime source unchanged.",
+      "mode": "-O",
+      "command": "python -O run_retained_invalid_case.py",
+      "log": "invalid-horizon-optimized.log",
+      "result": "PASS 1/1",
+      "test": "SupervisedWin32MCPTests.test_production_stdio_invalid_recovery_horizon_exact_query_stays_unknown"
+    },
+    {
+      "mode": "normal",
+      "test": "ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+      "command": "python -m unittest -v runtime.guarded_win32_v1.test_process_cancellation.ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+      "result": "PASS 1/1",
+      "duration_seconds": 0.805,
+      "log": "delayed-down-horizon-normal.log"
+    },
+    {
+      "mode": "-O",
+      "test": "ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+      "command": "python -O -m unittest -v runtime.guarded_win32_v1.test_process_cancellation.ProcessCancellationTests.test_delayed_down_during_recovery_horizon_keeps_owner_fenced",
+      "result": "PASS 1/1",
+      "duration_seconds": 0.832,
+      "log": "delayed-down-horizon-optimized.log"
+    }
+  ],
+  "positive_orphan_recovery": {
+    "source_action_status": "unknown",
+    "recovery_status": "recovered",
+    "release_confirmed": true,
+    "task_success": null,
+    "replay_allowed": false,
+    "operation_invoked": false,
+    "source_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "recovery_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "late_input_horizon_ns": 2000000000,
+    "observed_samples": 22,
+    "observation_span_ns": 2109000000,
+    "max_observed_gap_ns": 110000000,
+    "observation_span_by_mode_ns": {
+      "optimized": 2110000000,
+      "normal": 2109000000
+    }
+  },
+  "invalid_horizon": {
+    "fixture_claimed_horizon_ns": 2000000000,
+    "observation_count": 1,
+    "caller_status": "unknown",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "authority_expiry": {
+    "result_status": "execution_failed",
+    "error": "LEASE_EXPIRED_DURING_EXECUTION",
+    "program_emissions": 1,
+    "events": [
+      "focus fixture",
+      "down SHIFT",
+      "release_all SHIFT",
+      "up SHIFT"
+    ],
+    "recovery_status": "recovered",
+    "neutral_readback": [
+      false,
+      false
+    ],
+    "source_action_status": "unknown",
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "interpretation": "Public stdio recovery composes exact source/recovery generations, scoped release/readback and a finite 2-second neutral horizon. The invalid one-sample control stays UNKNOWN. The positive test supervisor and backend are synthetic; no native Win32 input, live GUI, task effect, efficiency or MAP01 claim.",
+  "gate": "SYNTHETIC_PROTOCOL_POSITIVE_CONTROL_ONLY; NATIVE_LIVE_RECOVERY_AND_TASK_EFFECT_UNVERIFIED",
+  "delayed_down_horizon_test": {
+    "horizon_ns": 250000000,
+    "old_generation_delayed_down_injected": true,
+    "observer_detected_delayed_down": true,
+    "owner_result": "unknown",
+    "release_confirmed": false,
+    "task_success": null,
+    "replay_allowed": false,
+    "new_generation_admission_refused_during_and_after_uncertainty": true,
+    "runtime_supervisor_and_persistent_fake_helpers": true,
+    "test": "test_delayed_down_during_recovery_horizon_keeps_owner_fenced"
+  },
+  "issue_comment_id": 7056093106
+}
