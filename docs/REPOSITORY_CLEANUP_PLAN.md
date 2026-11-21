@@ -1,5 +1,21 @@
 # Repository cleanup plan
 
+## Current live pointer after PR #10393 (2026-11-21)
+
+Verified `origin/main` is `cb02ec977c761b4f291cccebbd8d470760e16084`. A live
+GraphQL count read reports 1,643 open Issues and 409 open PRs. This is a
+count-only read; it is not a refreshed paginated membership receipt or semantic
+triage. The latest complete membership receipt remains r154 on main
+`8c71a6199bd51ca6b38aa02cb92d9833c3260a67` with 1,643 Issues and 410 PRs,
+captured before PR #10393 merged.
+
+Issues #57 (integrated control/efficiency), #58 (Research Preview), and #7924
+(WSLc migration STOP) are currently OPEN. In particular, do not use the older
+October snapshot below that lists #57 as CLOSED as current status. For active
+gates and the next execution sequence, use [CURRENT_GOAL](CURRENT_GOAL.md),
+[ROADMAP](../ROADMAP.md), and the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md).
+The dated sections below remain historical receipts and are not rewritten.
+
 ## Last verified main after PR #9792 (2026-10-28)
 
 Last verified `origin/main` is `d8dc65ce0dc6b38dcd4e3e8b882d1c33c9b089ac` (PR #9792). A
