@@ -1,8 +1,8 @@
 {
   "snapshot": "r160",
   "snapshot_main": "f39e966b6478170a7a91f1eec7859d30046784bf",
-  "current_main": "17593f850bc425f9b25dc6c38f786dc3b08206da",
-  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only", "PR #10410: docs-only", "PR #10411: docs-only", "PR #10412: docs-only", "PR #10413: docs-only"],
+  "current_main": "87f1afe2ad2202a3a5200a4add86190e9f6a1496",
+  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only", "PR #10410: docs-only", "PR #10411: docs-only", "PR #10412: docs-only", "PR #10413: docs-only", "PR #10414: docs-only"],
   "captured_utc": "2026-11-21",
   "open_issue_count": 1643,
   "open_issue_ids_sha256_crlf": "2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad",
@@ -95,6 +95,17 @@
     "issue6990": "Closed only after offline T8 receipt-schema audit; earlier WSLc T7/5309 STOPs and migration/performance questions remain unchanged.",
     "issue6975": "Offline T11 publication audit PASS does not change T7 STOP_HOST_RECEIPT_SCHEMA_MISMATCH.",
     "issue7165": "First retained outcome is HOLD_AUDITOR_RUNTIME_ERROR; later raw reconstruction audit does not replace it."
+  },
+  "b12_open_issues_checked": 25,
+  "b12_checked_states": "open for all 25",
+  "b12_open_issues_with_exact_ideas_and_outcomes_url": 25,
+  "b12_no_issue_state_changes": true,
+  "b12_semantic_triage_complete": false,
+  "b12_issue_ids": [7367, 7368, 7369, 7379, 7387, 7409, 7411, 7418, 7424, 7426, 7430, 7436, 7458, 7459, 7462, 7466, 7470, 7475, 7487, 7505, 7650, 7678, 7705, 7707, 7709],
+  "b12_scoped_reviews": {
+    "issue7430": "Correction preserves #7970's prohibition on new WSLc list/run/inventory calls until ownership reconciliation.",
+    "issue7466": "Formal FAIL_UNSAFE_RESUME remains; later raw replay is supplemental artifact validation only.",
+    "issue7709": "PASS_METHOD_SCOPED is synthetic latency-inference method evidence, not live performance."
   },
   "issue57_latest_comment_read": {
     "id": 7062348464,
@@ -268,7 +279,7 @@
     {"number":1460,"state":"open","updated_at":"2026-09-28T04:26:50Z","comments":11}
   ],
   "limits": [
-    "Navigation coverage only for B01-B04 and B06-B11; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart. B08, B10, and B11 additionally checked the bounded Issue records summarized above.",
+    "Navigation coverage only for B01-B04 and B06-B12; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart. B08 and B10-B12 additionally checked the bounded Issue records summarized above.",
     "No Issue state changes or closures.",
     "Open Issue membership is the immutable r160 snapshot; no claim that this file is a new paginated REST census."
   ]
