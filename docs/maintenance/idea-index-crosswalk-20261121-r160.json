@@ -1,8 +1,8 @@
 {
   "snapshot": "r160",
   "snapshot_main": "f39e966b6478170a7a91f1eec7859d30046784bf",
-  "current_main": "da363ede2892192c3436292ed4eaf005402c8e00",
-  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only"],
+  "current_main": "de27fcc9867adcabaec746dacb489858ca68ac03",
+  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only", "PR #10408: docs-only", "PR #10409: docs-only"],
   "captured_utc": "2026-11-21",
   "open_issue_count": 1643,
   "open_issue_ids_sha256_crlf": "2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad",
@@ -42,6 +42,19 @@
   "b06_open_issues_with_exact_ideas_and_outcomes_url": 22,
   "b06_no_issue_state_changes": true,
   "b06_semantic_triage_complete": false,
+  "b07_open_issues_checked": 24,
+  "b07_checked_states": "open for all 24",
+  "b07_open_issues_with_exact_ideas_and_outcomes_url": 24,
+  "b07_no_issue_state_changes": true,
+  "b07_semantic_triage_complete": false,
+  "b07_issue_ids": [1464, 1510, 1565, 1587, 1591, 1621, 1628, 1631, 1635, 1637, 1769, 1839, 1868, 1873, 1881, 1907, 1911, 2369, 2519, 2522, 2526, 2527, 2531, 2534],
+  "issue2369_current_policy_check": {
+    "state": "open",
+    "updated_at": "2026-10-19T00:55:49Z",
+    "comments": 1,
+    "source": "https://github.com/Unjuno/agent-interface/issues/2369#issuecomment-6257371993",
+    "summary": "Operational proposal, not a full-CI-before-every-push requirement. Worker Quickstart asks workers to run relevant local checks and record hosted-only checks; no unified runner is required by this record."
+  },
   "issue57_latest_comment_read": {
     "id": 7062348464,
     "created_at": "2026-11-21T12:07:41Z",
@@ -214,7 +227,7 @@
     {"number":1460,"state":"open","updated_at":"2026-09-28T04:26:50Z","comments":11}
   ],
   "limits": [
-    "Navigation coverage only for B01-B04 and B06; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58.",
+    "Navigation coverage only for B01-B04 and B06-B07; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58. B07 additionally checked Issue #2369's current policy comment against Worker Quickstart.",
     "No Issue state changes or closures.",
     "Open Issue membership is the immutable r160 snapshot; no claim that this file is a new paginated REST census."
   ]
