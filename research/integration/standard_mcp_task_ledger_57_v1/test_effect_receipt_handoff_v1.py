@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 import test_recorded_comparison_adapter_v1 as recorded_adapter
 from effect_receipt_handoff_v1 import adapt_measured_run
+from recorded_comparison_adapter_v1 import build_measured_run
 from comparison_measurement_v1 import validate_matched_block
 from ledger import LedgerValidationError
 
@@ -43,7 +44,64 @@ class EffectReceiptHandoffTests(unittest.TestCase):
     def write_receipt(self):
         (self.receipt_root/'score.json').write_text(json.dumps(self.receipt,sort_keys=True,separators=(',',':')),encoding='utf8')
     def adapt(self):
-        return adapt_measured_run(self.measured,receipt_root=self.receipt_root,receipt_path='score.json')
+        return adapt_measured_run(
+            self.measured, receipt_root=self.receipt_root,
+            receipt_path='score.json')
+
+    def _build_from_public_caller_receipt(self):
+        receipt = recorded_adapter.ProviderAttemptRecorder(
+            self.root / 'run' / 'recorder').reconcile()
+        image_ref = self.measured['task_ledger']['raw_refs'][-1]
+        if image_ref not in receipt['raw_refs']:
+            receipt['raw_refs'].append(image_ref)
+        metadata = {key: value for key, value in
+                    self.measured['task_ledger'].items()
+                    if key not in ('events', 'raw_refs', 'native_owner_binding')}
+        measurement = {key: value for key, value in self.measurement.items()
+                       if key != 'effect_attribution'}
+        measurement['native_owner_evidence'] = {
+            'lookup_tool_call_id': 'lookup-results-1',
+            'action_call_id': self.receipt['action_call_id'],
+            'effect_observed_ns': None,
+        }
+        observation = dict(self.measurement['local_observations'][0])
+        observation['captured_ns'] = 125
+        measurement['local_observations'] = [observation]
+        measured = build_measured_run(
+            receipt, recorder_root=self.root / 'run' / 'recorder',
+            ledger_metadata=metadata, measurement=measurement)
+
+        return measured
+
+    def test_recorded_public_caller_receipt_flows_through_both_adapters(self):
+        measured = self._build_from_public_caller_receipt()
+        summary = recorded_adapter.validate_measured_run(measured)
+        self.assertTrue(summary['factual_task_success'])
+        self.assertEqual(summary['effect_attribution']['effect_timing'],
+                         'unknown')
+        self.assertEqual(
+            measured['task_ledger']['native_owner_binding']['action_call_id'],
+            self.receipt['action_call_id'])
+
+    def test_public_caller_handoff_rejects_single_capture_without_after_capture(self):
+        measured = self._build_from_public_caller_receipt()
+        with self.assertRaisesRegex(
+                LedgerValidationError,
+                'capture reference is not a unique retained local observation'):
+            adapt_measured_run(
+                measured, receipt_root=self.receipt_root,
+                receipt_path='score.json')
+
+    def test_public_caller_to_effect_handoff_rejects_wrong_action_identity(self):
+        measured = self.measured
+        self.receipt['action_call_id'] = 'e' * 32
+        self.write_receipt()
+        with self.assertRaisesRegex(LedgerValidationError,
+                                    'public owner receipt belongs to a different action call'):
+            adapt_measured_run(
+                measured, receipt_root=self.receipt_root,
+                receipt_path='score.json')
+
     def test_timely_score_joins_same_action_and_raw_receipt(self):
         result=self.adapt()
         self.assertEqual(result['timing_status'],'within_authority')
