@@ -66,6 +66,16 @@ repair/replay the consumed allocation or normalize evidence. Any later #7732
 experiment is a separately preregistered question after custody is resolved.
 See the [B13 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
+**Issue #7741 / PR #8181 targeted disposition (2026-11-22):** Preserve the
+sequence: T0 v1 had 217 lifecycle-accounting errors, T0b stopped before output,
+and T0c failed its per-principal negative control despite a clean primary
+contrast. The separate frozen T0d passed its synthetic gate in 32/32 cells
+with zero replay errors and exact-null controls. PR #8181 contains that packet
+and has seven passing checks, but is Draft and 3,490 commits behind current
+main. A current-main exact-byte successor is [PR #10419](https://github.com/Unjuno/agent-interface/pull/10419); its local checks pass and hosted checks are pending. Do not replay the consumed allocation. Keep the Issue open for external validity. No real
+adoption, production queue, or user effect is established. See the [B13
+crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
 **Fake X release-boundary regressions (PRs #10416/#10417):** Both are now on
 main; their R01/R02 current-main results and limits are recorded in
 `docs/CURRENT_GOAL.md`. They test synthetic delayed input and a test-double

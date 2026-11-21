@@ -132,4 +132,31 @@ successor against a substitute allocation under the same identity. If the
 custody gate is eventually resolved, #7732's distinct minimal-field-bundle
 question needs its own fresh preregistration. See [#6774's custody status](https://github.com/Unjuno/agent-interface/issues/6774#issuecomment-5988381606), [#6775's byte-level qualification](https://github.com/Unjuno/agent-interface/pull/6775#issuecomment-5958513653), and [#7732](https://github.com/Unjuno/agent-interface/issues/7732). This is the third targeted B13 disposition, not a full-batch review.
 
+### B13 targeted disposition — Issue #7741 / PR #8181
+
+The retained sequence has materially different outcomes. T0 v1 is
+`METHOD_FAIL_OR_INCONCLUSIVE` after 217 lifecycle-accounting errors, a task-start
+probability defect, and invalid controls; T0b stopped before JSON output and
+was not audited. T0c's independent replay was clean and its primary contrast
+reversed in 16/16 cells, but its per-principal negative control also reversed
+in 11/16, so that frozen gate failed. The later separately preregistered T0d
+passed its synthetic gate: 256 groups, zero replay/accounting errors, 32/32
+qualifying topology/parameter/seed cells, +94 to +128 tick difference-in-
+differences against a three-tick model threshold, and exact-null no-imitation
+and shared-24 controls. Preserve all four outcomes; T0d does not erase the
+predecessor failures.
+
+PR #8181 retains the T0d packet, is OPEN/DRAFT, and its seven published checks
+pass. Its head `0d71f0a2` is only three commits ahead of its October base but
+3,490 commits behind current main; the remote comparison reports divergence.
+Do not replay the consumed T0d candidate or auditor. Keep #7741 open for the
+unmet external-validity boundary. Current-main import is prepared as [PR
+#10419](https://github.com/Unjuno/agent-interface/pull/10419), preserving the
+exact 23-file T0d packet, adding a sorted index entry, and marking both hash-bound
+T0c/T0d trees `-text` to prevent Windows newline conversion. Local SHA256SUMS
+validation passed for 22 files; the seven retained construction/evidence tests
+pass in normal and `-O`. Hosted checks are still running. The result remains
+a synthetic mechanism sensitivity finding, not evidence of human adoption,
+production queue load, or deployment harm. See [the T0d result](https://github.com/Unjuno/agent-interface/issues/7741#issuecomment-5993680943) and [PR #8181](https://github.com/Unjuno/agent-interface/pull/8181). This is the fourth targeted B13 disposition, not a full-batch review.
+
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
