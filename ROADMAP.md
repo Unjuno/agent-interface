@@ -2,9 +2,9 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current repository checkpoint r157 — 2026-11-21 (main `9734c7f907b49799c134483d6011d092f190740d`)
+## Current repository checkpoint r158 — 2026-11-21 (main `db31eb235c202c8c44cab49056d8da9bd6a1d12b`)
 
-Complete paginated reads, bracketed by the same main SHA, find 1,643 open Issues and 408 open PRs. Compared with r155, Issue membership is unchanged and the only PR removal is #10340, merged as this main commit. The merged prospective journal remains dispatch-disabled and is not a live efficiency result; its post-merge local journal tests pass 13/13 in normal and `-O`, with the cleanup boundary check 1/1 in both modes. Issue #57 and #58 remain open. Membership is not semantic triage, work ownership, or evidence-custody reconciliation. See the [r157 receipt](docs/maintenance/repository-inventory-recheck-20261121-r157.md) and [post-merge packet](research/integration/issue57_v3_postmerge_validation_20261121/RESULT.md).
+Complete paginated reads, bracketed by the same main SHA, find 1,643 open Issues and 408 open PRs, exactly matching r157. PR #10400 was opened and merged between the snapshots and had no net membership effect. The #10340 prospective journal remains dispatch-disabled and is not a live efficiency result; its post-merge local journal tests pass 13/13 in normal and `-O`, with the cleanup boundary check 1/1 in both modes. Issue #57 and #58 remain open. Membership is not semantic triage, work ownership, or evidence-custody reconciliation. See the [r158 receipt](docs/maintenance/repository-inventory-recheck-20261121-r158.md) and [post-merge packet](research/integration/issue57_v3_postmerge_validation_20261121/RESULT.md).
 
 ## G10 comparison-boundary audit — 2026-11-21 (frozen on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`)
 
@@ -56,7 +56,7 @@ experiment allocation.
   PR #10340 is merged as a dispatch-disabled prospective journal; the external
   allocation attestor and fresh exclusive comparison allocation remain absent.
   The latest whole-repository membership snapshot is
-  [r157](docs/maintenance/repository-inventory-recheck-20261121-r157.md):
+  [r158](docs/maintenance/repository-inventory-recheck-20261121-r158.md):
   1,643 open Issues and 408 open PRs. This is not semantic triage and does not
   justify bulk closure.
 
