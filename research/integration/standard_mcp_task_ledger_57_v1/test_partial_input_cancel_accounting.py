@@ -184,11 +184,24 @@ class PartialInputCancelAccountingTests(unittest.IsolatedAsyncioTestCase):
 
             fake_x_evidence = root / "fake-x-evidence"
             env = {"AGENT_INTERFACE_FAKE_X_EVIDENCE": str(fake_x_evidence)}
+            retained_diagnostic = os.environ.get(
+                "AGENT_INTERFACE_RETAIN_CALC_CANCEL_DIAGNOSTIC")
+            if retained_diagnostic:
+                diagnostic_root = Path(retained_diagnostic).resolve()
+                diagnostic_root.mkdir(parents=True, exist_ok=False)
+                run_id = f"cancel-accounting-{time.time_ns()}"
+                (diagnostic_root / "run-id.txt").write_text(
+                    run_id + "\n", encoding="utf-8")
+                env["AGENT_INTERFACE_RETAIN_CALC_CANCEL_DIAGNOSTIC"] = (
+                    str(diagnostic_root / run_id))
             with patch.dict(os.environ, env), patch.object(
                     calc_tests, "create_server", create_recording_server):
                 cancellation_case = calc_tests.OwnedProcessMCPTests(
                     "test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown")
-                await cancellation_case.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown()
+                try:
+                    await cancellation_case.test_registered_calc_profile_cancel_after_first_transition_keeps_effect_unknown()
+                except Exception as error:
+                    self.fail("wrapped Calc cancellation case failed: " + repr(error))
 
             self.assertIsNotNone(state["generation_join"])
             self.assertTrue(state["generation_join"]["tool_call_submitted"])
