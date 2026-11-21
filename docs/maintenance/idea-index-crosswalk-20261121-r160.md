@@ -2,14 +2,14 @@
 
 ## Baseline and method
 
-The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `32976473d8d7689ef899739bdb6350227a743a0e`; after r160, PRs #10404–#10407 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
+The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `de27fcc9867adcabaec746dacb489858ca68ac03`; after r160, PRs #10404–#10409 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
 
 Recomputed against current-main blobs:
 
 - Primary rows were parsed only from the `Issue inventory` table in `docs/RESEARCH_ISSUE_INDEX.md`.
 - Exact canonical GitHub Issue URLs were counted in `docs/IDEAS_AND_OUTCOMES.md` and tracked `docs/ideas/*.md` files (`git ls-tree -r origin/main docs/ideas`: 153 Markdown files).
 - The immutable r51 queue `open-issues-missing-research-primary-row-20261019-r51.csv` was joined by numeric Issue ID to r160's current open set.
-- Batches B01–B06's queued Issues were rechecked for current open state with direct GitHub Issue reads and joined to exact URLs in the current `IDEAS_AND_OUTCOMES.md` blob. B03/B04 state reads occurred about 2026-11-21 13:23–13:24 UTC; B05/B06 were checked shortly afterward. For B01–B04 and B06 the check was routing-only; comments and linked artifacts were not batch-reviewed, except for the latest #57 comment used to preserve its acceptance boundary. B05 additionally compares the specific #643 product-distribution requirement with merged #10377 and current #58 launch conditions.
+- Batches B01–B07's queued Issues were rechecked for current open state with direct GitHub Issue reads and joined to exact URLs in the current `IDEAS_AND_OUTCOMES.md` blob. B03/B04 state reads occurred about 2026-11-21 13:23–13:24 UTC; B05–B07 were checked shortly afterward. For B01–B04, B06, and B07 the check was routing-only; comments and linked artifacts were not batch-reviewed, except for the latest #57 comment used to preserve its acceptance boundary and #2369's current operational-policy comment. B05 additionally compares the specific #643 product-distribution requirement with merged #10377 and current #58 launch conditions.
 
 ## Current coverage
 
@@ -61,6 +61,8 @@ All 22 currently open B06 Issues were fetched and remain open; all 22 have exact
 
 ## Next finite step and limits
 
-Continue with B07 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
+All 24 currently open B07 Issues were fetched and remain open; all 24 have exact `IDEAS_AND_OUTCOMES.md` URLs. Their routes span X11 capture/readiness and lifecycle identity, temporal prediction and multimodal source freeze, MAP01 causal/task-effect lineage, calibration/augmentation follow-ups, and local-check policy. For #2369, its current comment and [Worker Quickstart](../WORKER_QUICKSTART.md) agree that workers should run relevant local checks and record hosted-only checks; full CI equivalence before every push is not a repository-enforced gate, and no unified runner is specified. Keep #2369 open as an operational proposal unless a concrete recurring local-check gap justifies a small runner. This does not mean arbitrary local checks replace required checks or experimental preregistration. No B07 issue disposition or state change was made.
+
+Continue with B08 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
