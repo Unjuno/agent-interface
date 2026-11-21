@@ -1,0 +1,20 @@
+{
+  "attempt_id": "ISSUE57-LATE-USAGE-NATIVE-OWNER-COMPOSITION-20261121-R01",
+  "frozen_at_utc": "2026-11-21T05:28:00Z",
+  "source_revision": "b2d8933a2b510905eb5ffd6090aee8de186b5f26",
+  "source_files": [
+    "research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_public_mcp_caller_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/recorded_comparison_adapter_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/comparison_measurement_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/effect_attribution_v1.py",
+    "research/integration/standard_mcp_task_ledger_57_v1/test_recorded_comparison_adapter_v1.py"
+  ],
+  "hypothesis": "A late usage observation attached to an earlier timed-out generation remains complete accounting when projected alongside a second successful action attempt whose public dispatch/results and native owner release/horizon receipt are exactly identity-bound; with the same two attempts but no late usage row, totals remain incomplete.",
+  "positive": "Two-attempt synthetic run: first attempt times out with unavailable usage; after an independent score, the public caller observes one App Server usage row (18 input, 3 output); a second completed attempt owns the recorded observe/dispatch/results calls; native owner release/horizon evidence is joined by call, operation, and target generation.",
+  "control": "Same synthetic two-attempt/action structure and independent score, but the late-usage source returns no row.",
+  "decision_rule": "PASS only if both runs retain two model attempts, exact public owner binding, UNKNOWN eligible effect time, and raw-reference integrity; positive usage is complete with total input=28/output=5; control usage is incomplete with null totals; and no tool call is attributed to the timed-out attempt.",
+  "dose": "One positive and one control, no retry of either run, no provider/Relay/GUI/OS input/Docker/WSLc action.",
+  "scope": "Synthetic integration only. The owner result, scorer, provider attempts, and App Server usage row are fixtures. This is not evidence of provider-side exhaustiveness, live owner truth, physical release, task success, matched economics, or reliability.",
+  "interpreter": "Windows CPython 3.11"
+}

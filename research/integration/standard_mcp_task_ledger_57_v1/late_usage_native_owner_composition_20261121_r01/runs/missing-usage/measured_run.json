@@ -1,0 +1,246 @@
+{
+  "measurement": {
+    "effect_attribution": {
+      "authority_expiry_ns": 150,
+      "effect_observed_ns": null,
+      "horizon_end_ns": 160,
+      "release_received_ns": 155
+    },
+    "elapsed_ns": 125,
+    "ended_ns": 220,
+    "local_observations": [
+      {
+        "captured_ns": 145,
+        "image_sha256": "2bf21cc5d6b867be8bd539227e519284912af4de3c2599aa3b9b3f98da56e73e",
+        "source_sequence": 1,
+        "tool_call_id": "observe-1"
+      }
+    ],
+    "model_delivered_images": [
+      {
+        "attempt_id": "attempt-1",
+        "sha256": "2bf21cc5d6b867be8bd539227e519284912af4de3c2599aa3b9b3f98da56e73e"
+      }
+    ],
+    "phases": [
+      {
+        "ended_ns": 100,
+        "name": "setup_acquisition",
+        "started_ns": 95
+      },
+      {
+        "ended_ns": 110,
+        "name": "provider_wait",
+        "started_ns": 100
+      },
+      {
+        "ended_ns": 140,
+        "name": "observation_grounding",
+        "started_ns": 110
+      },
+      {
+        "ended_ns": 150,
+        "name": "local_execution",
+        "started_ns": 140
+      },
+      {
+        "ended_ns": 160,
+        "name": "recovery",
+        "started_ns": 150
+      },
+      {
+        "ended_ns": 180,
+        "name": "effect_verification",
+        "started_ns": 160
+      },
+      {
+        "ended_ns": 220,
+        "name": "cleanup",
+        "started_ns": 180
+      }
+    ],
+    "started_ns": 95
+  },
+  "task_ledger": {
+    "comparison": {
+      "arm": "B",
+      "block": 1,
+      "order": 2,
+      "task_seed": "fixed-seed"
+    },
+    "environment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "events": [
+      {
+        "attempt_id": "attempt-late-usage",
+        "ended_ns": 110,
+        "kind": "model_attempt",
+        "seq": 1,
+        "started_ns": 100,
+        "status": "timeout",
+        "usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "status": "unavailable"
+        }
+      },
+      {
+        "attempt_id": "attempt-1",
+        "ended_ns": 130,
+        "kind": "model_attempt",
+        "seq": 2,
+        "started_ns": 120,
+        "status": "completed",
+        "usage": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "status": "reported"
+        }
+      },
+      {
+        "call_id": "observe-1",
+        "ended_ns": 150,
+        "kind": "tool_call",
+        "method": "interface_guarded_observe",
+        "model_attempt_id": "attempt-1",
+        "result": {
+          "source": {
+            "sequence": 1
+          }
+        },
+        "seq": 3,
+        "started_ns": 140
+      },
+      {
+        "call_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ended_ns": 170,
+        "kind": "tool_call",
+        "method": "interface_dispatch",
+        "model_attempt_id": "attempt-1",
+        "result": {
+          "result": {
+            "content": [
+              {
+                "text": "{\"call_id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"operation_id\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"replay_allowed\":false,\"status\":\"unknown\",\"target_generation\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"task_success\":null}",
+                "type": "text"
+              }
+            ]
+          },
+          "status": "returned",
+          "tool": "interface_dispatch"
+        },
+        "seq": 4,
+        "started_ns": 160
+      },
+      {
+        "call_id": "lookup-results-1",
+        "ended_ns": 190,
+        "kind": "tool_call",
+        "method": "interface_results",
+        "model_attempt_id": "attempt-1",
+        "result": {
+          "result": {
+            "content": [
+              {
+                "text": "{\"action\":{\"operation_id\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"status\":\"unknown\",\"target_generation\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"},\"call_id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"cancellation\":{\"action_operation_id\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation_id\":\"dddddddddddddddddddddddddddddddd\",\"release_confirmed\":true,\"result\":{\"deadline_ns\":150,\"late_input_horizon_ns\":5,\"late_input_horizon_verified\":true,\"late_input_max_observed_gap_ns\":5,\"late_input_max_sample_gap_ns\":5,\"late_input_observation_count\":2,\"late_input_observation_end_ns\":160,\"late_input_observation_start_ns\":155,\"late_input_release_received_ns\":155,\"operation_id\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"phase\":\"recovered\",\"release_confirmed\":true,\"status\":\"recovered\",\"target_generation\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"},\"status\":\"recovered\",\"target_generation\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"}}",
+                "type": "text"
+              }
+            ]
+          },
+          "status": "returned",
+          "tool": "interface_results"
+        },
+        "seq": 5,
+        "started_ns": 180
+      },
+      {
+        "ended_ns": 200,
+        "independent": true,
+        "kind": "task_score",
+        "scorer_id": "independent-fixture-oracle-v1",
+        "seq": 6,
+        "started_ns": 200,
+        "state_sha256": "a671fe61c4c90ab92bee9e29a2a8501c3511eb04991755921d17684f1f81b900",
+        "task_success": true
+      }
+    ],
+    "model": {
+      "effort": "low",
+      "id": "fixture-model",
+      "request_config_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "native_owner_binding": {
+      "action_call_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "action_operation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authority_expiry_ns": 150,
+      "effect_observed_ns": null,
+      "effect_timing": "unknown",
+      "horizon_end_ns": 160,
+      "horizon_ns": 5,
+      "horizon_observation_count": 2,
+      "horizon_start_ns": 155,
+      "horizon_verified": true,
+      "lookup_tool_call_id": "lookup-results-1",
+      "release_confirmed": true,
+      "release_received_ns": 155,
+      "schema": "agent-interface/native-owner-lifecycle-binding-v1",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "raw_refs": [
+      {
+        "path": "raw/attempt-late-usage.request.bin",
+        "sha256": "25c931807c5353c8b1894f37e696120a1dfff2a6fdda53afe1b4ab2b9445c36a"
+      },
+      {
+        "path": "raw/attempt-1.request.bin",
+        "sha256": "4c1288e0dc8c7feb89c57e1ad005811999ff598ffa3b150f278a77b359370372"
+      },
+      {
+        "path": "raw/attempt-1.response.bin",
+        "sha256": "7a4e4a0e3616e2b7774516b9f081ce2b3769eb95f07245a4b61ba136d64bdbf4"
+      },
+      {
+        "path": "raw/tool-714d526a39ccfbe8cb75b82e18414e05d2e5a4377ae4e1c2924c7c440796fa42.tool-request.bin",
+        "sha256": "8ff603954f0015da9de2cd3031dbd887315ba0d37202f1a7227cd54745d88753"
+      },
+      {
+        "path": "raw/tool-714d526a39ccfbe8cb75b82e18414e05d2e5a4377ae4e1c2924c7c440796fa42.tool-response.bin",
+        "sha256": "e436d9519c4129d35d196ccd1cd44b23e0ca1f0afa39b9b9ee5b86046e7cc24f"
+      },
+      {
+        "path": "raw/tool-9b9a10b218358e0a7c2327f5841447b256628c94ddc2f2c7a729b46bea1e03b4.tool-request.bin",
+        "sha256": "b9087ab102187558dd1b8599c9dbbea5acdedcc8dab381799001128eab314d2f"
+      },
+      {
+        "path": "raw/tool-9b9a10b218358e0a7c2327f5841447b256628c94ddc2f2c7a729b46bea1e03b4.tool-response.bin",
+        "sha256": "580d42fb2afd37a43d467e3d6efad2e38ed6a25252897c78faee10c63a91fce0"
+      },
+      {
+        "path": "raw/tool-2f5f5ded65ae90a46acfd8d8595b02f137374820f8353260e38186086a33c38c.tool-request.bin",
+        "sha256": "1a4142784e83b8cf24465146b22306d60b2aa1e891e11bf03bccd19f89862f12"
+      },
+      {
+        "path": "raw/tool-2f5f5ded65ae90a46acfd8d8595b02f137374820f8353260e38186086a33c38c.tool-response.bin",
+        "sha256": "ac6c4a855ebfe60d415042ecab2770db5b5604de387b45c3c2ea260203c642f4"
+      },
+      {
+        "path": "raw/task-score.state.bin",
+        "sha256": "a671fe61c4c90ab92bee9e29a2a8501c3511eb04991755921d17684f1f81b900"
+      },
+      {
+        "path": "raw/model-image.bin",
+        "sha256": "2bf21cc5d6b867be8bd539227e519284912af4de3c2599aa3b9b3f98da56e73e"
+      }
+    ],
+    "run_id": "run-B",
+    "schema": "agent-interface/standard-mcp-task-ledger-v1",
+    "source": {
+      "commit": "cccccccccccccccccccccccccccccccccccccccc",
+      "route_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "task": {
+      "fixture_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "scorer_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "task_id": "fixture-task"
+    }
+  }
+}
