@@ -1,0 +1,35 @@
+{
+  "schema": "issue57-recorded-comparison-adapter-v1",
+  "source_main": "9cc75e28aa288ec2f34c84edaa896b0b11f17abe",
+  "python": "Windows CPython 3.11.9",
+  "source_sha256": {
+    "recorded_comparison_adapter_v1.py": "29fcd6a506fab188a1c8dd89fa68782643b532075b3910db224f99bb356c082e",
+    "test_recorded_comparison_adapter_v1.py": "1017af48f45dda10d94734d15cc940423857942198e410e2a5904e1620d54250",
+    "run_experiment.py": "b5a098eda3d11d3c027b5956ebcc7990f24c3fd07430785c78abe32e4f186714",
+    "comparison_measurement_v1.py": "a513ab96c868d217271073d52c6aab262bfdeedd29f4f760fb260be290420b24",
+    "effect_attribution_v1.py": "cdfe3367af3a9ef55c3c45ca775aa08669258eb218298ae1087d16a64899e84c",
+    "ledger.py": "fd35a86b148eb7415f53f0da564d8c5e0ccbb2589ded7bce1edb7bf3b112b714",
+    "provider_attempt_recorder.py": "e733a5abefd4c1f7bd3ac442c4055cb3f4e2a2c35e4f04e83483f64ec022216f"
+  },
+  "provider_calls": 0,
+  "gui_input": 0,
+  "docker_or_wslc": false,
+  "live_allocation": false,
+  "arms": ["A", "B", "C"],
+  "fixture": "deterministic synthetic ProviderAttemptRecorder journal, one provider attempt, one public observation receipt, one independent synthetic score per arm",
+  "clock_ns": [100, 110, 120, 130, 140],
+  "effect_attribution": {
+    "effect_observed_ns": 130,
+    "authority_expiry_ns": 130,
+    "release_received_ns": 135,
+    "horizon_end_ns": 140,
+    "source": "explicit synthetic fixture; not a native owner receipt"
+  },
+  "commands": [
+    "python -m unittest -v test_recorded_comparison_adapter_v1",
+    "python -O -m unittest -v test_recorded_comparison_adapter_v1",
+    "python -m unittest -v test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "python -O -m unittest -v test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "python recorded_comparison_adapter_v1/run_experiment.py --output-root raw-r03"
+  ]
+}
