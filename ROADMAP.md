@@ -2,9 +2,9 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current checkpoint — 2026-11-21 (verified main base `a8402e9d8f74284e0bafd0aff3b55702f3dc4089`; local evidence candidate)
+## Current checkpoint — 2026-11-21 (main `2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb`)
 
-**Issue #57 local composition checkpoint:** On this branch based exactly on current origin/main, the effect-score adapter output is composed into the reuse-horizon evaluator. Thirty-three focused tests pass in normal and optimized modes with an explicit worktree-local temporary directory. This closes a synthetic offline connection check only. The live matched efficiency comparison, standard-caller task outcome/recovery reliability, and Research Preview graduation remain open. The evidence is not merged; see [the packet](research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
+**Issue #57 composition checkpoint (PR #10396):** Merged to main as 2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb. The retained effect-score adapter output composes into the reuse-horizon evaluator; 33 focused tests pass normally and under -O. This closes only a synthetic offline connection check. Live matched efficiency, standard-caller task outcome/recovery reliability, and Research Preview graduation remain open. See [the packet](research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
 
 **Research Preview RC1 setup and doctor (R05, 2026-11-21):** The frozen RC1 checkout installed its nine pinned Python dependencies successfully into an isolated WSL venv. Its doctor exited 1: 12/15 checks passed; the required Windows Codex CLI JS and WSL Chromium were absent, making the `codex_cli` check fail as a consequence. No app/runtime/model acquisition or GUI action occurred. This is a reproducible setup HOLD, not a golden run or preview acceptance. See [R05 evidence](research/integration/research_preview_rc1_setup_doctor_r05_20261121/RESULT.md). Issue #58 remains open.
 
