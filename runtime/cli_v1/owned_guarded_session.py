@@ -35,7 +35,11 @@ _RETIRE_KILL_GRACE_S = 0.25
 # return immediately while the OS process is still completing termination.
 _RETIRE_KILL_SETTLE_GRACE_S = 0.01
 _JOIN_TIMEOUT_S = 1.0
-_XRES_DISCONNECT_TIMEOUT_S = 0.15
+# A standard-caller Xvfb run observed a 199 ms XRes response under -O;
+# 150 ms consistently failed closed before release could be attempted. Keep
+# this query bounded while allowing measured local XRes latency. The caller's
+# shorter response deadline may still return pending/UNKNOWN during recovery.
+_XRES_DISCONNECT_TIMEOUT_S = 0.5
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
 # The spawned fresh client must import, connect, emit exact releases, sync, and
 # read back. This caps its post-start response wait; process creation remains

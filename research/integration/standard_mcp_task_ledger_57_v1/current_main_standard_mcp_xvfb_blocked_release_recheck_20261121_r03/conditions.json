@@ -1,0 +1,15 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-XVFB-OPTIMIZED-SUPERVISION-REPEAT-20261121-R03",
+  "frozen_at_utc": "2026-11-21T06:17:12Z",
+  "source_revision": "f6ab37afc5276689b32a01fe6799aed51b601a8c",
+  "source_blobs": "source-blobs.txt",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "container": "ephemeral; network none; read-only root and source; private tmpfs; evidence mount only writable",
+  "xvfb": "private :88, CI-equivalent startup, AGENT_INTERFACE_XVFB_PID set",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "hypothesis": "The optimized-mode XRes supervision timeout observed once in R02 is scheduling-sensitive under this container; repeated frozen attempts will show whether the 150 ms XRes query budget produces intermittent UNKNOWN or stable behavior.",
+  "attempts": ["optimized-01", "optimized-02", "optimized-03"],
+  "decision_rule": "For each attempt retain unittest outcome and XRes disconnect status. A task result is acceptable only if the test and independent task oracle both pass, release readback is neutral, no extra old-task effect occurs, and late horizon is clean. An XRes supervision timeout remains UNKNOWN and a task oracle failure remains failure even if cleanup/test assertions pass.",
+  "limits": "Three repeated synthetic Xvfb attempts are diagnostic samples, not a reliability rate or production guarantee."
+}
