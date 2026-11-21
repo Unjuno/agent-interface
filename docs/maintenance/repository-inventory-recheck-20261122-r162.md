@@ -20,6 +20,13 @@ closed after scoped evidence dispositions, and #7817, closed after its finite
 T0 method result was reconciled with merged PR #7938. The only PR removal is
 #8181, superseded after its packet was transferred through merged #10419.
 
+After documentation PR #10423 merged, a second complete paginated read was
+bracketed by main `8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2`. It again found
+1,640 open Issues and 407 open PRs, with no additions or removals relative to
+the r162 sets above. This confirms that the receipt remains applicable after
+the documentation integration; it does not claim later state beyond this
+recheck.
+
 This is a membership receipt, not complete semantic triage, branch/worktree
 custody reconciliation, or permission to bulk-close issues. The r160 semantic
 crosswalk remains the latest full routing analysis; targeted updates are linked
