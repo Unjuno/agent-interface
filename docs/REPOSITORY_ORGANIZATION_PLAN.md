@@ -56,6 +56,16 @@ release behavior. Keep the Issue open while deciding whether to close only its
 synthetic T0 hypothesis; any OS/GUI follow-up is separate. See the [B13
 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
+**Issue #7732 / predecessor #6774 targeted disposition (2026-11-21):** Keep
+#7732 open but execution-held on its explicit custody dependency. #6774's
+nine-row packet has seven recorded-vs-published hash mismatches that disappear
+when the final CRLF is excluded (cause unknown), and an auditor that cannot parse its terminal blank line; the
+separate 12-row packet matches its manifest but lacks independently attributable
+executor identity. Preserve both histories and #6775's merged bytes; do not
+repair/replay the consumed allocation or normalize evidence. Any later #7732
+experiment is a separately preregistered question after custody is resolved.
+See the [B13 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
 **Fake X release-boundary regressions (PRs #10416/#10417):** Both are now on
 main; their R01/R02 current-main results and limits are recorded in
 `docs/CURRENT_GOAL.md`. They test synthetic delayed input and a test-double

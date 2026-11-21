@@ -112,4 +112,24 @@ while deciding whether to close only its synthetic T0 hypothesis; any host/GUI
 study is a separate question requiring fresh eligibility and independent
 release evidence. See the [retained correction](https://github.com/Unjuno/agent-interface/issues/7722#issuecomment-5994116900), [audit-limit update](https://github.com/Unjuno/agent-interface/issues/7722#issuecomment-5985957545), and [PR #7735](https://github.com/Unjuno/agent-interface/pull/7735). This remains a targeted disposition, not a full B13 semantic review.
 
+### B13 targeted disposition — Issue #7732 / predecessor #6774
+
+Issue #7732 is a proposed finite successor about combinations of evidence
+fields. Its own body explicitly gates any experiment on custody/ownership
+reconciliation for #6774 and forbids rerunning that consumed allocation. The
+dependency remains unresolved: #6774's latest retained owner update says the
+nine-row packet's seven source/output hashes differ from published blobs by a
+terminal CRLF, and its published auditor cannot parse the terminal blank JSONL
+line. The separate 12-row local packet matches its ten-file manifest, but does
+not identify a unique executor. These limitations qualify both histories; they
+do not establish a corrected scientific result or authorize a new allocation.
+
+Keep #7732 open but HOLD execution until the existing #6774 custody request is
+resolved or the unavailable originals and accountable custodians are explicitly
+recorded. Preserve #6775's merged bytes and both reported histories unchanged;
+do not normalize line endings, repair/replay the consumed T0, or run the
+successor against a substitute allocation under the same identity. If the
+custody gate is eventually resolved, #7732's distinct minimal-field-bundle
+question needs its own fresh preregistration. See [#6774's custody status](https://github.com/Unjuno/agent-interface/issues/6774#issuecomment-5988381606), [#6775's byte-level qualification](https://github.com/Unjuno/agent-interface/pull/6775#issuecomment-5958513653), and [#7732](https://github.com/Unjuno/agent-interface/issues/7732). This is the third targeted B13 disposition, not a full-batch review.
+
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
