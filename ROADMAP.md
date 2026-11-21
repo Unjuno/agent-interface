@@ -2,7 +2,7 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current checkpoint — 2026-11-21 (main `8c71a619`)
+## Current checkpoint — 2026-11-21 (main `63449e8abed5938a780de22cabc160aefd9d3326`)
 **Research Preview RC1 setup and doctor (R05, 2026-11-21):** The frozen RC1 checkout installed its nine pinned Python dependencies successfully into an isolated WSL venv. Its doctor exited 1: 12/15 checks passed; the required Windows Codex CLI JS and WSL Chromium were absent, making the `codex_cli` check fail as a consequence. No app/runtime/model acquisition or GUI action occurred. This is a reproducible setup HOLD, not a golden run or preview acceptance. See [R05 evidence](research/integration/research_preview_rc1_setup_doctor_r05_20261121/RESULT.md). Issue #58 remains open.
 
 **Whole-repository membership refresh r154 (2026-11-21):** On main `8c71a6199bd51ca6b38aa02cb92d9833c3260a67`, the complete paginated open sets are still 1,643 Issues and 410 PRs, exactly matching r153/r152 membership; main was unchanged before and after. This is queue membership only, not semantic triage or merge readiness. The current organization plan records this comparison; no bulk closure follows. #5130 is the one-time six-task Mindustry three-arm economics allocation under #57, still gated on its frozen source/resource conditions; #7924 remains the explicit WSLc migration STOP.
@@ -14,7 +14,12 @@ experiment allocation.
 - **Portable package:** Windows and Ubuntu WSL deterministic package/startup
   checks pass 21/21 normally and under `-O`; outside-checkout `doctor` and
   `validate --help` pass with side-effect authority disabled. See the
-  [retained package packet](research/integration/portable_runtime_distribution_v2_current_main_20261121/RESULT.md).
+  [earlier package packet](research/integration/portable_runtime_distribution_v2_current_main_20261121/RESULT.md).
+  PR #10377 added a second independently rebuilt package pinned to runtime
+  source main `acbdfc0f9`; its tests pass 21/21 normally and under `-O` on
+  Windows, the outside-checkout CLI starts on Windows and WSL, and 64/64
+  source hashes audit clean. The evidence-only merge did not change runtime
+  source. See the [current-main packet](research/integration/portable_runtime_distribution_v2_current_main_acbdfc0f9_20261121/RESULT.md).
   This does not establish live X11/Win32 input, task effect, public release,
   or research-preview acceptance.
 - **Mindustry setup:** the pinned v160.2 JAR and both canonical saves match
@@ -42,6 +47,14 @@ experiment allocation.
   [r153](docs/maintenance/repository-inventory-recheck-20261121-r153.md):
   1,643 open Issues and 410 open PRs, unchanged from r152. This is not semantic
   triage and does not justify bulk closure.
+
+**Whole-repository membership refresh r155 (2026-11-21):** On main
+`63449e8abed5938a780de22cabc160aefd9d3326`, complete paginated REST reads found
+1,643 open Issues and 409 open PRs. Issue IDs exactly match r152; the only PR
+membership delta is #10218 removed. PR #10377 was opened and merged during the
+interval but had no residual membership effect. This is queue membership only,
+not semantic triage or merge readiness; no bulk closure follows. See the
+[r155 receipt](docs/maintenance/repository-inventory-recheck-20261121-r155.md).
 
 The next work must advance one scoped gate at a time, retain failures and
 unknowns, and re-read current source and ownership before any live or shared

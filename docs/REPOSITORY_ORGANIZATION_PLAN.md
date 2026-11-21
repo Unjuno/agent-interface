@@ -120,6 +120,18 @@ disposition, every retained artifact has recoverable custody or an explicit
 investigation, and independent workers can identify non-overlapping scopes.
 Open Issues and PRs may remain when their research or evidence is still live.
 
+## Current whole-repository checkpoint r155 (2026-11-21)
+
+On main `63449e8abed5938a780de22cabc160aefd9d3326`, complete paginated REST
+reads before and after were bracketed by the same main SHA. The open Issue set
+contains 1,643 IDs and exactly matches r152. The open PR set contains 409 IDs;
+compared with r152, #10218 is the sole removed member. PR #10377 was opened and
+merged during the interval and has no remaining membership effect. Existing
+sorted Issue IDs are reused; the PR delta and capture conditions are retained
+in [the r155 receipt](maintenance/repository-inventory-recheck-20261121-r155.md).
+This is membership evidence only. It does not semantically classify the queue,
+assign custody, or imply merge readiness, and it supports no bulk closure.
+
 ## Batch protocol
 
 Each batch selects one family, PR, or custody slice and leaves a compact receipt
