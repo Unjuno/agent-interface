@@ -1,0 +1,40 @@
+{
+  "attempt_id": "ISSUE57-G10-CURRENTMAIN-STDIO-RECHECK-20261121-R02",
+  "current_main_revision": "704ea90c3c3a4ed58a0d10e67674411b16ec7659",
+  "evidence_class": "process-owned Fake X / public MCP stdio / archived FODS; no live Calc or provider",
+  "host_os": "Windows",
+  "limits": [
+    "No live application input or native X server",
+    "No model/provider usage",
+    "No matched efficiency or current live Calc task result"
+  ],
+  "modes": {
+    "normal": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_mcp_g10_production_stdio"
+    ],
+    "optimized": [
+      "python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_mcp_g10_production_stdio"
+    ]
+  },
+  "python": "3.11.9",
+  "r01_deviation": "The first run was made from a sparse checkout without the two archived FODS inputs. Both modes failed at the test assertion because first.fods was unavailable; those logs are retained under r01_sparse_failure. R01 exit code was not separately captured.",
+  "r02_fix": "Materialized only the pinned archived first.fods and second.fods from source_revision, then reran the same module once in each mode.",
+  "runtime_test": "runtime.cli_v1.test_mcp_g10_production_stdio",
+  "sha256": {
+    "research/integration/calc_current_shared_3311_4d74_20261004/calc-compiled-ocrlive-4d74/runs/compiled_ocrlive10/first.fods": "c58fed9953776ce9bcfeb420ab8a85c66454f8b036018e0f12154bd558e2a2e9",
+    "research/integration/calc_current_shared_3311_4d74_20261004/calc-compiled-ocrlive-4d74/runs/compiled_ocrlive10/second.fods": "9c0efd47b8f145229dd77f3b6380b2f604707c6f4e776045c98b8a19b3a2a2df",
+    "runtime/cli_v1/mcp_calc_g10_stdio_test_server.py": "c8e090f979ee429f47918802936512a8c8c775a3fa2dd646dec49d9de8dcd2dc",
+    "runtime/cli_v1/mcp_guarded.py": "1321d746fa87c23c82209ebb1c304c478ba6d92ee4df9a298070351438d7fa45",
+    "runtime/cli_v1/mcp_server.py": "457637080c921bc5ed98715eb4da2db0e30d7840c88aeca62c62486c45b0e8b2",
+    "runtime/cli_v1/test_mcp_g10_production_stdio.py": "5199cdd2d9d15bd758a8b03643186b441b948f97048c44d844b63173b5ddc7b6",
+    "runtime/guarded_x11_v1/calc_g10_artifact_v1.py": "b865e4bd74712e66ee570a1bd865de6087550b569aca79b85a138c0976b52f1c"
+  },
+  "source_revision": "5dab476e1cdc7248e452e927e3a358f95e548f67"
+}
