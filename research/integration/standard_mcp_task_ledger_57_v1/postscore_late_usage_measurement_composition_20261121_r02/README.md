@@ -24,9 +24,10 @@ measured record, checks retained recorder raw hashes, and compares all six
 source files' Git-clean-normalized worktree blob IDs with the frozen Git
 revision (so Windows CRLF checkout conversion does not create a false source
 drift). It also excludes Python's ignored `__pycache__` bytecode from the
-packet file-set check. The `.gitattributes` control file is checked for the
-raw-byte preservation rule directly; it is excluded from the SHA256SUMS file
-set because Windows may convert its line endings on checkout. This experiment
+packet file-set check. The `.gitattributes` control file disables line-ending
+conversion for all packet files; the audit checks that rule directly. The
+control file itself is excluded from SHA256SUMS because Windows may convert
+its own line endings on checkout. This experiment
 does not establish
 provider billing, task effect, matched A/B/C economics, or recovery reliability.
 The required `effect_attribution` envelope is synthetic schema scaffolding:

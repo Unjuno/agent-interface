@@ -50,7 +50,7 @@ def main() -> None:
     if conditions["source_revision"] != SOURCE_REVISION:
         raise SystemExit("source pin mismatch")
     attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8").splitlines()
-    if "runs/**/recorder/raw/*.bin -text" not in attributes:
+    if "** -text whitespace=cr-at-eol" not in attributes:
         raise SystemExit("raw recorder byte-preservation attribute is missing")
     for relative in conditions["source_files"]:
         committed_blob = subprocess.check_output(
