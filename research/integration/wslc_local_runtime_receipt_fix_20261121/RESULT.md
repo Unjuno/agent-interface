@@ -31,7 +31,13 @@ still deleting the local probe directory. A separate attempt to run that same
 harness under PowerShell 7.6.9 stopped before the test at `Add-Type`, because
 that host rejects the harness's `ConsoleApplication`/`WindowsApplication`
 output kinds; this is a harness-host compatibility limitation, not a WSLc or
-product failure. No live WSLc run was repeated after the repair.
+product failure.
+
+After PR #10402 merged, the local worktree was confirmed tree-identical to main
+`d1c6833fb8cde624b9f751296ca5a093abb83d74`. The Windows PowerShell 5.1 offline
+harness passed again on that exact main tree. Its stdout, stderr, and exit code
+are retained separately in `raw/postmerge-offline-harness.*`. No live WSLc run
+was repeated after the repair.
 
 ## Limits
 
