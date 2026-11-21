@@ -67,6 +67,21 @@ matched efficiency and live MAP01 remain open. See the
 [R01 packet](research/integration/standard_mcp_task_ledger_57_v1/current_main_xvfb_tcp_queue_recheck_20261121_r01/RESULT.md)
 and [R02b packet](research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_xvfb_unix_queue_recheck_20261121_r02b/RESULT.md).
 
+**Issue #57 standard caller blocked-release result (2026-11-21):** The current
+public MCP/Xvfb path reproduced a 150 ms XRes supervision timeout in optimized
+mode 4/4 attempts; each remained UNKNOWN and skipped release. A one-second
+diagnostic returned XRes disconnect in 199.5 ms but still allowed old queued
+input to produce repeated application effects. The evidence-backed 500 ms
+candidate passed the exact standard-caller test and XRes unit suite in normal
+and `-O`: it returned a bounded pending response, verified release, retained
+the old operation as UNKNOWN/no-replay, and reported the old task as failed
+(effect count 1→4 normal, 1→19 optimized). A distinct fresh-generation task
+passed exactly once with no old-input contamination. See the
+[R01–R04 baseline/diagnostic packets](research/integration/standard_mcp_task_ledger_57_v1/current_main_standard_mcp_xvfb_blocked_release_recheck_20261121_r01/RESULT.md)
+and the [500 ms candidate packet](research/integration/standard_mcp_task_ledger_57_v1/current_main_standard_mcp_xvfb_blocked_release_candidate_500ms_20261121_r01/RESULT.md).
+This candidate improves bounded recovery evidence; delayed effects on the
+original task remain a failed gate. #57 stays open.
+
 The next work must advance one scoped gate at a time, retain failures and
 unknowns, and re-read current source and ownership before any live or shared
 resource action.

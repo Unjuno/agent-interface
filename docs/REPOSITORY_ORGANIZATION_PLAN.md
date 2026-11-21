@@ -8,6 +8,16 @@ from the current goal and roadmap, and keep the next worker item scoped to
 standard-caller recovery/effect composition rather than repeating Xvfb queue
 drainage.
 
+**Issue #57 standard-caller evidence wave (2026-11-21):** Preserve the distinct
+R01 runner-metadata deviation, R02 normal/optimized split, R03 3/3 optimized
+XRes timeouts, R04 one-second diagnostic, and R05 500 ms candidate. The candidate
+records improved disconnect/release observation while retaining the old task's
+delayed-effect failure and UNKNOWN/no-replay. Keep the raw attempts, conditions,
+source pins, and audit together; do not merge a green unittest into a task-success
+claim. The next bounded item is public-result semantics plus late-request
+quarantine, with a separate writable path and no overlap with the MAP01 or
+provider-efficiency allocations.
+
 **Issue #57 evidence update (2026-11-21):** The latest current-main focused
 recheck after PR #10368 passes normal mode but fails under `-O` at the existing
 3 s Save boundary and terminal receipt wait. Preserve it as a scheduling

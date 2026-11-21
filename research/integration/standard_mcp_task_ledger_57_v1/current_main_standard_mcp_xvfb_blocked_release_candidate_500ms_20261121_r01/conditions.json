@@ -1,0 +1,15 @@
+{
+  "attempt_id": "ISSUE57-XRES-500MS-STANDARD-MCP-XVFB-CANDIDATE-20261121-R01",
+  "frozen_at_utc": "2026-11-21T06:23:56Z",
+  "source_revision": "f27b07c8a2af568f4fc5318ce12fd6380180cf21",
+  "source_files": ["runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", "runtime/cli_v1/test_synthetic_task_oracle.py", "runtime/cli_v1/mcp_guarded.py", "runtime/cli_v1/mcp_server.py", "runtime/cli_v1/owned_guarded_session.py", "runtime/guarded_x11_v1/cancel_supervisor.py", "runtime/guarded_x11_v1/xres_client_fence.py"],
+  "source_blobs": "source-blobs.txt",
+  "candidate_change": "XRes disconnect worker wait 0.15 s -> 0.5 s; caller response deadline and transaction deadline unchanged; fail-closed UNKNOWN and no-replay semantics unchanged.",
+  "image": "agent-interface-xvfb-mcp:late-input-r19",
+  "image_id": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+  "container": "ephemeral; network none; root and source read-only; private tmpfs; evidence packet writable",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "attempts": [{"id":"normal-01","mode":"python3","count":1},{"id":"optimized-01","mode":"python3 -O","count":1}],
+  "decision_rule": "Record unit-test exit separately from old-task oracle, owner disconnect, release readback, late horizon, fresh-session task oracle, UNKNOWN fence, and replay policy. Candidate is acceptable only if the caller remains bounded/pending safely, both source and fresh task semantics are honestly classified, and both modes pass required safety assertions.",
+  "limits": "One synthetic task pair in each interpreter mode; not a reliability rate, MAP01, real provider, matched efficiency, or preview qualification."
+}
