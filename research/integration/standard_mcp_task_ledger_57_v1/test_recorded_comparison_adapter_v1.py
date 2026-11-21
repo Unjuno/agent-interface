@@ -1,5 +1,6 @@
 """Exercise the caller-journal to matched-comparison adapter offline."""
 
+import asyncio
 import hashlib
 import json
 import tempfile
@@ -10,13 +11,46 @@ from comparison_measurement_v1 import validate_matched_block, validate_measured_
 from ledger import LedgerValidationError
 from provider_attempt_recorder import ProviderAttemptRecorder
 from recorded_comparison_adapter_v1 import build_measured_run
+from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
+
+
+class SyntheticLateUsageSource:
+    def __init__(self, available):
+        self.available = available
+        self.read_count = 0
+        self.usage = {"status": "reported", "input_tokens": 18,
+                      "output_tokens": 3}
+        self.usage_bytes = json.dumps(
+            self.usage, sort_keys=True, separators=(",", ":")).encode()
+        self.source_bytes = json.dumps({
+            "direction": "received", "observed_ns": 10000,
+            "message": {"method": "thread/tokenUsage/updated",
+                        "params": {"threadId": "thread-fixture",
+                                   "turnId": "turn-fixture",
+                                   "tokenUsage": {"last": {
+                                       "inputTokens": 18,
+                                       "outputTokens": 3}}}},
+        }, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+
+    def read(self, _timeout):
+        self.read_count += 1
+        if not self.available or self.read_count > 1:
+            return None
+        return {"usage": self.usage, "usage_bytes": self.usage_bytes,
+                "source_bytes": self.source_bytes, "observed_ns": 10000}
+
+
+class UnusedRelay:
+    async def request(self, _request_bytes):
+        raise AssertionError("late-usage observation must not submit Relay calls")
 
 
 class RecordedComparisonAdapterTests(unittest.TestCase):
     @staticmethod
     def make_run(root: Path, arm: str, order: int, *,
-                 effect_observed_ns=130, owner_variant=None):
-        ticks = iter((100, 110, 120, 130, 140, 150, 160, 170, 180))
+                 effect_observed_ns=130, owner_variant=None,
+                 late_usage_available=None):
+        ticks = iter(range(100, 300, 10))
         recorder = ProviderAttemptRecorder(root / "recorder",
                                            clock_ns=lambda: next(ticks))
         recorder.session_id = hashlib.sha256(
@@ -24,6 +58,12 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         response = b'{"assistant":"observe"}\n'
         usage = {"status": "reported", "input_tokens": 10,
                  "output_tokens": 2}
+        if late_usage_available is not None:
+            unavailable = {"status": "unavailable", "input_tokens": None,
+                           "output_tokens": None}
+            recorder.invoke(
+                "attempt-late-usage", b'{"prompt":"timed out"}\n',
+                lambda: {"status": "timeout", "usage": unavailable})
         recorder.invoke("attempt-1", b'{"prompt":"frozen"}\n',
                         lambda: {"status": "completed", "usage": usage,
                                  "response_bytes": response})
@@ -113,6 +153,15 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
                      "response_bytes": public_response_bytes})
         state = b'{"task_state":"complete"}\n'
         recorder.record_task_score("independent-fixture-oracle-v1", True, state)
+        if late_usage_available is not None:
+            caller = RecordedPublicMcpCaller(
+                UnusedRelay(), recorder, allowed_methods={"interface_dispatch"})
+            observed = asyncio.run(caller.observe_late_usage(
+                "attempt-late-usage",
+                {"status": "timeout", "late_usage_source":
+                 SyntheticLateUsageSource(late_usage_available)}, timeout=0))
+            if observed["observed"] is not late_usage_available:
+                raise AssertionError("late-usage source result differs from arm")
         receipt = recorder.reconcile()
 
         delivered_image = b"synthetic model-delivered observation"
@@ -135,8 +184,10 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
             "model": {"id": "fixture-model", "effort": "low",
                       "request_config_sha256": "e" * 64},
         }
+        run_end_ns = 220 if late_usage_available is not None else 190
         measurement = {
-            "started_ns": 95, "ended_ns": 190, "elapsed_ns": 95,
+            "started_ns": 95, "ended_ns": run_end_ns,
+            "elapsed_ns": run_end_ns - 95,
             "phases": [
                 {"name": "setup_acquisition", "started_ns": 95,
                  "ended_ns": 100},
@@ -151,13 +202,14 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
                 {"name": "effect_verification", "started_ns": 160,
                  "ended_ns": 180},
                 {"name": "cleanup", "started_ns": 180,
-                 "ended_ns": 190},
+                 "ended_ns": run_end_ns},
             ],
             "model_delivered_images": [{"attempt_id": "attempt-1",
                                         "sha256": image_digest}],
             "local_observations": [{
                 "tool_call_id": "observe-1", "source_sequence": 1,
-                "captured_ns": 125, "image_sha256": image_digest}],
+            "captured_ns": (145 if late_usage_available is not None else 125),
+            "image_sha256": image_digest}],
             "native_owner_evidence": {
                 "lookup_tool_call_id": "lookup-results-1",
                 "action_call_id": action_call_id,
@@ -186,6 +238,30 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         self.assertEqual(binding["target_generation"], "c" * 64)
         self.assertTrue(binding["release_confirmed"])
         self.assertTrue(binding["horizon_verified"])
+
+    def test_late_usage_composes_with_identity_bound_native_owner_receipt(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            run = self.make_run(Path(temporary), "A", 1,
+                                late_usage_available=True)
+            summary = validate_measured_run(run)
+        self.assertEqual(summary["model_attempt_count"], 2)
+        self.assertEqual(summary["usage_status"], "complete")
+        self.assertEqual(summary["input_tokens"], 28)
+        self.assertEqual(summary["output_tokens"], 5)
+        self.assertTrue(run["task_ledger"]["native_owner_binding"][
+            "release_confirmed"])
+
+    def test_missing_late_usage_stays_incomplete_with_native_owner_receipt(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            run = self.make_run(Path(temporary), "A", 1,
+                                late_usage_available=False)
+            summary = validate_measured_run(run)
+        self.assertEqual(summary["model_attempt_count"], 2)
+        self.assertEqual(summary["usage_status"], "incomplete")
+        self.assertIsNone(summary["input_tokens"])
+        self.assertIsNone(summary["output_tokens"])
+        self.assertTrue(run["task_ledger"]["native_owner_binding"][
+            "release_confirmed"])
 
     def test_unknown_native_effect_time_keeps_factual_score_but_blocks_eligibility(self):
         with tempfile.TemporaryDirectory() as temporary:
