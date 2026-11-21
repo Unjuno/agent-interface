@@ -1,0 +1,45 @@
+{
+  "attempt_id": "calc-offline-e2e-01",
+  "call_id": "aaeaf0a485004f90baed61d5fc8540b8",
+  "environment": "synthetic FakeX in an owned child process; no live GUI",
+  "graph": {
+    "completed_transitions": 2,
+    "outcome": "SAFE_YIELD",
+    "reason": "effect_unavailable",
+    "recognized_filled_observation": false,
+    "release_verified": [
+      true,
+      true
+    ]
+  },
+  "ocr_record_count": 19,
+  "owner_elapsed_ns": 2563000000,
+  "parent_verification": {
+    "reason": "registered_calc_saved_artifact_verified",
+    "report_file_was_tampered": true,
+    "status": "verified",
+    "task_success": true
+  },
+  "profile_id": "calc-ocr-save-v1",
+  "raw_evidence": "raw-runtime/ (call reports, PNG captures, OCR TSV and receipts)",
+  "schema": "agent-interface/calc-owned-mcp-offline-evidence-v1",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_guarded.py": "ea0c9b106911d07e50bc265f0ca91553feaa95a27f7266acc43314e39d6df0d3",
+    "runtime/cli_v1/mcp_server.py": "457637080c921bc5ed98715eb4da2db0e30d7840c88aeca62c62486c45b0e8b2",
+    "runtime/cli_v1/owned_guarded_session.py": "a9c254171b053bb2e86bd17b6288b6f418e4f1e71dac6a262419765f8218d8dc",
+    "runtime/cli_v1/test_mcp_owned_process.py": "27c407cadac0fe1d3dea961d3ff772fb99ed4fe83397cb4cb0d0264088e5d4f0",
+    "runtime/guarded_x11_v1/calc_profile_v1.py": "8f3b7cdd14620837aaa444916662a09201693965dae61115abc2ab5a0eba9aa9",
+    "runtime/guarded_x11_v1/calc_task_artifact_v1.py": "6d6746c82c42157b11bb9f52dcafd9079b7b37789b1733a1c9d26dfdfa682623"
+  },
+  "synthetic_environment": {
+    "all_fake_inputs_released": true,
+    "save_requested": true,
+    "values_entered": "A1=731; A2=864"
+  },
+  "task_effect_verification": {
+    "reason": "trusted_save_controller_unavailable",
+    "status": "not_configured",
+    "task_success": null
+  },
+  "task_success": null
+}

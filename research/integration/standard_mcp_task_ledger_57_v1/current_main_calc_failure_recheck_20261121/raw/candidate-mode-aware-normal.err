@@ -1,0 +1,28 @@
+test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (research.integration.standard_mcp_task_ledger_57_v1.test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score. ... ERROR
+
+======================================================================
+ERROR: test_fake_app_server_generation_is_recorded_through_calc_profile_and_score (research.integration.standard_mcp_task_ledger_57_v1.test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score)
+Compose provider accounting, Calc public MCP, and an independent FODS score.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-calc-fixture-r01\research\integration\standard_mcp_task_ledger_57_v1\test_mcp_endpoint_composition.py", line 1576, in test_fake_app_server_generation_is_recorded_through_calc_profile_and_score
+    raise FileExistsError(evidence_root)
+FileExistsError: C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\research\integration\standard_mcp_task_ledger_57_v1\current_main_calc_failure_recheck_20261121\raw\provider-calc-fixture-candidate
+
+----------------------------------------------------------------------
+Ran 1 test in 0.030s
+
+FAILED (errors=1)
