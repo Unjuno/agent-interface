@@ -230,3 +230,5 @@ See [`release/README.md`](release/README.md).
 ## Stable release gate
 
 A stable release requires substantially frozen protocol/execution semantics, explicit recovery behavior, cross-platform evidence, and a support envelope that is narrower than the evidence rather than broader than it.
+
+**Issue #57 caller/comparator evidence join (PR #10373, merged 2026-11-21 as `428a38eaac2dce07c7b7557985ec58a998d8736b`):** The research adapter now maps complete recorder receipts into the comparison measurement schema with disk hash verification and fail-closed missing evidence. The merged tree passes 33/33 focused attribution/comparison/adapter tests normally and under `-O`; two GitHub checks passed and formal was skipped. This is not live caller/provider evidence or a matched efficiency/reliability result. The next gate is identity-bound native owner lifecycle evidence plus exhaustive provider-attempt reconciliation; see the [retained adapter packet](research/integration/standard_mcp_task_ledger_57_v1/recorded_comparison_adapter_v1/RESULT.md).

@@ -26,6 +26,16 @@ synthetic delivered image files are hash referenced. `SHA256SUMS` covers
 conditions, adapter and fixture source hashes, runner, all three raw runs,
 measured records, summaries, and all normal/optimized logs.
 
+After PR #10373 merged as `428a38eaac2dce07c7b7557985ec58a998d8736b`, the
+combined 33-test suite was rerun against that exact main tree and again passed
+33/33 normally and 33/33 under `-O`. The post-merge logs are retained beside
+the original candidate logs. GitHub's `replay-gate` and `public-navigation`
+checks passed; `formal` was skipped. No required branch protection was
+configured at merge time.
+
+The final manifest includes both post-merge logs and all three synthetic raw
+generations; all 86 listed entries verify against disk.
+
 ## Limits
 
 This is a deterministic offline contract fixture, not a live provider, GUI,

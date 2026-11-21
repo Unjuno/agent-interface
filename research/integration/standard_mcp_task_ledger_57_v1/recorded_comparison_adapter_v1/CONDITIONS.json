@@ -1,6 +1,7 @@
 {
   "schema": "issue57-recorded-comparison-adapter-v1",
-  "source_main": "9cc75e28aa288ec2f34c84edaa896b0b11f17abe",
+  "source_main": "428a38eaac2dce07c7b7557985ec58a998d8736b",
+  "candidate_base_main": "9cc75e28aa288ec2f34c84edaa896b0b11f17abe",
   "python": "Windows CPython 3.11.9",
   "source_sha256": {
     "recorded_comparison_adapter_v1.py": "29fcd6a506fab188a1c8dd89fa68782643b532075b3910db224f99bb356c082e",
@@ -30,6 +31,8 @@
     "python -O -m unittest -v test_recorded_comparison_adapter_v1",
     "python -m unittest -v test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
     "python -O -m unittest -v test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
-    "python recorded_comparison_adapter_v1/run_experiment.py --output-root raw-r03"
+    "python recorded_comparison_adapter_v1/run_experiment.py --output-root raw-r03",
+    "python -m unittest -v test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "python -O -m unittest -v test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1"
   ]
 }
