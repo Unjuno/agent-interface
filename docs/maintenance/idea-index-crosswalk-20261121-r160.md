@@ -2,14 +2,14 @@
 
 ## Baseline and method
 
-The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main at this recheck is `fb11b033eac6a1288e57ecad350af70875117524`; the intervening commits are documentation-only PRs #10404 and #10405. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
+The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `b100b1f8da9440454690ffe0e729d4ecabd03db0`; after r160, PRs #10404–#10406 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
 
 Recomputed against current-main blobs:
 
 - Primary rows were parsed only from the `Issue inventory` table in `docs/RESEARCH_ISSUE_INDEX.md`.
 - Exact canonical GitHub Issue URLs were counted in `docs/IDEAS_AND_OUTCOMES.md` and tracked `docs/ideas/*.md` files (`git ls-tree -r origin/main docs/ideas`: 153 Markdown files).
 - The immutable r51 queue `open-issues-missing-research-primary-row-20261019-r51.csv` was joined by numeric Issue ID to r160's current open set.
-- Batch B01's queued Issues were rechecked for current open state with direct GitHub Issue reads and joined to exact URLs in the current `IDEAS_AND_OUTCOMES.md` blob. The reads were made about 2026-11-21 13:10–13:12 UTC. This was a routing check only; Issue bodies, comments, linked PRs and artifacts were not semantically reviewed as a batch.
+- Batches B01–B04's queued Issues were rechecked for current open state with direct GitHub Issue reads and joined to exact URLs in the current `IDEAS_AND_OUTCOMES.md` blob. B03/B04 live state reads occurred about 2026-11-21 13:23–13:24 UTC. For B01/B02 the check was routing-only; comments and linked artifacts were not batch-reviewed. Issue #57's most recent comment was separately fetched to preserve the current acceptance boundary.
 
 ## Current coverage
 
@@ -43,8 +43,14 @@ All 25 B02 IDs remain open and all 25 have an exact URL in the current `IDEAS_AN
 
 Issue #57 was fetched in its current open state (`updated_at=2026-11-21T12:07:41Z`, 1,270 comments). Its latest comment at this read, [#7062348464](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-7062348464), reports the offline dispatch-disabled #10340 journal integration and explicitly retains the live matched-efficiency, task-effect and recovery-reliability gates. This is a navigation cross-reference, not a new experiment result. No issue state changed.
 
+## B03 and B04 current-route crosswalk
+
+All 20 currently open B03 Issues were fetched and remain open; all 20 have exact `IDEAS_AND_OUTCOMES.md` URLs. Their route spans MAP01 acquisition/scoring and lifecycle questions, local control/terminal behavior, observation scheduling, compiled-runtime validation, and retained source provenance. All 23 currently open B04 Issues were fetched and remain open; all 23 have exact central URLs. Their route spans delayed Git delivery/CAS, Inkscape selection/readiness and cross-session identity, native accessibility/event setup, concurrent SVG writes, FFmpeg candidate identity, and correction/retention of earlier watcher claims. Preserve the counterexamples, corrections, and distinct effect domains separately; route overlap is not evidence of a shared resolution.
+
+These are navigation plus current-state checks. No B03/B04 comments or linked experiment packets were reviewed, no issue disposition was made, and no Issue state changed.
+
 ## Next finite step and limits
 
-Continue with B03 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
+Continue with B05 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
