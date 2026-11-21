@@ -36,6 +36,8 @@ No runtime behavior or issue state changes follow from this audit.
 
 **Issue #57 Win32 standard-caller fixture update (2026-11-22):** Current-main R01 isolated a producer receipt capacity mismatch; after the minimal fix, fresh R03 completed one key action, verified input release, observed no late input for 2 s, and independently recorded a 6 s delayed task effect. R02 remains an explicit foreground-refusal/recovery attempt. These three packets preserve each attempt and its distinct outcome; do not pool R01/R02 into the positive result or treat this fixture as MAP01, efficiency, or repeated reliability evidence. See [R01](../research/integration/win32_current_main_fixture_effect_r01_20261122/README.md), [R02](../research/integration/win32_current_main_fixture_effect_r02_20261122/README.md), and [R03](../research/integration/win32_current_main_fixture_effect_r03_20261122/README.md).
 
+R04 supplies a second independent fixture pass under the same fixed protocol; it preserves a fresh process/window and its own MCP receipts. R03/R04 are two descriptive task successes, not an estimated reliability rate. See [R04](../research/integration/win32_current_main_fixture_effect_r04_20261122/README.md).
+
 **Issue #57 evidence custody (2026-11-21):** Two X11 follow-up packets now
 preserve the WSL TCP transport-identity HOLD and the passing isolated Docker
 Unix-socket normal/`-O` queue pair. Both are separately source-pinned and
