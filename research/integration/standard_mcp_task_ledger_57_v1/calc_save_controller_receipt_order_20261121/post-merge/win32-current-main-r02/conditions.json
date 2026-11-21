@@ -1,0 +1,82 @@
+{
+  "schema": "agent-interface/issue57-calc-receipt-cross-platform-recheck-v1",
+  "main_revision": "bc7e62ed4e48141d6b607e485f411c625d78e62b",
+  "run_date_local": "2026-11-22",
+  "windows_environment": {
+    "os": "Windows 11",
+    "python": "3.11.9",
+    "mode": "clean current-main checkout; no live GUI/provider/model API"
+  },
+  "docker_environment": {
+    "image": "agent-interface-xvfb-mcp:late-input-r19",
+    "image_digest": "sha256:bd191d30ea94871a1d3ca717252cd07a276e8ef7d1bcb4a130b63935ce075425",
+    "network": "none",
+    "cpus": 2,
+    "memory_bytes": 4294967296,
+    "memory_swap_bytes": 4294967296,
+    "pids_limit": 256,
+    "source_mount": "read-only"
+  },
+  "test_selector": "test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+  "commands": {
+    "windows": "python -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v",
+    "windows_optimized": "python -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v",
+    "docker": "python3 -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v",
+    "docker_optimized": "python3 -O -m unittest test_mcp_endpoint_composition.ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score -v"
+  },
+  "source_sha256": {
+    "research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py": "471eaadf5f60d20147b4dcf85452112385d3628ff8e61c222fa361da4a0c5ad2",
+    "runtime/guarded_x11_v1/calc_task_artifact_v1.py": "b3582edc6bfabc0fa351b43dc97023334caa28e1ffe3296225fc6bd0018a9833",
+    "runtime/cli_v1/mcp_server.py": "5bbbd72acce4bc5f1212229ab47670696a6706c717c4a0e02321bd0ce3d9ac19",
+    "runtime/guarded_x11_v1/test_calc_task_artifact_v1.py": "43cfce34382ddef49a02fb29215b62a820d6a78f30ac7612fd37361c6ed74e3c",
+    "runtime/cli_v1/test_mcp_owned_process.py": "434c77d7620be60d611af07d7fbd9738db6a104ef07bd68fff0daee531aa29ad"
+  },
+  "outcomes": {
+    "windows_normal": "PASS 1/1",
+    "windows_optimized": "PASS 1/1",
+    "docker_normal": "PASS 1/1",
+    "docker_optimized": "PASS 1/1"
+  },
+  "raw_logs": [
+    {
+      "file": "docker-normal.log",
+      "sha256": "f3609c6bd877aff9db4de8d90b25d920743651070531c22727451c9ba2dcc0db",
+      "bytes": 940
+    },
+    {
+      "file": "docker-optimized.log",
+      "sha256": "e6eadf38d38164514f061fa3e7b43513c644aed523edd35b1be7472f0c268836",
+      "bytes": 940
+    },
+    {
+      "file": "windows-normal.log",
+      "sha256": "185f4063924bd0d587df9da712e68062d43233c8497356067060bf19ece535c4",
+      "bytes": 32069
+    },
+    {
+      "file": "windows-optimized.log",
+      "sha256": "bb63751328c95672ccfdd9233bb9488312f7b455eb3a383192d239d00233021f",
+      "bytes": 32069
+    }
+  ],
+  "limitations": [
+    "Fake X/synthetic provider-planner composition only.",
+    "Does not establish live GUI, live provider billing, MAP01, standard-caller task reliability, recovery reliability, integrated efficiency, or preview graduation.",
+    "Earlier failures on the 897f4896-based worktree are retained separately and excluded because that checkout was 66 commits behind current main.",
+    "No runtime source change is proposed by this recheck."
+  ],
+  "excluded_prior_attempts": [
+    {
+      "source_checkout": "existing worktree HEAD 897f4896d23dd127a4523dc4955e573dace7d674",
+      "distance_from_current_main_commits": 66,
+      "decision": "retained but excluded from current-main result because surrounding source differed",
+      "files": [
+        "prior-stale-checkout-excluded/windows-normal-fail.log",
+        "prior-stale-checkout-excluded/windows-optimized-fail.log",
+        "prior-stale-checkout-excluded/receipt-trace-normal-inconclusive.log",
+        "prior-stale-checkout-excluded/trace_receipt_builder.py",
+        "prior-stale-checkout-excluded/README.md"
+      ]
+    }
+  ]
+}
