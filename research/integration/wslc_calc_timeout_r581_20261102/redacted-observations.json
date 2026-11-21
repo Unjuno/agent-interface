@@ -1,0 +1,68 @@
+{
+  "status": "UNKNOWN",
+  "error_type": "TimeoutError",
+  "error": "container deadline",
+  "run_id": "e6b80acb79204131a2f11d02f117b340",
+  "cid": "07d6042968f5ad00becbd75e8a096c0d9f826ebef9d548b40baa7a29836ee5f1",
+  "started_ns": 4521671000000,
+  "ended_ns": 4532171000000,
+  "script_sha256": "e297ea352f9b9c0c39af4b4cc256b1b7469428c35a7cccdcb0bc0bb3bb931762",
+  "payload_sha256": "6b739cc38ce8b82c772aea25a93802fda5e0cb795c7cd5fc627994ddccda7971",
+  "helper_sha256": "1254e364115f63c1e241ba1a701519b7bad3080d5c85863eae8ac44e3c26a8ad",
+  "ready": {
+    "status": "window_observed",
+    "started_ns": 1928995475,
+    "window": {
+      "id": 6292258,
+      "title": "Untitled 1 - LibreOffice Calc"
+    },
+    "screenshot_sha256": "92ea595eb9c7786b1ee71e7fa269e1b7cf25545defc711d923ac9e3586ddf2a3"
+  },
+  "screenshot_hash_matches": true,
+  "stop": {
+    "status": "UNKNOWN",
+    "command_succeeded": true,
+    "inspect": {
+      "Id": "07d6042968f5ad00becbd75e8a096c0d9f826ebef9d548b40baa7a29836ee5f1",
+      "label": "e6b80acb79204131a2f11d02f117b340",
+      "State": {
+        "ExitCode": 0,
+        "FinishedAt": "0001-01-01T00:00:00Z",
+        "Health": null,
+        "Running": true,
+        "StartedAt": "2026-11-02T07:35:13.013151159Z",
+        "Status": "running"
+      }
+    },
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "remove": {
+    "status": "observed_absent",
+    "observed_exit_code": 137,
+    "command_succeeded": true,
+    "inspect": {
+      "Id": "07d6042968f5ad00becbd75e8a096c0d9f826ebef9d548b40baa7a29836ee5f1",
+      "label": "e6b80acb79204131a2f11d02f117b340",
+      "State": {
+        "ExitCode": 137,
+        "FinishedAt": "2026-11-02T07:35:21.165288135Z",
+        "Health": null,
+        "Running": false,
+        "StartedAt": "2026-11-02T07:35:13.013151159Z",
+        "Status": "exited"
+      }
+    },
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "post_stdout_bytes": 0
+  }
+}

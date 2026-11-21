@@ -1,0 +1,9 @@
+# WSLc Calc smoke: R580
+
+One private Xvfb/LibreOffice Calc blank-window observation, no model or GUI input. Conditions and redacted observations are preserved with the source, exact helper copy and screenshot. The helper's exited-mode saved an exit code and removed the uniquely labeled full CID; the post-removal list was empty. Full raw outputs and journals remain local because inspect and command arguments can contain environment and host paths. Their hashes are recorded here, but they are not independently accessible from this repository.
+
+This is not a task-effect, input-release, late-operation, crash recovery, MAP01, benchmark, or speed result. Single normal sample only. The wrapper does not provide an independent custodian if it dies, and signal/alarm plus synchronous calls do not establish a hard wall-clock bound. If failure occurs before a complete CID is obtained, the non-auto-removed container may remain. WSLc may not enforce a swap limit.
+
+Independent review matched the eight saved inspect identities, source digests, payload text, screenshot hash, and journal order. Recorded host elapsed time was 4.312 s; payload elapsed time was 1.737 s on its own monotonic clock. These clocks are not cross-comparable, and neither is a benchmark.
+
+The archived code has material limitations: `walk` catches broad exceptions and can swallow the alarm's `TimeoutError`; the alarm is disabled before teardown, which can block. A failure after CID acquisition but before the first successful inspect leaves `last=None`, so the wrapper does not attempt a stop and the remove-only helper refuses a running target. The payload only terminates its directly tracked processes, and discards their output. No process-tree or abnormal-recovery guarantee follows. Preserve this source as the historical experiment, not as a reusable driver; repair these issues and establish independent custody before live controlled input.

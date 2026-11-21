@@ -1,0 +1,7 @@
+# Atomic Job membership with child and grandchild: R591
+
+One Windows no-GUI/no-model trial created a worker in a private kill-on-close Job using creation-time JOB_LIST membership. The worker spawned a Python grandchild. After both were ready, the owner confirmed both were in its Job; a separate auditor opened process HANDLEs and matched each PID and creation FILETIME. Both were nonsignaled before the auditor terminated its own owner process and signaled afterward. No fallback termination was used, and the auditor did not hold the Job HANDLE. Conditions, exact source bytes, markers, result and empty owner stdout/stderr are retained in raw.zip.
+
+Independent review matched all six source hashes, the nonce/identity chain, pre/post wait codes and handle closure. The host observation interval was 0.313 s, before either process's 30-second self-expiry. Owner termination and both exit observations had the same clock value, so fine-grained latency is not established; ended_ns precedes result writing. Each process was waited separately for up to five seconds, so the protocol is not a joint five-second bound.
+
+This is one ordinary worker/grandchild sample, not evidence for inherited pipe closure, real Codex, Job breakaway, external-service process creation, all failure boundaries, GUI input, WSLc recovery or general reliability. The experimental owner remains single-thread only and has no model integration or pipe support.

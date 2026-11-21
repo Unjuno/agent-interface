@@ -1,0 +1,102 @@
+{
+  "status": "scoped_fixture_pass",
+  "run_id": "535ebc44ba984f1581368093be025f00",
+  "grounding": "fixed_fixture_not_model",
+  "script_sha256": "6e8a4ebeb9b7d3652e1e753b665eed3c12adae9af820f3f4023c389e92ada7e2",
+  "started_ns": 5862750000000,
+  "ended_ns": 5870078000000,
+  "start": {
+    "status": "running",
+    "cid": "e48b019d35c0051c0e5ba9fe6dd899f61aa70c10f677f3af4442bc13ed5c4feb"
+  },
+  "wait": {
+    "status": "exited",
+    "cid": "e48b019d35c0051c0e5ba9fe6dd899f61aa70c10f677f3af4442bc13ed5c4feb",
+    "exit_code": 0
+  },
+  "source_hashes_unchanged": true,
+  "fixture_responses": [
+    {
+      "id": "pilot-1",
+      "image_sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+      "source_sequence": 1,
+      "time_ns": 5867843000000
+    },
+    {
+      "id": "pilot-2",
+      "image_sha256": "82b8c0897cd3b803493c2073c318f58b5b15d57961c8d7f1d4e042560bd165ba",
+      "source_sequence": 3,
+      "time_ns": 5868218000000
+    }
+  ],
+  "fixture_errors": [],
+  "fixture_thread_alive": false,
+  "action_release_checks": {
+    "click-result.json": true,
+    "recovery-save.json": true,
+    "compiled-enter": true
+  },
+  "compiled_recovery_verified": true,
+  "compiled_outcome": "SAFE_YIELD",
+  "compiled_reason": "effect_unavailable",
+  "compiled_transitions": 1,
+  "recovery": {
+    "case": "clear",
+    "cue": "filled",
+    "save_attempted": true,
+    "save_completed": true,
+    "entry_replayed": false,
+    "recovery_started_ns": 6197842969,
+    "recovery_deadline_ns": 9197842969,
+    "recovery_ended_ns": 6665844188
+  },
+  "owner_close_verified": true,
+  "final_neutral_readback": true,
+  "stale_gate_verified": true,
+  "saved_sha256": "6647f4f898a253ba832c5b454547b6eb649c9a24385339bdd90967025357d526",
+  "host_rescore": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "float",
+        "472",
+        "472",
+        null
+      ],
+      [
+        1,
+        0,
+        "float",
+        "615",
+        "615",
+        null
+      ]
+    ]
+  },
+  "cleanup_status": "observed_absent",
+  "cleanup_exit_code": 0,
+  "task_start_ns": 4759227952,
+  "task_end_ns": 6670163492,
+  "method_start_ns": 5446779058,
+  "method_end_ns": 6667804624
+}

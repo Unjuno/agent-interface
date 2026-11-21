@@ -1,0 +1,99 @@
+{
+  "fods_sha256": "ab4e77a75c1bc6c8d27d8209cb0fa0bc7c3cac8c574bcd9de8aaa68917b256e2",
+  "independent_xml_values": [
+    [
+      0,
+      0,
+      "float",
+      "472",
+      "472",
+      null
+    ],
+    [
+      1,
+      0,
+      "float",
+      "615",
+      "615",
+      null
+    ]
+  ],
+  "expected_values": [
+    [
+      0,
+      0,
+      "float",
+      "472",
+      "472",
+      null
+    ],
+    [
+      1,
+      0,
+      "float",
+      "615",
+      "615",
+      null
+    ]
+  ],
+  "effect_pass": true,
+  "actions_released": {
+    "click-result.json": true,
+    "fresh-entry.json": true,
+    "fresh-save.json": true
+  },
+  "owner_close_verified": true,
+  "final_neutral": true,
+  "stale_difference_detected_before_mint": true,
+  "fixture_requests": [
+    {
+      "request_id": "pilot-1",
+      "sequence": 1,
+      "digest_matches": true,
+      "actual_attempted": true,
+      "call_id_present": true,
+      "usage": {
+        "input_tokens": 12173,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "request_id": "pilot-2",
+      "sequence": 3,
+      "digest_matches": true,
+      "actual_attempted": true,
+      "call_id_present": true,
+      "usage": {
+        "input_tokens": 13534,
+        "cached_input_tokens": 12160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "request_id": "pilot-3",
+      "sequence": 12,
+      "digest_matches": true,
+      "actual_attempted": true,
+      "call_id_present": true,
+      "usage": {
+        "input_tokens": 14895,
+        "cached_input_tokens": 13440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ],
+  "fixture_sequence_increased": true,
+  "exit_code": 0,
+  "cleanup_status": "observed_absent",
+  "elapsed_seconds": 19.39,
+  "actual_model_single_fresh_not_benchmark": true,
+  "host_exit": 0,
+  "host_cleanup": "closed_scoped"
+}
