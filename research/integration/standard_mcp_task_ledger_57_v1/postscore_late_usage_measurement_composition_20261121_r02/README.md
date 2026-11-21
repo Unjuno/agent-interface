@@ -21,7 +21,9 @@ py -3.11 audit_packet.py
 
 `run_experiment.py` refuses to overwrite `runs/`. The audit revalidates each
 measured record, checks retained recorder raw hashes, and compares all six
-source files with the frozen Git revision. This experiment does not establish
+source files' Git-clean-normalized worktree blob IDs with the frozen Git
+revision (so Windows CRLF checkout conversion does not create a false source
+drift). This experiment does not establish
 provider billing, task effect, matched A/B/C economics, or recovery reliability.
 The required `effect_attribution` envelope is synthetic schema scaffolding:
 effect time is null, task success is UNKNOWN, and its times do not assert an

@@ -18,15 +18,43 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def verify_manifest() -> int:
+    manifest = ROOT / "SHA256SUMS"
+    if not manifest.exists():
+        raise SystemExit("SHA256SUMS manifest is missing")
+    expected = {}
+    for line in manifest.read_text(encoding="utf-8").splitlines():
+        digest, name = line.split("  ", 1)
+        if len(digest) != 64 or name in expected or Path(name).is_absolute() or ".." in Path(name).parts:
+            raise SystemExit(f"invalid manifest entry: {line}")
+        expected[name] = digest
+    generated = {"audit.json", "audit-final.stdout.log", "audit-final.exit-code.txt"}
+    actual = {
+        path.relative_to(ROOT).as_posix()
+        for path in ROOT.rglob("*")
+        if path.is_file() and path != manifest and path.name not in generated
+    }
+    if set(expected) != actual:
+        raise SystemExit(f"manifest file set mismatch: missing={sorted(actual-set(expected))}, extra={sorted(set(expected)-actual)}")
+    for name, digest in expected.items():
+        if sha256(ROOT / Path(*name.split("/"))) != digest:
+            raise SystemExit(f"manifest checksum mismatch: {name}")
+    return len(expected)
+
+
 def main() -> None:
     conditions = json.loads((ROOT / "conditions.json").read_text(encoding="utf-8"))
     if conditions["source_revision"] != SOURCE_REVISION:
         raise SystemExit("source pin mismatch")
     for relative in conditions["source_files"]:
-        committed = subprocess.check_output(
-            ["git", "show", f"{SOURCE_REVISION}:{relative}"], cwd=ROOT)
-        current = (REPO_ROOT / Path(relative)).read_bytes()
-        if committed != current:
+        committed_blob = subprocess.check_output(
+            ["git", "rev-parse", f"{SOURCE_REVISION}:{relative}"],
+            cwd=REPO_ROOT, text=True).strip()
+        worktree_blob = subprocess.check_output(
+            ["git", "hash-object", f"--path={relative}",
+             str(REPO_ROOT / Path(relative))],
+            cwd=REPO_ROOT, text=True).strip()
+        if committed_blob != worktree_blob:
             raise SystemExit(f"pinned source drift: {relative}")
 
     audited = []
@@ -48,6 +76,16 @@ def main() -> None:
         if len(actual_refs) != len(receipt["raw_refs"]):
             raise SystemExit(f"duplicate or missing raw reference: {case}")
         summary = validate_measured_run(measured)
+        score_events = [event for event in measured["task_ledger"]["events"]
+                        if event["kind"] == "task_score"]
+        tool_events = [event for event in measured["task_ledger"]["events"]
+                       if event["kind"] == "tool_call"]
+        if len(score_events) != 1 or score_events[0].get("task_success") is not None:
+            raise SystemExit(f"task score is not exactly one UNKNOWN: {case}")
+        if tool_events:
+            raise SystemExit(f"unexpected tool call event: {case}")
+        if measured["measurement"]["effect_attribution"].get("effect_observed_ns") is not None:
+            raise SystemExit(f"synthetic fixture claims an effect time: {case}")
         projection = {
             "condition": declared["condition"],
             "usage_status": summary["usage_status"],
@@ -75,6 +113,10 @@ def main() -> None:
                     row.get("message", {}).get("method") !=
                     "thread/tokenUsage/updated"):
                 raise SystemExit("retained usage protocol identity is malformed")
+            token_usage = row["message"]["params"]["tokenUsage"]["last"]
+            if (token_usage.get("inputTokens") != 18 or
+                    token_usage.get("outputTokens") != 3):
+                raise SystemExit("retained usage protocol token values drifted")
             if (summary["usage_status"] != "complete" or
                     summary["input_tokens"] != 18 or
                     summary["output_tokens"] != 3):
@@ -96,8 +138,10 @@ def main() -> None:
         "status": "PASS",
         "source_revision": SOURCE_REVISION,
         "source_files_checked": len(conditions["source_files"]),
+        "source_check": "git-clean-normalized-worktree-blob-equals-pinned-blob",
         "runs_checked": len(audited),
         "raw_reference_count": sum(row["raw_ref_count"] for row in audited),
+        "manifest_files_verified": verify_manifest(),
         "conditions": audited,
     }
     (ROOT / "audit.json").write_text(
