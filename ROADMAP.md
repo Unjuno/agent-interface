@@ -2,9 +2,9 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current repository checkpoint r158 — 2026-11-21 (main `db31eb235c202c8c44cab49056d8da9bd6a1d12b`)
+## Current repository checkpoint r160 — 2026-11-21 (main `f39e966b6478170a7a91f1eec7859d30046784bf`)
 
-Complete paginated reads, bracketed by the same main SHA, find 1,643 open Issues and 408 open PRs, exactly matching r157. PR #10400 was opened and merged between the snapshots and had no net membership effect. The #10340 prospective journal remains dispatch-disabled and is not a live efficiency result; its post-merge local journal tests pass 13/13 in normal and `-O`, with the cleanup boundary check 1/1 in both modes. Issue #57 and #58 remain open. Membership is not semantic triage, work ownership, or evidence-custody reconciliation. See the [r158 receipt](docs/maintenance/repository-inventory-recheck-20261121-r158.md) and [post-merge packet](research/integration/issue57_v3_postmerge_validation_20261121/RESULT.md).
+Complete paginated reads, bracketed by the same main SHA, find 1,643 open Issues and 408 open PRs, exactly matching r159. PRs #10402 and #10403 were opened and merged after r159; neither remains open, so they caused no net membership change. This count is not semantic triage or evidence-custody reconciliation. Issue #57's matched efficiency, standard-caller task success and repeated recovery reliability gates remain open; Research Preview graduation and distributable-runtime acceptance also remain open. See the [r160 receipt](docs/maintenance/repository-inventory-recheck-20261121-r160.md).
 
 ## G10 comparison-boundary audit — 2026-11-21 (frozen on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`)
 

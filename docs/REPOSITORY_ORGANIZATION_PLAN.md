@@ -798,6 +798,16 @@ PRs #10380–#10384 preserve the one-shot post-score late-usage positive/control
 
 **G10 public stdio current-main recheck (2026-11-21; tested source `5dab476e`, current main `704ea90c`):** After materializing the exact pinned G10 FODS fixtures in this sparse checkout, `runtime.cli_v1.test_mcp_g10_production_stdio` passed 3/3 normally and 3/3 under `-O`. The public MCP/stdio ledger records two archived-byte fixture effects verified, input release verified, owner close closed and replay denied; provider usage remains unknown. The first R01 attempt in this checkout failed before reliable assessment because the sparse tree omitted `first.fods`; its failure logs are retained separately and are not pooled with the R02 pass. Exact code/fixture pins still match main after the documentation-only crosswalk merge. This is Fake X plus archived FODS, not live Calc/provider evidence or efficiency. See [R01/R02 packet](../research/integration/issue57_g10_currentmain_stdio_recheck_20261121/RESULT.md). #57 still needs a permitted prospective live lifecycle comparison and the broader task/recovery gates.
 
+## Current repository membership checkpoint r160 (2026-11-21)
+
+On main `f39e966b6478170a7a91f1eec7859d30046784bf`, complete paginated reads
+found 1,643 open Issues and 408 open PRs, with both ID sets byte-identical to
+r159 and zero additions/removals. PRs #10402 and #10403 were opened and merged
+after r159 and therefore had no net membership effect. This confirms queue
+membership only; full semantic triage and evidence-custody reconciliation of
+the 2,051 open records remain unfinished. Do not bulk-close records. See the
+[r160 receipt](repository-inventory-recheck-20261121-r160.md).
+
 ## WSLc smoke receipt custody follow-up (2026-11-21)
 
 A one-shot pinned-image/read-only-bind WSLc smoke on main `e5866db03e25c044f7ffead5118624a1cd8c33e9` exited 0 and observed `EROFS`. Its successful cleanup removed the exact-CID and query stdout files, so disposition is scoped pass with receipt limitation. The bounded local harness was repaired to emit a JSON exact-CID cleanup receipt into the captured outer log; the offline harness passes on Windows PowerShell 5.1. This does not release shared ownership, close #7924, satisfy #5130, or establish computer-control/economics/reliability. See [result packet](../research/integration/wslc_local_runtime_receipt_fix_20261121/RESULT.md).
