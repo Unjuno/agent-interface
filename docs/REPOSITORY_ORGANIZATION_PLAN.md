@@ -1,3 +1,5 @@
+**Current whole-repository checkpoint r157 (2026-11-21; main `9734c7f907b49799c134483d6011d092f190740d`):** Complete paginated open Issue/PR reads were bracketed by the same main SHA. The 1,643 Issue IDs match r155; the 408 PR IDs are the r155 set minus #10340, merged on this main. The receipt retains the exact current PR ID set and its SHA-256. This confirms membership only; it does not semantically classify all open records or reconcile branches, worktrees, owners, and ignored artifacts. #57 remains open. PR #10340's post-merge verification passes locally and adds no live allocation or efficiency result. See the [r157 receipt](maintenance/repository-inventory-recheck-20261121-r157.md) and [post-merge packet](../research/integration/issue57_v3_postmerge_validation_20261121/RESULT.md).
+
 **Issue #57 G10 reuse-boundary audit (2026-11-21; based on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`):** The retained Calc G10 archive remains useful as a narrow live positive control. A source-pinned read-only audit checked its 33 declared source hashes and 69 run files; the current comparison adapter rejects the old raw record because it has no reconciled caller receipt/event ledger, and primary provider usage is UNKNOWN. Preserve the record and do not adapt unknown usage into zero. The next comparison must be a fresh matched block through the standard caller, with cold/warm/invalidation/repair and all-attempt usage. See [the R01 crosswalk](../research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md).
 
 **Issue #57 composition evidence custody (2026-11-21; PR #10396 merged):** The packet binds the normal/-O synthetic adapter-to-horizon test, explicit TEMP policy, raw results, and checksums in one directory. It is linked from the current goal and roadmap. The merge integrates this offline check only; keep #57 open for live efficiency, task outcome, and recovery evidence.
@@ -143,7 +145,7 @@ disposition, every retained artifact has recoverable custody or an explicit
 investigation, and independent workers can identify non-overlapping scopes.
 Open Issues and PRs may remain when their research or evidence is still live.
 
-## Current whole-repository checkpoint r155 (2026-11-21)
+## Prior whole-repository checkpoint r155 (2026-11-21)
 
 On main `63449e8abed5938a780de22cabc160aefd9d3326`, complete paginated REST
 reads before and after were bracketed by the same main SHA. The open Issue set

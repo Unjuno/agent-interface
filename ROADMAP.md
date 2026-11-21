@@ -2,6 +2,10 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+## Current repository checkpoint r157 — 2026-11-21 (main `9734c7f907b49799c134483d6011d092f190740d`)
+
+Complete paginated reads, bracketed by the same main SHA, find 1,643 open Issues and 408 open PRs. Compared with r155, Issue membership is unchanged and the only PR removal is #10340, merged as this main commit. The merged prospective journal remains dispatch-disabled and is not a live efficiency result; its post-merge local journal tests pass 13/13 in normal and `-O`, with the cleanup boundary check 1/1 in both modes. Issue #57 and #58 remain open. Membership is not semantic triage, work ownership, or evidence-custody reconciliation. See the [r157 receipt](docs/maintenance/repository-inventory-recheck-20261121-r157.md) and [post-merge packet](research/integration/issue57_v3_postmerge_validation_20261121/RESULT.md).
+
 ## G10 comparison-boundary audit — 2026-11-21 (frozen on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`)
 
 The retained Calc G10 record is a scoped positive control, not a matched efficiency arm. The read-only audit verified all 33 declared source hashes and 69 retained run files; current `recorded_comparison_adapter_v1` rejects the unmodified G10 raw record as lacking a reconciled caller receipt. Provider usage remains UNKNOWN and cannot be inferred as zero. The next #57 economics experiment needs a fresh preregistered matched block using the standard caller and all-attempt accounting. See [the crosswalk and audit](research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md). No GUI or provider action was run.
@@ -49,11 +53,12 @@ experiment allocation.
   and latest Issue #58 acceptance record.
 - **Allocation and queue:** #5130's named Docker CPU lane and #7924's WSLc
   client ownership remain unresolved; #908 is a consumed historical HOLD.
-  PR #10340 remains a non-dispatching draft without an external allocation
-  attestor. The latest whole-repository membership snapshot is
-  [r153](docs/maintenance/repository-inventory-recheck-20261121-r153.md):
-  1,643 open Issues and 410 open PRs, unchanged from r152. This is not semantic
-  triage and does not justify bulk closure.
+  PR #10340 is merged as a dispatch-disabled prospective journal; the external
+  allocation attestor and fresh exclusive comparison allocation remain absent.
+  The latest whole-repository membership snapshot is
+  [r157](docs/maintenance/repository-inventory-recheck-20261121-r157.md):
+  1,643 open Issues and 408 open PRs. This is not semantic triage and does not
+  justify bulk closure.
 
 **Whole-repository membership refresh r155 (2026-11-21):** On main
 `63449e8abed5938a780de22cabc160aefd9d3326`, complete paginated REST reads found
