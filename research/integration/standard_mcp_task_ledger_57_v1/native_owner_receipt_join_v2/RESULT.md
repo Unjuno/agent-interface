@@ -39,6 +39,16 @@ regression rather than rewriting the earlier packet or its manifest.
   40/40 verified and zero mismatches.
 - `git diff --check` passes.
 
+### Exact-main post-merge recheck
+
+PR #10375 was squash-merged as
+`3d546e5b8c0b9354bfd635d1ae379896855b0058`. On a fresh worktree at that exact
+main commit, the 56-test group passed 56/56 normally and 56/56 under `-O`; the
+supervised public owner-result projection passed 1/1 in both modes. All four
+post-merge logs are retained here and included in the updated 50-entry
+manifest. GitHub's `replay-gate` and `public-navigation` succeeded; `formal`
+was skipped. The main branch has no branch protection or required-review rule.
+
 ## Project-state cross-check and limits
 
 At freeze, `HEAD` and `origin/main` both equal
