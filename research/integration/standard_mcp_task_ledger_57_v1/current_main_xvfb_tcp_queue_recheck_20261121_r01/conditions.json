@@ -1,0 +1,25 @@
+{
+  "attempt_id": "ISSUE57-WSL-XVFB-TCP-QUEUE-RECHECK-20261121-R01",
+  "frozen_at_utc": "2026-11-21T05:49:36Z",
+  "source_revision": "ccbc061fd5191fc431e3283a4f2732f4f2ffaaea",
+  "source_files": [
+    "runtime/guarded_x11_v1/test_xres_disconnect_fence_integration.py",
+    "runtime/guarded_x11_v1/xres_client_fence.py"
+  ],
+  "environment": {
+    "distribution": "Ubuntu WSL2",
+    "python": "3.12.3",
+    "xvfb": "/usr/bin/Xvfb",
+    "display": "127.0.0.1:88",
+    "transport": "TCP only; Unix listener disabled",
+    "authentication": "temporary MIT-MAGIC-COOKIE-1; Xvfb -auth; no -ac"
+  },
+  "hypothesis": "The XRes delayed-KeyPress discriminator can run on an authenticated loopback TCP-only Xvfb without changing WSLg's shared Unix socket directory.",
+  "attempts": [
+    {"id": "normal-01", "mode": "python3", "count": 1},
+    {"id": "optimized-01", "mode": "python3 -O", "count": 1}
+  ],
+  "test": "runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XResHeldKeyDisconnectIntegrationTests.test_later_delayed_keypress_after_disconnect_and_independent_release",
+  "decision_rule": "PASS only if the exact test returns zero, its retained result reports PASS_SCOPED_XVFB_HELD_KEY_ORDER, XRes disconnection is confirmed, initial held-key and independent release readbacks are present, post-horizon key A is up, and final cleanup verifies both keys up. Record late key B true/false as the queue-order outcome; do not equate unittest PASS with queue drainage.",
+  "limits": "Xvfb and XTEST are synthetic. This does not establish physical input behavior, production native-owner recovery, task success, provider exhaustiveness, matched efficiency, or a reliability rate. No provider, Relay, GUI application, Docker, or WSLg socket/permission change."
+}
