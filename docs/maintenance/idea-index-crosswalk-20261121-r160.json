@@ -1,8 +1,8 @@
 {
   "snapshot": "r160",
   "snapshot_main": "f39e966b6478170a7a91f1eec7859d30046784bf",
-  "current_main": "b100b1f8da9440454690ffe0e729d4ecabd03db0",
-  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only"],
+  "current_main": "32976473d8d7689ef899739bdb6350227a743a0e",
+  "current_main_intervening_changes_after_r160": ["PR #10404: docs-only", "PR #10405: docs-only", "PR #10406: docs-only", "PR #10407: docs-only"],
   "captured_utc": "2026-11-21",
   "open_issue_count": 1643,
   "open_issue_ids_sha256_crlf": "2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad",
@@ -34,11 +34,31 @@
   "b04_open_issues_with_exact_ideas_and_outcomes_url": 23,
   "b04_no_issue_state_changes": true,
   "b04_semantic_triage_complete": false,
+  "b05_open_issues_checked": 21,
+  "b05_open_issues_with_exact_ideas_and_outcomes_url": 21,
+  "b05_no_issue_state_changes": true,
+  "b05_semantic_triage_complete": false,
   "issue57_latest_comment_read": {
     "id": 7062348464,
     "created_at": "2026-11-21T12:07:41Z",
     "url": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-7062348464",
     "summary": "PR #10340 offline dispatch-disabled v3 journal integration; no trusted external allocation attestor, live GUI/provider run, matched efficiency, task success, or recovery reliability result. #57 remains open."
+  },
+  "issue643_scope_assessment": {
+    "state": "open",
+    "source": "https://github.com/Unjuno/agent-interface/issues/643",
+    "pass_requires": ["byte-identical Linux/Windows/macOS builds", "doctor on all three operating systems", "exact archive closure", "malformed-target fail-closed dispatch"],
+    "merged_evidence": "PR #10377: 786369-byte artifact with SHA-256 11804313d731cbebe84d371ce6f3e23871a77a3bf8ccae569dedb68d6ea9e1ea; deterministic second build; Windows distribution tests 21/21 normal and -O; outside-checkout doctor/help on Windows CPython 3.13.14 and Ubuntu WSL CPython 3.12.3; source audit 64/64.",
+    "remaining": "No retained macOS build/startup, no demonstrated byte identity across independent OS builds, and no complete three-platform backend acceptance. PR #10377 does not satisfy Issue #58's golden demo/launch gate.",
+    "evidence_url": "https://github.com/Unjuno/agent-interface/pull/10377",
+    "disposition": "keep_open"
+  },
+  "issue58_gate_read": {
+    "state": "open",
+    "updated_at": "2026-11-21T04:27:02Z",
+    "comments": 10,
+    "source": "https://github.com/Unjuno/agent-interface/issues/58",
+    "boundary": "PR #10377's package integrity and basic startup do not fulfill the golden desktop demo, independent task score, reconstructible public measurements, clear claim boundaries, or honest MAP01 showcase conditions."
   },
   "b01_no_issue_state_changes": true,
   "b01_semantic_triage_complete": false,
@@ -142,8 +162,31 @@
     {"number":383,"state":"open","updated_at":"2026-09-16T11:43:29Z","comments":2},
     {"number":389,"state":"open","updated_at":"2026-09-16T12:11:30Z","comments":2}
   ],
+  "b05_issue_metadata": [
+    {"number":395,"state":"open","updated_at":"2026-09-16T11:47:47Z","comments":0},
+    {"number":399,"state":"open","updated_at":"2026-09-16T12:02:14Z","comments":1},
+    {"number":410,"state":"open","updated_at":"2026-09-16T12:17:33Z","comments":1},
+    {"number":415,"state":"open","updated_at":"2026-09-16T16:48:52Z","comments":8},
+    {"number":427,"state":"open","updated_at":"2026-09-16T12:35:56Z","comments":2},
+    {"number":432,"state":"open","updated_at":"2026-09-16T12:36:05Z","comments":1},
+    {"number":450,"state":"open","updated_at":"2026-09-16T13:18:52Z","comments":3},
+    {"number":478,"state":"open","updated_at":"2026-09-16T14:02:03Z","comments":1},
+    {"number":481,"state":"open","updated_at":"2026-09-21T19:52:27Z","comments":2},
+    {"number":494,"state":"open","updated_at":"2026-09-16T14:23:18Z","comments":2},
+    {"number":510,"state":"open","updated_at":"2026-09-19T20:50:37Z","comments":3},
+    {"number":564,"state":"open","updated_at":"2026-09-16T15:52:48Z","comments":0},
+    {"number":584,"state":"open","updated_at":"2026-09-16T16:10:41Z","comments":1},
+    {"number":603,"state":"open","updated_at":"2026-09-16T16:35:21Z","comments":1},
+    {"number":625,"state":"open","updated_at":"2026-09-16T17:36:32Z","comments":3},
+    {"number":626,"state":"open","updated_at":"2026-10-02T03:54:42Z","comments":11},
+    {"number":643,"state":"open","updated_at":"2026-09-16T17:27:27Z","comments":0},
+    {"number":648,"state":"open","updated_at":"2026-09-16T17:45:42Z","comments":1},
+    {"number":655,"state":"open","updated_at":"2026-09-16T18:07:07Z","comments":4},
+    {"number":672,"state":"open","updated_at":"2026-10-15T12:08:35Z","comments":1004},
+    {"number":706,"state":"open","updated_at":"2026-09-20T21:13:50Z","comments":6}
+  ],
   "limits": [
-    "Navigation coverage only; no batch-wide semantic review of comments, linked PRs, or artifacts.",
+    "Navigation coverage only for B01-B04; no batch-wide semantic review of comments, linked PRs, or artifacts. B05 was also checked for current open state and exact routes; only Issue #643 received the bounded semantic comparison against its explicit pass conditions, PR #10377, and Issue #58.",
     "No Issue state changes or closures.",
     "Open Issue membership is the immutable r160 snapshot; no claim that this file is a new paginated REST census."
   ]
