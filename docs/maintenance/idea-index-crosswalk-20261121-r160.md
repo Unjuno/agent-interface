@@ -2,7 +2,7 @@
 
 ## Baseline and method
 
-The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `87f1afe2ad2202a3a5200a4add86190e9f6a1496`; after r160, PRs #10404–#10414 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
+The latest complete Issue/PR membership snapshot is [r162](repository-inventory-recheck-20261122-r162.md). This file remains the r160 semantic-routing crosswalk, based on main `87f1afe2ad2202a3a5200a4add86190e9f6a1496`; its counts and routing were frozen against the earlier membership/main snapshot. The r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
 
 Recomputed against current-main blobs:
 
@@ -181,8 +181,21 @@ online Jacobian, failing the preregistered >=20% improvement gate as
 `FAIL_NO_GAIN`. Merged PR #7772 retains both studies; #7782 changes only harness
 validation. The closure comment and issue ledger explicitly state no real-GUI,
 task-effect, or host-timing result. Any live application comparison is a
-separate hypothesis. The 25-item B13 cohort now has 23 open Issues and two
-closed (#7748 and #7765), with all routes retained. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582), [PR #7772](https://github.com/Unjuno/agent-interface/pull/7772), and [PR #7782](https://github.com/Unjuno/agent-interface/pull/7782).
+separate hypothesis. The 25-item B13 cohort now has 22 open Issues and three
+closed (#7748, #7765, and #7817), with all routes retained. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582), [PR #7772](https://github.com/Unjuno/agent-interface/pull/7772), and [PR #7782](https://github.com/Unjuno/agent-interface/pull/7782).
+
+### B13 targeted closure — Issue #7817 / merged PR #7938
+
+Issue #7817 was closed on 2026-11-22 JST at its declared finite T0 method
+scope. The retained one-shot candidate and independent auditor each exited 0
+with zero retries; 10/10 authored contexts and proof paths matched the frozen
+oracle, and all 5/5 applied hostile mutations returned their frozen
+`UNKNOWN_STOP` reasons with no authority change. A read-only Git-blob audit
+verified all 17 package manifest entries against current main. The packet does
+not establish normative policy legitimacy, source interpretation, extraction
+completeness, GUI/runtime safety, or action authority. The old issue comment's
+two-review request was stale: PR #7938 is already merged, and repository
+policy has no fixed reviewer quota. See [PR #7938](https://github.com/Unjuno/agent-interface/pull/7938), [the retained report](../../research/analysis/provenance_defeasible_obligations_7817_a01_20261005/REPORT.md), and [the closure comment](https://github.com/Unjuno/agent-interface/issues/7817#issuecomment-7065690444).
 
 ### B13 targeted HOLD recheck — Issue #7773
 

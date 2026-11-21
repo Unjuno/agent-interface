@@ -24,6 +24,8 @@ No runtime behavior or issue state changes follow from this audit.
 
 # Repository organization plan
 
+**Latest membership checkpoint r162 (2026-11-22 JST; main `ed0798d45d3bb7b839015619cd81f30e292a7583` before/after):** Complete paginated GitHub reads found 1,640 open Issues and 407 open PRs. Compared with r160, there are no additions; Issues #7748/#7765/#7817 and PR #8181 are the only removals. The r160 crosswalk remains the latest full semantic-routing review, while targeted issue dispositions are appended there. Membership is not semantic triage or custody reconciliation. See the [r162 receipt](maintenance/repository-inventory-recheck-20261122-r162.md), [r161 receipt](maintenance/repository-inventory-recheck-20261122-r161.md), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
 **Issue #57 evidence custody (2026-11-21):** Two X11 follow-up packets now
 preserve the WSL TCP transport-identity HOLD and the passing isolated Docker
 Unix-socket normal/`-O` queue pair. Both are separately source-pinned and
@@ -105,6 +107,15 @@ confound and calibration A01 audit STOP remain; distinct calibration A02 and the
 held-out rows are retained unchanged in merged #7772, and merged #7782 only
 repairs harness input validation. No real-GUI/task-effect result follows. See
 [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582) and the [B13 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
+**Issue #7817 disposition (2026-11-22 JST):** Closed at the declared finite
+T0 method scope after verifying the retained one-shot candidate/auditor result,
+all ten frozen cases and five applied hostile mutations, no authority change,
+and all 17 current-main Git-blob manifest digests. The old Issue comment's
+two-review condition was stale because PR #7938 had already merged; it is not a
+repository-wide reviewer quota. The closure preserves explicit limits: no
+normative-policy, real-source, GUI/runtime-safety, or action-authority claim.
+The 25-item B13 cohort is now 22 open / three closed. See the [closure comment](https://github.com/Unjuno/agent-interface/issues/7817#issuecomment-7065690444) and [crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
 **Issue #7773 current-main feasibility recheck (2026-11-22):** The source
 search at current main `85a1d02d65` found no model-visible ordered target-belief
