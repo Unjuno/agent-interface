@@ -1,0 +1,149 @@
+{
+  "measurement": {
+    "effect_attribution": {
+      "authority_expiry_ns": 130,
+      "effect_observed_ns": 130,
+      "horizon_end_ns": 140,
+      "release_received_ns": 135
+    },
+    "elapsed_ns": 55,
+    "ended_ns": 150,
+    "local_observations": [
+      {
+        "captured_ns": 125,
+        "image_sha256": "2bf21cc5d6b867be8bd539227e519284912af4de3c2599aa3b9b3f98da56e73e",
+        "source_sequence": 1,
+        "tool_call_id": "observe-1"
+      }
+    ],
+    "model_delivered_images": [
+      {
+        "attempt_id": "attempt-1",
+        "sha256": "2bf21cc5d6b867be8bd539227e519284912af4de3c2599aa3b9b3f98da56e73e"
+      }
+    ],
+    "phases": [
+      {
+        "ended_ns": 100,
+        "name": "setup_acquisition",
+        "started_ns": 95
+      },
+      {
+        "ended_ns": 110,
+        "name": "provider_wait",
+        "started_ns": 100
+      },
+      {
+        "ended_ns": 120,
+        "name": "observation_grounding",
+        "started_ns": 110
+      },
+      {
+        "ended_ns": 130,
+        "name": "local_execution",
+        "started_ns": 120
+      },
+      {
+        "ended_ns": 140,
+        "name": "effect_verification",
+        "started_ns": 130
+      },
+      {
+        "ended_ns": 150,
+        "name": "cleanup",
+        "started_ns": 140
+      }
+    ],
+    "started_ns": 95
+  },
+  "task_ledger": {
+    "comparison": {
+      "arm": "B",
+      "block": 1,
+      "order": 2,
+      "task_seed": "fixed-seed"
+    },
+    "environment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "events": [
+      {
+        "attempt_id": "attempt-1",
+        "ended_ns": 110,
+        "kind": "model_attempt",
+        "seq": 1,
+        "started_ns": 100,
+        "status": "completed",
+        "usage": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "status": "reported"
+        }
+      },
+      {
+        "call_id": "observe-1",
+        "ended_ns": 130,
+        "kind": "tool_call",
+        "method": "interface_guarded_observe",
+        "model_attempt_id": "attempt-1",
+        "result": {
+          "source": {
+            "sequence": 1
+          }
+        },
+        "seq": 2,
+        "started_ns": 120
+      },
+      {
+        "ended_ns": 140,
+        "independent": true,
+        "kind": "task_score",
+        "scorer_id": "independent-fixture-oracle-v1",
+        "seq": 3,
+        "started_ns": 140,
+        "state_sha256": "a671fe61c4c90ab92bee9e29a2a8501c3511eb04991755921d17684f1f81b900",
+        "task_success": true
+      }
+    ],
+    "model": {
+      "effort": "low",
+      "id": "fixture-model",
+      "request_config_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "raw_refs": [
+      {
+        "path": "raw/attempt-1.request.bin",
+        "sha256": "4c1288e0dc8c7feb89c57e1ad005811999ff598ffa3b150f278a77b359370372"
+      },
+      {
+        "path": "raw/attempt-1.response.bin",
+        "sha256": "7a4e4a0e3616e2b7774516b9f081ce2b3769eb95f07245a4b61ba136d64bdbf4"
+      },
+      {
+        "path": "raw/tool-714d526a39ccfbe8cb75b82e18414e05d2e5a4377ae4e1c2924c7c440796fa42.tool-request.bin",
+        "sha256": "8ff603954f0015da9de2cd3031dbd887315ba0d37202f1a7227cd54745d88753"
+      },
+      {
+        "path": "raw/tool-714d526a39ccfbe8cb75b82e18414e05d2e5a4377ae4e1c2924c7c440796fa42.tool-response.bin",
+        "sha256": "e436d9519c4129d35d196ccd1cd44b23e0ca1f0afa39b9b9ee5b86046e7cc24f"
+      },
+      {
+        "path": "raw/task-score.state.bin",
+        "sha256": "a671fe61c4c90ab92bee9e29a2a8501c3511eb04991755921d17684f1f81b900"
+      },
+      {
+        "path": "raw/model-image.bin",
+        "sha256": "2bf21cc5d6b867be8bd539227e519284912af4de3c2599aa3b9b3f98da56e73e"
+      }
+    ],
+    "run_id": "run-B",
+    "schema": "agent-interface/standard-mcp-task-ledger-v1",
+    "source": {
+      "commit": "cccccccccccccccccccccccccccccccccccccccc",
+      "route_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "task": {
+      "fixture_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "scorer_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "task_id": "fixture-task"
+    }
+  }
+}
