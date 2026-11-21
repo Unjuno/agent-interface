@@ -23,7 +23,8 @@ py -3.11 audit_packet.py
 measured record, checks retained recorder raw hashes, and compares all six
 source files' Git-clean-normalized worktree blob IDs with the frozen Git
 revision (so Windows CRLF checkout conversion does not create a false source
-drift). This experiment does not establish
+drift). It also excludes Python's ignored `__pycache__` bytecode from the
+packet file-set check. This experiment does not establish
 provider billing, task effect, matched A/B/C economics, or recovery reliability.
 The required `effect_attribution` envelope is synthetic schema scaffolding:
 effect time is null, task success is UNKNOWN, and its times do not assert an

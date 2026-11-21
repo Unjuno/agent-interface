@@ -33,6 +33,8 @@ def verify_manifest() -> int:
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*")
         if path.is_file() and path != manifest and path.name not in generated
+        and "__pycache__" not in path.relative_to(ROOT).parts
+        and path.suffix != ".pyc"
     }
     if set(expected) != actual:
         raise SystemExit(f"manifest file set mismatch: missing={sorted(actual-set(expected))}, extra={sorted(set(expected)-actual)}")
