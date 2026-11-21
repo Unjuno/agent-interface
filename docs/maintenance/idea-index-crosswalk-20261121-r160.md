@@ -184,4 +184,18 @@ task-effect, or host-timing result. Any live application comparison is a
 separate hypothesis. The 25-item B13 cohort now has 23 open Issues and two
 closed (#7748 and #7765), with all routes retained. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582), [PR #7772](https://github.com/Unjuno/agent-interface/pull/7772), and [PR #7782](https://github.com/Unjuno/agent-interface/pull/7782).
 
+### B13 targeted HOLD recheck — Issue #7773
+
+Issue #7773 remains OPEN at `HOLD_NO_CANDIDATE_LIST_CONSUMER`. A new read-only
+check against current main `85a1d02d65bf901e8f4069564e7b8067fda34898` on
+2026-11-22 JST searched `runtime/cli_v1`, `runtime/core_v1`,
+`runtime/guarded_x11_v1`, and `runtime/USING_CURRENT_INTERFACE.md` for
+target-belief/candidate-list serialization and found no model-visible ordered
+consumer. This is a bounded source feasibility check, not proof about external
+providers and not an H result. No candidate, model, GUI, or action ran. Do not
+replace the required treatment with tool-list/image order or detector-internal
+ranking. Resume only after a concrete identity-stable consumer exists and its
+ownership/allocation are rechecked; T1 still requires a separately frozen
+experiment. See [the current-main HOLD comment](https://github.com/Unjuno/agent-interface/issues/7773#issuecomment-7064923854) and [the Issue](https://github.com/Unjuno/agent-interface/issues/7773).
+
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.

@@ -88,6 +88,13 @@ held-out rows are retained unchanged in merged #7772, and merged #7782 only
 repairs harness input validation. No real-GUI/task-effect result follows. See
 [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582) and the [B13 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
+**Issue #7773 current-main feasibility recheck (2026-11-22):** The source
+search at current main `85a1d02d65` found no model-visible ordered target-belief
+list in the inspected runtime paths. Keep `HOLD_NO_CANDIDATE_LIST_CONSUMER`; do
+not substitute image/tool/detector order or run a model/GUI proxy. The Issue
+remains open, with T1 gated on a real identity-stable consumer and separate
+preregistration. See the [current-main HOLD comment](https://github.com/Unjuno/agent-interface/issues/7773#issuecomment-7064923854) and the [B13 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
 **Fake X release-boundary regressions (PRs #10416/#10417):** Both are now on
 main; their R01/R02 current-main results and limits are recorded in
 `docs/CURRENT_GOAL.md`. They test synthetic delayed input and a test-double
