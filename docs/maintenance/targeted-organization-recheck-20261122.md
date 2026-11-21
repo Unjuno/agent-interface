@@ -38,3 +38,22 @@ allocation was run.
 
 This is two targeted dispositions, not a complete semantic audit of the 407
 open PRs or 1,640 open Issues. It does not change either item state.
+
+## Issue #58 supported-host prerequisite probe
+
+On this Windows PC, read-only inventory found Windows Node `v24.13.0` and a
+Codex app executable in WindowsApps. Ubuntu WSL2 reported Python `3.12.3`,
+`DISPLAY=:0`, `WAYLAND_DISPLAY=wayland-0`, `/tmp/.X11-unix/X0`, and `/usr/bin/Xvfb`.
+The Ubuntu distro was stopped before this probe and was started by the shell
+query. Ubuntu has no `chromium`, `chromium-browser`, `google-chrome`, or Node on
+PATH. Its apt metadata has no `chromium` candidate; `chromium-browser` resolves
+to the Ubuntu snap-transition package. Noninteractive sudo is unavailable.
+Windows Node is executable from WSL through `/mnt/c`, but the actual Codex JS
+bridge handoff was not exercised.
+
+This is environment inventory, not the frozen supported-host preflight/doctor.
+No package was installed, no model/GUI/action ran, no golden allocation or seed
+was registered/consumed, and no Docker command was run. The golden run gate
+remains open. The immediate environment requirement is a supported Chromium
+install and verification of the Windows-Codex/WSL bridge path before freezing
+and preregistering a fresh no-retry allocation.
