@@ -2,7 +2,11 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Latest full inventory checkpoint r162 — 2026-11-22 JST
+## Latest full inventory checkpoint r163 — 2026-11-22 JST
+
+Complete paginated reads bracketed by current main `1afb532ea153f3da3906764753909fac074afce3` found 1,640 open Issues and 407 open PRs. Compared by exact ID against r152/r157, there were no additions; Issues #7748/#7765/#7817 and PR #8181 are the only removals. This matches r162 membership. Membership is not semantic triage or custody reconciliation. See the [r163 receipt](docs/maintenance/repository-inventory-recheck-20261122-r163.md), [the r160 crosswalk](docs/maintenance/idea-index-crosswalk-20261121-r160.md), and [the current work map](docs/WORKER_WORK_MAP.md).
+
+## Prior full inventory checkpoint r162 — 2026-11-22 JST
 
 Complete paginated comparison against r160, captured at main `ed0798d45d3bb7b839015619cd81f30e292a7583`, found 1,640 open Issues and 407 open PRs: no additions; Issues #7748/#7765/#7817 and PR #8181 are the only removals. A second full page sweep after docs PR #10423 merged, bracketed by main `8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2`, found the same counts and exact sets. The r160 semantic crosswalk remains the latest full routing analysis, while targeted dispositions are appended there. Issue #57's matched live efficiency, standard-caller task success, and repeated recovery reliability remain open, as do Research Preview graduation and distributable-runtime acceptance. This is membership evidence, not semantic triage or custody reconciliation. See the [r162 receipt](docs/maintenance/repository-inventory-recheck-20261122-r162.md), [the r160 crosswalk](docs/maintenance/idea-index-crosswalk-20261121-r160.md), and the [r162 work-map](docs/WORKER_WORK_MAP.md).
 
