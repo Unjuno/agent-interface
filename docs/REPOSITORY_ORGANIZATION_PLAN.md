@@ -4,6 +4,22 @@
 
 **Issue #57 composition evidence custody (2026-11-21; PR #10396 merged):** The packet binds the normal/-O synthetic adapter-to-horizon test, explicit TEMP policy, raw results, and checksums in one directory. It is linked from the current goal and roadmap. The merge integrates this offline check only; keep #57 open for live efficiency, task outcome, and recovery evidence.
 
+**Preference-evidence dependency check (#7790 / #8859; 2026-11-22):** The
+merged #7923 A01 is a scoped synthetic admission-method result only. A
+current-main source search across `runtime/core_v1`, `runtime/cli_v1`, and
+`runtime/guarded_x11_v1` found no preference/personalization consumer; this
+search does not establish that no such path exists elsewhere. More decisively,
+the linked #8859 agenda requires independently classifiable successful #57
+traces before any blinded preference assay, and #57 still lacks its matched
+live comparison/task-success/recovery gates. Reuse #7790's audit without
+replaying it. Read-only #8859 feasibility audit R01 classified all six calls
+in one retained synthetic positive trace as required; there is no comparable
+successful pair, and other candidate traces lack complete all-attempt usage or
+real provider evidence. Hold a preference study until at least two matched
+successful traces satisfy caller/provider usage, effect, and release gates.
+See [R01](../research/integration/standard_mcp_task_ledger_57_v1/efficiency_trace_feasibility_r01_20261122/RESULT.md).
+No runtime behavior or issue state changes follow from this audit.
+
 # Repository organization plan
 
 **Issue #57 evidence custody (2026-11-21):** Two X11 follow-up packets now

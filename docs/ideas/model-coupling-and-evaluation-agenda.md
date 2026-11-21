@@ -205,6 +205,17 @@ separate hypotheses and must keep separate evidence and decisions.
   feasibility gate passes should a small blinded pairwise-preference assay be
   considered. Objective outcomes such as tokens, wall time, and interruptions
   remain separately reported. No study or result is recorded here.
+- **Feasibility update (2026-11-22):** Read-only audit R01 classified all six
+  calls in one retained synthetic Fake X positive trace as required under its
+  stale-generation/review/release contract. The trace has an independent pixel
+  score and complete synthetic usage, but only one trajectory; there is no
+  comparable successful pair and no real provider or preference evidence.
+  Status remains open/unverified for the proposed metric. Do not launch a
+  preference assay from this single synthetic case. Next gate: obtain at least
+  two matched successful traces with complete all-attempt usage and
+  independently verified effect/release, then annotate events blind to
+  comparative outcomes. See the
+  [R01 audit](../../research/integration/standard_mcp_task_ledger_57_v1/efficiency_trace_feasibility_r01_20261122/RESULT.md).
 
 ## 9. No-gold identifiability for GUI effect checkers — #8887
 
