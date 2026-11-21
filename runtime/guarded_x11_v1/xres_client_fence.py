@@ -174,7 +174,7 @@ def _xres_disconnect_worker(send_connection, display_name, resource_base, expect
 
 def wait_for_client_disconnect_supervised(display_name, resource_base, *,
                                           expected_pid,
-                                          timeout_s=0.15,
+                                          timeout_s=0.5,
                                           poll_interval_s=0.01,
                                           terminate_grace_s=0.1):
     """Observe expected local X client identity with a killable query bound.
