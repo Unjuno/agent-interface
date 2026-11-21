@@ -53,6 +53,8 @@ class ArchiveTests(unittest.TestCase):
                 path.write_text("{}\n")
 
         subprocess.run(["git", "-C", str(root), "add", "."], check=True)
+        for launcher in ("runtime/golden-demo-v3.sh", "runtime/setup-golden-demo-v3.sh"):
+            subprocess.run(["git", "-C", str(root), "update-index", "--chmod=+x", launcher], check=True)
         subprocess.run(["git", "-C", str(root), "commit", "-q", "-m", "fixture"], check=True)
         return prereg_sources
 
