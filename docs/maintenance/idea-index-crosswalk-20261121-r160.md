@@ -146,18 +146,16 @@ differences against a three-tick model threshold, and exact-null no-imitation
 and shared-24 controls. Preserve all four outcomes; T0d does not erase the
 predecessor failures.
 
-PR #8181 retains the T0d packet, is OPEN/DRAFT, and its seven published checks
-pass. Its head `0d71f0a2` is only three commits ahead of its October base but
-3,490 commits behind current main; the remote comparison reports divergence.
-Do not replay the consumed T0d candidate or auditor. Keep #7741 open for the
-unmet external-validity boundary. Current-main import is prepared as [PR
-#10419](https://github.com/Unjuno/agent-interface/pull/10419), preserving the
-exact 23-file T0d packet, adding a sorted index entry, and marking both hash-bound
-T0c/T0d trees `-text` to prevent Windows newline conversion. Local SHA256SUMS
-validation passed for 22 files; the seven retained construction/evidence tests
-pass in normal and `-O`. Hosted checks are still running. The result remains
-a synthetic mechanism sensitivity finding, not evidence of human adoption,
-production queue load, or deployment harm. See [the T0d result](https://github.com/Unjuno/agent-interface/issues/7741#issuecomment-5993680943) and [PR #8181](https://github.com/Unjuno/agent-interface/pull/8181). This is the fourth targeted B13 disposition, not a full-batch review.
+Old Draft PR #8181 was closed as superseded after merged current-main [PR
+#10419](https://github.com/Unjuno/agent-interface/pull/10419) imported the exact
+23-file T0d packet at merge `85a1d02d`. The 22-file SHA256SUMS and seven focused
+construction/evidence tests passed locally in normal and `-O`; all applicable
+hosted checks passed and formal was skipped. The merge adds a sorted current-main
+index entry and `-text` protection for both hash-bound T0c/T0d directories,
+without changing the frozen packet or rerunning candidate/auditor. Keep #7741
+open for unmet external validity. The result remains synthetic mechanism
+sensitivity, not evidence of human adoption, production queue load, or deployment
+harm. See [the T0d result](https://github.com/Unjuno/agent-interface/issues/7741#issuecomment-5993680943) and [PR #8181](https://github.com/Unjuno/agent-interface/pull/8181). This is the fourth targeted B13 disposition, not a full-batch review.
 
 ### B13 targeted closure — Issue #7748 / PRs #7762 and #8182
 
