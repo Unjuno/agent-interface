@@ -8,6 +8,8 @@ Complete paginated reads, bracketed by the same main SHA, found 1,643 open Issue
 
 **Current-main Fake X late-DOWN regression (2026-11-21):** one existing process-cancellation test passes normally and under `-O`, asserting UNKNOWN/no-replay and persistent owner fencing after delayed synthetic DOWN during recovery. It does not confirm physical release. Raw transcripts and exact conditions are preserved in [R01](research/integration/currentmain_fake_x_delayed_down_recovery_r01_20261121/RESULT.md).
 
+**Current-main lease-expiry refusal (2026-11-21):** the existing Win32 backend test passes normally and under `-O`, distinguishing a post-expiry refused button-DOWN by receipt phase. Native dispatch and physical release are not exercised. See [R02](research/integration/currentmain_fake_x_expired_down_refusal_r02_20261121/RESULT.md).
+
 ## G10 comparison-boundary audit — 2026-11-21 (frozen on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`)
 
 The retained Calc G10 record is a scoped positive control, not a matched efficiency arm. The read-only audit verified all 33 declared source hashes and 69 retained run files; current `recorded_comparison_adapter_v1` rejects the unmodified G10 raw record as lacking a reconciled caller receipt. Provider usage remains UNKNOWN and cannot be inferred as zero. The next #57 economics experiment needs a fresh preregistered matched block using the standard caller and all-attempt accounting. See [the crosswalk and audit](research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md). No GUI or provider action was run.
