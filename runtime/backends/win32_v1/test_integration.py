@@ -7,6 +7,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from runtime.core_v1.contract import SCHEMA_PROGRAM, office_readiness
@@ -811,6 +812,26 @@ class Win32SessionRecoveryTests(unittest.TestCase):
                     _program_operation_receipt.reset(token)
                 self.assertEqual(list(receipts),
                     [expected_phase, 1, expected_count, 0])
+
+    def test_prestarted_max_capacity_operation_receipt_buffer_is_accepted(self):
+        from runtime.backends.win32_v1.backend import Win32Backend
+
+        backend = Win32Backend.__new__(Win32Backend)
+        backend._program_operation_receipts = (ctypes.c_long * (2048 * 4))()
+        backend.preflight = lambda _program: None
+        backend.release_all = lambda: {"verified": True}
+        backend.emissions = 0
+        program = {"authority": {"expires_at_ns":
+                time.monotonic_ns() + 1_000_000_000},
+            "ops": [{"op": "verify"}, {"op": "verify"}]}
+
+        with patch("runtime.backends.win32_v1.backend.sys.platform", "win32"):
+            result = backend.execute(program)
+
+        self.assertEqual(result["program_emissions"], 0)
+        self.assertEqual(list(backend._program_operation_receipts[:8]),
+            [5, 0, 0, 0, 5, 0, 0, 0])
+        self.assertEqual(backend._program_operation_receipts[8], 0)
 
     def test_unverified_failure_cleanup_still_quarantines(self):
         backend = self.backend()

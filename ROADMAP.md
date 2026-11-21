@@ -2,6 +2,8 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+**Current-main Win32 receipt-capacity repair (2026-11-22):** The standard prestarted producer allocates a maximum-capacity receipt buffer, while the backend previously required exact equality to the current program length. R03 now passes one public caller fixture action, verified release, 2 s late-input observation and independent delayed application effect; focused normal/`-O` suites pass 24/24 each. The separate R01 UNKNOWN and R02 foreground refusal/recovery records remain intact. This is a scoped fixture result, not MAP01, matched efficiency, repeated reliability or preview graduation. See the [R03 packet](research/integration/win32_current_main_fixture_effect_r03_20261122/README.md) and [repair diff](runtime/backends/win32_v1/backend.py).
+
 The read-only worktree custody snapshot after PR #10427 is in
 [`worktree-custody-recheck-20261122.md`](docs/maintenance/worktree-custody-recheck-20261122.md): 15 worktrees, five dirty; unique outputs and raw evidence remain preserved.
 
