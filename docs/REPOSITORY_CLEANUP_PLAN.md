@@ -2,7 +2,7 @@
 
 ## Current working checkpoint — 2026-11-21
 
-origin/main and the isolated Issue #57 candidate base both resolve to a8402e9d8f74284e0bafd0aff3b55702f3dc4089. The branch now has a checksummed synthetic effect-receipt/reuse-horizon composition packet with 33/33 tests passing in normal and -O; it is not merged and does not close #57. No fresh full Issue/PR membership census was taken in this checkpoint. Counts in the snapshot below remain historical and must not be presented as current. See the packet [README](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
+Verified origin/main is 2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb after PR #10396. Its checksummed evidence packet covers a synthetic effect-receipt/reuse-horizon composition with 33/33 tests passing in normal and -O; the merge does not close #57. No fresh full Issue/PR membership census was taken in this checkpoint. Counts in the snapshot below remain historical and must not be presented as current. See the packet [README](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
 
 ## Last membership/count snapshot after PR #10393 (2026-11-21)
 

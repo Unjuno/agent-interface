@@ -40,8 +40,7 @@
     "synthetic/offline fixtures only",
     "three integrated cases are asserted by test suite: timely effect qualifies at index 2; post-horizon effect preserves factual success and token break-even at index 2 but no correctness-qualified break-even; unknown timing preserves factual success and token break-even at index 2 but no correctness-qualified break-even",
     "no live GUI/provider or real user task result",
-    "does not establish general runtime efficiency, speed, reliability, distribution readiness, or preview graduation",
-    "no production implementation changed; no PR or issue updated"
+    "does not establish general runtime efficiency, speed, reliability, distribution readiness, or preview graduation"
   ],
   "validated_pilot": {
     "command": "python -u pilot.py",
@@ -60,5 +59,12 @@
       "reason": "The earlier pilot changed the C-arm task id after adapter receipt verification, leaving the retained receipt task_id inconsistent with the final measured run. It is retained as history and excluded from the accepted result."
     }
   ],
-  "python_version": "3.11.9"
+  "python_version": "3.11.9",
+  "integration": {
+    "pull_request": 10396,
+    "merge_commit": "2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb",
+    "issue": "https://github.com/Unjuno/agent-interface/issues/57",
+    "issue_comment_id": 7061548603,
+    "issue_status": "open"
+  }
 }

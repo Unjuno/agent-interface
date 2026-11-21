@@ -16,6 +16,6 @@ Initial tests stalled because Windows Python tempfile._get_default_tempdir block
 
 ## Limits
 
-All runs use synthetic offline fixtures. This validates the composition and attribution boundary only; it does not show live GUI/provider task completion, general efficiency or speed, recovery reliability, runtime distribution readiness, or research preview graduation. No PR was opened and no issue was updated.
+All runs use synthetic offline fixtures. This validates the composition and attribution boundary only; it does not show live GUI/provider task completion, general efficiency or speed, recovery reliability, runtime distribution readiness, or research preview graduation. Merged as [PR #10396](https://github.com/Unjuno/agent-interface/pull/10396) at main commit 2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb. The result was recorded in [Issue #57 comment](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-7061548603); #57 remains open.
 
 Run from this directory with: python -u run_local_tests.py and python -O -u run_local_tests.py.
