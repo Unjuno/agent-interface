@@ -132,6 +132,15 @@ in [the r155 receipt](maintenance/repository-inventory-recheck-20261121-r155.md)
 This is membership evidence only. It does not semantically classify the queue,
 assign custody, or imply merge readiness, and it supports no bulk closure.
 
+The sole removed PR, [#10218](https://github.com/Unjuno/agent-interface/pull/10218),
+is closed unmerged as superseded, with its source branch retained. Its late
+App Server usage port was transferred to [#10352](https://github.com/Unjuno/agent-interface/pull/10352)
+(merged as `b0493167`); the scheduling/cleanup repair was merged in [#10365](https://github.com/Unjuno/agent-interface/pull/10365)
+(`897f4896`). Current main contains the late-usage spool publication, recorder,
+and public-caller methods. This only resolves that PR's unique-code custody;
+the caller does not automatically invoke the post-score usage method, and the
+work remains synthetic rather than real provider/economics evidence for #57.
+
 ## Batch protocol
 
 Each batch selects one family, PR, or custody slice and leaves a compact receipt

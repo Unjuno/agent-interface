@@ -16,6 +16,13 @@ removed PR. PR #10377 was opened and merged during this interval, so it has no
 remaining membership effect. The r155 PR ID file is derived from the prior
 r152 sorted set by removing the one live-confirmed delta.
 
+PR #10218 is closed unmerged as superseded, with its source branch retained.
+Its late-usage code was transferred to #10352 (merged as `b0493167`), and its
+test scheduling/cleanup repair is in #10365 (merged as `897f4896`). Current
+main has the spool publisher, provider-attempt recorder method, and public
+caller method. These are deterministic synthetic adapters; they do not
+establish automatic invocation by all callers or live provider accounting.
+
 This is membership evidence only. It does not classify hypotheses, establish
 custody, or determine merge readiness. No bulk Issue or PR action follows from
 this snapshot. Issue #57 and Issue #58 remain open; the live WSLc migration STOP
