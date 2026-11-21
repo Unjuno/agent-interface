@@ -1,3 +1,5 @@
+**Issue #57 local composition evidence custody (2026-11-21; base main a8402e9d):** The new packet binds a normal/-O synthetic adapter-to-horizon test, its explicit TEMP policy, raw results, and checksums in one directory. It is still an unmerged local candidate; do not count it as a closed issue or a live experiment. Preserve the packet; it is linked from the current goal and roadmap. Update its PR disposition after integration review.
+
 # Repository organization plan
 
 **Issue #57 evidence custody (2026-11-21):** Two X11 follow-up packets now

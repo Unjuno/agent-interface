@@ -1,0 +1,79 @@
+{
+  "base_commit": "a8402e9d8f74284e0bafd0aff3b55702f3dc4089",
+  "measure": "token break-even and correctness-qualified token break-even indices, four-block synthetic reuse horizon",
+  "cases": [
+    {
+      "effect": "within_authority; interval [144,145]",
+      "factual_task_success": true,
+      "eligible_task_success": true,
+      "token_break_even_task_index": {
+        "A": 2,
+        "B": 2
+      },
+      "correctness_qualified_token_break_even_task_index": {
+        "A": 2,
+        "B": 2
+      },
+      "receipt_task_id": "task-01",
+      "measured_task_id": "task-01",
+      "receipt_identity_verified_before_adapter": true
+    },
+    {
+      "effect": "after_release_horizon; interval [161,165]",
+      "factual_task_success": true,
+      "eligible_task_success": false,
+      "token_break_even_task_index": {
+        "A": 2,
+        "B": 2
+      },
+      "correctness_qualified_token_break_even_task_index": {
+        "A": null,
+        "B": null
+      },
+      "receipt_task_id": "task-01",
+      "measured_task_id": "task-01",
+      "receipt_identity_verified_before_adapter": true
+    },
+    {
+      "effect": "unknown; no interval",
+      "factual_task_success": true,
+      "eligible_task_success": null,
+      "token_break_even_task_index": {
+        "A": 2,
+        "B": 2
+      },
+      "correctness_qualified_token_break_even_task_index": {
+        "A": null,
+        "B": null
+      },
+      "receipt_task_id": "task-01",
+      "measured_task_id": "task-01",
+      "receipt_identity_verified_before_adapter": true
+    }
+  ],
+  "assertion_sources": [
+    "test_timely_receipt_qualifies_integrated_horizon_break_even",
+    "test_post_horizon_receipt_preserves_fact_but_blocks_qualified_break_even",
+    "test_unknown_receipt_time_preserves_fact_but_blocks_qualified_break_even"
+  ],
+  "verification": [
+    "33 tests passed in normal mode",
+    "33 tests passed in optimized (-O) mode",
+    "raw-suite-normal.txt",
+    "raw-suite-optimized.txt"
+  ],
+  "pilot": {
+    "command": "python -u pilot.py",
+    "exit_code": 0,
+    "output": {
+      "correctness_qualified_token_break_even_task_index": {
+        "A": 2,
+        "B": 2
+      }
+    },
+    "note": "Corrected task-id binding; supersedes raw-pilot-normal-pre-correction.txt"
+  },
+  "superseded_raw": [
+    "raw-pilot-normal-pre-correction.txt"
+  ]
+}

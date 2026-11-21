@@ -1,6 +1,10 @@
 # Repository cleanup plan
 
-## Current live pointer after PR #10393 (2026-11-21)
+## Current working checkpoint — 2026-11-21
+
+origin/main and the isolated Issue #57 candidate base both resolve to a8402e9d8f74284e0bafd0aff3b55702f3dc4089. The branch now has a checksummed synthetic effect-receipt/reuse-horizon composition packet with 33/33 tests passing in normal and -O; it is not merged and does not close #57. No fresh full Issue/PR membership census was taken in this checkpoint. Counts in the snapshot below remain historical and must not be presented as current. See the packet [README](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
+
+## Last membership/count snapshot after PR #10393 (2026-11-21)
 
 Verified `origin/main` is `cb02ec977c761b4f291cccebbd8d470760e16084`. A live
 GraphQL count read reports 1,643 open Issues and 409 open PRs. This is a
