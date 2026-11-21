@@ -2,7 +2,11 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current checkpoint — 2026-11-21 (main `2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb`)
+## G10 comparison-boundary audit — 2026-11-21 (frozen on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`)
+
+The retained Calc G10 record is a scoped positive control, not a matched efficiency arm. The read-only audit verified all 33 declared source hashes and 69 retained run files; current `recorded_comparison_adapter_v1` rejects the unmodified G10 raw record as lacking a reconciled caller receipt. Provider usage remains UNKNOWN and cannot be inferred as zero. The next #57 economics experiment needs a fresh preregistered matched block using the standard caller and all-attempt accounting. See [the crosswalk and audit](research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md). No GUI or provider action was run.
+
+## Prior checkpoint — 2026-11-21 (after PR #10396; main `2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb`)
 
 **Issue #57 composition checkpoint (PR #10396):** Merged to main as 2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb. The retained effect-score adapter output composes into the reuse-horizon evaluator; 33 focused tests pass normally and under -O. This closes only a synthetic offline connection check. Live matched efficiency, standard-caller task outcome/recovery reliability, and Research Preview graduation remain open. See [the packet](research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
 
