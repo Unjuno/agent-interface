@@ -2,9 +2,9 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Current repository checkpoint r160 — 2026-11-21 (main `f39e966b6478170a7a91f1eec7859d30046784bf`)
+## Latest full inventory checkpoint r160 — 2026-11-21 (captured at main `f39e966b6478170a7a91f1eec7859d30046784bf`; latest docs-only main `fb11b033eac6a1288e57ecad350af70875117524`)
 
-Complete paginated reads, bracketed by the same main SHA, find 1,643 open Issues and 408 open PRs, exactly matching r159. PRs #10402 and #10403 were opened and merged after r159; neither remains open, so they caused no net membership change. This count is not semantic triage or evidence-custody reconciliation. Issue #57's matched efficiency, standard-caller task success and repeated recovery reliability gates remain open; Research Preview graduation and distributable-runtime acceptance also remain open. See the [r160 receipt](docs/maintenance/repository-inventory-recheck-20261121-r160.md).
+Complete paginated reads, bracketed by the same main SHA, found 1,643 open Issues and 408 open PRs, exactly matching r159. PRs #10402/#10403 had merged before r160; since then #10404/#10405 have opened and merged without Issue-state changes. PRs #10404/#10405 update documentation pointers only, so the r160 Issue set remains applicable. This count is not semantic triage or evidence-custody reconciliation. Issue #57's matched efficiency, standard-caller task success and repeated recovery reliability gates remain open; Research Preview graduation and distributable-runtime acceptance also remain open. See the [r160 receipt](docs/maintenance/repository-inventory-recheck-20261121-r160.md) and the [current-main idea-index crosswalk](docs/maintenance/idea-index-crosswalk-20261121-r160.md).
 
 ## G10 comparison-boundary audit — 2026-11-21 (frozen on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`)
 
