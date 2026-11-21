@@ -1,0 +1,8 @@
+COMMAND: python -m py_compile test_effect_receipt_reuse_horizon_integration_v1.py
+EXIT_CODE: 1
+STDERR:
+  File "test_effect_receipt_reuse_horizon_integration_v1.py", line 19
+    c_run.update(copy.deepcopy(adapted))undefined
+SyntaxError: invalid syntax
+
+Corrected immediately; final syntax check is recorded in raw-syntax-check.txt. No test pass is claimed.
