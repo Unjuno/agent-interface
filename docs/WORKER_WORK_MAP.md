@@ -1,6 +1,10 @@
 # Worker work map
 
-## Current work-map pointer — 2026-11-10, after PR #10242
+## Current work-map pointer — 2026-11-21, after PR #10398
+
+Verified `origin/main`: `59a6873f9fc886b4293e7edc7e8451223740d448`. PR #10398 adds the R01 read-only G10 comparison-contract crosswalk; G10 remains a narrow positive control and cannot serve as a matched efficiency arm because primary usage is UNKNOWN and the reconciled caller event receipt is absent. Issues #57 and #58 remain open. #57 still needs a fresh matched standard-caller block with complete all-attempt usage, task scoring, release, and cold/warm/invalidation/repair accounting. The named Docker lane in #5130 is not granted; #7924 retains the WSLc ownership STOP. Draft PR #10340 remains a prospective journal with dispatch disabled and no trusted allocation attestor. This pointer is directional; no full current Issue/PR membership census or semantic triage was performed. See [CURRENT_GOAL](CURRENT_GOAL.md), [ROADMAP](../ROADMAP.md), and the [R01 audit](../research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md).
+
+## Prior work-map pointer — 2026-11-10, after PR #10242
 
 **Verified `origin/main` (2026-11-10):** `002947dcc55a9f7ebd56fcccc35af328cfabca04`
 (PR #10242, after #10241). This tree includes corrected supervised Win32 route documentation, the completion-horizon CLI help clarification, and the live-fixture recovery/normal-completion evidence packets. Runtime acquisition boundaries remain documented in

@@ -2,7 +2,7 @@
 
 ## Current working checkpoint — 2026-11-21
 
-Verified origin/main is 2f50f48ce69cfd72a22bb74fee4b6dd1d77fd1eb after PR #10396. Its checksummed evidence packet covers a synthetic effect-receipt/reuse-horizon composition with 33/33 tests passing in normal and -O; the merge does not close #57. No fresh full Issue/PR membership census was taken in this checkpoint. Counts in the snapshot below remain historical and must not be presented as current. See the packet [README](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_reuse_horizon_20261121/README.md).
+Verified `origin/main` is `59a6873f9fc886b4293e7edc7e8451223740d448` after PR #10398. The merged R01 packet verifies the historical G10 source/raw custody and shows that the current Issue #57 comparison adapter cannot admit that record as a matched efficiency arm. This adds no live/provider result; #57 and #58 remain open. The latest complete repository membership receipt remains r155 on earlier main `63449e8a`; its 1,643 open Issues / 409 open PRs are historical membership, not current semantic triage. No fresh full membership census or all-queue semantic review was performed here, and no bulk closure follows. Current project pointers are [CURRENT_GOAL](CURRENT_GOAL.md), [ROADMAP](../ROADMAP.md), and [WORKER_WORK_MAP](WORKER_WORK_MAP.md). The dated sections below remain historical receipts and are not rewritten.
 
 ## Last membership/count snapshot after PR #10393 (2026-11-21)
 
