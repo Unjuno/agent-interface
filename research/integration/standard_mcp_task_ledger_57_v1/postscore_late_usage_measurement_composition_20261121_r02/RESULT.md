@@ -20,11 +20,11 @@ the CRLF-converted Windows worktree bytes. The source bytes were unchanged:
 updated to compare Git-clean-normalized object IDs, and that audit passed.
 The preserved failed audit log is part of the record. A final audit further
 checks task-score/effect/tool-event boundaries and the complete SHA256SUMS
-manifest. Clean-main audits exposed two Windows checkout artifacts: ignored
-Python bytecode and CRLF conversion of the `.gitattributes` control file. The
-auditor excludes bytecode and checks the raw-byte preservation attribute
-directly; `.gitattributes` itself is excluded from SHA256SUMS because checkout
-can change its line endings without changing its rule.
+manifest. Clean-main audits exposed Windows checkout conversion of packet
+text files and ignored Python bytecode. The packet now disables line-ending
+conversion for all files; the auditor excludes bytecode and checks this
+attribute rule directly. `.gitattributes` itself remains outside SHA256SUMS
+because checkout can change its line endings without changing its rule.
 
 This demonstrates only a synthetic accounting composition on frozen source
 revision `d08596ee0590ba6a9531075a5769c0ac4abc1ec1`. It does not establish a
