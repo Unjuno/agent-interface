@@ -1,3 +1,5 @@
+**Issue #57 G10 reuse-boundary audit (2026-11-21; based on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`):** The retained Calc G10 archive remains useful as a narrow live positive control. A source-pinned read-only audit checked its 33 declared source hashes and 69 run files; the current comparison adapter rejects the old raw record because it has no reconciled caller receipt/event ledger, and primary provider usage is UNKNOWN. Preserve the record and do not adapt unknown usage into zero. The next comparison must be a fresh matched block through the standard caller, with cold/warm/invalidation/repair and all-attempt usage. See [the R01 crosswalk](../research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md).
+
 **Issue #57 composition evidence custody (2026-11-21; PR #10396 merged):** The packet binds the normal/-O synthetic adapter-to-horizon test, explicit TEMP policy, raw results, and checksums in one directory. It is linked from the current goal and roadmap. The merge integrates this offline check only; keep #57 open for live efficiency, task outcome, and recovery evidence.
 
 # Repository organization plan

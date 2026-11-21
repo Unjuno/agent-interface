@@ -1,0 +1,28 @@
+Attempt 1 — audit harness defect, not a G10 result
+====================================================
+
+Command:
+python research/integration/g10_current_main_comparison_readiness_20261121/audit_g10_comparison_readiness.py --output research/integration/g10_current_main_comparison_readiness_20261121/RESULT.normal.json
+
+Environment: Windows, Python 3.11.9
+Exit code: 1
+
+Raw stderr:
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-next-gate-main-20261121\research\integration\g10_current_main_comparison_readiness_20261121\audit_g10_comparison_readiness.py", line 182, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-next-gate-main-20261121\research\integration\g10_current_main_comparison_readiness_20261121\audit_g10_comparison_readiness.py", line 126, in main
+    fail("unexpected reconciled caller receipt fields appeared in G10 raw")
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\issue57-next-gate-main-20261121\research\integration\g10_current_main_comparison_readiness_20261121\audit_g10_comparison_readiness.py", line 26, in fail
+    raise RuntimeError(message)
+RuntimeError: unexpected reconciled caller receipt fields appeared in G10 raw
+
+Diagnosis and disposition:
+The audit implementation incorrectly expected all five recorder receipt keys,
+including `events`, to be absent. G10 has the `events` field, correctly empty;
+the other four receipt fields are absent. The preregistered input expectation was
+correct. The implementation was corrected to expect an empty `events` list and
+the four absent receipt fields; no G10 data, adapter behavior, or pass criterion
+was changed. The corrected normal and `-O` runs both exit 0 and produce identical
+results. Preserve this harness failure as superseded diagnostic history.
