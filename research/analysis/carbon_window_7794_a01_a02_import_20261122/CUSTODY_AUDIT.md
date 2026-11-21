@@ -10,14 +10,16 @@ transfer. The two per-folder `SHA256SUMS` files were added without changing
 the original eight file bytes. `.gitattributes` marks both folders `-text
 -whitespace` so Windows checkouts do not rewrite hash-bound evidence bytes.
 
-The original PR remains OPEN/Draft. Its listed `replay-gate` and
-`analysis-index` checks pass; formal is skipped; it has no submitted reviews
-and GitHub reports mergeability UNKNOWN. GitHub compare reports two PR commits
-and 3,880 current-main commits from the reported comparison (diverged, no merge
+At the time of this transfer audit, the original PR was OPEN/Draft. Its listed
+`replay-gate` and `analysis-index` checks passed; formal was skipped; it had no
+submitted reviews and GitHub reported mergeability UNKNOWN. GitHub compare
+reported two PR commits and 3,880 current-main commits from the reported
+comparison (diverged, no merge
 base in the response); this repository's clone is shallow, and local
-`merge-tree` could not resolve a common base. The transfer preserves its data
-without treating the stale Draft as merge-ready. The PR and its comment remain
-the provenance record.
+`merge-tree` could not resolve a common base. The transfer preserved its data
+without treating the stale Draft as merge-ready. Subsequently, PR #10431
+merged the evidence into main and #7968 was closed as superseded; its branch
+and history remain the provenance record.
 
 ## Byte audit
 
