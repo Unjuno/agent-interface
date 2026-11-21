@@ -20,7 +20,9 @@ the CRLF-converted Windows worktree bytes. The source bytes were unchanged:
 updated to compare Git-clean-normalized object IDs, and that audit passed.
 The preserved failed audit log is part of the record. A final audit further
 checks task-score/effect/tool-event boundaries and the complete SHA256SUMS
-manifest.
+manifest. The first clean-main audit also exposed that import-generated,
+ignored Python bytecode was being counted as packet content; the auditor now
+excludes `__pycache__` and `.pyc` files from the manifest file-set comparison.
 
 This demonstrates only a synthetic accounting composition on frozen source
 revision `d08596ee0590ba6a9531075a5769c0ac4abc1ec1`. It does not establish a
