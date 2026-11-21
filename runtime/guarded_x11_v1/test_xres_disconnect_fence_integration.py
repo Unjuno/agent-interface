@@ -132,9 +132,9 @@ class XvfbBuildProvenanceTests(unittest.TestCase):
 
 @unittest.skipUnless(
     sys.platform == 'linux'
-    and os.environ.get('DISPLAY') == ':88'
+    and os.environ.get('DISPLAY') in (':88', '127.0.0.1:88')
     and os.environ.get('AGENT_INTERFACE_XORG_FENCE_TEST') == '1',
-    'requires the explicitly enabled private Xorg/Xvfb display :88',
+    'requires explicitly enabled private Xorg/Xvfb display :88 or loopback :88',
 )
 class XResDisconnectFenceIntegrationTests(unittest.TestCase):
     def _assert_owner_pid_absent(self, receipt, owner_pid, report):
@@ -540,9 +540,9 @@ class OwnerMarkerPublicationTests(unittest.TestCase):
 
 @unittest.skipUnless(
     sys.platform == 'linux'
-    and os.environ.get('DISPLAY') == ':88'
+    and os.environ.get('DISPLAY') in (':88', '127.0.0.1:88')
     and os.environ.get('AGENT_INTERFACE_XORG_FENCE_TEST') == '1',
-    'requires the explicitly enabled private Xorg/Xvfb display :88',
+    'requires explicitly enabled private Xorg/Xvfb display :88 or loopback :88',
 )
 class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
     """Measure queued post-disconnect input after releasing an already-held key."""
