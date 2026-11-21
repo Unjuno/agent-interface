@@ -2,7 +2,7 @@
 
 ## Baseline and method
 
-The latest complete Issue/PR membership snapshot is [r162](repository-inventory-recheck-20261122-r162.md). This file remains the r160 semantic-routing crosswalk, based on main `87f1afe2ad2202a3a5200a4add86190e9f6a1496`; its counts and routing were frozen against the earlier membership/main snapshot. The r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
+The latest complete Issue/PR membership snapshot is [r163](repository-inventory-recheck-20261122-r163.md). This file remains the r160 semantic-routing crosswalk, based on main `87f1afe2ad2202a3a5200a4add86190e9f6a1496`; its counts and routing were frozen against the earlier membership/main snapshot. The r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
 
 Recomputed against current-main blobs:
 
@@ -211,4 +211,31 @@ ranking. Resume only after a concrete identity-stable consumer exists and its
 ownership/allocation are rechecked; T1 still requires a separately frozen
 experiment. See [the current-main HOLD comment](https://github.com/Unjuno/agent-interface/issues/7773#issuecomment-7064923854) and [the Issue](https://github.com/Unjuno/agent-interface/issues/7773).
 
-This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
+### B13 targeted evidence/custody update — Issue #7794 / successor #8386
+
+Issue #7794 remains OPEN at `HOLD_ACCOUNTING`. Its A01 and A02 unique raw
+packets were present only in Draft PR #7968, so this evidence-only change
+imports the eight original files byte-for-byte and adds per-folder SHA256SUMS;
+the PR remains unchanged as provenance until this transfer merges. A01 is a
+finite three-job synthetic method result. A02's nine cases do not distinguish
+the declared serial-ASAP comparator from the candidate's global-lexicographic
+feasible assignment; preserve that protocol gap rather than relabeling its
+first output.
+
+The later A03 output-path STOP remains unrerun. Merged PR #8183's A04
+`PASS_DIAGNOSTIC_SCOPED` supplies the fixed two-job discriminator, but a
+current-main check still finds 8/14 A04 manifest entries differ from checked-in
+bytes. Closed successor Issue #8386's A05 `PASS_BYTEBOUND_REPLAY_SCOPED`
+reconstructs the four execution inputs as exact A04 Git blobs plus one LF and
+replays the ten-row diagnostic once; an independent current-main check matches
+all 12 A05 manifest entries. A05 does not repair A04's `FREEZE.json` or
+preregistration hashes, retroactively validate A04, or claim energy/emissions.
+
+The parent's ≥10% operational-CO2e gate still lacks an owner-approved real
+deferrable workload, energy meter, declared time/region factor and allocation
+boundary. Keep #7794 open; neither this import nor A01–A05 authorizes postponing
+runtime/user work. See the [A01/A02 custody audit](../../research/analysis/carbon_window_7794_a01_a02_import_20261122/CUSTODY_AUDIT.md),
+[A05 record](../../research/carbon_window_7794_a05_bytebound_recheck_20261008/REPORT.md),
+and [the parent Issue](https://github.com/Unjuno/agent-interface/issues/7794).
+
+This file is a dated r160 navigation baseline with later targeted dispositions, not current semantic triage of the 1,640 open Issues in r163 or a reconciliation of all worktree/PR custody. It does not alter the #57/#58 product gates.
