@@ -1059,6 +1059,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`relative_view_rotation_features_8636_t0_a02_audit_20261009/`](relative_view_rotation_features_8636_t0_a02_audit_20261009/)
 - [`relative_view_rotation_features_8636_t0_a03_20261012/`](relative_view_rotation_features_8636_t0_a03_20261012/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
+- [`replenishable_cpu_service_7722_t0_20261005/`](replenishable_cpu_service_7722_t0_20261005/)
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
 - [`research_failure_detector_5531_t5/`](research_failure_detector_5531_t5/)

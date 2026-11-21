@@ -1,0 +1,13 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 0.8079373,
+  "command": "wslc.exe run --rm --cidfile <candidate>/container.cid --name cpu-control-7722-t0-candidate --pull never --network none --cpus 1 --memory 256m --mount study:/input:ro --mount candidate-output:/out --workdir /input --entrypoint /bin/sh python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 -c python -B /input/candidate.py --cases /input/cases.json --freeze /input/freeze.json > /out/candidate.raw.json 2> /out/candidate.stderr.log",
+  "study_path": "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\agent-interface\\work\\7722-replenishable-cpu-service-t0-20261005\\research\\analysis\\replenishable_cpu_service_7722_t0_20261005",
+  "output_path": "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\agent-interface\\work\\7722-replenishable-cpu-service-t0-20261005\\research\\analysis\\replenishable_cpu_service_7722_t0_20261005\\output\\candidate",
+  "retry_count": 0,
+  "cid": "d1d911d349b4a0cc1a7a9fbfa8a47635509ad9cff625300829c78dab3e7c8829",
+  "command_expanded": "wslc.exe run --rm --cidfile \"C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\agent-interface\\work\\7722-replenishable-cpu-service-t0-20261005\\research\\analysis\\replenishable_cpu_service_7722_t0_20261005\\output\\candidate\\container.cid\" --name cpu-control-7722-t0-candidate --pull never --network none --cpus 1 --memory 256m --mount \"type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\agent-interface\\work\\7722-replenishable-cpu-service-t0-20261005\\research\\analysis\\replenishable_cpu_service_7722_t0_20261005,target=/input,readonly\" --mount \"type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\agent-interface\\work\\7722-replenishable-cpu-service-t0-20261005\\research\\analysis\\replenishable_cpu_service_7722_t0_20261005\\output\\candidate,target=/out\" --workdir /input --entrypoint /bin/sh python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 -c 'python -B /input/candidate.py --cases /input/cases.json --freeze /input/freeze.json > /out/candidate.raw.json 2> /out/candidate.stderr.log'",
+  "cid_file_created_utc": "2026-10-04T18:04:17.4032576Z",
+  "result_file_last_write_utc": "2026-10-04T18:04:17.9913377Z",
+  "wslc_stderr_last_write_utc": "2026-10-04T18:04:18.1295032Z"
+}
