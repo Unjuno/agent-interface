@@ -77,4 +77,125 @@ All 25 B12 Issues were fetched and remain open; all 25 have exact central URLs. 
 
 Continue with B13 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
+### B13 targeted disposition — Issue #7728 / PR #7758
+
+The #7728 route remains exact in `IDEAS_AND_OUTCOMES.md`; its open state and
+research question are unchanged. The linked PR #7758 was directly checked on
+2026-11-21: it is still OPEN/DRAFT at head `f7f8fc24`, based on October main
+`c520359e`; GitHub reports `DIRTY`. Its A01 runner-source custody and A02
+stale-base holds remain in the PR's own evidence. Exact-head synthetic audit
+tests pass 3/3 each in normal and `-O`; this is not sensor, task-effect, T0 or
+T1 evidence. Keep the Issue and PR open, do not merge the obsolete head or
+repeat the one-shot captures. The two-approval language is inconsistent with
+the current Worker Quickstart and absent GitHub protection, but is not the
+integration blocker; a revived successor should remove that unsupported quota.
+See the [current PR disposition](pr7758-disposition-20261121.md). This is one
+targeted B13 semantic review, not a full B13 batch completion.
+
+### B13 targeted disposition — Issue #7722 / PR #7735
+
+Issue #7722's only frozen T0 allocation remains consumed. Its preregistered
+synthetic hypothesis failed: the reserved server reduced p99 service response
+by 71–77%, yet still missed 1–3 of 10 control deadlines on each schedulable
+trace. The original `METHOD_PASS_SCOPED` audit was explicitly superseded after
+defects were found. The later issue update reports a separate read-only checker
+reconstructed 18 retained runs with zero errors and rejected the original six
+mutations plus dispatch-order and premature-backpressure mutations; it reports
+zero candidate/frozen-auditor invocations. The reported 7/7 construction tests
+are repair-branch evidence, not a rerun of the consumed allocation.
+
+PR #7735 remains OPEN/DRAFT at `60d99065`, seven commits ahead of its old base
+and 4,062 commits behind current `main` (`b5c7dff`). Preserve its exact
+historical packet and the superseded-audit correction; do not rerun T0 or
+promote the supplemental checker to host-scheduling evidence. Keep #7722 open
+while deciding whether to close only its synthetic T0 hypothesis; any host/GUI
+study is a separate question requiring fresh eligibility and independent
+release evidence. See the [retained correction](https://github.com/Unjuno/agent-interface/issues/7722#issuecomment-5994116900), [audit-limit update](https://github.com/Unjuno/agent-interface/issues/7722#issuecomment-5985957545), and [PR #7735](https://github.com/Unjuno/agent-interface/pull/7735). This remains a targeted disposition, not a full B13 semantic review.
+
+### B13 targeted disposition — Issue #7732 / predecessor #6774
+
+Issue #7732 is a proposed finite successor about combinations of evidence
+fields. Its own body explicitly gates any experiment on custody/ownership
+reconciliation for #6774 and forbids rerunning that consumed allocation. The
+dependency remains unresolved: #6774's latest retained owner update says the
+nine-row packet's seven source/output hashes differ from published blobs by a
+terminal CRLF, and its published auditor cannot parse the terminal blank JSONL
+line. The separate 12-row local packet matches its ten-file manifest, but does
+not identify a unique executor. These limitations qualify both histories; they
+do not establish a corrected scientific result or authorize a new allocation.
+
+Keep #7732 open but HOLD execution until the existing #6774 custody request is
+resolved or the unavailable originals and accountable custodians are explicitly
+recorded. Preserve #6775's merged bytes and both reported histories unchanged;
+do not normalize line endings, repair/replay the consumed T0, or run the
+successor against a substitute allocation under the same identity. If the
+custody gate is eventually resolved, #7732's distinct minimal-field-bundle
+question needs its own fresh preregistration. See [#6774's custody status](https://github.com/Unjuno/agent-interface/issues/6774#issuecomment-5988381606), [#6775's byte-level qualification](https://github.com/Unjuno/agent-interface/pull/6775#issuecomment-5958513653), and [#7732](https://github.com/Unjuno/agent-interface/issues/7732). This is the third targeted B13 disposition, not a full-batch review.
+
+### B13 targeted disposition — Issue #7741 / PR #8181
+
+The retained sequence has materially different outcomes. T0 v1 is
+`METHOD_FAIL_OR_INCONCLUSIVE` after 217 lifecycle-accounting errors, a task-start
+probability defect, and invalid controls; T0b stopped before JSON output and
+was not audited. T0c's independent replay was clean and its primary contrast
+reversed in 16/16 cells, but its per-principal negative control also reversed
+in 11/16, so that frozen gate failed. The later separately preregistered T0d
+passed its synthetic gate: 256 groups, zero replay/accounting errors, 32/32
+qualifying topology/parameter/seed cells, +94 to +128 tick difference-in-
+differences against a three-tick model threshold, and exact-null no-imitation
+and shared-24 controls. Preserve all four outcomes; T0d does not erase the
+predecessor failures.
+
+Old Draft PR #8181 was closed as superseded after merged current-main [PR
+#10419](https://github.com/Unjuno/agent-interface/pull/10419) imported the exact
+23-file T0d packet at merge `85a1d02d`. The 22-file SHA256SUMS and seven focused
+construction/evidence tests passed locally in normal and `-O`; all applicable
+hosted checks passed and formal was skipped. The merge adds a sorted current-main
+index entry and `-text` protection for both hash-bound T0c/T0d directories,
+without changing the frozen packet or rerunning candidate/auditor. Keep #7741
+open for unmet external validity. The result remains synthetic mechanism
+sensitivity, not evidence of human adoption, production queue load, or deployment
+harm. See [the T0d result](https://github.com/Unjuno/agent-interface/issues/7741#issuecomment-5993680943) and [PR #8181](https://github.com/Unjuno/agent-interface/pull/8181). This is the fourth targeted B13 disposition, not a full-batch review.
+
+### B13 targeted closure — Issue #7748 / PRs #7762 and #8182
+
+Issue #7748 was closed on 2026-11-22 JST after completing its declared finite
+synthetic-method question. Merged PR #7762 reports `PASS_METHOD_SCOPED` on six
+hash-frozen traces; merged PR #8182 preserves the A01 CLI STOP and separate A02
+`PASS_DUPLICATE_ID_BOUNDARY_SCOPED`. The closure comment records both results
+and explicitly excludes real workload bounds, host/WSL scheduling, GUI behavior,
+physical release, and product deadlines. This does not close related Issue
+#8061 or resolve #7722's consumed allocation. Keep the historical r160 batch
+counts as a dated baseline; at this first closure the frozen 25-item B13 cohort had 24 open Issues and one closed (#7748); the later #7765 closure brings it to 23 open and two closed. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7748#issuecomment-7064746136), [PR #7762](https://github.com/Unjuno/agent-interface/pull/7762), and [PR #8182](https://github.com/Unjuno/agent-interface/pull/8182).
+
+### B13 targeted closure — Issue #7765 / PRs #7772 and #7782
+
+Issue #7765 was closed on 2026-11-22 JST at its preregistered finite synthetic
+scope. T0 remains `HOLD_METHOD_DESIGN_CONFOUNDED` because the gain arms differed
+and no separate calibration was used. Calibration A01 remains an immutable
+`STOP_CALIBRATION_AUDIT_FAILED`; the distinct A02 training calibration is
+audited and selects fixed gain 0.9. The held-out result independently
+reconstructed 240 rows with zero errors, matched all goals, and recorded zero
+safety violations, but fixed gain required 185 corrections versus 191 for
+online Jacobian, failing the preregistered >=20% improvement gate as
+`FAIL_NO_GAIN`. Merged PR #7772 retains both studies; #7782 changes only harness
+validation. The closure comment and issue ledger explicitly state no real-GUI,
+task-effect, or host-timing result. Any live application comparison is a
+separate hypothesis. The 25-item B13 cohort now has 23 open Issues and two
+closed (#7748 and #7765), with all routes retained. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582), [PR #7772](https://github.com/Unjuno/agent-interface/pull/7772), and [PR #7782](https://github.com/Unjuno/agent-interface/pull/7782).
+
+### B13 targeted HOLD recheck — Issue #7773
+
+Issue #7773 remains OPEN at `HOLD_NO_CANDIDATE_LIST_CONSUMER`. A new read-only
+check against current main `85a1d02d65bf901e8f4069564e7b8067fda34898` on
+2026-11-22 JST searched `runtime/cli_v1`, `runtime/core_v1`,
+`runtime/guarded_x11_v1`, and `runtime/USING_CURRENT_INTERFACE.md` for
+target-belief/candidate-list serialization and found no model-visible ordered
+consumer. This is a bounded source feasibility check, not proof about external
+providers and not an H result. No candidate, model, GUI, or action ran. Do not
+replace the required treatment with tool-list/image order or detector-internal
+ranking. Resume only after a concrete identity-stable consumer exists and its
+ownership/allocation are rechecked; T1 still requires a separately frozen
+experiment. See [the current-main HOLD comment](https://github.com/Unjuno/agent-interface/issues/7773#issuecomment-7064923854) and [the Issue](https://github.com/Unjuno/agent-interface/issues/7773).
+
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
