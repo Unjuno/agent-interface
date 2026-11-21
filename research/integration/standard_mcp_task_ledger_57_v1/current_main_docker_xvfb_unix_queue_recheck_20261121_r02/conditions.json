@@ -1,0 +1,13 @@
+{
+  "attempt_id": "ISSUE57-DOCKER-XVFB-UNIX-QUEUE-RECHECK-20261121-R02",
+  "source_revision": "ccbc061fd5191fc431e3283a4f2732f4f2ffaaea",
+  "source_blobs_file": "source-blobs.txt",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_mode": "ephemeral, --network none, root filesystem read-only, only task output mount writable",
+  "transport": "private container Unix socket /tmp/.X11-unix/X88; TCP disabled",
+  "authentication": "private container-local X server; container is isolated from host display sockets",
+  "test": "runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.XResHeldKeyDisconnectIntegrationTests.test_later_delayed_keypress_after_disconnect_and_independent_release",
+  "attempts": [{"id":"normal-01","mode":"python3","count":1},{"id":"optimized-01","mode":"python3 -O","count":1}],
+  "decision_rule": "PASS only if each test returns zero and result reports PASS_SCOPED_XVFB_HELD_KEY_ORDER, XRes disconnection, initial held readback, independent release readback, horizon readback, and final keys up; record late_keypress_readback separately as the queue-order outcome.",
+  "limits": "Synthetic XTEST/Xvfb only; no physical input, target GUI, provider, Relay, standard MCP caller, MAP01, task success, matched efficiency, or reliability rate. No shared WSLg socket or permissions are touched."
+}

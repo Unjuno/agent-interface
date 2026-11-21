@@ -1,5 +1,13 @@
 # Repository organization plan
 
+**Issue #57 evidence custody (2026-11-21):** Two X11 follow-up packets now
+preserve the WSL TCP transport-identity HOLD and the passing isolated Docker
+Unix-socket normal/`-O` queue pair. Both are separately source-pinned and
+audited; neither changes the open Issue's product or research gates. Link them
+from the current goal and roadmap, and keep the next worker item scoped to
+standard-caller recovery/effect composition rather than repeating Xvfb queue
+drainage.
+
 **Issue #57 evidence update (2026-11-21):** The latest current-main focused
 recheck after PR #10368 passes normal mode but fails under `-O` at the existing
 3 s Save boundary and terminal receipt wait. Preserve it as a scheduling

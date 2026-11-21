@@ -1,0 +1,33 @@
+{
+  "attempt_id": "ISSUE57-DOCKER-XVFB-UNIX-QUEUE-RECHECK-20261121-R02B",
+  "interpretation": "No late synthetic KeyPress was observed 8.5 s after owner termination in either run; independent release transition and final all-keys-up were observed.",
+  "manifest_files_verified": 19,
+  "runs": {
+    "normal": {
+      "exit_code": 0,
+      "final_keys_up": true,
+      "independent_release_effect_observed": true,
+      "initial_a_down": true,
+      "late_keypress_observed": false,
+      "server_package": "xvfb=2:21.1.7-3+deb12u13",
+      "server_sha256": "6eda36f0c84969a0fbe3f411c4a16521620db8a16c13defbee690cad86bd9ef8",
+      "state_after_disconnect_a_down": true
+    },
+    "optimized": {
+      "exit_code": 0,
+      "final_keys_up": true,
+      "independent_release_effect_observed": true,
+      "initial_a_down": true,
+      "late_keypress_observed": false,
+      "server_package": "xvfb=2:21.1.7-3+deb12u13",
+      "server_sha256": "6eda36f0c84969a0fbe3f411c4a16521620db8a16c13defbee690cad86bd9ef8",
+      "state_after_disconnect_a_down": true
+    }
+  },
+  "scope_limit": "Synthetic XTEST/Xvfb only; does not prove standard MCP caller, production owner recovery, GUI task effect, live MAP01, efficiency, or reliability rate.",
+  "source_hashes": {
+    "source/runtime/guarded_x11_v1/test_xres_disconnect_fence_integration.py": "8615a1089b1dd7d231e57d50e9d0b4b3bcb1504c",
+    "source/runtime/guarded_x11_v1/xres_client_fence.py": "87f277cb62d01fe91425e636272b297af66ed4e8"
+  },
+  "status": "PASS_SCOPED_XVFB_QUEUE_RECHECK"
+}

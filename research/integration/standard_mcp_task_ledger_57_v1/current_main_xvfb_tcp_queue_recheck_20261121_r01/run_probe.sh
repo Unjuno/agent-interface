@@ -9,7 +9,8 @@ case "$mode" in
 esac
 
 packet=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-repo=$(git -C "$packet" rev-parse --show-toplevel)
+repo=$(CDPATH= cd -- "$packet/../../../.." && pwd)
+cd "$repo"
 run="$packet/runs/$mode"
 if [ -e "$run" ]; then
   echo "refusing to overwrite frozen run: $run" >&2

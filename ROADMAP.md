@@ -56,6 +56,17 @@ interval but had no residual membership effect. This is queue membership only,
 not semantic triage or merge readiness; no bulk closure follows. See the
 [r155 receipt](docs/maintenance/repository-inventory-recheck-20261121-r155.md).
 
+**Issue #57 isolated X11 delayed-input gate (2026-11-21):** WSL TCP-only Xvfb
+recheck R01 is retained as `HOLD_TRANSPORT_IDENTITY`: XRes could not map the
+remote client to a unique PID, so the queue discriminator did not run. The
+separate Docker private-Unix-socket Xvfb pair R02b passes in normal and `-O`:
+both runs confirmed owner disconnect, held-key readback, independent release,
+no delayed KeyPress at 8.5 s, and final all-keys-up. This is synthetic XTEST
+evidence only. Standard caller recovery, task effect/success, reliability,
+matched efficiency and live MAP01 remain open. See the
+[R01 packet](research/integration/standard_mcp_task_ledger_57_v1/current_main_xvfb_tcp_queue_recheck_20261121_r01/RESULT.md)
+and [R02b packet](research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_xvfb_unix_queue_recheck_20261121_r02b/RESULT.md).
+
 The next work must advance one scoped gate at a time, retain failures and
 unknowns, and re-read current source and ownership before any live or shared
 resource action.
