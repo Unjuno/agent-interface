@@ -2,7 +2,7 @@
 
 ## Baseline and method
 
-The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `17593f850bc425f9b25dc6c38f786dc3b08206da`; after r160, PRs #10404–#10413 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
+The latest complete Issue/PR membership snapshot is [r160](repository-inventory-recheck-20261121-r160.md), captured on main `f39e966b6478170a7a91f1eec7859d30046784bf`. The current main used for this crosswalk is `87f1afe2ad2202a3a5200a4add86190e9f6a1496`; after r160, PRs #10404–#10414 changed documentation only and made no Issue-state changes. The frozen r160 open-Issue set contains 1,643 IDs and has SHA-256 `2b878bf18f22dde388f76611c9c8ae317c70842aed3a06aaff26b66fb11e4aad` in its preserved CRLF form. Its canonical sorted decimal-ID list with LF terminators hashes to `89bc3a4f1f5ca2c135d01bf102ba585b5fea1f56f3c0c3eec881239bfd2fbde1`.
 
 Recomputed against current-main blobs:
 
@@ -73,6 +73,8 @@ All 25 B10 Issues were fetched and remain open; all 25 have exact central URLs. 
 
 The frozen B11 queue contains 25 Issues. Current-state reads found 24 open and one closed (#6990), with exact central URLs retained for all 25. Selective comment checks show #6957 explicitly does not establish a repository-wide concurrency/review gate; #6990 closed only the offline T8 receipt-schema audit and leaves earlier WSLc STOPs intact; #6975's offline T11 publication audit PASS does not change its T7 host-receipt STOP; and #7165 retains its first auditor-runtime `HOLD_AUDITOR_RUNTIME_ERROR`, not replaced by its later raw reconstruction audit. No Issue state changed.
 
-Continue with B12 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
+All 25 B12 Issues were fetched and remain open; all 25 have exact central URLs. Selective evidence checks confirm #7430's correction preserves the #7970 prohibition on new WSLc list/run/inventory calls pending ownership reconciliation; #7466's formal `FAIL_UNSAFE_RESUME` remains, while its later raw replay is supplemental artifact validation only; and #7709's `PASS_METHOD_SCOPED` is synthetic latency-inference method evidence, not live performance. No Issue state changed.
+
+Continue with B13 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
