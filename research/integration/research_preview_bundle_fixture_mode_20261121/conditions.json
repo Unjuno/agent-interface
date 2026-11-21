@@ -1,0 +1,19 @@
+{
+  "schema": "research_preview_bundle_fixture_mode_v1",
+  "tested_commit": "f9d55130ed6f591c4f478c3b81b210f9a7978b61",
+  "tested_source_path": "release/preview_bundle_v1/test_build_preview.py",
+  "tested_source_blob": "e8c3ad14342a0e74b13bcc61f7a84a257b106eb5",
+  "candidate_change": "After git add, explicitly set the two synthetic shell launcher entries to executable in the fixture index with git update-index --chmod=+x.",
+  "baseline": {
+    "windows": "Python 3.11.9; normal and -O fail 1/4 because fixture archive launchers are non-executable",
+    "ubuntu_wsl": "Python 3.12.3; normal and -O pass 4/4"
+  },
+  "candidate": {
+    "windows": "Python 3.11.9; normal and -O pass 4/4",
+    "ubuntu_wsl": "Python 3.12.3; normal and -O pass 4/4"
+  },
+  "runtime_dependencies_installed": false,
+  "external_downloads": false,
+  "live_target_or_provider_used": false,
+  "frozen_rc1_changed": false
+}
