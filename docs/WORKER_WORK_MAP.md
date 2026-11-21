@@ -17,9 +17,10 @@ review using the [organization plan](REPOSITORY_ORGANIZATION_PLAN.md),
 and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md); do not
 bulk-close from cohort or inventory counts.
 
-B13 #7794's A01/A02 evidence has now been custody-audited for transfer from
-Draft PR #7968; A05's successor replay is verified, but the parent stays open
-at `HOLD_ACCOUNTING`. No operational carbon/emissions result is established.
+B13 #7794's A01/A02 evidence is preserved byte-for-byte on main via merged PR
+#10431. Draft PR #7968 is closed as superseded with its branch/history retained.
+A05's successor replay is verified, but the parent stays open at
+`HOLD_ACCOUNTING`; no operational carbon/emissions result is established.
 
 ## Current work-map pointer — 2026-11-21, after PRs #10410–#10417 and r160
 
