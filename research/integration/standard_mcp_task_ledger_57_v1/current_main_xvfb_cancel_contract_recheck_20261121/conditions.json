@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-21",
+  "repository": "Unjuno/agent-interface",
+  "frozen_head": "3a3cfa18ea5843ed624ca4d590dddb05654e5faf",
+  "wsl_distro": "Ubuntu WSL2",
+  "python": "3.12.3",
+  "xvfb": "/usr/bin/Xvfb",
+  "xauth": "/usr/bin/xauth",
+  "python_xlib_available": true,
+  "source_hashes": {
+    "runtime/guarded_x11_v1/test_xres_client_fence.py": {
+      "git_blob": "c09254fa3ab124424e9262754a3c8d2d347ac34d",
+      "sha256": "e37bc5927fbff610a4d39b26b801178eb4957a9e66efb903c3112dc9f9ceaecb"
+    },
+    "runtime/guarded_x11_v1/cancel_supervisor.py": {
+      "git_blob": "27e0a4779d3ae4c7f02cd46fc1cdca8d5f32ca0d",
+      "sha256": "3003c46a06845948c7f5e9332cb3de902e5accb7a1e0d882d27837c9fc9016dc"
+    },
+    "runtime/guarded_x11_v1/test_cancel_supervisor.py": {
+      "git_blob": "8f7906bae71beb955571185d00f0bb45b12421d6",
+      "sha256": "6ecbf5309f48e6042625b4e3bfd1d4e87b8fd601caacb6713392d91d57ed046d"
+    },
+    "runtime/guarded_x11_v1/test_owned_supervisor_capability.py": {
+      "git_blob": "c91994442828bbd760b94c52472bc702331b79e9",
+      "sha256": "9eea358e5be081b966490b6df40627099aa434a9e3e250aacd59cfc2a9f5676c"
+    },
+    "runtime/guarded_x11_v1/private_display_owner.py": {
+      "git_blob": "14bd8b660b0316158ab31117776449e727e71c25",
+      "sha256": "ef842dda025ddc8101b82d8a4bdc086e61550d4eb94be632fe9fa712a3e371dc"
+    }
+  },
+  "wsl_state": {
+    "tmp_mode": "1777",
+    "x11_socket_dir_mode": "0777",
+    "existing_socket": "X0",
+    "active_xvfb_processes": 0,
+    "system_setting_changed": false
+  },
+  "runs": [
+    {
+      "errors": 3,
+      "result": "FAIL_ENVIRONMENT_XVFB_UNIX_SOCKET",
+      "duration_seconds": 5.933,
+      "environment": "WSL2; Windows-mounted worktree",
+      "tests": 41,
+      "mode": "normal",
+      "command": "python3 -m unittest -v runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_owned_supervisor_capability runtime.guarded_x11_v1.test_xres_client_fence"
+    },
+    {
+      "errors": 3,
+      "result": "FAIL_ENVIRONMENT_XVFB_UNIX_SOCKET",
+      "duration_seconds": 10.369,
+      "environment": "WSL2; Windows-mounted worktree",
+      "tests": 41,
+      "mode": "-O",
+      "command": "python3 -O -m unittest -v runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_owned_supervisor_capability runtime.guarded_x11_v1.test_xres_client_fence"
+    },
+    {
+      "errors": 2,
+      "result": "FAIL_ENVIRONMENT_XVFB_UNIX_SOCKET",
+      "duration_seconds": 1.1,
+      "environment": "WSL2; exact frozen runtime/ tree extracted to ext4 /tmp",
+      "tests": 2,
+      "mode": "normal",
+      "command": "python3 -m unittest -v runtime.guarded_x11_v1.test_owned_supervisor_capability.OwnedSupervisorCapabilityTests.test_guarded_supervisor_releases_retired_owner_key runtime.guarded_x11_v1.test_owned_supervisor_capability.OwnedSupervisorCapabilityTests.test_other_retired_owner_request_does_not_release_live_held_key"
+    },
+    {
+      "errors": 0,
+      "result": "PASS",
+      "duration_seconds": 1.626,
+      "environment": "WSL2; exact frozen runtime/ tree extracted to ext4 /tmp",
+      "tests": 34,
+      "mode": "normal",
+      "command": "python3 -m unittest -v runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence"
+    },
+    {
+      "errors": 0,
+      "result": "PASS",
+      "duration_seconds": 5.969,
+      "environment": "WSL2; exact frozen runtime/ tree extracted to ext4 /tmp",
+      "tests": 34,
+      "mode": "-O",
+      "command": "python3 -O -m unittest -v runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence"
+    }
+  ],
+  "diagnosis": {
+    "private_display_owner_start": "fails because Xvfb cannot create a usable UNIX listener",
+    "observed_stderr": "_XSERVTransmkdir: Mode of /tmp/.X11-unix should be set to 1777; _XSERVTransSocketCreateListener failed to bind",
+    "fixed_display_probe": "Xvfb :99 stayed alive but reported failed UNIX listener creation; no usable display socket",
+    "same_failure_on_ext4": true,
+    "cause_class": "WSL X11 socket directory mode/host state, not checkout filesystem",
+    "runtime_or_test_change": false
+  },
+  "excluded": "Do not count any Xvfb-dependent test as passed. This run did not test real X server cancellation/readback.",
+  "issue_comment_id": 7056227269
+}
