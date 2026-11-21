@@ -12,7 +12,8 @@ drainage.
 R01 runner-metadata deviation, R02 normal/optimized split, R03 3/3 optimized
 XRes timeouts, R04 one-second diagnostic, and R05 500 ms candidate. The candidate
 records improved disconnect/release observation while retaining the old task's
-delayed-effect failure and UNKNOWN/no-replay. Keep the raw attempts, conditions,
+held-A repeat failure and UNKNOWN/no-replay; the scheduled delayed B KeyPress
+was not observed. Keep the raw attempts, conditions,
 source pins, and audit together; do not merge a green unittest into a task-success
 claim. The next bounded item is public-result semantics plus late-request
 quarantine, with a separate writable path and no overlap with the MAP01 or
