@@ -1,4 +1,4 @@
-**Latest full whole-repository checkpoint r160 (captured 2026-11-21 at main `f39e966b6478170a7a91f1eec7859d30046784bf`; current-main crosswalk base `87f1afe2ad2202a3a5200a4add86190e9f6a1496`):** Complete paginated open Issue/PR reads found 1,643 Issues and 408 PRs, byte-identical to r159 with zero additions/removals; PRs #10402/#10403 had already merged. Since r160, PRs #10404–#10414 opened and merged without Issue-state changes and updated documentation only. This confirms membership only; semantic classification and custody reconciliation remain unfinished. The current-main navigation recheck found all 1,643 open Issues linked in at least one of the research-index primary table or `IDEAS_AND_OUTCOMES.md`; 459 still lack a primary research row, all inherited from the historical r51 queue. B01–B11 are linked 24/24, 25/25, 20/20, 23/23, 21/21, 22/22, 24/24, 24/24, 25/25, 25/25, and 24/25 respectively among currently open Issues; B08 and B11 each also retain one closed Issue URL. These are navigation routes rather than semantic dispositions. B07 confirms #2369 remains a nonbinding local-check proposal; workers run relevant local checks and record hosted-only gaps. B08 records that #2679's earlier probe did not test model-in-loop terminal gameplay and that #3382 closed only after a scoped source audit. B09 is routing/state only. B10's #6664 result is a protocol-model finding and #6693's paired Docker/WSLc study remains held for shared ownership. B11 records #6990's narrow offline-audit closure, which does not clear prior WSLc STOPs. B12 confirms #7430 preserves the #7970 WSLc boundary and #7466 retains its formal failure. B05's #643 package evidence advances Windows/WSL distribution checks but does not meet its three-platform acceptance. See the [r160 receipt](maintenance/repository-inventory-recheck-20261121-r160.md), [current-main crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md), [#57 current goal](CURRENT_GOAL.md), and [latest WSLc scoped result](../research/integration/wslc_local_runtime_receipt_fix_20261121/RESULT.md).
+**Latest full whole-repository checkpoint r160 (captured 2026-11-21 at main `f39e966b6478170a7a91f1eec7859d30046784bf`; current-main crosswalk base `87f1afe2ad2202a3a5200a4add86190e9f6a1496`):** Complete paginated open Issue/PR reads found 1,643 Issues and 408 PRs, byte-identical to r159 with zero additions/removals; PRs #10402/#10403 had already merged. Since r160, PRs #10404–#10415 updated documentation/crosswalks and #10416/#10417 added synthetic Fake X evidence, with no Issue-state changes. This confirms membership only; semantic classification and custody reconciliation remain unfinished. The current-main navigation recheck found all 1,643 open Issues linked in at least one of the research-index primary table or `IDEAS_AND_OUTCOMES.md`; 459 still lack a primary research row, all inherited from the historical r51 queue. B01–B11 are linked 24/24, 25/25, 20/20, 23/23, 21/21, 22/22, 24/24, 24/24, 25/25, 25/25, and 24/25 respectively among currently open Issues; B08 and B11 each also retain one closed Issue URL. These are navigation routes rather than semantic dispositions. B07 confirms #2369 remains a nonbinding local-check proposal; workers run relevant local checks and record hosted-only gaps. B08 records that #2679's earlier probe did not test model-in-loop terminal gameplay and that #3382 closed only after a scoped source audit. B09 is routing/state only. B10's #6664 result is a protocol-model finding and #6693's paired Docker/WSLc study remains held for shared ownership. B11 records #6990's narrow offline-audit closure, which does not clear prior WSLc STOPs. B12 confirms #7430 preserves the #7970 WSLc boundary and #7466 retains its formal failure. B05's #643 package evidence advances Windows/WSL distribution checks but does not meet its three-platform acceptance. See the [r160 receipt](maintenance/repository-inventory-recheck-20261121-r160.md), [current-main crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md), [#57 current goal](CURRENT_GOAL.md), and [latest WSLc scoped result](../research/integration/wslc_local_runtime_receipt_fix_20261121/RESULT.md).
 
 **Issue #57 G10 reuse-boundary audit (2026-11-21; based on main `ce6449f38a56e1731f01d1024837fb34c9c759a3`):** The retained Calc G10 archive remains useful as a narrow live positive control. A source-pinned read-only audit checked its 33 declared source hashes and 69 run files; the current comparison adapter rejects the old raw record because it has no reconciled caller receipt/event ledger, and primary provider usage is UNKNOWN. Preserve the record and do not adapt unknown usage into zero. The next comparison must be a fresh matched block through the standard caller, with cold/warm/invalidation/repair and all-attempt usage. See [the R01 crosswalk](../research/integration/g10_current_main_comparison_readiness_20261121/RESULT.md).
 
@@ -31,6 +31,36 @@ recheck after PR #10368 passes normal mode but fails under `-O` at the existing
 sensitivity result; do not widen timeouts without boundary-state evidence.
 The raw logs and limits are in
 [the focused cancellation packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_cancel_boundary_recheck_20261121/RESULT.md).
+
+**Issue #7728 / PR #7758 targeted disposition (2026-11-21):** The exact PR
+head remains draft and is `DIRTY` against current main; its A01 runner-custody
+and A02 stale-base holds remain. Both synthetic audit suites pass 3/3 normal and
+3/3 under `-O` on the exact PR head. Preserve the packet, do not merge or rerun
+the one-shot sensor observations, and keep #7728 open. The PR's stated two
+non-author approval quota conflicts with the current Worker Quickstart and is
+not enforced by GitHub protection, but is not the reason this old head cannot
+integrate. A fresh evidence/navigation-only successor is the safe path if this
+family is resumed. See the
+[disposition record](maintenance/pr7758-disposition-20261121.md). This is one
+targeted B13 family review; the full B13 batch and whole-repository semantic
+triage remain unfinished.
+
+**Issue #7722 / PR #7735 targeted disposition (2026-11-21):** The frozen
+synthetic T0 hypothesis failed despite a 71–77% p99 response reduction because
+1–3/10 control deadlines were still missed per schedulable trace. The original
+audit PASS was superseded after defects; the issue's later correction reports a
+separate read-only 18-run reconstruction and eight mutation classes, with zero
+formal reruns. PR #7735 remains Draft and 4,062 commits behind current main.
+Preserve the historical packet; do not rerun or infer host scheduling/GUI
+release behavior. Keep the Issue open while deciding whether to close only its
+synthetic T0 hypothesis; any OS/GUI follow-up is separate. See the [B13
+crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
+**Fake X release-boundary regressions (PRs #10416/#10417):** Both are now on
+main; their R01/R02 current-main results and limits are recorded in
+`docs/CURRENT_GOAL.md`. They test synthetic delayed input and a test-double
+lease-expiry refusal. They do not demonstrate physical input release, live GUI
+effect, task success, or recovery reliability.
 
 **Purpose:** make `Unjuno/agent-interface` understandable and safe for many
 independent workers while preserving every distinct research idea, result,

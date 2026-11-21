@@ -77,4 +77,39 @@ All 25 B12 Issues were fetched and remain open; all 25 have exact central URLs. 
 
 Continue with B13 using the same frozen ID join, first checking current Issue state and exact routes. Inspect current bodies, comments, linked PRs, and retained evidence only where a proposed family link or disposition depends on them. Keep leave-open, superseded, duplicate, and evidence-complete outcomes distinct; an exact URL or open/closed state alone never justifies closure. Shared index/map edits should follow completed family-level review, not precede it.
 
+### B13 targeted disposition — Issue #7728 / PR #7758
+
+The #7728 route remains exact in `IDEAS_AND_OUTCOMES.md`; its open state and
+research question are unchanged. The linked PR #7758 was directly checked on
+2026-11-21: it is still OPEN/DRAFT at head `f7f8fc24`, based on October main
+`c520359e`; GitHub reports `DIRTY`. Its A01 runner-source custody and A02
+stale-base holds remain in the PR's own evidence. Exact-head synthetic audit
+tests pass 3/3 each in normal and `-O`; this is not sensor, task-effect, T0 or
+T1 evidence. Keep the Issue and PR open, do not merge the obsolete head or
+repeat the one-shot captures. The two-approval language is inconsistent with
+the current Worker Quickstart and absent GitHub protection, but is not the
+integration blocker; a revived successor should remove that unsupported quota.
+See the [current PR disposition](pr7758-disposition-20261121.md). This is one
+targeted B13 semantic review, not a full B13 batch completion.
+
+### B13 targeted disposition — Issue #7722 / PR #7735
+
+Issue #7722's only frozen T0 allocation remains consumed. Its preregistered
+synthetic hypothesis failed: the reserved server reduced p99 service response
+by 71–77%, yet still missed 1–3 of 10 control deadlines on each schedulable
+trace. The original `METHOD_PASS_SCOPED` audit was explicitly superseded after
+defects were found. The later issue update reports a separate read-only checker
+reconstructed 18 retained runs with zero errors and rejected the original six
+mutations plus dispatch-order and premature-backpressure mutations; it reports
+zero candidate/frozen-auditor invocations. The reported 7/7 construction tests
+are repair-branch evidence, not a rerun of the consumed allocation.
+
+PR #7735 remains OPEN/DRAFT at `60d99065`, seven commits ahead of its old base
+and 4,062 commits behind current `main` (`b5c7dff`). Preserve its exact
+historical packet and the superseded-audit correction; do not rerun T0 or
+promote the supplemental checker to host-scheduling evidence. Keep #7722 open
+while deciding whether to close only its synthetic T0 hypothesis; any host/GUI
+study is a separate question requiring fresh eligibility and independent
+release evidence. See the [retained correction](https://github.com/Unjuno/agent-interface/issues/7722#issuecomment-5994116900), [audit-limit update](https://github.com/Unjuno/agent-interface/issues/7722#issuecomment-5985957545), and [PR #7735](https://github.com/Unjuno/agent-interface/pull/7735). This remains a targeted disposition, not a full B13 semantic review.
+
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
