@@ -1233,7 +1233,8 @@ class Win32Backend:
         deadline_token = _task_authority_deadline.set(deadline_ns)
         try:
             operation_receipts = getattr(self, "_program_operation_receipts", None)
-            if operation_receipts is not None and len(operation_receipts) != len(program["ops"]) * 4:
+            if (operation_receipts is not None
+                    and len(operation_receipts) < len(program["ops"]) * 4):
                 raise Win32BackendError("invalid program operation receipt buffer")
             for operation_index, op in enumerate(program["ops"]):
                 if operation_receipts is not None:

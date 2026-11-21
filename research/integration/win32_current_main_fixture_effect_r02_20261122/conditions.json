@@ -1,0 +1,16 @@
+{
+  "experiment": "win32-current-main-fixture-effect-r02",
+  "status": "PENDING",
+  "source_main": "6d15df538cff4467a6c72a84a93cfc4557917551",
+  "source_branch": "research/win32-current-main-live-fixture-r01-20261122",
+  "source_patch": "backend accepts a prestarted operation receipt buffer with capacity >= 4 * program operation count",
+  "source_test_evidence": "runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests and runtime.cli_v1.test_win32_standard_producer: 24/24 normal and 24/24 -O",
+  "action": "one A key_chord followed by release_all; no replay",
+  "application_effect_delay_ms": 6000,
+  "verified_late_input_horizon_ms": 2000,
+  "provider_or_model_calls": 0,
+  "fresh_fixture_required": true,
+  "fresh_operation_id_required": true,
+  "no_gzdoom_map01_claim": true,
+  "timeout_policy": "20 s terminal poll, at most one cancel and 20 s additional poll; one 12 s effect poll; no action retry"
+}
