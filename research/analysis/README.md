@@ -1298,6 +1298,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [Issue #7794 comparator semantics diagnostic A04](carbon_window_7794_comparator_a04_20261005/REPORT.md) — `PASS_DIAGNOSTIC_SCOPED`: independent audit reconstructed all 10 rows; nine A02 fixtures agreed and the fixed two-job discriminator separated global lexicographic from serial ASAP. Native macOS fallback; no emissions/operational claim.
+- [Issue #7794 A01 analytical construction](carbon_window_7794_a01/README.md) — `PASS_METHOD_SCOPED` for the finite three-job synthetic scheduler model; no realistic workload or emissions result.
+- [Issue #7794 A02 finite replay](carbon_window_7794_a02/README.md) — `PASS_METHOD_SCOPED` for the nine-case synthetic mechanics; A04/A05 later identify and diagnose the untested serial-ASAP versus global-lexicographic comparator distinction.
+- [Issue #7794 A01/A02 custody audit](carbon_window_7794_a01_a02_import_20261122/CUSTODY_AUDIT.md) — exact unique evidence imported from Draft PR #7968; parent #7794 remains `HOLD_ACCOUNTING`.
 
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
