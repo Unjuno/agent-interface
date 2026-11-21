@@ -166,7 +166,22 @@ hash-frozen traces; merged PR #8182 preserves the A01 CLI STOP and separate A02
 and explicitly excludes real workload bounds, host/WSL scheduling, GUI behavior,
 physical release, and product deadlines. This does not close related Issue
 #8061 or resolve #7722's consumed allocation. Keep the historical r160 batch
-counts as a dated baseline; the frozen 25-item B13 cohort now has 24 open Issues
-and one closed (#7748). See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7748#issuecomment-7064746136), [PR #7762](https://github.com/Unjuno/agent-interface/pull/7762), and [PR #8182](https://github.com/Unjuno/agent-interface/pull/8182).
+counts as a dated baseline; at this first closure the frozen 25-item B13 cohort had 24 open Issues and one closed (#7748); the later #7765 closure brings it to 23 open and two closed. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7748#issuecomment-7064746136), [PR #7762](https://github.com/Unjuno/agent-interface/pull/7762), and [PR #8182](https://github.com/Unjuno/agent-interface/pull/8182).
+
+### B13 targeted closure — Issue #7765 / PRs #7772 and #7782
+
+Issue #7765 was closed on 2026-11-22 JST at its preregistered finite synthetic
+scope. T0 remains `HOLD_METHOD_DESIGN_CONFOUNDED` because the gain arms differed
+and no separate calibration was used. Calibration A01 remains an immutable
+`STOP_CALIBRATION_AUDIT_FAILED`; the distinct A02 training calibration is
+audited and selects fixed gain 0.9. The held-out result independently
+reconstructed 240 rows with zero errors, matched all goals, and recorded zero
+safety violations, but fixed gain required 185 corrections versus 191 for
+online Jacobian, failing the preregistered >=20% improvement gate as
+`FAIL_NO_GAIN`. Merged PR #7772 retains both studies; #7782 changes only harness
+validation. The closure comment and issue ledger explicitly state no real-GUI,
+task-effect, or host-timing result. Any live application comparison is a
+separate hypothesis. The 25-item B13 cohort now has 23 open Issues and two
+closed (#7748 and #7765), with all routes retained. See [the closure comment](https://github.com/Unjuno/agent-interface/issues/7765#issuecomment-7064868582), [PR #7772](https://github.com/Unjuno/agent-interface/pull/7772), and [PR #7782](https://github.com/Unjuno/agent-interface/pull/7782).
 
 This audit covers navigation for one inventory snapshot and one batch. It does not semantically triage the 1,643 open Issues, reconcile worktree/PR custody, or alter the #57/#58 product gates.
