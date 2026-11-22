@@ -1,0 +1,61 @@
+{
+  "schema": "v39-v15-keymap-journal-a06-prerun-v1",
+  "issue_preregistration_comment": 5986764896,
+  "branch": "research/v39-v15-keymap-journal-a06-20261005",
+  "base_commit": "5a290af598e4ef365ac5dfe66dca2c3c9916a20a",
+  "allocation": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "live": false
+  },
+  "hypothesis": "A one-shot suppressed server key-up can be detected by the post-batch keymap sample while per-case journals preserve completed cases and cleanup remains able to release the key; sampler failure must remain UNKNOWN.",
+  "conditions": [
+    "normal two-key release",
+    "one-shot suppressed SPACE key-up injection with later cleanup key-up allowed",
+    "post-batch sampler unavailable"
+  ],
+  "success_criteria": [
+    "normal reports both keys up",
+    "suppressed SPACE reports down/unverified while F8 reports up/verified",
+    "post-batch key state persists before cleanup and empty after owner cleanup",
+    "sampler failure yields UNKNOWN",
+    "no keymap query between explicit UPs",
+    "one per-case journal row per completed case and raw failure journal if any case aborts",
+    "no physical keyboard or application claims"
+  ],
+  "source_snapshot_commit": "bb5c39af103f2a5e0aa3229f16667a766a59a2b0",
+  "sources": [
+    {
+      "path": "research/doom/v39_v15_up_order_a04_20261005/sources/research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "git_blob": "f249ef036a9ec56740961af4aee375a28d9e133f",
+      "sha256": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9"
+    },
+    {
+      "path": "research/doom/v39_v15_up_order_a04_20261005/sources/research/live_control/input_transition_owner_v4.py",
+      "git_blob": "02c23c34e9382650a46e80d75fe49d5409153b75",
+      "sha256": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+    },
+    {
+      "path": "research/doom/v39_v15_up_order_a04_20261005/sources/research/live_control/input_transition_owner_v3.py",
+      "git_blob": "7d990a654804ba3ed7d406baee40c31b6cb27375",
+      "sha256": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456"
+    },
+    {
+      "path": "research/doom/v39_v15_up_order_a04_20261005/sources/research/live_control/input_owner_v12.py",
+      "git_blob": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+      "sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a"
+    },
+    {
+      "path": "research/doom/v39_v15_up_order_a04_20261005/sources/research/live_control/input_owner_v10.py",
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    }
+  ],
+  "candidate_sha256": "e2483233bb48b995058fd459d016574d1f7e7ab6c80db540c7f03637ba1623c0",
+  "runtime": {
+    "os": "Windows",
+    "python": "3.11.9"
+  },
+  "implementation_note": "Candidate uses the A04 harness's no-op PreviousBackend shim, plus production release-batch backend v1 and exact frozen owner snapshots. It does not exercise V39/V15 controller startup or the full typed parent backend."
+}
