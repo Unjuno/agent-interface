@@ -1291,7 +1291,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         program = options.pop('program')
                         report = owner.dispatch(program, **options)
                 elif operation == 'observe':
-                    report = observation_backend(deepcopy(targets), **options)
+                    report = observe(deepcopy(targets), **options)
                 else:
                     program = options.pop('program')
                     report = dispatch(program, deepcopy(targets), **options)

@@ -97,6 +97,13 @@ Treat the C: result as the candidate's qualified local suite and keep the D:
 failure as a host-storage confound. See the [R19 comparison](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_temp_volume_r19_20261123/RESULT.md)
 and [R20 full suite](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_ssd_r20_20261123/RESULT.md).
 
+The initial CI run found the binding was also applied to one-shot MCP, breaking
+five existing tests that replace the observer after server construction. The
+final candidate narrows binding to `supervised-win32`; the ordinary observer
+lookup remains unchanged. R21's first combined run had one WinError 267 due to
+its deep TEMP path. R22 passes both affected modules, 94 tests in normal and
+`-O`, with a short C: TEMP. See [R22](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_scope_corrected_combined_r22_20261123/RESULT.md).
+
 - **Portable package:** Windows and Ubuntu WSL deterministic package/startup
   checks pass 21/21 normally and under `-O`; outside-checkout `doctor` and
   `validate --help` pass with side-effect authority disabled. See the
