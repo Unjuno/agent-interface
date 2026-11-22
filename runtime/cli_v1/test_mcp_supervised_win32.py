@@ -1656,6 +1656,45 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(close["status"], "closed")
         self.assertTrue(supervisor.closed)
 
+    def test_recovered_unknown_task_gate_requires_exact_recovery_custody(self):
+        action = {"status": "unknown", "operation_id": "1" * 32,
+            "target_generation": GENERATION}
+        recovery = {"operation_id": action["operation_id"],
+            "target_generation": GENERATION, "phase": "recovered",
+            "status": "recovered", "release_confirmed": True,
+            "late_input_horizon_verified": True}
+        cancellation = {"status": "recovered",
+            "automatic_completion_recovery": True,
+            "release_confirmed": True, "result": recovery}
+        self.assertTrue(mcp_server_module
+            ._recovered_completion_is_task_verifiable(action, cancellation))
+
+        invalid_recovery = [
+            ("operation_id", "2" * 32),
+            ("target_generation", "b" * 64),
+            ("phase", "unknown"),
+            ("status", "unknown"),
+            ("release_confirmed", False),
+            ("late_input_horizon_verified", False),
+            ("late_input_horizon_verified", None),
+        ]
+        for key, value in invalid_recovery:
+            with self.subTest(recovery_field=key, value=value):
+                candidate = {**cancellation,
+                    "result": {**recovery, key: value}}
+                self.assertFalse(mcp_server_module
+                    ._recovered_completion_is_task_verifiable(
+                        action, candidate))
+        self.assertFalse(mcp_server_module
+            ._recovered_completion_is_task_verifiable(
+                {**action, "status": "completed"}, cancellation))
+        self.assertFalse(mcp_server_module
+            ._recovered_completion_is_task_verifiable(
+                action, {**cancellation, "automatic_completion_recovery": False}))
+        self.assertFalse(mcp_server_module
+            ._recovered_completion_is_task_verifiable(
+                action, {**cancellation, "release_confirmed": False}))
+
     async def test_supervised_task_oracle_certifies_exact_completed_action_once(self):
         owner, producer, _ = self.make_components()
         oracle_calls = []
