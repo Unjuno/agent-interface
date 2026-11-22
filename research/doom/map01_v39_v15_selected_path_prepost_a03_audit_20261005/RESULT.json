@@ -1,0 +1,52 @@
+{
+  "auditor_invocations": 1,
+  "baseline_checks_passed": 50,
+  "baseline_checks_total": 50,
+  "baseline_errors": [],
+  "candidate_invocations": 0,
+  "errors": [],
+  "input_sha256": {
+    "audit_v1": "9e44c3a1cfb34715ebcb551cf59fac35961afbf6363d9c31fbf648c541614ce2",
+    "pre_run": "98581f50e8ccb3e3914aca454975e4dcd523575acf09023e42971dd1b3ce13e7",
+    "raw": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596"
+  },
+  "mutation_controls": [
+    {
+      "name": "admission_row_not_release",
+      "rejected": true
+    },
+    {
+      "name": "lost_key_hidden_by_sample",
+      "rejected": true
+    },
+    {
+      "name": "suppressed_up_relabelled_delivered",
+      "rejected": true
+    },
+    {
+      "name": "lost_space_classification_wrong",
+      "rejected": true
+    },
+    {
+      "name": "missing_release_transition",
+      "rejected": true
+    },
+    {
+      "name": "terminal_retained_key_erased",
+      "rejected": true
+    },
+    {
+      "name": "physical_authority_claim_added",
+      "rejected": true
+    }
+  ],
+  "mutation_controls_rejected": 7,
+  "mutation_controls_total": 7,
+  "parent_audit_status": "FAIL",
+  "retries": 0,
+  "schema": "v39-v15-selected-path-prepost-a03-audit-v1",
+  "scope": "Raw-only audit of one synthetic fake-X source-composition candidate. It can confirm the retained trace detects the simulated lost SPACE KeyRelease and records fail-closed cleanup with key 65 still held. It does not prove real X11, physical key state, application effect, useful feedback, latency, recovery efficacy, live threat response, or gameplay; XSync is server synchronization only.",
+  "source_base": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "source_commit": "6bbdc0a705b60c9794805db966889fd65006cd61",
+  "status": "PASS_AUDIT_V2_LOST_RELEASE_DETECTION_SCOPED"
+}
