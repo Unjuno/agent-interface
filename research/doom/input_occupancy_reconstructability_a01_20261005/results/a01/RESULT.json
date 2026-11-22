@@ -1,0 +1,80 @@
+{
+  "next_measurement_minimum": [
+    "correlate each down/up with immutable actuation_id, intent token, program id and step",
+    "retain conservative per-key physical_down_interval and physical_up_interval sample brackets",
+    "retain every ordinary up and emergency cleanup up result; aggregate empty release alone is insufficient",
+    "retain independent first useful task-effect receipt and time with its source frame/program"
+  ],
+  "run_id": "map01-held-input-reconstructability-a01-20261005",
+  "runs": [
+    {
+      "admissions_with_physical_down_interval_and_actuation_id": 0,
+      "admissions_with_program_id_and_step": 0,
+      "all_terminals_verified_empty": true,
+      "down_actuation_ids": [],
+      "event_type_counts": {
+        "accepted": 7,
+        "cancel_requested": 6,
+        "clock_probe": 1,
+        "coast_result": 5,
+        "command": 14,
+        "input_admission": 11,
+        "keys_held": 11,
+        "observation": 119,
+        "post_control_score": 1,
+        "ready": 1,
+        "step_completed": 16,
+        "step_started": 22,
+        "terminal": 7,
+        "typed_observation": 119
+      },
+      "exact_per_key_occupancy_reconstructable": false,
+      "input_admission_count": 11,
+      "input_release_measurement_or_published_release_count": 0,
+      "keys_held_snapshot_count": 11,
+      "per_key_up_measurements_in_event_release_payloads": 0,
+      "per_key_up_measurements_in_owner_event_ledger": 0,
+      "release_events_with_program_id_and_step": 0,
+      "report_decision_count": 6,
+      "run": "map01-v38-integrated-threat-live-01",
+      "terminal_count": 7,
+      "up_actuation_ids": []
+    },
+    {
+      "admissions_with_physical_down_interval_and_actuation_id": 0,
+      "admissions_with_program_id_and_step": 0,
+      "all_terminals_verified_empty": true,
+      "down_actuation_ids": [],
+      "event_type_counts": {
+        "accepted": 9,
+        "cancel_requested": 7,
+        "clock_probe": 1,
+        "coast_result": 8,
+        "command": 17,
+        "input_admission": 39,
+        "input_released": 1,
+        "keys_held": 28,
+        "observation": 218,
+        "post_control_score": 1,
+        "ready": 1,
+        "step_completed": 35,
+        "step_started": 42,
+        "terminal": 9,
+        "typed_observation": 218
+      },
+      "exact_per_key_occupancy_reconstructable": false,
+      "input_admission_count": 39,
+      "input_release_measurement_or_published_release_count": 1,
+      "keys_held_snapshot_count": 28,
+      "per_key_up_measurements_in_event_release_payloads": 0,
+      "per_key_up_measurements_in_owner_event_ledger": 0,
+      "release_events_with_program_id_and_step": 0,
+      "report_decision_count": 6,
+      "run": "map01-v39-coast-liveness-live-01",
+      "terminal_count": 9,
+      "up_actuation_ids": []
+    }
+  ],
+  "scope": "retained log sufficiency only; absence of exact per-key edges does not mean input was stuck or unsafe",
+  "status": "FAIL_INSUFFICIENT_PER_KEY_EDGE_EVIDENCE"
+}
