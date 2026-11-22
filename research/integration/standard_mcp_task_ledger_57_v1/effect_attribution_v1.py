@@ -16,8 +16,8 @@ def adjudicate_effect(*, task_success, effect_observed_ns, authority_expiry_ns,
     bounds = (authority_expiry_ns, release_received_ns, horizon_end_ns)
     if any(type(value) is not int or value < 0 for value in bounds):
         raise ValueError("authority, release, and horizon times must be nonnegative integers")
-    if not authority_expiry_ns <= release_received_ns <= horizon_end_ns:
-        raise ValueError("time bounds must satisfy expiry <= release <= horizon")
+    if release_received_ns > horizon_end_ns:
+        raise ValueError("time bounds must satisfy release <= horizon")
     if effect_observed_ns is not None and (
             type(effect_observed_ns) is not int or effect_observed_ns < 0):
         raise ValueError("effect time must be a nonnegative integer or unknown")
@@ -26,7 +26,8 @@ def adjudicate_effect(*, task_success, effect_observed_ns, authority_expiry_ns,
         timing = "unknown"
     elif effect_observed_ns <= authority_expiry_ns:
         timing = "within_authority"
-    elif effect_observed_ns <= release_received_ns:
+    elif (authority_expiry_ns < release_received_ns
+          and effect_observed_ns <= release_received_ns):
         timing = "after_authority_before_release"
     elif effect_observed_ns <= horizon_end_ns:
         timing = "after_release_within_horizon"

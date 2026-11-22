@@ -51,9 +51,15 @@ those gates.
    [`post_authority_effect_attribution_v1`](../../research/integration/standard_mcp_task_ledger_57_v1/post_authority_effect_attribution_v1/RESULT.md)
    probe confirms the existing ledger collapses that case and an in-authority
    effect to the same `task_success=true`. Before counting recovered task
-   success in a matched comparison, carry factual final-state score separately
-   from effect timing and authority eligibility; the research candidate is not
-   wired into the frozen comparison evaluator yet.
+   success in a matched comparison, keep factual final-state score separate
+   from effect timing and authority eligibility. The offline synthetic score
+   receipt adapter is now composed with the reuse-horizon evaluator, and its
+   current-main normal-completion path also accepts only generation-bound
+   verified release/horizon custody. Neither establishes a live caller-to-score
+   handoff: R05 has no public results lookup or bracketing public captures, and
+   the recovered-task path still needs a fresh eligible standard-caller trial
+   plus repeated reliability evidence. See the
+   [normal-completion adapter packet](../../research/integration/standard_mcp_task_ledger_57_v1/completed_owner_handoff_r01_20261122/README.md).
 5. **Product boundary.** Retain Windows and Ubuntu WSL portable-runtime results
    as scoped packaging and basic-startup evidence. Public distribution, live
    X11/Win32 input, target permission flow, task effect, and side-effect
