@@ -34,7 +34,7 @@ success, comparative efficiency, reliability, or preview readiness.
 - The latest GitHub membership receipt is r165: **1,640 open Issues and
   405 open PRs**, collected against unchanged main
   `d5ada452527f97b90c3265966a6aebd7743cf483`. The exact sorted-ID hashes
-  match r164; #10463 opened and merged within the interval with no net queue
+  match r164; #10463 opened after r164 and merged before r165; it was absent from both snapshots, so no net queue delta
   change. See [r165](maintenance/repository-inventory-recheck-20261122-r165.md).
   Exact comparison with r152/r157 found no additions; Issues #7748/#7765/#7817
   and PRs #7968/#8181/#10227 are removed. This reconciles the two-PR delta
