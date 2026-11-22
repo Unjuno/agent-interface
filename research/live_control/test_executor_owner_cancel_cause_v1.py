@@ -68,7 +68,7 @@ class DeferredOwnerVisibility:
 
 def make_owner():
     names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
-             "Xlib.ext", "Xlib.ext.xtest")
+             "Xlib.ext", "Xlib.ext.xtest", "input_transition_owner_v4")
     saved = {name: sys.modules.get(name) for name in names}
     owner_module_names = ("input_owner_v12", "input_transition_owner_v3",
                           "input_transition_owner_v4")
