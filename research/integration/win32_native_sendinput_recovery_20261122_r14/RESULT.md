@@ -1,0 +1,9 @@
+# Win32 R14 — physical recovery observed; strict caller gate failed
+
+**Disposition: `PHASE1_RECOVERY_OBSERVED_ASYNC_RESULT_PHASE2_NOT_RUN`; full acceptance: FAIL.** Frozen main: `1839894946aac582ccc49b84bdebab68a3282807`. One disposable fixture was activated through Computer Use and the exact HWND was joined to native foreground and witnessed SHIFT-up state before public observation or dispatch.
+
+The pre-expiry public cancel correctly returned `cancel_not_due`. After the 8-second authority deadline, the public cancel call returned `pending`. A later `interface_results` read for the same call and operation reported `recovered`, `release_confirmed=true`, and native release/readback latency of 31 ms on the same target generation. The blocked producer exited (`-15` after supervisor termination). The 1.985-second late-input horizon contained 64 samples; every SHIFT read was up, on the same generation, with a maximum 47 ms sample gap. The fixture recorded only `ready`, exited with code 0, and the original foreground was restored.
+
+The frozen R10-derived acceptance requires the first post-expiry `interface_cancel` response itself to say `recovered`; this attempt returned `pending`, so the gate failed and the fresh-generation task was not run. The terminal `interface_results` recovery receipt is useful observed evidence but does not override that gate. No task effect, WSLc, Docker, provider, or model was used.
+
+The runner console emitted a `SpawnProcess` `BrokenPipeError`/`EOFError` traceback while the deliberately blocked producer was terminated. Fixture stderr remained empty and the fixture process exited 0. The full runner console stream was returned by the tool but was not captured as a separate raw file; this note preserves that limitation.
