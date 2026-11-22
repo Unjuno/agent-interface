@@ -1,0 +1,69 @@
+{
+  "bounds": {
+    "max_contexts_per_artifact": 1024,
+    "max_expanded_steps": 12,
+    "max_repeat": 2
+  },
+  "contexts": {
+    "active_targets": [
+      "editor",
+      "browser"
+    ],
+    "environment_transitions": "at most one nondeterministic change after any visible-event boundary, from/to any target-freshness state",
+    "fresh": [
+      false,
+      true
+    ]
+  },
+  "internal_event": "INTERNAL without side_effect only",
+  "model_id": "gui-macro-translation-validation-finite-v1",
+  "relation": "For every finite context script (initial state plus zero or one environment transition at a visible-event boundary) and cancellation point, exact equality of visible event traces. Only INTERNAL stutters. Unsupported operations and exceeded bounds are UNKNOWN and cannot certify.",
+  "source_ops": [
+    "guard",
+    "write",
+    "wait",
+    "observe",
+    "release",
+    "abort",
+    "yield",
+    "repeat"
+  ],
+  "source_rules": {
+    "abort": "release then abort(reason)",
+    "cancel": "before a nonterminal source step at the selected visible-event count, release then abort_cancel",
+    "guard": "sets authority only when fresh=true and active_target equals target; otherwise release then abort",
+    "repeat": "integer count 0..max_repeat",
+    "write": "requires prior matching guard and still-fresh matching target; otherwise release then abort",
+    "yield": "emit yield and terminate"
+  },
+  "target_ops": [
+    "CHECK",
+    "EMIT",
+    "WAIT",
+    "OBSERVE",
+    "RELEASE",
+    "ABORT",
+    "ABORT_NO_RELEASE",
+    "YIELD",
+    "CONTINUE",
+    "INTERNAL"
+  ],
+  "target_rules": {
+    "ABORT": "release then abort(reason)",
+    "ABORT_NO_RELEASE": "abort(reason) only",
+    "CHECK": "same guard rule",
+    "CONTINUE": "no event and proceed",
+    "EMIT": "emits declared effect even if unguarded; validator must reject any source-trace mismatch",
+    "INTERNAL": "stutters unless a side_effect field is present, which emits a forbidden event",
+    "YIELD": "emit yield and terminate",
+    "cancel_handler": "run handler on cancellation; frozen valid handler is RELEASE then ABORT_CANCEL"
+  },
+  "visible_events": [
+    "effect",
+    "wait",
+    "observe",
+    "release",
+    "abort",
+    "yield"
+  ]
+}
