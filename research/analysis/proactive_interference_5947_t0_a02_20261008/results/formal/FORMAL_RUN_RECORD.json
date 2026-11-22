@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "allocation_id": "5947-MULTI-UPDATE-PROVENANCE-T0-A02-20261008",
+  "issue": 8341,
+  "freeze_commit": "847332de8b1ce3a7044baf08792384ba5a1e585d",
+  "source_base_main": "fc595c0693750e4214d8f02f393b71db64db8894",
+  "branch": "research/5947-matched-context-t0-a02-20261008",
+  "branch_tip_at_execution": "847332de8b1ce3a7044baf08792384ba5a1e585d",
+  "candidate": {
+    "command": "python3 -B research/analysis/proactive_interference_5947_t0_a02_20261008/candidate.py research/analysis/proactive_interference_5947_t0_a02_20261008/results/formal/candidate.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_bytes": 507279,
+    "output_sha256": "fddae0822660244e03dfc9aca8a9807839d22081e2faf3dc72d770dcf4276280",
+    "rows": 50,
+    "matched_rows": 48,
+    "position_control_rows": 2
+  },
+  "independent_auditor": {
+    "command": "python3 -B research/analysis/proactive_interference_5947_t0_a02_20261008/auditor.py research/analysis/proactive_interference_5947_t0_a02_20261008/results/formal/candidate.json research/analysis/proactive_interference_5947_t0_a02_20261008/results/formal/auditor.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"errors\": [], \"matched_rows\": 48, \"position_rows\": 2, \"result\": \"PASS\"}\n",
+    "stderr": "",
+    "output_bytes": 66,
+    "output_sha256": "6727564a6b867e659e187f88e17acf9521f07d5eab9a720a2a68c0229bc7ffa1",
+    "result": "PASS",
+    "matched_rows": 48,
+    "position_rows": 2,
+    "errors": []
+  },
+  "environment": {
+    "os": "macOS Darwin 27.0.0",
+    "architecture": "arm64",
+    "python": "3.14.5",
+    "dependencies": "Python standard library only",
+    "execution_scope": "host-only; no isolation claim",
+    "container": "not used or required",
+    "model_calls": 0,
+    "network_gui_user_data_live_application": "none"
+  },
+  "post_formal_policy": {
+    "candidate_or_auditor_retries": 0,
+    "construction_tests_or_imports_after_candidate": 0,
+    "only_read_only_integrity_checks_performed": true
+  },
+  "scope_result": "PASS_FIXTURE_METHOD_SCOPED",
+  "limitations": [
+    "Synthetic authored fixtures only; no model-facing proactive-interference measurement.",
+    "Equal UTF-8 byte length and cue offset do not establish tokenizer, salience, attention, or semantic equivalence.",
+    "No natural GUI history, human outcome, task effect, latency, adaptation, safety, deployment, or generalization evidence.",
+    "No T1/model study authorization is implied."
+  ]
+}
