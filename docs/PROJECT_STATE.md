@@ -1,8 +1,20 @@
 # Project state and work order
 
-Updated 2026-11-23 from current `main` `cd708f52159cb87e38412640c49a59a0052c3e6d`.
+Updated 2026-11-23 from current `main` `b0bc13d71fd204e39d040584c2e3e9207a7879dd`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
+
+## Latest #57 composition result — 2026-11-23
+
+The current-main candidate composes public MCP observe/dispatch/exact-result
+lookup with automatic recovery and an independent task oracle. It allows task
+verification after automatic completion recovery only when the action remains
+UNKNOWN, recovery separately confirms release, and the matching late-input
+horizon is verified. The positive composition and unknown-custody negative
+control pass 2/2 normally and under `-O`; all external effects are fixtures.
+This does not establish native task effect, reliability, efficiency, MAP01, or
+Research Preview acceptance. Keep #57 and the project goal open. See the
+[R01 packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovered_caller_r01_20261123/RESULT.md).
 
 ## What the project is trying to finish
 
