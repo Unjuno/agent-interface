@@ -1,0 +1,27 @@
+{
+  "experiment": "win32-public-task-effect-r06",
+  "status": "FROZEN_NOT_RUN",
+  "run_id": "a23d2911ee634b31adb901fdb4340f37",
+  "source_main": "d8ad74eba8e7043276cf0ba48778c1a0bbef2023",
+  "scope": "one fresh native fixture; exact public observe/dispatch/results/observe; one focus+A+release_all; independent fixture oracle; no retry; 2s neutral horizon",
+  "provider": "none",
+  "exclusions": [
+    "MAP01",
+    "recovery rate",
+    "provider efficiency",
+    "Research Preview acceptance"
+  ],
+  "target_title": "Agent Interface Win32 Fixture",
+  "effect_delay_ms": 6000,
+  "horizon_ms": 2000,
+  "max_horizon_gap_ms": 100,
+  "program_id": "r06-acf1d89cee1a470cb07d852709ce04fe",
+  "lease_id": "r06-acf1d89cee1a470cb07d852709ce04fe",
+  "call_id": "acf1d89cee1a470cb07d852709ce04fe",
+  "task_score": "independent fixture event/effect file",
+  "stop_rules": [
+    "Do not dispatch unless exactly one fresh fixture window is present and foreground identity matches.",
+    "Single bounded dispatch only; if unresolved, cancel once, preserve UNKNOWN, never replay.",
+    "Retain all MCP responses, event/effect files and cleanup receipt before closing exact run-owned fixture."
+  ]
+}
