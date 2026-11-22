@@ -2,6 +2,15 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+**2026-11-23 post-merge checkpoint (main `1bf4d236`, PR #10470):** The
+supervised-win32 observer is now bound per server; ordinary observer behavior
+is preserved. R22 passes 94 focused ordinary/supervised MCP tests in both
+modes. R23 passes ten fresh Fake public-recovery lifecycle attempts (5 normal,
+5 `-O`) with callback, release/horizon and oracle identity evidence. This is
+synthetic only; native task effect, real recovery reliability and integrated
+efficiency remain open. Next run a fresh independently scored standard-caller
+native task-effect/recovery trial. See [R23](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r23_20261123/RESULT.md).
+
 
 **Recovery lifecycle diagnostic update — 2026-11-23:** R05 did not exercise its drain path; R06/R07 are failed designs; R08 verifies only a minimal delayed-observation Future drain. R09 (7/10) and R10 (8/10) remain mixed and cannot be classified as verified Fake-only because R10's optimized-02 orphan report came from real Win32 observation (`invalid HWND`, no input dispatched, owner call count zero). R11 failed on the wrong envelope oracle; corrected minimal R12 passed normal and `-O` and confirms only direct fake injection. The compiled-caller anomaly remains unresolved; instrument callback identity/raw response and detached worker state before freezing another lifecycle cohort. See [R05–R12 packets](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_drain_r05_20261123/RESULT.md).
 
