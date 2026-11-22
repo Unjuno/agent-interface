@@ -1,0 +1,66 @@
+{
+  "cases": [
+    {
+      "after": {
+        "type": "int",
+        "value": 11
+      },
+      "before": {
+        "type": "int",
+        "value": 10
+      },
+      "case": "integer_control",
+      "error": "AttributeError(\"'Game' object has no attribute 'get_available_game_variables'\")",
+      "readback": {
+        "type": "int",
+        "value": 11
+      },
+      "receipt_status": "UNKNOWN",
+      "row_status": "UNKNOWN",
+      "values_present": false
+    },
+    {
+      "after": {
+        "type": "int",
+        "value": 11
+      },
+      "before": {
+        "type": "int",
+        "value": 10
+      },
+      "case": "float_alias",
+      "error": "AttributeError(\"'Game' object has no attribute 'get_available_game_variables'\")",
+      "readback": {
+        "type": "float",
+        "value": 11.0
+      },
+      "receipt_status": "UNKNOWN",
+      "row_status": "UNKNOWN",
+      "values_present": false
+    },
+    {
+      "after": {
+        "type": "int",
+        "value": 1
+      },
+      "before": {
+        "type": "int",
+        "value": 0
+      },
+      "case": "bool_alias",
+      "error": "AttributeError(\"'Game' object has no attribute 'get_available_game_variables'\")",
+      "readback": {
+        "type": "bool",
+        "value": true
+      },
+      "receipt_status": "UNKNOWN",
+      "row_status": "UNKNOWN",
+      "values_present": false
+    }
+  ],
+  "decision": "PASS_FAIL_CLOSED",
+  "schema": "scorer-endpoint-read-type-7685-a01-v1",
+  "scope": "candidate construction behavior under stubs only",
+  "source_sha256": "c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5",
+  "subject_pr_head": "5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0"
+}
