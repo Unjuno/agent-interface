@@ -1,0 +1,28 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r01",
+  "disposition": "PASS_SYNTHETIC_FAILURE_USAGE_DURABLE_JOIN",
+  "host": "Windows CPython 3.13.14",
+  "tests": {
+    "normal": {"passed": 2, "failed": 0, "skipped": 0, "exit_code": 0},
+    "optimized": {"passed": 2, "failed": 0, "skipped": 0, "exit_code": 0}
+  },
+  "allocation_outcome": "CALLER_FAILED",
+  "allocation_audit": "audited",
+  "attempt_status": "failed",
+  "call_id": "turn-ledger-1",
+  "thread_id": "thread-ledger-1",
+  "requested_model": "synthetic-model",
+  "requested_effort": "medium",
+  "usage": {
+    "input_tokens": 1234,
+    "cached_input_tokens": 234,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 56,
+    "reasoning_output_tokens": 12
+  },
+  "execution_receipt_persisted": false,
+  "effect_receipt_persisted": false,
+  "live_provider": false,
+  "gui_or_native_input": false,
+  "three_arm_prospective_run": false
+}

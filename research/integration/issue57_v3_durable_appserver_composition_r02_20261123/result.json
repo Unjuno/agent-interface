@@ -1,0 +1,32 @@
+{
+  "schema": "issue57-v3-prospective-boundary-r02",
+  "status": "PASS_FAIL_CLOSED_INCOMPLETE_ENVELOPE_BOUNDARY",
+  "source_base": "490d7bcb4d84927116112e5ff348cdeadfc489d6",
+  "successful_runs": [
+    {
+      "mode": "normal",
+      "exit_code": 0,
+      "recorded": 4,
+      "rows_held": 4,
+      "missing": 14,
+      "dispatch_enabled": false,
+      "repetitions": 2
+    },
+    {
+      "mode": "optimized",
+      "exit_code": 0,
+      "recorded": 4,
+      "rows_held": 4,
+      "missing": 14,
+      "dispatch_enabled": false,
+      "repetitions": 2
+    }
+  ],
+  "projection_reason": "task_telemetry_incomplete",
+  "custody_reason": "task_custody_missing",
+  "provider_called": false,
+  "gui_used": false,
+  "live_dispatch_enabled": false,
+  "setup_failures_preserved": 2,
+  "limitation": "Incomplete caller envelopes only; not authentic v3 outcome/usage integration."
+}
