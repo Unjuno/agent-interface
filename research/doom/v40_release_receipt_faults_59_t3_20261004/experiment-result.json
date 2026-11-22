@@ -1,0 +1,162 @@
+{
+  "schema": "v40-release-receipt-fault-injection-v1",
+  "scope": "host-side cancellation helper construction only",
+  "cases": [
+    {
+      "helper": "initial",
+      "case": "valid_empty_release",
+      "disposition": "accepted",
+      "error": null,
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [],
+      "expected_error": "invalidated cover before planning did not verify empty release"
+    },
+    {
+      "helper": "initial",
+      "case": "completed_instead_of_cancelled",
+      "disposition": "rejected",
+      "error": "invalidated cover before planning did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [],
+      "expected_error": "invalidated cover before planning did not verify empty release"
+    },
+    {
+      "helper": "initial",
+      "case": "unverified_release",
+      "disposition": "rejected",
+      "error": "invalidated cover before planning did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [],
+      "expected_error": "invalidated cover before planning did not verify empty release"
+    },
+    {
+      "helper": "initial",
+      "case": "key_still_down",
+      "disposition": "rejected",
+      "error": "invalidated cover before planning did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [],
+      "expected_error": "invalidated cover before planning did not verify empty release"
+    },
+    {
+      "helper": "initial",
+      "case": "button_still_down",
+      "disposition": "rejected",
+      "error": "invalidated cover before planning did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [],
+      "expected_error": "invalidated cover before planning did not verify empty release"
+    },
+    {
+      "helper": "initial",
+      "case": "release_missing",
+      "disposition": "rejected",
+      "error": "invalidated cover before planning did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [],
+      "expected_error": "invalidated cover before planning did not verify empty release"
+    },
+    {
+      "helper": "renewal",
+      "case": "valid_empty_release",
+      "disposition": "accepted",
+      "error": null,
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [
+        "turn-t3"
+      ],
+      "expected_error": "invalidated cover did not verify empty release"
+    },
+    {
+      "helper": "renewal",
+      "case": "completed_instead_of_cancelled",
+      "disposition": "rejected",
+      "error": "invalidated cover did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [
+        "turn-t3"
+      ],
+      "expected_error": "invalidated cover did not verify empty release"
+    },
+    {
+      "helper": "renewal",
+      "case": "unverified_release",
+      "disposition": "rejected",
+      "error": "invalidated cover did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [
+        "turn-t3"
+      ],
+      "expected_error": "invalidated cover did not verify empty release"
+    },
+    {
+      "helper": "renewal",
+      "case": "key_still_down",
+      "disposition": "rejected",
+      "error": "invalidated cover did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [
+        "turn-t3"
+      ],
+      "expected_error": "invalidated cover did not verify empty release"
+    },
+    {
+      "helper": "renewal",
+      "case": "button_still_down",
+      "disposition": "rejected",
+      "error": "invalidated cover did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [
+        "turn-t3"
+      ],
+      "expected_error": "invalidated cover did not verify empty release"
+    },
+    {
+      "helper": "renewal",
+      "case": "release_missing",
+      "disposition": "rejected",
+      "error": "invalidated cover did not verify empty release",
+      "cancel_command": {
+        "op": "cancel",
+        "id": "cover-t3"
+      },
+      "planner_interrupts": [
+        "turn-t3"
+      ],
+      "expected_error": "invalidated cover did not verify empty release"
+    }
+  ]
+}
