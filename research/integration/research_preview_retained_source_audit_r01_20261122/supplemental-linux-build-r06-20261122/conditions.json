@@ -1,0 +1,23 @@
+{
+  "attempt_id": "research-preview-bundle-build-linux-r06-20261122",
+  "base_main": "128c33f22a042b83a51351debdc32ef3ae5bfa4b",
+  "candidate_commit": "6c50fdce0d857fbf1a7c647bcd6ca9a17f8c05c0",
+  "host": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "checkout": "/home/user/agent-interface-preview-build-r04",
+  "command": [
+    "/usr/bin/python3",
+    "/home/user/agent-interface-preview-build-r04/release/preview_bundle_v1/build_preview.py",
+    "--root",
+    "/home/user/agent-interface-preview-build-r04",
+    "--out",
+    "/home/user/agent-interface-preview-output-r06"
+  ],
+  "object_store_policy": "Use existing r03 and Windows Git object stores; GIT_NO_LAZY_FETCH=1; no new blob transfer.",
+  "scope": "Build a deterministic Research Preview artifact from the clean Linux candidate and audit retained evidence after extraction.",
+  "live_mode": false,
+  "model_calls": false,
+  "gui_actions": false,
+  "allocation": false,
+  "task_actions": false,
+  "dependency_install": false
+}
