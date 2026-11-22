@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "expected_reason": "complete",
+      "expected_status": "PASS",
+      "name": "baseline",
+      "reason": "complete",
+      "status": "PASS",
+      "v1_reason": "complete",
+      "v1_status": "PASS"
+    },
+    {
+      "expected_reason": "invalid_up_context_type",
+      "expected_status": "FAIL",
+      "name": "boolean_up_step",
+      "reason": "invalid_up_context_type",
+      "status": "FAIL",
+      "v1_reason": "complete",
+      "v1_status": "PASS"
+    },
+    {
+      "expected_reason": "invalid_sequence_type",
+      "expected_status": "FAIL",
+      "name": "boolean_up_sequence",
+      "reason": "invalid_sequence_type",
+      "status": "FAIL",
+      "v1_reason": "complete",
+      "v1_status": "PASS"
+    },
+    {
+      "expected_reason": "invalid_sequence_type",
+      "expected_status": "FAIL",
+      "name": "boolean_admission_sequence",
+      "reason": "invalid_sequence_type",
+      "status": "FAIL",
+      "v1_reason": "complete",
+      "v1_status": "PASS"
+    },
+    {
+      "expected_reason": "invalid_sequence_type",
+      "expected_status": "FAIL",
+      "name": "float_release_sequence",
+      "reason": "invalid_sequence_type",
+      "status": "FAIL",
+      "v1_reason": "complete",
+      "v1_status": "PASS"
+    },
+    {
+      "expected_reason": "unbound_or_cross_execution_admission",
+      "expected_status": "FAIL",
+      "name": "admission_step_outside_execution",
+      "reason": "unbound_or_cross_execution_admission",
+      "status": "FAIL",
+      "v1_reason": "complete",
+      "v1_status": "PASS"
+    }
+  ],
+  "schema": "map01-key-release-binding-types-a01-v1"
+}

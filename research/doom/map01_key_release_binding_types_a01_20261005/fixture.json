@@ -1,0 +1,13 @@
+{
+  "execution": {"id": "exec-1", "step": 2},
+  "admissions": [{"admission_id": "adm-1", "execution_id": "exec-1", "step": 2, "key": "Down", "outcome": "admitted", "seq": 1}],
+  "key_ups": [{"admission_id": "adm-1", "execution_id": "exec-1", "step": 2, "key": "Down", "outcome": "up_confirmed", "seq": 2}],
+  "releases": [{"execution_id": "exec-1", "outcome": "empty_verified", "seq": 3}],
+  "mutations": [
+    {"name": "boolean_up_step", "expected_status": "FAIL", "expected_reason": "invalid_up_context_type"},
+    {"name": "boolean_up_sequence", "expected_status": "FAIL", "expected_reason": "invalid_sequence_type"},
+    {"name": "boolean_admission_sequence", "expected_status": "FAIL", "expected_reason": "invalid_sequence_type"},
+    {"name": "float_release_sequence", "expected_status": "FAIL", "expected_reason": "invalid_sequence_type"},
+    {"name": "admission_step_outside_execution", "expected_status": "FAIL", "expected_reason": "unbound_or_cross_execution_admission"}
+  ]
+}
