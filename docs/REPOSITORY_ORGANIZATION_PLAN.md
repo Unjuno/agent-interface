@@ -6,13 +6,13 @@ exact-ID membership receipt is still r163 (1,640 Issues / 407 PRs); the two-PR
 delta is not yet matched to exact IDs. Treat the count as a queue-size signal,
 not as a completed inventory audit or a reason to close anything.
 
-**Project status handoff (2026-11-22):** The one-page [project state dashboard](PROJECT_STATE.md)
-distinguishes main-verified gates, candidate-only integration, live evidence
-gaps, and repository custody work. R08 now preserves one complete no-provider
-Win32 public caller run and an offline measured-run/effect-handoff reconstruction.
-The run found three candidate adapter seams; five local comparison/effect/owner
+**Project status handoff (2026-11-22; main `7075902b6dd95da57a2e25819e2d2d6859239c25`):** The one-page [project state dashboard](PROJECT_STATE.md)
+distinguishes main-verified gates, integrated repairs, live evidence gaps, and
+repository custody work. R08 preserves one complete no-provider Win32 public
+caller run and an offline measured-run/effect-handoff reconstruction. Three
+adapter repairs are now on main via PR #10451; five comparison/effect/owner
 suites pass 70/70 normally and under `-O`. This remains one fixture result, not
-matched efficiency or recovery evidence; the candidate changes are not on main.
+matched efficiency or recovery evidence.
 See [R08](../research/integration/win32_recorded_task_effect_r08_20261122/README.md),
 [R07](../research/integration/win32_recorded_task_effect_r07_20261122/README.md),
 and the [R02 synthetic adapter result](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_effect_pair_handoff_r02_20261122/RESULT.md).

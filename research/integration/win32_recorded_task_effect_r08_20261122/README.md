@@ -42,7 +42,9 @@ validator did not unwrap the public `review-v1` receipt while checking its
 separate PNG block; the measured-run path did not project the standard program
 from the hash-verified recorded `interface_dispatch` request; and the completed
 effect handoff referenced an unbound `action_event`. These seams are repaired
-in the current local candidate in `recorded_comparison_adapter_v1.py`,
+in the implementation merged by PR #10451 at main
+`7075902b6dd95da57a2e25819e2d2d6859239c25` in
+`recorded_comparison_adapter_v1.py`,
 `comparison_measurement_v1.py`, and `effect_receipt_handoff_v1.py`, with focused
 tests. Five comparison/effect/owner suites pass **70/70 normally and 70/70 under
 `-O`**. Normal and optimized offline R08 outputs are byte-identical; hashes are
@@ -51,8 +53,9 @@ in `raw/normal/` and `raw/optimized/`.
 This is one no-provider fixture effect, not an efficiency comparison, recovery
 trial, reliability estimate, MAP01 result, distributable-runtime acceptance,
 or Research Preview graduation. The live action ran on the frozen main commit;
-the candidate adapters were used only afterward to validate and reconstruct
-retained evidence. They have not yet been integrated into main.
+the merged adapters were used afterward to validate and reconstruct retained
+evidence. PR #10451 integrates those repairs into main; the live fixture itself
+was not rerun against the post-merge main.
 
 ## Custody
 
