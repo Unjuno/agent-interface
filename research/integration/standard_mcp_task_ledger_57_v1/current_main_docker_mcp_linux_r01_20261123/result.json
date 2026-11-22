@@ -1,0 +1,19 @@
+{
+  "schema": "agent-interface/current-main-docker-mcp-linux-r01-v1",
+  "status": "HOLD_COMBINED_OPTIMIZED_TIMING_FAILURE",
+  "main": "d18eefdb558d8292649f235d61a22bcd5a4e1b53",
+  "image_id": "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+  "python": "CPython 3.11.2",
+  "network": "none",
+  "source_mount": "read-only",
+  "runs": {
+    "combined_normal": {"tests": 87, "passed": 87, "seconds": 96.444},
+    "combined_optimized": {"tests": 87, "passed": 86, "failed": 1, "seconds": 13.725, "failure": "cancelled transport did not enter dispatch worker within 2 s"},
+    "failing_case_isolated_optimized": {"tests": 1, "passed": 1, "seconds": 0.035},
+    "server_module_isolated_optimized": {"tests": 31, "passed": 31, "seconds": 2.165},
+    "guarded_module_isolated_optimized": {"tests": 56, "passed": 56, "seconds": 2.263}
+  },
+  "live_gui": false,
+  "model_or_provider": false,
+  "issue57_closed": false
+}

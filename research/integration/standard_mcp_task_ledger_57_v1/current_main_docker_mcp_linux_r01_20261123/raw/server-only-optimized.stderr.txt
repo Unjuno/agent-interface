@@ -1,0 +1,73 @@
+test_cancelled_transport_keeps_worker_and_receipt_without_replay (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_cancelled_transport_keeps_worker_and_receipt_without_replay) ... ok
+test_cli_and_mcp_preserve_identical_failed_presentation (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_cli_and_mcp_preserve_identical_failed_presentation) ... ok
+test_cli_exposes_supervised_win32_standard_session (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_cli_exposes_supervised_win32_standard_session) ... ok
+test_cli_restricts_late_input_horizon_to_supervised_win32 (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_cli_restricts_late_input_horizon_to_supervised_win32) ... usage: mcp_server [-h] --targets TARGETS --output-directory OUTPUT_DIRECTORY
+                  [--display DISPLAY]
+                  [--session-mode {one-shot,persistent-x11,guarded-x11,supervised-win32}]
+                  [--supervised-win32-late-input-horizon-ms MS]
+                  [--supervised-win32-deadline-cancel-policy {automatic,public-caller}]
+                  [--supervised-win32-deadline-cancel-grace-ms MS]
+                  [--guarded-process-identity] [--guarded-query-worker]
+                  [--guarded-observation-worker] [--guarded-window-lifecycle]
+                  [--guarded-retention-mode {files,journal}]
+                  [--guarded-owned-process]
+                  [--guarded-prestarted-cancel-supervisor]
+                  [--calc-launcher-executable CALC_LAUNCHER_EXECUTABLE]
+                  [--calc-gui-executable CALC_GUI_EXECUTABLE]
+                  [--calc-window-title-hint CALC_WINDOW_TITLE_HINT]
+                  [--calc-discovery-deadline-s CALC_DISCOVERY_DEADLINE_S]
+mcp_server: error: --supervised-win32-late-input-horizon-ms requires --session-mode supervised-win32
+ok
+test_dispatch_once_preserves_failure_and_fixed_targets (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_dispatch_once_preserves_failure_and_fixed_targets) ... ok
+test_failed_accepted_future_without_entry_releases_admission (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_failed_accepted_future_without_entry_releases_admission) ... ok
+test_image_is_forwarded_once_outside_text (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_image_is_forwarded_once_outside_text) ... ok
+test_invalid_target_configuration (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_invalid_target_configuration) ... ok
+test_journal_retention_requires_guarded_x11_and_is_forwarded_to_owned_process (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_journal_retention_requires_guarded_x11_and_is_forwarded_to_owned_process) ... ok
+test_non_owned_process_receives_selected_retention_mode (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_non_owned_process_receives_selected_retention_mode) ... ok
+test_overlapping_call_is_rejected_without_queueing_input (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_overlapping_call_is_rejected_without_queueing_input) ... ok
+test_owned_process_receives_default_retention_option_for_child (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_owned_process_receives_default_retention_option_for_child) ... ok
+test_portable_stdio_runs_outside_checkout (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_portable_stdio_runs_outside_checkout) ... Executing <Task pending name='Task-61' coro=<PublicMCPTests.test_portable_stdio_runs_outside_checkout() running at /workspace/runtime/cli_v1/test_mcp_server.py:461> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.142 seconds
+execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=23 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=23 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+ok
+test_public_win32_dispatch_rechecks_observed_generation_before_input (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_public_win32_dispatch_rechecks_observed_generation_before_input) ... ok
+test_real_executor_rejection_does_not_strand_admission (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_real_executor_rejection_does_not_strand_admission) ... ok
+test_rejected_queued_callable_is_revoked_before_late_entry (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_rejected_queued_callable_is_revoked_before_late_entry) ... ok
+test_report_persistence_failure_retains_result_without_replay (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_report_persistence_failure_retains_result_without_replay) ... ok
+test_report_references_require_explicit_opt_in_without_replay (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_report_references_require_explicit_opt_in_without_replay) ... ok
+test_report_replace_failure_keeps_temporary_bytes_without_claiming_receipt (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_report_replace_failure_keeps_temporary_bytes_without_claiming_receipt) ... ok
+test_request_persistence_failure_is_explicit_and_releases_busy_lock (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_request_persistence_failure_is_explicit_and_releases_busy_lock) ... ok
+test_result_pages_are_stable_when_new_calls_arrive (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_result_pages_are_stable_when_new_calls_arrive) ... ok
+test_retained_image_can_be_omitted_without_changing_result_or_replaying (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_retained_image_can_be_omitted_without_changing_result_or_replaying) ... ok
+test_retained_public_metadata_lookup_never_encodes_image (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_retained_public_metadata_lookup_never_encodes_image) ... ok
+test_retained_results_never_repeat_backend_and_reject_unknown_ids (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_retained_results_never_repeat_backend_and_reject_unknown_ids) ... ok
+test_static_validation_matches_inspector_without_action_or_retention (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_static_validation_matches_inspector_without_action_or_retention) ... ok
+test_stdio_clock_is_parent_bracketed_and_issues_no_authority (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_stdio_clock_is_parent_bracketed_and_issues_no_authority) ... execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=53 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=53 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+ok
+test_stdio_discovery_and_invalid_request_without_gui (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_stdio_discovery_and_invalid_request_without_gui) ... execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=57 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=57 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+ok
+test_strict_arguments_refuse_before_backend (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_strict_arguments_refuse_before_backend) ... ok
+test_submission_error_after_entry_keeps_running_slot_and_context (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_submission_error_after_entry_keeps_running_slot_and_context) ... ok
+test_unexpected_backend_and_review_errors_never_repeat_input (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_unexpected_backend_and_review_errors_never_repeat_input) ... ok
+test_validation_nesting_failure_retains_structured_metadata (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_validation_nesting_failure_retains_structured_metadata) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 2.165s
+
+OK
