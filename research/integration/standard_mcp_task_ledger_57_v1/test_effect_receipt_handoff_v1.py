@@ -114,6 +114,20 @@ class EffectReceiptHandoffTests(unittest.TestCase):
         self.assertTrue(adapted['authority_binding']['release_confirmed'])
         self.assertTrue(adapted['authority_binding']['horizon_verified'])
 
+    def test_public_action_id_is_resolved_separately_from_recorder_call_id(self):
+        self._install_public_capture_pair()
+        dispatch_event = next(event for event in self.events
+                              if event.get('method') == 'interface_dispatch')
+        public_body = json.loads(
+            dispatch_event['result']['result']['content'][0]['text'])
+        dispatch_event['call_id'] = 'd' * 32
+        self.assertEqual(public_body['call_id'], self.receipt['action_call_id'])
+        self.assertNotEqual(dispatch_event['call_id'], public_body['call_id'])
+        adapted = self.adapt()
+        self.assertEqual(adapted['authority_binding']['action_call_id'],
+                         public_body['call_id'])
+        self.assertTrue(adapted['eligible_task_success'])
+
     def test_public_win32_capture_pair_rejects_changed_action_generation(self):
         self._install_public_capture_pair()
         self.receipt['after_observation']['target_generation'] = 'd' * 64
@@ -351,11 +365,13 @@ class EffectReceiptHandoffTests(unittest.TestCase):
                              'interface_results'})
 
         async def execute_calls():
+            dispatch_recorder_id = 'f' * 32
             before = await caller.call_tool(
                 'attempt-1', 'capture-before', 'interface_guarded_observe',
                 {'capture': 'before'})
             dispatch = await caller.call_tool(
-                'attempt-1', call_id, 'interface_dispatch', {'operation_id': operation_id})
+                'attempt-1', dispatch_recorder_id, 'interface_dispatch',
+                {'operation_id': operation_id})
             lookup = await caller.call_tool(
                 'attempt-1', 'lookup-results-1', 'interface_results',
                 {'call_id': call_id})
@@ -385,6 +401,11 @@ class EffectReceiptHandoffTests(unittest.TestCase):
         image_path.parent.mkdir(parents=True, exist_ok=True)
         image_path.write_bytes(image_bytes)
         receipt = recorder.reconcile()
+        dispatch_event = next(event for event in receipt['events']
+                              if event.get('method') == 'interface_dispatch')
+        dispatch_body = json.loads(
+            dispatch_event['result']['result']['content'][0]['text'])
+        self.assertNotEqual(dispatch_event['call_id'], dispatch_body['call_id'])
         image_ref = {'path': 'raw/model-image.bin', 'sha256': image_digest}
         receipt['raw_refs'].append(image_ref)
         metadata = {
