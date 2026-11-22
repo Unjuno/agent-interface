@@ -374,6 +374,105 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                     model.close()
                 client.close(timeout=2)
 
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
+                         "Calc guarded adapter import requires Pillow")
+    def test_unknown_usage_and_deferred_attempts_reach_prospective_custody(self):
+        from datetime import datetime, timedelta, timezone
+        from research.live_control.adaptive_acquisition_caller_v3 import ModelFailure
+        from research.live_control.calc_g10_caller_v1 import run_g10_in_durable_allocation
+        from research.live_control.integrated_efficiency_protocol_v1 import ARMS, TASKS
+        from research.live_control.issue57_v3_prospective_run_v1 import ProspectiveRun
+
+        usage = {"input_tokens": 7, "cached_input_tokens": 1,
+                 "cache_write_input_tokens": 0, "output_tokens": 3,
+                 "reasoning_output_tokens": 1}
+        cases = [
+            ("unknown-usage", "CALLER_FAILED", "FAILED_UPSTREAM", None),
+            ("deferred-known-usage", "TASK_DEFERRED", "DEFERRED_UPSTREAM", usage),
+        ]
+        for case_name, expected_outcome, typed_status, case_usage in cases:
+            with self.subTest(case=case_name), tempfile.TemporaryDirectory(
+                    prefix="prospective-" + case_name + "-") as tmp:
+                root = Path(tmp)
+                workspace = root / "workspace"
+                workspace.mkdir()
+                image = root / "observation.fixture"
+                image.write_bytes(b"synthetic custody case " + case_name.encode())
+                allocation_path = root / "allocation.json"
+                allocation = {
+                    "allocation_id": "synthetic-" + case_name,
+                    "host_id": "synthetic-local-host", "owner": "offline-test",
+                    "exclusive": True,
+                    "expires_at_utc": (datetime.now(timezone.utc) +
+                        timedelta(hours=1)).isoformat(),
+                    "task_ids": list(TASKS), "arms": list(ARMS),
+                    "model": "synthetic-model",
+                    "settings": {"effort": "medium", "provider": "fake"},
+                    "order_seed": 57,
+                }
+                allocation_path.write_text(json.dumps(allocation), encoding="utf-8")
+                source_root = Path(__file__).resolve().parents[2]
+                run = ProspectiveRun(allocation_path, root / "prospective-run",
+                    source_root=source_root, allocation_verifier=lambda *_args: True)
+                task_source = hashlib.sha256(case_name.encode()).hexdigest()
+                ledger = run.create_task_custodian("plain", 0,
+                    source_sha256=task_source,
+                    observation_ids=["observation-" + case_name],
+                    conditions={"fixture": case_name})
+
+                def fail_provider(_payload):
+                    raise ModelFailure("synthetic " + case_name,
+                        call_id="turn-" + case_name,
+                        thread_id="thread-" + case_name,
+                        usage=case_usage, requested_model="synthetic-model",
+                        requested_effort="medium", visible_images_submitted=1,
+                        wait_ns=3, typed_status=typed_status)
+
+                journal = []
+                adapters = {
+                    "observe_source": lambda _payload: {"sequence": 1},
+                    "acquire_anchor": lambda _payload: {"image": str(image)},
+                    "anchor_model": fail_provider,
+                    "verify_effect": lambda _payload: {"status": "unavailable"},
+                    "journal": journal.append,
+                }
+                spec = {
+                    "target": "synthetic Calc task", "route": "cold",
+                    "coarse_origin": "caller_provided",
+                    "provided_coarse": {"status": "candidate"},
+                    "cached_target": None, "local_repair_on": [],
+                    "repair_on": [], "session_id": "prospective-" + case_name,
+                }
+                result = run_g10_in_durable_allocation(
+                    spec, adapters, lambda _payload: {"interface_id": "unused"},
+                    None, {}, ledger,
+                    perceive=lambda *_args: {}, verify_effect=lambda *_args: {},
+                    proposal_worker=object(), cancelled=lambda: False)
+                self.assertEqual(result["outcome"], expected_outcome, result)
+                self.assertEqual(result["attempt_ledger"][0]["usage"], case_usage)
+                projected = run.record_task("plain", 0, result,
+                    {"submission_count": 0, "exact_submission": False}, {
+                        "local_observations": 1, "durable_calls": 1,
+                        "pointer_admissions": 0,
+                        "old_target_pointer_admissions": 0,
+                        "releases_verified": False, "elapsed_ns": 1,
+                        "source_to_completion_ns": None, "input_feedback_ns": [],
+                        "repair": {"required": False,
+                            "old_reference_status": None,
+                            "old_reference_pointer_admissions": 0,
+                            "attempted": False, "succeeded": False},
+                    }, custodian_path=ledger.path)
+                task_event, = [json.loads(line) for line in
+                    (root / "prospective-run" / "lifecycle.jsonl").read_text(
+                        encoding="utf-8").splitlines()
+                    if json.loads(line)["event"] == "task"]
+                self.assertEqual(task_event["payload"]["custody"]["status"],
+                                 "audited")
+                self.assertEqual(projected["status"], "HOLD")
+                self.assertEqual(projected["reason"],
+                                 "failed_attempt_not_representable_in_v1")
+                self.assertEqual(run.finish([])["status"], "HOLD")
+
 
 if __name__ == "__main__":
     unittest.main()
