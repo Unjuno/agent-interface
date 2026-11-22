@@ -559,24 +559,25 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_cancelled_transport_keeps_worker_and_receipt_without_replay(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
-            entered, release = threading.Event(), threading.Event()
+            loop = asyncio.get_running_loop()
+            entered, presented = asyncio.Event(), asyncio.Event()
+            release = threading.Event()
             def delayed(*args, **kwargs):
-                entered.set()
+                loop.call_soon_threadsafe(entered.set)
                 if not release.wait(5):
                     raise RuntimeError('test deadline')
                 return {'status': 'returned'}
             from runtime.cli_v1.review import present_result
-            presented = threading.Event()
             def present(*args, **kwargs):
                 result = present_result(*args, **kwargs)
-                presented.set()
+                loop.call_soon_threadsafe(presented.set)
                 return result
             args = {'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0}
             with patch('runtime.cli_v1.mcp_server.dispatch', side_effect=delayed) as dispatch, patch(
                     'runtime.cli_v1.mcp_server.present_result', side_effect=present):
                 first = asyncio.create_task(server.call_tool('interface_dispatch', args))
                 try:
-                    self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+                    await asyncio.wait_for(entered.wait(), 2)
                     listed = json.loads((await server.call_tool('interface_results', {})).content[0].text)
                     call_id = listed['calls'][0]['call_id']
                     pending = json.loads((await server.call_tool('interface_results', {'call_id': call_id})).content[0].text)
@@ -589,7 +590,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(busy.isError)
                 finally:
                     release.set()
-                self.assertTrue(await asyncio.to_thread(presented.wait, 2))
+                await asyncio.wait_for(presented.wait(), 2)
                 reports = list(Path(td).glob('*/report.json'))
                 self.assertEqual(len(reports), 1)
                 self.assertEqual(json.loads(reports[0].read_text()), {'status': 'returned'})
