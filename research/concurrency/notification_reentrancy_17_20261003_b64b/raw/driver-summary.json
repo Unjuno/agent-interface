@@ -1,0 +1,72 @@
+{
+  "cells": [
+    {
+      "arm": "baseline",
+      "mode": "healthy",
+      "nested": [],
+      "outer_error": null,
+      "outer_identity": "A",
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "baseline",
+      "mode": "reentrant-true",
+      "nested": [
+        "A"
+      ],
+      "outer_error": null,
+      "outer_identity": "A",
+      "remaining": []
+    },
+    {
+      "arm": "baseline",
+      "mode": "reentrant-false",
+      "nested": [
+        "A"
+      ],
+      "outer_error": "RuntimeError",
+      "outer_identity": null,
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "outside",
+      "mode": "healthy",
+      "nested": [],
+      "outer_error": null,
+      "outer_identity": "A",
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "outside",
+      "mode": "reentrant-true",
+      "nested": [
+        "A"
+      ],
+      "outer_error": "TimeoutError",
+      "outer_identity": null,
+      "remaining": [
+        "B"
+      ]
+    },
+    {
+      "arm": "outside",
+      "mode": "reentrant-false",
+      "nested": [
+        "A"
+      ],
+      "outer_error": "TimeoutError",
+      "outer_identity": null,
+      "remaining": [
+        "B"
+      ]
+    }
+  ],
+  "driver_pid": 7,
+  "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]"
+}

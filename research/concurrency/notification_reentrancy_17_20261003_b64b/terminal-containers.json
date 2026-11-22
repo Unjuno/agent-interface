@@ -1,0 +1,102 @@
+[
+  {
+    "HostConfig": {
+      "CapDrop": [
+        "ALL"
+      ],
+      "Memory": 134217728,
+      "MemorySwap": 134217728,
+      "NanoCpus": 250000000,
+      "NetworkMode": "none",
+      "PidsLimit": 32,
+      "ReadonlyRootfs": true,
+      "SecurityOpt": [
+        "no-new-privileges"
+      ]
+    },
+    "Image": "sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "State": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "2026-10-03T12:41:42.610419133Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 0,
+      "Restarting": false,
+      "Running": false,
+      "StartedAt": "2026-10-03T12:41:41.359175458Z",
+      "Status": "exited"
+    },
+    "id": "5fc4c08c72d85fe4927d52c90cf54437e1524d24281bf2441c47fb14cc81ddea",
+    "mounts": [
+      {
+        "Destination": "/src",
+        "Mode": "ro",
+        "Propagation": "rprivate",
+        "RW": false,
+        "Source": "/var/tmp/notification-reentrant-c02-b64b-src",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/out",
+        "Mode": "rw",
+        "Propagation": "rprivate",
+        "RW": true,
+        "Source": "/var/tmp/notification-reentrant-c02-b64b-out",
+        "Type": "bind"
+      }
+    ],
+    "name": "notification-reentrant-construction-c02-b64b"
+  },
+  {
+    "HostConfig": {
+      "CapDrop": [
+        "ALL"
+      ],
+      "Memory": 134217728,
+      "MemorySwap": 134217728,
+      "NanoCpus": 250000000,
+      "NetworkMode": "none",
+      "PidsLimit": 32,
+      "ReadonlyRootfs": true,
+      "SecurityOpt": [
+        "no-new-privileges"
+      ]
+    },
+    "Image": "sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "State": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "2026-10-03T12:41:43.836483305Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 0,
+      "Restarting": false,
+      "Running": false,
+      "StartedAt": "2026-10-03T12:41:42.875287443Z",
+      "Status": "exited"
+    },
+    "id": "8126aaaf54a1b1d4408ceca5ad474e53699b849be440459ffa1a9cfb11815a8c",
+    "mounts": [
+      {
+        "Destination": "/src",
+        "Mode": "ro",
+        "Propagation": "rprivate",
+        "RW": false,
+        "Source": "/var/tmp/notification-reentrant-c02-b64b-src",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/out",
+        "Mode": "rw",
+        "Propagation": "rprivate",
+        "RW": true,
+        "Source": "/var/tmp/notification-reentrant-c02-b64b-out",
+        "Type": "bind"
+      }
+    ],
+    "name": "notification-reentrant-saved-audit-c02-b64b"
+  }
+]
