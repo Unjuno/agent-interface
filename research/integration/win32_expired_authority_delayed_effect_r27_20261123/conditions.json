@@ -1,0 +1,94 @@
+{
+  "attempt_budget": {
+    "fresh_fixtures": 3,
+    "public_dispatches": 3,
+    "recovery_calls_per_unknown_source": 1,
+    "retries": 0
+  },
+  "experiment": "win32-expired-authority-delayed-effect-r27",
+  "frozen_at_utc": "2026-11-22T20:16:10.655710+00:00",
+  "ledger_tree": "f2d896996c041faec6939ca059492539d1865feb",
+  "model": "none",
+  "not_claimed": [
+    "provider/model efficiency",
+    "matched speedup",
+    "MAP01",
+    "Research Preview graduation",
+    "general GUI reliability",
+    "production release"
+  ],
+  "provider": "none",
+  "runtime_tree": "0461d0be5592cc3ebd575861923fe0c04950efe5",
+  "schema": "agent-interface/win32-expired-delayed-effect-recovery-cohort-v1",
+  "source_main": "490d7bcb4d84927116112e5ff348cdeadfc489d6",
+  "status": "FROZEN",
+  "stop_rules": [
+    "Freeze every ID and all trial conditions before the first fixture starts.",
+    "Exactly one standard public action is dispatched per trial; never replay a dispatched action.",
+    "If source action is UNKNOWN with release unconfirmed, preserve it; verify exact producer absence, then make at most one fresh-session public orphan recovery attempt.",
+    "Stop the cohort immediately if producer absence, target identity, release, neutral readback or configured late-input horizon is not verified; retain the target and durable fence.",
+    "Close a target only after normal terminal release plus neutral/horizon proof, or after successful orphan recovery confirms those conditions.",
+    "Preserve every failed/unknown attempt; no successful-subset analysis or retry.",
+    "Independent fixture scoring is factual only; post-expiry effects are not eligible task success.",
+    "Each fixture launch pauses before MCP. Computer Use must select exactly one target-title window and raise it; independent foreground probe must then match exact HWND and PID before any MCP observation/dispatch. Any failed activation or foreground proof stops the cohort before dispatch."
+  ],
+  "trial_order": [
+    1,
+    2,
+    3
+  ],
+  "trials": [
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "horizon_ms": 2000,
+      "lease_id": "r27-6ab383fe5ae346c7ab87c09066551ac2",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 1,
+      "program_id": "r27-768dc46850d540748453c8a3e72c047e",
+      "trial_id": "r27-01-a18058e544d44ab7a778ea388d28261c"
+    },
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "horizon_ms": 2000,
+      "lease_id": "r27-c3c1e09625944ceb81772ce7b4ec74ca",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 2,
+      "program_id": "r27-1e642442c39948668019866a0d8af98e",
+      "trial_id": "r27-02-f390d77d04e24cb2a945a5488ce1f497"
+    },
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "horizon_ms": 2000,
+      "lease_id": "r27-6904cf1683b04005b2ac6f6280cb52d1",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 3,
+      "program_id": "r27-81bdeb38946e4b1d80bd1d7367b3a1b3",
+      "trial_id": "r27-03-9d9b9a549a464c069231603979af5508"
+    }
+  ],
+  "workload": "one focused A key chord to an owned visible Win32 fixture per independent process; the fixture schedules text a 6000ms after keydown; authority lease expires after 2000ms"
+}
