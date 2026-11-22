@@ -1,0 +1,43 @@
+{
+  "schema": "agent-interface/public-recovered-caller-fresh-lifecycle-r04",
+  "frozen_main": "7fb6fe4c95fed8dec9f95d96e910da0fa769e690",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "0d216735aa30e0d85f562f327cb86a58936189f4f1b3688e0e699ef36d4b5ebf"
+  },
+  "environment": "CPython 3.11.9; Windows 11 Pro build 26300",
+  "attempt_count": {
+    "normal": 5,
+    "optimized": 5,
+    "total": 10
+  },
+  "order": [
+    "normal-01", "optimized-01",
+    "normal-02", "optimized-02",
+    "normal-03", "optimized-03",
+    "normal-04", "optimized-04",
+    "normal-05", "optimized-05"
+  ],
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle",
+  "freshness": "Each attempt is a separate Python process and constructs a fresh in-process MCP server, owner, producer, temporary directory, action ID, operation ID, recovery receipt, effect row, and oracle attempt.",
+  "pass_rule": "A sample passes only when the exact focused unittest exits 0 and prints OK. Any nonzero/timeout/error is a failed attempt and remains in the denominator; no retry or replacement sample.",
+  "expected_invariants": [
+    "SAFE_YIELD / delivery_uncertain",
+    "zero completed graph transitions",
+    "source action remains unknown and its task_success remains null",
+    "recovery separately confirms release and matching late-input horizon",
+    "independent oracle scores only exact operation and target generation",
+    "replay is denied"
+  ],
+  "scope": "Fake/local public-MCP recovery lifecycle repeatability only",
+  "not_tested": [
+    "live GUI or native Win32 input",
+    "external application task effect",
+    "MAP01",
+    "matched efficiency",
+    "WSLc or Docker allocation",
+    "Research Preview acceptance",
+    "distributable-runtime acceptance"
+  ],
+  "prior_capture_failure": "R03 aborted because the log directory was not created. Its unknown attempts are not scored or included in this R04 denominator."
+}
