@@ -1,0 +1,7 @@
+# Win32 R15 — asynchronous cancellation receipt, late horizon, fresh task
+
+Frozen main: `fd24ed40e452e16865b9725af4f3d97b0067d9d6`. This is a new one-shot attempt; R14 remains immutable. It preserves the 8-second public-caller lease, the pre-expiry `cancel_not_due` boundary, injected pre-SendInput hold, 3-second cleanup bound, 2-second late-input horizon, exact-generation check, and phase-2 fresh task. Both disposable fixtures must be activated by Computer Use and joined to native foreground/neutral witnessed state before any public input.
+
+The current public implementation returns `pending` while the owner is in `recovery_pending` and `_public` maps that phase to `pending`. Therefore a pending first response is only an in-progress signal. R15 still requires public `interface_results` polling to yield terminal `recovered`, `release_confirmed=true`, exact operation and generation, and measured release/readback under 3 seconds from the first post-expiry cancel. A timeout, UNKNOWN, identity mismatch, delayed input, or any failed check stops phase 2. This adds a terminal readback oracle; it does not count `pending` as recovery.
+
+Only after phase 1 passes, retire the old fixture, activate a different process/window, refuse the old generation before input, and run one compiled click/type/save action with exact independent oracle evidence, neutral release readback, and post-dispatch observation. No retries. Fixture only; no WSLc, Docker, provider, model, MAP01, efficiency, or reliability claim.
