@@ -1,0 +1,39 @@
+diff --git a/research/live_control/input_owner_v12.py b/research/live_control/input_owner_v12.py
+index 222039e7c1..0f39d64308 100644
+--- a/research/live_control/input_owner_v12.py
++++ b/research/live_control/input_owner_v12.py
+@@ -191,23 +191,24 @@ class InputOwner:
+                     'sync_error': sync_error,
+                 }]
+ 
++            # Keep the shared initial snapshot separate from per-key retry samples.
+             try:
+-                bitmap = d.query_keymap()
+-                sample_error = None
+-                sampled_ns = time.perf_counter_ns()
++                batch_bitmap = d.query_keymap()
++                batch_sample_error = None
++                batch_sampled_ns = time.perf_counter_ns()
+             except Exception as exc:
+-                bitmap = None
+-                sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+-                sampled_ns = time.perf_counter_ns()
++                batch_bitmap = None
++                batch_sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
++                batch_sampled_ns = time.perf_counter_ns()
+             receipts = []
+             for key, code in codes:
+                 attempts = attempt_rows[code]
+                 server_down = (
+-                    bool(bitmap[code // 8] & (1 << (code % 8)))
+-                    if bitmap is not None else None)
+-                attempts[0]['keymap_sampled_ns'] = sampled_ns
++                    bool(batch_bitmap[code // 8] & (1 << (code % 8)))
++                    if batch_bitmap is not None else None)
++                attempts[0]['keymap_sampled_ns'] = batch_sampled_ns
+                 attempts[0]['server_key_down_after'] = server_down
+-                attempts[0]['keymap_after_error'] = sample_error
++                attempts[0]['keymap_after_error'] = batch_sample_error
+                 while server_down is True and len(attempts) < 3:
+                     started_ns = time.perf_counter_ns()
+                     release_error = None

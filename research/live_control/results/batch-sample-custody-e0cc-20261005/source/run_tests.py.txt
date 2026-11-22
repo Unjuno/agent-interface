@@ -1,0 +1,37 @@
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+root = Path(__file__).resolve().parent
+source = root / 'source'
+run = root / sys.argv[1]
+run.mkdir(exist_ok=False)
+(run / 'traces').mkdir()
+command = [sys.executable, '-B', '-m', 'unittest', '-v', *(
+    sys.argv[2:] or ['test_input_owner_v12_batch_sample_custody'])]
+manifest = {str(p.relative_to(source)): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted(source.rglob('*.py'))}
+(run / 'sources.json').write_text(json.dumps(manifest, indent=2) + '\n')
+environment = dict(os.environ, BATCH_CUSTODY_OUT=str(run / 'traces'),
+                   PYTHONPATH=os.pathsep.join(str(source / 'research' / p)
+                                              for p in ('live_control', 'doom', 'observation_gating')))
+started = time.time_ns()
+result = subprocess.run(command, cwd=source / 'research/live_control', env=environment,
+                        capture_output=True, timeout=55)
+ended = time.time_ns()
+(run / 'stdout.txt').write_bytes(result.stdout)
+(run / 'stderr.txt').write_bytes(result.stderr)
+receipt = {'command': command, 'cwd': str(source / 'research/live_control'),
+           'started_unix_ns': started, 'ended_unix_ns': ended, 'exit_code': result.returncode,
+           'stdout_sha256': hashlib.sha256(result.stdout).hexdigest(),
+           'stderr_sha256': hashlib.sha256(result.stderr).hexdigest(),
+           'traces': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                      for p in sorted((run / 'traces').glob('*.json'))}}
+(run / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+print(json.dumps(receipt))
+print(result.stderr.decode())
+sys.exit(result.returncode)
