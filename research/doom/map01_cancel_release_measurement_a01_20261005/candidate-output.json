@@ -1,0 +1,151 @@
+{
+  "backend_held_after_cancel": [
+    "F8"
+  ],
+  "bridge_events_after_cancel": [
+    {
+      "admitted_ns": 159836417599208,
+      "event": "input_admission",
+      "id": "cover-cancel-a01",
+      "input_ack_ns": 159836417606291,
+      "intent_token": "intent-cancel-a01",
+      "key": "F8",
+      "owner_id": "6138b4fa5a774834b90e5190ebb13bb6",
+      "physical_key_measurement": {
+        "actuation_id": "6138b4fa5a774834b90e5190ebb13bb6:g1:F8",
+        "adapter_edge": {
+          "actuation_id": "6138b4fa5a774834b90e5190ebb13bb6:g1:F8",
+          "edge": "down",
+          "grants_input_authority": false,
+          "intent_token": "intent-cancel-a01",
+          "interval": [
+            159836417602833,
+            159836417609375
+          ],
+          "key": "F8",
+          "owner_id": "6138b4fa5a774834b90e5190ebb13bb6",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "grants_input_authority": false,
+          "intent_token": "intent-cancel-a01",
+          "key": "F8",
+          "owner_id": "6138b4fa5a774834b90e5190ebb13bb6",
+          "physical_down_interval": [
+            159836417602833,
+            159836417609375
+          ],
+          "press_id": "6138b4fa5a774834b90e5190ebb13bb6:r1:down:74",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "classification": "CONFIRMED_PHYSICAL_DOWN",
+        "edge": "down",
+        "grants_input_authority": false,
+        "identity_status": "MINTED",
+        "post_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 159836417609375,
+          "started_ns": 159836417606625
+        },
+        "pre_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 159836417602833,
+          "started_ns": 159836417599708
+        },
+        "press_request_ns": 159836417604250,
+        "sync_return_ns": 159836417606291
+      },
+      "step": 7,
+      "valid_until_ns": 159846417562625
+    }
+  ],
+  "events_after_down": [
+    {
+      "admitted_ns": 159836417599208,
+      "event": "input_admission",
+      "id": "cover-cancel-a01",
+      "input_ack_ns": 159836417606291,
+      "intent_token": "intent-cancel-a01",
+      "key": "F8",
+      "owner_id": "6138b4fa5a774834b90e5190ebb13bb6",
+      "physical_key_measurement": {
+        "actuation_id": "6138b4fa5a774834b90e5190ebb13bb6:g1:F8",
+        "adapter_edge": {
+          "actuation_id": "6138b4fa5a774834b90e5190ebb13bb6:g1:F8",
+          "edge": "down",
+          "grants_input_authority": false,
+          "intent_token": "intent-cancel-a01",
+          "interval": [
+            159836417602833,
+            159836417609375
+          ],
+          "key": "F8",
+          "owner_id": "6138b4fa5a774834b90e5190ebb13bb6",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "grants_input_authority": false,
+          "intent_token": "intent-cancel-a01",
+          "key": "F8",
+          "owner_id": "6138b4fa5a774834b90e5190ebb13bb6",
+          "physical_down_interval": [
+            159836417602833,
+            159836417609375
+          ],
+          "press_id": "6138b4fa5a774834b90e5190ebb13bb6:r1:down:74",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "classification": "CONFIRMED_PHYSICAL_DOWN",
+        "edge": "down",
+        "grants_input_authority": false,
+        "identity_status": "MINTED",
+        "post_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 159836417609375,
+          "started_ns": 159836417606625
+        },
+        "pre_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 159836417602833,
+          "started_ns": 159836417599708
+        },
+        "press_request_ns": 159836417604250,
+        "sync_return_ns": 159836417606291
+      },
+      "step": 7,
+      "valid_until_ns": 159846417562625
+    }
+  ],
+  "operation": "down then asynchronous lease cancellation",
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "cancelled",
+      "valid_until_ns": 159846417562625,
+      "verified": true,
+      "verified_ns": 159836420590333
+    }
+  ],
+  "physical_after_cancel": [],
+  "physical_after_down": [
+    74
+  ],
+  "source_context": [
+    "cover-cancel-a01",
+    7
+  ]
+}
