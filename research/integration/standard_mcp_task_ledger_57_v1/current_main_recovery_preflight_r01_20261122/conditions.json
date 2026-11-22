@@ -1,0 +1,29 @@
+{
+  "run_id": "r01-current-main-win32-recovery-preflight-20261122",
+  "purpose": "finite Fake/local recovery contract preflight before any fresh standard-caller live recovery dispatch",
+  "source_main": "77d3a4bb704b68868b86208674aded55b5f2cacf",
+  "runtime_tree_equal_to_origin_main": true,
+  "commands": [
+    "python -m unittest runtime.cli_v1.test_mcp_supervised_win32",
+    "python -O -m unittest runtime.cli_v1.test_mcp_supervised_win32"
+  ],
+  "environment": {
+    "python": "3.11.9",
+    "implementation": "CPython",
+    "platform": "Windows-10-10.0.26300-SP0"
+  },
+  "acceptance": "both modes report 59 tests, zero failures/errors, exit status 0",
+  "scope_limits": [
+    "Fake/local contract tests only",
+    "no public live target dispatch",
+    "no external model/provider calls",
+    "not a live recovery or reliability result"
+  ],
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "92a7c73588d9c62ce3f0b8f0233ad6473aeb73dd3e0499fe1bdac76a996fc642",
+    "runtime/cli_v1/mcp_supervised_stdio_test_server.py": "5b4c144bd33a2e7c64e922ac560b9c4d46eee0a7bb9457025b1975adf3d82e21",
+    "runtime/cli_v1/supervised_win32_compiled.py": "440c705c50bb79c0797f24ee8bc7f1e1cbc53abf668ee5e707979df11f21d89f",
+    "runtime/cli_v1/mcp_server.py": "457637080c921bc5ed98715eb4da2db0e30d7840c88aeca62c62486c45b0e8b2",
+    "runtime/cli_v1/mcp_guarded.py": "1321d746fa87c23c82209ebb1c304c478ba6d92ee4df9a298070351438d7fa45"
+  }
+}
