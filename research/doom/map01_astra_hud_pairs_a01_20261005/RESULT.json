@@ -1,0 +1,20 @@
+{
+  "schema": "map01-astra-hud-pairs-a01",
+  "disposition": "PASS_SCOPED",
+  "base_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "frame_count": 13,
+  "ordered_pair_count_including_self": 169,
+  "distinct_ordered_pair_count": 156,
+  "self_pair_controls": 13,
+  "distinct_pairs_by_same_manual_health_label": 22,
+  "distinct_pairs_by_changed_manual_health_label": 134,
+  "mismatch_count": 0,
+  "interpretation": "within-run pairwise pixel separability of the manually transcribed health label using the frozen one-way guard; not a live temporal detector evaluation",
+  "limitations": [
+    "one retained trajectory and 13 decision frames; pairs are dependent and do not estimate a population false-positive rate",
+    "manual HUD labels and health ROI were established by the preceding posthoc analysis",
+    "nonadjacent frame pairs discard temporal ordering and do not model sampling cadence, source expiry, or real-time response",
+    "health change does not identify threat, direction, task effect, or safe next action",
+    "no candidate, model, game, X server, OS input, or live allocation was run"
+  ]
+}
