@@ -1,0 +1,28 @@
+{
+  "adjudication": "R16_POSTRUN_RECOVERY_GATE",
+  "checks": {
+    "bounded_native_late_input_horizon": true,
+    "fence_preimage_exact": true,
+    "fresh_distinct_recovery_generation": true,
+    "neutral_recovery_readback": true,
+    "no_fixture_task_effect": true,
+    "one_recovery_no_task_dispatch": true,
+    "postrun_fixture_and_foreground_cleanup": true,
+    "pretrial_inputs_intact": true,
+    "producer_exact_identity_absent": true,
+    "public_api_resolved_and_fenced_both_generations": true,
+    "public_recovery_terminal_success": true,
+    "r14_source_bytes_pinned": true,
+    "raw_run_manifest_intact": true,
+    "raw_runner_mischeck_identified": true,
+    "source_unknown_and_not_replayed": true
+  },
+  "classification": "PASS_SCOPED_ORPHAN_RECOVERY_WITH_HORIZON",
+  "fence_after_sha256": "97fee23782fa7150660bf26349a6a4ab9dd2a4bd3d643e3e5f89f3510c674334",
+  "fixture_exit_code_observed_after_cua": true,
+  "public_operation_invoked_field_present": false,
+  "public_replay_allowed": false,
+  "public_task_dispatch_not_attempted": true,
+  "public_task_success": null,
+  "raw_runner_classification_preserved": "FAIL_OR_UNKNOWN_FENCE_RETAINED"
+}
