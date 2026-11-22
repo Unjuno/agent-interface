@@ -1,0 +1,93 @@
+{
+  "schema": "selected-missing-finite-spec-v1",
+  "id": "17-SELECTED-MISSING-QUOTIENT-A01-20261003-e0cc",
+  "issue": 17,
+  "claim": 5969591888,
+  "base": "30cd9cd27e75ceed6f1cfd6d5b518b87581478f6",
+  "source_origin": "current baseline6508 plus exact AST wait method from immutable7029 outside source; new text composition preserves all other current methods/EOF/close. Own text composition7136B differs author7058 whitespace representation7137B; not the same image.",
+  "policies": [
+    "baseline",
+    "outside",
+    "false_deadline_first",
+    "retry_guard"
+  ],
+  "pc": [
+    "SNAP",
+    "SCAN",
+    "MATCH_CHECK",
+    "MISSING",
+    "FALSE_CHECK",
+    "DONE_MATCH",
+    "DONE_TIMEOUT"
+  ],
+  "queue_capacity": 1,
+  "deadline_expired": true,
+  "closed": false,
+  "A_predicate": "constant literal True; no user callback execution in quotient",
+  "B_predicate": "constant literal True; complete successful no-interference public consume macro",
+  "R": "fresh immutable equal-payload matching notification when queue empty; no reinsert or concrete identity reuse",
+  "identity": "Canonical comparison-relevant snapshot-first equality partition, at most2 handles; not all Python local references. Concrete fresh IDs represented by equality classes, not reused concrete objects.",
+  "initial": {
+    "pc": "SNAP",
+    "q": 0,
+    "snap": null
+  },
+  "A_steps": "Baseline atomic match/remove ifqpresent elseTimeout. Outside SNAP capture->SCAN;nonemptySCANTrue->MATCH_CHECK;emptySCAN->FALSE_CHECK;MATCH_CHECK identity stillpresent->MATCHremove terminal elseMISSING;MISSING->SNAP retry beforeclock. False_deadline_first differs only FALSE_CHECKtimeout beforechangedretry; retry_guard guards MISSING and changedqueue retry byexpired clock. DONEabsorbing.",
+  "D": "PASS_SCOPED_SELECTED_MISSING_COUNTEREXAMPLE iff complete source/relation joins; outside andfalse_deadline_first have reachable A/B/R matching closed walk containing A_TRUE_SCAN andA_SELECTED_MISSING; baseline/retry_guard lack anyAprogress closedwalk. ElseFAIL/HOLDretained, no modelretry.",
+  "fairness": "existential reachable closed walk with all3actor labels AND true-scan/selected-missing; not strongtransition fairness, inevitability, OS probability or whole-call bound.",
+  "T": "one fresh bounded finite source-projected enumeration; independent saved-only complete truth-table+transitive closure checker. Distinct from7029 allFalse enumeration and7058 six reentrant nestedpublicmethod cells; originalallocations unchanged.",
+  "C": "Empty-snapshot outside loop has zero callbacks and is excluded from the matching-witness gate; selected-missing requires TRUE_SCAN andSELECTED_MISSING in sameclosedwalk. Matching initialstill-present returns beforeclock; guardreference does not redefine that priority. PureTrue not arbitrary blocking callbacks.",
+  "U": "CPUlocal symbolic quotient only. No actual wait method call/clientconstructor/Condition/nativequeue/OS/process/model/game/task effect.",
+  "budgets": {
+    "new_model": 1,
+    "new_saved_auditor": 1,
+    "model_retries": 0,
+    "native": 0,
+    "source_method_calls": 0
+  },
+  "host": "macOS ordinary isolated own local proof; no shared physical/VM/GPU/input lease or containers needed for mathematical enumeration. CPU RLIMIT10s and wall containment20s perchild requested by wrapper, not native realtime claim. No measured memory enforcement claim.",
+  "output_caps": {
+    "stdout_bytes": 65536,
+    "stderr_bytes": 65536,
+    "file_bytes": 1048576
+  },
+  "limits": [
+    "finite pureTrueA/pureTrueB/queuecap1/expired-open equality quotient only",
+    "B macro is one legal finite no-interference schedule, not complete B/native linearizability",
+    "matching closedwalk is existential actor progress, not strongtransition/OS fairness",
+    "two comparison handles, not total livePythonreferences/object allocation bound",
+    "guard preserves source initialstillpresent matching return before expiry; fresh-match/selected-late priority remains qualified",
+    "guard max4 A macrosteps conditional on A advancing is not 4seconds, lockdeadline, arbitrarycallback bound or whole-call liveness",
+    "new sourceprojection only; no native/model/task/gui/input release/production adoption/whole17/59/57 goal PASS"
+  ],
+  "variables": [
+    {
+      "symbol": "pc",
+      "meaning_ja": "Aの抽象制御位置",
+      "unit": "非物理識別子",
+      "type": "有限列挙7値",
+      "scope": "SNAP,SCAN,MATCH_CHECK,MISSING,FALSE_CHECK,DONE_MATCH,DONE_TIMEOUT"
+    },
+    {
+      "symbol": "q,snap",
+      "meaning_ja": "キューと比較用スナップショットの同一性ハンドル",
+      "unit": "非物理識別子",
+      "type": "null/整数0,1",
+      "scope": "snapshotから命名した同一性の商。snapshot有なら0固定、queueはnull/0/1"
+    },
+    {
+      "symbol": "A,B,R",
+      "meaning_ja": "待機者、別の消費者、新規受信者",
+      "unit": "非物理識別子",
+      "type": "役割ラベル",
+      "scope": "単一の合法なmacrostepスケジュール"
+    },
+    {
+      "symbol": "nA",
+      "meaning_ja": "終了までのAのmacrostep数",
+      "unit": "1（無次元の個数）",
+      "type": "非負整数または非有界",
+      "scope": "Aが進む条件下、時間や待機回数の上限ではない"
+    }
+  ]
+}
