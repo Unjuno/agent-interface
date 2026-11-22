@@ -1,0 +1,18 @@
+{
+  "run_id": "r01-current-main-recovered-caller-task-oracle-20261122",
+  "repository": "Unjuno/agent-interface",
+  "frozen_head": "cd708f52159cb87e38412640c49a59a0052c3e6d",
+  "host": {
+    "os": "Microsoft Windows NT 10.0.26300.0",
+    "python": "Python 3.11.9"
+  },
+  "question": "Does the standard compiled caller preserve graph UNKNOWN/replay refusal while accepting an independently verified task outcome after recovered release custody?",
+  "scope": "One existing Fake/local composition test; no live GUI/input, model/provider, WSLc, Docker, install, or task target.",
+  "command_normal": "python -m unittest -v runtime.cli_v1.test_supervised_win32_compiled.SupervisedWin32CompiledCallerTests.test_recovered_dispatch_scores_task_effect_without_completing_graph",
+  "command_optimized": "python -O -m unittest -v runtime.cli_v1.test_supervised_win32_compiled.SupervisedWin32CompiledCallerTests.test_recovered_dispatch_scores_task_effect_without_completing_graph",
+  "acceptance": "Both invocations pass 1/1; recovered task oracle success remains separate from graph completion, source action stays UNKNOWN/null where automatic recovery applies, replay denied, recovery release verified.",
+  "source_sha256": {
+    "runtime/cli_v1/supervised_win32_compiled.py": "440c705c50bb79c0797f24ee8bc7f1e1cbc53abf668ee5e707979df11f21d89f",
+    "runtime/cli_v1/test_supervised_win32_compiled.py": "b982f6bac9b87e639badf8e397276e481f45c82e2736dae30fd8b84b256a6e74"
+  }
+}
