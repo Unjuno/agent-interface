@@ -1,6 +1,6 @@
 # Project state and work order
 
-Updated 2026-11-22 from current `main` `7075902b6dd95da57a2e25819e2d2d6859239c25`.
+Updated 2026-11-22 from current `main` `48ef3e498b287a69b68e3e6912a43db2acb3551b`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 
@@ -31,11 +31,12 @@ success, comparative efficiency, reliability, or preview readiness.
 
 ## Repository organization
 
-- The latest full GitHub membership receipt is r163: **1,640 open Issues and
-  407 open PRs** at its recorded checkpoint. A live CLI recount while writing
-  this page returned **1,640 Issues and 405 PRs**. The two-PR delta has not yet
-  been reconciled by exact ID set, so r163 remains the latest complete
-  membership audit. Counts are inventory, not semantic triage. The full
+- The latest GitHub membership receipt is r164: **1,640 open Issues and
+  405 open PRs**, collected against unchanged main
+  `48ef3e498b287a69b68e3e6912a43db2acb3551b`.
+  Exact comparison with r152/r157 found no additions; Issues #7748/#7765/#7817
+  and PRs #7968/#8181/#10227 are removed. This reconciles the two-PR delta
+  previously noted at r163. Counts are inventory, not semantic triage. The full
   family-level routing map is the dated [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md); targeted checks are recorded in [the organization recheck](maintenance/targeted-organization-recheck-20261122.md).
 - Do not close or merge items based only on age, unchanged inventory, or green
   checks. PR #10144 remains a Draft research prototype; Issue #7773 remains on
@@ -52,17 +53,17 @@ success, comparative efficiency, reliability, or preview readiness.
 
 ## Execution order
 
-1. Finish a fresh project inventory against the latest main and GitHub state;
-   update dated receipts rather than silently treating r160/r163 as current.
-2. Convert the R06 live public caller raw records to the canonical measured-run
-   and task-effect receipt, preserving the live `task_success=null` fact.
-3. Freeze one finite standard-caller recovery experiment and run its local
-   negative controls before any live dispatch; preserve every attempt.
-4. Run the matched all-attempt efficiency block only after the measurement path
+1. Continue family-by-family semantic triage and custody reconciliation using
+   the fresh r164 membership baseline; do not infer disposition from counts.
+2. With R08 now reconstructed and its adapter repairs merged, freeze one finite
+   standard-caller recovery experiment, pass its local negative controls, then
+   run it while preserving public `task_success` separately from independently
+   scored effect and eligibility. Preserve every attempt.
+3. Run the matched all-attempt efficiency block only after the measurement path
    can account for every provider attempt and all arms' task outcomes.
-5. Close the supported-host Research Preview acceptance gates and verify the
+4. Close the supported-host Research Preview acceptance gates and verify the
    portable runtime artifact on its declared hosts.
-6. Reconcile the broader Issue/PR/worktree queue family by family, retaining
+5. Reconcile the broader Issue/PR/worktree queue family by family, retaining
    ideas that lack evidence for closure and resolving custody before deletion.
 
 The overall goal remains active until these gates have direct evidence. Current
@@ -75,5 +76,5 @@ research or release gates.
 - [Roadmap](../ROADMAP.md)
 - [Repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md)
 - [Issue #57 next gates](maintenance/issue57-next-gates-20261121.md)
-- [Latest inventory receipt r163](maintenance/repository-inventory-recheck-20261122-r163.md)
+- [Latest inventory receipt r164](maintenance/repository-inventory-recheck-20261122-r164.md)
 - [Worker work map](WORKER_WORK_MAP.md)
