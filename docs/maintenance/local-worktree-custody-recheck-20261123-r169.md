@@ -20,4 +20,3 @@ but merged status alone does not resolve local
 post-merge changes. No worktree or output was modified or deleted. Next steps
 are owner/custody checks, byte-hash comparison against tracked evidence, and
 only then deciding whether any exact duplicate can be removed.
-
