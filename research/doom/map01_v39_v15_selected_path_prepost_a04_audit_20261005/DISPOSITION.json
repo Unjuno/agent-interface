@@ -1,0 +1,22 @@
+{
+  "schema": "v39-v15-prepost-a04-disposition-v1",
+  "issue": 7933,
+  "allocation": "V39-V15-PREPOST-A04-TRACE-AUDIT-20261005-01",
+  "status": "FAIL_AUDITOR_RUNTIME_ERROR_NOT_EVALUATED",
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "container_exit": 1,
+  "failure": {
+    "type": "NameError",
+    "message": "name 'pre_run' is not defined",
+    "phase": "input digest map construction",
+    "baseline_checks_started": false,
+    "mutation_checks_started": false
+  },
+  "formal_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "formal_stderr_sha256": "17b63af6a59ca4f4ff0324dd495f58ba1548cdd5e36ccd25b8541b3cf5eb42d3",
+  "formal_auditor_source_sha256": "f433ce309810672555fb7c4f4fbefd02ee98f6a5657a8ba3b0acd08b9755b6e8",
+  "scientific_result": "NOT_EVALUATED",
+  "scope": "Auditor implementation failure only; no conclusion about the retained A02 raw trace or underlying fake-X behavior."
+}
