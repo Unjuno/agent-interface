@@ -1,0 +1,98 @@
+{
+  "base_commit": "40f15b8b04fbdc33327fd18d52250930fb03aee1",
+  "crosscheck": {
+    "report_map_exit": false,
+    "report_player_dead": false,
+    "saved_interval_audit_contains_same_transition": true,
+    "saved_interval_audit_disposition": "HOLD_CAUSAL_INPUT_ATTRIBUTION; HOLD_POST_INVALIDATION_RECOVERY"
+  },
+  "event_rows": 355,
+  "first_useful_event": {
+    "conservative_onset_window_ms": 70.512598,
+    "conservative_read_window_onset_ns": [
+      28331791183,
+      28402303781
+    ],
+    "controller_visible": false,
+    "first_positive_sample_sequence": 393,
+    "kind": "KILL_COUNT_INCREASE",
+    "previous_sample_sequence": 392,
+    "prior_sample_timestamp_bracket_ns": [
+      28348735736,
+      28398091723
+    ],
+    "sampled_state": {
+      "after_kills": 1,
+      "before_kills": 0
+    },
+    "useful": true
+  },
+  "formal_allocation": false,
+  "interpretation": "A useful kill-count increase was independently sampled after the plan's Space KeyRelease/XSync and wholly during its following A hold. Timing is descriptive only: prior fire/projectiles may explain the delayed kill; this does not identify causality or recovery efficacy.",
+  "limits": [
+    "XSync does not prove physical key state or application consumption",
+    "scorer sampling brackets client observation, not exact engine kill onset",
+    "one retained construction trajectory; no matched control or rate estimate",
+    "no policy invalidation was exposed in this episode",
+    "no MAP01 exit; construction evidence does not close Issue #59"
+  ],
+  "new_runtime_or_model_calls": 0,
+  "raw_sha256": {
+    "events": "5407eaab7cc9f9d549c93a6407fc57f8d6252b52e9f2fb6e079eb27bb5004332",
+    "freeze": "150e3615dd4c88f0f40eecb5dbc6efbad1ed9a46e92dd6ec83ea619325550f60",
+    "report": "fef60b73d330cc99af461dac6e7f8e85e4b20ec87e74748223a98f794586e2a3",
+    "runtime_sources": "8bda4ff1f769b47357107b264523e887fcf88133d89ff929a952db1cdee3edc5",
+    "samples": "e113cca3c3f9635f76cb765e3d01f3c239110616c630db332b28058007476599",
+    "saved_interval_audit": "0425068900546eb74d5037ab9cee5455edda3098bc7cb00f23a481b57537cdf0",
+    "scorer_events": "1974b6e9e2c60740c51d627ca8c0b0f91d270cbaff0aff319c3a501f15a68228",
+    "scorer_summary": "f2b5016c327b40199e07786219da2d17bcb7548bef3d7c643a3a8f38c8583591"
+  },
+  "release_transition_rows": 19,
+  "run_allocation_id": "59-4d74-current-visual-construction-03-20261004",
+  "run_effort": "low",
+  "run_iterations": 4,
+  "run_model": "gpt-5.6-luna",
+  "same_plan_timing": {
+    "a_input_ack_ns": 28215940081,
+    "a_owner_keyrelease_xsync_ns": [
+      28575882021,
+      28576259908
+    ],
+    "a_step": 1,
+    "delay_from_space_xsync_to_kill_onset_ms": [
+      312.756361,
+      383.57549
+    ],
+    "kill_onset_wholly_after_space_xsync": true,
+    "kill_onset_wholly_during_a_hold": true,
+    "physical_release_authority": false,
+    "plan_id": "plan-1-primary-0-1",
+    "space_owner_keyrelease_xsync_ns": [
+      28018728291,
+      28019034822
+    ],
+    "space_step": 0
+  },
+  "sample_rows": 761,
+  "schema": "map01-feedback-release-alignment-retained-v1",
+  "scorer_sampling": {
+    "maximum_interval_ms": 147.362322,
+    "median_interval_ms": 28.9627765,
+    "missed_sample_periods": 198,
+    "p95_interval_ms": 75.162554,
+    "sample_hz_nominal": 34.99999947500001
+  },
+  "status": "PASS_SCOPED_TEMPORAL_ALIGNMENT",
+  "verified_source_file_count": 9,
+  "verified_source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "a9e109f07dbfdefbf33e87840528c4e24195b2d435782d92f0880049721d0b7d",
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/session_map01_v16.py": "526f6ef9f07953c053cc3eed136b1c1144e071dd35c0b9493b0c9820889ddefe",
+    "research/live_control/input_owner_v12.py": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+  }
+}
