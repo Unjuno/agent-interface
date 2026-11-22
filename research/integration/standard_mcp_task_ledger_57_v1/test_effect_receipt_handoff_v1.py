@@ -1,4 +1,5 @@
 import asyncio
+import base64
 import hashlib
 import json
 import tempfile
@@ -51,6 +52,91 @@ class EffectReceiptHandoffTests(unittest.TestCase):
         return adapt_measured_run(
             self.measured, receipt_root=self.receipt_root,
             receipt_path='score.json')
+
+    def _install_public_capture_pair(self):
+        png = base64.b64decode(
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j9WQAAAAASUVORK5CYII=')
+        image_digest = hashlib.sha256(png).hexdigest()
+        image_path = self.receipt_root / 'raw' / 'public-capture.png'
+        image_path.write_bytes(png)
+        self.measured['task_ledger']['raw_refs'].append({
+            'path': 'raw/public-capture.png', 'sha256': image_digest})
+
+        captures = []
+        for call_id, observation_id, capture_start, capture_end in (
+                ('observe-1', '1' * 32, 122, 125),
+                ('observe-after', '2' * 32, 172, 174)):
+            row = {
+                'tool_call_id': call_id,
+                'observation_id': observation_id,
+                'target_generation': self.receipt['target_generation'],
+                'capture_started_ns': capture_start,
+                'capture_ended_ns': capture_end,
+                'image_sha256': image_digest,
+            }
+            body = {
+                'schema': 'agent-interface/runtime-observation-v1',
+                'status': 'returned', 'observation_id': observation_id,
+                'side_effect_authority': False, 'input_dispatched': False,
+                'target_generation': self.receipt['target_generation'],
+                'target_generation_consistency': 'matched',
+                'observation': {
+                    'capture_started_ns': capture_start,
+                    'capture_ended_ns': capture_end,
+                    'artifact': {'mime_type': 'image/png',
+                                 'bytes': len(png), 'sha256': image_digest},
+                },
+            }
+            event = next(event for event in self.events
+                         if event.get('call_id') == call_id)
+            event['method'] = 'interface_observe'
+            event['result'] = {
+                'status': 'returned', 'tool': 'interface_observe',
+                'result': {'content': [
+                    {'type': 'text', 'text': json.dumps(
+                        body, sort_keys=True, separators=(',', ':'))},
+                    {'type': 'image', 'mimeType': 'image/png',
+                     'data': base64.b64encode(png).decode('ascii')},
+                ]},
+            }
+            captures.append(row)
+        self.measurement['local_observations'] = captures
+        self.receipt['before_observation'] = captures[0]
+        self.receipt['after_observation'] = captures[1]
+        self.write_receipt()
+
+    def test_public_win32_capture_pair_joins_action_score_and_owner_horizon(self):
+        self._install_public_capture_pair()
+        adapted = self.adapt()
+        self.assertTrue(adapted['factual_task_success'])
+        self.assertTrue(adapted['eligible_task_success'])
+        self.assertEqual(adapted['timing_status'], 'within_authority')
+        self.assertTrue(adapted['authority_binding']['release_confirmed'])
+        self.assertTrue(adapted['authority_binding']['horizon_verified'])
+
+    def test_public_win32_capture_pair_rejects_changed_action_generation(self):
+        self._install_public_capture_pair()
+        self.receipt['after_observation']['target_generation'] = 'd' * 64
+        event = next(event for event in self.events
+                     if event.get('call_id') == 'observe-after')
+        report = json.loads(event['result']['result']['content'][0]['text'])
+        report['target_generation'] = 'd' * 64
+        event['result']['result']['content'][0]['text'] = json.dumps(
+            report, sort_keys=True, separators=(',', ':'))
+        self.write_receipt()
+        with self.assertRaisesRegex(
+                LedgerValidationError,
+                'public capture must bind the exact observation and action generation'):
+            self.adapt()
+
+    def test_public_win32_effect_interval_must_fit_between_capture_windows(self):
+        self._install_public_capture_pair()
+        self.receipt['effect_interval_ns'] = {'lower_ns': 171, 'upper_ns': 173}
+        self.write_receipt()
+        with self.assertRaisesRegex(
+                LedgerValidationError,
+                'effect interval must be ordered inside its capture bracket'):
+            self.adapt()
 
     def _build_from_public_caller_receipt(self):
         receipt = recorded_adapter.ProviderAttemptRecorder(

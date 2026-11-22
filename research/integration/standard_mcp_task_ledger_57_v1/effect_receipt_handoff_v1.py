@@ -53,17 +53,47 @@ def _read_receipt(root: Path, relative: str):
     return value, hashlib.sha256(data).hexdigest(), data
 
 
-def _capture(value, observations, calls):
-    fields = {"tool_call_id", "source_sequence", "captured_ns", "image_sha256"}
-    if type(value) is not dict or set(value) != fields:
+def _capture(value, observations, calls, target_generation):
+    guarded_fields = {
+        "tool_call_id", "source_sequence", "captured_ns", "image_sha256"}
+    public_fields = {
+        "tool_call_id", "observation_id", "target_generation",
+        "capture_started_ns", "capture_ended_ns", "image_sha256"}
+    if type(value) is not dict or set(value) not in (guarded_fields, public_fields):
         _fail("capture reference fields do not match local observation contract")
     matches = [item for item in observations if item == value]
     call = calls.get(value["tool_call_id"])
     if len(matches) != 1 or call is None:
         _fail("capture reference is not a unique retained local observation")
-    if type(value["captured_ns"]) is not int or type(value["source_sequence"]) is not int:
-        _fail("capture time and source sequence must be integers")
-    return value
+    if set(value) == guarded_fields:
+        if call.get("method") not in {
+                "interface_guarded_observe", "interface_guarded_review_window",
+                "interface_guarded_feedback"}:
+            _fail("source-sequence capture must use a guarded observation call")
+        if (type(value["captured_ns"]) is not int or
+                type(value["source_sequence"]) is not int or
+                value["source_sequence"] <= 0):
+            _fail("capture time and positive source sequence must be integers")
+        if not call["started_ns"] <= value["captured_ns"] <= call["ended_ns"]:
+            _fail("guarded capture time lies outside its public observation call")
+        return {**value, "capture_started_ns": value["captured_ns"],
+                "capture_ended_ns": value["captured_ns"],
+                "capture_kind": "guarded"}
+
+    if (call.get("method") != "interface_observe" or
+            not isinstance(value["observation_id"], str) or
+            re.fullmatch(r"[0-9a-f]{32}", value["observation_id"]) is None or
+            value["target_generation"] != target_generation or
+            not isinstance(value["target_generation"], str) or
+            _HASH.fullmatch(value["target_generation"]) is None):
+        _fail("public capture must bind the exact observation and action generation")
+    capture_start = value["capture_started_ns"]
+    capture_end = value["capture_ended_ns"]
+    if (type(capture_start) is not int or type(capture_end) is not int or
+            capture_end < capture_start or
+            not call["started_ns"] <= capture_start <= capture_end <= call["ended_ns"]):
+        _fail("public capture interval lies outside its observation tool call")
+    return {**value, "capture_kind": "public"}
 
 
 def _derive_completed_owner_attribution(events, evidence, public_receipt):
@@ -233,21 +263,26 @@ def adapt_measured_run(measured: object, *, receipt_root: str | Path,
 
     observations = measurement["local_observations"]
     calls = {event["call_id"]: event for event in events if event["kind"] == "tool_call"}
-    before = _capture(receipt["before_observation"], observations, calls)
-    after = _capture(receipt["after_observation"], observations, calls)
+    before = _capture(receipt["before_observation"], observations, calls,
+                      receipt["target_generation"])
+    after = _capture(receipt["after_observation"], observations, calls,
+                     receipt["target_generation"])
     lookup_event = next(event for event in events
                         if event.get("call_id") == receipt["lookup_tool_call_id"])
-    if (before["captured_ns"] >= after["captured_ns"] or
-            before["source_sequence"] >= after["source_sequence"] or
-            calls[before["tool_call_id"]]["seq"] >= action_event["seq"] or
+    before_call = calls[before["tool_call_id"]]
+    after_call = calls[after["tool_call_id"]]
+    before_end = before["capture_ended_ns"]
+    after_start = after["capture_started_ns"]
+    same_capture_kind = before["capture_kind"] == after["capture_kind"]
+    source_order_ok = (before["capture_kind"] == "public" or
+                       before["source_sequence"] < after["source_sequence"])
+    if (not same_capture_kind or before_end >= after_start or not source_order_ok or
+            before_call["seq"] >= action_event["seq"] or
             action_event["seq"] >= lookup_event["seq"] or
-            lookup_event["seq"] >= calls[after["tool_call_id"]]["seq"] or
-            before["captured_ns"] > action_event["started_ns"] or
-            after["captured_ns"] < lookup_event["ended_ns"]):
+            lookup_event["seq"] >= after_call["seq"] or
+            before_end > action_event["started_ns"] or
+            after_start < lookup_event["ended_ns"]):
         _fail("effect captures must bracket the same action and its public result")
-    if before["captured_ns"] < calls[before["tool_call_id"]]["started_ns"] or after[
-            "captured_ns"] > calls[after["tool_call_id"]]["ended_ns"]:
-        _fail("effect capture lies outside its public observation call")
 
     interval = receipt["effect_interval_ns"]
     effect_ns = None
@@ -257,7 +292,7 @@ def adapt_measured_run(measured: object, *, receipt_root: str | Path,
             _fail("effect interval requires exact lower and upper bounds")
         lower, upper = interval["lower_ns"], interval["upper_ns"]
         if (type(lower) is not int or type(upper) is not int or
-                lower < before["captured_ns"] or upper > after["captured_ns"] or lower > upper):
+                lower < before_end or upper > after_start or lower > upper):
             _fail("effect interval must be ordered inside its capture bracket")
         bands = lambda t: ("within_authority" if t <= binding["authority_expiry_ns"] else
                            "after_authority_before_release" if t <= binding["release_received_ns"] else

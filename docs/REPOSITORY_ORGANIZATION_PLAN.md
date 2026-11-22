@@ -9,10 +9,11 @@ not as a completed inventory audit or a reason to close anything.
 **Project status handoff (2026-11-22):** The one-page [project state dashboard](PROJECT_STATE.md)
 now distinguishes main-verified gates, candidate-only integration, live
 evidence gaps, and repository custody work. A local #57 measurement candidate
-accepts native Win32 `interface_observe` captures with exact PNG custody and
-passes 38 focused / 64 combined normal and `-O` tests; it remains synthetic
-until exact action/result/effect/task-score/release evidence is joined. See its
-[R01 packet](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_observation_handoff_r01_20261122/RESULT.md).
+accepts native Win32 `interface_observe` captures with exact PNG custody (PR
+#10445 merged) and a local R02 effect handoff joins the before/after pair to
+dispatch/result/task-score/release/horizon custody. The combined 67-test suite
+passes normally and under `-O`; it remains synthetic pending a fresh live
+standard-caller trial. See [R02](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_effect_pair_handoff_r02_20261122/RESULT.md).
 
 **Latest whole-repository membership checkpoint r163 (2026-11-22 JST; main `1afb532ea153f3da3906764753909fac074afce3` before/after):** Complete paginated reads found 1,640 open Issues and 407 open PRs. Compared by exact ID against r152/r157, there were no additions; #7748/#7765/#7817 are the only removed Issues and #8181 the only removed PR. These sets match r162. Membership remains distinct from semantic review and custody reconciliation. The r160 semantic crosswalk is still the latest full routing analysis. Issue #57 remains open for matched live efficiency, standard-caller task success/recovery reliability, Research Preview graduation, and distributable-runtime acceptance. See the [r163 receipt](maintenance/repository-inventory-recheck-20261122-r163.md), [r162 receipt](maintenance/repository-inventory-recheck-20261122-r162.md), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
