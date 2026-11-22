@@ -1,0 +1,142 @@
+{
+  "admission_receipt": {
+    "authored": {
+      "critical_health_minimum": 51,
+      "max_source_age_ms": 30000,
+      "maximum_health_loss": 10,
+      "signal_id": "health"
+    },
+    "effective": {
+      "critical_health_minimum": 51,
+      "hard_minimum": 51,
+      "max_source_age_ms": 30000,
+      "maximum_health_loss": 10,
+      "signal_id": "health"
+    },
+    "grants_input_authority": false,
+    "monitor_mode": "paired_health_ammo",
+    "source_ammo_signal": {
+      "binding": {
+        "focus": 17,
+        "geometry": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "surface": 23
+      },
+      "capture_ns": 1000000000,
+      "format": "observable-signal-v1",
+      "sequence": 10,
+      "signal_id": "ammo",
+      "status": "observed",
+      "value": 40
+    },
+    "source_signal": {
+      "binding": {
+        "focus": 17,
+        "geometry": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "surface": 23
+      },
+      "capture_ns": 1000000000,
+      "format": "observable-signal-v1",
+      "sequence": 10,
+      "signal_id": "health",
+      "status": "observed",
+      "value": 61
+    },
+    "status": "admitted"
+  },
+  "input_sha256": "63b9d9eb3fc2dcad22f56bc1453279058b196f1ed9b24998db517bc72255531a",
+  "monitor_result": null,
+  "next_observation": {
+    "capture_ns": 6520000000,
+    "event": "typed_observation",
+    "frame_rgb_sha256": "6340b3e3b9b0153eba3a10e595cd0cf2fa13a81e49dde9a0f56026f499935f9c",
+    "pointer_binding": {
+      "focus": 17,
+      "geometry": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "surface": 23
+    },
+    "sequence": 11,
+    "signals": {
+      "ammo": {
+        "binding": {
+          "focus": 17,
+          "geometry": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "surface": 23
+        },
+        "capture_ns": 6520000000,
+        "format": "observable-signal-v1",
+        "sequence": 11,
+        "signal_id": "ammo",
+        "status": "observed",
+        "value": 40
+      },
+      "health": {
+        "binding": {
+          "focus": 17,
+          "geometry": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "surface": 23
+        },
+        "capture_ns": 6520000000,
+        "format": "observable-signal-v1",
+        "sequence": 11,
+        "signal_id": "health",
+        "status": "observed",
+        "value": 61
+      }
+    }
+  },
+  "post_state": {
+    "last_frame_rgb_sha256": "6340b3e3b9b0153eba3a10e595cd0cf2fa13a81e49dde9a0f56026f499935f9c",
+    "last_sequence": 11,
+    "last_values": {
+      "ammo": 40,
+      "health": 61
+    },
+    "latest_soft_event": null,
+    "soft_event_count": 0
+  },
+  "schema": "v39-frame-only-threat-boundary-raw-v1",
+  "source_commit": "53ec001a334e4077caf665ff56372cd4b0ccb068",
+  "source_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "source_observation": {
+    "capture_ns": 1000000000,
+    "event": "observation",
+    "frame_rgb_sha256": "fb7b771578d0b05a8ef54efa9c0dd838d91ff9a030a35af86f8dcc565d0902e8",
+    "pointer_binding": {
+      "focus": 17,
+      "geometry": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "surface": 23
+    },
+    "sequence": 10
+  },
+  "source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca"
+}
