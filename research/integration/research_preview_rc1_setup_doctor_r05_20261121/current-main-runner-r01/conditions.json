@@ -1,0 +1,39 @@
+{
+  "schema": "agent_interface_preview_runner_recheck_conditions_v1",
+  "question": "Does the merged current-main supported-host runner pass frozen RC1 preflight and reuse an already-present venv without installing, then retain the exact doctor boundary?",
+  "runner_source_commit": "a103a5ddb4fa12b8d7dde90b72f8655fafcfe3e5",
+  "runner_change_commit": "d1a92e04c47b4dbf88e4c784c3dfdfea16bb8e10",
+  "target_checkout_commit": "8e5052e04f8720fe89052ad01127114dd6852d88",
+  "target_root": "/home/user/agent-interface-rp-rc1-doctor-r05-20261121",
+  "host": "Ubuntu WSL2 x86_64, Linux 6.18.58.1-microsoft-standard-WSL2, Python 3.12.3",
+  "output_path_was_absent": true,
+  "preexisting_venv": true,
+  "arguments": {
+    "live": false,
+    "install_dependencies": false,
+    "seed": 991029
+  },
+  "ordered_steps": [
+    "preflight: PASS_LAUNCHER_BOUNDARY",
+    "setup: skipped_existing_venv",
+    "doctor: FAIL (12/15 checks passed)"
+  ],
+  "doctor_failures": [
+    "windows_cli",
+    "chromium",
+    "codex_cli"
+  ],
+  "runner_stopped_before": [
+    "audit-retained",
+    "fresh golden run",
+    "audit-live"
+  ],
+  "not_performed": [
+    "dependency installation or download",
+    "model/provider call",
+    "GUI action",
+    "Docker or WSLc allocation",
+    "golden task or allocation"
+  ],
+  "interpretation": "A scoped current-main acceptance-runner integration check. The frozen supported-host doctor and Research Preview acceptance remain HOLD/OPEN."
+}
