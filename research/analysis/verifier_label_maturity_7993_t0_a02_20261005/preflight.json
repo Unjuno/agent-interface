@@ -1,0 +1,16 @@
+{
+  "allocation": "UNJUNO-7993-VERIFIER-LABEL-MATURITY-T0-A02-MACOS-HOST-20261005",
+  "before_candidate_or_auditor": true,
+  "observed_at_utc": "exact timestamp not captured by the inventory command",
+  "orbstack_image_inventory": {
+    "command": "docker --context orbstack image ls --digests --no-trunc --format '{{.Repository}}:{{.Tag}}\\t{{.Digest}}\\t{{.ID}}'",
+    "result": "STOP_IMAGE_STORE_READ_ERROR",
+    "error": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:29b4131f68497276cdebc816b6e3a50354a459064edbff57538340fd3ab54118 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/29b4131f68497276cdebc816b6e3a50354a459064edbff57538340fd3ab54118: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/29b4131f68497276cdebc816b6e3a50354a459064edbff57538340fd3ab54118: operation not supported"
+  },
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "container_created_or_started": false,
+  "image_pulled": false,
+  "cleanup_or_restart": false,
+  "environment_delta": "A02 prospectively uses native macOS CPython 3.14.5; no container isolation or OS-enforced network isolation is claimed"
+}

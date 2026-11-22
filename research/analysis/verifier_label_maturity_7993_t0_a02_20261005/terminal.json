@@ -1,0 +1,75 @@
+{
+  "allocation": "UNJUNO-7993-VERIFIER-LABEL-MATURITY-T0-A02-MACOS-HOST-20261005",
+  "audit_disposition": "PASS_METHOD_SCOPED",
+  "auditor_command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "audit.py",
+    "--input",
+    "public_input.json",
+    "--truth",
+    "auditor_truth.json",
+    "--candidate",
+    "formal_output.json",
+    "--output",
+    "audit.json"
+  ],
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "candidate_command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "candidate.py",
+    "--input",
+    "public_input.json",
+    "--output",
+    "formal_output.json"
+  ],
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "container": "none; native host execution only",
+  "disposition": "PASS_METHOD_SCOPED",
+  "driver_invocations": 1,
+  "elapsed_seconds": 0.8879210840004816,
+  "environment_after": {
+    "available_disk_bytes": 688587550720,
+    "container": "none; native host substitution",
+    "cpu_count_logical": 10,
+    "host": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "load_average_1_5_15": [
+      74.44580078125,
+      44.58935546875,
+      38.46728515625
+    ],
+    "machine": "arm64",
+    "network_enforcement": "none; not claimed",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "environment_before": {
+    "available_disk_bytes": 688604749824,
+    "container": "none; native host substitution",
+    "cpu_count_logical": 10,
+    "host": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "load_average_1_5_15": [
+      74.44580078125,
+      44.58935546875,
+      38.46728515625
+    ],
+    "machine": "arm64",
+    "network_enforcement": "none; not claimed",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "finished_at_utc": "2026-10-05T06:23:02.871834+00:00",
+  "freeze_manifest_sha256": "04309735e0401e9672e28ac44775dc85893a32aaa1b10704094be3a90834096a",
+  "network": "no network calls by candidate/auditor; not OS-isolated",
+  "output_sha256": {
+    "audit.json": "ccc3b446a20dc163e0bf6ebfd46570f37e0c5c6fdadd0e43b0d4984840bdbd69",
+    "auditor.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "auditor.stdout.txt": "62b5399a8838b009836c8e30c2375bf38564b1a3f66c401dd46869f9d7aeb123",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "formal_output.json": "4d5f0a9c027c6c88d9f70dde2b88167b359b82b98d01fa85b9240f952ed6e740"
+  },
+  "retries": 0,
+  "started_at_utc": "2026-10-05T06:23:00.610432+00:00"
+}
