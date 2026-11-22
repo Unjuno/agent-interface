@@ -264,6 +264,116 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                     model.close()
                 client.close(timeout=2)
 
+    @unittest.skipIf(os.name == "nt" and sys.version_info[:2] < (3, 12),
+                     "app-server pipe transport requires Windows Python 3.12+")
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
+                         "Calc guarded adapter import requires Pillow")
+    def test_provider_failure_usage_joins_prospective_task_custody(self):
+        from datetime import datetime, timedelta, timezone
+        from research.live_control.calc_g10_caller_v1 import run_g10_in_durable_allocation
+        from research.live_control.integrated_efficiency_protocol_v1 import ARMS, TASKS
+        from research.live_control.issue57_v3_prospective_run_v1 import ProspectiveRun
+
+        with tempfile.TemporaryDirectory(prefix="grounding-prospective-custody-") as tmp:
+            root = Path(tmp)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.fixture"
+            image.write_bytes(b"synthetic prospective composition fixture")
+            allocation_path = root / "allocation.json"
+            allocation = {
+                "allocation_id": "synthetic-prospective-join-01",
+                "host_id": "synthetic-local-host", "owner": "offline-test",
+                "exclusive": True,
+                "expires_at_utc": (datetime.now(timezone.utc) +
+                    timedelta(hours=1)).isoformat(),
+                "task_ids": list(TASKS), "arms": list(ARMS),
+                "model": "synthetic-model",
+                "settings": {"effort": "medium", "provider": "fake"},
+                "order_seed": 57,
+            }
+            allocation_path.write_text(json.dumps(allocation), encoding="utf-8")
+            source_root = Path(__file__).resolve().parents[2]
+            run = ProspectiveRun(allocation_path, root / "prospective-run",
+                source_root=source_root, allocation_verifier=lambda *_args: True)
+            task_source = hashlib.sha256(b"synthetic frozen task source").hexdigest()
+            ledger = run.create_task_custodian("plain", 0,
+                source_sha256=task_source, observation_ids=["observation-prospective-01"],
+                conditions={"fixture": "synthetic-provider-failure"})
+
+            client = CodexAppServerClient(
+                [sys.executable, "-B", "-c", PEER], cwd=str(workspace),
+                journal_path=str(root / "protocol.jsonl"))
+            model = None
+            try:
+                client.initialize()
+                model = PersistentGroundingModel(
+                    root / "session", workspace, node="unused", cli="unused",
+                    client=client, path_converter=str,
+                    model="synthetic-model", effort="medium")
+                provider = V3PersistentGroundingAdapter(model)
+                conditions = {"model": "synthetic-model", "effort": "medium",
+                              "task": "two-cell-save", "route": "cold"}
+                journal = []
+                adapters = {
+                    "observe_source": lambda _payload: {"sequence": 1},
+                    "acquire_anchor": lambda _payload: {"image": str(image)},
+                    "anchor_model": lambda _payload: provider(
+                        root / "provider-call", "synthetic grounding request", image,
+                        "compiled", workspace),
+                    "verify_effect": lambda _payload: {"status": "unavailable"},
+                    "journal": journal.append,
+                }
+                spec = {
+                    "target": "synthetic Calc task", "route": "cold",
+                    "coarse_origin": "caller_provided",
+                    "provided_coarse": {"status": "candidate"},
+                    "cached_target": None, "local_repair_on": [],
+                    "repair_on": [], "session_id": "prospective-provider-fixture",
+                }
+                result = run_g10_in_durable_allocation(
+                    spec, adapters, lambda _payload: {"interface_id": "unused"},
+                    None, {}, ledger,
+                    perceive=lambda *_args: {}, verify_effect=lambda *_args: {},
+                    proposal_worker=object(), cancelled=lambda: False)
+                telemetry = {
+                    "local_observations": 1, "durable_calls": 1,
+                    "pointer_admissions": 0, "old_target_pointer_admissions": 0,
+                    "releases_verified": False, "elapsed_ns": 1,
+                    "source_to_completion_ns": None, "input_feedback_ns": [],
+                    "repair": {"required": False, "old_reference_status": None,
+                        "old_reference_pointer_admissions": 0,
+                        "attempted": False, "succeeded": False},
+                }
+                projected = run.record_task("plain", 0, result,
+                    {"submission_count": 0, "exact_submission": False}, telemetry,
+                    custodian_path=ledger.path)
+                task_event, = [json.loads(line) for line in
+                    (root / "prospective-run" / "lifecycle.jsonl").read_text(
+                        encoding="utf-8").splitlines()
+                    if json.loads(line)["event"] == "task"]
+                custody = task_event["payload"]["custody"]
+                audit = custody["audit"]
+                self.assertEqual(result["outcome"], "CALLER_FAILED")
+                self.assertEqual(custody["status"], "audited")
+                self.assertEqual(audit["status"], "audited")
+                self.assertEqual(audit["attempt_ledger"][0]["call_id"],
+                                 "turn-ledger-1")
+                self.assertEqual(audit["attempt_ledger"][0]["usage"]["input_tokens"],
+                                 1234)
+                self.assertEqual(projected["status"], "HOLD")
+                self.assertEqual(projected["reason"],
+                                 "failed_attempt_not_representable_in_v1")
+                finished = run.finish([])
+                self.assertEqual(finished["status"], "HOLD")
+                self.assertEqual(len(finished["missing_assignments"]), 17)
+                self.assertFalse(json.loads((root / "prospective-run" /
+                    "run-manifest.json").read_text(encoding="utf-8"))["dispatch_enabled"])
+            finally:
+                if model is not None:
+                    model.close()
+                client.close(timeout=2)
+
 
 if __name__ == "__main__":
     unittest.main()
