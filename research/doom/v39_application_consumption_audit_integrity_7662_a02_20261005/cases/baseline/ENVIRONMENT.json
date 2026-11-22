@@ -1,0 +1,15 @@
+{
+  "docker_context": "orbstack",
+  "docker_info": "29.4.0 linux/aarch64",
+  "docker_image_list": {
+    "exit_code": 1,
+    "stderr": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916: operation not supported"
+  },
+  "pinned_image_preflight": {
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "command": "docker run --pull=never --rm python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -c 'import platform,sys; print(sys.version.split()[0],platform.machine())'",
+    "exit_code": 125,
+    "stderr": "docker: Error response from daemon: No such image: python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016"
+  },
+  "disposition": "STOP_CONTAINER_IMAGE_UNAVAILABLE; no image pull or daemon repair attempted"
+}

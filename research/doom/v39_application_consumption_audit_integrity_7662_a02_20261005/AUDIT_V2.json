@@ -1,0 +1,45 @@
+{
+  "baseline_recomputed_counts": {
+    "baseline": [
+      15,
+      85
+    ],
+    "candidate": [
+      15,
+      85
+    ]
+  },
+  "baseline_recomputed_errors": [],
+  "errors": [
+    "mutation_not_independently_rejected"
+  ],
+  "experiment_id": "v39-application-consumption-audit-integrity-7662-a02-20261005",
+  "mutated_recomputed_counts": {
+    "baseline": [
+      15,
+      85
+    ],
+    "candidate": [
+      15,
+      85
+    ]
+  },
+  "mutated_recomputed_errors": [
+    "baseline:expected_ordered_mismatch:4",
+    "baseline:status_mismatch:4",
+    "baseline:paired_output_mismatch:4",
+    "baseline:expected_ordered_mismatch:15",
+    "baseline:status_mismatch:15",
+    "baseline:unordered_interval_exposed:15",
+    "candidate:expected_ordered_mismatch:4",
+    "candidate:status_mismatch:4",
+    "candidate:paired_output_mismatch:4",
+    "candidate:expected_ordered_mismatch:15",
+    "candidate:status_mismatch:15",
+    "candidate:unordered_interval_exposed:15"
+  ],
+  "original_auditor_baseline_pass": true,
+  "original_auditor_mutated_pass": true,
+  "outcome": "FAIL_AUDIT_V2",
+  "scope": "Saved-result auditor integrity for the #7662 interval sweep only; no source candidate or live allocation rerun."
+}

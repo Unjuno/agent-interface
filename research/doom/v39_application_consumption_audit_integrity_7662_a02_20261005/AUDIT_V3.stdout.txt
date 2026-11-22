@@ -1,0 +1,12 @@
+{
+  "chronology_label_mismatch_count": 4,
+  "errors": [],
+  "experiment_id": "v39-application-consumption-audit-integrity-7662-a02-20261005",
+  "outcome": "PASS_REPRODUCED_AUDITOR_FALSE_PASS",
+  "scope": "Versioned post-hoc audit correction over saved A02 output; no experiment invocation repeated.",
+  "v2_errors": [
+    "mutation_not_independently_rejected"
+  ],
+  "v2_outcome": "FAIL_AUDIT_V2",
+  "v2_repair_note": "v2 counted four expected_ordered discrepancies as if the total auditor error list must equal four; the independent oracle reports four label disagreements plus downstream status/output inconsistencies for the same mutated rows."
+}
