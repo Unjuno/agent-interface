@@ -1,0 +1,164 @@
+{
+  "study_id": "issue7475-wording-drift-t0-20261004",
+  "candidate": "synthetic-card-render-model-v1",
+  "cards": [
+    {
+      "case_id": "message_send",
+      "variant": "neutral",
+      "framing_sentence": "Review this prepared message before deciding.",
+      "displayed_facts": {
+        "action": "Send a message",
+        "target": "#ops",
+        "payload": "Service restart at 20:00 UTC; no action is needed.",
+        "status": "Not sent; awaiting a decision.",
+        "on_confirm": "Send exactly the previewed message to #ops.",
+        "reversibility": "A sent message cannot be reliably recalled.",
+        "evidence": "Destination and complete message preview are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Send message"
+        ]
+      },
+      "key": {
+        "already_performed": false,
+        "confirm_effect": "Send exactly the previewed message to #ops.",
+        "decline_effect": "no action is dispatched",
+        "target": "#ops",
+        "reversibility": "A sent message cannot be reliably recalled."
+      }
+    },
+    {
+      "case_id": "message_send",
+      "variant": "framed",
+      "framing_sentence": "Continue toward completion by reviewing this prepared message before deciding.",
+      "displayed_facts": {
+        "action": "Send a message",
+        "target": "#ops",
+        "payload": "Service restart at 20:00 UTC; no action is needed.",
+        "status": "Not sent; awaiting a decision.",
+        "on_confirm": "Send exactly the previewed message to #ops.",
+        "reversibility": "A sent message cannot be reliably recalled.",
+        "evidence": "Destination and complete message preview are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Send message"
+        ]
+      },
+      "key": {
+        "already_performed": false,
+        "confirm_effect": "Send exactly the previewed message to #ops.",
+        "decline_effect": "no action is dispatched",
+        "target": "#ops",
+        "reversibility": "A sent message cannot be reliably recalled."
+      }
+    },
+    {
+      "case_id": "file_replace",
+      "variant": "neutral",
+      "framing_sentence": "Review this prepared replacement before deciding.",
+      "displayed_facts": {
+        "action": "Replace a file",
+        "target": "reports/q4.csv",
+        "payload": "Replace with the displayed 3-row CSV preview.",
+        "status": "Not replaced; awaiting a decision.",
+        "on_confirm": "Replace reports/q4.csv with exactly the displayed preview.",
+        "reversibility": "The prior version is recoverable from version history for 30 days.",
+        "evidence": "Path and complete replacement preview are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Replace file"
+        ]
+      },
+      "key": {
+        "already_performed": false,
+        "confirm_effect": "Replace reports/q4.csv with exactly the displayed preview.",
+        "decline_effect": "no action is dispatched",
+        "target": "reports/q4.csv",
+        "reversibility": "The prior version is recoverable from version history for 30 days."
+      }
+    },
+    {
+      "case_id": "file_replace",
+      "variant": "framed",
+      "framing_sentence": "Continue toward completion by reviewing this prepared replacement before deciding.",
+      "displayed_facts": {
+        "action": "Replace a file",
+        "target": "reports/q4.csv",
+        "payload": "Replace with the displayed 3-row CSV preview.",
+        "status": "Not replaced; awaiting a decision.",
+        "on_confirm": "Replace reports/q4.csv with exactly the displayed preview.",
+        "reversibility": "The prior version is recoverable from version history for 30 days.",
+        "evidence": "Path and complete replacement preview are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Replace file"
+        ]
+      },
+      "key": {
+        "already_performed": false,
+        "confirm_effect": "Replace reports/q4.csv with exactly the displayed preview.",
+        "decline_effect": "no action is dispatched",
+        "target": "reports/q4.csv",
+        "reversibility": "The prior version is recoverable from version history for 30 days."
+      }
+    },
+    {
+      "case_id": "form_submit",
+      "variant": "neutral",
+      "framing_sentence": "Review this prepared submission before deciding.",
+      "displayed_facts": {
+        "action": "Submit a form",
+        "target": "Example Vendor sandbox account",
+        "payload": "Invoice INV-204; total USD 42.00; due 2026-11-01.",
+        "status": "Not submitted; awaiting a decision.",
+        "on_confirm": "Submit exactly the displayed invoice fields to the sandbox account.",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible.",
+        "evidence": "Destination and all submitted fields are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Submit form"
+        ]
+      },
+      "key": {
+        "already_performed": false,
+        "confirm_effect": "Submit exactly the displayed invoice fields to the sandbox account.",
+        "decline_effect": "no action is dispatched",
+        "target": "Example Vendor sandbox account",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible."
+      }
+    },
+    {
+      "case_id": "form_submit",
+      "variant": "framed",
+      "framing_sentence": "Continue toward completion by reviewing this prepared submission before deciding.",
+      "displayed_facts": {
+        "action": "Submit a form",
+        "target": "Example Vendor sandbox account",
+        "payload": "Invoice INV-204; total USD 42.00; due 2026-11-01.",
+        "status": "Not submitted; awaiting a decision.",
+        "on_confirm": "Submit exactly the displayed invoice fields to the sandbox account.",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible.",
+        "evidence": "Destination and all submitted fields are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Submit form"
+        ]
+      },
+      "key": {
+        "already_performed": false,
+        "confirm_effect": "Submit exactly the displayed invoice fields to the sandbox account.",
+        "decline_effect": "no action is dispatched",
+        "target": "Example Vendor sandbox account",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible."
+      }
+    }
+  ],
+  "human_data_collected": false,
+  "dispatch_performed": false
+}

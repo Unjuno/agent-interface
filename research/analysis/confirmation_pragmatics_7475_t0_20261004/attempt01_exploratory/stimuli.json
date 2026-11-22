@@ -1,0 +1,59 @@
+{
+  "study_id": "issue7475-wording-drift-t0-20261004",
+  "source": {
+    "issue": "https://github.com/Unjuno/agent-interface/issues/7475",
+    "main_sha": "0178fd24e9c317fff40e0fa1952fbe7e8ae01078",
+    "stage": "T0 synthetic card-equivalence audit",
+    "not_authorized": ["human participants", "live accounts", "models", "GUI", "action dispatch", "human-subject study"]
+  },
+  "cases": [
+    {
+      "id": "message_send",
+      "facts": {
+        "action": "Send a message",
+        "target": "#ops",
+        "payload": "Service restart at 20:00 UTC; no action is needed.",
+        "status": "Not sent; awaiting a decision.",
+        "on_confirm": "Send exactly the previewed message to #ops.",
+        "reversibility": "A sent message cannot be reliably recalled.",
+        "evidence": "Destination and complete message preview are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": ["Decline", "Send message"]
+      },
+      "neutral": "Review this prepared message before deciding.",
+      "framed": "Continue toward completion by reviewing this prepared message before deciding."
+    },
+    {
+      "id": "file_replace",
+      "facts": {
+        "action": "Replace a file",
+        "target": "reports/q4.csv",
+        "payload": "Replace with the displayed 3-row CSV preview.",
+        "status": "Not replaced; awaiting a decision.",
+        "on_confirm": "Replace reports/q4.csv with exactly the displayed preview.",
+        "reversibility": "The prior version is recoverable from version history for 30 days.",
+        "evidence": "Path and complete replacement preview are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": ["Decline", "Replace file"]
+      },
+      "neutral": "Review this prepared replacement before deciding.",
+      "framed": "Continue toward completion by reviewing this prepared replacement before deciding."
+    },
+    {
+      "id": "form_submit",
+      "facts": {
+        "action": "Submit a form",
+        "target": "Example Vendor sandbox account",
+        "payload": "Invoice INV-204; total USD 42.00; due 2026-11-01.",
+        "status": "Not submitted; awaiting a decision.",
+        "on_confirm": "Submit exactly the displayed invoice fields to the sandbox account.",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible.",
+        "evidence": "Destination and all submitted fields are shown.",
+        "layout": "single-column; facts before controls",
+        "buttons": ["Decline", "Submit form"]
+      },
+      "neutral": "Review this prepared submission before deciding.",
+      "framed": "Continue toward completion by reviewing this prepared submission before deciding."
+    }
+  ]
+}
