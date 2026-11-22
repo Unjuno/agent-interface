@@ -31,4 +31,32 @@ class AcceptanceHelpers(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             self.assertIsNone(mod.git_revision(Path(td)))
 
+    @mock.patch.object(mod, 'run_step')
+    def test_setup_reuses_existing_venv_without_installing(self, run_step):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'; out.mkdir()
+            venv = root / 'runtime' / '.venv'; venv.mkdir(parents=True)
+            row = mod.setup_step(root, out, 2, install_dependencies=True)
+            self.assertEqual(row['status'], 'skipped_existing_venv')
+            self.assertEqual(row['venv_path'], str(venv))
+            run_step.assert_not_called()
+
+    @mock.patch.object(mod, 'run_step')
+    def test_setup_requires_explicit_install_opt_in_for_missing_venv(self, run_step):
+        run_step.return_value = {'name': 'setup', 'returncode': 2}
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'; out.mkdir()
+            mod.setup_step(root, out, 2, install_dependencies=False)
+            self.assertEqual(run_step.call_args.args[3], 'setup')
+            self.assertEqual(run_step.call_args.args[4], ['./runtime/setup-golden-demo-v3.sh'])
+
+    @mock.patch.object(mod, 'run_step')
+    def test_setup_passes_install_opt_in_when_authorized(self, run_step):
+        run_step.return_value = {'name': 'setup', 'returncode': 0}
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'; out.mkdir()
+            mod.setup_step(root, out, 2, install_dependencies=True)
+            self.assertEqual(run_step.call_args.args[4], [
+                './runtime/setup-golden-demo-v3.sh', '--install-dependencies'])
+
 if __name__=='__main__': unittest.main()

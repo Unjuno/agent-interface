@@ -47,6 +47,36 @@ def run_step(root: Path, out: Path, index: int, name: str, command: list[str]) -
     return row
 
 
+def setup_step(root: Path, out: Path, index: int, *, install_dependencies: bool) -> dict:
+    """Reuse an existing venv or invoke setup with an explicit install opt-in."""
+    venv = root / "runtime" / ".venv"
+    if not venv.exists():
+        command = ["./runtime/setup-golden-demo-v3.sh"]
+        if install_dependencies:
+            command.append("--install-dependencies")
+        return run_step(root, out, index, "setup", command)
+
+    started = time.time_ns()
+    ended = time.time_ns()
+    stem = f"{index:02d}-setup"
+    note = f"Reused existing runtime venv: {venv}\n"
+    (out / f"{stem}.stdout.txt").write_text(note, encoding="utf-8", newline="\n")
+    (out / f"{stem}.stderr.txt").write_text("", encoding="utf-8", newline="\n")
+    row = {
+        "name": "setup",
+        "status": "skipped_existing_venv",
+        "command": None,
+        "returncode": 0,
+        "started_ns": started,
+        "ended_ns": ended,
+        "elapsed_ns": ended - started,
+        "parsed_json": None,
+        "venv_path": str(venv),
+    }
+    dump(out / f"{stem}.json", row)
+    return row
+
+
 def git_revision(root: Path) -> str | None:
     if not (root / ".git").exists():
         return None
@@ -61,6 +91,8 @@ def main() -> int:
                         help="New acceptance directory; refusing overwrite preserves first outcome.")
     parser.add_argument("--live", action="store_true",
                         help="Run the one fresh no-retry golden allocation and audit-live.")
+    parser.add_argument("--install-dependencies", action="store_true",
+                        help="Explicitly install the pinned golden-demo Python dependencies if runtime/.venv is absent.")
     parser.add_argument("--seed", type=int, default=991029)
     args = parser.parse_args()
     root = args.root.resolve(); out = args.out.resolve()
@@ -81,11 +113,27 @@ def main() -> int:
 
     commands = [
         ("preflight", [sys.executable, "release/first_run_smoke_v1/preflight.py", "--root", "."]),
-        ("setup", ["./runtime/setup-golden-demo-v3.sh"]),
         ("doctor", ["./runtime/golden-demo-v3.sh", "doctor"]),
         ("audit-retained", ["./runtime/golden-demo-v3.sh", "audit-retained"]),
     ]
-    for index, (name, command) in enumerate(commands, 1):
+    row = run_step(root, out, 1, commands[0][0], commands[0][1]); steps.append(row)
+    if row["returncode"] != 0:
+        report = {**base, "status": "FAIL_SUPPORTED_HOST_ACCEPTANCE", "passed": False,
+                  "failed_step": commands[0][0], "steps": steps}
+        dump(out / "acceptance.json", report)
+        print(json.dumps(report, indent=2))
+        return 1
+
+    row = setup_step(root, out, 2, install_dependencies=args.install_dependencies)
+    steps.append(row)
+    if row["returncode"] != 0:
+        report = {**base, "status": "FAIL_SUPPORTED_HOST_ACCEPTANCE", "passed": False,
+                  "failed_step": "setup", "steps": steps}
+        dump(out / "acceptance.json", report)
+        print(json.dumps(report, indent=2))
+        return 1
+
+    for index, (name, command) in enumerate(commands[1:], 3):
         row = run_step(root, out, index, name, command); steps.append(row)
         if row["returncode"] != 0:
             report = {**base, "status": "FAIL_SUPPORTED_HOST_ACCEPTANCE", "passed": False,
