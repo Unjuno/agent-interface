@@ -405,3 +405,7 @@ A stable release requires substantially frozen protocol/execution semantics, exp
 ## Current-main Linux MCP contract R02
 
 R02 passes the focused cancellation boundary and full public/guarded MCP suites in Docker/Linux normal and -O (87/87 each) after a test-only event-wait change. The two-second limits and production runtime are unchanged; R01's initial combined -O failure remains in its own packet. This is local regression evidence only. Continue the live standard-caller task/effect/recovery and matched efficiency gates in docs/PROJECT_STATE.md. See [R02](research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261123/RESULT.md).
+
+## Research Preview Windows builder R01
+
+On current main, the builder unit tests pass 6/6. A Windows sparse-checkout attempt exposed 26 CRLF-materialized frozen-source mirrors; exact current-main blobs restored their 29/29 registered hashes. The actual archive build remains HOLD because the sparse worktree lacks 22 files in the selected release closure. No package or live supported-host acceptance passed. Retain the WSL R06 result only for its recorded host/source and use a complete clean current-main checkout for the next packaging attempt. See [R01 diagnosis](research/integration/research_preview_windows_builder_current_main_r01_20261123/RESULT.md).
