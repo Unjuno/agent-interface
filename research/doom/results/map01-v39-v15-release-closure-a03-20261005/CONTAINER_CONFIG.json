@@ -1,0 +1,19 @@
+{
+  "schema": "container-execution-v1",
+  "runtime": "Microsoft WSLc 3.0.1.0",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "python": "3.12.15",
+  "network": "none",
+  "cpus_configured": 1,
+  "memory_bytes_configured": 536870912,
+  "source_mount": "readonly",
+  "output_mount": "read-write",
+  "pids_limit": "not supported by this WSLc run CLI",
+  "swap_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "candidate_container": "map01-v39-v15-release-a03-20261005-candidate",
+  "candidate_exit": 0,
+  "auditor_container": "map01-v39-v15-release-a03-20261005-auditor",
+  "auditor_exit": 0,
+  "running_containers_after": 0
+}
