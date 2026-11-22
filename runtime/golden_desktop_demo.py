@@ -33,6 +33,10 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def normalized_text_sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def dump(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8", newline="\n")
 
@@ -178,7 +182,7 @@ def audit_retained() -> dict:
         source_mismatches.append("SOURCE_MANIFEST.json")
     current_source_mismatches = [name for name, digest in expected_sources.items()
                                  if not (RESEARCH / name).is_file()
-                                 or sha(RESEARCH / name) != digest]
+                                 or normalized_text_sha(RESEARCH / name) != digest]
     evaluation = report["evaluation"]
     passed = (
         not source_mismatches

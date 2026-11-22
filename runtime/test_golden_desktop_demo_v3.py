@@ -62,9 +62,8 @@ class GoldenDesktopV3RetainedAuditTests(unittest.TestCase):
                        "size_bytes": len(source_bytes)}],
         }
         (archive / "SOURCE_MANIFEST.json").write_text(json.dumps(manifest))
-        # Deliberately changed current source proves audit authority comes from
-        # the byte-verified archive while drift remains visible in the result.
-        (research / "frozen.py").write_text("CURRENT = True\n")
+        # CRLF in the current checkout must not become source drift.
+        (research / "frozen.py").write_bytes(source_bytes.replace(b"\n", b"\r\n"))
         return retained, archive, research
 
     def test_retained_audit_accepts_exact_archive_and_reports_current_drift(self):
@@ -76,8 +75,19 @@ class GoldenDesktopV3RetainedAuditTests(unittest.TestCase):
                 result = self.base.audit_retained()
         self.assertTrue(result["passed"])
         self.assertEqual(result["source_mismatches"], [])
-        self.assertEqual(result["current_source_mismatches"], ["frozen.py"])
+        self.assertEqual(result["current_source_mismatches"], [])
         self.assertEqual(result["source_validation"], "frozen_archive")
+
+    def test_retained_audit_reports_content_drift_after_eol_normalization(self):
+        with TemporaryDirectory() as temp:
+            retained, archive, research = self.make_packet(Path(temp))
+            (research / "frozen.py").write_text("CURRENT = True\n")
+            with patch.object(self.base, "RETAINED", retained), \
+                 patch.object(self.base, "RETAINED_SOURCE_ARCHIVE", archive), \
+                 patch.object(self.base, "RESEARCH", research):
+                result = self.base.audit_retained()
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["current_source_mismatches"], ["frozen.py"])
 
     def test_retained_audit_fails_if_frozen_archive_bytes_change(self):
         with TemporaryDirectory() as temp:
