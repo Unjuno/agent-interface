@@ -1,0 +1,57 @@
+"""Data-only independent receipt/order predicate, no controller imports."""
+def require(value,message):
+    if not value:raise ValueError(message)
+
+def audit(r):
+    require(type(r) is dict,'result object')
+    require(type(r.get('pid')) is int and r['pid']>0,'typed PID')
+    mode=r.get('mode');require(mode in ('precancel','pending_cancel'),'mode')
+    require(r.get('status')=='PRIMARY_COMPLETE','primary not complete')
+    require(r.get('cleanup_write') is False and r.get('thread_alive') is False and r.get('caller_cancelled') is True,'actual primary/caller/worker receipts')
+    events=r.get('events');require(type(events) is list and events,'events')
+    prior=-1
+    for i,e in enumerate(events):
+        require(type(e) is dict and type(e.get('seq')) is int and e['seq']==i,'sequence')
+        tick=e.get('monotonic_ns');require(type(tick) is int and tick>=prior,'clock');prior=tick
+        require(not str(e.get('kind','')).startswith(('cleanup_','primary_failure','worker_exception')),'failure or cleanup event')
+    def one(kind):
+        rows=[e for e in events if e.get('kind')==kind];require(len(rows)==1,'unique '+kind);return rows[0]
+    def before(a,b):require(a['seq']<b['seq'],'order '+a['kind']+'/'+b['kind'])
+    enter=one('worker_enter');opened=one('thread_handle_open')
+    require(type(enter.get('tid')) is int and enter['tid']>0 and opened.get('tid')==enter['tid'] and type(opened.get('tid')) is int,'thread identity')
+    require(type(opened.get('handle')) is int and opened['handle']>0,'thread handle')
+    before(enter,opened)
+    caller=one('caller_cancel_receipt');require(caller.get('cancelled') is True,'caller actual canceled')
+    exited=one('worker_exit');terminal=one('controller_terminal');joined=one('thread_join');closed=one('close_handle')
+    require(joined.get('alive') is False and closed.get('success') is True,'join/close receipt')
+    before(exited,terminal);before(terminal,joined);before(joined,closed)
+    fd=[e for e in events if e.get('kind')=='close_fd'];require(len(fd)==2 and {e.get('role') for e in fd}=={'read_fd','write_fd'},'FD closure set')
+    require(all(type(e.get('fd')) is int and e['fd']>=0 for e in fd) and fd[0]['fd']!=fd[1]['fd'],'distinct descriptors')
+    for e in fd:before(joined,e)
+    c=r.get('controller');require(type(c) is dict,'controller summary')
+    completion=c.get('worker_completion');require(type(completion) is dict,'completion summary')
+    require(terminal.get('result')==completion,'terminal event/summary join')
+    require(c.get('settled') is True and c.get('resources_released') is True and c.get('thread_joined') is True and c.get('caller_terminal')=='CANCELLED','settlement claims')
+    require(c.get('resources')=={k:'RETIRED' for k in ('thread_handle','read_fd','write_fd')},'resource summary')
+    admission=one('admission')
+    require(type(c.get('cancel_requests')) is int,'typed cancel count')
+    if mode=='precancel':
+        require(admission.get('allowed') is False and c['cancel_requests']==0,'precancel admission')
+        before(caller,admission);notissued=one('read_not_issued');before(notissued,exited)
+        require(c.get('worker_completion')=={'kind':'NOT_ISSUED'},'not issued summary')
+        require(not any(e['kind'] in ('read_enter','read_return','cancel_started','cancel_reply','pending_observation') for e in events),'forbidden precancel native action')
+        return 'PASS_PRE_CANCEL'
+    require(admission.get('allowed') is True and c['cancel_requests']==1,'pending admission/count')
+    read=one('read_enter');returned=one('read_return');send=one('cancel_started');reply=one('cancel_reply')
+    require(type(read.get('tid')) is int and read['tid']==enter['tid'],'read thread')
+    before(opened,read);before(read,send);before(caller,send);before(send,reply);before(send,returned);before(returned,exited);before(reply,closed)
+    require(reply.get('success') is True and type(reply.get('error')) is int and reply['error']==0,'cancel API receipt')
+    v=returned.get('result');require(type(v) is list and len(v)==4 and v[0] is False and type(v[1]) is int and v[1]==995 and type(v[2]) is int and v[2]==0 and v[3]=='','actual worker abort')
+    require(completion==dict(kind='ABORTED',success=False,error=995,count=0,hex='') and type(completion.get('error')) is int and type(completion.get('count')) is int and completion.get('success') is False,'typed worker summary')
+    event_completion=terminal['result']
+    require(type(event_completion.get('error')) is int and type(event_completion.get('count')) is int and event_completion.get('success') is False,'typed terminal event')
+    samples=[e for e in events if e.get('kind')=='pending_observation' and e['seq']<send['seq']]
+    require(bool(samples),'pending witness absent');w=samples[-1]
+    require(w.get('api_success') is True and w.get('pending') is True and type(w.get('last_error')) is int and w['last_error']==0 and w.get('action')==send.get('ticket') and type(send.get('ticket')) is str,'successful pending/ticket binding')
+    before(read,w)
+    return 'PASS_PENDING_CANCEL'
