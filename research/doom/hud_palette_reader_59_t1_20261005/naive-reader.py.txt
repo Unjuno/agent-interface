@@ -1,0 +1,56 @@
+"""Opt-in palette-aware HUD reader; no controller imports this version yet."""
+from copy import copy
+
+import numpy as np
+from PIL import Image
+
+from doom_hud_signal_v1 import _wad_lumps, _render_patch
+from doom_hud_signal_v3 import DoomStatusNumberReader as Previous
+
+
+class DoomStatusNumberReader(Previous):
+    def __init__(self, wad_path, **kwargs):
+        super().__init__(wad_path, **kwargs)
+        lumps = _wad_lumps(wad_path, self.wad_sha256)
+        data = lumps['PLAYPAL']
+        if len(data) != 14 * 768:
+            raise ValueError('frozen fourteen-palette WAD required')
+        self.palette_templates = []
+        for palette in np.frombuffer(data, dtype=np.uint8).reshape(14, 256, 3):
+            group = []
+            for digit in range(10):
+                patch = Image.fromarray(_render_patch(lumps[f'STTNUM{digit}'], palette))
+                resized = np.asarray(patch.resize(self.glyph_size, Image.Resampling.NEAREST))
+                group.append((resized[:, :, :3], resized[:, :, 3] > 0))
+            self.palette_templates.append(tuple(group))
+        self.palette_templates = tuple(self.palette_templates)
+
+    def read_frame(self, observation, frame):
+        candidates = []
+        baseline = None
+        for index, templates in enumerate(self.palette_templates):
+            variant = copy(self)
+            variant.templates = templates
+            result = Previous.read_frame(variant, observation, frame)
+            if baseline is None:
+                baseline = result
+            if result['status'] == 'observed':
+                candidates.append((index, result))
+        if not candidates:
+            return baseline
+        if len({result['value'] for _, result in candidates}) != 1:
+            return self._unknown('conflicting_palette_values', observation.get('sequence'),
+                                 observation.get('capture_ns'), observation.get('pointer_binding'))
+        palette, result = candidates[0]
+        result['palette_indices'] = [index for index, _ in candidates]
+        result['evidence'] = 'hash-bound WAD glyph foreground exact-match across palettes'
+        return result
+
+    def read(self, observation):
+        try:
+            with Image.open(self.image_resolver(observation['image'])) as opened:
+                frame = opened.convert('RGB')
+        except (KeyError, OSError, ValueError):
+            return self._unknown('image_unavailable', observation.get('sequence'),
+                                 observation.get('capture_ns'), observation.get('pointer_binding'))
+        return self.read_frame(observation, frame)
