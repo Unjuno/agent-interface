@@ -5,11 +5,12 @@
 The repository is not clean yet. Keep product qualification and repository
 triage as two linked workstreams: the first protects acceptance gates; the
 second reconciles issue/PR meaning and evidence custody without bulk closure.
-The latest complete paginated membership baseline is r165 (1,640 Issues / 405
-PRs on main `d5ada452`). A later count-only read matched those totals but did
-not refresh exact membership. Therefore these are dated baseline numbers, not
-a current complete inventory. Run a new full paginated ID snapshot before the
-next family-level reconciliation.
+The latest complete paginated membership baseline is r166 (1,640 Issues / 405
+PRs on main `01fb5fcbdde0729e30eef5771a0630aed03796b9`). The exact sorted-ID
+hashes match r165. PRs #10470/#10471 were opened and merged between the two
+snapshots, leaving no net membership delta. See the [r166 receipt](maintenance/repository-inventory-recheck-20261123-r166.md).
+This refreshes queue membership only; semantic issue/PR disposition is still
+incomplete and must proceed family by family.
 
 ### Current project map
 
