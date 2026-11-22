@@ -11,6 +11,7 @@ from provider_attempt_recorder import ProviderAttemptRecorder
 from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
 from comparison_measurement_v1 import validate_matched_block
 from ledger import LedgerValidationError
+from runtime.cli_v1.mcp_relay import Relay
 
 class EffectReceiptHandoffTests(unittest.TestCase):
     def setUp(self):
@@ -105,7 +106,7 @@ class EffectReceiptHandoffTests(unittest.TestCase):
                 measured, receipt_root=self.receipt_root,
                 receipt_path='score.json')
 
-    def test_recorded_caller_fake_relay_records_capture_pair_and_adapts_effect(self):
+    def test_recorded_caller_actual_relay_records_capture_pair_and_adapts_effect(self):
         root = self.root / 'caller-composition'
         ticks = iter(range(100, 300, 5))
         recorder_root = root / 'recorder'
@@ -133,17 +134,20 @@ class EffectReceiptHandoffTests(unittest.TestCase):
             },
         }
 
-        class FakeRelay:
-            def __init__(self):
-                self.next_id = 1
+        class FakeMCPResult:
+            def __init__(self, body):
+                self.body = body
 
-            async def request(self, raw):
-                request = json.loads(raw)
-                request_id = request['id']
-                self.next_id += 1
-                method = request['tool']
+            def model_dump(self, *, mode):
+                if mode != 'json':
+                    raise AssertionError(f'unexpected MCP serialization mode: {mode}')
+                return {'content': [{'type': 'text',
+                                     'text': json.dumps(self.body)}]}
+
+        class FakeMCPClient:
+            async def call_tool(self, method, arguments):
                 if method == 'interface_guarded_observe':
-                    sequence = 1 if request['arguments']['capture'] == 'before' else 2
+                    sequence = 1 if arguments['capture'] == 'before' else 2
                     body = {'source': {'sequence': sequence}}
                 elif method == 'interface_dispatch':
                     body = {'call_id': call_id, 'operation_id': operation_id,
@@ -153,18 +157,14 @@ class EffectReceiptHandoffTests(unittest.TestCase):
                     body = owner_public
                 else:
                     raise AssertionError(f'unexpected public method: {method}')
-                return {'id': request_id, 'status': 'returned', 'tool': method,
-                        'sdk_entry_ns': 1, 'sdk_return_ns': 2,
-                        'next_id': self.next_id,
-                        'result': {'content': [{'type': 'text',
-                                                'text': json.dumps(body)}]}}
+                return FakeMCPResult(body)
 
         usage = {'status': 'reported', 'input_tokens': 10, 'output_tokens': 2}
         recorder.invoke('attempt-1', b'{"prompt":"fixture"}',
                         lambda: {'status': 'completed', 'usage': usage,
                                  'response_bytes': b'{"plan":"dispatch"}'})
         caller = RecordedPublicMcpCaller(
-            FakeRelay(), recorder,
+            Relay(FakeMCPClient()), recorder,
             allowed_methods={'interface_guarded_observe', 'interface_dispatch',
                              'interface_results'})
 
@@ -182,8 +182,17 @@ class EffectReceiptHandoffTests(unittest.TestCase):
                 {'capture': 'after'})
             return before, dispatch, lookup, after
 
-        _, dispatch_response, lookup_response, _ = asyncio.run(
-            execute_calls())
+        before_response, dispatch_response, lookup_response, after_response = (
+            asyncio.run(execute_calls()))
+        self.assertEqual(
+            [(row['id'], row['next_id']) for row in (
+                before_response, dispatch_response, lookup_response,
+                after_response)],
+            [(1, 2), (2, 3), (3, 4), (4, 5)])
+        self.assertTrue(all(type(row['sdk_entry_ns']) is int and
+                            type(row['sdk_return_ns']) is int
+                            for row in (before_response, dispatch_response,
+                                        lookup_response, after_response)))
         self.assertEqual(dispatch_response['status'], 'returned')
         self.assertEqual(lookup_response['status'], 'returned')
         state_before = b'fixture-state-before'
