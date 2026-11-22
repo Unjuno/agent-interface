@@ -9,6 +9,7 @@ import subprocess
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
 SPEC = importlib.util.spec_from_file_location("build_preview", HERE / "build_preview.py")
@@ -126,6 +127,19 @@ class ArchiveTests(unittest.TestCase):
             meta = mod.inspect_rc(root)
             self.assertEqual(len(meta["head"]), 40)
             self.assertLess(meta["selected_file_count"], meta["tracked_file_count"])
+
+    def test_inspect_uses_bounded_stage_listing(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "repo"; root.mkdir()
+            self.make_repo(root)
+            with patch.object(mod, "_git", wraps=mod._git) as git_call:
+                meta = mod.inspect_rc(root)
+            stage_calls = [call for call in git_call.call_args_list
+                           if len(call.args) >= 3 and call.args[1:3] == ("ls-files", "--stage")]
+            self.assertEqual(len(stage_calls), 1)
+            self.assertEqual(stage_calls[0].args[3:], ("-z",))
+            self.assertTrue(stage_calls[0].kwargs.get("binary"))
+            self.assertGreater(meta["selected_file_count"], 0)
 
     def test_retained_source_names_must_be_flat_and_hashed(self):
         with tempfile.TemporaryDirectory() as td:

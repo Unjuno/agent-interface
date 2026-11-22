@@ -186,8 +186,16 @@ def inspect_rc(root: Path) -> dict:
     commit_time = str(_git(root, "show", "-s", "--format=%cI", "HEAD"))
     tracked = tracked_files(root)
     selected = select_release_paths(root, tracked)
-    stage = str(_git(root, "ls-files", "--stage", "--", *selected))
-    submodules = [line for line in stage.splitlines() if line.startswith("160000 ")]
+    # Keep the Git process argument list bounded. A preview closure can include
+    # tens of thousands of runtime files, exceeding Windows CreateProcess limits
+    # when every selected path is passed as a separate argument.
+    selected_bytes = {name.encode("utf-8") for name in selected}
+    stage_entries = bytes(_git(root, "ls-files", "--stage", "-z", binary=True)).split(b"\0")
+    submodules = []
+    for entry in stage_entries:
+        header, separator, path = entry.partition(b"\t")
+        if separator and path in selected_bytes and header.startswith(b"160000 "):
+            submodules.append(path.decode("utf-8", "replace"))
     if submodules:
         raise BuildError("submodule entries are unsupported in preview closure")
     return {
