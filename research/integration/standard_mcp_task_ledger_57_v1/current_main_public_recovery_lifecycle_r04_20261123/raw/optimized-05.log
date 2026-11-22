@@ -1,0 +1,30 @@
+test_public_compiled_caller_joins_exact_result_query_and_task_oracle (runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle) ... Executing <Task pending name='Task-2' coro=<SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle() running at C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\runtime\cli_v1\test_mcp_supervised_win32.py:3181> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\futures.py:387, Task.task_wakeup()] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 1.156 seconds
+FAIL
+
+======================================================================
+FAIL: test_public_compiled_caller_joins_exact_result_query_and_task_oracle (runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\runtime\cli_v1\test_mcp_supervised_win32.py", line 3190, in test_public_compiled_caller_joins_exact_result_query_and_task_oracle
+    self.assertEqual(recovered["outcome"], "SAFE_YIELD", recovered)
+AssertionError: 'RUNTIME_FAILED' != 'SAFE_YIELD'
+- RUNTIME_FAILED
++ SAFE_YIELD
+ : {'format': 'compiled-gui-runtime-receipt-v1', 'interface_id': 'public-result-query-composition', 'method': 'save-once', 'method_version': '1', 'session_scope': 'supervised-win32-fixture', 'outcome': 'RUNTIME_FAILED', 'reason': 'execution_failed', 'completed_transitions': 0, 'frontier_model_resumptions': 0, 'observations': [{'sequence': 1, 'captured_ns': 406596187000000, 'evidence_ref': 'public-composition-1', 'evidence_digest': '80555b48c5017789d45ea07a5c239b1a5df342684003c136081213f74653f81f', 'predicates': {'ready': True, 'saved': False}, 'observation_started_ns': 406594671000000, 'observation_accepted_ns': 406600015000000}], 'transitions': [], 'critical_events': [{'event': 'branch_selected', 'state': 'before', 'outcome': 'action', 'action': 'save', 'matched_conditions': {'ready': True}, 'evidence_ref': 'public-composition-1'}, {'event': 'action_terminal', 'action': 'save', 'status': 'uncertain', 'action_id': '81ef509567c144db98569ab1fd79ad5a', 'release_verified': False, 'execution_started_ns': 406600015000000, 'execution_accepted_ns': 406609750000000}, {'event': 'runtime_finished', 'outcome': 'RUNTIME_FAILED', 'reason': 'execution_failed', 'completed_transitions': 0}], 'latest_evidence_ref': 'public-composition-1', 'pending_effect': None, 'started_ns': 406594671000000, 'ended_ns': 406609750000000, 'elapsed_ns': 15079000000, 'input_authority': 'admission_per_action_only', 'raw_evidence_retention': 'adapter_responsibility_unverified', 'unresolved_execution': {'action': 'save', 'reason': 'release_unverified', 'release_verified': False, 'input_dispatched': None, 'action_id': '81ef509567c144db98569ab1fd79ad5a', 'effect_ref': 'standard-win32-save'}, 'standard_observation_call_ids': ['11b7f0d2e381415bbd84e72115fc550a'], 'standard_action_call_ids': ['81ef509567c144db98569ab1fd79ad5a'], 'standard_target_evidence': [{'kind': 'observation', 'call_id': '11b7f0d2e381415bbd84e72115fc550a', 'target': 'fixture', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'target_generation_consistency': 'matched', 'observation_id': 'public-composition-1', 'observation_sequence': 1, 'evidence_ref': 'public-composition-1', 'evidence_digest': '80555b48c5017789d45ea07a5c239b1a5df342684003c136081213f74653f81f', 'captured_ns': 406596187000000, 'compiled_observation_accepted': True}, {'kind': 'dispatch', 'call_id': '81ef509567c144db98569ab1fd79ad5a', 'target': 'fixture', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'program_id': 'compiled-13c98e77ba9e4f1386f80b9bafb740cc', 'observation_sequence': 1, 'binding_revision': 1, 'action_id': '81ef509567c144db98569ab1fd79ad5a', 'effect_ref': 'standard-win32-save', 'status': 'uncertain', 'pending_result_resolution': 'error:AssertionError', 'input_dispatched': None, 'release_verified': False}], 'bound_target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'task_success': None, 'task_verification': None}
+
+----------------------------------------------------------------------
+Ran 1 test in 20.214s
+
+FAILED (failures=1)

@@ -1,6 +1,6 @@
 # Project state and work order
 
-Updated 2026-11-23 from current `main` `10680fe597678649c3de8a18a490462f4291edaf`.
+Updated 2026-11-23 from current `main` `7fb6fe4c95fed8dec9f95d96e910da0fa769e690`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 
@@ -20,6 +20,15 @@ A follow-up candidate isolates the eligibility predicate and adds exact
 operation/generation/horizon mismatch controls. Its four focused tests pass in
 normal and `-O`; all inputs remain Fake/local. See the
 [R02 packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_negative_controls_r02_20261123/RESULT.md).
+
+The R04 fresh-process lifecycle experiment ran its frozen ten samples once:
+7/10 passed (normal 4/5, `-O` 3/5). Two failures ended with uncertain action
+status and release unverified; one failed to accept an observation before its
+fixture callback budget. Treat this as a failed repeatability gate and a
+timing-sensitive safety signal, not a reliability estimate or pass. Raw logs,
+exit codes, conditions, and SHA-256 manifest are in the
+[R04 packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r04_20261123/RESULT.md).
+R03's logging failure is preserved separately and is not scored. Keep #57 open.
 
 ## What the project is trying to finish
 
