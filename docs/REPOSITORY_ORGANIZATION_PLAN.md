@@ -12,6 +12,8 @@ See the [r170 receipt](maintenance/repository-inventory-recheck-20261123-r170.md
 The earlier r168 check was count-only. Semantic issue/PR disposition remains
 incomplete and must proceed family by family.
 
+**Current-main recheck r171 (2026-11-23; main `953ce41370666c656278f203dc545aa310947ffe`):** Complete pagination still returns 1,640 open Issues and 405 open PRs. The exact sorted ID sets match r170 with no additions/removals, bracketed by the same main SHA before and after. PR #10478 was merged; its appearance and removal happened between complete snapshots, so it does not change the current set. This does not advance semantic triage. See the [r171 receipt](maintenance/repository-inventory-recheck-20261123-r171.md).
+
 ### Current project map
 
 | Workstream | Current evidence | Remaining gate |
