@@ -63,7 +63,10 @@ class AcknowledgedSampler:
         self.sequence += 1
         row = {"schema": "scorer-client-update-v1", "run_id": self.run_id,
                "sample_sequence": self.sequence, "controller_visible": False,
-               "status": "UPDATE_UNAVAILABLE"}
+               "status": "UPDATE_UNAVAILABLE",
+               "update_status": "NOT_ATTEMPTED",
+               "sample_status": "NOT_ATTEMPTED"}
+        producer = None
         try:
             if game.is_episode_finished():
                 if self.last is not None and self.last.episode_finished:
@@ -76,16 +79,16 @@ class AcknowledgedSampler:
                                 "observation_status": "EXTERNAL_UPDATE_RETURNED"}
                 else:
                     raise RuntimeError("terminal state has no acknowledged sample")
+                row["update_status"] = producer["observation_status"]
             else:
                 before = int(game.get_episode_time())
                 row.update(tic_before=before, update_started_ns=self.clock_ns())
                 external_before = self.external_ack
                 game.advance_action(1, True)
                 row["update_returned_ns"] = self.clock_ns()
+                row["update_status"] = "UPDATE_RETURNED"
                 after = int(game.get_episode_time())
                 row["tic_after"] = after
-                if after <= before:
-                    raise RuntimeError("acknowledged update did not advance episode tic")
                 if self.external_ack is external_before:
                     self.update_sequence += 1
                 producer = {"run_id": self.run_id, "sample_sequence": self.sequence,
@@ -94,6 +97,13 @@ class AcknowledgedSampler:
                             "tic_before": before, "tic_after": after,
                             "update_started_ns": row["update_started_ns"],
                             "update_returned_ns": row["update_returned_ns"]}
+                row["producer"] = copy.deepcopy(producer)
+                if after <= before:
+                    raise RuntimeError("acknowledged update did not advance episode tic")
+            # Publish the acknowledged producer identity before scorer code runs,
+            # so a later sampling failure cannot erase update evidence.
+            row["producer"] = copy.deepcopy(producer)
+            row["sample_status"] = "PENDING"
             sample = self.sample_fn(game, variables, timeout_seconds, **kwargs)
             sample.validate()
             if int(game.get_episode_time()) != producer["tic_after"]:
@@ -106,11 +116,19 @@ class AcknowledgedSampler:
                 sample.sample_ns, sample.kill_count, sample.death_count,
                 sample.episode_finished, sample.player_dead, sample.map_exit,
                 producer)
-            row.update(status=producer["observation_status"], sample=result.as_dict())
+            row.update(status=producer["observation_status"],
+                       sample_status="AVAILABLE", sample=result.as_dict())
         except BaseException as error:
             self._failure = error
-            row.update(status="UPDATE_UNAVAILABLE", error_type=type(error).__name__,
-                       error=str(error))
+            if row["update_status"] == "NOT_ATTEMPTED":
+                row.update(status="UPDATE_UNAVAILABLE",
+                           update_status="UPDATE_UNAVAILABLE")
+            elif row["sample_status"] == "PENDING":
+                row.update(status="SAMPLE_UNAVAILABLE",
+                           sample_status="UNAVAILABLE")
+            else:
+                row["status"] = "UPDATE_VALIDATION_FAILED"
+            row.update(error_type=type(error).__name__, error=str(error))
             raise
         finally:
             # No retry after an ambiguous evidence-sink exception.
