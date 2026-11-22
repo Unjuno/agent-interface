@@ -1,0 +1,46 @@
+{
+  "schema": "doom-controller-finish-pipe-audit-v1",
+  "status": "PASS_BASELINE_BLOCK_CONFIRMED",
+  "checks": {
+    "frozen_hashes_match": true,
+    "candidate_exit_zero": true,
+    "source_hash_bound": true,
+    "pipe_filled": true,
+    "cleanup_still_blocked_at_barrier": true,
+    "child_alive_at_barrier": true,
+    "planner_not_closed_at_barrier": true,
+    "primary_exception_preserved": true,
+    "external_probe_kill_recorded": true,
+    "thread_joined_after_external_release": true,
+    "planner_closed_after_external_release": true,
+    "stderr_captured": true,
+    "stdout_captured": true,
+    "argv_captured": true
+  },
+  "checked_sha256": {
+    "cleanup_source": "7844cd558e453408a0b5aa46b860b53cf9afab9d47ccccaf7b61db2e90b42bb6",
+    "probe": "f3654bc3e04a9785fc15e11cdd4ff9a6c01862c2b04a0f82b8698d42d154081d",
+    "runner": "cd78318f2482acc4d0ba46334811f229ccbc14ee96d375605f952c3a10735045",
+    "report": "29f02321b3e2d26f7c82194dc3f4e05a8117919e5f7bf251a177ab1fedec503f",
+    "auditor": "477664f5ddc7a7e40e3e2602e290a5c2359b8a52de12aec30abcf0c1983d0a27"
+  },
+  "result": {
+    "schema": "doom-controller-finish-pipe-probe-v1",
+    "source_sha256": "7844cd558e453408a0b5aa46b860b53cf9afab9d47ccccaf7b61db2e90b42bb6",
+    "pipe_fill_bytes": 65536,
+    "primary_exception_preserved": true,
+    "blocked_after_barrier": true,
+    "child_alive_at_barrier": true,
+    "planner_closed_at_barrier": false,
+    "external_cleanup": {
+      "action": "probe_kill_owned_child",
+      "exit_code": -9
+    },
+    "cleanup_thread_error": null,
+    "barrier_elapsed_ms": 501.654819,
+    "cleanup_thread_joined": true,
+    "planner_closed_after_external_release": true
+  },
+  "exit_code": 0,
+  "scope": "raw-result integrity and frozen boundary assertions; no rerun"
+}
