@@ -1,0 +1,98 @@
+{
+  "name": "doctor",
+  "command": [
+    "./runtime/golden-demo-v3.sh",
+    "doctor"
+  ],
+  "returncode": 1,
+  "started_ns": 1795330530065359255,
+  "ended_ns": 1795330530834240884,
+  "elapsed_ns": 768881629,
+  "parsed_json": {
+    "schema": "agent_interface_golden_doctor_v2",
+    "passed": false,
+    "checks": [
+      {
+        "name": "linux",
+        "passed": true,
+        "detail": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      },
+      {
+        "name": "wslpath",
+        "passed": true,
+        "detail": "/usr/bin/wslpath"
+      },
+      {
+        "name": "display",
+        "passed": true,
+        "detail": ":0"
+      },
+      {
+        "name": "python:PIL",
+        "passed": true,
+        "detail": "PIL"
+      },
+      {
+        "name": "python:numpy",
+        "passed": true,
+        "detail": "numpy"
+      },
+      {
+        "name": "python:Xlib",
+        "passed": true,
+        "detail": "Xlib"
+      },
+      {
+        "name": "python:jsonschema",
+        "passed": true,
+        "detail": "jsonschema"
+      },
+      {
+        "name": "windows_python",
+        "passed": true,
+        "detail": "/mnt/c/Users/user/AppData/Local/Programs/Python/Python311/python.exe"
+      },
+      {
+        "name": "windows_node",
+        "passed": true,
+        "detail": "/mnt/c/Program Files/nodejs/node.exe"
+      },
+      {
+        "name": "windows_cli",
+        "passed": false,
+        "detail": null
+      },
+      {
+        "name": "chromium",
+        "passed": false,
+        "detail": null
+      },
+      {
+        "name": "x11_connection",
+        "passed": true,
+        "detail": "connected"
+      },
+      {
+        "name": "codex_cli",
+        "passed": false,
+        "detail": null
+      },
+      {
+        "name": "python:openpyxl",
+        "passed": true,
+        "detail": "3.1.2"
+      },
+      {
+        "name": "python:et_xmlfile",
+        "passed": true,
+        "detail": "1.1.0"
+      }
+    ],
+    "configuration": {
+      "windows_python": "/mnt/c/Users/user/AppData/Local/Programs/Python/Python311/python.exe",
+      "windows_node": "/mnt/c/Program Files/nodejs/node.exe",
+      "windows_cli": null,
+      "chromium": null
+    }
+  }
+}
