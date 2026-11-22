@@ -42,7 +42,9 @@ class AcknowledgedSampler:
 
     def observe_external_update(self, game, before, after, started, returned):
         self.before_external_update(game)
-        if after <= before or returned < started:
+        if (type(before) is not int or before < 0 or
+                type(after) is not int or after < 0 or
+                after <= before or returned < started):
             raise RuntimeError("external update acknowledgment is unavailable")
         self.update_sequence += 1
         self.external_ack = {"run_id": self.run_id,
@@ -66,23 +68,30 @@ class AcknowledgedSampler:
                "status": "UPDATE_UNAVAILABLE"}
         try:
             if game.is_episode_finished():
+                terminal_tic = game.get_episode_time()
+                if type(terminal_tic) is not int or terminal_tic < 0:
+                    raise ValueError("invalid terminal episode tic")
                 if self.last is not None and self.last.episode_finished:
                     # Terminal repeats carry the original acknowledgment explicitly.
                     producer = copy.deepcopy(self.last.producer)
                     producer.update(sample_sequence=self.sequence,
                                     observation_status="TERMINAL_REPEAT_NO_UPDATE")
-                elif self.external_ack is not None and self.external_ack['tic_after'] == int(game.get_episode_time()):
+                elif self.external_ack is not None and self.external_ack['tic_after'] == terminal_tic:
                     producer = {**self.external_ack, "sample_sequence": self.sequence,
                                 "observation_status": "EXTERNAL_UPDATE_RETURNED"}
                 else:
                     raise RuntimeError("terminal state has no acknowledged sample")
             else:
-                before = int(game.get_episode_time())
+                before = game.get_episode_time()
+                if type(before) is not int or before < 0:
+                    raise ValueError("invalid pre-update episode tic")
                 row.update(tic_before=before, update_started_ns=self.clock_ns())
                 external_before = self.external_ack
                 game.advance_action(1, True)
                 row["update_returned_ns"] = self.clock_ns()
-                after = int(game.get_episode_time())
+                after = game.get_episode_time()
+                if type(after) is not int or after < 0:
+                    raise ValueError("invalid post-update episode tic")
                 row["tic_after"] = after
                 if after <= before:
                     raise RuntimeError("acknowledged update did not advance episode tic")
@@ -96,7 +105,8 @@ class AcknowledgedSampler:
                             "update_returned_ns": row["update_returned_ns"]}
             sample = self.sample_fn(game, variables, timeout_seconds, **kwargs)
             sample.validate()
-            if int(game.get_episode_time()) != producer["tic_after"]:
+            sample_tic = game.get_episode_time()
+            if type(sample_tic) is not int or sample_tic != producer["tic_after"]:
                 raise RuntimeError("episode tic changed across acknowledged sample")
             if sample.sample_ns < producer["update_returned_ns"]:
                 raise RuntimeError("sample timestamp precedes update acknowledgment")
