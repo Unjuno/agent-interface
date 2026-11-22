@@ -1,0 +1,48 @@
+{
+  "allocation_id": "APPLICATION-QUOTIENT-FIRST-7804-T0-A01-20261005-01",
+  "auditor": {
+    "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m; individual read-only sources plus candidate.raw.json under /src; results/a01 under /out; pinned Python image",
+    "exit_code": 125,
+    "failure": "Docker rejected a relative bind source for candidate.raw.json: mount source path must be absolute",
+    "launch_attempts": 1,
+    "python_process_started": false,
+    "retries": 0,
+    "stderr_sha256": "f7dafa47cb2c3dd91dbac75d27245ba858afd35580a9b166d81098dcbb511e01",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "auditor_process_invocations": 0,
+  "base_main": "aeed696ff756d68497faed39b92e3546cb144972",
+  "candidate": {
+    "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount candidate.py:/src/candidate.py:ro --mount predecessor_model.py:/src/predecessor_model.py:ro --mount spec.json:/src/spec.json:ro --mount results/a01:/out --entrypoint python <pinned-image> /src/candidate.py /src/spec.json /out/candidate.raw.json",
+    "exit_code": 0,
+    "invocation_attempts": 1,
+    "python_process_started": true,
+    "raw_sha256": "92ccdd61d166decc8ffd022f7811967379dcd674ad40f29d7d3199439d4d3572",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "87dea8f50765fd7f6510415d2f828b1506b2de6c8ead0d60e13814269ffb6a47"
+  },
+  "candidate_process_invocations": 1,
+  "candidate_raw_unverified_metrics": {
+    "full_generated_transitions": 1484,
+    "full_named_states": 312,
+    "quotient_generated_transitions": 803,
+    "typed_quotient_classes": 166
+  },
+  "created_utc": "2026-10-05T10:36:14Z",
+  "disposition": "STOP_INFRA_AUDITOR_LAUNCH",
+  "formal_method_result": "UNVERIFIED; no successful independent audit",
+  "freeze_commit": "1eb39150ed31bbe507321c64cb6e2fd209fdfcb2",
+  "postrun_running_containers": [],
+  "retries": 0,
+  "runtime": {
+    "cpu_enforcement_verified": false,
+    "cpus_requested": 1,
+    "docker_client": "29.5.2",
+    "docker_server": "29.4.0",
+    "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+    "network": "none",
+    "platform": "linux/arm64",
+    "rootfs_read_only": true,
+    "swap_assessed": false
+  }
+}
