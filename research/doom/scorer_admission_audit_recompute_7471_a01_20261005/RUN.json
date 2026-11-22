@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "audit": {
+      "audit_errors": [],
+      "audit_pass": true,
+      "directory": "cases/baseline",
+      "exit_code": 0,
+      "raw_sha256": "e58f766039f1dfcb9413b039978ac60a3bff7fafb538e93458fb61f01fb9d9a3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a622829df82507b694523d16b2c87b4d6ed02c6387e1b3a7ed62860827a28334"
+    },
+    "independent_reconstruction": {
+      "baseline_ns": 155,
+      "decision": "ADMISSION_BRACKETED_PROGRESS",
+      "gap_ns": 50,
+      "positive_sample_ns": 205
+    }
+  },
+  "baseline_raw_sha256": "e58f766039f1dfcb9413b039978ac60a3bff7fafb538e93458fb61f01fb9d9a3",
+  "experiment_id": "scorer-admission-audit-recompute-7471-a01",
+  "freeze_sha256": "b815bc5c19cfd274d026dd9d17b242473d3064c1d45396f33142a32004282dc0",
+  "mutated": {
+    "audit": {
+      "audit_errors": [],
+      "audit_pass": true,
+      "directory": "cases/positive_sample_removed",
+      "exit_code": 0,
+      "raw_sha256": "29ef122e0905f9f4809c472012ba68219b2e26abdc7509aa141338991f56cf57",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a622829df82507b694523d16b2c87b4d6ed02c6387e1b3a7ed62860827a28334"
+    },
+    "independent_reconstruction": {
+      "decision": "POST_CANCELLATION_COOCCURRENCE"
+    },
+    "retained_observed": {
+      "baseline_ns": 155,
+      "decision": "ADMISSION_BRACKETED_PROGRESS",
+      "gap_ns": 50,
+      "positive_sample_ns": 205
+    }
+  },
+  "mutated_raw_sha256": "29ef122e0905f9f4809c472012ba68219b2e26abdc7509aa141338991f56cf57",
+  "mutation": {
+    "preserved_declared_expected_and_observed": true,
+    "row_id": "bracketed_bounded_positive",
+    "sample_index": 2,
+    "score_after": 0,
+    "score_before": 1
+  },
+  "outcome": "FAIL_AUDITOR_ACCEPTS_RAW_MUTATION",
+  "scope": "Synthetic raw-result audit-integrity mutation only; no game, model, live input, GUI, container, or allocation."
+}
