@@ -1,0 +1,17 @@
+{
+  "schema": "portable_runtime_current_main_recheck_v1",
+  "attempt_id": "portable-runtime-current-main-d5ada452-r01-20261122",
+  "source_commit": "d5ada452527f97b90c3265966a6aebd7743cf483",
+  "suite": "runtime/distribution_v2/test_*.py",
+  "test_count": 21,
+  "environments": [
+    {"name": "windows", "python": "CPython 3.11.9", "modes": ["normal", "optimized"]},
+    {"name": "ubuntu-wsl", "python": "CPython 3.12.3", "modes": ["normal", "optimized"]}
+  ],
+  "scope": "offline deterministic packaging and CLI contract tests; no native GUI input or provider calls",
+  "live_mode": false,
+  "model_calls": false,
+  "gui_actions": false,
+  "allocation": false,
+  "dependency_install": false
+}
