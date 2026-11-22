@@ -1,0 +1,43 @@
+{
+  "experiment": "win32-recorded-task-effect-r08",
+  "status": "FROZEN_NOT_RUN",
+  "run_id": "a1402ea90e1640048841adb7c45293b6",
+  "source_main": "7bcf4a795e71a466e004b066bfb48f0fcb2d5491",
+  "scope": "one fresh Win32 fixture; recorded public observe/dispatch/results/observe/close; one focus+A+release_all action; independent fixture score; no retry; 2 s late-input horizon",
+  "provider": "none",
+  "target_title": "Agent Interface Win32 Fixture",
+  "fixture_delay_ms": 6000,
+  "horizon_ms": 2000,
+  "max_horizon_gap_ms": 100,
+  "program_id": "r08-0da978eec5e749f091a5ee35e7d91ceb",
+  "lease_id": "r08-1b607f2f22c2471e975d859b79d2674c",
+  "recorder_call_ids": {
+    "observe_before": "94ca8939bac94b4ebe43b242a56e6328",
+    "dispatch_boundary": "3f5fe663e6404976acb826e9933c5e44",
+    "results_exact": "f087dff69b9b4f808be500c42c60d946",
+    "observe_after": "615861b113584fae8f1d098cf0990a7a",
+    "close_boundary": "f8919ad973f2443d94edf63e40b70735"
+  },
+  "task_id": "r08-delayed-a-fixture-task",
+  "scorer_id": "fixture-delayed-a-independent-v1",
+  "environment": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "main_commit": "7bcf4a795e71a466e004b066bfb48f0fcb2d5491",
+    "provider": "none",
+    "model": "none"
+  },
+  "stop_rules": [
+    "Require exactly one fresh fixture window and exact foreground PID/HWND/title before the public caller.",
+    "Validate public observation no-authority/no-input and artifact/source/image hashes before dispatch.",
+    "Do not dispatch on failed before observation or generation mismatch.",
+    "One dispatch only. If unresolved, cancel once, preserve UNKNOWN, and never replay.",
+    "Retain exact result lookup, both observations, score, release/horizon, and cleanup before closing the exact fixture."
+  ],
+  "not_claimed": [
+    "provider or model efficiency",
+    "recovery reliability rate",
+    "MAP01",
+    "Research Preview graduation"
+  ]
+}

@@ -240,6 +240,50 @@ class ComparisonMeasurementTests(unittest.TestCase):
         result = validate_measured_run(value)
         self.assertEqual(result["local_observation_count"], 1)
 
+    def test_public_review_wrapper_binds_raw_observation_and_image_reference(self):
+        value = self.public_win32_observation_case()
+        event = next(item for item in value["task_ledger"]["events"]
+                     if item.get("kind") == "tool_call")
+        envelope = event["result"]
+        body = json.loads(envelope["result"]["content"][0]["text"])
+        image = envelope["result"]["content"][1]
+        report = body
+        observation = report["observation"]
+        artifact = observation["artifact"]
+        observation["target"] = "fixture"
+        observation["native_window_id"] = 123
+        observation["frame"] = "screen_physical_px"
+        observation["region"] = [0, 0, 1, 1]
+        observation["width"] = observation["height"] = 1
+        value["measurement"]["local_observations"][0]["capture_started_ns"] = 21
+        value["measurement"]["local_observations"][0]["capture_ended_ns"] = 24
+        wrapped = {
+            "schema": "agent-interface/review-v1", "authority": "none",
+            "receipt": {
+                "schema": "agent-interface/receipt-view-v1", "authority": "none",
+                "source": {"kind": "received_bytes", "bytes": 10,
+                           "sha256": "1" * 64, "raw_report": report},
+            },
+            "image_reference": {
+                "status": "image", "authority": "none",
+                "observation_id": report["observation_id"],
+                "sha256": artifact["sha256"],
+                "recorded_capture": {
+                    key: observation[key] for key in (
+                        "target", "native_window_id", "frame", "region",
+                        "width", "height", "capture_started_ns", "capture_ended_ns")
+                },
+            },
+        }
+        envelope["result"]["content"] = [
+            {"type": "text", "text": json.dumps(wrapped)}, image]
+        self.assertEqual(validate_measured_run(value)["local_observation_count"], 1)
+        wrapped["image_reference"]["recorded_capture"]["native_window_id"] = 456
+        envelope["result"]["content"][0]["text"] = json.dumps(wrapped)
+        with self.assertRaisesRegex(LedgerValidationError,
+                                    "public observation must retain one text receipt and one PNG image"):
+            validate_measured_run(value)
+
     def test_public_win32_observation_rejects_generation_or_image_mismatch(self):
         value = self.public_win32_observation_case()
         value["measurement"]["local_observations"][0]["target_generation"] = "c" * 64

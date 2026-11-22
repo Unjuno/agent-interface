@@ -100,6 +100,49 @@ def _recorded_public_observation(result):
         return None
     if type(body) is not dict:
         return None
+
+    # The public MCP review surface wraps the raw observation receipt while
+    # returning the PNG as a sibling content block. Project only the retained
+    # raw report after checking the wrapper's custody and image identity.
+    if body.get("schema") == "agent-interface/review-v1":
+        receipt = body.get("receipt")
+        source = receipt.get("source") if type(receipt) is dict else None
+        raw_report = source.get("raw_report") if type(source) is dict else None
+        image_reference = body.get("image_reference")
+        recorded_capture = (image_reference.get("recorded_capture")
+                            if type(image_reference) is dict else None)
+        observation = (raw_report.get("observation")
+                       if type(raw_report) is dict else None)
+        artifact = (observation.get("artifact")
+                    if type(observation) is dict else None)
+        if (body.get("authority") != "none" or
+                type(receipt) is not dict or
+                receipt.get("schema") != "agent-interface/receipt-view-v1" or
+                receipt.get("authority") != "none" or
+                type(source) is not dict or source.get("kind") != "received_bytes" or
+                type(source.get("bytes")) is not int or source["bytes"] <= 0 or
+                not isinstance(source.get("sha256"), str) or
+                _HASH.fullmatch(source["sha256"]) is None or
+                type(raw_report) is not dict or
+                raw_report.get("schema") != "agent-interface/runtime-observation-v1" or
+                type(observation) is not dict or type(artifact) is not dict or
+                type(image_reference) is not dict or
+                image_reference.get("status") != "image" or
+                image_reference.get("authority") != "none" or
+                image_reference.get("observation_id") != raw_report.get("observation_id") or
+                image_reference.get("sha256") != artifact.get("sha256") or
+                image_reference.get("sha256") != hashlib.sha256(image_bytes).hexdigest() or
+                type(recorded_capture) is not dict or
+                recorded_capture.get("target") != observation.get("target") or
+                recorded_capture.get("native_window_id") != observation.get("native_window_id") or
+                recorded_capture.get("frame") != observation.get("frame") or
+                recorded_capture.get("region") != observation.get("region") or
+                recorded_capture.get("width") != observation.get("width") or
+                recorded_capture.get("height") != observation.get("height") or
+                recorded_capture.get("capture_started_ns") != observation.get("capture_started_ns") or
+                recorded_capture.get("capture_ended_ns") != observation.get("capture_ended_ns")):
+            return None
+        body = raw_report
     return body, hashlib.sha256(image_bytes).hexdigest(), len(image_bytes)
 
 
@@ -155,10 +198,23 @@ def validate_measured_run(value):
             _fail("ledger event falls outside the full-lifecycle interval")
 
     raw_hashes = {reference["sha256"] for reference in record["raw_refs"]}
+    raw_ref_pairs = {(reference["path"], reference["sha256"])
+                     for reference in record["raw_refs"]}
     attempts = {event["attempt_id"] for event in events
                 if event["kind"] == "model_attempt"}
     calls = {event["call_id"]: event for event in events
              if event["kind"] == "tool_call"}
+    for event in events:
+        program = event.get("dispatch_program")
+        program_ref = event.get("dispatch_program_ref")
+        if program is None and program_ref is None:
+            continue
+        if (event.get("method") != "interface_dispatch" or
+                type(program) is not dict or type(program_ref) is not dict or
+                set(program_ref) != {"path", "sha256"} or
+                (program_ref.get("path"), program_ref.get("sha256"))
+                not in raw_ref_pairs):
+            _fail("dispatch program projection must bind one retained request reference")
 
     model_images = measurement["model_delivered_images"]
     if type(model_images) is not list:

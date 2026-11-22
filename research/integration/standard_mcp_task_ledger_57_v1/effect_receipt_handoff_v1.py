@@ -248,7 +248,7 @@ def adapt_measured_run(measured: object, *, receipt_root: str | Path,
     else:
         attribution_input, binding = _derive_native_owner_attribution(
             events, owner_evidence)
-    _, action_body = _public_dispatch_event(
+    action_event, action_body = _public_dispatch_event(
         events, receipt["action_call_id"])
     operation_id = action_body.get("operation_id")
     generation = action_body.get("target_generation")

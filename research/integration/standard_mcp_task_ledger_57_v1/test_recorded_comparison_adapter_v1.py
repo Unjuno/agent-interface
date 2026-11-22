@@ -175,7 +175,9 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         }
         recorder.invoke_tool(
             "attempt-1", action_call_id, "interface_dispatch",
-            b'{"tool":"interface_dispatch"}\n',
+            json.dumps({"tool": "interface_dispatch", "arguments": {
+                "program": {"authority": {"expires_at_ns": 150}}}},
+                sort_keys=True, separators=(",", ":")).encode(),
             lambda: {"result": dispatch_response,
                      "response_bytes": json.dumps(
                          dispatch_response, sort_keys=True,
@@ -286,6 +288,16 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         self.assertEqual(binding["target_generation"], "c" * 64)
         self.assertTrue(binding["release_confirmed"])
         self.assertTrue(binding["horizon_verified"])
+
+    def test_dispatch_program_projection_binds_retained_request_bytes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            measured = self.make_run(Path(temporary), "C", 3)
+        dispatch = next(event for event in measured["task_ledger"]["events"]
+                        if event.get("method") == "interface_dispatch")
+        self.assertEqual(dispatch["dispatch_program"]["authority"]["expires_at_ns"],
+                         150)
+        ref = dispatch["dispatch_program_ref"]
+        self.assertIn(ref, measured["task_ledger"]["raw_refs"])
 
     def test_recorded_adapter_retains_public_win32_observation_png(self):
         with tempfile.TemporaryDirectory() as temporary:

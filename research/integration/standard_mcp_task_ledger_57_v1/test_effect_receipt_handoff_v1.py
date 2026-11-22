@@ -262,7 +262,8 @@ class EffectReceiptHandoffTests(unittest.TestCase):
         dispatch['standard_program'] = {
             'authority': {'expires_at_ns': expiry_ns},
         }
-        replace_public_body(action_id, dispatch)
+        dispatch_event['result']['result']['content'][0]['text'] = json.dumps(
+            dispatch, sort_keys=True, separators=(',', ':'))
 
         self.receipt['effect_interval_ns'] = {'lower_ns': 170, 'upper_ns': 172}
         self.write_receipt()
