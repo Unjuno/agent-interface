@@ -33,8 +33,8 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def normalized_text_sha(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+def normalized_text(path: Path) -> bytes:
+    return path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
 
 
 def dump(path: Path, value: object) -> None:
@@ -144,6 +144,7 @@ def audit_retained() -> dict:
     expected_sources = plan.get("sources")
     source_mismatches = []
     source_manifest = None
+    archived = {}
     if (not isinstance(expected_sources, dict) or not expected_sources
             or any(not isinstance(name, str) or not name or "/" in name or "\\" in name
                    or not isinstance(digest, str) or len(digest) != 64
@@ -180,9 +181,17 @@ def audit_retained() -> dict:
                     source_mismatches.append(name)
     except (OSError, AttributeError, KeyError, TypeError, json.JSONDecodeError):
         source_mismatches.append("SOURCE_MANIFEST.json")
-    current_source_mismatches = [name for name, digest in expected_sources.items()
-                                 if not (RESEARCH / name).is_file()
-                                 or normalized_text_sha(RESEARCH / name) != digest]
+    current_source_mismatches = []
+    for name in expected_sources:
+        current_path = RESEARCH / name
+        archive_entry = (archived.get(name) if source_manifest is not None else None)
+        archive_path = (RETAINED_SOURCE_ARCHIVE / archive_entry.get("archive_file")
+                        if isinstance(archive_entry, dict)
+                        and isinstance(archive_entry.get("archive_file"), str)
+                        else None)
+        if (not current_path.is_file() or archive_path is None or not archive_path.is_file()
+                or normalized_text(current_path) != normalized_text(archive_path)):
+            current_source_mismatches.append(name)
     evaluation = report["evaluation"]
     passed = (
         not source_mismatches
