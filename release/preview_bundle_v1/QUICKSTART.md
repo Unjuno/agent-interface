@@ -34,9 +34,14 @@ This checks the packaged launcher boundary only. It does not prove GUI/model rea
 You can run the gates individually:
 
 ```bash
-./runtime/setup-golden-demo-v3.sh
+./runtime/setup-golden-demo-v3.sh --install-dependencies
 ./runtime/golden-demo-v3.sh doctor
 ```
+
+Run the setup command only when `runtime/.venv` does not already exist. The
+acceptance runner reuses an existing `runtime/.venv`. If it is absent, pass
+`--install-dependencies` to authorize the pinned Python package install;
+without that flag the runner records setup refusal and stops before `doctor`.
 
 Or retain the whole supported-host prefix in one new evidence directory:
 
@@ -64,6 +69,10 @@ python3 release/preview_bundle_v1/accept_supported_host.py \
   --live \
   --out artifacts-local/release-acceptance-live
 ```
+
+To authorize installation when no venv exists, add
+`--install-dependencies`. `--live` separately authorizes the single fresh
+golden allocation; it does not imply dependency-download consent.
 
 The runner executes preflight, setup, doctor, retained audit, one fresh run, and `audit-live`, retaining stdout/stderr/return codes for every step. It refuses to reuse the acceptance directory and performs no automatic retry.
 
