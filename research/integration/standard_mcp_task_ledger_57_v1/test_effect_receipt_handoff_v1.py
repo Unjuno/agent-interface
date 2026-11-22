@@ -106,6 +106,102 @@ class EffectReceiptHandoffTests(unittest.TestCase):
                 measured, receipt_root=self.receipt_root,
                 receipt_path='score.json')
 
+    def _install_completed_public_action(self, *, expiry_ns=155):
+        def replace_public_body(call_id, body):
+            event = next(event for event in self.events
+                         if event.get('call_id') == call_id)
+            event['result']['result']['content'][0]['text'] = json.dumps(
+                body, sort_keys=True, separators=(',', ':'))
+
+        owner_event = next(event for event in self.events
+                           if event.get('call_id') == 'lookup-results-1')
+        owner = json.loads(owner_event['result']['result']['content'][0]['text'])
+        action_id = self.receipt['action_call_id']
+        operation_id = self.receipt['action_operation_id']
+        generation = self.receipt['target_generation']
+        owner['cancellation'] = None
+        owner['action'] = {
+            'operation_id': operation_id,
+            'target_generation': generation,
+            'status': 'completed',
+            'release_confirmed': True,
+            'completion_custody': {
+                'operation_id': operation_id,
+                'target_generation': generation,
+                'phase': 'completed',
+                'status': 'completed',
+                'deadline_ns': expiry_ns,
+                'release_confirmed': True,
+                'completion_release_receipt': {
+                    'verified': True, 'monotonic_ns': 160,
+                    'keys_down': [], 'buttons_down': [],
+                    'keys_unknown': [], 'buttons_unknown': [],
+                    'release_errors': [],
+                },
+                'completion_readback_outcome': 'verified',
+                'completion_readback': {
+                    'operation_id': operation_id,
+                    'target_generation': generation,
+                    'neutral': True,
+                    'late_input_horizon_ns': 5,
+                    'late_input_horizon_verified': True,
+                    'late_input_observation_start_monotonic_ns': 160,
+                    'late_input_observation_end_monotonic_ns': 165,
+                    'late_input_observation_count': 2,
+                    'late_input_max_observed_gap_ns': 5,
+                    'late_input_max_sample_gap_ns': 5,
+                },
+            },
+        }
+        replace_public_body('lookup-results-1', owner)
+
+        dispatch_event = next(event for event in self.events
+                              if event.get('call_id') == action_id)
+        dispatch = json.loads(
+            dispatch_event['result']['result']['content'][0]['text'])
+        dispatch['standard_program'] = {
+            'authority': {'expires_at_ns': expiry_ns},
+        }
+        replace_public_body(action_id, dispatch)
+
+        self.receipt['effect_interval_ns'] = {'lower_ns': 170, 'upper_ns': 172}
+        self.write_receipt()
+
+    def test_completed_public_action_handoff_uses_verified_completion_custody(self):
+        self._install_completed_public_action()
+        adapted = adapt_measured_run(
+            self.measured, receipt_root=self.receipt_root,
+            receipt_path='score.json')
+        self.assertEqual(adapted['timing_status'], 'after_release_horizon')
+        self.assertTrue(adapted['factual_task_success'])
+        self.assertFalse(adapted['eligible_task_success'])
+        self.assertEqual(adapted['authority_binding']['action_call_id'],
+                         self.receipt['action_call_id'])
+
+    def test_completed_public_action_release_before_expiry_keeps_effect_eligible(self):
+        self._install_completed_public_action(expiry_ns=180)
+        adapted = adapt_measured_run(
+            self.measured, receipt_root=self.receipt_root,
+            receipt_path='score.json')
+        self.assertEqual(adapted['timing_status'], 'within_authority')
+        self.assertTrue(adapted['factual_task_success'])
+        self.assertTrue(adapted['eligible_task_success'])
+
+    def test_completed_public_action_rejects_unverified_neutral_horizon(self):
+        self._install_completed_public_action()
+        owner_event = next(event for event in self.events
+                           if event.get('call_id') == 'lookup-results-1')
+        owner = json.loads(owner_event['result']['result']['content'][0]['text'])
+        owner['action']['completion_custody']['completion_readback'][
+            'late_input_horizon_verified'] = False
+        owner_event['result']['result']['content'][0]['text'] = json.dumps(
+            owner, sort_keys=True, separators=(',', ':'))
+        with self.assertRaisesRegex(LedgerValidationError,
+                                    'generation-bound neutral horizon'):
+            adapt_measured_run(
+                self.measured, receipt_root=self.receipt_root,
+                receipt_path='score.json')
+
     def test_recorded_caller_actual_relay_records_capture_pair_and_adapts_effect(self):
         root = self.root / 'caller-composition'
         ticks = iter(range(100, 300, 5))

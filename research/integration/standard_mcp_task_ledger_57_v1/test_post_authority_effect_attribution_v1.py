@@ -117,6 +117,20 @@ class PostAuthorityEffectAttributionTests(unittest.TestCase):
         self.assertIsNone(unknown["eligible_task_success"])
         self.assertEqual(unknown["effect_timing"], "unknown")
 
+    def test_completed_action_may_release_before_lease_expiry(self):
+        timely = adjudicate_effect(
+            task_success=True, effect_observed_ns=170,
+            authority_expiry_ns=180, release_received_ns=160,
+            horizon_end_ns=165)
+        late = adjudicate_effect(
+            task_success=True, effect_observed_ns=181,
+            authority_expiry_ns=180, release_received_ns=160,
+            horizon_end_ns=165)
+        self.assertEqual(timely["effect_timing"], "within_authority")
+        self.assertTrue(timely["eligible_task_success"])
+        self.assertEqual(late["effect_timing"], "after_release_horizon")
+        self.assertFalse(late["eligible_task_success"])
+
     def test_all_expiry_release_and_horizon_time_bands_are_distinct(self):
         cases = (
             (R149["expiry_ns"], "within_authority"),
@@ -138,9 +152,9 @@ class PostAuthorityEffectAttributionTests(unittest.TestCase):
                                  expected == "within_authority")
 
     def test_invalid_or_reordered_clock_bounds_are_rejected(self):
-        with self.assertRaisesRegex(ValueError, "expiry <= release <= horizon"):
+        with self.assertRaisesRegex(ValueError, "release <= horizon"):
             adjudicate_effect(task_success=True, effect_observed_ns=1,
-                authority_expiry_ns=3, release_received_ns=2, horizon_end_ns=4)
+                authority_expiry_ns=3, release_received_ns=4, horizon_end_ns=2)
         with self.assertRaisesRegex(ValueError, "nonnegative integers"):
             adjudicate_effect(task_success=True, effect_observed_ns=1,
                 authority_expiry_ns=True, release_received_ns=2, horizon_end_ns=3)

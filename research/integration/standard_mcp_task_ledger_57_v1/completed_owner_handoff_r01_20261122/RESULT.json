@@ -1,0 +1,21 @@
+{
+  "schema": "agent-interface/completed-owner-handoff-result-v1",
+  "status": "PASS_SYNTHETIC_COMPOSITION_ONLY",
+  "tested_source_base": "0b97018dd09302c22167ea61759351f24ad3b396",
+  "normal": {"exit_code": 0, "tests_passed": 26, "tests_failed": 0},
+  "optimized": {"exit_code": 0, "tests_passed": 26, "tests_failed": 0},
+  "negative_control": "unverified completion horizon rejected",
+  "post_horizon_effect": {
+    "factual_task_success": true,
+    "timing_status": "after_release_horizon",
+    "eligible_task_success": false
+  },
+  "normal_completion_order": {
+    "release_before_authority_expiry": "accepted",
+    "effect_before_expiry": "eligible"
+  },
+  "live_observation": false,
+  "runtime_action": false,
+  "provider_call": false,
+  "allocation": false
+}
