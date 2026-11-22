@@ -1,0 +1,37 @@
+{
+  "experiment": "win32-current-main-fixture-effect-r05",
+  "status": "PREREGISTERED_NOT_RUN",
+  "source_main": "ee14863bec0c7a222bec4d96300162afde61cf82",
+  "purpose": "Third independent scoped standard-caller task/effect sample after R03/R04; not a reliability estimate, MAP01 run, or efficiency comparison.",
+  "hypothesis": "A fresh, uniquely identified Win32 fixture can receive one standard supervised-win32 A key chord, return verified release, remain neutral throughout the 2 s late-input horizon, and independently record the task effect after the 6 s fixture delay.",
+  "treatment": "One public MCP observe/dispatch/results/close sequence through runtime.cli_v1.mcp_server; exact program is focus, one A key_chord, release_all. No replay. One independent task-effect poll after terminal, for at most 12 s.",
+  "target_gate": "Create a fresh run-owned fixture, require exactly one CUA window titled Agent Interface Win32 Fixture, activate that returned window, and independently verify foreground PID/HWND/title match before invoking the public caller. Stop before dispatch on any mismatch or stale/changed generation.",
+  "release_and_late_input": {
+    "required": "release_confirmed=true and independent neutral state from the public caller receipt",
+    "horizon_ms": 2000,
+    "max_observed_sample_gap_ms": 100
+  },
+  "task_effect": {
+    "fixture_delay_ms": 6000,
+    "oracle": "run-owned fixture effect.json and events.jsonl",
+    "expected_text": "a"
+  },
+  "stop_rules": [
+    "Never dispatch if foreground identity or observation generation is not exact and fresh.",
+    "If the one action remains unresolved at its finite deadline, cancel once, continue observation to terminal, and do not replay.",
+    "Close only the exact run-owned fixture after terminal custody is retained.",
+    "Preserve FAIL_OR_UNKNOWN if release or effect cannot be independently confirmed."
+  ],
+  "provider_model_or_allocation": "none",
+  "not_claimed": [
+    "recovery reliability rate",
+    "MAP01 or GZDoom task performance",
+    "provider/model efficiency",
+    "Research Preview graduation"
+  ],
+  "raw_output_directory": "raw/",
+  "source_files": {
+    "fixture_app.py_git_blob": "015f36bdf755ff1407fd8e05f0bc4aade9ab16e8",
+    "live_probe.py_git_blob": "8fd0ba17f6f6374a9d3df4ed7cc9d03ca395a62a"
+  }
+}

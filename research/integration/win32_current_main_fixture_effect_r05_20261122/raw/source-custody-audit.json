@@ -1,0 +1,27 @@
+{
+  "schema": "agent_interface_source_custody_audit_v1",
+  "method_correction": "Compare raw source bytes to git show bytes and use git hash-object --no-filters; default clean filters are inappropriate for raw-byte identity.",
+  "source_rows": [
+    {
+      "path": "source/fixture_app.py",
+      "expected_git_blob": "015f36bdf755ff1407fd8e05f0bc4aade9ab16e8",
+      "initial_default_filter_hash": "a5e2358780c4b4e44d016556e5d076925f1daaf3",
+      "initial_check": "An initial filtered-hash comparison falsely reported a mismatch; corrected raw-byte comparison passes.",
+      "corrected_no_filter_hash": "015f36bdf755ff1407fd8e05f0bc4aade9ab16e8",
+      "raw_bytes_equal_git_show": true,
+      "sha256": "fe26e4d87cab05aea7c742f83f8d6e0b30a47463e9f4d2f78f77d245a4c8fd8f",
+      "corrected_result": "PASS"
+    },
+    {
+      "path": "source/live_probe.py",
+      "expected_git_blob": "8fd0ba17f6f6374a9d3df4ed7cc9d03ca395a62a",
+      "initial_default_filter_hash": null,
+      "initial_check": "Not reached by the initial filtered-hash comparison; corrected raw-byte comparison passes.",
+      "corrected_no_filter_hash": "8fd0ba17f6f6374a9d3df4ed7cc9d03ca395a62a",
+      "raw_bytes_equal_git_show": true,
+      "sha256": "3d738bccf55dceca8b56ee005c53dafe667c8a5710a5aec1c1ed987629925a9b",
+      "corrected_result": "PASS"
+    }
+  ],
+  "overall": "PASS"
+}
