@@ -9,6 +9,8 @@
 - Each run passes only if the selector reports exactly one test and exits 0. Preserve failures and skips as outcomes.
 - This is the repository's deterministic Fake App Server/Fake X composition test. It must use temporary files and fake ownership; it does not call a real provider, real GUI, Docker, WSL/WSLc, or an external allocation.
 - `AGENT_INTERFACE_RETAIN_APP_SERVER_CALC_EVIDENCE` was unset before the run.
+- The first invocation omitted the test directory from `sys.path` and failed before any test ran (`ModuleNotFoundError: app_server_file_spool_v1`). Both normal and optimized setup failures are retained in `setup-failure-invocation-01/`.
+- Corrected invocation: set `PYTHONPATH` to the repository-relative test directory `research/integration/standard_mcp_task_ledger_57_v1`, then invoke the same selector from the repository root in a fresh normal and optimized process. This only makes the test module's sibling imports resolvable; selector, source revision, and acceptance rule are unchanged.
 
 ## Pinned source hashes
 
