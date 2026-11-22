@@ -4,8 +4,9 @@
 
 R02 resolved the R01 optimized combined-suite timing failure through test-only event notification. The two-second acceptance bounds are unchanged; Docker `test_mcp_server` + `test_mcp_guarded` passed 87/87 normal and under `-O`, with explicit container exit code 0. R01 failure is retained. This qualifies only a local contract suite, not live task effect, recovery reliability, provider accounting, efficiency or release acceptance. See [R02 result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261123/RESULT.md).
 
+**Research Preview Windows builder R01 (current main `39cbd0d2`):** Builder unit tests pass 6/6, but no archive was produced. A sparse Windows checkout initially materialized 26/29 frozen source mirrors with CRLF; exact main blobs reconciled all 29 hashes. The subsequent build correctly stopped because this sparse checkout omits 22 selected tracked files. No dependencies or live acceptance were run. Prior WSL R06 remains scoped to its recorded host/source. See [R01 diagnosis](../research/integration/research_preview_windows_builder_current_main_r01_20261123/RESULT.md).
 
-Updated 2026-11-23 from current `main` `1d2bdc20699ff9e39308ab7a9e79dd1fe75c2e2f`.
+Updated 2026-11-23 from current `main` `39cbd0d202db82baf4886f1d781461909c4f706a`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 
@@ -157,7 +158,6 @@ research or release gates.
 - [Issue #57 next gates](maintenance/issue57-next-gates-20261121.md)
 - [Latest inventory receipt r164](maintenance/repository-inventory-recheck-20261122-r164.md)
 - [Worker work map](WORKER_WORK_MAP.md)
-
 
 ## R27 foreground-activated native cohort
 
