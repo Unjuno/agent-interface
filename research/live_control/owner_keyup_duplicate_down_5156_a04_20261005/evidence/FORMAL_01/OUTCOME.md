@@ -1,0 +1,9 @@
+# A04 formal outcome — STOP (auditor provenance failure)
+
+Allocation `OWNER-KEYUP-DUPLICATE-DOWN-5156-A04-20261005-01` used one fresh fake-Xlib candidate invocation in the pinned WSLc Python 3.12.15 image. Candidate exit was 0 and it emitted exactly one case. The single formal auditor invocation exited 1 before raw reconstruction: the pre-fix auditor iterated three `current_main:<path>` Git blob SHA-1 manifest entries as if they were local SHA-256 filenames, then raised `FileNotFoundError`. The formal allocation is consumed. No formal audit retry is permitted or made.
+
+The raw candidate result is retained unchanged. A separately labeled, non-formal post-run diagnostic parsed it only to preserve observations: two distinct owner-issued admission IDs for the same key (`:admission:1`, `:admission:2`), one `A` explicit-up release marked `ambiguous_multiple_admissions`, matching nested owner KeyRelease receipt for the latest ID, exact calls `KeyPress, XSync, KeyPress, XSync, KeyRelease, XSync, close-XSync`, false authority fields, and a neutral final fake keymap. Because the formal independent auditor failed before evaluating the raw, this is diagnostic only and does not satisfy the protocol gate or upgrade the allocation to a scientific FAIL.
+
+Pre-freeze evidence remains separate: two construction tests passed; the corrected local fixture verifier reconstructed the ambiguity with zero base errors and rejected 6/6 corruption controls. This validates the expected shape but cannot substitute for the failed formal audit. The formal candidate raw SHA-256 is `6f75f798185ce627d33ea2b0326fed436ea38dc6789fa04525c4c0afc1a2c307`. The formal auditor source SHA-256 is `3cd5ac7e52680655e771f5eff3fcd8eed9cfbfda39d3eb63da562b4277f58ba9`.
+
+Scope remains fake Xlib/direct-owner only. No real X11, client, game, physical release, feedback, recovery, latency, task effect, safety, or authority claim follows. The #59 live lane remains unassigned and untouched.
