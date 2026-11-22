@@ -9,6 +9,7 @@ captured every external event.
 
 from __future__ import annotations
 
+import json
 import re
 
 from ledger import LedgerValidationError, validate_record
@@ -46,6 +47,28 @@ def _integer(value):
 
 def _fail(message):
     raise LedgerValidationError(message)
+
+
+def _observation_source_sequence(result, method):
+    """Read the source sequence from a direct or recorded public MCP receipt."""
+    body = result
+    if (type(result) is dict and
+            {"status", "tool", "result"} <= set(result)):
+        if result.get("status") != "returned" or result.get("tool") != method:
+            return None
+        envelope = result.get("result")
+        content = envelope.get("content") if type(envelope) is dict else None
+        rows = ([item.get("text") for item in content if type(item) is dict and
+                 item.get("type") == "text" and type(item.get("text")) is str]
+                if type(content) is list else [])
+        if len(rows) != 1:
+            return None
+        try:
+            body = json.loads(rows[0])
+        except (TypeError, ValueError):
+            return None
+    source = body.get("source") if type(body) is dict else None
+    return source.get("sequence") if type(source) is dict else None
 
 
 def validate_measured_run(value):
@@ -141,9 +164,9 @@ def validate_measured_run(value):
         digest = observation["image_sha256"]
         if not isinstance(digest, str) or not _HASH.fullmatch(digest) or digest not in raw_hashes:
             _fail("local observation image must be retained by digest")
-        result_source = event["result"].get("source")
-        if (not isinstance(result_source, dict)
-                or result_source.get("sequence") != observation["source_sequence"]):
+        result_sequence = _observation_source_sequence(
+            event["result"], event["method"])
+        if result_sequence != observation["source_sequence"]:
             _fail("observation sequence does not match the public tool receipt")
 
     task_success = summary["task_success"]
