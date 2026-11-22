@@ -1,0 +1,32 @@
+{
+  "schema": "issue57-current-main-public-mcp-calc-composition-r03-v1",
+  "status": "PASS_SYNTHETIC_COMPOSITION_ON_CURRENT_MAIN",
+  "source_main_commit": "066d70435fe19d0dc2690bc01a114e0912b20f87",
+  "conditions_commit": "a909f4031df1fc95528eb332d79b8573ac5f3098",
+  "environment": {
+    "os": "Windows 11",
+    "python": "CPython 3.11.9",
+    "provider": "fake",
+    "ui": "Fake X",
+    "external_allocation": false
+  },
+  "selector": "ProviderToPublicMcpCompositionTests.test_fake_app_server_generation_is_recorded_through_calc_profile_and_score",
+  "runs": {
+    "normal": {"passed": 1, "failed": 0, "exit_code": 0, "elapsed_seconds": 22.106},
+    "optimized": {"passed": 1, "failed": 0, "exit_code": 0, "elapsed_seconds": 29.879}
+  },
+  "initial_setup_failure": {
+    "status": "PRESERVED_NOT_COUNTED_AS_TEST_RUN",
+    "reason": "ModuleNotFoundError: app_server_file_spool_v1 was absent from sys.path",
+    "runs": ["normal", "optimized"]
+  },
+  "limitations": [
+    "No real provider call or live GUI task",
+    "No caller-attributed live task success or recovery reliability",
+    "No efficiency comparison, MAP01 completion, or Research Preview graduation"
+  ],
+  "reused_evidence": {
+    "packet": "research/integration/issue57_v3_durable_appserver_full_trace_r06_20261123",
+    "reason": "All R06 source hashes match this main; no duplicate run was made"
+  }
+}
