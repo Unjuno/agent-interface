@@ -566,6 +566,166 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
             self.assertEqual(finished["status"], "HOLD")
             self.assertEqual(len(finished["missing_assignments"]), 17)
 
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
+                         "Calc guarded adapter import requires Pillow")
+    def test_complete_synthetic_three_arm_run_audits_all_18_custodians(self):
+        from datetime import datetime, timedelta, timezone
+        from research.live_control.integrated_efficiency_protocol_v1 import (
+            ARMS, EXPECTED_MODEL_CALLS, TASKS,
+        )
+        from research.live_control.issue57_v3_prospective_run_v1 import ProspectiveRun
+
+        with tempfile.TemporaryDirectory(prefix="prospective-three-arm-complete-") as tmp:
+            root = Path(tmp)
+            allocation_path = root / "allocation.json"
+            allocation = {
+                "allocation_id": "synthetic-prospective-three-arm-01",
+                "host_id": "synthetic-local-host", "owner": "offline-test",
+                "exclusive": True,
+                "expires_at_utc": (datetime.now(timezone.utc) +
+                    timedelta(hours=1)).isoformat(),
+                "task_ids": list(TASKS), "arms": list(ARMS),
+                "model": "synthetic-model",
+                "settings": {"effort": "medium", "provider": "fake"},
+                "order_seed": 57,
+            }
+            allocation_path.write_text(json.dumps(allocation), encoding="utf-8")
+            source_root = Path(__file__).resolve().parents[2]
+            run = ProspectiveRun(allocation_path, root / "prospective-run",
+                source_root=source_root, allocation_verifier=lambda *_args: True)
+            usage_by_arm = {
+                "plain": 1000, "ephemeral": 1200, "persistent": 10,
+            }
+            for arm in ARMS:
+                run.record_preflight(arm, {
+                    "call_id": "preflight-" + arm,
+                    "stage": "schema_preflight", "requested_model": "synthetic-model",
+                    "requested_effort": "medium",
+                    "usage": {"input_tokens": 10, "cached_input_tokens": 0,
+                        "cache_write_input_tokens": 0, "output_tokens": 1,
+                        "reasoning_output_tokens": 0},
+                    "model_visible_images": 0,
+                })
+
+            for arm in ARMS:
+                for index, task_id in enumerate(TASKS):
+                    calls = []
+                    for call_index in range(EXPECTED_MODEL_CALLS[arm][index]):
+                        call_id = f"{arm}-{task_id}-{call_index}"
+                        call_usage = {"input_tokens": usage_by_arm[arm],
+                            "cached_input_tokens": 0, "cache_write_input_tokens": 0,
+                            "output_tokens": 10, "reasoning_output_tokens": 1}
+                        calls.append({
+                            "attempt_id": "attempt-" + call_id,
+                            "stage": "anchor_model", "status": "completed",
+                            "call_id": call_id, "thread_id": "thread-" + call_id,
+                            "requested_model": "synthetic-model",
+                            "requested_effort": "medium", "usage": call_usage,
+                            "cost": None, "visible_images_submitted": 1,
+                            "wait_ns": 100,
+                        })
+                    coverage = {field: len(calls) for field in (
+                        "input_tokens", "cached_input_tokens",
+                        "cache_write_input_tokens", "output_tokens",
+                        "reasoning_output_tokens")}
+                    totals = {field: sum(row["usage"][field] for row in calls)
+                              for field in coverage}
+                    model_calls = [{key: row[key] for key in (
+                        "attempt_id", "call_id", "stage", "requested_model",
+                        "requested_effort", "usage", "cost",
+                        "visible_images_submitted", "wait_ns")}
+                        for row in calls]
+                    accounting = {
+                        "attempted_calls": len(calls),
+                        "completed_calls": len(calls),
+                        "duplicate_call_ids": [], "usage_totals": totals,
+                        "usage_coverage": coverage,
+                        "visible_images_submitted": len(calls),
+                        "visible_image_coverage": len(calls),
+                        "model_wait_ns": 100 * len(calls),
+                        "model_wait_coverage": len(calls),
+                        "cost_coverage": 0,
+                        "cost": 0 if not calls else None,
+                        "cached_input_semantics":
+                            "subset of input_tokens; never added to input total",
+                    }
+                    result = {
+                        "outcome": "TASK_SUCCEEDED", "task_effect": "succeeded",
+                        "attempt_ledger": calls, "model_call_ledger": model_calls,
+                        "accounting": accounting,
+                        "effect_receipt": {"status": "succeeded"},
+                    }
+                    source_sha = hashlib.sha256(
+                        f"synthetic-task-source-{arm}-{task_id}".encode()).hexdigest()
+                    ledger = run.create_task_custodian(arm, index,
+                        source_sha256=source_sha,
+                        observation_ids=[f"obs-{arm}-{task_id}"],
+                        conditions={"fixture": "synthetic-complete-trace"})
+                    ledger.bind_interface({"interface_id": f"if-{arm}-{task_id}"})
+                    ledger.persist_execution_receipt({
+                        "status": "completed", "synthetic": True})
+                    ledger.persist_effect_receipt({
+                        "status": "succeeded", "evidence_ref": f"fixture://{task_id}"})
+                    ledger.finalize(result)
+                    repair_required = arm == "persistent" and index == 3
+                    projected = run.record_task(arm, index, result,
+                        {"submission_count": 1, "exact_submission": True}, {
+                            "local_observations": 2, "durable_calls": 1,
+                            "pointer_admissions": 2,
+                            "old_target_pointer_admissions": 0,
+                            "releases_verified": True,
+                            "elapsed_ns": 300 if arm == "persistent" else 1000,
+                            "source_to_completion_ns": 250,
+                            "input_feedback_ns": [100, 120],
+                            "repair": ({"required": True,
+                                "old_reference_status": "missing",
+                                "old_reference_pointer_admissions": 0,
+                                "attempted": True, "succeeded": True}
+                                if repair_required else {
+                                    "required": False,
+                                    "old_reference_status": None,
+                                    "old_reference_pointer_admissions": 0,
+                                    "attempted": False, "succeeded": False}),
+                        }, custodian_path=ledger.path)
+                    self.assertEqual(projected["status"], "projected",
+                                     (arm, index, projected))
+
+            discoveries = json.loads((source_root / "research/live_control" /
+                "integrated_efficiency_discoveries_v1.json").read_text(
+                    encoding="utf-8"))
+            lifecycle = [json.loads(line) for line in
+                (root / "prospective-run" / "lifecycle.jsonl").read_text(
+                    encoding="utf-8").splitlines()]
+            task_events = [row for row in lifecycle if row["event"] == "task"]
+            self.assertEqual(len(task_events), 18)
+            self.assertTrue(all(row["payload"]["custody"]["status"] == "audited"
+                                for row in task_events))
+            result = run.finish(discoveries)
+            self.assertEqual(result["status"], "ready_for_frozen_evaluator", result)
+            self.assertEqual(result["adjudication"]["evaluation"]["disposition"],
+                             "RETAIN")
+            self.assertEqual(result["missing_assignments"], [])
+            self.assertEqual(len(result["adjudication"]["trace"]["arms"]["plain"]), 6)
+            manifest = json.loads((root / "prospective-run" /
+                "run-manifest.json").read_text(encoding="utf-8"))
+            self.assertFalse(manifest["dispatch_enabled"])
+            evaluation = result["adjudication"]["evaluation"]
+            print("SYNTHETIC_R06 " + json.dumps({
+                "status": result["status"],
+                "disposition": evaluation["disposition"],
+                "missing_assignments": len(result["missing_assignments"]),
+                "custody_audited": len(task_events),
+                "arms": {arm: {
+                    "correct": evaluation["arms"][arm]["correct"],
+                    "input_tokens_final": evaluation["arms"][arm][
+                        "cumulative_input_tokens"][-1],
+                    "planner_generations_final": evaluation["arms"][arm][
+                        "cumulative_planner_generations"][-1],
+                    "elapsed_ns": evaluation["arms"][arm]["elapsed_ns"],
+                } for arm in ARMS},
+                "dispatch_enabled": manifest["dispatch_enabled"],
+            }, sort_keys=True))
+
 
 if __name__ == "__main__":
     unittest.main()
