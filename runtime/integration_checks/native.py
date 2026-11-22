@@ -40,6 +40,7 @@ SUITES['protocol'].append('test_app_server_known_eof')
 SUITES['protocol'].append('test_app_server_runtime_eligibility')
 SUITES['protocol'].append('test_app_server_send_snapshot')
 SUITES['protocol'].append('test_appserver_bounded_close_e0cc')
+SUITES['protocol'].append('test_appserver_stderr_backpressure_current_main_r01')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 

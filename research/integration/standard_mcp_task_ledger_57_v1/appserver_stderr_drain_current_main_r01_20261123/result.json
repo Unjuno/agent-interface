@@ -1,0 +1,20 @@
+{
+  "schema": "agent-interface/appserver-stderr-drain-r01-v1",
+  "status": "PASS_SCOPED_LOCAL_CONTRACT",
+  "baseline_main": "07c0d7f72bf19d0dc2690bc01a114e0912b20f87",
+  "platform": "Windows 11",
+  "python": "CPython 3.13.14",
+  "target": "current-main CodexAppServerClient stderr draining and bounded reader retirement",
+  "verification": {
+    "focused_normal": {"tests": 2, "passed": 2, "skipped": 0},
+    "focused_optimized": {"tests": 2, "passed": 2, "skipped": 0},
+    "related_normal": {"tests": 81, "passed": 81, "skipped": 10},
+    "related_optimized": {"tests": 81, "passed": 81, "skipped": 10},
+    "wider_native_protocol": {"tests": 713, "errors": 31, "failures": 3, "skipped": 17, "status": "FAIL_INCOMPLETE_RUNNER_ENCODING_ERROR"}
+  },
+  "live_provider": false,
+  "gui": false,
+  "docker": false,
+  "wsl": false,
+  "closes_issue_57": false
+}
