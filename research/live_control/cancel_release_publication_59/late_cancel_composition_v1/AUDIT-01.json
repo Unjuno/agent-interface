@@ -1,0 +1,12 @@
+{
+  "audit": "CROSS_COMPONENT_POST_SAMPLE_CANCEL_AUDIT_V1",
+  "result": "PASS_SCOPED_REPRODUCTION",
+  "errors": [],
+  "negative_controls_rejected": true,
+  "negative_control_error_counts": [
+    2,
+    1,
+    2
+  ],
+  "interpretation": "The current owner recheck preserves cancellation cause across the forced post-sample boundary; the executor publishes the verified-empty release before terminal. Ordinary release remains an un-interrupted completion. Fake-Xlib composition only; no physical input or task effect."
+}
