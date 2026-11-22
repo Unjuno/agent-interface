@@ -1,0 +1,52 @@
+...usage: mcp_server [-h] --targets TARGETS --output-directory OUTPUT_DIRECTORY
+                  [--display DISPLAY]
+                  [--session-mode {one-shot,persistent-x11,guarded-x11,supervised-win32}]
+                  [--supervised-win32-late-input-horizon-ms MS]
+                  [--supervised-win32-deadline-cancel-policy {automatic,public-caller}]
+                  [--supervised-win32-deadline-cancel-grace-ms MS]
+                  [--guarded-process-identity] [--guarded-query-worker]
+                  [--guarded-observation-worker] [--guarded-window-lifecycle]
+                  [--guarded-retention-mode {files,journal}]
+                  [--guarded-owned-process]
+                  [--guarded-prestarted-cancel-supervisor]
+                  [--calc-launcher-executable CALC_LAUNCHER_EXECUTABLE]
+                  [--calc-gui-executable CALC_GUI_EXECUTABLE]
+                  [--calc-window-title-hint CALC_WINDOW_TITLE_HINT]
+                  [--calc-discovery-deadline-s CALC_DISCOVERY_DEADLINE_S]
+mcp_server: error: --supervised-win32-late-input-horizon-ms requires --session-mode supervised-win32
+.........Executing <Task pending name='Task-63' coro=<PublicMCPTests.test_portable_stdio_runs_outside_checkout() running at /workspace/runtime/cli_v1/test_mcp_server.py:461> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.130 seconds
+execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=23 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=23 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+.............execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=53 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=53 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+.execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=57 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=57 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+..............................Executing <Task pending name='Task-287' coro=<GuardedMCPTests.test_public_observation_keeps_current_rgb_across_capture_directory_changes() running at /workspace/runtime/cli_v1/test_mcp_guarded.py:534> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at /usr/lib/python3.11/asyncio/tasks.py:898, Task.task_wakeup()] created at /usr/lib/python3.11/asyncio/base_events.py:427> cb=[_run_until_complete_cb() at /usr/lib/python3.11/asyncio/base_events.py:180] created at /usr/lib/python3.11/asyncio/runners.py:100> took 0.147 seconds
+.execute program '/usr/bin/python3': <_UnixSubprocessTransport pid=111 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=111 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+..............................
+----------------------------------------------------------------------
+Ran 87 tests in 4.185s
+
+OK
