@@ -1,0 +1,15 @@
+{
+  "schema": "map01-cancel-keycode-identity-repair-freeze-v1",
+  "issue": 59,
+  "parent_result": "map01-cancel-keycode-identity-59-t0-a01-20261004",
+  "source_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "source_path": "research/live_control/batch_fixture_composition_59_4d74_20261004/source/input_owner_v12.py",
+  "source_git_blob": "da1a0b496572f3b853a84a94451e6824369a49b0",
+  "candidate_mutation": "add resolved keycode to input_admission receipt",
+  "test_factors": {
+    "control": {"W": 87, "A": 65},
+    "alias": {"W": 77, "A": 77}
+  },
+  "decision": "admission keycode lists must exactly match release interval keycodes as physical-key groups; alias case intentionally has two symbol rows for one keycode interval",
+  "scope": "source mutation construction only; not a proposed main change or live qualification"
+}

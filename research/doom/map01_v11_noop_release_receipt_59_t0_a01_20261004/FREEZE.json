@@ -1,0 +1,14 @@
+{
+  "schema": "map01-v11-noop-release-receipt-freeze-v1",
+  "issue": 59,
+  "allocation": "map01-v11-noop-release-receipt-t0-a01-20261004",
+  "method": "source-pinned V10/V11 owner with fake Xlib and controlled alias keymap",
+  "source_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "sources": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56"
+  },
+  "factor": {"symbols": ["W", "A"], "keycode": 77},
+  "decision": "the second up receipt must not assert release-plus-XSync if the owner issues no KeyRelease and performs no sync",
+  "scope": "synthetic identity collision only; no real X server or input"
+}

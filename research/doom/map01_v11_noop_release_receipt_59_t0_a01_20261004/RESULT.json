@@ -1,0 +1,78 @@
+{
+  "admissions": [
+    {
+      "admitted_ns": 115609744713600,
+      "event": "input_admission",
+      "input_ack_ns": 115609744718900,
+      "key": "W",
+      "valid_until_ns": 115614744678200
+    },
+    {
+      "admitted_ns": 115609744823900,
+      "event": "input_admission",
+      "input_ack_ns": 115609744826300,
+      "key": "A",
+      "valid_until_ns": 115614744678200
+    }
+  ],
+  "calls_after_first_up": {
+    "key_release_requests": 1,
+    "sync_calls": 3
+  },
+  "calls_after_second_up": {
+    "key_release_requests": 1,
+    "sync_calls": 3
+  },
+  "candidate_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "first_up_receipt": {
+    "application_consumption_observed": false,
+    "call_returned_ns": 115609744895900,
+    "call_started_ns": 115609744843900,
+    "continuous_physical_state_sampled": false,
+    "event": "input_release_rpc",
+    "grants_input_authority": false,
+    "intent_token": "noop-probe",
+    "interval_width_ns": 52000,
+    "operation": "up",
+    "owner_id": "5df6b85a8e9844b88fdffb77f1cf5230",
+    "payload": "W",
+    "release_transition_interval_ns": [
+      115609744843900,
+      115609744895900
+    ],
+    "valid_until_ns": 115614744678200,
+    "x11_release_and_sync_completed_before_return": true
+  },
+  "schema": "map01-v11-noop-release-receipt-t0-v1",
+  "scope": "fake Xlib only; no physical input, game, model, or live allocation",
+  "second_call_added_key_release_request": 0,
+  "second_call_added_sync": 0,
+  "second_receipt_claims_xsync": true,
+  "second_up_receipt": {
+    "application_consumption_observed": false,
+    "call_returned_ns": 115609744936900,
+    "call_started_ns": 115609744898500,
+    "continuous_physical_state_sampled": false,
+    "event": "input_release_rpc",
+    "grants_input_authority": false,
+    "intent_token": "noop-probe",
+    "interval_width_ns": 38400,
+    "operation": "up",
+    "owner_id": "5df6b85a8e9844b88fdffb77f1cf5230",
+    "payload": "A",
+    "release_transition_interval_ns": [
+      115609744898500,
+      115609744936900
+    ],
+    "valid_until_ns": 115614744678200,
+    "x11_release_and_sync_completed_before_return": true
+  },
+  "sources": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56"
+  },
+  "synthetic_keysym_map": {
+    "A": 77,
+    "W": 77
+  }
+}
