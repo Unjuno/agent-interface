@@ -1,0 +1,13 @@
+{
+  "schema": "issue57-v3-prospective-deferred-unknown-r04",
+  "status": "PASS_SYNTHETIC_DEFERRED_AND_UNKNOWN_USAGE_CUSTODY",
+  "normal": {"tests": 4, "passed": 4, "exit_code": 0},
+  "optimized": {"tests": 4, "passed": 4, "exit_code": 0},
+  "cases": [
+    {"outcome": "CALLER_FAILED", "typed_status": "FAILED_UPSTREAM", "usage": null, "custody": "audited"},
+    {"outcome": "TASK_DEFERRED", "typed_status": "DEFERRED_UPSTREAM", "usage": "all five synthetic counters", "custody": "audited"}
+  ],
+  "projection": "HOLD / failed_attempt_not_representable_in_v1",
+  "live_provider_or_gui": false,
+  "initial_fixture_failure_preserved": true
+}

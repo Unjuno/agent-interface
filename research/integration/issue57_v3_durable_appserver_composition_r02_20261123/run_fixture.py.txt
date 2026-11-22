@@ -1,0 +1,40 @@
+import datetime, hashlib, json, sys
+from pathlib import Path
+from research.live_control.issue57_v3_prospective_run_v1 import ProspectiveRun
+
+repo = Path(sys.argv[2])
+evidence = Path(sys.argv[1]) / ("normal-rerun1" if not sys.flags.optimize else "optimized-rerun1")
+allocation_path = evidence.parent / ("allocation-normal.json" if not sys.flags.optimize else "allocation-optimized.json")
+evidence.parent.mkdir(parents=True, exist_ok=True)
+allocation = {
+ "allocation_id":"synthetic-boundary-r02", "host_id":"synthetic-local-host",
+ "owner":"offline-test", "exclusive":True,
+ "expires_at_utc":(datetime.datetime.now(datetime.timezone.utc)+datetime.timedelta(hours=1)).isoformat(),
+ "task_ids":[f"task-{i}" for i in range(1,7)],
+ "arms":["plain","ephemeral","persistent"], "model":"synthetic-model",
+ "settings":{"effort":"medium","provider":"fake"}, "order_seed":57}
+allocation_path.write_text(json.dumps(allocation), encoding="utf-8")
+run=ProspectiveRun(allocation_path,evidence,source_root=repo,allocation_verifier=lambda *_:True)
+usage={"input_tokens":12,"cached_input_tokens":2,"cache_write_input_tokens":0,"output_tokens":4,"reasoning_output_tokens":1}
+rows=[
+ ("TASK_SUCCEEDED", usage, "nominal_success_shaped"),
+ ("CALLER_FAILED", usage, "failed_with_known_usage"),
+ ("TASK_DEFERRED", usage, "deferred_with_known_usage"),
+ ("CALLER_FAILED", None, "failed_with_unknown_usage"),
+]
+for index,(outcome, usage_value,label) in enumerate(rows):
+ caller={"outcome":outcome,"reason":label,"attempt_ledger":[],"accounting":{"attempted_calls":0,"usage":usage_value},"task_effect":None}
+ row=run.record_task("plain",index,caller,{"submission_count":0,"exact_submission":False},{"synthetic_case":label})
+ assert row["status"]=="HOLD", row
+ assert row["caller_result"]==caller
+result=run.finish([])
+assert result["status"]=="HOLD", result
+assert result["reason"]=="assigned_task_missing", result
+assert len(result["missing_assignments"])==14, result["missing_assignments"]
+manifest=json.loads((evidence/"run-manifest.json").read_text(encoding="utf-8"))
+assert manifest["dispatch_enabled"] is False
+journal=[json.loads(line) for line in (evidence/"lifecycle.jsonl").read_text(encoding="utf-8").splitlines()]
+tasks=[row for row in journal if row["event"]=="task"]
+assert len(tasks)==4
+assert [row["payload"]["caller_result"]["reason"] for row in tasks]==[x[2] for x in rows]
+print(json.dumps({"status":"PASS_FAIL_CLOSED_BOUNDARY","optimize":sys.flags.optimize,"recorded_rows":len(tasks),"row_statuses":[row["payload"]["projection"]["status"] for row in tasks],"finish_status":result["status"],"finish_reason":result["reason"],"missing_assignments":len(result["missing_assignments"]),"dispatch_enabled":manifest["dispatch_enabled"],"evidence_root":str(evidence)},sort_keys=True))

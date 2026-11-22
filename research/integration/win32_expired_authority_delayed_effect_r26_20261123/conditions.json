@@ -1,0 +1,58 @@
+{
+  "attempt_budget": {
+    "fresh_fixtures": 1,
+    "public_dispatches": 1,
+    "recovery_calls_per_unknown_source": 1,
+    "retries": 0
+  },
+  "experiment": "win32-expired-authority-delayed-effect-r26",
+  "frozen_at_utc": "2026-11-22T20:08:42.654156+00:00",
+  "ledger_tree": "f2d896996c041faec6939ca059492539d1865feb",
+  "model": "none",
+  "not_claimed": [
+    "provider/model efficiency",
+    "matched speedup",
+    "MAP01",
+    "Research Preview graduation",
+    "general GUI reliability",
+    "production release"
+  ],
+  "provider": "none",
+  "runtime_tree": "0461d0be5592cc3ebd575861923fe0c04950efe5",
+  "schema": "agent-interface/win32-expired-delayed-effect-recovery-cohort-v1",
+  "source_main": "490d7bcb4d84927116112e5ff348cdeadfc489d6",
+  "status": "FROZEN",
+  "stop_rules": [
+    "Freeze every ID and all trial conditions before the first fixture starts.",
+    "Exactly one standard public action is dispatched per trial; never replay a dispatched action.",
+    "If source action is UNKNOWN with release unconfirmed, preserve it; verify exact producer absence, then make at most one fresh-session public orphan recovery attempt.",
+    "Stop the cohort immediately if producer absence, target identity, release, neutral readback or configured late-input horizon is not verified; retain the target and durable fence.",
+    "Close a target only after normal terminal release plus neutral/horizon proof, or after successful orphan recovery confirms those conditions.",
+    "Preserve every failed/unknown attempt; no successful-subset analysis or retry.",
+    "Independent fixture scoring is factual only; post-expiry effects are not eligible task success.",
+    "Fixture launch must pause before any MCP action until Computer Use uniquely selects and raises the exact fixture window; the foreground probe must then match HWND and PID."
+  ],
+  "trial_order": [
+    1
+  ],
+  "trials": [
+    {
+      "authority_lease_ms": 2000,
+      "capture_frame": "window_client",
+      "capture_region": [
+        0,
+        0,
+        400,
+        180
+      ],
+      "effect_delay_ms": 6000,
+      "horizon_ms": 2000,
+      "lease_id": "r26-96dbdc8399e54d1bbbf5db5d2f635653",
+      "max_horizon_gap_ms": 100,
+      "ordinal": 1,
+      "program_id": "r26-ace7504d7872472b86cba07a9393b32d",
+      "trial_id": "r26-01-1e03b1cbf9634e77b7b6f88293a47e94"
+    }
+  ],
+  "workload": "one focused A key chord to an owned visible Win32 fixture per independent process; the fixture schedules text a 6000ms after keydown; authority lease expires after 2000ms"
+}

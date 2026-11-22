@@ -1,0 +1,61 @@
+{
+  "attempts_started": 2,
+  "cohort_outcome": "STOPPED_MIXED_NO_REPEATABILITY_CLAIM",
+  "completed_trials": 1,
+  "frozen_attempts": 3,
+  "schema": "agent-interface/r25-progress-v1",
+  "stopped_before_ordinal": 3,
+  "trials": [
+    {
+      "action": {
+        "call_id": "39866f38bcdb4247aa81d4ec64939fb2",
+        "input_dispatched": true,
+        "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "unknown",
+        "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "task_success": null
+      },
+      "effect": {
+        "effect_delay_ms": 6000,
+        "effect_observed_ns": 420235046000000,
+        "key_down_accepted_ns": 420229046000000,
+        "text": "a",
+        "verified": true
+      },
+      "fixture_closed": true,
+      "independent_score": {
+        "state_sha256": "64630bbec0d4dc3ac58a1de0bf0638272b40796f1c47b5051ba24ce5e04820bb",
+        "task_success": true
+      },
+      "ordinal": 1,
+      "outcome": "RECOVERY_VERIFIED",
+      "recovery": {
+        "fence_status": "clear",
+        "horizon_ns": 2000000000,
+        "horizon_verified": true,
+        "maximum_gap_limit_ns": 100000000,
+        "maximum_gap_ns": 32000000,
+        "neutral_readback": true,
+        "observation_count": 78,
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "status": "recovered",
+        "task_success": null
+      },
+      "runner_failure": "AttributeError in scorer module loader after dispatch and before recovery; preserved in trial-exception.json; no retry/replay",
+      "trial_id": "r25-01-4e51d38d84fd49a2935e011f5919bf3f"
+    },
+    {
+      "dispatch_attempted": false,
+      "evidence": "trial-02/setup-stop-disposition.json",
+      "fixture_closed": true,
+      "ordinal": 2,
+      "outcome": "STOP_PRE_DISPATCH_TARGET_NOT_FOREGROUND",
+      "recovery_attempted": false,
+      "source_action": null,
+      "trial_id": "r25-02-336b61404325413c9bf6f3b33fff975b"
+    }
+  ]
+}

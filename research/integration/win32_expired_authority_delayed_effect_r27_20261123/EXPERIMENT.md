@@ -1,0 +1,3 @@
+# R27: Three-attempt foreground-activated Win32 cohort
+
+Three independent fixtures, each with one public focused A action, a 2 s authority lease, 6 s delayed fixture effect, and one possible fresh-session orphan recovery with a 2 s horizon. Conditions and all IDs were frozen before the first fixture. The only setup protocol change from R25 is explicit Computer Use selection/raise and exact HWND/PID foreground verification before MCP observation or dispatch. No retries or task replay are allowed. Any setup failure stops the cohort and remains in the denominator. A full pass is scoped to this fixture/protocol and is not a population reliability estimate.

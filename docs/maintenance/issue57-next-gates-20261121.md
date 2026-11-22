@@ -88,6 +88,20 @@ The test and source SHA-256 values, pinned main SHA, runner commands, and
 temporary tree location are recorded in
 [`pr10340-lineage-correction-20261121.md`](pr10340-lineage-correction-20261121.md).
 
+## Current-main continuation — 2026-11-23
+
+R24-R27 add controlled Win32 late-effect/orphan-recovery mechanics, but none is
+an eligible task-success or efficiency result. Do not repeat that same fixture
+experiment as the next step. The Calc G10 evidence crosswalk confirms a narrow
+historical positive effect, while the original record's primary provider usage
+is UNKNOWN and its caller event schema cannot enter the current comparison
+adapter. Current research code already includes `run_g10_in_durable_allocation`
+and an offline composed test; audit how the actual production provider callback
+feeds that writer before freezing any new matched allocation. If its attempts,
+failures, deferred completion, and unknown usage cannot all be joined without
+loss, hold the live comparison and repair the recording path first. See [Calc
+crosswalk](issue57-calc-evidence-bridge-audit-20261123.md), [R24](../../research/integration/win32_expired_authority_delayed_effect_r24_20261123/RESULT.md), and [R27](../../research/integration/win32_expired_authority_delayed_effect_r27_20261123/RESULT.md).
+
 ## Disposition
 
 Keep #57 and #5130 open. Keep #908/#879 as consumed historical evidence; do

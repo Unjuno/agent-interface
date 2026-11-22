@@ -1,0 +1,339 @@
+{
+  "custody_record": {
+    "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+    "dispatch": {
+      "input_dispatched": true,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "do_not_replay": true,
+    "late_server_request_possible": true,
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "observed_producer_live": false,
+    "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+    "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+  },
+  "fence_after": {
+    "fenced_generations": [
+      "823eea172602a724f7ba69cbdbc9c73b9f89626e36fa60d6a06193816bfa330c",
+      "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+      "eab175df2940cb5ed04ed4696e5288db0f4c699266b584761afbe556ec6fcafc",
+      "9ac4c2fa8d399043222c19d420b10912b762d348e73c06af43390aa6c00497ad",
+      "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5",
+      "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+    ],
+    "last_resolved": {
+      "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+      "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+    },
+    "namespace_digest": "daad63552416ce22de89c5e5ff25be5951a6ee1973e4f1abf3533da1bf2fb445",
+    "pending": null,
+    "revision": 75,
+    "schema": "win32-custody-fence-v1",
+    "status": "clear"
+  },
+  "fence_after_sha256": "b961bc85cd98d44c786567704b43c76fdec68a1a1dbedd60222302966a569049",
+  "fence_before_sha256": "2dc108fa0a392307ca514cd08cef5a204f1b66066db785ad5b140489bbc05cfc",
+  "final_recovery_receipt": {
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r25_20261123\\raw\\trial-01\\recovery-mcp\\d3fe8de8a3f04e9fb793814bc0958e68",
+    "call_id": "d3fe8de8a3f04e9fb793814bc0958e68",
+    "next_action_requires_fresh_generation": true,
+    "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+    "recovery_receipt": {
+      "late_input_horizon_ns": 2000000000,
+      "late_input_horizon_verified": true,
+      "late_input_max_observed_gap_ns": 32000000,
+      "late_input_max_sample_gap_ns": 100000000,
+      "late_input_observation_count": 78,
+      "late_input_observation_end_monotonic_ns": 420445000000000,
+      "late_input_observation_start_monotonic_ns": 420443000000000,
+      "late_input_release_received_monotonic_ns": 420443000000000,
+      "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+      "readback": {
+        "key_button_states": [
+          false
+        ],
+        "neutral": true,
+        "observed_monotonic_ns": 420445000000000,
+        "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+        "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+        "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "unicode_event_units": 0
+      },
+      "recovery_completed_monotonic_ns": 420445000000000,
+      "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+      "recovery_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+      "release_confirmed": true,
+      "release_receipt": {
+        "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+        "pending_unicode_ups": [],
+        "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+        "release_accepted": true,
+        "release_error_type": null,
+        "release_key_up_attempts": [
+          {
+            "encoding": "virtual_key",
+            "status": "returned",
+            "virtual_key": 65
+          }
+        ],
+        "release_receipt": {
+          "buttons_down": [],
+          "buttons_unknown": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "monotonic_ns": 420443000000000,
+          "perf_counter_ns": 420443029541900,
+          "release_attempts": [
+            {
+              "domain": "key_up",
+              "encoding": "virtual_key",
+              "error_type": null,
+              "key_names": [
+                "A"
+              ],
+              "ordinal": 0,
+              "outcome": "returned",
+              "sendinput_call_started": true,
+              "sendinput_error_type": null,
+              "sendinput_return_count": 1,
+              "virtual_key": 65
+            }
+          ],
+          "release_errors": [],
+          "state_query_witnesses": {
+            "65": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 22416078,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 35464,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 17384
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 22416078,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 35464,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 17384
+              }
+            ]
+          },
+          "verified": true
+        },
+        "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+      },
+      "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+      "status": "recovered",
+      "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+    },
+    "recovery_status": "recovered",
+    "recovery_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "session": {
+      "call_count": 0,
+      "mode": "supervised-win32",
+      "session_id": "2b097da90dd047f48cf419bb05ec209f",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "source_action_status": "unknown",
+    "source_custody_canonical_sha256": "f2b7faa964bef48c8244384c33b2bc64bc62f07aaf70285cf5d96177b7b9cef5",
+    "source_operation_id": "a18637c9d2554bc498082bc58b17eed1",
+    "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+    "status": "recovered",
+    "task_success": null
+  },
+  "finished_ns": 420445687000000,
+  "fixture_cleanup": {
+    "window_after": false,
+    "window_before": true,
+    "wm_close_posted": true
+  },
+  "fresh_observation": {
+    "input_dispatched": false,
+    "observation_id": "b225e0f89f204e248593c7ace60e3b5f",
+    "side_effect_authority": false,
+    "status": "returned",
+    "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+  },
+  "horizon_verified": true,
+  "initial_recovery_receipt": {
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r25_20261123\\raw\\trial-01\\recovery-mcp\\d3fe8de8a3f04e9fb793814bc0958e68",
+    "call_id": "d3fe8de8a3f04e9fb793814bc0958e68",
+    "next_action_requires_fresh_generation": true,
+    "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+    "recovery_receipt": {
+      "late_input_horizon_ns": 2000000000,
+      "late_input_horizon_verified": true,
+      "late_input_max_observed_gap_ns": 32000000,
+      "late_input_max_sample_gap_ns": 100000000,
+      "late_input_observation_count": 78,
+      "late_input_observation_end_monotonic_ns": 420445000000000,
+      "late_input_observation_start_monotonic_ns": 420443000000000,
+      "late_input_release_received_monotonic_ns": 420443000000000,
+      "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+      "readback": {
+        "key_button_states": [
+          false
+        ],
+        "neutral": true,
+        "observed_monotonic_ns": 420445000000000,
+        "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+        "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+        "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "unicode_event_units": 0
+      },
+      "recovery_completed_monotonic_ns": 420445000000000,
+      "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+      "recovery_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+      "release_confirmed": true,
+      "release_receipt": {
+        "operation_id": "a18637c9d2554bc498082bc58b17eed1",
+        "pending_unicode_ups": [],
+        "recovery_id": "fc5adb02121246aca35e0ba185ef8e2f",
+        "release_accepted": true,
+        "release_error_type": null,
+        "release_key_up_attempts": [
+          {
+            "encoding": "virtual_key",
+            "status": "returned",
+            "virtual_key": 65
+          }
+        ],
+        "release_receipt": {
+          "buttons_down": [],
+          "buttons_unknown": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "monotonic_ns": 420443000000000,
+          "perf_counter_ns": 420443029541900,
+          "release_attempts": [
+            {
+              "domain": "key_up",
+              "encoding": "virtual_key",
+              "error_type": null,
+              "key_names": [
+                "A"
+              ],
+              "ordinal": 0,
+              "outcome": "returned",
+              "sendinput_call_started": true,
+              "sendinput_error_type": null,
+              "sendinput_return_count": 1,
+              "virtual_key": 65
+            }
+          ],
+          "release_errors": [],
+          "state_query_witnesses": {
+            "65": [
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 22416078,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 35464,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 17384
+              },
+              {
+                "desktop_hookcontrol_opened": true,
+                "hwnd": 22416078,
+                "input_desktop": "Default",
+                "input_desktop_active": true,
+                "pid": 35464,
+                "probe_integrity_rid": 8192,
+                "target": "fixture",
+                "target_integrity_rid": 8192,
+                "thread_id": 17384
+              }
+            ]
+          },
+          "verified": true
+        },
+        "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+        "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+      },
+      "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+      "status": "recovered",
+      "target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786"
+    },
+    "recovery_status": "recovered",
+    "recovery_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "session": {
+      "call_count": 0,
+      "mode": "supervised-win32",
+      "session_id": "2b097da90dd047f48cf419bb05ec209f",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "source_action_status": "unknown",
+    "source_custody_canonical_sha256": "f2b7faa964bef48c8244384c33b2bc64bc62f07aaf70285cf5d96177b7b9cef5",
+    "source_operation_id": "a18637c9d2554bc498082bc58b17eed1",
+    "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+    "status": "recovered",
+    "task_success": null
+  },
+  "producer_identity_check": {
+    "absent": true,
+    "open_error": 87,
+    "pid": 10968
+  },
+  "recovery_session_close": {
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r25_20261123\\raw\\trial-01\\recovery-mcp\\28fdb704ab41457aa384737d38d2b5a2",
+    "call_id": "28fdb704ab41457aa384737d38d2b5a2",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "session": {
+      "call_count": 0,
+      "mode": "supervised-win32",
+      "session_id": "2b097da90dd047f48cf419bb05ec209f",
+      "state": "closed",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    },
+    "status": "closed",
+    "task_success": null
+  },
+  "release_confirmed": true,
+  "replay_allowed": false,
+  "result_status": "recovered",
+  "source_operation_id": "a18637c9d2554bc498082bc58b17eed1",
+  "source_target_generation": "33b87e0fb180cdbac6454410f735640b8490e625e0cca2a1b30a20ec6ded1786",
+  "task_success": null,
+  "timeline": [
+    {
+      "ended_ns": 420442984000000,
+      "started_ns": 420442953000000,
+      "tool": "interface_observe"
+    },
+    {
+      "call_id": "d3fe8de8a3f04e9fb793814bc0958e68",
+      "ended_ns": 420445000000000,
+      "started_ns": 420442984000000,
+      "status": "recovered",
+      "tool": "interface_recover_orphaned_input"
+    }
+  ]
+}

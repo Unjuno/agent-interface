@@ -1,0 +1,59 @@
+Processing request of type CallToolRequest
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\win32_expired_authority_delayed_effect_r24_20261123\source\live_probe.py", line 99, in <module>
+  |     asyncio.run(main())
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 190, in run
+  |     return runner.run(main)
+  |            ^^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+  |     return self._loop.run_until_complete(task)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+  |     return future.result()
+  |            ^^^^^^^^^^^^^^^
+  |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\win32_expired_authority_delayed_effect_r24_20261123\source\live_probe.py", line 44, in main
+  |     async with stdio_client(params) as (rd,wr):
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(typ, value, traceback)
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\client\stdio\__init__.py", line 182, in stdio_client
+  |     async with (
+  |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\mcp\client\stdio\__init__.py", line 189, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\win32_expired_authority_delayed_effect_r24_20261123\source\live_probe.py", line 45, in main
+    |     async with ClientSession(rd,wr,read_timeout_seconds=timedelta(seconds=50)) as session:
+    |   File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\standard_mcp_task_ledger_57_v1\comparison_measurement_v1.py", line 313, in validate_measured_run
+      |     adjudicated = adjudicate_effect(
+      |                   ^^^^^^^^^^^^^^^^^^
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\standard_mcp_task_ledger_57_v1\effect_attribution_v1.py", line 18, in adjudicate_effect
+      |     raise ValueError("authority, release, and horizon times must be nonnegative integers")
+      | ValueError: authority, release, and horizon times must be nonnegative integers
+      | 
+      | During handling of the above exception, another exception occurred:
+      | 
+      | Traceback (most recent call last):
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\win32_expired_authority_delayed_effect_r24_20261123\source\live_probe.py", line 91, in main
+      |     measured=build_measured_run(receipt,recorder_root=recorder_root,ledger_metadata=metadata,measurement=measurement); save_json(raw/'measured-run.json',measured)
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\standard_mcp_task_ledger_57_v1\recorded_comparison_adapter_v1.py", line 347, in build_measured_run
+      |     validate_measured_run(measured)
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\standard_mcp_task_ledger_57_v1\comparison_measurement_v1.py", line 316, in validate_measured_run
+      |     _fail(f"invalid effect attribution: {exc}")
+      |   File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\integration\standard_mcp_task_ledger_57_v1\comparison_measurement_v1.py", line 51, in _fail
+      |     raise LedgerValidationError(message)
+      | ledger.LedgerValidationError: invalid effect attribution: authority, release, and horizon times must be nonnegative integers
+      +------------------------------------

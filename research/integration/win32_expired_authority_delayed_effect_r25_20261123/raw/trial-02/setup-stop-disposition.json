@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/r25-setup-stop-disposition-v1",
+  "trial_id": "r25-02-336b61404325413c9bf6f3b33fff975b",
+  "classification": "STOP_PRE_DISPATCH_TARGET_NOT_FOREGROUND",
+  "evidence": {
+    "fixture_ready_event": true,
+    "fixture_hwnd": 11537126,
+    "fixture_pid": 29568,
+    "foreground_pre_dispatch": {
+      "hwnd": 67636796,
+      "pid": 4880,
+      "title": "Example Domains — Lightbrowse",
+      "foreground_matches": false
+    },
+    "fence_before": {
+      "status": "clear",
+      "pending": null
+    },
+    "public_dispatch_attempted": false,
+    "source_action_response_present": false,
+    "fixture_closed_by_computer_use": true,
+    "fixture_process_absent_after_close": true
+  },
+  "disposition": "Frozen R25 stopped per predeclared stop rule. No retry, no dispatch, no recovery call, and no trial 3. This setup failure remains in the frozen cohort denominator and is not a completed effect/recovery trial."
+}

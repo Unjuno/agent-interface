@@ -1,0 +1,259 @@
+{
+  "attempt_id": "2c54be1414d1415eaf25c6ec744f2108",
+  "custody_record": {
+    "classification": "UNKNOWN_RELEASE_UNCONFIRMED_STOPPED",
+    "dispatch": {
+      "input_dispatched": true,
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "task_success": null
+    },
+    "do_not_replay": true,
+    "late_server_request_possible": true,
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "observed_producer_live": false,
+    "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+    "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5"
+  },
+  "exception": {
+    "message": "unhandled errors in a TaskGroup (1 sub-exception)",
+    "traceback": "  + Exception Group Traceback (most recent call last):\n  |   File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\recover_once.py\", line 50, in main\n  |     async with stdio_client(params) as (rd,wr):\n  |   File \"C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py\", line 231, in __aexit__\n  |     await self.gen.athrow(typ, value, traceback)\n  |   File \"C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\mcp\\client\\stdio\\__init__.py\", line 182, in stdio_client\n  |     async with (\n  |   File \"C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\anyio\\_backends\\_asyncio.py\", line 847, in __aexit__\n  |     raise BaseExceptionGroup(\n  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)\n  +-+---------------- 1 ----------------\n    | Exception Group Traceback (most recent call last):\n    |   File \"C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\mcp\\client\\stdio\\__init__.py\", line 189, in stdio_client\n    |     yield read_stream, write_stream\n    |   File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\recover_once.py\", line 51, in main\n    |     async with ClientSession(rd,wr,read_timeout_seconds=timedelta(seconds=40)) as s:\n    |   File \"C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\anyio\\_backends\\_asyncio.py\", line 847, in __aexit__\n    |     raise BaseExceptionGroup(\n    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)\n    +-+---------------- 1 ----------------\n      | Traceback (most recent call last):\n      |   File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\recover_once.py\", line 54, in main\n      |     if report.get(\"status\")!=\"returned\" or report.get(\"input_dispatched\") is not False or report.get(\"side_effect_authority\") not in (False,\"none\") or not isinstance(gen,str) or len(gen)!=64: raise RuntimeError(\"fresh public observation failed no-input/no-authority/generation validation\")\n      |                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n      | RuntimeError: fresh public observation failed no-input/no-authority/generation validation\n      +------------------------------------\n",
+    "type": "ExceptionGroup"
+  },
+  "fence_after": {
+    "fenced_generations": [
+      "823eea172602a724f7ba69cbdbc9c73b9f89626e36fa60d6a06193816bfa330c",
+      "6e308d1c6abe7de7a4c994d33014d0d70170cd19fafe34e25bc68342ea730bd9",
+      "eab175df2940cb5ed04ed4696e5288db0f4c699266b584761afbe556ec6fcafc",
+      "9ac4c2fa8d399043222c19d420b10912b762d348e73c06af43390aa6c00497ad"
+    ],
+    "last_resolved": null,
+    "namespace_digest": "daad63552416ce22de89c5e5ff25be5951a6ee1973e4f1abf3533da1bf2fb445",
+    "pending": {
+      "gate_state": "authorized",
+      "input_dispatched": true,
+      "late_input_horizon_required": true,
+      "obligations": [
+        "key:fixture:A:virtual_key"
+      ],
+      "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+      "phase": "recovery_pending",
+      "producer_identity": {
+        "creation_time_100ns": 134398491157343876,
+        "pid": 33804
+      },
+      "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5"
+    },
+    "revision": 65,
+    "schema": "win32-custody-fence-v1",
+    "status": "unresolved"
+  },
+  "fence_path": "C:\\Users\\user\\AppData\\Local\\Unjuno\\AgentInterface\\custody-v1\\daad63552416ce22de89c5e5ff25be5951a6ee1973e4f1abf3533da1bf2fb445.json",
+  "fence_pending": {
+    "gate_state": "authorized",
+    "input_dispatched": true,
+    "late_input_horizon_required": true,
+    "obligations": [
+      "key:fixture:A:virtual_key"
+    ],
+    "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+    "phase": "recovery_pending",
+    "producer_identity": {
+      "creation_time_100ns": 134398491157343876,
+      "pid": 33804
+    },
+    "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5"
+  },
+  "fence_revision_before": 65,
+  "fence_sha256_after": "4a1f1130c1f06613e6c118efcbcdd26593084db66ae2bc23ce71df1bd4094be0",
+  "fence_sha256_before": "4a1f1130c1f06613e6c118efcbcdd26593084db66ae2bc23ce71df1bd4094be0",
+  "finished_ns": 418737796000000,
+  "obligations": [
+    "key:fixture:A:virtual_key"
+  ],
+  "observation_public_response": {
+    "authority": "none",
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\raw\\recovery-mcp\\99e5b9566eea40deaf46ad7d91d2a79a",
+    "call_id": "99e5b9566eea40deaf46ad7d91d2a79a",
+    "image_reference": {
+      "authority": "none",
+      "capture_ns": 418737578000000,
+      "freshness": "historical referenced capture; no new observation",
+      "observation_id": "522a2e70456d42778181770d8cee82e4",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\raw\\recovery-mcp\\99e5b9566eea40deaf46ad7d91d2a79a\\images\\db48c761305d484fa23e3e45ed4db5b4.png",
+      "recorded_capture": {
+        "capture_ended_ns": 418737578000000,
+        "capture_started_ns": 418737578000000,
+        "frame": "window_client",
+        "height": 180,
+        "native_window_id": 26411224,
+        "region": [
+          0,
+          0,
+          400,
+          180
+        ],
+        "target": "fixture",
+        "width": 400
+      },
+      "relative_path": "images\\db48c761305d484fa23e3e45ed4db5b4.png",
+      "sha256": "c439a451de0fb1f1320fb8dcd67bcc76ee554b5e0ca9747b3673cc7a8a738241",
+      "status": "image"
+    },
+    "image_status": "image",
+    "outcome_summary": {
+      "cleanup_error": null,
+      "error": null,
+      "failure_phase": null,
+      "reported_status": "returned"
+    },
+    "receipt": {
+      "authority": "none",
+      "events": [],
+      "latest_observations": [],
+      "motor_state_validation": {
+        "accepted": false,
+        "present": false,
+        "reason": "missing"
+      },
+      "omitted_from_view": 0,
+      "record_counts": {},
+      "report": {
+        "input_dispatched": false,
+        "observation": {
+          "artifact": {
+            "bytes": 1227,
+            "height": 180,
+            "mime_type": "image/png",
+            "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\raw\\recovery-mcp\\99e5b9566eea40deaf46ad7d91d2a79a\\images\\db48c761305d484fa23e3e45ed4db5b4.png",
+            "sha256": "c439a451de0fb1f1320fb8dcd67bcc76ee554b5e0ca9747b3673cc7a8a738241",
+            "source_raw_sha256": "334f55276249b2fdaa0adab2fad142e4bdb2a922d4c063e23ec4f63aee4f81ee",
+            "timing_ns": {
+              "converted": 418737593000000,
+              "encoded": 418737593000000,
+              "started": 418737578000000,
+              "written": 418737593000000
+            },
+            "width": 400
+          },
+          "bytes": 288000,
+          "capture_ended_ns": 418737578000000,
+          "capture_started_ns": 418737578000000,
+          "frame": "window_client",
+          "height": 180,
+          "native_window_id": 26411224,
+          "region": [
+            0,
+            0,
+            400,
+            180
+          ],
+          "sha256": "334f55276249b2fdaa0adab2fad142e4bdb2a922d4c063e23ec4f63aee4f81ee",
+          "target": "fixture",
+          "width": 400
+        },
+        "observation_id": "522a2e70456d42778181770d8cee82e4",
+        "schema": "agent-interface/runtime-observation-v1",
+        "session": {
+          "call_count": 0,
+          "mode": "supervised-win32",
+          "session_id": "fe7e243286f1445b8b352da1b16ebfe5",
+          "state": "open",
+          "synthetic_only": false,
+          "unresolved_call_ids": []
+        },
+        "side_effect_authority": false,
+        "status": "returned",
+        "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5",
+        "target_generation_consistency": "matched"
+      },
+      "schema": "agent-interface/receipt-view-v1",
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "source": {
+        "bytes": 1517,
+        "kind": "received_bytes",
+        "path": null,
+        "raw_report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 1227,
+              "height": 180,
+              "mime_type": "image/png",
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\.goal-main-381a21-20261120\\.worktrees\\repo-current-main-audit-20261122\\research\\integration\\win32_expired_authority_delayed_effect_r24_20261123\\raw\\recovery-mcp\\99e5b9566eea40deaf46ad7d91d2a79a\\images\\db48c761305d484fa23e3e45ed4db5b4.png",
+              "sha256": "c439a451de0fb1f1320fb8dcd67bcc76ee554b5e0ca9747b3673cc7a8a738241",
+              "source_raw_sha256": "334f55276249b2fdaa0adab2fad142e4bdb2a922d4c063e23ec4f63aee4f81ee",
+              "timing_ns": {
+                "converted": 418737593000000,
+                "encoded": 418737593000000,
+                "started": 418737578000000,
+                "written": 418737593000000
+              },
+              "width": 400
+            },
+            "bytes": 288000,
+            "capture_ended_ns": 418737578000000,
+            "capture_started_ns": 418737578000000,
+            "frame": "window_client",
+            "height": 180,
+            "native_window_id": 26411224,
+            "region": [
+              0,
+              0,
+              400,
+              180
+            ],
+            "sha256": "334f55276249b2fdaa0adab2fad142e4bdb2a922d4c063e23ec4f63aee4f81ee",
+            "target": "fixture",
+            "width": 400
+          },
+          "observation_id": "522a2e70456d42778181770d8cee82e4",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "fe7e243286f1445b8b352da1b16ebfe5",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "side_effect_authority": false,
+          "status": "returned",
+          "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5",
+          "target_generation_consistency": "matched"
+        },
+        "sha256": "bb488df1fa4a759addc7cb38e383b71dc5ecde0f6c0b0e2e5cd2ac9a9a46c199"
+      }
+    },
+    "schema": "agent-interface/review-v1",
+    "session": {
+      "call_count": 0,
+      "mode": "supervised-win32",
+      "session_id": "fe7e243286f1445b8b352da1b16ebfe5",
+      "state": "open",
+      "synthetic_only": false,
+      "unresolved_call_ids": []
+    }
+  },
+  "producer_live_at_check": false,
+  "producer_pid": 33804,
+  "schema": "agent-interface/r24-orphan-recovery-attempt-v1",
+  "source_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5",
+  "source_operation_id": "eb96730b07d3454095f478a8a3f2673c",
+  "target_hwnd": 26411224,
+  "target_pid": 43388,
+  "timeline": [
+    {
+      "end_ns": 418737593000000,
+      "input_dispatched": null,
+      "observation_id": null,
+      "side_effect_authority": null,
+      "start_ns": 418737578000000,
+      "status": null,
+      "target_generation": null,
+      "tool": "interface_observe"
+    }
+  ]
+}
