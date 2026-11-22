@@ -7,10 +7,13 @@ triage as two linked workstreams: the first protects acceptance gates; the
 second reconciles issue/PR meaning and evidence custody without bulk closure.
 The latest complete paginated membership baseline is r167 (1,640 Issues / 406
 PRs) bracketed by main `490d7bcb4d84927116112e5ff348cdeadfc489d6`. Issue IDs match
-r166; PR #10473 is the only addition and there were no removals. See the [r167
-receipt](maintenance/repository-inventory-recheck-20261123-r167.md).
-This refreshes queue membership only; semantic issue/PR disposition is still
-incomplete and must proceed family by family.
+r166; PR #10473 was the only addition. PR #10473 has since merged as
+`31fcd3a2e9ee3d1e9a2dbe7d92faf777deae54d8`. A post-merge GraphQL count check
+r168 at that main reports 1,640 open Issues and 405 open PRs; it did not
+recheck exact membership. See the [r167 receipt](maintenance/repository-inventory-recheck-20261123-r167.md)
+and [r168 count receipt](maintenance/repository-inventory-count-recheck-20261123-r168.md).
+Semantic issue/PR disposition remains incomplete and must proceed family by
+family.
 
 ### Current project map
 
