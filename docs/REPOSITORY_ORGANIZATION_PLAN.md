@@ -5,10 +5,10 @@
 The repository is not clean yet. Keep product qualification and repository
 triage as two linked workstreams: the first protects acceptance gates; the
 second reconciles issue/PR meaning and evidence custody without bulk closure.
-The latest complete paginated membership baseline is r166 (1,640 Issues / 405
-PRs on main `01fb5fcbdde0729e30eef5771a0630aed03796b9`). The exact sorted-ID
-hashes match r165. PRs #10470/#10471 were opened and merged between the two
-snapshots, leaving no net membership delta. See the [r166 receipt](maintenance/repository-inventory-recheck-20261123-r166.md).
+The latest complete paginated membership baseline is r167 (1,640 Issues / 406
+PRs) bracketed by main `490d7bcb4d84927116112e5ff348cdeadfc489d6`. Issue IDs match
+r166; PR #10473 is the only addition and there were no removals. See the [r167
+receipt](maintenance/repository-inventory-recheck-20261123-r167.md).
 This refreshes queue membership only; semantic issue/PR disposition is still
 incomplete and must proceed family by family.
 
@@ -16,8 +16,9 @@ incomplete and must proceed family by family.
 
 | Workstream | Current evidence | Remaining gate |
 |---|---|---|
-| Integrated control / #57 | PR #10470 merged; observer binding is limited to supervised-win32. R22 passes both affected MCP modules 94/94 in normal and `-O`. R23 post-merge Fake recovery lifecycle passes 10/10. Historical R10 cause remains unproven. | Proceed from synthetic lifecycle to fresh independently scored native standard-caller task effect/recovery; then matched all-attempt efficiency. Keep #57 open. |
+| Integrated control / #57 | PR #10470 merged; R22 passes 94/94 affected MCP tests in both modes; R23 Fake lifecycle passes 10/10; R24/R26/R27 are native Win32 expiry/recovery fixtures, with R27 3/3 under exact foreground activation. Historical frozen-source `integrated-efficiency-live-01` is a scoped three-arm pass (6/6 each; task-2 token break-even); PR #10473 retains R24-R27. | The three-arm result is one older-source allocation, not current-main standard-caller evidence. Source actions remain UNKNOWN after post-expiry effects; no eligible recovered task success or current-source integrated provider comparison. Reuse existing evidence; next inspect provider-to-ledger binding, then freeze only a valid current-source matched block. Keep #57 open. |
 | Research Preview / #58 | Runner/setup and archived-source checks are partial; current host doctor/live prerequisites remain unmet. | Supported-host setup/doctor, retained audit, fresh no-retry live run and final live audit. |
+| Real-time control / #59 | Existing MAP01 R153/R154 and historical threat-policy mechanics remain scoped; no latest live threat-exposure closure. Read-only local search found no GZDoom/WAD in searched roots; nothing was installed/downloaded. | Locate a supplied/preinstalled target and assets before live threat exposure. Preserve #59 priority; do not claim MAP01 or threat-control completion. |
 | Runtime distribution | Deterministic package/startup and outside-checkout CLI checks passed on declared hosts in retained packets. | Live authority/input behavior and public artifact on declared supported environments. |
 | Research ideas | r160 idea-index crosswalk and targeted family reviews exist; they are not current semantic triage. | Refresh membership; adjudicate one family at a time, retaining viable ideas and closing only with evidence-backed disposition. |
 | Branches/worktrees/artifacts | r165 note reports 15 worktrees (10 clean/5 dirty) and 61 unique root `outputs/` files. | Re-inventory; link each dirty tree/artifact to branch, PR, issue and hash before consolidation or deletion. |
@@ -30,14 +31,16 @@ incomplete and must proceed family by family.
    D: temp location; R20 passed the full module on dedicated C: TEMP. Retain
    both failure and success contexts; use the qualified C: path for local
    validation and proceed to public standard-caller recovery/effect evidence.
-3. Freeze one public standard-caller recovery/effect trial only after callback,
-   release and oracle boundaries are stable. Do not pool MAP01 or Calc evidence.
-4. Refresh complete Issue/PR membership, then triage by family with evidence
-   and custody links. Counts and the r160 crosswalk are navigation only.
-5. Reconcile worktrees, branches and outputs by path/hash and references;
-   remove only exact duplicates with resolved custody.
-6. Reassess #58 and package gates on declared hosts. Keep #57, #58 and the
-   project goal open until each stated criterion is independently met.
+3. R24-R27 now provide scoped native expiry/recovery evidence; do not repeat
+   the same delayed fixture. Continue only with an eligible standard-caller task
+   outcome or the matched efficiency/accounting seam.
+4. Keep #59 live threat exposure in view; the local GZDoom/WAD search was empty
+   in the searched roots. No installation/download was performed.
+5. Refresh complete Issue/PR membership, then triage families with evidence
+   and custody links. r167 is membership only; r160 is an older navigation map.
+6. Reconcile worktrees, branches and outputs by path/hash and references;
+   remove only exact duplicates with resolved custody. Reassess #58/package
+   gates. Keep #57, #58, #59 and the project goal open until proven complete.
 
 **Evidence custody reconciliation (2026-11-23; current main `cd708f52`):** Restored the byte-exact R06/R07/R08 Win32 fixture packets referenced below from a clean tracked worktree after checking each packet's root manifest against its raw files. Current copies verify R06 38/38, R07 23/23, and R08 69/69 entries. R06's working bytes differ from the main index only in line endings (`git diff --ignore-space-at-eol` is empty); preserving the manifest-matching bytes is required for raw custody. No result was replayed or re-scored. A separate current-main local recovery composition result is [R01](../research/integration/standard_mcp_task_ledger_57_v1/current_main_recovered_caller_task_oracle_r01_20261122/RESULT.md); it does not establish public recovery or efficiency. The GraphQL count-only check at 2026-11-22 14:55 UTC returned 1,640 open Issues and 405 open PRs, but no exact-ID or semantic recheck was made; r165 remains the latest full membership receipt.
 
@@ -102,7 +105,9 @@ No runtime behavior or issue state changes follow from this audit.
 
 # Repository organization plan
 
-**Latest membership checkpoint r162 (2026-11-22 JST; captured at main `ed0798d45d3bb7b839015619cd81f30e292a7583` and rechecked after PR #10423 at main `8e4ac52d664fbba306fbd1af4b1c2e0dd9eaf0d2`):** Complete paginated GitHub reads found 1,640 open Issues and 407 open PRs at both checkpoints. Compared with r160, there are no additions; Issues #7748/#7765/#7817 and PR #8181 are the only removals. The r160 crosswalk remains the latest full semantic-routing review, while targeted issue dispositions are appended there. Membership is not semantic triage or custody reconciliation. See the [r162 receipt](maintenance/repository-inventory-recheck-20261122-r162.md), [r161 receipt](maintenance/repository-inventory-recheck-20261122-r161.md), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+**Latest membership checkpoint r167 (2026-11-23 JST; current main `490d7bcb4d84927116112e5ff348cdeadfc489d6` before and after reads):** Complete paginated GitHub reads found 1,640 open Issues and 406 open PRs. Issue IDs match r166; the only PR-set addition is #10473, with no removals. This updates membership only. The r160 crosswalk remains the latest full semantic-routing review, so queue cleanup and custody reconciliation are incomplete. See the [r167 receipt](maintenance/repository-inventory-recheck-20261123-r167.md), [exact-ID JSON](maintenance/repository-inventory-recheck-20261123-r167.json), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+
+**Issue #57 Calc evidence crosswalk (2026-11-23):** The G10 retained OCR/compiled-graph result remains a narrow positive control; its historical record lacks a current-schema caller receipt and primary provider usage. Current research code already contains a durable allocation composition with offline synthetic coverage. This does not establish live provider bindings or matched economics. Reuse it for the next provider-attempt/accounting audit; do not repeat or retrofit the consumed G10 allocation. See the [crosswalk](maintenance/issue57-calc-evidence-bridge-audit-20261123.md).
 
 **Issue #57 Win32 standard-caller fixture update (2026-11-22):** Current-main R01 isolated a producer receipt capacity mismatch; after the minimal fix, fresh R03 completed one key action, verified input release, observed no late input for 2 s, and independently recorded a 6 s delayed task effect. R02 remains an explicit foreground-refusal/recovery attempt. These three packets preserve each attempt and its distinct outcome; do not pool R01/R02 into the positive result or treat this fixture as MAP01, efficiency, or repeated reliability evidence. See [R01](../research/integration/win32_current_main_fixture_effect_r01_20261122/README.md), [R02](../research/integration/win32_current_main_fixture_effect_r02_20261122/README.md), and [R03](../research/integration/win32_current_main_fixture_effect_r03_20261122/README.md).
 
