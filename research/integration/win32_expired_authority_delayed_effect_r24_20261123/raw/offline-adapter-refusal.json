@@ -1,0 +1,18 @@
+{
+  "adapter": "recorded_comparison_adapter_v1._derive_native_owner_attribution via effect_receipt_handoff_v1.adapt_measured_run",
+  "disposition": "correct fail-closed refusal: the separate recovery cannot be backfilled into or used to upgrade the source action receipt; join via a separately identity-bound research adapter",
+  "observed_error": "LedgerValidationError: cancellation receipt does not bind a confirmed recovery to the action",
+  "schema": "agent-interface/r24-existing-handoff-refusal-v1",
+  "separate_recovery_facts": {
+    "public_tool": "interface_recover_orphaned_input",
+    "recovery_horizon_verified": true,
+    "recovery_release_confirmed": true,
+    "result_status": "recovered"
+  },
+  "source_receipt_facts": {
+    "source_action_status": "unknown",
+    "source_cancellation_late_input_horizon_ns": 0,
+    "source_cancellation_status": "pending",
+    "source_release_confirmed": false
+  }
+}

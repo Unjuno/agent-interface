@@ -1,0 +1,48 @@
+{
+  "effect": {
+    "authority_expiry_ns": 418220515000000,
+    "effect_observed_ns": 418224562000000,
+    "effect_timing": "after_authority_before_release",
+    "eligible_task_success": false,
+    "factual_task_success": true,
+    "recovery_horizon_end_ns": 418776062000000,
+    "recovery_release_received_ns": 418774062000000
+  },
+  "inference": "recovery is a separate attempt; it does not upgrade source action status or authorize replay",
+  "measurement": {
+    "elapsed_ns": 6407000000,
+    "local_observation_count": 2,
+    "model_delivered_image_count": 0,
+    "provider_usage": "unavailable"
+  },
+  "raw_join": {
+    "action_public_sha256": "b9e060b7a3d64a1491c7aaf7904a0b87d0f4e3fddf9a44ce06a3b57d40bad1f8",
+    "effect_receipt_sha256": "bdf0fbb5dcde444ccbca26d954dd9cda9ca1f2ea7663e0866a69c75fd11b57d2",
+    "recovery_envelope_sha256": "2fa2dc5845152a2fb1792d3fe61eaff6ce8c45d1cf5eb7ce0a85b9d7e4685c1f",
+    "recovery_raw_report_sha256": "1b48957a6f87c40d282593679fe064b73a002edeb2dc2e54bfd57d196fc6ffa4"
+  },
+  "recovery_attempt": {
+    "call_id": "c643bb9a29f94267a51a245f98bfc65c",
+    "horizon_gap_limit_ns": 100000000,
+    "horizon_max_sample_gap_ns": 32000000,
+    "horizon_ns": 2000000000,
+    "horizon_observation_count": 78,
+    "neutral_readback": true,
+    "recovery_id": "58e40bd484224159841196517af77913",
+    "release_confirmed": true,
+    "source_custody_sha256": "370fde1b698673b3eb8908044706ac7d3854861deddccee7730161a82f769950",
+    "status": "recovered"
+  },
+  "schema": "agent-interface/orphan-recovery-effect-handoff-v1",
+  "source_action": {
+    "call_id": "b90c4747d2e04bbb9c8d73bc283fa44c",
+    "input_dispatched": true,
+    "operation_id": "eb96730b07d3454095f478a8a3f2673c",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "unknown",
+    "target_generation": "4320ee549126d017108274f2037414d38b95fca3e536471e7d249f96704dd6c5",
+    "task_success": null
+  },
+  "task_id": "r24-delayed-a-after-expiry-159fa184854a4e8db5e5fb97a9748fb5"
+}

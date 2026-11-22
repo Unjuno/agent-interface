@@ -1,5 +1,7 @@
 # Roadmap
 
+**Win32 R24-R26 expiry/recovery boundary — 2026-11-23 (frozen source main `490d7bcb`):** R24 and R26 each produced one factual fixture effect after a 2 s authority lease while the source action stayed UNKNOWN, release-unconfirmed and replay-denied; a separate fresh-session orphan recovery in each case verified key-up, neutral readback and a 2 s/78-sample horizon (maximum gap 32 ms), then cleared the exact durable fence. Offline scoring keeps factual success distinct from eligible task success. R25 froze three attempts but stopped after one recovered dispatch and one pre-dispatch foreground mismatch; trial 3 was not attempted. R26's prospective one-attempt repeat explicitly raised the unique target with Computer Use before the foreground probe and recovered successfully. No reliability or efficiency estimate follows from these small experiments. Seven R24 research-adapter checks pass normally and under `-O`. See [R24](research/integration/win32_expired_authority_delayed_effect_r24_20261123/RESULT.md), [R25](research/integration/win32_expired_authority_delayed_effect_r25_20261123/RESULT.md), and [R26](research/integration/win32_expired_authority_delayed_effect_r26_20261123/RESULT.md).
+
 This roadmap is ordered by research uncertainty, not by feature count.
 
 **2026-11-23 post-merge checkpoint (main `1bf4d236`, PR #10470):** The

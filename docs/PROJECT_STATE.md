@@ -1,12 +1,33 @@
 # Project state and work order
 
-Updated 2026-11-23 from current `main` `01fb5fcbdde0729e30eef5771a0630aed03796b9`.
+Updated 2026-11-23 from current `main` `490d7bcb4d84927116112e5ff348cdeadfc489d6`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 
 ## Latest #57 composition results — 2026-11-23
 
-PR #10470 is merged in main `1bf4d236`; it binds the observer only for supervised-win32, with ordinary caller lookup unchanged. R22's final-source combined MCP check passed 94/94 in both modes. On that merged main, R23 reran the Fake public recovery lifecycle as ten independent processes: 10/10 passed (5 normal, 5 `-O`), with exact per-observation Fake receipts, a fail-closed lower observer guard, exact oracle identity, separate release/horizon, UNKNOWN source action, no replay, and drained Futures. This improves on R04's 7/10 synthetic cohort but does not estimate live reliability or task effect. See [R23](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r23_20261123/RESULT.md). Next priority is a fresh independently scored standard-caller task-effect/recovery trial on an authorized native fixture, then matched all-attempt efficiency. Keep #57 open.
+PR #10470 is merged in main `1bf4d236`; it binds the observer only for supervised-win32, with ordinary caller lookup unchanged. R22's final-source combined MCP check passed 94/94 in both modes. R23 reran the Fake public recovery lifecycle as ten independent processes: 10/10 passed (5 normal, 5 `-O`), without estimating live reliability. R166 refreshed full open membership at 1,640 Issues / 405 PRs, but not semantic triage. R24 produced one native delayed fixture effect after a 2 s lease, with the public action UNKNOWN/replay-denied; one fresh-session orphan recovery verified release, neutral readback and a 2 s / 78-sample horizon, clearing the exact durable fence. Offline reconstruction scored factual effect true and eligible success false; the original action remains UNKNOWN. The separate-receipt research join passes seven checks in normal and `-O`. R25 froze three attempts but stopped after one recovered UNKNOWN action and one pre-dispatch foreground mismatch; trial 3 was not attempted and no reliability claim is made. R26 then froze a separate one-attempt repeat with explicit Computer Use target activation; exact HWND/PID foreground matched, a delayed post-expiry effect again occurred, and one bounded orphan recovery cleared the exact fence while the action remained UNKNOWN/replay-denied. These native fixtures narrow expiry/recovery behavior only; they are not provider efficiency, MAP01 or reliability evidence. Next: freeze a larger all-attempt activation/recovery cohort, then run the matched efficiency comparison. Keep #57 open. See [R24](../research/integration/win32_expired_authority_delayed_effect_r24_20261123/RESULT.md), [R25](../research/integration/win32_expired_authority_delayed_effect_r25_20261123/RESULT.md), [R26](../research/integration/win32_expired_authority_delayed_effect_r26_20261123/RESULT.md), [R23](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r23_20261123/RESULT.md), and the [r166 inventory receipt](maintenance/repository-inventory-recheck-20261123-r166.md).
+
+## R24 native expiry and orphan recovery
+
+R24 observed one factual delayed fixture effect after authority expiry, while
+the public source action stayed UNKNOWN, release-unconfirmed, task-success
+null, and replay-denied. The original durable fence stayed unresolved until a
+single public orphan recovery verified the matching key-up, neutral readback,
+and a full 2 s late-input horizon (78 samples; 32 ms maximum observed gap),
+then cleared that exact source fence. Offline reconstruction and a dedicated
+research join now derive factual success true but eligible success false and
+keep recovery separate from the source action. Seven join checks pass in normal
+and `-O`. See the [R24 result packet](../research/integration/win32_expired_authority_delayed_effect_r24_20261123/RESULT.md).
+
+R25's frozen three-attempt repeat stopped after one recovered dispatch and one
+pre-dispatch target-foreground failure; the third attempt was not run. R26
+explicitly raised the unique target with Computer Use before the foreground
+probe and repeated the delayed effect plus one-shot orphan recovery once. The
+source action again stayed UNKNOWN and replay-denied while the separate
+recovery verified key-up, neutral readback, horizon and exact fence clearing.
+Neither cohort estimates reliability. See the [R25 stop/result](../research/integration/win32_expired_authority_delayed_effect_r25_20261123/RESULT.md)
+and [R26 repeat](../research/integration/win32_expired_authority_delayed_effect_r26_20261123/RESULT.md).
 
 The first PR workflow exposed an overbroad scope: five ordinary `test_mcp_server` cases patched the observer after server creation and failed because the initial candidate bound the observer for one-shot sessions too. The source was narrowed to use per-server binding only for supervised-win32, restoring the ordinary branch. R21's 94-test combined run then hit WinError 267 only because its temporary path was too deep. R22 reran both complete MCP modules with a short C: path; all 94 tests passed in normal (121.368 s) and `-O` (122.586 s). This is the final candidate's local MCP-module qualification. See [R21](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_scope_correction_r21_20261123/RESULT.md) and [R22](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_scope_corrected_combined_r22_20261123/RESULT.md).
 
@@ -109,10 +130,9 @@ success, comparative efficiency, reliability, or preview readiness.
 
 1. Continue family-by-family semantic triage and custody reconciliation using
    the r166 full membership baseline; do not infer disposition from counts.
-2. With R08 now reconstructed and its adapter repairs merged, freeze one finite
-   standard-caller recovery experiment, pass its local negative controls, then
-   run it while preserving public `task_success` separately from independently
-   scored effect and eligibility. Preserve every attempt.
+2. Freeze a repeated native standard-caller effect/recovery cohort with the
+   R24 orphan-recovery join, keeping each source action UNKNOWN where required
+   and each recovery attempt distinct. Preserve all attempts and cleanup.
 3. Run the matched all-attempt efficiency block only after the measurement path
    can account for every provider attempt and all arms' task outcomes.
 4. Close the supported-host Research Preview acceptance gates and verify the
