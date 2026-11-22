@@ -104,8 +104,58 @@ class CodexAppServerClient:
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
+        self._stderr_lock = threading.Lock()
+        self._stderr_tail = b""
+        self._stderr_bytes = 0
+        self._stderr_error = None
+        self._stderr_complete = getattr(self.process, "stderr", None) is None
+        self._stderr_reader = None
+        if getattr(self.process, "stderr", None) is not None:
+            self._stderr_reader = threading.Thread(
+                target=self._drain_stderr, daemon=True)
+            self._stderr_reader.start()
         self._reader = threading.Thread(target=self._read, daemon=True)
         self._reader.start()
+
+    def _drain_stderr(self):
+        """Drain diagnostics independently while retaining only a bounded raw tail."""
+        stream = self.process.stderr
+        try:
+            raw_stream = getattr(stream, "buffer", None)
+            if raw_stream is None:
+                raw_stream = stream
+            read = getattr(raw_stream, "read1", None)
+            if not callable(read):
+                read = getattr(raw_stream, "read", None)
+            if not callable(read):
+                raise TypeError("stderr stream has no read method")
+            while True:
+                chunk = read(65536)
+                if chunk in (b"", ""):
+                    with self._stderr_lock:
+                        self._stderr_complete = True
+                    return
+                if isinstance(chunk, str):
+                    chunk = chunk.encode("utf-8", errors="replace")
+                if not isinstance(chunk, (bytes, bytearray, memoryview)):
+                    raise TypeError("stderr reader returned a non-byte chunk")
+                chunk = bytes(chunk)
+                with self._stderr_lock:
+                    self._stderr_bytes += len(chunk)
+                    self._stderr_tail = (self._stderr_tail + chunk)[-65536:]
+        except Exception as error:
+            with self._stderr_lock:
+                self._stderr_error = type(error).__name__
+
+    def stderr_snapshot(self):
+        """Return bounded, best-effort diagnostics; stderr is never protocol evidence."""
+        with self._stderr_lock:
+            return {
+                "tail": bytes(self._stderr_tail),
+                "bytes_received": self._stderr_bytes,
+                "complete": self._stderr_complete,
+                "error": self._stderr_error,
+            }
 
     def _read(self):
         try:
@@ -428,6 +478,15 @@ class CodexAppServerClient:
                 self._reader.join(timeout=remaining())
             if self._reader.is_alive():
                 raise TimeoutError("app-server reader close timed out")
+        stderr_reader = getattr(self, "_stderr_reader", None)
+        if stderr_reader is not None:
+            stderr_reader.join(timeout=remaining())
+            if stderr_reader.is_alive():
+                if owns_process_group:
+                    self._signal_owned_group(signal.SIGKILL)
+                    stderr_reader.join(timeout=remaining())
+                if stderr_reader.is_alive():
+                    raise TimeoutError("app-server stderr reader close timed out")
         # Custom process factories own their stream wrappers and may provide
         # lightweight proxies without the IOBase ``closed``/``close`` API.
         if getattr(self, "_owns_process_streams", owns_process_group):

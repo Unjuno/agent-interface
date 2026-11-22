@@ -1,0 +1,24 @@
+test_close_timeout_keeps_stderr_open_until_orphaned_writer_retires (research.live_control.test_appserver_stderr_backpressure_current_main_r01.AppServerStderrBackpressureCurrentMainTest.test_close_timeout_keeps_stderr_open_until_orphaned_writer_retires) ... C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\test_appserver_stderr_backpressure_current_main_r01.py:80: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\CodexData\\Temp\\appserver-stderr-orphan-iyji92zo\\writer.pid' mode='r' encoding='ascii'>
+  child_pid = int(open(pid_path, encoding="ascii").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+FAIL
+
+======================================================================
+FAIL: test_close_timeout_keeps_stderr_open_until_orphaned_writer_retires (research.live_control.test_appserver_stderr_backpressure_current_main_r01.AppServerStderrBackpressureCurrentMainTest.test_close_timeout_keeps_stderr_open_until_orphaned_writer_retires)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\research\live_control\test_appserver_stderr_backpressure_current_main_r01.py", line 108, in test_close_timeout_keeps_stderr_open_until_orphaned_writer_retires
+    self.assertEqual(str(close_result["error"]),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     "app-server stderr reader close timed out")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'app-server reader close timed out' != 'app-server stderr reader close timed out'
+- app-server reader close timed out
++ app-server stderr reader close timed out
+?            +++++++
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.234s
+
+FAILED (failures=1)
