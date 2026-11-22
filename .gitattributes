@@ -100,6 +100,13 @@ research/doom/map01_v39_live_threat_guard_a02_20261009/raw_traces/episode__runti
 
 # Preserve the exact workbook bytes used for offline scoring.
 /research/live_control/results/calc-table-live-01/runtime/sheet.xlsx -text -whitespace
+
+# Preserve the byte-exact sources used by the retained integrated-efficiency run.
+/research/live_control/results/integrated-efficiency-live-01-frozen-source-v1/** -text -whitespace
+
+# Preserve the byte-exact raw and checksummed outputs for these Research Preview audits.
+research/integration/research_preview_retained_source_audit_r01_20261122/** -text -whitespace
+research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-main-prefix-r02-20261122/** -text -whitespace
 # Preserve exact bytes for the Calc late-proposal/release regression evidence.
 research/integration/calc_g10_late_proposal_release_20261028_r01/** -text -whitespace
 research/integration/calc_g10_wsl_fake_x_release_20261028_r01/** -text -whitespace
