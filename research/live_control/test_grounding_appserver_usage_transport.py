@@ -1,5 +1,7 @@
 """Compose the real JSONL client with grounding and the adaptive attempt ledger."""
 import json
+import hashlib
+import importlib.util
 import os
 from pathlib import Path
 import sys
@@ -18,6 +20,9 @@ from research.live_control.issue57_v3_attempt_ledger_v1 import (
     AppendOnlyAttemptLedger, make_row,
 )
 from research.live_control.issue57_v3_trace_adapter_v1 import project_task
+from research.live_control.calc_durable_allocation_v1 import (
+    DurableCalcAllocation, audit_allocation,
+)
 
 
 PEER = r'''
@@ -165,6 +170,95 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                 self.assertTrue(any(event.get("event") == "model_attempt_finished" and
                                     event.get("thread_id") == attempt["thread_id"]
                                     for event in events))
+            finally:
+                if model is not None:
+                    model.close()
+                client.close(timeout=2)
+
+    @unittest.skipIf(os.name == "nt" and sys.version_info[:2] < (3, 12),
+                     "app-server pipe transport requires Windows Python 3.12+")
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
+                         "Calc guarded adapter import requires Pillow")
+    def test_provider_transport_failure_is_retained_in_durable_g10_allocation(self):
+        from research.live_control.calc_g10_caller_v1 import run_g10_in_durable_allocation
+
+        with tempfile.TemporaryDirectory(prefix="grounding-durable-allocation-") as tmp:
+            root = Path(tmp)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.fixture"
+            image.write_bytes(b"synthetic durable app-server composition fixture")
+            client = CodexAppServerClient(
+                [sys.executable, "-B", "-c", PEER], cwd=str(workspace),
+                journal_path=str(root / "protocol.jsonl"))
+            model = None
+            try:
+                client.initialize()
+                model = PersistentGroundingModel(
+                    root / "session", workspace, node="unused", cli="unused",
+                    client=client, path_converter=str,
+                    model="synthetic-model", effort="medium")
+                provider = V3PersistentGroundingAdapter(model)
+                conditions = {"model": "synthetic-model", "effort": "medium",
+                              "task": "two-cell-save", "route": "cold"}
+                allocation_root = root / "allocations"
+                allocation_root.mkdir()
+                ledger = DurableCalcAllocation(
+                    allocation_root, "attempt-provider-join-01",
+                    source_sha256=hashlib.sha256(b"frozen task source").hexdigest(),
+                    observation_ids=["observation-01"],
+                    source_hashes={"caller.py": hashlib.sha256(
+                        b"frozen caller source").hexdigest()},
+                    conditions=conditions)
+                journal = []
+                adapters = {
+                    "observe_source": lambda _payload: {"sequence": 1},
+                    "acquire_anchor": lambda _payload: {"image": str(image)},
+                    "anchor_model": lambda _payload: provider(
+                        root / "provider-call", "synthetic grounding request", image,
+                        "compiled", workspace),
+                    "verify_effect": lambda _payload: {"status": "unavailable"},
+                    "journal": journal.append,
+                }
+                spec = {
+                    "target": "synthetic Calc task", "route": "cold",
+                    "coarse_origin": "caller_provided",
+                    "provided_coarse": {"status": "candidate"},
+                    "cached_target": None, "local_repair_on": [],
+                    "repair_on": [], "session_id": "durable-provider-fixture",
+                }
+                result = run_g10_in_durable_allocation(
+                    spec, adapters, lambda _payload: {"interface_id": "unused"},
+                    None, {}, ledger,
+                    perceive=lambda *_args: {}, verify_effect=lambda *_args: {},
+                    proposal_worker=object(), cancelled=lambda: False)
+
+                receipt = audit_allocation(ledger.path)
+                self.assertEqual(result["outcome"], "CALLER_FAILED")
+                self.assertEqual(receipt["status"], "audited")
+                self.assertEqual(receipt["outcome"], "CALLER_FAILED")
+                self.assertFalse(receipt["receipt_persisted"])
+                self.assertFalse(receipt["effect_receipt_persisted"])
+                attempt, = receipt["attempt_ledger"]
+                self.assertEqual(attempt["status"], "failed")
+                self.assertEqual(attempt["call_id"], "turn-ledger-1")
+                self.assertEqual(attempt["thread_id"], "thread-ledger-1")
+                self.assertEqual(attempt["requested_model"], "synthetic-model")
+                self.assertEqual(attempt["requested_effort"], "medium")
+                self.assertEqual(attempt["usage"], {
+                    "input_tokens": 1234, "cached_input_tokens": 234,
+                    "cache_write_input_tokens": 0, "output_tokens": 56,
+                    "reasoning_output_tokens": 12})
+                self.assertEqual(receipt["accounting"]["usage_totals"]["input_tokens"], 1234)
+                self.assertTrue(any(event.get("event") == "model_attempt_finished" and
+                                    event.get("call_id") == "turn-ledger-1"
+                                    for event in journal))
+                protocol = [json.loads(line) for line in
+                    (root / "protocol.jsonl").read_text(encoding="utf-8").splitlines()]
+                self.assertTrue(any(row["direction"] == "received" and
+                    row["message"].get("method") == "thread/tokenUsage/updated" and
+                    row["message"]["params"].get("turnId") == attempt["call_id"]
+                    for row in protocol))
             finally:
                 if model is not None:
                     model.close()

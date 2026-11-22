@@ -16,7 +16,7 @@ incomplete and must proceed family by family.
 
 | Workstream | Current evidence | Remaining gate |
 |---|---|---|
-| Integrated control / #57 | PR #10470 merged; R22 passes 94/94 affected MCP tests in both modes; R23 Fake lifecycle passes 10/10; R24/R26/R27 are native Win32 expiry/recovery fixtures, with R27 3/3 under exact foreground activation. Historical frozen-source `integrated-efficiency-live-01` is a scoped three-arm pass (6/6 each; task-2 token break-even); PR #10473 retains R24-R27. | The three-arm result is one older-source allocation, not current-main standard-caller evidence. Source actions remain UNKNOWN after post-expiry effects; no eligible recovered task success or current-source integrated provider comparison. Reuse existing evidence; next inspect provider-to-ledger binding, then freeze only a valid current-source matched block. Keep #57 open. |
+| Integrated control / #57 | PR #10470 merged; R22 passes 94/94 affected MCP tests in both modes; R23 Fake lifecycle passes 10/10; R24/R26/R27 are native Win32 expiry/recovery fixtures, with R27 3/3 under exact foreground activation. Historical frozen-source `integrated-efficiency-live-01` is a scoped three-arm pass (6/6 each; task-2 token break-even); PR #10473 retains R24-R27. Synthetic durable provider join R01 passes 2/2; ProspectiveRun boundary R02 keeps four incomplete outcome envelopes at HOLD in normal and `-O`. | The three-arm result is one older-source allocation, not current-main standard-caller evidence. Source actions remain UNKNOWN after post-expiry effects; no eligible recovered task success or current-source integrated provider comparison. R02 does not use authentic v3 outputs or registered custody. Next join actual v3 provider-attempt usage to durable custody before considering a live block. Keep #57 open. |
 | Research Preview / #58 | Runner/setup and archived-source checks are partial; current host doctor/live prerequisites remain unmet. | Supported-host setup/doctor, retained audit, fresh no-retry live run and final live audit. |
 | Real-time control / #59 | Existing MAP01 R153/R154 and historical threat-policy mechanics remain scoped; no latest live threat-exposure closure. Read-only local search found no GZDoom/WAD in searched roots; nothing was installed/downloaded. | Locate a supplied/preinstalled target and assets before live threat exposure. Preserve #59 priority; do not claim MAP01 or threat-control completion. |
 | Runtime distribution | Deterministic package/startup and outside-checkout CLI checks passed on declared hosts in retained packets. | Live authority/input behavior and public artifact on declared supported environments. |
@@ -31,7 +31,7 @@ incomplete and must proceed family by family.
    D: temp location; R20 passed the full module on dedicated C: TEMP. Retain
    both failure and success contexts; use the qualified C: path for local
    validation and proceed to public standard-caller recovery/effect evidence.
-3. R24-R27 now provide scoped native expiry/recovery evidence; do not repeat
+3. R24-R27 now provide scoped native expiry/recovery evidence; R01/R02 add a synthetic failed-usage join and a fail-closed incomplete-envelope boundary. Do not repeat
    the same delayed fixture. Continue only with an eligible standard-caller task
    outcome or the matched efficiency/accounting seam.
 4. Keep #59 live threat exposure in view; the local GZDoom/WAD search was empty
