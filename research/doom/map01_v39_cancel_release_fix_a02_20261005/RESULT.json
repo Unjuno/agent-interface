@@ -1,0 +1,38 @@
+{
+  "schema": "map01-v39-release-evidence-a02-result-v1",
+  "disposition": "PASS_CANDIDATE_MECHANICS",
+  "base_main": "dccf55e264f434ca27f2948fe53be09919047819",
+  "predecessor_pr": 7805,
+  "predecessor_head": "7a696dc085cad8a49eaae50d968bc6e8d28fb45e",
+  "environment": {
+    "os": "Windows 11 Home 10.0.26300",
+    "python": "CPython 3.11.9",
+    "container_equivalent": false,
+    "display": "deterministic fake display"
+  },
+  "behavior": {
+    "aggregate_query_exception_preserves_confirmed_per_key_up": true,
+    "aggregate_neutrality_remains_unverified_on_query_exception": true,
+    "confirmed_key_up_reconciles_only_that_bridge_key": true,
+    "executor_final_release_barrier_drain_precedes_expired_terminal": true,
+    "terminal_release_verified": true,
+    "fake_physical_keys_empty": true,
+    "bridge_held_keys_empty": true
+  },
+  "tests": {
+    "candidate_cancel_and_release": {"count": 10, "exit": 0, "log": "candidate-suite-final.log"},
+    "input_owner_v12_compatibility_on_v13": {"count": 10, "exit": 0, "log": "owner-compat-suite.log"},
+    "existing_v39_bridge": {"count": 2, "exit": 0, "log": "existing-bridge-suite.log"},
+    "py_compile": {"exit": 0, "log": "py-compile.log"},
+    "expiry_red_pre_fix_bridge": {"count": 1, "exit": 1, "log": "expiry-red-a02-owner.log"},
+    "expiry_green_a02_bridge": {"count": 1, "exit": 0, "log": "expiry-green-a02.log"},
+    "aggregate_failure_red_before_owner_fix": {"count": 1, "exit": 1, "observed_console": true}
+  },
+  "limitations": [
+    "no WSLc/container-equivalent run",
+    "no real X11 or physical OS input",
+    "executor test uses a fake backend release barrier around the candidate InputOwner, not the full current V39 session stack",
+    "no application consumption or task effect",
+    "no live allocation, threat response, bounded recovery, safety, latency, or MAP01 outcome"
+  ]
+}
