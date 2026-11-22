@@ -24,7 +24,7 @@ family.
 | Real-time control / #59 | Existing MAP01 R153/R154 and historical threat-policy mechanics remain scoped; no latest live threat-exposure closure. Read-only local search found no GZDoom/WAD in searched roots; nothing was installed/downloaded. | Locate a supplied/preinstalled target and assets before live threat exposure. Preserve #59 priority; do not claim MAP01 or threat-control completion. |
 | Runtime distribution | Deterministic package/startup and outside-checkout CLI checks passed on declared hosts in retained packets. | Live authority/input behavior and public artifact on declared supported environments. |
 | Research ideas | r160 idea-index crosswalk and targeted family reviews exist; they are not current semantic triage. | Refresh membership; adjudicate one family at a time, retaining viable ideas and closing only with evidence-backed disposition. |
-| Branches/worktrees/artifacts | r165 note reports 15 worktrees (10 clean/5 dirty) and 61 unique root `outputs/` files. | Re-inventory; link each dirty tree/artifact to branch, PR, issue and hash before consolidation or deletion. |
+| Branches/worktrees/artifacts | Read-only local recheck r169 found 21 worktrees (14 clean/7 non-clean) and 12 files under the workspace-root `outputs/`. Two dirty branches correspond to merged PRs; other dirty trees include main and detached checkouts. | Custody remains unresolved for seven non-clean trees. Identify owners and link changed bytes to branch, PR, issue and hashes before consolidation or deletion; do not clean them automatically. See [r169](maintenance/local-worktree-custody-recheck-20261123-r169.md). |
 
 ### Execution sequence
 
