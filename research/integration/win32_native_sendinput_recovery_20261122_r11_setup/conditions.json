@@ -1,0 +1,18 @@
+{
+  "attempt_id": "win32-r11-fixture-state-readback-20261122",
+  "source_main": "1b1ce38c943a5f93d94e6a9f028f5a50ceed618b",
+  "scope": "one owned Win32 fixture; foreground activation and native state-readback readiness only",
+  "input_dispatched": false,
+  "provider_or_model": "none",
+  "acceptance": "fixture is foreground after activation and native SHIFT readback is boolean false with a nonempty query witness; otherwise classify HOLD and do not attempt recovery",
+  "cleanup": "fixture exits cleanly and pre-launch foreground window is restored where Windows permits",
+  "source_paths": [
+    "runtime/backends/win32_v1/backend.py",
+    "runtime/backends/win32_v1/fixture_app.py"
+  ],
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "129318b21706a651ca488a9b65676626ecd3fc9147becb77b8bf732be0b690c8",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6"
+  },
+  "probe_sha256": "a67b418247ec937e2db7d1235b306cceb9c3e15927af9fc2a6a889bdb3a32331"
+}
