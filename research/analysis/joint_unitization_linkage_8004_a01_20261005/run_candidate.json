@@ -1,0 +1,49 @@
+{
+  "controls": {
+    "clean_control_linked": true,
+    "oracle_all_channel_missing_opportunity_retained": true
+  },
+  "factorial": {
+    "baseline_linked": false,
+    "disposition": "UNIDENTIFIED",
+    "joint_changes_decision": true,
+    "joint_linked": true,
+    "linkage_only_linked": false,
+    "one_factor_ranges_stable": true,
+    "segmentation_only_linked": false
+  },
+  "rows": [
+    {
+      "capture_history": "10+01",
+      "identity_match": false,
+      "linkage": "L0_false_candidate",
+      "linked": false,
+      "segmentation": "S0_boundary_left",
+      "temporal_overlap": false
+    },
+    {
+      "capture_history": "10+01",
+      "identity_match": true,
+      "linkage": "L1_oracle_candidate",
+      "linked": false,
+      "segmentation": "S0_boundary_left",
+      "temporal_overlap": false
+    },
+    {
+      "capture_history": "10+01",
+      "identity_match": false,
+      "linkage": "L0_false_candidate",
+      "linked": false,
+      "segmentation": "S1_boundary_right",
+      "temporal_overlap": true
+    },
+    {
+      "capture_history": "11",
+      "identity_match": true,
+      "linkage": "L1_oracle_candidate",
+      "linked": true,
+      "segmentation": "S1_boundary_right",
+      "temporal_overlap": true
+    }
+  ]
+}

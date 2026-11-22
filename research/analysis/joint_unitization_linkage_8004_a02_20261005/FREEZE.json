@@ -1,0 +1,44 @@
+{
+  "record_type": "post-run provenance for exploratory construction A02",
+  "issue": "Unjuno/agent-interface#8004",
+  "captured_at_utc": "2026-10-05T05:52:14Z",
+  "main_sha_at_run_start": "NOT_CAPTURED",
+  "main_sha_current_at_provenance_capture": "267dbf61e19efe94299b681dcda89925aae5b935",
+  "preregistration_status": "DEVIATION: oracle input changed during test-driven development; final run is exploratory, see PREREGISTRATION_DEVIATION.md",
+  "runtime": {
+    "os": "macOS 27.0.1",
+    "python": "Python 3.14.5",
+    "dependencies": "Python standard library only"
+  },
+  "commands": [
+    "python3 -m unittest -v test_method",
+    "python3 -O -m unittest -v test_method",
+    "python3 candidate.py --observations observations.json --output run_candidate.json",
+    "python3 auditor.py --observations observations.json --oracle oracle.json --candidate run_candidate.json --output run_audit.json",
+    "python3 -m py_compile candidate.py auditor.py test_method.py"
+  ],
+  "input_sha256": {
+    "observations.json": "e9c26e6dc1cc82fd10285d32da8385264499ca479236f642d38c687494601317",
+    "oracle.json": "090d18f09a3c3c97148318d76db9525e55a1a7ccc412d13272ee46cebeba78d5"
+  },
+  "source_sha256": {
+    "candidate.py": "2cfe1aae7b7c85876db007a9789bf913e9021da8bb6bd95bd1897ea30d6a2ddb",
+    "auditor.py": "c4ef87c0ac2327fd174786f639d6ba1652d535b351d6dd38ed8ebc2ce4742d3b",
+    "test_method.py": "804ebc05434ca7c99f40fa26f288c01414253fb6c22adebaa4e1a2a12f2ad83c"
+  },
+  "results": {
+    "candidate_disposition": "UNIDENTIFIED",
+    "assignments": 4,
+    "latent_opportunities": 6,
+    "independent_audit": "PASS; zero errors",
+    "normal_tests": "PASS 8/8",
+    "optimized_tests": "PASS 8/8",
+    "scope": "PASS_CONSTRUCTION_ONLY exploratory; full Issue #8004 T0 HOLD"
+  },
+  "docker": {
+    "status": "STOP_IMAGE_INSPECTION",
+    "command": "docker image ls --no-trunc",
+    "error": "containerd content blob sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27 open returned operation not supported",
+    "mutation": "none"
+  }
+}
