@@ -1,0 +1,9 @@
+import hashlib,json,os
+from pathlib import Path
+from capture_v2 import capture
+P=Path(__file__).resolve().parent;python=P.parent/'venv/Scripts/python.exe'
+assert not (P/'FREEZE.json').exists()
+freeze=dict(id='excel-calculation-effect-0820-01',parent=57,main='61e704d63cb917ba5f03e2533c6e110e9daddb2f',H='manual calculation can preserve edited inputs but stale formula results after Save; standard CalculateBeforeSave is sufficient for this owned fixed workbook',T='two fresh owned Excel workbooks, manual mode, standard save setting false/true; once edit/save each; no old row-binding actor replay',D='preserve first outcome; counterexample if input-only accepts both but first cached derived values wrong, second exact; stop ownership/error/cleanup; no retry',C='deliberately manual and known arithmetic; not natural frequency/model need/performance',U='not arbitrary formulas, async external refresh, GUI/input release, full controller or power-loss proof',source_pins={n:hashlib.sha256((P/n).read_bytes()).hexdigest() for n in ['actor.py','run_once.py','capture_v2.py']},python_sha256=hashlib.sha256(python.read_bytes()).hexdigest(),scope='new ordinary native Windows Excel API construction; wslc.exe absent from inspected PATH',timeout_s=40)
+(P/'FREEZE.json').write_text(json.dumps(freeze,indent=2))
+r=capture([str(python),'-X','utf8',str(P/'actor.py')],dict(os.environ),P/'driver',40)
+(P/'DRIVER_RECEIPT.json').write_text(json.dumps(r,indent=2));print(json.dumps(dict(exit=r['exit'],timed_out=r['timed_out'],reaped=r['reaped'])))
