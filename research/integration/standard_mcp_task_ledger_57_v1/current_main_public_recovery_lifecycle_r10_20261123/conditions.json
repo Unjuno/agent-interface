@@ -1,0 +1,46 @@
+{
+  "scope": "Fake/local test harness reliability experiment only",
+  "question": "Does polling the same dispatch call until its atomic report is finalized (within existing 10s caller-result window), then draining the detached exact dispatch and close operation within 30s during teardown, eliminate premature report-temp cleanup while preserving all callback, release/recovery, oracle, and replay safeguards?",
+  "order": [
+    "normal-01",
+    "optimized-01",
+    "normal-02",
+    "optimized-02",
+    "normal-03",
+    "optimized-03",
+    "normal-04",
+    "optimized-04",
+    "normal-05",
+    "optimized-05"
+  ],
+  "pass_rule": "Sample pass requires exit0, unittest OK, original semantic assertions (single effect, exact recovery release/horizon, source UNKNOWN/null, no replay, oracle), and reports finalized. Any failure remains in denominator.",
+  "not_tested": [
+    "native GUI/MAP01",
+    "production reliability",
+    "matched efficiency/provider/token accounting",
+    "WSLc/Docker",
+    "Research Preview",
+    "distribution"
+  ],
+  "environment": "CPython 3.11.9; Windows host",
+  "baseline": "R09 tracked API futures, but dispatch result report still had a separate in-flight worker",
+  "schema": "agent-interface/public-recovered-caller-fresh-lifecycle-r10",
+  "design": [
+    "No server/runtime code changes.",
+    "Keep 8s API Future result timeout and 10s exact-result polling window. Replace the premature fixed 2s inner report-finalization assertion with a continue-poll-until-report-finalized condition within the same 10s deadline.",
+    "On teardown, wait up to 30s for each already-issued exact dispatch report to have report.json and no report temp before requesting close. Retry only close when it returns busy; never retry observe/dispatch or task effect.",
+    "Track/drain API futures as in R05/R09.",
+    "Run 5 normal + 5 -O interleaved, fresh process each; no retries/replacements."
+  ],
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle",
+  "attempt_count": {
+    "optimized": 5,
+    "total": 10,
+    "normal": 5
+  },
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "ea98061768db002661d0c350e61a4c7ed5fedcb363522a784a0ac42a81161b1b",
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510"
+  }
+}

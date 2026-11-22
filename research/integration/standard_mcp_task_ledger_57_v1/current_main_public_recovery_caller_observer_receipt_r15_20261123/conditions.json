@@ -1,0 +1,28 @@
+{
+  "schema": "agent-interface/compiled-caller-fake-observer-receipts-r15",
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "candidate_change": "Bind module observer when create_server is constructed; R14 passed a queued-worker patch-scope test normal and -O.",
+  "environment": "Windows CPython 3.11.9",
+  "question": "Does the public compiled caller recovery/task-oracle composition complete while every public observation is accounted to exactly one server-bound Fake callback and no lower real observer is reached?",
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "attempt_count": {
+    "total": 2,
+    "normal": 1,
+    "optimized": 1
+  },
+  "pass_rule": "Both invocations exit 0; original exact effect/recovery release+horizon/source UNKNOWN/no replay/task oracle assertions pass; fake callback count equals public observation receipt count; lower open_session guard stays untouched; all API Futures/reports drain and close completes.",
+  "not_tested": [
+    "reliability rate",
+    "live Win32 input or GUI/MAP01",
+    "efficiency/provider accounting",
+    "Research Preview",
+    "distribution"
+  ],
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "f9bd44a8378ba6b0710d4c2b084d0d860f42a63a38da17efbffcf6a5107c1a34",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "2921346df4d4882dc43159b77f30c48bd5ef3a21506bb65d06ea1ec51bcde1fc"
+  }
+}

@@ -3,6 +3,7 @@ import os
 import time
 import unittest
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 import threading
 import sys
 from contextlib import nullcontext
@@ -2927,6 +2928,197 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool("interface_close", {})
 
+    async def test_public_observation_callback_timeout_drains_before_teardown(self):
+        started = threading.Event()
+        release = threading.Event()
+        calls = {"count": 0, "future": None, "timed_out": False}
+        loop = asyncio.get_running_loop()
+
+        def delayed_observe(_targets, *, target, frame, region,
+                            capture_directory=None, display_name=None):
+            calls["count"] += 1
+            started.set()
+            if not release.wait(20):
+                raise TimeoutError("fixture observation release was not signaled")
+            now = time.monotonic_ns()
+            return {"schema": "agent-interface/runtime-observation-v1",
+                "observation_id": "drain-diagnostic-observation",
+                "status": "returned", "target": target,
+                "target_generation": "d" * 64,
+                "target_generation_consistency": "matched",
+                "observation": {"frame": frame, "region": region,
+                    "capture_started_ns": now, "capture_ended_ns": now},
+                "predicates": {}, "side_effect_authority": False,
+                "input_dispatched": False}
+
+        with TemporaryDirectory() as root, patch(
+                "runtime.cli_v1.mcp_server.observe", delayed_observe):
+            server = create_server({"fixture": 123}, root)
+
+            def call_with_eight_second_timeout():
+                future = asyncio.run_coroutine_threadsafe(server.call_tool(
+                    "interface_observe", {"target": "fixture",
+                        "frame": "window_client", "region": [0, 0, 1, 1]}),
+                    loop)
+                calls["future"] = future
+                try:
+                    return future.result(timeout=8)
+                except TimeoutError:
+                    calls["timed_out"] = True
+                    return None
+
+            caller = asyncio.create_task(
+                asyncio.to_thread(call_with_eight_second_timeout))
+            try:
+                self.assertTrue(await asyncio.to_thread(started.wait, 20),
+                    "delayed observation worker did not start")
+                await caller
+                future = calls["future"]
+                self.assertTrue(calls["timed_out"])
+                self.assertIsNotNone(future)
+                self.assertFalse(future.done(),
+                    "8-second caller timeout must leave the accepted callback live")
+                self.assertEqual(calls["count"], 1)
+                listing = self.row(await server.call_tool(
+                    "interface_results", {}))
+                matching_calls = [row for row in listing.get("calls", [])
+                    if row.get("operation") == "observe"]
+                self.assertEqual(len(matching_calls), 1, listing)
+                call_id = matching_calls[0]["call_id"]
+                release.set()
+                reply = await asyncio.wait_for(
+                    asyncio.wrap_future(future, loop=loop), timeout=30)
+                row = self.row(reply)
+                self.assertEqual(calls["count"], 1)
+                report_path = Path(root) / call_id / "report.json"
+                report_temp = report_path.with_name(".report.json.tmp")
+                self.assertTrue(report_path.is_file(),
+                    "the timed-out callback must finalize its same-call report")
+                self.assertFalse(report_temp.exists(),
+                    "the worker must finish the atomic report write before teardown")
+                report = json.loads(report_path.read_text(encoding="utf-8"))
+                self.assertEqual(report.get("status"), "returned", report)
+                self.assertFalse(report.get("input_dispatched", False), report)
+                retrieved_reply = await server.call_tool(
+                    "interface_results", {"call_id": call_id,
+                        "compact": True, "include_image": False,
+                        "detail": "brief"})
+                retrieved_envelope = json.loads(
+                    retrieved_reply.content[0].text)
+                retrieved = self.row(retrieved_reply)
+                self.assertEqual(retrieved_envelope.get("call_id"), call_id,
+                    retrieved_envelope)
+                self.assertFalse(retrieved.get("replay_allowed", False), retrieved)
+            finally:
+                release.set()
+                future = calls["future"]
+                if future is not None and not future.done():
+                    wrapped = asyncio.wrap_future(future, loop=loop)
+                    done, pending = await asyncio.wait({wrapped}, timeout=30)
+                    if done:
+                        await asyncio.gather(*done, return_exceptions=True)
+                    self.assertFalse(pending,
+                        "in-flight observation callback did not drain before teardown")
+
+    async def test_supervised_observation_uses_injected_fake_backend(self):
+        owner, producer, _supervisor = self.make_components()
+        observations = []
+
+        def fake_observe(_targets, *, target, frame, region,
+                         capture_directory=None, display_name=None):
+            observations.append((target, frame, list(region)))
+            now = time.monotonic_ns()
+            return {"schema": "agent-interface/runtime-observation-v1",
+                "observation_id": "supervised-fake-observation-r11",
+                "status": "returned", "target": target,
+                "target_generation": GENERATION,
+                "target_generation_consistency": "matched",
+                "observation": {"frame": frame, "region": region,
+                    "capture_started_ns": now, "capture_ended_ns": now},
+                "predicates": {"ready": True},
+                "side_effect_authority": False,
+                "input_dispatched": False}
+
+        with TemporaryDirectory() as root, patch(
+                "runtime.cli_v1.mcp_server.observe", fake_observe):
+            server = self.make_server(root, owner, producer)
+            try:
+                reply = await server.call_tool("interface_observe", {
+                    "target": "fixture", "frame": "window_client",
+                    "region": [0, 0, 1, 1]})
+                row = self.row(reply)
+                self.assertEqual(observations, [("fixture", "window_client",
+                    [0, 0, 1, 1])])
+                self.assertEqual(row.get("observation_id"),
+                    "supervised-fake-observation-r11", row)
+                self.assertFalse(row.get("input_dispatched", True), row)
+            finally:
+                await server.call_tool("interface_close", {})
+
+    async def test_queued_supervised_observation_keeps_server_bound_fake(self):
+        owner, producer, _supervisor = self.make_components()
+        loop = asyncio.get_running_loop()
+        executor = ThreadPoolExecutor(max_workers=1)
+        loop.set_default_executor(executor)
+        blocker_started = threading.Event()
+        release_blocker = threading.Event()
+        fake_calls = []
+        forbidden_real_observation = []
+        server = None
+
+        def occupy_worker():
+            blocker_started.set()
+            if not release_blocker.wait(20):
+                raise TimeoutError("executor blocker was not released")
+
+        def fake_observe(_targets, *, target, frame, region,
+                         capture_directory=None, display_name=None):
+            fake_calls.append((target, frame, list(region),
+                threading.current_thread().name))
+            now = time.monotonic_ns()
+            return {"schema": "agent-interface/runtime-observation-v1",
+                "observation_id": "queued-server-bound-fake-r14",
+                "status": "returned", "target": target,
+                "target_generation": GENERATION,
+                "target_generation_consistency": "matched",
+                "observation": {"frame": frame, "region": region,
+                    "capture_started_ns": now, "capture_ended_ns": now},
+                "predicates": {"ready": True},
+                "side_effect_authority": False,
+                "input_dispatched": False}
+
+        def forbidden_open_session(*args, **kwargs):
+            forbidden_real_observation.append((args, kwargs))
+            raise RuntimeError("real observer boundary reached in Fake-only trial")
+
+        with TemporaryDirectory() as root:
+            loop.run_in_executor(None, occupy_worker)
+            self.assertTrue(blocker_started.wait(5),
+                "executor blocker did not occupy the only worker")
+            with patch("runtime.cli_v1.observe.open_session",
+                    side_effect=forbidden_open_session):
+                with patch("runtime.cli_v1.mcp_server.observe", fake_observe):
+                    server = self.make_server(root, owner, producer)
+                    request = asyncio.create_task(server.call_tool(
+                        "interface_observe", {"target": "fixture",
+                            "frame": "window_client", "region": [0, 0, 1, 1]}))
+                    await asyncio.sleep(0.05)
+                    self.assertFalse(request.done(),
+                        "request should remain queued behind the blocker")
+                # The module patch is gone, but this accepted call must retain
+                # the observer bound when create_server constructed its worker.
+                release_blocker.set()
+                reply = await asyncio.wait_for(request, timeout=15)
+                row = self.row(reply)
+                self.assertEqual(row.get("observation_id"),
+                    "queued-server-bound-fake-r14", row)
+                self.assertEqual(len(fake_calls), 1, fake_calls)
+                self.assertEqual(fake_calls[0][:3], ("fixture",
+                    "window_client", [0, 0, 1, 1]))
+                self.assertEqual(forbidden_real_observation, [])
+                await server.call_tool("interface_close", {})
+            release_blocker.set()
+
     async def test_public_compiled_caller_joins_exact_result_query_and_task_oracle(self):
         process = FakeProcess()
         identity = {"pid": 7101, "creation_time_100ns": 90101}
@@ -3043,11 +3235,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                         "next_state": None, "reason": None}]}}},
         }
         observation_count = 0
+        fake_observation_receipts = []
+        forbidden_real_observation = []
         observed_call_ids = []
         dispatch_call_ids = []
         result_queries = []
         task_client_calls = []
         callback_errors = []
+        api_futures = []
         observation_envelopes = []
         loop = asyncio.get_running_loop()
 
@@ -3056,7 +3251,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             nonlocal observation_count
             observation_count += 1
             now = time.monotonic_ns()
-            return {"schema": "agent-interface/runtime-observation-v1",
+            report = {"schema": "agent-interface/runtime-observation-v1",
                 "observation_id": f"public-composition-{observation_count}",
                 "status": "returned", "target": target,
                 "target_generation": GENERATION,
@@ -3065,6 +3260,19 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     "capture_started_ns": now, "capture_ended_ns": now},
                 "predicates": {"ready": True, "saved": bool(effects)},
                 "side_effect_authority": False, "input_dispatched": False}
+            fake_observation_receipts.append({
+                "observation_id": report["observation_id"],
+                "thread_name": threading.current_thread().name,
+                "thread_ident": threading.get_ident(),
+                "started_ns": now, "finished_ns": time.monotonic_ns(),
+                "input_dispatched": report["input_dispatched"]})
+            return report
+
+        def forbidden_open_session(*args, **kwargs):
+            forbidden_real_observation.append({"args": repr(args),
+                "kwargs": repr(kwargs),
+                "thread_name": threading.current_thread().name})
+            raise RuntimeError("unexpected lower real-observation boundary")
 
         original_write_json = mcp_server_module._write_json
         delayed_dispatch_report_writes = []
@@ -3081,6 +3289,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             return original_write_json(path, report)
 
         with TemporaryDirectory() as root, patch(
+                "runtime.cli_v1.observe.open_session",
+                side_effect=forbidden_open_session), patch(
                 "runtime.cli_v1.mcp_server.observe", fake_observe), patch(
                 "runtime.cli_v1.mcp_server._write_json",
                 side_effect=delay_dispatch_report_write):
@@ -3091,8 +3301,16 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 supervised_win32_task_oracle=task_oracle)
 
             def call_tool(name, arguments):
-                return asyncio.run_coroutine_threadsafe(
-                    server.call_tool(name, arguments), loop).result(timeout=8)
+                future = asyncio.run_coroutine_threadsafe(
+                    server.call_tool(name, arguments), loop)
+                api_futures.append((name, future))
+                try:
+                    return future.result(timeout=8)
+                except Exception as error:
+                    callback_errors.append(
+                        f"api_call {name}: {type(error).__name__}: {error}; "
+                        f"future_done={future.done()}")
+                    raise
 
             def observe(target, frame, region):
                 try:
@@ -3131,6 +3349,8 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     # result poll finite while allowing loaded Windows hosts
                     # to schedule producer retirement and public readback.
                     deadline = time.monotonic() + 10
+                    last_action_status = None
+                    last_report_state = None
                     while time.monotonic() < deadline:
                         reply = call_tool("interface_results", {
                             "call_id": call_id, "include_image": False,
@@ -3143,26 +3363,28 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                             if isinstance(row.get("call"), dict) else None)
                         self.assertEqual(retrieved_call, call_id, row)
                         action = row.get("action")
-                        if (isinstance(action, dict)
-                                and action.get("status") in (
-                                    "completed", "unknown", "recovered")):
+                        last_action_status = (action.get("status")
+                            if isinstance(action, dict) else None)
+                        if last_action_status in ("completed", "unknown",
+                                "recovered"):
                             # This fixture delays the exact dispatch report
-                            # writer before it creates its temp file. Require the
-                            # final report, not only absence of an observed temp.
+                            # writer before it creates its temp file. The action
+                            # can become terminal before its enclosing MCP call
+                            # finishes; keep polling inside the original finite
+                            # result deadline until the atomic report is stable.
                             report_path = Path(root) / call_id / "report.json"
                             report_temp = report_path.with_name(".report.json.tmp")
-                            finalize_deadline = time.monotonic() + 2
-                            while (
-                                    not report_path.is_file() or report_temp.exists()
-                            ) and time.monotonic() < finalize_deadline:
-                                time.sleep(0.01)
-                            self.assertTrue(report_path.is_file(),
-                                f"exact call report was not finalized: {call_id}")
-                            self.assertFalse(report_temp.exists(),
-                                f"exact call report temp remains: {call_id}")
-                            return reply
+                            report_ready = (report_path.is_file()
+                                and not report_temp.exists())
+                            last_report_state = {
+                                "report_exists": report_path.is_file(),
+                                "report_temp_exists": report_temp.exists()}
+                            if report_ready:
+                                return reply
                         time.sleep(0.01)
-                    self.fail("exact-call interface_results did not reach completed")
+                    self.fail("exact-call result/report did not become final "
+                        f"within its finite wait: action={last_action_status!r}, "
+                        f"report={last_report_state!r}")
                 except Exception as error:
                     callback_errors.append("resolve_pending: " + repr(error))
                     raise
@@ -3187,7 +3409,15 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     verify_effect=lambda _request, _report, _reply: {
                         "status": "succeeded", "evidence_ref": "must-not-score"},
                     verify_task=verify_task, cancelled=lambda: False)
-                self.assertEqual(recovered["outcome"], "SAFE_YIELD", recovered)
+                self.assertEqual(callback_errors, [], {
+                    "errors": callback_errors,
+                    "api_futures": [(name, future.done())
+                        for name, future in api_futures]})
+                self.assertEqual(recovered["outcome"], "SAFE_YIELD", {
+                    "receipt": recovered,
+                    "callback_errors": callback_errors,
+                    "api_futures": [(name, future.done())
+                        for name, future in api_futures]})
                 self.assertEqual(recovered["reason"], "delivery_uncertain")
                 self.assertEqual(recovered["completed_transitions"], 0)
                 self.assertTrue(recovered["task_verification"]["valid"],
@@ -3197,7 +3427,15 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     dispatch_call_ids)
                 self.assertEqual(recovered["standard_observation_call_ids"],
                     observed_call_ids)
-                self.assertEqual(callback_errors, [])
+                self.assertEqual(observation_count, len(observed_call_ids), {
+                    "fake_observation_receipts": fake_observation_receipts,
+                    "observed_call_ids": observed_call_ids})
+                self.assertEqual(len(fake_observation_receipts),
+                    observation_count)
+                self.assertEqual(forbidden_real_observation, [])
+                self.assertTrue(all(row["input_dispatched"] is False
+                    for row in fake_observation_receipts),
+                    fake_observation_receipts)
                 recovered_dispatch = next(row for row in recovered[
                     "standard_target_evidence"] if row["kind"] == "dispatch")
                 self.assertEqual(len(dispatch_call_ids), 1)
@@ -3253,7 +3491,48 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     report_temps = list(Path(root).glob("*/.report.json.tmp"))
                 self.assertFalse(report_temps, report_temps)
             finally:
-                await server.call_tool("interface_close", {})
+                pending_api_futures = [future for _, future in api_futures
+                    if not future.done()]
+                if pending_api_futures:
+                    wrapped = [asyncio.wrap_future(future, loop=loop)
+                        for future in pending_api_futures]
+                    done, pending = await asyncio.wait(wrapped, timeout=30)
+                    await asyncio.gather(*done, return_exceptions=True)
+                    if pending:
+                        callback_errors.append(
+                            "API callback futures failed to drain before "
+                            "fixture teardown: " + str(len(pending)))
+                # wait_for_result_ms=0 leaves the dispatch worker detached from
+                # the caller Future. Do not let TemporaryDirectory race its
+                # atomic report write after a terminal action readback.
+                dispatch_reports = [(call_id,
+                    Path(root) / call_id / "report.json")
+                    for call_id in dispatch_call_ids]
+                for _call_id, report_path in dispatch_reports:
+                    report_temp = report_path.with_name(".report.json.tmp")
+                    drain_deadline = time.monotonic() + 30
+                    while (not report_path.is_file() or report_temp.exists()) \
+                            and time.monotonic() < drain_deadline:
+                        await asyncio.sleep(0.01)
+                close_deadline = time.monotonic() + 30
+                close_row = None
+                while time.monotonic() < close_deadline:
+                    close_row = self.row(await server.call_tool(
+                        "interface_close", {}))
+                    if close_row.get("status") != "busy":
+                        break
+                    await asyncio.sleep(0.01)
+                self.assertIsNotNone(close_row)
+                self.assertNotEqual(close_row.get("status"), "busy",
+                    {"close": close_row, "dispatch_reports": [
+                        {"call_id": call_id,
+                         "report_exists": report_path.is_file(),
+                         "report_temp_exists": report_path.with_name(
+                            ".report.json.tmp").exists()}
+                        for call_id, report_path in dispatch_reports]})
+                self.assertEqual(observation_count,
+                    len(fake_observation_receipts), fake_observation_receipts)
+                self.assertEqual(forbidden_real_observation, [])
 
     async def test_stdio_expiry_delayed_recovery_and_exact_call_effect(self):
         from mcp import ClientSession, StdioServerParameters

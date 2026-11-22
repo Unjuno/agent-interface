@@ -1,5 +1,43 @@
 > Concise project-wide gate status and cleanup sequence: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Project-wide cleanup status — 2026-11-23
+
+The repository is not clean yet. Keep product qualification and repository
+triage as two linked workstreams: the first protects acceptance gates; the
+second reconciles issue/PR meaning and evidence custody without bulk closure.
+The latest complete paginated membership baseline is r165 (1,640 Issues / 405
+PRs on main `d5ada452`). A later count-only read matched those totals but did
+not refresh exact membership. Therefore these are dated baseline numbers, not
+a current complete inventory. Run a new full paginated ID snapshot before the
+next family-level reconciliation.
+
+### Current project map
+
+| Workstream | Current evidence | Remaining gate |
+|---|---|---|
+| Integrated control / #57 | Public recovered-caller composition and narrow eligibility checks pass on Fake fixtures. Initial R16/R19 runs exposed D: TEMP delays. CI found ordinary observer binding was overbroad; final scope binds only supervised-win32. R22 passes both complete affected MCP modules, 94/94 normal and `-O`. Historical R10 attribution remains unresolved. | Final candidate's local MCP modules are qualified. Preserve D:/long-path failures; proceed to public standard-caller recovery with independent effect scoring/repeatability; later matched all-attempt efficiency. |
+| Research Preview / #58 | Runner/setup and archived-source checks are partial; current host doctor/live prerequisites remain unmet. | Supported-host setup/doctor, retained audit, fresh no-retry live run and final live audit. |
+| Runtime distribution | Deterministic package/startup and outside-checkout CLI checks passed on declared hosts in retained packets. | Live authority/input behavior and public artifact on declared supported environments. |
+| Research ideas | r160 idea-index crosswalk and targeted family reviews exist; they are not current semantic triage. | Refresh membership; adjudicate one family at a time, retaining viable ideas and closing only with evidence-backed disposition. |
+| Branches/worktrees/artifacts | r165 note reports 15 worktrees (10 clean/5 dirty) and 61 unique root `outputs/` files. | Re-inventory; link each dirty tree/artifact to branch, PR, issue and hash before consolidation or deletion. |
+
+### Execution sequence
+
+1. Finalize the running scoped experiment and preserve failures. R16 is now
+   finalized as a failed broad check in its own evidence packet.
+2. R17/R18 isolated and grouped checks passed; R19 reproduced failures on the
+   D: temp location; R20 passed the full module on dedicated C: TEMP. Retain
+   both failure and success contexts; use the qualified C: path for local
+   validation and proceed to public standard-caller recovery/effect evidence.
+3. Freeze one public standard-caller recovery/effect trial only after callback,
+   release and oracle boundaries are stable. Do not pool MAP01 or Calc evidence.
+4. Refresh complete Issue/PR membership, then triage by family with evidence
+   and custody links. Counts and the r160 crosswalk are navigation only.
+5. Reconcile worktrees, branches and outputs by path/hash and references;
+   remove only exact duplicates with resolved custody.
+6. Reassess #58 and package gates on declared hosts. Keep #57, #58 and the
+   project goal open until each stated criterion is independently met.
+
 **Evidence custody reconciliation (2026-11-23; current main `cd708f52`):** Restored the byte-exact R06/R07/R08 Win32 fixture packets referenced below from a clean tracked worktree after checking each packet's root manifest against its raw files. Current copies verify R06 38/38, R07 23/23, and R08 69/69 entries. R06's working bytes differ from the main index only in line endings (`git diff --ignore-space-at-eol` is empty); preserving the manifest-matching bytes is required for raw custody. No result was replayed or re-scored. A separate current-main local recovery composition result is [R01](../research/integration/standard_mcp_task_ledger_57_v1/current_main_recovered_caller_task_oracle_r01_20261122/RESULT.md); it does not establish public recovery or efficiency. The GraphQL count-only check at 2026-11-22 14:55 UTC returned 1,640 open Issues and 405 open PRs, but no exact-ID or semantic recheck was made; r165 remains the latest full membership receipt.
 
 **Latest membership check r164 (2026-11-22; main `48ef3e498b287a69b68e3e6912a43db2acb3551b`):** Exact paginated ID reads returned 1,640 open Issues and 405 open PRs. Compared with r152/r157, there were no additions; Issues #7748/#7765/#7817 and PRs #7968/#8181/#10227 were removed. This resolves the two-PR delta noted after r163. The full receipt is [r164](maintenance/repository-inventory-recheck-20261122-r164.md). Membership is not semantic triage or a reason to close anything.

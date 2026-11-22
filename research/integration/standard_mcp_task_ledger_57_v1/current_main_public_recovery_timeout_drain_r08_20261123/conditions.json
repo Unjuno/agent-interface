@@ -1,0 +1,39 @@
+{
+  "invariants": [
+    "timeout remains 8 sec",
+    "startup guard 20 sec; delayed observer blocks on Event until released",
+    "read exact call_id from interface_results listing while worker pending",
+    "release once and await same future <=30 sec",
+    "single observer call, exact report finalized, no temporary file, exact result envelope preserves call id",
+    "no dispatch/input/replay; teardown after worker finished"
+  ],
+  "environment": "CPython 3.11.9; Windows host",
+  "attempt_count": {
+    "optimized": 1,
+    "total": 2,
+    "normal": 1
+  },
+  "question": "With a 20-second startup guard and outer envelope call_id check, does the deterministic 8-second observation callback timeout still leave the same Future pending, then complete it once on release, finalize its exact report, and allow clean teardown?",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_observation_callback_timeout_drains_before_teardown",
+  "pass_rule": "Both runs exit 0 and satisfy invariants; any failure remains and no retry.",
+  "scope": "Deterministic fake API callback future and report file lifecycle",
+  "baseline": "R07 instrumented test; correct call lookup and no unsupported close",
+  "order": [
+    "normal-01",
+    "optimized-01"
+  ],
+  "schema": "agent-interface/public-observe-future-timeout-drain-r08",
+  "not_tested": [
+    "native GUI/MAP01",
+    "production reliability",
+    "matched efficiency",
+    "WSLc/Docker",
+    "preview/runtime release"
+  ],
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "prior": "R06 failed due assumed call_id in observation payload and nonexistent interface_close on one-shot server. R07 normal failed 3-second startup guard; optimized failed because exact results call_id is in envelope, not unwrapped report. Neither is retried.",
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510",
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "565892c8d6a217bfa8f61d149441743147d5d540761a2093ca41d8793cdb4d83"
+  }
+}
