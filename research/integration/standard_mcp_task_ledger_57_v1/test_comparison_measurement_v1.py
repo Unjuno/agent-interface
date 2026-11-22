@@ -1,3 +1,4 @@
+import json
 import unittest
 
 from comparison_measurement_v1 import (
@@ -212,6 +213,23 @@ class ComparisonMeasurementTests(unittest.TestCase):
     def test_local_observation_must_match_observation_tool_receipt(self):
         value = run("A", 1)
         value["measurement"]["local_observations"][0]["source_sequence"] = 5
+        with self.assertRaises(LedgerValidationError):
+            validate_measured_run(value)
+
+    def test_recorded_public_mcp_observation_envelope_is_sequence_checked(self):
+        value = run("A", 1)
+        event = next(item for item in value["task_ledger"]["events"]
+                     if item.get("kind") == "tool_call")
+        event["result"] = {
+            "id": 1, "status": "returned",
+            "tool": "interface_guarded_observe", "sdk_entry_ns": 11,
+            "sdk_return_ns": 12, "next_id": 2,
+            "result": {"content": [{"type": "text",
+                        "text": json.dumps({"source": {"sequence": 4}})}]},
+        }
+        self.assertTrue(validate_measured_run(value)["task_success"])
+        event["result"]["result"]["content"][0]["text"] = json.dumps(
+            {"source": {"sequence": 5}})
         with self.assertRaises(LedgerValidationError):
             validate_measured_run(value)
 

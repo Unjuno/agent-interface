@@ -2,20 +2,21 @@
 
 ## Conditions
 
-- Source base: current main `cf66c1758f25a0beafe8d577502bd849dcd6e2cf`.
+- Source base: current main `cf66c1758f25a0beafe8d577502bd849dcd6e2cf` plus the candidate changes in this PR.
 - Runtime: Windows CPython 3.11.9.
 - Suites: `test_effect_receipt_handoff_v1`, `test_recorded_comparison_adapter_v1`, `test_comparison_measurement_v1`.
-- Offline Fake X/research adapter only. No external provider, live desktop, MAP01, Docker, or WSLc.
-- The final raw stdout files are base64 encoded to preserve exact bytes through Git. See `RAW_OUTPUTS.md` and `SHA256SUMS`.
+- Synthetic Fake Relay and research adapter only. The standard `RecordedPublicMcpCaller` and `ProviderAttemptRecorder` execute; no OS GUI, external provider, MAP01, Docker, or WSLc is used.
+- Raw stdout is base64 encoded to preserve exact bytes through Git. See `RAW_OUTPUTS.md` and `SHA256SUMS`.
 
 ## Result
 
-- Focused handoff suite: normal 12/12; optimized (`python -O`) 12/12.
-- Combined adapter suites: normal 45/45; optimized 45/45.
-- The recorded caller journal builds a measured run retaining action ID, operation, target generation and one linked local observation.
-- Handoff rejects an effect receipt whose action call ID differs from the public owner receipt.
-- A one-capture run is refused because the second retained capture is absent. Existing positive hand-assembled handoff test remains separate; R01 does not claim a fully caller-generated before/after effect receipt.
+- Combined adapter suites: normal 47/47; optimized (`python -O`) 47/47.
+- The standard caller records two local observations, `interface_dispatch`, `interface_results`, and a terminal independent-score event in one reconciled receipt.
+- The measured-run adapter preserves action call ID, operation, target generation, owner lifecycle receipt and both observation links.
+- The effect handoff joins the independent final score and separate before-state receipt to the same dispatch; the bounded effect interval is adjudicated `within_authority`, factual success is true, and eligible success is true.
+- Wrong action-call identity is rejected. A one-capture run without its after-capture remains rejected.
+- The comparison validator reads source sequence from the standard Relay response envelope, including request ID, SDK timestamps and next ID, as well as the existing direct fixture shape. A mismatched source sequence fails closed.
 
-## Limitations
+## Limits
 
-The fixture supplies lifecycle phases, capture timestamp/image pin, native effect interval, and independent score certificate. ProviderAttemptRecorder preserves the supplied score but does not prove scorer independence. This is not live provider usage reconciliation, matched efficiency, repeated reliability, MAP01, or Research Preview graduation.
+This is finite synthetic transport composition with fixture owner and scorer receipts. It proves the offline caller journal-to-effect-adapter seam, not physical release, scorer independence, external-provider usage completeness, live GUI/MAP01 task success, matched integrated efficiency, repeated reliability, or Research Preview graduation.

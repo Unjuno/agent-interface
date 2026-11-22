@@ -1,3 +1,4 @@
+import asyncio
 import hashlib
 import json
 import tempfile
@@ -6,6 +7,8 @@ from pathlib import Path
 import test_recorded_comparison_adapter_v1 as recorded_adapter
 from effect_receipt_handoff_v1 import adapt_measured_run
 from recorded_comparison_adapter_v1 import build_measured_run
+from provider_attempt_recorder import ProviderAttemptRecorder
+from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
 from comparison_measurement_v1 import validate_matched_block
 from ledger import LedgerValidationError
 
@@ -101,6 +104,167 @@ class EffectReceiptHandoffTests(unittest.TestCase):
             adapt_measured_run(
                 measured, receipt_root=self.receipt_root,
                 receipt_path='score.json')
+
+    def test_recorded_caller_fake_relay_records_capture_pair_and_adapts_effect(self):
+        root = self.root / 'caller-composition'
+        ticks = iter(range(100, 300, 5))
+        recorder_root = root / 'recorder'
+        recorder = ProviderAttemptRecorder(recorder_root, clock_ns=lambda: next(ticks))
+        call_id, operation_id, generation = 'a' * 32, 'b' * 32, 'c' * 64
+        owner_result = {
+            'operation_id': operation_id, 'target_generation': generation,
+            'phase': 'recovered', 'status': 'recovered', 'deadline_ns': 130,
+            'release_confirmed': True, 'late_input_horizon_verified': True,
+            'late_input_release_received_ns': 135, 'late_input_horizon_ns': 25,
+            'late_input_observation_start_ns': 135,
+            'late_input_observation_end_ns': 160,
+            'late_input_observation_count': 2,
+            'late_input_max_observed_gap_ns': 25,
+            'late_input_max_sample_gap_ns': 25,
+        }
+        owner_public = {
+            'call_id': call_id,
+            'action': {'operation_id': operation_id,
+                       'target_generation': generation, 'status': 'unknown'},
+            'cancellation': {
+                'operation_id': 'd' * 32, 'action_operation_id': operation_id,
+                'target_generation': generation, 'status': 'recovered',
+                'release_confirmed': True, 'result': owner_result,
+            },
+        }
+
+        class FakeRelay:
+            def __init__(self):
+                self.next_id = 1
+
+            async def request(self, raw):
+                request = json.loads(raw)
+                request_id = request['id']
+                self.next_id += 1
+                method = request['tool']
+                if method == 'interface_guarded_observe':
+                    sequence = 1 if request['arguments']['capture'] == 'before' else 2
+                    body = {'source': {'sequence': sequence}}
+                elif method == 'interface_dispatch':
+                    body = {'call_id': call_id, 'operation_id': operation_id,
+                            'target_generation': generation, 'status': 'unknown',
+                            'task_success': None, 'replay_allowed': False}
+                elif method == 'interface_results':
+                    body = owner_public
+                else:
+                    raise AssertionError(f'unexpected public method: {method}')
+                return {'id': request_id, 'status': 'returned', 'tool': method,
+                        'sdk_entry_ns': 1, 'sdk_return_ns': 2,
+                        'next_id': self.next_id,
+                        'result': {'content': [{'type': 'text',
+                                                'text': json.dumps(body)}]}}
+
+        usage = {'status': 'reported', 'input_tokens': 10, 'output_tokens': 2}
+        recorder.invoke('attempt-1', b'{"prompt":"fixture"}',
+                        lambda: {'status': 'completed', 'usage': usage,
+                                 'response_bytes': b'{"plan":"dispatch"}'})
+        caller = RecordedPublicMcpCaller(
+            FakeRelay(), recorder,
+            allowed_methods={'interface_guarded_observe', 'interface_dispatch',
+                             'interface_results'})
+
+        async def execute_calls():
+            before = await caller.call_tool(
+                'attempt-1', 'capture-before', 'interface_guarded_observe',
+                {'capture': 'before'})
+            dispatch = await caller.call_tool(
+                'attempt-1', call_id, 'interface_dispatch', {'operation_id': operation_id})
+            lookup = await caller.call_tool(
+                'attempt-1', 'lookup-results-1', 'interface_results',
+                {'call_id': call_id})
+            after = await caller.call_tool(
+                'attempt-1', 'capture-after', 'interface_guarded_observe',
+                {'capture': 'after'})
+            return before, dispatch, lookup, after
+
+        _, dispatch_response, lookup_response, _ = asyncio.run(
+            execute_calls())
+        self.assertEqual(dispatch_response['status'], 'returned')
+        self.assertEqual(lookup_response['status'], 'returned')
+        state_before = b'fixture-state-before'
+        state_after = b'fixture-state-after'
+        image_bytes = b'fixture-observation-image'
+        image_digest = hashlib.sha256(image_bytes).hexdigest()
+        image_path = recorder_root / 'raw' / 'model-image.bin'
+        image_path.parent.mkdir(parents=True, exist_ok=True)
+        image_path.write_bytes(image_bytes)
+        receipt = recorder.reconcile()
+        image_ref = {'path': 'raw/model-image.bin', 'sha256': image_digest}
+        receipt['raw_refs'].append(image_ref)
+        metadata = {
+            'schema': 'agent-interface/standard-mcp-task-ledger-v1',
+            'run_id': 'caller-effect-r01',
+            'comparison': {'arm': 'C', 'block': 1, 'order': 3,
+                           'task_seed': 'caller-effect-seed'},
+            'task': {'task_id': 'caller-effect-task', 'fixture_sha256': 'a' * 64,
+                     'scorer_sha256': 'e' * 64},
+            'source': {'commit': 'f' * 40, 'route_sha256': '9' * 64},
+            'environment_sha256': '8' * 64,
+            'model': {'id': 'fixture-model', 'effort': 'low',
+                      'request_config_sha256': '7' * 64},
+        }
+        observations = [
+            {'tool_call_id': 'capture-before', 'source_sequence': 1,
+             'captured_ns': 112, 'image_sha256': image_digest},
+            {'tool_call_id': 'capture-after', 'source_sequence': 2,
+             'captured_ns': 142, 'image_sha256': image_digest},
+        ]
+        measurement = {
+            'started_ns': 90, 'ended_ns': 250, 'elapsed_ns': 160,
+            'phases': [{'name': 'other', 'started_ns': 90, 'ended_ns': 250,
+                        'reason': 'bounded synthetic caller composition'}],
+            'model_delivered_images': [{'attempt_id': 'attempt-1',
+                                        'sha256': image_digest}],
+            'local_observations': observations,
+            'native_owner_evidence': {
+                'lookup_tool_call_id': 'lookup-results-1',
+                'action_call_id': call_id, 'effect_observed_ns': None,
+            },
+        }
+        recorder.record_task_score('fixture-independent-oracle-v1', True, state_after)
+        receipt = recorder.reconcile()
+        receipt['raw_refs'].append(image_ref)
+        self.assertTrue(receipt['complete'])
+        self.assertEqual(
+            [event.get('method') for event in receipt['events']
+             if event['kind'] == 'tool_call'],
+            ['interface_guarded_observe', 'interface_dispatch',
+             'interface_results', 'interface_guarded_observe'])
+        measured = build_measured_run(
+            receipt, recorder_root=recorder_root,
+            ledger_metadata=metadata, measurement=measurement)
+        task_score = next(event for event in measured['task_ledger']['events']
+                          if event['kind'] == 'task_score')
+        receipt_score = {
+            'schema': 'agent-interface/task-effect-score-receipt-v1',
+            'task_id': metadata['task']['task_id'],
+            'lookup_tool_call_id': 'lookup-results-1',
+            'action_call_id': call_id, 'action_operation_id': operation_id,
+            'target_generation': generation,
+            'scorer_id': task_score['scorer_id'],
+            'scorer_sha256': metadata['task']['scorer_sha256'],
+            'task_success': task_score['task_success'],
+            'state_sha256': task_score['state_sha256'],
+            'before_task_success': False,
+            'before_state_sha256': hashlib.sha256(state_before).hexdigest(),
+            'before_observation': observations[0],
+            'after_observation': observations[1],
+            'effect_interval_ns': {'lower_ns': 122, 'upper_ns': 123},
+        }
+        effect_path = recorder_root / 'score.json'
+        effect_path.write_text(json.dumps(receipt_score, sort_keys=True,
+                                          separators=(',', ':')), encoding='utf-8')
+        adapted = adapt_measured_run(
+            measured, receipt_root=recorder_root, receipt_path='score.json')
+        self.assertEqual(adapted['timing_status'], 'within_authority')
+        self.assertTrue(adapted['factual_task_success'])
+        self.assertTrue(adapted['eligible_task_success'])
+        self.assertEqual(adapted['authority_binding']['action_call_id'], call_id)
 
     def test_timely_score_joins_same_action_and_raw_receipt(self):
         result=self.adapt()
