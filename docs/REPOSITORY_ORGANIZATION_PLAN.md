@@ -5,15 +5,12 @@
 The repository is not clean yet. Keep product qualification and repository
 triage as two linked workstreams: the first protects acceptance gates; the
 second reconciles issue/PR meaning and evidence custody without bulk closure.
-The latest complete paginated membership baseline is r167 (1,640 Issues / 406
-PRs) bracketed by main `490d7bcb4d84927116112e5ff348cdeadfc489d6`. Issue IDs match
-r166; PR #10473 was the only addition. PR #10473 has since merged as
-`31fcd3a2e9ee3d1e9a2dbe7d92faf777deae54d8`. A post-merge GraphQL count check
-r168 at that main reports 1,640 open Issues and 405 open PRs; it did not
-recheck exact membership. See the [r167 receipt](maintenance/repository-inventory-recheck-20261123-r167.md)
-and [r168 count receipt](maintenance/repository-inventory-count-recheck-20261123-r168.md).
-Semantic issue/PR disposition remains incomplete and must proceed family by
-family.
+The latest complete paginated membership baseline is r170 (1,640 Issues / 405
+PRs), bracketed by main `1d2bdc20699ff9e39308ab7a9e79dd1fe75c2e2f`. Compared with
+r167, the exact Issue ID set is unchanged and PR #10473 is the only removal.
+See the [r170 receipt](maintenance/repository-inventory-recheck-20261123-r170.md).
+The earlier r168 check was count-only. Semantic issue/PR disposition remains
+incomplete and must proceed family by family.
 
 ### Current project map
 
