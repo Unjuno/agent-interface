@@ -1,10 +1,26 @@
 # Project state and work order
 
-Updated 2026-11-23 from current `main` `7fb6fe4c95fed8dec9f95d96e910da0fa769e690`.
+Updated 2026-11-23 from current `main` `19d4752ed16063d63119f5d7347c51fb69f44a8c`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 
 ## Latest #57 composition results — 2026-11-23
+
+**Observer-binding candidate R14/R15/R16:** R14's narrow delayed-executor test and R15's public compiled-caller callback receipts each pass 1/1 in normal and `-O` focused runs. R16 then ran the full 63-test supervised MCP module once per mode and failed both: normal 12 errors in 527.637 s; `-O` 12 failures plus 16 errors in 867.312 s. The monolithic result has timing spillover and temporary request/report-file cleanup contention; preserve it as a failed broad check, not a candidate pass or reliability estimate. See [R16](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_r16_20261123/RESULT.md). Next isolate the narrow affected tests in fresh processes and diagnose suite interference before another cohort.
+
+R17 ran three representative tests in separate processes with unique temporary roots: all six normal/`-O` runs passed. These selected cases do not reproduce in isolation, supporting (without proving) a suite-context interference explanation. Keep R16 failed; see [R17](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_isolated_r17_20261123/RESULT.md). Return next to the public standard-caller recovery/effect gate after the remaining broad-suite interference is understood.
+
+R18 then ran three R16-failing recovery/caller tests together in one process per mode with separate temporary roots. Both groups passed 3/3 (4.038 s normal, 4.035 s `-O`). The selected cases pass both separately and grouped; this points to full-suite host/run context or cumulative workload without proving a specific cause. Keep the full-module failure and return to the standard-caller recovery/effect gate. See [R18](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_grouped_r18_20261123/RESULT.md).
+
+R19 compared that same three-test group with TEMP under `D:\CodexData\Temp`: normal took 59.060 s and failed with two temp-report cleanup errors plus a caller observer timeout; `-O` took 168.923 s and hit WinError 145. R20 ran the complete 63-test module with dedicated C: TEMP and passed 63/63 in both modes (116.525 s normal; 118.401 s `-O`). This strongly implicates the D: temp path/storage behavior as a test confound, while not identifying its exact OS-level cause. The observer-binding candidate now passes the whole local module on the recorded C: environment; this still does not prove live recovery reliability/effect or efficiency. See [R19](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_temp_volume_r19_20261123/RESULT.md) and [R20](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_ssd_r20_20261123/RESULT.md).
+
+## Recovery lifecycle diagnostics R05–R12 — 2026-11-23
+
+R05's six ordinary caller runs passed but none exercised the timeout drain. R06 and R07 are preserved failed test designs; R08 passed one normal and one `-O` deterministic direct-server delayed-observer Future-drain check, without exercising task/recovery. R09 is mixed at 7/10 and R10 at 8/10; R10's orphan report recorded a real Win32 invalid-HWND observation, `input_dispatched=false`, and owner `call_count=0`. Consequently R04/R09/R10 are not admissible as verified Fake-only lifecycle cohorts. The direct supervised observation injection seam then failed R11 twice because its test asserted the wrong envelope field after raw fake assertions had passed; corrected R12 passed 1/1 normal and 1/1 `-O`, confirming only the minimal direct fake observe seam. It does not resolve R10's longer compiled-caller path anomaly. No additional lifecycle trials were run. Packet manifests for R05 and R08–R12 verify; preserve R06/R07 as failed designs and R10's orphan report.
+
+R13 then passed one normal and one `-O` deterministic direct-observe Future-drain test. It verifies that the same accepted observation Future completes after release and its report finalizes before teardown; each run took about 44–46 seconds. A source audit found a plausible but unproven cause for R10's orphan: `submit()` queues `invoke` on the loop's default executor, and the supervised observe branch resolves module-global `observe` only when that worker reaches the branch. A late worker could therefore outlive a test patch scope. R10 raw does not prove this sequence; keep the anomaly unresolved. See the [R13 packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_callback_future_drain_r13_20261123/RESULT.md).
+
+**Current diagnostic gate:** before another lifecycle cohort, make the observer dependency stable for each accepted invocation and retain per-observation callback identity, raw response, owner call count, and dispatch/report worker state across timeout and teardown. Keep the sample count and failure denominator frozen before execution. Do not claim Fake isolation from outer-envelope fields or from the minimal direct-server R12/R13 results.
 
 PR #10467 merged public MCP observe/dispatch/exact-result
 lookup with automatic recovery and an independent task oracle. It allows task
@@ -28,6 +44,10 @@ fixture callback budget. Treat this as a failed repeatability gate and a
 timing-sensitive safety signal, not a reliability estimate or pass. Raw logs,
 exit codes, conditions, and SHA-256 manifest are in the
 [R04 packet](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r04_20261123/RESULT.md).
+Post-merge raw-log review also found a `PermissionError` deleting an in-flight
+`.report.json.tmp` during the optimized observation-timeout teardown. The
+writer's identity and causal role are unknown; a traced cleanup follow-up is
+needed.
 R03's logging failure is preserved separately and is not scored. Keep #57 open.
 
 ## What the project is trying to finish

@@ -2,7 +2,12 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-**Current checkpoint — 2026-11-23 (main `7fb6fe4c`, PRs #10467/#10468):** The public compiled caller composes automatic recovery, exact-call result lookup, and an independent task oracle only when separate recovery confirms the matching operation/generation, release, and late-input horizon. It preserves UNKNOWN source action and denies replay. Positive composition and negative controls pass normally and under `-O`. R04 then ran ten fresh Fake lifecycle processes once: 7/10 passed; two action executions had unverified release and one observation missed its callback budget. This fails the repeatability gate and is not a production reliability estimate. Research Preview still lacks supported-host doctor, fresh no-retry golden run, and `audit-live`; #57 still lacks repeated recovery reliability and matched all-attempt provider/token/latency/correctness accounting. Evidence is in the [project state index](docs/PROJECT_STATE.md), [R04 result](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r04_20261123/RESULT.md), [public recovery R02](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_negative_controls_r02_20261123/RESULT.md), [public recovered-caller R01](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovered_caller_r01_20261123/RESULT.md), and existing R06/R07/R08 task-effect packets. The latest full membership receipt r165 predates this main SHA and remains a dated snapshot, not a fresh queue count.
+
+**Recovery lifecycle diagnostic update — 2026-11-23:** R05 did not exercise its drain path; R06/R07 are failed designs; R08 verifies only a minimal delayed-observation Future drain. R09 (7/10) and R10 (8/10) remain mixed and cannot be classified as verified Fake-only because R10's optimized-02 orphan report came from real Win32 observation (`invalid HWND`, no input dispatched, owner call count zero). R11 failed on the wrong envelope oracle; corrected minimal R12 passed normal and `-O` and confirms only direct fake injection. The compiled-caller anomaly remains unresolved; instrument callback identity/raw response and detached worker state before freezing another lifecycle cohort. See [R05–R12 packets](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_drain_r05_20261123/RESULT.md).
+
+R13 passed the deterministic direct-observation Future-drain diagnostic once normally and once under `-O` (44.108 s and 46.170 s). Source review found a plausible, unproven late-executor-worker/test-patch race behind R10; retain the native invalid-HWND anomaly as unresolved and keep the R04/R09/R10 Fake-only classification withdrawn. The next gate is a stable per-invocation observer dependency plus retained caller worker/callback receipts before another lifecycle cohort. See [R13](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_callback_future_drain_r13_20261123/RESULT.md).
+
+**Current checkpoint — 2026-11-23 (main `19d4752e`, PRs #10467–#10469):** The public compiled caller composes automatic recovery, exact-call result lookup, and an independent task oracle only when separate recovery confirms the matching operation/generation, release, and late-input horizon. It preserves UNKNOWN source action and denies replay. Positive composition and negative controls pass normally and under `-O`. R04 ran ten fresh Fake lifecycle processes once: 7/10 passed; two action executions had unverified release and one observation missed its callback budget. A post-merge raw-log audit found an additional teardown `PermissionError` while deleting an in-flight report temp file; the writer identity and cause remain unproven. This fails the repeatability gate and is not a production reliability estimate. Research Preview still lacks supported-host doctor, fresh no-retry golden run, and `audit-live`; #57 still lacks repeated recovery reliability and matched all-attempt provider/token/latency/correctness accounting. Evidence is in the [project state index](docs/PROJECT_STATE.md), [R04 result](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_lifecycle_r04_20261123/RESULT.md), [public recovery R02](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_negative_controls_r02_20261123/RESULT.md), [public recovered-caller R01](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovered_caller_r01_20261123/RESULT.md), and existing R06/R07/R08 task-effect packets. The latest full membership receipt r165 predates this main SHA and remains a dated snapshot, not a fresh queue count.
 
 For the concise project-wide gate and repository-organization status, see the
 [project state dashboard](docs/PROJECT_STATE.md).
@@ -79,6 +84,18 @@ The retained Calc G10 record is a scoped positive control, not a matched efficie
 The active completion goal is to qualify the distributable runtime and the
 research gates below; this roadmap is a navigation/status summary, not a new
 experiment allocation.
+
+**2026-11-23 update:** Observer-binding R14/R15 focused tests pass in both
+Python modes, but full-module R16 fails in both modes (normal 12 errors;
+optimized 12 failures + 16 errors) with timing and temporary-file/cleanup
+interference. Do not treat the candidate as broadly verified yet. Retained
+details: [R16 result](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_r16_20261123/RESULT.md).
+
+R19 reproduced long cleanup failures with `D:\CodexData\Temp`; R20 passed all
+63 tests normally and under `-O` on dedicated C: TEMP (116.525 s / 118.401 s).
+Treat the C: result as the candidate's qualified local suite and keep the D:
+failure as a host-storage confound. See the [R19 comparison](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_temp_volume_r19_20261123/RESULT.md)
+and [R20 full suite](research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_observer_binding_suite_ssd_r20_20261123/RESULT.md).
 
 - **Portable package:** Windows and Ubuntu WSL deterministic package/startup
   checks pass 21/21 normally and under `-O`; outside-checkout `doctor` and

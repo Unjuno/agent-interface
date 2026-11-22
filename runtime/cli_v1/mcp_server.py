@@ -526,6 +526,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   supervised_win32_late_input_horizon_ns=0,
                   _supervised_win32_deadline_cancel_policy='automatic',
                   _supervised_win32_deadline_cancel_grace_ns=0):
+    # Bind the observation backend for this server instance. Accepted executor
+    # work can start after the caller's module patch/configuration scope ends;
+    # resolving the module global from a late worker can otherwise change the
+    # observer for an already accepted request.
+    observation_backend = observe
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11",
                             "guarded-win32", "supervised-win32"):
         raise ValueError("unknown session mode")
@@ -1266,7 +1271,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             'replay_allowed': False}
                 elif supervised_win32 and operation == 'observe':
                     options.pop('display_name')
-                    report = observe(deepcopy(targets), **options)
+                    report = observation_backend(deepcopy(targets), **options)
                 elif operation in ('inspect_target', 'review_target'):
                     try:
                         review_options = dict(kwargs)
@@ -1286,7 +1291,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         program = options.pop('program')
                         report = owner.dispatch(program, **options)
                 elif operation == 'observe':
-                    report = observe(deepcopy(targets), **options)
+                    report = observation_backend(deepcopy(targets), **options)
                 else:
                     program = options.pop('program')
                     report = dispatch(program, deepcopy(targets), **options)

@@ -11,7 +11,7 @@ The ten frozen attempts were executed once each in the order recorded in `condit
 | normal-01 | normal | 0 | PASS |
 | optimized-01 | -O | 0 | PASS |
 | normal-02 | normal | 0 | PASS |
-| optimized-02 | -O | 1 | FAIL: observation failed at the fixture callback budget (receipt elapsed 8.016 s; no observation accepted). |
+| optimized-02 | -O | 1 | FAIL: observation failed at the fixture callback budget (receipt elapsed 8.016 s; no observation accepted). During teardown, `TemporaryDirectory` also hit `PermissionError` deleting `.report.json.tmp` because another process still held the file. This is a secondary cleanup symptom; the raw log does not establish whether the delayed writer belongs to the runtime worker or fixture callback. |
 | normal-03 | normal | 1 | FAIL: action became uncertain and runtime returned `RUNTIME_FAILED` / `execution_failed`; release unverified, result resolution raised AssertionError. |
 | optimized-03 | -O | 0 | PASS |
 | normal-04 | normal | 0 | PASS |
@@ -23,7 +23,7 @@ The ten frozen attempts were executed once each in the order recorded in `condit
 
 The composed exact-effect/recovery/oracle path can pass in fresh local processes, but this run does **not** establish stable repeatability under the frozen timing budget. Two action executions ended with uncertain status and unverified release; those are safety-relevant failures, not test noise. A third attempt reached the observation callback deadline without accepted evidence. These retained failures show timing sensitivity in this fixture and justify a separate bounded diagnosis of callback and release/result-resolution timing. Do not widen deadlines and rerun this frozen experiment, discard failures, or call the 7/10 result a pass.
 
-The experiment is local and synthetic. It provides no live GUI, MAP01, WSLc, matched efficiency, preview graduation, or distributable-runtime evidence. Issue #57 remains open.
+Post-merge raw-log review found a teardown cleanup race after the optimized observation failure: `TemporaryDirectory` could not delete an in-flight `.report.json.tmp`. The writer's identity and causal role are unknown and need a traced follow-up. The experiment is local and synthetic. It provides no live GUI, MAP01, WSLc, matched efficiency, preview graduation, or distributable-runtime evidence. Issue #57 remains open.
 
 ## Evidence custody
 

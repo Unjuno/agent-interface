@@ -1,0 +1,40 @@
+{
+  "scope": "Fake/local public-MCP recovered-caller repeatability; compare with R04 descriptively only",
+  "not_tested": [
+    "native GUI/MAP01",
+    "production reliability",
+    "matched efficiency/token/provider accounting",
+    "WSLc/Docker",
+    "Research Preview",
+    "distributable runtime"
+  ],
+  "frozen_main": "19d4752ed16063d63119f5d7347c51fb69f44a8c",
+  "baseline_comparison": "R04 had 7/10 passes and included unresolved API callback timeout/release failures. R09 uses unchanged server code and callback/result timeouts; only test-side Future diagnostics and cleanup drain are added. R04 remains a separate frozen denominator.",
+  "freshness": "Every attempt is a separate Python process with new MCP server, owner, producer, temp directory, operation/call ID, recovery, effect, and oracle.",
+  "environment": "CPython 3.11.9; Windows host",
+  "instrumented_source_sha256": {
+    "runtime/cli_v1/test_mcp_supervised_win32.py": "565892c8d6a217bfa8f61d149441743147d5d540761a2093ca41d8793cdb4d83",
+    "runtime/cli_v1/mcp_server.py": "5a04e6b05169a3000e7570db6ca951de21650fde5d1769ebdc54f07ca3d64510"
+  },
+  "attempt_count": {
+    "total": 10,
+    "optimized": 5,
+    "normal": 5
+  },
+  "pass_rule": "Each sample passes only exit=0 plus unittest OK and existing exact-effect/release/horizon/source-UNKNOWN/no-replay assertions. Failures remain in denominator. No retries/replacements.",
+  "order": [
+    "normal-01",
+    "optimized-01",
+    "normal-02",
+    "optimized-02",
+    "normal-03",
+    "optimized-03",
+    "normal-04",
+    "optimized-04",
+    "normal-05",
+    "optimized-05"
+  ],
+  "question": "With caller API futures now tracked and drained during test cleanup, does the public Fake recovered-caller complete exact effect/recovery/oracle semantics repeatedly under the same original callback and result-poll budgets?",
+  "schema": "agent-interface/public-recovered-caller-fresh-lifecycle-r09",
+  "per_attempt_command": "python [-O] -m unittest -v runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle"
+}
