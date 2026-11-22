@@ -91,6 +91,34 @@ def _tool_body(event: dict) -> dict:
     return body
 
 
+def _recorded_dispatch_program(event: dict, recorder_root: Path):
+    """Project the program from one hash-verified retained MCP request."""
+    request_refs = [ref for ref in event.get("raw_refs", [])
+                    if type(ref) is dict and
+                    isinstance(ref.get("path"), str) and
+                    ref["path"].endswith(".tool-request.bin")]
+    if not request_refs:
+        return None
+    if len(request_refs) != 1:
+        _fail("dispatch needs exactly one retained MCP request")
+    ref = request_refs[0]
+    data = (recorder_root / ref["path"]).read_bytes()
+    if hashlib.sha256(data).hexdigest() != ref.get("sha256"):
+        _fail("dispatch request bytes do not match their retained digest")
+    import json
+    try:
+        request = json.loads(data)
+    except (TypeError, ValueError) as exc:
+        raise LedgerValidationError("dispatch request is not valid JSON") from exc
+    arguments = request.get("arguments") if type(request) is dict else None
+    program = arguments.get("program") if type(arguments) is dict else None
+    if type(request) is not dict or request.get("tool") != "interface_dispatch":
+        _fail("retained dispatch request does not name interface_dispatch")
+    if type(program) is not dict:
+        return None
+    return program, {"path": ref["path"], "sha256": ref["sha256"]}
+
+
 def _public_dispatch_event(events: list, action_call_id: str):
     """Resolve the public action ID through a recorded dispatch response.
 
@@ -106,7 +134,24 @@ def _public_dispatch_event(events: list, action_call_id: str):
             matches.append(event)
     if len(matches) != 1:
         _fail("native owner evidence must bind one recorded interface_dispatch call")
-    return matches[0], _tool_body(matches[0])
+    event = matches[0]
+    body = _tool_body(event)
+    if body.get("schema") == "agent-interface/review-v1":
+        receipt = body.get("receipt")
+        source = receipt.get("source") if type(receipt) is dict else None
+        raw_report = source.get("raw_report") if type(source) is dict else None
+        if (body.get("authority") != "none" or
+                type(receipt) is not dict or
+                receipt.get("schema") != "agent-interface/receipt-view-v1" or
+                receipt.get("authority") != "none" or
+                type(raw_report) is not dict or
+                raw_report.get("schema") != "agent-interface/runtime-dispatch-result-v1" or
+                raw_report.get("call_id") != body.get("call_id")):
+            _fail("public dispatch review wrapper lacks one matching raw report")
+        body = raw_report
+    if "standard_program" not in body and type(event.get("dispatch_program")) is dict:
+        body = {**body, "standard_program": event["dispatch_program"]}
+    return event, body
 
 
 def _derive_native_owner_attribution(events: list, evidence: object):
@@ -257,9 +302,16 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
             if (not required <= set(event) or
                     event.get("response_status") != "matched"):
                 _fail("public MCP call lacks a matching retained response")
-            projected.append({key: event[key] for key in (
+            projected_event = {key: event[key] for key in (
                 "seq", "kind", "call_id", "model_attempt_id", "method",
-                "started_ns", "ended_ns", "result")})
+                "started_ns", "ended_ns", "result")}
+            if event.get("method") == "interface_dispatch":
+                dispatch_program = _recorded_dispatch_program(
+                    event, recorder_root)
+                if dispatch_program is not None:
+                    projected_event["dispatch_program"], projected_event[
+                        "dispatch_program_ref"] = dispatch_program
+            projected.append(projected_event)
         elif kind == "task_score":
             required = common | {"independent", "scorer_id", "task_success", "state_sha256"}
             if not required <= set(event):
