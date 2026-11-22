@@ -36,6 +36,24 @@ _SUPERVISED_WIN32_COMPLETION_OBSERVER_NS = 1_000_000_000
 _SUPERVISED_WIN32_DEADLINE_POLL_MAX_S = 0.002
 
 
+def _recovered_completion_is_task_verifiable(action, cancellation):
+    """Allow separate task scoring only after exact recovery custody is proven."""
+    if (not isinstance(action, dict) or not isinstance(cancellation, dict)
+            or action.get('status') != 'unknown'
+            or cancellation.get('status') != 'recovered'
+            or cancellation.get('automatic_completion_recovery') is not True
+            or cancellation.get('release_confirmed') is not True):
+        return False
+    recovery = cancellation.get('result')
+    return (isinstance(recovery, dict)
+        and recovery.get('operation_id') == action.get('operation_id')
+        and recovery.get('target_generation') == action.get('target_generation')
+        and recovery.get('phase') == 'recovered'
+        and recovery.get('status') == 'recovered'
+        and recovery.get('release_confirmed') is True
+        and recovery.get('late_input_horizon_verified') is True)
+
+
 def _x11_root_window_id(display_name=None):
     """Return the root XID for the configured connection without changing focus."""
     from Xlib import display as xdisplay
@@ -2174,21 +2192,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         'replay_allowed':False,'scope':'supervised_win32'}, error=True)
                 action = existing.get('action') or {}
                 cancellation = existing.get('cancellation') or {}
-                recovery = cancellation.get('result')
-                recovered_completion_uncertain = (
-                    action.get('status') == 'unknown'
-                    and cancellation.get('status') == 'recovered'
-                    and cancellation.get('automatic_completion_recovery') is True
-                    and cancellation.get('release_confirmed') is True
-                    and isinstance(recovery, dict)
-                    and recovery.get('operation_id') == action.get('operation_id')
-                    and recovery.get('target_generation') == action.get('target_generation')
-                    and recovery.get('phase') == 'recovered'
-                    and recovery.get('status') == 'recovered'
-                    and recovery.get('release_confirmed') is True
-                    and recovery.get('late_input_horizon_verified') is True)
                 if (action.get('status') not in ('completed','recovered')
-                        and not recovered_completion_uncertain):
+                        and not _recovered_completion_is_task_verifiable(
+                            action, cancellation)):
                     status = ('pending' if action.get('status') in
                               ('pending','queued','running','cancel_pending') else 'unknown')
                     return content({'status':status,'call_id':call_id,
