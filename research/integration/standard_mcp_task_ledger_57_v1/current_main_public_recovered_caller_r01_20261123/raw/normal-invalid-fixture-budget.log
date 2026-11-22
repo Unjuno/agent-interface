@@ -1,0 +1,39 @@
+test_public_compiled_caller_joins_exact_result_query_and_task_oracle (runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle) ... ERROR
+test_task_oracle_is_not_invoked_for_unknown_public_custody (runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_task_oracle_is_not_invoked_for_unknown_public_custody) ... ok
+
+======================================================================
+ERROR: test_public_compiled_caller_joins_exact_result_query_and_task_oracle (runtime.cli_v1.test_mcp_supervised_win32.SupervisedWin32MCPTests.test_public_compiled_caller_joins_exact_result_query_and_task_oracle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\runtime\cli_v1\test_mcp_supervised_win32.py", line 3143, in test_public_compiled_caller_joins_exact_result_query_and_task_oracle
+    result = await asyncio.to_thread(run_public_compiled,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\runtime\cli_v1\supervised_win32_compiled.py", line 591, in run_public_compiled
+    spec = validate(interface)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\.goal-main-381a21-20261120\.worktrees\repo-current-main-audit-20261122\runtime\core_v1\compiled_gui.py", line 98, in validate
+    raise ValueError("max_runtime_ms must be one to 10000")
+ValueError: max_runtime_ms must be one to 10000
+
+----------------------------------------------------------------------
+Ran 2 tests in 8.420s
+
+FAILED (errors=1)

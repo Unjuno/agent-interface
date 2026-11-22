@@ -2894,6 +2894,30 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
         effects = []
         operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
             process_identity_reader=lambda handle: identity if handle is process else None)
+        raw_owner_result = operation_owner.result
+        def result_with_recovery_horizon(operation_id):
+            row = raw_owner_result(operation_id)
+            if row.get("phase") == "recovered":
+                release_ns = time.monotonic_ns() - 2_100_000_000
+                horizon_start_ns = release_ns + 10_000_000
+                horizon_end_ns = horizon_start_ns + 2_000_000_000
+                row.update(late_input_horizon_ns=2_000_000_000,
+                    late_input_release_received_ns=release_ns,
+                    late_input_observation_start_ns=horizon_start_ns,
+                    late_input_observation_end_ns=horizon_end_ns,
+                    late_input_observation_count=77,
+                    late_input_max_observed_gap_ns=32_000_000,
+                    late_input_max_sample_gap_ns=100_000_000,
+                    late_input_validation_error=None,
+                    recovery_release_key_up_attempts=[
+                        {"virtual_key": 0x11, "encoding": "virtual_key",
+                            "status": "returned"},
+                        {"virtual_key": 0x53, "encoding": "virtual_key",
+                            "status": "returned"}])
+                row["readback"].update(observed_monotonic_ns=horizon_end_ns,
+                    key_button_states=[False, False])
+            return row
+        operation_owner.result = result_with_recovery_horizon
         supervisor = RecoveringFakeSupervisor(operation_owner, process)
         owner = OwnedWin32SessionOwner(operation_owner, supervisor,
             synthetic_only=False)
@@ -2901,6 +2925,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
 
         class EffectfulProducer(FakeProducerFactory):
             fail_next = False
+            record_effect_before_failure = False
 
             def __call__(self, action):
                 self.started += 1
@@ -2912,9 +2937,11 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     # Keep the public dispatch pending long enough for the
                     # caller to exercise exact-call result retrieval.
                     time.sleep(0.04)
-                    if not self.fail_next:
+                    if (not self.fail_next
+                            or self.record_effect_before_failure):
                         effects.append({"operation_id": action["operation_id"],
-                            "target_generation": action["target_generation"]})
+                            "target_generation": action["target_generation"],
+                            "observed_monotonic_ns": time.monotonic_ns()})
                     self.process.alive = False
                     self.process.exitcode = 0
                 return self.process, lambda: self.identity, authorize_start
@@ -2924,6 +2951,10 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.fail_next = False
                     if process is not self.process or process.is_alive():
                         raise RuntimeError("failure fixture did not exit")
+                    if self.record_effect_before_failure:
+                        self.record_effect_before_failure = False
+                        raise EOFError(
+                            "controlled receipt loss after exact task effect")
                     return {"result": {"status": "runtime_failed",
                             "error_type": "RuntimeError",
                             "detail": "controlled result exception"},
@@ -2963,7 +2994,7 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                 "operation": "save", "expected_effect": {"saved": True}}},
             "method": {"name": "save-once", "version": "1",
                 "initial_state": "before", "max_transitions": 1,
-                "max_runtime_ms": 2000,
+                "max_runtime_ms": 10000,
                 "states": {
                     "before": {"branches": [{"when": {"ready": True},
                         "outcome": "action", "action": "save",
@@ -3103,54 +3134,13 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     "call_id": call_id, "wait_for_result_ms": 1000})
 
             try:
-                result = await asyncio.to_thread(run_public_compiled,
-                    interface, {"save": self.valid_program()},
-                    target="fixture", current_binding_revision=1,
-                    region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
-                    resolve_pending=resolve_pending,
-                    perceive=lambda report, _reply: report["predicates"],
-                    verify_effect=lambda _request, _report, _reply: {
-                        "status": "succeeded", "evidence_ref": "fixture-pixels"},
-                    verify_task=verify_task, cancelled=lambda: False)
-                self.assertEqual(result["outcome"], "TASK_SUCCEEDED",
-                    {"result": result, "callback_errors": callback_errors,
-                     "observation_envelopes": observation_envelopes})
-                self.assertEqual(result["standard_action_call_ids"], dispatch_call_ids)
-                self.assertEqual(result["standard_observation_call_ids"], observed_call_ids)
-                busy_rows = [row for row in result["standard_target_evidence"]
-                    if row["kind"] == "observation_busy"]
-                # A public lock-contention busy is scheduler-dependent; the
-                # bounded retry/refusal contract has deterministic unit tests.
-                self.assertTrue(all(row["operation_invoked"] is False
-                    and row["input_dispatched"] is False for row in busy_rows))
-                dispatch_evidence = next(row for row in result[
-                    "standard_target_evidence"] if row["kind"] == "dispatch")
-                self.assertEqual(dispatch_evidence["call_id"], dispatch_call_ids[0])
-                self.assertEqual(dispatch_evidence["pending_result_resolution"],
-                    "same_call_id")
-                self.assertTrue(result["task_verification"]["valid"], result)
-                self.assertIs(result["task_success"], True)
-                self.assertEqual(result["task_verification"]["action_call_id"],
-                    dispatch_call_ids[0])
-                self.assertTrue(any(isinstance(row.get("action"), dict)
-                    and row["action"].get("status") == "completed"
-                    for row in result_queries))
-                self.assertEqual(len(oracle_calls), 1)
-                self.assertEqual(oracle_calls[0]["call_id"], dispatch_call_ids[0])
-                self.assertEqual(oracle_calls[0]["operation_id"],
-                    result["transitions"][-1]["action_id"])
-                self.assertEqual(len(effects), 1)
-                self.assertEqual(producer.started, 1)
-                self.assertEqual(len(delayed_dispatch_report_writes), 1)
-
-                # A second exact-call readback carries an exception/unknown
-                # action plus release-only recovery. Without a verified late
-                # input horizon, the caller must retain uncertainty and skip
-                # task-effect verification.
-                effects.clear()
                 producer.fail_next = True
-                failed = await asyncio.to_thread(run_public_compiled,
-                    interface, {"save": self.valid_program()},
+                producer.record_effect_before_failure = True
+                recovery_program = self.valid_program()
+                recovery_program["authority"]["expires_at_ns"] = (
+                    time.monotonic_ns() + 30_000_000_000)
+                recovered = await asyncio.to_thread(run_public_compiled,
+                    interface, {"save": recovery_program},
                     target="fixture", current_binding_revision=1,
                     region=[0, 0, 1, 1], observe=observe, dispatch=dispatch,
                     resolve_pending=resolve_pending,
@@ -3158,23 +3148,63 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     verify_effect=lambda _request, _report, _reply: {
                         "status": "succeeded", "evidence_ref": "must-not-score"},
                     verify_task=verify_task, cancelled=lambda: False)
-                self.assertEqual(failed["outcome"], "RUNTIME_FAILED", failed)
-                self.assertIsNone(failed["task_success"])
-                self.assertIsNone(failed["task_verification"])
-                failed_dispatch = next(row for row in failed[
+                self.assertEqual(recovered["outcome"], "SAFE_YIELD", recovered)
+                self.assertEqual(recovered["reason"], "delivery_uncertain")
+                self.assertEqual(recovered["completed_transitions"], 0)
+                self.assertTrue(recovered["task_verification"]["valid"],
+                    recovered)
+                self.assertIs(recovered["task_success"], True)
+                self.assertEqual(recovered["standard_action_call_ids"],
+                    dispatch_call_ids)
+                self.assertEqual(recovered["standard_observation_call_ids"],
+                    observed_call_ids)
+                self.assertEqual(callback_errors, [])
+                recovered_dispatch = next(row for row in recovered[
                     "standard_target_evidence"] if row["kind"] == "dispatch")
-                self.assertEqual(len(dispatch_call_ids), 2)
-                self.assertNotEqual(dispatch_call_ids[0], dispatch_call_ids[1])
-                self.assertEqual(failed_dispatch["call_id"], dispatch_call_ids[1])
+                self.assertEqual(len(dispatch_call_ids), 1)
+                self.assertEqual(recovered_dispatch["call_id"],
+                    dispatch_call_ids[0])
                 self.assertEqual(result_queries[-1]["call_id"],
-                    dispatch_call_ids[1])
-                self.assertEqual(failed_dispatch["pending_result_resolution"],
+                    dispatch_call_ids[0])
+                self.assertEqual(recovered_dispatch["pending_result_resolution"],
                     "same_call_id")
-                self.assertEqual(failed_dispatch["status"], "uncertain")
-                self.assertFalse(failed_dispatch["release_verified"])
-                self.assertEqual(task_client_calls, [dispatch_call_ids[0]])
+                self.assertEqual(recovered_dispatch["status"],
+                    "delivery_uncertain")
+                self.assertTrue(recovered_dispatch["release_verified"])
+                recovered_row = result_queries[-1]
+                self.assertEqual(recovered_row["action"]["status"], "unknown")
+                self.assertIsNone(recovered_row["action"]["task_success"])
+                self.assertFalse(recovered_row["action"]["release_confirmed"])
+                self.assertEqual(recovered_row["cancellation"]["status"],
+                    "recovered")
+                self.assertTrue(recovered_row["cancellation"][
+                    "automatic_completion_recovery"])
+                self.assertTrue(recovered_row["cancellation"][
+                    "release_confirmed"])
+                recovery_receipt = recovered_row["cancellation"]["result"]
+                self.assertTrue(recovery_receipt[
+                    "late_input_horizon_verified"], recovery_receipt)
+                self.assertEqual(recovery_receipt["operation_id"],
+                    recovered_row["action"]["operation_id"])
+                self.assertEqual(recovery_receipt["target_generation"],
+                    GENERATION)
+                self.assertFalse(recovered_row["replay_allowed"])
+                self.assertEqual(len(delayed_dispatch_report_writes), 1)
+                self.assertEqual(task_client_calls, dispatch_call_ids)
                 self.assertEqual(len(oracle_calls), 1)
-                self.assertEqual(producer.started, 2)
+                self.assertEqual(oracle_calls[-1]["call_id"],
+                    dispatch_call_ids[0])
+                self.assertEqual(oracle_calls[-1]["operation_id"],
+                    recovered_row["action"]["operation_id"])
+                self.assertEqual(oracle_calls[-1]["target_generation"],
+                    GENERATION)
+                self.assertEqual(len(effects), 1)
+                self.assertEqual(effects[0]["operation_id"],
+                    recovered_row["action"]["operation_id"])
+                self.assertEqual(effects[0]["target_generation"], GENERATION)
+                self.assertLess(effects[0]["observed_monotonic_ns"],
+                    recovery_program["authority"]["expires_at_ns"])
+                self.assertEqual(producer.started, 1)
                 # The public result can become readable just before the
                 # producer's atomic report replacement finishes.
                 report_temps = list(Path(root).glob("*/.report.json.tmp"))

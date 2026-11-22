@@ -2173,7 +2173,22 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         'operation_invoked':False,'task_success':None,
                         'replay_allowed':False,'scope':'supervised_win32'}, error=True)
                 action = existing.get('action') or {}
-                if action.get('status') not in ('completed','recovered'):
+                cancellation = existing.get('cancellation') or {}
+                recovery = cancellation.get('result')
+                recovered_completion_uncertain = (
+                    action.get('status') == 'unknown'
+                    and cancellation.get('status') == 'recovered'
+                    and cancellation.get('automatic_completion_recovery') is True
+                    and cancellation.get('release_confirmed') is True
+                    and isinstance(recovery, dict)
+                    and recovery.get('operation_id') == action.get('operation_id')
+                    and recovery.get('target_generation') == action.get('target_generation')
+                    and recovery.get('phase') == 'recovered'
+                    and recovery.get('status') == 'recovered'
+                    and recovery.get('release_confirmed') is True
+                    and recovery.get('late_input_horizon_verified') is True)
+                if (action.get('status') not in ('completed','recovered')
+                        and not recovered_completion_uncertain):
                     status = ('pending' if action.get('status') in
                               ('pending','queued','running','cancel_pending') else 'unknown')
                     return content({'status':status,'call_id':call_id,
