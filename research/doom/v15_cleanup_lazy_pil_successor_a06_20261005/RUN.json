@@ -1,0 +1,76 @@
+{
+  "schema": "v15-cleanup-lazy-pil-a06-execution-v1",
+  "modes": {
+    "normal": {
+      "argv": [
+        "C:\\Users\\junny\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests",
+        "test_input_owner_v12_key_measurement",
+        "test_input_owner_v12_batch_sample_custody",
+        "test_batch_key_measurement_composition",
+        "test_input_owner_v12_explicit_up_cancel",
+        "test_input_owner_v12_wheel_cleanup",
+        "test_input_transition_owner_v4"
+      ],
+      "exit_code": 1,
+      "stdout": {
+        "path": "runs/normal.stdout.txt.b64",
+        "bytes": 51032,
+        "sha256": "b2d82174822b7d09367ab27ffaba456b5b45614ad5bff924284efe16a58d013f"
+      },
+      "stderr": {
+        "path": "runs/normal.stderr.txt.b64",
+        "bytes": 24653,
+        "sha256": "185afb6cc25d68b8de869117c5fe520c74e281df295156b7b1530986d2bb8414"
+      },
+      "blocker_marker_seen": true
+    },
+    "optimized": {
+      "argv": [
+        "C:\\Users\\junny\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-O",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests",
+        "test_input_owner_v12_key_measurement",
+        "test_input_owner_v12_batch_sample_custody",
+        "test_batch_key_measurement_composition",
+        "test_input_owner_v12_explicit_up_cancel",
+        "test_input_owner_v12_wheel_cleanup",
+        "test_input_transition_owner_v4"
+      ],
+      "exit_code": 1,
+      "stdout": {
+        "path": "runs/optimized.stdout.txt.b64",
+        "bytes": 51032,
+        "sha256": "57c89781d72337a0efcd6699676b0443981b78443087e932f1b96fa807a4bac1"
+      },
+      "stderr": {
+        "path": "runs/optimized.stderr.txt.b64",
+        "bytes": 24653,
+        "sha256": "cd600a0741e3a4efc4087c38d5a6598076a92aa8a2cbcb6db1a8b6e025baccd2"
+      },
+      "blocker_marker_seen": true
+    }
+  },
+  "candidate_code_retries": 0,
+  "tree": "78b8636f08bef691944da8bb536437586f0d116a",
+  "main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "pr": 8094,
+  "pr_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "tests_discovered": 47,
+  "errors_per_mode": 8,
+  "disposition": "FAIL_SINGLE_IMPORT_RELOCATION_INSUFFICIENT",
+  "failure_evidence": "8/8 composition setup tracebacks fail at research/live_control/session_v9.py top-level from PIL import ImageGrab after blocker marker",
+  "live_game": false,
+  "model_calls": 0,
+  "native_x11": false,
+  "input_calls": 0,
+  "retry": false
+}

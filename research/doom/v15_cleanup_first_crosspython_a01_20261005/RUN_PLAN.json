@@ -1,0 +1,35 @@
+{
+  "schema": "v15-cleanup-crosspython-run-plan-v1",
+  "merge_base": "21fecd58b9de30073c97234124e73b78c67d4b0c",
+  "current_main": "2c1c90c80389dc6aab6a950c7058528272979f2d",
+  "pr_number": 8094,
+  "pr_head": "a3132379705d10f2bbfd122de8dad7c0298c6e7b",
+  "virtual_merge_tree": "2ce07e058ed6b868ea97799e9a7b65deff21da71",
+  "module_search_path": ["/src/research/live_control", "/src/research/doom"],
+  "modules": [
+    "test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests",
+    "test_input_owner_v12_key_measurement",
+    "test_input_owner_v12_batch_sample_custody",
+    "test_batch_key_measurement_composition",
+    "test_input_owner_v12_explicit_up_cancel",
+    "test_input_owner_v12_wheel_cleanup",
+    "test_input_transition_owner_v4"
+  ],
+  "expected_distinct_methods_per_mode": 47,
+  "modes": [
+    {"name":"normal","python_args":["-B","-m","unittest","-v"]},
+    {"name":"optimized","python_args":["-O","-B","-m","unittest","-v"]}
+  ],
+  "container": {
+    "runtime":"WSLc 3.0.1",
+    "image":"python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform":"linux/amd64",
+    "python":"3.12.15",
+    "pull":"never",
+    "network":"none",
+    "cpus":"1",
+    "memory":"512M requested only; enforcement unverified",
+    "source_mount":"read-only",
+    "cleanup":"--rm"
+  }
+}

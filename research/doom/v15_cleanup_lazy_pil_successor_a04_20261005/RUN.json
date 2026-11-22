@@ -1,0 +1,75 @@
+{
+  "schema": "v15-cleanup-lazy-pil-a04-run-v1",
+  "disposition": "PASS_SYNTHETIC_REGRESSION_WITH_PILLOW_PRESENT",
+  "tree": "78b8636f08bef691944da8bb536437586f0d116a",
+  "main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "pr": 8094,
+  "pr_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "roots": [
+    "research/live_control",
+    "research/doom",
+    "research/observation_tiles",
+    "research/observation_gating",
+    "research/real_apps_v1"
+  ],
+  "source_files": 2013,
+  "source_bytes": 11302097,
+  "patched_path": "research/doom/doom_typed_coast_backend_v1.py",
+  "base_sha256": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+  "patched_sha256": "8570b509576994746edbac46848d3b6f7e1827d9b918d06b433588222c817329",
+  "runtime": {
+    "python": "3.12.14",
+    "pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "platform": "Windows AMD64",
+    "xlib": "fake modules installed by test fixture; no native Xlib"
+  },
+  "modes": {
+    "normal": {
+      "exit_code": 0,
+      "tests": 47,
+      "failures": 0,
+      "errors": 0,
+      "terminal_summary": [
+        "Ran 47 tests in 1.238s",
+        "OK"
+      ],
+      "stdout": {
+        "bytes": 208071,
+        "sha256": "607f3f84b15d26584710f6fbfabf59447d7af365f732147493dfe78f244a7b36",
+        "path": "runs/normal.stdout.txt.b64"
+      },
+      "stderr": {
+        "bytes": 8981,
+        "sha256": "13b853a0e6f834d9a0309ad8fe394cc0cc7e130a936a0a0cbe72bb13c6537908",
+        "path": "runs/normal.stderr.txt.b64"
+      }
+    },
+    "optimized": {
+      "exit_code": 0,
+      "tests": 47,
+      "failures": 0,
+      "errors": 0,
+      "terminal_summary": [
+        "Ran 47 tests in 1.622s",
+        "OK"
+      ],
+      "stdout": {
+        "bytes": 208073,
+        "sha256": "7e69d56e13fa8e8a03abc781057358e676cec8276f0232641e6f4d46071ba446",
+        "path": "runs/optimized.stdout.txt.b64"
+      },
+      "stderr": {
+        "bytes": 8981,
+        "sha256": "708243d3543ec48db3efa51563dffcee986d214fdc9c8ab379d18683cc00fd9a",
+        "path": "runs/optimized.stderr.txt.b64"
+      }
+    }
+  },
+  "live_game": false,
+  "model_calls": 0,
+  "native_x11": false,
+  "input_calls": 0,
+  "formal_allocation": false,
+  "limitations": "Pillow was present; this PASS does not establish test importability when PIL is absent."
+}
