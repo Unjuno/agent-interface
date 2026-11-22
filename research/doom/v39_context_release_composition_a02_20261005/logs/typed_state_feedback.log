@@ -1,0 +1,21 @@
+test_map01_v39_typed_state_feedback (unittest.loader._FailedTest.test_map01_v39_typed_state_feedback) ... ERROR
+
+======================================================================
+ERROR: test_map01_v39_typed_state_feedback (unittest.loader._FailedTest.test_map01_v39_typed_state_feedback)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_v39_typed_state_feedback
+Traceback (most recent call last):
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/v39-a02-export/research/doom/test_map01_v39_typed_state_feedback.py", line 15, in <module>
+    import map01_overlap_controller_v39 as controller
+  File "/private/tmp/v39-a02-export/research/doom/map01_overlap_controller_v39.py", line 16, in <module>
+    from map01_stagnation_v1 import descriptor, normalized_mae
+ModuleNotFoundError: No module named 'map01_stagnation_v1'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
