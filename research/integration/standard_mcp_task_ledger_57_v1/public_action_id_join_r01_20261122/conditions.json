@@ -1,0 +1,15 @@
+{
+  "schema": "agent-interface/public-action-id-join-r01",
+  "base_commit": "f5c87f4bef26be604bb6872e63ee2274d1c9bbd3",
+  "purpose": "Resolve public supervised action identity separately from caller recorder MCP boundary identity.",
+  "change": "Find exactly one retained interface_dispatch event by its parsed public response body call_id; continue cross-checking exact interface_results, operation_id, target_generation, release and horizon.",
+  "scope": "Offline synthetic completed and recovered handoff validation. No GUI, provider, model, Docker, WSLc, or allocation.",
+  "normal_tests": 68,
+  "optimized_tests": 68,
+  "normal_exit": 0,
+  "optimized_exit": 0,
+  "commands": [
+    "python -m unittest -v test_effect_receipt_handoff_v1 test_effect_receipt_reuse_horizon_integration_v1 test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "python -O -m unittest -v test_effect_receipt_handoff_v1 test_effect_receipt_reuse_horizon_integration_v1 test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1"
+  ]
+}

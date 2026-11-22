@@ -15,6 +15,7 @@ from effect_attribution_v1 import adjudicate_effect
 from ledger import LedgerValidationError
 from recorded_comparison_adapter_v1 import (
     _derive_native_owner_attribution,
+    _public_dispatch_event,
     _tool_body,
 )
 
@@ -104,11 +105,7 @@ def _derive_completed_owner_attribution(events, evidence, public_receipt):
     the exact dispatched program expiry plus verified release and readback.
     """
     action_call_id = evidence["action_call_id"]
-    actions = [event for event in events if event.get("kind") == "tool_call"
-               and event.get("call_id") == action_call_id]
-    if len(actions) != 1 or actions[0].get("method") != "interface_dispatch":
-        _fail("completed owner evidence must bind one recorded interface_dispatch call")
-    dispatch = _tool_body(actions[0])
+    _, dispatch = _public_dispatch_event(events, action_call_id)
     action = public_receipt.get("action")
     if (type(action) is not dict or public_receipt.get("call_id") != action_call_id
             or action.get("status") != "completed"
@@ -251,8 +248,8 @@ def adapt_measured_run(measured: object, *, receipt_root: str | Path,
     else:
         attribution_input, binding = _derive_native_owner_attribution(
             events, owner_evidence)
-    action_event = next(event for event in events if event.get("call_id") == receipt["action_call_id"])
-    action_body = json.loads(action_event["result"]["result"]["content"][0]["text"])
+    _, action_body = _public_dispatch_event(
+        events, receipt["action_call_id"])
     operation_id = action_body.get("operation_id")
     generation = action_body.get("target_generation")
     if (receipt["action_operation_id"] != operation_id or
