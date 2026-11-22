@@ -25,10 +25,11 @@ raw = verify(RUN / "SHA256SUMS", RUN)
 d = json.loads((RUN / "probe.json").read_text(encoding="utf-8"))
 ready = json.loads((RUN / "ready.json").read_text(encoding="utf-8"))
 late = json.loads((RUN / "computer-use-activation-post-stop.json").read_text(encoding="utf-8"))
+timestamps = json.loads((PACKET / "post-stop-file-timestamps.json").read_text(encoding="utf-8"))
 events = [json.loads(row) for row in (RUN / "events.jsonl").read_text(
     encoding="utf-8").splitlines()]
-probe_time = (RUN / "probe.json").stat().st_mtime_ns
-late_receipt_time = (RUN / "computer-use-activation-post-stop.json").stat().st_mtime_ns
+probe_time = timestamps["probe_result_last_write_utc"]
+late_receipt_time = timestamps["activation_receipt_last_write_utc"]
 checks = {
     "attempt_and_timeout_recorded": d.get("attempt_id") ==
         "win32-r12-cua-foreground-state-readback-20261122"
@@ -36,7 +37,9 @@ checks = {
     "no_native_state_read_or_input": d.get("input_dispatched") is False
         and "shift_down" not in d,
     "post_stop_receipt_is_not_joined": late.get("fixture_window_id") ==
-        ready["fixture"]["hwnd"] and probe_time < late_receipt_time,
+        ready["fixture"]["hwnd"] and probe_time < late_receipt_time
+        and timestamps.get("interpretation") ==
+            "activation receipt was written after the probe result and cannot be joined to a live native foreground/key-state read",
     "no_fixture_effect": not (RUN / "effect.json").exists()
         and events == [{"hwnd": ready["fixture"]["hwnd"], "kind": "ready"}],
     "fixture_cleanup_passed": d.get("cleanup_pass") is True
