@@ -1,0 +1,30 @@
+{
+  "worker": "01a0ff58-ba92-7fd2-9317-d75b43383005",
+  "policy": "FINAL-v5",
+  "recorded_utc": "2026-10-03T11:57:50.259256+00:00",
+  "base": "ba1c4d966bc098e8f9f7e9e6df85f1281daa1582",
+  "branch": "research/relay-inherited-close-01a0ff58-20261003",
+  "unit": "ordinary Node relay inherited-pipe cleanup E01",
+  "H": "After an actual cooperative parent exit0, inherited stdout/stderr held by a separately owned descendant can postpone the original relay_client close promise and exit journal.",
+  "T": "three fixed sequential Windows native cells healthy/stdout-held/stderr-held; parent/descendant native handles acquired before close; original close observed against one simple100ms checkpoint after actual parent exit, then single owned release and same promise completion",
+  "D": "Healthy close/receipt/native0 complete; held cases are GAP only with actual parent native0, descendant nativeSTILL_ACTIVE, close pending and no exit receipt BEFORE any release, then actual native0 and original close receipt after owned release. Otherwise HOLD; no API hard-deadline contract is invented.",
+  "C": "holder setup failure or selfcap, delayed readiness, false parent ancestry, reader faults, CPU scheduling and OS inheritance behavior; exact Node module unchanged and zero request sends",
+  "U": "one observation per cell; fixtures selfcap3000ms and root driver12000ms/capture20000ms, no production hard deadline/process containment/input cleanup or performance inference",
+  "source_sha256": {
+    "capture.py.txt": "4382ff0a4a5f4fe5dd16471f98cda92312092afb2ee9d021b88b4934600cf4fd",
+    "probe.mjs": "1b4d56e845c0e631d8d319c5810dba54d2a313317df15a2e319e1cb9e97019c8",
+    "relay_client.mjs": "0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b"
+  },
+  "capture_sha256": "4382ff0a4a5f4fe5dd16471f98cda92312092afb2ee9d021b88b4934600cf4fd",
+  "producer_invocations": 0,
+  "shared_leases": [],
+  "dedup": "323 current parent57 comments;8 descendant-related records describe separate Python appserver ownership or old native cleanup, none exact Node relay_client close/inheritance. Narrow all-state PR/issue searches retained in intake; bounded coverage not proof of unpushed absence.",
+  "distinct_predecessor": "b04b5967777892 and be6f6955 are Python reader/journal retirement; no replay or source takeover",
+  "decision_units": {
+    "checkpoint_interval_ms": "milliseconds scalar100, SI time equivalent0.1s; observer after actual parent exit, not a production deadline",
+    "native_filetime": "Windows100ns integer ticks, raw API field",
+    "exit_codes": "integer process codes, actual native handles",
+    "observed_ns": "Node driver monotonic integer nanoseconds as decimal string, same driver clock only"
+  },
+  "scope": "Evidence-only; no production changes, source-head mutation, formal/native model/game allocation or main application"
+}
