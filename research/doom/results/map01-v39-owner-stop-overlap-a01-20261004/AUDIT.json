@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "baseline:all_captured_release_records_verify_empty": true,
+    "baseline:first_record_is_lease_bound_release": true,
+    "baseline:no_fake_key_remains_down": true,
+    "baseline:one_keypress_one_keyrelease": true,
+    "baseline:release_call_returns_once": true,
+    "baseline_has_one_boundary_release_record": true,
+    "frozen_source_git_blob": true,
+    "frozen_source_sha256": true,
+    "manifest_covers_exact_package": true,
+    "manifest_hashes_match": true,
+    "record_count_changes_without_extra_key_event": true,
+    "stop-overlap:all_captured_release_records_verify_empty": true,
+    "stop-overlap:first_record_is_lease_bound_release": true,
+    "stop-overlap:no_fake_key_remains_down": true,
+    "stop-overlap:one_keypress_one_keyrelease": true,
+    "stop-overlap:release_call_returns_once": true,
+    "stop_overlap_adds_one_shutdown_record": true,
+    "stop_signal_was_set_after_dequeue": true
+  },
+  "pass": true,
+  "schema": "map01-v39-owner-stop-overlap-audit-v1",
+  "scope": "deterministic fake-Xlib owner queue/record behavior only"
+}
