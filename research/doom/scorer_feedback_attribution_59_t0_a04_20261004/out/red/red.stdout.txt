@@ -1,0 +1,64 @@
+test_admission_tied_to_lower_sample_is_unresolved (test_attribution.AttributionTests.test_admission_tied_to_lower_sample_is_unresolved) ... ok
+test_duplicate_per_key_interval_is_rejected (test_attribution.AttributionTests.test_duplicate_per_key_interval_is_rejected) ... ok
+test_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow (test_attribution.AttributionTests.test_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow) ... ok
+test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) ... 
+  test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind=None) ... FAIL
+  test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind='') ... FAIL
+  test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind='   ') ... FAIL
+  test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind=17) ... FAIL
+test_missing_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_missing_positive_event_kind_is_rejected) ... FAIL
+test_partial_overlap_is_unresolved (test_attribution.AttributionTests.test_partial_overlap_is_unresolved) ... ok
+test_rejects_event_not_bound_to_scorer_sample (test_attribution.AttributionTests.test_rejects_event_not_bound_to_scorer_sample) ... ok
+test_release_tied_to_event_sample_is_unresolved (test_attribution.AttributionTests.test_release_tied_to_event_sample_is_unresolved) ... ok
+test_same_intent_key_intervals_may_jointly_cover_without_a_gap (test_attribution.AttributionTests.test_same_intent_key_intervals_may_jointly_cover_without_a_gap) ... ok
+test_same_intent_key_intervals_with_gap_are_unresolved (test_attribution.AttributionTests.test_same_intent_key_intervals_with_gap_are_unresolved) ... ok
+test_strict_envelope_is_possible_only_not_confirmed_hold (test_attribution.AttributionTests.test_strict_envelope_is_possible_only_not_confirmed_hold) ... ok
+test_strictly_bracketing_interval_remains_a_possible_envelope (test_attribution.AttributionTests.test_strictly_bracketing_interval_remains_a_possible_envelope) ... ok
+test_two_intents_intersecting_detection_interval_are_ambiguous (test_attribution.AttributionTests.test_two_intents_intersecting_detection_interval_are_ambiguous) ... ok
+test_unverified_older_release_remains_possible_overlap (test_attribution.AttributionTests.test_unverified_older_release_remains_possible_overlap) ... ok
+test_unverified_release_cannot_establish_unique_coverage (test_attribution.AttributionTests.test_unverified_release_cannot_establish_unique_coverage) ... ok
+
+======================================================================
+FAIL: test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-feedback-attribution-20261004\research\doom\scorer_feedback_attribution_59_t0_a04_20261004\out\red\test_attribution.py", line 163, in test_malformed_positive_event_kind_is_rejected
+    with self.assertRaisesRegex(ValueError, "kind.*nonempty string"):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-feedback-attribution-20261004\research\doom\scorer_feedback_attribution_59_t0_a04_20261004\out\red\test_attribution.py", line 163, in test_malformed_positive_event_kind_is_rejected
+    with self.assertRaisesRegex(ValueError, "kind.*nonempty string"):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind='   ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-feedback-attribution-20261004\research\doom\scorer_feedback_attribution_59_t0_a04_20261004\out\red\test_attribution.py", line 163, in test_malformed_positive_event_kind_is_rejected
+    with self.assertRaisesRegex(ValueError, "kind.*nonempty string"):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) (kind=17)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-feedback-attribution-20261004\research\doom\scorer_feedback_attribution_59_t0_a04_20261004\out\red\test_attribution.py", line 163, in test_malformed_positive_event_kind_is_rejected
+    with self.assertRaisesRegex(ValueError, "kind.*nonempty string"):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_missing_positive_event_kind_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-feedback-attribution-20261004\research\doom\scorer_feedback_attribution_59_t0_a04_20261004\out\red\test_attribution.py", line 172, in test_missing_positive_event_kind_is_rejected
+    with self.assertRaisesRegex(ValueError, "kind.*nonempty string"):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.002s
+
+FAILED (failures=5)
