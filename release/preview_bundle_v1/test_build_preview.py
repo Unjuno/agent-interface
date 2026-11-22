@@ -1,5 +1,6 @@
 from __future__ import annotations
 import importlib.util
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -23,6 +24,7 @@ class ArchiveTests(unittest.TestCase):
         subprocess.run(["git", "-C", str(root), "config", "user.name", "Test"], check=True)
 
         required = set(mod.REQUIRED_TRACKED) | set(mod.ROOT_RELEASE_FILES)
+        required.add(".gitattributes")
         required.update({
             "runtime/helper.py",
             "release/helper.md",
@@ -30,16 +32,37 @@ class ArchiveTests(unittest.TestCase):
             "research/live_control/unrelated_asset.json",
             "research/doom/huge-raw.bin",
         })
-        prereg_sources = {
-            "runtime_dependency.py": "0" * 64,
-            "source_from_prereg.py": "1" * 64,
-        }
+        source_bytes = b"VALUE = 1\n"
+        source_digest = hashlib.sha256(source_bytes).hexdigest()
+        prereg_sources = {"runtime_dependency.py": source_digest,
+                          "source_from_prereg.py": source_digest}
         required.add("research/live_control/source_from_prereg.py")
+        archive_dir = "research/live_control/results/integrated-efficiency-live-01-frozen-source-v1"
+        manifest_path = archive_dir + "/SOURCE_MANIFEST.json"
+        required.add(manifest_path)
+        for name in prereg_sources:
+            required.add(archive_dir + "/" + name + ".source")
         for name in sorted(required):
             path = root / name
             path.parent.mkdir(parents=True, exist_ok=True)
-            if name == mod.RETAINED_FILES[0]:
+            if name == ".gitattributes":
+                path.write_text(
+                    "/research/live_control/results/integrated-efficiency-live-01-frozen-source-v1/** -text\n"
+                )
+            elif name == mod.RETAINED_FILES[0]:
                 path.write_text(json.dumps({"sources": prereg_sources}) + "\n")
+            elif name == manifest_path:
+                files = [{"name": source, "archive_file": source + ".source",
+                          "source_path": "research/live_control/" + source,
+                          "sha256": digest, "size_bytes": len(source_bytes)}
+                         for source, digest in prereg_sources.items()]
+                path.write_text(json.dumps({
+                    "schema": "integrated_efficiency_live_frozen_source_archive_v1",
+                    "study": "integrated-efficiency-live-01", "source_commit": "a" * 40,
+                    "source_count": len(files), "files": files,
+                }) + "\n")
+            elif path.name.endswith(".source"):
+                path.write_bytes(source_bytes)
             elif name.endswith(".sh"):
                 path.write_text("#!/usr/bin/env bash\necho ok\n")
                 path.chmod(0o755)
@@ -67,6 +90,11 @@ class ArchiveTests(unittest.TestCase):
             self.assertIn("release/helper.md", selected)
             self.assertIn("research/live_control/runtime_dependency.py", selected)
             self.assertIn("research/live_control/source_from_prereg.py", selected)
+            self.assertIn(mod.RETAINED_SOURCE_MANIFEST, selected)
+            self.assertIn(
+                "research/live_control/results/integrated-efficiency-live-01-frozen-source-v1/runtime_dependency.py.source",
+                selected,
+            )
             self.assertNotIn("research/live_control/unrelated_asset.json", selected)
             self.assertNotIn("research/doom/huge-raw.bin", selected)
 
@@ -107,6 +135,15 @@ class ArchiveTests(unittest.TestCase):
             prereg.write_text(json.dumps({"sources": {"../escape.py": "0" * 64}}))
             with self.assertRaises(mod.BuildError):
                 mod.retained_source_paths(root)
+
+    def test_frozen_archive_must_match_preregistration_bytes(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "repo"; root.mkdir()
+            self.make_repo(root)
+            archived = root / "research/live_control/results/integrated-efficiency-live-01-frozen-source-v1/runtime_dependency.py.source"
+            archived.write_bytes(b"tampered\n")
+            with self.assertRaises(mod.BuildError):
+                mod.retained_source_archive_paths(root)
 
 
 if __name__ == "__main__":

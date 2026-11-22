@@ -24,6 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RESEARCH = ROOT / "research" / "live_control"
 RETAINED = RESEARCH / "results" / "integrated-efficiency-live-01"
+RETAINED_SOURCE_ARCHIVE = RESEARCH / "results" / "integrated-efficiency-live-01-frozen-source-v1"
 if str(RESEARCH) not in sys.path:
     sys.path.insert(0, str(RESEARCH))
 
@@ -136,8 +137,48 @@ def audit_retained() -> dict:
     plan = json.loads((RETAINED / "preregistration.json").read_text(encoding="utf-8"))
     report = json.loads((RETAINED / "report.json").read_text(encoding="utf-8"))
     audit = json.loads((RETAINED / "audit.json").read_text(encoding="utf-8"))
-    source_mismatches = [name for name, digest in plan["sources"].items()
-                         if not (RESEARCH / name).is_file() or sha(RESEARCH / name) != digest]
+    expected_sources = plan.get("sources")
+    source_mismatches = []
+    source_manifest = None
+    if (not isinstance(expected_sources, dict) or not expected_sources
+            or any(not isinstance(name, str) or not name or "/" in name or "\\" in name
+                   or not isinstance(digest, str) or len(digest) != 64
+                   or any(char not in "0123456789abcdef" for char in digest)
+                   for name, digest in expected_sources.items())):
+        source_mismatches.append("preregistration.sources")
+        expected_sources = {}
+    try:
+        source_manifest = json.loads(
+            (RETAINED_SOURCE_ARCHIVE / "SOURCE_MANIFEST.json").read_text(encoding="utf-8")
+        )
+        entries = source_manifest["files"]
+        archived = {entry["name"]: entry for entry in entries}
+        if (source_manifest.get("schema") != "integrated_efficiency_live_frozen_source_archive_v1"
+                or source_manifest.get("study") != "integrated-efficiency-live-01"
+                or source_manifest.get("source_count") != len(expected_sources)
+                or not isinstance(source_manifest.get("source_commit"), str)
+                or len(source_manifest["source_commit"]) != 40
+                or any(char not in "0123456789abcdef" for char in source_manifest["source_commit"])
+                or len(archived) != len(entries)
+                or set(archived) != set(expected_sources)):
+            source_mismatches.append("SOURCE_MANIFEST.json")
+        else:
+            for name, digest in expected_sources.items():
+                entry = archived[name]
+                archive_name = name + ".source"
+                archive_path = RETAINED_SOURCE_ARCHIVE / archive_name
+                if (entry.get("source_path") != f"research/live_control/{name}"
+                        or entry.get("archive_file") != archive_name
+                        or entry.get("sha256") != digest
+                        or not archive_path.is_file()
+                        or sha(archive_path) != digest
+                        or archive_path.stat().st_size != entry.get("size_bytes")):
+                    source_mismatches.append(name)
+    except (OSError, AttributeError, KeyError, TypeError, json.JSONDecodeError):
+        source_mismatches.append("SOURCE_MANIFEST.json")
+    current_source_mismatches = [name for name, digest in expected_sources.items()
+                                 if not (RESEARCH / name).is_file()
+                                 or sha(RESEARCH / name) != digest]
     evaluation = report["evaluation"]
     passed = (
         not source_mismatches
@@ -151,6 +192,10 @@ def audit_retained() -> dict:
         "schema": "agent_interface_retained_demo_audit_v1",
         "passed": passed,
         "source_mismatches": source_mismatches,
+        "source_validation": "frozen_archive",
+        "frozen_source_commit": (source_manifest or {}).get("source_commit"),
+        "frozen_source_count": (source_manifest or {}).get("source_count"),
+        "current_source_mismatches": current_source_mismatches,
         "disposition": evaluation.get("disposition"),
         "exact_tasks": audit.get("exact_tasks"),
         "input_tokens": audit.get("final_input_tokens"),
