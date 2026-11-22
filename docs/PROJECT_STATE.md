@@ -1,7 +1,7 @@
 # Project state and work order
 
-Updated 2026-11-22 after PR #10446 merged to `main` at
-`d8ad74eba8e7043276cf0ba48778c1a0bbef2023`.
+Updated 2026-11-22 after PR #10448 merged to `main` at
+`c44f5aebf5bfc45d9235d3886fd12c2cb5874b81`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 
