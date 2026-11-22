@@ -1,3 +1,5 @@
+import base64
+import hashlib
 import json
 import unittest
 
@@ -232,6 +234,79 @@ class ComparisonMeasurementTests(unittest.TestCase):
             {"source": {"sequence": 5}})
         with self.assertRaises(LedgerValidationError):
             validate_measured_run(value)
+
+    def test_public_win32_observation_binds_exact_capture_and_png(self):
+        value = self.public_win32_observation_case()
+        result = validate_measured_run(value)
+        self.assertEqual(result["local_observation_count"], 1)
+
+    def test_public_win32_observation_rejects_generation_or_image_mismatch(self):
+        value = self.public_win32_observation_case()
+        value["measurement"]["local_observations"][0]["target_generation"] = "c" * 64
+        with self.assertRaises(LedgerValidationError):
+            validate_measured_run(value)
+        value = self.public_win32_observation_case()
+        value["measurement"]["local_observations"][0]["image_sha256"] = "d" * 64
+        with self.assertRaises(LedgerValidationError):
+            validate_measured_run(value)
+
+    def test_public_win32_observation_rejects_receipt_and_image_block_drift(self):
+        value = self.public_win32_observation_case()
+        event = next(item for item in value["task_ledger"]["events"]
+                     if item.get("kind") == "tool_call")
+        text = event["result"]["result"]["content"][0]["text"]
+        report = json.loads(text)
+        report["observation_id"] = "f" * 32
+        event["result"]["result"]["content"][0]["text"] = json.dumps(report)
+        with self.assertRaises(LedgerValidationError):
+            validate_measured_run(value)
+
+        value = self.public_win32_observation_case()
+        event = next(item for item in value["task_ledger"]["events"]
+                     if item.get("kind") == "tool_call")
+        event["result"]["result"]["content"][1]["data"] = base64.b64encode(
+            b"different image bytes").decode("ascii")
+        with self.assertRaises(LedgerValidationError):
+            validate_measured_run(value)
+
+    @staticmethod
+    def public_win32_observation_case():
+        value = run("A", 1)
+        png = base64.b64decode(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j9WQAAAAASUVORK5CYII=")
+        digest = hashlib.sha256(png).hexdigest()
+        observation_id = "a" * 32
+        generation = "b" * 64
+        value["task_ledger"]["raw_refs"].append({
+            "path": "raw/public-observation.png", "sha256": digest})
+        event = next(item for item in value["task_ledger"]["events"]
+                     if item.get("kind") == "tool_call")
+        event["method"] = "interface_observe"
+        event["result"] = {
+            "status": "returned", "tool": "interface_observe",
+            "result": {"content": [
+                {"type": "text", "text": json.dumps({
+                    "schema": "agent-interface/runtime-observation-v1",
+                    "status": "returned", "observation_id": observation_id,
+                    "side_effect_authority": False, "input_dispatched": False,
+                    "target_generation": generation,
+                    "target_generation_consistency": "matched",
+                    "observation": {"capture_started_ns": 21,
+                                    "capture_ended_ns": 24,
+                                    "artifact": {"mime_type": "image/png",
+                                                 "bytes": len(png),
+                                                 "sha256": digest}},
+                })},
+                {"type": "image", "mimeType": "image/png",
+                 "data": base64.b64encode(png).decode("ascii")},
+            ]},
+        }
+        value["measurement"]["local_observations"] = [{
+            "tool_call_id": event["call_id"], "observation_id": observation_id,
+            "target_generation": generation, "capture_started_ns": 21,
+            "capture_ended_ns": 24, "image_sha256": digest,
+        }]
+        return value
 
     def test_matched_block_rejects_model_or_task_condition_mismatch(self):
         values = [run("A", 1), run("B", 2), run("C", 3)]

@@ -1,6 +1,7 @@
 """Exercise the caller-journal to matched-comparison adapter offline."""
 
 import asyncio
+import base64
 import hashlib
 import json
 import tempfile
@@ -49,7 +50,7 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
     @staticmethod
     def make_run(root: Path, arm: str, order: int, *,
                  effect_observed_ns=130, owner_variant=None,
-                 late_usage_available=None):
+                 late_usage_available=None, public_observation=False):
         ticks = iter(range(100, 300, 10))
         recorder = ProviderAttemptRecorder(root / "recorder",
                                            clock_ns=lambda: next(ticks))
@@ -67,12 +68,46 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         recorder.invoke("attempt-1", b'{"prompt":"frozen"}\n',
                         lambda: {"status": "completed", "usage": usage,
                                  "response_bytes": response})
-        tool_response = {"source": {"sequence": 1}}
+        png = None
+        observation_id = None
+        target_generation = None
+        if public_observation:
+            png = base64.b64decode(
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j9WQAAAAASUVORK5CYII=")
+            local_image_digest = hashlib.sha256(png).hexdigest()
+            observation_id = "9" * 32
+            target_generation = "c" * 64
+            observation_report = {
+                "schema": "agent-interface/runtime-observation-v1",
+                "status": "returned", "observation_id": observation_id,
+                "side_effect_authority": False, "input_dispatched": False,
+                "target_generation": target_generation,
+                "target_generation_consistency": "matched",
+                "observation": {"capture_started_ns": 121,
+                                "capture_ended_ns": 125,
+                                "artifact": {"mime_type": "image/png",
+                                             "bytes": len(png),
+                                             "sha256": local_image_digest}},
+            }
+            tool_response = {
+                "status": "returned", "tool": "interface_observe",
+                "result": {"content": [
+                    {"type": "text", "text": json.dumps(
+                        observation_report, sort_keys=True,
+                        separators=(",", ":"))},
+                    {"type": "image", "mimeType": "image/png",
+                     "data": base64.b64encode(png).decode("ascii")},
+                ]},
+            }
+            observation_method = "interface_observe"
+        else:
+            tool_response = {"source": {"sequence": 1}}
+            observation_method = "interface_guarded_observe"
         tool_response_bytes = json.dumps(
             tool_response, separators=(",", ":"), sort_keys=True).encode()
         recorder.invoke_tool(
-            "attempt-1", "observe-1", "interface_guarded_observe",
-            b'{"tool":"interface_guarded_observe"}\n',
+            "attempt-1", "observe-1", observation_method,
+            json.dumps({"tool": observation_method}, sort_keys=True).encode(),
             lambda: {"result": tool_response,
                      "response_bytes": tool_response_bytes})
         action_call_id = "a" * 32
@@ -170,6 +205,13 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         image_digest = hashlib.sha256(delivered_image).hexdigest()
         receipt["raw_refs"].append({
             "path": "raw/model-image.bin", "sha256": image_digest})
+        if public_observation:
+            local_image_path = root / "recorder" / "raw" / "public-observation.png"
+            local_image_path.write_bytes(png)
+            local_image_digest = hashlib.sha256(png).hexdigest()
+            receipt["raw_refs"].append({
+                "path": "raw/public-observation.png",
+                "sha256": local_image_digest})
         metadata = {
             "schema": "agent-interface/standard-mcp-task-ledger-v1",
             "run_id": f"run-{arm}",
@@ -206,10 +248,16 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
             ],
             "model_delivered_images": [{"attempt_id": "attempt-1",
                                         "sha256": image_digest}],
-            "local_observations": [{
+            "local_observations": ([{
+                "tool_call_id": "observe-1", "observation_id": observation_id,
+                "target_generation": target_generation,
+                "capture_started_ns": 121, "capture_ended_ns": 125,
+                "image_sha256": local_image_digest,
+            }] if public_observation else [{
                 "tool_call_id": "observe-1", "source_sequence": 1,
-            "captured_ns": (145 if late_usage_available is not None else 125),
-            "image_sha256": image_digest}],
+                "captured_ns": (145 if late_usage_available is not None else 125),
+                "image_sha256": image_digest,
+            }]),
             "native_owner_evidence": {
                 "lookup_tool_call_id": "lookup-results-1",
                 "action_call_id": action_call_id,
@@ -238,6 +286,17 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         self.assertEqual(binding["target_generation"], "c" * 64)
         self.assertTrue(binding["release_confirmed"])
         self.assertTrue(binding["horizon_verified"])
+
+    def test_recorded_adapter_retains_public_win32_observation_png(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            measured = self.make_run(Path(temporary), "A", 1,
+                                     public_observation=True)
+        observation = measured["measurement"]["local_observations"][0]
+        self.assertEqual(observation["observation_id"], "9" * 32)
+        self.assertEqual(observation["target_generation"], "c" * 64)
+        self.assertIn(observation["image_sha256"], {
+            ref["sha256"] for ref in measured["task_ledger"]["raw_refs"]})
+        self.assertEqual(validate_measured_run(measured)["local_observation_count"], 1)
 
     def test_late_usage_composes_with_identity_bound_native_owner_receipt(self):
         with tempfile.TemporaryDirectory() as temporary:

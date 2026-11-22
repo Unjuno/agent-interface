@@ -1,0 +1,57 @@
+{
+  "schema": "agent-interface/public-win32-observation-handoff-r01",
+  "base_commit": "04ad2956de284069ba5b93fe85beab56ef678393",
+  "branch": "codex/issue57-public-observe-capture",
+  "python": "CPython 3.11.9 Windows-10-10.0.26300-SP0",
+  "commands": [
+    "python -m unittest -v test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "python -O -m unittest -v test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "git diff --check"
+  ],
+  "normal_exit": 0,
+  "optimized_exit": 0,
+  "source_hashes": [
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/comparison_measurement_v1.py",
+      "sha256": "241880507099395d815fffc535fb0d60e9eeac5097380ffac09493217e66f4ab"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/test_comparison_measurement_v1.py",
+      "sha256": "0c87aac1fe1506057e7380b027eff80cefceaf421e79b3fadd51a6801f43f8e1"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/recorded_comparison_adapter_v1.py",
+      "sha256": "9680761627e72a1986304eb8985b89280fe74d74f93aef9a2375ec02065aeac1"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/provider_attempt_recorder.py",
+      "sha256": "e733a5abefd4c1f7bd3ac442c4055cb3f4e2a2c35e4f04e83483f64ec022216f"
+    },
+    {
+      "path": "research/integration/standard_mcp_task_ledger_57_v1/test_recorded_comparison_adapter_v1.py",
+      "sha256": "27d2832d34da5b5690fe27f72038a9fb0eafb6a511a2cb0e29984c97baa5fdc4"
+    }
+  ],
+  "scope": "Synthetic measurement and recorder-journal tests only; no provider calls, live GUI input, Docker, WSLc, or allocation.",
+  "excluded_attempt": "Initial invocations from repository root failed test discovery; preserved in raw/*-wrong-directory-excluded.log and not pooled.",
+  "integrated_commands": [
+    "python -m unittest -v test_effect_receipt_handoff_v1 test_effect_receipt_reuse_horizon_integration_v1 test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1",
+    "python -O -m unittest -v test_effect_receipt_handoff_v1 test_effect_receipt_reuse_horizon_integration_v1 test_post_authority_effect_attribution_v1 test_comparison_measurement_v1 test_recorded_comparison_adapter_v1"
+  ],
+  "integrated_normal_exit": 0,
+  "integrated_optimized_exit": 0,
+  "excluded_integrated_attempt": "Initial combined invocation omitted repo root from PYTHONPATH; two modules failed import before tests. Logs preserved and excluded.",
+  "exact_environment": "PYTHONPATH set to repository root before invoking combined suites.",
+  "diff_check_exit": 0,
+  "reference_capture": {
+    "repository_commit": "ee14863bec0c7a222bec4d96300162afde61cf82",
+    "current_blob": "843368b61ca5350a3ec020c9c3983cf513c093ad",
+    "path": "research/integration/win32_current_main_fixture_effect_r05_20261122/raw/observation.json",
+    "observation_id": "c594f5eb53d74a1ca894882bac12651e",
+    "target_generation": "e6de002307faa85bd9d35938c16f7cbb78e3bf2c080b4182b7db42c4242bd0ba",
+    "capture_started_ns": 373853750000000,
+    "capture_ended_ns": 373853765000000,
+    "png_sha256": "1f1b46039aae37691d0672566320aae94208181f69cbbcdf5070b3c329c13eed",
+    "scope": "One retained pre-action public observation only; not an effect pair or task-score receipt."
+  }
+}
