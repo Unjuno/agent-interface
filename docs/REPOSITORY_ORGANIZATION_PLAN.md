@@ -1,12 +1,8 @@
 > Concise project-wide gate status and cleanup sequence: [PROJECT_STATE.md](PROJECT_STATE.md).
 
-**Live count check (2026-11-22):** `gh issue list --state open` returned 1,640
-Issues and `gh pr list --state open` returned 405 PRs. The latest complete
-exact-ID membership receipt is still r163 (1,640 Issues / 407 PRs); the two-PR
-delta is not yet matched to exact IDs. Treat the count as a queue-size signal,
-not as a completed inventory audit or a reason to close anything.
+**Latest membership check r164 (2026-11-22; main `48ef3e498b287a69b68e3e6912a43db2acb3551b`):** Exact paginated ID reads returned 1,640 open Issues and 405 open PRs. Compared with r152/r157, there were no additions; Issues #7748/#7765/#7817 and PRs #7968/#8181/#10227 were removed. This resolves the two-PR delta noted after r163. The full receipt is [r164](maintenance/repository-inventory-recheck-20261122-r164.md). Membership is not semantic triage or a reason to close anything.
 
-**Project status handoff (2026-11-22; main `7075902b6dd95da57a2e25819e2d2d6859239c25`):** The one-page [project state dashboard](PROJECT_STATE.md)
+**Project status handoff (2026-11-22; main `48ef3e498b287a69b68e3e6912a43db2acb3551b`):** The one-page [project state dashboard](PROJECT_STATE.md)
 distinguishes main-verified gates, integrated repairs, live evidence gaps, and
 repository custody work. R08 preserves one complete no-provider Win32 public
 caller run and an offline measured-run/effect-handoff reconstruction. Three
@@ -17,7 +13,7 @@ See [R08](../research/integration/win32_recorded_task_effect_r08_20261122/README
 [R07](../research/integration/win32_recorded_task_effect_r07_20261122/README.md),
 and the [R02 synthetic adapter result](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_effect_pair_handoff_r02_20261122/RESULT.md).
 
-**Latest whole-repository membership checkpoint r163 (2026-11-22 JST; main `1afb532ea153f3da3906764753909fac074afce3` before/after):** Complete paginated reads found 1,640 open Issues and 407 open PRs. Compared by exact ID against r152/r157, there were no additions; #7748/#7765/#7817 are the only removed Issues and #8181 the only removed PR. These sets match r162. Membership remains distinct from semantic review and custody reconciliation. The r160 semantic crosswalk is still the latest full routing analysis. Issue #57 remains open for matched live efficiency, standard-caller task success/recovery reliability, Research Preview graduation, and distributable-runtime acceptance. See the [r163 receipt](maintenance/repository-inventory-recheck-20261122-r163.md), [r162 receipt](maintenance/repository-inventory-recheck-20261122-r162.md), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
+**Prior whole-repository checkpoint r163 (2026-11-22 JST; main `1afb532ea153f3da3906764753909fac074afce3`):** Complete paginated reads found 1,640 open Issues and 407 open PRs. The later exact-ID r164 receipt reconciles its two-PR count difference. Membership remains distinct from semantic review and custody reconciliation. The r160 semantic crosswalk is still the latest full routing analysis. Issue #57 remains open for matched live efficiency, standard-caller task success/recovery reliability, Research Preview graduation, and distributable-runtime acceptance. See [r164](maintenance/repository-inventory-recheck-20261122-r164.md), the [r163 receipt](maintenance/repository-inventory-recheck-20261122-r163.md), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
 **Worktree custody recheck (2026-11-22, after PR #10427):** A read-only audit found 15 registered worktrees: ten clean and five dirty. The 70-commit-behind parent checkout contains unclassified changes and output; four other dirty checkouts contain Calc historical results, a WSLc read-only probe, a Research Preview fixture result, or modified audit raw. Root `outputs/` contains 61 unique files, while the 16-file ledger `outputs/` directory matches current-main blobs; attempted removal of that exact duplicate directory was rejected and it remains untouched. No cleanup was performed. Follow the item-by-item custody sequence in [the recheck report](maintenance/worktree-custody-recheck-20261122.md) before deleting branches or files.
 

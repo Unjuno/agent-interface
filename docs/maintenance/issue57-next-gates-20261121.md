@@ -43,7 +43,10 @@ those gates.
    existing #908 result is setup evidence only; the historical #2624 V2
    archive is reported incomplete. Do not claim setup readiness from the
    preregistration alone.
-4. **Standard caller and recovery.** Keep the recovered-task success and
+4. **Standard caller and recovery.** R08 now reconstructs the complete retained
+   no-provider fixture journal through the adapter repairs merged by PR #10451;
+   public `task_success` remains null, and the run did not exercise expiry or
+   recovery. Keep recovered-task success and
    repeated reliability tests separate from Mindustry economics. A single
    successful Edge form POST or one R281 input effect does not close either.
    R149 shows a recovered/released Win32 action can be followed by a real
@@ -56,8 +59,8 @@ those gates.
    receipt adapter is now composed with the reuse-horizon evaluator, and its
    current-main normal-completion path also accepts only generation-bound
    verified release/horizon custody. Neither establishes a live caller-to-score
-   handoff: R05 has no public results lookup or bracketing public captures, and
-   the recovered-task path still needs a fresh eligible standard-caller trial
+   handoff: R08 has exact public result lookup and bracketing captures, but the
+   recovered-task path still needs a fresh eligible standard-caller trial
    plus repeated reliability evidence. See the
    [normal-completion adapter packet](../../research/integration/standard_mcp_task_ledger_57_v1/completed_owner_handoff_r01_20261122/README.md).
 5. **Product boundary.** Retain Windows and Ubuntu WSL portable-runtime results
