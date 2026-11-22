@@ -1,0 +1,66 @@
+{
+  "architecture": "aarch64",
+  "network_boundary": {
+    "interfaces": [
+      [
+        1,
+        "lo"
+      ],
+      [
+        2,
+        "tunl0"
+      ],
+      [
+        3,
+        "sit0"
+      ],
+      [
+        4,
+        "ip6tnl0"
+      ]
+    ],
+    "ipv4_non_loopback_routes": [],
+    "ipv6_non_loopback_routes": [],
+    "namespace_inode": 4026533664,
+    "pid1_namespace_inode": 4026533393,
+    "up_non_loopback_interfaces": []
+  },
+  "packages": {
+    "gcc": "4:13.2.0-7ubuntu1",
+    "git": "1:2.43.0-1ubuntu7.3",
+    "libx11-dev": "2:1.8.7-1build1",
+    "python3-tk": "3.12.3-0ubuntu1",
+    "python3-xlib": "0.33-2",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.39",
+  "python": "3.12.3",
+  "python_xlib": "0.33",
+  "scope": "excluded pre-allocation readiness only",
+  "status": "PASS",
+  "study_id": "caps-text-query-xtest-a01-20261007",
+  "tk": "8.6.14",
+  "xtest_present": true,
+  "xvfb": {
+    "argv": [
+      "Xvfb",
+      ":99",
+      "-screen",
+      "0",
+      "640x240x24",
+      "-nolisten",
+      "tcp",
+      "-ac"
+    ],
+    "display": ":99",
+    "exit": 0,
+    "lock_removed": true,
+    "pid": 5903,
+    "socket_removed": true,
+    "stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\nThe XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+    "stderr_blocks": 2,
+    "stderr_sha256": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+    "stderr_warning_error": null,
+    "stdout": ""
+  }
+}
