@@ -2,6 +2,8 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+**Current checkpoint — 2026-11-22 (`d5ada452`):** PR #10463 is merged. Research Preview retained-source audit and supported WSL bundle construction pass; the extracted artifact verifies all 29 frozen sources and reports seven later changes. Portable runtime distribution tests pass 21/21 on Windows and Ubuntu WSL in normal and `-O` modes. Issue #58 remains open for supported-host doctor, fresh no-retry golden run, and `audit-live`; #57 remains open for eligible recovered-task success, repeated reliability, and matched all-attempt provider/token/latency/correctness accounting. Whole-repository membership r165 is unchanged from r164 at 1,640 Issues and 405 PRs. See the [project state index](docs/PROJECT_STATE.md), [R06 package result](research/integration/research_preview_retained_source_audit_r01_20261122/supplemental-linux-build-r06-20261122/RESULT.md), and [r165 membership receipt](docs/maintenance/repository-inventory-recheck-20261122-r165.md).
+
 For the concise project-wide gate and repository-organization status, see the
 [project state dashboard](docs/PROJECT_STATE.md).
 
