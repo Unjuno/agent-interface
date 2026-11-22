@@ -2,6 +2,11 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+For the concise project-wide gate and repository-organization status, see the
+[project state dashboard](docs/PROJECT_STATE.md).
+
+**Issue #57 public Win32 observation measurement handoff R01 (2026-11-22; local candidate from main `04ad2956`):** The research comparison validator and recorder adapter now accept `interface_observe` through exact capture ID, target generation, capture interval, and decoded PNG bytes/digest. The focused suites pass 38/38 normally and under `-O`; the combined handoff/reuse/attribution/comparison/adapter suite passes 64/64 in both modes. Raw logs and source hashes are retained in [R01](research/integration/standard_mcp_task_ledger_57_v1/public_win32_observation_handoff_r01_20261122/RESULT.md). Synthetic only: no R05 conversion, exact action/result/effect/release join, live input, provider accounting, or efficiency result. Next bind before/after observations to one dispatch and independent task scorer before freezing a fresh finite caller trial.
+
 **Research Preview acceptance-runner repair merged (2026-11-22; main `d1a92e04c47b4dbf88e4c784c3dfdfea16bb8e10`):** PR #10440 makes the supported-host acceptance prefix reuse an existing golden venv and requires explicit `--install-dependencies` before setup can install one. The focused acceptance-runner and package-builder suites pass 9/9 normally and under `-O` on the merged main; replay-gate passed and the formal check was skipped. Actual WSL Chromium and Windows Codex CLI JS remain unverified, so setup/doctor and the fresh no-retry golden acceptance gates remain open. Details: [Issue #58 update](https://github.com/Unjuno/agent-interface/issues/58#issuecomment-7075513226).
 
 **Research Preview current-main runner R01 (2026-11-22; frozen RC1 `8e5052e0`):** The merged acceptance runner passes 19/19 launcher preflight checks, reuses the existing venv without dependency installation, and retains a doctor HOLD at 12/15 because Windows Codex CLI JS and WSL Chromium are absent (`codex_cli` fails downstream). No retained audit or live allocation ran. Preserve the gate as open; see the [R01 result packet](research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-main-runner-r01/RESULT.md).

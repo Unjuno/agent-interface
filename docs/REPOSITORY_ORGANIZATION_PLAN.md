@@ -1,3 +1,19 @@
+> Concise project-wide gate status and cleanup sequence: [PROJECT_STATE.md](PROJECT_STATE.md).
+
+**Live count check (2026-11-22):** `gh issue list --state open` returned 1,640
+Issues and `gh pr list --state open` returned 405 PRs. The latest complete
+exact-ID membership receipt is still r163 (1,640 Issues / 407 PRs); the two-PR
+delta is not yet matched to exact IDs. Treat the count as a queue-size signal,
+not as a completed inventory audit or a reason to close anything.
+
+**Project status handoff (2026-11-22):** The one-page [project state dashboard](PROJECT_STATE.md)
+now distinguishes main-verified gates, candidate-only integration, live
+evidence gaps, and repository custody work. A local #57 measurement candidate
+accepts native Win32 `interface_observe` captures with exact PNG custody and
+passes 38 focused / 64 combined normal and `-O` tests; it remains synthetic
+until exact action/result/effect/task-score/release evidence is joined. See its
+[R01 packet](../research/integration/standard_mcp_task_ledger_57_v1/public_win32_observation_handoff_r01_20261122/RESULT.md).
+
 **Latest whole-repository membership checkpoint r163 (2026-11-22 JST; main `1afb532ea153f3da3906764753909fac074afce3` before/after):** Complete paginated reads found 1,640 open Issues and 407 open PRs. Compared by exact ID against r152/r157, there were no additions; #7748/#7765/#7817 are the only removed Issues and #8181 the only removed PR. These sets match r162. Membership remains distinct from semantic review and custody reconciliation. The r160 semantic crosswalk is still the latest full routing analysis. Issue #57 remains open for matched live efficiency, standard-caller task success/recovery reliability, Research Preview graduation, and distributable-runtime acceptance. See the [r163 receipt](maintenance/repository-inventory-recheck-20261122-r163.md), [r162 receipt](maintenance/repository-inventory-recheck-20261122-r162.md), and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md).
 
 **Worktree custody recheck (2026-11-22, after PR #10427):** A read-only audit found 15 registered worktrees: ten clean and five dirty. The 70-commit-behind parent checkout contains unclassified changes and output; four other dirty checkouts contain Calc historical results, a WSLc read-only probe, a Research Preview fixture result, or modified audit raw. Root `outputs/` contains 61 unique files, while the 16-file ledger `outputs/` directory matches current-main blobs; attempted removal of that exact duplicate directory was rejected and it remains untouched. No cleanup was performed. Follow the item-by-item custody sequence in [the recheck report](maintenance/worktree-custody-recheck-20261122.md) before deleting branches or files.

@@ -9,6 +9,8 @@ captured every external event.
 
 from __future__ import annotations
 
+import base64
+import hashlib
 import json
 import re
 
@@ -69,6 +71,36 @@ def _observation_source_sequence(result, method):
             return None
     source = body.get("source") if type(body) is dict else None
     return source.get("sequence") if type(source) is dict else None
+
+
+def _recorded_public_observation(result):
+    """Return the public observe report and verified image digest, or None."""
+    if (type(result) is not dict or result.get("status") != "returned" or
+            result.get("isError") is True or
+            result.get("tool") != "interface_observe"):
+        return None
+    envelope = result.get("result")
+    content = envelope.get("content") if type(envelope) is dict else None
+    if type(content) is not list:
+        return None
+    text_rows = [item.get("text") for item in content
+                 if type(item) is dict and item.get("type") == "text" and
+                 type(item.get("text")) is str]
+    image_rows = [item for item in content
+                  if type(item) is dict and item.get("type") == "image"]
+    if len(text_rows) != 1 or len(image_rows) != 1:
+        return None
+    try:
+        body = json.loads(text_rows[0])
+        image = image_rows[0]
+        if image.get("mimeType") != "image/png" or type(image.get("data")) is not str:
+            return None
+        image_bytes = base64.b64decode(image["data"], validate=True)
+    except (TypeError, ValueError, KeyError):
+        return None
+    if type(body) is not dict:
+        return None
+    return body, hashlib.sha256(image_bytes).hexdigest(), len(image_bytes)
 
 
 def validate_measured_run(value):
@@ -145,29 +177,71 @@ def validate_measured_run(value):
         _fail("local observations must be an explicit list")
     observation_ids = set()
     for observation in observations:
-        if type(observation) is not dict or set(observation) != {
-                "tool_call_id", "source_sequence", "captured_ns", "image_sha256"}:
+        if type(observation) is not dict:
+            _fail("local observation must be an object")
+        guarded_shape = {"tool_call_id", "source_sequence", "captured_ns",
+                         "image_sha256"}
+        public_shape = {"tool_call_id", "observation_id", "target_generation",
+                        "capture_started_ns", "capture_ended_ns", "image_sha256"}
+        if set(observation) not in (guarded_shape, public_shape):
             _fail("local observation fields do not match the schema")
         call_id = observation["tool_call_id"]
         event = calls.get(call_id)
-        if event is None or event["method"] not in _OBSERVATION_METHODS:
+        if event is None:
             _fail("local observation must link to a recorded observation tool call")
         if call_id in observation_ids:
             _fail("local observation tool call is duplicated")
         observation_ids.add(call_id)
-        if not _integer(observation["source_sequence"]) or observation[
-                "source_sequence"] <= 0:
-            _fail("observation source sequence must be positive")
-        if not _integer(observation["captured_ns"]) or not (
-                event["started_ns"] <= observation["captured_ns"] <= event["ended_ns"]):
-            _fail("capture time must fall within its observation tool call")
         digest = observation["image_sha256"]
         if not isinstance(digest, str) or not _HASH.fullmatch(digest) or digest not in raw_hashes:
             _fail("local observation image must be retained by digest")
-        result_sequence = _observation_source_sequence(
-            event["result"], event["method"])
-        if result_sequence != observation["source_sequence"]:
-            _fail("observation sequence does not match the public tool receipt")
+        if set(observation) == guarded_shape:
+            if event["method"] not in _OBSERVATION_METHODS:
+                _fail("source-sequence observations require a guarded observation tool")
+            if not _integer(observation["source_sequence"]) or observation[
+                    "source_sequence"] <= 0:
+                _fail("observation source sequence must be positive")
+            if not _integer(observation["captured_ns"]) or not (
+                    event["started_ns"] <= observation["captured_ns"] <= event["ended_ns"]):
+                _fail("capture time must fall within its observation tool call")
+            result_sequence = _observation_source_sequence(
+                event["result"], event["method"])
+            if result_sequence != observation["source_sequence"]:
+                _fail("observation sequence does not match the public tool receipt")
+        else:
+            if event["method"] != "interface_observe":
+                _fail("capture-identity observations require interface_observe")
+            if (not isinstance(observation["observation_id"], str) or
+                    not re.fullmatch(r"[0-9a-f]{32}", observation["observation_id"]) or
+                    not isinstance(observation["target_generation"], str) or
+                    not _HASH.fullmatch(observation["target_generation"])):
+                _fail("public observation needs its exact ID and target generation")
+            capture_start = observation["capture_started_ns"]
+            capture_end = observation["capture_ended_ns"]
+            if (not _integer(capture_start) or not _integer(capture_end) or
+                    capture_end < capture_start or
+                    event["started_ns"] > capture_start or capture_end > event["ended_ns"]):
+                _fail("public capture interval must fall inside its tool call")
+            retained = _recorded_public_observation(event["result"])
+            if retained is None:
+                _fail("public observation must retain one text receipt and one PNG image")
+            body, image_digest, image_bytes = retained
+            report = body.get("observation")
+            artifact = report.get("artifact") if type(report) is dict else None
+            if (body.get("schema") != "agent-interface/runtime-observation-v1" or
+                    body.get("status") != "returned" or
+                    body.get("side_effect_authority") is not False or
+                    body.get("input_dispatched") is not False or
+                    body.get("observation_id") != observation["observation_id"] or
+                    body.get("target_generation") != observation["target_generation"] or
+                    body.get("target_generation_consistency") != "matched" or
+                    type(report) is not dict or
+                    report.get("capture_started_ns") != capture_start or
+                    report.get("capture_ended_ns") != capture_end or
+                    type(artifact) is not dict or artifact.get("mime_type") != "image/png" or
+                    artifact.get("bytes") != image_bytes or
+                    artifact.get("sha256") != image_digest or image_digest != digest):
+                _fail("public capture identity, generation, timing, or PNG does not match")
 
     task_success = summary["task_success"]
     attribution = measurement.get("effect_attribution")
