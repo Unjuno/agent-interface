@@ -1,0 +1,1 @@
+docker run --rm --pull never --network none --cpus 1 --memory 512m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --mount type=bind,src="$PWD",dst=/repo,readonly --workdir /repo python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python test_candidate.py
