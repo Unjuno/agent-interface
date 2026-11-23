@@ -2,7 +2,15 @@
 
 # Project state and work order
 
-## Current checkpoint — 2026-11-24 (main `a96559ed`)
+## Current checkpoint — 2026-11-24 (main `164650754bce28fc849f630f0b744decb4034f87`)
+
+PR #10542 refreshed the repository status after #10541 merged. A complete
+current-main membership check found 1,640 open Issues and 403 open PRs, with
+the exact sorted ID sets unchanged from r177. The accompanying read-only local
+census found 33 registered worktrees, 10 dirty; this is not a clean local
+repository and does not justify deleting or resetting any path. See [inventory
+r180](maintenance/repository-inventory-recheck-20261124-r180.md) and [custody
+r179](maintenance/local-worktree-custody-recheck-20261124-r179.md).
 
 PR #10541 is merged. It fixes the specific distribution defect on its frozen
 base main `22aba58c`: the deterministic runtime zipapp omitted
@@ -27,9 +35,8 @@ and [R04](../research/integration/win32_notepad_public_cli_r04_20261124/RESULT.m
 Project-wide: #57 remains open for matched lifecycle economics, exhaustive
 provider/token accounting, and repeatable recovery transfer. #58 remains on
 the supported-host doctor/live-acceptance HOLD. #59 has no verified isolated
-GZDoom/IWAD target or MAP01 completion. The latest complete membership receipt
-is r179 (1,640 open Issues / 403 open PRs at `b290c1ef`), before PR #10540 and
-#10541. The latest exact local custody census is r178 and is not current; no
+GZDoom/IWAD target or MAP01 completion. The current complete membership receipt
+is r180 (1,640 open Issues / 403 open PRs at `164650754bce28fc849f630f0b744decb4034f87`); the local custody census is r179 (33 worktrees, 10 dirty). No
 full semantic queue triage or clean-worktree claim is justified. Continue the
 existing family-by-family evidence routing; do not bulk-close or delete
 unresolved work.
