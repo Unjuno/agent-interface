@@ -1,0 +1,287 @@
+[
+  {
+    "name": "01-test_adaptive_acquisition_compiled_gui_v1-normal",
+    "module": "research.live_control.test_adaptive_acquisition_compiled_gui_v1",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "research.live_control.test_adaptive_acquisition_compiled_gui_v1",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.275,
+    "stdout": "",
+    "stderr": "test_changed_intermediate_evidence_stops_before_second_admission (research.live_control.test_adaptive_acquisition_compiled_gui_v1.AdaptiveCallerCompiledGuiCompositionTest.test_changed_intermediate_evidence_stops_before_second_admission) ... ok\r\ntest_cold_accounting_composes_with_evidence_selected_local_continuation (research.live_control.test_adaptive_acquisition_compiled_gui_v1.AdaptiveCallerCompiledGuiCompositionTest.test_cold_accounting_composes_with_evidence_selected_local_continuation) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.001s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "02-test_adaptive_acquisition_caller_v3-normal",
+    "module": "research.live_control.test_adaptive_acquisition_caller_v3",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "research.live_control.test_adaptive_acquisition_caller_v3",
+      "-v"
+    ],
+    "exit_code": 1,
+    "duration_s": 0.206,
+    "stdout": "",
+    "stderr": "test_adaptive_acquisition_caller_v3 (unittest.loader._FailedTest.test_adaptive_acquisition_caller_v3) ... ERROR\r\n\r\n======================================================================\r\nERROR: test_adaptive_acquisition_caller_v3 (unittest.loader._FailedTest.test_adaptive_acquisition_caller_v3)\r\n----------------------------------------------------------------------\r\nImportError: Failed to import test module: test_adaptive_acquisition_caller_v3\r\nTraceback (most recent call last):\r\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\unittest\\loader.py\", line 137, in loadTestsFromName\r\n    module = __import__(module_name)\r\n  File \"\\\\wsl.localhost\\Ubuntu\\home\\user\\agent-interface-postrecovery-r42-20261123\\research\\live_control\\test_adaptive_acquisition_caller_v3.py\", line 4, in <module>\r\n    from adaptive_acquisition_caller_v3 import ModelFailure, run\r\nModuleNotFoundError: No module named 'adaptive_acquisition_caller_v3'\r\n\r\n\r\n----------------------------------------------------------------------\r\nRan 1 test in 0.000s\r\n\r\nFAILED (errors=1)\r\n"
+  },
+  {
+    "name": "03-test_compiled_admission_custody_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_admission_custody_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_admission_custody_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.234,
+    "stdout": "",
+    "stderr": "test_cancellation_exception_retains_typed_prefix_after_local_clear (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_cancellation_exception_retains_typed_prefix_after_local_clear) ... ok\r\ntest_cancellation_still_stops_before_dispatch_after_local_clear (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_cancellation_still_stops_before_dispatch_after_local_clear) ... ok\r\ntest_deadline_still_stops_before_dispatch_after_local_clear (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_deadline_still_stops_before_dispatch_after_local_clear) ... ok\r\ntest_initial_malformed_fields_still_reject_before_dispatch (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_initial_malformed_fields_still_reject_before_dispatch) ... ok\r\ntest_retained_admission_clear_does_not_interrupt_authorized_prefix (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_clear_does_not_interrupt_authorized_prefix) ... ok\r\ntest_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 6 tests in 0.004s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "04-test_compiled_admission_sequence_01a0ff33-normal",
+    "module": "runtime.core_v1.test_compiled_admission_sequence_01a0ff33",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_admission_sequence_01a0ff33",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.231,
+    "stdout": "",
+    "stderr": "test_equal_boolean_or_float_is_rejected_before_first_dispatch (runtime.core_v1.test_compiled_admission_sequence_01a0ff33.AdmissionSequenceTests.test_equal_boolean_or_float_is_rejected_before_first_dispatch) ... ok\r\ntest_false_cannot_alias_zero_observation_sequence (runtime.core_v1.test_compiled_admission_sequence_01a0ff33.AdmissionSequenceTests.test_false_cannot_alias_zero_observation_sequence) ... ok\r\ntest_ineligible_admission_keeps_refusal_precedence (runtime.core_v1.test_compiled_admission_sequence_01a0ff33.AdmissionSequenceTests.test_ineligible_admission_keeps_refusal_precedence) ... ok\r\ntest_malformed_second_admission_keeps_verified_prefix (runtime.core_v1.test_compiled_admission_sequence_01a0ff33.AdmissionSequenceTests.test_malformed_second_admission_keeps_verified_prefix) ... ok\r\ntest_matching_integer_sequences_keep_normal_completion (runtime.core_v1.test_compiled_admission_sequence_01a0ff33.AdmissionSequenceTests.test_matching_integer_sequences_keep_normal_completion) ... ok\r\ntest_mismatched_sequence_still_prevents_dispatch (runtime.core_v1.test_compiled_admission_sequence_01a0ff33.AdmissionSequenceTests.test_mismatched_sequence_still_prevents_dispatch) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 6 tests in 0.002s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "05-test_compiled_callback_custody_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_callback_custody_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_callback_custody_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.208,
+    "stdout": "",
+    "stderr": "test_journal_can_clear_its_payload_after_an_executed_action (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_can_clear_its_payload_after_an_executed_action) ... ok\r\ntest_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield) ... ok\r\ntest_journal_exception_still_propagates_before_dispatch (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_exception_still_propagates_before_dispatch) ... ok\r\ntest_journal_top_level_and_nested_edits_leave_branch_evidence_intact (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_top_level_and_nested_edits_leave_branch_evidence_intact) ... ok\r\ntest_retained_journal_payloads_cannot_rewrite_the_returned_receipt (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_retained_journal_payloads_cannot_rewrite_the_returned_receipt) ... ok\r\ntest_observer_can_consume_its_requested_predicate_list (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledObservationRequestCustodyTests.test_observer_can_consume_its_requested_predicate_list) ... ok\r\ntest_retained_observer_request_cannot_change_later_declarations (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledObservationRequestCustodyTests.test_retained_observer_request_cannot_change_later_declarations) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 7 tests in 0.002s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "06-test_compiled_callback_failure_composition-normal",
+    "module": "runtime.core_v1.test_compiled_callback_failure_composition",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_callback_failure_composition",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.229,
+    "stdout": "",
+    "stderr": "test_fatal_verifier_stop_still_propagates_same_object (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_fatal_verifier_stop_still_propagates_same_object) ... ok\r\ntest_journal_failure_after_effect_stops_before_next_input (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_journal_failure_after_effect_stops_before_next_input) ... ok\r\ntest_mutating_successful_journal_keeps_original_evidence (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_mutating_successful_journal_keeps_original_evidence) ... ok\r\ntest_terminal_journal_failure_cannot_leave_success_claim (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_journal_failure_cannot_leave_success_claim) ... ok\r\ntest_terminal_mutation_then_failure_keeps_private_prefix (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_mutation_then_failure_keeps_private_prefix) ... ok\r\ntest_verifier_and_terminal_journal_failures_both_survive (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_and_terminal_journal_failures_both_survive) ... ok\r\ntest_verifier_exception_without_journal_failure_is_typed (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_exception_without_journal_failure_is_typed) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 7 tests in 0.002s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "07-test_compiled_clock_custody-normal",
+    "module": "runtime.core_v1.test_compiled_clock_custody",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_clock_custody",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.223,
+    "stdout": "",
+    "stderr": "test_clock_cannot_replace_observed_predicate_before_branch_selection (runtime.core_v1.test_compiled_clock_custody.ClockCustodyTests.test_clock_cannot_replace_observed_predicate_before_branch_selection) ... ok\r\ntest_clock_cannot_rewrite_returned_terminal_or_release (runtime.core_v1.test_compiled_clock_custody.ClockCustodyTests.test_clock_cannot_rewrite_returned_terminal_or_release) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.002s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "08-test_compiled_custody_effect_join_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_custody_effect_join_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_custody_effect_join_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.222,
+    "stdout": "",
+    "stderr": "test_invalid_success_witness_stops_at_its_action_despite_callback_edits (runtime.core_v1.test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) ... ok\r\ntest_valid_witness_and_returned_prefix_survive_immediate_and_retained_edits (runtime.core_v1.test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_valid_witness_and_returned_prefix_survive_immediate_and_retained_edits) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.004s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "09-test_compiled_effect_evidence_01a0ff32-normal",
+    "module": "runtime.core_v1.test_compiled_effect_evidence_01a0ff32",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_effect_evidence_01a0ff32",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.222,
+    "stdout": "",
+    "stderr": "test_absent_reference_on_negative_verdict_keeps_safe_yield (runtime.core_v1.test_compiled_effect_evidence_01a0ff32.SuccessEvidenceTests.test_absent_reference_on_negative_verdict_keeps_safe_yield) ... ok\r\ntest_bounded_distinct_success_reference_keeps_completion (runtime.core_v1.test_compiled_effect_evidence_01a0ff32.SuccessEvidenceTests.test_bounded_distinct_success_reference_keeps_completion) ... ok\r\ntest_malformed_success_reference_stops_before_next_action_or_completion (runtime.core_v1.test_compiled_effect_evidence_01a0ff32.SuccessEvidenceTests.test_malformed_success_reference_stops_before_next_action_or_completion) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 3 tests in 0.003s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "10-test_compiled_effect_return_custody_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_effect_return_custody_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_effect_return_custody_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.222,
+    "stdout": "",
+    "stderr": "test_blank_success_reference_is_still_rejected_before_journal (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_blank_success_reference_is_still_rejected_before_journal) ... ok\r\ntest_failed_return_cannot_be_promoted_by_journal (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_failed_return_cannot_be_promoted_by_journal) ... ok\r\ntest_failed_unchanged_stops_before_second_action (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_failed_unchanged_stops_before_second_action) ... ok\r\ntest_healthy_success_is_preserved (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_healthy_success_is_preserved) ... ok\r\ntest_real_journal_cancellation_still_blocks_second_action (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_real_journal_cancellation_still_blocks_second_action) ... ok\r\ntest_successful_return_cannot_be_demoted_by_journal (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_successful_return_cannot_be_demoted_by_journal) ... ok\r\ntest_unavailable_return_cannot_be_promoted_by_journal (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_unavailable_return_cannot_be_promoted_by_journal) ... ok\r\ntest_unavailable_unchanged_stops_before_second_action (runtime.core_v1.test_compiled_effect_return_custody_01a0ff35.EffectReturnCustodyTests.test_unavailable_unchanged_stops_before_second_action) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.001s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "11-test_compiled_gui-normal",
+    "module": "runtime.core_v1.test_compiled_gui",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_gui",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.219,
+    "stdout": "",
+    "stderr": "test_action_deadline_cannot_extend_method_budget (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_action_deadline_cannot_extend_method_budget) ... ok\r\ntest_admission_callback_exception_returns_completed_prefix (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_admission_callback_exception_returns_completed_prefix) ... ok\r\ntest_ambiguous_state_sends_no_input (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_ambiguous_state_sends_no_input) ... ok\r\ntest_branch_journal_consuming_budget_never_admits (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_branch_journal_consuming_budget_never_admits) ... ok\r\ntest_cross_type_effect_retains_prefix_and_never_calls_verifier_or_next_action (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_cross_type_effect_retains_prefix_and_never_calls_verifier_or_next_action) ... ok\r\ntest_cross_type_predicate_cannot_select_action_or_complete (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_cross_type_predicate_cannot_select_action_or_complete) ... ok\r\ntest_dispatch_or_held_input_cannot_be_downgraded_to_abstention (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_dispatch_or_held_input_cannot_be_downgraded_to_abstention) ... ok\r\ntest_effect_verification_can_use_the_callback_clock_domain (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_effect_verification_can_use_the_callback_clock_domain) ... ok\r\ntest_execution_callback_exception_preserves_prefix_and_unknown_delivery (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_execution_callback_exception_preserves_prefix_and_unknown_delivery) ... ok\r\ntest_explicit_no_input_refusal_yields_without_inventing_release (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_explicit_no_input_refusal_yields_without_inventing_release) ... ok\r\ntest_failed_effect_blocks_second_input (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_failed_effect_blocks_second_input) ... ok\r\ntest_failed_release_is_preserved_over_expired_budget (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_failed_release_is_preserved_over_expired_budget) ... ok\r\ntest_input_dispatched_requires_strict_boolean (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_input_dispatched_requires_strict_boolean) ... ok\r\ntest_late_admission_never_dispatches (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_admission_never_dispatches) ... ok\r\ntest_late_execution_retains_effect_and_does_not_observe_again (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_execution_retains_effect_and_does_not_observe_again) ... ok\r\ntest_late_final_execution_preserves_both_actions (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_final_execution_preserves_both_actions) ... ok\r\ntest_late_final_observation_never_claims_completion (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_final_observation_never_claims_completion) ... ok\r\ntest_late_final_verifier_never_claims_completion (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_final_verifier_never_claims_completion) ... ok\r\ntest_late_initial_observation_never_admits (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_initial_observation_never_admits) ... ok\r\ntest_late_intermediate_observation_preserves_prefix_pending_effect (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_intermediate_observation_preserves_prefix_pending_effect) ... ok\r\ntest_late_second_admission_preserves_prefix (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_second_admission_preserves_prefix) ... ok\r\ntest_late_verifier_never_dispatches_second_action (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_verifier_never_dispatches_second_action) ... ok\r\ntest_missing_second_symbol_retains_first_input (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_missing_second_symbol_retains_first_input) ... ok\r\ntest_no_input_flag_cannot_downgrade_other_execution_statuses (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_no_input_flag_cannot_downgrade_other_execution_statuses) ... ok\r\ntest_no_input_refusal_after_verified_prefix_keeps_completed_action (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_no_input_refusal_after_verified_prefix_keeps_completed_action) ... ok\r\ntest_normal_branches_use_fresh_effects (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_normal_branches_use_fresh_effects) ... ok\r\ntest_observation_adapter_failure_returns_receipt_and_never_admits_next_action (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_observation_adapter_failure_returns_receipt_and_never_admits_next_action) ... ok\r\ntest_receipt_times_bound_observation_execution_and_effect_confirmation (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_receipt_times_bound_observation_execution_and_effect_confirmation) ... ok\r\ntest_same_type_scalar_completion_remains_supported (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_same_type_scalar_completion_remains_supported) ... ok\r\ntest_stale_intermediate_observation_blocks_second_input (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_stale_intermediate_observation_blocks_second_input) ... ok\r\ntest_unattested_refusal_still_requires_actual_neutral_release (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_unattested_refusal_still_requires_actual_neutral_release) ... ok\r\ntest_unavailable_effect_blocks_second_input (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_unavailable_effect_blocks_second_input) ... ok\r\ntest_uncertain_delivery_is_preserved_over_expired_budget (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_uncertain_delivery_is_preserved_over_expired_budget) ... ok\r\ntest_unchanged_effect_verifier_does_not_start_at_expired_deadline (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_unchanged_effect_verifier_does_not_start_at_expired_deadline) ... ok\r\ntest_unchanged_frame_uses_explicit_nonvisual_effect_verifier (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_unchanged_frame_uses_explicit_nonvisual_effect_verifier) ... ok\r\ntest_unknown_initial_state_sends_no_input (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_unknown_initial_state_sends_no_input) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 36 tests in 0.008s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "12-test_compiled_gui_effect_verifier_exception-normal",
+    "module": "runtime.core_v1.test_compiled_gui_effect_verifier_exception",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_gui_effect_verifier_exception",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.231,
+    "stdout": "",
+    "stderr": "test_successful_verifier_control_still_completes (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_successful_verifier_control_still_completes) ... ok\r\ntest_verifier_exception_returns_typed_receipt_and_keeps_prefix (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_verifier_exception_returns_typed_receipt_and_keeps_prefix) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.000s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "13-test_compiled_gui_journal_exception-normal",
+    "module": "runtime.core_v1.test_compiled_gui_journal_exception",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_gui_journal_exception",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.202,
+    "stdout": "",
+    "stderr": "test_terminal_journal_failure_returns_prefix_and_stops (runtime.core_v1.test_compiled_gui_journal_exception.CompiledJournalExceptionTests.test_terminal_journal_failure_returns_prefix_and_stops) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 1 test in 0.000s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "14-test_compiled_invalid_delivery_reconciliation-normal",
+    "module": "runtime.core_v1.test_compiled_invalid_delivery_reconciliation",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_invalid_delivery_reconciliation",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.217,
+    "stdout": "",
+    "stderr": "test_bad_flag_after_first_or_second_execution_is_unresolved (runtime.core_v1.test_compiled_invalid_delivery_reconciliation.InvalidDeliveryTests.test_bad_flag_after_first_or_second_execution_is_unresolved) ... ok\r\ntest_false_with_nonrefusal_is_unknown_not_preinput (runtime.core_v1.test_compiled_invalid_delivery_reconciliation.InvalidDeliveryTests.test_false_with_nonrefusal_is_unknown_not_preinput) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.001s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "15-test_compiled_literal_unknown_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_literal_unknown_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_literal_unknown_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.219,
+    "stdout": "",
+    "stderr": "test_explicit_unknown_literal_reaches_verifier_and_completion (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_explicit_unknown_literal_reaches_verifier_and_completion) ... ok\r\ntest_literal_match_still_requires_negative_verifier_disposition (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_literal_match_still_requires_negative_verifier_disposition) ... ok\r\ntest_literal_unknown_can_be_verified_in_two_successive_states (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_literal_unknown_can_be_verified_in_two_successive_states) ... ok\r\ntest_missing_literal_predicate_stays_unavailable (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_missing_literal_predicate_stays_unavailable) ... ok\r\ntest_no_progress_and_deadline_precede_literal_verifier (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_no_progress_and_deadline_precede_literal_verifier) ... ok\r\ntest_nonmatching_legacy_unknown_stays_unavailable (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_nonmatching_legacy_unknown_stays_unavailable) ... ok\r\ntest_other_literals_and_exact_scalar_types_keep_their_meaning (runtime.core_v1.test_compiled_literal_unknown_01a0ff35.LiteralUnknownEffectTests.test_other_literals_and_exact_scalar_types_keep_their_meaning) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 7 tests in 0.003s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "16-test_compiled_observation_order-normal",
+    "module": "runtime.core_v1.test_compiled_observation_order",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_observation_order",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.214,
+    "stdout": "",
+    "stderr": "test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) ... ok\r\ntest_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) ... ok\r\ntest_equal_boundaries_and_later_captures_remain_valid (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_equal_boundaries_and_later_captures_remain_valid) ... ok\r\ntest_future_effect_capture_preserves_verified_prefix (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_effect_capture_preserves_verified_prefix) ... ok\r\ntest_future_initial_capture_does_not_authorize_input (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_initial_capture_does_not_authorize_input) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 5 tests in 0.002s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "17-test_compiled_release_recovery_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_release_recovery_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_release_recovery_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.215,
+    "stdout": "",
+    "stderr": "test_equality_lie_cannot_complete_either_release_field (runtime.core_v1.test_compiled_release_recovery_01a0ff35.ReleaseRecoveryTests.test_equality_lie_cannot_complete_either_release_field) ... ok\r\ntest_healthy_completion_and_plain_held_failure_keep_existing_receipt_shape (runtime.core_v1.test_compiled_release_recovery_01a0ff35.ReleaseRecoveryTests.test_healthy_completion_and_plain_held_failure_keep_existing_receipt_shape) ... ok\r\ntest_malformed_no_input_refusal_cannot_hide_nonempty_metadata (runtime.core_v1.test_compiled_release_recovery_01a0ff35.ReleaseRecoveryTests.test_malformed_no_input_refusal_cannot_hide_nonempty_metadata) ... ok\r\ntest_nonlist_and_opaque_reference_return_conservative_evidence (runtime.core_v1.test_compiled_release_recovery_01a0ff35.ReleaseRecoveryTests.test_nonlist_and_opaque_reference_return_conservative_evidence) ... ok\r\ntest_second_invalid_return_preserves_verified_completed_prefix (runtime.core_v1.test_compiled_release_recovery_01a0ff35.ReleaseRecoveryTests.test_second_invalid_return_preserves_verified_completed_prefix) ... ok\r\ntest_user_hooks_are_not_called_during_rejection_or_receipt (runtime.core_v1.test_compiled_release_recovery_01a0ff35.ReleaseRecoveryTests.test_user_hooks_are_not_called_during_rejection_or_receipt) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 6 tests in 0.002s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "18-test_compiled_terminal_return_custody_01a0ff35-normal",
+    "module": "runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.222,
+    "stdout": "",
+    "stderr": "test_action_and_effect_references_keep_return_time_identity (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_action_and_effect_references_keep_return_time_identity) ... ok\r\ntest_actual_journal_cancellation_retains_completed_pending_prefix (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_actual_journal_cancellation_retains_completed_pending_prefix) ... ok\r\ntest_completed_return_cannot_be_demoted_and_lose_prefix (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_completed_return_cannot_be_demoted_and_lose_prefix) ... ok\r\ntest_false_release_still_fails_when_original_dictionary_is_later_cleared (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_false_release_still_fails_when_original_dictionary_is_later_cleared) ... ok\r\ntest_healthy_two_step_completion_is_preserved (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_healthy_two_step_completion_is_preserved) ... ok\r\ntest_original_nonstring_references_cannot_be_coerced_by_copy_hook (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_original_nonstring_references_cannot_be_coerced_by_copy_hook) ... ok\r\ntest_original_release_subclass_cannot_be_coerced_by_copy_hook (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_original_release_subclass_cannot_be_coerced_by_copy_hook) ... ok\r\ntest_reported_dispatch_cannot_be_rebound_into_preinput_refusal (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_reported_dispatch_cannot_be_rebound_into_preinput_refusal) ... ok\r\ntest_reported_held_input_cannot_be_cleared_into_preinput_refusal (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_reported_held_input_cannot_be_cleared_into_preinput_refusal) ... ok\r\ntest_uncertain_return_cannot_be_promoted_to_completion (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_uncertain_return_cannot_be_promoted_to_completion) ... ok\r\ntest_unchanged_uncertainty_still_stops (runtime.core_v1.test_compiled_terminal_return_custody_01a0ff35.TerminalReturnCustodyTests.test_unchanged_uncertainty_still_stops) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 11 tests in 0.003s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "19-test_compiled_unverified_release_reconciliation-normal",
+    "module": "runtime.core_v1.test_compiled_unverified_release_reconciliation",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "runtime.core_v1.test_compiled_unverified_release_reconciliation",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.224,
+    "stdout": "",
+    "stderr": "test_delivery_flag_is_preserved_without_inventing_neutrality (runtime.core_v1.test_compiled_unverified_release_reconciliation.UnverifiedReleaseTests.test_delivery_flag_is_preserved_without_inventing_neutrality) ... ok\r\ntest_explicit_preinput_refusal_retains_existing_no_input_path (runtime.core_v1.test_compiled_unverified_release_reconciliation.UnverifiedReleaseTests.test_explicit_preinput_refusal_retains_existing_no_input_path) ... ok\r\ntest_opaque_reference_is_not_copied_into_unresolved_record (runtime.core_v1.test_compiled_unverified_release_reconciliation.UnverifiedReleaseTests.test_opaque_reference_is_not_copied_into_unresolved_record) ... ok\r\ntest_second_action_retains_verified_prefix_and_unresolved_save (runtime.core_v1.test_compiled_unverified_release_reconciliation.UnverifiedReleaseTests.test_second_action_retains_verified_prefix_and_unresolved_save) ... ok\r\ntest_unverified_completed_entry_preserves_unresolved_identity (runtime.core_v1.test_compiled_unverified_release_reconciliation.UnverifiedReleaseTests.test_unverified_completed_entry_preserves_unresolved_identity) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 5 tests in 0.001s\r\n\r\nOK\r\n"
+  }
+]

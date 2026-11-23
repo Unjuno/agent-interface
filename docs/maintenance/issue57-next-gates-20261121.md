@@ -181,3 +181,19 @@ This closes one synthetic terminal-shape gap only. See [R07
 result](../../research/integration/issue57_v3_durable_appserver_composition_r07_20261123/RESULT.md).
 Next continue the all-attempt/current-source provider join and integrated
 comparison path; keep #57 open.
+
+
+## Integrated caller-v3 and compiled-runtime composition R01 - 2026-11-23
+
+A synthetic composed path now runs the full cold adaptive caller v3 accounting
+through the existing bounded compiled GUI runtime. The positive path has two
+accounted model attempts and two observation-selected local transitions before
+a distinct task scorer. Changed intermediate evidence refuses the second
+admission/input and preserves EXECUTION_INCOMPLETE / unknown_state /
+confirmed_partial. Focused tests pass 2/2; the related caller and compiled-core
+suites pass 132/132 normal and under -O. This is composition correctness only,
+not live app/provider/economics evidence. See [R01
+result](../../research/integration/issue57_adaptive_caller_compiled_gui_composition_r01_20261123/RESULT.md)
+and [requirement crosswalk](issue57-composition-plan-and-requirement-crosswalk-20261123.md).
+Next add the exact v3 adapter to the established independently scored live
+workflow, then freeze the current-source comparison. Keep #57 open.
