@@ -1,0 +1,233 @@
+{
+  "completed_trials": 1,
+  "schema": "agent-interface/r27-progress-v1",
+  "trials": [
+    {
+      "effect": {
+        "effect_delay_ms": 6000,
+        "effect_observed_ns": 446311843000000,
+        "key_down_accepted_ns": 446305828000000,
+        "text": "a",
+        "verified": true
+      },
+      "fence_last_resolved": {
+        "operation_id": "36cbadd7fa834448b1610d2ecbad4ed2",
+        "target_generation": "d54a510a31a47a08527d503081190da3157e25f8ffd839acd3da4c09737615c9"
+      },
+      "fence_status_after": "clear",
+      "fixture_closed": true,
+      "followup_call_id": "fefe093b00c14c3e8edc21fc2611dc85",
+      "followup_operation_id": "36cbadd7fa834448b1610d2ecbad4ed2",
+      "followup_release_confirmed": true,
+      "followup_status": "completed",
+      "followup_task_success": true,
+      "fresh_fixture_closed": true,
+      "ordinal": 1,
+      "outcome": "RECOVERY_AND_NEW_TASK_VERIFIED",
+      "recovery_attempted": true,
+      "recovery_horizon_verified": true,
+      "recovery_receipt_summary": {
+        "late_input_horizon_ns": 2000000000,
+        "late_input_horizon_verified": true,
+        "late_input_max_observed_gap_ns": 32000000,
+        "late_input_max_sample_gap_ns": 100000000,
+        "late_input_observation_count": 77,
+        "readback_neutral": true,
+        "recovery_target_generation": "9d518fe59d7d007cd4236e04994eed48f045563efb3f9811dcc2c34a50966916",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "source_action_status": "unknown",
+        "source_operation_id": "0a735e8ad25b4afd91f058a580641d47",
+        "source_target_generation": "9d518fe59d7d007cd4236e04994eed48f045563efb3f9811dcc2c34a50966916",
+        "task_success": null
+      },
+      "recovery_release_confirmed": true,
+      "recovery_status": "recovered",
+      "score": {
+        "state_sha256": "100f9e7c64cef5adfc76c9966bfdd522d0e9a51b919b96115a5d03f729eadc01",
+        "task_success": true
+      },
+      "source": {
+        "action_call_id": "8a4e09112a7f4097bad0a6e77a78565e",
+        "cancellation": {
+          "cleanup_deadline_ns": 446312890000000,
+          "cleanup_latency_ns": null,
+          "cleanup_latency_perf_counter_ns": null,
+          "cleanup_requested_monotonic_ns": 446307890000000,
+          "cleanup_requested_perf_counter_ns": 446307911802900,
+          "completion_readback": null,
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "not_attempted",
+          "completion_release_receipt": null,
+          "deadline_ns": 446307796000000,
+          "late_input_horizon_ns": 0,
+          "late_input_max_observed_gap_ns": null,
+          "late_input_max_sample_gap_ns": null,
+          "late_input_observation_count": 0,
+          "late_input_observation_end_ns": null,
+          "late_input_observation_start_ns": null,
+          "late_input_release_received_ns": null,
+          "late_input_validation_error": null,
+          "obligations": [
+            "key:fixture:A:virtual_key"
+          ],
+          "operation_id": "0a735e8ad25b4afd91f058a580641d47",
+          "phase": "recovery_pending",
+          "producer_exit_code": 0,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134398772033833123,
+            "pid": 25704
+          },
+          "readback": null,
+          "recovery_completed_monotonic_ns": null,
+          "recovery_completed_perf_counter_ns": null,
+          "recovery_id": "2b5f3532c8eb488a891080a02cc04036",
+          "recovery_release_attempts": [
+            {
+              "domain": "key_up",
+              "encoding": "virtual_key",
+              "error_type": null,
+              "key_names": [
+                "A"
+              ],
+              "ordinal": 0,
+              "outcome": "returned",
+              "sendinput_call_started": true,
+              "sendinput_error_type": null,
+              "sendinput_return_count": 1,
+              "virtual_key": 65
+            }
+          ],
+          "recovery_release_key_up_attempts": [
+            {
+              "encoding": "virtual_key",
+              "status": "returned",
+              "virtual_key": 65
+            }
+          ],
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "9d518fe59d7d007cd4236e04994eed48f045563efb3f9811dcc2c34a50966916",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "input_dispatched": true,
+        "operation_id": "0a735e8ad25b4afd91f058a580641d47",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "unknown",
+        "target_generation": "9d518fe59d7d007cd4236e04994eed48f045563efb3f9811dcc2c34a50966916",
+        "task_success": null
+      },
+      "source_calls": [
+        {
+          "call_id": "1868a6de221d4b439e1a40683039eee9",
+          "ended_ns": 446305781000000,
+          "session": "source",
+          "started_ns": 446305734000000,
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "7f57694bcb0d4745af93b6a9d6cd676d",
+          "ended_ns": 446307921000000,
+          "session": "source",
+          "started_ns": 446305796000000,
+          "tool": "interface_dispatch"
+        },
+        {
+          "call_id": "19bffeb3764d48dba24e9490880cd317",
+          "ended_ns": 446307921000000,
+          "session": "source",
+          "started_ns": 446307921000000,
+          "tool": "interface_results"
+        },
+        {
+          "call_id": "966bd12f55ac4ceaa060e91e966eda89",
+          "ended_ns": 446307968000000,
+          "session": "source",
+          "started_ns": 446307921000000,
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "bf310816325d41f4b71e325c21e8ee37",
+          "ended_ns": 446308000000000,
+          "session": "source",
+          "started_ns": 446307984000000,
+          "tool": "interface_close"
+        },
+        {
+          "ended_ns": 446314921000000,
+          "input_dispatched": false,
+          "observation_id": "2bb9fceba84a4a2aaa0a64462b2e6e3a",
+          "session": "recovery",
+          "side_effect_authority": false,
+          "started_ns": 446314875000000,
+          "status": "returned",
+          "target_generation": "9d518fe59d7d007cd4236e04994eed48f045563efb3f9811dcc2c34a50966916",
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "6620c06b46ab44c28cef68636fba4cab",
+          "ended_ns": 446317046000000,
+          "release_confirmed": true,
+          "session": "recovery",
+          "started_ns": 446315000000000,
+          "status": "recovered",
+          "tool": "interface_recover_orphaned_input"
+        },
+        {
+          "ended_ns": 446317218000000,
+          "session": "recovery",
+          "started_ns": 446317046000000,
+          "status": "closed",
+          "tool": "interface_close"
+        },
+        {
+          "ended_ns": 446370984000000,
+          "session": "followup",
+          "started_ns": 446370921000000,
+          "tool": "interface_observe"
+        },
+        {
+          "ended_ns": 446373093000000,
+          "session": "followup",
+          "started_ns": 446370984000000,
+          "tool": "interface_dispatch"
+        },
+        {
+          "ended_ns": 446373093000000,
+          "session": "followup",
+          "started_ns": 446373093000000,
+          "tool": "interface_results"
+        },
+        {
+          "ended_ns": 446373125000000,
+          "session": "followup",
+          "started_ns": 446373109000000,
+          "tool": "interface_verify_task"
+        },
+        {
+          "ended_ns": 446373234000000,
+          "session": "followup",
+          "started_ns": 446373125000000,
+          "tool": "interface_close"
+        }
+      ],
+      "source_release_confirmed": false,
+      "target": {
+        "hwnd": 32117296,
+        "pid": 44316,
+        "region": [
+          0,
+          0,
+          400,
+          180
+        ],
+        "title": "Agent Interface Win32 Fixture R41 Source"
+      },
+      "trial_id": "r41-87cadc55958a4b63aaa8a3f7c47029d0"
+    }
+  ]
+}

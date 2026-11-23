@@ -1,0 +1,237 @@
+{
+  "completed_trials": 1,
+  "schema": "agent-interface/r40-progress-v1",
+  "trials": [
+    {
+      "effect": {
+        "effect_delay_ms": 6000,
+        "effect_observed_ns": 446040093000000,
+        "key_down_accepted_ns": 446034093000000,
+        "text": "a",
+        "verified": true
+      },
+      "fence_last_resolved": {
+        "operation_id": "4f8213295613487db5f65017b4e89da0",
+        "target_generation": "13a7e2f373168d22e0e3f5ae55f1e8b1962798c2a567a090cebbf9461ac18b0b"
+      },
+      "fence_status_after": "clear",
+      "fixture_closed": false,
+      "followup_call_id": "5359e778ae9c4903a64d590d8709348e",
+      "followup_effect_adjudication": {
+        "independent_fixture_effect": "one WM_CHAR B inside exact dispatch interval; fresh state b",
+        "public_runtime_task_success": null,
+        "verification_error": "independent_task_oracle_receipt_invalid: ValueError('task-effect observation is outside the oracle request/receipt window')"
+      },
+      "followup_operation_id": "4f8213295613487db5f65017b4e89da0",
+      "followup_release_confirmed": true,
+      "followup_status": "completed",
+      "followup_task_success": null,
+      "ordinal": 1,
+      "outcome": "STOP_ORACLE_TIME_OUTSIDE_REQUEST_WINDOW_AFTER_B_RELEASE",
+      "recovery_attempted": true,
+      "recovery_horizon_verified": true,
+      "recovery_receipt_summary": {
+        "late_input_horizon_ns": 2000000000,
+        "late_input_horizon_verified": true,
+        "late_input_max_observed_gap_ns": 32000000,
+        "late_input_max_sample_gap_ns": 100000000,
+        "late_input_observation_count": 77,
+        "readback_neutral": true,
+        "recovery_target_generation": "5e7d856d8f2028efff5a938b975c93bb0fdf3f0f0a95df940ed8689c5dc97991",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "source_action_status": "unknown",
+        "source_operation_id": "de7ba9ca21ff47008f1b0eb7910e1723",
+        "source_target_generation": "5e7d856d8f2028efff5a938b975c93bb0fdf3f0f0a95df940ed8689c5dc97991",
+        "task_success": null
+      },
+      "recovery_release_confirmed": true,
+      "recovery_status": "recovered",
+      "score": {
+        "state_sha256": "cd65e179b805fc2bcfe1a1168e7132ee7319b2306b6230fac965b025df957b8c",
+        "task_success": true
+      },
+      "source": {
+        "action_call_id": "64c2b43da5254c34aeddc59532aedd3c",
+        "cancellation": {
+          "cleanup_deadline_ns": 446041156000000,
+          "cleanup_latency_ns": null,
+          "cleanup_latency_perf_counter_ns": null,
+          "cleanup_requested_monotonic_ns": 446036156000000,
+          "cleanup_requested_perf_counter_ns": 446036184568800,
+          "completion_readback": null,
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "not_attempted",
+          "completion_release_receipt": null,
+          "deadline_ns": 446036046000000,
+          "late_input_horizon_ns": 0,
+          "late_input_max_observed_gap_ns": null,
+          "late_input_max_sample_gap_ns": null,
+          "late_input_observation_count": 0,
+          "late_input_observation_end_ns": null,
+          "late_input_observation_start_ns": null,
+          "late_input_release_received_ns": null,
+          "late_input_validation_error": null,
+          "obligations": [
+            "key:fixture:A:virtual_key"
+          ],
+          "operation_id": "de7ba9ca21ff47008f1b0eb7910e1723",
+          "phase": "recovery_pending",
+          "producer_exit_code": 0,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134398769316516018,
+            "pid": 28840
+          },
+          "readback": null,
+          "recovery_completed_monotonic_ns": null,
+          "recovery_completed_perf_counter_ns": null,
+          "recovery_id": "dc3b11335b83479ab9eba91e3be62efb",
+          "recovery_release_attempts": [
+            {
+              "domain": "key_up",
+              "encoding": "virtual_key",
+              "error_type": null,
+              "key_names": [
+                "A"
+              ],
+              "ordinal": 0,
+              "outcome": "returned",
+              "sendinput_call_started": true,
+              "sendinput_error_type": null,
+              "sendinput_return_count": 1,
+              "virtual_key": 65
+            }
+          ],
+          "recovery_release_key_up_attempts": [
+            {
+              "encoding": "virtual_key",
+              "status": "returned",
+              "virtual_key": 65
+            }
+          ],
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "5e7d856d8f2028efff5a938b975c93bb0fdf3f0f0a95df940ed8689c5dc97991",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "input_dispatched": true,
+        "operation_id": "de7ba9ca21ff47008f1b0eb7910e1723",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "unknown",
+        "target_generation": "5e7d856d8f2028efff5a938b975c93bb0fdf3f0f0a95df940ed8689c5dc97991",
+        "task_success": null
+      },
+      "source_calls": [
+        {
+          "call_id": "2058924661984de7b1f44c592f0704b2",
+          "ended_ns": 446034046000000,
+          "session": "source",
+          "started_ns": 446033984000000,
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "af2504b9faff4863bf773d5591d90d35",
+          "ended_ns": 446036187000000,
+          "session": "source",
+          "started_ns": 446034046000000,
+          "tool": "interface_dispatch"
+        },
+        {
+          "call_id": "7bcb8e25c68d49b4a7a9772c0fef491d",
+          "ended_ns": 446036203000000,
+          "session": "source",
+          "started_ns": 446036187000000,
+          "tool": "interface_results"
+        },
+        {
+          "call_id": "ab431553d50d44e8ac9a1c302dd98ce6",
+          "ended_ns": 446036250000000,
+          "session": "source",
+          "started_ns": 446036203000000,
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "dba83374eeb9446f974e721abf06390e",
+          "ended_ns": 446036265000000,
+          "session": "source",
+          "started_ns": 446036250000000,
+          "tool": "interface_close"
+        },
+        {
+          "ended_ns": 446043218000000,
+          "input_dispatched": false,
+          "observation_id": "8e8fbbd72ef8487b91384fe8232b6e8d",
+          "session": "recovery",
+          "side_effect_authority": false,
+          "started_ns": 446043156000000,
+          "status": "returned",
+          "target_generation": "5e7d856d8f2028efff5a938b975c93bb0fdf3f0f0a95df940ed8689c5dc97991",
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "a9bdb35a6e8a452083f8a72f298c8dcc",
+          "ended_ns": 446045328000000,
+          "release_confirmed": true,
+          "session": "recovery",
+          "started_ns": 446043296000000,
+          "status": "recovered",
+          "tool": "interface_recover_orphaned_input"
+        },
+        {
+          "ended_ns": 446045515000000,
+          "session": "recovery",
+          "started_ns": 446045343000000,
+          "status": "closed",
+          "tool": "interface_close"
+        },
+        {
+          "ended_ns": 446080093000000,
+          "session": "followup",
+          "started_ns": 446080031000000,
+          "tool": "interface_observe"
+        },
+        {
+          "ended_ns": 446082218000000,
+          "session": "followup",
+          "started_ns": 446080093000000,
+          "tool": "interface_dispatch"
+        },
+        {
+          "ended_ns": 446082218000000,
+          "session": "followup",
+          "started_ns": 446082218000000,
+          "tool": "interface_results"
+        },
+        {
+          "ended_ns": 446082250000000,
+          "session": "followup",
+          "started_ns": 446082234000000,
+          "tool": "interface_verify_task"
+        },
+        {
+          "ended_ns": 446082375000000,
+          "session": "followup",
+          "started_ns": 446082250000000,
+          "tool": "interface_close"
+        }
+      ],
+      "source_release_confirmed": false,
+      "target": {
+        "hwnd": 4002486,
+        "pid": 50136,
+        "region": [
+          0,
+          0,
+          400,
+          180
+        ],
+        "title": "Agent Interface Win32 Fixture R40 Source"
+      },
+      "trial_id": "r40-d0bd3c13301440ebaa02b26a27061e40"
+    }
+  ]
+}

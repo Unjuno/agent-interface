@@ -1,0 +1,36 @@
+{
+  "schema": "agent-interface/r32-progress-v1",
+  "completed_trials": 1,
+  "trials": [
+    {
+      "schema": "agent-interface/r32-stop-v1",
+      "experiment": "win32-post-recovery-public-task-r32",
+      "outcome": "STOP_FOLLOWUP_CLIENT_LOGGER_NAMEERROR_AFTER_OBSERVE",
+      "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+      "public_observations": 3,
+      "public_dispatches": 1,
+      "orphan_recovery_calls": 1,
+      "followup_observations": 1,
+      "followup_dispatches": 0,
+      "task_verifications": 0,
+      "source_action_status": "unknown",
+      "source_task_success": null,
+      "source_release_confirmed": false,
+      "source_replay_allowed": false,
+      "recovery_status": "recovered",
+      "recovery_release_confirmed": true,
+      "recovery_neutral": true,
+      "recovery_horizon_verified": true,
+      "recovery_horizon_samples": 78,
+      "followup_observation_status": "returned",
+      "followup_observation_input_dispatched": false,
+      "followup_observation_authority": false,
+      "followup_target_generation": "97c714221219c112c6ab6002b8884d7838bf4b4d9f4831dc80091e6bd967a363",
+      "fixture_state_after_recovery": "a",
+      "fixture_process_left_open_for_diagnosis": true,
+      "durable_fence_clear": true,
+      "client_error": "NameError: uuid is not defined",
+      "root_cause": "The follow-up interface_observe MCP call returned and its server-side report was retained, but the runner raised while creating the local response filename because run_cohort.py uses uuid.uuid4() without importing uuid. No follow-up dispatch occurred."
+    }
+  ]
+}

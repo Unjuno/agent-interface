@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "\\wsl.localhost\Ubuntu\home\user\agent-interface-preview-main-r06-20261123\research\integration\win32_post_recovery_public_task_r33_20261123\source\fixture_app.py", line 15, in <module>
+    user33 = ctypes.WinDLL("user33", use_last_error=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\ctypes\__init__.py", line 376, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: Could not find module 'user33' (or one of its dependencies). Try using the full path with constructor syntax.

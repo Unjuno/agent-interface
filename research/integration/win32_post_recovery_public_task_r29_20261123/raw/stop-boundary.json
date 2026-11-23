@@ -1,0 +1,19 @@
+{
+  "detail": "The copied R24 foreground probe hardcodes the R24 title. Computer Use raised the exact R29 target; observed HWND/PID matched, but title predicate caused the pre-MCP false result. The frozen stop rule was honored.",
+  "experiment": "win32-post-recovery-public-task-r29",
+  "fence_clear_after": true,
+  "fixture_closed": true,
+  "fixture_hwnd": 11014098,
+  "fixture_pid": 26604,
+  "mcp_observations": 0,
+  "outcome": "STOP_HARNESS_TITLE_MISMATCH_BEFORE_MCP",
+  "probe_expected_legacy_title": "Agent Interface Win32 Fixture R24",
+  "probe_observed_hwnd_pid_match": true,
+  "probe_observed_title": "Agent Interface Win32 Fixture R29",
+  "probe_result": false,
+  "public_dispatches": 0,
+  "recovery_calls": 0,
+  "schema": "agent-interface/r29-stop-v1",
+  "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+  "task_verifications": 0
+}
