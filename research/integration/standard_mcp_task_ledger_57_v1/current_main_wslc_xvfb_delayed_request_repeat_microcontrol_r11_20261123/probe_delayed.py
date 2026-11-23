@@ -7,12 +7,9 @@ ka=owner.keysym_to_keycode(XK.string_to_keysym('a'))
 kb=owner.keysym_to_keycode(XK.string_to_keysym('b'))
 owner.change_keyboard_control(key=ka,auto_repeat_mode=X.AutoRepeatModeOff); owner.sync()
 ctl=owner.get_keyboard_control(); amask=1<<(ka&7)
-win=root.create_window(0,0,180,100,0,screen.root_depth,X.InputOutput,X.CopyFromParent,event_mask=X.KeyPressMask|X.KeyReleaseMask)
+win=root.create_window(0,0,180,100,0,screen.root_depth,X.InputOutput,X.CopyFromParent)
 win.map(); owner.sync(); win.set_input_focus(X.RevertToParent,X.CurrentTime); owner.sync()
-reader=display.Display(); rw=reader.screen().root.create_window(0,0,180,100,0,reader.screen().root_depth,X.InputOutput,X.CopyFromParent,event_mask=X.KeyPressMask|X.KeyReleaseMask); rw.map(); reader.sync()
-# Reuse one focused window on the same server; the owner client delivers XTEST.
-reader.close()
-observer=display.Display(); observed=win.change_attributes(event_mask=X.KeyPressMask|X.KeyReleaseMask); owner.sync()
+observer=display.Display(); owner.sync()
 events=[]; stop=threading.Event()
 def collect():
     while not stop.is_set():
@@ -23,7 +20,8 @@ def collect():
         time.sleep(.001)
 t=threading.Thread(target=collect,daemon=True); t.start()
 # The separate observer selects the shared target window.
-observer.change_attributes(event_mask=X.KeyPressMask|X.KeyReleaseMask)
+observer_window=observer.create_resource_object('window', win.id)
+observer_window.change_attributes(event_mask=X.KeyPressMask|X.KeyReleaseMask)
 owner.sync(); observer.sync()
 xtest.fake_input(owner,X.KeyPress,detail=ka); owner.sync()
 queue_start=time.monotonic_ns()
