@@ -6,6 +6,10 @@
 
 On current-main baseline `e67ca18c`, a bounded read-only check found no GZDoom in six standard install paths, command lookup, running processes, or Windows uninstall registry. It did not search the full disk or establish WAD availability. No application was launched and no runtime/assets were installed. Live #59 threat exposure remains pending a supplied/preinstalled executable path and intended IWAD/map. See [R01](../research/integration/map01_preinstalled_target_preflight_current_main_r01_20261123/RESULT.md).
 
+## MAP01 expanded target search R02 — 2026-11-23
+
+On frozen current-main baseline `fd3f0f58`, a one-shot read-only scan covered five existing AppData/desktop/saved-games roots and returned no `gzdoom.exe`, `doom2.wad`, or `freedoom*.wad` filenames in 6.047 s. Six other configured roots did not exist. The scan did not inspect file contents or search the full disk; nothing was launched, installed, or downloaded. No live MAP01 exposure can proceed until an owned target and IWAD are located. See [R02](../research/integration/map01_expanded_target_search_current_main_r02_20261123/RESULT.md).
+
 ## Whole-repository membership recheck r173 — 2026-11-23
 
 On stable current main `bc903f77`, complete GitHub REST pagination returned 1,640 open Issues and 405 open PRs. Both exact ID sets match r172; this is a count/membership refresh only, not semantic cleanup. See [r173](maintenance/repository-inventory-recheck-20261123-r173.md).

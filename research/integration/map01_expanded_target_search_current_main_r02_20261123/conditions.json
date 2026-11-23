@@ -1,0 +1,40 @@
+{
+  "run_id": "map01-expanded-target-search-r02-20261123",
+  "frozen_main_sha": "fd3f0f58edd1b77127b84fa1be7757aff9b3b739",
+  "method": "one bounded read-only rg filename search; no retry",
+  "roots": [
+    "C:\\Users\\user\\AppData\\Local\\Temp",
+    "C:\\Users\\user\\AppData\\Local\\Programs",
+    "C:\\Users\\user\\AppData\\Roaming",
+    "C:\\Users\\user\\Desktop",
+    "C:\\Users\\user\\Saved Games",
+    "C:\\Users\\user\\OneDrive\\Games",
+    "C:\\Games",
+    "D:\\Games",
+    "D:\\SteamLibrary",
+    "E:\\Games",
+    "E:\\SteamLibrary"
+  ],
+  "filename_globs": [
+    "gzdoom.exe",
+    "doom2.wad",
+    "freedoom*.wad"
+  ],
+  "rg_args": [
+    "--files",
+    "--hidden",
+    "--no-ignore",
+    "-g",
+    "!**/.git/**"
+  ],
+  "timeout_seconds": 90,
+  "forbidden_actions": [
+    "no file content inspection",
+    "no application launch/focus/input",
+    "no asset or runtime download/install",
+    "no Docker/WSLc operation",
+    "no model allocation"
+  ],
+  "source_sha256": "c6d0474b5133d95fe5f7cd3d455ed898f972cb8dbaa327850a234b5293bb8e9d",
+  "frozen_at_utc": "2026-11-23T07:11:33.503209Z"
+}
