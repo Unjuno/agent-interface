@@ -15,7 +15,7 @@
 - Python 3 environment capable of installing the pinned `runtime/requirements-golden.txt` set
 - WSLg/X11 display connectivity
 - Chromium / Google Chrome as documented by the runtime doctor
-- Windows Node.js and Codex CLI bridge paths visible from WSL
+- Windows Node.js and the separately installed Codex CLI JavaScript entrypoint visible from WSL (set `AGENT_INTERFACE_WINDOWS_CODEX_JS` when it is outside the default path)
 
 ## Release semantics
 
