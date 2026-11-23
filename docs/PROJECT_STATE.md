@@ -114,11 +114,11 @@ success, comparative efficiency, reliability, or preview readiness.
 
 ## Repository organization
 
-- The latest GitHub membership receipt is r167: **1,640 open Issues and
-  406 open PRs**, bracketed by unchanged main
-  `490d7bcb4d84927116112e5ff348cdeadfc489d6`. Issue IDs match r166; the only
-  open-PR addition is #10473, with no removals. See [r167](maintenance/repository-inventory-recheck-20261123-r167.md)
-  and [its exact-ID receipt](maintenance/repository-inventory-recheck-20261123-r167.json).
+- The latest GitHub membership receipt is r172: **1,640 open Issues and
+  405 open PRs**, bracketed by unchanged main
+  `b600070965c48cc9449a87ff31264a5b3604c2d8`. Exact sorted ID sets match r171
+  with no additions/removals. See [r172](maintenance/repository-inventory-recheck-20261123-r172.md)
+  and [its exact-ID receipt](maintenance/repository-inventory-recheck-20261123-r172.json).
   This remains membership evidence, not semantic issue/PR triage.
   Exact comparison with r152/r157 found no additions; Issues #7748/#7765/#7817
   and PRs #7968/#8181/#10227 are removed. This reconciles the two-PR delta
@@ -140,7 +140,7 @@ success, comparative efficiency, reliability, or preview readiness.
 ## Execution order
 
 1. Continue family-by-family semantic triage and custody reconciliation using
-   the r167 full membership baseline; do not infer disposition from counts.
+   the r172 full membership baseline; do not infer disposition from counts.
 2. Stop repeating the same late fixture-effect experiment. Qualify a standard-
    caller task whose effect can be prospectively eligible, with exact
    recovery/owner evidence and an independent task score; keep failed and
