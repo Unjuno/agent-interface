@@ -9,8 +9,8 @@ def repo_root():
         if (p/".git").exists(): return p
     raise RuntimeError("repository root not found")
 REPO=repo_root()
-CONDITIONS=PACKET/"CONDITIONS.json"
-RAW=PACKET/"raw"
+CONDITIONS=PACKET/"CONDITIONS-r03.json"
+RAW=PACKET/"raw-r03"
 IMAGE="sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056"
 MODULES=["runtime.cli_v1.test_mcp_server","runtime.cli_v1.test_mcp_guarded"]
 def run(args,**kwargs): return subprocess.run(args,cwd=REPO,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False,**kwargs)
@@ -22,7 +22,7 @@ def main():
     for n,h in c["source_sha256"].items():
         if sha((REPO/n).read_bytes())!=h: raise SystemExit(f"source drift: {n}")
     image=subprocess.check_output(["docker","image","inspect",IMAGE,"--format","{{.Id}}"],text=True).strip()
-    if image!=c["image_id"]: raise SystemExit("Docker image ID mismatch")
+    if image!=c["design"]["image_id"]: raise SystemExit("Docker image ID mismatch")
     if RAW.exists(): raise SystemExit("raw output exists; refusing overwrite")
     RAW.mkdir()
     mount=f"type=bind,source={REPO},target=/workspace,readonly"
