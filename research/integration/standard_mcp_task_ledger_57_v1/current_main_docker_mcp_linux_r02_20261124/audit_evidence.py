@@ -9,8 +9,12 @@ def sha(b): return hashlib.sha256(b).hexdigest()
 def require(ok,msg):
     if not ok: raise AssertionError(msg)
 def main():
-    c=json.loads((PACKET/"CONDITIONS-r07.json").read_text(encoding="utf-8"))
+    c=json.loads((PACKET/"CONDITIONS-r08.json").read_text(encoding="utf-8"))
     require(subprocess.check_output(["git","rev-parse","origin/main"],cwd=REPO,text=True).strip()==c["base_main_sha"],"main drift")
+    tree=subprocess.check_output(["git","rev-parse","origin/main:runtime"],cwd=REPO,text=True).strip()
+    require(tree==c["runtime_tree_id"],"runtime tree id mismatch")
+    diff=subprocess.run(["git","diff","--quiet","origin/main","--","runtime"],cwd=REPO,check=False)
+    require(diff.returncode==0,"runtime working tree differs from frozen main")
     source={}
     for n,h in c["source_sha256"].items():
         actual=sha((REPO/n).read_bytes()); require(actual==h,"source hash mismatch: "+n); source[n]=actual
