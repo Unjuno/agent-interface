@@ -1,0 +1,3 @@
+# R39 — Recovered task with a fresh-only target registry
+
+One frozen public-caller trial recovers the expired UNKNOWN A source, then creates a distinct fresh target and runs the B task with a server registry containing only that fresh target. This directly fixes the R38 harness mismatch against the runtime exactly-one-target invariant. Source and follow-up windows occupy separate screen coordinates. Computer Use screenshot/title/click and independent HWND/PID/title foreground probes are mandatory. Recovery requires release confirmation, neutral readback, and a verified 2 s horizon. Oracle requires exactly one B WM_CHAR during the operation interval and fresh target state b. No retry. One local trial only; no broad reliability/economics claim.

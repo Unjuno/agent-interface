@@ -1,0 +1,304 @@
+{
+  "action": {
+    "completion_custody": {
+      "cleanup_deadline_ns": null,
+      "cleanup_latency_ns": null,
+      "cleanup_latency_perf_counter_ns": null,
+      "cleanup_requested_monotonic_ns": null,
+      "cleanup_requested_perf_counter_ns": null,
+      "completion_readback": {
+        "late_input_horizon_ns": 2000000000,
+        "late_input_horizon_verified": true,
+        "late_input_max_observed_gap_ns": 32000000,
+        "late_input_max_sample_gap_ns": 100000000,
+        "late_input_observation_count": 77,
+        "late_input_observation_end_monotonic_ns": 446373078000000,
+        "late_input_observation_start_monotonic_ns": 446371078000000,
+        "neutral": true,
+        "observed_monotonic_ns": 446371109000000,
+        "operation_id": "36cbadd7fa834448b1610d2ecbad4ed2",
+        "producer_exit_confirmed_ns": 446371078000000,
+        "target_generation": "d54a510a31a47a08527d503081190da3157e25f8ffd839acd3da4c09737615c9"
+      },
+      "completion_readback_attempt": null,
+      "completion_readback_outcome": "verified",
+      "completion_release_receipt": {
+        "buttons_down": [],
+        "buttons_unknown": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "monotonic_ns": 446371031000000,
+        "perf_counter_ns": 446371061797000,
+        "release_attempts": [
+          {
+            "domain": "key_up",
+            "encoding": null,
+            "error_type": null,
+            "key_names": [
+              "B"
+            ],
+            "ordinal": 0,
+            "outcome": "returned",
+            "sendinput_call_started": true,
+            "sendinput_error_type": null,
+            "sendinput_return_count": 1,
+            "virtual_key": 66
+          }
+        ],
+        "release_errors": [],
+        "state_query_witnesses": {
+          "66": [
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 30085956,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 27908,
+              "probe_integrity_rid": 8192,
+              "target": "fresh",
+              "target_integrity_rid": 8192,
+              "thread_id": 45732
+            },
+            {
+              "desktop_hookcontrol_opened": true,
+              "hwnd": 30085956,
+              "input_desktop": "Default",
+              "input_desktop_active": true,
+              "pid": 27908,
+              "probe_integrity_rid": 8192,
+              "target": "fresh",
+              "target_integrity_rid": 8192,
+              "thread_id": 45732
+            }
+          ]
+        },
+        "verified": true
+      },
+      "deadline_ns": 446430984000000,
+      "late_input_horizon_ns": 2000000000,
+      "late_input_max_observed_gap_ns": 32000000,
+      "late_input_max_sample_gap_ns": 100000000,
+      "late_input_observation_count": 77,
+      "late_input_observation_end_ns": 446373078000000,
+      "late_input_observation_start_ns": 446371078000000,
+      "late_input_release_received_ns": null,
+      "late_input_validation_error": null,
+      "obligations": [
+        "key:fresh:B:virtual_key"
+      ],
+      "operation_id": "36cbadd7fa834448b1610d2ecbad4ed2",
+      "phase": "completed",
+      "producer_exit_code": 0,
+      "producer_gate_state": "authorization_attempted",
+      "producer_identity": {
+        "creation_time_100ns": 134398772684837640,
+        "pid": 3528
+      },
+      "readback": null,
+      "recovery_completed_monotonic_ns": null,
+      "recovery_completed_perf_counter_ns": null,
+      "recovery_id": null,
+      "recovery_release_attempts": null,
+      "recovery_release_key_up_attempts": null,
+      "release_confirmed": true,
+      "replay_allowed": false,
+      "status": "completed",
+      "target_generation": "d54a510a31a47a08527d503081190da3157e25f8ffd839acd3da4c09737615c9",
+      "task_success": null,
+      "uncertainty": null
+    },
+    "input_dispatched": true,
+    "metadata": {
+      "program_id": "r41-cdb77ac7c73e469fa09a560bcbfa6d40",
+      "source": "interface_dispatch"
+    },
+    "operation_id": "36cbadd7fa834448b1610d2ecbad4ed2",
+    "producer_timing": {
+      "child_ready_monotonic_ns": 446371015000000,
+      "clock": "time.monotonic_ns",
+      "factory_requested_monotonic_ns": 446371000000000,
+      "factory_returned_monotonic_ns": 446371000000000,
+      "identity_verified_monotonic_ns": 446371015000000,
+      "prestarted_worker_assigned_monotonic_ns": 446371015000000,
+      "start_gate_authorized_monotonic_ns": 446371031000000
+    },
+    "program_operation_receipts": {
+      "counter_scope": "per-operation SendInput returns and local SetCursorPos actions; not application effect",
+      "observed_monotonic_ns": 446373093000000,
+      "operations": [
+        {
+          "local_action_count": 0,
+          "operation_index": 0,
+          "phase": "completed",
+          "sendinput_attempts": 0,
+          "sendinput_returned_count": 0
+        },
+        {
+          "local_action_count": 0,
+          "operation_index": 1,
+          "phase": "completed",
+          "sendinput_attempts": 2,
+          "sendinput_returned_count": 2
+        },
+        {
+          "local_action_count": 0,
+          "operation_index": 2,
+          "phase": "completed",
+          "sendinput_attempts": 0,
+          "sendinput_returned_count": 0
+        }
+      ],
+      "schema": "win32-program-operation-receipts-v1",
+      "status": "observed"
+    },
+    "program_operation_receipts_capture_status": "observed",
+    "release_confirmed": true,
+    "replay_allowed": false,
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "emissions": 3,
+        "ended_ns": 446371031000000,
+        "observations": [],
+        "program_emissions": 2,
+        "releases": [
+          {
+            "buttons_down": [],
+            "buttons_unknown": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "monotonic_ns": 446371031000000,
+            "perf_counter_ns": 446371061797000,
+            "release_attempts": [
+              {
+                "domain": "key_up",
+                "encoding": null,
+                "error_type": null,
+                "key_names": [
+                  "B"
+                ],
+                "ordinal": 0,
+                "outcome": "returned",
+                "sendinput_call_started": true,
+                "sendinput_error_type": null,
+                "sendinput_return_count": 1,
+                "virtual_key": 66
+              }
+            ],
+            "release_errors": [],
+            "state_query_witnesses": {
+              "66": [
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 30085956,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 27908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fresh",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 45732
+                },
+                {
+                  "desktop_hookcontrol_opened": true,
+                  "hwnd": 30085956,
+                  "input_desktop": "Default",
+                  "input_desktop_active": true,
+                  "pid": 27908,
+                  "probe_integrity_rid": 8192,
+                  "target": "fresh",
+                  "target_integrity_rid": 8192,
+                  "thread_id": 45732
+                }
+              ]
+            },
+            "verified": true
+          }
+        ],
+        "started_ns": 446371015000000
+      },
+      "program_operation_receipts": {
+        "counter_scope": "per-operation SendInput returns and local SetCursorPos actions; not application effect",
+        "observed_monotonic_ns": 446373093000000,
+        "operations": [
+          {
+            "local_action_count": 0,
+            "operation_index": 0,
+            "phase": "completed",
+            "sendinput_attempts": 0,
+            "sendinput_returned_count": 0
+          },
+          {
+            "local_action_count": 0,
+            "operation_index": 1,
+            "phase": "completed",
+            "sendinput_attempts": 2,
+            "sendinput_returned_count": 2
+          },
+          {
+            "local_action_count": 0,
+            "operation_index": 2,
+            "phase": "completed",
+            "sendinput_attempts": 0,
+            "sendinput_returned_count": 0
+          }
+        ],
+        "schema": "win32-program-operation-receipts-v1",
+        "status": "observed"
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "status": "completed",
+    "target_generation": "d54a510a31a47a08527d503081190da3157e25f8ffd839acd3da4c09737615c9",
+    "task_success": null
+  },
+  "call_id": "fefe093b00c14c3e8edc21fc2611dc85",
+  "cancellation": null,
+  "deadline_cancel_policy": "automatic",
+  "input_dispatched": false,
+  "operation_invoked": false,
+  "query_input_dispatched": false,
+  "replay_allowed": false,
+  "source_action_input_dispatched": true,
+  "standard_program": {
+    "authority": {
+      "expires_at_ns": 446430984000000,
+      "lease_id": "r41-40c7581ed31f415093742227484e7ebe"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "fresh"
+      },
+      {
+        "keys": [
+          "B"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "r41-cdb77ac7c73e469fa09a560bcbfa6d40",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generations": {
+        "fresh": "d54a510a31a47a08527d503081190da3157e25f8ffd839acd3da4c09737615c9"
+      }
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "task_effect": null,
+  "task_success": null
+}

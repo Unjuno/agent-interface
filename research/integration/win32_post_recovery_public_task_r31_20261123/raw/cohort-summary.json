@@ -1,0 +1,32 @@
+{
+  "schema": "agent-interface/r31-summary-v1",
+  "cohort_outcome": "STOP_TASK_SERVER_SPAWN_IMPORT_ERROR_AFTER_RECOVERY",
+  "attempts": [
+    {
+      "schema": "agent-interface/r31-stop-v1",
+      "experiment": "win32-post-recovery-public-task-r31",
+      "outcome": "STOP_TASK_SERVER_SPAWN_IMPORT_ERROR_AFTER_RECOVERY",
+      "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+      "public_observations": 2,
+      "public_dispatches": 1,
+      "orphan_recovery_calls": 1,
+      "followup_observations": 0,
+      "followup_dispatches": 0,
+      "task_verifications": 0,
+      "source_action_status": "unknown",
+      "source_task_success": null,
+      "source_release_confirmed": false,
+      "source_replay_allowed": false,
+      "recovery_status": "recovered",
+      "recovery_release_confirmed": true,
+      "recovery_neutral": true,
+      "recovery_horizon_verified": true,
+      "recovery_horizon_samples": 77,
+      "fixture_state_after_recovery": "a",
+      "fixture_process_left_open_for_diagnosis": true,
+      "durable_fence_clear": true,
+      "server_launch_error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "root_cause": "Custom task-oracle server module ran create_server().run() at import time without an __main__ guard. Windows multiprocessing spawn imported the wrapper in a child, recursively starting initialization until recovery-helper readiness timed out. Failure preceded follow-up observation/dispatch."
+    }
+  ]
+}

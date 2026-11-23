@@ -1,0 +1,3 @@
+# R40 — Public recovered task with schema-valid oracle identity
+
+One frozen public-caller trial recovers expired UNKNOWN A on a source fixture, then performs one B task on a separate native target generation using a fresh-only target registry. This reuses the R39 path and fixes only its invalid task oracle identifier: a 32-character lowercase hexadecimal value. Independent oracle requires exactly one B WM_CHAR in the public action interval and fresh state b. Source remains UNKNOWN and unreplayed. Computer Use screenshot, blank-area click, and exact Win32 foreground probe are required for both windows. Recovery must confirm release, neutral readback, and 2 s horizon. No retries. One local fixture trial only.

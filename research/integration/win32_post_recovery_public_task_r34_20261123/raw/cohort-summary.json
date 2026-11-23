@@ -1,0 +1,225 @@
+{
+  "attempts": [
+    {
+      "effect": {
+        "effect_delay_ms": 6000,
+        "effect_observed_ns": 444022671000000,
+        "key_down_accepted_ns": 444016656000000,
+        "text": "a",
+        "verified": true
+      },
+      "fence_last_resolved": {
+        "operation_id": "5c03ef035d894bd3b7ef99fcfff75da8",
+        "target_generation": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac"
+      },
+      "fence_status_after": "clear",
+      "fixture_closed": false,
+      "ordinal": 1,
+      "outcome": "STOP_CUSTODY_FENCE_TARGET_GENERATION_FENCED_BEFORE_INPUT",
+      "recovery_attempted": true,
+      "recovery_horizon_verified": true,
+      "recovery_receipt_summary": {
+        "late_input_horizon_ns": 2000000000,
+        "late_input_horizon_verified": true,
+        "late_input_max_observed_gap_ns": 32000000,
+        "late_input_max_sample_gap_ns": 100000000,
+        "late_input_observation_count": 77,
+        "readback_neutral": true,
+        "recovery_target_generation": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac",
+        "release_confirmed": true,
+        "replay_allowed": false,
+        "source_action_status": "unknown",
+        "source_operation_id": "5c03ef035d894bd3b7ef99fcfff75da8",
+        "source_target_generation": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac",
+        "task_success": null
+      },
+      "recovery_release_confirmed": true,
+      "recovery_status": "recovered",
+      "score": {
+        "interpretation": "source delayed factual a only; follow-up B not admitted; no eligible task success",
+        "state_sha256": "7ea8da3757d2cc9af4f334e64375f96e21f0cf3333d9ab4b1ecf279722981a87",
+        "task_success": null
+      },
+      "source": {
+        "action_call_id": "0382ca941e3f4dbbb6c2beceaa8152ae",
+        "cancellation": {
+          "cleanup_deadline_ns": 444023718000000,
+          "cleanup_latency_ns": null,
+          "cleanup_latency_perf_counter_ns": null,
+          "cleanup_requested_monotonic_ns": 444018718000000,
+          "cleanup_requested_perf_counter_ns": 444018744471800,
+          "completion_readback": null,
+          "completion_readback_attempt": null,
+          "completion_readback_outcome": "not_attempted",
+          "completion_release_receipt": null,
+          "deadline_ns": 444018625000000,
+          "late_input_horizon_ns": 0,
+          "late_input_max_observed_gap_ns": null,
+          "late_input_max_sample_gap_ns": null,
+          "late_input_observation_count": 0,
+          "late_input_observation_end_ns": null,
+          "late_input_observation_start_ns": null,
+          "late_input_release_received_ns": null,
+          "late_input_validation_error": null,
+          "obligations": [
+            "key:fixture:A:virtual_key"
+          ],
+          "operation_id": "5c03ef035d894bd3b7ef99fcfff75da8",
+          "phase": "recovery_pending",
+          "producer_exit_code": 0,
+          "producer_gate_state": "authorization_attempted",
+          "producer_identity": {
+            "creation_time_100ns": 134398749141863593,
+            "pid": 48472
+          },
+          "readback": null,
+          "recovery_completed_monotonic_ns": null,
+          "recovery_completed_perf_counter_ns": null,
+          "recovery_id": "e370258140af4d6f8ae01902b5ad8e3f",
+          "recovery_release_attempts": [
+            {
+              "domain": "key_up",
+              "encoding": "virtual_key",
+              "error_type": null,
+              "key_names": [
+                "A"
+              ],
+              "ordinal": 0,
+              "outcome": "returned",
+              "sendinput_call_started": true,
+              "sendinput_error_type": null,
+              "sendinput_return_count": 1,
+              "virtual_key": 65
+            }
+          ],
+          "recovery_release_key_up_attempts": [
+            {
+              "encoding": "virtual_key",
+              "status": "returned",
+              "virtual_key": 65
+            }
+          ],
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "pending",
+          "target_generation": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac",
+          "task_success": null,
+          "uncertainty": null
+        },
+        "input_dispatched": true,
+        "operation_id": "5c03ef035d894bd3b7ef99fcfff75da8",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "unknown",
+        "target_generation": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac",
+        "task_success": null
+      },
+      "source_calls": [
+        {
+          "call_id": "6178da4a87c544d2bf4fbb2bf7fd78f4",
+          "ended_ns": 444016625000000,
+          "session": "source",
+          "started_ns": 444016562000000,
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "56593ef431d449358e4ce95d302bf57e",
+          "ended_ns": 444018750000000,
+          "session": "source",
+          "started_ns": 444016625000000,
+          "tool": "interface_dispatch"
+        },
+        {
+          "call_id": "f7fac097f75549eea0c76cfc0e79bc3c",
+          "ended_ns": 444018750000000,
+          "session": "source",
+          "started_ns": 444018750000000,
+          "tool": "interface_results"
+        },
+        {
+          "call_id": "efea4f7d7e78437eb8cb2a8cfe96183e",
+          "ended_ns": 444018921000000,
+          "session": "source",
+          "started_ns": 444018750000000,
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "d3cab7ab86244fe5a07e2efbb25dfc3c",
+          "ended_ns": 444018937000000,
+          "session": "source",
+          "started_ns": 444018921000000,
+          "tool": "interface_close"
+        },
+        {
+          "ended_ns": 444025843000000,
+          "input_dispatched": false,
+          "observation_id": "1debcabb429c4b32ba39c159ddfc6fa5",
+          "session": "recovery",
+          "side_effect_authority": false,
+          "started_ns": 444025796000000,
+          "status": "returned",
+          "target_generation": "7b9e99ccff7419385f0fafb307edb0c623036c5de81c0d120c28261470d52dac",
+          "tool": "interface_observe"
+        },
+        {
+          "call_id": "028af8bd68af4c12a10450c76be22c7a",
+          "ended_ns": 444027968000000,
+          "release_confirmed": true,
+          "session": "recovery",
+          "started_ns": 444025937000000,
+          "status": "recovered",
+          "tool": "interface_recover_orphaned_input"
+        },
+        {
+          "ended_ns": 444028125000000,
+          "session": "recovery",
+          "started_ns": 444027984000000,
+          "status": "closed",
+          "tool": "interface_close"
+        },
+        {
+          "ended_ns": 444063750000000,
+          "session": "followup",
+          "started_ns": 444063703000000,
+          "tool": "interface_observe"
+        },
+        {
+          "ended_ns": 444063781000000,
+          "session": "followup",
+          "started_ns": 444063765000000,
+          "tool": "interface_dispatch"
+        },
+        {
+          "ended_ns": 444063796000000,
+          "session": "followup",
+          "started_ns": 444063781000000,
+          "tool": "interface_results"
+        },
+        {
+          "ended_ns": 444063937000000,
+          "session": "followup",
+          "started_ns": 444063796000000,
+          "tool": "interface_close"
+        }
+      ],
+      "source_release_confirmed": false,
+      "target": {
+        "hwnd": 101191320,
+        "pid": 41940,
+        "region": [
+          0,
+          0,
+          400,
+          180
+        ],
+        "title": "Agent Interface Win32 Fixture R34"
+      },
+      "trial_id": "r34-68365218900d4eaa887c26139b2e0306"
+    }
+  ],
+  "cohort_outcome": "STOP_CUSTODY_FENCE_TARGET_GENERATION_FENCED_BEFORE_INPUT",
+  "frozen_trials": 1,
+  "schema": "agent-interface/r27-summary-v1",
+  "source_main": "87b5b459a56c636934947a2fc7616f26150e8b9a",
+  "stopped_early": true
+}
