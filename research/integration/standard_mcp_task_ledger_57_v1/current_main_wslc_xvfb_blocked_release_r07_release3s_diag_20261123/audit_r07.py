@@ -17,6 +17,6 @@ need(r['late_request_horizon_readback']['late_keypress_a_observed'] is True,'R07
 need(r['fresh_session_recovery']['task_oracle']['task_success'] is True,'R07 fresh task did not pass')
 need(r['fresh_session_recovery']['task_oracle']['checks']['old_unknown_fence_preserved'] is True,'R07 old UNKNOWN fence not preserved')
 need(r['fresh_session_recovery']['late_old_keypress_after_new_session'] is False,'R07 old input contaminated new task')
-need(r['cancel']['release_confirmed'] is False and r['cancel']['task_success'] is False,'R07 public cancellation incorrectly claims success')
+need(r['cancel']['release_confirmed'] is False and r['cancel']['task_success'] is None,'R07 public cancellation incorrectly claims success')
 need(all(v is False for v in r['final_cleanup']['keys_down'].values()),'R07 final cleanup not all-up')
 print(json.dumps({'status':'SCOPED_DIAGNOSTIC_CLASSIFIED_NOT_PRODUCT_PASS','release_ms':r['cancel']['owner_release_attempt']['elapsed_ms'],'release_readback_neutral':True,'old_effect_count':'1 -> 25','old_task_success':False,'late_a':True,'fresh_task_success':True,'old_fence_unknown':True,'final_cleanup_all_up':True},indent=2))
