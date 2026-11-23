@@ -1,0 +1,291 @@
+{
+  "captured_at_utc": "2026-11-23T14:53:00Z",
+  "origin_main_before_after": "fec81b7017a9e4d76d976dc78ee1ecabcf838346",
+  "membership_comparison_source": "docs/maintenance/repository-inventory-recheck-20261123-r177.json",
+  "github_membership": {
+    "open_issues": {
+      "count": 1640,
+      "added_vs_r177": [],
+      "removed_vs_r177": [],
+      "ids_sha256": "8ffa0fe03507328e29ced059f599f0f24a1bad1fe63afd53d6678cfcdbc647eb"
+    },
+    "open_pull_requests": {
+      "count": 403,
+      "added_vs_r177": [],
+      "removed_vs_r177": [],
+      "ids_sha256": "eb4d6ae6becb2d1000b7ccedcd3e785ddf7b8a5a06a8ca8791aedf65ff3e2a9c"
+    }
+  },
+  "worktree_source": "git worktree list --porcelain; git status --porcelain=v1 --untracked-files=normal and git rev-parse HEAD for every registered path",
+  "worktree_count": 31,
+  "dirty_worktree_count": 10,
+  "status_error_count": 0,
+  "untracked_directory_policy": "Git reports untracked directories as directory entries; each registered nested worktree is separately recorded. This avoids recursively duplicating nested-worktree contents.",
+  "worktrees": [
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120",
+      "branch": "refs/heads/main",
+      "head": "897f4896d23dd127a4523dc4955e573dace7d674",
+      "dirty": true,
+      "porcelain": [
+        "M .gitattributes",
+        " M ROADMAP.md",
+        " M docs/CURRENT_GOAL.md",
+        " M docs/REPOSITORY_ORGANIZATION_PLAN.md",
+        " M docs/WORKER_WORK_MAP.md",
+        " M docs/maintenance/issue57-next-gates-20261121.md",
+        " M research/integration/standard_mcp_task_ledger_57_v1/current_main_late_usage_port_20261121/RESULT.md",
+        " M research/integration/standard_mcp_task_ledger_57_v1/current_main_recheck_8207849_20261121/RESULT.md",
+        " M research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+        " M runtime/guarded_x11_v1/calc_task_artifact_v1.py",
+        " M runtime/guarded_x11_v1/test_calc_task_artifact_v1.py",
+        "?? .worktrees/",
+        "?? docs/maintenance/issue57-next-integration-seam-20261121.md",
+        "?? docs/maintenance/open-pr-delta-20261121-r155.csv",
+        "?? docs/maintenance/repository-inventory-recheck-20261121-r155.md",
+        "?? outputs/",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/calc_save_controller_receipt_order_20261121/",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/current_main_calc_failure_recheck_20261121/",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_handoff_current_main_recheck_20261123/",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/outputs/",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/pr10218_supersession_audit_20261121/",
+        "?? worktrees/"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-calc-fixture-r01",
+      "branch": "refs/heads/codex/issue57-calc-fixture-r01",
+      "head": "bdd1fb57720ab05d671c81dd953e71ad0a70b98b",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-calc-merged-main-20261121",
+      "branch": "refs/heads/codex/issue57-effect-clock-domain-r01",
+      "head": "f5f28c0f3b2182e78d1074048978c945b5cee827",
+      "dirty": true,
+      "porcelain": [
+        "M research/integration/standard_mcp_task_ledger_57_v1/calc_save_controller_receipt_order_20261121/SHA256SUMS",
+        " M research/integration/standard_mcp_task_ledger_57_v1/calc_save_controller_receipt_order_20261121/conditions.json",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/calc_save_controller_receipt_order_20261121/post-merge/"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-cancel-timing-diagnostic-r01",
+      "branch": "refs/heads/codex/issue57-native-owner-receipt-join-r01",
+      "head": "b8130b847aa0094ba1f82ed98636d5bd40c2618d",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-effect-clock-domain-postmerge-20261121",
+      "branch": "refs/heads/codex/issue57-full-discovery-recheck-20261121",
+      "head": "704d2a2b133ff54feea34017d5b81a80c9ccbede",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-effect-receipt-handoff-main-20261121",
+      "branch": "refs/heads/codex/issue57-effect-receipt-handoff-20261121",
+      "head": "ae10f768a8ed2dfe4d8a626ead25039842e88f87",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-native-owner-postmerge-r01",
+      "branch": "refs/heads/codex/issue57-native-owner-postmerge-evidence-r01",
+      "head": "d18f24af4e2fbe612172fefd59c7d10998a3c4a4",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/issue57-next-gate-main-20261121",
+      "branch": "refs/heads/codex/wslc-readonly-probe-20261121",
+      "head": "e5866db03e25c044f7ffead5118624a1cd8c33e9",
+      "dirty": true,
+      "porcelain": [
+        "?? research/integration/wslc_readonly_probe_current_main_20261121/"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/portable-runtime-current-main-acbdfc0f9-r01",
+      "branch": "refs/heads/docs/g10-currentmain-stdio-rerun",
+      "head": "456b25eb8024090ad55946e438983df6ee6294fe",
+      "dirty": true,
+      "porcelain": [
+        "?? research/integration/research_preview_bundle_fixture_mode_20261121/"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/preview-retained-audit-source-r01",
+      "branch": "refs/heads/codex/preview-retained-audit-source-r01-20261122",
+      "head": "128c33f22a042b83a51351debdc32ef3ae5bfa4b",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/repo-current-main-audit-20261122",
+      "branch": "refs/heads/research/preview-current-main-chrome-config-r04",
+      "head": "1e5fe5503ef865a1b3a2bc8be7b718d4bf4ebe5a",
+      "dirty": true,
+      "porcelain": [
+        "?? .worktrees/"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/repo-current-main-audit-20261122/.worktrees/preview-release-full-main-r03-20261123",
+      "branch": "detached",
+      "head": "c5fc0ee00b5fa5208088ee69004a336770336ac4",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/research-preview-builder-clean-r01",
+      "branch": "refs/heads/codex/preview-retained-audit-source-r02-20261122",
+      "head": "10c533f4617d939e759226365c4c38956c33dbc1",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/research-preview-host-recheck-20261122",
+      "branch": "detached",
+      "head": "10b47b4b4edf283ed2b28f19bbeb9de4b9cf9b51",
+      "dirty": true,
+      "porcelain": [
+        "?? research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-archive-prefix-r01-20261122/",
+        "?? research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-host-prefix-r02-20261122/",
+        "?? research/integration/research_preview_rc1_setup_doctor_r05_20261121/current-main-prefix-r02-20261122/"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/.worktrees/win32-r16-orphan-horizon-20261122",
+      "branch": "refs/heads/codex/win32-r16-orphan-horizon-20261122",
+      "head": "915b1d98289a88bb884b8968110be2cbd963962f",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/issue57-calc-failure-integrity-20261122",
+      "branch": "refs/heads/research/issue57-calc-failure-integrity-20261122",
+      "head": "aa24c2d31f87ebc5d2dfdb8c299a920ab5fea596",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/issue57-effect-receipt-handoff-r02-20261123",
+      "branch": "detached",
+      "head": "7e9caab2acf8428beeb48682edd5e7a0bace4967",
+      "dirty": true,
+      "porcelain": [
+        "M release/first_run_smoke_v1/test_launchers.py"
+      ]
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/issue57-latest-main-audit-20261122",
+      "branch": "refs/heads/codex/win32-r15-async-recovery-task-trial",
+      "head": "a5c2d2f3126f331636d3202fe186c30a3da58bcd",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/project-state-audit-update-20261123",
+      "branch": "refs/heads/research/project-state-audit-20261123",
+      "head": "66d4a436593508df7cea3678d32f5f95484ab1fd",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/public-recovery-drain-r05-20261123",
+      "branch": "refs/heads/research/issue57-public-recovery-drain-r05-20261123",
+      "head": "d2d0ee8f2b358e96033eee8e4a0c575220d345a5",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/public-recovery-drain-r06-20261123",
+      "branch": "refs/heads/research/map01-expanded-target-search-r02-20261123",
+      "head": "9145c0d5b8d66b2c3d407a15cb15a5ebb51e2ba4",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": ".goal-main-381a21-20261120/worktrees/repository-inventory-r163-20261122",
+      "branch": "refs/heads/research/win32-current-main-fixture-repeat-r04-20261122",
+      "head": "b422191ae9fa0e4d9b6e6d4114b25b8a31876279",
+      "dirty": true,
+      "porcelain": [
+        "M research/integration/standard_mcp_task_ledger_57_v1/test_mcp_endpoint_composition.py",
+        "?? research/integration/standard_mcp_task_ledger_57_v1/outputs/"
+      ]
+    },
+    {
+      "path_from_workspace_root": "_audit-pr10340-c47ae761",
+      "branch": "detached",
+      "head": "c47ae761ed7a8c47e6d5d6b16937b468145956cd",
+      "dirty": true,
+      "porcelain": [
+        "M research/analysis/handoff_choice_complexity_8604_t0_a03_wslc_20261008/raw/audit.stderr.txt",
+        " M research/analysis/handoff_choice_complexity_8604_t0_a03_wslc_20261008/raw/candidate.stderr.txt"
+      ]
+    },
+    {
+      "path_from_workspace_root": "worktrees/b13-dispositions-r160-20261121",
+      "branch": "refs/heads/docs/r162-roadmap-20261122",
+      "head": "472b5ebf883d7ea7eedaa3f7ad257199178003a4",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": "worktrees/calc-current-main-recheck-r02-20261123",
+      "branch": "refs/heads/research/issue57-calc-effect-window-r02-20261123",
+      "head": "a565b5a67f2a503298538bb587aece2251e75bea",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": "worktrees/integrate-7741-t0d-20261122",
+      "branch": "refs/heads/research/integrate-7741-t0d-20261122",
+      "head": "6c2b473fbc48c74057a1e410be7190f767e5ac88",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": "worktrees/issue57-chromium-v3-adapter-r01-20261123",
+      "branch": "refs/heads/research/issue57-chromium-v3-edge-r06-20261123",
+      "head": "fe8e99f82c539cfcb63f74886679f3355428a24f",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": "worktrees/issue57-chromium-v5-compiled-adapter-r01-20261123",
+      "branch": "refs/heads/research/59-local-block-motion-r02-20261123",
+      "head": "6904093071431f3cc119ad014a084d5863a19fb7",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": "worktrees/public-navigation-current-main-r01",
+      "branch": "refs/heads/research/public-navigation-current-main-r01",
+      "head": "85ee895da349530b6e8c306bfb0bff3d0c7e525f",
+      "dirty": false,
+      "porcelain": []
+    },
+    {
+      "path_from_workspace_root": "worktrees/win32-public-recovery-r43",
+      "branch": "refs/heads/docs/project-cleanup-checkpoint-20261123",
+      "head": "c6a05dadafff7cc76e1b4615121e3f658d12f1ab",
+      "dirty": true,
+      "porcelain": [
+        "?? docs/maintenance/local-worktree-custody-recheck-20261123-r178.json"
+      ]
+    },
+    {
+      "path_from_workspace_root": "worktrees/wslc-live-smoke-record-20261121",
+      "branch": "refs/heads/codex/fakex-expired-down-refusal-r02-20261121",
+      "head": "f8dbf9097c78942a21094e68d408c64537d7ef21",
+      "dirty": false,
+      "porcelain": []
+    }
+  ],
+  "disposition": "Read-only custody snapshot. No worktree, branch, file, issue or PR was deleted, reset, moved, closed or merged as part of this census. Dirty worktree ownership, PR/Issue linkage, artifact hashes and duplicate status require path-by-path reconciliation before cleanup."
+}
