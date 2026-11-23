@@ -3,12 +3,14 @@
 ## Project-wide status reconciliation — 2026-11-23
 
 The current `origin/main` is
-`095d92b1696e03c266287b530cbb38f5b9d5e7f6` (after PR #10522). The canonical
+`a6add75aa2f2adac36b71d86a41a7a4c2b36345e` (after PR #10523). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
 evidence. Issue #57's R10–R14 outcomes are merged in PR #10522; its public
-comments record the stops and explicitly keep the issue open.
+comments record the stops and explicitly keep the issue open. Research
+Preview doctor R07 and the corrected ROADMAP navigation are merged in PR
+#10523; #58 remains blocked on its missing Windows Codex CLI JS entrypoint.
 
 The R10–R14 Win32 Edge attempts are all setup stops and do not change product
 qualification: launcher-PID window discovery failed in R10; R11 then found
@@ -20,12 +22,14 @@ standard-mode raw records show scoped profile cleanup and foreground restore;
 its optimized run was not attempted. Do not mark #57 or the runtime complete
 on these stops.
 
-The last complete membership baseline remains r175 (1,640 open Issues / 404
-open PRs at its recorded main SHA), not a live current count. The GitHub open
-PR queue contains long-lived drafts, and semantic issue/PR disposition,
-worktree ownership, local evidence custody, and duplicate reconciliation are
-still incomplete. Preserve viable research; disposition by family against a
-canonical question and evidence rather than closing items to reduce counts.
+The latest complete membership receipt is r176: 1,640 open Issues / 404 open
+PRs at the current main above. Its exact sorted-ID hashes match r175, so no
+queue membership changed between those snapshots. This is not semantic
+triage. The GitHub open PR queue contains long-lived drafts, and semantic
+issue/PR disposition, worktree ownership, local evidence custody, and duplicate
+reconciliation are still incomplete. Preserve viable research; disposition
+by family against a canonical question and evidence rather than closing items
+to reduce counts. See [r176](maintenance/repository-inventory-recheck-20261123-r176.md).
 
 ## Project-wide cleanup status — 2026-11-23
 
