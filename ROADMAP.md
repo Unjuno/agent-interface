@@ -110,6 +110,10 @@ The retained Calc G10 record is a scoped positive control, not a matched efficie
 
 **Whole-repository membership refresh r154 (2026-11-21):** On main `8c71a6199bd51ca6b38aa02cb92d9833c3260a67`, the complete paginated open sets are still 1,643 Issues and 410 PRs, exactly matching r153/r152 membership; main was unchanged before and after. This is queue membership only, not semantic triage or merge readiness. The current organization plan records this comparison; no bulk closure follows. #5130 is the one-time six-task Mindustry three-arm economics allocation under #57, still gated on its frozen source/resource conditions; #7924 remains the explicit WSLc migration STOP.
 
+## Issue #57 interrupted-terminal usage custody R07   -  2026-11-23
+
+On current main f64c58179524db4be64b116a265182c9facc1736, one synthetic JSONL turn emitted observed usage then terminated with status interrupted. Exact turn/thread identity and all five usage counters survived the real parser/model/v3/durable allocation/ProspectiveRun path; the failed attempt produced no task receipts, task/run stayed HOLD, and dispatch stayed disabled. Focused 1/1 and full module 11/11 passed normal and -O on Windows CPython 3.13.14. A broken optimized runner invocation is preserved but excluded; corrected optimized runs pass. This is synthetic custody coverage only. See research/integration/issue57_v3_durable_appserver_composition_r07_20261123/RESULT.md. Keep #57 open; live provider, efficiency, caller recovery and runtime gates remain open.
+
 The active completion goal is to qualify the distributable runtime and the
 research gates below; this roadmap is a navigation/status summary, not a new
 experiment allocation.
