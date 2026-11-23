@@ -1,12 +1,14 @@
 # Worker work map
 
-## Current membership and targeted organization update — 2026-11-22
+## Current membership and targeted organization update — 2026-11-23
 
-The latest complete membership sweep is r163, bracketed by main
-`1afb532ea153f3da3906764753909fac074afce3`: it found 1,640 open Issues and
-407 open PRs, with no additions from r152/r157, three Issue removals
-(#7748/#7765/#7817), and one PR removal (#8181). These sets match r162. The
-frozen B13 cohort is now 22 open / three closed after
+The latest complete membership sweep is r175, bracketed by main
+`acce16071b604fa8c06287d0b71d27addeccf481`: it found 1,640 open Issues and
+404 open PRs. Compared with r173's exact ID arrays, there were no Issue
+changes and only PR #7760 left the open set; its 43-file A01 trace/HOLD evidence
+is preserved byte-for-byte by merged #10511. Docs PR #10512 indexes the
+corrected insufficient-coverage result. The frozen B13 cohort is now 22 open /
+three closed after
 Issue #7817's finite-method disposition. Its merged #7938 evidence is
 `PASS_METHOD_SCOPED` only: ten authored contexts, five applied mutations, no
 authority change, and 17/17 current-main manifest digests. No real-policy,
@@ -15,7 +17,7 @@ not completed semantic triage or custody reconciliation. Continue the full
 review using the [organization plan](REPOSITORY_ORGANIZATION_PLAN.md),
 [r163 inventory](maintenance/repository-inventory-recheck-20261122-r163.md),
 and [r160 crosswalk](maintenance/idea-index-crosswalk-20261121-r160.md); do not
-bulk-close from cohort or inventory counts.
+bulk-close from cohort or inventory counts. See the [r175 inventory](maintenance/repository-inventory-recheck-20261123-r175.md).
 
 B13 #7794's A01/A02 evidence is preserved byte-for-byte on main via merged PR
 #10431. Draft PR #7968 is closed as superseded with its branch/history retained.
