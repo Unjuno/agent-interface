@@ -102,7 +102,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
         if not edge.is_file() or node is None:
             self.skipTest("Edge and Node.js are required for this integration test")
 
-        token = "t991025-2"
+        token = "t991025-3"
         records = []
         record_lock = threading.Lock()
 
@@ -146,7 +146,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                 self.end_headers()
                 self.wfile.write(body)
 
-        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r04"
+        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r05"
         evidence_root = packet_root / "raw"
         worktree_status_before_capture = subprocess.run(
             ["git", "status", "--porcelain"], cwd=HERE.parents[1],
@@ -176,7 +176,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
             check=True).stdout.strip()
         evidence_root.mkdir(parents=True, exist_ok=False)
         evidence_conditions = {"scope": "one local headless Edge form submission",
-            "task_token": "t991025-1", "initial_field_state": "prepopulated",
+            "task_token": token, "initial_field_state": "prepopulated",
             "caller": "adaptive_acquisition_caller_v3",
             "compiled_core": "runtime.core_v1.compiled_gui",
             "provider": "offline-test-double; no network model call",
@@ -256,6 +256,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                         receipts = []
                         ocr_elapsed_ns = []
                         observed_value_states = []
+                        observation_errors = []
 
                         def cdp(operation, argument=""):
                             reply = subprocess.run([
@@ -266,6 +267,16 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                                                    reply.stderr[-300:])
 
                         def observe(_payload):
+                            try:
+                                return observe_inner(_payload)
+                            except Exception as error:
+                                observation_errors.append({
+                                    "runtime_state": _payload.get("state"),
+                                    "type": type(error).__name__,
+                                    "error": str(error)})
+                                raise
+
+                        def observe_inner(_payload):
                             nonlocal previous_frame, sequence
                             sequence += 1
                             cdp("capture", str(image))
@@ -278,6 +289,8 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                             ocr_elapsed_ns.append(ocr["elapsed_ns"])
                             value_state = exact_token_state(ocr["text"], token)
                             observed_value_states.append(value_state)
+                            changed = previous_frame is not None and digest != previous_frame
+                            previous_frame = digest
                             observation_rows.append({
                                 "sequence": sequence,
                                 "runtime_state": _payload["state"],
@@ -293,8 +306,6 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                                 "capture_sha256": digest,
                                 "ocr_text": ocr["text"],
                                 "ocr_elapsed_ns": ocr["elapsed_ns"]})
-                            changed = previous_frame is not None and digest != previous_frame
-                            previous_frame = digest
                             return {"sequence": sequence,
                                     "captured_ns": time.perf_counter_ns(),
                                     "surface": "form",
@@ -366,6 +377,26 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                              "cancelled": lambda: False},
                             on_receipt=receipts.append,
                             id_factory=lambda: "offline-target-contract")
+                        (evidence_root / "run.json").write_text(json.dumps({
+                            "outcome": result["outcome"],
+                            "task_effect": result["task_effect"],
+                            "delivery": result["delivery"],
+                            "accounting": result["accounting"],
+                            "attempt_ledger": result["attempt_ledger"],
+                            "model_call_ledger": result["model_call_ledger"],
+                            "execution_progress": result["execution_progress"],
+                            "effect_receipt": result["effect_receipt"],
+                            "compiled_execution_receipt":
+                                result["compiled_execution_receipt"],
+                            "ocr_observations": observation_rows,
+                            "observer_errors": observation_errors,
+                            "ocr_elapsed_ns": ocr_elapsed_ns,
+                            "value_states": observed_value_states,
+                            "dispatched_operations": dispatched,
+                            "server_posts": records,
+                            "edge_version": version,
+                            "python": platform.python_version(),
+                        }, indent=2) + "\n", encoding="utf-8", newline="\n")
 
                     self.assertEqual(result["outcome"], "TASK_SUCCEEDED", result)
                     self.assertEqual(result["task_effect"], "succeeded")
@@ -381,25 +412,6 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                     self.assertEqual(receipts[0]["completed_transitions"], 1)
                     self.assertTrue(receipts[0]["transitions"][0]["release_verified"])
                     self.assertEqual(receipts[0]["frontier_model_resumptions"], 0)
-                    (evidence_root / "run.json").write_text(json.dumps({
-                        "outcome": result["outcome"],
-                        "task_effect": result["task_effect"],
-                        "delivery": result["delivery"],
-                        "accounting": result["accounting"],
-                        "attempt_ledger": result["attempt_ledger"],
-                        "model_call_ledger": result["model_call_ledger"],
-                        "execution_progress": result["execution_progress"],
-                        "effect_receipt": result["effect_receipt"],
-                        "compiled_execution_receipt":
-                            result["compiled_execution_receipt"],
-                        "ocr_observations": observation_rows,
-                        "ocr_elapsed_ns": ocr_elapsed_ns,
-                        "value_states": observed_value_states,
-                        "dispatched_operations": dispatched,
-                        "server_posts": records,
-                        "edge_version": version,
-                        "python": platform.python_version(),
-                    }, indent=2) + "\n", encoding="utf-8")
                 finally:
                     close = subprocess.run([
                         node, "-e", BROWSER_CLOSE,

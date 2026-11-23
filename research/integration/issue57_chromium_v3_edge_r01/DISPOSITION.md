@@ -7,5 +7,7 @@ been started but the test's outer `finally` shut it down. No task input, model
 call, screenshot, POST, or result was produced. This is a harness construction
 failure, not a scored task attempt.
 
-The path fix and new output location are frozen separately in R02. No gate or
-pass condition changed. R01 is retained unchanged as a failed preparation.
+The path fix and new output location were frozen separately in R02, whose
+preflight then stopped on a second path-component error before Edge startup.
+No gate or pass condition changed. R01 is retained unchanged as a failed
+preparation.

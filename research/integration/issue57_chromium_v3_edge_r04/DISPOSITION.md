@@ -17,3 +17,8 @@ the first capture, and cleanup are preserved. No input was sent. Do not rerun
 R04 or infer that the R03 positive establishes repeatability. A future run
 requires a pre-action diagnostic wrapper that persists observer exceptions and
 complete result envelopes before assertions.
+
+The frozen conditions file also retained the prior token value (`t991025-1`)
+while the source/test page used `t991025-2`; the retained PNG and source hash
+identify the actual page token. This manifest mismatch independently keeps
+R04 on HOLD.
