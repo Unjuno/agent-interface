@@ -127,11 +127,12 @@ success, comparative efficiency, reliability, or preview readiness.
 - Do not close or merge items based only on age, unchanged inventory, or green
   checks. PR #10144 remains a Draft research prototype; Issue #7773 remains on
   feasibility HOLD. Other items require their own evidence/custody review.
-- The last custody snapshot found **15 registered worktrees: 10 clean and 5
-  dirty**. It also identified 61 unique files in root `outputs/`; preserve all
-  unique experiment data. The 16-file ledger output directory is byte-identical
-  to tracked blobs, but its attempted deletion was rejected and it remains.
-  See [worktree custody](maintenance/worktree-custody-recheck-20261122.md).
+- The current custody snapshot r173 found **22 registered worktrees: 14 clean
+  and 8 dirty**. Dirty trees include untracked experiment packets, local source
+  edits, changed raw logs, and a nested `.worktrees/` residue. Preserve all
+  until owner/reference and hash reconciliation; nothing was deleted or reset.
+  See [r173 custody](maintenance/local-worktree-custody-recheck-20261123-r173.md)
+  and its [exact snapshot](maintenance/local-worktree-custody-recheck-20261123-r173.json).
 - Cleanup is therefore **in progress, not complete**: reconcile branch/PR
   reachability, inspect dirty worktrees and raw artifacts by path and hash,
   route every open item to an evidence-backed disposition, then remove only
