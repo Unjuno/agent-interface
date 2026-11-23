@@ -46,6 +46,37 @@ from runtime.core_v1.compiled_gui import validate
 from runtime.guarded_x11_v1.handles import TargetHandleStore
 
 
+def _stop_edge_processes_for_profile(profile):
+    """Stop only Edge processes still holding this test's unique profile."""
+    powershell = shutil.which("powershell.exe") or shutil.which("powershell")
+    if powershell is None:
+        raise RuntimeError("PowerShell is required for scoped Edge cleanup")
+    script = r"""
+$profile = [IO.Path]::GetFullPath($env:AI_EDGE_PROFILE_PATH)
+$deadline = [DateTime]::UtcNow.AddSeconds(5)
+do {
+  $matches = @(Get-CimInstance Win32_Process | Where-Object {
+    $_.Name -eq 'msedge.exe' -and $_.CommandLine -and
+    $_.CommandLine.IndexOf($profile, [StringComparison]::OrdinalIgnoreCase) -ge 0
+  })
+  foreach ($process in $matches) {
+    Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue
+  }
+  if ($matches.Count -eq 0) { exit 0 }
+  Start-Sleep -Milliseconds 100
+} while ([DateTime]::UtcNow -lt $deadline)
+exit 1
+"""
+    environment = os.environ.copy()
+    environment["AI_EDGE_PROFILE_PATH"] = str(Path(profile).resolve())
+    completed = subprocess.run(
+        [powershell, "-NoProfile", "-NonInteractive", "-Command", script],
+        capture_output=True, text=True, timeout=8, env=environment)
+    if completed.returncode:
+        raise RuntimeError(
+            "scoped Edge process cleanup failed: " + completed.stderr[-500:])
+
+
 LIVE = Path(__file__).resolve().parent
 REPO = LIVE.parents[1]
 if str(LIVE) not in sys.path:
@@ -584,6 +615,7 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
                     edge_process.kill()
                     edge_process.wait()
             try:
+            _stop_edge_processes_for_profile(profile)
                 _cleanup_edge_test_profile(profile)
                 profile_cleaned = not profile.exists()
             except Exception as error:
