@@ -1,6 +1,6 @@
 # Agent Interface project overview
 
-**Snapshot:** current-main baseline e67ca18cd3e8a5ccb0288b41ed2f5d0bb94bc6c7 (2026-11-23). This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
+**Snapshot:** current-main baseline bc903f77bd69102187329f9e0d020ca5259f88bb (2026-11-23). This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose
 
@@ -23,7 +23,7 @@ At this snapshot, Issues [#53](https://github.com/Unjuno/agent-interface/issues/
 | Research Preview (#58) | A WSL package build and frozen-source retained audit passed; setup/launcher checks have partial coverage. | Supported-host readiness is incomplete. The current records do not establish the full doctor, fresh no-retry live run, final live audit, or browser-to-runtime control on the declared host. |
 | Real-time control / MAP01 (#59) | The retained MAP01 work identifies a live threat-response gap; later controller and policy repairs have scoped evidence. Current-main preflight R01 found no GZDoom executable in six standard paths, `PATH`, the process table, or uninstall registry. | A current integrated threat-exposure test and separately labelled MAP01 outcome are not established. The bounded check did not search the full disk or establish asset availability; a supplied/preinstalled executable path and IWAD/map are still needed. Do not install or download them as incidental setup. See [R01](../research/integration/map01_preinstalled_target_preflight_current_main_r01_20261123/RESULT.md). |
 | Runtime distribution | Deterministic package construction and several startup/CLI contracts have passed on recorded hosts. | Publicly obtainable artifact plus declared-host live authority/input behavior and complete acceptance remain unverified. |
-| Issue/PR and local artifact organization | Organization plans, evidence indices, historical inventories, and targeted family dispositions exist. | The latest exact full Issue/PR membership snapshot in the organization plan is r172 (1,640 open Issues / 405 open PRs); later work has merged, so those totals are a dated baseline. The semantic crosswalk is r160 and is not current whole-queue triage. Worktree/output custody still has unresolved historical entries. |
+| Issue/PR and local artifact organization | Organization plans, evidence indices, historical inventories, and targeted family dispositions exist. The current-main r173 paginated membership receipt records 1,640 open Issues and 405 open PRs; both exact ID sets match r172. | Membership is current but semantic disposition remains incomplete; the issue/PR crosswalk is r160 and is not whole-queue triage. Worktree/output custody still has unresolved historical entries. See [r173](maintenance/repository-inventory-recheck-20261123-r173.md). |
 
 ## Work order
 
