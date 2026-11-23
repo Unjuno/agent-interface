@@ -2,6 +2,17 @@
 
 # Project state and work order
 
+## Research Preview current-main supported-host doctor R07 — 2026-11-23
+
+Current main `095d92b1696e03c266287b530cbb38f5b9d5e7f6` has no changes in the
+runtime/RC source from the R06 doctor evidence base. Reusing the retained
+current-main R06 source and installed pinned WSL venv, the current WSL/WSLg
+doctor passed 13/15 and exited 1. Only `windows_cli` and dependent `codex_cli`
+failed because the expected Windows Codex CLI JS entrypoint is absent. Chrome
+path and X11 connection passed; Chrome was not launched. No install or live
+Golden/audit-live run occurred. See [R07](../research/integration/research_preview_current_main_supported_host_doctor_r07_20261123/RESULT.md).
+Keep #58 open.
+
 ## Issue #57 V5 handle → caller v3 composition R01 — 2026-11-23
 
 On frozen main `d27e7639`, the exact V5 point-mint method and real
