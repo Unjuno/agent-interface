@@ -1,0 +1,10 @@
+{
+  "audit_method": "The runner's scoped cleanup helper queries Win32_Process for msedge.exe command lines containing the exact generated profile path until none remain, then calls the existing validated profile deletion helper. Each run record reports profile_cleaned=true and errors=[]. The random profile marker is not separately serialized, so no independent post-run process query was possible.",
+  "cases": [
+    {"mode": "normal", "case": "positive", "profile_cleaned": true, "cleanup_errors": [], "post_run_query": "not independently available; runner verified scoped cleanup before recording profile_cleaned"},
+    {"mode": "normal", "case": "changed-generation", "profile_cleaned": true, "cleanup_errors": [], "post_run_query": "not independently available; runner verified scoped cleanup before recording profile_cleaned"},
+    {"mode": "optimized", "case": "positive", "profile_cleaned": true, "cleanup_errors": [], "post_run_query": "not independently available; runner verified scoped cleanup before recording profile_cleaned"},
+    {"mode": "optimized", "case": "changed-generation", "profile_cleaned": true, "cleanup_errors": [], "post_run_query": "not independently available; runner verified scoped cleanup before recording profile_cleaned"}
+  ],
+  "unrelated_edge_processes_targeted": 0
+}
