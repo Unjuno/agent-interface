@@ -102,6 +102,22 @@ failures, deferred completion, and unknown usage cannot all be joined without
 loss, hold the live comparison and repair the recording path first. See [Calc
 crosswalk](issue57-calc-evidence-bridge-audit-20261123.md), [R24](../../research/integration/win32_expired_authority_delayed_effect_r24_20261123/RESULT.md), and [R27](../../research/integration/win32_expired_authority_delayed_effect_r27_20261123/RESULT.md).
 
+## Current-main provider success-to-custody R03 - 2026-11-23
+
+R03 closes one offline gap left by R01/R02: one valid synthetic JSONL App
+Server turn crosses the real transport/parser, persistent grounding model, v3
+adapter/caller, durable Calc allocation, and registered ProspectiveRun
+custodian. Identity and all five usage counters audit through one completed
+attempt; the synthetic effect projects. Focused 1/1 and module 7/7 pass in
+normal and optimized modes. This is one-task composition, not a live provider
+or allocation. The final run remains HOLD with 17 assignments missing and
+dispatch disabled. Do not treat R01/R02 fixture coverage plus this success
+case as proof of provider completeness or matched-comparison admissibility.
+Next require an externally attested fresh allocation and all-attempt joins
+across all three arms, including provider failures, deferred outcomes, unknown
+usage, independent scores, release/recovery and cleanup. Keep #57 open. See
+[R03 result](../../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).
+
 ## Disposition
 
 Keep #57 and #5130 open. Keep #908/#879 as consumed historical evidence; do

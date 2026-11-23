@@ -1325,3 +1325,13 @@ R13 separately passed the deterministic direct public observation Future-drain t
 **Current-main App Server stderr drain R01 (2026-11-23; candidate from main `07c0d7f7`):** A local child that wrote 1 MiB of binary stderr before answering a JSON-RPC request reproduced a current-main timeout; bounded concurrent draining plus close-time reader retirement fixes the deadlock and the orphaned-pipe close hang. The exact two-test module passes 2/2 normally and under `-O`; 14 related App Server protocol modules pass 81/81 per mode (10 existing platform skips). The wider native protocol run remains FAIL/incomplete (713 tests, 31 errors, 3 failures, 17 skips; runner hit a cp932 console encoding error; missing optional `mcp==1.30.0` and existing Windows/POSIX mismatches are recorded). This is a local transport contract result, not live provider/task/recovery or efficiency evidence. See [R01](research/integration/standard_mcp_task_ledger_57_v1/appserver_stderr_drain_current_main_r01_20261123/RESULT.md). #57 and the project goal remain open.
 
 **Current-main Docker/Linux MCP contract R01 (2026-11-23; main `d18eefdb`):** The current runtime tree was mounted read-only into the existing cached `issue57-calc-appserver-r88` image with networking disabled. MCP standard + guarded modules passed 87/87 normally, but the combined `-O` run failed 1/87 at a 2 s worker-entry wait. The failing case passed alone under `-O`, and both constituent modules passed individually (31/31 and 56/56), so this is retained as a combined-suite timing HOLD; do not count the isolated controls as a full-suite pass. No GUI, model/provider, or live input ran. See [R01](research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r01_20261123/RESULT.md). Next diagnose the combined optimized timing context without weakening the 2 s condition.
+
+## Issue #57 provider success-to-custody R03 - 2026-11-23
+
+One synthetic valid App Server JSONL success traverses the real parser,
+grounding model, v3 adapter, adaptive caller, durable Calc allocation, and
+registered ProspectiveRun custodian. Exact identity and all five usage counters
+are retained; one synthetic effect projects and custody audits. Focused 1/1 and
+module 7/7 pass in normal and -O on Windows CPython 3.13.14. The run remains
+non-dispatching and HOLD with 17 assignments missing. This does not establish
+live-provider completeness or authorize the matched comparison. See [R03](../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).

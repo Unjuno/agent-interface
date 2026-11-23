@@ -1,5 +1,20 @@
 # Project state and work order
 
+## Issue #57 provider success-to-custody R03 - 2026-11-23
+
+On current main 2cf4230f918f1b05990a4491779805cc18658e12, one synthetic
+valid JSONL App Server success traversed the production parser/model adapter,
+v3 caller, durable Calc allocation writer, and registered ProspectiveRun
+custodian. Its exact turn/thread IDs and all five usage counters survived;
+synthetic execution/effect receipts audited and one task projected. Focused
+1/1 and full module 7/7 passed in normal and -O on Windows CPython 3.13.14.
+The prospective run correctly remains HOLD with 17/18 assignments missing and
+dispatch disabled. This closes only the offline success-transport seam. Live
+provider usage completeness, independent allocation custody, matched
+three-arm efficiency, recovered-task repeatability, and preview graduation
+remain open. See [R03 packet](../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).
+
+
 ## Research Preview and #57 current-main follow-up R06 — 2026-11-23
 
 PR #10490 merged the launcher fixture correction at main 7e9caab2; the exact-main WSL post-merge checks passed preflight 19/19, launcher tests 21/21 in both modes, and preview builder/supported-host helper tests 11/11 in both modes. The merged R06 packet also records an isolated WSL-launched Windows Chrome blank-page/window-identity observation; it does not claim GUI input or product task effect. PR #10491 merged the reused-pinned-venv diagnosis at main 8554b2bf: doctor passed 13/15, with only the missing Windows Codex CLI JS entrypoint and dependent codex_cli check failing; current-main audit-retained passed RETAIN. No runtime/package install, browser launch in the doctor trial, model, fresh Golden run, or audit-live occurred. #58 remains open. See [R06 launcher gate](../research/integration/research_preview_current_main_launcher_r06_20261123/RESULT.md) and [R06 host diagnostic](../research/integration/research_preview_reused_pinned_venv_doctor_r06_20261123/RESULT.md).
