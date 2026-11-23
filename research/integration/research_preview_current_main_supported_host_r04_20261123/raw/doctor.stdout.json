@@ -1,0 +1,87 @@
+{
+  "schema": "agent_interface_golden_doctor_v2",
+  "passed": false,
+  "checks": [
+    {
+      "name": "linux",
+      "passed": true,
+      "detail": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+    },
+    {
+      "name": "wslpath",
+      "passed": true,
+      "detail": "/usr/bin/wslpath"
+    },
+    {
+      "name": "display",
+      "passed": true,
+      "detail": ":0"
+    },
+    {
+      "name": "python:PIL",
+      "passed": false,
+      "detail": "PIL"
+    },
+    {
+      "name": "python:numpy",
+      "passed": false,
+      "detail": "numpy"
+    },
+    {
+      "name": "python:Xlib",
+      "passed": true,
+      "detail": "Xlib"
+    },
+    {
+      "name": "python:jsonschema",
+      "passed": true,
+      "detail": "jsonschema"
+    },
+    {
+      "name": "windows_python",
+      "passed": true,
+      "detail": "/mnt/c/Users/user/AppData/Local/Programs/Python/Python311/python.exe"
+    },
+    {
+      "name": "windows_node",
+      "passed": true,
+      "detail": "/mnt/c/Program Files/nodejs/node.exe"
+    },
+    {
+      "name": "windows_cli",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "chromium",
+      "passed": true,
+      "detail": "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+    },
+    {
+      "name": "x11_connection",
+      "passed": true,
+      "detail": "connected"
+    },
+    {
+      "name": "codex_cli",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "python:openpyxl",
+      "passed": false,
+      "detail": "ModuleNotFoundError: No module named 'openpyxl'"
+    },
+    {
+      "name": "python:et_xmlfile",
+      "passed": false,
+      "detail": "ModuleNotFoundError: No module named 'et_xmlfile'"
+    }
+  ],
+  "configuration": {
+    "windows_python": "/mnt/c/Users/user/AppData/Local/Programs/Python/Python311/python.exe",
+    "windows_node": "/mnt/c/Program Files/nodejs/node.exe",
+    "windows_cli": null,
+    "chromium": "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+  }
+}
