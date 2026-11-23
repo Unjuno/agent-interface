@@ -3,7 +3,7 @@
 ## Project-wide status reconciliation — 2026-11-23
 
 This status snapshot uses main
-`612b857d7c1c6a951d3f055862a5141dbc9c7637` (after PR #10530). The canonical
+`26152e5aaebf678d19f2e7431f57b7012a0064b1` (after PR #10531). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
@@ -16,7 +16,12 @@ stale draft #8476 is closed as superseded; block-motion R02 is merged in #10529
 and misses its frozen same-episode criterion. #59 remains open. For #57, the
 current-main R43 five-attempt controlled recovery/task cohort passed; it does
 not close the issue or establish population reliability. Its evidence is linked
-from CURRENT_GOAL, PROJECT_STATE, and ROADMAP. #58 remains
+from CURRENT_GOAL, PROJECT_STATE, and ROADMAP. Current-main WSLc R05–R07 are
+now retained in separate packets: optimized R05 timed out at the 0.5 s XRes
+bound; 1 s/3 s in-memory diagnostics reached verified neutral release, but the
+old-task effect oracle failed (1→25), while a new generation passed
+independently. These records are diagnostic only and do not support production
+timeout changes. #58 remains
 blocked on its missing Windows Codex CLI JS entrypoint.
 
 The R10–R14 Win32 Edge attempts are all setup stops and do not change product

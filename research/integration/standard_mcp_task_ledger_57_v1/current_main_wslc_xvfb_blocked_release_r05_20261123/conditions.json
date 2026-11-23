@@ -1,0 +1,18 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-WSLC-XVFB-CURRENT-MAIN-R05-20261123",
+  "frozen_at_local": "2026-11-23",
+  "source_revision": "26152e5aaebf678d19f2e7431f57b7012a0064b1",
+  "source_tree": "a8101de9d6bc868a523e412ec3a98d40d6a8649e",
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+  "runtime": "WSL Containers wslc 3.0.5.0; cached image; --pull never; --network none; ephemeral --rm containers; source bind read-only; evidence bind writable; private tmpfs /tmp; bounded cpus=2 and memory=4g. wslc run exposes no read-only-root option, so root filesystem is not claimed read-only.",
+  "display": "private Xvfb :88, screen 1024x768x24, -ac; AGENT_INTERFACE_XVFB_PID exported",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "attempts": [
+    {"id":"normal-01","mode":"python3","count":1},
+    {"id":"optimized-01","mode":"python3 -O","count":1}
+  ],
+  "hypothesis": "The current-main increase of supervised XRes disconnect timeout from 0.15s to 0.5s prevents the optimized Xvfb caller from returning UNKNOWN solely because the 0.15s bound expires before the server reply.",
+  "decision_rule": "A scoped pass requires both test processes exit 0, Xvfb provenance, independent task oracle true for the fresh operation and false for contaminated old operation, independent release readback neutral, all late-horizon keys up, and no replay of the old generation. Preserve all failures and UNKNOWN outcomes without retry.",
+  "limits": "One normal and one optimized synthetic Xvfb pair on WSLc. This is not MAP01/live GUI, provider-token/latency matched economics, reliability rate, or Research Preview acceptance."
+}
