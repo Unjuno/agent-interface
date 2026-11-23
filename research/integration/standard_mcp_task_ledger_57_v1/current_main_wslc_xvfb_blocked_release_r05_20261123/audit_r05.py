@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Strictly classify the frozen R05 WSLc raw evidence; never claim product PASS."""
-import hashlib, json, re, sys
+import gzip, hashlib, json, re, sys
 from pathlib import Path
 
 packet = Path(__file__).resolve().parent
@@ -10,6 +10,9 @@ def need(condition, message):
         raise RuntimeError(message)
 def load(path):
     return json.loads(path.read_text(encoding="utf-8"))
+def log_text(path):
+    with gzip.open(path.with_suffix(path.suffix + ".gz"), "rt", encoding="utf-8", errors="replace") as stream:
+        return stream.read()
 
 # Verify the exact runtime inputs used by the experiment.
 for row in (packet / "SOURCE_SHA256SUMS.txt").read_text(encoding="utf-8").splitlines():
@@ -22,7 +25,8 @@ optimized = packet / "runs/optimized"
 n = load(normal / "result.json")
 o = load(optimized / "result.json")
 need((normal / "exit-code.txt").read_text().strip() == "0", "normal unittest process did not exit 0")
-need("Ran 1 test" in (normal / "test.log").read_text() and "OK" in (normal / "test.log").read_text(), "normal unittest log incomplete")
+normal_log = log_text(normal / "test.log")
+need("Ran 1 test" in normal_log and "OK" in normal_log, "normal unittest log incomplete")
 need((normal / "container.exit-code.txt").read_text().strip() == "2", "normal wrapper defect not preserved")
 need(n["cancel"]["owner_client_disconnect"]["status"] == "disconnected", "normal XRes disconnect was not observed")
 need(n["cancel"]["owner_release_attempt"]["status"] == "readback_verified", "normal owner release worker receipt missing")
@@ -37,7 +41,7 @@ need(n["fresh_session_recovery"]["late_old_keypress_after_new_session"] is False
 need(all(v is False for v in n["final_cleanup"]["keys_down"].values()), "normal final cleanup keys not all up")
 
 need((optimized / "exit-code.txt").read_text().strip() == "1", "optimized unittest did not preserve failure exit")
-need("FAILED (failures=1)" in (optimized / "test.log").read_text(), "optimized unittest failure missing")
+need("FAILED (failures=1)" in log_text(optimized / "test.log"), "optimized unittest failure missing")
 need(o["status"] == "FAIL", "optimized result status missing")
 d = o["cancel"]["owner_client_disconnect"]
 need(d["status"] == "unknown" and d["reason"] == "supervision_timeout", "optimized XRes timeout not preserved")
