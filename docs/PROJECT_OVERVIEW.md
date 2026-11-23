@@ -14,7 +14,7 @@ The public product and research program are connected but distinct:
 
 ## Current state
 
-At this snapshot, Issues [#53](https://github.com/Unjuno/agent-interface/issues/53), [#56](https://github.com/Unjuno/agent-interface/issues/56), [#57](https://github.com/Unjuno/agent-interface/issues/57), [#58](https://github.com/Unjuno/agent-interface/issues/58), and [#59](https://github.com/Unjuno/agent-interface/issues/59) remain open. PRs [#10515](https://github.com/Unjuno/agent-interface/pull/10515) through [#10523](https://github.com/Unjuno/agent-interface/pull/10523) are merged and represented in main. The complete r176 membership receipt at this main revision records 1,640 open Issues and 404 open PRs; its exact ID hashes match r175. This is queue membership only; the full queue has not been semantically re-triaged.
+At this snapshot, Issues [#53](https://github.com/Unjuno/agent-interface/issues/53), [#56](https://github.com/Unjuno/agent-interface/issues/56), [#57](https://github.com/Unjuno/agent-interface/issues/57), [#58](https://github.com/Unjuno/agent-interface/issues/58), and [#59](https://github.com/Unjuno/agent-interface/issues/59) remain open. PRs [#10515](https://github.com/Unjuno/agent-interface/pull/10515) through [#10524](https://github.com/Unjuno/agent-interface/pull/10524) are merged and represented in main. The complete r176 membership receipt was captured at main `a6add75aa2f2adac36b71d86a41a7a4c2b36345e` and merged in PR #10524; it records 1,640 open Issues and 404 open PRs, with exact ID hashes matching r175. This is queue membership only; the full queue has not been semantically re-triaged.
 
 | Area | What is established | What remains open |
 |---|---|---|

@@ -3,7 +3,7 @@
 ## Project-wide status reconciliation — 2026-11-23
 
 The current `origin/main` is
-`a6add75aa2f2adac36b71d86a41a7a4c2b36345e` (after PR #10523). The canonical
+`7690e7d713140abafcc54f5dc244d5a66e6699ab` (after PR #10524). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
@@ -23,8 +23,9 @@ its optimized run was not attempted. Do not mark #57 or the runtime complete
 on these stops.
 
 The latest complete membership receipt is r176: 1,640 open Issues / 404 open
-PRs at the current main above. Its exact sorted-ID hashes match r175, so no
-queue membership changed between those snapshots. This is not semantic
+PRs, captured at main `a6add75aa2f2adac36b71d86a41a7a4c2b36345e` and merged
+by PR #10524. Its exact sorted-ID hashes match r175, so no queue membership
+changed between those snapshots. This is not semantic
 triage. The GitHub open PR queue contains long-lived drafts, and semantic
 issue/PR disposition, worktree ownership, local evidence custody, and duplicate
 reconciliation are still incomplete. Preserve viable research; disposition
