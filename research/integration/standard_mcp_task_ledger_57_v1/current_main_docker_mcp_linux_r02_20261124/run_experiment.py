@@ -9,8 +9,8 @@ def repo_root():
         if (p/".git").exists(): return p
     raise RuntimeError("repository root not found")
 REPO=repo_root()
-CONDITIONS=PACKET/"CONDITIONS-r03.json"
-RAW=PACKET/"raw-r03"
+CONDITIONS=PACKET/"CONDITIONS-r04.json"
+RAW=PACKET/"raw-r04"
 IMAGE="sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056"
 MODULES=["runtime.cli_v1.test_mcp_server","runtime.cli_v1.test_mcp_guarded"]
 def run(args,**kwargs): return subprocess.run(args,cwd=REPO,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False,**kwargs)
