@@ -1,3 +1,5 @@
+> Project-wide orientation and gate order: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md). This page retains the detailed, dated result dashboard.
+
 # Project state and work order
 
 ## Issue #57 caller v3 + compiled GUI composition R01 - 2026-11-23

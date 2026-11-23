@@ -1,4 +1,6 @@
-> Project-wide current status and next work order: [PROJECT_STATE.md](PROJECT_STATE.md).
+> Project-wide orientation and current work order: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md). The detailed status dashboard remains in [PROJECT_STATE.md](PROJECT_STATE.md).
+
+> Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
 ## Issue #57 caller v3 + compiled GUI composition R01 - 2026-11-23
 

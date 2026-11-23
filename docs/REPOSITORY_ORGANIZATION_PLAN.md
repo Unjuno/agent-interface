@@ -1,4 +1,4 @@
-> Concise project-wide gate status and cleanup sequence: [PROJECT_STATE.md](PROJECT_STATE.md).
+> Start with [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for project goals and gate order; use [PROJECT_STATE.md](PROJECT_STATE.md) for detailed result status. This plan tracks inventory, family triage, and evidence/worktree custody.
 
 ## Project-wide cleanup status — 2026-11-23
 
