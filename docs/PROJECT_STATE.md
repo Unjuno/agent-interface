@@ -1,5 +1,11 @@
 # Project state and work order
 
+## Research Preview and #57 current-main follow-up R06 — 2026-11-23
+
+PR #10490 merged the launcher fixture correction at main 7e9caab2; the exact-main WSL post-merge checks passed preflight 19/19, launcher tests 21/21 in both modes, and preview builder/supported-host helper tests 11/11 in both modes. The merged R06 packet also records an isolated WSL-launched Windows Chrome blank-page/window-identity observation; it does not claim GUI input or product task effect. PR #10491 merged the reused-pinned-venv diagnosis at main 8554b2bf: doctor passed 13/15, with only the missing Windows Codex CLI JS entrypoint and dependent codex_cli check failing; current-main audit-retained passed RETAIN. No runtime/package install, browser launch in the doctor trial, model, fresh Golden run, or audit-live occurred. #58 remains open. See [R06 launcher gate](../research/integration/research_preview_current_main_launcher_r06_20261123/RESULT.md) and [R06 host diagnostic](../research/integration/research_preview_reused_pinned_venv_doctor_r06_20261123/RESULT.md).
+
+#57 effect-receipt handoff suite reran 60/60 normal and 60/60 optimized on main 7e9caab2. This is synthetic identity/timing/comparison validation only; live provider usage, recovered task success, repeated reliability, and matched integrated efficiency remain open. See [current-main recheck](../research/integration/standard_mcp_task_ledger_57_v1/effect_receipt_handoff_current_main_recheck_20261123/RESULT.md).
+
 ## Current-main WSL Research Preview package follow-up
 
 **Research Preview WSL package R02 (2026-11-23; current main `c5fc0ee0`):** A complete persistent Ubuntu WSL checkout builds the bundle successfully: 29/29 frozen-source hashes match; builder tests 6/6; 22,647 members; checkout/archive static preflight pass; bundle SHA-256 `5850fc0581a47570b542d74198450227da75e010022365f52bc496c17a1b7006`; extracted `audit-retained` passes `RETAIN`. No dependency install, doctor, fresh Golden run or `audit-live`; #58 remains open. This supersedes the earlier sparse/Windows environment diagnosis without erasing it. See [R02](../research/integration/research_preview_current_main_wsl_build_r02_20261123/RESULT.md).
