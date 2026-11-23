@@ -11,7 +11,7 @@ import time
 
 
 PACKET = Path(__file__).resolve().parent
-REPO = PACKET.parents[3]
+REPO = Path(__file__).resolve().parents[4]
 CONDITIONS = PACKET / "CONDITIONS.json"
 TEST = PACKET / "test_provider_compiled_composition.py"
 RAW = PACKET / "raw"
