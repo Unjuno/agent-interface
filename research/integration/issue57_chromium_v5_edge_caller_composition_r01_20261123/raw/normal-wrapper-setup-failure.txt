@@ -1,0 +1,4 @@
+Command: redirect unittest output to raw/normal.stdout.txt before creating its parent directory.
+PowerShell Out-File: Could not find a part of the path 'C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\integration\issue57_chromium_v5_edge_caller_composition_r01_20261123\raw\normal.stdout.txt'.
+Exit receipt creation also failed because the raw directory did not exist. The unittest process did not start; no Edge allocation was consumed.
+Disposition: setup failure; create the dedicated raw directory, then proceed with the frozen one-shot normal run.

@@ -1,0 +1,19 @@
+test_chromium_v5_edge_caller_v3_v1 (unittest.loader._FailedTest.test_chromium_v5_edge_caller_v3_v1) ... ERROR
+
+======================================================================
+ERROR: test_chromium_v5_edge_caller_v3_v1 (unittest.loader._FailedTest.test_chromium_v5_edge_caller_v3_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_chromium_v5_edge_caller_v3_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_edge_caller_v3_v1.py", line 26, in <module>
+    from model_point_target_v1 import OPERATION
+ModuleNotFoundError: No module named 'model_point_target_v1'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
