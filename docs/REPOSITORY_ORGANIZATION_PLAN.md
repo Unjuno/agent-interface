@@ -7,7 +7,10 @@ This status snapshot uses main
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
-evidence. Issue #57's R10–R14 outcomes are merged in PR #10522; its public
+evidence. Current-main WSLc R08–R11 are now retained with independent direct
+XTEST controls: ordinary repeat settings suppress held-key repeat in isolation,
+but the standard-caller repeated-effect interaction is still unresolved. No
+runtime setting was changed. Issue #57's R10–R14 outcomes are merged in PR #10522; its public
 comments record the stops and explicitly keep the issue open. Research
 Preview doctor R07 and the corrected ROADMAP navigation are merged in PR
 #10523; Quickstart acquisition boundaries are clarified in #10526. For #59,
