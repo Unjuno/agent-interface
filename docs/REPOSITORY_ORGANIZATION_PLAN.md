@@ -1,5 +1,32 @@
 > Start with [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for project goals and gate order; use [PROJECT_STATE.md](PROJECT_STATE.md) for detailed result status. This plan tracks inventory, family triage, and evidence/worktree custody.
 
+## Project-wide status reconciliation — 2026-11-23
+
+The current `origin/main` used for the latest experiment freeze is
+`6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3` (after PR #10521). There is no
+standalone `ROADMAP.md` in `docs/`; `PROJECT_OVERVIEW.md` is the canonical
+project purpose, current state, and ordered work list, while `CURRENT_GOAL.md`
+and `PROJECT_STATE.md` carry the active goal and dated gate evidence. Issue
+#57's latest public comment is R09 (2026-11-23); the R10–R14 outcomes are
+retained in the current experiment branch pending review/integration.
+
+The R10–R14 Win32 Edge attempts are all setup stops and do not change product
+qualification: launcher-PID window discovery failed in R10; R11 then found
+the profile-owned window but CDP/client geometry differed; R12 obtained a
+dimension-matched but black PrintWindow capture; R13 was denied foreground by
+Windows; R14's explicit CUA activation was blocked by the browser-URL policy
+guard before any click. All task-input and provider-call counts are zero. R14
+standard-mode raw records show scoped profile cleanup and foreground restore;
+its optimized run was not attempted. Do not mark #57 or the runtime complete
+on these stops.
+
+The last complete membership baseline remains r175 (1,640 open Issues / 404
+open PRs at its recorded main SHA), not a live current count. The GitHub open
+PR queue contains long-lived drafts, and semantic issue/PR disposition,
+worktree ownership, local evidence custody, and duplicate reconciliation are
+still incomplete. Preserve viable research; disposition by family against a
+canonical question and evidence rather than closing items to reduce counts.
+
 ## Project-wide cleanup status — 2026-11-23
 
 The repository is not clean yet. Keep product qualification and repository

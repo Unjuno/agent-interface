@@ -2,6 +2,49 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 native Edge composition attempts R10–R14 — 2026-11-23
+
+On current `origin/main` `6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3`, five
+separately frozen Edge/Win32 attempts narrowed setup boundaries; none sent a
+task input or made a provider call. R10 could not find the visible window by
+the launcher PID. R11 fixed ownership discovery, then stopped because CDP
+capture was 756×457 while the Win32 client was 756×488. R12 used the matching
+Win32 `PrintWindow` dimensions, but the captured frame was black and the V5
+mint correctly refused it as flat. R13's normal and `-O` runs found the HWND
+but Windows denied `SetForegroundWindow`; no focus-policy bypass was attempted.
+R14's normal run paused for explicit CUA activation, but the CUA tool stopped
+at its browser-URL confidence guard before any click; both cases timed out and
+cleaned up. R14 `-O` was not run. Per-attempt protocols, raw, conditions, and
+hashes are retained in [R10](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r10_20261123/RESULT.md),
+[R11](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r11_20261123/RESULT.md),
+[R12](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r12_20261123/RESULT.md),
+[R13](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r13_20261123/RESULT.md),
+and [R14](../research/integration/issue57_chromium_v5_edge_win32_caller_composition_r14_20261123/RESULT.md).
+
+These attempts do not establish OS-level task input, release after task action,
+task effect, provider accounting, matched efficiency, reliability, MAP01, or
+runtime readiness. Keep #57 open. Continue with non-UI gates while a compliant
+foreground-activation route is unavailable; do not retry these run identities.
+
+## Issue #57 local Edge composition R09 — 2026-11-23
+
+PR #10520 merged the current-main-source headless Edge R09 packet. Real Edge
+screenshots and Windows OCR passed an exact local form task through V5 point
+mint, caller v3, compiled GUI, and a loopback POST scorer; the caller returned
+`TASK_SUCCEEDED` in normal and `-O`. A same-target page reload changed loader
+generation; the actual handle store refused the second action as
+`SCOPE_MISMATCH/window_generation_changed_or_missing`, with one completed
+action, no POST, and `EXECUTION_INCOMPLETE` in both modes. Per-case cleanup
+passed. R01–R08 setup/OCR/predicate/cleanup failures remain separately
+preserved and are not counted as passes. See [R09](../research/integration/issue57_chromium_v5_edge_caller_composition_r09_20261123/RESULT.md).
+
+This is headless Edge/CDP fixture evidence with fixed points and zero
+provider/model calls. It does not establish physical OS input/release, a live
+app/provider task, matched economics, or reliability. Continue the current
+gate by joining real provider attempt/usage accounting to standard-caller
+task/effect/release evidence, then freeze the matched comparison when resource
+conditions are valid. Keep #57 open.
+
 ## Issue #57 V5 handle → caller v3 composition R01 — 2026-11-23
 
 On frozen current main `d27e76398b5c094d5785c154ccf8a6fe70acf0c3`, the exact V5
