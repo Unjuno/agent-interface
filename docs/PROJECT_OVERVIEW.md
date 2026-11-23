@@ -1,6 +1,6 @@
 # Agent Interface project overview
 
-**Snapshot:** origin/main at d4446aa82d182325a2a34ed89a085574c706f84c (2026-11-23). This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
+**Snapshot:** origin/main at ce428001afdd9b99c7b3936d82557614d5d0c8e4 (2026-11-23). This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose
 
