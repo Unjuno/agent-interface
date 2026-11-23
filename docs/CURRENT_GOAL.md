@@ -2,6 +2,10 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## MAP01 target availability preflight R01 — 2026-11-23
+
+On current-main baseline `e67ca18c`, a bounded read-only check found no GZDoom in six standard install paths, command lookup, running processes, or Windows uninstall registry. It did not search the full disk or establish WAD availability. No application was launched and no runtime/assets were installed. Live #59 threat exposure remains pending a supplied/preinstalled executable path and intended IWAD/map. See [R01](../research/integration/map01_preinstalled_target_preflight_current_main_r01_20261123/RESULT.md).
+
 ## Issue #57 public recovery writer-drain R05 - 2026-11-23
 
 On frozen current main `d5a378ec`, the exact public Fake Win32 recovery test passed 1/1 normally and 1/1 under `-O` on Windows CPython 3.11.9. The later `1bf4d236` test change drained the dispatch report temp file and server close before teardown; neither the old 8.016 s observation failure nor `.report.json.tmp` cleanup collision reproduced in this single focused case. R04 remains a mixed 7/10 result; this is not reliability evidence. The initial wrapper setup error is only transcribed because its raw stderr was overwritten; the target test outputs and 18-entry hash manifest are retained. No real GUI/input ran. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_writer_drain_r05_20261123/RESULT.md).
