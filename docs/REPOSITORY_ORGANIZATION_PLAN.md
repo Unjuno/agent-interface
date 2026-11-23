@@ -1,5 +1,19 @@
 > Start with [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for project goals and gate order; use [PROJECT_STATE.md](PROJECT_STATE.md) for detailed result status. This plan tracks inventory, family triage, and evidence/worktree custody.
 
+## Follow-up since the last complete census — 2026-11-24
+
+Main advanced to `22aba58c276141401a7688be335be5191ec661b9` with PR #10540.
+The scoped Win32 zipapp packaging repair and R01–R04 Notepad evidence are
+proposed in PR [#10541](https://github.com/Unjuno/agent-interface/pull/10541).
+R04 is one verified public-CLI task/release case; it does not alter #57's
+matched economics or recovery gate. The last complete membership census is
+still r179 at `b290c1ef` (1,640 open Issues / 403 open PRs), and the last exact
+local custody census is still r178. Both are stale for the present checkout
+and PR. Refresh them before claiming current queue totals or repository
+cleanliness. Keep viable ideas and failure evidence routed to their canonical
+questions; no mass closure or artifact/worktree deletion follows from these
+results.
+
 ## Current checkpoint — 2026-11-24
 
 Current main is `1d7164b65790c5ff893c958a33f1f58d9fb20980`, after PR #10539.

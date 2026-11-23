@@ -1,0 +1,42 @@
+{
+  "authority": {
+    "expires_at_ns": 495371062000000,
+    "lease_id": "win32-notepad-r03"
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "notepad"
+    },
+    {
+      "op": "text",
+      "text": "AI-WIN32-NOTEPAD-R03-4DB219"
+    },
+    {
+      "keys": [
+        "CTRL",
+        "S"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 250
+    },
+    {
+      "op": "release_all"
+    }
+  ],
+  "program_id": "notepad-save-r03",
+  "schema": "agent-interface/program-v1",
+  "source": {
+    "binding_revision": 1,
+    "observation_seq": 1,
+    "target_generations": {
+      "notepad": "98459c923a5940f0c265da9d5e32c3805b66d3f99228ca7797b1089ca9c6906c"
+    }
+  },
+  "terminal": {
+    "release_all_required": true
+  }
+}

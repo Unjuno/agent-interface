@@ -2,6 +2,38 @@
 
 # Project state and work order
 
+## Current checkpoint — 2026-11-24 (main `22aba58c`)
+
+PR #10540 is the latest merge on main. PR [#10541](https://github.com/Unjuno/agent-interface/pull/10541)
+is open for a specific distribution defect: the deterministic runtime zipapp
+omitted `runtime/backends/win32_v1/capture_artifacts.py`, which the promoted
+Win32 backend imports during observation. The package list and an archive
+import regression test are fixed on the branch. Local `test_distribution`
+passes 11/11 normally and under `-O` on unpackaged CPython 3.12.12.
+
+The retained live trial R04 is a **scoped pass**: after ordinary Computer
+Control activated the uniquely identified Notepad window, one public CLI task
+completed, the independent file oracle matched all 27 token bytes, and the
+terminal release receipt verified. R01 stopped on the package omission; R02
+stopped on a frozen target-name mismatch; R03 stopped on Windows foreground
+admission with zero input. Keep all three stops and R04 separate. These trials
+do not close #57 or demonstrate comparative efficiency, expiry recovery,
+reliability, provider accounting, MAP01, or Research Preview graduation. See
+[R01](../research/integration/win32_notepad_public_cli_r01_20261124/RESULT.md),
+[R02](../research/integration/win32_notepad_public_cli_r02_20261124/RESULT.md),
+[R03](../research/integration/win32_notepad_public_cli_r03_20261124/RESULT.md),
+and [R04](../research/integration/win32_notepad_public_cli_r04_20261124/RESULT.md).
+
+Project-wide: #57 remains open for matched lifecycle economics, exhaustive
+provider/token accounting, and repeatable recovery transfer. #58 remains on
+the supported-host doctor/live-acceptance HOLD. #59 has no verified isolated
+GZDoom/IWAD target or MAP01 completion. The latest complete membership receipt
+is r179 (1,640 open Issues / 403 open PRs at `b290c1ef`), before PR #10540 and
+#10541. The latest exact local custody census is r178 and is not current; no
+full semantic queue triage or clean-worktree claim is justified. Continue the
+existing family-by-family evidence routing; do not bulk-close or delete
+unresolved work.
+
 ## Issue #57 WSLc XTEST repeat boundary R08–R11 — 2026-11-23
 
 Frozen source main: `36da81e3fb97dca875e4dc5b1d13d5385574b400`. Standard-caller R08 global-repeat-off and R09 A-key-repeat-off still observed excess old-task effects (1→5 and 1→28). Normal runs reached neutral release readback yet failed the old-task oracle; optimized runs timed out in the unchanged 1.5 s release worker and preserved UNKNOWN, then fixture cleanup read all keys up. Direct XTEST control R10 confirmed default repeat at 15 press/release events over 1.2 s, versus exactly one pair with global-off and per-key-off, under normal and `-O`. Delayed XTEST control R11 with A repeat disabled queued B at 2 s and observed one A pair, one B pair and neutral final keymap. Thus simple XTEST autorepeat and delayed-request controls work, but the repeated A effects in the standard caller fixture remain unexplained. R08–R11 audits and SHA manifests pass normal/`-O`; these are synthetic controls and do not justify runtime changes or close #57. See [R08](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_repeat_off_diagnostic_r08_20261123/RESULT.md), [R09](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_key_repeat_keyoff_diagnostic_r09_20261123/RESULT.md), [R10](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_xtest_repeat_microcontrol_r10_20261123/RESULT.md), and [R11](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_delayed_request_repeat_microcontrol_r11_20261123/RESULT.md).

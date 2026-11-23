@@ -215,6 +215,26 @@ print('archive method passed without optional dependencies')
                     ["Pillow"],
                 )
 
+    def test_portable_archive_includes_public_win32_capture_module(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            archive_path = td / "runtime.pyz"
+            build(root, archive_path, td / "manifest.json", td / "sum")
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertIn("runtime/backends/win32_v1/capture_artifacts.py", archive.namelist())
+            code = """
+import sys
+sys.path.insert(0, sys.argv[1])
+from runtime.backends.win32_v1 import capture_artifacts
+assert callable(capture_artifacts.CaptureArtifacts)
+print('public Win32 capture module imported')
+"""
+            proc = subprocess.run([sys.executable, "-I", "-S", "-c", code, str(archive_path)],
+                                  cwd=td, capture_output=True, text=True, timeout=10)
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+            self.assertEqual(proc.stdout.strip(), "public Win32 capture module imported")
+
     def test_malformed_targets_fail_before_native_backend(self):
         root = Path(__file__).resolve().parents[2]
         with tempfile.TemporaryDirectory() as td:
