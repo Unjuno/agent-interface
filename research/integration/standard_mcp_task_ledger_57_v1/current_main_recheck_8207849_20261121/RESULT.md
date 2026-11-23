@@ -26,3 +26,7 @@ The earlier full 107-test current-main discovery still has two separate Calc/Fak
 - `r02-pass-invalid-freeze/`: unchanged invalid conditions and diagnostic logs; excluded because source hashes were absent.
 - `r03-pass-frozen/`: corrected conditions, exact tested file hashes, and both successful raw logs/codes.
 - Each directory contains a `SHA256SUMS` manifest covering its conditions and raw evidence.
+
+## Later PR disposition
+
+The audit at frozen main `897f4896d23dd127a4523dc4955e573dace7d674` found PR #10218's implementation/evidence already represented in main (37/41 changed-path blobs identical; the remaining differences were superseding main content). PR #10218 was closed unmerged on 2026-11-20 without deleting its branch. See the [path-by-path audit](../pr10218_supersession_audit_20261121/RESULT.md). Issue #57 remains open for live provider accounting, caller task success, recovery reliability, and matched efficiency.

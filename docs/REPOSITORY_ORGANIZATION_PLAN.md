@@ -448,6 +448,9 @@ App Server usage port was transferred to [#10352](https://github.com/Unjuno/agen
 and public-caller methods. This only resolves that PR's unique-code custody;
 the caller does not automatically invoke the post-score usage method, and the
 work remains synthetic rather than real provider/economics evidence for #57.
+The path-by-path evidence supporting this disposition is preserved in the
+[#10218 supersession audit packet](../research/integration/standard_mcp_task_ledger_57_v1/pr10218_supersession_audit_20261121/RESULT.md)
+and its byte manifest.
 
 ## Batch protocol
 

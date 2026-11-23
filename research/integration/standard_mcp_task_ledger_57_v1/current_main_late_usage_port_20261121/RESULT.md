@@ -23,3 +23,7 @@ Evidence is deterministic App Server/spool/Fake X with synthetic provider stream
 ## Post-`551cf28` focused recheck (2026-11-21)
 
 Current main later advanced to `8207849ad0bd30b6b31ef4a9cee7eb95f5b4619a`, including changes to the late-usage modules and tests. A fresh four-module run found R01 normal-mode start-receipt timeout plus a publisher-thread cleanup race; `-O` passed. R02 passed both modes but is excluded because its freeze lost the source-hash map. A narrowly scoped test-fixture repair then passed R03 at 26/26 normal and 26/26 optimized, with exact hashes retained in [the recheck packet](../current_main_recheck_8207849_20261121/RESULT.md). The full 107-test Calc/Fake X failures in the prior audit remain unresolved; this focused test repair does not make PR #10218 merge-ready or establish live-provider economics.
+
+## PR #10218 disposition (2026-11-20)
+
+PR #10218 was closed unmerged as superseded after a frozen-main comparison of all 41 changed paths: 37 blobs were identical and the remaining differences contained no unique implementation/evidence to transfer. The late-usage port was transferred to merged PR #10352 and the scheduling/cleanup repair to merged PR #10365; the original source branch remains preserved. See the [path-by-path audit](../pr10218_supersession_audit_20261121/RESULT.md). This historical disposition does not establish real-provider usage or integrated economics; Issue #57 remains open.
