@@ -134,6 +134,19 @@ scored effects from one common current-source caller without losing failures,
 unknowns, release/recovery, or cleanup. Keep #57 open. See [R04
 result](../../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
 
+## Current-main successful effect with UNKNOWN usage R05 - 2026-11-23
+
+R05 separates product-task outcome from measurement eligibility. A valid
+synthetic JSONL response with no usage notification still completes the
+synthetic caller/effect path and custody retains both receipts, but the frozen
+comparison projector returns HOLD because usage is incomplete. Focused 1/1 and
+module 9/9 pass normal and optimized. This confirms the existing adapter
+fails closed without discarding a completed task effect; it does not supply
+provider usage or make a matched allocation admissible. The remaining work is
+a permitted, externally attested fresh three-arm execution with all attempts,
+provider accounting, independently scored effects, release/recovery and
+cleanup joined. Keep #57 open. See [R05 result](../../research/integration/issue57_v3_durable_appserver_composition_r05_20261123/RESULT.md).
+
 ## Disposition
 
 Keep #57 and #5130 open. Keep #908/#879 as consumed historical evidence; do

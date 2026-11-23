@@ -1,5 +1,16 @@
 # Project state and work order
 
+## Issue #57 successful effect with UNKNOWN usage R05 - 2026-11-23
+
+On current main 8a9cb6d9b99b724732f3baf3caee83d2f043c0bb, a valid synthetic
+JSONL response without usage retained the completed caller attempt and
+successful synthetic effect. All five totals stayed UNKNOWN; custody audited
+execution/effect receipts, and the comparison projector held the assignment
+with usage_incomplete_or_invalid. Focused 1/1 and the full nine-test module
+pass normal and -O on Windows CPython 3.13.14. This cleanly separates a task
+effect from comparison eligibility, but no live provider or GUI was used.
+See [R05 packet](../research/integration/issue57_v3_durable_appserver_composition_r05_20261123/RESULT.md).
+
 ## Issue #57 failed-turn UNKNOWN-usage R04 - 2026-11-23
 
 On current main d58deb08567325d103eadb7966654907293d10e1, the synthetic

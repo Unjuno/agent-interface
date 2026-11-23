@@ -1345,3 +1345,11 @@ UNKNOWN (None), no execution/effect receipt is promoted, and projection stays
 HOLD with dispatch disabled. Focused 1/1 and module 8/8 pass normal and -O on
 Windows CPython 3.13.14. This is synthetic and does not establish live
 provider completeness. See [R04](../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
+
+## Issue #57 successful effect with UNKNOWN usage R05 - 2026-11-23
+
+A valid synthetic JSONL response without usage keeps the caller's successful
+task/effect and audited receipts, while all five usage totals stay UNKNOWN.
+The frozen comparison projector returns HOLD for incomplete usage, and the
+prospective run remains non-dispatching with 17 assignments missing. Focused
+1/1 and module 9/9 pass normal and -O. No live provider or GUI ran. See [R05](../research/integration/issue57_v3_durable_appserver_composition_r05_20261123/RESULT.md).
