@@ -11,9 +11,13 @@ oracle?
 
 ## Frozen source and host
 
-- Source: current main `22aba58c276141401a7688be335be5191ec661b9`.
+- Source baseline: current main `22aba58c276141401a7688be335be5191ec661b9`.
 - Runtime package: deterministic `runtime.distribution_v2` zipapp built from
-  that exact commit with the already-installed unpackaged CPython 3.12.12.
+  frozen experiment commit `85d001cfdfde48d96c525c4d1057f2772a46b46a` with
+  unpackaged CPython 3.12.12. This commit adds only this experiment's frozen
+  condition file; a pre-build `git diff 22aba58..85d001 -- runtime` must be
+  empty, and the artifact manifest's runtime-file hashes will be compared to
+  the exact main tree before use.
 - Runtime invocation: `python agent-interface-runtime.pyz dispatch` under
   unpackaged CPython 3.12.12. The runtime build and CLI use only the Python
   standard library for this Win32 path. The host's CPython 3.13.14 WindowsApps
@@ -37,6 +41,9 @@ oracle?
 - A separate read-only public runtime CLI observation after dispatch captures
   the target once; it cannot issue input or replay the action.
 - Authority lease: 30 seconds from immediately before the single dispatch.
+- The result packet retains the exact observation and dispatch JSON requests,
+  complete JSON results, capture images, the task file bytes, target HWND/PID
+  identity, process exit, timestamps, and SHA-256 manifest.
 - Exactly one dispatch call is permitted. No retries or second task action.
 - If setup, observation, target identity, foreground admission, capture, or
   pre-dispatch validation fails, stop without input and preserve the stop.
