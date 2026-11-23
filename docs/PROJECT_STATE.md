@@ -2,6 +2,10 @@
 
 # Project state and work order
 
+## Issue #57 current-main WSLc recovery diagnostics R05–R07 — 2026-11-23
+
+Frozen source main: `26152e5aaebf678d19f2e7431f57b7012a0064b1`; WSLc 3.0.5, pinned local Xvfb image, pull disabled and network off. R05 normal observed XRes disconnect and neutral release readback, but the old task effect count increased 1→9 and its independent task oracle failed. Optimized mode timed out at the 0.5 s XRes bound (504 ms). R06 raised only the in-memory XRes diagnostic bound to 1 s; disconnect was observed at 448 ms, but the 1.5 s release worker timed out and independent readback still found A down. R07 used in-memory 1 s/3 s XRes/release diagnostic bounds; it verified neutral release after 1,188 ms, but old-task effect count increased 1→25 and the oracle failed. A distinct fresh-generation task passed without old input contamination; the old cancellation remained UNKNOWN and public task_success stayed null. Final cleanup read all keys up. Normal and `-O` evidence audits pass. These finite synthetic Xvfb diagnostics do not justify production timeout changes, estimate reliability, or close #57. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r05_20261123/RESULT.md), [R06](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r06_timeout1s_diag_20261123/RESULT.md), and [R07](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r07_release3s_diag_20261123/RESULT.md). Continue #57 with matched live economics and eligibility-backed live/different-boundary task evidence.
+
 ## Issue #57 current-main native recovered-task cohort R43 — 2026-11-23
 
 On frozen source main `612b857d7c1c6a951d3f055862a5141dbc9c7637`, all five

@@ -2,6 +2,10 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 current-main WSLc recovery diagnostics R05–R07 — 2026-11-23
+
+Frozen source main was `26152e5aaebf678d19f2e7431f57b7012a0064b1`; all runs used the pinned local WSLc/Xvfb image with pull disabled and network off. R05 normal observed disconnect and neutral release readback but the old task effect count grew 1→9 and failed its independent oracle; optimized mode timed out at the 0.5 s XRes bound (504 ms). R06's in-memory 1 s XRes diagnostic reached disconnect at 448 ms but its 1.5 s release worker timed out, with A still down at readback. R07's in-memory 1 s/3 s diagnostic verified release/readback at 1,188 ms, but the old task effect count grew 1→25 and its oracle failed. The separate fresh-generation task passed with no old input contamination, while the old fence remained UNKNOWN. R05–R07 audits pass in normal and `-O`; they classify evidence, not product acceptance. No production timeout changed. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r05_20261123/RESULT.md), [R06](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r06_timeout1s_diag_20261123/RESULT.md), and [R07](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_blocked_release_r07_release3s_diag_20261123/RESULT.md). #57 remains open for live task completion, repeated recovery reliability, and matched provider/token/latency/correctness comparison.
+
 ## Issue #57 current-main native recovered-task cohort R43 — 2026-11-23
 
 On frozen baseline `612b857d7c1c6a951d3f055862a5141dbc9c7637`, all five
