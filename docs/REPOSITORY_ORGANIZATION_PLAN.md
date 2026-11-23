@@ -5,16 +5,20 @@
 The repository is not clean yet. Keep product qualification and repository
 triage as two linked workstreams: the first protects acceptance gates; the
 second reconciles issue/PR meaning and evidence custody without bulk closure.
-The latest complete paginated membership baseline is r172 (1,640 Issues / 405
-PRs), bracketed by main `b600070965c48cc9449a87ff31264a5b3604c2d8`. Compared with
-r171, both exact sorted ID sets are unchanged. See the [r172 receipt](maintenance/repository-inventory-recheck-20261123-r172.md)
-and [exact-ID data](maintenance/repository-inventory-recheck-20261123-r172.json).
+The latest complete paginated membership baseline is r173 (1,640 Issues / 405
+PRs), bracketed by stable main `bc903f77bd69102187329f9e0d020ca5259f88bb`.
+Compared with r172, both exact sorted ID sets are unchanged. The prior r172
+Markdown receipt contains literal main-SHA placeholders; its JSON is intact,
+and r173 records the independently confirmed ref. See the [r173 receipt](maintenance/repository-inventory-recheck-20261123-r173.md)
+and [exact-ID data](maintenance/repository-inventory-recheck-20261123-r173.json).
 Earlier r168 was count-only. Semantic issue/PR disposition remains incomplete
 and must proceed family by family.
 
 **Current-main recheck r171 (2026-11-23; main `953ce41370666c656278f203dc545aa310947ffe`):** Complete pagination still returns 1,640 open Issues and 405 open PRs. The exact sorted ID sets match r170 with no additions/removals, bracketed by the same main SHA before and after. PR #10478 was merged; its appearance and removal happened between complete snapshots, so it does not change the current set. This does not advance semantic triage. See the [r171 receipt](maintenance/repository-inventory-recheck-20261123-r171.md).
 
 **Current-main recheck r172 (2026-11-23; main `b600070965c48cc9449a87ff31264a5b3604c2d8`):** Complete pagination returns 1,640 open Issues and 405 open PRs. Both exact sorted ID sets match r171 with no additions/removals; main was unchanged around the reads. This membership refresh does not advance semantic triage. See the [r172 receipt](maintenance/repository-inventory-recheck-20261123-r172.md).
+
+**Current-main membership recheck r173 (2026-11-23; main `bc903f77bd69102187329f9e0d020ca5259f88bb`):** Complete pagination again returns 1,640 open Issues and 405 open PRs. Both exact sorted ID sets match r172 with no additions/removals; the main SHA was stable before and after reads. This does not advance semantic triage. See the [r173 receipt](maintenance/repository-inventory-recheck-20261123-r173.md).
 
 ## Local worktree custody recheck r173
 
