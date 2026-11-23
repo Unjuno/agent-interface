@@ -32,6 +32,20 @@ reliability, provider accounting, MAP01, or Research Preview graduation. See
 [R03](../research/integration/win32_notepad_public_cli_r03_20261124/RESULT.md),
 and [R04](../research/integration/win32_notepad_public_cli_r04_20261124/RESULT.md).
 
+PR #10544 is merged at `e18bbd7c`. Its frozen synthetic composition packet
+joins one local App Server usage event to the v3 persistent grounding adapter,
+caller v3, compiled GUI execution, per-action release receipts, and durable
+execution/effect custody. Normal and `-O` each passed a positive and a
+changed-intermediate case; the independent audit verified all four attempt,
+usage, and durable-custody joins. The changed-intermediate path stopped after
+the first action and retained UNKNOWN/partial without task-effect promotion.
+This closes an offline integration seam only. It does not establish a live
+provider or GUI path, deadline-expiry late-input behavior, recovery reliability,
+matched economics, MAP01, runtime distribution, or Research Preview graduation.
+See the [conditions](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/CONDITIONS-r04.json),
+[result](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/RESULT.md),
+and [independent audit](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/AUDIT.json).
+
 Project-wide: #57 remains open for matched lifecycle economics, exhaustive
 provider/token accounting, and repeatable recovery transfer. #58 remains on
 the supported-host doctor/live-acceptance HOLD. #59 has no verified isolated

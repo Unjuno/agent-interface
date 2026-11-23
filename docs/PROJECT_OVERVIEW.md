@@ -14,6 +14,13 @@ host/app path, not recovery reliability, matched efficiency, or public release
 readiness. See the [R01–R04 packets](../research/integration/) and the
 [detailed state dashboard](PROJECT_STATE.md).
 
+PR #10544 has since merged a scoped offline composition result: synthetic
+provider usage is joined to caller v3, compiled GUI execution, and durable
+effect custody in normal and `-O`; a changed intermediate safely prevents the
+second action. This does not close any live provider/GUI, late-input recovery,
+matched economics, or release-readiness gate. See the [conditions](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/CONDITIONS-r04.json)
+and [result](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/RESULT.md).
+
 The gates remain distinct: #57 still needs integrated all-attempt
 provider/token/latency/correctness economics and transferable recovery
 reliability; #58 remains held by supported-host readiness and its fresh live
