@@ -1,0 +1,17 @@
+{
+  "attempt_id": "ISSUE57-STANDARD-MCP-WSLC-XVFB-CURRENT-MAIN-R06-TIMEOUT1S-DIAGNOSTIC-20261123",
+  "frozen_at_utc": "2026-11-23T13:45:19Z",
+  "source_revision": "26152e5aaebf678d19f2e7431f57b7012a0064b1",
+  "source_tree": "e9690e0d135adbfdf440c0611fbc28d25807a5b4",
+  "source_files": ["runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py", "runtime/cli_v1/owned_guarded_session.py", "runtime/guarded_x11_v1/xres_client_fence.py"],
+  "container_image": "agent-interface-xvfb-mcp:late-input-r19",
+  "container_image_id": "sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+  "runtime": "WSLc 3.0.5.0; --pull never; --network none; ephemeral --rm; source read-only bind; evidence writable bind; private /tmp; cpus=2; memory=4g (swap cap unavailable warning); no read-only-root feature.",
+  "mode": "python3 -O",
+  "test": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "single_diagnostic_override": "Set runtime.cli_v1.owned_guarded_session._XRES_DISCONNECT_TIMEOUT_S = 1.0 in the unittest process before loading the test; no source file modified.",
+  "hypothesis": "R05 optimized UNKNOWN was caused by the 0.5 s XRes supervision budget expiring before the query response. A 1.0 s diagnostic should allow disconnect/release to proceed if the query completes within the larger bound.",
+  "decision_rule": "Record unittest exit and all independent task/release/horizon evidence. This timing override cannot constitute product PASS or justify widening a production bound. Old task success, release neutral readback, new-generation task oracle, old UNKNOWN fence, and late old inputs must remain separately scored.",
+  "attempts": ["optimized-timeout-1s-01"],
+  "limits": "One synthetic Xvfb optimized diagnostic only; not MAP01/live GUI, matched economics, reliability rate, or Research Preview acceptance."
+}
