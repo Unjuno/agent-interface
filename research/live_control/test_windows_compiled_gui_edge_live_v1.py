@@ -150,10 +150,10 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
         server_thread = threading.Thread(target=server.serve_forever, daemon=True)
         server_thread.start()
         origin = f"http://127.0.0.1:{server.server_port}/form"
-        packet_root = HERE.parents[1] / "integration/issue57_chromium_v3_edge_r01"
+        packet_root = HERE.parents[1] / "integration/issue57_chromium_v3_edge_r02"
         evidence_root = packet_root / "raw"
         worktree_status_before_capture = subprocess.run(
-            ["git", "status", "--porcelain"], cwd=HERE.parents[2],
+            ["git", "status", "--porcelain"], cwd=HERE.parents[1],
             capture_output=True, text=True, check=True).stdout.strip()
         evidence_root.mkdir(parents=True, exist_ok=False)
         evidence_sources = [
@@ -167,7 +167,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
             packet_root / "PROTOCOL.md",
             packet_root / "audit_saved_run.py",
         ]
-        source_hashes = {str(path.relative_to(HERE.parents[2])):
+        source_hashes = {str(path.relative_to(HERE.parents[1])):
                          hashlib.sha256(path.read_bytes()).hexdigest()
                          for path in evidence_sources}
         evidence_conditions = {"scope": "one local headless Edge form submission",
@@ -180,7 +180,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
             "target_generation_mutation": "not tested",
             "two_action_entry_and_submit": "not tested; token prepopulated",
             "repository_head": subprocess.run(["git", "rev-parse", "HEAD"],
-                cwd=HERE.parents[2], capture_output=True, text=True,
+                cwd=HERE.parents[1], capture_output=True, text=True,
                 check=True).stdout.strip(),
             "repository_clean_before_run": not worktree_status_before_capture,
             "worktree_status_before_capture": worktree_status_before_capture,
