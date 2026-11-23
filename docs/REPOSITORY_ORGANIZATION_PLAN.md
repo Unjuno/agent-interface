@@ -2,8 +2,26 @@
 
 ## Project-wide status reconciliation — 2026-11-23
 
+### Post-merge checkpoint
+
+This checkpoint uses current main `bead5f7ecb2e59fc7a0c88d8e32d914ee430135d`.
+PR [#10534](https://github.com/Unjuno/agent-interface/pull/10534) merged the
+R08–R11 repeat-boundary packets together with deterministic gzip copies of
+ignored `.log` streams, their uncompressed SHA256/byte counts, and independent
+normal/`-O` byte auditors for R05–R11. This fixes the evidence-retention gap;
+it does not resolve the unexplained standard-caller repeats or change runtime
+behavior. The PR's required replay-gate and public-navigation checks passed;
+formal was skipped. Issue #57 received a linked status comment and remains open.
+
+The latest complete repository membership receipt remains r177 (1,640 open
+Issues / 403 open PRs) at an earlier main SHA. No complete post-merge
+pagination or new worktree custody census has been run, so those figures are
+historical baseline values, not current counts. The current repository is
+still **not clean**: product gates, semantic Issue/PR disposition, and local
+artifact/worktree custody all have unresolved work.
+
 This status snapshot uses main
-`d8d7ce00bc4b5512f5617f1f33de68245be72f20` (after PR #10532). The canonical
+`bead5f7ecb2e59fc7a0c88d8e32d914ee430135d` (after PR #10534). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
