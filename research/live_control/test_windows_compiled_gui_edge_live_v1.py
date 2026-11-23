@@ -1,8 +1,10 @@
 """One-task local Edge/OCR/compiled-GUI/caller integration smoke on Windows."""
 
+import hashlib
 import json
 import math
 import os
+import platform
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import shutil
@@ -19,7 +21,7 @@ from research.live_control.integrated_efficiency_compiled_adapter_v2 import (
     EXPECTED_METHOD_CONTRACT,
     compile_form_method,
 )
-from research.live_control.integrated_efficiency_compiled_execution_v1 import (
+from research.live_control.integrated_efficiency_compiled_execution_v2 import (
     run_compiled_interface_in_caller,
 )
 from research.live_control.windows_ocr_observer_v1 import (
@@ -126,11 +128,14 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
 
             def do_POST(self):
                 length = int(self.headers.get("Content-Length", "0"))
-                submitted = urllib.parse.parse_qs(
-                    self.rfile.read(length).decode("utf-8", "replace"),
-                    keep_blank_values=True)
+                raw_body = self.rfile.read(length)
+                submitted = urllib.parse.parse_qs(raw_body.decode("utf-8", "replace"),
+                                                   keep_blank_values=True)
                 row = {"submitted_values": submitted.get("value", []),
-                       "exact": submitted == {"value": [token]}}
+                       "exact": submitted == {"value": [token]},
+                       "raw_body_utf8": raw_body.decode("utf-8", "strict"),
+                       "received_ns": time.perf_counter_ns(),
+                       "path": self.path}
                 with record_lock:
                     records.append(row)
                 body = (b"<!doctype html><h1>AI INTEGRATED SAVED</h1>"
@@ -145,6 +150,44 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
         server_thread = threading.Thread(target=server.serve_forever, daemon=True)
         server_thread.start()
         origin = f"http://127.0.0.1:{server.server_port}/form"
+        packet_root = HERE.parents[1] / "integration/issue57_chromium_v3_edge_r01"
+        evidence_root = packet_root / "raw"
+        worktree_status_before_capture = subprocess.run(
+            ["git", "status", "--porcelain"], cwd=HERE.parents[2],
+            capture_output=True, text=True, check=True).stdout.strip()
+        evidence_root.mkdir(parents=True, exist_ok=False)
+        evidence_sources = [
+            Path(__file__).resolve(),
+            HERE / "adaptive_acquisition_caller_v3.py",
+            HERE / "integrated_efficiency_compiled_execution_v2.py",
+            HERE / "integrated_efficiency_compiled_adapter_v2.py",
+            HERE / "windows_ocr_observer_v1.py",
+            HERE / "windows_ocr_worker_v1.ps1",
+            Path(__file__).resolve().parents[2] / "runtime/core_v1/compiled_gui.py",
+            packet_root / "PROTOCOL.md",
+            packet_root / "audit_saved_run.py",
+        ]
+        source_hashes = {str(path.relative_to(HERE.parents[2])):
+                         hashlib.sha256(path.read_bytes()).hexdigest()
+                         for path in evidence_sources}
+        evidence_conditions = {"scope": "one local headless Edge form submission",
+            "task_token": "t991025-1", "initial_field_state": "prepopulated",
+            "caller": "adaptive_acquisition_caller_v3",
+            "compiled_core": "runtime.core_v1.compiled_gui",
+            "provider": "offline-test-double; no network model call",
+            "independent_scorer": "local HTTP server exact POST body",
+            "headless": True, "task_family": "private localhost HTML form",
+            "target_generation_mutation": "not tested",
+            "two_action_entry_and_submit": "not tested; token prepopulated",
+            "repository_head": subprocess.run(["git", "rev-parse", "HEAD"],
+                cwd=HERE.parents[2], capture_output=True, text=True,
+                check=True).stdout.strip(),
+            "repository_clean_before_run": not worktree_status_before_capture,
+            "worktree_status_before_capture": worktree_status_before_capture,
+            "source_hashes_sha256": source_hashes,
+            "python": platform.python_version(), "platform": platform.platform()}
+        (evidence_root / "conditions.json").write_text(
+            json.dumps(evidence_conditions, indent=2) + "\n", encoding="utf-8")
 
         interface = compile_form_method(
             interface_id="edge-ocr-submit-v1",
@@ -153,6 +196,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
             method_contract=EXPECTED_METHOD_CONTRACT)
         interface["method"]["initial_state"] = "verify_value"
         interface = validate(interface)
+        observation_rows = []
 
         try:
             with tempfile.TemporaryDirectory(
@@ -217,12 +261,20 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                             sequence += 1
                             cdp("capture", str(image))
                             raw = image.read_bytes()
-                            digest = __import__("hashlib").sha256(raw).hexdigest()
+                            digest = hashlib.sha256(raw).hexdigest()
+                            capture_path = evidence_root / f"frame-{sequence}.png"
+                            capture_path.write_bytes(raw)
                             ocr = observer.recognize(
                                 image, region=(125, 80, 355, 70), scale=2)
                             ocr_elapsed_ns.append(ocr["elapsed_ns"])
                             value_state = exact_token_state(ocr["text"], token)
                             observed_value_states.append(value_state)
+                            observation_rows.append({
+                                "sequence": sequence, "state": value_state,
+                                "capture_file": capture_path.name,
+                                "capture_sha256": digest,
+                                "ocr_text": ocr["text"],
+                                "ocr_elapsed_ns": ocr["elapsed_ns"]})
                             changed = previous_frame is not None and digest != previous_frame
                             previous_frame = digest
                             return {"sequence": sequence,
@@ -274,7 +326,8 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                                           "cache_write_input_tokens": 0,
                                           "reasoning_output_tokens": 0},
                                 "requested_model": "offline-test-double",
-                                "requested_effort": "medium", "cost": None},
+                                "requested_effort": "medium", "cost": None,
+                                "visible_images_submitted": 1, "wait_ns": 0},
                             "final_revalidate": lambda _payload: {
                                 "status": "revalidated"},
                             "verify_effect": verify_effect,
@@ -283,9 +336,11 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                                 "route": "cold", "coarse_origin": "caller_provided",
                                 "provided_coarse": {"source": "edge-frame-1"},
                                 "cached_target": None, "repair_on": [],
+                                "local_repair_on": [],
                                 "session_id": "edge-ocr-session-v1"}
                         result = run_compiled_interface_in_caller(
-                            spec, caller_adapters, interface,
+                            spec, caller_adapters,
+                            lambda payload: payload["target"]["interface"],
                             {"observe": observe, "admit": admit, "execute": execute,
                              "verify_effect": lambda payload: {
                                  "status": "succeeded",
@@ -308,6 +363,25 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                     self.assertEqual(receipts[0]["completed_transitions"], 1)
                     self.assertTrue(receipts[0]["transitions"][0]["release_verified"])
                     self.assertEqual(receipts[0]["frontier_model_resumptions"], 0)
+                    (evidence_root / "run.json").write_text(json.dumps({
+                        "outcome": result["outcome"],
+                        "task_effect": result["task_effect"],
+                        "delivery": result["delivery"],
+                        "accounting": result["accounting"],
+                        "attempt_ledger": result["attempt_ledger"],
+                        "model_call_ledger": result["model_call_ledger"],
+                        "execution_progress": result["execution_progress"],
+                        "effect_receipt": result["effect_receipt"],
+                        "compiled_execution_receipt":
+                            result["compiled_execution_receipt"],
+                        "ocr_observations": observation_rows,
+                        "ocr_elapsed_ns": ocr_elapsed_ns,
+                        "value_states": observed_value_states,
+                        "dispatched_operations": dispatched,
+                        "server_posts": records,
+                        "edge_version": version,
+                        "python": platform.python_version(),
+                    }, indent=2) + "\n", encoding="utf-8")
                 finally:
                     close = subprocess.run([
                         node, "-e", BROWSER_CLOSE,
@@ -341,6 +415,13 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                         launcher.kill()
                         launcher.wait()
                     _cleanup_edge_test_profile(root)
+                    (evidence_root / "cleanup.json").write_text(json.dumps({
+                        "browser_close_returncode": close.returncode,
+                        "launcher_pid": launcher.pid,
+                        "launcher_returncode": launcher.returncode,
+                        "profile_exists_after_cleanup": profile.exists(),
+                        "owned_temp_root_exists_after_cleanup": root.exists(),
+                    }, indent=2) + "\n", encoding="utf-8")
                     self.assertEqual(close.returncode, 0, close.stderr)
         finally:
             server.shutdown()
