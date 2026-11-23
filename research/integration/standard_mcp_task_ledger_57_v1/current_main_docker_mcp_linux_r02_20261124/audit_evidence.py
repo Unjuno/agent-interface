@@ -9,13 +9,13 @@ def sha(b): return hashlib.sha256(b).hexdigest()
 def require(ok,msg):
     if not ok: raise AssertionError(msg)
 def main():
-    c=json.loads((PACKET/"CONDITIONS-r05.json").read_text(encoding="utf-8"))
+    c=json.loads((PACKET/"CONDITIONS-r06.json").read_text(encoding="utf-8"))
     require(subprocess.check_output(["git","rev-parse","origin/main"],cwd=REPO,text=True).strip()==c["base_main_sha"],"main drift")
     source={}
     for n,h in c["source_sha256"].items():
         actual=sha((REPO/n).read_bytes()); require(actual==h,"source hash mismatch: "+n); source[n]=actual
     rr=json.loads((PACKET/"run_results.json").read_text(encoding="utf-8"))
-    require(rr["base_main_sha"]==c["base_main_sha"] and rr["image_id"]==c["image_id"],"run provenance mismatch")
+    require(rr["base_main_sha"]==c["base_main_sha"] and rr["image_id"]==c["design"]["image_id"],"run provenance mismatch")
     preout=(PACKET/"raw/preflight.stdout.bin").read_bytes(); preerr=(PACKET/"raw/preflight.stderr.bin").read_bytes()
     require((PACKET/"raw/preflight.exitcode.txt").read_text().strip()=="0","preflight exit not zero")
     require(b"3.11.2" in preout+preerr,"container Python version differs")
