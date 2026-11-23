@@ -131,7 +131,7 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(self.f.calls(), [])
 
     def test_setup_sequence(self):
-        self.assertEqual(self.f.call(SCRIPTS[0])["returncode"], 0)
+        self.assertEqual(self.f.call(SCRIPTS[0], "--install-dependencies")["returncode"], 0)
         calls = self.f.calls()
         self.assertEqual([c["stage"] for c in calls], ["venv", "pip", "entrypoint"])
         self.assertEqual(calls[1]["argv"], ["-m", "pip", "install", "--disable-pip-version-check", "-r", str(self.f.root / FILES[3])])
@@ -140,9 +140,11 @@ class LauncherTests(unittest.TestCase):
     def test_setup_failures_preserve_exit_status_and_stop(self):
         for stage, code, count in (("venv", 17, 1), ("pip", 23, 2), ("entrypoint", 31, 3)):
             with self.subTest(stage=stage):
+                venv = self.f.root / "runtime/.venv"
+                if venv.exists(): shutil.rmtree(venv)
                 if self.f.log.exists(): self.f.log.unlink()
                 self.f.env["SMOKE_FAIL"] = stage
-                self.assertEqual(self.f.call(SCRIPTS[0])["returncode"], code)
+                self.assertEqual(self.f.call(SCRIPTS[0], "--install-dependencies")["returncode"], code)
                 self.assertEqual(len(self.f.calls()), count)
 
     def test_archive_preflight_is_scoped(self):
