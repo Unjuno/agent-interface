@@ -69,6 +69,30 @@ reconciliation are still incomplete. Preserve viable research; disposition
 by family against a canonical question and evidence rather than closing items
 to reduce counts. See [r177](maintenance/repository-inventory-recheck-20261123-r177.md).
 
+## Project-wide cleanup status — current checkpoint r179 (2026-11-24)
+
+At current main `b290c1ef9bafcd0d6294b7aae13c953adc36ffcc`, complete paginated
+Issue and PR reads match r177's exact sorted membership: **1,640 open Issues / 403
+open PRs, zero additions and zero removals**. The full arrays were reused from
+r177 and their SHA-256 digests were independently recomputed. PR #10538 merged
+the Calc receipt-packet byte-custody repair at this main SHA; it does not change
+Issue #57's scientific status. See the [r179 inventory receipt](maintenance/repository-inventory-recheck-20261124-r179.md).
+
+The highest-level acceptance gates #57, #58, and #59 remain open. #5130's
+one-time Mindustry economics allocation and #7924's WSLc ownership/current-main
+STOP also remain open. The latest documented #58 setup/doctor result is a HOLD
+for missing Windows Codex CLI JavaScript and WSL Chromium; the #5130 and #7924
+records retain their specific resource-ownership constraints. These statuses
+separate live/product gates from the queue count; none should be closed merely
+because membership is unchanged.
+
+The Calc evidence-custody repair from r01 is merged, but the repository remains
+unclean locally: the root checkout contains preserved dirty and untracked data,
+and duplicate candidates whose removal was rejected remain untouched. Continue
+hash/lineage reconciliation family by family; preserve unique idea and failure
+evidence while routing it to the existing canonical question. Do not bulk-close
+the queue.
+
 ## Project-wide cleanup status — 2026-11-23
 
 The repository is not clean yet. Keep product qualification and repository
