@@ -3,7 +3,7 @@
 ## Project-wide status reconciliation — 2026-11-23
 
 This status snapshot uses main
-`893c3400c694586ff42d30e2f8fa42f5868f5bba` (after PR #10528). The canonical
+`967a4aaa947dd21c7964ea4d0cb653cbc5518c64` (after PR #10529). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
@@ -12,9 +12,9 @@ comments record the stops and explicitly keep the issue open. Research
 Preview doctor R07 and the corrected ROADMAP navigation are merged in PR
 #10523; Quickstart acquisition boundaries are clarified in #10526. For #59,
 the negative fixed-translation screen and evidence rescue are merged in #10527;
-stale draft #8476 is closed as superseded. R02 adds a fixed block-motion screen
-with a small same-episode AUC change that misses its frozen criterion; #59
-remains open. #58 remains blocked on its missing Windows Codex CLI JS entrypoint.
+stale draft #8476 is closed as superseded; block-motion R02 is merged in #10529
+and misses its frozen same-episode criterion. #59 remains open. #58 remains
+blocked on its missing Windows Codex CLI JS entrypoint.
 
 The R10–R14 Win32 Edge attempts are all setup stops and do not change product
 qualification: launcher-PID window discovery failed in R10; R11 then found
