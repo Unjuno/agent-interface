@@ -146,16 +146,13 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                 self.end_headers()
                 self.wfile.write(body)
 
-        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
-        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
-        server_thread.start()
-        origin = f"http://127.0.0.1:{server.server_port}/form"
-        packet_root = HERE.parents[1] / "integration/issue57_chromium_v3_edge_r02"
+        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r03"
         evidence_root = packet_root / "raw"
         worktree_status_before_capture = subprocess.run(
             ["git", "status", "--porcelain"], cwd=HERE.parents[1],
             capture_output=True, text=True, check=True).stdout.strip()
-        evidence_root.mkdir(parents=True, exist_ok=False)
+        if worktree_status_before_capture:
+            raise RuntimeError("frozen experiment requires a clean worktree")
         evidence_sources = [
             Path(__file__).resolve(),
             HERE / "adaptive_acquisition_caller_v3.py",
@@ -167,9 +164,17 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
             packet_root / "PROTOCOL.md",
             packet_root / "audit_saved_run.py",
         ]
+        missing_sources = [str(path) for path in evidence_sources if not path.is_file()]
+        if missing_sources:
+            raise FileNotFoundError("frozen evidence sources missing: " +
+                                    ", ".join(missing_sources))
         source_hashes = {str(path.relative_to(HERE.parents[1])):
                          hashlib.sha256(path.read_bytes()).hexdigest()
                          for path in evidence_sources}
+        repository_head = subprocess.run(["git", "rev-parse", "HEAD"],
+            cwd=HERE.parents[1], capture_output=True, text=True,
+            check=True).stdout.strip()
+        evidence_root.mkdir(parents=True, exist_ok=False)
         evidence_conditions = {"scope": "one local headless Edge form submission",
             "task_token": "t991025-1", "initial_field_state": "prepopulated",
             "caller": "adaptive_acquisition_caller_v3",
@@ -179,9 +184,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
             "headless": True, "task_family": "private localhost HTML form",
             "target_generation_mutation": "not tested",
             "two_action_entry_and_submit": "not tested; token prepopulated",
-            "repository_head": subprocess.run(["git", "rev-parse", "HEAD"],
-                cwd=HERE.parents[1], capture_output=True, text=True,
-                check=True).stdout.strip(),
+            "repository_head": repository_head,
             "repository_clean_before_run": not worktree_status_before_capture,
             "worktree_status_before_capture": worktree_status_before_capture,
             "source_hashes_sha256": source_hashes,
@@ -197,8 +200,14 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
         interface["method"]["initial_state"] = "verify_value"
         interface = validate(interface)
         observation_rows = []
+        server = None
+        server_thread = None
 
         try:
+            server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+            server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+            server_thread.start()
+            origin = f"http://127.0.0.1:{server.server_port}/form"
             with tempfile.TemporaryDirectory(
                     prefix="interface-edge-submit-",
                     dir=str(Path(__file__).resolve().parent),
@@ -424,9 +433,11 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                     }, indent=2) + "\n", encoding="utf-8")
                     self.assertEqual(close.returncode, 0, close.stderr)
         finally:
-            server.shutdown()
-            server.server_close()
-            server_thread.join(timeout=2)
+            if server is not None:
+                server.shutdown()
+                server.server_close()
+            if server_thread is not None:
+                server_thread.join(timeout=2)
 
 
 if __name__ == "__main__":
