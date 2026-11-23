@@ -102,7 +102,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
         if not edge.is_file() or node is None:
             self.skipTest("Edge and Node.js are required for this integration test")
 
-        token = "t991025-1"
+        token = "t991025-2"
         records = []
         record_lock = threading.Lock()
 
@@ -146,7 +146,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                 self.end_headers()
                 self.wfile.write(body)
 
-        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r03"
+        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r04"
         evidence_root = packet_root / "raw"
         worktree_status_before_capture = subprocess.run(
             ["git", "status", "--porcelain"], cwd=HERE.parents[1],
@@ -279,7 +279,16 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                             value_state = exact_token_state(ocr["text"], token)
                             observed_value_states.append(value_state)
                             observation_rows.append({
-                                "sequence": sequence, "state": value_state,
+                                "sequence": sequence,
+                                "runtime_state": _payload["state"],
+                                "state": value_state,
+                                "predicates": {
+                                    "field_pixels_changed": changed,
+                                    "field_value_matches_task": value_state,
+                                    "field_target_present": True,
+                                    "submit_target_present": True,
+                                    "submission_pixels_changed": changed,
+                                },
                                 "capture_file": capture_path.name,
                                 "capture_sha256": digest,
                                 "ocr_text": ocr["text"],
