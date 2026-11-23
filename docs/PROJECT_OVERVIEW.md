@@ -1,6 +1,6 @@
 # Agent Interface project overview
 
-**Snapshot:** current main `beba1903d7ddd9d5c9e810bc35edd1db3772286d` (2026-11-23), after PR #10520. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
+**Evidence baseline:** main `6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3` (2026-11-23), after PR #10521 and before this status refresh. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose
 
@@ -14,7 +14,7 @@ The public product and research program are connected but distinct:
 
 ## Current state
 
-At this snapshot, Issues [#53](https://github.com/Unjuno/agent-interface/issues/53), [#56](https://github.com/Unjuno/agent-interface/issues/56), [#57](https://github.com/Unjuno/agent-interface/issues/57), [#58](https://github.com/Unjuno/agent-interface/issues/58), and [#59](https://github.com/Unjuno/agent-interface/issues/59) remain open. PRs [#10515](https://github.com/Unjuno/agent-interface/pull/10515) through [#10520](https://github.com/Unjuno/agent-interface/pull/10520) are merged and represented in main. The last complete membership receipt, r175, recorded 1,640 open Issues and 404 open PRs at its stated main revision; it is a dated baseline, not a live count for this snapshot. The full queue has not been semantically re-triaged.
+At this snapshot, Issues [#53](https://github.com/Unjuno/agent-interface/issues/53), [#56](https://github.com/Unjuno/agent-interface/issues/56), [#57](https://github.com/Unjuno/agent-interface/issues/57), [#58](https://github.com/Unjuno/agent-interface/issues/58), and [#59](https://github.com/Unjuno/agent-interface/issues/59) remain open. PRs [#10515](https://github.com/Unjuno/agent-interface/pull/10515) through [#10521](https://github.com/Unjuno/agent-interface/pull/10521) are merged and represented in main. The last complete membership receipt, r175, recorded 1,640 open Issues and 404 open PRs at its stated main revision; it is a dated baseline, not a live count for this snapshot. The full queue has not been semantically re-triaged.
 
 | Area | What is established | What remains open |
 |---|---|---|

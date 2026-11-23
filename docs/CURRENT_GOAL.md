@@ -2,6 +2,25 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 local Edge composition R09 — 2026-11-23
+
+PR #10520 merged the current-main-source headless Edge R09 packet. Real Edge
+screenshots and Windows OCR passed an exact local form task through V5 point
+mint, caller v3, compiled GUI, and a loopback POST scorer; the caller returned
+`TASK_SUCCEEDED` in normal and `-O`. A same-target page reload changed loader
+generation; the actual handle store refused the second action as
+`SCOPE_MISMATCH/window_generation_changed_or_missing`, with one completed
+action, no POST, and `EXECUTION_INCOMPLETE` in both modes. Per-case cleanup
+passed. R01–R08 setup/OCR/predicate/cleanup failures remain separately
+preserved and are not counted as passes. See [R09](../research/integration/issue57_chromium_v5_edge_caller_composition_r09_20261123/RESULT.md).
+
+This is headless Edge/CDP fixture evidence with fixed points and zero
+provider/model calls. It does not establish physical OS input/release, a live
+app/provider task, matched economics, or reliability. Continue the current
+gate by joining real provider attempt/usage accounting to standard-caller
+task/effect/release evidence, then freeze the matched comparison when resource
+conditions are valid. Keep #57 open.
+
 ## Issue #57 V5 handle → caller v3 composition R01 — 2026-11-23
 
 On frozen current main `d27e76398b5c094d5785c154ccf8a6fe70acf0c3`, the exact V5
