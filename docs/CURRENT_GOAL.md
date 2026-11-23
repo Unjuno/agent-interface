@@ -10,9 +10,9 @@ On current-main baseline `e67ca18c`, a bounded read-only check found no GZDoom i
 
 On frozen current-main baseline `fd3f0f58`, a one-shot read-only scan covered five existing AppData/desktop/saved-games roots and returned no `gzdoom.exe`, `doom2.wad`, or `freedoom*.wad` filenames in 6.047 s. Six other configured roots did not exist. The scan did not inspect file contents or search the full disk; nothing was launched, installed, or downloaded. No live MAP01 exposure can proceed until an owned target and IWAD are located. See [R02](../research/integration/map01_expanded_target_search_current_main_r02_20261123/RESULT.md).
 
-## Whole-repository membership recheck r173 — 2026-11-23
+## Whole-repository membership recheck r175 — 2026-11-23
 
-On stable current main `bc903f77`, complete GitHub REST pagination returned 1,640 open Issues and 405 open PRs. Both exact ID sets match r172; this is a count/membership refresh only, not semantic cleanup. See [r173](maintenance/repository-inventory-recheck-20261123-r173.md).
+Complete GitHub REST pagination on stable main `acce16071b604fa8c06287d0b71d27addeccf481` found 1,640 open Issues and 404 open PRs. Compared with exact r173 ID arrays, no Issues changed and PR #7760 was the only removal; its 43-file trace/HOLD evidence is now preserved byte-for-byte by merged #10511. Membership only: semantic triage and custody reconciliation remain open. See [r175](maintenance/repository-inventory-recheck-20261123-r175.md).
 
 ## Issue #57 public recovery writer-drain R05 - 2026-11-23
 
