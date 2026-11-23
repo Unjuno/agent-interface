@@ -2,6 +2,19 @@
 
 # Project state and work order
 
+## Issue #57 V5 handle → caller v3 composition R01 — 2026-11-23
+
+On frozen main `d27e7639`, the exact V5 point-mint method and real
+TargetHandleStore compose through adaptive caller v3 and compiled GUI. The
+positive path completes two guarded actions with verified release and a
+separate outer task score. The changed-window-generation negative retains the
+first released action, refuses Submit at admission, and returns
+`EXECUTION_INCOMPLETE` / `confirmed_partial` without outer success. The
+25-test Fake-only bundle passes normally and under `-O`. It does not establish
+live GUI/provider, efficiency, recovery reliability, or preview acceptance.
+See [R01](../research/integration/issue57_chromium_v5_caller_v3_composition_r01_20261123/RESULT.md).
+Keep #57 open.
+
 ## Issue #57 Chromium V5 generation guard post-merge R07 — 2026-11-23
 
 PR #10516 merged at main `561fe044a2023fc419ed4bc35942272bcbb3c279`. The

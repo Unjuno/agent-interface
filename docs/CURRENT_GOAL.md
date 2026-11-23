@@ -2,6 +2,18 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 V5 handle → caller v3 composition R01 — 2026-11-23
+
+On frozen current main `d27e76398b5c094d5785c154ccf8a6fe70acf0c3`, the exact V5
+point-mint method and real TargetHandleStore now compose through adaptive
+caller v3 and compiled GUI in a Fake-only two-case bundle. The positive path
+performs two guarded actions with verified release and a separate task score.
+The changed-window-generation negative preserves the first released action and
+refuses Submit before execution, yielding `EXECUTION_INCOMPLETE` /
+`confirmed_partial` with no outer success verdict. The suite passes 25/25
+normally and under `-O`. See [R01](../research/integration/issue57_chromium_v5_caller_v3_composition_r01_20261123/RESULT.md).
+No live provider, GUI, or efficiency evidence follows; #57 remains open.
+
 ## Issue #57 Chromium V5 generation guard current-main recheck R07 — 2026-11-23
 
 PR #10516 merged at `561fe044a2023fc419ed4bc35942272bcbb3c279`. The exact-main
