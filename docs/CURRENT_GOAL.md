@@ -18,6 +18,16 @@ general reliability requirements. #58 and #59 also remain open. Full status
 and routing: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md),
 [PROJECT_STATE.md](PROJECT_STATE.md), and the repository-root [ROADMAP](../ROADMAP.md).
 
+PR #10544 added a scoped offline join from synthetic App Server usage through
+caller v3, compiled GUI execution, and durable effect custody; PR #10545
+refreshed the project status. Current-main Docker/Linux contract R02 then
+passed all 87 public-MCP and guarded tests normally and under `-O` in the
+cached network-disabled image. This resolves the prior combined optimized
+test-harness HOLD after the worker-entry event coordination changed. It is
+not live task, provider-efficiency, recovery-reliability, MAP01, or distribution
+evidence. See the [R02 result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/RESULT.md)
+and its [conditions](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/CONDITIONS-r08.json).
+
 ## Issue #57 WSLc XTEST repeat boundary R08–R11 — 2026-11-23
 
 Frozen source main: `36da81e3fb97dca875e4dc5b1d13d5385574b400`. Standard-caller R08/R09 still showed excess old-task A effects while the global or per-key repeat setting was read back off: effect counts 1→5 and 1→28; normal runs reached neutral physical release but the old-task oracle failed, while optimized runs timed out at the 1.5 s release budget and retained UNKNOWN until final cleanup. The counts are separate single-run observations and are not a controlled comparison. Direct WSLc Xvfb controls R10 showed 15 A press/release pairs for a 1.2 s hold at defaults and only 1/1 with global-off or A-key-off, both normal and `-O`. R11 queued a 2 s delayed B request with A repeat disabled and observed exactly one A press/release, one B press/release, and a neutral final keymap. Ordinary server autorepeat controls work in isolation; the extra repetitions in the standard caller/harness path remain unexplained. No runtime setting changed. R08–R11 audit scripts and packet manifests pass normal/`-O`; this remains synthetic Xvfb diagnosis, not #57 task acceptance. See [R08](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_repeat_off_diagnostic_r08_20261123/RESULT.md), [R09](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_key_repeat_keyoff_diagnostic_r09_20261123/RESULT.md), [R10](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_xtest_repeat_microcontrol_r10_20261123/RESULT.md), and [R11](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_delayed_request_repeat_microcontrol_r11_20261123/RESULT.md). #57 remains open.

@@ -2,8 +2,9 @@
 
 ## Current checkpoint — 2026-11-24
 
-The latest verified main is `164650754bce28fc849f630f0b744decb4034f87`
-after PR #10542 updated the status for merged PR #10541 (based on main
+The latest verified main is `b65b617361efd94494bb472f167f6c966a48464c`
+after PR #10545 updated the status after PR #10544's scoped synthetic
+composition evidence and PR #10541's packaging repair (based on main
 `22aba58c`). The Win32 zipapp capture-module omission fix and archive import
 regression test are merged. Its retained
 local evidence includes R04: one Computer-Control-activated Notepad
@@ -11,7 +12,11 @@ task completed through the public CLI, independently saved the exact token,
 and verified terminal release. R01–R03 preserve one packaging stop and two
 setup/admission stops; these are not pooled with R04. This proves one scoped
 host/app path, not recovery reliability, matched efficiency, or public release
-readiness. See the [R01–R04 packets](../research/integration/) and the
+readiness. Current-main Docker/Linux public-MCP contract R02 also passes
+87/87 tests normally and under `-O`; this is local contract evidence, not live
+control or efficiency evidence. The latest exact Issue/PR membership census
+remains r180 at its recorded source main; a new full census is still needed.
+See the [R01–R04 packets](../research/integration/) and the
 [detailed state dashboard](PROJECT_STATE.md).
 
 PR #10544 has since merged a scoped offline composition result: synthetic

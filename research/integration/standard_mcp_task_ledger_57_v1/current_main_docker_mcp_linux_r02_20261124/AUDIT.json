@@ -1,0 +1,42 @@
+{
+  "schema": "issue57-current-main-docker-mcp-linux-r02-audit",
+  "status": "PASS_CURRENT_MAIN_BOTH_MODES",
+  "base_main_sha": "b65b617361efd94494bb472f167f6c966a48464c",
+  "image_id": "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+  "container_python": "3.11.2",
+  "network": "none",
+  "source_hashes_verified": {
+    "runtime/cli_v1/mcp_server.py": "037776f2e918342aac71b54dc0344d09416df56b2ef8e873c10297698e7b35e7",
+    "runtime/cli_v1/test_mcp_server.py": "323dec980701262d14167de840d0c989607e79373cc571441fda8881091fa4ed",
+    "runtime/cli_v1/test_mcp_guarded.py": "2ad896b3aca9fa8b1f42c91ca8105d02c7ee0fee1f5692fb6ea963ca97623986",
+    "research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/run_experiment.py": "0937077473846d1e05bb3ac3fd9113b9c66e6e55ad2547a5646d3380d642310c",
+    "research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/audit_evidence.py": "c0604d89e6c69e9a85da9e2d306631f41d44c36a713db3999d8b555fb76d5eca"
+  },
+  "runs": [
+    {
+      "mode": "normal",
+      "exit": 0,
+      "tests": 87,
+      "passed": true,
+      "failure_signature_present": false,
+      "elapsed_ns": 9007535000,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0afa7633514218a0c55cda49f2e0d51cc744597697ab49c91b6af0a192a67587"
+    },
+    {
+      "mode": "optimized",
+      "exit": 0,
+      "tests": 87,
+      "passed": true,
+      "failure_signature_present": false,
+      "elapsed_ns": 7197258100,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "edccec7b482df2d9bdda70bc545705a2741367414f5fc070358124d5f129eddc"
+    }
+  ],
+  "limits": [
+    "No live GUI, model/provider, external allocation, WSLc, task effect, or recovery behavior was exercised.",
+    "This verifies only the Linux public-MCP test bundle under the frozen cached image.",
+    "The normal/-O outcomes characterize current-main tests; they do not estimate product reliability or efficiency."
+  ]
+}
