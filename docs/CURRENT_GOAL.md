@@ -1,5 +1,19 @@
 > Project-wide current status and next work order: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 App Server timeout with observed usage R06 — 2026-11-23
+
+On frozen source main 54bad709d8ab4cf496512ab60a66e3f6ba09d3bd, a
+synthetic JSONL peer emitted usage and then timed out without a terminal turn.
+The actual parser/model/v3 caller/durable allocation/registered ProspectiveRun
+path retained exact turn/thread identity and all five observed usage counters;
+no execution/effect receipt was fabricated and both task projection and run
+stayed HOLD (17 assignments missing, dispatch disabled). Focused 1/1 and full
+module 10/10 passed in normal and -O on Windows CPython 3.13.14. This is
+offline fake-peer custody evidence, not a provider, GUI, live allocation,
+efficiency, or reliability result. See [R06 result](../research/integration/issue57_v3_durable_appserver_composition_r06_20261123/RESULT.md).
+Continue with current-main caller/provider completeness and matched comparison
+prerequisites; keep #57 open.
+
 
 ## Current-main public recovered-task repeats R41–R42 — 2026-11-23
 

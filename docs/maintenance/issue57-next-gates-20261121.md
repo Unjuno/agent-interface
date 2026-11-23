@@ -152,3 +152,17 @@ cleanup joined. Keep #57 open. See [R05 result](../../research/integration/issue
 Keep #57 and #5130 open. Keep #908/#879 as consumed historical evidence; do
 not overwrite their STOP/HOLD records. Reconcile and advance one dependency
 gate at a time, preserving failed/held outcomes.
+
+
+## Current-main timeout-with-usage custody R06 — 2026-11-23
+
+A synthetic JSONL peer delivered 	hread/tokenUsage/updated and withheld
+	urn/completed. The real transport/parser/model/v3 caller/durable allocation
+and registered ProspectiveRun path retained exact turn/thread identity and all
+five observed counters while leaving execution/effect receipts absent and the
+task/run HOLD. Focused 1/1 and module 10/10 passed normal and -O on Windows
+CPython 3.13.14. This closes one offline timeout custody shape only; it does not
+show live-provider completeness or admit a matched comparison. See [R06
+result](../../research/integration/issue57_v3_durable_appserver_composition_r06_20261123/RESULT.md).
+Next inspect remaining current-main attempt/result shapes and the exact join
+requirements before proposing any live block. Keep #57 open.
