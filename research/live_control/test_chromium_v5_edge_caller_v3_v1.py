@@ -23,7 +23,7 @@ import unittest
 
 from PIL import Image
 
-from model_point_target_v1 import OPERATION
+from research.live_control.model_point_target_v1 import OPERATION
 from research.live_control.test_chromium_v5_generation_mint_guard_v1 import (
     PointMintBackend,
 )
