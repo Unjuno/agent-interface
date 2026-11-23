@@ -5,14 +5,16 @@
 The repository is not clean yet. Keep product qualification and repository
 triage as two linked workstreams: the first protects acceptance gates; the
 second reconciles issue/PR meaning and evidence custody without bulk closure.
-The latest complete paginated membership baseline is r170 (1,640 Issues / 405
-PRs), bracketed by main `1d2bdc20699ff9e39308ab7a9e79dd1fe75c2e2f`. Compared with
-r167, the exact Issue ID set is unchanged and PR #10473 is the only removal.
-See the [r170 receipt](maintenance/repository-inventory-recheck-20261123-r170.md).
-The earlier r168 check was count-only. Semantic issue/PR disposition remains
-incomplete and must proceed family by family.
+The latest complete paginated membership baseline is r172 (1,640 Issues / 405
+PRs), bracketed by main `b600070965c48cc9449a87ff31264a5b3604c2d8`. Compared with
+r171, both exact sorted ID sets are unchanged. See the [r172 receipt](maintenance/repository-inventory-recheck-20261123-r172.md)
+and [exact-ID data](maintenance/repository-inventory-recheck-20261123-r172.json).
+Earlier r168 was count-only. Semantic issue/PR disposition remains incomplete
+and must proceed family by family.
 
 **Current-main recheck r171 (2026-11-23; main `953ce41370666c656278f203dc545aa310947ffe`):** Complete pagination still returns 1,640 open Issues and 405 open PRs. The exact sorted ID sets match r170 with no additions/removals, bracketed by the same main SHA before and after. PR #10478 was merged; its appearance and removal happened between complete snapshots, so it does not change the current set. This does not advance semantic triage. See the [r171 receipt](maintenance/repository-inventory-recheck-20261123-r171.md).
+
+**Current-main recheck r172 (2026-11-23; main `b600070965c48cc9449a87ff31264a5b3604c2d8`):** Complete pagination returns 1,640 open Issues and 405 open PRs. Both exact sorted ID sets match r171 with no additions/removals; main was unchanged around the reads. This membership refresh does not advance semantic triage. See the [r172 receipt](maintenance/repository-inventory-recheck-20261123-r172.md).
 
 ### Current project map
 
