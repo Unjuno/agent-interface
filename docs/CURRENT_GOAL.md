@@ -2,6 +2,24 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 current-main native recovered-task cohort R43 — 2026-11-23
+
+On frozen baseline `612b857d7c1c6a951d3f055862a5141dbc9c7637`, all five
+prospectively ordered public Win32 fixture attempts passed with no retries.
+Every expired source action remained UNKNOWN, release-unconfirmed,
+task-success-null, and replay-denied despite its separately observed delayed
+`a` effect. Public orphan recovery verified input release, neutral readback,
+and the complete 2 s late-input horizon; each fresh process/window/generation
+then completed a distinct public `B` task verified by an independent oracle
+inside the exact dispatch interval. Both fixtures closed and the persistent
+custody fence cleared after each attempt. The corrected independent audit
+passes normally and under `-O`, including all 451 packet-manifest entries.
+This is a controlled single-host repeated fixture result, not a population
+reliability estimate or arbitrary-app, same-window, provider-efficiency,
+MAP01, Research Preview, or distribution qualification. See [R43](../research/integration/win32_post_recovery_public_task_r43_20261123/RESULT.md).
+Keep #57 open; continue matched current-main economics, live provider
+accounting, broader recovery transfer, and product/distribution gates.
+
 ## Issue #59 block-motion screen R02 — 2026-11-23
 
 Frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`; retained on current

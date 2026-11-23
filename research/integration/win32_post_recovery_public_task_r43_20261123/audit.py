@@ -77,6 +77,11 @@ def audit() -> dict:
         effect = read_json(folder / "effect.json")
         require(effect["verified"] is True and effect["text"] == "a", f"trial {ordinal}: delayed A effect missing")
         require(effect["effect_observed_ns"] > program["authority"]["expires_at_ns"], f"trial {ordinal}: A effect not post-expiry")
+        source_events = [json.loads(line) for line in (folder / "events.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+        require(all(e.get("kind") in {"ready", "key_down_accepted", "key_up_received", "delayed_effect"} for e in source_events), f"trial {ordinal}: unexpected source UI/input event")
+        delayed_a = [e for e in source_events if e.get("kind") == "delayed_effect" and e.get("text") == "a"]
+        require(len(delayed_a) == 1 and delayed_a[0].get("effect_observed_ns") == effect["effect_observed_ns"], f"trial {ordinal}: source delayed effect log mismatch")
+        require(sum(e.get("kind") == "key_down_accepted" and e.get("code") == 65 for e in source_events) == 1, f"trial {ordinal}: source A dispatch event count mismatch")
 
         recovery = read_json(folder / "orphan-recovery-body.json")
         receipt = recovery["recovery_receipt"]
@@ -118,14 +123,15 @@ def audit() -> dict:
         require(action["target_generation"] != source["target_generation"], f"trial {ordinal}: generation reused")
 
         verify = read_json(folder / "followup-task-verification.json")
-        oracle = verify["receipt"]
+        oracle = verify["task_effect"]["receipt"]
         require(verify["status"] == "verified" and verify["task_success"] is True, f"trial {ordinal}: independent task oracle failed")
         require(oracle["call_id"] == attempt["followup_call_id"], f"trial {ordinal}: oracle call mismatch")
         require(oracle["operation_id"] == action["operation_id"], f"trial {ordinal}: oracle operation mismatch")
         require(oracle["target_generation"] == action["target_generation"], f"trial {ordinal}: oracle generation mismatch")
         events = [json.loads(line) for line in (folder / "fresh-task-target" / "events.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+        require(all(e.get("kind") in {"ready", "char"} for e in events), f"trial {ordinal}: unexpected fresh-task UI/input event")
         matching = [e for e in events if e.get("kind") == "char" and e.get("text") == "b"]
-        require(any(execution["started_ns"] <= e["monotonic_ns"] <= execution["ended_ns"] for e in matching), f"trial {ordinal}: no B event inside dispatch interval")
+        require(len(matching) == 1 and execution["started_ns"] <= matching[0]["monotonic_ns"] <= execution["ended_ns"], f"trial {ordinal}: no unique B event inside dispatch interval")
 
         before = read_json(folder / "fence-before.json")
         after = read_json(folder / "fence-after.json")
