@@ -259,6 +259,10 @@ R27 explicitly raised each unique fixture through Computer Use and required exac
 
 On current-main baseline `e67ca18c`, a bounded read-only Windows check found no GZDoom in six standard install paths, command lookup, running processes, or uninstall registry. The exploratory broad recursive scan was stopped without a result and is excluded. No application was launched or runtime/assets installed; the bounded check does not establish full-disk or WAD availability. The #59 live threat-exposure gate remains pending an exact target path and intended IWAD/map. See [R01](../research/integration/map01_preinstalled_target_preflight_current_main_r01_20261123/RESULT.md).
 
+## MAP01 expanded target search R02 — 2026-11-23
+
+On frozen current-main baseline `fd3f0f58`, a single filename-only scan of five existing AppData, Desktop and Saved Games roots found no `gzdoom.exe`, `doom2.wad`, or `freedoom*.wad`. Six configured locations did not exist. The scan completed in 6.047 s; no application, input, install, or download occurred. This does not establish full-disk absence or task readiness. See [R02](../research/integration/map01_expanded_target_search_current_main_r02_20261123/RESULT.md).
+
 ## Whole-repository membership recheck r173 — 2026-11-23
 
 Complete REST pagination against stable main `bc903f77bd69102187329f9e0d020ca5259f88bb` returned 1,640 open Issues and 405 open PRs. Exact sorted ID sets match r172 with no additions or removals. The stale r172 Markdown SHA placeholders are called out in the r173 receipt; its exact-ID JSON remains usable. Semantic triage and local worktree/output custody remain open. See [r173](maintenance/repository-inventory-recheck-20261123-r173.md).
