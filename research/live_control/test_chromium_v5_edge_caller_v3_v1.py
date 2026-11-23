@@ -159,9 +159,7 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
                               capture_output=True, text=True, check=True).stdout.strip()
         status = subprocess.run(["git", "status", "--porcelain"], cwd=REPO,
                                 capture_output=True, text=True, check=True).stdout.splitlines()
-        cls.conditions_sha256 = hashlib.sha256(
-            (cls.evidence_root / "conditions.json").read_bytes()).hexdigest()
-        (cls.evidence_root / "conditions.json").write_text(json.dumps({
+        conditions = {
             "scope": "one positive and one changed-generation local Edge task per Python mode",
             "main_base": "3979669f5fb25115cd38ab67fba219ba3d87f494",
             "experiment_head": head,
@@ -185,7 +183,12 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
             },
             "python_optimization": __debug__ is False,
             "source_sha256": source_hashes,
-        }, indent=2) + "\n", encoding="utf-8", newline="\n")
+        }
+        conditions_path = cls.evidence_root / "conditions.json"
+        conditions_path.write_text(json.dumps(conditions, indent=2) + "\n",
+                                  encoding="utf-8", newline="\n")
+        cls.conditions_sha256 = hashlib.sha256(
+            conditions_path.read_bytes()).hexdigest()
 
     def _case(self, case_name, *, invalidate_after_entry):
         case_root = self.evidence_root / case_name
