@@ -4,7 +4,8 @@
 
 ## Issue #59 local block-motion screen R02 — 2026-11-23
 
-On frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`, the fixed
+Frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`; retained on current
+main `967a4aaa947dd21c7964ea4d0cb653cbc5518c64` by PR #10529. The fixed
 blockwise method was evaluated once in normal mode and once under `-O` on the
 same 52 adjacent pairs as camera-motion A01. Both candidate runs returned
 `FAIL_SCOPED` with identical outputs; the independent provenance/score audit

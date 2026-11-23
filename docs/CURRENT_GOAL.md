@@ -4,7 +4,8 @@
 
 ## Issue #59 block-motion screen R02 — 2026-11-23
 
-On frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`, fixed local
+Frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`; retained on current
+main `967a4aaa947dd21c7964ea4d0cb653cbc5518c64` by PR #10529. Fixed local
 block matching was screened on the same 52 retained V39 pairs and four typed
 health-loss labels as A01. Normal and `-O` outputs match; independent audits
 pass in both modes. Blockwise AUC is 0.427 vs raw 0.417 (gain 0.010); only
