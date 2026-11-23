@@ -20,10 +20,10 @@ def _repo_root():
 
 
 REPO = _repo_root()
-CONDITIONS = PACKET / "CONDITIONS-r03.json"
+CONDITIONS = PACKET / "CONDITIONS-r04.json"
 TEST = PACKET / "test_provider_compiled_composition.py"
-RAW = PACKET / "raw"
-ATTEMPTS = PACKET / "attempts"
+RAW = PACKET / "raw-r04"
+ATTEMPTS = PACKET / "attempts-r04"
 
 
 def sha256(data):
