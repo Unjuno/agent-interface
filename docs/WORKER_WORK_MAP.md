@@ -61,14 +61,17 @@ or partial-input recovery, all-attempt accounting, or MAP01.
 
 **2026-11-13 finite Calc comparison (PR #10258, main `fdf9dc2a1165314dd407c9ffc9f3ae4699a3d2ab`):** A preregistered six-attempt batch compared repeated fresh grounding (2), optimized ordinary control with location-hint reuse (2), and compiled graph execution (2), with all attempts and usage retained. All six passed the scoped three-effect task, known-obstruction refusal/no-emission check, release checks, and cleanup. Prepared-invocation medians were 33.4765 s fresh, 16.5815 s ordinary, and 19.4015 s compiled; compiled was about 17% slower than ordinary in this batch. Each arm has only two observations, provider/cache load was uncontrolled, and the harness supplied known-value OCR and removed the obstruction. Thus this is a finite Calc finding, not broad reliability or a causal estimate of reuse. Retain guarded location-hint reuse/refusal/repair; HOLD compiled economic promotion for this task. Raw private packet: `private-packets/calc_matched_20261113_m01` (manifest SHA-256 `32387149a6b460adad7460cc81ec84547884769a85f2c30875cef0c1070cd414`). This advances the integrated comparison but does not complete #57: MAP01, independent task semantics, broader matched attempts, and the remaining recovery/custody boundaries remain open.
 
-Open Draft [PR #10218](https://github.com/Unjuno/agent-interface/pull/10218)
-adds bounded same-turn late-usage capture after timeout while preserving the
-timeout attempt and requiring task-score custody before explicit ingestion.
-Its local tests use synthetic App Server/Fake X streams; the PR itself states
-that every-runner integration, live provider/billing semantics, GUI effects,
-WSLc, MAP01, and integrated efficiency remain unproven. The reported 107-test
-serial rerun is retained in the author checkout; earlier broader failures did
-not reproduce, and their cause remains unknown.
+PR [#10218](https://github.com/Unjuno/agent-interface/pull/10218) was closed
+unmerged as superseded on 2026-11-20. A frozen-main audit compared all 41
+changed paths: 37 blobs were identical; the four differences added no unique
+implementation/evidence beyond later main-side changes. The late-usage port
+was transferred to [#10352](https://github.com/Unjuno/agent-interface/pull/10352)
+and the scheduling/cleanup repair to [#10365](https://github.com/Unjuno/agent-interface/pull/10365).
+The original source branch remains preserved. See the exact conditions,
+path-blob comparison, remaining diff, and attribute audit in the
+[supersession packet](../research/integration/standard_mcp_task_ledger_57_v1/pr10218_supersession_audit_20261121/RESULT.md).
+This disposition does not establish real-provider/billing semantics, live GUI
+effects, WSLc/MAP01 control, or integrated efficiency; #57 remains open.
 
 [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) remains open
 (last updated 2026-11-04). Merged [PR #10214](https://github.com/Unjuno/agent-interface/pull/10214)
