@@ -4,7 +4,7 @@
 
 ### Post-merge checkpoint
 
-This checkpoint uses current main `bead5f7ecb2e59fc7a0c88d8e32d914ee430135d`.
+This checkpoint uses current main `fec81b7017a9e4d76d976dc78ee1ecabcf838346`.
 PR [#10534](https://github.com/Unjuno/agent-interface/pull/10534) merged the
 R08–R11 repeat-boundary packets together with deterministic gzip copies of
 ignored `.log` streams, their uncompressed SHA256/byte counts, and independent
@@ -12,16 +12,21 @@ normal/`-O` byte auditors for R05–R11. This fixes the evidence-retention gap;
 it does not resolve the unexplained standard-caller repeats or change runtime
 behavior. The PR's required replay-gate and public-navigation checks passed;
 formal was skipped. Issue #57 received a linked status comment and remains open.
+The follow-up organization-plan refresh is PR
+[#10535](https://github.com/Unjuno/agent-interface/pull/10535).
 
-The latest complete repository membership receipt remains r177 (1,640 open
-Issues / 403 open PRs) at an earlier main SHA. No complete post-merge
-pagination or new worktree custody census has been run, so those figures are
-historical baseline values, not current counts. The current repository is
-still **not clean**: product gates, semantic Issue/PR disposition, and local
-artifact/worktree custody all have unresolved work.
+Current-main membership recheck r178 completed full pagination at the same
+main SHA before and after the reads: **1,640 open Issues / 403 open PRs**, with
+no ID additions or removals against r177. The local read-only custody census
+found **31 registered worktrees, 10 dirty**; nine were pre-existing dirty
+project trees, and the tenth was the checkpoint authoring tree. Its detailed
+status is in [local custody r178](maintenance/local-worktree-custody-recheck-20261123-r178.md)
+and [the exact snapshot](maintenance/local-worktree-custody-recheck-20261123-r178.json).
+The current repository is still **not clean**: product gates, semantic
+Issue/PR disposition, and local artifact/worktree custody have unresolved work.
 
 This status snapshot uses main
-`bead5f7ecb2e59fc7a0c88d8e32d914ee430135d` (after PR #10534). The canonical
+`fec81b7017a9e4d76d976dc78ee1ecabcf838346` (after PR #10535). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
@@ -55,11 +60,10 @@ standard-mode raw records show scoped profile cleanup and foreground restore;
 its optimized run was not attempted. Do not mark #57 or the runtime complete
 on these stops.
 
-The latest complete membership receipt is r177: 1,640 open Issues / 403 open
-PRs, captured at main `75c2c57ceef623a27d093ad67d1103714b3692f0` and merged
-by PR #10528. Relative to r176, only draft PR #8476 left the open set after its
-evidence was transferred to #10527; Issue membership did not change. This is not semantic
-triage. The GitHub open PR queue contains long-lived drafts, and semantic
+The latest complete membership reconciliation is r178: 1,640 open Issues /
+403 open PRs at main `fec81b7017a9e4d76d976dc78ee1ecabcf838346`, exactly
+matching r177's sorted ID sets. This is not semantic triage. The GitHub open PR
+queue contains long-lived drafts, and semantic
 issue/PR disposition, worktree ownership, local evidence custody, and duplicate
 reconciliation are still incomplete. Preserve viable research; disposition
 by family against a canonical question and evidence rather than closing items
@@ -87,6 +91,8 @@ remains incomplete and must proceed family by family.
 **Current-main recheck r172 (2026-11-23; main `b600070965c48cc9449a87ff31264a5b3604c2d8`):** Complete pagination returns 1,640 open Issues and 405 open PRs. Both exact sorted ID sets match r171 with no additions/removals; main was unchanged around the reads. This membership refresh does not advance semantic triage. See the [r172 receipt](maintenance/repository-inventory-recheck-20261123-r172.md).
 
 **Current-main membership recheck r173 (2026-11-23; main `bc903f77bd69102187329f9e0d020ca5259f88bb`):** Complete pagination again returns 1,640 open Issues and 405 open PRs. Both exact sorted ID sets match r172 with no additions/removals; the main SHA was stable before and after reads. This does not advance semantic triage. See the [r173 receipt](maintenance/repository-inventory-recheck-20261123-r173.md).
+
+**Current-main membership and local custody recheck r178 (2026-11-23; main `fec81b7017a9e4d76d976dc78ee1ecabcf838346`):** Complete Issue/PR pagination returned 1,640 open Issues and 403 open PRs, exactly matching r177's sorted ID sets; the main SHA was unchanged around the reads. A read-only local census found 31 registered worktrees, 10 dirty at capture. Nine pre-existing dirty trees include a heavily modified root `main` checkout, nested worktree/evidence directories, post-merge Calc/WSLc/preview artifacts, a launcher-test edit, and changed raw stderr in a detached audit. Several associated branches point to merged PRs (#10367, #10392, #10489, #10435), but residual bytes are not thereby proven duplicates. The tenth dirty tree was this checkpoint's authoring checkout. See [r178](maintenance/local-worktree-custody-recheck-20261123-r178.md) and its [JSON snapshot](maintenance/local-worktree-custody-recheck-20261123-r178.json). No cleanup mutation was performed; reconcile path, owner, source, PR/Issue, and hash before transfer or archival.
 
 ## Local worktree custody recheck r173
 
