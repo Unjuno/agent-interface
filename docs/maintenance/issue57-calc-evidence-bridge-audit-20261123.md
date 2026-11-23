@@ -71,3 +71,15 @@ HOLD with dispatch disabled. Focused 1/1 and the full eight-test module pass
 normal and -O on Windows CPython 3.13.14. This confirms UNKNOWN is not turned
 into zero in this fixture. It is not live provider evidence or proof that all
 provider response shapes are covered. See the [R04 packet](../../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
+
+## Current-main R05 successful effect with UNKNOWN usage - 2026-11-23
+
+The valid synthetic App Server answer completed with no usage notification.
+The caller retained TASK_SUCCEEDED and its synthetic task effect; durable
+custody audited execution and effect receipts. All five provider usage totals
+remained None, so the frozen comparison projector held the row with
+usage_incomplete_or_invalid. Focused 1/1 and the complete nine-test module
+passed normal and -O on Windows CPython 3.13.14. This demonstrates that a
+successful effect is retained while incomplete accounting blocks comparison.
+It does not establish live-provider usage completeness or efficiency. See the
+[R05 packet](../../research/integration/issue57_v3_durable_appserver_composition_r05_20261123/RESULT.md).
