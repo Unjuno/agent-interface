@@ -1,0 +1,71 @@
+{
+  "schema": "issue57-current-main-docker-mcp-linux-r02",
+  "base_main_sha": "b65b617361efd94494bb472f167f6c966a48464c",
+  "image_id": "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+  "python_preflight": "Python 3.11.2",
+  "network": "none",
+  "source_mount": "read-only",
+  "runs": [
+    {
+      "mode": "normal",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--mount",
+        "type=bind,source=C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-local-form-r01-20261124,target=/workspace,readonly",
+        "--workdir",
+        "/workspace",
+        "--env",
+        "PYTHONPATH=/workspace",
+        "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_mcp_server",
+        "runtime.cli_v1.test_mcp_guarded"
+      ],
+      "returncode": 0,
+      "elapsed_ns": 9007535000,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0afa7633514218a0c55cda49f2e0d51cc744597697ab49c91b6af0a192a67587",
+      "stdout_bytes": 0,
+      "stderr_bytes": 20642
+    },
+    {
+      "mode": "optimized",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--mount",
+        "type=bind,source=C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\win32-local-form-r01-20261124,target=/workspace,readonly",
+        "--workdir",
+        "/workspace",
+        "--env",
+        "PYTHONPATH=/workspace",
+        "sha256:a3b2b4cd54ca731a86f8d2ba16f1eb833220122c60bfafbdb048e5ad39e50056",
+        "python3",
+        "-B",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_mcp_server",
+        "runtime.cli_v1.test_mcp_guarded"
+      ],
+      "returncode": 0,
+      "elapsed_ns": 7197258100,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "edccec7b482df2d9bdda70bc545705a2741367414f5fc070358124d5f129eddc",
+      "stdout_bytes": 0,
+      "stderr_bytes": 20070
+    }
+  ]
+}

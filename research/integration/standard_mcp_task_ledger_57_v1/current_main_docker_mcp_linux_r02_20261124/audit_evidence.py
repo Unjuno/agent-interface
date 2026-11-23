@@ -9,7 +9,7 @@ def sha(b): return hashlib.sha256(b).hexdigest()
 def require(ok,msg):
     if not ok: raise AssertionError(msg)
 def main():
-    c=json.loads((PACKET/"CONDITIONS.json").read_text(encoding="utf-8"))
+    c=json.loads((PACKET/"CONDITIONS-r05.json").read_text(encoding="utf-8"))
     require(subprocess.check_output(["git","rev-parse","origin/main"],cwd=REPO,text=True).strip()==c["base_main_sha"],"main drift")
     source={}
     for n,h in c["source_sha256"].items():
