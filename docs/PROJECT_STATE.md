@@ -2,6 +2,10 @@
 
 # Project state and work order
 
+## Issue #57 public recovery writer-drain R05 - 2026-11-23
+
+On frozen current main `d5a378ec`, the exact public Fake Win32 recovery test passed 1/1 normally and 1/1 under `-O` on Windows CPython 3.11.9. The post-R04 report-temp/server-close drain did not reproduce the prior 8.016 s observation failure or cleanup collision in this one focused sample. R04 remains mixed 7/10; no reliability claim. The wrapper setup failure is transcribed only because raw stderr was overwritten; the actual target outputs are retained with an 18-entry manifest. No real GUI/input ran. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_writer_drain_r05_20261123/RESULT.md).
+
 ## Calc artifact receipt-window recheck R02 — 2026-11-23
 
 On exact current main `5156ec0e`, `test_calc_task_artifact_v1` passed 20/20 in Windows CPython 3.11.9 in both normal and `-O` modes. The synthetic checks accept a Save request inside the effect-verification interval and reject timestamps outside it. This is artifact/receipt contract evidence only: no Calc GUI, live task, provider, or efficiency comparison ran. Keep #57 open. See [`R02`](../research/integration/standard_mcp_task_ledger_57_v1/calc_effect_verification_window_order_current_main_r02_20261123/RESULT.md).

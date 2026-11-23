@@ -4,6 +4,10 @@ Status: local measurement-infrastructure construction only. This does not run a
 model, GUI, WSLc, Docker, or a formal allocation, and does not qualify the
 integrated route.
 
+## Current-main public recovery writer-drain R05 - 2026-11-23
+
+On frozen main `d5a378ec`, the public Fake Win32 exact-result/recovery test passed 1/1 in normal and `-O` on CPython 3.11.9. This confirms only that the post-R04 report-temp drain/close change works in one focused sample; R04 remains 7/10 and no reliability or live-input claim follows. Raw setup-error bytes from the first incorrect wrapper invocation were lost before archival; its transcript is disclosed. Target outputs and committed-byte manifest are retained in [R05](current_main_public_recovery_writer_drain_r05_20261123/RESULT.md).
+
 ## Current-main Calc artifact receipt-window recheck R02 — 2026-11-23
 
 The frozen 20-test `calc_task_artifact_v1` suite passes on main `5156ec0e` under Windows CPython 3.11.9 in normal and `-O` modes. It covers timestamp inclusion within effect verification and rejection outside its interval. Synthetic artifact/receipt contract only; no live Calc task or efficiency claim. See [R02 result](calc_effect_verification_window_order_current_main_r02_20261123/RESULT.md).
