@@ -15,7 +15,7 @@ need(r['independent_task_oracle']['measurements']['initial_effect_count']==[1],'
 need(r['independent_task_oracle']['measurements']['final_effect_count']==[25],'R07 final count changed')
 need(r['late_request_horizon_readback']['late_keypress_a_observed'] is True,'R07 delayed A evidence missing')
 need(r['fresh_session_recovery']['task_oracle']['task_success'] is True,'R07 fresh task did not pass')
-need(r['fresh_session_recovery']['task_oracle']['old_unknown_fence_preserved'] is True,'R07 old UNKNOWN fence not preserved')
+need(r['fresh_session_recovery']['task_oracle']['checks']['old_unknown_fence_preserved'] is True,'R07 old UNKNOWN fence not preserved')
 need(r['fresh_session_recovery']['late_old_keypress_after_new_session'] is False,'R07 old input contaminated new task')
 need(r['cancel']['release_confirmed'] is False and r['cancel']['task_success'] is False,'R07 public cancellation incorrectly claims success')
 need(all(v is False for v in r['final_cleanup']['keys_down'].values()),'R07 final cleanup not all-up')
