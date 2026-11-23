@@ -2,6 +2,15 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 Chromium V5 generation guard current-main recheck R07 — 2026-11-23
+
+PR #10516 merged at `561fe044a2023fc419ed4bc35942272bcbb3c279`. The exact-main
+post-merge Fake-only guard + handle/caller/core bundle passed 23/23 normally
+and under `-O`. Changed process/window generations refuse before mint; the
+same-generation private-alias positive passes. No live provider, GUI, task
+effect, efficiency, or recovery result follows. See [R07](../research/integration/issue57_chromium_v5_generation_mint_r07/RESULT.md).
+Keep #57 open; the V5-to-v3 evidence path and the broader research gates remain.
+
 ## Issue #57 Chromium V5 point-mint generation guard R06 — 2026-11-23
 
 R05 reproduced a stale-generation mint defect in the exact V5
