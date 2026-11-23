@@ -1,0 +1,59 @@
+{
+  "raw": {
+    "format": "compiled-form-grounding-v1",
+    "field": {
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 10,
+        "y": 20
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "submit": {
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 30,
+        "y": 40
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "grounding": {
+    "field_point": [
+      10,
+      20
+    ],
+    "submit_point": [
+      30,
+      40
+    ],
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "usage": {
+    "input_tokens": 1234,
+    "cached_input_tokens": 234,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 56,
+    "reasoning_output_tokens": 12
+  },
+  "call_id": "turn-ledger-1",
+  "thread_id": "thread-ledger-1",
+  "turn_id": "turn-ledger-1",
+  "turn_status": "completed",
+  "answer_eligible": true,
+  "runner_ns": 887900,
+  "requested_model": "synthetic-model",
+  "requested_effort": "medium",
+  "cost": null
+}

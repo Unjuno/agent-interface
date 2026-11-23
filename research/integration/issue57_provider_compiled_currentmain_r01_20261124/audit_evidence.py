@@ -11,7 +11,14 @@ from research.live_control.calc_durable_allocation_v1 import audit_allocation
 
 
 PACKET = Path(__file__).resolve().parent
-REPO = PACKET.parents[3]
+def _repo_root():
+    for candidate in (PACKET, *PACKET.parents):
+        if (candidate / ".git").exists():
+            return candidate
+    raise RuntimeError("cannot locate repository root from audit packet")
+
+
+REPO = _repo_root()
 MODES = ("normal", "optimized")
 CASES = ("positive", "changed-intermediate")
 USAGE = {
@@ -37,7 +44,7 @@ def require(condition, message):
 
 
 def audit():
-    conditions = read_json(PACKET / "CONDITIONS.json")
+    conditions = read_json(PACKET / "CONDITIONS-r04.json")
     require(subprocess.check_output(["git", "rev-parse", "origin/main"],
             cwd=REPO, text=True).strip() == conditions["base_main_sha"],
         "remote main differs from frozen base")
@@ -54,7 +61,7 @@ def audit():
     for run in runs:
         mode = run["mode"]
         require(run["returncode"] == 0, f"{mode} process exit was not zero")
-        raw_dir = PACKET / "raw"
+        raw_dir = PACKET / "raw-r04"
         stdout = (raw_dir / f"{mode}.stdout.bin").read_bytes()
         stderr = (raw_dir / f"{mode}.stderr.bin").read_bytes()
         exitcode = (raw_dir / f"{mode}.exitcode.txt").read_text().strip()
@@ -67,9 +74,9 @@ def audit():
                 f"{mode} scenario summary missing")
 
         for case in CASES:
-            case_root = PACKET / "attempts" / mode / case
+            case_root = PACKET / "attempts-r04" / mode / case
             summary = read_json(case_root / "scenario-summary.json")
-            durable_path = case_root / summary["durable_allocation"]
+            durable_path = PACKET / "attempts-r04" / summary["durable_allocation"]
             actual_audit = audit_allocation(durable_path)
             require(actual_audit == summary["durable_audit"],
                     f"{mode}/{case}: durable audit mismatch")

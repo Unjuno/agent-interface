@@ -59,7 +59,7 @@
     "research/live_control/test_grounding_appserver_usage_transport.py": "4645236e24c7b673ad93582ae9928e61f8d608c98d8fab3f794568bdc29be17a",
     "research/integration/issue57_provider_compiled_currentmain_r01_20261124/test_provider_compiled_composition.py": "e30819b57dcf57f1cb7f1254080c34f8d57e29b368beea7a85135a5306fe57d9",
     "research/integration/issue57_provider_compiled_currentmain_r01_20261124/run_experiment.py": "dfd139c1b74507c91a33262b46be57475969707631bff01cfb58a06d2129dc16",
-    "research/integration/issue57_provider_compiled_currentmain_r01_20261124/audit_evidence.py": "79df9c3b0b7519f698f80177782c79e48eab7393369fa6fe2799f7c10040dfd0"
+    "research/integration/issue57_provider_compiled_currentmain_r01_20261124/audit_evidence.py": "c3b41c818160a7103459bedb2d3c90129c7d95be5900536f688552607a95921c"
   },
-  "revision_note": "R04 assigns fresh raw-r04/attempts-r04 output roots so earlier preflight records remain immutable. R01-R03 did not launch scenarios; all failures are retained in raw/. R04 is the first conditionset with a viable runner."
+  "revision_note": "R04 assigns fresh raw-r04/attempts-r04 output roots so earlier preflight records remain immutable. R01-R03 did not launch scenarios; all failures are retained in raw/. R04 is the first conditionset with a viable runner. Auditor selects the R04 output roots and R04 conditions document. Auditor repository-root lookup corrected after its first invocation failed before evidence evaluation; no evidence was modified by that invocation. Auditor conditions-file selector corrected after initial audit invocation; it had evaluated the R01 conditions instead of R04. Raw experiment outputs remain unchanged. Auditor durable-allocation path resolution corrected: scenario paths are relative to attempts-r04 root. Initial audit stopped before evaluating any allocation."
 }
