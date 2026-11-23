@@ -118,6 +118,22 @@ across all three arms, including provider failures, deferred outcomes, unknown
 usage, independent scores, release/recovery and cleanup. Keep #57 open. See
 [R03 result](../../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).
 
+## Current-main failed-turn UNKNOWN-usage R04 - 2026-11-23
+
+R04 confirms a synthetic JSONL terminal failure with no usage notification
+survives the real grounding/v3 caller/durable writer/ProspectiveRun custody
+path as a failed attempt with exact call/thread IDs and five UNKNOWN counters.
+No execution/effect receipt is written; the task and incomplete run remain
+HOLD with dispatch disabled. Focused 1/1 and module 8/8 pass normal and -O.
+This establishes fail-closed fixture behavior only, not provider completeness.
+R03/R04 plus existing synthetic known-usage, deferred, and malformed-response
+cases still do not establish live-provider reporting or an externally
+attested three-arm allocation. Next work should verify that the planned
+allocation can admit and reconcile all-attempt accounting and independently
+scored effects from one common current-source caller without losing failures,
+unknowns, release/recovery, or cleanup. Keep #57 open. See [R04
+result](../../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
+
 ## Disposition
 
 Keep #57 and #5130 open. Keep #908/#879 as consumed historical evidence; do

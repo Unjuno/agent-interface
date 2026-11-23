@@ -1,0 +1,68 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r04",
+  "disposition": "PASS_SYNTHETIC_FAILED_TURN_UNKNOWN_USAGE_CUSTODY_HOLD",
+  "current_main_sha": "d58deb08567325d103eadb7966654907293d10e1",
+  "host": "Windows CPython 3.13.14, Pillow 12.2.0",
+  "qualified_runs": [
+    {
+      "name": "focused-normal",
+      "exit_code": 0,
+      "tests": 1,
+      "unittest_seconds": 1.248
+    },
+    {
+      "name": "module-normal",
+      "exit_code": 0,
+      "tests": 8,
+      "unittest_seconds": 22.316
+    },
+    {
+      "name": "focused-optimized",
+      "exit_code": 0,
+      "tests": 1,
+      "unittest_seconds": 1.238
+    },
+    {
+      "name": "module-optimized",
+      "exit_code": 0,
+      "tests": 8,
+      "unittest_seconds": 32.156
+    }
+  ],
+  "observed": {
+    "terminal_status": "failed",
+    "usage_notification_count": 0,
+    "call_id": "turn-ledger-1",
+    "thread_id": "thread-ledger-1",
+    "attempt_status": "failed",
+    "attempt_usage": null,
+    "usage_totals": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "cache_write_input_tokens": null,
+      "output_tokens": null,
+      "reasoning_output_tokens": null
+    },
+    "durable_custody": "audited",
+    "execution_receipt_persisted": false,
+    "effect_receipt_persisted": false,
+    "task_projection": "HOLD",
+    "projection_reason": "failed_attempt_not_representable_in_v1",
+    "run_status": "HOLD",
+    "missing_assignments": 17,
+    "dispatch_enabled": false
+  },
+  "nonqualifying_history": {
+    "pre_refresh_base": "2cf4230f918f1b05990a4491779805cc18658e12",
+    "reason": "local origin/main had not advanced to merged PR #10495 (d58deb0); its 7-test run is retained and excluded",
+    "preliminary_assertion_mismatch": "The initial test expected usage_totals=None; code returned five fields all None. Corrected expectation before frozen runs."
+  },
+  "provider_live": false,
+  "gui_or_native_input": false,
+  "external_allocation": false,
+  "limitations": [
+    "Synthetic JSONL peer and test allocation verifier only.",
+    "One failed task; no live allocation or efficiency evidence.",
+    "Does not prove live provider completeness or close Issue #57."
+  ]
+}

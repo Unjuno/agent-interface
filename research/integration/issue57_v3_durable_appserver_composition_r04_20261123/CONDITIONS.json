@@ -1,0 +1,40 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r04",
+  "frozen_utc": "2026-11-23T04:21:39.270Z",
+  "current_main_sha": "d58deb08567325d103eadb7966654907293d10e1",
+  "scope": "One failed terminal JSONL App Server turn with omitted usage, through actual transport/model adapter/v3 caller/durable Calc writer/registered ProspectiveRun custody; no live provider, GUI, input, Docker, WSLc, or external allocation.",
+  "hypothesis": "The App Server failed terminal status and absent usage remain attributable to one failed call with UNKNOWN usage through durable custody; no execution/effect receipt is promoted, projection stays HOLD, and dispatch stays disabled.",
+  "pass_rule": "Focused test and full module pass normal and -O on Windows CPython 3.13 against exact current main plus this isolated test; identity retained; all five usage totals stay None rather than zero; custody audited; task projection/incomplete run HOLD; no execution/effect receipt.",
+  "fixture": {
+    "allocation_id": "synthetic-prospective-jsonl-unknown-01",
+    "call_id": "turn-ledger-1",
+    "thread_id": "thread-ledger-1",
+    "provider_terminal_status": "failed",
+    "usage_event_present": false,
+    "expected_usage": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "cache_write_input_tokens": null,
+      "output_tokens": null,
+      "reasoning_output_tokens": null
+    }
+  },
+  "source_sha256": {
+    "research/live_control/test_grounding_appserver_usage_transport.py": "591de4ca73c646a6ade00f8108b550eb416ef899c51015f91d71b24ab488815a",
+    "research/live_control/codex_app_server_client_v2.py": "1a7ce3f606b237d02a8b8af256bd959ca3d3cc619d9a3e7e5070a153b22d720f",
+    "research/live_control/persistent_planner_adapter_v2.py": "77b372cb3557501f16287a363fe687ec1089459df4baad4b6f5c862754173698",
+    "research/live_control/integrated_efficiency_app_server_model_v1.py": "a77dba12ce7b8e0b0f68d2e17553b8be4475e283ebbc6609e6f72e5192897f37",
+    "research/live_control/v3_persistent_grounding_adapter_v1.py": "1255816bd12c8b1797c00028b19f2486d1ae6d144efdd184a1e51f02e6c15bd6",
+    "research/live_control/adaptive_acquisition_caller_v3.py": "0a3b05a8708c6aa8385f0d93fe36e89f26cba7b608e73cd9cf3dca90de163874",
+    "research/live_control/calc_g10_caller_v1.py": "366c8b8b62fa01917e7a87afdd9cc3591f8f7ebff3f98dd5ef69c0b0ed445821",
+    "research/live_control/calc_durable_allocation_v1.py": "d39afe1accdbc51338bb78b48a25d3877de5864b69b21d2a95bc958666b6ce14",
+    "research/live_control/issue57_v3_prospective_run_v1.py": "197863346fff190fb5d1fb53c2b2d5ac0cf18e79483b490f42646e39a87bbfa5",
+    "research/live_control/issue57_v3_trace_adapter_v1.py": "734bd93fa5a52032d696623bed70cbacb1b4c04b65eeca7a4768e165c9adbec5"
+  },
+  "limits": [
+    "Fake JSONL peer; no live provider.",
+    "No GUI/native input; no execution action.",
+    "Injected local allocation verifier; no external attestation.",
+    "One assignment only; no comparative result."
+  ]
+}
