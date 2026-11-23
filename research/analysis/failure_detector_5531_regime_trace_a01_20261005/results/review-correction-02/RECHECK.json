@@ -1,0 +1,31 @@
+{
+  "allocation": "FAILURE-DETECTOR-5531-REGIME-TRACE-A01-20261005-01",
+  "candidate_or_formal_auditor_rerun": false,
+  "counter_formula_review": {
+    "consequence": "idle time is double-counted; the recorded regime labels cannot be accepted as valid busy percentages",
+    "corrected_formula_if_raw_deltas_are_retained": "(delta_kernel + delta_user - delta_idle) / (delta_kernel + delta_user)",
+    "raw_counter_deltas_retained": false,
+    "recorded_formula_in_collect_py": "(delta_idle + delta_kernel + delta_user - delta_idle) / (delta_idle + delta_kernel + delta_user)",
+    "source": "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getsystemtimes",
+    "windows_kernel_counter_includes_idle": true
+  },
+  "eligible_for_regime_comparison": false,
+  "errors": [],
+  "heartbeat_split_rows": 6000,
+  "host_counter_samples": 595,
+  "host_regime_labels_reconstructable": false,
+  "observer_event_rows": 6600,
+  "original_audit_output_preserved": true,
+  "original_run_status_preserved": "CAPTURED",
+  "post_audit_manifest_committed_blob_mismatches": [],
+  "post_audit_manifest_committed_sidecar_mismatch": false,
+  "post_audit_manifest_worktree_mismatches": [],
+  "previous_audit_disposition": "PASS_TRACE_CAPTURE_SCOPED",
+  "previous_audit_scope_caveat": "prior audit checked row structure and timing but did not independently derive or verify GetSystemTimes busy-percent arithmetic",
+  "progress_split_rows": 600,
+  "raw_worker_event_rows": 6600,
+  "samples_without_raw_counter_deltas": 595,
+  "schema": "failure-detector-5531-regime-trace-review-recheck-v1",
+  "scientific_disposition": "HOLD_INVALID_UNAUDITABLE_HOST_REGIME_LABELS",
+  "split_projection_errors": []
+}
