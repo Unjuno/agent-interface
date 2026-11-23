@@ -1,6 +1,6 @@
 # Agent Interface project overview
 
-**Evidence baseline:** main `26152e5aaebf678d19f2e7431f57b7012a0064b1` (2026-11-23), after PR #10531. R43 adds a five-attempt scoped native recovered-task cohort; WSLc R05–R07 add current-main synthetic Xvfb recovery diagnostics that still fail the old-task effect oracle even when diagnostic budgets reach neutral release. Research Preview doctor R07 remains HOLD at 13/15. Camera-motion A01 and block-motion R02 reject two fixed motion-compensation cues for their shared offline episode; no live target is available. The repository-root `ROADMAP.md` carries the ordered product/research gates. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
+**Evidence baseline:** main `d8d7ce00bc4b5512f5617f1f33de68245be72f20` (2026-11-23), after PR #10532. R43 adds a five-attempt scoped native recovered-task cohort; WSLc R05–R07 add current-main synthetic Xvfb recovery diagnostics that still fail the old-task effect oracle even when diagnostic budgets reach neutral release. Research Preview doctor R07 remains HOLD at 13/15. Camera-motion A01 and block-motion R02 reject two fixed motion-compensation cues for their shared offline episode; no live target is available. The repository-root `ROADMAP.md` carries the ordered product/research gates. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose
 

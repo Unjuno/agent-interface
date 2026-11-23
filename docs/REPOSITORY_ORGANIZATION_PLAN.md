@@ -3,7 +3,7 @@
 ## Project-wide status reconciliation — 2026-11-23
 
 This status snapshot uses main
-`26152e5aaebf678d19f2e7431f57b7012a0064b1` (after PR #10531). The canonical
+`d8d7ce00bc4b5512f5617f1f33de68245be72f20` (after PR #10532). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
