@@ -2,15 +2,18 @@
 
 ## Project-wide status reconciliation — 2026-11-23
 
-The current `origin/main` is
-`7690e7d713140abafcc54f5dc244d5a66e6699ab` (after PR #10524). The canonical
+This status snapshot uses main
+`75c2c57ceef623a27d093ad67d1103714b3692f0` (after PR #10527). The canonical
 ordered research/product gates are in the repository-root `ROADMAP.md`;
 `PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
 `CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
 evidence. Issue #57's R10–R14 outcomes are merged in PR #10522; its public
 comments record the stops and explicitly keep the issue open. Research
 Preview doctor R07 and the corrected ROADMAP navigation are merged in PR
-#10523; #58 remains blocked on its missing Windows Codex CLI JS entrypoint.
+#10523; Quickstart acquisition boundaries are clarified in #10526. For #59,
+the negative fixed-translation screen and evidence rescue are merged in #10527;
+stale draft #8476 is closed as superseded. #58 remains blocked on its missing
+Windows Codex CLI JS entrypoint.
 
 The R10–R14 Win32 Edge attempts are all setup stops and do not change product
 qualification: launcher-PID window discovery failed in R10; R11 then found
@@ -22,15 +25,15 @@ standard-mode raw records show scoped profile cleanup and foreground restore;
 its optimized run was not attempted. Do not mark #57 or the runtime complete
 on these stops.
 
-The latest complete membership receipt is r176: 1,640 open Issues / 404 open
-PRs, captured at main `a6add75aa2f2adac36b71d86a41a7a4c2b36345e` and merged
-by PR #10524. Its exact sorted-ID hashes match r175, so no queue membership
-changed between those snapshots. This is not semantic
+The latest complete membership receipt is r177: 1,640 open Issues / 403 open
+PRs, captured at the main snapshot above and merged by the follow-up evidence
+PR. Relative to r176, only draft PR #8476 left the open set after its evidence
+was transferred to #10527; Issue membership did not change. This is not semantic
 triage. The GitHub open PR queue contains long-lived drafts, and semantic
 issue/PR disposition, worktree ownership, local evidence custody, and duplicate
 reconciliation are still incomplete. Preserve viable research; disposition
 by family against a canonical question and evidence rather than closing items
-to reduce counts. See [r176](maintenance/repository-inventory-recheck-20261123-r176.md).
+to reduce counts. See [r177](maintenance/repository-inventory-recheck-20261123-r177.md).
 
 ## Project-wide cleanup status — 2026-11-23
 
