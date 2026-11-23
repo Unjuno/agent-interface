@@ -16,6 +16,10 @@ and must proceed family by family.
 
 **Current-main recheck r172 (2026-11-23; main `b600070965c48cc9449a87ff31264a5b3604c2d8`):** Complete pagination returns 1,640 open Issues and 405 open PRs. Both exact sorted ID sets match r171 with no additions/removals; main was unchanged around the reads. This membership refresh does not advance semantic triage. See the [r172 receipt](maintenance/repository-inventory-recheck-20261123-r172.md).
 
+## Local worktree custody recheck r173
+
+At main `bfddb91a39b4fefeff4a6de22c55fd661936dc62`, the local Git registry contains 22 worktrees: 14 clean and 8 dirty. The dirty set includes a main checkout with 21 changes, several untracked experiment packets, one worktree with a changed test/output, one detached audit with two changed raw logs, and the active preview audit's nested `.worktrees/` residue. Preserve all of them until owner, PR/Issue linkage, exact content hashes, and duplicate status are reconciled. No cleanup or reset was performed. See the [r173 custody receipt](maintenance/local-worktree-custody-recheck-20261123-r173.md) and [exact status snapshot](maintenance/local-worktree-custody-recheck-20261123-r173.json).
+
 ### Current project map
 
 | Workstream | Current evidence | Remaining gate |
