@@ -504,6 +504,10 @@ gates remain open; this archive makes no code promotion.
 
 - [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
 
+## Camera-compensated visual-change screen A01 (#59)
+
+- [Translation registration against retained V39 health-loss pairs](camera_compensated_motion_a01_20261008/README.md) — 52 adjacent pairs; residual AUC 0.406 versus raw 0.417, with only 1/4 health-loss pairs above the no-loss median. Fixed translation-only cue rejected for this scoped screen; no semantic threat or live-control claim.
+
 ## Synthetic fake-Xlib key-hold bounds (historical)
 
 - [30-cycle construction record](results/map01-key-hold-bounds-construction-v1/README.md) — frozen fake-Xlib evidence reports 300/300 row checks and 11/11 aggregate checks, bounded to synthetic server-side intervals; no application, GUI, game, or task-effect claim. Source baseline is historical and stacked on #7440; see the archived scope and limitations.
