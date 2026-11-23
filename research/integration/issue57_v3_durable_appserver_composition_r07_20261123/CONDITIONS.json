@@ -1,0 +1,29 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r07",
+  "frozen_utc": "2026-11-23T04:46:07.457557+00:00",
+  "current_main_sha": "f64c58179524db4be64b116a265182c9facc1736",
+  "scope": "One synthetic JSONL App Server turn emits observed token usage and terminates with status interrupted; exercises real client/parser, grounding model, v3 caller, durable Calc allocation writer, and registered ProspectiveRun custody.",
+  "hypothesis": "An interrupted terminal turn after usage must remain one failed attempt with exact identity and all observed counters, without execution/effect receipts or successful task projection.",
+  "pass_rule": "Focused test and complete transport module pass in normal and -O on Windows CPython 3.13; journal contains one usage update and one interrupted terminal, custody audits, task/run HOLD, and dispatch false.",
+  "fixture": {
+    "allocation_id": "synthetic-prospective-jsonl-interrupted-usage-01",
+    "call_id": "turn-ledger-1",
+    "thread_id": "thread-ledger-1",
+    "terminal_status": "interrupted",
+    "usage": {
+      "input_tokens": 1234,
+      "cached_input_tokens": 234,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 56,
+      "reasoning_output_tokens": 12
+    }
+  },
+  "source_sha256": {
+    "research/live_control/test_grounding_appserver_usage_transport.py": "4645236e24c7b673ad93582ae9928e61f8d608c98d8fab3f794568bdc29be17a"
+  },
+  "limits": [
+    "Fake App Server peer; no live provider.",
+    "No GUI/input or external allocation attestation.",
+    "One synthetic failed assignment; no efficiency or reliability claim."
+  ]
+}

@@ -1,5 +1,9 @@
 > Project-wide current status and next work order: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 interrupted-terminal usage custody R07   -  2026-11-23
+
+On current main f64c58179524db4be64b116a265182c9facc1736, one synthetic JSONL turn emitted observed usage then terminated with status interrupted. Exact turn/thread identity and all five usage counters survived the real parser/model/v3/durable allocation/ProspectiveRun path; the failed attempt produced no task receipts, task/run stayed HOLD, and dispatch stayed disabled. Focused 1/1 and full module 11/11 passed normal and -O on Windows CPython 3.13.14. A broken optimized runner invocation is preserved but excluded; corrected optimized runs pass. This is synthetic custody coverage only. See research/integration/issue57_v3_durable_appserver_composition_r07_20261123/RESULT.md. Keep #57 open; live provider, efficiency, caller recovery and runtime gates remain open.
+
 ## Issue #57 App Server timeout with observed usage R06 — 2026-11-23
 
 On frozen source main 54bad709d8ab4cf496512ab60a66e3f6ba09d3bd, a

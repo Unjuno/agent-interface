@@ -22,6 +22,10 @@ At main `bfddb91a39b4fefeff4a6de22c55fd661936dc62`, the local Git registry conta
 
 **Root worktree blob match audit r174 (2026-11-23; current main `f9042aa3`):** The dirty root `main` checkout is 170 commits behind and has no commits ahead. Three of its 11 tracked modifications are byte-identical to current-main blobs and other registered worktree commits; eight tracked modifications did not match any registered HEAD. The three stale-base markers do not make the root clean; its remaining edits and ten untracked paths are preserved pending ownership/custody review. See [r174](maintenance/local-worktree-blob-match-20261123-r174.md).
 
+### Product-gate evidence update   -  2026-11-23
+
+R06 and R07 now add two adjacent synthetic App Server-to-ProspectiveRun custody shapes: timeout after observed usage, and explicit interrupted terminal after observed usage. Both retain attempt identity/accounting and fail closed at task projection with dispatch disabled. R07 passes its focused case and all 11 transport tests in normal and -O; its evidence and setup failure custody are in [R07](../research/integration/issue57_v3_durable_appserver_composition_r07_20261123/RESULT.md). These tests do not resolve live provider accounting, matched integrated economics, public recovered-task reliability, Research Preview graduation, or runtime distribution acceptance. Repository organization is still incomplete; this update does not authorize bulk issue closure.
+
 ### Current project map
 
 | Workstream | Current evidence | Remaining gate |

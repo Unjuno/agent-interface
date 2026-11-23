@@ -166,3 +166,18 @@ show live-provider completeness or admit a matched comparison. See [R06
 result](../../research/integration/issue57_v3_durable_appserver_composition_r06_20261123/RESULT.md).
 Next inspect remaining current-main attempt/result shapes and the exact join
 requirements before proposing any live block. Keep #57 open.
+
+
+## Current-main interrupted-terminal usage custody R07   -  2026-11-23
+
+A frozen synthetic JSONL turn emitted usage and ended with status interrupted.
+The real transport/parser/model/v3 caller/durable allocation/registered
+ProspectiveRun path retained exact turn/thread identity and all five observed
+counters, while writing no execution/effect receipts and leaving projection
+and run HOLD. Focused 1/1 and full module 11/11 passed normally and under -O
+on Windows CPython 3.13.14. The initial optimized wrapper's argument-order
+failure is preserved separately; it never started tests and is not counted.
+This closes one synthetic terminal-shape gap only. See [R07
+result](../../research/integration/issue57_v3_durable_appserver_composition_r07_20261123/RESULT.md).
+Next continue the all-attempt/current-source provider join and integrated
+comparison path; keep #57 open.

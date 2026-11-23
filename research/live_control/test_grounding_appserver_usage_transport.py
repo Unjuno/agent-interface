@@ -1015,6 +1015,136 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
 
     @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
                          "Calc guarded adapter import requires Pillow")
+    def test_jsonl_interrupted_turn_with_observed_usage_reaches_durable_custody(self):
+        from datetime import datetime, timedelta, timezone
+        from unittest.mock import patch
+        from research.live_control.calc_g10_caller_v1 import run_g10_in_durable_allocation
+        from research.live_control.integrated_efficiency_protocol_v1 import ARMS, TASKS
+        from research.live_control.issue57_v3_prospective_run_v1 import ProspectiveRun
+
+        interrupted_peer = PEER.replace('"status": "completed"', '"status": "interrupted"')
+        with tempfile.TemporaryDirectory(prefix="prospective-jsonl-interrupted-usage-") as tmp:
+            root = Path(tmp)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.fixture"
+            image.write_bytes(b"synthetic interrupted-turn observation")
+            allocation_path = root / "allocation.json"
+            allocation = {
+                "allocation_id": "synthetic-prospective-jsonl-interrupted-usage-01",
+                "host_id": "synthetic-local-host", "owner": "offline-test",
+                "exclusive": True,
+                "expires_at_utc": (datetime.now(timezone.utc) +
+                    timedelta(hours=1)).isoformat(),
+                "task_ids": list(TASKS), "arms": list(ARMS),
+                "model": "synthetic-model",
+                "settings": {"effort": "medium", "provider": "fake"},
+                "order_seed": 57,
+            }
+            allocation_path.write_text(json.dumps(allocation), encoding="utf-8")
+            source_root = Path(__file__).resolve().parents[2]
+            run = ProspectiveRun(allocation_path, root / "prospective-run",
+                source_root=source_root, allocation_verifier=lambda *_args: True)
+            ledger = run.create_task_custodian("plain", 0,
+                source_sha256=hashlib.sha256(b"synthetic interrupted task source").hexdigest(),
+                observation_ids=["observation-interrupted-usage-01"],
+                conditions={"fixture": "synthetic-jsonl-interrupted-with-known-usage"})
+            protocol_path = root / "protocol.jsonl"
+            client = CodexAppServerClient(
+                [sys.executable, "-B", "-c", interrupted_peer], cwd=str(workspace),
+                journal_path=str(protocol_path))
+            model = None
+            usage = {"input_tokens": 1234, "cached_input_tokens": 234,
+                     "cache_write_input_tokens": 0, "output_tokens": 56,
+                     "reasoning_output_tokens": 12}
+            try:
+                client.initialize()
+                model = PersistentGroundingModel(
+                    root / "session", workspace, node="unused", cli="unused",
+                    client=client, path_converter=str,
+                    model="synthetic-model", effort="medium")
+                provider = V3PersistentGroundingAdapter(model)
+                original_await = model.planner.await_turn
+
+                def short_wait(handle, timeout=90):
+                    return original_await(handle, timeout=2)
+
+                adapters = {
+                    "observe_source": lambda _payload: {"sequence": 1},
+                    "acquire_anchor": lambda _payload: {"image": str(image)},
+                    "anchor_model": lambda _payload: provider(
+                        root / "provider-call", "synthetic grounding request", image,
+                        "compiled", workspace),
+                    "verify_effect": lambda _payload: {"status": "unavailable"},
+                }
+                spec = {
+                    "target": "synthetic Calc save", "route": "cold",
+                    "coarse_origin": "caller_provided",
+                    "provided_coarse": {"status": "candidate"},
+                    "cached_target": None, "local_repair_on": [], "repair_on": [],
+                    "session_id": "prospective-jsonl-interrupted-usage-01",
+                }
+                with patch.object(model.planner, "await_turn", side_effect=short_wait):
+                    result = run_g10_in_durable_allocation(
+                        spec, adapters,
+                        lambda _payload: {"interface_id": "synthetic-calc-interface"},
+                        object(), {}, ledger,
+                        perceive=lambda *_args: {}, verify_effect=lambda *_args: {},
+                        proposal_worker=object(), cancelled=lambda: False)
+                telemetry = {
+                    "local_observations": 1, "durable_calls": 1,
+                    "pointer_admissions": 0, "old_target_pointer_admissions": 0,
+                    "releases_verified": False, "elapsed_ns": 200_000_000,
+                    "source_to_completion_ns": None, "input_feedback_ns": [],
+                    "repair": {"required": False, "old_reference_status": None,
+                        "old_reference_pointer_admissions": 0,
+                        "attempted": False, "succeeded": False},
+                }
+                projected = run.record_task("plain", 0, result,
+                    {"submission_count": 0, "exact_submission": False}, telemetry,
+                    custodian_path=ledger.path)
+                lifecycle = [json.loads(line) for line in
+                    (root / "prospective-run" / "lifecycle.jsonl").read_text(
+                        encoding="utf-8").splitlines()]
+                task_event, = [row for row in lifecycle if row["event"] == "task"]
+                audit = task_event["payload"]["custody"]["audit"]
+                protocol = [json.loads(line) for line in
+                    protocol_path.read_text(encoding="utf-8").splitlines()]
+                usage_events = [row["message"] for row in protocol
+                    if row["direction"] == "received" and
+                    row["message"].get("method") == "thread/tokenUsage/updated"]
+                terminal_events = [row for row in protocol
+                    if row["direction"] == "received" and
+                    row["message"].get("method") == "turn/completed"]
+                self.assertEqual(len(usage_events), 1)
+                self.assertEqual(usage_events[0]["params"]["turnId"], "turn-ledger-1")
+                self.assertEqual(len(terminal_events), 1)
+                self.assertEqual(terminal_events[0]["message"]["params"]["turn"]["status"], "interrupted")
+                self.assertEqual(result["outcome"], "CALLER_FAILED")
+                self.assertEqual(result["attempt_ledger"][0]["status"], "failed")
+                self.assertEqual(result["attempt_ledger"][0]["call_id"], "turn-ledger-1")
+                self.assertEqual(result["attempt_ledger"][0]["thread_id"], "thread-ledger-1")
+                self.assertEqual(result["attempt_ledger"][0]["usage"], usage)
+                self.assertEqual(result["accounting"]["attempted_calls"], 1)
+                self.assertEqual(result["accounting"]["completed_calls"], 0)
+                self.assertEqual(result["accounting"]["usage_totals"], usage)
+                self.assertFalse(audit["receipt_persisted"])
+                self.assertFalse(audit["effect_receipt_persisted"])
+                self.assertEqual(audit["attempt_ledger"][0]["usage"], usage)
+                self.assertEqual(audit["status"], "audited")
+                self.assertEqual(projected["status"], "HOLD")
+                self.assertEqual(projected["reason"],
+                                 "failed_attempt_not_representable_in_v1")
+                self.assertEqual(run.finish([])["status"], "HOLD")
+                self.assertFalse(json.loads((root / "prospective-run" /
+                    "run-manifest.json").read_text(encoding="utf-8"))["dispatch_enabled"])
+            finally:
+                if model is not None:
+                    model.close()
+                client.close(timeout=2)
+
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
+                         "Calc guarded adapter import requires Pillow")
     def test_successful_effect_and_receipts_project_into_prospective_task(self):
         from datetime import datetime, timedelta, timezone
         from unittest.mock import patch
