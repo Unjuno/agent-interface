@@ -1,0 +1,64 @@
+{
+  "schema": "agent_interface_research_preview_manifest_v2",
+  "channel": "Research Preview",
+  "version": "research-preview-2026-09-17+c5fc0ee00b5f",
+  "release_date": "2026-09-17",
+  "revision": "c5fc0ee00b5fa5208088ee69004a336770336ac4",
+  "commit_time": "2026-11-23T08:36:58+09:00",
+  "support": {
+    "preview_target": "WSLg / Linux-X11 with Windows Codex CLI bridge",
+    "native_windows": "not claimed in RC1",
+    "native_macos": "not claimed in RC1",
+    "generic_linux": "not claimed beyond documented prerequisites"
+  },
+  "artifact": {
+    "name": "agent-interface-research-preview-2026-09-17+c5fc0ee00b5f.tar.gz",
+    "bytes": 349893264,
+    "sha256": "5850fc0581a47570b542d74198450227da75e010022365f52bc496c17a1b7006"
+  },
+  "tracked_file_count": 225363,
+  "selected_file_count": 22647,
+  "selection_policy": [
+    "root LICENSE/README/SECURITY",
+    "all tracked runtime/**",
+    "all tracked release/**",
+    "all top-level research/live_control/*.py",
+    "explicit Golden Desktop schema/responder assets",
+    "retained integrated-efficiency prereg/report/audit",
+    "every source named by retained preregistration",
+    "byte-frozen source archive and manifest for the retained study"
+  ],
+  "required_closure": [
+    "runtime/golden-demo-v3.sh",
+    "runtime/setup-golden-demo-v3.sh",
+    "runtime/golden_desktop_demo_v3.py",
+    "runtime/requirements-golden.txt",
+    "release/first_run_smoke_v1/preflight.py",
+    "release/preview_bundle_v1/build_preview.py",
+    "release/preview_bundle_v1/accept_supported_host.py",
+    "release/preview_bundle_v1/QUICKSTART.md",
+    "release/preview_bundle_v1/SUPPORT.md",
+    "release/preview_bundle_v1/RELEASE_NOTES.md",
+    "research/live_control/results/integrated-efficiency-live-01/preregistration.json",
+    "research/live_control/results/integrated-efficiency-live-01/report.json",
+    "research/live_control/results/integrated-efficiency-live-01/audit.json",
+    "research/live_control/integrated_efficiency_discoveries_v1.json",
+    "research/live_control/plain_form_points_schema_v1.json",
+    "research/live_control/plain_form_points_responder_v1.txt",
+    "research/live_control/compiled_form_grounding_schema_v1.json",
+    "research/live_control/compiled_form_grounding_responder_v1.txt"
+  ],
+  "checks": {
+    "checkout_static_preflight": "PASS_LAUNCHER_BOUNDARY",
+    "archive_static_preflight": "PASS_LAUNCHER_BOUNDARY",
+    "member_count": 22647,
+    "required_files_present": true,
+    "selected_closure_exact": true,
+    "launcher_modes_preserved": true
+  },
+  "limitations": [
+    "Packaging/static checks do not replace supported-host setup/doctor.",
+    "A fresh model-backed golden run and audit-live are separate release acceptance gates.",
+    "This is a Research Preview, not a stable cross-platform release."
+  ]
+}
