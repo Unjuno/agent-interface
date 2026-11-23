@@ -102,7 +102,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
         if not edge.is_file() or node is None:
             self.skipTest("Edge and Node.js are required for this integration test")
 
-        token = "t991025-3"
+        token = "t991025-4"
         records = []
         record_lock = threading.Lock()
 
@@ -146,7 +146,7 @@ class CompiledGuiEdgeIntegrationTests(unittest.TestCase):
                 self.end_headers()
                 self.wfile.write(body)
 
-        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r05"
+        packet_root = HERE.parents[1] / "research/integration/issue57_chromium_v3_edge_r06"
         evidence_root = packet_root / "raw"
         worktree_status_before_capture = subprocess.run(
             ["git", "status", "--porcelain"], cwd=HERE.parents[1],
