@@ -1,0 +1,18 @@
+{
+  "run_id": "issue57-chromium-v5-generation-mint-r06",
+  "frozen_base_main": "759d15697be34a5db1afd6215b46ecf4e42d40d1",
+  "host": "Windows 10",
+  "python": "CPython 3.11.9",
+  "invocation": "PYTHONPATH=research/live_control; python -m unittest research.live_control.test_chromium_v5_generation_mint_guard_v1 research.live_control.test_target_handle_semantic_binding_v1 research.live_control.test_compiled_caller_handoff_v2 research.live_control.test_adaptive_acquisition_compiled_gui_v1 (and python -O)",
+  "source_hashes": {
+    "research/live_control/session_v33.py": "a228cadbd1c787da021189ad4b9d823e8bed78a062fe57920db39035876fdd15",
+    "research/live_control/test_chromium_v5_generation_mint_guard_v1.py": "5e9368f1a3f44969a61aa86708bf6268c60aec8dc56c02f7ce01c846d26d1792"
+  },
+  "cases": [
+    "process generation changes while window generation, focus, surface, geometry and exact checker pixels remain constant",
+    "window generation changes while process generation, focus, surface, geometry and exact checker pixels remain constant",
+    "process/window generations, focus, surface, geometry and exact checker pixels remain constant"
+  ],
+  "scope": "Fake-only exact V5 point-mint method with in-memory TargetHandleStore; no browser, X server, OS input, provider, or user desktop",
+  "acceptance": "Changed-generation negatives refuse before handle creation; same-generation positive mints private-registry-backed alias with exact patch hashes; all 23 focused/regression tests pass normally and under -O."
+}
