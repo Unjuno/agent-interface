@@ -1,0 +1,30 @@
+usage: agent-interface dispatch [-h] --program PROGRAM --targets TARGETS
+                                --current-observation-seq
+                                CURRENT_OBSERVATION_SEQ
+                                --current-binding-revision
+                                CURRENT_BINDING_REVISION [--display DISPLAY]
+                                [--capture-directory CAPTURE_DIRECTORY]
+                                [--run-directory RUN_DIRECTORY]
+                                [--retention-timings] [--review] [--compact]
+                                [--report-refs] [--detail {full,summary}]
+
+options:
+  -h, --help            show this help message and exit
+  --program PROGRAM
+  --targets TARGETS
+  --current-observation-seq CURRENT_OBSERVATION_SEQ
+  --current-binding-revision CURRENT_BINDING_REVISION
+  --display DISPLAY
+  --capture-directory CAPTURE_DIRECTORY
+  --run-directory RUN_DIRECTORY
+                        reserve a fresh directory for request, raw result and
+                        images
+  --retention-timings   measure retention phases; requires --run-directory
+  --review              return result and last captured image together
+  --compact             use smaller reversible receipt references with
+                        --review
+  --report-refs         allow v3 report references; requires --compact and a
+                        compatible decoder
+  --detail {full,summary}
+                        summary projects supported successes; requires
+                        retained review with compact/report-refs

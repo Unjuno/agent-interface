@@ -64,6 +64,7 @@ SOURCE_FILES = (
     "runtime/backends/x11_v1/session.py",
     "runtime/backends/win32_v1/__init__.py",
     "runtime/backends/win32_v1/backend.py",
+    "runtime/backends/win32_v1/capture_artifacts.py",
     "runtime/backends/win32_v1/session.py",
     "runtime/guarded_win32_v1/__init__.py",
     "runtime/guarded_win32_v1/bridge.py",
