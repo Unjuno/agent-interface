@@ -615,7 +615,7 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
                     edge_process.kill()
                     edge_process.wait()
             try:
-            _stop_edge_processes_for_profile(profile)
+                _stop_edge_processes_for_profile(profile)
                 _cleanup_edge_test_profile(profile)
                 profile_cleaned = not profile.exists()
             except Exception as error:
