@@ -1,30 +1,32 @@
 > Start with [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for project goals and gate order; use [PROJECT_STATE.md](PROJECT_STATE.md) for detailed result status. This plan tracks inventory, family triage, and evidence/worktree custody.
 
-## Project-wide status reconciliation — 2026-11-24 (r180 / r179)
+## Project-wide status reconciliation — 2026-11-24 (r181 / r179)
 
-Current main is `164650754bce28fc849f630f0b744decb4034f87`, after #10541's
-runtime packaging fix and #10542's documentation refresh. A fresh complete
-GitHub pagination found **1,640 open Issues and 403 open PRs**. Exact Issue and
-PR ID sets match r177; this is inventory stability, not semantic triage. See
-[membership r180](maintenance/repository-inventory-recheck-20261124-r180.md)
-and [the exact ID arrays](maintenance/repository-inventory-recheck-20261124-r180.json).
+Current main is `68bc4daab111e2820960a8e4de1514a10b1bfe75`, after PR #10546
+recorded the current-main Docker/Linux MCP contract result. Complete GitHub
+pagination found **1,640 open Issues and 403 open PRs**. Exact Issue and PR ID
+sets match r180; this is inventory stability, not semantic triage. See
+[membership r181](maintenance/repository-inventory-recheck-20261124-r181.md)
+and [the exact ID arrays](maintenance/repository-inventory-recheck-20261124-r181.json).
 
-The corresponding local read-only census found **33 registered worktrees, 10
-dirty**. Normal Git status collapses untracked directory contents, and the
-snapshot records a status hash for each checkout. It is a custody index, not a
-complete file-level ownership or duplicate proof. See [local census
+The last corresponding local read-only census r179 found **33 registered
+worktrees, 10 dirty**. Normal Git status collapses untracked directory
+contents, and that snapshot records a status hash for each checkout. It is a
+custody index, not a complete file-level ownership or duplicate proof; r181
+does not refresh local custody. See [local census
 r179](maintenance/local-worktree-custody-recheck-20261124-r179.md) and [the
 exact snapshot](maintenance/local-worktree-custody-recheck-20261124-r179.json).
-The local repo is not clean; do not reset/delete/move worktrees based only on
+That snapshot was not clean; do not reset/delete/move worktrees based only on
 branch ancestry or counts.
 
 ### Project work order
 
 1. **Finish current-main public runtime integration:** reuse Win32 R04's
-   single public-CLI Notepad task/release pass and fix the package omission
-   already merged. Next compose the standard caller with independent task
-   scoring, provider/token accounting, terminal release and finite recovery;
-   preserve setup stops R01–R03 as separate failures.
+   single public-CLI Notepad task/release pass and the merged package repair.
+   The synthetic caller-v3 composition and Linux public-MCP contract R02 now
+   pass locally, but the next gate remains a standard caller task with
+   independent scoring, live provider/token accounting, terminal release and
+   finite recovery. Preserve setup stops R01–R03 as separate failures.
 2. **Resolve #59's live-control prerequisite:** reacquire an owned,
    preinstalled GZDoom/IWAD and freeze a MAP01 task/effect oracle before a
    live run. Do not infer gameplay from offline motion screens.

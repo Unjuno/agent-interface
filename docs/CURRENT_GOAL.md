@@ -20,13 +20,17 @@ and routing: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md),
 
 PR #10544 added a scoped offline join from synthetic App Server usage through
 caller v3, compiled GUI execution, and durable effect custody; PR #10545
-refreshed the project status. Current-main Docker/Linux contract R02 then
-passed all 87 public-MCP and guarded tests normally and under `-O` in the
+refreshed the project status. PR #10546 records current-main Docker/Linux
+contract R02, which passed all 87 public-MCP and guarded tests normally and
+under `-O` in the
 cached network-disabled image. This resolves the prior combined optimized
 test-harness HOLD after the worker-entry event coordination changed. It is
 not live task, provider-efficiency, recovery-reliability, MAP01, or distribution
 evidence. See the [R02 result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/RESULT.md)
 and its [conditions](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/CONDITIONS-r08.json).
+The r181 Issue/PR census at stable current main reports 1,640 open Issues and
+403 open PRs, with exact membership unchanged from r180; semantic family triage
+and the older local worktree custody snapshot remain outstanding.
 
 ## Issue #57 WSLc XTEST repeat boundary R08–R11 — 2026-11-23
 
