@@ -4,9 +4,10 @@
 
 ## Current-main follow-up — 2026-11-24
 
-On main `22aba58c276141401a7688be335be5191ec661b9` (PR #10540), a public Win32
-runtime packaging omission was isolated by a frozen Notepad CLI attempt. The
-fix and zipapp import regression test are in [PR #10541](https://github.com/Unjuno/agent-interface/pull/10541).
+On base main `22aba58c276141401a7688be335be5191ec661b9` (PR #10540), a public
+Win32 runtime packaging omission was isolated by a frozen Notepad CLI attempt.
+The fix and zipapp import regression test merged in [PR #10541](https://github.com/Unjuno/agent-interface/pull/10541)
+as main `a96559edfb5637f88f4fdcb38c5b2b1fae3ce01d`.
 R04 then completed one fresh Notepad task after explicit Computer Control
 foreground activation: exact independent file effect, same target generation,
 and verified terminal release. R01–R03 failures remain separately retained.

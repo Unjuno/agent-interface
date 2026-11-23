@@ -2,14 +2,14 @@
 
 # Project state and work order
 
-## Current checkpoint — 2026-11-24 (main `22aba58c`)
+## Current checkpoint — 2026-11-24 (main `a96559ed`)
 
-PR #10540 is the latest merge on main. PR [#10541](https://github.com/Unjuno/agent-interface/pull/10541)
-is open for a specific distribution defect: the deterministic runtime zipapp
-omitted `runtime/backends/win32_v1/capture_artifacts.py`, which the promoted
-Win32 backend imports during observation. The package list and an archive
-import regression test are fixed on the branch. Local `test_distribution`
-passes 11/11 normally and under `-O` on unpackaged CPython 3.12.12.
+PR #10541 is merged. It fixes the specific distribution defect on its frozen
+base main `22aba58c`: the deterministic runtime zipapp omitted
+`runtime/backends/win32_v1/capture_artifacts.py`, which the promoted Win32
+backend imports during observation. The package list and archive import
+regression test are now on main. Local `test_distribution` passed 11/11
+normally and under `-O` on unpackaged CPython 3.12.12.
 
 The retained live trial R04 is a **scoped pass**: after ordinary Computer
 Control activated the uniquely identified Notepad window, one public CLI task
