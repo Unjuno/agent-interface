@@ -6,6 +6,8 @@ This RC packages the complete tracked source closure for the promoted Golden Des
 
 The currently tested runtime target is **WSLg / Linux-X11** with Chromium plus the Windows Codex CLI bridge available from WSL. Native macOS and native Windows execution are not claimed by this RC.
 
+The bridge requires a separately installed Windows Codex CLI JavaScript entrypoint visible from WSL. The doctor reads `AGENT_INTERFACE_WINDOWS_CODEX_JS` (default: `/mnt/c/Users/<user>/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js`) and checks it with Windows Node.js. If that file is absent, stop at `doctor`; do not start the live acceptance run. See the [runtime setup and acquisition boundaries](../../runtime/README.md).
+
 ## Verify the download
 
 From the directory containing the archive and `SHA256SUMS`:
@@ -42,6 +44,9 @@ Run the setup command only when `runtime/.venv` does not already exist. The
 acceptance runner reuses an existing `runtime/.venv`. If it is absent, pass
 `--install-dependencies` to authorize the pinned Python package install;
 without that flag the runner records setup refusal and stops before `doctor`.
+This option installs only the pinned Python dependencies. It does not acquire
+the Agent Interface runtime artifact, Codex CLI, Chromium, model weights, or
+provider configuration. Each of those is a separate, explicit user action.
 
 Or retain the whole supported-host prefix in one new evidence directory:
 
