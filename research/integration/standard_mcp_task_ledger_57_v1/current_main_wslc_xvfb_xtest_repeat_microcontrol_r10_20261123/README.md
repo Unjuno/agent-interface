@@ -1,0 +1,3 @@
+# R10 XTEST repeat microcontrol
+
+This control isolates one XTest-synthesized A press held for 1.2 s, without the MCP caller or its delayed-request harness. It runs under three settings (default, global autorepeat off, A-key autorepeat off) in normal and optimized Python, each in a fresh WSLc container. It measures delivered X KeyPress/KeyRelease events and uses a separate X client for post-release keymap readback. It is diagnostic only.
