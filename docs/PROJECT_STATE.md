@@ -2,11 +2,13 @@
 
 # Project state and work order
 
-## Current checkpoint — 2026-11-24 (main `164650754bce28fc849f630f0b744decb4034f87`)
+## Current checkpoint — 2026-11-24 (r180 inventory at `164650754bce28fc849f630f0b744decb4034f87`; current main `b65b617361efd94494bb472f167f6c966a48464c`)
 
-PR #10542 refreshed the repository status after #10541 merged. A complete
-current-main membership check found 1,640 open Issues and 403 open PRs, with
-the exact sorted ID sets unchanged from r177. The accompanying read-only local
+PR #10542 refreshed the repository status after #10541 merged. At r180's source
+main, a complete membership check found 1,640 open Issues and 403 open PRs,
+with the exact sorted ID sets unchanged from r177. PRs #10544 and #10545 have
+merged since that inventory, so r180 remains the latest full ID-set census,
+not a count of the current open queue. The accompanying read-only local
 census found 33 registered worktrees, 10 dirty; this is not a clean local
 repository and does not justify deleting or resetting any path. See [inventory
 r180](maintenance/repository-inventory-recheck-20261124-r180.md) and [custody
@@ -45,6 +47,15 @@ matched economics, MAP01, runtime distribution, or Research Preview graduation.
 See the [conditions](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/CONDITIONS-r04.json),
 [result](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/RESULT.md),
 and [independent audit](../research/integration/issue57_provider_compiled_currentmain_r01_20261124/AUDIT.json).
+
+PR #10545 merged the status refresh at main `b65b6173`. Current-main Docker/Linux
+public MCP contract R02 passes all 87 tests in both normal and optimized modes
+using the cached image with networking disabled and a read-only source mount.
+It resolves the prior combined `-O` test-harness HOLD after the worker-entry
+event coordination changed; these test timings are not product-efficiency
+evidence. No runtime code changed in R02. See the [R02 conditions](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/CONDITIONS-r08.json),
+[result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/RESULT.md),
+and [audit](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261124/AUDIT.json).
 
 Project-wide: #57 remains open for matched lifecycle economics, exhaustive
 provider/token accounting, and repeatable recovery transfer. #58 remains on
