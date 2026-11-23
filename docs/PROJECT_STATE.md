@@ -164,6 +164,10 @@ success, comparative efficiency, reliability, or preview readiness.
 | Recovery and repeated reliability | R16 resolves one native orphan-custody case; R23 has 10/10 Fake caller cycles; R27 has 3/3 same-host expiry/recovery cycles; R41 and R42 each have one public recovered-task success on a separate generation. | **Open.** These scopes do not establish a product reliability rate. Preserve all failures/censored attempts in the next independent live standard-caller cases; do not pool fixture, MAP01 and Calc outcomes. |
 | Distributable runtime | The WSL Research Preview package build and extracted retained audit passed; the recorded Windows/Ubuntu WSL package suite passed on `d5ada452`. | **Partial.** Construction and basic CLI contracts pass; live native input, permissions, public artifact publication, and the remaining #58 supported-host doctor, fresh no-retry golden run, and `audit-live` gates are unverified. |
 
+## Issue #57 current-main provider timeout custody R06
+
+The frozen synthetic App Server timeout-after-usage case now passes through the actual JSONL parser, grounding model, v3 caller, durable allocation writer, and registered ProspectiveRun custodian. It preserves exact attempt identity and five observed usage counters, creates no task receipts, and remains HOLD with dispatch disabled. Focused and full transport module pass in normal and -O (1/1 and 10/10). Evidence is offline fixture coverage only; provider completeness and matched live economics remain open. See [R06 packet](../research/integration/issue57_v3_durable_appserver_composition_r06_20261123/RESULT.md).
+
 ## Repository organization
 
 - The latest GitHub membership receipt is r172: **1,640 open Issues and

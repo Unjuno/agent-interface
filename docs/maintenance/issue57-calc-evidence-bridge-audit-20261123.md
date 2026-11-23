@@ -83,3 +83,15 @@ passed normal and -O on Windows CPython 3.13.14. This demonstrates that a
 successful effect is retained while incomplete accounting blocks comparison.
 It does not establish live-provider usage completeness or efficiency. See the
 [R05 packet](../../research/integration/issue57_v3_durable_appserver_composition_r05_20261123/RESULT.md).
+
+
+## Current-main R06 timeout after observed usage — 2026-11-23
+
+A synthetic JSONL peer emitted usage then timed out without terminal completion.
+The actual transport/parser/model/v3 caller/durable writer/registered
+ProspectiveRun path retained exact IDs and all five observed usage counters;
+no task effect/receipt was created, and projection/run stayed HOLD with 17
+assignments missing and dispatch disabled. Focused 1/1 and full module 10/10
+passed in normal and -O on Windows CPython 3.13.14. This is an additional
+synthetic timeout-custody shape, not proof of external-provider completeness or
+matched economics. See [R06 packet](../../research/integration/issue57_v3_durable_appserver_composition_r06_20261123/RESULT.md).
