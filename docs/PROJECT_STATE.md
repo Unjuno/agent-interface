@@ -1,12 +1,16 @@
 # Project state and work order
 
+## Current-main WSL Research Preview package follow-up
+
+**Research Preview WSL package R02 (2026-11-23; current main `c5fc0ee0`):** A complete persistent Ubuntu WSL checkout builds the bundle successfully: 29/29 frozen-source hashes match; builder tests 6/6; 22,647 members; checkout/archive static preflight pass; bundle SHA-256 `5850fc0581a47570b542d74198450227da75e010022365f52bc496c17a1b7006`; extracted `audit-retained` passes `RETAIN`. No dependency install, doctor, fresh Golden run or `audit-live`; #58 remains open. This supersedes the earlier sparse/Windows environment diagnosis without erasing it. See [R02](../research/integration/research_preview_current_main_wsl_build_r02_20261123/RESULT.md).
+
 ## Current-main Linux MCP contract follow-up
 
 R02 resolved the R01 optimized combined-suite timing failure through test-only event notification. The two-second acceptance bounds are unchanged; Docker `test_mcp_server` + `test_mcp_guarded` passed 87/87 normal and under `-O`, with explicit container exit code 0. R01 failure is retained. This qualifies only a local contract suite, not live task effect, recovery reliability, provider accounting, efficiency or release acceptance. See [R02 result](../research/integration/standard_mcp_task_ledger_57_v1/current_main_docker_mcp_linux_r02_20261123/RESULT.md).
 
 **Research Preview Windows builder R01 (current main `39cbd0d2`):** Builder unit tests pass 6/6, but no archive was produced. A sparse Windows checkout initially materialized 26/29 frozen source mirrors with CRLF; exact main blobs reconciled all 29 hashes. The subsequent build correctly stopped because this sparse checkout omits 22 selected tracked files. No dependencies or live acceptance were run. Prior WSL R06 remains scoped to its recorded host/source. See [R01 diagnosis](../research/integration/research_preview_windows_builder_current_main_r01_20261123/RESULT.md).
 
-Updated 2026-11-23 from current `main` `39cbd0d202db82baf4886f1d781461909c4f706a`.
+Updated 2026-11-23 from current `main` `c5fc0ee00b5fa5208088ee69004a336770336ac4`.
 This page is the short project-wide status index. It points to the detailed
 receipts; it does not replace their raw evidence or promote a partial result.
 

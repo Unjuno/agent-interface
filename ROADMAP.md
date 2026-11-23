@@ -409,3 +409,7 @@ R02 passes the focused cancellation boundary and full public/guarded MCP suites 
 ## Research Preview Windows builder R01
 
 On current main, the builder unit tests pass 6/6. A Windows sparse-checkout attempt exposed 26 CRLF-materialized frozen-source mirrors; exact current-main blobs restored their 29/29 registered hashes. The actual archive build remains HOLD because the sparse worktree lacks 22 files in the selected release closure. No package or live supported-host acceptance passed. Retain the WSL R06 result only for its recorded host/source and use a complete clean current-main checkout for the next packaging attempt. See [R01 diagnosis](research/integration/research_preview_windows_builder_current_main_r01_20261123/RESULT.md).
+
+## Research Preview WSL package R02
+
+A complete persistent Ubuntu WSL checkout at current main c5fc0ee0 builds the 349,893,264-byte archive. The 29-entry frozen source archive matches, builder tests pass 6/6, selected closure is exact at 22,647 members, static preflights pass before and after extraction, and extracted udit-retained passes (RETAIN). This does not close supported-host doctor, fresh no-retry Golden run, udit-live, or live permissions. Issue #58 stays open. See [R02](research/integration/research_preview_current_main_wsl_build_r02_20261123/RESULT.md).
