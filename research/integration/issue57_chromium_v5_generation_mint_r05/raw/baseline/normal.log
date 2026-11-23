@@ -1,0 +1,21 @@
+.FF
+======================================================================
+FAIL: test_point_mint_refuses_process_generation_change_with_identical_pixels (research.live_control.test_chromium_v5_generation_mint_guard_v1.ChromiumV5GenerationMintGuardTests.test_point_mint_refuses_process_generation_change_with_identical_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 121, in test_point_mint_refuses_process_generation_change_with_identical_pixels
+    with self.assertRaisesRegex(DecisionRequired, "process_generation_changed"):
+AssertionError: DecisionRequired not raised
+
+======================================================================
+FAIL: test_point_mint_refuses_window_generation_change_with_identical_pixels (research.live_control.test_chromium_v5_generation_mint_guard_v1.ChromiumV5GenerationMintGuardTests.test_point_mint_refuses_window_generation_change_with_identical_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\issue57-chromium-v5-compiled-adapter-r01-20261123\research\live_control\test_chromium_v5_generation_mint_guard_v1.py", line 132, in test_point_mint_refuses_window_generation_change_with_identical_pixels
+    with self.assertRaisesRegex(DecisionRequired, "window_generation_changed"):
+AssertionError: DecisionRequired not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=2)

@@ -2,6 +2,23 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #57 Chromium V5 point-mint generation guard R06 — 2026-11-23
+
+R05 reproduced a stale-generation mint defect in the exact V5
+`session_v33.Backend.execute` method: when process or window generation
+changed between the retained model observation and fresh mint observation,
+the method still minted if focus, surface, geometry, and exact pixels matched.
+The guard now refuses each generation change before registry creation. The
+same-generation alias/private-ID positive remains valid. The Fake-only R06
+suite passes 23/23 normally and under `-O` on Windows CPython 3.11.9. Setup
+stops and the baseline failures are retained in R01–R05 packets; see [R05
+baseline](../research/integration/issue57_chromium_v5_generation_mint_r05/RESULT.md)
+and [R06 recheck](../research/integration/issue57_chromium_v5_generation_mint_r06/RESULT.md).
+This narrows only point-mint generation correctness. The real Chromium V5
+target-handle/evidence path is still not bridged through caller v3; no live
+provider, GUI task, efficiency, recovery, MAP01, or preview graduation result
+follows. Keep #57 open.
+
 ## MAP01 target availability preflight R01 — 2026-11-23
 
 On current-main baseline `e67ca18c`, a bounded read-only check found no GZDoom in six standard install paths, command lookup, running processes, or Windows uninstall registry. It did not search the full disk or establish WAD availability. No application was launched and no runtime/assets were installed. Live #59 threat exposure remains pending a supplied/preinstalled executable path and intended IWAD/map. See [R01](../research/integration/map01_preinstalled_target_preflight_current_main_r01_20261123/RESULT.md).

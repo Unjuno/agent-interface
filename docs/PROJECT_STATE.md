@@ -2,6 +2,19 @@
 
 # Project state and work order
 
+## Issue #57 Chromium V5 point-mint generation guard R06 — 2026-11-23
+
+R05 reproduced stale target-handle mint across both process- and
+window-generation changes with exact pixels/focus/surface/geometry unchanged.
+The exact V5 method now refuses those changes before mint, while the
+same-generation private-alias positive passes. The isolated R06 regression
+bundle passes 23/23 normally and under `-O` on Windows CPython 3.11.9. This is
+Fake-only and does not bridge V5 into caller v3 or establish live task effect,
+provider economics, recovery reliability, MAP01, or preview graduation. See
+[R05](../research/integration/issue57_chromium_v5_generation_mint_r05/RESULT.md)
+and [R06](../research/integration/issue57_chromium_v5_generation_mint_r06/RESULT.md).
+Keep #57 open.
+
 ## Issue #57 public recovery writer-drain R05 - 2026-11-23
 
 On frozen current main `d5a378ec`, the exact public Fake Win32 recovery test passed 1/1 normally and 1/1 under `-O` on Windows CPython 3.11.9. The post-R04 report-temp/server-close drain did not reproduce the prior 8.016 s observation failure or cleanup collision in this one focused sample. R04 remains mixed 7/10; no reliability claim. The wrapper setup failure is transcribed only because raw stderr was overwritten; the actual target outputs are retained with an 18-entry manifest. No real GUI/input ran. See [R05](../research/integration/standard_mcp_task_ledger_57_v1/current_main_public_recovery_writer_drain_r05_20261123/RESULT.md).

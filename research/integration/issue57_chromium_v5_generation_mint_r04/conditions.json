@@ -1,0 +1,23 @@
+{
+  "run_id": "issue57-chromium-v5-generation-mint-r04",
+  "frozen_base_main": "759d15697be34a5db1afd6215b46ecf4e42d40d1",
+  "host": "Windows 10",
+  "python": "CPython 3.11.9",
+  "invocation": "PYTHONPATH=research/live_control; python -m unittest research.live_control.test_chromium_v5_generation_mint_guard_v1 (and python -O)",
+  "scope": "Fake-only direct call of exact V5 point-mint method; unrelated session_v32 parent is stubbed to avoid importing legacy Calc/UI dependencies; no desktop, browser, provider, or input dispatch",
+  "source_hashes": {
+    "research/live_control/session_v33.py": "cc79bc4b0cf5739ab8bbc9ce822b1614c52eae96617ce962b3b4e141ae671d08",
+    "research/live_control/model_point_target_v1.py": "52230d07dc981ec73846ee0c4c2ba21ae20cfbdad98e0f15382390ef06c623c4",
+    "runtime/guarded_x11_v1/handles.py": "b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7",
+    "runtime/guarded_x11_v1/handles_texture.py": "b78d09aa2cbd2e5bfa3a33567bb4038f5eabbb3dd138627a675583bc27f30774",
+    "runtime/guarded_x11_v1/handles_base.py": "616132365dd807541f8d733564de96a3efe3b602db6479d332a0820e4f9f961e",
+    "research/live_control/test_chromium_v5_generation_mint_guard_v1.py": "faa262a297d09704ca38cce79ce20d662aed539288f701d29539e28994dc3cf1"
+  },
+  "cases": [
+    "process generation changes; window generation, focus, surface, geometry and pixels stay constant",
+    "window generation changes; process generation, focus, surface, geometry and pixels stay constant",
+    "same process/window generations, focus, surface, geometry and pixels"
+  ],
+  "acceptance": "Both negatives raise DecisionRequired with no TargetHandleStore entry; positive mints one session alias backed by a private registry ID and records exact same source/fresh patch SHA-256.",
+  "retry_policy": "One normal and one -O run only; retain all outcomes."
+}
