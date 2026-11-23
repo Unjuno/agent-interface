@@ -20,6 +20,8 @@ and must proceed family by family.
 
 At main `bfddb91a39b4fefeff4a6de22c55fd661936dc62`, the local Git registry contains 22 worktrees: 14 clean and 8 dirty. The dirty set includes a main checkout with 21 changes, several untracked experiment packets, one worktree with a changed test/output, one detached audit with two changed raw logs, and the active preview audit's nested `.worktrees/` residue. Preserve all of them until owner, PR/Issue linkage, exact content hashes, and duplicate status are reconciled. No cleanup or reset was performed. See the [r173 custody receipt](maintenance/local-worktree-custody-recheck-20261123-r173.md) and [exact status snapshot](maintenance/local-worktree-custody-recheck-20261123-r173.json).
 
+**Root worktree blob match audit r174 (2026-11-23; current main `f9042aa3`):** The dirty root `main` checkout is 170 commits behind and has no commits ahead. Three of its 11 tracked modifications are byte-identical to current-main blobs and other registered worktree commits; eight tracked modifications did not match any registered HEAD. The three stale-base markers do not make the root clean; its remaining edits and ten untracked paths are preserved pending ownership/custody review. See [r174](maintenance/local-worktree-blob-match-20261123-r174.md).
+
 ### Current project map
 
 | Workstream | Current evidence | Remaining gate |
