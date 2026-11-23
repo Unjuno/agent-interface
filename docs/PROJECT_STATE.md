@@ -2,6 +2,10 @@
 
 # Project state and work order
 
+## Calc artifact receipt-window recheck R02 — 2026-11-23
+
+On exact current main `5156ec0e`, `test_calc_task_artifact_v1` passed 20/20 in Windows CPython 3.11.9 in both normal and `-O` modes. The synthetic checks accept a Save request inside the effect-verification interval and reject timestamps outside it. This is artifact/receipt contract evidence only: no Calc GUI, live task, provider, or efficiency comparison ran. Keep #57 open. See [`R02`](../research/integration/standard_mcp_task_ledger_57_v1/calc_effect_verification_window_order_current_main_r02_20261123/RESULT.md).
+
 ## Issue #57 caller v3 + compiled GUI composition R01 - 2026-11-23
 
 On current main c4065d011e1297ebd589bcd5b85da3beb269e037, the shared adaptive caller v3 now has a composed synthetic path through runtime.core_v1.compiled_gui. The positive path records two complete-cold model attempts, executes two local evidence-selected transitions with zero internal frontier resumptions, and sends program completion to a distinct synthetic task scorer. The changed-intermediate path keeps the first action/release, refuses the second admission/input, and returns EXECUTION_INCOMPLETE / unknown_state / confirmed_partial. Focused composition tests pass 2/2; the caller v3 suite plus 17 compiled-runtime suites pass 132/132 normal and 132/132 under -O on Windows CPython 3.13.14. The first bundle's legacy top-level import setup failure is retained and excluded. This is synthetic composition only; live app/provider/accounting/economics remain open. See [R01 result](../research/integration/issue57_adaptive_caller_compiled_gui_composition_r01_20261123/RESULT.md) and [composition plan/crosswalk](maintenance/issue57-composition-plan-and-requirement-crosswalk-20261123.md).

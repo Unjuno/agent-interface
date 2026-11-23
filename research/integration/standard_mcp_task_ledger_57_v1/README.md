@@ -4,6 +4,10 @@ Status: local measurement-infrastructure construction only. This does not run a
 model, GUI, WSLc, Docker, or a formal allocation, and does not qualify the
 integrated route.
 
+## Current-main Calc artifact receipt-window recheck R02 — 2026-11-23
+
+The frozen 20-test `calc_task_artifact_v1` suite passes on main `5156ec0e` under Windows CPython 3.11.9 in normal and `-O` modes. It covers timestamp inclusion within effect verification and rejection outside its interval. Synthetic artifact/receipt contract only; no live Calc task or efficiency claim. See [R02 result](calc_effect_verification_window_order_current_main_r02_20261123/RESULT.md).
+
 The earlier retained [r01 packet](composition-evidence-20261020/README.md)
 captures the immediate-response stale-generation case. The follow-up
 [r02 packet](composition-evidence-20261020-r02/README.md) holds the fake
