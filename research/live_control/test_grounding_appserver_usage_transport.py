@@ -475,6 +475,145 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
 
     @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
                          "Calc guarded adapter import requires Pillow")
+    def test_jsonl_provider_success_joins_durable_prospective_custody(self):
+        from datetime import datetime, timedelta, timezone
+        from unittest.mock import patch
+        from research.live_control.calc_g10_caller_v1 import run_g10_in_durable_allocation
+        from research.live_control.integrated_efficiency_protocol_v1 import ARMS, TASKS
+        from research.live_control.issue57_v3_prospective_run_v1 import ProspectiveRun
+
+        with tempfile.TemporaryDirectory(prefix="prospective-jsonl-success-") as tmp:
+            root = Path(tmp)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.fixture"
+            image.write_bytes(b"synthetic JSONL success observation")
+            answer = {
+                "format": "compiled-form-grounding-v1",
+                "field": {"point_space": "source_observation_pixels",
+                          "point": {"x": 10, "y": 20},
+                          "motion_model": "surface_origin_translation"},
+                "submit": {"point_space": "source_observation_pixels",
+                           "point": {"x": 30, "y": 40},
+                           "motion_model": "surface_origin_translation"},
+                "method": {"first_action": "enter_exact_token",
+                           "continue_when": "field_pixels_changed_and_submit_revalidated",
+                           "second_action": "activate_submit",
+                           "complete_when": "submission_pixels_changed_then_independent_score"},
+            }
+            success_peer = PEER.replace('"text": "{}"',
+                                        '"text": ' + json.dumps(json.dumps(answer)))
+            allocation_path = root / "allocation.json"
+            allocation = {
+                "allocation_id": "synthetic-prospective-jsonl-success-01",
+                "host_id": "synthetic-local-host", "owner": "offline-test",
+                "exclusive": True,
+                "expires_at_utc": (datetime.now(timezone.utc) +
+                    timedelta(hours=1)).isoformat(),
+                "task_ids": list(TASKS), "arms": list(ARMS),
+                "model": "synthetic-model",
+                "settings": {"effort": "medium", "provider": "fake"},
+                "order_seed": 57,
+            }
+            allocation_path.write_text(json.dumps(allocation), encoding="utf-8")
+            source_root = Path(__file__).resolve().parents[2]
+            run = ProspectiveRun(allocation_path, root / "prospective-run",
+                source_root=source_root, allocation_verifier=lambda *_args: True)
+            ledger = run.create_task_custodian("plain", 0,
+                source_sha256=hashlib.sha256(b"synthetic JSONL success source").hexdigest(),
+                observation_ids=["observation-jsonl-success-01"],
+                conditions={"fixture": "synthetic-jsonl-provider-success"})
+            protocol_path = root / "protocol.jsonl"
+            client = CodexAppServerClient(
+                [sys.executable, "-B", "-c", success_peer], cwd=str(workspace),
+                journal_path=str(protocol_path))
+            model = None
+            try:
+                client.initialize()
+                model = PersistentGroundingModel(
+                    root / "session", workspace, node="unused", cli="unused",
+                    client=client, path_converter=str,
+                    model="synthetic-model", effort="medium")
+                provider = V3PersistentGroundingAdapter(model)
+                usage = {"input_tokens": 1234, "cached_input_tokens": 234,
+                         "cache_write_input_tokens": 0, "output_tokens": 56,
+                         "reasoning_output_tokens": 12}
+                adapters = {
+                    "observe_source": lambda _payload: {"sequence": 1},
+                    "acquire_anchor": lambda _payload: {"image": str(image)},
+                    "anchor_model": lambda _payload: provider(
+                        root / "provider-call", "synthetic grounding request", image,
+                        "compiled", workspace),
+                    "final_revalidate": lambda _payload: {"status": "revalidated"},
+                    "verify_effect": lambda _payload: {
+                        "status": "succeeded", "evidence_ref": "fixture://saved-cell",
+                        "evidence_digest": "b" * 64, "effect_scope": "cell-A1 value"},
+                }
+                spec = {
+                    "target": "synthetic Calc save", "route": "cold",
+                    "coarse_origin": "caller_provided",
+                    "provided_coarse": {"status": "candidate"},
+                    "cached_target": None, "local_repair_on": [], "repair_on": [],
+                    "session_id": "prospective-jsonl-success-01",
+                }
+                execution = {"outcome": "TASK_SUCCEEDED", "completed_transitions": 2,
+                             "critical_events": [{"event": "action_terminal",
+                                                  "input_dispatched": True}]}
+                with patch("research.live_control.calc_g10_caller_v1.run_with_bounded_fresh_proposal",
+                           return_value=execution):
+                    result = run_g10_in_durable_allocation(
+                        spec, adapters,
+                        lambda _payload: {"interface_id": "synthetic-calc-interface"},
+                        object(), {}, ledger,
+                        perceive=lambda *_args: {}, verify_effect=lambda *_args: {},
+                        proposal_worker=object(), cancelled=lambda: False)
+                telemetry = {
+                    "local_observations": 2, "durable_calls": 1,
+                    "pointer_admissions": 0, "old_target_pointer_admissions": 0,
+                    "releases_verified": True, "elapsed_ns": 100,
+                    "source_to_completion_ns": 80, "input_feedback_ns": [],
+                    "repair": {"required": False, "old_reference_status": None,
+                        "old_reference_pointer_admissions": 0,
+                        "attempted": False, "succeeded": False},
+                }
+                projected = run.record_task("plain", 0, result,
+                    {"submission_count": 1, "exact_submission": True}, telemetry,
+                    custodian_path=ledger.path)
+                lifecycle = [json.loads(line) for line in
+                    (root / "prospective-run" / "lifecycle.jsonl").read_text(
+                        encoding="utf-8").splitlines()]
+                task_event, = [row for row in lifecycle if row["event"] == "task"]
+                audit = task_event["payload"]["custody"]["audit"]
+                protocol = [json.loads(line) for line in
+                    protocol_path.read_text(encoding="utf-8").splitlines()]
+                usage_event, = [row["message"] for row in protocol
+                    if row["direction"] == "received" and
+                    row["message"].get("method") == "thread/tokenUsage/updated"]
+                self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
+                self.assertEqual(result["attempt_ledger"][0]["status"], "completed")
+                self.assertEqual(result["attempt_ledger"][0]["call_id"], "turn-ledger-1")
+                self.assertEqual(result["attempt_ledger"][0]["thread_id"], "thread-ledger-1")
+                self.assertEqual(result["attempt_ledger"][0]["usage"], usage)
+                self.assertEqual(result["accounting"]["usage_totals"], usage)
+                self.assertEqual(usage_event["params"]["turnId"], "turn-ledger-1")
+                self.assertEqual(usage_event["params"]["tokenUsage"]["last"]["inputTokens"], 1234)
+                self.assertEqual(projected["status"], "projected")
+                self.assertEqual(audit["status"], "audited")
+                self.assertTrue(audit["receipt_persisted"])
+                self.assertTrue(audit["effect_receipt_persisted"])
+                self.assertEqual(audit["attempt_ledger"][0]["usage"], usage)
+                finished = run.finish([])
+                self.assertEqual(finished["status"], "HOLD")
+                self.assertEqual(len(finished["missing_assignments"]), 17)
+                self.assertFalse(json.loads((root / "prospective-run" /
+                    "run-manifest.json").read_text(encoding="utf-8"))["dispatch_enabled"])
+            finally:
+                if model is not None:
+                    model.close()
+                client.close(timeout=2)
+
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None,
+                         "Calc guarded adapter import requires Pillow")
     def test_successful_effect_and_receipts_project_into_prospective_task(self):
         from datetime import datetime, timedelta, timezone
         from unittest.mock import patch

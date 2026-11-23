@@ -42,3 +42,21 @@ material; do not replay its consumed allocation. Keep #57 open.
 
 This note is an offline source/evidence crosswalk. It adds no live result, code
 change, or new reliability/efficiency claim.
+
+## Current-main R03 success-path follow-up - 2026-11-23
+
+The worktree was checked against origin/main at
+2cf4230f918f1b05990a4491779805cc18658e12. A frozen one-task synthetic
+success fixture exercises JSONL client/parser, persistent grounding model,
+v3 adapter/caller, run_g10_in_durable_allocation, and registered ProspectiveRun
+custody. Unlike the earlier success-shaped dictionary stub, provider output
+and usage enter through the real JSONL parser. Exact call/thread IDs and five
+usage counters survive durable audit; synthetic execution/effect receipts
+produce one projected task. The focused test passes 1/1 and the module passes
+7/7 in normal and -O on Windows CPython 3.13.14.
+
+This establishes the local success transport seam only. The fake peer is not a
+provider, the execution/scorer are synthetic, custody attestation is injected,
+and 17 of 18 assignments remain missing with dispatch disabled. It does not
+establish real-provider accounting completeness or make a matched live
+allocation admissible. See the [R03 packet](../../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).

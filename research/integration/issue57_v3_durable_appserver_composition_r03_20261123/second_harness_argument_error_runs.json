@@ -1,0 +1,62 @@
+[
+  {
+    "name": "focused-normal",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_provider_success_joins_durable_prospective_custody",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 2.171,
+    "stdout": "",
+    "stderr": "test_jsonl_provider_success_joins_durable_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_provider_success_joins_durable_prospective_custody) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 1 test in 1.772s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "focused-optimized",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-O",
+      "-m",
+      "unittest",
+      "-O",
+      "research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_provider_success_joins_durable_prospective_custody",
+      "-v"
+    ],
+    "exit_code": 2,
+    "duration_s": 0.241,
+    "stdout": "",
+    "stderr": "usage: python.exe -m unittest [-h] [-v] [-q] [--locals] [--durations N] [-f]\r\n                              [-c] [-b] [-k TESTNAMEPATTERNS]\r\n                              [tests ...]\r\npython.exe -m unittest: error: unrecognized arguments: -O\r\n"
+  },
+  {
+    "name": "module-normal",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-m",
+      "unittest",
+      "research.live_control.test_grounding_appserver_usage_transport",
+      "-v"
+    ],
+    "exit_code": 0,
+    "duration_s": 20.987,
+    "stdout": "SYNTHETIC_R06 {\"arms\": {\"ephemeral\": {\"correct\": true, \"elapsed_ns\": 6000, \"input_tokens_final\": 7210, \"planner_generations_final\": 7}, \"persistent\": {\"correct\": true, \"elapsed_ns\": 1800, \"input_tokens_final\": 30, \"planner_generations_final\": 3}, \"plain\": {\"correct\": true, \"elapsed_ns\": 6000, \"input_tokens_final\": 6010, \"planner_generations_final\": 7}}, \"custody_audited\": 18, \"dispatch_enabled\": false, \"disposition\": \"RETAIN\", \"missing_assignments\": 0, \"status\": \"ready_for_frozen_evaluator\"}\r\n",
+    "stderr": "test_complete_synthetic_three_arm_run_audits_all_18_custodians (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_complete_synthetic_three_arm_run_audits_all_18_custodians) ... ok\r\ntest_jsonl_provider_success_joins_durable_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_jsonl_provider_success_joins_durable_prospective_custody) ... ok\r\ntest_provider_failure_usage_joins_prospective_task_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_provider_failure_usage_joins_prospective_task_custody) ... ok\r\ntest_provider_transport_failure_is_retained_in_durable_g10_allocation (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_provider_transport_failure_is_retained_in_durable_g10_allocation) ... ok\r\ntest_successful_effect_and_receipts_project_into_prospective_task (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_successful_effect_and_receipts_project_into_prospective_task) ... ok\r\ntest_thread_and_turn_identity_with_usage_reach_failed_attempt_ledger (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_thread_and_turn_identity_with_usage_reach_failed_attempt_ledger) ... ok\r\ntest_unknown_usage_and_deferred_attempts_reach_prospective_custody (research.live_control.test_grounding_appserver_usage_transport.GroundingAppServerUsageTransportTest.test_unknown_usage_and_deferred_attempts_reach_prospective_custody) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 7 tests in 20.652s\r\n\r\nOK\r\n"
+  },
+  {
+    "name": "module-optimized",
+    "command": [
+      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+      "-O",
+      "-m",
+      "unittest",
+      "-O",
+      "research.live_control.test_grounding_appserver_usage_transport",
+      "-v"
+    ],
+    "exit_code": 2,
+    "duration_s": 0.15,
+    "stdout": "",
+    "stderr": "usage: python.exe -m unittest [-h] [-v] [-q] [--locals] [--durations N] [-f]\r\n                              [-c] [-b] [-k TESTNAMEPATTERNS]\r\n                              [tests ...]\r\npython.exe -m unittest: error: unrecognized arguments: -O\r\n"
+  }
+]\n

@@ -1,0 +1,37 @@
+{
+  "schema": "issue57-v3-durable-appserver-composition-r03",
+  "frozen_utc": "2026-11-23T03:57:58.564Z",
+  "current_main_sha": "2cf4230f918f1b05990a4491779805cc18658e12",
+  "worktree_base_commit": "7a214b17b724f65f924ed36516f2195b856c0b05",
+  "scope": "One synthetic valid JSONL provider turn through the actual parser, grounding model, v3 adapter, caller, durable Calc allocation, and ProspectiveRun task custody; no external provider, GUI, native input, Docker, WSLc, or live allocation.",
+  "hypothesis": "A successful provider turn's exact turn/thread identity and all five usage counters survive as one completed caller attempt, are durably audited, and join the successful task/effect projection in ProspectiveRun.",
+  "pass_rule": "Focused test and complete test module pass normally and under -O on Windows CPython 3.13; one synthetic call, no retries, one projected task, custody audit succeeds; final 17 assignments remain missing and dispatch_enabled remains false.",
+  "fixture": {
+    "allocation_id": "synthetic-prospective-jsonl-success-01",
+    "call_id": "turn-ledger-1",
+    "thread_id": "thread-ledger-1",
+    "usage": {
+      "input_tokens": 1234,
+      "cached_input_tokens": 234,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 56,
+      "reasoning_output_tokens": 12
+    },
+    "effect": "fixture://saved-cell"
+  },
+  "source_sha256": {
+    "research/live_control/test_grounding_appserver_usage_transport.py": "6aeb41db85e0fca6d904b2e9e99a893647689e0e06503a977f7b8276055639c6",
+    "research/live_control/calc_g10_caller_v1.py": "366c8b8b62fa01917e7a87afdd9cc3591f8f7ebff3f98dd5ef69c0b0ed445821",
+    "research/live_control/issue57_v3_prospective_run_v1.py": "197863346fff190fb5d1fb53c2b2d5ac0cf18e79483b490f42646e39a87bbfa5",
+    "research/live_control/integrated_efficiency_app_server_model_v1.py": "a77dba12ce7b8e0b0f68d2e17553b8be4475e283ebbc6609e6f72e5192897f37",
+    "research/live_control/v3_persistent_grounding_adapter_v1.py": "1255816bd12c8b1797c00028b19f2486d1ae6d144efdd184a1e51f02e6c15bd6",
+    "research/live_control/codex_app_server_client_v2.py": "1a7ce3f606b237d02a8b8af256bd959ca3d3cc619d9a3e7e5070a153b22d720f"
+  },
+  "limitations": [
+    "The provider peer is synthetic.",
+    "Compiled execution is stubbed; no physical input or GUI task occurred.",
+    "The allocator verifier is a test callback, not trusted external custody.",
+    "One task only; does not qualify a three-arm comparison, product runtime, reliability, or Research Preview graduation."
+  ],
+  "condition_provenance": "Conditions were written before the qualified captured runs. An earlier exploratory focused normal test preceded this freeze and is excluded from the pass count."
+}
