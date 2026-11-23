@@ -1,0 +1,3 @@
+# R09 per-key repeat preflight
+
+On a disposable private Xvfb in the pinned image, Python Xlib read global auto-repeat enabled and the A-key repeat mask set (64). `change_keyboard_control(key=38, auto_repeat_mode=AutoRepeatModeOff)` retained global auto-repeat enabled and changed only the A repeat bit to 0. R09 resolves the A keycode dynamically from keysym `a` and verifies this precondition in each run before invoking the standard caller.
