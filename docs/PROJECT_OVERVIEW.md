@@ -2,9 +2,10 @@
 
 ## Current checkpoint — 2026-11-24
 
-The latest verified main is `a96559edfb5637f88f4fdcb38c5b2b1fae3ce01d`
-after PR #10541 (based on main `22aba58c`). The Win32 zipapp capture-module
-omission fix and archive import regression test are merged. Its retained
+The latest verified main is `164650754bce28fc849f630f0b744decb4034f87`
+after PR #10542 updated the status for merged PR #10541 (based on main
+`22aba58c`). The Win32 zipapp capture-module omission fix and archive import
+regression test are merged. Its retained
 local evidence includes R04: one Computer-Control-activated Notepad
 task completed through the public CLI, independently saved the exact token,
 and verified terminal release. R01–R03 preserve one packaging stop and two
@@ -18,12 +19,15 @@ provider/token/latency/correctness economics and transferable recovery
 reliability; #58 remains held by supported-host readiness and its fresh live
 acceptance; #59 still lacks an isolated preinstalled GZDoom/IWAD target and
 MAP01 completion evidence. Latest complete Issue/PR membership evidence is
-r179 (1,640 Issues / 403 PRs at baseline `b290c1ef`), predating #10540 and
-#10541. Latest exact local custody census is r178; it is stale and does not
-establish current cleanliness. Preserve the evidence and continue semantic
+[r180](maintenance/repository-inventory-recheck-20261124-r180.md): 1,640
+Issues / 403 PRs, exact ID sets unchanged from r177 at stable main
+`164650754bce28fc849f630f0b744decb4034f87`. The read-only local custody census
+[r179](maintenance/local-worktree-custody-recheck-20261124-r179.md) found 33
+registered worktrees, 10 dirty; the local repository is not clean. Preserve
+the evidence and continue semantic
 family triage; do not bulk-close Issues or remove unresolved worktrees.
 
-**Evidence baseline:** the dated R43 and WSLc R05–R11 findings below were added after main `d8d7ce00bc4b5512f5617f1f33de68245be72f20` (2026-11-23). The latest checked-out main is `1d7164b65790c5ff893c958a33f1f58d9fb20980` (2026-11-24); see the [current repository checkpoint](maintenance/repository-inventory-recheck-20261124-r179.md) and [organization plan](REPOSITORY_ORGANIZATION_PLAN.md). R43 adds a five-attempt scoped native recovered-task cohort; WSLc R05–R09 add current-main synthetic Xvfb recovery diagnostics that fail the old-task effect oracle even when physical release is observed. R10/R11 isolate ordinary XTEST autorepeat controls but leave the standard-caller repeated-effect interaction unresolved. Research Preview doctor R07 remains HOLD at 13/15. Camera-motion A01 and block-motion R02 reject two fixed motion-compensation cues for their shared offline episode; no live target is available. The repository-root `ROADMAP.md` carries the ordered product/research gates. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
+**Evidence baseline:** the dated R43 and WSLc R05–R11 findings below were added after main `d8d7ce00bc4b5512f5617f1f33de68245be72f20` (2026-11-23). The current checked-out main is `164650754bce28fc849f630f0b744decb4034f87` (2026-11-24); PR #10541's packaging correction is merged, and PR #10542 refreshed the status docs. See the [current inventory and custody checkpoint](REPOSITORY_ORGANIZATION_PLAN.md). R43 adds a five-attempt scoped native recovered-task cohort; WSLc R05–R09 add current-main synthetic Xvfb recovery diagnostics that fail the old-task effect oracle even when physical release is observed. R10/R11 isolate ordinary XTEST autorepeat controls but leave the standard-caller repeated-effect interaction unresolved. Research Preview doctor R07 remains HOLD at 13/15. Camera-motion A01 and block-motion R02 reject two fixed motion-compensation cues for their shared offline episode; no live target is available. The repository-root `ROADMAP.md` carries the ordered product/research gates. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose
 
@@ -37,7 +41,7 @@ The public product and research program are connected but distinct:
 
 ## Current state
 
-At the r179 inventory checkpoint, Issues [#53](https://github.com/Unjuno/agent-interface/issues/53), [#56](https://github.com/Unjuno/agent-interface/issues/56), [#57](https://github.com/Unjuno/agent-interface/issues/57), [#58](https://github.com/Unjuno/agent-interface/issues/58), and [#59](https://github.com/Unjuno/agent-interface/issues/59) remained open. PRs through #10538 were represented in that checkpoint; stale draft PR #8476 was superseded by #10527. The complete r179 membership read at main `b290c1ef9bafcd0d6294b7aae13c953adc36ffcc` found 1,640 open Issues and 403 open PRs, with exact ID sets unchanged from r177. PR #10539 then merged the organization-plan refresh at current main `1d7164b65790c5ff893c958a33f1f58d9fb20980`. This membership receipt does not perform semantic re-triage or establish product-gate completion.
+At the r180 inventory checkpoint, Issues [#53](https://github.com/Unjuno/agent-interface/issues/53), [#56](https://github.com/Unjuno/agent-interface/issues/56), [#57](https://github.com/Unjuno/agent-interface/issues/57), [#58](https://github.com/Unjuno/agent-interface/issues/58), and [#59](https://github.com/Unjuno/agent-interface/issues/59) remained open. Complete pagination at main `164650754bce28fc849f630f0b744decb4034f87` found 1,640 open Issues and 403 open PRs, with exact ID sets unchanged from r177. The inventory does not perform semantic re-triage or establish product-gate completion.
 
 | Area | What is established | What remains open |
 |---|---|---|

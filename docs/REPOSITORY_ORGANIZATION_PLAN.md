@@ -1,20 +1,61 @@
 > Start with [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for project goals and gate order; use [PROJECT_STATE.md](PROJECT_STATE.md) for detailed result status. This plan tracks inventory, family triage, and evidence/worktree custody.
 
-## Follow-up since the last complete census — 2026-11-24
+## Project-wide status reconciliation — 2026-11-24 (r180 / r179)
+
+Current main is `164650754bce28fc849f630f0b744decb4034f87`, after #10541's
+runtime packaging fix and #10542's documentation refresh. A fresh complete
+GitHub pagination found **1,640 open Issues and 403 open PRs**. Exact Issue and
+PR ID sets match r177; this is inventory stability, not semantic triage. See
+[membership r180](maintenance/repository-inventory-recheck-20261124-r180.md)
+and [the exact ID arrays](maintenance/repository-inventory-recheck-20261124-r180.json).
+
+The corresponding local read-only census found **33 registered worktrees, 10
+dirty**. Normal Git status collapses untracked directory contents, and the
+snapshot records a status hash for each checkout. It is a custody index, not a
+complete file-level ownership or duplicate proof. See [local census
+r179](maintenance/local-worktree-custody-recheck-20261124-r179.md) and [the
+exact snapshot](maintenance/local-worktree-custody-recheck-20261124-r179.json).
+The local repo is not clean; do not reset/delete/move worktrees based only on
+branch ancestry or counts.
+
+### Project work order
+
+1. **Finish current-main public runtime integration:** reuse Win32 R04's
+   single public-CLI Notepad task/release pass and fix the package omission
+   already merged. Next compose the standard caller with independent task
+   scoring, provider/token accounting, terminal release and finite recovery;
+   preserve setup stops R01–R03 as separate failures.
+2. **Resolve #59's live-control prerequisite:** reacquire an owned,
+   preinstalled GZDoom/IWAD and freeze a MAP01 task/effect oracle before a
+   live run. Do not infer gameplay from offline motion screens.
+3. **Keep #58's Preview gate explicit:** resolve supported-host prerequisites,
+   then run the fresh no-retry live acceptance and final audit. Doctor R07 is
+   HOLD at 13/15; it does not qualify the Preview.
+4. **Reconcile repository state in families:** first map dirty worktree paths
+   to owners, Issues, PRs and evidence hashes; then triage the Issue/PR queue
+   by canonical research question, retained results and successor. Keep viable
+   ideas and failures; close only evidence-resolved or superseded items.
+
+These are linked workstreams with explicit gates, not a claim that the project
+is complete. Keep the project goal active until research-preview graduation,
+matched integrated efficiency, standard-caller task/recovery reliability, and
+public runtime distribution have each passed.
+
+## Historical follow-up before census r180 — 2026-11-24
 
 Main advanced to `a96559edfb5637f88f4fdcb38c5b2b1fae3ce01d` after PR #10541.
 The scoped Win32 zipapp packaging repair and R01–R04 Notepad evidence are now
 on main via [PR #10541](https://github.com/Unjuno/agent-interface/pull/10541).
 R04 is one verified public-CLI task/release case; it does not alter #57's
 matched economics or recovery gate. The last complete membership census is
-still r179 at `b290c1ef` (1,640 open Issues / 403 open PRs), and the last exact
-local custody census is still r178. Both are stale for the present checkout
-and PR. Refresh them before claiming current queue totals or repository
-cleanliness. Keep viable ideas and failure evidence routed to their canonical
-questions; no mass closure or artifact/worktree deletion follows from these
-results.
+At that point, the last complete membership census was r179 and custody census
+was r178. The newer r180/r179 receipts above supersede those counts. R04 is one
+verified public-CLI task/release case; it does not alter #57's matched economics
+or recovery gate. Keep viable ideas and failure evidence routed to their
+canonical questions; no mass closure or artifact/worktree deletion follows
+from these results.
 
-## Current checkpoint — 2026-11-24
+## Prior checkpoint — 2026-11-24 (superseded by r180 / r179 above)
 
 Current main is `1d7164b65790c5ff893c958a33f1f58d9fb20980`, after PR #10539.
 The latest complete Issue/PR membership receipt is [r179](maintenance/repository-inventory-recheck-20261124-r179.md), captured at its exact source main `b290c1ef9bafcd0d6294b7aae13c953adc36ffcc`: 1,640 open Issues and 403 open PRs, with exact sets unchanged from r177. This is not an inventory at the later `1d7164b` checkpoint and does not establish semantic disposition.
