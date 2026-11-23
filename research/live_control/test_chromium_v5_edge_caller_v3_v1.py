@@ -49,7 +49,7 @@ LIVE = Path(__file__).resolve().parent
 REPO = LIVE.parents[1]
 if str(LIVE) not in sys.path:
     sys.path.insert(0, str(LIVE))
-TOKEN = "t991025-4"
+TOKEN = "t9910254"
 SCOPE = "edge-v5-caller-v3-local-session"
 FIELD_POINT = [190, 121]
 SUBMIT_POINT = [545, 121]
