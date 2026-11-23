@@ -1,11 +1,13 @@
 > Project-wide current status and next work order: [PROJECT_STATE.md](PROJECT_STATE.md).
 
 
-## Current-main public recovery task R41 — 2026-11-23
+## Current-main public recovered-task repeats R41–R42 — 2026-11-23
 
-On current main 87b5b459a56c636934947a2fc7616f26150e8b9a, R41 passed one prospectively frozen public standard-caller task after orphan recovery. The source A action stayed UNKNOWN, release-unconfirmed, task_success null, and replay-denied. Recovery confirmed release, neutral readback, and the 2 s horizon (77 samples). A separately created HWND/PID generation accepted one B task; the independent event oracle and public verifier returned task_success true. Both fixtures closed and the durable fence cleared. R29-R40 setup/target/oracle stops and partial outcomes remain preserved; see [R41 result](../research/integration/win32_post_recovery_public_task_r41_20261123/RESULT.md) and its raw manifest.
+R41 passed one prospectively frozen public standard-caller trial on main 87b5b459a56c636934947a2fc7616f26150e8b9a. R42 independently repeated the same one-shot question on merged main dc1f119bcb4094d0b58e70ffa273596f206c6c7a. In both, source A stayed UNKNOWN, release-unconfirmed, task_success null, and replay-denied; one public orphan recovery confirmed release, neutral readback, and the 2 s late-input horizon; then a separate fresh HWND/PID generation completed and released a public B task. The independent event oracle found exactly one B inside the exact dispatch interval, and the public verifier returned task_success=true. Both source/follow-up fixture pairs closed and the durable fence cleared.
 
-This is one controlled Win32 fixture pass, not same-window reuse, a reliability estimate, arbitrary-app/MAP01/Calc evidence, matched provider efficiency, or Research Preview graduation. Keep #57 and #58 open; continue with repeated independent standard-caller outcomes and the current-source matched efficiency/accounting gate.
+R42 preserves the client-area fixture's inherited R34 label as a visual-identity caveat; its OS window title, foreground probe, HWND/PID and allocation registry match R42. The raw screenshots record it.
+
+These are two controlled same-host fixture passes, not a reliability estimate, same-window reuse, arbitrary-app/MAP01/Calc evidence, matched provider efficiency, or Research Preview graduation. Keep #57 and #58 open; next close the current-source all-attempt provider/accounting path and then freeze a finite matched comparison. See [R41 result](../research/integration/win32_post_recovery_public_task_r41_20261123/RESULT.md) and [R42 result](../research/integration/win32_post_recovery_public_task_r42_20261123/RESULT.md).
 
 ## Research Preview and #57 current-main follow-up R06 — 2026-11-23
 
