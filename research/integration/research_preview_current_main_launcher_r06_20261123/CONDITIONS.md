@@ -8,5 +8,6 @@
 - Baseline suite: `python3 -m unittest test_launchers -v` and `python3 -O -m unittest test_launchers -v`; both initially failed 4/21 because tests omitted the explicit `--install-dependencies` flag required by current setup script.
 - Candidate correction: test fixture now passes the explicit opt-in flag to its fake setup dispatcher; repeated staged failure tests clear only their disposable fixture venv before injecting the next failure.
 - Candidate suite: same two commands; both passed 21/21 (normal 0.415 s, optimized 0.388 s).
+- Preview bundle builder + supported-host acceptance helper suites: 11/11 PASS normally and 11/11 under Python optimized mode; raw logs retained.
 - Raw logs preserve pre-fix failures and post-fix passes.
 - Limitation: fixture contract only. This does not run setup, pip, doctor, GUI, model, live task, or supported-host golden acceptance.
