@@ -1,5 +1,12 @@
 > Start with [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for project goals and gate order; use [PROJECT_STATE.md](PROJECT_STATE.md) for detailed result status. This plan tracks inventory, family triage, and evidence/worktree custody.
 
+## Current checkpoint — 2026-11-24
+
+Current main is `1d7164b65790c5ff893c958a33f1f58d9fb20980`, after PR #10539.
+The latest complete Issue/PR membership receipt is [r179](maintenance/repository-inventory-recheck-20261124-r179.md), captured at its exact source main `b290c1ef9bafcd0d6294b7aae13c953adc36ffcc`: 1,640 open Issues and 403 open PRs, with exact sets unchanged from r177. This is not an inventory at the later `1d7164b` checkpoint and does not establish semantic disposition.
+
+Product gates remain open. Current `docs/CURRENT_GOAL.md` records R43's five scoped recovered-task fixture passes, WSLc R05–R11 release/repeat diagnostics, and the Research Preview R07 doctor HOLD. These do not establish live-provider economics, broad recovery reliability, MAP01 completion, or distribution acceptance. Preserve the failed and stopped cohorts. The current work order remains in [ROADMAP.md](../ROADMAP.md); the latest full semantic routing remains the r160 crosswalk, and the latest exact local custody census remains r178. Continue bounded family-by-family triage and reconcile changed worktrees by owner and content before moving or deleting anything. Do not treat a stable membership count as a clean repository or a reason to bulk-close Issues.
+
 ## Project-wide status reconciliation — 2026-11-23
 
 ### Post-merge checkpoint
