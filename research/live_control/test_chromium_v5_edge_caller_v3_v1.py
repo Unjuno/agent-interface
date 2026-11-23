@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import secrets
 import shutil
 import subprocess
@@ -356,8 +357,10 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
                     submit_present = "save" in page_ocr["text"].casefold()
                     if state["baseline_field_digest"] is None:
                         state["baseline_field_digest"] = field_digest
+                    completion_text = re.sub(
+                        r"[^a-z0-9]", "", page_ocr["text"].casefold())
                     submitted_pixels = (
-                        "ai integrated saved" in page_ocr["text"].casefold()
+                        "aiintegratedsaved" in completion_text
                         and full_digest != state["previous_digest"])
                     digest = hashlib.sha256(
                         (full_digest + full_observation["pointer_binding"][
