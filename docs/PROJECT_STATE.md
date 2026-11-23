@@ -133,6 +133,10 @@ success, comparative efficiency, reliability, or preview readiness.
   until owner/reference and hash reconciliation; nothing was deleted or reset.
   See [r173 custody](maintenance/local-worktree-custody-recheck-20261123-r173.md)
   and its [exact snapshot](maintenance/local-worktree-custody-recheck-20261123-r173.json).
+  Follow-up r174 found three root `main` working files already byte-identical
+  to current-main blobs, while eight other tracked changes matched no
+  registered worktree HEAD. The root checkout is 170 commits behind and still
+  requires full custody review; see [r174](maintenance/local-worktree-blob-match-20261123-r174.md).
 - Cleanup is therefore **in progress, not complete**: reconcile branch/PR
   reachability, inspect dirty worktrees and raw artifacts by path and hash,
   route every open item to an evidence-backed disposition, then remove only
