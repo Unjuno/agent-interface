@@ -1,0 +1,889 @@
+{
+  "case": "changed-generation",
+  "invalidate_after_entry": true,
+  "outcome": "EXECUTION_INCOMPLETE",
+  "result": {
+    "outcome": "EXECUTION_INCOMPLETE",
+    "reason": "association_changed",
+    "task_effect": null,
+    "effect_receipt": null,
+    "delivery": "confirmed_partial",
+    "execution_progress": {
+      "status": "safe_yield",
+      "reason": "association_changed",
+      "completed_actions": 1,
+      "input_dispatched": true
+    },
+    "selected_target": {
+      "field": "field",
+      "submit": "submit"
+    },
+    "cache_update": {
+      "field": "field",
+      "submit": "submit"
+    },
+    "repair_path": "none",
+    "route": "reuse",
+    "repair_trace": [
+      {
+        "stage": "reuse_revalidate",
+        "status": "revalidated"
+      }
+    ],
+    "coarse_origin": "caller_provided",
+    "comparison": {
+      "class": "warm_reuse",
+      "omitted_stages": [
+        "observe_source",
+        "coarse_model",
+        "acquire_anchor",
+        "anchor_model"
+      ],
+      "comparable_to_full_cold": false
+    },
+    "stages": {
+      "observe_source": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "coarse_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "acquire_anchor": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "anchor_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "reuse_revalidate": {
+        "status": "completed",
+        "reason": null
+      },
+      "local_repair": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "acquire_expansion": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "expanded_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_observe": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_revalidate": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "final_revalidate": {
+        "status": "completed",
+        "reason": null
+      },
+      "execute": {
+        "status": "completed",
+        "reason": null
+      },
+      "verify_effect": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      }
+    },
+    "attempt_ledger": [],
+    "model_call_ledger": [],
+    "accounting": {
+      "attempted_calls": 0,
+      "completed_calls": 0,
+      "duplicate_call_ids": [],
+      "usage_totals": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "usage_coverage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "visible_images_submitted": 0,
+      "visible_image_coverage": 0,
+      "model_wait_ns": 0,
+      "model_wait_coverage": 0,
+      "cost_coverage": 0,
+      "cost": 0,
+      "cached_input_semantics": "subset of input_tokens; never added to input total"
+    },
+    "phase_timings": [
+      {
+        "stage": "reuse_revalidate",
+        "started_ns": 471219865762200,
+        "ended_ns": 471219976187300,
+        "elapsed_ns": 110425100
+      },
+      {
+        "stage": "final_revalidate",
+        "started_ns": 471219976217100,
+        "ended_ns": 471220070216000,
+        "elapsed_ns": 93998900
+      },
+      {
+        "stage": "execute",
+        "started_ns": 471220070247900,
+        "ended_ns": 471220675351500,
+        "elapsed_ns": 605103600
+      }
+    ],
+    "input_authority": "consumed_by_recorded_execute_stage",
+    "compiled_execution_receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "chromium-v5-edge-form",
+      "method": "enter_verify_exact_value_then_submit",
+      "method_version": "2",
+      "session_scope": "edge-v5-caller-v3-local-session",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 6,
+          "captured_ns": 471220172773300,
+          "evidence_ref": "edge-v5-frame-6",
+          "evidence_digest": "ca63126572e53cf505b053e2dcb7783bd1951e078304c977bc0df838195a2ecb",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_value_matches_task": false,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 471220070548600,
+          "observation_accepted_ns": 471220310276000
+        },
+        {
+          "sequence": 7,
+          "captured_ns": 471220604251700,
+          "evidence_ref": "edge-v5-frame-7",
+          "evidence_digest": "84f7aca32747b212da36170a5870b3797d15acebb265977de301ca5a55c3ab95",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_value_matches_task": true,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 471220490759300,
+          "observation_accepted_ns": 471220675064000
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "empty",
+          "to_state": "verify_value",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "observation_sequence": 6,
+          "evidence_ref": "edge-v5-frame-6",
+          "action_id": "edge-action-1",
+          "effect_ref": "edge-effect-1",
+          "release_verified": true,
+          "execution_started_ns": 471220310418000,
+          "execution_accepted_ns": 471220490711500
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "empty",
+          "outcome": "action",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "evidence_ref": "edge-v5-frame-6"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter_token",
+          "status": "completed",
+          "action_id": "edge-action-1",
+          "release_verified": true,
+          "execution_started_ns": 471220310418000,
+          "execution_accepted_ns": 471220490711500,
+          "input_dispatched": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter_token",
+          "status": "succeeded",
+          "evidence_ref": "edge-v5-frame-7",
+          "action_id": "edge-action-1",
+          "execution_accepted_ns": 471220490711500,
+          "effect_observation_captured_ns": 471220604251700,
+          "effect_observation_accepted_ns": 471220675064000,
+          "effect_verification_started_ns": 471220675087000,
+          "effect_verification_accepted_ns": 471220675108100,
+          "effect_verification_clock_domain": "graph"
+        },
+        {
+          "event": "branch_selected",
+          "state": "verify_value",
+          "outcome": "action",
+          "action": "submit_form",
+          "matched_conditions": {
+            "field_value_matches_task": true,
+            "submit_target_present": true
+          },
+          "evidence_ref": "edge-v5-frame-7"
+        },
+        {
+          "event": "admission_refused",
+          "action": "submit_form",
+          "status": "association_changed",
+          "reason": "association_changed"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "association_changed",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "edge-v5-frame-7",
+      "pending_effect": null,
+      "started_ns": 471220070543400,
+      "ended_ns": 471220675191500,
+      "elapsed_ns": 604648100,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "compiled_receipt_publication_error": null
+  },
+  "minted_handles": {
+    "field": {
+      "alias": "field",
+      "offset": [
+        32,
+        14
+      ],
+      "source_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_exact": true,
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    "submit": {
+      "alias": "submit",
+      "offset": [
+        24,
+        14
+      ],
+      "source_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_exact": true,
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  },
+  "mint_events": [
+    {
+      "event": "target_handle_minted_from_point",
+      "id": "mint-field",
+      "step": 0,
+      "minted_ns": 471218523023200,
+      "handle": "field",
+      "name": "field",
+      "status": "VALID",
+      "created_sequence": 2,
+      "expires_ns": 471248523023200,
+      "allowed_transformations": [
+        "window_translation"
+      ],
+      "patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "authority": "observational reference only; grants no input authority",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false,
+      "derivation": "centered_region_from_model_point",
+      "source_point": [
+        190,
+        121
+      ],
+      "source_sequence": 1,
+      "fresh_sequence": 2,
+      "derived_box": [
+        158,
+        107,
+        64,
+        28
+      ],
+      "derived_offset": [
+        32,
+        14
+      ],
+      "source_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+      "fresh_patch_exact": true
+    },
+    {
+      "event": "target_handle_minted_from_point",
+      "id": "mint-submit",
+      "step": 0,
+      "minted_ns": 471218622584600,
+      "handle": "submit",
+      "name": "submit",
+      "status": "VALID",
+      "created_sequence": 3,
+      "expires_ns": 471248622584600,
+      "allowed_transformations": [
+        "window_translation"
+      ],
+      "patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "authority": "observational reference only; grants no input authority",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false,
+      "derivation": "centered_region_from_model_point",
+      "source_point": [
+        545,
+        121
+      ],
+      "source_sequence": 1,
+      "fresh_sequence": 3,
+      "derived_box": [
+        521,
+        107,
+        48,
+        28
+      ],
+      "derived_offset": [
+        24,
+        14
+      ],
+      "source_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+      "fresh_patch_exact": true
+    }
+  ],
+  "observations": [
+    {
+      "sequence": 6,
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form",
+      "ocr_field": "ー Enter code",
+      "ocr_submit": "save",
+      "value_state": false,
+      "page_ocr": "VaIUe Enter code Save",
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_value_matches_task": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "evidence_digest": "ca63126572e53cf505b053e2dcb7783bd1951e078304c977bc0df838195a2ecb"
+    },
+    {
+      "sequence": 7,
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "C6E2A6AB530E6F09147A0849C042D26D",
+      "url": "http://127.0.0.1:57624/form",
+      "ocr_field": "t9910254",
+      "ocr_submit": "save",
+      "value_state": true,
+      "page_ocr": "VaIUe t9910254 Save",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_value_matches_task": true,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "evidence_digest": "84f7aca32747b212da36170a5870b3797d15acebb265977de301ca5a55c3ab95"
+    }
+  ],
+  "admissions": [
+    {
+      "stage": "caller_revalidation",
+      "resolutions": [
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            190,
+            121
+          ],
+          "observed_box": [
+            158,
+            107,
+            64,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 471224970667700,
+          "patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "submit",
+          "point": [
+            545,
+            121
+          ],
+          "observed_box": [
+            521,
+            107,
+            48,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 471224970667700,
+          "patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    {
+      "stage": "caller_revalidation",
+      "resolutions": [
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            190,
+            121
+          ],
+          "observed_box": [
+            158,
+            107,
+            64,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 471225067767500,
+          "patch_sha256": "56464df6563988a1d8d75421a8b8d77a6e0d7b7e6a8e22448651196a3b6579f4",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "eligible": true,
+          "status": "VALID",
+          "handle": "submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "submit",
+          "point": [
+            545,
+            121
+          ],
+          "observed_box": [
+            521,
+            107,
+            48,
+            28
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 471225067767500,
+          "patch_sha256": "ee53a67fa2f9db8d738ed74fb5065137be10d20876864e5ab3cb5032a837356a",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    {
+      "stage": "compiled_admission",
+      "alias": "field",
+      "status": "VALID",
+      "reason": "exact_region_match",
+      "point": [
+        190,
+        121
+      ],
+      "sequence": 6
+    },
+    {
+      "stage": "compiled_admission",
+      "alias": "submit",
+      "status": "SCOPE_MISMATCH",
+      "reason": "window_generation_changed_or_missing",
+      "point": null,
+      "sequence": null
+    }
+  ],
+  "dispatched_operations": [
+    "enter_exact_token"
+  ],
+  "core_effect_checks": [
+    {
+      "expected_effect": {
+        "field_value_matches_task": true
+      },
+      "action": "enter_token",
+      "effect_ref": "edge-effect-1",
+      "observation": {
+        "sequence": 7,
+        "captured_ns": 471220604251700,
+        "surface": "edge-v5-caller-v3-local-session",
+        "predicates": {
+          "field_pixels_changed": true,
+          "field_value_matches_task": true,
+          "field_target_present": true,
+          "submit_target_present": true,
+          "submission_pixels_changed": false
+        },
+        "evidence_ref": "edge-v5-frame-7",
+        "evidence_digest": "84f7aca32747b212da36170a5870b3797d15acebb265977de301ca5a55c3ab95"
+      }
+    }
+  ],
+  "outer_scores": [],
+  "server_posts": [],
+  "receipts": [
+    {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "chromium-v5-edge-form",
+      "method": "enter_verify_exact_value_then_submit",
+      "method_version": "2",
+      "session_scope": "edge-v5-caller-v3-local-session",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 6,
+          "captured_ns": 471220172773300,
+          "evidence_ref": "edge-v5-frame-6",
+          "evidence_digest": "ca63126572e53cf505b053e2dcb7783bd1951e078304c977bc0df838195a2ecb",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_value_matches_task": false,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 471220070548600,
+          "observation_accepted_ns": 471220310276000
+        },
+        {
+          "sequence": 7,
+          "captured_ns": 471220604251700,
+          "evidence_ref": "edge-v5-frame-7",
+          "evidence_digest": "84f7aca32747b212da36170a5870b3797d15acebb265977de301ca5a55c3ab95",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_value_matches_task": true,
+            "field_target_present": true,
+            "submit_target_present": true,
+            "submission_pixels_changed": false
+          },
+          "observation_started_ns": 471220490759300,
+          "observation_accepted_ns": 471220675064000
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "empty",
+          "to_state": "verify_value",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "observation_sequence": 6,
+          "evidence_ref": "edge-v5-frame-6",
+          "action_id": "edge-action-1",
+          "effect_ref": "edge-effect-1",
+          "release_verified": true,
+          "execution_started_ns": 471220310418000,
+          "execution_accepted_ns": 471220490711500
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "empty",
+          "outcome": "action",
+          "action": "enter_token",
+          "matched_conditions": {
+            "field_value_matches_task": false,
+            "field_target_present": true
+          },
+          "evidence_ref": "edge-v5-frame-6"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter_token",
+          "status": "completed",
+          "action_id": "edge-action-1",
+          "release_verified": true,
+          "execution_started_ns": 471220310418000,
+          "execution_accepted_ns": 471220490711500,
+          "input_dispatched": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter_token",
+          "status": "succeeded",
+          "evidence_ref": "edge-v5-frame-7",
+          "action_id": "edge-action-1",
+          "execution_accepted_ns": 471220490711500,
+          "effect_observation_captured_ns": 471220604251700,
+          "effect_observation_accepted_ns": 471220675064000,
+          "effect_verification_started_ns": 471220675087000,
+          "effect_verification_accepted_ns": 471220675108100,
+          "effect_verification_clock_domain": "graph"
+        },
+        {
+          "event": "branch_selected",
+          "state": "verify_value",
+          "outcome": "action",
+          "action": "submit_form",
+          "matched_conditions": {
+            "field_value_matches_task": true,
+            "submit_target_present": true
+          },
+          "evidence_ref": "edge-v5-frame-7"
+        },
+        {
+          "event": "admission_refused",
+          "action": "submit_form",
+          "status": "association_changed",
+          "reason": "association_changed"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "association_changed",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "edge-v5-frame-7",
+      "pending_effect": null,
+      "started_ns": 471220070543400,
+      "ended_ns": 471220675191500,
+      "elapsed_ns": 604648100,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    }
+  ],
+  "journal": [
+    {
+      "event": "stage_started",
+      "stage": "reuse_revalidate",
+      "started_ns": 471219865762200
+    },
+    {
+      "event": "stage_completed",
+      "stage": "reuse_revalidate",
+      "ended_ns": 471219976187300
+    },
+    {
+      "event": "stage_started",
+      "stage": "final_revalidate",
+      "started_ns": 471219976217100
+    },
+    {
+      "event": "stage_completed",
+      "stage": "final_revalidate",
+      "ended_ns": 471220070216000
+    },
+    {
+      "event": "stage_started",
+      "stage": "execute",
+      "started_ns": 471220070247900
+    },
+    {
+      "event": "observation_recorded",
+      "state": "empty",
+      "sequence": 6,
+      "evidence_ref": "edge-v5-frame-6"
+    },
+    {
+      "event": "branch_selected",
+      "state": "empty",
+      "outcome": "action",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_value_matches_task": false,
+        "field_target_present": true
+      },
+      "evidence_ref": "edge-v5-frame-6"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter_token",
+      "status": "completed",
+      "action_id": "edge-action-1",
+      "release_verified": true,
+      "execution_started_ns": 471220310418000,
+      "execution_accepted_ns": 471220490711500,
+      "input_dispatched": true
+    },
+    {
+      "event": "observation_recorded",
+      "state": "verify_value",
+      "sequence": 7,
+      "evidence_ref": "edge-v5-frame-7"
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter_token",
+      "status": "succeeded",
+      "evidence_ref": "edge-v5-frame-7",
+      "action_id": "edge-action-1",
+      "execution_accepted_ns": 471220490711500,
+      "effect_observation_captured_ns": 471220604251700,
+      "effect_observation_accepted_ns": 471220675064000,
+      "effect_verification_started_ns": 471220675087000,
+      "effect_verification_accepted_ns": 471220675108100,
+      "effect_verification_clock_domain": "graph"
+    },
+    {
+      "event": "branch_selected",
+      "state": "verify_value",
+      "outcome": "action",
+      "action": "submit_form",
+      "matched_conditions": {
+        "field_value_matches_task": true,
+        "submit_target_present": true
+      },
+      "evidence_ref": "edge-v5-frame-7"
+    },
+    {
+      "event": "admission_refused",
+      "action": "submit_form",
+      "status": "association_changed",
+      "reason": "association_changed"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 1
+    },
+    {
+      "event": "stage_completed",
+      "stage": "execute",
+      "ended_ns": 471220675351500
+    },
+    {
+      "event": "adaptive_route_finished",
+      "outcome": "EXECUTION_INCOMPLETE",
+      "reason": "association_changed",
+      "repair_path": "none",
+      "attempted_calls": 0
+    }
+  ],
+  "browser_frames": [
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form"
+    },
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form"
+    },
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form"
+    },
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form"
+    },
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form"
+    },
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "9EEC8C66A17905CFA85F9CB070967011",
+      "url": "http://127.0.0.1:57624/form"
+    },
+    {
+      "frame_id": "D3EC362F3050E4BD84F03E2719672E47",
+      "loader_id": "C6E2A6AB530E6F09147A0849C042D26D",
+      "url": "http://127.0.0.1:57624/form"
+    }
+  ],
+  "edge_version": {
+    "Browser": "Edg/157.0.4341.60",
+    "File-Path-Style": "windows",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+    "V8-Version": "15.7.11.7",
+    "WebKit-Version": "537.36 (@fbcb2989a6c61b72a4919fe1028e58e70131cd46)",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:57625/devtools/browser/589434fc-a78f-48ac-9174-8bf898287b6f"
+  },
+  "profile_cleaned": true,
+  "conditions_sha256": "3c1d206f69d4d36b57b90d5039855309963059b945d651a820b190f6cc779531",
+  "python": "3.11.9",
+  "optimization": true,
+  "errors": []
+}

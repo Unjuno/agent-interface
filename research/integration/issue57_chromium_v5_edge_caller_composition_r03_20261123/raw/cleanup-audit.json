@@ -1,0 +1,11 @@
+{
+  "scope": "cleanup of only the R03 Edge user-data-dir after the test cleanup helper found it locked",
+  "initial_cleanup": "failed after 16 retries; recorded in positive/run.json",
+  "process_selection": "msedge.exe command lines containing the exact generated R03 profile marker",
+  "unrelated_shell_processes": "excluded by executable-name filter",
+  "targeted_edge_processes_at_cleanup": 10,
+  "matching_edge_processes_after_termination": 0,
+  "test_owned_profile_after_cleanup": false,
+  "verification": "follow-up Win32_Process query and Test-Path both returned no match/False",
+  "test_outcome_changed": false
+}
