@@ -1,6 +1,6 @@
 # Agent Interface project overview
 
-**Evidence baseline:** main `6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3` (2026-11-23), after PR #10521; R10–R14 results are in the linked dated packets. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
+**Evidence baseline:** main `095d92b1696e03c266287b530cbb38f5b9d5e7f6` (2026-11-23), after PR #10522. R10–R14 are merged setup-stop evidence; #57 remains open. The repository-root `ROADMAP.md` carries the ordered product/research gates. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose
 

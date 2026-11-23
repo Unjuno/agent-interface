@@ -2,6 +2,18 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Research Preview current-main doctor R07 — 2026-11-23
+
+After PR #10522, the current WSL/WSLg host re-ran the doctor from the retained
+R06 current-main runtime source using its already-installed pinned WSL venv.
+The runtime and RC source are unchanged between the R06 evidence base and
+current main `095d92b1696e03c266287b530cbb38f5b9d5e7f6`. Thirteen of 15 checks
+passed; `windows_cli` and dependent `codex_cli` failed because the expected
+Windows Codex CLI JavaScript entrypoint remains absent. The doctor exited 1.
+No package was installed, Chrome was not launched, and no Golden task or
+`audit-live` ran. Do not substitute the desktop `codex.exe`. See [R07
+conditions/result](../research/integration/research_preview_current_main_supported_host_doctor_r07_20261123/RESULT.md).
+
 ## Issue #57 native Edge composition attempts R10–R14 — 2026-11-23
 
 On current `origin/main` `6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3`, five

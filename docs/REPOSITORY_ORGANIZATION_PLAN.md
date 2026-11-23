@@ -2,13 +2,13 @@
 
 ## Project-wide status reconciliation — 2026-11-23
 
-The current `origin/main` used for the latest experiment freeze is
-`6cd2fd2d20c713849e48b3d2bae3e8aa6fad3bb3` (after PR #10521). There is no
-standalone `ROADMAP.md` in `docs/`; `PROJECT_OVERVIEW.md` is the canonical
-project purpose, current state, and ordered work list, while `CURRENT_GOAL.md`
-and `PROJECT_STATE.md` carry the active goal and dated gate evidence. Issue
-#57's latest public comment is R09 (2026-11-23); the R10–R14 outcomes are
-retained in the current experiment branch pending review/integration.
+The current `origin/main` is
+`095d92b1696e03c266287b530cbb38f5b9d5e7f6` (after PR #10522). The canonical
+ordered research/product gates are in the repository-root `ROADMAP.md`;
+`PROJECT_OVERVIEW.md` is the short orientation and work-order page, while
+`CURRENT_GOAL.md` and `PROJECT_STATE.md` carry the active goal and dated gate
+evidence. Issue #57's R10–R14 outcomes are merged in PR #10522; its public
+comments record the stops and explicitly keep the issue open.
 
 The R10–R14 Win32 Edge attempts are all setup stops and do not change product
 qualification: launcher-PID window discovery failed in R10; R11 then found
