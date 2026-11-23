@@ -1,5 +1,28 @@
 # Agent Interface project overview
 
+## Current checkpoint — 2026-11-24
+
+The latest verified main is `22aba58c276141401a7688be335be5191ec661b9`
+(PR #10540). PR [#10541](https://github.com/Unjuno/agent-interface/pull/10541)
+is open with the Win32 zipapp capture-module omission fix and its regression
+test. Its local evidence includes R04: one Computer-Control-activated Notepad
+task completed through the public CLI, independently saved the exact token,
+and verified terminal release. R01–R03 preserve one packaging stop and two
+setup/admission stops; these are not pooled with R04. This proves one scoped
+host/app path, not recovery reliability, matched efficiency, or public release
+readiness. See the [R01–R04 packets](../research/integration/) and the
+[detailed state dashboard](PROJECT_STATE.md).
+
+The gates remain distinct: #57 still needs integrated all-attempt
+provider/token/latency/correctness economics and transferable recovery
+reliability; #58 remains held by supported-host readiness and its fresh live
+acceptance; #59 still lacks an isolated preinstalled GZDoom/IWAD target and
+MAP01 completion evidence. Latest complete Issue/PR membership evidence is
+r179 (1,640 Issues / 403 PRs at baseline `b290c1ef`), predating #10540 and
+#10541. Latest exact local custody census is r178; it is stale and does not
+establish current cleanliness. Preserve the evidence and continue semantic
+family triage; do not bulk-close Issues or remove unresolved worktrees.
+
 **Evidence baseline:** the dated R43 and WSLc R05–R11 findings below were added after main `d8d7ce00bc4b5512f5617f1f33de68245be72f20` (2026-11-23). The latest checked-out main is `1d7164b65790c5ff893c958a33f1f58d9fb20980` (2026-11-24); see the [current repository checkpoint](maintenance/repository-inventory-recheck-20261124-r179.md) and [organization plan](REPOSITORY_ORGANIZATION_PLAN.md). R43 adds a five-attempt scoped native recovered-task cohort; WSLc R05–R09 add current-main synthetic Xvfb recovery diagnostics that fail the old-task effect oracle even when physical release is observed. R10/R11 isolate ordinary XTEST autorepeat controls but leave the standard-caller repeated-effect interaction unresolved. Research Preview doctor R07 remains HOLD at 13/15. Camera-motion A01 and block-motion R02 reject two fixed motion-compensation cues for their shared offline episode; no live target is available. The repository-root `ROADMAP.md` carries the ordered product/research gates. This is the short, project-wide orientation page. Detailed experiment records, failure history, and raw evidence remain in their existing locations.
 
 ## Purpose

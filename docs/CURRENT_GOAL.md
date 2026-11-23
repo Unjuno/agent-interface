@@ -2,6 +2,20 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Current-main follow-up — 2026-11-24
+
+On main `22aba58c276141401a7688be335be5191ec661b9` (PR #10540), a public Win32
+runtime packaging omission was isolated by a frozen Notepad CLI attempt. The
+fix and zipapp import regression test are in [PR #10541](https://github.com/Unjuno/agent-interface/pull/10541).
+R04 then completed one fresh Notepad task after explicit Computer Control
+foreground activation: exact independent file effect, same target generation,
+and verified terminal release. R01–R03 failures remain separately retained.
+This is basic one-attempt public CLI evidence and does not satisfy #57's
+integrated lifecycle efficiency, provider accounting, repeated recovery, or
+general reliability requirements. #58 and #59 also remain open. Full status
+and routing: [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md),
+[PROJECT_STATE.md](PROJECT_STATE.md), and the repository-root [ROADMAP](../ROADMAP.md).
+
 ## Issue #57 WSLc XTEST repeat boundary R08–R11 — 2026-11-23
 
 Frozen source main: `36da81e3fb97dca875e4dc5b1d13d5385574b400`. Standard-caller R08/R09 still showed excess old-task A effects while the global or per-key repeat setting was read back off: effect counts 1→5 and 1→28; normal runs reached neutral physical release but the old-task oracle failed, while optimized runs timed out at the 1.5 s release budget and retained UNKNOWN until final cleanup. The counts are separate single-run observations and are not a controlled comparison. Direct WSLc Xvfb controls R10 showed 15 A press/release pairs for a 1.2 s hold at defaults and only 1/1 with global-off or A-key-off, both normal and `-O`. R11 queued a 2 s delayed B request with A repeat disabled and observed exactly one A press/release, one B press/release, and a neutral final keymap. Ordinary server autorepeat controls work in isolation; the extra repetitions in the standard caller/harness path remain unexplained. No runtime setting changed. R08–R11 audit scripts and packet manifests pass normal/`-O`; this remains synthetic Xvfb diagnosis, not #57 task acceptance. See [R08](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_repeat_off_diagnostic_r08_20261123/RESULT.md), [R09](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_key_repeat_keyoff_diagnostic_r09_20261123/RESULT.md), [R10](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_xtest_repeat_microcontrol_r10_20261123/RESULT.md), and [R11](../research/integration/standard_mcp_task_ledger_57_v1/current_main_wslc_xvfb_delayed_request_repeat_microcontrol_r11_20261123/RESULT.md). #57 remains open.
