@@ -1335,3 +1335,13 @@ are retained; one synthetic effect projects and custody audits. Focused 1/1 and
 module 7/7 pass in normal and -O on Windows CPython 3.13.14. The run remains
 non-dispatching and HOLD with 17 assignments missing. This does not establish
 live-provider completeness or authorize the matched comparison. See [R03](../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).
+
+## Issue #57 failed-turn UNKNOWN-usage R04 - 2026-11-23
+
+A synthetic failed App Server terminal response without usage traverses the
+real JSONL client/parser, grounding model, v3 caller, durable allocation, and
+ProspectiveRun custody. Identity is retained, all five usage totals remain
+UNKNOWN (None), no execution/effect receipt is promoted, and projection stays
+HOLD with dispatch disabled. Focused 1/1 and module 8/8 pass normal and -O on
+Windows CPython 3.13.14. This is synthetic and does not establish live
+provider completeness. See [R04](../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).

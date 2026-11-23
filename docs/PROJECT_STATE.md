@@ -1,5 +1,16 @@
 # Project state and work order
 
+## Issue #57 failed-turn UNKNOWN-usage R04 - 2026-11-23
+
+On current main d58deb08567325d103eadb7966654907293d10e1, the synthetic
+JSONL provider's terminal failed status with no usage notification is retained
+as one failed attempt with exact call/thread identity and all five usage
+totals UNKNOWN (None). Durable custody audits, neither execution nor effect
+receipt appears, the task remains HOLD, and dispatch remains false. Focused
+1/1 and the full eight-test module pass normal and -O on Windows CPython
+3.13.14. This is synthetic fail-closed evidence, not proof of live provider
+completeness or matched efficiency. See [R04 packet](../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
+
 ## Issue #57 provider success-to-custody R03 - 2026-11-23
 
 On current main 2cf4230f918f1b05990a4491779805cc18658e12, one synthetic

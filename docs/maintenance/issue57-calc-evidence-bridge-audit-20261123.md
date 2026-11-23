@@ -60,3 +60,14 @@ provider, the execution/scorer are synthetic, custody attestation is injected,
 and 17 of 18 assignments remain missing with dispatch disabled. It does not
 establish real-provider accounting completeness or make a matched live
 allocation admissible. See the [R03 packet](../../research/integration/issue57_v3_durable_appserver_composition_r03_20261123/RESULT.md).
+
+## Current-main R04 UNKNOWN-usage follow-up - 2026-11-23
+
+A fake JSONL peer completed with terminal status failed and no usage update.
+The actual parser/model/v3 caller/durable writer/ProspectiveRun path retained
+the failed attempt's turn/thread identity and left every usage total None.
+Custody audited; no execution/effect receipt was recorded; task and run stayed
+HOLD with dispatch disabled. Focused 1/1 and the full eight-test module pass
+normal and -O on Windows CPython 3.13.14. This confirms UNKNOWN is not turned
+into zero in this fixture. It is not live provider evidence or proof that all
+provider response shapes are covered. See the [R04 packet](../../research/integration/issue57_v3_durable_appserver_composition_r04_20261123/RESULT.md).
