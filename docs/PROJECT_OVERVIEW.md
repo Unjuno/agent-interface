@@ -2,11 +2,11 @@
 
 ## Current checkpoint — 2026-11-24
 
-The latest verified main is `b65b617361efd94494bb472f167f6c966a48464c`
-after PR #10545 updated the status after PR #10544's scoped synthetic
-composition evidence and PR #10541's packaging repair (based on main
-`22aba58c`). The Win32 zipapp capture-module omission fix and archive import
-regression test are merged. Its retained
+The latest verified main is `68bc4daab111e2820960a8e4de1514a10b1bfe75`
+after PR #10546 recorded the Docker/Linux contract result following PR #10545's
+status refresh and PR #10544's scoped synthetic composition evidence; PR #10541
+carried the packaging repair (based on main `22aba58c`). The Win32 zipapp
+capture-module omission fix and archive-import regression test are merged. Its retained
 local evidence includes R04: one Computer-Control-activated Notepad
 task completed through the public CLI, independently saved the exact token,
 and verified terminal release. R01–R03 preserve one packaging stop and two
@@ -14,8 +14,10 @@ setup/admission stops; these are not pooled with R04. This proves one scoped
 host/app path, not recovery reliability, matched efficiency, or public release
 readiness. Current-main Docker/Linux public-MCP contract R02 also passes
 87/87 tests normally and under `-O`; this is local contract evidence, not live
-control or efficiency evidence. The latest exact Issue/PR membership census
-remains r180 at its recorded source main; a new full census is still needed.
+control or efficiency evidence. Full Issue/PR pagination r181 found 1,640
+open Issues and 403 open PRs, with exact ID sets unchanged from r180 at the
+stable source main above. This does not complete semantic queue triage; local
+worktree custody remains the older r179 snapshot.
 See the [R01–R04 packets](../research/integration/) and the
 [detailed state dashboard](PROJECT_STATE.md).
 
