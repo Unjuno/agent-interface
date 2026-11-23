@@ -51,8 +51,8 @@ if str(LIVE) not in sys.path:
     sys.path.insert(0, str(LIVE))
 TOKEN = "t991025-4"
 SCOPE = "edge-v5-caller-v3-local-session"
-FIELD_POINT = [190, 115]
-SUBMIT_POINT = [435, 115]
+FIELD_POINT = [190, 121]
+SUBMIT_POINT = [545, 121]
 FIELD_SIZE = [64, 28]
 SUBMIT_SIZE = [48, 28]
 
@@ -205,9 +205,9 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
                 body = ("<!doctype html><meta charset='utf-8'>"
                         "<style>body{margin:0;font:16px Arial}"
                         "input{position:absolute;left:150px;top:100px;"
-                        "width:220px;height:30px;font:16px Arial}"
-                        "button{position:absolute;left:400px;top:100px;"
-                        "width:70px;height:30px}</style>"
+                        "width:300px;height:42px;font:bold 26px Arial}"
+                        "button{position:absolute;left:500px;top:100px;"
+                        "width:90px;height:42px;font:18px Arial}</style>"
                         "<form method='post' action='/submit'>"
                         "<label>Value <input id='value' name='value' "
                         "placeholder='Enter code'></label>"
@@ -343,13 +343,13 @@ class ChromiumV5EdgeCallerV3Tests(unittest.TestCase):
                     full_observation = harness._observation(frame)
                     sequence = full_observation["sequence"]
                     # This is also the generation the real handle store checks.
-                    field_patch = image.crop((158, 103, 222, 131)).tobytes()
+                    field_patch = image.crop((150, 100, 450, 142)).tobytes()
                     field_digest = hashlib.sha256(field_patch).hexdigest()
                     full_digest = hashlib.sha256(image.tobytes()).hexdigest()
                     field_ocr = observer.recognize(
-                        screenshot, region=(125, 80, 355, 70), scale=2)
+                        screenshot, region=(145, 95, 310, 55), scale=2)
                     submit_ocr = observer.recognize(
-                        screenshot, region=(390, 85, 120, 60), scale=2)
+                        screenshot, region=(490, 95, 110, 55), scale=2)
                     page_ocr = observer.recognize(
                         screenshot, region=(0, 0, 756, 200), scale=1)
                     value_state = exact_token_state(field_ocr["text"], token)
