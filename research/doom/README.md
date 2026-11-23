@@ -508,6 +508,10 @@ gates remain open; this archive makes no code promotion.
 
 - [Translation registration against retained V39 health-loss pairs](camera_compensated_motion_a01_20261008/README.md) — 52 adjacent pairs; residual AUC 0.406 versus raw 0.417, with only 1/4 health-loss pairs above the no-loss median. Fixed translation-only cue rejected for this scoped screen; no semantic threat or live-control claim.
 
+## Local block-motion screen R02 (#59)
+
+- [Fixed interior-tile matching on the same V39 episode](camera_block_motion_r02_20261123/RESULT.md) — 52 pairs; blockwise AUC 0.427 versus raw 0.417 and global-translation 0.406, gain only 0.010 with 1/4 losses above the no-loss median. Fails the frozen threshold; same data as A01, no independent sample or live-control claim.
+
 ## Synthetic fake-Xlib key-hold bounds (historical)
 
 - [30-cycle construction record](results/map01-key-hold-bounds-construction-v1/README.md) — frozen fake-Xlib evidence reports 300/300 row checks and 11/11 aggregate checks, bounded to synthetic server-side intervals; no application, GUI, game, or task-effect claim. Source baseline is historical and stacked on #7440; see the archived scope and limitations.

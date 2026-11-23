@@ -2,6 +2,19 @@
 
 # Project state and work order
 
+## Issue #59 local block-motion screen R02 — 2026-11-23
+
+On frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`, the fixed
+blockwise method was evaluated once in normal mode and once under `-O` on the
+same 52 adjacent pairs as camera-motion A01. Both candidate runs returned
+`FAIL_SCOPED` with identical outputs; the independent provenance/score audit
+passed in both modes. Raw world AUC was 0.417, global-translation AUC 0.406,
+and blockwise AUC 0.427 (gain 0.010); only one of four health-loss pairs
+exceeded the no-loss median. The frozen threshold was not met. This remains a
+single-episode offline screen, not semantic threat detection or live control.
+See [R02](../research/doom/camera_block_motion_r02_20261123/RESULT.md). Keep
+#59 open.
+
 ## Research Preview current-main supported-host doctor R07 — 2026-11-23
 
 Current main `095d92b1696e03c266287b530cbb38f5b9d5e7f6` has no changes in the

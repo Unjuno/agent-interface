@@ -2,6 +2,16 @@
 
 > Detailed dated evidence status: [PROJECT_STATE.md](PROJECT_STATE.md).
 
+## Issue #59 block-motion screen R02 — 2026-11-23
+
+On frozen main `893c3400c694586ff42d30e2f8fa42f5868f5bba`, fixed local
+block matching was screened on the same 52 retained V39 pairs and four typed
+health-loss labels as A01. Normal and `-O` outputs match; independent audits
+pass in both modes. Blockwise AUC is 0.427 vs raw 0.417 (gain 0.010); only
+1/4 losses exceed the no-loss median, so the frozen criterion fails. This is
+not an independent episode or live-control result. See [R02](../research/doom/camera_block_motion_r02_20261123/RESULT.md).
+Keep #59 open; no game target or physical input was used.
+
 ## Research Preview current-main doctor R07 — 2026-11-23
 
 After PR #10522, the current WSL/WSLg host re-ran the doctor from the retained
