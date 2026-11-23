@@ -11,8 +11,16 @@ import time
 
 
 PACKET = Path(__file__).resolve().parent
-REPO = Path(__file__).resolve().parents[4]
-CONDITIONS = PACKET / "CONDITIONS-r02.json"
+def _repo_root():
+    probe = Path(__file__).resolve().parent
+    for candidate in (probe, *probe.parents):
+        if (candidate / ".git").exists():
+            return candidate
+    raise RuntimeError("cannot locate repository root from experiment packet")
+
+
+REPO = _repo_root()
+CONDITIONS = PACKET / "CONDITIONS-r03.json"
 TEST = PACKET / "test_provider_compiled_composition.py"
 RAW = PACKET / "raw"
 ATTEMPTS = PACKET / "attempts"
