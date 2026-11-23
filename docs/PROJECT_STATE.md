@@ -2,6 +2,16 @@
 
 # Project state and work order
 
+## Issue #57 Chromium V5 generation guard post-merge R07 — 2026-11-23
+
+PR #10516 merged at main `561fe044a2023fc419ed4bc35942272bcbb3c279`. The
+exact-main Fake-only handle/caller/core recheck passed 23/23 normally and under
+`-O`; both changed-generation negatives refused before mint and the
+same-generation positive remained valid. No live provider, GUI task effect,
+matched efficiency, recovery reliability, MAP01, or preview result follows.
+See [R07](../research/integration/issue57_chromium_v5_generation_mint_r07/RESULT.md).
+Keep #57 open.
+
 ## Issue #57 Chromium V5 point-mint generation guard R06 — 2026-11-23
 
 R05 reproduced stale target-handle mint across both process- and

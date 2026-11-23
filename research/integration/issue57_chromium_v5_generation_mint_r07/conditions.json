@@ -1,0 +1,15 @@
+{
+  "run_id": "issue57-chromium-v5-generation-mint-r07",
+  "frozen_current_main": "561fe044a2023fc419ed4bc35942272bcbb3c279",
+  "merged_pull_request": 10516,
+  "host": "Windows 10",
+  "python": "CPython 3.11.9",
+  "invocation": "PYTHONPATH=research/live_control; python -m unittest research.live_control.test_chromium_v5_generation_mint_guard_v1 research.live_control.test_target_handle_semantic_binding_v1 research.live_control.test_compiled_caller_handoff_v2 research.live_control.test_adaptive_acquisition_compiled_gui_v1 (and python -O)",
+  "source_hashes": {
+    "research/live_control/session_v33.py": "a228cadbd1c787da021189ad4b9d823e8bed78a062fe57920db39035876fdd15",
+    "research/live_control/test_chromium_v5_generation_mint_guard_v1.py": "5e9368f1a3f44969a61aa86708bf6268c60aec8dc56c02f7ce01c846d26d1792"
+  },
+  "scope": "Fake-only current-main recheck; no browser, X server, OS input, provider, or live allocation",
+  "acceptance": "All 23 focused/regression tests pass in normal and -O modes; changed-generation cases refuse before mint, same-generation positive succeeds.",
+  "retry_policy": "One run per mode only."
+}
