@@ -2,9 +2,9 @@
 
 ## Follow-up since the last complete census — 2026-11-24
 
-Main advanced to `22aba58c276141401a7688be335be5191ec661b9` with PR #10540.
-The scoped Win32 zipapp packaging repair and R01–R04 Notepad evidence are
-proposed in PR [#10541](https://github.com/Unjuno/agent-interface/pull/10541).
+Main advanced to `a96559edfb5637f88f4fdcb38c5b2b1fae3ce01d` after PR #10541.
+The scoped Win32 zipapp packaging repair and R01–R04 Notepad evidence are now
+on main via [PR #10541](https://github.com/Unjuno/agent-interface/pull/10541).
 R04 is one verified public-CLI task/release case; it does not alter #57's
 matched economics or recovery gate. The last complete membership census is
 still r179 at `b290c1ef` (1,640 open Issues / 403 open PRs), and the last exact

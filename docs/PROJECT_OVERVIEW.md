@@ -2,10 +2,10 @@
 
 ## Current checkpoint — 2026-11-24
 
-The latest verified main is `22aba58c276141401a7688be335be5191ec661b9`
-(PR #10540). PR [#10541](https://github.com/Unjuno/agent-interface/pull/10541)
-is open with the Win32 zipapp capture-module omission fix and its regression
-test. Its local evidence includes R04: one Computer-Control-activated Notepad
+The latest verified main is `a96559edfb5637f88f4fdcb38c5b2b1fae3ce01d`
+after PR #10541 (based on main `22aba58c`). The Win32 zipapp capture-module
+omission fix and archive import regression test are merged. Its retained
+local evidence includes R04: one Computer-Control-activated Notepad
 task completed through the public CLI, independently saved the exact token,
 and verified terminal release. R01–R03 preserve one packaging stop and two
 setup/admission stops; these are not pooled with R04. This proves one scoped
