@@ -1,0 +1,14 @@
+{
+ "attempt_id":"ISSUE57-WSLC-XVFB-DELAYED-XTEST-REPEAT-MICROCONTROL-R11-20261123",
+ "frozen_at_utc":"2026-11-23T14:12:00Z",
+ "source_revision":"36da81e3fb97dca875e4dc5b1d13d5385574b400",
+ "source_tree":"5ee7dcc7751fa7e7d12800eae855f5e65902c4be",
+ "container_image":"agent-interface-xvfb-mcp:late-input-r19",
+ "container_image_id":"sha256:4b8e054511b1f3e3f4957ae657c20648f8e87312a75ebecafe2405bc6d852fd7",
+ "runtime":"WSLc 3.0.5.0; pull never; network none; ephemeral container; private tmpfs; no model/provider; memory swap warning recorded.",
+ "purpose":"Isolate whether a server-side delayed XTEST KeyPress request recreates repeated A events even when A autorepeat is disabled.",
+ "condition":"Normal Python only; disable per-key auto-repeat for A and verify readback; send one A KeyPress; queue one B KeyPress with XTest delay=2000ms; queue A KeyRelease behind it; concurrently record events from a separate X client; release B and verify final keymap.",
+ "attempts":["key-off-delay-2000ms-01"],
+ "decision_rule":"Preserve counts and event timing. This is a mechanism diagnostic; it does not establish a standard caller/product result.",
+ "limits":"Single Xvfb server microcontrol. No MCP runtime or task oracle."
+}
