@@ -71,12 +71,15 @@ def _deadline(timeout):
 
 
 class CodexAppServerClient:
-    def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
+    def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None,
+                 windows_owner=None):
         _require_pipe_runtime()
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
         self._owns_process_streams = process_factory is subprocess.Popen
-        self._owns_process_group = os.name == "posix" and process_factory is subprocess.Popen
+        self._windows_owner = windows_owner
+        self._owns_process_group = (windows_owner is None and os.name == "posix"
+                                    and process_factory is subprocess.Popen)
         process_options = {
             "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
             "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
@@ -88,7 +91,13 @@ class CodexAppServerClient:
             process_options["env"] = interop_environment
         if self._owns_process_group:
             process_options["start_new_session"] = True
-        self.process = process_factory(command, **process_options)
+        try:
+            self.process = (windows_owner.launch(command, process_options, self._record)
+                            if windows_owner is not None else process_factory(command, **process_options))
+        except BaseException:
+            if self._journal is not None:
+                self._journal.close()
+            raise
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._journal_order_lock = threading.Lock()
@@ -449,7 +458,14 @@ class CodexAppServerClient:
             available = remaining()
             return None if available is None else available / 2
         owns_process_group = getattr(self, "_owns_process_group", False)
-        if owns_process_group:
+        windows_owner = getattr(self, "_windows_owner", None)
+        retirement_error = None
+        if windows_owner is not None:
+            try:
+                windows_owner.retire(self.process, remaining())
+            except BaseException as error:
+                retirement_error = error
+        elif owns_process_group:
             # The leader may have exited while descendants still own its pipes.
             self._signal_owned_group(signal.SIGTERM)
             if self.process.poll() is None:
@@ -467,6 +483,16 @@ class CodexAppServerClient:
             except subprocess.TimeoutExpired:
                 self.process.kill()
                 self.process.wait(timeout=partial_budget())
+        try:
+            self._close_local_transport(remaining, owns_process_group)
+        except BaseException as cleanup_error:
+            if retirement_error is not None:
+                raise retirement_error from cleanup_error
+            raise
+        if retirement_error is not None:
+            raise retirement_error
+
+    def _close_local_transport(self, remaining, owns_process_group):
         self._reader.join(timeout=remaining())
         if self._reader.is_alive():
             if owns_process_group:

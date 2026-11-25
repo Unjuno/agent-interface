@@ -28,10 +28,11 @@ def require_compatible(entries, cache_dir, result_dir, workspace):
         value = preflight(entry["schema"], cache_dir, result_dir / entry["name"], workspace)
         results.append({"name": entry["name"], "result": value})
     accepted = all(row["result"]["endpoint_status"] == "ENDPOINT_COMPATIBLE" for row in results)
+    calls = [row["result"]["model_call_performed"] for row in results]
     report = {
         "accepted": accepted,
         "results": results,
-        "model_calls": sum(bool(row["result"]["model_call_performed"]) for row in results),
+        "model_calls": sum(calls) if all(type(call) is bool for call in calls) else None,
         "fresh_usage_records": sum(row["result"]["usage"] is not None for row in results),
         "authority": "schema compatibility only; grants no GUI or input authority",
     }

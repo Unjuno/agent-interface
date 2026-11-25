@@ -16,6 +16,7 @@ USAGE = {"input_tokens": 10, "cached_input_tokens": 5,
 class FakeGrounding:
     def __init__(self, *_args, **_kwargs):
         self.thread_id = "thread-grounding"
+        self.native_job_reference = {"run_nonce": "1" * 32}
         self.calls = 0
 
     def call(self, *_args, **_kwargs):
