@@ -52,8 +52,12 @@ class UnusedRelay:
 
 
 class RecordedComparisonAdapterTests(unittest.TestCase):
+    @classmethod
+    def make_run(cls, *args, **kwargs):
+        return build_measured_run(**cls.make_inputs(*args, **kwargs))
+
     @staticmethod
-    def make_run(root: Path, arm: str, order: int, *,
+    def make_inputs(root: Path, arm: str, order: int, *,
                  effect_observed_ns=130, owner_variant=None,
                  late_usage_available=None, public_observation=False):
         ticks = iter(range(100, 300, 10))
@@ -275,9 +279,8 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
                                         else effect_observed_ns),
             },
         }
-        return build_measured_run(
-            receipt, recorder_root=root / "recorder",
-            ledger_metadata=metadata, measurement=measurement)
+        return {"receipt": receipt, "recorder_root": root / "recorder",
+                "ledger_metadata": metadata, "measurement": measurement}
 
     def test_three_recorded_caller_runs_form_one_valid_matched_block(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -379,6 +382,11 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
                 with self.subTest(journal_present=journal_present):
                     if not journal_present:
                         (recorder_root / "attempts.jsonl").unlink()
+                        with self.assertRaisesRegex(LedgerValidationError, "retained journal"):
+                            build_measured_run(
+                                receipt, recorder_root=recorder_root,
+                                ledger_metadata=metadata, measurement=measured["measurement"])
+                        continue
                     current = build_measured_run(
                         receipt, recorder_root=recorder_root,
                         ledger_metadata=metadata, measurement=measured["measurement"])
@@ -389,8 +397,7 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
                     self.assertEqual(summary["model_attempt_count"], 1)
                     self.assertIsNone(summary["factual_task_success"])
                     self.assertIsNone(summary["task_success"])
-                    self.assertEqual(summary["independent_score_status"],
-                                     "recorded" if journal_present else "missing")
+                    self.assertEqual(summary["independent_score_status"], "recorded")
                     self.assertEqual(current["task_ledger"]["raw_refs"], receipt["raw_refs"])
 
     def test_frozen_r02_measurement_composition_with_explicit_synthetic_binding(self):
@@ -504,6 +511,76 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
                                      if key not in ("events", "raw_refs",
                                                     "native_owner_binding")},
                     measurement=measurement)
+
+    def test_owner_horizon_cannot_be_upgraded_in_serialized_tool_response(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            inputs = self.make_inputs(Path(temporary), "A", 1,
+                                      owner_variant="unverified_horizon")
+            with self.assertRaisesRegex(LedgerValidationError, "horizon"):
+                build_measured_run(**inputs)
+
+            lookup = next(event for event in inputs["receipt"]["events"]
+                          if event.get("method") == "interface_results")
+            text = lookup["result"]["result"]["content"][0]
+            body = json.loads(text["text"])
+            self.assertIs(body["cancellation"]["result"]["late_input_horizon_verified"], False)
+            body["cancellation"]["result"]["late_input_horizon_verified"] = True
+            text["text"] = json.dumps(body)
+            with self.assertRaisesRegex(LedgerValidationError, "public MCP call.*journal"):
+                build_measured_run(**inputs)
+
+    def test_omitted_public_tool_call_cannot_enter_comparison(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for call_id in ("observe-1", "lookup-results-1"):
+                with self.subTest(omitted_call=call_id):
+                    inputs = self.make_inputs(root / call_id, "A", 1)
+                    # The generic effect projection has no lookup or capture requirement.
+                    inputs["measurement"] = build_measured_run(**inputs)["measurement"]
+                    if call_id == "observe-1":
+                        inputs["measurement"]["local_observations"] = []
+                    events = inputs["receipt"]["events"]
+                    events[:] = [event for event in events if event.get("call_id") != call_id]
+                    for seq, event in enumerate(events, 1):
+                        event["seq"] = seq
+                    with self.assertRaisesRegex(LedgerValidationError, "public MCP call.*journal"):
+                        build_measured_run(**inputs)
+
+    def test_extra_public_tool_call_cannot_enter_comparison(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            inputs = self.make_inputs(Path(temporary), "A", 1)
+            events = inputs["receipt"]["events"]
+            observation = next(event for event in events if event.get("call_id") == "observe-1")
+            score = events[-1]
+            extra = {**observation, "call_id": "receipt-only-call",
+                     "seq": score["seq"], "started_ns": score["started_ns"],
+                     "ended_ns": score["started_ns"]}
+            score["seq"] += 1
+            events.insert(-1, extra)
+            with self.assertRaisesRegex(LedgerValidationError, "public MCP call.*journal"):
+                build_measured_run(**inputs)
+
+    def test_missing_journal_cannot_certify_public_owner_horizon(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            inputs = self.make_inputs(Path(temporary), "A", 1)
+            measured = build_measured_run(**inputs)
+            self.assertTrue(measured["task_ledger"]["native_owner_binding"]["horizon_verified"])
+            self.assertTrue(validate_measured_run(measured)["task_success"])
+            (inputs["recorder_root"] / "attempts.jsonl").unlink()
+            with self.assertRaisesRegex(LedgerValidationError, "public MCP call.*journal"):
+                build_measured_run(**inputs)
+
+            # Unchanged raw response files do not prove that the projected
+            # workload had zero public calls when the journal is missing.
+            receipt = inputs["receipt"]
+            retained_refs = list(receipt["raw_refs"])
+            receipt["events"] = [event for event in receipt["events"] if event["kind"] != "tool_call"]
+            for seq, event in enumerate(receipt["events"], 1):
+                event["seq"] = seq
+            inputs["measurement"] = {**measured["measurement"], "local_observations": []}
+            self.assertEqual(receipt["raw_refs"], retained_refs)
+            with self.assertRaisesRegex(LedgerValidationError, "public MCP call.*journal"):
+                build_measured_run(**inputs)
 
     def test_retained_raw_hash_drift_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
