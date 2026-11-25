@@ -118,6 +118,10 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
         error = outcome["error"]
         error_usage = outcome["error_usage"]
         late_usage_source = outcome.get("late_usage_source")
+        if error is not None:
+            provider_identity = getattr(error, "provider_identity", None)
+        else:
+            provider_identity = result.get("provider_identity") if isinstance(result, dict) else None
 
         raw = event_bytes()
         if cancelled:
@@ -126,6 +130,8 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
             cancellation = asyncio.CancelledError()
             cancellation.usage = _usage({"usage": usage_source})
             cancellation.response_bytes = raw
+            if provider_identity is not None:
+                cancellation.provider_identity = provider_identity
             raise cancellation
         if error is not None:
             status = ("timeout" if isinstance(
@@ -136,9 +142,12 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
                       "error_type": type(error).__name__}
             if status == "timeout" and late_usage_source is not None:
                 result["late_usage_source"] = late_usage_source
-            return result
-        return {"status": "completed", "usage": _usage(result),
-                "response_bytes": raw, "backend_result": result}
+        else:
+            result = {"status": "completed", "usage": _usage(result),
+                      "response_bytes": raw, "backend_result": result}
+        if provider_identity is not None:
+            result["provider_identity"] = provider_identity
+        return result
 
     return request_bytes, provider_call
 
