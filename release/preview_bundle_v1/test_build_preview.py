@@ -4,6 +4,8 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import re
+import shutil
 import stat
 import subprocess
 import tarfile
@@ -19,6 +21,29 @@ SPEC.loader.exec_module(mod)
 
 
 class ArchiveTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("sh"), "quickstart commands require a POSIX shell")
+    def test_quickstart_enters_the_checksummed_archive_directory(self):
+        guide = (HERE / "QUICKSTART.md").read_text(encoding="utf-8")
+        instructions = guide.split("## Verify the download", 1)[1].split("## Static first-run check", 1)[0]
+        commands = re.findall(r"^```bash\n(.*?)^```$", instructions, re.MULTILINE | re.DOTALL)
+        self.assertTrue(commands)
+        prefix = "agent-interface-research-preview-20260917+123456789abc"
+        with tempfile.TemporaryDirectory() as td:
+            downloads = Path(td)
+            archive = downloads / (prefix + ".tar.gz")
+            with tarfile.open(archive, "w:gz") as bundle:
+                directory = tarfile.TarInfo(prefix)
+                directory.type = tarfile.DIRTYPE
+                bundle.addfile(directory)
+            digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+            (downloads / "SHA256SUMS").write_bytes(f"{digest}  {archive.name}\n".encode())
+            (downloads / "agent-interface-research-preview-older").mkdir()
+            (downloads / "agent-interface-research-preview-older.tar.gz").touch()
+            script = "\n".join(commands) + '\ntest "${PWD##*/}" = "$1"'
+            completed = subprocess.run(
+                ["sh", "-ec", script, "quickstart", prefix], cwd=downloads, capture_output=True, text=True)
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+
     def make_repo(self, root: Path):
         subprocess.run(["git", "init", "-q", str(root)], check=True)
         subprocess.run(["git", "-C", str(root), "config", "user.email", "test@example.com"], check=True)
