@@ -10,17 +10,14 @@ The bridge requires a separately installed Windows Codex CLI JavaScript entrypoi
 
 ## Verify the download
 
-From the directory containing the archive and `SHA256SUMS`:
+In the download directory, use the archive named in the release's single-entry
+`SHA256SUMS` file to verify, extract and enter that version.
 
 ```bash
-sha256sum -c SHA256SUMS
-```
-
-Extract and enter the directory:
-
-```bash
-tar -xzf agent-interface-research-preview-*.tar.gz
-cd agent-interface-research-preview-*
+sha256sum -c SHA256SUMS &&
+  read -r digest archive < SHA256SUMS &&
+  tar -xzf "./$archive" &&
+  cd "./${archive%.tar.gz}"
 ```
 
 ## Static first-run check
