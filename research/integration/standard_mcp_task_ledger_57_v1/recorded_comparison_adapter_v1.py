@@ -67,12 +67,12 @@ def _verified_raw_refs(root: Path, refs: object) -> list[dict]:
     return verified
 
 
-def _reconciled_events(root: Path) -> list[dict] | None:
+def _reconciled_events(root: Path) -> list[dict]:
     journal = root / "attempts.jsonl"
     if journal.is_symlink():
         _fail("provider journal must stay inside its recorder root")
     if not journal.is_file():
-        return None
+        _fail("public MCP call completeness requires its retained journal")
     if not (root / "raw").is_dir():
         _fail("provider journal lacks its retained raw evidence directory")
     try:
@@ -266,6 +266,9 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
                        measurement: object) -> dict:
     """Build and validate one measured run from ProviderAttemptRecorder output.
 
+    The retained attempts journal establishes the complete set of public calls,
+    including a workload with zero calls.
+
     ``ledger_metadata`` is a frozen condition envelope containing exactly the
     schema/run/comparison/task/source/environment/model pins. ``measurement``
     supplies the contiguous full-lifecycle phases, delivered-image and local
@@ -293,11 +296,14 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
     top_level_refs = {(ref["path"], ref["sha256"]) for ref in raw_refs}
     recorder_root = Path(recorder_root)
     recorded_events = _reconciled_events(recorder_root)
-    recorded_attempts = {event["attempt_id"]: event for event in recorded_events or ()
+    recorded_attempts = {event["attempt_id"]: event for event in recorded_events
                          if event["kind"] == "model_attempt"}
-    recorded_score = next((event for event in recorded_events or ()
+    recorded_tool_calls = {event["call_id"]: event for event in recorded_events
+                           if event["kind"] == "tool_call"}
+    recorded_score = next((event for event in recorded_events
                            if event["kind"] == "task_score"), None)
     projected_attempt_ids = set()
+    projected_tool_call_ids = set()
     event_refs = set()
     projected = []
     for seq, event in enumerate(events, start=1):
@@ -331,16 +337,23 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
                 "seq", "kind", "attempt_id", "status", "started_ns", "ended_ns")},
                 "usage": usage})
         elif kind == "tool_call":
-            required = common | {"call_id", "model_attempt_id", "method", "result"}
-            if (not required <= set(event) or
-                    event.get("response_status") != "matched"):
+            tool_fields = ("seq", "kind", "call_id", "model_attempt_id", "method",
+                           "started_ns", "ended_ns", "result")
+            if (not set(tool_fields) <= set(event) or type(event["call_id"]) is not str
+                    or event.get("response_status") != "matched"):
                 _fail("public MCP call lacks a matching retained response")
-            projected_event = {key: event[key] for key in (
-                "seq", "kind", "call_id", "model_attempt_id", "method",
-                "started_ns", "ended_ns", "result")}
-            if event.get("method") == "interface_dispatch":
+            call_id = event["call_id"]
+            recorded = recorded_tool_calls.get(call_id)
+            if recorded is None:
+                _fail("public MCP call has no matching entry in the retained journal")
+            if (recorded["response_status"] != "matched" or refs != recorded["raw_refs"]
+                    or any(event[key] != recorded[key] for key in tool_fields)):
+                _fail("public MCP call differs from its retained journal entry")
+            projected_tool_call_ids.add(call_id)
+            projected_event = {key: recorded[key] for key in tool_fields}
+            if recorded["method"] == "interface_dispatch":
                 dispatch_program = _recorded_dispatch_program(
-                    event, recorder_root)
+                    recorded, recorder_root)
                 if dispatch_program is not None:
                     projected_event["dispatch_program"], projected_event[
                         "dispatch_program_ref"] = dispatch_program
@@ -360,8 +373,10 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
         else:
             _fail("caller receipt contains an unsupported event kind")
 
-    if recorded_events is not None and projected_attempt_ids != set(recorded_attempts):
+    if projected_attempt_ids != set(recorded_attempts):
         _fail("caller receipt provider attempts differ from the retained journal")
+    if projected_tool_call_ids != set(recorded_tool_calls):
+        _fail("public MCP calls differ from the retained journal")
     if not event_refs <= top_level_refs:
         _fail("top-level raw references omit journal-bound event evidence")
 
