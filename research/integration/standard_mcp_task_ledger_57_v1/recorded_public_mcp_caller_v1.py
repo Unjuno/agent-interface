@@ -32,11 +32,16 @@ class RecordedPublicMcpCaller:
         self.relay = relay
         self.recorder = recorder
         self.allowed_methods = frozenset(allowed_methods)
+        self._late_usage_sources = {}
 
     async def invoke_provider(self, attempt_id, request_bytes, provider_call):
         """Record one injected provider call before invoking it."""
-        return await self.recorder.invoke_async(
+        generation = await self.recorder.invoke_async(
             attempt_id, request_bytes, provider_call)
+        source = generation.get("late_usage_source") if type(generation) is dict else None
+        if callable(getattr(source, "read", None)):
+            self._late_usage_sources[attempt_id] = source
+        return generation
 
     async def invoke_generation_to_tool(self, attempt_id, request_bytes,
                                        provider_call, call_id, method,
@@ -93,6 +98,16 @@ class RecordedPublicMcpCaller:
         if (len(attempts) != 1 or attempts[0].get("status") !=
                 generation.get("status")):
             raise ValueError("late usage source does not match a terminal attempt")
+        if self._late_usage_sources.get(attempt_id) is not source:
+            raise ValueError("late usage source is not bound to this attempt")
+        identity = attempts[0].get("provider_identity")
+        if identity is None:
+            return {"observed": False, "reason": "provider_identity_unbound"}
+        if getattr(source, "provider_identity", None) != identity:
+            raise ValueError("late usage source is not bound to the terminal provider turn")
+        if any(event.get("kind") == "model_attempt" and event.get("attempt_id") != attempt_id
+               and event.get("provider_identity") == identity for event in receipt["events"]):
+            raise ValueError("late usage source is not uniquely bound to one attempt")
         if not any(event.get("kind") == "task_score"
                    for event in receipt["events"]):
             raise ValueError("late usage may be observed only after task score custody")

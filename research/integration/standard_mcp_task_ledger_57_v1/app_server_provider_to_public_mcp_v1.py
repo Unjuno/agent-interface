@@ -133,6 +133,7 @@ class _LateAppServerUsageSource:
     def __init__(self, planner, handle, journal_path):
         self.planner = planner
         self.handle = handle
+        self.provider_identity = {"thread_id": handle.thread_id, "turn_id": handle.turn_id}
         self.journal_path = Path(journal_path)
         self._lock = threading.Lock()
         self._cursor = None
@@ -211,6 +212,7 @@ class _LateSpoolUsageSource:
     def __init__(self, planner, handle, journal_path):
         self.planner = planner
         self.handle = handle
+        self.provider_identity = {"thread_id": handle.thread_id, "turn_id": handle.turn_id}
         self.journal_path = Path(journal_path)
         self._sequence = 1
         self._captured = False
@@ -347,6 +349,7 @@ class AppServerPublicMcpModelCall:
         events_path.parent.mkdir(parents=True, exist_ok=False)
         (root / "prompt.txt").write_text(prompt, encoding="utf-8", newline="\n")
 
+        provider_identity = None
         handle = None
         turn = None
         protocol_bytes = b""
@@ -354,36 +357,47 @@ class AppServerPublicMcpModelCall:
         call_error = None
         started_ns = time.perf_counter_ns()
         try:
-            with self._lock:
-                # A file-spool planner may cause the host App Server to create
-                # the shared journal only after it atomically claims the
-                # request. Treat that first turn as an offset-zero slice.
-                before = (self.protocol_journal_path.stat().st_size
-                          if self.protocol_journal_path.exists() else 0)
-                handle = self.planner.begin_turn(
-                    prompt, output_schema=self.output_schema,
-                    image_path=self.path_converter(image))
-                try:
-                    turn = self.planner.await_turn(handle, timeout=self.turn_timeout)
-                except BaseException as exc:
-                    call_error = exc
-                journal = self.protocol_journal_path.read_bytes()
-                if len(journal) < before:
-                    raise RuntimeError("app-server protocol journal was truncated")
-                protocol_bytes = journal[before:]
-        finally:
-            # Keep partial send/receive evidence even when the planner raises.
-            if not protocol_bytes and self.protocol_journal_path.exists():
-                try:
-                    current = self.protocol_journal_path.read_bytes()
-                    if before is not None and len(current) >= before:
-                        protocol_bytes = current[before:]
-                except OSError:
-                    pass
-            events_path.write_bytes(protocol_bytes)
+            try:
+                with self._lock:
+                    # A file-spool planner may cause the host App Server to create
+                    # the shared journal only after it atomically claims the
+                    # request. Treat that first turn as an offset-zero slice.
+                    before = (self.protocol_journal_path.stat().st_size
+                              if self.protocol_journal_path.exists() else 0)
+                    handle = self.planner.begin_turn(
+                        prompt, output_schema=self.output_schema,
+                        image_path=self.path_converter(image))
+                    provider_identity = {"thread_id": handle.thread_id, "turn_id": handle.turn_id}
+                    try:
+                        turn = self.planner.await_turn(handle, timeout=self.turn_timeout)
+                    except BaseException as exc:
+                        call_error = exc
+                    journal = self.protocol_journal_path.read_bytes()
+                    if len(journal) < before:
+                        raise RuntimeError("app-server protocol journal was truncated")
+                    protocol_bytes = journal[before:]
+            finally:
+                # Keep partial send/receive evidence even when the planner raises.
+                if not protocol_bytes and self.protocol_journal_path.exists():
+                    try:
+                        current = self.protocol_journal_path.read_bytes()
+                        if before is not None and len(current) >= before:
+                            protocol_bytes = current[before:]
+                    except OSError:
+                        pass
+                events_path.write_bytes(protocol_bytes)
 
+            return self._finish_turn(root, handle, provider_identity, turn,
+                                     call_error, protocol_bytes, started_ns)
+        except BaseException as exc:
+            if provider_identity is not None:
+                exc.provider_identity = provider_identity
+            raise
+
+    def _finish_turn(self, root, handle, provider_identity, turn, call_error,
+                     protocol_bytes, started_ns):
         if call_error is not None:
-            if handle is not None:
+            if provider_identity is not None:
                 partial_usage = _best_effort_partial_turn_usage(
                     protocol_bytes, thread_id=handle.thread_id,
                     turn_id=handle.turn_id)
@@ -411,7 +425,7 @@ class AppServerPublicMcpModelCall:
             error = RuntimeError("app-server answer is ineligible; no tool call")
             error.call_id = getattr(handle, "turn_id", None)
             error.thread_id = getattr(handle, "thread_id", None)
-            if handle is not None:
+            if provider_identity is not None:
                 journal_usage = _partial_turn_usage(_journal_turn_usage(
                     protocol_bytes, thread_id=handle.thread_id,
                     turn_id=handle.turn_id))
@@ -444,6 +458,7 @@ class AppServerPublicMcpModelCall:
             "call_id": handle.turn_id,
             "thread_id": handle.thread_id,
             "turn_id": handle.turn_id,
+            "provider_identity": provider_identity,
             "turn_status": turn.status,
             "answer_eligible": True,
             "runner_ns": time.perf_counter_ns() - started_ns,

@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from app_server_provider_to_public_mcp_v1 import (
     AppServerPublicMcpModelCall,
@@ -120,6 +121,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(observed["usage"]["output_tokens"], 3)
             ledger = recorder.reconcile()
             self.assertEqual(ledger["events"][0]["status"], "timeout")
+            self.assertEqual(ledger["events"][0]["provider_identity"],
+                             {"thread_id": handle.thread_id, "turn_id": handle.turn_id})
             self.assertEqual(ledger["events"][0]["usage"], observed["usage"])
             self.assertEqual(summarize(ledger["events"])["model_attempt_count"], 1)
             self.assertTrue(ledger["events"][1]["task_success"])
@@ -293,6 +296,8 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(raw["complete"])
             self.assertEqual([event["kind"] for event in raw["events"]],
                              ["model_attempt", "tool_call"])
+            self.assertEqual(raw["events"][0]["provider_identity"],
+                             {"thread_id": "thread-1", "turn_id": "turn-1"})
             response_ref = next(ref for event in raw["events"]
                                 if event["kind"] == "model_attempt"
                                 for ref in event["raw_refs"]
@@ -633,6 +638,121 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                                                        b"\"inputTokens\":22"))
             with self.assertRaisesRegex(ValueError, "raw evidence digest does not match"):
                 recorder.reconcile()
+
+    async def test_malformed_completed_usage_and_same_turn_timeout_hold_accounting(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "protocol.jsonl"
+            journal.write_bytes(b"")
+            identity = {"thread_id": "thread-shared", "turn_id": "turn-shared"}
+
+            class UnreadLateUsage:
+                provider_identity = identity
+
+                def read(self, timeout):
+                    raise AssertionError("an ambiguous turn must not consume its late usage")
+
+            class Planner:
+                calls = 0
+
+                def begin_turn(self, *_args, **_kwargs):
+                    self.calls += 1
+                    return SimpleNamespace(**identity)
+
+                def await_turn(self, handle, timeout):
+                    if self.calls == 1:
+                        return SimpleNamespace(status="completed", answer_eligible=True,
+                                               answer={}, usage={"last": {"inputTokens": 8}})
+                    row = {"direction": "received", "message": {
+                        "method": "thread/tokenUsage/updated", "params": {
+                            "threadId": handle.thread_id, "turnId": handle.turn_id,
+                            "tokenUsage": {"last": {"inputTokens": 8, "outputTokens": 2}},
+                        }}}
+                    journal.write_bytes(json.dumps(row).encode() + b"\n")
+                    raise TimeoutError("synthetic timeout")
+
+                def late_usage_source(self, handle, journal_path):
+                    return UnreadLateUsage()
+
+            class RejectingRelay:
+                async def request(self, _request_bytes):
+                    raise AssertionError("failed provider outcomes must not reach MCP")
+
+            model = AppServerPublicMcpModelCall(
+                Planner(), journal, workspace=workspace, contract="public-mcp",
+                output_schema={"type": "object"}, model="gpt-test", effort="low")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            caller = RecordedPublicMcpCaller(
+                RejectingRelay(), recorder, allowed_methods={"interface_guarded_compiled"})
+            outcomes = {}
+            for attempt_id in ("malformed-completed", "same-turn-timeout"):
+                request, provider = build_model_provider_call(
+                    model_call=model.call, root=root / attempt_id, prompt="task",
+                    image=image, contract="public-mcp", workspace=workspace)
+                outcome = await caller.invoke_generation_to_tool(
+                    attempt_id, request, provider, f"call-{attempt_id}",
+                    "interface_guarded_compiled", json.loads)
+                self.assertFalse(outcome["tool_call_submitted"])
+                outcomes[attempt_id] = outcome["generation"]
+            malformed, timeout = outcomes.values()
+            self.assertEqual(malformed["status"], "failed")
+            self.assertEqual(malformed["error_type"], "ValueError")
+            self.assertEqual(timeout["status"], "timeout")
+            self.assertEqual(timeout["usage"]["input_tokens"], 8)
+            self.assertEqual(timeout["usage"]["output_tokens"], 2)
+            recorder.record_task_score("independent-oracle", True, b"independently scored state")
+            receipt = recorder.reconcile()
+            attempts = receipt["events"][:2]
+            self.assertEqual([attempt.get("provider_identity") for attempt in attempts], [identity, identity])
+            self.assertEqual([attempt["usage"]["status"] for attempt in attempts], ["unavailable", "unavailable"])
+            self.assertEqual(summarize(receipt["events"])["usage_status"], "incomplete")
+            self.assertTrue(receipt["events"][-1]["task_success"])
+            with self.assertRaisesRegex(ValueError, "uniquely bound"):
+                await caller.observe_late_usage("same-turn-timeout", timeout, timeout=0)
+            self.assertEqual(recorder.reconcile(), receipt)
+
+    def test_acknowledged_turn_identity_survives_journal_and_publication_errors(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "protocol.jsonl"
+            journal.write_bytes(b"")
+            identity = {"thread_id": "thread-known", "turn_id": "turn-known"}
+
+            class Planner:
+                def begin_turn(self, *_args, **_kwargs):
+                    return SimpleNamespace(**identity)
+
+                def await_turn(self, handle, timeout):
+                    return SimpleNamespace(status="completed", answer_eligible=True,
+                                           answer={}, usage=None)
+
+            model = AppServerPublicMcpModelCall(
+                Planner(), journal, workspace=workspace, contract="public-mcp",
+                output_schema={"type": "object"}, model="gpt-test", effort="low")
+            cases = (("read_bytes", "journal-read", journal),
+                     ("write_bytes", "events-write", root / "events-write/model/events.jsonl"),
+                     ("write_text", "result-write", root / "result-write/result.json"))
+            for method, stage, target in cases:
+                with self.subTest(stage=stage):
+                    original = getattr(Path, method)
+
+                    def fail_at_target(path, *args, **kwargs):
+                        if path == target:
+                            raise OSError(stage)
+                        return original(path, *args, **kwargs)
+
+                    with patch.object(Path, method, autospec=True, side_effect=fail_at_target):
+                        with self.assertRaisesRegex(OSError, stage) as failure:
+                            model.call(root / stage, "task", image, "public-mcp", workspace)
+                    self.assertEqual(failure.exception.provider_identity, identity)
 
     async def test_usage_mismatch_with_protocol_journal_skips_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -12,6 +12,7 @@ import re
 import threading
 import time
 import uuid
+from collections import Counter
 from pathlib import Path, PurePosixPath
 
 from ledger import LedgerValidationError, _ATTEMPT_STATUSES, _HASH, _validate_usage
@@ -33,6 +34,15 @@ _UNAVAILABLE_USAGE = {
     "input_tokens": None,
     "output_tokens": None,
 }
+
+
+def _valid_provider_identity(identity):
+    return (type(identity) is dict and set(identity) == {"thread_id", "turn_id"}
+            and all(isinstance(value, str) and value for value in identity.values()))
+
+
+def _provider_turn_key(identity):
+    return identity["thread_id"], identity["turn_id"]
 
 
 def _validate_app_server_usage_source(source_bytes, usage):
@@ -152,7 +162,7 @@ class ProviderAttemptRecorder:
             return started_ns
 
     def finish(self, attempt_id, *, status, usage, ended_ns=None,
-               response_bytes=None):
+               response_bytes=None, provider_identity=None):
         """Persist one terminal provider outcome for a prior durable start."""
         if status not in _ATTEMPT_STATUSES:
             raise AttemptJournalError("unknown provider attempt status")
@@ -162,6 +172,8 @@ class ProviderAttemptRecorder:
             raise AttemptJournalError("provider usage is not normalized") from exc
         if response_bytes is not None and not isinstance(response_bytes, bytes):
             raise AttemptJournalError("response evidence must be raw bytes or null")
+        if provider_identity is not None and not _valid_provider_identity(provider_identity):
+            raise AttemptJournalError("provider terminal identity is malformed")
 
         with self._lock:
             current = self.reconcile(allow_incomplete=True)
@@ -182,7 +194,7 @@ class ProviderAttemptRecorder:
                 raise AttemptJournalError("attempt end must follow its start")
             response_ref = (None if response_bytes is None else
                             self._write_raw(attempt_id, "response", response_bytes))
-            self._append({
+            terminal = {
                 "event": "model_attempt_finished",
                 "attempt_id": attempt_id,
                 "session_id": self.session_id,
@@ -190,7 +202,10 @@ class ProviderAttemptRecorder:
                 "status": status,
                 "usage": usage,
                 "response_ref": response_ref,
-            })
+            }
+            if provider_identity is not None:
+                terminal["provider_identity"] = dict(provider_identity)
+            self._append(terminal)
 
     def observe_late_usage(self, attempt_id, *, usage, usage_bytes,
                            source_bytes=None, observed_ns=None):
@@ -198,7 +213,8 @@ class ProviderAttemptRecorder:
 
         This is accounting evidence only: it cannot change the terminal status,
         add a provider attempt, or authorize any later tool operation. The raw
-        receipt must be a JSON encoding of the normalized usage mapping.
+        receipt must be a JSON encoding of the normalized usage mapping. An
+        App Server source row must name the turn recorded at terminal return.
         """
         if not isinstance(attempt_id, str) or not _ATTEMPT_ID.fullmatch(attempt_id):
             raise AttemptJournalError("attempt id must be a safe path component")
@@ -235,6 +251,15 @@ class ProviderAttemptRecorder:
             if terminal["status"] not in ("timeout", "failed", "cancelled"):
                 raise AttemptJournalError(
                     "late usage is only valid for a non-completed attempt")
+            if source_identity != terminal.get("provider_identity"):
+                raise AttemptJournalError(
+                    "app-server late usage is not bound to the terminal provider turn")
+            if source_identity is not None and any(
+                    event.get("kind") == "model_attempt"
+                    and event["attempt_id"] != attempt_id
+                    and event.get("provider_identity") == source_identity
+                    for event in current["events"]):
+                raise AttemptJournalError("app-server provider turn is bound to multiple attempts")
             observations = [row for row in self._read_rows()
                             if row.get("event") == "model_attempt_usage_observed" and
                             row.get("attempt_id") == attempt_id]
@@ -287,9 +312,11 @@ class ProviderAttemptRecorder:
         try:
             result = provider_call()
         except BaseException as exc:
+            identity = getattr(exc, "provider_identity", None)
             self.finish(attempt_id, status=self._exception_status(exc),
                         usage=self._exception_usage(exc),
-                        response_bytes=self._exception_response_bytes(exc))
+                        response_bytes=self._exception_response_bytes(exc),
+                        provider_identity=identity if _valid_provider_identity(identity) else None)
             raise
 
         return self._record_provider_result(attempt_id, result)
@@ -300,9 +327,11 @@ class ProviderAttemptRecorder:
         try:
             result = await provider_call()
         except BaseException as exc:
+            identity = getattr(exc, "provider_identity", None)
             self.finish(attempt_id, status=self._exception_status(exc),
                         usage=self._exception_usage(exc),
-                        response_bytes=self._exception_response_bytes(exc))
+                        response_bytes=self._exception_response_bytes(exc),
+                        provider_identity=identity if _valid_provider_identity(identity) else None)
             raise
 
         return self._record_provider_result(attempt_id, result)
@@ -323,8 +352,9 @@ class ProviderAttemptRecorder:
         except AttemptJournalError:
             status = "malformed"
             usage = _UNAVAILABLE_USAGE
-        self.finish(attempt_id, status=status, usage=usage,
-                    response_bytes=response_bytes)
+        identity = result.get("provider_identity") if isinstance(result, dict) else None
+        self.finish(attempt_id, status=status, usage=usage, response_bytes=response_bytes,
+                    provider_identity=identity if _valid_provider_identity(identity) else None)
         return result
 
     @staticmethod
@@ -588,6 +618,9 @@ class ProviderAttemptRecorder:
                     latest_ended_ns = max(latest_ended_ns, ended_ns)
                     if row.get("status") not in _ATTEMPT_STATUSES:
                         raise AttemptJournalError("provider terminal status is invalid")
+                    if ("provider_identity" in row
+                            and not _valid_provider_identity(row["provider_identity"])):
+                        raise AttemptJournalError("provider terminal identity is malformed")
                     try:
                         _validate_usage(row.get("usage"))
                     except LedgerValidationError as exc:
@@ -627,6 +660,10 @@ class ProviderAttemptRecorder:
                         if (source_ref is None) != (source_identity is None):
                             raise AttemptJournalError(
                                 "app-server usage raw reference and identity must pair")
+                        provider_identity = terminal.get("provider_identity")
+                        if provider_identity is not None and source_identity != provider_identity:
+                            raise AttemptJournalError(
+                                "app-server late usage is not bound to the terminal provider turn")
                         if source_ref is not None:
                             source_bytes = self._verify_raw_ref(source_ref)
                             thread_id, turn_id = _validate_app_server_usage_source(
@@ -744,6 +781,10 @@ class ProviderAttemptRecorder:
                 raise IncompleteProviderAttemptError(
                     "operations lack terminal receipts: " + ", ".join(pending))
 
+            provider_turn_counts = Counter(
+                _provider_turn_key(terminal["provider_identity"])
+                for terminal in finished.values() if "provider_identity" in terminal
+            )
             ordered_events = []
             for attempt_id in model_order:
                 if attempt_id not in finished:
@@ -757,16 +798,27 @@ class ProviderAttemptRecorder:
                 refs.extend(item["receipt_ref"] for item in late)
                 refs.extend(item["source_ref"] for item in late
                             if item.get("source_ref") is not None)
+                provider_identity = terminal.get("provider_identity")
+                usage = terminal["usage"]
+                unbound_app_server_usage = provider_identity is None and any(
+                    item.get("source_ref") is not None for item in late)
+                if provider_identity is not None and provider_turn_counts[
+                        _provider_turn_key(provider_identity)] > 1:
+                    usage = dict(_UNAVAILABLE_USAGE)
+                elif late and not unbound_app_server_usage:
+                    usage = late[-1]["usage"]
                 event = {
                     "kind": "model_attempt", "attempt_id": attempt_id,
                     "session_id": start["session_id"], "status": terminal["status"],
                     "started_ns": start["started_ns"],
                     "ended_ns": terminal["ended_ns"],
-                    "usage": (late[-1]["usage"] if late else terminal["usage"]),
+                    "usage": usage,
                     "response_status": ("raw_retained" if terminal.get(
                         "response_ref") is not None else "unavailable"),
                     "raw_refs": refs,
                 }
+                if provider_identity is not None:
+                    event["provider_identity"] = provider_identity
                 if late:
                     event["late_usage_observed_ns"] = [
                         item["observed_ns"] for item in late]

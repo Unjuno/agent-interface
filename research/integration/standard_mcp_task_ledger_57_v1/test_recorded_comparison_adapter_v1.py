@@ -3,10 +3,14 @@
 import asyncio
 import base64
 import hashlib
+import importlib.util
 import json
+import shutil
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from comparison_measurement_v1 import validate_matched_block, validate_measured_run
 from ledger import LedgerValidationError
@@ -16,10 +20,11 @@ from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
 
 
 class SyntheticLateUsageSource:
-    def __init__(self, available):
+    def __init__(self, available, *, input_tokens=18, turn_id="turn-fixture"):
         self.available = available
         self.read_count = 0
-        self.usage = {"status": "reported", "input_tokens": 18,
+        self.provider_identity = {"thread_id": "thread-fixture", "turn_id": turn_id}
+        self.usage = {"status": "reported", "input_tokens": input_tokens,
                       "output_tokens": 3}
         self.usage_bytes = json.dumps(
             self.usage, sort_keys=True, separators=(",", ":")).encode()
@@ -27,9 +32,9 @@ class SyntheticLateUsageSource:
             "direction": "received", "observed_ns": 10000,
             "message": {"method": "thread/tokenUsage/updated",
                         "params": {"threadId": "thread-fixture",
-                                   "turnId": "turn-fixture",
+                                   "turnId": turn_id,
                                    "tokenUsage": {"last": {
-                                       "inputTokens": 18,
+                                       "inputTokens": input_tokens,
                                        "outputTokens": 3}}}},
         }, sort_keys=True, separators=(",", ":")).encode() + b"\n"
 
@@ -62,9 +67,16 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         if late_usage_available is not None:
             unavailable = {"status": "unavailable", "input_tokens": None,
                            "output_tokens": None}
-            recorder.invoke(
-                "attempt-late-usage", b'{"prompt":"timed out"}\n',
-                lambda: {"status": "timeout", "usage": unavailable})
+            caller = RecordedPublicMcpCaller(
+                UnusedRelay(), recorder, allowed_methods={"interface_dispatch"})
+
+            async def timed_out_provider():
+                source = SyntheticLateUsageSource(late_usage_available)
+                return {"status": "timeout", "usage": unavailable,
+                        "provider_identity": source.provider_identity, "late_usage_source": source}
+
+            timed_out = asyncio.run(caller.invoke_provider(
+                "attempt-late-usage", b'{"prompt":"timed out"}\n', timed_out_provider))
         recorder.invoke("attempt-1", b'{"prompt":"frozen"}\n',
                         lambda: {"status": "completed", "usage": usage,
                                  "response_bytes": response})
@@ -191,12 +203,8 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         state = b'{"task_state":"complete"}\n'
         recorder.record_task_score("independent-fixture-oracle-v1", True, state)
         if late_usage_available is not None:
-            caller = RecordedPublicMcpCaller(
-                UnusedRelay(), recorder, allowed_methods={"interface_dispatch"})
             observed = asyncio.run(caller.observe_late_usage(
-                "attempt-late-usage",
-                {"status": "timeout", "late_usage_source":
-                 SyntheticLateUsageSource(late_usage_available)}, timeout=0))
+                "attempt-late-usage", timed_out, timeout=0))
             if observed["observed"] is not late_usage_available:
                 raise AssertionError("late-usage source result differs from arm")
         receipt = recorder.reconcile()
@@ -309,6 +317,113 @@ class RecordedComparisonAdapterTests(unittest.TestCase):
         self.assertIn(observation["image_sha256"], {
             ref["sha256"] for ref in measured["task_ledger"]["raw_refs"]})
         self.assertEqual(validate_measured_run(measured)["local_observation_count"], 1)
+
+    def test_late_usage_cannot_be_credited_to_another_failed_generation(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            ticks = iter(range(100, 300, 10))
+            recorder = ProviderAttemptRecorder(temporary, clock_ns=lambda: next(ticks))
+            caller = RecordedPublicMcpCaller(
+                UnusedRelay(), recorder, allowed_methods={"interface_dispatch"})
+            first_source = SyntheticLateUsageSource(True, input_tokens=18, turn_id="turn-first")
+            second_source = SyntheticLateUsageSource(True, input_tokens=31, turn_id="turn-second")
+
+            async def finish_attempt(attempt_id, source):
+                async def provider():
+                    return {
+                        "status": "timeout", "late_usage_source": source,
+                        "provider_identity": getattr(source, "provider_identity", None),
+                        "usage": {"status": "unavailable", "input_tokens": None, "output_tokens": None},
+                    }
+                return await caller.invoke_provider(attempt_id, b"fake request", provider)
+
+            async def run():
+                first = await finish_attempt("first", first_source)
+                second = await finish_attempt("second", second_source)
+                unbound_source = SyntheticLateUsageSource(True, turn_id="unknown-turn")
+                del unbound_source.provider_identity
+                unbound = await finish_attempt("unbound", unbound_source)
+                recorder.record_task_score("independent-oracle", True, b"independent state")
+                before = recorder.reconcile()
+                held = await caller.observe_late_usage("unbound", unbound, timeout=0)
+                self.assertEqual(held, {"observed": False, "reason": "provider_identity_unbound"})
+                self.assertEqual(unbound_source.read_count, 0)
+                with self.assertRaisesRegex(ValueError, "late usage source.*bound"):
+                    await caller.observe_late_usage("first", second, timeout=0)
+                self.assertEqual(second_source.read_count, 0)
+                self.assertEqual(recorder.reconcile(), before)
+                await caller.observe_late_usage("first", first, timeout=0)
+                await caller.observe_late_usage("second", second, timeout=0)
+                return before["events"][-1], recorder.reconcile()
+
+            score, receipt = asyncio.run(run())
+        first, second, unbound, retained_score = receipt["events"]
+        self.assertEqual([(attempt["attempt_id"], attempt["usage"]["input_tokens"])
+                          for attempt in (first, second, unbound)],
+                         [("first", 18), ("second", 31), ("unbound", None)])
+        self.assertEqual(retained_score, score)
+
+    def test_old_serialized_app_server_usage_cannot_bypass_reconciliation(self):
+        retained = (Path(__file__).parent / "postscore_late_usage_measurement_composition_20261121_r02"
+                    / "runs/positive")
+        receipt = json.loads((retained / "receipt.json").read_bytes())
+        measured = json.loads((retained / "measured_run.json").read_bytes())
+        self.assertEqual(receipt["events"][0]["usage"]["input_tokens"], 18)
+        self.assertIsNone(receipt["events"][-1]["task_success"])
+        receipt["events"][-1]["task_success"] = True
+        metadata = {key: value for key, value in measured["task_ledger"].items()
+                    if key not in ("events", "raw_refs")}
+        with tempfile.TemporaryDirectory() as temporary:
+            recorder_root = Path(temporary) / "recorder"
+            shutil.copytree(retained / "recorder", recorder_root)
+            for journal_present in (True, False):
+                with self.subTest(journal_present=journal_present):
+                    if not journal_present:
+                        (recorder_root / "attempts.jsonl").unlink()
+                    current = build_measured_run(
+                        receipt, recorder_root=recorder_root,
+                        ledger_metadata=metadata, measurement=measured["measurement"])
+                    summary = validate_measured_run(current)
+                    self.assertEqual(summary["usage_status"], "incomplete")
+                    self.assertIsNone(summary["input_tokens"])
+                    self.assertIsNone(summary["output_tokens"])
+                    self.assertEqual(summary["model_attempt_count"], 1)
+                    self.assertIsNone(summary["factual_task_success"])
+                    self.assertIsNone(summary["task_success"])
+                    self.assertEqual(summary["independent_score_status"],
+                                     "recorded" if journal_present else "missing")
+                    self.assertEqual(current["task_ledger"]["raw_refs"], receipt["raw_refs"])
+
+    def test_frozen_r02_measurement_composition_with_explicit_synthetic_binding(self):
+        packet = Path(__file__).parent / "postscore_late_usage_measurement_composition_20261121_r02"
+
+        def load_module(name, filename):
+            spec = importlib.util.spec_from_file_location(name, packet / filename)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module
+
+        composition = load_module("frozen_r02_composition", "composition.py")
+        identity = {"thread_id": "synthetic-thread-57", "turn_id": "synthetic-turn-57"}
+
+        class BoundFixtureCaller(RecordedPublicMcpCaller):
+            async def invoke_provider(self, attempt_id, request_bytes, provider_call):
+                async def bound_fixture_provider():
+                    generation = await provider_call()
+                    source = generation["late_usage_source"]
+                    if type(source) is not composition.SyntheticLateUsageSource:
+                        raise TypeError("expected the pinned fixture source")
+                    source.provider_identity = identity
+                    return {**generation, "provider_identity": identity}
+                return await super().invoke_provider(attempt_id, request_bytes, bound_fixture_provider)
+
+        # Bind the archived synthetic turn outside its hash-pinned fixture and test files.
+        with patch.object(composition, "RecordedPublicMcpCaller", BoundFixtureCaller):
+            with patch.dict(sys.modules, {"composition": composition}):
+                frozen_tests = load_module("frozen_r02_tests", "test_composition.py")
+            result = unittest.TestResult()
+            unittest.defaultTestLoader.loadTestsFromModule(frozen_tests).run(result)
+        self.assertEqual(result.testsRun, 2)
+        self.assertTrue(result.wasSuccessful(), result.failures + result.errors)
 
     def test_late_usage_composes_with_identity_bound_native_owner_receipt(self):
         with tempfile.TemporaryDirectory() as temporary:

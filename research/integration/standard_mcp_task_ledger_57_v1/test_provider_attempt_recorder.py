@@ -247,6 +247,106 @@ class ProviderAttemptRecorderTests(unittest.TestCase):
                     json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n"
                     for row in original_rows))
 
+    def test_app_server_late_rows_require_the_durable_terminal_turn(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            ticks = iter((10, 20, 30))
+            recorder = ProviderAttemptRecorder(root, clock_ns=lambda: next(ticks))
+            recorder.begin("timeout", b"provider request")
+            unavailable = {"status": "unavailable", "input_tokens": None, "output_tokens": None}
+            identity = {"thread_id": "thread", "turn_id": "assigned-turn"}
+            recorder.finish("timeout", status="timeout", usage=unavailable,
+                            provider_identity=identity)
+            recorder.record_task_score("independent-oracle", True, b"independent result")
+
+            def observe(usage, turn_id, observed_ns):
+                last = {"inputTokens": usage["input_tokens"], "outputTokens": usage["output_tokens"]}
+                source = json.dumps({
+                    "direction": "received", "observed_ns": observed_ns,
+                    "message": {"method": "thread/tokenUsage/updated", "params": {
+                        "threadId": identity["thread_id"], "turnId": turn_id,
+                        "tokenUsage": {"last": last},
+                    }},
+                }).encode() + b"\n"
+                recorder.observe_late_usage(
+                    "timeout", usage=usage, usage_bytes=json.dumps(usage).encode(),
+                    source_bytes=source, observed_ns=observed_ns,
+                )
+
+            partial = {"status": "partial", "input_tokens": 12, "output_tokens": None}
+            final = {"status": "reported", "input_tokens": 18, "output_tokens": 3}
+            with self.assertRaisesRegex(AttemptJournalError, "terminal provider turn"):
+                observe(partial, "foreign-turn", 40)
+            observe(partial, identity["turn_id"], 40)
+            with self.assertRaisesRegex(AttemptJournalError, "terminal provider turn"):
+                observe(final, "foreign-turn", 50)
+            observe(final, identity["turn_id"], 50)
+
+            retained = ProviderAttemptRecorder(root).reconcile()
+            self.assertEqual(retained["events"][0]["provider_identity"], identity)
+            self.assertEqual(retained["events"][0]["usage"], final)
+            self.assertEqual(retained["events"][0]["late_usage_observed_ns"], [40, 50])
+            self.assertTrue(retained["events"][1]["task_success"])
+
+            rows = [json.loads(line) for line in recorder.journal_path.read_bytes().splitlines()]
+            terminal = next(row for row in rows if row["event"] == "model_attempt_finished")
+            terminal["provider_identity"] = {**identity, "turn_id": "foreign-turn"}
+            recorder.journal_path.write_bytes(b"".join(json.dumps(row).encode() + b"\n" for row in rows))
+            with self.assertRaisesRegex(AttemptJournalError, "terminal provider turn"):
+                ProviderAttemptRecorder(root).reconcile()
+
+            # Older journals retain their original score and raw evidence. App Server
+            # counters cannot enter a new comparison when their terminal turn is absent.
+            del terminal["provider_identity"]
+            recorder.journal_path.write_bytes(b"".join(json.dumps(row).encode() + b"\n" for row in rows))
+            legacy = ProviderAttemptRecorder(root).reconcile()
+            self.assertEqual(legacy["events"][0]["usage"], unavailable)
+            self.assertEqual(legacy["events"][1], retained["events"][1])
+            self.assertEqual(legacy["raw_refs"], retained["raw_refs"])
+            self.assertEqual(summarize(legacy["events"])["usage_status"], "incomplete")
+
+    def test_duplicate_provider_turn_keeps_attempts_and_withholds_all_token_credit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            ticks = iter((10, 20, 40, 50, 60))
+            recorder = ProviderAttemptRecorder(root, clock_ns=lambda: next(ticks))
+            identity = {"thread_id": "thread", "turn_id": "shared-turn"}
+            unavailable = {"status": "unavailable", "input_tokens": None, "output_tokens": None}
+            partial = {"status": "partial", "input_tokens": 12, "output_tokens": None}
+            complete = {"status": "reported", "input_tokens": 18, "output_tokens": 3}
+            recorder.begin("timeout", b"first provider request")
+            recorder.finish("timeout", status="timeout", usage=unavailable, provider_identity=identity)
+
+            def observe(usage, now):
+                source = json.dumps({
+                    "direction": "received", "observed_ns": now,
+                    "message": {"method": "thread/tokenUsage/updated", "params": {
+                        "threadId": "thread", "turnId": "shared-turn",
+                        "tokenUsage": {"last": {"inputTokens": usage["input_tokens"],
+                                                "outputTokens": usage["output_tokens"]}},
+                    }},
+                }).encode() + b"\n"
+                recorder.observe_late_usage(
+                    "timeout", usage=usage, usage_bytes=json.dumps(usage).encode(),
+                    source_bytes=source, observed_ns=now,
+                )
+
+            observe(partial, 30)
+            self.assertEqual(recorder.reconcile()["events"][0]["usage"], partial)
+            recorder.begin("completed", b"second provider request")
+            recorder.finish("completed", status="completed", usage=complete, provider_identity=identity)
+            recorder.record_task_score("independent-oracle", True, b"independent state")
+
+            receipt = ProviderAttemptRecorder(root).reconcile()
+            self.assertEqual([event["usage"] for event in receipt["events"][:2]], [unavailable, unavailable])
+            self.assertTrue(receipt["events"][-1]["task_success"])
+            self.assertEqual(summarize(receipt["events"])["usage_status"], "incomplete")
+            self.assertEqual(summarize(receipt["events"])["model_attempt_count"], 2)
+            self.assertTrue(any(ref["path"].endswith("late-source-0001.bin") for ref in receipt["raw_refs"]))
+            with self.assertRaisesRegex(AttemptJournalError, "bound to multiple attempts"):
+                observe(complete, 70)
+            self.assertEqual(recorder.reconcile(), receipt)
+
     def test_partial_usage_stays_incomplete_in_shared_ledger_summary(self):
         with tempfile.TemporaryDirectory() as temp:
             ticks = iter((10, 20))

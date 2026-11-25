@@ -14,6 +14,7 @@ from pathlib import Path, PurePosixPath
 from comparison_measurement_v1 import validate_measured_run
 from effect_attribution_v1 import adjudicate_effect
 from ledger import LedgerValidationError
+from provider_attempt_recorder import AttemptJournalError, ProviderAttemptRecorder, _UNAVAILABLE_USAGE
 
 
 _HASH = re.compile(r"^[0-9a-f]{64}$")
@@ -64,6 +65,20 @@ def _verified_raw_refs(root: Path, refs: object) -> list[dict]:
             _fail("retained raw reference digest does not match its file")
         verified.append({"path": relative, "sha256": digest})
     return verified
+
+
+def _reconciled_events(root: Path) -> list[dict] | None:
+    journal = root / "attempts.jsonl"
+    if journal.is_symlink():
+        _fail("provider journal must stay inside its recorder root")
+    if not journal.is_file():
+        return None
+    if not (root / "raw").is_dir():
+        _fail("provider journal lacks its retained raw evidence directory")
+    try:
+        return ProviderAttemptRecorder(root).reconcile()["events"]
+    except AttemptJournalError as exc:
+        raise LedgerValidationError("retained caller journal cannot be reconciled") from exc
 
 
 def _tool_body(event: dict) -> dict:
@@ -277,6 +292,12 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
         _fail("caller receipt must contain a nonempty event list")
     top_level_refs = {(ref["path"], ref["sha256"]) for ref in raw_refs}
     recorder_root = Path(recorder_root)
+    recorded_events = _reconciled_events(recorder_root)
+    recorded_attempts = {event["attempt_id"]: event for event in recorded_events or ()
+                         if event["kind"] == "model_attempt"}
+    recorded_score = next((event for event in recorded_events or ()
+                           if event["kind"] == "task_score"), None)
+    projected_attempt_ids = set()
     event_refs = set()
     projected = []
     for seq, event in enumerate(events, start=1):
@@ -291,12 +312,24 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
         common = {"seq", "kind", "started_ns", "ended_ns"}
         if kind == "model_attempt":
             required = common | {"attempt_id", "status", "usage"}
-            if not required <= set(event) or event.get("response_status") not in (
-                    "raw_retained", "unavailable"):
+            if (not required <= set(event) or type(event["attempt_id"]) is not str
+                    or event.get("response_status") not in ("raw_retained", "unavailable")):
                 _fail("provider attempt lacks a terminal/raw receipt")
-            projected.append({key: event[key] for key in (
-                "seq", "kind", "attempt_id", "status", "started_ns",
-                "ended_ns", "usage")})
+            attempt_id = event["attempt_id"]
+            projected_attempt_ids.add(attempt_id)
+            usage = dict(_UNAVAILABLE_USAGE)
+            if attempt_id in recorded_attempts:
+                recorded = recorded_attempts[attempt_id]
+                if any(event[key] != recorded[key] for key in (
+                        "status", "started_ns", "ended_ns", "response_status")):
+                    _fail("provider attempt lifecycle differs from its retained journal")
+                # A stale receipt might omit usage evidence attached after the score.
+                # Credit only counters backed by the retained references in this snapshot.
+                if refs == recorded["raw_refs"]:
+                    usage = recorded["usage"]
+            projected.append({**{key: event[key] for key in (
+                "seq", "kind", "attempt_id", "status", "started_ns", "ended_ns")},
+                "usage": usage})
         elif kind == "tool_call":
             required = common | {"call_id", "model_attempt_id", "method", "result"}
             if (not required <= set(event) or
@@ -313,15 +346,22 @@ def build_measured_run(receipt: object, *, recorder_root: str | Path,
                         "dispatch_program_ref"] = dispatch_program
             projected.append(projected_event)
         elif kind == "task_score":
-            required = common | {"independent", "scorer_id", "task_success", "state_sha256"}
-            if not required <= set(event):
+            score_fields = ("kind", "independent", "scorer_id", "state_sha256",
+                            "started_ns", "ended_ns")
+            if seq != len(events) or not (set(score_fields) | {"task_success"}) <= set(event):
                 _fail("terminal independent score receipt is incomplete")
-            projected.append({key: event[key] for key in (
-                "seq", "kind", "independent", "scorer_id", "task_success",
-                "state_sha256", "started_ns", "ended_ns")})
+            if recorded_score is None:
+                continue
+            if (refs != recorded_score["raw_refs"] or
+                    any(event[key] != recorded_score[key] for key in score_fields)):
+                _fail("independent score identity differs from its retained journal")
+            projected.append({**{key: recorded_score[key] for key in score_fields},
+                              "seq": seq, "task_success": recorded_score["task_success"]})
         else:
             _fail("caller receipt contains an unsupported event kind")
 
+    if recorded_events is not None and projected_attempt_ids != set(recorded_attempts):
+        _fail("caller receipt provider attempts differ from the retained journal")
     if not event_refs <= top_level_refs:
         _fail("top-level raw references omit journal-bound event evidence")
 
