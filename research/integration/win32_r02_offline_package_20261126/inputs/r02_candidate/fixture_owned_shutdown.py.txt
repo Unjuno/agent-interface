@@ -1,0 +1,135 @@
+"""Single-use shutdown transport between a runner and its own fixture process."""
+from __future__ import annotations
+
+import ctypes
+import json
+import os
+import re
+import secrets
+import subprocess
+import time
+
+ACK_NAME = "fixture-shutdown-ack.json"
+ACK_SCHEMA = "agent-interface/r02-owned-fixture-close-v2"
+TIMEOUT_S = 5
+PREFIX = b"R02 CLOSE "
+REQUEST_SIZE = len(PREFIX) + 32 + 1 + 20 + 1
+REQUEST = re.compile(rb"R02 CLOSE ([0-9a-f]{32}) ([0-9]{20})\n")
+
+
+def win32_pipe_peeker(fd):
+    import msvcrt
+    from ctypes import wintypes
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel32.GetFileType.argtypes = [wintypes.HANDLE]
+    kernel32.GetFileType.restype = wintypes.DWORD
+    kernel32.PeekNamedPipe.argtypes = [
+        wintypes.HANDLE, wintypes.LPVOID, wintypes.DWORD,
+        wintypes.LPDWORD, wintypes.LPDWORD, wintypes.LPDWORD,
+    ]
+    kernel32.PeekNamedPipe.restype = wintypes.BOOL
+    handle = msvcrt.get_osfhandle(fd)
+    if kernel32.GetFileType(handle) != 3:
+        raise ValueError("fixture shutdown stdin is not a pipe")
+    msvcrt.setmode(fd, os.O_BINARY)
+
+    def available():
+        count = wintypes.DWORD()
+        if kernel32.PeekNamedPipe(handle, None, 0, None, ctypes.byref(count), None):
+            return count.value
+        if ctypes.get_last_error() == 109:
+            return None
+        raise ctypes.WinError(ctypes.get_last_error())
+
+    return available
+
+
+def read_shutdown_request(fd, available):
+    """Read at most one complete frame. Return whether polling should continue."""
+    count = available()
+    if count == 0:
+        return None, True
+    if count != REQUEST_SIZE:
+        return None, False
+    frame = os.read(fd, REQUEST_SIZE)
+    match = REQUEST.fullmatch(frame)
+    if match is None:
+        return None, False
+    return (match[1].decode("ascii"), int(match[2])), False
+
+
+def apply_shutdown_request(request, destroy_window, ack_path):
+    if request is None:
+        return False
+    request_id, deadline_ns = request
+    remaining_ns = deadline_ns - time.monotonic_ns()
+    if not 0 < remaining_ns <= TIMEOUT_S * 1_000_000_000:
+        return False
+    if not destroy_window():
+        return False
+    completed_ns = time.monotonic_ns()
+    with ack_path.open("x", encoding="utf-8") as ack:
+        json.dump({
+            "schema": ACK_SCHEMA, "status": "window_destroyed",
+            "process_pid": os.getpid(), "request_id": request_id,
+            "completed_monotonic_ns": completed_ns,
+        }, ack)
+    return True
+
+
+def request_owned_shutdown(proc, ack_path, *, timeout_s=TIMEOUT_S):
+    receipt = {"process_pid": proc.pid, "shutdown_requested": False, "closed": False}
+    exit_code = proc.poll()
+    if exit_code is not None:
+        return {**receipt, "reason": "owned_process_already_exited", "process_exit_code": exit_code}
+    pipe = proc.stdin
+    if pipe is None or pipe.closed:
+        return {**receipt, "reason": "owned_shutdown_pipe_unavailable"}
+
+    request_id = secrets.token_hex(16)
+    started_ns = time.monotonic_ns()
+    deadline_ns = started_ns + int(timeout_s * 1_000_000_000)
+    payload = f"R02 CLOSE {request_id} {deadline_ns:020d}\n".encode("ascii")
+    receipt.update(request_id=request_id, request_started_monotonic_ns=started_ns,
+                   shutdown_deadline_monotonic_ns=deadline_ns)
+    try:
+        # This is the sole write to a fresh, private, unbuffered stdin pipe.
+        with pipe:
+            if pipe.write(payload) != len(payload):
+                return {**receipt, "reason": "owned_shutdown_short_write"}
+    except OSError as exc:
+        return {**receipt, "reason": "owned_shutdown_write_failed", "error": str(exc)}
+    receipt["shutdown_requested"] = True
+
+    remaining_ns = deadline_ns - time.monotonic_ns()
+    if remaining_ns <= 0:
+        return {**receipt, "reason": "owned_process_exit_unverified"}
+    try:
+        receipt["process_exit_code"] = proc.wait(timeout=remaining_ns / 1_000_000_000)
+    except subprocess.TimeoutExpired:
+        return {**receipt, "reason": "owned_process_exit_unverified"}
+    exit_observed_ns = time.monotonic_ns()
+    receipt["process_exit_observed_monotonic_ns"] = exit_observed_ns
+    if exit_observed_ns > deadline_ns:
+        return {**receipt, "reason": "owned_process_exit_unverified"}
+    if receipt["process_exit_code"] != 0:
+        return {**receipt, "reason": "owned_process_exit_failed"}
+    try:
+        ack = json.loads(ack_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return {**receipt, "reason": "owned_shutdown_ack_unavailable", "error": str(exc)}
+    receipt["ack"] = ack
+    identity = {
+        "schema": ACK_SCHEMA, "status": "window_destroyed",
+        "process_pid": proc.pid, "request_id": request_id,
+    }
+    if (
+        not isinstance(ack, dict) or set(ack) != {*identity, "completed_monotonic_ns"}
+        or any(ack[key] != expected for key, expected in identity.items())
+    ):
+        return {**receipt, "reason": "owned_shutdown_ack_mismatch"}
+    completed_ns = ack["completed_monotonic_ns"]
+    if type(completed_ns) is not int or not started_ns <= completed_ns <= exit_observed_ns:
+        return {**receipt, "reason": "owned_shutdown_completion_unverified"}
+    return {**receipt, "closed": True}
