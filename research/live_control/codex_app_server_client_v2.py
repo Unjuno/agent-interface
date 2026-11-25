@@ -46,24 +46,20 @@ def wsl_environment_for_windows_executable(command, environ):
             not str(command[0]).lower().endswith(".exe") or
             command[1] != "app-server"):
         return None
+    return wsl_codex_home_environment(environ)
+
+
+def wsl_codex_home_environment(environ):
+    """Forward one scalar WSL path to a selected Windows Codex process."""
     codex_home = environ.get("CODEX_HOME")
-    if not codex_home or not codex_home.startswith("/"):
+    if not environ.get("WSL_INTEROP") or not codex_home or not codex_home.startswith("/"):
         raise AppServerError(
-            "WSL Windows App Server requires CODEX_HOME as an absolute WSL path")
+            "Windows Codex requires WSL interop and CODEX_HOME as an absolute WSL path")
 
     result = dict(environ)
-    entries = [entry for entry in environ.get("WSLENV", "").split(":") if entry]
-    retained = []
-    path_flags = "p"
-    for entry in entries:
-        name, separator, flags = entry.partition("/")
-        if name == "CODEX_HOME":
-            if separator:
-                path_flags = "".join(dict.fromkeys(flags + "p"))
-            continue
-        retained.append(entry)
-    retained.append("CODEX_HOME/" + path_flags)
-    result["WSLENV"] = ":".join(retained)
+    entries = [entry for entry in environ.get("WSLENV", "").split(":")
+               if entry and entry.partition("/")[0] != "CODEX_HOME"]
+    result["WSLENV"] = ":".join([*entries, "CODEX_HOME/p"])
     return result
 
 

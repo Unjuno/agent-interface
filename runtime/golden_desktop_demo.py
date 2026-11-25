@@ -75,6 +75,11 @@ def configuration() -> dict[str, Path | None]:
     chrome = Path(chrome_raw) if chrome_raw else (
         Path(shutil.which("google-chrome")) if shutil.which("google-chrome") else None
     )
+    native_key = "AGENT_INTERFACE_WINDOWS_CODEX_EXE"
+    if native_key in os.environ:
+        return {"windows_python": windows_python,
+                "windows_codex_exe": Path(os.environ[native_key]).expanduser(),
+                "chromium": chrome}
     return {
         "windows_python": windows_python,
         "windows_node": windows_node,
@@ -90,6 +95,21 @@ def windows_arg(path: Path) -> str:
     return completed.stdout.strip()
 
 
+def chromium_version(path: Path | None) -> str:
+    if path is None or not path.is_file():
+        raise ValueError("configure an existing Linux Chromium or Chrome executable")
+    executable = path.resolve(strict=True)
+    if (platform.system() != "Linux" or path.suffix.lower() == ".exe"
+            or executable.suffix.lower() == ".exe" or not os.access(executable, os.X_OK)):
+        raise ValueError("Golden requires an executable Linux Chromium or Chrome launcher")
+    completed = subprocess.run([str(path), "--version"], capture_output=True,
+                               text=True, timeout=10)
+    detail = (completed.stdout or completed.stderr).strip()
+    if completed.returncode != 0 or not any(name in detail for name in ("Chromium", "Chrome")):
+        raise ValueError(f"Chromium --version could not start successfully (exit {completed.returncode}): {detail}")
+    return detail
+
+
 def doctor() -> dict:
     config = configuration()
     checks: list[dict] = []
@@ -103,7 +123,19 @@ def doctor() -> dict:
     for module in ("PIL", "numpy", "Xlib", "jsonschema"):
         add("python:" + module, importlib.util.find_spec(module) is not None, module)
     for name, path in config.items():
-        add(name, path is not None and path.exists(), None if path is None else str(path))
+        if name == "chromium":
+            try:
+                version = chromium_version(path)
+            except (OSError, subprocess.SubprocessError, ValueError) as error:
+                add(name, False, str(error))
+            else:
+                add(name, True, version)
+            continue
+        exists = path is not None and path.exists()
+        if name == "windows_codex_exe":
+            exists = (path is not None and path.is_absolute()
+                      and path.suffix.lower() == ".exe" and path.is_file())
+        add(name, exists, None if path is None else str(path))
     display_error = None
     try:
         from Xlib.display import Display
@@ -117,16 +149,32 @@ def doctor() -> dict:
     add("x11_connection", display_ok, display_error or "connected")
     cli_version = None
     cli_ok = False
-    if config["windows_node"] and config["windows_cli"]:
-        try:
+    try:
+        if "windows_codex_exe" in config:
+            from codex_app_server_client_v2 import wsl_codex_home_environment
+            from schema_preflight_v1 import require_native_runner
+
+            require_native_runner()
+            executable = config["windows_codex_exe"]
+            if not (executable.is_absolute() and executable.suffix.lower() == ".exe"
+                    and executable.is_file()):
+                raise ValueError("set AGENT_INTERFACE_WINDOWS_CODEX_EXE to an absolute WSL .exe file")
+            environment = wsl_codex_home_environment(os.environ)
+            if not Path(environment["CODEX_HOME"]).is_dir():
+                raise ValueError("CODEX_HOME must be an existing directory visible to Windows")
+            completed = subprocess.run([str(executable), "--version"], env=environment,
+                                       capture_output=True, text=True, timeout=15)
+            cli_ok = completed.returncode == 0 and completed.stdout.startswith("codex-cli ")
+            cli_version = (completed.stdout or completed.stderr).strip()
+        elif config["windows_node"] and config["windows_cli"]:
             completed = subprocess.run(
                 [str(config["windows_node"]), windows_arg(config["windows_cli"]), "--version"],
                 capture_output=True, text=True, timeout=15,
             )
             cli_ok = completed.returncode == 0
             cli_version = (completed.stdout or completed.stderr).strip()
-        except Exception as error:
-            cli_version = f"{type(error).__name__}: {error}"
+    except Exception as error:
+        cli_version = f"{type(error).__name__}: {error}"
     add("codex_cli", cli_ok, cli_version)
     return {
         "schema": "agent_interface_golden_doctor_v1",
@@ -299,17 +347,22 @@ def configure_research_modules(config: dict[str, Path | None], chromium: Path):
     from integrated_efficiency_client_v1 import RuntimeClient
 
     windows_python = config["windows_python"]
-    windows_node = config["windows_node"]
-    windows_cli = config["windows_cli"]
-    assert windows_python and windows_node and windows_cli
+    if windows_python is None:
+        raise ValueError("Windows Python is required for the schema preflight runner")
     model.WINDOWS_PYTHON = windows_python
-    model.NODE = windows_arg(windows_node)
-    model.CLI = windows_arg(windows_cli)
     schema_preflight.WINDOWS_PYTHON = windows_python
-    schema_preflight.NODE_WSL = windows_node
-    schema_preflight.CLI_WSL = windows_cli
-    schema_preflight.NODE_ARG = windows_arg(windows_node)
-    schema_preflight.CLI_ARG = windows_arg(windows_cli)
+    schema_preflight.CLI_EXE_WSL = config.get("windows_codex_exe")
+    if schema_preflight.CLI_EXE_WSL is None:
+        windows_node = config["windows_node"]
+        windows_cli = config["windows_cli"]
+        if windows_node is None or windows_cli is None:
+            raise ValueError("Windows Node and the Codex JavaScript entrypoint are required")
+        model.NODE = windows_arg(windows_node)
+        model.CLI = windows_arg(windows_cli)
+        schema_preflight.NODE_WSL = windows_node
+        schema_preflight.CLI_WSL = windows_cli
+        schema_preflight.NODE_ARG = model.NODE
+        schema_preflight.CLI_ARG = model.CLI
 
     class ConfiguredRuntimeClient(RuntimeClient):
         def start(self):
@@ -347,13 +400,21 @@ def configure_research_modules(config: dict[str, Path | None], chromium: Path):
     return implementation, ConfiguredRuntimeClient
 
 
-def run_live(out: Path, seed: int) -> dict:
-    health = doctor()
-    if not health["passed"]:
-        raise RuntimeError("doctor failed; run the doctor command for exact missing dependencies")
+def claim_output(out: Path, on_claimed) -> None:
     if out.exists():
         raise FileExistsError(f"refusing to reuse output directory: {out}")
     out.mkdir(parents=True)
+    if on_claimed is not None:
+        on_claimed(out.lstat())
+
+
+def run_live(out: Path, seed: int, *, on_output_claimed=None) -> dict:
+    if "windows_codex_exe" in configuration():
+        raise RuntimeError("the Windows native Codex bridge requires the Golden v2/v3 launcher")
+    health = doctor()
+    if not health["passed"]:
+        raise RuntimeError("doctor failed; run the doctor command for exact missing dependencies")
+    claim_output(out, on_output_claimed)
     dump(out / "doctor.json", health)
     config = configuration()
     chromium = config["chromium"]
@@ -421,6 +482,12 @@ def main() -> int:
     live.add_argument("--seed", type=int, default=991029)
     args = parser.parse_args()
     run_out = (args.out or default_output()).resolve() if args.command == "run" else None
+    owned_out = None
+
+    def record_claim(stat_result):
+        nonlocal owned_out
+        owned_out = stat_result
+
     try:
         if args.command == "doctor":
             result = doctor()
@@ -429,18 +496,24 @@ def main() -> int:
         elif args.command == "audit-live":
             result = audit_live(args.out.resolve())
         else:
-            result = run_live(run_out, args.seed)
+            result = run_live(run_out, args.seed, on_output_claimed=record_claim)
     except Exception as error:
         failure = {
             "schema": "agent_interface_golden_failure_v1",
             "passed": False,
             "error_type": type(error).__name__,
             "message": str(error),
-            "output_retained": None if run_out is None else display_path(run_out),
+            "output_retained": None if owned_out is None else display_path(run_out),
             "automatic_retry": False,
         }
-        if run_out is not None and run_out.is_dir():
-            dump(run_out / "failure.json", failure)
+        if owned_out is not None:
+            try:
+                if os.path.samestat(owned_out, run_out.lstat()):
+                    with (run_out / "failure.json").open("x", encoding="utf-8", newline="\n") as stream:
+                        stream.write(json.dumps(failure, indent=2) + "\n")
+            except OSError:
+                # Report the original failure even when evidence publication fails.
+                pass
         print(json.dumps(failure, indent=2), file=sys.stderr)
         return 2
     print(json.dumps(result, indent=2))

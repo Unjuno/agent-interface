@@ -90,7 +90,7 @@ class PersistentGroundingModel:
 
     def __init__(self, session_root, workspace, *, node=None, cli=None,
                  contract="compiled", model="gpt-5.6-luna", effort="low", executable=None,
-                 client=None, path_converter=windows_path):
+                 client=None, path_converter=windows_path, require_complete_usage=False):
         if contract not in CONTRACTS:
             raise ValueError("contract must be plain or compiled")
         self.session_root = Path(session_root)
@@ -99,6 +99,7 @@ class PersistentGroundingModel:
         self.model = model
         self.effort = effort
         self.path_converter = path_converter
+        self.require_complete_usage = require_complete_usage
         self.session_root.mkdir(parents=True, exist_ok=False)
         self._owns_client = client is None
         if client is not None:
@@ -111,15 +112,30 @@ class PersistentGroundingModel:
             self.client = CodexAppServerClient(
                 argv, cwd=self.workspace,
                 journal_path=self.session_root / "protocol.jsonl")
-        if self._owns_client:
-            self.client.initialize()
-        _schema, instructions, _validator = CONTRACTS[contract]
-        self.planner = PersistentPlannerAdapter(
-            self.client, model=model, effort=effort,
-            cwd=self.path_converter(self.workspace),
-            base_instructions=Path(instructions).read_text(encoding="utf-8"))
-        self.thread_id = self.planner.start_session()
+        try:
+            if self._owns_client:
+                self.client.initialize()
+            _schema, instructions, _validator = CONTRACTS[contract]
+            self.planner = PersistentPlannerAdapter(
+                self.client, model=model, effort=effort,
+                cwd=self.path_converter(self.workspace),
+                base_instructions=Path(instructions).read_text(encoding="utf-8"))
+            self.thread_id = self.planner.start_session()
+        except BaseException as error:
+            if self._owns_client:
+                try:
+                    self.client.close()
+                except BaseException as cleanup_error:
+                    error.add_note("App Server startup cleanup failed: " + type(cleanup_error).__name__)
+            raise
         self.calls = 0
+
+    def _turn_usage(self, value):
+        usage = per_turn_usage(value)
+        if self.require_complete_usage and (usage is None or
+                usage["reasoning_output_tokens"] > usage["output_tokens"]):
+            raise ValueError("required per-turn provider usage is incomplete or inconsistent")
+        return usage
 
     def call(self, root: Path, prompt: str, image: Path, contract: str, workspace: Path):
         if contract != self.contract:
@@ -144,7 +160,7 @@ class PersistentGroundingModel:
             self.calls += 1
             if not turn.answer_eligible:
                 try:
-                    known_usage = per_turn_usage(turn.usage)
+                    known_usage = self._turn_usage(turn.usage)
                 except ValueError as error:
                     known_usage = None
                     usage_error = str(error)
@@ -174,7 +190,7 @@ class PersistentGroundingModel:
                     raise failure_error from publication_error
                 raise failure_error
             try:
-                known_usage = per_turn_usage(turn.usage)
+                known_usage = self._turn_usage(turn.usage)
             except ValueError as error:
                 usage_error = str(error)
                 raise
@@ -202,7 +218,7 @@ class PersistentGroundingModel:
                     observed_usage = self.client.latest_turn_usage(
                         handle.thread_id, handle.turn_id)
                     if observed_usage is not None:
-                        known_usage = per_turn_usage(observed_usage)
+                        known_usage = self._turn_usage(observed_usage)
                 except Exception as accounting_error:
                     usage_error = str(accounting_error)
             cause = getattr(error, "publication_error", error)

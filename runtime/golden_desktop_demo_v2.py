@@ -18,19 +18,26 @@ import golden_desktop_demo as base
 from integrated_efficiency_app_server_model_v1 import PersistentGroundingModel
 
 
-def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingModel) -> dict:
+def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingModel,
+             on_output_claimed=None) -> dict:
     health = base.doctor()
     if not health["passed"]:
         raise RuntimeError("doctor failed; run the doctor command for exact missing dependencies")
-    if out.exists():
-        raise FileExistsError(f"refusing to reuse output directory: {out}")
-    out.mkdir(parents=True)
+    base.claim_output(out, on_output_claimed)
     base.dump(out / "doctor.json", health)
     config = base.configuration()
     chromium = config["chromium"]
-    node = config["windows_node"]
-    cli = config["windows_cli"]
-    assert chromium is not None and node is not None and cli is not None
+    executable = config.get("windows_codex_exe")
+    if chromium is None:
+        raise ValueError("Chromium path is required")
+    if executable is None:
+        node = config["windows_node"]
+        cli = config["windows_cli"]
+        if node is None or cli is None:
+            raise ValueError("Windows Node and the Codex JavaScript entrypoint are required")
+        launch = {"node": node, "cli": base.windows_arg(cli)}
+    else:
+        launch = {"executable": executable, "require_complete_usage": True}
     implementation, client_type = base.configure_research_modules(config, chromium)
     implementation.OUT = out
     implementation.RuntimeClient = client_type
@@ -39,8 +46,7 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
     workspace = out / "workspaces" / "persistent"
     with grounding_model_type(
             out / "persistent-grounding-app-server", workspace,
-            node=node, cli=base.windows_arg(cli), contract="compiled",
-            model="gpt-5.6-luna", effort="low") as grounding:
+            contract="compiled", model="gpt-5.6-luna", effort="low", **launch) as grounding:
         implementation.call_model = grounding.call
         rows, independent = implementation.run_arm("persistent", seed, workspace)
         grounding_thread_id = grounding.thread_id
