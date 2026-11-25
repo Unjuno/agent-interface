@@ -38,6 +38,14 @@ LIVE_CONTROL_ASSETS = (
     "research/live_control/compiled_form_grounding_schema_v1.json",
     "research/live_control/compiled_form_grounding_responder_v1.txt",
 )
+# The Golden GUI child imports and records the hashes of these canonical sources.
+GOLDEN_GUI_SOURCES = (
+    "research/observation_tiles/tile_transport.py",
+    "research/observation_tiles/image_artifact.py",
+    "research/observation_gating/gui_suite.py",
+    "research/observation_gating/exact_gate.py",
+    "research/real_apps_v1/real_app_suite_v1.py",
+)
 REQUIRED_TRACKED = (
     "runtime/golden-demo-v3.sh",
     "runtime/setup-golden-demo-v3.sh",
@@ -51,6 +59,7 @@ REQUIRED_TRACKED = (
     "release/preview_bundle_v1/RELEASE_NOTES.md",
     *RETAINED_FILES,
     *LIVE_CONTROL_ASSETS,
+    *GOLDEN_GUI_SOURCES,
 )
 
 
@@ -162,6 +171,7 @@ def select_release_paths(root: Path, tracked: list[str]) -> list[str]:
         and name.endswith(".py")
     )
     selected.update(LIVE_CONTROL_ASSETS)
+    selected.update(GOLDEN_GUI_SOURCES)
     selected.update(RETAINED_FILES)
     selected.update(retained_source_paths(root))
     selected.update(retained_source_archive_paths(root))
@@ -317,6 +327,7 @@ def build(root: Path, out: Path) -> dict:
             "all tracked release/**",
             "all top-level research/live_control/*.py",
             "explicit Golden Desktop schema/responder assets",
+            "canonical Python sources used by the Golden GUI child",
             "retained integrated-efficiency prereg/report/audit",
             "every source named by retained preregistration",
             "byte-frozen source archive and manifest for the retained study",

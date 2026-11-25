@@ -21,6 +21,14 @@ SPEC.loader.exec_module(mod)
 
 
 class ArchiveTests(unittest.TestCase):
+    gui_sources = {
+        "research/observation_tiles/tile_transport.py",
+        "research/observation_tiles/image_artifact.py",
+        "research/observation_gating/gui_suite.py",
+        "research/observation_gating/exact_gate.py",
+        "research/real_apps_v1/real_app_suite_v1.py",
+    }
+
     @unittest.skipUnless(shutil.which("sh"), "quickstart commands require a POSIX shell")
     def test_quickstart_enters_the_checksummed_archive_directory(self):
         guide = (HERE / "QUICKSTART.md").read_text(encoding="utf-8")
@@ -34,6 +42,7 @@ class ArchiveTests(unittest.TestCase):
             with tarfile.open(archive, "w:gz") as bundle:
                 directory = tarfile.TarInfo(prefix)
                 directory.type = tarfile.DIRTYPE
+                directory.mode = 0o755
                 bundle.addfile(directory)
             digest = hashlib.sha256(archive.read_bytes()).hexdigest()
             (downloads / "SHA256SUMS").write_bytes(f"{digest}  {archive.name}\n".encode())
@@ -50,12 +59,14 @@ class ArchiveTests(unittest.TestCase):
         subprocess.run(["git", "-C", str(root), "config", "user.name", "Test"], check=True)
 
         required = set(mod.REQUIRED_TRACKED) | set(mod.ROOT_RELEASE_FILES)
+        required.update(self.gui_sources)
         required.add(".gitattributes")
         required.update({
             "runtime/helper.py",
             "release/helper.md",
             "research/live_control/runtime_dependency.py",
             "research/live_control/unrelated_asset.json",
+            "research/observation_tiles/benchmark_image_artifact.py",
             "research/doom/huge-raw.bin",
         })
         source_bytes = b"VALUE = 1\n"
@@ -137,6 +148,8 @@ class ArchiveTests(unittest.TestCase):
             self.assertTrue(check["selected_closure_exact"])
             with tarfile.open(fileobj=io.BytesIO(first), mode="r:gz") as tf:
                 names = set(tf.getnames())
+                self.assertLessEqual({f"{prefix}/{name}" for name in self.gui_sources}, names)
+                self.assertNotIn(prefix + "/research/observation_tiles/benchmark_image_artifact.py", names)
                 self.assertNotIn(prefix + "/research/doom/huge-raw.bin", names)
                 member = tf.getmember(prefix + "/runtime/golden-demo-v3.sh")
                 self.assertTrue(member.mode & stat.S_IXUSR)
