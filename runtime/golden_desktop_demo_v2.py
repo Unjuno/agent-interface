@@ -47,8 +47,8 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
     with grounding_model_type(
             out / "persistent-grounding-app-server", workspace,
             contract="compiled", model="gpt-5.6-luna", effort="low", **launch) as grounding:
-        implementation.call_model = grounding.call
-        rows, independent = implementation.run_arm("persistent", seed, workspace)
+        rows, independent = implementation.run_arm(
+            "persistent", seed, workspace, model_call=grounding.call)
         grounding_thread_id = grounding.thread_id
         grounding_turns = grounding.calls
     ended = time.perf_counter_ns()
