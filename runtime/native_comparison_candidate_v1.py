@@ -1,6 +1,7 @@
 """Native App Server transport for a prospective matched comparison."""
 
 from contextlib import contextmanager
+import inspect
 import json
 import os
 from pathlib import Path
@@ -16,7 +17,7 @@ from research.live_control.integrated_efficiency_app_server_model_v1 import (
     windows_path,
 )
 from research.live_control.integrated_efficiency_fixture_v1 import workload
-from research.live_control.integrated_efficiency_protocol_v1 import ARMS, EXPECTED_MODEL_CALLS, TASKS
+from research.live_control.integrated_efficiency_protocol_v1 import ARMS, EXPECTED_MODEL_CALLS, TASKS, USAGE_FIELDS
 from research.live_control.native_app_server_job_v1 import WindowsAppServerOwner
 from research.live_control.native_codex_usage_v1 import normalize_usage
 from research.live_control.schema_preflight_v1 import EFFORT, MODEL
@@ -46,6 +47,62 @@ def scheduled_grounding_roots(out, arm):
                  if count)
 
 
+def repair_window(events, task_source_sequence):
+    missing = [(i, row) for i, row in enumerate(events)
+               if row.get("event") == "target_handle_checked" and row.get("handle") == "persistent_a_field"
+               and row.get("status") == "MISSING" and row.get("eligible") is False]
+    if len(missing) != 1 or type(task_source_sequence) is not int:
+        return None
+    start, refusal = missing[0]
+    start_ns, refused_sequence = refusal.get("checked_ns"), refusal.get("observation_sequence")
+    if (type(start_ns) is not int or type(refused_sequence) is not int
+            or refused_sequence < task_source_sequence):
+        return None
+    lower_index, lower_ns, lower_sequence = start, start_ns, refused_sequence
+    for alias in ("persistent_b_field", "persistent_b_submit"):
+        matches = [(i, row) for i, row in enumerate(events)
+                   if row.get("event") == "target_handle_minted_from_point" and row.get("handle") == alias
+                   and row.get("status") == "VALID"]
+        if len(matches) != 1:
+            return None
+        index, mint = matches[0]
+        sequence, stamp = mint.get("fresh_sequence"), mint.get("minted_ns")
+        if (index <= lower_index or type(sequence) is not int or sequence <= lower_sequence
+                or type(stamp) is not int or stamp <= lower_ns or mint.get("created_sequence") != sequence
+                or mint.get("source_sequence") != task_source_sequence or mint.get("fresh_patch_exact") is not True):
+            return None
+        lower_index, lower_ns, lower_sequence = index, stamp, sequence
+    checked = next(((i, row) for i, row in enumerate(events)
+                    if i > lower_index and row.get("event") == "target_handle_checked"
+                    and row.get("handle") == "persistent_b_field" and row.get("eligible") is True
+                    and row.get("status") == "VALID"), None)
+    if checked is None:
+        return None
+    end, verified = checked
+    end_ns, final_sequence = verified.get("checked_ns"), verified.get("observation_sequence")
+    if (type(end_ns) is not int or end_ns <= lower_ns
+            or type(final_sequence) is not int or final_sequence <= lower_sequence):
+        return None
+    accepted = {row["id"]: row.get("accepted_ns") for row in events if row.get("event") == "accepted"}
+    terminal = {row["id"]: row.get("terminal_ns") for row in events if row.get("event") == "terminal"}
+    pointers = []
+    for i, row in enumerate(events):
+        if row.get("event") != "pointer_admission" or row.get("operation") != "button_down":
+            continue
+        admitted = row.get("admitted_ns")
+        if type(admitted) is not int:
+            return None
+        if start < i < end or start_ns <= admitted <= end_ns:
+            program = row.get("id")
+            began, ended = accepted.get(program), terminal.get(program)
+            if type(began) is not int or type(ended) is not int or not began <= admitted <= ended:
+                return None
+            pointers.append((program, admitted))
+    return {"refusal_id": refusal["id"], "revalidation_id": verified["id"],
+            "begin_ns": start_ns, "end_ns": end_ns,
+            "pointer_admissions": pointers}
+
+
 def audit_local_effects(out, seed, arm):
     """Recompute exact submissions and checked release from local runtime streams."""
     if arm not in ARMS or type(seed) is not int or seed < 0:
@@ -58,6 +115,7 @@ def audit_local_effects(out, seed, arm):
     tasks = workload(seed)
     expected = {task["task_id"]: task for task in tasks}
     exact = []
+    wrong = []
     for row in history:
         task = expected.get(row.get("task_id"))
         if (task is not None and row.get("schema") == "integrated_efficiency_submission_v1"
@@ -65,6 +123,12 @@ def audit_local_effects(out, seed, arm):
                 and row.get("expected_token") == task["token"]
                 and row.get("submitted_values") == [task["token"]] and row.get("exact") is True):
             exact.append(task["task_id"])
+        elif (task is not None and row.get("schema") == "integrated_efficiency_submission_v1"
+                and row.get("layout") == task["layout"] and row.get("expected_token") == task["token"]
+                and row.get("exact") is False and type(row.get("submitted_values")) is list
+                and all(type(value) is str for value in row["submitted_values"])
+                and row["submitted_values"] != [task["token"]]):
+            wrong.append(task["task_id"])
     admissions = [row["id"] for row in events if row.get("event") == "accepted"]
     terminal = [row for row in events if row.get("event") == "terminal"]
     release_verified = [row["id"] for row in terminal if neutral_release(row)]
@@ -84,16 +148,25 @@ def audit_local_effects(out, seed, arm):
     old_target_admissions = sum(row.get("event") == "pointer_admission"
                                 and row.get("operation") == "button_down"
                                 and row.get("id") in missing_checks for row in events)
+    source_sequence = (details[3].get("source", {}).get("sequence")
+                       if arm == "persistent" and len(details) >= 4 else None)
+    window = repair_window(events, source_sequence) if arm == "persistent" else None
+    consistent = window is not None and window == repair_window(delivered, source_sequence)
     return {
         "exact_tasks": len(set(exact)), "submission_count": len(history),
         "exact_once_in_allocation_order": len(history) == len(tasks) and exact == list(expected),
         "accepted_programs": len(admissions), "verified_terminal_releases": len(release_verified),
         "all_accepted_programs_released": released_all, "old_layout_missing_checks": len(missing_checks),
         "old_check_program_button_down_admissions": old_target_admissions,
+        "repair_window_verified": consistent,
+        "pre_repair_button_down_admissions": len(window["pointer_admissions"]) if consistent else None,
+        "confirmed_wrong_submissions": len(wrong),
+        "confirmed_duplicate_exact_submissions": len(exact) - len(set(exact)),
     }
 
 
-def capture_block(out, seed, *, preflight, run_arm, open_grounding):
+def capture_block(out, seed, *, preflight, run_arm, open_grounding,
+                  registration=None, registration_sha256=None):
     """Retain a fresh, ordered block pending independent raw verification."""
     if type(seed) is not int or seed < 0:
         raise ValueError("nonnegative integer comparison seed required")
@@ -108,6 +181,7 @@ def capture_block(out, seed, *, preflight, run_arm, open_grounding):
         "expected_grounding_turns": {arm: sum(EXPECTED_MODEL_CALLS[arm]) for arm in ARMS},
         "schema_preflight_calls_per_arm": 1,
         "provider_context": "one_arm_owned_app_server_with_one_fresh_thread_per_grounding",
+        "registration": registration, "registration_sha256": registration_sha256,
     })
     statuses = dict.fromkeys(ARMS, "not_run")
     disposition = {"schema": "native_comparison_capture_v1", "disposition": "HOLD",
@@ -123,8 +197,10 @@ def capture_block(out, seed, *, preflight, run_arm, open_grounding):
                 "started_monotonic_ns": time.monotonic_ns()})
             try:
                 preflight_row = preflight(arm, contract, workspace)
-                normalize_usage(preflight_row["usage"])
+                usage = normalize_usage(preflight_row["usage"])
                 write_record(arm_receipts / "preflight-result.json", preflight_row)
+                if set(usage) != set(USAGE_FIELDS):
+                    raise ValueError("unreported schema preflight usage field")
                 stage = "arm"
                 with open_grounding(arm, contract, workspace) as call:
                     rows, independent = run_arm(arm, seed, workspace, model_call=call)
@@ -150,7 +226,10 @@ def capture_block(out, seed, *, preflight, run_arm, open_grounding):
                            or row.get("releases_verified") is not True for row in rows)
                     or independent.get("success") is not True
                     or not effects["exact_once_in_allocation_order"]
-                    or not effects["all_accepted_programs_released"]):
+                    or not effects["all_accepted_programs_released"]
+                    or (registration is not None and arm == "persistent" and (
+                        effects["repair_window_verified"] is not True
+                        or effects["pre_repair_button_down_admissions"] != 0))):
                 statuses[arm] = "incomplete"
                 disposition["reason"] = "task_or_independent_effect_incomplete"
                 break
@@ -173,7 +252,22 @@ def bind_golden_runner(out):
     import schema_preflight_v1 as schema_preflight
 
     with _GOLDEN_BINDING:
-        config = golden.previous.base.configuration()
+        repo = Path(__file__).resolve().parents[1]
+        runtime_base = golden.previous.base
+        research = repo / "research" / "live_control"
+        runner_source = research / "run_integrated_efficiency_live_v1.py"
+        loaded_sources = (
+            (implementation.__file__, runner_source),
+            (inspect.getsourcefile(implementation.run_arm), runner_source),
+            (inspect.getsourcefile(implementation.preflight_call), runner_source),
+            (schema_preflight.__file__, research / "schema_preflight_v1.py"),
+            (legacy_model.__file__, research / "integrated_efficiency_model_v1.py"),
+            (runtime_base.__file__, repo / "runtime" / "golden_desktop_demo.py"),
+            (golden.__file__, repo / "runtime" / "golden_desktop_demo_v3.py"),
+        )
+        if any(actual is None or Path(actual).resolve() != expected for actual, expected in loaded_sources):
+            raise ValueError("loaded comparison source is outside the registered checkout")
+        config = runtime_base.configuration()
         executable = config.get("windows_codex_exe")
         windows_python, chromium = config.get("windows_python"), config.get("chromium")
         if executable is None or windows_python is None or chromium is None:
@@ -189,7 +283,7 @@ def bind_golden_runner(out):
             (schema_preflight, "CLI_EXE_WSL", schema_preflight.CLI_EXE_WSL),
         ]
         try:
-            configured, runtime_client = golden.previous.base.configure_research_modules(config, chromium)
+            configured, runtime_client = runtime_base.configure_research_modules(config, chromium)
             if configured is not implementation:
                 raise RuntimeError("unexpected Golden arm implementation")
             class ReleaseCheckedRuntime(runtime_client):
@@ -323,6 +417,13 @@ def owned_grounding(session_root, workspace, *, contract, executable, windows_py
                 usage=usage, visible_images_submitted=1, wait_ns=time.monotonic_ns() - started,
                 requested_model=MODEL, requested_effort=EFFORT,
                 publication_error=publication_error) from publication_error
+        if set(usage) != set(USAGE_FIELDS):
+            blocked = True
+            error = ValueError("unreported grounding usage field")
+            raise GroundingCallError(
+                error, call_id=result["call_id"], thread_id=result["thread_id"],
+                usage=usage, visible_images_submitted=1, wait_ns=time.monotonic_ns() - started,
+                requested_model=MODEL, requested_effort=EFFORT, usage_error=str(error)) from error
         return result
 
     try:
