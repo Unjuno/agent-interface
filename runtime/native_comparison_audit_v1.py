@@ -22,7 +22,8 @@ from research.live_control.native_codex_usage_v1 import accounting, normalize_us
 from research.live_control.native_preflight_job_v1 import RECEIPT, START_RECORD, completed_receipt, valid_hex
 from research.live_control.schema_preflight_v1 import EFFORT, MODEL
 from runtime.native_comparison_candidate_v1 import (
-    audit_local_effects, bind_golden_runner, capture_block, scheduled_grounding_roots, write_record,
+    audit_local_effects, bind_golden_runner, capture_block, capture_plan_values,
+    scheduled_grounding_roots, write_record,
 )
 
 
@@ -166,6 +167,17 @@ def verify_all_provider_paths(out):
                      raw / "arrivals.jsonl", raw / "plan.json", raw / "process.json",
                      out / "arms" / arm / "runtime" / "events.jsonl"):
             paths[path.name].add(path)
+        model_files = {slot / name for slot in scheduled_grounding_roots(out, arm)
+                       for name in ("request.json", "prompt.txt", "result.json")}
+        require({path for path in (out / "model-calls" / arm).rglob("*") if path.is_file()}
+                == model_files, "unexpected or missing grounding artifacts")
+        require({path.name for path in (out / "capture-arms" / arm).iterdir()} == {
+            "preflight-start.json", "preflight-result.json", "task-results.json",
+            "effect-release-audit.json", "arm-timing.json",
+        }, "unexpected or missing arm evidence")
+    require(not any(path.name.casefold() in {
+        "failure.json", "terminal-publication-failure.json", "refused-groundings",
+    } for path in out.rglob("*")), "capture has additional failure evidence")
     for name, expected in paths.items():
         require(set(out.rglob(name)) == expected, "provider artifacts differ from the allocated paths")
     require({path.name for path in (out / "native-app-server").iterdir()} == set(ARMS)
@@ -310,14 +322,19 @@ def verify_protocol(protocol, owner, attempts):
         completed_index, completed = completions[0]
         terminal = completed["turn"]
         messages = [item for item in terminal["items"] if item.get("type") == "agentMessage"]
-        require(completed_index > started_index and timestamps[completed_index] <= attempt["finished_ns"]
+        require(completed_index > started_index and timestamps[completed_index] <= attempt["returned_ns"]
                 and terminal.get("status") == "completed"
                 and terminal.get("error") is None and completed.get("error") is None
                 and all(item.get("type") in permitted_item_types for item in terminal["items"])
                 and len(messages) == 1 and same(json.loads(messages[0]["text"]), attempt["answer"]),
                 "App Server completion differs from the saved answer")
-        use = [per_turn_usage(value, allow_missing_cache_write=True) for _index, value in observations]
-        require(same(use[-1], attempt["usage"]), "App Server usage differs from the acquired turn result")
+        observed = [(timestamps[index], per_turn_usage(value, allow_missing_cache_write=True))
+                    for index, value in observations]
+        acquired = [use for stamp, use in observed if stamp <= attempt["returned_ns"]]
+        late = [use for stamp, use in observed if stamp > attempt["returned_ns"]]
+        require(acquired and same(acquired[-1], attempt["usage"])
+                and all(same(use, attempt["usage"]) for use in late),
+                "App Server usage was unavailable at return or later changed")
         previous_end = max(completed_index, turn_index)
 
 
@@ -413,6 +430,88 @@ def verify_task_sources(events, details, seed):
     return observations
 
 
+def task_effect_times(events, details, history, unplanned_repair_presses):
+    start = [row for row in events if row["event"] == "accepted"]
+    stop = {row["id"]: row for row in events if row["event"] == "terminal"}
+    effects = defaultdict(list)
+    previous_receipt = -1
+    for row in history:
+        stamp = row["received_ns"]
+        require(type(stamp) is int and stamp > previous_receipt, "submission receipt clock is unverified")
+        previous_receipt = stamp
+        effects[row["task_id"]].append(stamp)
+    require(list(effects) == [detail["trace"]["task_id"] for detail in details],
+            "submission receipt order differs from the allocated tasks")
+    require(len(start) == len(stop) == sum(detail["program_count"] for detail in details),
+            "task effects lack a complete input program partition")
+    timeline, cursor, previous_end = [], 0, -1
+    for detail in details:
+        task = detail["trace"]
+        entries = start[cursor:cursor + detail["program_count"]]
+        cursor += len(entries)
+        ids = [row["id"] for row in entries]
+        require(len(ids) >= 2 and ids[1] == detail["source"]["id"],
+                "task source and input program partition differ")
+        for opened in entries:
+            begin = opened["accepted_ns"]
+            end = stop[opened["id"]]["terminal_ns"]
+            require(type(begin) is int and type(end) is int and previous_end < begin <= end,
+                    "accepted task programs are not serial")
+            previous_end = end
+        downs = [row for row in events if row["event"] == "pointer_admission"
+                 and row.get("operation") == "button_down" and row["id"] in ids]
+        allowed_extra = unplanned_repair_presses if task["repair"]["required"] else 0
+        require(task["pointer_admissions"] == 2 and len(downs) == 2 + allowed_extra,
+                "task button-down admissions differ from its checked two-click sequence")
+        field, submit = downs[-2:]
+        source_ns = detail["source"]["capture_ns"]
+        receipts = effects[task["task_id"]]
+        submit_end = stop[submit["id"]]["terminal_ns"]
+        stamps = [source_ns, field["admitted_ns"], field["input_ack_ns"],
+                  submit["admitted_ns"], submit["input_ack_ns"], *receipts, submit_end]
+        require(all(type(stamp) is int for stamp in stamps)
+                and stamps == sorted(stamps) and len(set(stamps)) == len(stamps)
+                and (len(receipts) != 1 or task["source_to_completion_ns"] == receipts[0] - source_ns),
+                "task submission is not bound to the settled source and submit program")
+        program_begins = {row["id"]: row["accepted_ns"] for row in entries}
+        require(all(program_begins[row["id"]] <= row["admitted_ns"] < row["input_ack_ns"]
+                    <= stop[row["id"]]["terminal_ns"] for row in (field, submit)),
+                "task pointer input is outside its accepted program")
+        timeline.append((ids[0], entries[0]["accepted_ns"], source_ns,
+                         field["admitted_ns"], submit["admitted_ns"], tuple(receipts), previous_end))
+    return timeline
+
+
+def verify_arm_timing(out, arm, effects, prior_arm_end):
+    receipt = out / "capture-arms" / arm
+    timing = read(receipt / "arm-timing.json")
+    first, checked, opened, closed = [timing[key] for key in (
+        "preflight_started_ns", "preflight_finished_ns", "arm_started_ns", "arm_finished_ns")]
+    start = read(receipt / "preflight-start.json")
+    require(all(type(stamp) is int for stamp in (first, checked, opened, closed))
+            and prior_arm_end < first < checked <= opened < closed
+            and start.get("started_monotonic_ns") == first
+            and start.get("contract") == ("plain" if arm == "plain" else "compiled"),
+            "arm clocks overlap or its preflight ordering is unverified")
+    arm_root = out / "arms" / arm
+    runtime = arm_root / "runtime"
+    detail = read(arm_root / "task-details.json")
+    history = records(runtime / "submission-history.jsonl")
+    extra = effects["pre_repair_button_down_admissions"] or 0
+    events = records(runtime / "events.jsonl")
+    delivered = records(runtime / "delivered.jsonl")
+    scope = task_effect_times(events, detail, history, extra)
+    require(scope == task_effect_times(delivered, detail, history, extra),
+            "task effect ordering differs across the runtime streams")
+    protocol = records(out / "native-app-server" / arm / "protocol.jsonl")
+    ready = [row.get("emit_started_ns") for row in events if row.get("event") == "ready"]
+    require(len(ready) == 1 and type(ready[0]) is int
+            and opened <= protocol[0]["observed_ns"] <= ready[0] <= scope[0][1]
+            and max(scope[-1][-1], protocol[-1]["observed_ns"]) <= closed,
+            "runtime or provider activity is outside the sealed arm interval")
+    return closed
+
+
 def audit_exec(repo, out, plan, arm, contract):
     home = out / "preflight" / arm
     entry_name = contract + "-form-grounding"
@@ -476,6 +575,11 @@ def audit_exec(repo, out, plan, arm, contract):
                     and row["sha256"] == hashlib.sha256(line).hexdigest()
                     for i, (row, line) in enumerate(zip(arrival, lines, strict=True))),
             "preflight raw Exec stream differs from its local arrival journal")
+    lifecycle = {"thread.started", "turn.started", "turn.completed"}
+    items = {"item.started", "item.updated", "item.completed"}
+    require(all(row.get("type") in lifecycle or (
+        row.get("type") in items and row.get("item", {}).get("type") in {"agent_message", "reasoning"})
+                for row in events), "preflight stream has an unregistered item or a failed event")
     usage = normalize_usage(preflight_terminal(events).get("usage"))
     messages = [row["item"]["text"] for row in events if row.get("type") == "item.completed"
                 and row.get("item", {}).get("type") == "agent_message"]
@@ -540,8 +644,11 @@ def audit_app_server(repo, out, plan, arm, contract, rows):
         require(type(start["generation"]) is int and start["generation"] == index
                 and start["result_root"] == str(source_slot) and start["contract"] == contract
                 and terminal["status"] == "completed" and terminal["provider_turn_observed"] is True
-                and type(start["started_monotonic_ns"]) is int and type(terminal["finished_monotonic_ns"]) is int
-                and terminal["finished_monotonic_ns"] >= start["started_monotonic_ns"] >= bindings[task_index][3],
+                and all(type(value) is int for value in (
+                    start["started_monotonic_ns"], terminal["result_returned_monotonic_ns"],
+                    terminal["finished_monotonic_ns"]))
+                and terminal["finished_monotonic_ns"] >= terminal["result_returned_monotonic_ns"]
+                >= start["started_monotonic_ns"] >= bindings[task_index][3],
                 "grounding attempt ledger did not settle")
         usage = normalize_usage(result["usage"])
         require(same(usage, normalize_usage(terminal["usage"])) and same(usage, normalize_usage(call["usage"]))
@@ -568,7 +675,8 @@ def audit_app_server(repo, out, plan, arm, contract, rows):
         threads.append({"thread_id": result["thread_id"], "call_id": result["call_id"],
                         "thread_request": thread_request, "turn_request": turn_request,
                         "answer": result["raw"], "usage": usage,
-                        "started_ns": start["started_monotonic_ns"], "finished_ns": terminal["finished_monotonic_ns"]})
+                        "started_ns": start["started_monotonic_ns"],
+                        "returned_ns": terminal["result_returned_monotonic_ns"]})
         provider_calls.append(call)
     require(sorted(path.relative_to(out) for path in (out / "model-calls" / arm).rglob("result.json"))
             == sorted(slot.relative_to(out) / "result.json" for slot in slots),
@@ -610,8 +718,7 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
                 and plan["arms"] == list(ARMS) and same(plan["tasks"], workload(plan["seed"]))
                 and plan["model"] == MODEL and plan["effort"] == EFFORT and plan["retry"] is False
                 and same(plan["source"], source_snapshot(repo))
-                and same(stored.get("registration"), plan)
-                and stored.get("registration_sha256") == registration_sha256,
+                and same(stored, capture_plan_values(plan["seed"], plan, registration_sha256)),
                 "capture differs from the frozen plan or source")
         statuses = read(out / "capture.json").get("arms")
         require(type(statuses) is dict and set(statuses) == set(ARMS)
@@ -621,6 +728,7 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
                 "the retained block lacks the two reference arms or persistent attempt")
         verify_all_provider_paths(out)
         arms, call_ids, nonces = {}, [], []
+        prior_arm_end = -1
         for arm in ARMS:
             contract = "plain" if arm == "plain" else "compiled"
             saved = read(out / "capture-arms" / arm / "task-results.json")
@@ -628,6 +736,7 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             require(len(rows) == len(TASKS), "arm task schedule is incomplete")
             checked = [validate_task(row, arm, i) for i, row in enumerate(rows)]
             effects = audit_local_effects(out, plan["seed"], arm)
+            prior_arm_end = verify_arm_timing(out, arm, effects, prior_arm_end)
             preflight, preflight_nonce = audit_exec(repo, out, plan, arm, contract)
             calls, threads, session_nonce = audit_app_server(repo, out, plan, arm, contract, rows)
             nonces.extend((preflight_nonce, session_nonce))

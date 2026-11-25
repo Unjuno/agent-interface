@@ -79,8 +79,8 @@ class SyntheticCapture:
                     windows_repo=str(WINDOWS_REPO), windows_out=str(WINDOWS_OUT))
         write(self.registration_path, self.plan)
         self.registration_digest = audit.digest(self.registration_path)
-        write(self.out / "capture-plan.json", {"registration": self.plan,
-                                               "registration_sha256": self.registration_digest})
+        write(self.out / "capture-plan.json",
+              audit.capture_plan_values(SEED, self.plan, self.registration_digest))
         write(self.out / "capture.json", {"arms": dict.fromkeys(ARMS, "captured")})
 
     def exec_arm(self, arm, contract, answer, arm_index):
@@ -137,6 +137,7 @@ class SyntheticCapture:
 
     def populate(self, persistent_tokens=20):
         for arm_index, arm in enumerate(ARMS):
+            base_ns = arm_index * 100_000
             (self.out / "workspaces" / arm).mkdir(parents=True)
             contract = "plain" if arm == "plain" else "compiled"
             answer = answer_for(contract)
@@ -144,7 +145,8 @@ class SyntheticCapture:
             stage_fake_effects(self.out, arm, SEED)
             runtime = self.out / "arms" / arm / "runtime"
             history = runtime / "submission-history.jsonl"
-            lines(history, [json.loads(line) for line in history.read_bytes().splitlines()])
+            lines(history, [{**json.loads(line), "received_ns": base_ns + i * 1000 + 120}
+                            for i, line in enumerate(history.read_bytes().splitlines(), start=1)])
             session = self.out / "native-app-server" / arm
             owner = {"run_nonce": f"{arm_index + 11:032x}", "windows_executable": NATIVE["windows_path"],
                      "owner_sha256": self.plan["source"]["files"][str(audit.APP_OWNER)]}
@@ -165,7 +167,7 @@ class SyntheticCapture:
             send("initialize", {}, {"platformFamily": "windows"})
             send("initialized", {})
             for i, row in enumerate(stream):
-                row["observed_ns"] = i
+                row["observed_ns"] = base_ns + 101 + i
             tasks, details, observations = [], [], []
             ready_tasks = [{"task_id": task, "token": f"t{SEED:06d}-{i}",
                             "layout": "A" if i < 4 else "B",
@@ -173,13 +175,14 @@ class SyntheticCapture:
                                       "invalidation_repair" if i == 4 else "post_repair_warm"),
                             "url": f"http://127.0.0.1:16534/task/{i}"}
                            for i, task in enumerate(TASKS, start=1)]
-            observations.append({"event": "ready", "goal": {"tasks": ready_tasks}})
+            observations.append({"event": "ready", "goal": {"tasks": ready_tasks},
+                                 "emit_started_ns": base_ns + 150})
             neutral = {"verified": True, "keys_down": [], "buttons_down": []}
             generation = 0
             for i, (task, route) in enumerate(zip(TASKS, EXPECTED_ROUTES[arm], strict=True), start=1):
                 calls = []
                 repair = route == "repair"
-                stamp = i * 1000
+                stamp = base_ns + i * 1000
                 source_id, nav_id = f"source-{i}", f"navigation-{i}"
                 observation = {"event": "observation", "id": source_id, "sequence": i * 10,
                                "capture_ns": stamp + 20, "image": (runtime / f"{i:03d}.png").as_posix()}
@@ -217,7 +220,7 @@ class SyntheticCapture:
                           "source_image": observation["image"]})
                     write(attempt / "terminal.json", {"status": "completed", "provider_turn_observed": True,
                           "thread_id": thread, "call_id": turn, "usage": tokens,
-                          "finished_monotonic_ns": stamp + 90})
+                          "result_returned_monotonic_ns": stamp + 75, "finished_monotonic_ns": stamp + 90})
                     write(slot / "result.json", {"raw": answer, "usage": tokens, "provider_usage": provider_usage,
                           "turn_status": "completed", "answer_eligible": True, "requested_model": "gpt-5.6-luna",
                           "requested_effort": "low", "thread_id": thread, "call_id": turn, "turn_id": turn})
@@ -248,14 +251,14 @@ class SyntheticCapture:
                         row["observed_ns"] = stamp + 41 + j
                 row = {"arm": arm, "task_id": task, "layout": "A" if i < 4 else "B", "route": route,
                        "model_calls": calls, "planner_generations": len(calls), "model_visible_images": len(calls),
-                       "local_observations": 1, "durable_calls": 1, "pointer_admissions": 0,
+                       "local_observations": 1, "durable_calls": 1, "pointer_admissions": 2,
                        "old_target_pointer_admissions": 0, "releases_verified": True, "submission_count": 1,
                        "exact_submission": True, "typed_outcome": "completed", "elapsed_ns": i * 1000,
-                       "source_to_completion_ns": 100, "input_feedback_ns": [],
+                       "source_to_completion_ns": 100, "input_feedback_ns": [None, None],
                        "repair": {"required": repair, "old_reference_status": "missing" if repair else None,
                                   "old_reference_pointer_admissions": 0, "attempted": repair, "succeeded": repair}}
                 tasks.append(row)
-                details.append({"trace": row, "source": observation, "program_count": 3 if repair else 2})
+                details.append({"trace": row, "source": observation, "program_count": 4 if repair else 3})
                 if repair:
                     observations.extend([
                         {"event": "target_handle_checked", "id": "old-check",
@@ -274,12 +277,28 @@ class SyntheticCapture:
                          "eligible": True, "status": "VALID", "observation_sequence": i * 10 + 4,
                          "checked_ns": stamp + 80},
                     ])
+                action_id = f"input-{i}"
+                observations.extend([{"event": "accepted", "id": action_id, "accepted_ns": stamp + 91},
+                    {"event": "pointer_admission", "id": action_id, "operation": "button_down",
+                     "admitted_ns": stamp + 100, "input_ack_ns": stamp + 101},
+                    {"event": "pointer_admission", "id": action_id, "operation": "button_down",
+                     "admitted_ns": stamp + 110, "input_ack_ns": stamp + 111},
+                    {"event": "terminal", "id": action_id, "terminal_ns": stamp + 150,
+                     "status": "completed", "release": neutral},
+                ])
             for name in ("events.jsonl", "delivered.jsonl"):
                 path = runtime / name
                 lines(path, observations)
             write(runtime.parent / "task-details.json", details)
-            write(self.out / "capture-arms" / arm / "task-results.json",
+            arm_receipts = self.out / "capture-arms" / arm
+            write(arm_receipts / "task-results.json",
                   {"tasks": tasks, "independent": {"success": True}})
+            write(arm_receipts / "preflight-start.json",
+                  {"contract": contract, "started_monotonic_ns": base_ns + 1})
+            write(arm_receipts / "arm-timing.json", {
+                  "preflight_started_ns": base_ns + 1, "preflight_finished_ns": base_ns + 80,
+                  "arm_started_ns": base_ns + 100, "arm_finished_ns": base_ns + 7000})
+            write(arm_receipts / "effect-release-audit.json", {"synthetic": True})
             lines(session / "protocol.jsonl", stream)
 
     def verify(self, seal=None):
@@ -372,7 +391,7 @@ class NativeComparisonAuditTests(unittest.TestCase):
                                 if row.get("event") == "accepted" and row.get("id") == "different-program")
                             events.insert(earlier_program + 1, {"event": "pointer_admission",
                                 "operation": "button_down", "id": "different-program",
-                                "admitted_ns": 4044})
+                                "admitted_ns": events[earlier_program]["accepted_ns"] + 2})
                         lines(path, events)
                 report = audit.read(capture.out / "capture.json")
                 report["arms"]["persistent"] = "incomplete"
@@ -393,6 +412,77 @@ class NativeComparisonAuditTests(unittest.TestCase):
                     stream.write(b"\n")
                 result = capture.verify(seal)
                 self.assertEqual(result["disposition"], "HOLD", result)
+
+    def test_failure_evidence_plan_mismatch_or_exec_tool_item_prevents_retain(self):
+        for flaw in ("unallocated_failure", "arm_failure", "plan", "exec_tool"):
+            with self.subTest(flaw=flaw), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                out = capture.out
+                if flaw == "unallocated_failure":
+                    write(out / "model-calls/persistent/task-2/anchor/failure.json", {"failed": True})
+                elif flaw == "arm_failure":
+                    write(out / "capture-arms/persistent/failure.json", {"failed": True})
+                elif flaw == "plan":
+                    path = out / "capture-plan.json"
+                    write(path, {**audit.read(path), "seed": SEED + 1, "arms": ["persistent"],
+                                 "automatic_retry": True, "requested_model": "other"})
+                else:
+                    home = out / "preflight/plain/gate/plain-form-grounding/model-call"
+                    path = home / "events.jsonl"
+                    stream = audit.records(path)
+                    stream.insert(-1, {"type": "item.completed",
+                                       "item": {"type": "command_execution", "command": "synthetic"}})
+                    lines(path, stream)
+                    lines(home / "arrivals.jsonl", [
+                        {"line": i, "bytes": len(line), "sha256": hashlib.sha256(line).hexdigest()}
+                        for i, line in enumerate(path.read_bytes().splitlines(keepends=True))])
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD", result)
+                if flaw == "exec_tool":
+                    self.assertIn("unregistered item", result["reason"])
+
+    def test_late_usage_cannot_replace_observation_at_return(self):
+        for mode, expected in (("moved", "HOLD"), ("changed", "HOLD"), ("identical", "RETAIN")):
+            with self.subTest(mode=mode), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                path = capture.out / "native-app-server/persistent/protocol.jsonl"
+                stream = audit.records(path)
+                first = next(row for row in stream
+                             if row["message"].get("method") == "thread/tokenUsage/updated")
+                late = json.loads(json.dumps(first))
+                late["observed_ns"] = stream[-1]["observed_ns"] + 100
+                if mode == "moved":
+                    stream.remove(first)
+                elif mode == "changed":
+                    late["message"]["params"]["tokenUsage"]["last"]["reasoningOutputTokens"] += 1
+                lines(path, [*stream, late])
+                result = capture.verify()
+                self.assertEqual(result["disposition"], expected, result)
+                if expected == "HOLD":
+                    self.assertIn("unavailable at return or later changed", result["reason"])
+
+    def test_missing_or_crossed_effect_and_arm_clocks_hold(self):
+        for flaw in ("missing_receipt_clock", "receipt_before_submit", "overlapping_arms"):
+            with self.subTest(flaw=flaw), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                if flaw == "overlapping_arms":
+                    receipts = capture.out / "capture-arms" / "ephemeral"
+                    path = receipts / "arm-timing.json"
+                    write(path, {**audit.read(path), "preflight_started_ns": 6000})
+                    path = receipts / "preflight-start.json"
+                    write(path, {**audit.read(path), "started_monotonic_ns": 6000})
+                else:
+                    path = capture.out / "arms/plain/runtime/submission-history.jsonl"
+                    history = audit.records(path)
+                    if flaw == "missing_receipt_clock":
+                        history[0].pop("received_ns")
+                    else:
+                        history[0]["received_ns"] = 1105
+                    lines(path, history)
+                self.assertEqual(capture.verify()["disposition"], "HOLD")
 
 
 if __name__ == "__main__":

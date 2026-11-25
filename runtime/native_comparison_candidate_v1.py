@@ -165,6 +165,18 @@ def audit_local_effects(out, seed, arm):
     }
 
 
+def capture_plan_values(seed, registration, registration_sha256):
+    return {
+        "schema": "native_comparison_capture_plan_v1", "seed": seed,
+        "arms": list(ARMS), "tasks": workload(seed), "requested_model": MODEL,
+        "requested_effort": EFFORT, "automatic_retry": False,
+        "expected_grounding_turns": {arm: sum(EXPECTED_MODEL_CALLS[arm]) for arm in ARMS},
+        "schema_preflight_calls_per_arm": 1,
+        "provider_context": "one_arm_owned_app_server_with_one_fresh_thread_per_grounding",
+        "registration": registration, "registration_sha256": registration_sha256,
+    }
+
+
 def capture_block(out, seed, *, preflight, run_arm, open_grounding,
                   registration=None, registration_sha256=None):
     """Retain a fresh, ordered block pending independent raw verification."""
@@ -174,15 +186,7 @@ def capture_block(out, seed, *, preflight, run_arm, open_grounding,
     if out.is_relative_to(Path(__file__).resolve().parents[1]):
         raise ValueError("comparison output must be outside the source checkout")
     out.mkdir(parents=True, exist_ok=False)
-    write_record(out / "capture-plan.json", {
-        "schema": "native_comparison_capture_plan_v1", "seed": seed,
-        "arms": list(ARMS), "tasks": workload(seed), "requested_model": MODEL,
-        "requested_effort": EFFORT, "automatic_retry": False,
-        "expected_grounding_turns": {arm: sum(EXPECTED_MODEL_CALLS[arm]) for arm in ARMS},
-        "schema_preflight_calls_per_arm": 1,
-        "provider_context": "one_arm_owned_app_server_with_one_fresh_thread_per_grounding",
-        "registration": registration, "registration_sha256": registration_sha256,
-    })
+    write_record(out / "capture-plan.json", capture_plan_values(seed, registration, registration_sha256))
     statuses = dict.fromkeys(ARMS, "not_run")
     disposition = {"schema": "native_comparison_capture_v1", "disposition": "HOLD",
                    "reason": "independent_raw_audit_required", "arms": statuses}
@@ -193,19 +197,26 @@ def capture_block(out, seed, *, preflight, run_arm, open_grounding,
             arm_receipts = out / "capture-arms" / arm
             arm_receipts.mkdir(parents=True)
             stage = "preflight"
+            preflight_started = time.monotonic_ns()
             write_record(arm_receipts / "preflight-start.json", {"contract": contract,
-                "started_monotonic_ns": time.monotonic_ns()})
+                "started_monotonic_ns": preflight_started})
             try:
                 preflight_row = preflight(arm, contract, workspace)
+                preflight_finished = time.monotonic_ns()
                 usage = normalize_usage(preflight_row["usage"])
                 write_record(arm_receipts / "preflight-result.json", preflight_row)
                 if set(usage) != set(USAGE_FIELDS):
                     raise ValueError("unreported schema preflight usage field")
                 stage = "arm"
+                arm_started = time.monotonic_ns()
                 with open_grounding(arm, contract, workspace) as call:
                     rows, independent = run_arm(arm, seed, workspace, model_call=call)
                     write_record(arm_receipts / "task-results.json",
                                  {"tasks": rows, "independent": independent})
+                write_record(arm_receipts / "arm-timing.json", {
+                    "preflight_started_ns": preflight_started, "preflight_finished_ns": preflight_finished,
+                    "arm_started_ns": arm_started, "arm_finished_ns": time.monotonic_ns(),
+                })
                 stage = "effect_release_audit"
                 effects = audit_local_effects(out, seed, arm)
                 write_record(arm_receipts / "effect-release-audit.json", effects)
@@ -377,6 +388,7 @@ def owned_grounding(session_root, workspace, *, contract, executable, windows_py
                 session_root / "threads" / attempt.name, workspace, contract=contract,
                 model=MODEL, effort=EFFORT, allow_missing_cache_write=True, client=client)
             result = model.call(root, prompt, image, selected_contract, selected_workspace)
+            returned = time.monotonic_ns()
             usage = normalize_usage(result["usage"])
         except BaseException as error:
             blocked = True
@@ -399,6 +411,7 @@ def owned_grounding(session_root, workspace, *, contract, executable, windows_py
         terminal = {
             "status": "completed", "provider_turn_observed": True, "call_id": result["call_id"],
             "thread_id": result["thread_id"], "usage": usage,
+            "result_returned_monotonic_ns": returned,
             "finished_monotonic_ns": time.monotonic_ns(),
         }
         try:
