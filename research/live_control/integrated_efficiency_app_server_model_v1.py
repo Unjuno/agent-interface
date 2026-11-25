@@ -223,6 +223,8 @@ class PersistentGroundingModel:
                 "requested_model": self.model, "requested_effort": self.effort,
                 "cost": None,
             }
+            if self.allow_missing_cache_write:
+                result["provider_usage"] = copy.deepcopy(turn.usage)
             (root / "result.json").write_text(
                 json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
             return result

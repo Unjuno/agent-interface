@@ -91,6 +91,7 @@ class NativeCodexUsageTests(unittest.TestCase):
             self.assertEqual(result["usage"], PARTIAL)
             evidence = json.loads((root / "call" / "result.json").read_bytes())
             self.assertNotIn(CACHE_WRITE, evidence["usage"])
+            self.assertEqual(evidence["provider_usage"], provider_usage(PARTIAL))
             self.assertEqual(client.start_thread.call_args.kwargs["config"],
                              {"project_doc_max_bytes": 0, "model_reasoning_effort": "low"})
             self.assertEqual(client.start_turn.call_count, 1)
@@ -122,8 +123,11 @@ class NativeCodexUsageTests(unittest.TestCase):
             with patch.object(demo.base, "doctor", return_value={"passed": True}), \
                  patch.object(demo.base, "configuration", return_value=config), \
                  patch.object(demo.base, "configure_research_modules",
-                              return_value=(implementation, object)):
+                              return_value=(implementation, object)), \
+                 patch.object(demo.base, "windows_arg", return_value=r"C:\allocation"):
                 report = demo.run_live(root / "out", 1, grounding_model_type=Mock(return_value=model))
+            recorded = json.loads((root / "out" / "doctor.json").read_bytes())
+            self.assertEqual(recorded["native_run_root"], report["environment"]["native_run_root"])
             self.assertTrue(report["functional_passed"])
             self.assertFalse(report["passed"])
             self.assertIsNone(report["usage"][CACHE_WRITE])
@@ -139,13 +143,16 @@ class NativeCodexUsageTests(unittest.TestCase):
                  "exec_image", "thread_wrong_model", "thread_wrong_effort",
                  "turn_wrong_model", "turn_wrong_effort", "turn_missing_image",
                  "same_unrelated_images", "changed_image_bytes", "second_completed_first",
-                 "double_preflight_start", "completion_error", "completion_empty_items")
+                 "double_preflight_start", "completion_error", "completion_empty_items",
+                 "zero_edited_journal_and_ledger", "result_usage_zero_only",
+                 "relocated_provider_root", "mismatched_preflight_root", "unc_root",
+                 "unc_case_substitution")
         for mode in cases:
             with self.subTest(mode=mode), TemporaryDirectory() as td:
                 out = Path(td)
                 self.make_audit_packet(out, mode)
                 audit = demo.base.audit_live(out)
-                if mode in ("complete", "partial", "late_usage"):
+                if mode in ("complete", "partial", "late_usage", "unc_root"):
                     self.assertTrue(audit["functional_passed"])
                     complete = mode != "partial"
                     self.assertEqual(audit["passed"], complete)
@@ -173,12 +180,21 @@ class NativeCodexUsageTests(unittest.TestCase):
             report.pop("accounting_policy")
         if mode == "boolean_zero":
             report["tasks"][0]["model_calls"][0]["usage"] = {**task_report[0], CACHE_WRITE: False}
-        put(out, "golden-report.json", report)
-
         exe = r"C:\Program Files\Codex\codex.exe"
+        unc = mode in ("unc_root", "unc_case_substitution")
+        windows_root = r"\\wsl.localhost\Ubuntu\home\owner\allocation" if unc else r"C:\allocation"
+        wsl_root = "/home/owner/allocation" if unc else "/mnt/c/allocation"
+        launch_root = r"C:\different" if mode == "mismatched_preflight_root" else windows_root
         native = {"windows_path": exe, "version": "codex-cli fixture", "executable_sha256": "a" * 64}
-        put(out, "doctor.json", {"passed": True, "configuration": {
-            "windows_codex_exe": "/mnt/c/Program Files/Codex/codex.exe"}, "native_codex": native})
+        root_receipt = {"wsl_path": wsl_root, "windows_path": launch_root}
+        doctor = {"passed": True, "configuration": {
+            "windows_codex_exe": "/mnt/c/Program Files/Codex/codex.exe"}, "native_codex": native,
+            "native_run_root": root_receipt}
+        put(out, "doctor.json", doctor)
+        report["environment"] = doctor
+        if mode == "erased_labels":
+            report.pop("environment")
+        put(out, "golden-report.json", report)
         identity = {"cli_transport": "windows-native-codex-exe", "usage_policy": POLICY,
                     "cli_windows_path": exe, "cli_version": native["version"],
                     "cli_executable_sha256": native["executable_sha256"], "requested_model": "gpt-5.6-luna",
@@ -199,7 +215,8 @@ class NativeCodexUsageTests(unittest.TestCase):
         argv = [r"C:\another\codex.exe" if mode == "argv_mismatch" else exe, "exec",
                 "--model", "different" if mode == "exec_wrong_model" else "gpt-5.6-luna",
                 "-c", 'model_reasoning_effort="high"' if mode == "exec_wrong_effort" else 'model_reasoning_effort="low"',
-                "-c", 'model_instructions_file="fixture.txt"', "-c", "project_doc_max_bytes=0"]
+                "-c", 'model_instructions_file="fixture.txt"', "-c", "project_doc_max_bytes=0",
+                "-C", windows_root + r"\workspaces\persistent"]
         if mode == "exec_image":
             argv += ["--image", "fixture.png"]
         plan = {"args": argv + ["-"], "mode": "handle", "image_sha256": None}
@@ -229,8 +246,11 @@ class NativeCodexUsageTests(unittest.TestCase):
             task = report["tasks"][offset]
             [call] = task["model_calls"]
             filename = f"{offset + 1:03}.png"
-            original = "/allocation/" + runtime + filename
-            mounted = "C:\\allocation\\" + (runtime + filename).replace("/", "\\")
+            original = wsl_root + "/" + runtime + filename
+            provider_root = r"C:\different" if mode == "relocated_provider_root" else windows_root
+            mounted = provider_root + "\\" + (runtime + filename).replace("/", "\\")
+            if mode == "unc_case_substitution" and offset == 0:
+                mounted = mounted.removesuffix(".png") + ".PNG"
             images[call["call_id"]] = mounted
             details[offset]["source"]["image"] = original
             content = f"synthetic observation {offset}".encode()
@@ -239,8 +259,11 @@ class NativeCodexUsageTests(unittest.TestCase):
             prefix = f"model-calls/persistent/{task['task_id']}/{stage}/"
             put(out, prefix + "request.json", {"source_image": original, "provider_image": mounted,
                 "image_sha256": hashlib.sha256(content).hexdigest()})
+            persisted = PARTIAL if mode == "zero_edited_journal_and_ledger" and offset == 0 else raw_grounding[int(offset == 3)]
+            provider = PARTIAL if mode == "result_usage_zero_only" and offset == 0 else persisted
             put(out, prefix + "result.json", {"thread_id": "thread", "call_id": call["call_id"],
-                                            "turn_status": "completed", "raw": ANSWER})
+                                            "turn_status": "completed", "raw": ANSWER,
+                                            "usage": persisted, "provider_usage": provider_usage(provider)})
         (out / "arms/persistent/task-details.json").write_text(json.dumps(details), encoding="utf-8")
         if mode == "missing_protocol":
             return

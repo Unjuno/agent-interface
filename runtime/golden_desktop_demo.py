@@ -306,6 +306,11 @@ def verify_native_exec_argv(argv, model, effort):
         raise ValueError("Exec preflight does not send the fixed reasoning effort")
 
 
+def same_windows_path(left, right):
+    # A WSL share can expose case-sensitive Linux path components.
+    return left.anchor.casefold() == right.anchor.casefold() and left.parts[1:] == right.parts[1:]
+
+
 def audit_launch_policy(out, report, preflight, preflight_root):
     from native_codex_usage_v1 import POLICY
 
@@ -337,7 +342,7 @@ def audit_launch_policy(out, report, preflight, preflight_root):
                 or any(Path(config[field]).name.casefold() != PureWindowsPath(argument).name.casefold()
                        for field, argument in zip(("windows_node", "windows_cli"), argv[:2]))):
             raise ValueError("legacy launcher is not identified by the preflight receipts")
-        return False
+        return None
     if (not raw_native or type(config.get("windows_codex_exe")) is not str
             or not config["windows_codex_exe"] or "windows_node" in config or "windows_cli" in config
             or identity.get("cli_transport") != "windows-native-codex-exe"
@@ -365,10 +370,24 @@ def audit_launch_policy(out, report, preflight, preflight_root):
     if identity.get("requested_model") != MODEL or identity.get("requested_effort") != EFFORT:
         raise ValueError("native preflight differs from the fixed model or effort")
     verify_native_exec_argv(argv, MODEL, EFFORT)
-    return True
+    roots = doctor_receipt["native_run_root"]
+    source_root = PurePosixPath(roots["wsl_path"])
+    windows_root = PureWindowsPath(roots["windows_path"])
+    if (not source_root.is_absolute() or ".." in source_root.parts
+            or not windows_root.is_absolute() or ".." in windows_root.parts
+            or report.get("environment", {}).get("native_run_root") != roots
+            or argv.count("-C") != 1
+            or not same_windows_path(PureWindowsPath(argv[argv.index("-C") + 1]),
+                                     windows_root / "workspaces" / "persistent")):
+        raise ValueError("native run roots disagree with the Exec workspace")
+    return source_root, windows_root
 
 
-def audit_grounding_images(out, tasks, thread_id):
+def audit_grounding_results(out, tasks, thread_id, roots):
+    from integrated_efficiency_app_server_model_v1 import per_turn_usage
+    from native_codex_usage_v1 import normalize_usage
+
+    source_root, windows_root = roots
     arm = out / "arms" / "persistent"
     details = json.loads((arm / "task-details.json").read_bytes())
     if len(details) != 6 or len(tasks) != 6:
@@ -387,19 +406,22 @@ def audit_grounding_images(out, tasks, thread_id):
         request = json.loads((folder / "request.json").read_bytes())
         returned = json.loads((folder / "result.json").read_bytes())
         source = PurePosixPath(detail["source"]["image"])
+        relative = source.relative_to(source_root)
         provider = PureWindowsPath(request["provider_image"])
-        retained_image = (arm / "runtime" / source.name).resolve()
-        if (not source.is_absolute() or source.parts[-4:-1] != ("arms", "persistent", "runtime")
+        retained_image = out.joinpath(*relative.parts).resolve()
+        if (len(relative.parts) != 4 or relative.parts[:3] != ("arms", "persistent", "runtime")
                 or source.suffix.lower() != ".png" or source != PurePosixPath(request["source_image"])
-                or tuple(part.casefold() for part in provider.parts[-4:]) !=
-                   tuple(part.casefold() for part in source.parts[-4:])
+                or not same_windows_path(provider, windows_root.joinpath(*relative.parts))
                 or not retained_image.is_relative_to(out.resolve())
                 or sha(retained_image) != request.get("image_sha256")
                 or returned.get("thread_id") != thread_id or returned.get("call_id") != call_id
                 or returned.get("turn_status") != "completed" or call_id in bound):
             raise ValueError("grounding image or turn differs from the retained task source")
-        bound[call_id] = (provider, returned["raw"])
-    if len({path for path, _answer in bound.values()}) != 2:
+        acquired_usage = per_turn_usage(returned.get("provider_usage"), allow_missing_cache_write=True)
+        if acquired_usage is None or acquired_usage != normalize_usage(returned.get("usage")):
+            raise ValueError("grounding result usage differs from the acquired provider usage")
+        bound[call_id] = (provider, returned["raw"], acquired_usage)
+    if len({path for path, _answer, _usage in bound.values()}) != 2:
         raise ValueError("each grounding turn must use its own task source image")
     return bound
 
@@ -429,7 +451,7 @@ def verify_grounding_completion(params, answer):
         raise ValueError("completed grounding response differs from the recorded answer")
 
 
-def audited_native_usage(out, report, preflight, preflight_events, task_calls):
+def audited_native_usage(out, report, preflight, preflight_events, task_calls, roots):
     from integrated_efficiency_app_server_model_v1 import per_turn_usage
     from native_codex_usage_v1 import accounting, normalize_usage, preflight_terminal
 
@@ -446,7 +468,7 @@ def audited_native_usage(out, report, preflight, preflight_events, task_calls):
     if (len(ids) != 2 or len(set(ids)) != 2 or report.get("grounding_call_ids") != ids
             or type(thread_id) is not str or not thread_id):
         raise ValueError("two scoped raw grounding turns are required")
-    bound_images = audit_grounding_images(out, report["tasks"], thread_id)
+    bound_calls = audit_grounding_results(out, report["tasks"], thread_id, roots)
     protocol = read_json_lines(out / "persistent-grounding-app-server" / "protocol.jsonl")
     prepared = {}
     thread_sends = []
@@ -501,7 +523,7 @@ def audited_native_usage(out, report, preflight, preflight_events, task_calls):
             turn_id = params["turn"]["id"]
             if params["threadId"] != thread_id or turn_id not in ids or turn_id in completions:
                 raise ValueError("invalid raw grounding completion")
-            verify_grounding_completion(params, bound_images[turn_id][1])
+            verify_grounding_completion(params, bound_calls[turn_id][1])
             completions[turn_id] = index
     sent_ids = {rpc_id for rpc_id, _entry in [*thread_sends, *turn_sends]}
     if (len(thread_sends) != 1 or len(turn_sends) != 2 or len(sent_ids) != 3
@@ -529,14 +551,14 @@ def audited_native_usage(out, report, preflight, preflight_events, task_calls):
         if (prepared[rpc_id][0] <= previous_end or reply["turn"]["id"] != turn_id
                 or first_usage.get(turn_id, -1) <= send_index or completions[turn_id] <= send_index):
             raise ValueError("grounding turns lack serial sends and matching later notifications")
-        if sent_images[rpc_id] != bound_images[turn_id][0]:
+        if not same_windows_path(sent_images[rpc_id], bound_calls[turn_id][0]):
             raise ValueError("sent localImage differs from the independent task source")
         previous_end = max(reply_index, completions[turn_id])
     observed = [{"usage": preflight_usage}]
     for call in task_calls:
         usage = observed_usage.get(call["call_id"])
-        if usage is None or usage != normalize_usage(call.get("usage")):
-            raise ValueError("raw grounding usage does not match the recorded call")
+        if usage is None or usage != normalize_usage(call.get("usage")) or usage != bound_calls[call["call_id"]][2]:
+            raise ValueError("grounding usage differs across the journal, result and recorded call")
         observed.append({"usage": usage})
     return accounting(observed)
 
@@ -565,12 +587,13 @@ def audit_live(out: Path) -> dict:
     usage_error = None
     summary = None
     try:
-        if audit_launch_policy(out, report, preflight, preflight_root):
+        roots = audit_launch_policy(out, report, preflight, preflight_root)
+        if roots is not None:
             process = json.loads((preflight_root / "model-call" / "process.json").read_bytes())
             if (preflight.get("endpoint_status") != "ENDPOINT_COMPATIBLE"
                     or type(process.get("exit_code")) is not int or process["exit_code"] != 0):
                 raise ValueError("schema preflight has no successful raw process exit")
-            summary = audited_native_usage(out, report, preflight, preflight_events, task_calls)
+            summary = audited_native_usage(out, report, preflight, preflight_events, task_calls, roots)
         else:
             if any(type(call["usage"][field]) is not int or call["usage"][field] < 0
                    for call in calls for field in usage_fields):

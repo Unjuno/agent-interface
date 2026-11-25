@@ -25,10 +25,14 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
     if not health["passed"]:
         raise RuntimeError("doctor failed; run the doctor command for exact missing dependencies")
     base.claim_output(out, on_output_claimed)
-    base.dump(out / "doctor.json", health)
     config = base.configuration()
     chromium = config["chromium"]
     executable = config.get("windows_codex_exe")
+    if executable is not None:
+        run_root = out.resolve()
+        health = {**health, "native_run_root": {
+            "wsl_path": run_root.as_posix(), "windows_path": base.windows_arg(run_root)}}
+    base.dump(out / "doctor.json", health)
     if chromium is None:
         raise ValueError("Chromium path is required")
     if executable is None:
