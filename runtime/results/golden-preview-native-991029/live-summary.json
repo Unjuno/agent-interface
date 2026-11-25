@@ -1,0 +1,89 @@
+{
+  "schema": "agent_interface_golden_native_supported_host_summary_v1",
+  "source_revision": "e90f35e5866f31c9571cf5d82bed617d81f1ddfe",
+  "allocation": {
+    "seed": 991029,
+    "formal_invocations": 1,
+    "automatic_retry": false,
+    "host": "Ubuntu 24.04.3 LTS on WSL2",
+    "python_version": "3.12.3",
+    "chromium": "Google Chrome for Testing 156.0.8078.4",
+    "native_codex_cli_version": "0.171.0-alpha.13.2",
+    "native_codex_executable_sha256": "2a1ec3f1dd463fd30224be4c0c67d3fe83d3d863a3d7539ccad366952436d2aa",
+    "display": "private Xvfb with Xauthority",
+    "requested_model": "gpt-5.6-luna",
+    "requested_effort": "low"
+  },
+  "acceptance": {
+    "status": "PASS_SUPPORTED_HOST_ACCEPTANCE",
+    "launcher_preflight_passed": true,
+    "doctor_passed": true,
+    "retained_audit_passed": true,
+    "live_audit_passed": true,
+    "exact_tasks": 6,
+    "scheduled_tasks": 6,
+    "routes": [
+      "cold",
+      "reuse",
+      "reuse",
+      "repair",
+      "reuse",
+      "reuse"
+    ],
+    "old_layout_missing_checks": 1,
+    "repair_succeeded": true,
+    "terminal_programs": 57,
+    "verified_terminal_releases": 57,
+    "old_target_pointer_admissions": 0,
+    "display_retired": true,
+    "service_cgroup_retired": true
+  },
+  "provider": {
+    "schema_preflight_calls": 1,
+    "app_server_grounding_calls": 2,
+    "grounding_sessions": 1,
+    "model_visible_images": 2,
+    "usage_status": "complete",
+    "tokens": {
+      "input_tokens": 30716,
+      "cached_input_tokens": 9600,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 472,
+      "reasoning_output_tokens": 127
+    },
+    "calls_reporting_each_field": {
+      "input_tokens": 3,
+      "cached_input_tokens": 3,
+      "cache_write_input_tokens": 3,
+      "output_tokens": 3,
+      "reasoning_output_tokens": 3
+    }
+  },
+  "windows_job_retirement": {
+    "schema_preflight": {
+      "status": "COMPLETED",
+      "active_processes": 0,
+      "total_processes": 3
+    },
+    "app_server": {
+      "status": "STOP_REQUESTED",
+      "active_processes": 0,
+      "total_processes": 6
+    }
+  },
+  "local_originals": {
+    "verified_manifest_entries": 302,
+    "sha256": {
+      "manifest": "957d08d1332976d46831972b4e505fbd3dc7285516eabadc491e268c2e15d29f",
+      "allocation_claim": "defcbef8e635fad437b094d0cb583b6b4e7849770a4c1fee01e940e2df17c77b",
+      "supported_host_acceptance": "0312da5551cd4728cf664a843d3ed6d2f103499f2ff90770be15b9e700b1e3be",
+      "golden_report": "d292ee8ba201ef221de2dfcb023b0a1e568027db960e6acd3e4386d6fcb207c6",
+      "live_audit": "ed38c6388ee51963c16158e96d8bb63d6d4756268e1927763c8cd512d11cd54f",
+      "schema_preflight_windows_job": "75b73cc69f1fcb4a2dd35ff1fe00b34c0c0db5fa13a0a3a71aea21fedcb4588e",
+      "app_server_windows_job": "d3c13c3fa0da2688ad5a60067724bee242f8d385e25a4551d533dbd6ee74b4ee",
+      "schema_preflight_events": "602a45467b449ab2387c6a90eb96c9ff695a6a1849e777f523ea8621827421c2",
+      "app_server_protocol_journal": "09e47c52f50eab17d5b72a762a0784f28a67a627e8e312e2bf63717be385703c",
+      "host_display_retirement": "c8bd79d151b733cf0b337339f2d4b1b70e1b4810bd0e8739adba96a93fe5acd6"
+    }
+  }
+}
