@@ -469,7 +469,22 @@ def audited_native_usage(out, report, preflight, preflight_events, task_calls, r
             or type(thread_id) is not str or not thread_id):
         raise ValueError("two scoped raw grounding turns are required")
     bound_calls = audit_grounding_results(out, report["tasks"], thread_id, roots)
-    protocol = read_json_lines(out / "persistent-grounding-app-server" / "protocol.jsonl")
+    from native_app_server_job_v1 import APP_SERVER_JOB_RECEIPT, APP_SERVER_JOB_START, retired_app_server
+
+    session = out / "persistent-grounding-app-server"
+    job_start = json.loads((session / APP_SERVER_JOB_START).read_bytes())
+    job_end = json.loads((session / APP_SERVER_JOB_RECEIPT).read_bytes())
+    identity = preflight["identity"]
+    if (job_start["owner_sha256"] != identity["windows_app_server_owner_sha256"]
+            or not same_windows_path(PureWindowsPath(job_start["windows_executable"]),
+                                     PureWindowsPath(identity["cli_windows_path"]))
+            or not retired_app_server(job_end, job_start["run_nonce"], job_start["owner_sha256"])):
+        raise ValueError("native grounding requires a retired Windows App Server job")
+    protocol = read_json_lines(session / "protocol.jsonl")
+    owners = [row["message"] for row in protocol if row["direction"] == "windows_job_owner"]
+    if (not protocol or protocol[0]["direction"] != "windows_job_owner" or owners != [job_start]
+            or report.get("app_server_windows_job") != {**job_start, "thread_id": thread_id}):
+        raise ValueError("App Server job receipt does not bind the recorded session")
     prepared = {}
     thread_sends = []
     turn_sends = []
@@ -589,6 +604,15 @@ def audit_live(out: Path) -> dict:
     try:
         roots = audit_launch_policy(out, report, preflight, preflight_root)
         if roots is not None:
+            from native_preflight_job_v1 import RECEIPT, START_RECORD, completed_receipt
+
+            ownership = json.loads((preflight_root / RECEIPT).read_bytes())
+            owner_start = json.loads((preflight_root / START_RECORD).read_bytes())
+            if (owner_start["owner_sha256"] != preflight["identity"]["windows_owner_sha256"]
+                    or not completed_receipt(ownership, 0, run_nonce=owner_start["run_nonce"],
+                                             owner_sha256=owner_start["owner_sha256"])
+                    or ownership != preflight.get("windows_job")):
+                raise ValueError("native schema preflight has no completed Windows job receipt")
             process = json.loads((preflight_root / "model-call" / "process.json").read_bytes())
             if (preflight.get("endpoint_status") != "ENDPOINT_COMPATIBLE"
                     or type(process.get("exit_code")) is not int or process["exit_code"] != 0):

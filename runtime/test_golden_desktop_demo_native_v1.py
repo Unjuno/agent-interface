@@ -162,7 +162,8 @@ class NativeCodexPreviewTests(unittest.TestCase):
                 wsl_codex_home_environment(env)
 
     def test_native_schema_gate_separates_binary_cache_and_only_allows_optional_field_omission(self):
-        modes = ("complete", "partial", "missing_required", "invalid", "mixed_terminal", "double_start")
+        modes = ("complete", "partial", "missing_required", "invalid", "mixed_terminal",
+                 "double_start", "missing_job", "outer_timeout")
         for mode in modes:
             with self.subTest(mode=mode), TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -183,7 +184,17 @@ class NativeCodexPreviewTests(unittest.TestCase):
                         return subprocess.CompletedProcess(argv, 0, "codex-cli test\n", "")
                     called_argv.append(argv)
                     self.assertEqual(options["env"]["WSLENV"], "OTHER/w:CODEX_HOME/p")
-                    events = gate_dir / "compiled" / "model-call" / "events.jsonl"
+                    if mode == "outer_timeout":
+                        raise subprocess.TimeoutExpired(argv, 90)
+                    evidence = gate_dir / "compiled"
+                    if mode != "missing_job":
+                        owner_start = json.loads((evidence / "windows-job-start.json").read_bytes())
+                        ownership = {**owner_start, "schema": "native-preflight-windows-job-v1",
+                                     "ownership": "create-process-job-list", "status": "COMPLETED",
+                                     "exit_code": 0, "job_empty": True, "active_processes": 0,
+                                     "total_processes": 2}
+                        (evidence / "windows-job.json").write_text(json.dumps(ownership), encoding="utf-8")
+                    events = evidence / "model-call" / "events.jsonl"
                     events.parent.mkdir()
                     usage = dict(USAGE)
                     if mode == "partial":
@@ -223,8 +234,9 @@ class NativeCodexPreviewTests(unittest.TestCase):
                 self.assertEqual(new_identity["cli_executable_sha256"],
                                  preflight.sha(executable))
                 argv, = called_argv
-                self.assertEqual(argv[2:4], ["--native-codex-exe", "W:" + str(executable)])
-                self.assertEqual(argv[7:9], ["handle", "-"])
+                self.assertTrue(argv[1].endswith("native_preflight_job_v1.py"))
+                self.assertEqual(argv[5:7], ["--native-codex-exe", "W:" + str(executable)])
+                self.assertEqual(argv[10:12], ["handle", "-"])
                 result = report["results"][0]["result"]
                 self.assertEqual(result["compatibility_key"], new_key)
                 self.assertEqual(report["accepted"], mode in ("complete", "partial"))
@@ -239,9 +251,14 @@ class NativeCodexPreviewTests(unittest.TestCase):
                 else:
                     self.assertIsNone(result["usage"])
                     status = {"mixed_terminal": "ENDPOINT_INCOMPATIBLE",
-                              "double_start": "PREFLIGHT_LIFECYCLE_UNVERIFIED"}.get(
+                              "double_start": "PREFLIGHT_LIFECYCLE_UNVERIFIED",
+                              "missing_job": "PREFLIGHT_JOB_UNVERIFIED",
+                              "outer_timeout": "PREFLIGHT_JOB_UNVERIFIED"}.get(
                                   mode, "PREFLIGHT_USAGE_UNVERIFIED")
                     self.assertEqual(result["endpoint_status"], status)
+                    if status == "PREFLIGHT_JOB_UNVERIFIED":
+                        self.assertIsNone(report["model_calls"])
+                        self.assertIsNone(result["model_call_performed"])
 
     def test_native_refuses_an_override_runner_before_launch(self):
         with TemporaryDirectory() as directory:

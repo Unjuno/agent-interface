@@ -13,6 +13,7 @@ from integrated_efficiency_app_server_model_v1 import (
     GroundingCallError, PersistentGroundingModel, USAGE_MAP, per_turn_usage,
 )
 from native_codex_usage_v1 import CACHE_WRITE, POLICY, accounting
+from native_preflight_job_v1 import JOB_KILL_EXIT_CODE
 
 
 USAGE = {"input_tokens": 8, "cached_input_tokens": 2, CACHE_WRITE: 0,
@@ -118,8 +119,10 @@ class NativeCodexUsageTests(unittest.TestCase):
             implementation = SimpleNamespace()
             implementation.preflight_call = lambda *_: {"call_id": "preflight", "usage": USAGE}
             implementation.run_arm = Mock(return_value=(tasks_for([PARTIAL, USAGE]), {"success": True}))
-            model = nullcontext(SimpleNamespace(thread_id="thread", calls=2, call=Mock()))
-            config = {"chromium": root / "browser", "windows_codex_exe": root / "codex.exe"}
+            model = nullcontext(SimpleNamespace(thread_id="thread", calls=2, call=Mock(),
+                                              native_job_reference={"run_nonce": "1" * 32}))
+            config = {"chromium": root / "browser", "windows_codex_exe": root / "codex.exe",
+                      "windows_python": root / "python.exe"}
             with patch.object(demo.base, "doctor", return_value={"passed": True}), \
                  patch.object(demo.base, "configuration", return_value=config), \
                  patch.object(demo.base, "configure_research_modules",
@@ -146,7 +149,7 @@ class NativeCodexUsageTests(unittest.TestCase):
                  "double_preflight_start", "completion_error", "completion_empty_items",
                  "zero_edited_journal_and_ledger", "result_usage_zero_only",
                  "relocated_provider_root", "mismatched_preflight_root", "unc_root",
-                 "unc_case_substitution")
+                 "unc_case_substitution", "copied_job_pair", "null_job_nonce", "wrong_app_exit")
         for mode in cases:
             with self.subTest(mode=mode), TemporaryDirectory() as td:
                 out = Path(td)
@@ -197,17 +200,26 @@ class NativeCodexUsageTests(unittest.TestCase):
         put(out, "golden-report.json", report)
         identity = {"cli_transport": "windows-native-codex-exe", "usage_policy": POLICY,
                     "cli_windows_path": exe, "cli_version": native["version"],
-                    "cli_executable_sha256": native["executable_sha256"], "requested_model": "gpt-5.6-luna",
+                    "cli_executable_sha256": native["executable_sha256"],
+                    "windows_owner_sha256": "f" * 64, "windows_app_server_owner_sha256": "0" * 64,
+                    "requested_model": "gpt-5.6-luna",
                     "requested_effort": "low", "runner_sha256": "b" * 64, "schema_sha256": "c" * 64,
                     "instructions_sha256": "d" * 64}
         key = hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        owner_start = {"run_nonce": "1" * 32, "owner_sha256": identity["windows_owner_sha256"]}
+        ownership = {**owner_start, "schema": "native-preflight-windows-job-v1", "ownership": "create-process-job-list",
+                     "status": "COMPLETED", "exit_code": 0, "job_empty": True,
+                     "active_processes": 0, "total_processes": 2}
         result = {"identity": identity, "compatibility_key": key, "endpoint_status": "ENDPOINT_COMPATIBLE",
-                  "usage": preflight_report, "cache_hit": False, "model_call_performed": True}
+                  "usage": preflight_report, "cache_hit": False, "model_call_performed": True,
+                  "windows_job": ownership}
         gate = "preflight/persistent/gate/"
         gate_result = ({**result, "identity": {}} if mode == "erased_labels" else result)
         put(out, gate + "gate-report.json", {"accepted": True, "results": [{"result": gate_result}]})
         independent = gate + "compiled-form-grounding/"
         put(out, independent + "preflight-result.json", result)
+        put(out, independent + "windows-job-start.json", owner_start)
+        put(out, independent + "windows-job.json", ownership)
         cache = {**result, "observed_at_unix_ns": 1}
         if mode == "cache_mismatch":
             cache["identity"] = {**identity, "cli_executable_sha256": "e" * 64}
@@ -310,7 +322,23 @@ class NativeCodexUsageTests(unittest.TestCase):
         if mode == "extra_prepared":
             rows.append({"direction": "send_prepared", "message": {
                 "method": "turn/start", "id": 3, "params": {"threadId": "thread"}}})
-        put(out, "persistent-grounding-app-server/protocol.jsonl", rows)
+        owner = {"run_nonce": None if mode == "null_job_nonce" else "2" * 32,
+                 "owner_sha256": identity["windows_app_server_owner_sha256"],
+                 "windows_executable": exe}
+        report["app_server_windows_job"] = {**owner, "thread_id": "thread"}
+        put(out, "golden-report.json", report)
+        session = "persistent-grounding-app-server/"
+        other = {**owner, "run_nonce": "3" * 32} if mode == "copied_job_pair" else owner
+        put(out, session + "windows-app-server-start.json", other)
+        put(out, session + "windows-app-server-job.json", {
+            **other, "schema": "native-app-server-windows-job-v1",
+            "ownership": "create-process-job-list", "status": "STOP_REQUESTED",
+            "exit_code": 42 if mode == "wrong_app_exit" else JOB_KILL_EXIT_CODE,
+            "termination_requested": True, "job_empty": True, "active_processes": 0,
+            "total_processes": 2,
+        })
+        put(out, session + "protocol.jsonl", [
+            {"direction": "windows_job_owner", "message": owner}, *rows])
 
 
 if __name__ == "__main__":

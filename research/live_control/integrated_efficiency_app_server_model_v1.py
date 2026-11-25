@@ -14,6 +14,7 @@ try:
     from .codex_app_server_command_v1 import direct_command as direct_app_server_command
     from .compiled_form_grounding_v1 import validate as validate_compiled
     from .native_codex_usage_v1 import normalize_usage
+    from .native_app_server_job_v1 import WindowsAppServerOwner
     from .plain_form_points_v1 import validate as validate_plain
     from .persistent_planner_adapter_v2 import PersistentPlannerAdapter
 except ImportError:  # Script-oriented research callers add this directory to sys.path.
@@ -22,6 +23,7 @@ except ImportError:  # Script-oriented research callers add this directory to sy
     from codex_app_server_command_v1 import direct_command as direct_app_server_command
     from compiled_form_grounding_v1 import validate as validate_compiled
     from native_codex_usage_v1 import normalize_usage
+    from native_app_server_job_v1 import WindowsAppServerOwner
     from plain_form_points_v1 import validate as validate_plain
     from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 
@@ -97,7 +99,7 @@ class PersistentGroundingModel:
     def __init__(self, session_root, workspace, *, node=None, cli=None,
                  contract="compiled", model="gpt-5.6-luna", effort="low", executable=None,
                  client=None, path_converter=windows_path, require_complete_usage=False,
-                 allow_missing_cache_write=False):
+                 allow_missing_cache_write=False, windows_python=None):
         if require_complete_usage and allow_missing_cache_write:
             raise ValueError("choose one required usage policy")
         if contract not in CONTRACTS:
@@ -112,6 +114,7 @@ class PersistentGroundingModel:
         self.allow_missing_cache_write = allow_missing_cache_write
         self.session_root.mkdir(parents=True, exist_ok=False)
         self._owns_client = client is None
+        self.native_job_reference = None
         if client is not None:
             self.client = client
         else:
@@ -119,9 +122,14 @@ class PersistentGroundingModel:
                 raise ValueError("provide a direct executable or both node and cli")
             argv = (direct_app_server_command(executable) if executable is not None
                     else app_server_command(node, cli))
+            transport = {}
+            if executable is not None and windows_python is not None:
+                transport["windows_owner"] = WindowsAppServerOwner(
+                    windows_python, self.path_converter, self.session_root)
             self.client = CodexAppServerClient(
-                argv, cwd=self.workspace,
-                journal_path=self.session_root / "protocol.jsonl")
+                argv, cwd=self.workspace, journal_path=self.session_root / "protocol.jsonl", **transport)
+            if "windows_owner" in transport:
+                self.native_job_reference = transport["windows_owner"].reference.copy()
         try:
             if self._owns_client:
                 self.client.initialize()

@@ -1,4 +1,5 @@
 """Preflight one output schema through the same Codex CLI response-format path."""
+from contextlib import nullcontext
 import hashlib
 import json
 import os
@@ -11,9 +12,11 @@ from jsonschema import Draft202012Validator, SchemaError
 try:
     from .codex_app_server_client_v2 import wsl_codex_home_environment
     from .native_codex_usage_v1 import CACHE_WRITE, POLICY, normalize_usage, preflight_terminal
+    from .native_preflight_job_v1 import RECEIPT, START_RECORD, LeaseWriter, completed_receipt
 except ImportError:
     from codex_app_server_client_v2 import wsl_codex_home_environment
     from native_codex_usage_v1 import CACHE_WRITE, POLICY, normalize_usage, preflight_terminal
+    from native_preflight_job_v1 import RECEIPT, START_RECORD, LeaseWriter, completed_receipt
 
 HERE = Path(__file__).resolve().parent
 WINDOWS_PYTHON = Path("/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe")
@@ -22,6 +25,8 @@ CLI_WSL = Path("/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/code
 NODE_ARG = r"C:\Program Files\nodejs\node.exe"
 CLI_ARG = r"C:\Users\junny\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
 DEFAULT_RUNNER = HERE / "target_handle_model_runner_v2.py"
+NATIVE_OWNER = HERE / "native_preflight_job_v1.py"
+APP_SERVER_OWNER = HERE / "native_app_server_job_v1.py"
 RUNNER = Path(os.environ.get("AGENT_INTERFACE_MODEL_RUNNER", str(DEFAULT_RUNNER)))
 CLI_EXE_WSL = None
 INSTRUCTIONS = HERE / "schema_preflight_responder_v1.txt"
@@ -60,6 +65,8 @@ def compatibility_identity(schema):
         require_native_runner()
         identity.update(cli_transport="windows-native-codex-exe", usage_policy=POLICY,
                         cli_windows_path=windows_path(CLI_EXE_WSL),
+                        windows_owner_sha256=sha(NATIVE_OWNER),
+                        windows_app_server_owner_sha256=sha(APP_SERVER_OWNER),
                         cli_executable_sha256=sha(CLI_EXE_WSL),
                         cli_version=version([str(CLI_EXE_WSL), "--version"], timeout=15,
                             env=wsl_codex_home_environment(os.environ)))
@@ -107,17 +114,43 @@ def preflight(schema, cache_dir, result_dir, workspace):
                       encoding="utf-8", newline="\n")
     call = result_dir / "model-call"; started = time.perf_counter_ns()
     launch_options = {}
-    prefix = [NODE_ARG, CLI_ARG]
-    if CLI_EXE_WSL is not None:
-        prefix = ["--native-codex-exe", identity["cli_windows_path"]]
-        launch_options["env"] = wsl_codex_home_environment(os.environ)
-    command = [str(WINDOWS_PYTHON), windows_path(RUNNER), *prefix,
-        windows_path(prompt), windows_path(workspace), windows_path(call), "handle", "-",
-        windows_path(INSTRUCTIONS), windows_path(schema)]
-    completed = subprocess.run(command, capture_output=True, timeout=90, **launch_options)
+    owner_start = None
+    outer_timeout = False
+    with (LeaseWriter(result_dir) if CLI_EXE_WSL is not None else nullcontext()) as lease:
+        if lease is not None:
+            owner_start = {"run_nonce": lease.nonce, "owner_sha256": identity["windows_owner_sha256"]}
+            dump(result_dir / START_RECORD, owner_start)
+            command = [str(WINDOWS_PYTHON), windows_path(NATIVE_OWNER), windows_path(result_dir),
+                       lease.nonce, windows_path(RUNNER), "--native-codex-exe", identity["cli_windows_path"]]
+            launch_options["env"] = wsl_codex_home_environment(os.environ)
+        else:
+            command = [str(WINDOWS_PYTHON), windows_path(RUNNER), NODE_ARG, CLI_ARG]
+        command += [windows_path(prompt), windows_path(workspace), windows_path(call), "handle", "-",
+                    windows_path(INSTRUCTIONS), windows_path(schema)]
+        try:
+            completed = subprocess.run(command, capture_output=True, timeout=90, **launch_options)
+        except subprocess.TimeoutExpired as error:
+            if lease is None:
+                raise
+            outer_timeout = True
+            completed = subprocess.CompletedProcess(command, None, error.stdout or b"", error.stderr or b"")
     elapsed_ms = (time.perf_counter_ns() - started) / 1e6
     (result_dir / "runner-stdout.txt").write_bytes(completed.stdout)
     (result_dir / "runner-stderr.txt").write_bytes(completed.stderr)
+    ownership = None
+    if CLI_EXE_WSL is not None:
+        try:
+            ownership = json.loads((result_dir / RECEIPT).read_bytes())
+        except (OSError, ValueError):
+            pass
+        if outer_timeout or not completed_receipt(ownership, completed.returncode, **owner_start):
+            result = {**base, "cache_hit": False, "endpoint_status": "PREFLIGHT_JOB_UNVERIFIED",
+                      "endpoint_error": {"outer_timeout": outer_timeout, "returncode": completed.returncode},
+                      "usage": None, "usage_status": "unverified", "model_call_performed": None,
+                      "elapsed_ms": elapsed_ms, "cost": None, "windows_job": ownership,
+                      "scope": "native schema preflight did not establish completed Windows job custody"}
+            dump(result_dir / "preflight-result.json", result)
+            return result
     events = [json.loads(line) for line in (call / "events.jsonl").read_text(encoding="utf-8").splitlines()]
     turns = [row for row in events if row.get("type") == "turn.completed"]
     failures = [row for row in events if row.get("type") in ("error", "turn.failed")]
@@ -147,6 +180,7 @@ def preflight(schema, cache_dir, result_dir, workspace):
         "elapsed_ms": elapsed_ms, "cost": None,
         "scope": "actual no-GUI endpoint compatibility call; no semantic-quality or task claim"}
     if CLI_EXE_WSL is not None:
+        result["windows_job"] = ownership
         result["usage_status"] = ("unverified" if usage is None else
                                   "complete" if CACHE_WRITE in usage else "partial")
     cache_record = {**result, "observed_at_unix_ns": time.time_ns()}

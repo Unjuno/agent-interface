@@ -42,7 +42,10 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
             raise ValueError("Windows Node and the Codex JavaScript entrypoint are required")
         launch = {"node": node, "cli": base.windows_arg(cli)}
     else:
-        launch = {"executable": executable, "allow_missing_cache_write": True}
+        if config.get("windows_python") is None:
+            raise ValueError("native Golden requires Windows Python for Windows job supervision")
+        launch = {"executable": executable, "windows_python": config["windows_python"],
+                  "allow_missing_cache_write": True}
     implementation, client_type = base.configure_research_modules(config, chromium)
     implementation.OUT = out
     implementation.RuntimeClient = client_type
@@ -56,6 +59,7 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
             "persistent", seed, workspace, model_call=grounding.call)
         grounding_thread_id = grounding.thread_id
         grounding_turns = grounding.calls
+        job_reference = grounding.native_job_reference if executable is not None else None
     ended = time.perf_counter_ns()
     usage_fields = ("input_tokens", "cached_input_tokens", "cache_write_input_tokens",
                     "output_tokens", "reasoning_output_tokens")
@@ -100,7 +104,8 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
         "scope": "one fresh persistent typed-grounding demonstration; no baseline, rate, generality, token-efficiency or human-speed claim",
     }
     if native_accounting is not None:
-        report.update(native_accounting, accounting_policy=POLICY, functional_passed=report["passed"])
+        report.update(native_accounting, accounting_policy=POLICY, functional_passed=report["passed"],
+                      app_server_windows_job={**job_reference, "thread_id": grounding_thread_id})
         report["passed"] = report["functional_passed"] and report["usage_status"] == "complete"
     base.dump(out / "golden-report.json", report)
     return report
