@@ -2,7 +2,7 @@ from pathlib import Path
 import tempfile
 import types
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import runtime.golden_desktop_demo_v2 as demo
 
@@ -29,6 +29,12 @@ class FakeGrounding:
 
 class GoldenDesktopV2Tests(unittest.TestCase):
     def test_report_requires_two_same_session_grounding_turns(self):
+        self.run_case(native=False)
+
+    def test_native_run_passes_executable_and_requires_complete_usage(self):
+        self.run_case(native=True)
+
+    def run_case(self, *, native):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             implementation = types.SimpleNamespace()
@@ -62,15 +68,27 @@ class GoldenDesktopV2Tests(unittest.TestCase):
 
             implementation.preflight_call = preflight
             implementation.run_arm = run_arm
-            config = {"chromium": Path("chrome"), "windows_node": Path("node"),
-                      "windows_cli": Path("cli"), "windows_python": Path("python")}
+            config = {"chromium": Path("chrome"), "windows_python": Path("python")}
+            if native:
+                config["windows_codex_exe"] = root / "codex.exe"
+            else:
+                config.update(windows_node=Path("node"), windows_cli=Path("cli"))
             health = {"passed": True}
+            grounding = Mock(side_effect=FakeGrounding)
             with patch.object(demo.base, "doctor", return_value=health), \
                  patch.object(demo.base, "configuration", return_value=config), \
                  patch.object(demo.base, "configure_research_modules",
                               return_value=(implementation, object)), \
                  patch.object(demo.base, "windows_arg", return_value="CLI"):
-                report = demo.run_live(root / "out", 1, grounding_model_type=FakeGrounding)
+                report = demo.run_live(root / "out", 1, grounding_model_type=grounding)
+            options = grounding.call_args.kwargs
+            if native:
+                self.assertEqual(options["executable"], config["windows_codex_exe"])
+                self.assertIs(options["require_complete_usage"], True)
+                self.assertNotIn("node", options)
+            else:
+                self.assertEqual((options["node"], options["cli"]), (Path("node"), "CLI"))
+                self.assertNotIn("executable", options)
         self.assertTrue(report["passed"])
         self.assertEqual(report["grounding_thread_id"], "thread-grounding")
         self.assertEqual(report["grounding_turns"], 2)

@@ -13,13 +13,20 @@ def sha(path):
 
 def main():
     node, cli, prompt_file, working, output, mode, image, instructions, schema = sys.argv[1:]
+    if node == "--native-codex-exe":
+        executable = Path(cli)
+        if not executable.is_absolute() or executable.suffix.lower() != ".exe":
+            raise ValueError("native Codex executable must be an absolute Windows .exe path")
+        prefix = [str(executable)]
+    else:
+        prefix = [node, cli]
     if mode not in ("coordinate", "handle"):
         raise ValueError("mode must be coordinate or handle")
     root = Path(output).resolve()
     root.mkdir(parents=True, exist_ok=False)
     prompt = Path(prompt_file).read_text(encoding="utf-8")
     (root / "prompt.txt").write_text(prompt, encoding="utf-8", newline="\n")
-    args = [node, cli, "exec", "--ignore-user-config", "--ignore-rules",
+    args = [*prefix, "exec", "--ignore-user-config", "--ignore-rules",
             "--ephemeral", "--sandbox", "read-only", "--skip-git-repo-check",
             "--json", "--model", "gpt-5.6-luna", "-c",
             'model_reasoning_effort="low"', "-c",

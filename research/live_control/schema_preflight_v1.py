@@ -8,14 +8,22 @@ import time
 
 from jsonschema import Draft202012Validator, SchemaError
 
+try:
+    from .codex_app_server_client_v2 import wsl_codex_home_environment
+    from .integrated_efficiency_protocol_v1 import USAGE_FIELDS
+except ImportError:
+    from codex_app_server_client_v2 import wsl_codex_home_environment
+    from integrated_efficiency_protocol_v1 import USAGE_FIELDS
+
 HERE = Path(__file__).resolve().parent
 WINDOWS_PYTHON = Path("/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe")
 NODE_WSL = Path("/mnt/c/Program Files/nodejs/node.exe")
 CLI_WSL = Path("/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js")
 NODE_ARG = r"C:\Program Files\nodejs\node.exe"
 CLI_ARG = r"C:\Users\junny\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
-RUNNER = Path(os.environ.get("AGENT_INTERFACE_MODEL_RUNNER",
-                            str(HERE / "target_handle_model_runner_v2.py")))
+DEFAULT_RUNNER = HERE / "target_handle_model_runner_v2.py"
+RUNNER = Path(os.environ.get("AGENT_INTERFACE_MODEL_RUNNER", str(DEFAULT_RUNNER)))
+CLI_EXE_WSL = None
 INSTRUCTIONS = HERE / "schema_preflight_responder_v1.txt"
 MODEL = "gpt-5.6-luna"
 EFFORT = "low"
@@ -29,17 +37,31 @@ def dump(path, value):
 def windows_path(path):
     return subprocess.run(["wslpath", "-w", str(Path(path).resolve())], capture_output=True,
                           text=True, check=True).stdout.strip()
-def version(command):
-    return subprocess.run(command, capture_output=True, text=True, check=True).stdout.strip()
+def version(command, **options):
+    return subprocess.run(command, capture_output=True, text=True, check=True,
+                          **options).stdout.strip()
+
+
+def require_native_runner():
+    if RUNNER.resolve() != DEFAULT_RUNNER.resolve():
+        raise ValueError("native Codex requires the built-in schema preflight runner")
 
 
 def compatibility_identity(schema):
     identity = {"schema_sha256": sha(schema), "requested_model": MODEL,
         "requested_effort": EFFORT, "runner_sha256": sha(RUNNER),
-        "instructions_sha256": sha(INSTRUCTIONS), "cli_entry_sha256": sha(CLI_WSL),
-        "cli_version": version([str(NODE_WSL), CLI_ARG, "--version"]),
-        "node_version": version([str(NODE_WSL), "--version"]),
+        "instructions_sha256": sha(INSTRUCTIONS),
         "request_shape": f"{RUNNER.name}:handle:no-image:output-schema"}
+    if CLI_EXE_WSL is None:
+        identity.update(cli_entry_sha256=sha(CLI_WSL),
+                        cli_version=version([str(NODE_WSL), CLI_ARG, "--version"]),
+                        node_version=version([str(NODE_WSL), "--version"]))
+    else:
+        require_native_runner()
+        identity.update(cli_transport="windows-native-codex-exe",
+                        cli_executable_sha256=sha(CLI_EXE_WSL),
+                        cli_version=version([str(CLI_EXE_WSL), "--version"], timeout=15,
+                            env=wsl_codex_home_environment(os.environ)))
     encoded = json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()
     return identity, hashlib.sha256(encoded).hexdigest()
 
@@ -83,10 +105,15 @@ def preflight(schema, cache_dir, result_dir, workspace):
     prompt.write_text("Schema compatibility probe. Produce any object accepted by the supplied schema.",
                       encoding="utf-8", newline="\n")
     call = result_dir / "model-call"; started = time.perf_counter_ns()
-    command = [str(WINDOWS_PYTHON), windows_path(RUNNER), NODE_ARG, CLI_ARG,
+    launch_options = {}
+    prefix = [NODE_ARG, CLI_ARG]
+    if CLI_EXE_WSL is not None:
+        prefix = ["--native-codex-exe", windows_path(CLI_EXE_WSL)]
+        launch_options["env"] = wsl_codex_home_environment(os.environ)
+    command = [str(WINDOWS_PYTHON), windows_path(RUNNER), *prefix,
         windows_path(prompt), windows_path(workspace), windows_path(call), "handle", "-",
         windows_path(INSTRUCTIONS), windows_path(schema)]
-    completed = subprocess.run(command, capture_output=True, timeout=90)
+    completed = subprocess.run(command, capture_output=True, timeout=90, **launch_options)
     elapsed_ms = (time.perf_counter_ns() - started) / 1e6
     (result_dir / "runner-stdout.txt").write_bytes(completed.stdout)
     (result_dir / "runner-stderr.txt").write_bytes(completed.stderr)
@@ -94,7 +121,16 @@ def preflight(schema, cache_dir, result_dir, workspace):
     turns = [row for row in events if row.get("type") == "turn.completed"]
     failures = [row for row in events if row.get("type") in ("error", "turn.failed")]
     if completed.returncode == 0 and len(turns) == 1:
-        endpoint_status, endpoint_error, usage = "ENDPOINT_COMPATIBLE", None, turns[0]["usage"]
+        endpoint_status, endpoint_error = "ENDPOINT_COMPATIBLE", None
+        usage = turns[0]["usage"] if CLI_EXE_WSL is None else turns[0].get("usage")
+        if CLI_EXE_WSL is not None and not (
+                type(usage) is dict and all(type(usage.get(field)) is int and usage[field] >= 0
+                                            for field in USAGE_FIELDS)
+                and usage["cached_input_tokens"] <= usage["input_tokens"]
+                and usage["reasoning_output_tokens"] <= usage["output_tokens"]):
+            endpoint_status = "PREFLIGHT_USAGE_UNVERIFIED"
+            endpoint_error = {"reason": "complete native Codex usage is required"}
+            usage = None
     elif completed.returncode != 0 and failures:
         endpoint_status, endpoint_error, usage = "ENDPOINT_INCOMPATIBLE", failures[-1], None
     else:
