@@ -84,6 +84,14 @@ def git_revision(root: Path) -> str | None:
     return completed.stdout.strip() if completed.returncode == 0 else None
 
 
+def partial_accounting_step(step, schema):
+    payload = step["parsed_json"]
+    return (step["returncode"] == 1 and isinstance(payload, dict)
+            and payload.get("schema") == schema and payload.get("passed") is False
+            and payload.get("accounting_policy") == "native-cache-write-optional-v1"
+            and payload.get("functional_passed") is True and payload.get("usage_status") == "partial")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
@@ -156,19 +164,27 @@ def main() -> int:
                     ["./runtime/golden-demo-v3.sh", "run", "--out", str(live_out),
                      "--seed", str(args.seed)])
     steps.append(live)
-    if live["returncode"] != 0:
+    live_partial = partial_accounting_step(live, "agent_interface_golden_desktop_live_v2")
+    if live["returncode"] != 0 and not live_partial:
         report = {**base, "status": "FAIL_SUPPORTED_HOST_ACCEPTANCE", "passed": False,
                   "failed_step": "run", "steps": steps, "live_output": str(live_out)}
         dump(out / "acceptance.json", report); print(json.dumps(report, indent=2)); return 1
     audit = run_step(root, out, 6, "audit-live",
                      ["./runtime/golden-demo-v3.sh", "audit-live", str(live_out)])
     steps.append(audit)
-    audit_pass = audit["returncode"] == 0 and isinstance(audit["parsed_json"], dict) and audit["parsed_json"].get("passed") is True
+    audit_pass = (not live_partial and audit["returncode"] == 0
+                  and isinstance(audit["parsed_json"], dict)
+                  and audit["parsed_json"].get("passed") is True)
+    audit_partial = live_partial and partial_accounting_step(audit, "agent_interface_golden_live_audit_v1")
+    status = ("PASS_SUPPORTED_HOST_ACCEPTANCE" if audit_pass else
+              "HOLD_SUPPORTED_HOST_ACCOUNTING" if audit_partial else "FAIL_SUPPORTED_HOST_ACCEPTANCE")
     report = {**base,
-              "status": "PASS_SUPPORTED_HOST_ACCEPTANCE" if audit_pass else "FAIL_SUPPORTED_HOST_ACCEPTANCE",
+              "status": status,
               "passed": audit_pass, "release_ready": audit_pass,
-              "failed_step": None if audit_pass else "audit-live",
+              "failed_step": None if audit_pass or audit_partial else "audit-live",
               "steps": steps, "live_output": str(live_out)}
+    if audit_partial:
+        report["open_gate"] = "native cache-write tokens were unavailable on at least one call"
     dump(out / "acceptance.json", report)
     print(json.dumps(report, indent=2))
     return 0 if audit_pass else 1

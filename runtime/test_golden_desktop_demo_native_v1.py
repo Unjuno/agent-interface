@@ -45,7 +45,8 @@ class NativeCodexPreviewTests(unittest.TestCase):
                  patch.object(base.importlib.util, "find_spec", return_value=object()), \
                  patch("codex_app_server_client_v2.wsl_codex_home_environment",
                        return_value={"CODEX_HOME": str(root), "WSLENV": "CODEX_HOME/p"}), \
-                 patch.object(base.subprocess, "run", return_value=completed) as run:
+                 patch.object(base.subprocess, "run", return_value=completed) as run, \
+                 patch.object(base, "windows_arg", return_value=r"C:\Codex Folder\codex.exe"):
                 report = base.doctor()
             self.assertEqual(report["configuration"]["windows_codex_exe"], str(executable))
             self.assertNotIn("windows_node", report["configuration"])
@@ -53,6 +54,9 @@ class NativeCodexPreviewTests(unittest.TestCase):
             self.assertTrue(next(check["passed"] for check in report["checks"]
                                  if check["name"] == "codex_cli"))
             self.assertEqual(run.call_args.args[0], [str(executable), "--version"])
+            self.assertEqual(report["native_codex"], {
+                "windows_path": r"C:\Codex Folder\codex.exe", "version": "codex-cli test",
+                "executable_sha256": base.sha(executable)})
 
     def test_broken_linux_browser_stops_before_preflight(self):
         base = demo.base
@@ -157,9 +161,10 @@ class NativeCodexPreviewTests(unittest.TestCase):
             with self.subTest(env=env), self.assertRaises(AppServerError):
                 wsl_codex_home_environment(env)
 
-    def test_native_schema_gate_separates_binary_cache_and_holds_missing_usage(self):
-        for missing in (False, True):
-            with self.subTest(missing=missing), TemporaryDirectory() as directory:
+    def test_native_schema_gate_separates_binary_cache_and_only_allows_optional_field_omission(self):
+        modes = ("complete", "partial", "missing_required", "invalid", "mixed_terminal", "double_start")
+        for mode in modes:
+            with self.subTest(mode=mode), TemporaryDirectory() as directory:
                 root = Path(directory)
                 executable = root / "Codex Folder" / "codex.exe"
                 executable.parent.mkdir()
@@ -181,10 +186,19 @@ class NativeCodexPreviewTests(unittest.TestCase):
                     events = gate_dir / "compiled" / "model-call" / "events.jsonl"
                     events.parent.mkdir()
                     usage = dict(USAGE)
-                    if missing:
+                    if mode == "partial":
                         del usage["cache_write_input_tokens"]
-                    events.write_text(json.dumps({"type": "turn.completed", "usage": usage}) + "\n",
-                                      encoding="utf-8")
+                    elif mode == "missing_required":
+                        del usage["output_tokens"]
+                    elif mode == "invalid":
+                        usage["cache_write_input_tokens"] = None
+                    rows = [{"type": "thread.started", "thread_id": "preflight"},
+                            {"type": "turn.started"}, {"type": "turn.completed", "usage": usage}]
+                    if mode == "mixed_terminal":
+                        rows.insert(2, {"type": "turn.failed", "error": {"message": "synthetic"}})
+                    if mode == "double_start":
+                        rows.insert(2, {"type": "turn.started"})
+                    events.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
                     return subprocess.CompletedProcess(argv, 0, b"", b"")
 
                 with patch.dict(os.environ, WSL, clear=True), \
@@ -195,7 +209,7 @@ class NativeCodexPreviewTests(unittest.TestCase):
                     old_identity, old_key = preflight.compatibility_identity(schema)
                     preflight.CLI_EXE_WSL = executable
                     new_identity, new_key = preflight.compatibility_identity(schema)
-                    if missing:
+                    if mode not in ("complete", "partial"):
                         with self.assertRaises(gate.SchemaPreflightRefused) as stopped:
                             gate.require_compatible([{"name": "compiled", "schema": schema}],
                                                     root / "cache", gate_dir, workspace)
@@ -213,10 +227,21 @@ class NativeCodexPreviewTests(unittest.TestCase):
                 self.assertEqual(argv[7:9], ["handle", "-"])
                 result = report["results"][0]["result"]
                 self.assertEqual(result["compatibility_key"], new_key)
-                self.assertEqual(report["accepted"], not missing)
-                self.assertEqual(result["usage"], None if missing else USAGE)
-                if missing:
-                    self.assertEqual(result["endpoint_status"], "PREFLIGHT_USAGE_UNVERIFIED")
+                self.assertEqual(report["accepted"], mode in ("complete", "partial"))
+                if mode == "complete":
+                    self.assertEqual(result["usage"], USAGE)
+                    self.assertEqual(result["usage_status"], "complete")
+                elif mode == "partial":
+                    self.assertEqual(result["usage"],
+                                     {field: value for field, value in USAGE.items()
+                                      if field != "cache_write_input_tokens"})
+                    self.assertEqual(result["usage_status"], "partial")
+                else:
+                    self.assertIsNone(result["usage"])
+                    status = {"mixed_terminal": "ENDPOINT_INCOMPATIBLE",
+                              "double_start": "PREFLIGHT_LIFECYCLE_UNVERIFIED"}.get(
+                                  mode, "PREFLIGHT_USAGE_UNVERIFIED")
+                    self.assertEqual(result["endpoint_status"], status)
 
     def test_native_refuses_an_override_runner_before_launch(self):
         with TemporaryDirectory() as directory:

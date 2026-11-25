@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -12,6 +13,7 @@ try:
     from .codex_app_server_command_v1 import command as app_server_command
     from .codex_app_server_command_v1 import direct_command as direct_app_server_command
     from .compiled_form_grounding_v1 import validate as validate_compiled
+    from .native_codex_usage_v1 import normalize_usage
     from .plain_form_points_v1 import validate as validate_plain
     from .persistent_planner_adapter_v2 import PersistentPlannerAdapter
 except ImportError:  # Script-oriented research callers add this directory to sys.path.
@@ -19,6 +21,7 @@ except ImportError:  # Script-oriented research callers add this directory to sy
     from codex_app_server_command_v1 import command as app_server_command
     from codex_app_server_command_v1 import direct_command as direct_app_server_command
     from compiled_form_grounding_v1 import validate as validate_compiled
+    from native_codex_usage_v1 import normalize_usage
     from plain_form_points_v1 import validate as validate_plain
     from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 
@@ -46,12 +49,15 @@ USAGE_MAP = {
 }
 
 
-def per_turn_usage(value):
+def per_turn_usage(value, *, allow_missing_cache_write=False):
     if value is None:
         return None
     if type(value) is not dict or type(value.get("last")) is not dict:
         raise ValueError("app-server usage requires a last-turn object")
     last = value["last"]
+    if allow_missing_cache_write:
+        return normalize_usage({target: last[source] for source, target in USAGE_MAP.items()
+                                if source in last})
     missing = set(USAGE_MAP) - set(last)
     if missing:
         raise ValueError("missing app-server usage fields: " + ",".join(sorted(missing)))
@@ -90,7 +96,10 @@ class PersistentGroundingModel:
 
     def __init__(self, session_root, workspace, *, node=None, cli=None,
                  contract="compiled", model="gpt-5.6-luna", effort="low", executable=None,
-                 client=None, path_converter=windows_path, require_complete_usage=False):
+                 client=None, path_converter=windows_path, require_complete_usage=False,
+                 allow_missing_cache_write=False):
+        if require_complete_usage and allow_missing_cache_write:
+            raise ValueError("choose one required usage policy")
         if contract not in CONTRACTS:
             raise ValueError("contract must be plain or compiled")
         self.session_root = Path(session_root)
@@ -100,6 +109,7 @@ class PersistentGroundingModel:
         self.effort = effort
         self.path_converter = path_converter
         self.require_complete_usage = require_complete_usage
+        self.allow_missing_cache_write = allow_missing_cache_write
         self.session_root.mkdir(parents=True, exist_ok=False)
         self._owns_client = client is None
         if client is not None:
@@ -116,10 +126,13 @@ class PersistentGroundingModel:
             if self._owns_client:
                 self.client.initialize()
             _schema, instructions, _validator = CONTRACTS[contract]
+            thread_config = ({"project_doc_max_bytes": 0, "model_reasoning_effort": effort}
+                             if allow_missing_cache_write else None)
             self.planner = PersistentPlannerAdapter(
                 self.client, model=model, effort=effort,
                 cwd=self.path_converter(self.workspace),
-                base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                base_instructions=Path(instructions).read_text(encoding="utf-8"),
+                thread_config=thread_config)
             self.thread_id = self.planner.start_session()
         except BaseException as error:
             if self._owns_client:
@@ -131,9 +144,9 @@ class PersistentGroundingModel:
         self.calls = 0
 
     def _turn_usage(self, value):
-        usage = per_turn_usage(value)
-        if self.require_complete_usage and (usage is None or
-                usage["reasoning_output_tokens"] > usage["output_tokens"]):
+        usage = per_turn_usage(value, allow_missing_cache_write=self.allow_missing_cache_write)
+        if (self.require_complete_usage or self.allow_missing_cache_write) and (
+                usage is None or usage["reasoning_output_tokens"] > usage["output_tokens"]):
             raise ValueError("required per-turn provider usage is incomplete or inconsistent")
         return usage
 
@@ -152,9 +165,15 @@ class PersistentGroundingModel:
         known_usage = None
         usage_error = None
         try:
-            handle = self.planner.begin_turn(
-                prompt, output_schema=schema,
-                image_path=self.path_converter(Path(image).resolve()))
+            source_image = Path(image).resolve()
+            provider_image = self.path_converter(source_image)
+            if self.allow_missing_cache_write:
+                request = {"source_image": str(source_image),
+                           "provider_image": str(Path(provider_image)),
+                           "image_sha256": hashlib.sha256(source_image.read_bytes()).hexdigest()}
+                (root / "request.json").write_text(
+                    json.dumps(request, indent=2) + "\n", encoding="utf-8", newline="\n")
+            handle = self.planner.begin_turn(prompt, output_schema=schema, image_path=provider_image)
             turn = self.planner.await_turn(handle, timeout=90)
             elapsed = time.perf_counter_ns() - started
             self.calls += 1
@@ -204,6 +223,8 @@ class PersistentGroundingModel:
                 "requested_model": self.model, "requested_effort": self.effort,
                 "cost": None,
             }
+            if self.allow_missing_cache_write:
+                result["provider_usage"] = copy.deepcopy(turn.usage)
             (root / "result.json").write_text(
                 json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
             return result
