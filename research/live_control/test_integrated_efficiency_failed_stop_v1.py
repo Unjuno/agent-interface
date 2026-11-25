@@ -27,6 +27,39 @@ class FailStopTests(unittest.TestCase):
             self.assertFalse(evaluation['success'])
             self.assertTrue((root/'arms/persistent/task-details.json').is_file())
 
+    def test_unverified_release_stops_completed_arm_before_next_task(self):
+        seen = []
+
+        class Client:
+            def __init__(self, root, seed):
+                self.runtime = Path(root) / "runtime"
+                self.ready = {"goal": {"tasks": [{"task_id": "task-1"}, {"task_id": "task-2"}]}}
+
+            def __enter__(self):
+                self.runtime.mkdir(parents=True)
+                return self
+
+            def __exit__(self, *args):
+                pass
+
+            def finish(self, request_id):
+                seen.append("finish")
+                return {"success": False}
+
+        def task_with_unknown_release(client, arm, task, index, cached, workspace, model_root, model_call):
+            seen.append(task["task_id"])
+            return ({"task_id": task["task_id"], "typed_outcome": "completed",
+                     "releases_verified": False}, None, {"source": {"capture_ns": 0}})
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with patch.object(live, "OUT", root), patch.object(live, "RuntimeClient", Client), \
+                 patch.object(live, "run_task", task_with_unknown_release):
+                rows, _ = live.run_arm("persistent", 1, root, model_call=lambda *args: None)
+            self.assertEqual(seen, ["task-1", "finish"])
+            self.assertEqual(len(rows), 1)
+            self.assertFalse(rows[0]["releases_verified"])
+
     def test_incomplete_arm_stops_later_arms_and_writes_partial_report(self):
         seen=[]
         def run_arm(arm, seed, workspace):
