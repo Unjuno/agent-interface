@@ -16,6 +16,7 @@ for path in (HERE, RESEARCH):
 
 import golden_desktop_demo as base
 from integrated_efficiency_app_server_model_v1 import PersistentGroundingModel
+from native_codex_usage_v1 import POLICY, accounting
 
 
 def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingModel,
@@ -37,7 +38,7 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
             raise ValueError("Windows Node and the Codex JavaScript entrypoint are required")
         launch = {"node": node, "cli": base.windows_arg(cli)}
     else:
-        launch = {"executable": executable, "require_complete_usage": True}
+        launch = {"executable": executable, "allow_missing_cache_write": True}
     implementation, client_type = base.configure_research_modules(config, chromium)
     implementation.OUT = out
     implementation.RuntimeClient = client_type
@@ -55,7 +56,9 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
     usage_fields = ("input_tokens", "cached_input_tokens", "cache_write_input_tokens",
                     "output_tokens", "reasoning_output_tokens")
     calls = [preflight] + [call for row in rows for call in row["model_calls"]]
-    usage = {field: sum(call["usage"][field] for call in calls) for field in usage_fields}
+    native_accounting = accounting(calls) if executable is not None else None
+    usage = (native_accounting["usage"] if native_accounting else
+             {field: sum(call["usage"][field] for call in calls) for field in usage_fields})
     feedback_ms = [value / 1e6 for row in rows for value in row["input_feedback_ns"]]
     report = {
         "schema": "agent_interface_golden_desktop_live_v2",
@@ -69,7 +72,7 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
                 "attempted": True, "succeeded": True,
             }
             and grounding_turns == 2
-            and len({call["call_id"] for call in calls}) == len(calls)
+            and len({call["call_id"] for call in calls}) == len(calls) == 3
         ),
         "seed": seed,
         "tasks_exact": sum(row["exact_submission"] for row in rows),
@@ -92,6 +95,9 @@ def run_live(out: Path, seed: int, *, grounding_model_type=PersistentGroundingMo
         "environment": health,
         "scope": "one fresh persistent typed-grounding demonstration; no baseline, rate, generality, token-efficiency or human-speed claim",
     }
+    if native_accounting is not None:
+        report.update(native_accounting, accounting_policy=POLICY, functional_passed=report["passed"])
+        report["passed"] = report["functional_passed"] and report["usage_status"] == "complete"
     base.dump(out / "golden-report.json", report)
     return report
 

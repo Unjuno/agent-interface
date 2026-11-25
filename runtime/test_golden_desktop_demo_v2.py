@@ -33,7 +33,7 @@ class GoldenDesktopV2Tests(unittest.TestCase):
     def test_report_requires_two_same_session_grounding_turns(self):
         self.run_case(native=False)
 
-    def test_native_run_passes_executable_and_requires_complete_usage(self):
+    def test_native_run_passes_executable_and_checks_required_usage(self):
         self.run_case(native=True)
 
     def run_case(self, *, native):
@@ -98,7 +98,7 @@ class GoldenDesktopV2Tests(unittest.TestCase):
             options = grounding.call_args.kwargs
             if native:
                 self.assertEqual(options["executable"], config["windows_codex_exe"])
-                self.assertIs(options["require_complete_usage"], True)
+                self.assertIs(options["allow_missing_cache_write"], True)
                 self.assertNotIn("node", options)
             else:
                 self.assertEqual((options["node"], options["cli"]), (Path("node"), "CLI"))

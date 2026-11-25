@@ -18,7 +18,8 @@ import subprocess
 import sys
 import tempfile
 import time
-from pathlib import Path
+import tomllib
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -149,6 +150,7 @@ def doctor() -> dict:
     add("x11_connection", display_ok, display_error or "connected")
     cli_version = None
     cli_ok = False
+    native_codex = None
     try:
         if "windows_codex_exe" in config:
             from codex_app_server_client_v2 import wsl_codex_home_environment
@@ -166,6 +168,9 @@ def doctor() -> dict:
                                        capture_output=True, text=True, timeout=15)
             cli_ok = completed.returncode == 0 and completed.stdout.startswith("codex-cli ")
             cli_version = (completed.stdout or completed.stderr).strip()
+            if cli_ok:
+                native_codex = {"windows_path": windows_arg(executable.resolve()),
+                                "version": cli_version, "executable_sha256": sha(executable)}
         elif config["windows_node"] and config["windows_cli"]:
             completed = subprocess.run(
                 [str(config["windows_node"]), windows_arg(config["windows_cli"]), "--version"],
@@ -174,15 +179,19 @@ def doctor() -> dict:
             cli_ok = completed.returncode == 0
             cli_version = (completed.stdout or completed.stderr).strip()
     except Exception as error:
+        cli_ok = False
         cli_version = f"{type(error).__name__}: {error}"
     add("codex_cli", cli_ok, cli_version)
-    return {
+    result = {
         "schema": "agent_interface_golden_doctor_v1",
         "passed": all(row["passed"] for row in checks),
         "checks": checks,
         "configuration": {key: None if value is None else str(value)
                           for key, value in config.items()},
     }
+    if native_codex is not None:
+        result["native_codex"] = native_codex
+    return result
 
 
 def audit_retained() -> dict:
@@ -274,6 +283,264 @@ def read_json_lines(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
 
+def canonical_json(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def verify_native_exec_argv(argv, model, effort):
+    if (not all(type(argument) is str for argument in argv)
+            or argv[-1:] != ["-"] or argv.count("--model") != 1
+            or argv[argv.index("--model") + 1] != model
+            or any(arg.startswith(("-m", "-i", "-p", "--model=", "--image", "--profile", "--config"))
+                   or (arg.startswith("-c") and arg != "-c") for arg in argv[2:])):
+        raise ValueError("Exec preflight must send the fixed model without an image or profile override")
+    settings = {}
+    for index, arg in enumerate(argv[:-1]):
+        if arg == "-c":
+            option = tomllib.loads(argv[index + 1])
+            if len(option) != 1 or settings.keys() & option.keys():
+                raise ValueError("Exec preflight has an ambiguous configuration option")
+            settings.update(option)
+    if (set(settings) != {"model_reasoning_effort", "model_instructions_file", "project_doc_max_bytes"}
+            or settings["model_reasoning_effort"] != effort):
+        raise ValueError("Exec preflight does not send the fixed reasoning effort")
+
+
+def audit_launch_policy(out, report, preflight, preflight_root):
+    from native_codex_usage_v1 import POLICY
+
+    doctor_receipt = json.loads((out / "doctor.json").read_bytes())
+    plan = json.loads((preflight_root / "model-call" / "plan.json").read_bytes())
+    retained = json.loads((preflight_root / "preflight-result.json").read_bytes())
+    identity = retained["identity"]
+    cache_key = hashlib.sha256(canonical_json(identity).encode()).hexdigest()
+    cache_path = out / "preflight" / "persistent" / "fresh-cache" / (cache_key + ".json")
+    cached = json.loads(cache_path.read_bytes())
+    cached.pop("observed_at_unix_ns", None)
+    if (doctor_receipt.get("passed") is not True or retained.get("compatibility_key") != cache_key
+            or canonical_json(preflight) != canonical_json(retained)
+            or canonical_json(cached) != canonical_json(retained)):
+        raise ValueError("doctor and preflight accounting receipts do not agree")
+    config = doctor_receipt["configuration"]
+    argv = plan["args"]
+    launcher = report.get("environment", {}).get("configuration", {})
+    raw_native = type(argv) is list and argv[1:2] == ["exec"]
+    native = (raw_native or "windows_codex_exe" in config or "native_codex" in doctor_receipt
+              or "windows_codex_exe" in launcher or "accounting_policy" in report
+              or identity.get("cli_transport") == "windows-native-codex-exe"
+              or "usage_policy" in identity or "cli_executable_sha256" in identity)
+    if not native:
+        if (type(argv) is not list or argv[2:3] != ["exec"]
+                or not all(type(config.get(field)) is str and config[field]
+                           for field in ("windows_node", "windows_cli"))
+                or not identity.get("cli_entry_sha256") or not identity.get("node_version")
+                or any(Path(config[field]).name.casefold() != PureWindowsPath(argument).name.casefold()
+                       for field, argument in zip(("windows_node", "windows_cli"), argv[:2]))):
+            raise ValueError("legacy launcher is not identified by the preflight receipts")
+        return False
+    if (not raw_native or type(config.get("windows_codex_exe")) is not str
+            or not config["windows_codex_exe"] or "windows_node" in config or "windows_cli" in config
+            or identity.get("cli_transport") != "windows-native-codex-exe"
+            or identity.get("usage_policy") != POLICY or report.get("accounting_policy") != POLICY):
+        raise ValueError("independent launch evidence requires matching native accounting")
+    from schema_preflight_v1 import EFFORT, MODEL
+
+    path = PureWindowsPath(argv[0])
+    native_doctor = doctor_receipt["native_codex"]
+    digest = identity["cli_executable_sha256"]
+    if (not path.is_absolute() or path.suffix.lower() != ".exe"
+            or path != PureWindowsPath(native_doctor["windows_path"])
+            or path != PureWindowsPath(identity["cli_windows_path"])
+            or type(digest) is not str or len(digest) != 64
+            or any(char not in "0123456789abcdef" for char in digest)
+            or digest != native_doctor["executable_sha256"]
+            or type(identity.get("cli_version")) is not str
+            or not identity["cli_version"].startswith("codex-cli ")
+            or identity["cli_version"] != native_doctor["version"]
+            or plan.get("mode") != "handle" or plan.get("image_sha256") is not None
+            or any(plan.get(field) != identity[field] for field in
+                   ("requested_model", "requested_effort", "runner_sha256", "schema_sha256",
+                    "instructions_sha256"))):
+        raise ValueError("native executable or schema runner identity differs")
+    if identity.get("requested_model") != MODEL or identity.get("requested_effort") != EFFORT:
+        raise ValueError("native preflight differs from the fixed model or effort")
+    verify_native_exec_argv(argv, MODEL, EFFORT)
+    return True
+
+
+def audit_grounding_images(out, tasks, thread_id):
+    arm = out / "arms" / "persistent"
+    details = json.loads((arm / "task-details.json").read_bytes())
+    if len(details) != 6 or len(tasks) != 6:
+        raise ValueError("six task source records are required")
+    bound = {}
+    for index, stage in ((0, "anchor"), (3, "repair")):
+        task_id = f"task-{index + 1}"
+        detail, task = details[index], tasks[index]
+        trace = detail["trace"]
+        if (task.get("task_id") != task_id or trace.get("task_id") != task_id
+                or canonical_json(task["model_calls"]) != canonical_json(trace["model_calls"])):
+            raise ValueError("grounding call is not bound to the expected task source")
+        [call] = trace["model_calls"]
+        call_id = call["call_id"]
+        folder = out / "model-calls" / "persistent" / task_id / stage
+        request = json.loads((folder / "request.json").read_bytes())
+        returned = json.loads((folder / "result.json").read_bytes())
+        source = PurePosixPath(detail["source"]["image"])
+        provider = PureWindowsPath(request["provider_image"])
+        retained_image = (arm / "runtime" / source.name).resolve()
+        if (not source.is_absolute() or source.parts[-4:-1] != ("arms", "persistent", "runtime")
+                or source.suffix.lower() != ".png" or source != PurePosixPath(request["source_image"])
+                or tuple(part.casefold() for part in provider.parts[-4:]) !=
+                   tuple(part.casefold() for part in source.parts[-4:])
+                or not retained_image.is_relative_to(out.resolve())
+                or sha(retained_image) != request.get("image_sha256")
+                or returned.get("thread_id") != thread_id or returned.get("call_id") != call_id
+                or returned.get("turn_status") != "completed" or call_id in bound):
+            raise ValueError("grounding image or turn differs from the retained task source")
+        bound[call_id] = (provider, returned["raw"])
+    if len({path for path, _answer in bound.values()}) != 2:
+        raise ValueError("each grounding turn must use its own task source image")
+    return bound
+
+
+def verify_turn_input(params, model, effort):
+    inputs = params.get("input")
+    if (params.get("model") != model or params.get("effort") != effort
+            or type(inputs) is not list or len(inputs) != 2
+            or any(type(item) is not dict for item in inputs)
+            or inputs[0].get("type") != "text" or type(inputs[0].get("text")) is not str
+            or not inputs[0]["text"] or inputs[1].get("type") != "localImage"
+            or type(inputs[1].get("path")) is not str
+            or not PureWindowsPath(inputs[1]["path"]).is_absolute()):
+        raise ValueError("grounding must send the fixed model and effort with text and one local image")
+    return PureWindowsPath(inputs[1]["path"])
+
+
+def verify_grounding_completion(params, answer):
+    turn = params["turn"]
+    items = turn.get("items")
+    if (turn.get("status") != "completed" or turn.get("error") is not None
+            or params.get("error") is not None or type(items) is not list):
+        raise ValueError("grounding turn did not complete normally")
+    messages = [item for item in items if item.get("type") == "agentMessage"]
+    if (len(messages) != 1 or type(messages[0].get("text")) is not str
+            or canonical_json(json.loads(messages[0]["text"])) != canonical_json(answer)):
+        raise ValueError("completed grounding response differs from the recorded answer")
+
+
+def audited_native_usage(out, report, preflight, preflight_events, task_calls):
+    from integrated_efficiency_app_server_model_v1 import per_turn_usage
+    from native_codex_usage_v1 import accounting, normalize_usage, preflight_terminal
+
+    preflight_usage = normalize_usage(preflight_terminal(preflight_events).get("usage"))
+    if preflight_usage != normalize_usage(preflight.get("usage")):
+        raise ValueError("raw schema preflight usage does not match the recorded result")
+    model = preflight["identity"]["requested_model"]
+    effort = preflight["identity"]["requested_effort"]
+    if any(call.get("requested_model") != model or call.get("requested_effort") != effort
+           for call in task_calls):
+        raise ValueError("grounding usage records differ from the fixed model or effort")
+    ids = [call["call_id"] for call in task_calls]
+    thread_id = report.get("grounding_thread_id")
+    if (len(ids) != 2 or len(set(ids)) != 2 or report.get("grounding_call_ids") != ids
+            or type(thread_id) is not str or not thread_id):
+        raise ValueError("two scoped raw grounding turns are required")
+    bound_images = audit_grounding_images(out, report["tasks"], thread_id)
+    protocol = read_json_lines(out / "persistent-grounding-app-server" / "protocol.jsonl")
+    prepared = {}
+    thread_sends = []
+    turn_sends = []
+    replies = {}
+    sent_images = {}
+    observed_usage = {}
+    first_usage = {}
+    completions = {}
+    for index, row in enumerate(protocol):
+        direction, message = row["direction"], row["message"]
+        method = message.get("method")
+        if direction == "send_uncertain":
+            raise ValueError("uncertain App Server send")
+        if direction in ("send_prepared", "sent") and method in ("thread/start", "turn/start"):
+            params = message["params"]
+            if type(message.get("id")) is not int:
+                raise ValueError("App Server request has no valid request ID")
+            rpc_id = message["id"]
+            if method == "thread/start":
+                if (params.get("model") != model
+                        or params.get("config", {}).get("model_reasoning_effort") != effort):
+                    raise ValueError("App Server thread does not request the fixed model and effort")
+            else:
+                if params.get("threadId") != thread_id:
+                    raise ValueError("App Server request has no matching thread")
+                image = verify_turn_input(params, model, effort)
+                if direction == "sent":
+                    sent_images[rpc_id] = image
+            entry = (index, canonical_json(message))
+            if direction == "send_prepared":
+                if rpc_id in prepared:
+                    raise ValueError("duplicate App Server send preparation")
+                prepared[rpc_id] = entry
+            else:
+                sends = thread_sends if method == "thread/start" else turn_sends
+                sends.append((rpc_id, entry))
+        if direction != "received":
+            continue
+        if type(message.get("id")) is int:
+            replies.setdefault(message["id"], []).append((index, message))
+        if method == "thread/tokenUsage/updated":
+            params = message["params"]
+            turn_id = params["turnId"]
+            if params["threadId"] != thread_id or turn_id not in ids:
+                raise ValueError("unexpected raw grounding usage identity")
+            first_usage.setdefault(turn_id, index)
+            observed_usage[turn_id] = per_turn_usage(
+                params.get("tokenUsage"), allow_missing_cache_write=True)
+        if method == "turn/completed":
+            params = message["params"]
+            turn_id = params["turn"]["id"]
+            if params["threadId"] != thread_id or turn_id not in ids or turn_id in completions:
+                raise ValueError("invalid raw grounding completion")
+            verify_grounding_completion(params, bound_images[turn_id][1])
+            completions[turn_id] = index
+    sent_ids = {rpc_id for rpc_id, _entry in [*thread_sends, *turn_sends]}
+    if (len(thread_sends) != 1 or len(turn_sends) != 2 or len(sent_ids) != 3
+            or set(prepared) != sent_ids or set(completions) != set(ids)):
+        raise ValueError("expected one prepared thread start and two prepared and completed grounding turns")
+
+    def acknowledged(send):
+        rpc_id, (send_index, request) = send
+        prepare_index, prepared_request = prepared[rpc_id]
+        if prepare_index >= send_index or prepared_request != request:
+            raise ValueError("App Server send does not match its preparation")
+        [(reply_index, reply)] = replies.get(rpc_id, [])
+        if "error" in reply or reply_index <= send_index:
+            raise ValueError("App Server acknowledgement is missing or precedes a matching send")
+        return reply_index, reply["result"]
+
+    thread_ack_index, thread = acknowledged(thread_sends[0])
+    if (thread["thread"]["id"] != thread_id or thread.get("model") != model
+            or thread.get("reasoningEffort") != effort):
+        raise ValueError("App Server acknowledged a different thread, model or effort")
+    previous_end = thread_ack_index
+    for send, turn_id in zip(turn_sends, ids, strict=True):
+        rpc_id, (send_index, _request) = send
+        reply_index, reply = acknowledged(send)
+        if (prepared[rpc_id][0] <= previous_end or reply["turn"]["id"] != turn_id
+                or first_usage.get(turn_id, -1) <= send_index or completions[turn_id] <= send_index):
+            raise ValueError("grounding turns lack serial sends and matching later notifications")
+        if sent_images[rpc_id] != bound_images[turn_id][0]:
+            raise ValueError("sent localImage differs from the independent task source")
+        previous_end = max(reply_index, completions[turn_id])
+    observed = [{"usage": preflight_usage}]
+    for call in task_calls:
+        usage = observed_usage.get(call["call_id"])
+        if usage is None or usage != normalize_usage(call.get("usage")):
+            raise ValueError("raw grounding usage does not match the recorded call")
+        observed.append({"usage": usage})
+    return accounting(observed)
+
+
 def audit_live(out: Path) -> dict:
     report = json.loads((out / "golden-report.json").read_text(encoding="utf-8"))
     gate = json.loads((out / "preflight" / "persistent" / "gate" /
@@ -284,10 +551,8 @@ def audit_live(out: Path) -> dict:
     task_calls = [call for task in report["tasks"] for call in task["model_calls"]]
     preflight = gate["results"][0]["result"]
     call_ids = [call["call_id"] for call in task_calls]
-    preflight_events = read_json_lines(
-        out / "preflight" / "persistent" / "gate" / "compiled-form-grounding" /
-        "model-call" / "events.jsonl"
-    )
+    preflight_root = out / "preflight" / "persistent" / "gate" / "compiled-form-grounding"
+    preflight_events = read_json_lines(preflight_root / "model-call" / "events.jsonl")
     call_ids.extend(row["thread_id"] for row in preflight_events
                     if row.get("type") == "thread.started")
     terminal = [row for row in events if row.get("event") == "terminal"]
@@ -297,11 +562,41 @@ def audit_live(out: Path) -> dict:
     usage_fields = ("input_tokens", "cached_input_tokens", "cache_write_input_tokens",
                     "output_tokens", "reasoning_output_tokens")
     calls = [{"usage": preflight["usage"]}] + task_calls
-    recomputed_usage = {field: sum(call["usage"][field] for call in calls)
-                        for field in usage_fields}
+    usage_error = None
+    summary = None
+    try:
+        if audit_launch_policy(out, report, preflight, preflight_root):
+            process = json.loads((preflight_root / "model-call" / "process.json").read_bytes())
+            if (preflight.get("endpoint_status") != "ENDPOINT_COMPATIBLE"
+                    or type(process.get("exit_code")) is not int or process["exit_code"] != 0):
+                raise ValueError("schema preflight has no successful raw process exit")
+            summary = audited_native_usage(out, report, preflight, preflight_events, task_calls)
+        else:
+            if any(type(call["usage"][field]) is not int or call["usage"][field] < 0
+                   for call in calls for field in usage_fields):
+                raise ValueError("legacy usage requires complete nonnegative token counts")
+            recomputed_usage = {field: sum(call["usage"][field] for call in calls)
+                                for field in usage_fields}
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
+        usage_error = str(error)
+        summary = {"usage": {field: None for field in usage_fields},
+                   "usage_coverage": {field: 0 for field in usage_fields},
+                   "usage_status": "unverified"}
+    if summary is None:
+        usage_complete = True
+        report_valid = report.get("passed") is True
+    else:
+        recomputed_usage = summary["usage"]
+        usage_complete = summary["usage_status"] == "complete"
+        report_valid = (usage_error is None and report.get("functional_passed") is True
+                        and report.get("passed") is usage_complete
+                        and all(canonical_json(report.get(field)) == canonical_json(value)
+                                for field, value in summary.items()))
     expected_tasks = [f"task-{index}" for index in range(1, 7)]
-    passed = all([
-        report.get("passed") is True,
+    repair_succeeded = (len(report["tasks"]) > 3
+                        and report["tasks"][3].get("repair", {}).get("succeeded") is True)
+    functional_passed = all([
+        report_valid,
         gate.get("accepted") is True,
         preflight.get("cache_hit") is False,
         preflight.get("model_call_performed") is True,
@@ -317,12 +612,12 @@ def audit_live(out: Path) -> dict:
         all(row.get("release", {}).get("verified") is True
             and row["release"].get("keys_down") == []
             and row["release"].get("buttons_down") == [] for row in terminal),
-        report["tasks"][3].get("repair", {}).get("succeeded") is True,
+        repair_succeeded,
         not (out / "failure.json").exists(),
     ])
     audit = {
         "schema": "agent_interface_golden_live_audit_v1",
-        "passed": passed,
+        "passed": functional_passed and usage_complete,
         "output": display_path(out),
         "exact_tasks": len(history),
         "model_call_ids": call_ids,
@@ -333,9 +628,15 @@ def audit_live(out: Path) -> dict:
         ),
         "old_layout_missing_checks": len(missing_old),
         "old_target_pointer_admissions": report.get("old_target_pointer_admissions"),
-        "repair_succeeded": report["tasks"][3].get("repair", {}).get("succeeded"),
+        "repair_succeeded": repair_succeeded,
         "scope": report["scope"],
     }
+    if summary is not None:
+        from native_codex_usage_v1 import POLICY
+
+        audit.update(summary, accounting_policy=POLICY, functional_passed=functional_passed)
+        if usage_error is not None:
+            audit["usage_error"] = usage_error
     dump(out / "audit.json", audit)
     return audit
 

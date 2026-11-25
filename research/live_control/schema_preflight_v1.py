@@ -10,10 +10,10 @@ from jsonschema import Draft202012Validator, SchemaError
 
 try:
     from .codex_app_server_client_v2 import wsl_codex_home_environment
-    from .integrated_efficiency_protocol_v1 import USAGE_FIELDS
+    from .native_codex_usage_v1 import CACHE_WRITE, POLICY, normalize_usage, preflight_terminal
 except ImportError:
     from codex_app_server_client_v2 import wsl_codex_home_environment
-    from integrated_efficiency_protocol_v1 import USAGE_FIELDS
+    from native_codex_usage_v1 import CACHE_WRITE, POLICY, normalize_usage, preflight_terminal
 
 HERE = Path(__file__).resolve().parent
 WINDOWS_PYTHON = Path("/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe")
@@ -58,7 +58,8 @@ def compatibility_identity(schema):
                         node_version=version([str(NODE_WSL), "--version"]))
     else:
         require_native_runner()
-        identity.update(cli_transport="windows-native-codex-exe",
+        identity.update(cli_transport="windows-native-codex-exe", usage_policy=POLICY,
+                        cli_windows_path=windows_path(CLI_EXE_WSL),
                         cli_executable_sha256=sha(CLI_EXE_WSL),
                         cli_version=version([str(CLI_EXE_WSL), "--version"], timeout=15,
                             env=wsl_codex_home_environment(os.environ)))
@@ -108,7 +109,7 @@ def preflight(schema, cache_dir, result_dir, workspace):
     launch_options = {}
     prefix = [NODE_ARG, CLI_ARG]
     if CLI_EXE_WSL is not None:
-        prefix = ["--native-codex-exe", windows_path(CLI_EXE_WSL)]
+        prefix = ["--native-codex-exe", identity["cli_windows_path"]]
         launch_options["env"] = wsl_codex_home_environment(os.environ)
     command = [str(WINDOWS_PYTHON), windows_path(RUNNER), *prefix,
         windows_path(prompt), windows_path(workspace), windows_path(call), "handle", "-",
@@ -120,18 +121,24 @@ def preflight(schema, cache_dir, result_dir, workspace):
     events = [json.loads(line) for line in (call / "events.jsonl").read_text(encoding="utf-8").splitlines()]
     turns = [row for row in events if row.get("type") == "turn.completed"]
     failures = [row for row in events if row.get("type") in ("error", "turn.failed")]
-    if completed.returncode == 0 and len(turns) == 1:
+    if completed.returncode == 0 and len(turns) == 1 and (CLI_EXE_WSL is None or not failures):
         endpoint_status, endpoint_error = "ENDPOINT_COMPATIBLE", None
         usage = turns[0]["usage"] if CLI_EXE_WSL is None else turns[0].get("usage")
-        if CLI_EXE_WSL is not None and not (
-                type(usage) is dict and all(type(usage.get(field)) is int and usage[field] >= 0
-                                            for field in USAGE_FIELDS)
-                and usage["cached_input_tokens"] <= usage["input_tokens"]
-                and usage["reasoning_output_tokens"] <= usage["output_tokens"]):
-            endpoint_status = "PREFLIGHT_USAGE_UNVERIFIED"
-            endpoint_error = {"reason": "complete native Codex usage is required"}
-            usage = None
-    elif completed.returncode != 0 and failures:
+        if CLI_EXE_WSL is not None:
+            try:
+                preflight_terminal(events)
+            except ValueError as error:
+                endpoint_status = "PREFLIGHT_LIFECYCLE_UNVERIFIED"
+                endpoint_error = {"reason": str(error)}
+                usage = None
+            else:
+                try:
+                    usage = normalize_usage(usage)
+                except ValueError as error:
+                    endpoint_status = "PREFLIGHT_USAGE_UNVERIFIED"
+                    endpoint_error = {"reason": str(error)}
+                    usage = None
+    elif failures and (completed.returncode != 0 or CLI_EXE_WSL is not None):
         endpoint_status, endpoint_error, usage = "ENDPOINT_INCOMPATIBLE", failures[-1], None
     else:
         endpoint_status, endpoint_error, usage = "PREFLIGHT_FAILED", {"returncode": completed.returncode}, None
@@ -139,5 +146,8 @@ def preflight(schema, cache_dir, result_dir, workspace):
         "endpoint_error": endpoint_error, "usage": usage, "model_call_performed": True,
         "elapsed_ms": elapsed_ms, "cost": None,
         "scope": "actual no-GUI endpoint compatibility call; no semantic-quality or task claim"}
+    if CLI_EXE_WSL is not None:
+        result["usage_status"] = ("unverified" if usage is None else
+                                  "complete" if CACHE_WRITE in usage else "partial")
     cache_record = {**result, "observed_at_unix_ns": time.time_ns()}
     dump(cache_path, cache_record); dump(result_dir / "preflight-result.json", result); return result
