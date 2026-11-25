@@ -235,8 +235,8 @@ class LeaseReader:
     def __init__(self, root, nonce):
         self.path = root / LEASE_FILE
         self.nonce = nonce
-        self.last = self.read()
         self.seen = time.monotonic()
+        self.last = self.read()
 
     def read(self):
         try:
@@ -252,9 +252,12 @@ class LeaseReader:
             observed = time.monotonic()
             if observed - self.seen >= LEASE_TIMEOUT:
                 break
-            if value is not None and (origin is None or value > origin):
-                self.last, self.seen = value, observed
-                return
+            if value is not None:
+                if origin is None:
+                    origin = value
+                elif value > origin:
+                    self.last, self.seen = value, observed
+                    return
             time.sleep(.05)
         raise TimeoutError("WSL caller did not renew the initial Windows job lease")
 

@@ -99,6 +99,66 @@ class NativePreflightJobTests(unittest.TestCase):
             self.assertTrue(reader.lost())
             self.assertEqual(reader.last, 4)
 
+    def test_initial_read_failure_requires_a_fresh_lease_increment_to_launch(self):
+        owner_code = """
+import sys
+from pathlib import Path
+from unittest.mock import patch
+from research.live_control import native_preflight_job_v1 as job
+from research.live_control.native_app_server_job_v1 import own_app_server
+
+root = Path(sys.argv[1])
+writer = job.LeaseWriter(root)
+writer.write(14400)
+read_text = Path.read_text
+lease_reads = 0
+
+def read_with_initial_failure(path, *args, **kwargs):
+    global lease_reads
+    if path == writer.path:
+        lease_reads += 1
+        if lease_reads == 1:
+            raise PermissionError("lease file temporarily unavailable")
+        if lease_reads == 3 and sys.argv[2] == "renew":
+            writer.write(14401)
+    return read_text(path, *args, **kwargs)
+
+child = "import sys; from pathlib import Path; Path(sys.argv[1]).write_text('ran')"
+with patch.object(Path, "read_text", read_with_initial_failure), patch.object(job, "LEASE_TIMEOUT", 1):
+    try:
+        result = own_app_server(root, writer.nonce,
+                                [sys.executable, "-B", "-c", child, str(root / "ran")], timeout=2)
+    except TimeoutError:
+        result = 124
+raise SystemExit(result)
+"""
+        for mode, expected_code in (("stale", 124), ("renew", 0)):
+            with self.subTest(mode=mode), TemporaryDirectory() as directory:
+                root = Path(directory)
+                owner = subprocess.run([sys.executable, "-B", "-c", owner_code, str(root), mode],
+                                       creationflags=subprocess.CREATE_NO_WINDOW,
+                                       capture_output=True, timeout=5)
+                self.assertEqual(owner.returncode, expected_code, owner.stderr)
+                self.assertEqual((root / "ran").is_file(), mode == "renew")
+
+    def test_initial_lease_reads_share_one_deadline(self):
+        with TemporaryDirectory() as directory:
+            elapsed = 0
+            observations = iter(((.25, None), (.75, 8), (1.125, 9)))
+
+            def read():
+                nonlocal elapsed
+                elapsed, value = next(observations)
+                return value
+
+            with patch.object(job, "LEASE_TIMEOUT", 1), \
+                 patch.object(job.LeaseReader, "read", side_effect=read), \
+                 patch.object(job.time, "monotonic", side_effect=lambda: elapsed), \
+                 patch.object(job.time, "sleep"):
+                reader = job.LeaseReader(Path(directory), "a" * 32)
+                with self.assertRaises(TimeoutError):
+                    reader.await_owner()
+
     def test_lease_read_returning_after_expiry_cannot_renew(self):
         with TemporaryDirectory() as directory:
             root = Path(directory)
