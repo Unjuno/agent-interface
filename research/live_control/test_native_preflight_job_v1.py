@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -57,6 +58,87 @@ class NativePreflightJobTests(unittest.TestCase):
             self.assertEqual(report["status"], "TIMED_OUT")
             self.assertTrue(report["job_empty"])
 
+    def test_final_lease_io_cannot_move_completion_past_deadline(self):
+        read_accounting = job.read_accounting
+        observed_empty = False
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def account(*args):
+                nonlocal observed_empty
+                counts = read_accounting(*args)
+                observed_empty = counts.ActiveProcesses == 0
+                return counts
+
+            def delayed_lease():
+                if observed_empty:
+                    time.sleep(.7)
+                return False
+
+            with patch.object(job, "read_accounting", side_effect=account):
+                report = job.run_owned([sys.executable, "-B", "-c", "pass"],
+                                       root / "out", root / "err", timeout=.6,
+                                       owner_lost=delayed_lease)
+            self.assertTrue(observed_empty)
+            self.assertEqual(report["status"], "TIMED_OUT")
+            self.assertTrue(report["job_empty"])
+
+    def test_expired_or_rolled_back_lease_cannot_be_renewed(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            writer = job.LeaseWriter(root)
+            writer.write(4)
+            reader = job.LeaseReader(root, writer.nonce)
+            seen = reader.seen
+            writer.write(3)
+            self.assertFalse(reader.lost())
+            self.assertEqual(reader.seen, seen)
+            self.assertEqual(reader.last, 4)
+            writer.write(5)
+            reader.seen = time.monotonic() - job.LEASE_TIMEOUT - .1
+            self.assertTrue(reader.lost())
+            self.assertEqual(reader.last, 4)
+
+    def test_lease_read_returning_after_expiry_cannot_renew(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            writer = job.LeaseWriter(root)
+            writer.write(4)
+            reader = job.LeaseReader(root, writer.nonce)
+            watermark = reader.seen
+            before, after = watermark + job.LEASE_TIMEOUT - .1, watermark + job.LEASE_TIMEOUT + .1
+            with patch.object(job.time, "monotonic", side_effect=[before, after]), \
+                 patch.object(reader, "read", return_value=5):
+                self.assertTrue(reader.lost())
+            self.assertEqual((reader.last, reader.seen), (4, watermark))
+
+    def test_lease_read_blocks_only_the_monitor(self):
+        entered = threading.Event()
+        release = threading.Event()
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            writer = job.LeaseWriter(root)
+            writer.write(0)
+            reader = job.LeaseReader(root, writer.nonce)
+
+            def blocked_read():
+                entered.set()
+                release.wait(4)
+                return 1
+
+            with patch.object(reader, "read", side_effect=blocked_read), job.LeaseMonitor(reader) as monitor:
+                try:
+                    self.assertTrue(entered.wait(1))
+                    report = job.run_owned([sys.executable, "-B", "-c", "from time import sleep; sleep(4)"],
+                                           root / "out", root / "err", timeout=.4,
+                                           owner_lost=monitor.retired)
+                    self.assertTrue(entered.is_set())
+                    self.assertFalse(release.is_set())
+                    self.assertEqual(report["status"], "TIMED_OUT")
+                    self.assertTrue(report["job_empty"])
+                finally:
+                    release.set()
+
     def test_timeout_and_premature_root_exit_retire_the_descendant(self):
         for child_mode, status in (("wait", "TIMED_OUT"), ("exit", "DESCENDANTS_ACTIVE")):
             with self.subTest(child_mode=child_mode), TemporaryDirectory() as directory:
@@ -71,6 +153,7 @@ class NativePreflightJobTests(unittest.TestCase):
                 owner = {"run_nonce": "a" * 32, "owner_sha256": "b" * 64}
                 self.assertFalse(job.completed_receipt({**report, **owner}, report["exit_code"], **owner))
 
+    @unittest.skipIf(sys.version_info[:2] < (3, 12), "App Server Windows pipes require Python 3.12")
     def test_close_releases_local_handles_even_when_retirement_fails(self):
         expected = RuntimeError("synthetic peer exit 42")
 

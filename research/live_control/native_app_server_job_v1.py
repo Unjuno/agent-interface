@@ -9,9 +9,9 @@ import subprocess
 import sys
 
 if __package__:
-    from .native_preflight_job_v1 import JOB_KILL_EXIT_CODE, LeaseReader, LeaseWriter, run_in_job, valid_hex
+    from .native_preflight_job_v1 import JOB_KILL_EXIT_CODE, LeaseMonitor, LeaseReader, LeaseWriter, run_in_job, valid_hex
 else:
-    from native_preflight_job_v1 import JOB_KILL_EXIT_CODE, LeaseReader, LeaseWriter, run_in_job, valid_hex
+    from native_preflight_job_v1 import JOB_KILL_EXIT_CODE, LeaseMonitor, LeaseReader, LeaseWriter, run_in_job, valid_hex
 
 
 APP_SERVER_JOB_RECEIPT = "windows-app-server-job.json"
@@ -31,15 +31,10 @@ def own_app_server(root, nonce, argv, *, timeout=APP_SERVER_LIFETIME):
         except OSError:
             return False
 
-    stop_seen = False
-    def should_retire():
-        nonlocal stop_seen
-        stop_seen = stop_requested()
-        return stop_seen or lease.lost()
-
-    result = run_in_job(argv, (sys.stdin, sys.stdout, sys.stderr), timeout=timeout,
-                        owner_lost=should_retire)
-    if result["status"] == "OWNER_LOST" and stop_seen:
+    with LeaseMonitor(lease, stop_requested) as monitor:
+        result = run_in_job(argv, (sys.stdin, sys.stdout, sys.stderr), timeout=timeout,
+                            owner_lost=monitor.retired)
+    if result["status"] == "OWNER_LOST" and monitor.requested_stop.is_set():
         if result["exit_code"] == JOB_KILL_EXIT_CODE and result["termination_requested"]:
             result["status"] = "STOP_REQUESTED"
         elif result["exit_code"] == 0 and not result["termination_requested"]:

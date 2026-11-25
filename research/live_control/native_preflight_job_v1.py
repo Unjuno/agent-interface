@@ -243,23 +243,59 @@ class LeaseReader:
             prefix, value = self.path.read_text(encoding="ascii").strip().split(":", 1)
         except (OSError, ValueError):
             return None
-        return value if prefix == self.nonce and value.isdecimal() else None
+        return int(value) if prefix == self.nonce and value.isdecimal() and len(value) <= 9 else None
 
     def await_owner(self):
         origin = self.last
         while time.monotonic() - self.seen < LEASE_TIMEOUT:
             value = self.read()
-            if value is not None and value != origin:
-                self.last, self.seen = value, time.monotonic()
+            observed = time.monotonic()
+            if observed - self.seen >= LEASE_TIMEOUT:
+                break
+            if value is not None and (origin is None or value > origin):
+                self.last, self.seen = value, observed
                 return
             time.sleep(.05)
         raise TimeoutError("WSL caller did not renew the initial Windows job lease")
 
     def lost(self):
+        if time.monotonic() - self.seen >= LEASE_TIMEOUT:
+            return True
         value = self.read()
-        if value is not None and value != self.last:
-            self.last, self.seen = value, time.monotonic()
-        return time.monotonic() - self.seen >= LEASE_TIMEOUT
+        observed = time.monotonic()
+        if observed - self.seen >= LEASE_TIMEOUT:
+            return True
+        if value is not None and (self.last is None or value > self.last):
+            self.last, self.seen = value, observed
+        return False
+
+
+class LeaseMonitor:
+    """Keep filesystem liveness checks off the Windows job deadline loop."""
+
+    def __init__(self, lease, stop_requested=None):
+        self.lease = lease
+        self.stop_requested = stop_requested
+        self.requested_stop = threading.Event()
+        self.done = threading.Event()
+
+    def watch(self):
+        while not self.done.wait(.05):
+            if self.stop_requested is not None and self.stop_requested():
+                self.requested_stop.set()
+                return
+            if self.lease.lost():
+                return
+
+    def retired(self):
+        return self.requested_stop.is_set() or time.monotonic() - self.lease.seen >= LEASE_TIMEOUT
+
+    def __enter__(self):
+        threading.Thread(target=self.watch, daemon=True).start()
+        return self
+
+    def __exit__(self, *_):
+        self.done.set()
 
 
 def run_owned(argv, stdout, stderr, *, timeout=JOB_TIMEOUT, owner_lost=None):
@@ -279,6 +315,8 @@ def run_in_job(argv, streams, *, timeout, owner_lost=None):
         check(api.SetInformationJobObject(job, 9, ctypes.byref(limits), ctypes.sizeof(limits)))
         if owner_lost is not None and owner_lost():
             raise TimeoutError("WSL caller lease expired before Windows process creation")
+        if time.monotonic() > deadline:
+            raise TimeoutError("Windows job deadline expired before process creation")
         process = create_owned_process(api, job, argv, streams)
         reason = None
         while True:
@@ -309,9 +347,10 @@ def run_in_job(argv, streams, *, timeout, owner_lost=None):
             check(api.GetExitCodeProcess(process, ctypes.byref(exit_code)))
             code = exit_code.value
         if status == "COMPLETED":
+            caller_lost = owner_lost is not None and owner_lost()
             if time.monotonic() > deadline:
                 status = "TIMED_OUT"
-            elif owner_lost is not None and owner_lost():
+            elif caller_lost:
                 status = "OWNER_LOST"
         return {"schema": SCHEMA, "ownership": "create-process-job-list",
                 "status": status, "exit_code": code, "job_empty": job_empty,
@@ -348,9 +387,10 @@ def main(argv):
     root = Path(destination)
     lease = LeaseReader(root, nonce)
     lease.await_owner()
-    result = run_owned([sys.executable, "-B", runner, *request],
-                       root / "windows-runner-stdout.txt", root / "windows-runner-stderr.txt",
-                       owner_lost=lease.lost)
+    with LeaseMonitor(lease) as monitor:
+        result = run_owned([sys.executable, "-B", runner, *request],
+                           root / "windows-runner-stdout.txt", root / "windows-runner-stderr.txt",
+                           owner_lost=monitor.retired)
     result.update(run_nonce=nonce, owner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
     with (root / RECEIPT).open("x", encoding="utf-8", newline="\n") as receipt:
         json.dump(result, receipt, indent=2)
