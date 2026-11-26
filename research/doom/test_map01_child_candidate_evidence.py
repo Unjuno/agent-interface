@@ -3,7 +3,7 @@ import hashlib,json,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from test_map01_candidate_setup_synthetic import fixture,write,seal,custody,FakeHud
-from map01_candidate_setup_evidence_v1 import verify_setup_candidate,EvidenceError,digest_file
+from map01_candidate_setup_evidence_v1 import verify_setup_candidate,EvidenceError,digest_file,_movement_gate_start_consistent
 
 
 def derive(root, retry=False):
@@ -142,6 +142,14 @@ class DerivedCandidateTests(unittest.TestCase):
     proof.write_text(json.dumps(spec))
     with self.assertRaises(EvidenceError):verify()
 
+
+ def test_equal_deadline_boundary_requires_fresh_source(self):
+  reserve=10_000_000_000
+  check=lambda capture:_movement_gate_start_consistent(
+   1_000_000_000,capture,9_500_000_000,reserve,1965,reserve,reserve)
+  self.assertTrue(check(7_000_000_001))
+  self.assertFalse(check(7_000_000_000))
+  self.assertFalse(check(6_800_000_000))
 
  def test_verified_retry_can_release_the_key(self):
   with tempfile.TemporaryDirectory() as temp:

@@ -48,6 +48,17 @@ def read_sealed_directory(root, expected_sha, *, expected_pass=True):
         raise EvidenceError('sealed evidence unavailable or malformed') from error
 
 
+def _movement_gate_start_consistent(validated_ns, capture_ns, sample_started_ns,
+                                    reserve_deadline_ns, submission_tic, clock_deadline_ns,
+                                    admission_deadline_ns):
+    projection=(2100-submission_tic)*1_000_000_000//45
+    started=max(validated_ns,capture_ns,sample_started_ns-1_000_000_000,
+                clock_deadline_ns-projection,admission_deadline_ns-1_000_000_000)
+    return (started<=sample_started_ns and 0<=started-capture_ns<2_000_000_000
+            and min(reserve_deadline_ns,started+projection)==clock_deadline_ns
+            and min(started+1_000_000_000,clock_deadline_ns)==admission_deadline_ns)
+
+
 def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, iwad_sha, skill, seed, timeout_seconds, iwad_path, *, _depth=0, _seen=frozenset()):
     """Validate two sealed trials and return a setup-only load binding.
 
@@ -513,14 +524,10 @@ def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, i
             move_source=next(row for row in frames if row.get('sequence')==move_gate['source_sequence'])
             clock_deadline=move_gate['first_input_clock_deadline_ns']
             deadline=move_gate['admission_deadline_ns']
-            projection=(2100-move_gate['observed_engine_tic'])*1_000_000_000//45
-            move_started=max(parent_summary['validated_ns'],move_source['capture_ns'],
-                             move_gate['owner_state']['sample_started_ns']-1_000_000_000,
-                             clock_deadline-projection,deadline-1_000_000_000)
-            require(move_started<=move_gate['owner_state']['sample_started_ns']
-                    and 0<=move_started-move_source['capture_ns']<2_000_000_000
-                    and min(reserve_deadline,move_started+projection)==clock_deadline
-                    and min(move_started+1_000_000_000,clock_deadline)==deadline,
+            require(_movement_gate_start_consistent(
+                        parent_summary['validated_ns'],move_source['capture_ns'],
+                        move_gate['owner_state']['sample_started_ns'],reserve_deadline,
+                        move_gate['observed_engine_tic'],clock_deadline,deadline),
                     'derived movement source or deadline calculation differs')
             require(admission['first_press_deadline_ns']==parent_gate[7]['admission_deadline_ns']
                     and admission['input_ack_ns']<parent_gate[7]['first_input_clock_deadline_ns'],
