@@ -115,6 +115,26 @@ class DoorTaskContractTests(unittest.TestCase):
    gate.authorize(c,source,1_100_000_000,prior,accepted('intervention'))
    with self.assertRaises(ValueError):gate.completed('traverse-1',release('traverse-1'),accepted('traverse-1'),[])
    finish(gate,c);self.assertTrue(gate.finished)
+ def test_exit_probe_is_final_and_requires_release(self):
+  import inspect
+  self.assertIn('exit_arm',inspect.signature(DoorTaskContract).parameters)
+  for arm in ('control','use'):
+   gate=DoorTaskContract('use',traverse=True,exit_probe=True,exit_arm=arm)
+   for i in range(4):
+    c=command('approach-'+str(i+1),[{'op':'hold','keys':['Up'],'duration_ms':600}],i+1)
+    prior='cover-0' if i==0 else 'approach-'+str(i)
+    gate.authorize(c,state(i+1),1_100_000_000,release(prior),accepted(prior));finish(gate,c)
+   step=[{'op':'hold','keys':['e'],'duration_ms':120}] if arm=='use' else [{'op':'coast','duration_ms':120,'sample_ms':100}]
+   opening=[{'op':'hold','keys':['e'],'duration_ms':120}]
+   c=command('intervention',opening,5);gate.authorize(c,state(5),1_100_000_000,release('approach-4'),accepted('approach-4'));finish(gate,c)
+   source=state(6);source['id']='intervention';prior=release('intervention')
+   c=command('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':600}],6);gate.authorize(c,source,1_100_000_000,prior,accepted('intervention'));finish(gate,c)
+   self.assertFalse(gate.finished)
+   source=state(7);source['id']='traverse-1';c=command('exit-probe',step,7)
+   gate.authorize(c,source,1_100_000_000,release('traverse-1'),accepted('traverse-1'))
+   with self.assertRaises(ValueError):gate.completed('exit-probe',release('exit-probe'),accepted('exit-probe'),[])
+   finish(gate,c);self.assertTrue(gate.finished)
+   with self.assertRaises(ValueError):gate.authorize(c,source,1_100_000_000,release('traverse-1'),accepted('traverse-1'))
  def test_each_submit_requires_new_source_and_same_target(self):
   gate=DoorTaskContract('use')
   c=command('approach-1',[{'op':'hold','keys':['Up'],'duration_ms':600}])

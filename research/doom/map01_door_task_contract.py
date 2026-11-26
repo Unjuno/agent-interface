@@ -26,12 +26,16 @@ from doom_controller_failure_cleanup_v1 import operation_release_verified, owner
 
 
 class DoorTaskContract:
-    def __init__(self, arm, *, traverse=False):
+    def __init__(self, arm, *, traverse=False, exit_probe=False, exit_arm=None):
         if arm not in ('control','use'):
             raise ValueError('invalid arm')
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
+        if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
+                or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
         self.arm=arm
         self.traverse=traverse
+        self.exit_probe=exit_probe
+        self.exit_arm=exit_arm
         self.index=0
         self.inflight=None
         self.identity=None
@@ -39,18 +43,18 @@ class DoorTaskContract:
 
     @property
     def finished(self):
-        return self.index==(6 if self.traverse else 5) and self.inflight is None
+        return self.index==(7 if self.exit_probe else 6 if self.traverse else 5) and self.inflight is None
 
     def authorize(self, command, source, now, terminal, accepted):
         if self.inflight is not None or self.finished or type(command) is not dict or type(source) is not dict:
             raise ValueError('unexpected submission')
         identifier=('approach-'+str(self.index+1) if self.index<4 else
-                    'intervention' if self.index==4 else 'traverse-1')
+                    'intervention' if self.index==4 else 'traverse-1' if self.index==5 else 'exit-probe')
         if self.index<4:
             steps=[{'op':'hold','keys':['Up'],'duration_ms':600}]
         elif self.index==5:
             steps=[{'op':'hold','keys':['Up'],'duration_ms':600}]
-        elif self.arm=='use':
+        elif (self.exit_arm if self.index==6 else self.arm)=='use':
             steps=[{'op':'hold','keys':['e'],'duration_ms':120}]
         else:
             steps=[{'op':'coast','duration_ms':120,'sample_ms':100}]
@@ -60,7 +64,7 @@ class DoorTaskContract:
         window=source.get('target_renewal_window_identity')
         valid=command.get('valid_until_ns')
         previous=('approach-'+str(self.index) if 0<self.index<=4 else
-                  'intervention' if self.index==5 else 'cover-0')
+                  'intervention' if self.index==5 else 'traverse-1' if self.index==6 else 'cover-0')
         if (command.get('op')!='submit' or command.get('id')!=identifier or command.get('steps')!=steps
             or type(seq) is not int or seq<=self.last_sequence or command.get('expected_sequence')!=seq
             or type(capture) is not int or type(now) is not int or not 0<=now-capture<2_000_000_000

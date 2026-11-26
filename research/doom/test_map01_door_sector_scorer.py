@@ -52,6 +52,91 @@ class SectorScorerTests(unittest.TestCase):
     game.get_state=state;scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True)
     with self.assertRaises(ValueError):scorer.sample('cover-0',game,1_000_000_000,lambda:True)
     self.assertEqual(json.loads(path.read_text())['status'],'HOLD')
+ def test_final_finished_sample_requires_neutral_without_advancing(self):
+  import inspect,json
+  self.assertIn('exit_probe',inspect.signature(DoorSectorScorer).parameters)
+  with tempfile.TemporaryDirectory() as temp:
+   path=Path(temp)/'private';game=Game()
+   def state():
+    result=State(game.sectors,game.tic,game.refreshes);result.game_variables=[0,0,687.9,-192,0,100];return result
+   game.get_state=state;game.is_episode_finished=lambda:False
+   scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True,exit_probe=True)
+   for stage in ('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'):
+    scorer.sample(stage,game,1_000_000_000,lambda:True)
+   before=game.refreshes
+   game.is_episode_finished=lambda:True;game.is_player_dead=lambda:False
+   game.is_episode_timeout_reached=lambda:False
+   game.get_game_variable=lambda variable:0.0
+   scorer.sample('exit-probe',game,1_000_000_000,lambda:True)
+   self.assertEqual(game.refreshes,before)
+   row=json.loads(path.read_text().splitlines()[-1]);self.assertEqual(row['status'],'terminal_probe_observed')
+   self.assertTrue(row['episode_finished']);self.assertFalse(row['native_timeout']);self.assertEqual(row['death_count'],0)
+ def test_final_unfinished_sample_is_passive_too(self):
+  import json
+  with tempfile.TemporaryDirectory() as temp:
+   path=Path(temp)/'private';game=Game()
+   def state():
+    result=State(game.sectors,game.tic,game.refreshes);result.game_variables=[0,0,687.9,-192,0,100];return result
+   game.get_state=state;game.is_episode_finished=lambda:False
+   scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True,exit_probe=True)
+   for stage in ('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'):
+    scorer.sample(stage,game,1_000_000_000,lambda:True)
+   game.is_player_dead=lambda:False;game.is_episode_timeout_reached=lambda:False
+   game.get_game_variable=lambda variable:0.0
+   before=game.refreshes;scorer.sample('exit-probe',game,1_000_000_000,lambda:True)
+   self.assertEqual(game.refreshes,before)
+   row=json.loads(path.read_text().splitlines()[-1]);self.assertFalse(row['episode_finished'])
+   self.assertEqual(row['refresh_count'],0)
+ def test_final_neutral_check_must_finish_before_deadline(self):
+  import json
+  with tempfile.TemporaryDirectory() as temp:
+   path=Path(temp)/'private';game=Game();now=[1_100_000_000]
+   def state():
+    result=State(game.sectors,game.tic,game.refreshes);result.game_variables=[0,0,687.9,-192,0,100];return result
+   game.get_state=state;game.is_episode_finished=lambda:False
+   scorer=DoorSectorScorer(path,clock=lambda:now[0],traverse=True,exit_probe=True)
+   for stage in ('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'):
+    scorer.sample(stage,game,1_000_000_000,lambda:True)
+   game.is_player_dead=lambda:False;game.is_episode_timeout_reached=lambda:False;game.get_game_variable=lambda variable:0.0
+   calls=[]
+   def neutral():
+    calls.append(True)
+    if len(calls)==2:now[0]=2_010_000_000
+    return True
+   with self.assertRaises(ValueError):scorer.sample('exit-probe',game,1_000_000_000,neutral)
+   self.assertEqual(json.loads(path.read_text().splitlines()[-1])['status'],'HOLD')
+ def test_final_probe_rejects_mixed_engine_tics(self):
+  import json
+  with tempfile.TemporaryDirectory() as temp:
+   path=Path(temp)/'private';game=Game()
+   def state():
+    result=State(game.sectors,game.tic,game.refreshes);result.game_variables=[0,0,687.9,-192,0,100];return result
+   game.get_state=state;game.is_episode_finished=lambda:False
+   scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True,exit_probe=True)
+   for stage in ('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'):
+    scorer.sample(stage,game,1_000_000_000,lambda:True)
+   ticks=iter((100,101));game.get_episode_time=lambda:next(ticks)
+   game.is_player_dead=lambda:False;game.is_episode_timeout_reached=lambda:False;game.get_game_variable=lambda variable:0.0
+   with self.assertRaises(ValueError):scorer.sample('exit-probe',game,1_000_000_000,lambda:True)
+   self.assertEqual(json.loads(path.read_text().splitlines()[-1])['status'],'HOLD')
+ def test_final_terminal_unknown_timeout_or_non_neutral_is_hold(self):
+  import json
+  for condition in ('timeout','neutral'):
+   with self.subTest(condition=condition),tempfile.TemporaryDirectory() as temp:
+    path=Path(temp)/'private';game=Game()
+    def state():
+     result=State(game.sectors,game.tic,game.refreshes);result.game_variables=[0,0,687.9,-192,0,100];return result
+    game.get_state=state;game.is_episode_finished=lambda:False
+    scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True,exit_probe=True)
+    for stage in ('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'):
+     scorer.sample(stage,game,1_000_000_000,lambda:True)
+    game.is_episode_finished=lambda:True;game.is_player_dead=lambda:False
+    game.is_episode_timeout_reached=lambda:None if condition=='timeout' else False
+    game.get_game_variable=lambda variable:0.0
+    before=game.refreshes
+    with self.assertRaises(ValueError):scorer.sample('exit-probe',game,1_000_000_000,lambda:condition!='neutral')
+    self.assertEqual(game.refreshes,before)
+    self.assertEqual(json.loads(path.read_text().splitlines()[-1])['status'],'HOLD')
  def test_stale_state_and_physical_input_are_rejected(self):
   with tempfile.TemporaryDirectory() as temp:
    game=Game();scorer=DoorSectorScorer(Path(temp)/'stale',clock=lambda:1_100_000_000)
