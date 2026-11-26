@@ -1780,28 +1780,45 @@ def main():
                     except TimeoutError:
                         continue
                     if boundary["event"] == "policy_invalidation":
-                        invalidation=boundary["invalidation"]
-                        planner_interrupt,current_terminal=cancel_invalidated_cover(
-                            planner,planner_handle,process,wait,current_cover,failure_root=args.out)
+                        invalidation = boundary["invalidation"]
+                    else:
+                        current_terminal = boundary
                         cover_terminals.append(current_terminal)
-                        recover_cover_owner(current_terminal, "policy_invalidated_cover")
-                        break
-                    current_terminal=boundary
+                        failure_cleanup.set_stage("cover_terminal_validation")
+                        validate_planner_cover_terminal(planner, planner_handle, future,
+                                                        current_terminal, args.out)
+                        if future.done():
+                            break
+                        next_cover = f"cover-{index}-renew-{len(cover_ids)}"
+                        # Keep observations until the ACK identifies the cover to cancel.
+                        consumed_events = []
+                        next_accepted = submit_cover(next_cover, consumed_events)
+                        if next_accepted["event"] != "accepted":
+                            error = RuntimeError(next_accepted)
+                            retire_failed_cover(planner, planner_handle, future,
+                                                current_terminal, error, args.out)
+                            raise error
+                        cover_renewal_gaps_ms.append((next_accepted["accepted_ns"] -
+                            current_terminal["terminal_ns"]) / 1e6)
+                        current_cover, current_terminal = next_cover, None
+                        try:
+                            invalidation = observe_cover_submission_events(
+                                consumed_events, invalidation_monitor)
+                        except Exception as error:
+                            invalidation = {
+                                "event": "policy_invalidation",
+                                "reason": "renewal_observation_unverified",
+                                "error_type": type(error).__name__,
+                                "requires_new_decision": True,
+                                "grants_input_authority": False,
+                            }
+                        if invalidation is None:
+                            continue
+                    planner_interrupt, current_terminal = cancel_invalidated_cover(
+                        planner, planner_handle, process, wait, current_cover, failure_root=args.out)
                     cover_terminals.append(current_terminal)
-                    failure_cleanup.set_stage("cover_terminal_validation")
-                    validate_planner_cover_terminal(planner, planner_handle, future,
-                                                    current_terminal, args.out)
-                    if future.done():break
-                    next_cover=f"cover-{index}-renew-{len(cover_ids)}"
-                    next_accepted=submit_cover(next_cover)
-                    if next_accepted["event"] != "accepted":
-                        error = RuntimeError(next_accepted)
-                        retire_failed_cover(planner, planner_handle, future,
-                                            current_terminal, error, args.out)
-                        raise error
-                    cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
-                        current_terminal["terminal_ns"])/1e6)
-                    current_cover=next_cover;current_terminal=None
+                    recover_cover_owner(current_terminal, "policy_invalidated_cover")
+                    break
                 if future.done() and invalidation is None:
                     drained = drain_pending_observation_events(
                         incoming, invalidation_monitor, current_cover)
