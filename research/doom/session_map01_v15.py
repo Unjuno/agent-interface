@@ -55,10 +55,22 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
     """Read scorer state only when all fields are bracketed by one episode tic."""
     if type(attempts) is not int or attempts<1:raise ValueError('attempts must be positive integer')
     for _ in range(attempts):
-        tic_before=int(game.get_episode_time());finished=bool(game.is_episode_finished());dead=bool(game.is_player_dead())
-        kills=int(game.get_game_variable(game_variable.KILLCOUNT));deaths=int(game.get_game_variable(game_variable.DEATHCOUNT));ticrate=int(game.get_ticrate())
-        timeout_method=getattr(game,'is_episode_timeout_reached',None);timeout_reached=bool(timeout_method()) if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
-        tic_after=int(game.get_episode_time())
+        tic_before=game.get_episode_time();finished=game.is_episode_finished();dead=game.is_player_dead()
+        if type(finished) is not bool or type(dead) is not bool:
+            raise ValueError('terminal state is not a boolean')
+        raw_kills=game.get_game_variable(game_variable.KILLCOUNT);raw_deaths=game.get_game_variable(game_variable.DEATHCOUNT)
+        if any(type(value) not in (int,float) or value<0 or value%1!=0 for value in (raw_kills,raw_deaths)):
+            raise ValueError('game counter is invalid')
+        kills=int(raw_kills);deaths=int(raw_deaths);ticrate=game.get_ticrate()
+        if type(tic_before) is not int or tic_before<0 or type(ticrate) is not int or ticrate<=0:
+            raise ValueError('engine clock is invalid')
+        timeout_method=getattr(game,'is_episode_timeout_reached',None)
+        timeout_reached=timeout_method() if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
+        if type(timeout_reached) is not bool:
+            raise ValueError('timeout state is not a boolean')
+        tic_after=game.get_episode_time()
+        if type(tic_after) is not int or tic_after<0:
+            raise ValueError('engine clock is invalid')
         if tic_before==tic_after:
             return ProgressSample(clock_ns(),kills,deaths,finished,dead,bool(finished and not dead and not timeout_reached))
     raise RuntimeError('independent scorer could not obtain one-tic coherent sample')

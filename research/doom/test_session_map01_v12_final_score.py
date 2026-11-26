@@ -31,7 +31,7 @@ def load_finish(out, wall_seconds, close, emit):
         "control_started_ns": 0, "executor": object(),
         "vd": SimpleNamespace(GameVariable=SimpleNamespace(DEATHCOUNT="deaths", KILLCOUNT="kills")),
         "time": SimpleNamespace(perf_counter_ns=lambda: wall_seconds * 1_000_000_000),
-        "json": json, "emit": emit, "close_before_control_effect": close,
+        "json": json, "emit": emit, "close_before_control_effect": close, "probe_delivery": None,
     }
     exec(compile(wrapper, str(SOURCE), "exec"), namespace)
     return namespace["finish"]
@@ -114,6 +114,56 @@ class FinishScoringTests(unittest.TestCase):
                 self.assertTrue(record["map_exit"])
                 self.assertTrue(record["one_life_map_exit"])
                 self.assertFalse(record["episode_timeout_reached"])
+
+    def test_unknown_terminal_values_cannot_be_scored_as_exit(self):
+        for finished, dead in ((True, None), (True, 0)):
+            with self.subTest(finished=finished, dead=dead), TemporaryDirectory() as directory:
+                game = SimpleNamespace(is_episode_finished=lambda: finished, is_player_dead=lambda: dead,
+                    is_episode_timeout_reached=lambda: False, get_episode_time=lambda: 50,
+                    get_ticrate=lambda: 35, get_game_variable=lambda key: 0,
+                    get_total_reward=lambda: 0.0, advance_action=Mock())
+                out=Path(directory); emitted=[]
+                load_finish(out, 5, Mock(), emitted.append)(game)
+                self.assertFalse(json.loads((out/'score.json').read_text())['map_exit'])
+
+    def test_invalid_death_count_cannot_become_one_life_exit(self):
+        for value in (0.5,-0.5,False,float('nan'),float('inf')):
+            with self.subTest(value=value), TemporaryDirectory() as directory:
+                game=SimpleNamespace(is_episode_finished=lambda:True,is_player_dead=lambda:False,
+                    is_episode_timeout_reached=lambda:False,get_game_variable=lambda key: value if key=='deaths' else 0.0,
+                    get_total_reward=lambda:0.0,advance_action=Mock())
+                out=Path(directory)
+                with self.assertRaises(ValueError):load_finish(out,5,Mock(),lambda row:None)(game)
+                self.assertFalse((out/'score.json').exists())
+
+    def test_actual_command_loop_propagates_finish_scoring_failure(self):
+        tree=ast.parse(SOURCE.read_bytes())
+        main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
+        loop=next(n for n in ast.walk(main) if isinstance(n,ast.For) and isinstance(n.iter,ast.Attribute) and n.iter.attr=='stdin')
+        wrapper=ast.parse('def run(executor):\n pass\n');wrapper.body[0].body=[loop];ast.fix_missing_locations(wrapper)
+        game=SimpleNamespace(is_episode_finished=lambda:None,advance_action=Mock())
+        with TemporaryDirectory() as directory:
+            out=Path(directory);events=[]
+            scope={'sys':SimpleNamespace(stdin=['{"op":"finish"}']), 'json':json,
+              'args':SimpleNamespace(out=out,timeout_seconds=100,skill=1,fresh_neutral_fixture_setup=False,verified_fixture_setup=False),
+              'time':SimpleNamespace(perf_counter_ns=lambda:5_000_000_000),'control_started_ns':0,
+              'door_coordinator':None,'probe_delivery':None,'game':game,'executor':object(),
+              'close_before_control_effect':lambda *args:None,'emit':events.append,
+              'Expired':type('Expired',(Exception,),{})}
+            exec(compile(wrapper,str(SOURCE),'exec'),scope)
+            with self.assertRaises(ValueError):scope['run'](object())
+            self.assertFalse((out/'score.json').exists());game.advance_action.assert_not_called()
+
+    def test_unknown_initial_terminal_state_does_not_advance(self):
+        game=SimpleNamespace(is_episode_finished=Mock(side_effect=[None,True]),
+                             advance_action=Mock(),is_player_dead=lambda:False,
+                             is_episode_timeout_reached=lambda:False,
+                             get_game_variable=lambda key:0,get_total_reward=lambda:0)
+        with TemporaryDirectory() as directory:
+            out=Path(directory)
+            with self.assertRaises(ValueError):load_finish(out,5,Mock(),lambda row:None)(game)
+            game.advance_action.assert_not_called()
+            self.assertFalse((out/'score.json').exists())
 
     def test_scorer_refresh_failure_preserves_error_without_publishing_score(self):
         failure = RuntimeError("synthetic engine refresh failed")
