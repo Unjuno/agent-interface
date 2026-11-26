@@ -227,12 +227,34 @@ class RenewalObservationTests(unittest.TestCase):
         self.assertIs(raised.exception, error)
         pool.shutdown.assert_called_once_with(wait=False, cancel_futures=True)
 
+    def test_pool_shutdown_failure_keeps_primary_cover_exception(self):
+        for receipt_name in ("cover_renewal_receipt", "cover_cancellation_receipt"):
+            with self.subTest(receipt=receipt_name):
+                error = TimeoutError("cover outcome unknown")
+                setattr(error, receipt_name, {"input_recovery_required": True})
+                pool = Mock()
+                pool.shutdown.side_effect = OSError("pool shutdown failed")
+                with patch.object(controller, "ThreadPoolExecutor", return_value=pool):
+                    with self.assertRaises(TimeoutError) as observed:
+                        with controller.pending_cover_planner_pool():
+                            raise error
+                self.assertIs(observed.exception, error)
+                self.assertIn("planner waiter pool shutdown failed: OSError", error.__notes__)
+                pool.shutdown.assert_called_once_with(wait=False, cancel_futures=True)
+
     def test_hard_invalidation_full_pipe_aborts_without_claiming_release(self):
         reader, writer = os.pipe()
         planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
-                                  interrupt=Mock(), abort_pending_turn=Mock())
+                                  interrupt=Mock(), close=Mock(return_value=None),
+                                  abort_pending_turn=Mock(side_effect=OSError("abort failed")))
         done = threading.Event()
-        failures = []
+        waiter_started, release_waiter = threading.Event(), threading.Event()
+        waiter_futures = []
+        primary_failures, failures = [], []
+
+        def await_planner():
+            waiter_started.set()
+            release_waiter.wait()
 
         with os.fdopen(reader, "rb", buffering=0) as drained, os.fdopen(writer, "w") as stream, \
              TemporaryDirectory() as directory:
@@ -254,9 +276,19 @@ class RenewalObservationTests(unittest.TestCase):
 
             def run_cancel():
                 try:
-                    controller.cancel_invalidated_cover(
-                        planner, "pending-turn", SimpleNamespace(stdin=stream), wait, RENEWED,
-                        failure_root=directory)
+                    with controller.ControllerFailureCleanup(planner, Path(directory)) as cleanup:
+                        cleanup.set_stage("policy_cancel")
+                        with controller.pending_cover_planner_pool() as pool:
+                            waiter_futures.append(pool.submit(await_planner))
+                            if not waiter_started.wait(1):
+                                raise TimeoutError("planner waiter did not start")
+                            try:
+                                controller.cancel_invalidated_cover(
+                                    planner, "pending-turn", SimpleNamespace(stdin=stream), wait, RENEWED,
+                                    failure_root=directory)
+                            except BaseException as primary:
+                                primary_failures.append(primary)
+                                raise
                 except BaseException as error:
                     failures.append(error)
                 finally:
@@ -266,8 +298,12 @@ class RenewalObservationTests(unittest.TestCase):
             worker.start()
             try:
                 self.assertTrue(done.wait(controller.COVER_RENEWAL_IO_SECONDS + 1),
-                                "cancellation blocked on the full input pipe")
+                                "failed cancellation did not reach outer cleanup with an active waiter")
+                self.assertTrue(waiter_started.is_set())
+                self.assertFalse(waiter_futures[0].done())
                 self.assertEqual(len(failures), 1)
+                self.assertIs(failures[0], primary_failures[0])
+                self.assertIn("planner transport abort failed: OSError", failures[0].__notes__)
                 self.assertIsInstance(failures[0], TimeoutError)
                 self.assertIn("pipe did not become writable", str(failures[0]))
                 receipt = controller.load_controller_event(
@@ -279,14 +315,24 @@ class RenewalObservationTests(unittest.TestCase):
                 self.assertTrue(receipt["input_recovery_required"])
                 self.assertFalse(receipt["grants_input_authority"])
                 self.assertTrue(os.get_blocking(writer))
+                global_receipt = controller.load_controller_event(
+                    (Path(directory) / "controller-failure.json").read_text())
+                self.assertEqual(global_receipt["primary_error_type"], "TimeoutError")
+                self.assertEqual(global_receipt["failed_stage"], "policy_cancel")
+                self.assertFalse(global_receipt["input_releases_verified_empty"])
+                self.assertFalse(global_receipt["cleanup_complete"])
             finally:
-                # Let the blocked pre-fix worker exit without retaining a test pipe.
-                self.assertEqual(drained.read(filled), b"x" * filled)
+                release_waiter.set()
+                drained_bytes = drained.read(filled)
                 worker.join(1)
+                for future in waiter_futures:
+                    future.result(timeout=1)
             self.assertFalse(worker.is_alive())
+            self.assertEqual(drained_bytes, b"x" * filled)
             self.assertFalse(select.select([reader], [], [], 0)[0])
         planner.invalidate_turn.assert_called_once_with("pending-turn")
         planner.abort_pending_turn.assert_called_once_with()
+        planner.close.assert_called_once_with(timeout=1)
         planner.interrupt.assert_not_called()
 
     def test_full_renewal_pipe_times_out_and_restores_blocking_mode(self):

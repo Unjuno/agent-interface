@@ -591,8 +591,14 @@ def pending_cover_planner_pool():
     try:
         yield pool
     except BaseException as error:
-        # The outer cleanup must run even when abort could not wake this waiter.
-        pool.shutdown(wait=not hasattr(error, "cover_renewal_receipt"), cancel_futures=True)
+        # On uncertain admission or cancellation, let outer cleanup continue
+        # even when the planner transport abort could not wake the waiter.
+        uncertain_cover = (hasattr(error, "cover_renewal_receipt") or
+                           hasattr(error, "cover_cancellation_receipt"))
+        try:
+            pool.shutdown(wait=not uncertain_cover, cancel_futures=True)
+        except BaseException as shutdown_error:
+            error.add_note("planner waiter pool shutdown failed: " + type(shutdown_error).__name__)
         raise
     else:
         pool.shutdown(wait=True)
