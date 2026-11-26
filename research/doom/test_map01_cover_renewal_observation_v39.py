@@ -136,14 +136,21 @@ class RenewalObservationTests(unittest.TestCase):
 
     def test_uncertain_ack_attempts_owned_cancel_and_aborts_planner(self):
         timeout = TimeoutError("renewal ACK missing")
-        malformed = {"event": "accepted", "id": RENEWED}
-        reverse_time = {"event": "accepted", "id": RENEWED, "accepted_ns": 99}
-        future_time = {"event": "accepted", "id": RENEWED, "accepted_ns": 10**30}
-        for response, terminal_kind in ((timeout, "missing"), (malformed, "released"),
-                                        (reverse_time, "not_empty"), (future_time, "released")):
+        accepted = {"event": "accepted", "id": RENEWED, "intent_token": "renewed-lease"}
+        reverse_time = {**accepted, "accepted_ns": 99}
+        future_time = {**accepted, "accepted_ns": 10**30}
+        nonfinite_time = {**accepted, "accepted_ns": float("nan")}
+        for response, terminal_kind in ((timeout, "missing"), (accepted, "released"),
+                                        (timeout, "no_ack"), (timeout, "late_ack"),
+                                        (reverse_time, "not_empty"),
+                                        (future_time, "released"), (accepted, "wrong_token"),
+                                        (nonfinite_time, "malformed_ack")):
             with self.subTest(response=response), TemporaryDirectory() as directory:
                 old = terminal("cover-0", status="completed", stamp=100)
                 ending = terminal(RENEWED, status="cancelled", stamp=300)
+                ending["release"]["intent_token"] = "renewed-lease"
+                if terminal_kind == "wrong_token":
+                    ending["release"]["intent_token"] = "other-lease"
                 if terminal_kind == "not_empty":
                     ending["release"]["keys_unknown"] = ["Up"]
                 planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
@@ -162,6 +169,15 @@ class RenewalObservationTests(unittest.TestCase):
                         cancellations.append(json.loads(messages.readline()))
                         if terminal_kind == "missing":
                             raise TimeoutError("renewal terminal missing")
+                        if terminal_kind == "late_ack":
+                            owner_release = {**ending["release"], "intent_token": "renewed-lease"}
+                            options["consumed_events"].extend([
+                                {**accepted, "accepted_ns": 200},
+                                {"event": "input_admission", "id": RENEWED, "intent_token": "renewed-lease"},
+                                {"event": "input_released", "id": RENEWED, "intent_token": "renewed-lease",
+                                 "owner_release": owner_release},
+                            ])
+                            ending["release"]["intent_token"] = None
                         return ending
 
                     def submit(identifier, consumed_events, *, renewal):
@@ -178,13 +194,18 @@ class RenewalObservationTests(unittest.TestCase):
                                              SimpleNamespace(stdin=stream), recover, Path(directory))
                 if response is timeout:
                     self.assertIs(raised.exception, timeout)
-                receipt = json.loads((Path(directory) / "cover-renewal-unverified.json").read_bytes())
+                payload = (Path(directory) / "cover-renewal-unverified.json").read_text()
+                receipt = controller.load_controller_event(payload)
                 self.assertEqual(raised.exception.cover_renewal_receipt, receipt)
+                if terminal_kind == "malformed_ack":
+                    self.assertIs(receipt["ack"]["invalid_json"], True)
                 self.assertEqual(receipt["id"], RENEWED)
                 self.assertEqual(cancellations, [{"op": "cancel", "id": RENEWED}])
                 self.assertEqual(receipt["admission"], "UNKNOWN")
-                self.assertEqual(receipt["verified_empty_release"], terminal_kind == "released")
-                self.assertEqual(receipt["input_recovery_required"], terminal_kind != "released")
+                verified = terminal_kind in {"released", "late_ack"}
+                self.assertEqual(receipt["verified_empty_release"], verified)
+                self.assertEqual(receipt["input_recovery_required"], not verified)
+                self.assertEqual(receipt.get("verified_release_intent_token"), "renewed-lease" if verified else None)
                 self.assertIs(receipt["grants_input_authority"], False)
                 planner.abort_pending_turn.assert_called_once_with()
                 recover.assert_not_called()

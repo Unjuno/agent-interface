@@ -82,34 +82,36 @@ class CoverTerminalTests(unittest.TestCase):
 
             executor = Executor(ErrorBackend(), emit)
 
+        def consume_command(value):
+            command = json.loads(value)
+            trace["commands"].append(command)
+            trace["timeline"].append("write:" + command["op"])
+            if command["op"] == "submit":
+                count = sum(row["op"] == "submit" for row in trace["commands"])
+                stop_after_ack = count > (2 if renewed else 1)
+                identifier = command["id"]
+                if reject_renewal and count == 2:
+                    incoming.put({"event": "rejected", "id": identifier,
+                                  "reason": "latest observation sequence required before input"})
+                    return
+                if executor is not None:
+                    executor.submit(identifier, command["steps"], 1,
+                                    time.perf_counter_ns() + 1_000_000_000)
+                    return
+                incoming.put({"event": "accepted", "id": identifier,
+                              "accepted_ns": 105 + (count - 1) * 100, "steps": [],
+                              "program_sha256": "synthetic", "intent_token": "test"})
+                if stop_after_ack:
+                    trace["stop_after_renewal_ack"] = True
+                elif pending:
+                    result = (dict(terminal, status="completed", release=NEUTRAL)
+                              if renewed and count == 1 else terminal)
+                    incoming.put(dict(result, id=identifier, terminal_ns=120 + (count - 1) * 100))
+            elif command["op"] == "cancel":
+                incoming.put(dict(terminal, id=command["id"]))
         class Stdin:
-            def write(self, value):
-                command = json.loads(value)
-                trace["commands"].append(command)
-                trace["timeline"].append("write:" + command["op"])
-                if command["op"] == "submit":
-                    count = sum(row["op"] == "submit" for row in trace["commands"])
-                    if count > (2 if renewed else 1):
-                        complete.set()
-                        raise NextBoundary("renewal")
-                    identifier = command["id"]
-                    if reject_renewal and count == 2:
-                        incoming.put({"event": "rejected", "id": identifier,
-                                      "reason": "latest observation sequence required before input"})
-                        return
-                    if executor is not None:
-                        executor.submit(identifier, command["steps"], 1,
-                                        time.perf_counter_ns() + 1_000_000_000)
-                        return
-                    incoming.put({"event": "accepted", "id": identifier,
-                                  "accepted_ns": 105, "steps": [],
-                                  "program_sha256": "synthetic", "intent_token": "test"})
-                    if pending:
-                        result = (dict(terminal, status="completed", release=NEUTRAL)
-                                  if renewed and count == 1 else terminal)
-                        incoming.put(dict(result, id=identifier))
-                elif command["op"] == "cancel":
-                    incoming.put(dict(terminal, id=command["id"]))
+            def fileno(self): return pipe_write
+            def write(self, value): return os.write(pipe_write, value.encode("utf-8"))
             def flush(self): pass
 
         process = SimpleNamespace(stdin=Stdin(), stdout=iter(()),
@@ -225,7 +227,25 @@ class CoverTerminalTests(unittest.TestCase):
                 if path.name == "map01_motor_responder_v10.txt": return "synthetic"
                 return original_read(path, *args, **kwargs)
 
+            pipe_read, pipe_write = os.pipe()
+            raw_write = os.write
+            real_observe_cover = controller.observe_cover_submission_events
+
+            def pipe_write_and_deliver(fd, value):
+                count = raw_write(fd, value)
+                if fd == pipe_write:
+                    consume_command(os.read(pipe_read, count))
+                return count
+
+            def observe_until_boundary(events, monitor, **options):
+                if options.get("fail_closed") and trace.get("stop_after_renewal_ack"):
+                    complete.set()
+                    raise NextBoundary("renewal")
+                return real_observe_cover(events, monitor, **options)
+
             replacements = [
+                patch.object(os, "write", side_effect=pipe_write_and_deliver),
+                patch.object(controller, "observe_cover_submission_events", side_effect=observe_until_boundary),
                 patch.object(sys, "argv", argv),
                 patch.object(controller, "app_server_command", return_value=["offline-app-server"]),
                 patch.object(controller, "CodexAppServerClient", return_value=planner),
@@ -247,6 +267,8 @@ class CoverTerminalTests(unittest.TestCase):
                 patch.object(Path, "read_text", read_text),
             ]
             with ExitStack() as stack:
+                stack.callback(os.close, pipe_read)
+                stack.callback(os.close, pipe_write)
                 for replacement in replacements: stack.enter_context(replacement)
                 started_ns = time.perf_counter_ns()
                 try:

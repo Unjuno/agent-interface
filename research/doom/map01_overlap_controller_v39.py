@@ -24,7 +24,7 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
-    ControllerFailureCleanup, reject_duplicate_json_members,
+    ControllerFailureCleanup, load_controller_event, operation_release_verified,
     reject_control_boundary_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from verified_interruption_release_v1 import qualified_interruption_release
@@ -521,10 +521,21 @@ def send_bounded_cover_command(stream, command, *, timeout=COVER_RENEWAL_IO_SECO
         os.set_blocking(fd, was_blocking)
 
 
-def retire_uncertain_cover_renewal(planner, planner_handle, process, wait, cover_id, ack, error, out):
+def renewal_event_snapshot(row):
+    try:
+        json.dumps(row, allow_nan=False)
+    except (TypeError, ValueError):
+        return {"invalid_json": True, **{
+            key: row[key] for key in ("event", "id")
+            if type(row) is dict and type(row.get(key)) is str}}
+    return deepcopy(row)
+
+
+def retire_uncertain_cover_renewal(planner, planner_handle, process, wait, cover_id, ack,
+                                   consumed_events, error, out):
     """Attempt release and stop the planner even though renewal admission is unknown."""
     receipt = {"schema": "cover-renewal-unverified-v1", "id": cover_id,
-               "admission": "UNKNOWN", "ack": ack, "verified_empty_release": False,
+               "admission": "UNKNOWN", "ack": renewal_event_snapshot(ack), "verified_empty_release": False,
                "terminal": None, "failure_type": type(error).__name__,
                "grants_input_authority": False, "task_effect": "unknown"}
     try:
@@ -537,11 +548,22 @@ def retire_uncertain_cover_renewal(planner, planner_handle, process, wait, cover
     except BaseException as cancel_error:
         receipt["cancel_write"] = "uncertain"
         receipt["cancel_error"] = type(cancel_error).__name__
+    evidence = list(consumed_events)
+    if type(ack) is dict and not any(row is ack for row in evidence):
+        evidence.append(ack)
     try:
         terminal = wait(lambda row: row.get("event") == "terminal" and row.get("id") == cover_id,
-                        timeout=COVER_RENEWAL_IO_SECONDS)
-        receipt["terminal"] = terminal
+                        timeout=COVER_RENEWAL_IO_SECONDS, consumed_events=evidence)
+        receipt["terminal"] = renewal_event_snapshot(terminal)
         require_cover_terminal(terminal, cancellation_requested=True)
+        if not any(row is terminal for row in evidence):
+            evidence.append(terminal)
+        owned_evidence = [row for row in evidence if type(row) is dict and row.get("id") == cover_id]
+        json.dumps(owned_evidence, allow_nan=False)
+        if not operation_release_verified(cover_id, owned_evidence, require_intent=True):
+            raise RuntimeError("renewal release does not match a verified accepted intent")
+        receipt["verified_release_intent_token"] = next(
+            row["intent_token"] for row in owned_evidence if row.get("event") == "accepted")
         receipt["verified_empty_release"] = True
     except BaseException as release_error:
         receipt["release_error"] = type(release_error).__name__
@@ -1652,8 +1674,7 @@ def main():
         def reader():
             try:
                 for line in process.stdout:
-                    row = json.loads(
-                        line, object_pairs_hook=reject_duplicate_json_members)
+                    row = load_controller_event(line)
                     is_typed = row.get("event") == "typed_observation"
                     if is_typed:
                         row["controller_parsed_ns"] = time.perf_counter_ns()
@@ -1903,7 +1924,8 @@ def main():
                                 raise ValueError("unverified cover renewal acknowledgement time")
                         except BaseException as error:
                             retire_uncertain_cover_renewal(
-                                planner, planner_handle, process, wait, next_cover, next_accepted, error, args.out)
+                                planner, planner_handle, process, wait, next_cover, next_accepted,
+                                consumed_events, error, args.out)
                             raise
                         if next_accepted["event"] != "accepted":
                             error = RuntimeError(next_accepted)
