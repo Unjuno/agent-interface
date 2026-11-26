@@ -167,4 +167,12 @@ class SectorScorerTests(unittest.TestCase):
      if bad=='missing':game.sectors=[]
      if bad=='keys':game.action[7]=1
      with self.assertRaises(ValueError):scorer.sample('cover-0',game,1_000_000_000,lambda:True)
+class ReverseScorerConfigurationTests(unittest.TestCase):
+ def test_reverse_stages_are_explicitly_opt_in(self):
+  from map01_reverse_program import reverse_stages
+  with tempfile.TemporaryDirectory() as temp:
+   scorer=DoorSectorScorer(Path(temp)/'private.jsonl',traverse=True,reverse_arm='use')
+   self.assertEqual(scorer.STAGES[-len(reverse_stages('use')):],tuple(x[0] for x in reverse_stages('use')))
+   with self.assertRaises(ValueError):DoorSectorScorer(Path(temp)/'bad.jsonl',reverse_arm='use')
+   with self.assertRaises(ValueError):DoorSectorScorer(Path(temp)/'bad2.jsonl',traverse=True,exit_probe=True,reverse_arm='use')
 if __name__=='__main__':unittest.main()

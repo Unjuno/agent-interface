@@ -146,6 +146,14 @@ class _GameProxy:
         return result
 
 def validate_door_runtime_options(argv):
+    reverse_flag='--door-task-reverse-arm'
+    reverse_options=[item for item in argv if item.split('=',1)[0]==reverse_flag]
+    for item in argv:
+        name=item.split('=',1)[0]
+        if name.startswith('--') and name!=reverse_flag and reverse_flag.startswith(name):
+            raise ValueError('reverse option must be spelled in full')
+    if reverse_options and (reverse_options != [reverse_flag] or argv.count('--door-task-arm')!=1 or argv.count('--door-task-traverse')!=1):
+        raise ValueError('reverse option requires one explicit door/traverse mode')
     door_flags=[item for item in argv if item=='--door-task-arm' or item.startswith('--door-task-arm=')]
     if not door_flags:
         return

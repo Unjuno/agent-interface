@@ -44,6 +44,14 @@ class DoorModeTests(unittest.TestCase):
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=True),object())
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=False,door_task_exit_arm='control'),object())
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_arm=None,door_task_traverse=False,door_task_exit=True),object())
+ def test_reverse_mode_requires_use_traverse_and_excludes_exit(self):
+  session=session_module()
+  self.assertIsNone(session.validate_verified_fixture_setup(args(door_task_arm='use',door_task_traverse=True,door_task_reverse_arm='use'),object()))
+  for changes in ({'door_task_arm':'control','door_task_traverse':True,'door_task_reverse_arm':'use'},
+                  {'door_task_arm':'use','door_task_reverse_arm':'use'},
+                  {'door_task_arm':'use','door_task_traverse':True,'door_task_reverse_arm':'invalid'},
+                  {'door_task_arm':'use','door_task_traverse':True,'door_task_reverse_arm':'use','door_task_exit':True,'door_task_exit_arm':'use'}):
+   with self.subTest(changes=changes),self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(**changes),object())
  def test_synthetic_scenario_copy_binds_the_read_bytes_exclusively(self):
   import hashlib,tempfile
   from unittest.mock import patch
@@ -169,6 +177,16 @@ class DoorModeTests(unittest.TestCase):
   with self.assertRaisesRegex(RuntimeError,'before finish'):scope['run']()
   self.assertEqual(coordinator.calls,[(command,source_row)])
   self.assertEqual(events[-1]['reason'],'stdin_eof_before_finish')
+ def test_v15_reverse_option_requires_full_spelling_and_is_unique(self):
+  import importlib.util
+  source=Path(__file__).with_name('session_map01_v15.py')
+  spec=importlib.util.spec_from_file_location('reverse_v15_options',source);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  required=['--door-task-arm','use','--door-task-traverse','--door-task-reverse-arm','use',
+            '--target-process-identity','--owned-input-service','--renewal-passive-observer','--post-load-clock-gate']
+  self.assertIsNone(module.validate_door_runtime_options(required))
+  for malformed in ([x for x in required if x!='--door-task-arm'],required+['--door-task-reverse-arm','use'],
+                    [x.replace('--door-task-reverse-arm','--door-task-rev') for x in required]):
+   with self.assertRaises(ValueError):module.validate_door_runtime_options(malformed)
  def test_v15_synthetic_mode_requires_owned_target_and_observer(self):
   import importlib.util
   source=Path(__file__).with_name('session_map01_v15.py')

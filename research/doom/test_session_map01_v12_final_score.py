@@ -105,6 +105,17 @@ class FinishScoringTests(unittest.TestCase):
             with self.assertRaises(ValueError): finish(object())
             close.assert_called_once()
 
+    def test_reverse_door_finish_does_not_advance_after_last_release(self):
+        game = SimpleNamespace(is_episode_finished=lambda: False, is_player_dead=lambda: False,
+            is_episode_timeout_reached=lambda: False, get_total_reward=lambda: 0.0,
+            get_game_variable={'deaths': 0, 'kills': 0}.__getitem__, advance_action=Mock())
+        with TemporaryDirectory() as directory:
+            out=Path(directory); finish=load_finish(out,5,Mock(),lambda row:None)
+            finish.__globals__['args'].door_task_reverse_arm='calibrate'
+            finish(game)
+            game.advance_action.assert_not_called()
+            self.assertEqual(json.loads((out/'score.json').read_text())['scorer_refresh_calls_after_control'],0)
+
     def test_native_timeout_is_not_map_exit_before_wall_cutoff(self):
         record = self.finish(native_timeout=True)
         self.assertTrue(record["episode_finished"])

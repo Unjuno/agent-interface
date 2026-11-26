@@ -75,7 +75,7 @@ def validate_synthetic_exit_calibration(args, post_load_gate):
         if arm is not None or getattr(args, 'synthetic_exit_refresh', False):raise ValueError('synthetic exit options require the fixed scenario')
         return None
     if (arm not in ('control','use') or post_load_gate is not None
-            or args.door_task_arm is not None or getattr(args,'door_task_traverse',False)
+            or args.door_task_arm is not None or getattr(args,'door_task_traverse',False) or getattr(args,'door_task_reverse_arm',None) is not None
             or getattr(args,'door_task_exit',False) or getattr(args,'door_task_exit_arm',None) is not None
             or args.load_fixture_manifest is not None or args.fixture_out is not None
             or args.verified_fixture_setup or args.fresh_neutral_fixture_setup
@@ -136,6 +136,9 @@ def validate_verified_fixture_setup(args, post_load_gate):
     traverse=getattr(args,'door_task_traverse',False)
     exit_probe=getattr(args,'door_task_exit',False)
     exit_arm=getattr(args,'door_task_exit_arm',None)
+    reverse_arm=getattr(args,'door_task_reverse_arm',None)
+    if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate') or door_arm!='use' or not traverse or exit_probe):
+        raise ValueError('reverse door mode requires use/traverse without exit probe')
     if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
             or not exit_probe and exit_arm is not None):
         raise ValueError('exit probe requires explicit door traversal')
@@ -594,6 +597,7 @@ def main(*, post_load_gate=None):
     parser.add_argument("--synthetic-exit-refresh", action="store_true")
     parser.add_argument("--door-task-arm", choices=("control","use"))
     parser.add_argument("--door-task-traverse", action="store_true")
+    parser.add_argument("--door-task-reverse-arm", choices=("control","use","calibrate"))
     parser.add_argument("--door-task-exit", action="store_true")
     parser.add_argument("--door-task-exit-arm", choices=("control","use"))
     parser.add_argument("--door-expected-manifest-sha256")
@@ -644,7 +648,7 @@ def main(*, post_load_gate=None):
         door_scorer=SyntheticExitScorer(args.out / 'door-sector-private.jsonl')
     elif args.door_task_arm is not None:
         from map01_door_sector_scorer import DoorSectorScorer
-        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl',traverse=args.door_task_traverse,exit_probe=args.door_task_exit)
+        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl',traverse=args.door_task_traverse,exit_probe=args.door_task_exit,reverse_arm=args.door_task_reverse_arm)
 
     def emit(row):
         nonlocal last_terminal, last_accepted
@@ -716,7 +720,7 @@ def main(*, post_load_gate=None):
     if candidate_preflight is not None:
         sources["doom/map01_candidate_setup_evidence_v1.py"] = file_sha256(HERE / "map01_candidate_setup_evidence_v1.py")
     if args.door_task_arm is not None or args.synthetic_exit_pwad is not None:
-        for name in ('map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py'):
+        for name in ('map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py','map01_reverse_program.py'):
             sources['doom/'+name] = file_sha256(HERE/name)
     if args.synthetic_exit_pwad is not None:
         sources['doom/map01_synthetic_exit_scorer.py']=file_sha256(HERE/'map01_synthetic_exit_scorer.py')
@@ -850,7 +854,8 @@ def main(*, post_load_gate=None):
                                              traverse=args.door_task_traverse or args.synthetic_exit_pwad is not None,
                                              exit_probe=args.door_task_exit or args.synthetic_exit_pwad is not None,
                                              exit_arm=args.synthetic_exit_arm if args.synthetic_exit_pwad is not None else args.door_task_exit_arm,
-                                             direct_exit=args.synthetic_exit_pwad is not None)
+                                             direct_exit=args.synthetic_exit_pwad is not None,
+                                             reverse_arm=args.door_task_reverse_arm)
         operations = ["submit", "cancel", "clock", "finish"]
         if args.renewal_passive_observer:
             if (not callable(getattr(backend, "capture_cover_renewal", None))
@@ -876,6 +881,10 @@ def main(*, post_load_gate=None):
         prohibited = ["pause", "API action selection", "automap", "object labels", "sector labels"]
         if args.fixture_out is None:
             prohibited.append("save state")
+        reverse_ready={}
+        if args.door_task_reverse_arm is not None:
+            from map01_reverse_program import reverse_manifest
+            reverse_ready={"reverse_door_program":reverse_manifest(args.door_task_reverse_arm)}
         emit({"event": "ready", "presentation": "full",
               "operations": operations,
               "command_contract": {
@@ -911,7 +920,7 @@ def main(*, post_load_gate=None):
                            "e or Return": "use", "space": "attack",
                            "Shift_L": "run"},
               "fixture": loaded_fixture,
-              "prohibited": prohibited, **startup_gate})
+              "prohibited": prohibited, **startup_gate, **reverse_ready})
         backend.snapshot("initial", 0)
         control_started_ns = time.perf_counter_ns()
         for line in sys.stdin:
@@ -1151,7 +1160,7 @@ def main(*, post_load_gate=None):
                     finished_before_refresh = game.is_episode_finished()
                     if type(finished_before_refresh) is not bool:
                         raise ValueError('initial terminal state is not a boolean')
-                    if finished_before_refresh is False and not (getattr(args,'door_task_exit',False) or getattr(args,'synthetic_exit_pwad',None) is not None):
+                    if finished_before_refresh is False and not (getattr(args,'door_task_exit',False) or getattr(args,'synthetic_exit_pwad',None) is not None or getattr(args,'door_task_reverse_arm',None) is not None):
                         game.advance_action(1, True)
                         scorer_refresh_calls = 1
                     finished = game.is_episode_finished()

@@ -3,14 +3,19 @@
 This is not an evidence verifier: it sends the fixed commands only after the
 runtime's own settlement gate reports DONE. Private scorer data is never read.
 """
+from map01_reverse_program import reverse_stages, reverse_manifest
+
 class DoorDriverProtocol:
-    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False, exit_probe=False, exit_arm=None, direct_exit=False):
+    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False, exit_probe=False, exit_arm=None, direct_exit=False, reverse_arm=None):
         if arm not in ('control','use') or type(restore_tic) is not int:
             raise ValueError('invalid registered trial')
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
                 or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
         if type(direct_exit) is not bool or direct_exit and not exit_probe:raise ValueError('invalid direct exit mode')
+        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate') or not traverse or arm!='use' or exit_probe or direct_exit):
+            raise ValueError('reverse mode requires the use/traverse prefix without exit probe')
+        self.reverse_arm=reverse_arm
         self.direct_exit=direct_exit
         self.arm=arm
         self.traverse=traverse
@@ -46,6 +51,9 @@ class DoorDriverProtocol:
         if event=='ready':
             fixture=row.get('fixture')
             proof=fixture.get('setup_candidate_evidence') if type(fixture) is dict else None
+            if (self.reverse_arm is None and 'reverse_door_program' in row
+                    or self.reverse_arm is not None and row.get('reverse_door_program')!=reverse_manifest(self.reverse_arm)):
+                raise ValueError('reverse program binding differs')
             if (self.ready or type(proof) is not dict or fixture.get('manifest_sha256')!=self.manifest_sha
                     or fixture.get('save_sha256')!=self.save_sha or fixture.get('after_load_tic')!=self.restore_tic
                     or proof.get('evidence_sha256')!=self.evidence_sha
@@ -131,7 +139,17 @@ class DoorDriverProtocol:
                        else [{'op':'coast','duration_ms':120,'sample_ms':100}])
                 return self._submit('intervention',steps,now)
             if self.index==6 and self.traverse:
-                return self._submit('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':600}],now)
+                return self._submit('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':300 if self.reverse_arm is not None else 600}],now)
+            if self.reverse_arm is not None and self.index>=7:
+                stages=reverse_stages(self.reverse_arm)
+                offset=self.index-7
+                if offset<len(stages):
+                    identifier,steps=stages[offset]
+                    return self._submit(identifier,steps,now)
+                if offset==len(stages):
+                    self.stage='finish'
+                    return {'op':'finish'}
+                raise ValueError('too many reverse operations')
             if self.index==7 and self.exit_probe:
                 steps=([{'op':'hold','keys':['e'],'duration_ms':120}] if self.exit_arm=='use'
                        else [{'op':'coast','duration_ms':120,'sample_ms':100}])
