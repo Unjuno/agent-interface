@@ -26,17 +26,19 @@ from doom_controller_failure_cleanup_v1 import operation_release_verified, owner
 
 
 class DoorTaskContract:
-    def __init__(self, arm, *, traverse=False, exit_probe=False, exit_arm=None):
+    def __init__(self, arm, *, traverse=False, exit_probe=False, exit_arm=None, direct_exit=False):
         if arm not in ('control','use'):
             raise ValueError('invalid arm')
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
                 or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
+        if type(direct_exit) is not bool or direct_exit and not exit_probe:raise ValueError('invalid direct exit mode')
+        self.direct_exit=direct_exit
         self.arm=arm
         self.traverse=traverse
         self.exit_probe=exit_probe
         self.exit_arm=exit_arm
-        self.index=0
+        self.index=6 if direct_exit else 0
         self.inflight=None
         self.identity=None
         self.last_sequence=0
@@ -63,7 +65,8 @@ class DoorTaskContract:
         pointer=source.get('pointer_binding');process=source.get('target_process_identity')
         window=source.get('target_renewal_window_identity')
         valid=command.get('valid_until_ns')
-        previous=('approach-'+str(self.index) if 0<self.index<=4 else
+        previous=('cover-0' if self.direct_exit and self.index==6 else
+                  'approach-'+str(self.index) if 0<self.index<=4 else
                   'intervention' if self.index==5 else 'traverse-1' if self.index==6 else 'cover-0')
         if (command.get('op')!='submit' or command.get('id')!=identifier or command.get('steps')!=steps
             or type(seq) is not int or seq<=self.last_sequence or command.get('expected_sequence')!=seq
@@ -85,7 +88,7 @@ class DoorTaskContract:
         if self.identity is not None and identity!=self.identity:
             raise ValueError('input target changed')
         prior=previous
-        if not _release_matches(prior,identity,terminal,accepted,allow_no_token=self.index==0 or (self.index==5 and self.arm=='control')):
+        if not _release_matches(prior,identity,terminal,accepted,allow_no_token=self.index==0 or self.direct_exit and self.index==6 or (self.index==5 and self.arm=='control')):
             raise ValueError('previous release unavailable')
         self.identity=identity
         self.last_sequence=seq

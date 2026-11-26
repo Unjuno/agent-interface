@@ -4,12 +4,14 @@ This is not an evidence verifier: it sends the fixed commands only after the
 runtime's own settlement gate reports DONE. Private scorer data is never read.
 """
 class DoorDriverProtocol:
-    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False, exit_probe=False, exit_arm=None):
+    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False, exit_probe=False, exit_arm=None, direct_exit=False):
         if arm not in ('control','use') or type(restore_tic) is not int:
             raise ValueError('invalid registered trial')
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
                 or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
+        if type(direct_exit) is not bool or direct_exit and not exit_probe:raise ValueError('invalid direct exit mode')
+        self.direct_exit=direct_exit
         self.arm=arm
         self.traverse=traverse
         self.exit_probe=exit_probe
@@ -115,6 +117,13 @@ class DoorDriverProtocol:
             self.index+=1
             self.pending=None
             self.settling=False
+            if self.direct_exit and self.index==1:
+                steps=([{'op':'hold','keys':['e'],'duration_ms':120}] if self.exit_arm=='use'
+                       else [{'op':'coast','duration_ms':120,'sample_ms':100}])
+                return self._submit('exit-probe',steps,now)
+            if self.direct_exit and self.index==2:
+                self.stage='finish'
+                return {'op':'finish'}
             if self.index<=4:
                 return self._submit('approach-'+str(self.index),[{'op':'hold','keys':['Up'],'duration_ms':600}],now)
             if self.index==5:

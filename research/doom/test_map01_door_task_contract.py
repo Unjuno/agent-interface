@@ -135,6 +135,17 @@ class DoorTaskContractTests(unittest.TestCase):
    with self.assertRaises(ValueError):gate.completed('exit-probe',release('exit-probe'),accepted('exit-probe'),[])
    finish(gate,c);self.assertTrue(gate.finished)
    with self.assertRaises(ValueError):gate.authorize(c,source,1_100_000_000,release('traverse-1'),accepted('traverse-1'))
+ def test_direct_exit_probe_starts_after_verified_cover(self):
+  import inspect
+  self.assertIn('direct_exit',inspect.signature(DoorTaskContract).parameters)
+  for arm in ('control','use'):
+   gate=DoorTaskContract('use',traverse=True,exit_probe=True,exit_arm=arm,direct_exit=True)
+   step=[{'op':'hold','keys':['e'],'duration_ms':120}] if arm=='use' else [{'op':'coast','duration_ms':120,'sample_ms':100}]
+   c=command('exit-probe',step,1)
+   with self.assertRaises(ValueError):gate.authorize(c,state(),1_100_000_000,release('wrong'),accepted('wrong'))
+   gate.authorize(c,state(),1_100_000_000,release('cover-0'),accepted('cover-0'));finish(gate,c)
+   self.assertTrue(gate.finished)
+   with self.assertRaises(ValueError):gate.authorize(c,state(),1_100_000_000,release('cover-0'),accepted('cover-0'))
  def test_each_submit_requires_new_source_and_same_target(self):
   gate=DoorTaskContract('use')
   c=command('approach-1',[{'op':'hold','keys':['Up'],'duration_ms':600}])

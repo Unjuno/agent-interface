@@ -44,6 +44,41 @@ class DoorModeTests(unittest.TestCase):
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=True),object())
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=False,door_task_exit_arm='control'),object())
   with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_arm=None,door_task_traverse=False,door_task_exit=True),object())
+ def test_synthetic_scenario_copy_binds_the_read_bytes_exclusively(self):
+  import hashlib,tempfile
+  from unittest.mock import patch
+  session=session_module()
+  self.assertTrue(hasattr(session,'copy_synthetic_exit_scenario'))
+  with tempfile.TemporaryDirectory() as temp:
+   source=Path(temp)/'source.wad';target=Path(temp)/'private.wad';source.write_bytes(b'calibration')
+   with patch.object(session,'SYNTHETIC_EXIT_PWAD_SHA256',hashlib.sha256(b'calibration').hexdigest()):
+    session.copy_synthetic_exit_scenario(source,target)
+    self.assertEqual(target.read_bytes(),b'calibration')
+    with self.assertRaises(FileExistsError):session.copy_synthetic_exit_scenario(source,target)
+    source.write_bytes(b'changed')
+    with self.assertRaises(ValueError):session.copy_synthetic_exit_scenario(source,Path(temp)/'other')
+ def test_synthetic_calibration_requires_isolated_fixed_scenario_and_arm(self):
+  import tempfile
+  from unittest.mock import patch
+  session=session_module()
+  self.assertTrue(hasattr(session,'validate_synthetic_exit_calibration'))
+  with tempfile.TemporaryDirectory() as temp:
+   scenario=Path(temp)/'scenario.wad';scenario.write_bytes(b'fixture')
+   base=args(door_task_arm=None,door_task_traverse=False,door_task_exit=False,door_task_exit_arm=None,
+       load_fixture_manifest=None,candidate_setup_evidence=None,candidate_setup_evidence_sha256=None,
+       door_expected_manifest_sha256=None,door_expected_save_sha256=None,door_expected_iwad_sha256=None,
+       door_expected_restore_tic=None,synthetic_exit_pwad=scenario,synthetic_exit_arm='use')
+   with patch.object(session,'file_sha256',return_value='bd634d97942e6c88f5474d58f4181245d0f7475c9c2ec4595952f3657c5681f3'):
+    self.assertIsNone(session.validate_synthetic_exit_calibration(base,None))
+    for changes in ({'synthetic_exit_arm':None},{'synthetic_exit_arm':'invalid'},
+                    {'door_task_arm':'use'},{'load_fixture_manifest':scenario},
+                    {'fixture_out':scenario},{'renewal_passive_observer':False},
+                    {'timeout_seconds':76},{'seed':2},{'skill':2}):
+     altered=types.SimpleNamespace(**vars(base));altered.__dict__.update(changes)
+     with self.subTest(changes=changes),self.assertRaises(ValueError):session.validate_synthetic_exit_calibration(altered,None)
+    with self.assertRaises(ValueError):session.validate_synthetic_exit_calibration(base,object())
+   with patch.object(session,'file_sha256',return_value='0'*64):
+    with self.assertRaises(ValueError):session.validate_synthetic_exit_calibration(base,None)
  def test_binding_must_match_preregistered_candidate(self):
   session=session_module()
   binding={'candidate_manifest_sha256':'b'*64,'candidate_save_sha256':'c'*64,'expected_restore_tic':870}
@@ -93,6 +128,21 @@ class DoorModeTests(unittest.TestCase):
   with self.assertRaisesRegex(RuntimeError,'before finish'):scope['run']()
   self.assertEqual(coordinator.calls,[(command,source_row)])
   self.assertEqual(events[-1]['reason'],'stdin_eof_before_finish')
+ def test_v15_synthetic_mode_requires_owned_target_and_observer(self):
+  import importlib.util
+  source=Path(__file__).with_name('session_map01_v15.py')
+  spec=importlib.util.spec_from_file_location('synthetic_v15_options',source);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  self.assertTrue(hasattr(module,'validate_synthetic_runtime_options'))
+  required=['--synthetic-exit-pwad','/tmp/map.wad','--synthetic-exit-arm','use',
+            '--target-process-identity','--owned-input-service','--renewal-passive-observer']
+  self.assertIsNone(module.validate_synthetic_runtime_options(required))
+  for flag in ('--target-process-identity','--owned-input-service','--renewal-passive-observer'):
+   with self.subTest(flag=flag),self.assertRaises(ValueError):module.validate_synthetic_runtime_options([x for x in required if x!=flag])
+  with self.assertRaises(ValueError):module.validate_synthetic_runtime_options(required+['--post-load-clock-gate'])
+  with self.assertRaises(ValueError):module.validate_synthetic_runtime_options(required+['--target-window-lifecycle'])
+  for abbreviated in ('--synthetic-exit-p','--synthetic-exit-a','--synt'):
+   with self.subTest(flag=abbreviated),self.assertRaises(ValueError):
+    module.validate_synthetic_runtime_options([abbreviated,'x'])
  def test_v15_requires_owned_process_clock_and_observer(self):
   import importlib.util
   source=Path(__file__).with_name('session_map01_v15.py')

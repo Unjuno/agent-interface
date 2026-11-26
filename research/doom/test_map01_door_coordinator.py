@@ -48,6 +48,20 @@ class CoordinatorTests(unittest.TestCase):
   self.assertEqual(executor.calls[-1][1],{'admission_deadline_ns':1_800_000_000})
   self.assertEqual(run.contract.deadline,1_800_000_000)
   with self.assertRaises(ValueError):run.submit_next(move,source)
+ def test_direct_exit_probe_rechecks_source_and_first_keyed_gate(self):
+  for arm in ('control','use'):
+   executor=Executor();run=DoorCoordinator('use',Gate(),object(),executor,lambda:1_500_000_000,
+                                          traverse=True,exit_probe=True,exit_arm=arm,direct_exit=True)
+   initial=state();initial['id']='initial'
+   cover=command('cover-0',[{'op':'coast','duration_ms':200,'sample_ms':100}])
+   run.submit_cover(cover,initial);captured=Capture();finish(captured,cover)
+   for event in captured.events:run.record(event)
+   self.assertEqual(run.settle(),'DONE')
+   source=next(event for event in captured.events if event.get('event')=='observation')
+   step=[{'op':'hold','keys':['e'],'duration_ms':120}] if arm=='use' else [{'op':'coast','duration_ms':120,'sample_ms':100}]
+   probe=command('exit-probe',step,source['sequence']);run.submit_next(probe,source)
+   self.assertEqual(executor.calls[-1][1]['admission_deadline_ns'],1_800_000_000 if arm=='use' else 1_900_000_000)
+   with self.assertRaises(ValueError):run.submit_next(probe,source)
  def test_shorter_cover_lease_is_forwarded(self):
   executor=Executor();run=DoorCoordinator('use',Gate(),object(),executor,lambda:1_500_000_000)
   initial=state();initial['id']='initial'
