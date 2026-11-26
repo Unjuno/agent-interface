@@ -120,6 +120,144 @@ class OwnerRpcTests(unittest.TestCase):
             left.close(); thread.join(5); raise
         return client, client_wire, server_wire, results, thread
 
+    def test_first_press_deadline_reaches_actual_owner_over_private_socket(self):
+        for case in ("expired", "timely", "key-free", "cancelled-before-first"):
+            with self.subTest(case=case), backend_fixture() as (backend, events, generation, fake):
+                backend.snapshot("renewal", 0)
+                lease = bound(backend)
+                lease.first_press_deadline_ns = (time.perf_counter_ns() - 1 if case in ("expired", "key-free")
+                                                 else time.perf_counter_ns() + 9_000_000_000)
+                client, wire, peer, receipts, thread = self.session(backend, fake=fake)
+                try:
+                    if case == "cancelled-before-first":
+                        lease.cancel.set()
+                    if case in ("expired", "cancelled-before-first"):
+                        with self.assertRaises((rpc().RpcOutcomeUnknown, ValueError)):
+                            client.call("down", lease, "a")
+                        self.assertEqual(fake.rpc_edges, [])
+                        self.assertEqual(fake.down, set())
+                    elif case == "key-free":
+                        self.assertTrue(client.call("release", lease)["verified"])
+                        self.assertEqual(fake.rpc_edges, [])
+                    else:
+                        first = client.call("down", lease, "a")
+                        self.assertEqual(first["first_press_deadline_ns"], lease.first_press_deadline_ns)
+                        self.assertTrue(first["first_press_submission_checked_before_deadline"])
+                        client.call("up", lease, "a")
+                        with patch.object(native, "time", wraps=time) as clock:
+                            clock.perf_counter_ns.return_value = lease.first_press_deadline_ns
+                            second = client.call("down", lease, "d")
+                        self.assertFalse(second["first_press_submission_checked_before_deadline"])
+                        self.assertLess(lease.first_press_deadline_ns, lease.deadline)
+                        self.assertEqual(fake.down, {40})
+                        self.assertTrue(client.call("release", lease)["verified"])
+                    frames = [row["lease"] for row in wire.sent if type(row.get("lease")) is dict]
+                    if case == "cancelled-before-first":
+                        self.assertEqual(frames, [])
+                    else:
+                        self.assertEqual(frames[0]["first_press_deadline_ns"], lease.first_press_deadline_ns)
+                finally:
+                    client.close()
+                    thread.join(3)
+
+    def test_first_press_refuses_new_physical_key_without_releasing_it(self):
+        with backend_fixture() as (backend, events, generation, fake):
+            backend.snapshot("startup", 0)
+            lease = bound(backend)
+            lease.first_press_deadline_ns = time.perf_counter_ns() + 1_000_000_000
+            client, wire, peer, receipts, thread = self.session(backend, fake=fake)
+            fake.down.add(99)
+            try:
+                with self.assertRaises(rpc().RpcOutcomeUnknown) as refused:
+                    client.call("down", lease, "a")
+                self.assertEqual(refused.exception.remote_error,
+                                 {"type": "DecisionRequired", "message":
+                                  "first press requires independently neutral X11 input"})
+                self.assertEqual(fake.rpc_edges, [])
+                self.assertEqual(fake.down, {99})
+            finally:
+                fake.down.discard(99)
+                client.close()
+                thread.join(3)
+
+    def test_first_press_rechecks_target_and_deadline_after_neutral_queries(self):
+        for change in ("focus", "identity", "deadline"):
+            with self.subTest(change=change), backend_fixture() as (backend, events, generation, fake):
+                backend.snapshot("startup", 0)
+                lease = bound(backend)
+                now = [time.perf_counter_ns()]
+                lease.first_press_deadline_ns = now[0] + 1_000_000_000
+                client, wire, peer, receipts, thread = self.session(backend, fake=fake)
+                original_query = fake.query_keymap
+                original_focus = fake.get_input_focus
+                target = [41]
+
+                def neutral_query():
+                    value = original_query()
+                    if change == "focus":
+                        target[0] = 73
+                    elif change == "identity":
+                        generation[0] = "c" * 64
+                    else:
+                        now[0] = lease.first_press_deadline_ns
+                    return value
+
+                def current_focus():
+                    result = original_focus()
+                    result.focus = target[0]
+                    return result
+
+                try:
+                    with patch.object(fake, "query_keymap", side_effect=neutral_query), \
+                         patch.object(fake, "get_input_focus", side_effect=current_focus), \
+                         patch.object(native, "time", wraps=time) as owner_clock:
+                        owner_clock.perf_counter_ns.side_effect = lambda: now[0]
+                        with self.assertRaises(rpc().RpcOutcomeUnknown) as refused:
+                            client.call("down", lease, "a")
+                    self.assertEqual(refused.exception.remote_error["type"], "DecisionRequired")
+                    self.assertEqual(fake.rpc_edges, [])
+                    self.assertEqual(fake.down, set())
+                finally:
+                    generation[0] = "a" * 64
+                    client.close()
+                    thread.join(3)
+
+    def test_first_press_with_late_sync_is_unknown_and_neutralized(self):
+        with backend_fixture() as (backend, events, generation, fake):
+            backend.snapshot("renewal", 0)
+            lease = bound(backend)
+            wall = time.perf_counter_ns()
+            lease.first_press_deadline_ns = wall + 1_000_000_000
+            client, wire, peer, receipts, thread = self.session(backend, fake=fake)
+            now = [wall]
+            sync = fake.sync
+
+            def delayed_sync():
+                if fake.down:
+                    now[0] = lease.first_press_deadline_ns
+                return sync()
+
+            try:
+                with patch.object(native, "time", wraps=time) as clock, \
+                     patch.object(fake, "sync", side_effect=delayed_sync):
+                    clock.perf_counter_ns.side_effect = lambda: now[0]
+                    with self.assertRaises(rpc().RpcOutcomeUnknown):
+                        client.call("down", lease, "a")
+                edges = [row["event"] for row in fake.rpc_edges]
+                self.assertEqual(edges, [native.X.KeyPress, native.X.KeyRelease])
+                self.assertEqual(fake.down, set())
+                late = next(row for row in backend.owner.records
+                            if row.get("event") == "renewal_first_press_ack_late")
+                self.assertEqual(late["timely_delivery"], "unknown")
+                self.assertLess(late["xtest_submission_started_ns"], lease.first_press_deadline_ns)
+                self.assertEqual(late["input_ack_observed_ns"], lease.first_press_deadline_ns)
+                release = next(row for row in backend.owner.records
+                               if row.get("event") == "owner_release" and row.get("reason") == "cancelled")
+                self.assertTrue(release["verified"])
+            finally:
+                client.close()
+                thread.join(3)
+
     def test_actual_strict_owner_roundtrip_and_eof_releases(self):
         c = rpc()
         with backend_fixture() as (backend, events, generation, fake):

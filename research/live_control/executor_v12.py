@@ -86,7 +86,10 @@ class Executor(Previous):
                     event.get("event") in ("input_released", "input_release_unverified")):
                 self.release_publication_errors.pop(event.get("id"), None)
 
-    def submit(self, identifier, steps, expected_sequence, valid_until_ns):
+    def submit(self, identifier, steps, expected_sequence, valid_until_ns, *, admission_deadline_ns=None):
+        if admission_deadline_ns is not None and (type(admission_deadline_ns) is not int
+                                                  or time.perf_counter_ns() >= admission_deadline_ns):
+            raise ValueError("renewal observation admission deadline expired")
         with self.lock:
             if self.closed or self.active is not None:
                 raise ValueError("closed or busy; no implicit queue")
@@ -97,6 +100,10 @@ class Executor(Previous):
             if not isinstance(identifier, str) or not identifier or identifier in self.used_ids:
                 raise ValueError("new nonempty id required")
             lease = Lease(valid_until_ns)
+            if admission_deadline_ns is not None:
+                if admission_deadline_ns > lease.deadline:
+                    raise ValueError("first press deadline exceeds lease lifetime")
+                lease.first_press_deadline_ns = admission_deadline_ns
             lease.check()
             copied = copy.deepcopy(steps)
             self.backend.validate(copied)
@@ -106,6 +113,8 @@ class Executor(Previous):
                 bind_source(lease, expected_sequence)
                 lease.check()
             attestation = program_sha256(copied)
+            if admission_deadline_ns is not None and time.perf_counter_ns() >= admission_deadline_ns:
+                raise ValueError("renewal observation admission deadline expired")
             self.backend.lease = lease
             self._admission_context = {"id": identifier, "intent_token": lease.intent_token,
                 "valid_until_ns": valid_until_ns, "expected_sequence": expected_sequence,
@@ -139,7 +148,8 @@ class Executor(Previous):
             # executing any input.
             if self.active is None or self.active[0] != identifier:
                 return
-            if self.closed:
+            if (self.closed or admission_deadline_ns is not None
+                    and time.perf_counter_ns() >= admission_deadline_ns):
                 lease.set()
                 try:
                     release = self.backend.release_all()

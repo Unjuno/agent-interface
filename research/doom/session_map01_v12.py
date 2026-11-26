@@ -20,6 +20,8 @@ from executor_v12 import Executor
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
+from doom_cover_renewal_probe_v1 import (
+    IDENTIFIER as RENEWAL_ID, PassiveProbeDelivery, settled_cover_probe_source)
 from input_owner_generation_protocol_v1 import InputOwnerGenerationProtocol
 
 
@@ -123,7 +125,7 @@ def close_before_control_effect(executor, out, emit, operation):
     raise RuntimeError("input retirement is unresolved; control effect refused")
 
 
-def main():
+def main(*, post_load_gate=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--seed", type=int, required=True)
@@ -131,7 +133,10 @@ def main():
     parser.add_argument("--skill", type=int, choices=range(1,6), default=1)
     parser.add_argument("--fixture-out", type=Path)
     parser.add_argument("--load-fixture-manifest", type=Path)
+    parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
+    if post_load_gate is not None and (args.load_fixture_manifest is None or args.fixture_out is not None):
+        parser.error("post-load clock gate requires a fixed loaded fixture")
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
     args.out.mkdir(parents=True, exist_ok=False)
@@ -141,12 +146,31 @@ def main():
     latest_observation = None
     owner_generation_protocol = InputOwnerGenerationProtocol()
 
+    probe_delivery = None
+    last_terminal = None
+    last_accepted = None
+
     def emit(row):
+        nonlocal last_terminal, last_accepted
+        if row.get("event") == "accepted":
+            last_accepted = row
+        if row.get("event") == "terminal":
+            last_terminal = row
         nonlocal latest_observation
         with lock:
             if row.get("event") == "observation":
                 latest_observation = dict(row)
             owner_generation_protocol.record_terminal(row, backend)
+            if post_load_gate is not None:
+                try:
+                    post_load_gate.record(row)
+                except Exception as error:
+                    # The executor releases input after emit raises. Do not do
+                    # disk I/O here: attach the receipt to the exception that
+                    # becomes the terminal error after the release attempt.
+                    rejected = json.dumps(row, allow_nan=False, sort_keys=True)
+                    raise RuntimeError(f"post-load gate rejected event: {rejected}; "
+                                       f"{type(error).__name__}: {error}") from error
             row["emit_ns"] = time.perf_counter_ns()
             encoded = json.dumps(row)
             with (args.out / "events.jsonl").open("a") as stream:
@@ -183,10 +207,20 @@ def main():
                  HERE / "doom_hud_signal_v2.py",
                  HERE / "doom_hud_signal_v1.py"):
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
+    if post_load_gate is not None:
+        sources["doom/map01_post_load_gate_v1.py"] = file_sha256(HERE / "map01_post_load_gate_v1.py")
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
+            if post_load_gate is not None:
+                # An unset bus address invites X11 autolaunch. Suppress it
+                # before Xvfb/Openbox inherit the environment.
+                os.environ["DBUS_SESSION_BUS_ADDRESS"] = "disabled:"
             session = suite.Session()
+            if post_load_gate is not None:
+                # The shared X11 helper strips the inherited address from its
+                # copied environment. Keep subsequent session subprocesses isolated.
+                session.env["DBUS_SESSION_BUS_ADDRESS"] = os.environ["DBUS_SESSION_BUS_ADDRESS"]
             atom = session.d.intern_atom("_NET_SUPPORTING_WM_CHECK")
             session._wait(lambda: session.d.screen().root.get_full_property(atom, 0) is not None,
                           4, "WM readiness")
@@ -248,6 +282,7 @@ def main():
         iwad = Path(vd.__file__).parent / "freedoom2.wad"
         iwad_sha256 = file_sha256(iwad)
         loaded_fixture = None
+        startup_gate = {}
         if args.load_fixture_manifest is not None:
             manifest_path = args.load_fixture_manifest.resolve()
             fixture, save_path = validate_fixture_manifest(
@@ -263,12 +298,17 @@ def main():
                 "source_episode_tic": fixture["episode_tic"],
                 "setup_input_contract": fixture["setup_input_contract"],
             }
+            if post_load_gate is not None:
+                startup_gate["post_load_clock_gate"] = post_load_gate.after_load(
+                    game, session, expected_tic=fixture["episode_tic"])
         environment = {"vizdoom": vd.__version__, "mode": str(game.get_mode()),
             "ticrate": game.get_ticrate(), "seed": args.seed, "map": "MAP01", "skill": args.skill,
             "scenario_path": None, "iwad": str(iwad),
             "iwad_sha256": iwad_sha256,
             "loaded_fixture": loaded_fixture,
             "sound_for_controller": False, "episode_timeout_seconds": args.timeout_seconds}
+        if post_load_gate is not None:
+            environment["dbus_session_bus_address"] = session.env["DBUS_SESSION_BUS_ADDRESS"]
         (args.out / "environment.json").write_text(json.dumps(environment, indent=2))
         emit({"event": "clock_probe", "before_tic": before, "after_tic": after,
               "wall_seconds": elapsed, "no_advance_calls_during_wait": True,
@@ -281,6 +321,16 @@ def main():
         executor_factory = make_executor_factory(emit)
         executor = executor_factory(backend)
         operations = ["submit", "cancel", "clock", "finish"]
+        if args.renewal_passive_observer:
+            if (not callable(getattr(backend, "capture_cover_renewal", None))
+                    or getattr(backend, "renewal_window_identity", None) is None):
+                raise ValueError("renewal observer requires the process/window identity backend")
+
+            def check_probe_source(command):
+                return settled_cover_probe_source(executor, backend, last_terminal, last_accepted, command)
+
+            probe_delivery = PassiveProbeDelivery(check_probe_source, backend.capture_cover_renewal, emit)
+            operations.append("probe_cover_renewal")
         if (callable(getattr(backend, "rotate_input_owner_after_cancel", None))
                      and getattr(backend, "window_identity", None) is None
                      and getattr(backend, "_provided_input_owner", None) is None):
@@ -325,7 +375,7 @@ def main():
                            "e or Return": "use", "space": "attack",
                            "Shift_L": "run"},
               "fixture": loaded_fixture,
-              "prohibited": prohibited})
+              "prohibited": prohibited, **startup_gate})
         backend.snapshot("initial", 0)
         control_started_ns = time.perf_counter_ns()
         for line in sys.stdin:
@@ -333,10 +383,31 @@ def main():
                 command = json.loads(line)
                 emit({"event": "command", "command": command,
                       "received_ns": time.perf_counter_ns()})
-                if command["op"] == "submit":
+                if command["op"] == "probe_cover_renewal" and probe_delivery is not None:
+                    probe_delivery.start(command)
+                elif command["op"] == "submit":
+                    approval = {}
+                    if probe_delivery is not None:
+                        if type(command.get("id")) is str and RENEWAL_ID.fullmatch(command["id"]):
+                            approval["admission_deadline_ns"] = probe_delivery.consume(command)
+                        probe_delivery.cancel()
+                    if "renewal_approval" in command and not approval:
+                        raise ValueError("unexpected renewal approval")
+                    if post_load_gate is not None and not post_load_gate.first_press_observed:
+                        if executor.active is not None:
+                            raise ValueError("executor must be idle for startup gate")
+                        first_press_deadline = post_load_gate.check_submit(
+                            command, backend, latest_observation,
+                            terminal=last_terminal, accepted=last_accepted)
+                        if first_press_deadline is not None:
+                            approval["admission_deadline_ns"] = min(
+                                approval.get("admission_deadline_ns", first_press_deadline),
+                                first_press_deadline)
                     executor.submit(command["id"], command["steps"],
-                                    command["expected_sequence"], command["valid_until_ns"])
+                                    command["expected_sequence"], command["valid_until_ns"], **approval)
                 elif command["op"] == "cancel":
+                    if probe_delivery is not None:
+                        probe_delivery.cancel()
                     executor.cancel(command["id"])
                 elif command["op"] == "clock":
                     emit({"event": "clock", "runtime_ns": time.perf_counter_ns(),
@@ -401,6 +472,8 @@ def main():
                           "source_sequence": latest_observation["sequence"]})
                     break
                 elif command["op"] == "finish":
+                    if probe_delivery is not None:
+                        probe_delivery.cancel()
                     close_before_control_effect(executor, args.out, emit, "finish")
                     scorer_refresh_calls = 0
                     if not game.is_episode_finished():
@@ -448,6 +521,8 @@ def main():
                 emit({"event": "rejected", "id": command.get("id"),
                       "reason": str(error)})
     finally:
+        if probe_delivery is not None:
+            probe_delivery.cancel()
         # A close or evidence-save error must not skip later owned resources.
         # Each finally preserves failure reporting and the existing close order.
         try:

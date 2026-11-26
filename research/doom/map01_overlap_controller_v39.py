@@ -27,6 +27,8 @@ from doom_controller_failure_cleanup_v1 import (
     ControllerFailureCleanup, load_controller_event, operation_release_verified,
     reject_control_boundary_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
+from doom_cover_renewal_probe_v1 import (
+    EVENT as RENEWAL_PROBE_EVENT, request_passive_probe, verify_probe_frame)
 from verified_interruption_release_v1 import qualified_interruption_release
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -597,7 +599,8 @@ def pending_cover_planner_pool():
         # On uncertain admission or cancellation, let outer cleanup continue
         # even when the planner transport abort could not wake the waiter.
         uncertain_cover = (hasattr(error, "cover_renewal_receipt") or
-                           hasattr(error, "cover_cancellation_receipt"))
+                           hasattr(error, "cover_cancellation_receipt") or
+                           hasattr(error, "cover_probe_failure_receipt"))
         try:
             pool.shutdown(wait=not uncertain_cover, cancel_futures=True)
         except BaseException as shutdown_error:
@@ -1255,13 +1258,19 @@ def session_command(args, runtime):
                else "session_map01_v12.py")
     command = [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
-            "--timeout-seconds", "600", "--skill", "1",
+            "--timeout-seconds", str(getattr(args, "episode_timeout_seconds", 600)), "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
     if identity:
         command.append("--target-process-identity")
     if lifecycle:
         command.append('--target-window-lifecycle')
     if getattr(args,'owned_input_service',False):command.append('--owned-input-service')
+    if getattr(args, "renewal_passive_observer", False):
+        command.append("--renewal-passive-observer")
+    if getattr(args, "post_load_clock_gate", False):
+        if not getattr(args, "owned_input_service", False):
+            raise ValueError("post-load clock gate requires the owned input service")
+        command.append("--post-load-clock-gate")
     return command
 
 
@@ -1682,10 +1691,21 @@ def main():
                         help="select trusted-local XRes/Linux process evidence in V15 input owner")
     parser.add_argument('--owned-input-service',action='store_true',
                         help='explicit independent input service; requires measurement and process identity')
+    parser.add_argument("--episode-timeout-seconds", type=int, default=600)
+    parser.add_argument("--post-load-clock-gate", action="store_true",
+                        help="qualify the loaded spectator clock before initial cover")
+    parser.add_argument("--renewal-passive-observer", action="store_true",
+                        help="observe the process-bound viewport before each renewal submission")
     args = parser.parse_args()
     try:
         require_release_receipt_session(args)
+        if not 10 <= args.episode_timeout_seconds <= 600:
+            raise ValueError("episode timeout must be between 10 and 600 seconds")
+        if args.renewal_passive_observer and not args.target_process_identity:
+            raise ValueError("renewal observer requires --target-process-identity")
         validate_input_service_selection(args)
+        if args.post_load_clock_gate and not args.owned_input_service:
+            raise ValueError("post-load clock gate requires the owned input service")
         if args.target_window_lifecycle and not args.target_process_identity:
             raise ValueError('target window lifecycle requires --target-process-identity')
     except ValueError as error:
@@ -1767,6 +1787,12 @@ def main():
         failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
         failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
+        if args.renewal_passive_observer and "probe_cover_renewal" not in ready.get("operations", []):
+            raise RuntimeError("required passive renewal transport is unavailable")
+        if args.post_load_clock_gate:
+            gate = ready.get("post_load_clock_gate")
+            if type(gate) is not dict or gate.get("passed") is not True:
+                raise RuntimeError("required post-load clock evidence is unavailable")
         runtime_fixture = ready.get("fixture")
         if runtime_fixture is None:
             raise RuntimeError("v28 requires a loaded fixture receipt")
@@ -1842,11 +1868,13 @@ def main():
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             cover_submission_recovery=None
             cover_submission_invalidation=None
-            def submit_cover(identifier, consumed_events=None, *, renewal=False):
+            def submit_cover(identifier, consumed_events=None, *, renewal=False, approval=None):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
+                if approval is not None:
+                    command["renewal_approval"] = approval
                 if renewal:
                     send_bounded_cover_command(process.stdin, command)
                 else:
@@ -1928,6 +1956,7 @@ def main():
             with pending_cover_planner_pool() as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)
                 current_cover=cover
+                current_cover_accepted=cover_ack
                 current_terminal=None
                 while not future.done():
                     try:
@@ -1948,11 +1977,55 @@ def main():
                         if future.done():
                             break
                         next_cover = f"cover-{index}-renew-{len(cover_ids)}"
+                        approval = {}
+                        if getattr(args, "renewal_passive_observer", False):
+                            failure_cleanup.set_stage("pre_renewal_passive_observation")
+                            source_at_probe = latest
+                            def receive_probe(identifier, deadline):
+                                return wait(lambda row: row.get("event") == "post_control_score" or
+                                            (row.get("id") == identifier and
+                                             row.get("event") in (RENEWAL_PROBE_EVENT,
+                                                                 "cover_renewal_passive_refused",
+                                                                 "rejected")),
+                                            timeout=max(0, (deadline - time.perf_counter_ns()) / 1e9))
+                            guards = getattr(invalidation_monitor, "guards", {})
+                            if isinstance(invalidation_monitor, ObservableSignalPolicyMonitor):
+                                guards = {"health": invalidation_monitor.guard}
+                            try:
+                                outcome = request_passive_probe(
+                                    lambda command: send_bounded_cover_command(
+                                        process.stdin, command, timeout=max(0,
+                                            (command["deadline_ns"] - time.perf_counter_ns()) / 1e9)),
+                                    receive_probe, next_cover,
+                                    dict(current_terminal, intent_token=current_cover_accepted.get("intent_token"),
+                                         program_sha256=current_cover_accepted.get("program_sha256")),
+                                    source_at_probe, guards,
+                                    done=future.done, verify_frame=lambda witness:
+                                        verify_probe_frame(runtime, witness,
+                                                           {"health": signal_reader, "ammo": ammo_reader}))
+                                if latest is not source_at_probe:
+                                    raise ValueError("source observation changed while awaiting renewal proof")
+                                with (model_root / "passive-renewals.jsonl").open("a", encoding="utf-8") as stream:
+                                    stream.write(json.dumps(outcome, allow_nan=False) + "\n")
+                                invalidation = outcome["invalidation"]
+                                if invalidation is not None:
+                                    planner.invalidate_turn(planner_handle)
+                                    if not future.done():
+                                        planner_interrupt = planner.interrupt(planner_handle)
+                            except BaseException as error:
+                                error.cover_probe_failure_receipt = {"id": next_cover,
+                                                                    "renewal_submit": "not_sent"}
+                                retire_failed_cover(planner, planner_handle, future,
+                                                    current_terminal, error, args.out)
+                                raise
+                            if not outcome["admit_renewal"] or future.done():
+                                break
+                            approval["approval"] = outcome["witness"]["approval_nonce"]
                         # Keep observations until the ACK identifies the cover to cancel.
                         consumed_events = []
                         next_accepted = None
                         try:
-                            next_accepted = submit_cover(next_cover, consumed_events, renewal=True)
+                            next_accepted = submit_cover(next_cover, consumed_events, renewal=True, **approval)
                             if (type(next_accepted) is not dict or next_accepted.get("id") != next_cover
                                     or next_accepted.get("event") not in ("accepted", "rejected")):
                                 raise ValueError("unverified cover renewal acknowledgement")
@@ -1974,7 +2047,8 @@ def main():
                             raise error
                         cover_renewal_gaps_ms.append((next_accepted["accepted_ns"] -
                             current_terminal["terminal_ns"]) / 1e6)
-                        current_cover, current_terminal = next_cover, None
+                        current_cover, current_cover_accepted = next_cover, next_accepted
+                        current_terminal = None
                         invalidation = observe_cover_submission_events(
                             consumed_events, invalidation_monitor, fail_closed=True)
                         if invalidation is None:

@@ -211,7 +211,32 @@ class X11TargetQueries:
                     pending.append((window, depth + 1, matched_hint, matched_hint_xid))
         return result
 
+    def _renewal_target(self, xid):
+        window_digest = self._window_incarnation(xid)
+        connection = self.connection
+        root = connection.screen().root
+        active = root.get_full_property(connection.intern_atom("_NET_ACTIVE_WINDOW"), Xatom.WINDOW)
+        if active is None or len(active.value) != 1 or int(active.value[0]) != xid:
+            raise QueryUnavailable("renewal viewport is not active")
+        focus = connection.get_input_focus().focus
+        focus_id = getattr(focus, "id", focus)
+        if type(focus_id) is not int or not focus_within_target(connection, xid, raise_errors=True):
+            raise QueryUnavailable("renewal viewport focus changed")
+        window = connection.create_resource_object("window", xid)
+        if window.get_attributes().map_state != X.IsViewable:
+            raise QueryUnavailable("renewal viewport is not viewable")
+        size = window.get_geometry()
+        origin = root.translate_coords(window, 0, 0)
+        return {
+            "pointer_binding": {"focus": focus_id, "surface": xid,
+                                "geometry": [origin.x, origin.y, size.width, size.height]},
+            "process_digest": read_linux_x11_process_identity_details(connection, xid)["process_generation"],
+            "window_digest": window_digest,
+        }
+
     def read(self, operation, xid):
+        if operation == 'renewal_target':
+            return self._renewal_target(xid)
         if operation == 'window_incarnation':
             return self._window_incarnation(xid)
         if operation == 'focus_id':

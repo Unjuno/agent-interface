@@ -12,7 +12,7 @@ from verified_interruption_release_v1 import qualified_interruption_release
 
 
 class Backend(Previous):
-    def __init__(self, session, out, emit, signal_readers, *, window_lifecycle=False,owner_service=None):
+    def __init__(self, session, out, emit, signal_readers, *, window_lifecycle=False,owner_service=None,renewal_passive_observer=False):
         if type(window_lifecycle) is not bool:
             raise ValueError('window_lifecycle must be boolean')
         if owner_service is not None and window_lifecycle:
@@ -22,17 +22,20 @@ class Backend(Previous):
         self._capture_samples = None
         self._source_identity = None
         self._source_window_identity = None
+        self._source_renewal_window_identity = None
         self._owner_generation = 0
         self._retired_owner_quarantine = []
         self._archived_owner_records = []
         self._consumed_rotation_terminals = set()
-        self.window_identity=self.capture_identity=None
+        self.window_identity=self.capture_identity=self.renewal_window_identity=None
         try:
             if owner_service is not None:
                 from input_owner_service_adapter import OwnedOwnerAdapter
                 self._provided_input_owner=OwnedOwnerAdapter(owner_service,display=session.name)
             self.window_identity = IdentityReader(session.name, purpose='window') if window_lifecycle else None
             self.capture_identity = IdentityReader(session.name, purpose='capture')
+            if renewal_passive_observer:
+                self.renewal_window_identity = IdentityReader(session.name, purpose='window')
             super().__init__(session, out, self._emit_identity, signal_readers)
             options = dict(process_identity=True)
             if window_lifecycle: options.update(window_lifecycle=True, _window_reader=self.window_identity)
@@ -42,7 +45,7 @@ class Backend(Previous):
         except BaseException as error:
             from input_owner_rpc_v2 import _run_cleanups
             if owner_service is not None:error.owner_service_handle=owner_service
-            closers=[reader.close for reader in (self.capture_identity,self.window_identity) if reader is not None]
+            closers=[reader.close for reader in (self.capture_identity,self.window_identity,self.renewal_window_identity) if reader is not None]
             owner=getattr(self,'owner',None) or self._provided_input_owner
             if owner is not None:closers.append(owner.close)
             try:_run_cleanups(*closers)
@@ -173,14 +176,23 @@ class Backend(Previous):
         except Exception as error:
             raise DecisionRequired('capture process identity unavailable') from error
         if self._capture_samples is not None:
-            self._capture_samples.append((deepcopy(value), digest, window))
+            renewal_window = None
+            if self.renewal_window_identity is not None:
+                try:
+                    renewal_window = self.renewal_window_identity.read_window(
+                        xid, perf_deadline_ns=time.perf_counter_ns()+250_000_000)
+                except Exception:
+                    # This observer has no authority over an ordinary capture.
+                    # Missing witness data will veto the separate renewal path.
+                    pass
+            self._capture_samples.append((deepcopy(value), digest, window, renewal_window))
         return value
 
     def _emit_identity(self, event):
         is_source = event.get('event') in ('typed_observation', 'observation')
         if is_source:
             samples = self._capture_samples
-            if (type(samples) is not list or len(samples) != 2 or samples[0] != samples[1] or
+            if (type(samples) is not list or len(samples) != 2 or samples[0][:3] != samples[1][:3] or
                     samples[1][0] != event.get('pointer_binding')):
                 raise DecisionRequired('process identity changed across capture')
             identity = {'sequence': event['sequence'], 'surface': samples[1][0]['surface'],
@@ -189,20 +201,62 @@ class Backend(Previous):
                          input_owner_generation=self._owner_generation)
             if self.window_identity is not None:
                 event['target_window_identity'] = dict(sequence=identity['sequence'], surface=identity['surface'], digest=samples[1][2])
+            if (self.renewal_window_identity is not None and type(samples[0][3]) is str
+                    and samples[0][3] == samples[1][3]):
+                event['target_renewal_window_identity'] = dict(
+                    sequence=identity['sequence'], surface=identity['surface'], digest=samples[1][3])
+                event['renewal_owner_id'] = self.owner.owner_id
         self._external_emit(event)
         if is_source and event['event'] == 'observation':
             self._source_identity = (identity['sequence'], identity['surface'], identity['digest'])
             if self.window_identity is not None:
                 self._source_window_identity = (identity['sequence'], identity['surface'], samples[1][2])
+            if 'target_renewal_window_identity' in event:
+                self._source_renewal_window_identity = (identity['sequence'], identity['surface'], samples[1][3])
 
     def snapshot(self, identifier, index):
         self._source_identity = None
         self._source_window_identity = None
+        self._source_renewal_window_identity = None
         self._capture_samples = []
         try:
             return super().snapshot(identifier, index)
         finally:
             self._capture_samples = None
+
+    def cover_renewal_source(self, sequence):
+        process, window = self._source_identity, self._source_renewal_window_identity
+        if (self.renewal_window_identity is None or type(sequence) is not int
+                or sequence != self.sequence or process is None or window is None
+                or process[:2] != window[:2] or process[0] != sequence
+                or type(self.observed_pointer) is not dict
+                or self.observed_pointer.get("surface") != process[1]):
+            raise DecisionRequired("renewal requires a current process- and window-bound source")
+        return {
+            "sequence": sequence, "input_owner_generation": self._owner_generation,
+            "renewal_owner_id": self.owner.owner_id,
+            "pointer_binding": deepcopy(self.observed_pointer),
+            "target_process_identity": dict(sequence=sequence, surface=process[1], digest=process[2]),
+            "target_renewal_window_identity": dict(sequence=sequence, surface=window[1], digest=window[2]),
+        }
+
+    def capture_cover_renewal(self, identifier, previous, source, deadline, cancelled):
+        from PIL import ImageGrab
+        from doom_cover_renewal_probe_v1 import capture_passive_probe, probe_frame_path
+
+        def read_proof(deadline):
+            return self.renewal_window_identity.read_renewal_target(source["pointer_binding"]["surface"],
+                                                            perf_deadline_ns=deadline, cancelled=cancelled)
+
+        def publish_frame(frame):
+            if cancelled():
+                raise DecisionRequired("renewal observation cancelled before publication")
+            with probe_frame_path(self.out, identifier).open("xb") as stream:
+                frame.save(stream, format="PNG", compress_level=1)
+
+        return capture_passive_probe(identifier, previous, source, read_proof=read_proof,
+                                     grab_frame=lambda: ImageGrab.grab(xdisplay=self.session.name).convert("RGB"),
+                                     readers=self.signal_readers, publish_frame=publish_frame, deadline=deadline)
 
     def bind_lease_source(self, lease, expected_sequence):
         if hasattr(lease, 'target_process_identity'):
@@ -229,7 +283,7 @@ class Backend(Previous):
         from input_owner_rpc_v2 import _run_cleanups
         result=[]
         def close_owner():result.append(self.owner.close())
-        closers=[reader.close for reader in (self.capture_identity,self.window_identity) if reader is not None]
+        closers=[reader.close for reader in (self.capture_identity,self.window_identity,self.renewal_window_identity) if reader is not None]
         closers.append(close_owner)
         _run_cleanups(*closers)
         return result[0]

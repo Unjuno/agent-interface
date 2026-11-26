@@ -77,6 +77,9 @@ def encode_lease(lease):
         cancel_requested=cancel.is_set(), focus_invalid=getattr(lease, 'focus_invalid', False),
         target_process_identity=getattr(lease, 'target_process_identity', None),
         target_window_identity=getattr(lease, 'target_window_identity', None))
+    first_press_deadline = getattr(lease, 'first_press_deadline_ns', None)
+    if first_press_deadline is not None:
+        dto['first_press_deadline_ns'] = first_press_deadline
     # Validate before any transport write; JSON projection is an explicit wire copy.
     dto = json.loads(json.dumps(dto, allow_nan=False))
     _validate_lease(dto)
@@ -84,11 +87,14 @@ def encode_lease(lease):
 
 
 def _validate_lease(dto):
-    if type(dto) is not dict or set(dto) != LEASE_FIELDS:
+    if type(dto) is not dict or set(dto) not in (LEASE_FIELDS, LEASE_FIELDS | {'first_press_deadline_ns'}):
         raise ValueError('exact v2 lease fields required')
     deadline = dto['deadline_ns']
     if type(deadline) is not int or deadline <= 0:
         raise ValueError('positive original lease deadline required')
+    if 'first_press_deadline_ns' in dto and (type(dto['first_press_deadline_ns']) is not int
+                                          or not 0 < dto['first_press_deadline_ns'] <= deadline):
+        raise ValueError('positive first press deadline within the lease required')
     _identity(dto['intent_token'])
     for field in ('expected_focus', 'expected_surface'):
         if type(dto[field]) is not int or dto[field] <= 1:
@@ -110,7 +116,7 @@ def decode_lease(dto, leases):
     process, window = _validate_lease(dto)
     token = dto['intent_token']
     fingerprint = (dto['deadline_ns'], dto['expected_focus'], dto['expected_surface'],
-                   tuple(dto['expected_geometry']), process, window)
+                   tuple(dto['expected_geometry']), process, window, dto.get('first_press_deadline_ns'))
     lease = leases.get(token)
     if lease is None:
         if len(leases) >= MAX_LEASES:
@@ -122,6 +128,8 @@ def decode_lease(dto, leases):
         lease.expected_geometry = list(dto['expected_geometry'])
         lease.target_process_identity = process
         lease.target_window_identity = window
+        if 'first_press_deadline_ns' in dto:
+            lease.first_press_deadline_ns = dto['first_press_deadline_ns']
         lease._rpc_source_binding = fingerprint
         leases[token] = lease
     elif lease._rpc_source_binding != fingerprint:

@@ -57,6 +57,13 @@ class ObservableSignalGuard:
         self.source_binding = binding_key(binding)
 
     def evaluate(self, current_signal):
+        return self._evaluate(current_signal, passive=False)
+
+    def evaluate_passive(self, current_signal):
+        """Rate a separately verified screen sample without advancing input state."""
+        return self._evaluate(current_signal, passive=True)
+
+    def _evaluate(self, current_signal, *, passive):
         if type(current_signal) is not dict or current_signal.get("status") != "observed":
             return self._outcome("UNKNOWN", "signal_unavailable", None, None)
         if current_signal.get("signal_id") != self.spec["signal_id"]:
@@ -65,7 +72,8 @@ class ObservableSignalGuard:
             return self._outcome("UNKNOWN", "binding_changed", None, None)
         sequence = current_signal.get("sequence")
         sampled_ns = current_signal.get("capture_ns")
-        if type(sequence) is not int or sequence <= self.spec["source_sequence"]:
+        if (type(sequence) is not int or sequence < self.spec["source_sequence"]
+                or sequence == self.spec["source_sequence"] and not passive):
             return self._outcome("UNKNOWN", "nonadvancing_sequence", None, None)
         if type(sampled_ns) is not int or sampled_ns <= self.source_capture_ns:
             return self._outcome("UNKNOWN", "invalid_sample_time", None, None)

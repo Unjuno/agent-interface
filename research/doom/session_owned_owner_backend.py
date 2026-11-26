@@ -25,13 +25,14 @@ def _raise(errors,primary,handle,receipt=None):
 
 
 class Backend(Previous):
-    def __init__(self,session,out,emit,signal_readers,*,_owner_factory=None):
+    def __init__(self,session,out,emit,signal_readers,*,_owner_factory=None,renewal_passive_observer=False):
         self.owned_service=None;self._session_out=Path(out);self._startup_hash=None
         self._session_lock=threading.RLock();self._session_close=None;self._session_error=None
         try:
             self.owned_service=launch_owner_service(display=session.name,out=self._session_out/'input-owner-service',
                 cancellation=True,_owner_factory=_owner_factory)
-            super().__init__(session,out,emit,signal_readers,owner_service=self.owned_service)
+            super().__init__(session,out,emit,signal_readers,owner_service=self.owned_service,
+                             renewal_passive_observer=renewal_passive_observer)
             startup=dict(schema='map01-owned-session-startup-v1',startup=self.owned_service.startup,
                          spawn_pid=self.owned_service.process.pid,grants_input_authority=False)
             self._startup_hash=publish_json_exclusive(self._session_out/'session-owner-service-startup.json',startup)

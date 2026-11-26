@@ -729,14 +729,29 @@ class InputOwner:
                             lease.check()
                             if lease.cancel.is_set():
                                 raise Cancelled()
+                            first_press_deadline = getattr(lease, 'first_press_deadline_ns', None)
+                            first_press = first_press_deadline is not None and not getattr(lease, '_first_press_applied', False)
+                            if first_press:
+                                neutral_keymap = d.query_keymap()
+                                neutral_pointer = d.screen().root.query_pointer().mask
+                                if (active is not None or held or buttons or len(neutral_keymap) != 32
+                                        or any(neutral_keymap) or type(neutral_pointer) is not int
+                                        or neutral_pointer != 0):
+                                    raise DecisionRequired('first press requires independently neutral X11 input')
                             if not identity_matches(lease):
                                 lease.focus_invalid = True
                                 raise DecisionRequired('target process identity unavailable or changed')
-                            if self.identity_reader is not None and invalid_focus(lease):
+                            if (first_press or self.identity_reader is not None) and invalid_focus(lease):
                                 lease.focus_invalid = True
                                 raise DecisionRequired('focus changed during identity read')
                             final_identity_fence(lease)
+                            if first_press:
+                                lease.check()
+                                if lease.cancel.is_set():
+                                    raise Cancelled()
                             admitted = time.perf_counter_ns()
+                            if first_press and (type(first_press_deadline) is not int or admitted >= first_press_deadline):
+                                raise DecisionRequired('renewal first press deadline expired')
                             active = lease
                             active_pointer = False
                             active_identity = checked_identity
@@ -745,8 +760,29 @@ class InputOwner:
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
+                            acknowledged = time.perf_counter_ns()
+                            if first_press and acknowledged >= first_press_deadline:
+                                # A press may already have been delivered. Its timely
+                                # delivery is unknown, so retire this intent and release.
+                                self.records.append(dict(
+                                    event='renewal_first_press_ack_late', intent_token=lease.intent_token,
+                                    keycode=code, xtest_submission_started_ns=admitted,
+                                    input_ack_observed_ns=acknowledged, first_press_deadline_ns=first_press_deadline,
+                                    timely_delivery='unknown', grants_input_authority=False))
+                                lease.set()
+                                late = DecisionRequired('renewal first press acknowledgement exceeded deadline')
+                                try:
+                                    release('cancelled')
+                                except Exception as cleanup:
+                                    late.add_note('late first press cleanup failed: ' + type(cleanup).__name__)
+                                raise late
+                            if first_press:
+                                lease._first_press_applied = True
                             result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
-                                          input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
+                                          input_ack_ns=acknowledged, valid_until_ns=lease.deadline)
+                            if first_press_deadline is not None:
+                                result['first_press_deadline_ns'] = first_press_deadline
+                                result['first_press_submission_checked_before_deadline'] = first_press
                             if self.identity_reader is not None:
                                 result['target_process_identity'] = list(checked_identity)
                             if self.window_reader is not None:
