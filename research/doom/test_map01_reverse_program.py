@@ -6,11 +6,13 @@ class ReverseProgramTests(unittest.TestCase):
     def test_matched_programs_differ_only_at_reopen_probe(self):
         control=reverse_stages('control');use=reverse_stages('use')
         self.assertEqual([x[0] for x in control],[x[0] for x in use])
-        self.assertEqual([i for i,(a,b) in enumerate(zip(control,use)) if a!=b],[10])
-        self.assertEqual(control[10][0],'reverse-probe')
-        self.assertEqual(control[10][1],[{'op':'coast','duration_ms':120,'sample_ms':100}])
-        self.assertEqual(use[10][1],[{'op':'hold','keys':['e'],'duration_ms':120}])
+        self.assertEqual([i for i,(a,b) in enumerate(zip(control,use)) if a!=b],[9])
+        self.assertEqual(control[9][0],'reverse-probe')
+        self.assertEqual(control[9][1],[{'op':'coast','duration_ms':120,'sample_ms':100}])
+        self.assertEqual(use[9][1],[{'op':'hold','keys':['e'],'duration_ms':120}])
         self.assertEqual(control[-1][0],'reverse-cross')
+        self.assertNotIn('reverse-approach',[x[0] for x in control])
+        self.assertNotIn('reverse-align',[x[0] for x in control])
     def test_calibration_stops_after_turn_without_probe_or_cross(self):
         control=reverse_stages('control');calibration=reverse_stages('calibrate')
         self.assertEqual(calibration,control[:9])
