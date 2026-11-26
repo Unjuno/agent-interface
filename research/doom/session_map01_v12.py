@@ -87,6 +87,45 @@ def validate_synthetic_exit_calibration(args, post_load_gate):
     return None
 
 
+def synthetic_neutral_heartbeat(backend, gate, session, source, *, clock=time.perf_counter_ns, started=None, expected_revision=None):
+    """Read owner and physical input state without a lease or input authority."""
+    if started is None:started=clock()
+    try:
+        owner=backend.owner;service=backend.owned_service
+        binding=source['pointer_binding'];identity=source['target_process_identity']
+        if (type(started) is not int or type(source) is not dict or type(binding) is not dict
+                or type(identity) is not dict or type(source.get('sequence')) is not int
+                or source['sequence']!=backend.sequence or identity.get('sequence')!=source['sequence']
+                or identity.get('surface')!=binding.get('surface') or binding.get('focus')!=binding.get('surface')
+                or backend._source_identity!=(source['sequence'],binding['surface'],identity.get('digest'))
+                or source.get('input_owner_generation')!=backend._owner_generation
+                or source.get('renewal_owner_id')!=owner.owner_id or owner.service_id!=service.service_id
+                or service.process is None or not service.process.is_alive() or owner.obligation_snapshot() is not None):
+            raise ValueError('owner or source identity differs')
+        state=owner.call('input_state')
+        if (type(state) is not dict or state.get('owner_id')!=owner.owner_id
+                or type(state.get('revision')) is not int or state['revision']<0
+                or expected_revision is not None and (type(expected_revision) is not int or state['revision']!=expected_revision)
+                or state.get('owned_keycodes')!=[] or state.get('owned_buttons')!=[]
+                or type(state.get('physical_pointer_mask')) is not int or state['physical_pointer_mask']!=0
+                or type(state.get('focus')) is not int or state['focus']!=binding['surface']
+                or state.get('release_pending') is not False or state.get('cancel_requested') is not False
+                or 'active_lease_deadline_ns' not in state or state['active_lease_deadline_ns'] is not None
+                or type(state.get('sample_started_ns')) is not int or type(state.get('sample_finished_ns')) is not int
+                or not started<=state['sample_started_ns']<=state['sample_finished_ns']
+                or gate.neutral(session) is not True):
+            raise ValueError('owner or physical state is not neutral')
+        ended=clock()
+        if (type(ended) is not int or not state['sample_finished_ns']<=ended<started+1_000_000_000
+                or not service.process.is_alive() or owner.obligation_snapshot() is not None):
+            raise ValueError('owner heartbeat timed out or lost custody')
+        return {'verified':True,'started_ns':started,'finished_ns':ended,'owner_id':owner.owner_id,
+                'owner_generation':backend._owner_generation,'source_sequence':source['sequence'],
+                'owner_state':state,'physical_neutral':True,'grants_input_authority':False}
+    except Exception as error:
+        raise RuntimeError('synthetic neutral heartbeat unavailable') from error
+
+
 def validate_verified_fixture_setup(args, post_load_gate):
     fresh = getattr(args, 'fresh_neutral_fixture_setup', False)
     loaded = args.verified_fixture_setup
@@ -594,6 +633,8 @@ def main(*, post_load_gate=None):
     setup_events = []
     setup_sources = {}
     setup_input_claimed = False
+    synthetic_heartbeat_count = 0
+    synthetic_heartbeat_revision = None
     door_coordinator = None
     door_scorer = None
     if args.synthetic_exit_pwad is not None:
@@ -951,6 +992,21 @@ def main(*, post_load_gate=None):
                         probe_delivery.cancel()
                     executor.cancel(command["id"])
                 elif command["op"] == "clock":
+                    if args.synthetic_exit_pwad is not None and door_coordinator is not None and door_coordinator.finished:
+                        started=time.perf_counter_ns()
+                        _,last_probe=door_coordinator.journal.completion('exit-probe')
+                        if (synthetic_heartbeat_count>=4 or executor.active is not None
+                                or type(last_probe.get('terminal_ns')) is not int
+                                or not 0<=started-last_probe['terminal_ns']<12_000_000_000):
+                            raise RuntimeError('synthetic heartbeat window unavailable')
+                        synthetic_heartbeat_count+=1
+                        with lock:
+                            heartbeat_source=deepcopy(latest_observation)
+                        receipt=synthetic_neutral_heartbeat(backend,door_coordinator.gate,session,
+                            heartbeat_source,started=started,expected_revision=synthetic_heartbeat_revision)
+                        if synthetic_heartbeat_revision is None:
+                            synthetic_heartbeat_revision=receipt['owner_state']['revision']
+                        emit({'event':'synthetic_owner_heartbeat','count':synthetic_heartbeat_count,**receipt})
                     emit({"event": "clock", "runtime_ns": time.perf_counter_ns(),
                           "sequence": backend.sequence})
                 elif command["op"] == "rotate_input_owner":

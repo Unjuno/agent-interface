@@ -79,6 +79,47 @@ class DoorModeTests(unittest.TestCase):
     with self.assertRaises(ValueError):session.validate_synthetic_exit_calibration(base,object())
    with patch.object(session,'file_sha256',return_value='0'*64):
     with self.assertRaises(ValueError):session.validate_synthetic_exit_calibration(base,None)
+ def test_synthetic_heartbeat_is_read_only_and_fails_closed(self):
+  from unittest.mock import Mock
+  session=session_module();self.assertTrue(hasattr(session,'synthetic_neutral_heartbeat'))
+  source={'sequence':7,'input_owner_generation':0,'renewal_owner_id':'owner',
+          'pointer_binding':{'surface':123,'focus':123},
+          'target_process_identity':{'sequence':7,'surface':123,'digest':'abc'}}
+  state={'owner_id':'owner','owned_keycodes':[],'owned_buttons':[], 'physical_pointer_mask':0,
+         'focus':123,'revision':2,'release_pending':False,'cancel_requested':False,'active_lease_deadline_ns':None,
+         'sample_started_ns':110,'sample_finished_ns':120}
+  owner=types.SimpleNamespace(owner_id='owner',service_id='svc',call=Mock(return_value=state),obligation_snapshot=lambda:None)
+  service=types.SimpleNamespace(service_id='svc',process=types.SimpleNamespace(is_alive=lambda:True))
+  backend=types.SimpleNamespace(owner=owner,owned_service=service,sequence=7,_owner_generation=0,_source_identity=(7,123,'abc'))
+  gate=types.SimpleNamespace(neutral=lambda target:True)
+  result=session.synthetic_neutral_heartbeat(backend,gate,object(),source,clock=lambda:130,started=100,expected_revision=2)
+  self.assertTrue(result['verified']);self.assertFalse(result['grants_input_authority'])
+  owner.call.assert_called_once_with('input_state')
+  for changed in ({'owned_keycodes':[1]},{'focus':999},{'release_pending':True},{'active_lease_deadline_ns':200},{'revision':3},{'physical_pointer_mask':False}):
+   with self.subTest(changed=changed):
+    owner.call.return_value=dict(state,**changed)
+    with self.assertRaises(RuntimeError):session.synthetic_neutral_heartbeat(backend,gate,object(),source,clock=lambda:130,started=100,expected_revision=2)
+ def test_actual_synthetic_wait_loop_bounds_read_only_heartbeats(self):
+  from unittest.mock import Mock
+  source=Path(__file__).with_name('session_map01_v12.py');tree=ast.parse(source.read_text())
+  main=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='main')
+  loop=next(node for node in ast.walk(main) if isinstance(node,ast.For) and isinstance(node.iter,ast.Attribute) and node.iter.attr=='stdin')
+  wrapper=ast.parse('def run(executor,backend,latest_observation,synthetic_heartbeat_count,synthetic_heartbeat_revision):\n pass\n')
+  wrapper.body[0].body=[loop];ast.fix_missing_locations(wrapper)
+  heartbeat=Mock(return_value={'verified':True,'owner_state':{'revision':2},'grants_input_authority':False})
+  coordinator=types.SimpleNamespace(finished=True,pending=None,gate=object(),
+     journal=types.SimpleNamespace(completion=lambda name:({}, {'terminal_ns':99})))
+  emitted=[];backend=types.SimpleNamespace(sequence=7)
+  scope={'sys':types.SimpleNamespace(stdin=['{"op":"clock"}']*5),'json':json,
+   'args':types.SimpleNamespace(synthetic_exit_pwad=Path('/tmp/calibration'),fresh_neutral_fixture_setup=False,verified_fixture_setup=False),
+   'door_coordinator':coordinator,'lock':threading.RLock(),'deepcopy':copy.deepcopy,
+   'synthetic_neutral_heartbeat':heartbeat,'session':object(),'time':types.SimpleNamespace(perf_counter_ns=lambda:100),
+   'emit':emitted.append,'Expired':type('Expired',(Exception,),{})}
+  exec(compile(wrapper,str(source),'exec'),scope)
+  with self.assertRaisesRegex(RuntimeError,'heartbeat window'):scope['run'](types.SimpleNamespace(active=None),backend,{},0,None)
+  self.assertEqual(heartbeat.call_count,4)
+  self.assertEqual([call.kwargs['expected_revision'] for call in heartbeat.call_args_list],[None,2,2,2])
+  self.assertEqual([row['event'] for row in emitted].count('synthetic_owner_heartbeat'),4)
  def test_binding_must_match_preregistered_candidate(self):
   session=session_module()
   binding={'candidate_manifest_sha256':'b'*64,'candidate_save_sha256':'c'*64,'expected_restore_tic':870}
