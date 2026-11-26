@@ -411,7 +411,8 @@ class Backend(Previous):
         )
         first_count = min(counts) if counts_valid else None
         records_since_first_release = records[first_count:] if counts_valid else None
-        after = self.owner.call("input_state")
+        release_state=getattr(self.owner,"release_state",None)
+        after = release_state(self.lease) if callable(release_state) else self.owner.call("input_state")
         token = getattr(self.lease, "intent_token", None)
         latest_return = max(row["release_call_returned_ns"] for row in rows)
         sample_started = after.get("sample_started_ns") if isinstance(after, dict) else None
