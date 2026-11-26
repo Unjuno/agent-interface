@@ -18,7 +18,7 @@ import map01_overlap_controller_v39 as controller
 RENEWED = "cover-0-renew-1"
 
 
-def pending_cover_loop():
+def pending_cover_loop(cycle_limit=None):
     source = Path(controller.__file__)
     tree = ast.parse(source.read_bytes(), filename=str(source))
     main = next(node for node in tree.body
@@ -31,6 +31,10 @@ def pending_cover_loop():
 def run(future, wait, submit_cover, invalidation_monitor, planner, process,
         recover_cover_owner, out=None):
     current_cover = "cover-0"
+    current_cover_accepted = {"event": "accepted", "id": "cover-0"}
+    current_cover_source = {}
+    all_events, latest, cover_steps = [], {}, []
+    source_at_probe = {}
     current_terminal = invalidation = planner_interrupt = None
     cover_ids = [current_cover]
     cover_terminals = []
@@ -38,11 +42,12 @@ def run(future, wait, submit_cover, invalidation_monitor, planner, process,
     index = 0
     planner_handle = "pending-turn"
     failure_cleanup = SimpleNamespace(set_stage=lambda stage: None)
-    args = SimpleNamespace(out=out)
+    args = SimpleNamespace(out=out, _cycle_max_submissions=configured_cycle_limit)
     return invalidation, current_terminal, cover_terminals, planner_interrupt
 """)
     module.body[0].body.insert(-1, loop)
-    namespace = {**vars(controller), "SimpleNamespace": SimpleNamespace}
+    namespace = {**vars(controller), "SimpleNamespace": SimpleNamespace,
+                 "configured_cycle_limit": cycle_limit}
     exec(compile(ast.fix_missing_locations(module), str(source), "exec"), namespace)
     return namespace["run"]
 
@@ -54,6 +59,35 @@ def terminal(cover, *, status, stamp):
 
 
 class RenewalObservationTests(unittest.TestCase):
+    def test_cycle_budget_exhaustion_holds_before_probe_or_renewal(self):
+        old = terminal("cover-0", status="completed", stamp=100)
+        future = SimpleNamespace(done=Mock(return_value=False))
+        planner = SimpleNamespace(invalidate_turn=Mock(return_value={"outcome": "invalidated"}),
+                                  abort_pending_turn=Mock(return_value={"outcome": "aborted"}))
+        submit = Mock()
+        with TemporaryDirectory() as temporary, patch.object(controller, "qualify_cycle_terminal") as qualify:
+            with self.assertRaises(controller.CoverCycleBudgetExhausted):
+                pending_cover_loop(cycle_limit=1)(future, lambda *a, **k: old, submit,
+                    SimpleNamespace(), planner, SimpleNamespace(), Mock(), out=temporary)
+            qualify.assert_called_once()
+        submit.assert_not_called()
+        planner.invalidate_turn.assert_called_once()
+        planner.abort_pending_turn.assert_called_once()
+
+    def test_cycle_renewal_rejection_is_recorded_and_never_retried(self):
+        old = terminal("cover-0", status="completed", stamp=100)
+        future = SimpleNamespace(done=Mock(return_value=False))
+        planner = SimpleNamespace(invalidate_turn=Mock(), abort_pending_turn=Mock())
+        rejected = {"event": "rejected", "id": RENEWED}
+        submit = Mock(return_value=rejected)
+        with TemporaryDirectory() as temporary, patch.object(controller, "qualify_cycle_terminal"):
+            with self.assertRaises(controller.CoverCycleBudgetExhausted) as caught:
+                pending_cover_loop(cycle_limit=2)(future, lambda *a, **k: old, submit,
+                    SimpleNamespace(), planner, SimpleNamespace(), Mock(), out=temporary)
+        self.assertEqual(caught.exception.cycle_budget_receipt["renewal_submit"], "rejected")
+        self.assertEqual(caught.exception.cycle_budget_receipt["renewal_response"], rejected)
+        submit.assert_called_once()
+
     def run_renewal(self, result, *, followup_error=None):
         observation = {"event": "typed_observation", "sequence": 8}
         followup = {"event": "typed_observation", "sequence": 9}
