@@ -1,10 +1,17 @@
 """EOF must not synchronously drain another transport diagnostic stream."""
 import io
 import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from tempfile import TemporaryDirectory
 import threading
 import unittest
+from unittest.mock import patch
 
 from codex_app_server_client_v2 import AppServerError, CodexAppServerClient
+from native_preflight_job_v1 import LeaseWriter
 
 
 class NoDiagnosticRead:
@@ -109,6 +116,78 @@ class EofStopRegression(unittest.TestCase):
         self.assertFalse(waiter.is_alive())
         self.assertEqual(len(errors), 1)
         self.assertIsInstance(errors[0], AppServerError)
+
+
+@unittest.skipUnless(os.name == "posix", "stdio and lease rollback tested with a POSIX dummy")
+class StartupRetirementTests(unittest.TestCase):
+    def test_owned_reader_start_failure_retires_process_lease_and_streams(self):
+        class DummyOwner:
+            def __init__(self, root, retirement_error):
+                self.lease = LeaseWriter(root)
+                self.retirement_error = retirement_error
+                self.process = None
+
+            def launch(self, command, options, journal):
+                self.lease.__enter__()
+                journal("owner_fixture", {})
+                self.process = subprocess.Popen(command, **options)
+                return self.process
+
+            def retire(self, process, timeout):
+                try:
+                    if process.poll() is None:
+                        process.terminate()
+                    process.wait(timeout=timeout)
+                    if self.retirement_error is not None:
+                        raise self.retirement_error
+                finally:
+                    self.lease.__exit__()
+
+        cases = (("_drain_stderr", False, None),
+                 ("_read", True, OSError("retirement proof unavailable")))
+        for method, start_then_fail, retirement_error in cases:
+            with self.subTest(reader=method), TemporaryDirectory() as directory:
+                root = Path(directory)
+                owner = DummyOwner(root, retirement_error)
+                error = RuntimeError("synthetic reader startup failure")
+                started_clients = []
+                thread_start = threading.Thread.start
+
+                def start(thread):
+                    target = thread._target
+                    if getattr(target, "__name__", None) == method:
+                        started_clients.append(target.__self__)
+                        if start_then_fail:
+                            thread_start(thread)
+                        raise error
+                    return thread_start(thread)
+
+                try:
+                    with patch.object(threading.Thread, "start", start):
+                        with self.assertRaises(RuntimeError) as raised:
+                            CodexAppServerClient(
+                                [sys.executable, "-c", "import time; time.sleep(8)"],
+                                journal_path=root / "protocol.jsonl", windows_owner=owner)
+                    self.assertIs(raised.exception, error)
+                    self.assertIsNotNone(owner.process.poll())
+                    self.assertTrue(owner.lease.stop.is_set())
+                    self.assertFalse(owner.lease.writer.is_alive())
+                    self.assertTrue(all(getattr(owner.process, name).closed
+                                        for name in ("stdin", "stdout", "stderr")))
+                    self.assertTrue(started_clients[0]._journal.closed)
+                    if retirement_error is not None:
+                        self.assertIn("app-server startup cleanup failed: OSError", error.__notes__)
+                finally:
+                    # The pre-fix failure path leaves both owned resources live.
+                    owner.lease.__exit__()
+                    if owner.process is not None:
+                        if owner.process.poll() is None:
+                            owner.process.terminate()
+                        owner.process.wait(timeout=2)
+                        for name in ("stdin", "stdout", "stderr"):
+                            getattr(owner.process, name).close()
+                    if started_clients:
+                        started_clients[0]._journal.close()
 
 
 if __name__ == '__main__':

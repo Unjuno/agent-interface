@@ -1201,19 +1201,31 @@ def app_server_command_for_run(output):
         raise
 
 
+def canonical_windows_executable(value, variable):
+    path = Path(value)
+    message = f"{variable} must resolve from an absolute WSL path to an existing .exe file"
+    if not path.is_absolute():
+        raise ValueError(message)
+    try:
+        executable = path.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise ValueError(message) from error
+    if executable.suffix.lower() != ".exe" or not executable.is_file():
+        raise ValueError(message)
+    return executable
+
+
 def start_planner_client(output):
     command = app_server_command_for_run(output)
     windows_owner = None
-    if (os.name == "posix" and command[1:3] == ["app-server", "--stdio"]
-            and Path(command[0]).suffix.lower() == ".exe"):
+    if os.name == "posix" and command[1:3] == ["app-server", "--stdio"]:
         if not os.environ.get("WSL_INTEROP"):
             raise ValueError("native Windows Codex requires WSL interop")
-        if not Path(command[0]).is_absolute() or not Path(command[0]).is_file():
-            raise ValueError("AGENT_INTERFACE_CODEX_APP_SERVER_EXE must name an absolute WSL .exe file")
+        executable = canonical_windows_executable(command[0], "AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+        command = [str(executable), *command[1:]]
         wsl_environment_for_windows_executable(command, os.environ)
-        python = Path(os.environ.get("AGENT_INTERFACE_WINDOWS_PYTHON", ""))
-        if not python.is_absolute() or python.suffix.lower() != ".exe" or not python.is_file():
-            raise ValueError("AGENT_INTERFACE_WINDOWS_PYTHON must name an absolute WSL .exe file")
+        python_variable = "AGENT_INTERFACE_WINDOWS_PYTHON"
+        python = canonical_windows_executable(os.environ.get(python_variable, ""), python_variable)
         windows_owner = WindowsAppServerOwner(python, win, output.resolve())
     return CodexAppServerClient(command, cwd=REPO, journal_path=output / "planner-protocol.jsonl",
                                 windows_owner=windows_owner)

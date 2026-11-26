@@ -81,6 +81,14 @@ class AppServerCommandTests(unittest.TestCase):
             windows_python = root / "python.exe"
             executable.write_bytes(b"synthetic PE selection")
             windows_python.write_bytes(b"synthetic Python selection")
+            executable_alias = root / "codex"
+            executable_alias.symlink_to(executable.name)
+            unresolved_alias = root / "missing-codex"
+            unresolved_alias.symlink_to("missing.exe")
+            ambiguous_target = root / "other-program"
+            ambiguous_target.write_bytes(b"opaque executable")
+            ambiguous_alias = root / "ambiguous.exe"
+            ambiguous_alias.symlink_to(ambiguous_target.name)
             common = {
                 "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": str(executable),
                 "CODEX_HOME": str(root / "profile"),
@@ -91,6 +99,17 @@ class AppServerCommandTests(unittest.TestCase):
                 ("missing-interop", {"WSL_INTEROP": "",
                                      "AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)}, "WSL interop"),
                 ("owned", {"AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)}, None),
+                ("owned-alias", {"AGENT_INTERFACE_CODEX_APP_SERVER_EXE": str(executable_alias),
+                                 "AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)}, None),
+                ("alias-missing-profile", {"AGENT_INTERFACE_CODEX_APP_SERVER_EXE": str(executable_alias),
+                                           "AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python),
+                                           "CODEX_HOME": ""}, "CODEX_HOME"),
+                ("dangling-alias", {"AGENT_INTERFACE_CODEX_APP_SERVER_EXE": str(unresolved_alias),
+                                    "AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)},
+                 "AGENT_INTERFACE_CODEX_APP_SERVER_EXE"),
+                ("opaque-alias", {"AGENT_INTERFACE_CODEX_APP_SERVER_EXE": str(ambiguous_alias),
+                                  "AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)},
+                 "AGENT_INTERFACE_CODEX_APP_SERVER_EXE"),
             ):
                 with self.subTest(name=name):
                     output = root / name
@@ -101,7 +120,7 @@ class AppServerCommandTests(unittest.TestCase):
                          patch.object(controller, "CodexAppServerClient",
                                       side_effect=LauncherBoundary("client launcher boundary")) as client:
                         if expected_error is not None:
-                            with self.assertRaisesRegex(ValueError, expected_error):
+                            with self.assertRaisesRegex((ValueError, app_server_client.AppServerError), expected_error):
                                 controller.main()
                             client.assert_not_called()
                             continue
