@@ -52,7 +52,7 @@ def fixture(root):
   'qualification':'pending','map':'MAP01','skill':1,'seed':990619,'vizdoom':'1.3.0','iwad_sha256':wad_sha,
   'save_file':'fixture.png','save_sha256':digest_file(c/'fixture.png'),
   'source_frame':'fixture.source.png','source_frame_sha256':digest_file(c/'fixture.source.png'),'episode_tic':529,
-  'source_observation':{'event':'observation','id':'fixture-source','sequence':37,'capture_ns':3700,'exact':True,
+  'source_observation':{'event':'observation','id':'fixture-source','step':0,'sequence':37,'capture_ns':3700,'exact':True,
   'frame_rgb_sha256':source_rgb,'pointer_binding':{'focus':11,'surface':11,'geometry':[0,0,640,480]},
   'renewal_owner_id':'owner','input_owner_generation':0,'target_process_identity':{'sequence':37,'surface':11,'digest':'a'*64},
   'target_renewal_window_identity':{'sequence':37,'surface':11,'digest':'b'*64},
@@ -85,8 +85,15 @@ def fixture(root):
  creation_sha=seal(creation,True)
  (headless/'isolated-save.png').write_bytes(b'save')
  h={'disposition':'HOLD','expected_tic':529,'actual_tic_before_any_refresh':528,
-    'candidate_save_sha256':candidate['save_sha256'],'model_calls':0,'input_commands':0,'game_close':'returned'}
- write(headless,'worker-outcome.json',h);custody(headless,{},'30s',2)
+    'candidate_save_sha256':candidate['save_sha256'],'model_calls':0,'input_commands':0,'game_close':'returned',
+    'init_started_ns':1,'before_sample_started_ns':2,'before_load_tic':1,'load_started_ns':4,
+    'load_returned_ns':5,'after_getter_ns':6,'comparison':'HOLD'}
+ write(headless,'worker-outcome.json',h)
+ write(headless,'load-attempt.json',{'before_load_tic':1,'before_sample_started_ns':2,'recorded_ns':3,
+                                   'candidate_save_sha256':candidate['save_sha256']})
+ write(headless,'load-returned.json',{'load_started_ns':4,'load_returned_ns':5,'after_getter_ns':6,
+                                    'actual_tic_before_any_refresh':528})
+ custody(headless,{},'30s',2)
  headless_sha=seal(headless,False)
  def state(tic):return {'tic':tic,'rate':35,'limit':2625,'x11_input_neutral':True,
    'last_action':[0]*9,'dead':False,'finished':False,'timeout':False}
