@@ -407,12 +407,16 @@ def main():
                     finished = game.is_episode_finished()
                     dead = game.is_player_dead()
                     wall_ns = time.perf_counter_ns() - control_started_ns
-                    map_exit = bool(finished and not dead
+                    timeout_check = getattr(game, "is_episode_timeout_reached", None)
+                    timeout_reached = (bool(timeout_check()) if callable(timeout_check) else
+                                       int(game.get_episode_time()) >= args.timeout_seconds * int(game.get_ticrate()))
+                    map_exit = bool(finished and not dead and not timeout_reached
                                     and wall_ns < (args.timeout_seconds - 5) * 1_000_000_000)
                     deaths = int(game.get_game_variable(vd.GameVariable.DEATHCOUNT))
                     kills = int(game.get_game_variable(vd.GameVariable.KILLCOUNT))
                     score = {"event": "post_control_score", "map": "MAP01", "skill": args.skill,
                         "map_exit": map_exit, "episode_finished": finished,
+                        "episode_timeout_reached": timeout_reached,
                         "player_dead": dead, "wall_control_ns": wall_ns,
                         "death_count": deaths, "kill_count": kills,
                         "one_life_map_exit": bool(map_exit and deaths == 0),

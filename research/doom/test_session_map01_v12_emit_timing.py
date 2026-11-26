@@ -41,6 +41,8 @@ def load_actual_emit(output, clock):
         "json": json,
         "threading": threading,
         "time": clock,
+        "owner_generation_protocol": types.SimpleNamespace(record_terminal=lambda row, backend: None),
+        "backend": None,
     }
     exec(compile(module, str(SOURCE), "exec"), namespace)
     return namespace["build_emit"]()
