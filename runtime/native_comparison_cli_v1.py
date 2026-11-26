@@ -18,6 +18,7 @@ from research.live_control.codex_app_server_client_v2 import wsl_codex_home_envi
 from research.live_control.integrated_efficiency_app_server_model_v1 import windows_path
 from research.live_control.native_comparison_arm_x11_v1 import CONTEXT_ENV
 from runtime import native_comparison_audit_v1 as audit
+from runtime import native_comparison_failure_v1 as failure_evidence
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -210,6 +211,35 @@ def host_seal_values(allocation, expected_sha):
             "files": {name: audit.digest(audit.scoped_path(allocation, name)) for name in HOST_FILES}}
 
 
+def failed_service_retired(allocation, unit):
+    """Observe retirement before reading files a failed worker could still change."""
+    fields = ("ActiveState", "MainPID", "ControlGroup")
+    try:
+        stopped = subprocess.run(
+            ["systemctl", "--user", "show", unit, *(f"--property={name}" for name in fields)],
+            capture_output=True, text=True, timeout=5, check=False)
+        values = dict(line.split("=", 1) for line in stopped.stdout.splitlines() if "=" in line)
+        if values.get("ActiveState") not in {"inactive", "failed"} or values.get("MainPID") != "0":
+            return False
+        uid = os.getuid()
+        default_group = f"/user.slice/user-{uid}.slice/user@{uid}.service/app.slice/{unit}"
+        groups = {values.get("ControlGroup") or default_group}
+        proof = allocation / "service-start.json"
+        if proof.is_file():
+            record = audit.read(proof)
+            if record.get("unit") != unit or type(record.get("ControlGroup")) is not str:
+                return False
+            groups.add(record["ControlGroup"])
+        return all(cgroup_retired(group, unit) for group in groups)
+    except (OSError, TypeError, ValueError, subprocess.SubprocessError):
+        return False
+
+
+def retain_failed_capture(allocation, expected_sha, unit, reason):
+    settled = failed_service_retired(allocation, unit)
+    return failure_evidence.retain(allocation, expected_sha, HOST_FILES, settled=settled, reason=reason)
+
+
 def seal_host(allocation, expected_sha):
     target = allocation / "host-seal.json"
     audit.write_record(target, host_seal_values(allocation, expected_sha))
@@ -370,6 +400,9 @@ def run_service(allocation, expected_sha, token):
 def adjudicate(allocation, expected_sha, *, expected_seal=None, expected_host_seal=None):
     allocation, plan, registration = load_plan(allocation, expected_sha)
     try:
+        if any((allocation / name).exists() for name in (failure_evidence.HOST_SEAL, failure_evidence.RAW_SEAL)):
+            return failure_evidence.verify(allocation, expected_sha, HOST_FILES,
+                                           raw_digest=expected_seal, host_digest=expected_host_seal)
         host_seal = allocation / "host-seal.json"
         host_digest = audit.digest(host_seal)
         audit.require(audit.valid_hex(expected_host_seal, 64) and host_digest == expected_host_seal
@@ -378,7 +411,7 @@ def adjudicate(allocation, expected_sha, *, expected_seal=None, expected_host_se
         service = verify_host_receipts(allocation, expected_sha)
         anchor = audit.read(allocation / "audit-anchor.json")
         seal = anchor["seal_sha256"]
-        audit.require(audit.valid_hex(seal, 64) and (expected_seal is None or seal == expected_seal),
+        audit.require(audit.valid_hex(seal, 64) and seal == expected_seal,
                       "post-capture seal differs from the retained anchor")
         verify_actual_arm_displays(allocation, service)
         outcome = audit.audit_comparison(ROOT, allocation / "raw", registration,
@@ -422,18 +455,33 @@ def run_once(allocation, expected_sha, *, confirm_live):
                 cleanup = stop.returncode
             except (OSError, subprocess.SubprocessError) as close_error:
                 error.add_note("Stopping the claimed unit raised " + type(close_error).__name__)
-            audit.write_record(allocation / "service-result.json", {
-                "returncode": None, "error_type": type(error).__name__, "stop_returncode": cleanup,
-            })
+            try:
+                audit.write_record(allocation / "service-result.json", {
+                    "returncode": None, "unit": unit, "claim_token": token,
+                    "error_type": type(error).__name__, "stop_returncode": cleanup,
+                })
+            except (OSError, ValueError) as receipt_error:
+                error.add_note("Saving service result raised " + type(receipt_error).__name__)
+            retained = retain_failed_capture(
+                allocation, expected_sha, unit, "claimed comparison service interrupted: " + type(error).__name__)
+            if isinstance(error, Exception):
+                if getattr(error, "__notes__", None):
+                    retained["diagnostics"] = error.__notes__
+                return retained
+            error.add_note(json.dumps(retained, sort_keys=True))
             raise
         if completed.returncode != 0:
-            return {"disposition": "HOLD", "reason": "claimed comparison service failed; evidence retained",
-                    "accounting_verified": False}
+            return retain_failed_capture(allocation, expected_sha, unit, "claimed comparison service exited nonzero")
         try:
             host_digest = seal_host(allocation, expected_sha)
         except (OSError, ValueError) as error:
-            return {"disposition": "HOLD", "reason": str(error), "accounting_verified": False}
-        return adjudicate(allocation, expected_sha, expected_host_seal=host_digest)
+            return retain_failed_capture(allocation, expected_sha, unit,
+                                         "full host seal unavailable: " + type(error).__name__)
+        try:
+            raw_digest = audit.read(allocation / "audit-anchor.json").get("seal_sha256")
+        except (OSError, ValueError, AttributeError):
+            raw_digest = None
+        return adjudicate(allocation, expected_sha, expected_seal=raw_digest, expected_host_seal=host_digest)
 
 
 def main(argv=None):
@@ -450,7 +498,7 @@ def main(argv=None):
         command.add_argument("allocation", type=Path)
         command.add_argument("launch_plan_sha256")
     launch.add_argument("--confirm-live", action="store_true")
-    readout.add_argument("--seal-sha256", required=True)
+    readout.add_argument("--seal-sha256")
     readout.add_argument("--host-seal-sha256", required=True)
     service = commands.add_parser("_service", help=argparse.SUPPRESS)
     service.add_argument("allocation", type=Path)

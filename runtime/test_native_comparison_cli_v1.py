@@ -196,6 +196,116 @@ class NativeComparisonCliTests(unittest.TestCase):
             self.assertFalse((allocation / "claim.json").exists())
             launch.assert_not_called()
 
+    def test_failed_unit_seals_available_evidence_and_refuses_later_changes(self):
+        for failure in ("partial", "seal_write", "still_alive", "before_raw", "transport_timeout",
+                        "windows_unsettled", "windows_retired"):
+            with self.subTest(failure=failure), TemporaryDirectory() as directory:
+                root = Path(directory)
+                allocation = root / "allocation"
+                config, host, source = self.source_and_host(root)
+                with patch.object(cli, "host_inputs", return_value=host), \
+                     patch.object(cli, "windows_path", return_value=r"C:\dummy"), \
+                     patch.object(cli.audit, "registration_values", return_value={"source": source}):
+                    plan = cli.prepare(allocation, 2, config)
+                digest = plan["launch_plan_sha256"]
+                available = allocation / "raw" / "capture-plan.json"
+                first = cli.audit.write_record
+                secret = root / "unrelated"
+                secret.write_text("must never be hashed", encoding="utf-8")
+
+                def failed(command, **kwargs):
+                    if command[:3] == ["systemctl", "--user", "stop"]:
+                        self.assertEqual(command[3], cli.audit.read(allocation / "claim.json")["unit"])
+                        return subprocess.CompletedProcess(command, 0)
+                    if failure != "before_raw":
+                        available.parent.mkdir()
+                        available.write_text('{"partly_observed": true}\n', encoding="utf-8")
+                        if failure == "partial":
+                            (available.parent / "unexpected-link").symlink_to(secret)
+                        if failure in {"windows_unsettled", "windows_retired"}:
+                            folder = available.parent / "preflight/plain/gate/plain-form-grounding"
+                            folder.mkdir(parents=True)
+                            reference = {"run_nonce": "a" * 32, "owner_sha256": "b" * 64}
+                            first(folder / cli.audit.START_RECORD, reference)
+                            if failure == "windows_retired":
+                                first(folder / cli.audit.RECEIPT, {**reference,
+                                    "schema": "native-preflight-windows-job-v1",
+                                    "ownership": "create-process-job-list", "status": "OWNER_LOST",
+                                    "job_empty": True, "active_processes": 0, "total_processes": 2,
+                                    "exit_code": 124})
+                    if failure == "transport_timeout":
+                        raise subprocess.TimeoutExpired(command, timeout=1)
+                    return subprocess.CompletedProcess(command, 17)
+
+                def write(path, value):
+                    if failure == "seal_write" and path.name == "partial-raw-seal.json":
+                        raise OSError("synthetic raw seal write failure")
+                    return first(path, value)
+
+                with patch.object(cli, "host_inputs", return_value=host), \
+                     patch.object(cli.audit, "source_snapshot", return_value=source), \
+                     patch.object(cli, "exclusive_launch", side_effect=lambda role="caller": nullcontext()), \
+                     patch.object(cli, "failed_service_retired", return_value=failure != "still_alive", create=True), \
+                     patch.object(cli.audit, "write_record", side_effect=write), \
+                     patch.object(cli.subprocess, "run", side_effect=failed) as launch:
+                    result = cli.run_once(allocation, digest, confirm_live=True)
+                    self.assertEqual(result["disposition"], "HOLD")
+                    worker = cli.audit.read(allocation / "service-result.json")
+                    self.assertEqual(worker["returncode"], None if failure == "transport_timeout" else 17)
+                    if failure == "transport_timeout":
+                        self.assertEqual(worker["stop_returncode"], 0)
+                    with self.assertRaisesRegex(ValueError, "already been claimed"):
+                        cli.run_once(allocation, digest, confirm_live=True)
+                    self.assertEqual(launch.call_count, 2 if failure == "transport_timeout" else 1)
+                self.assertIn("host_seal_sha256", result)
+                if failure == "seal_write":
+                    self.assertNotIn("seal_sha256", result)
+                    self.assertEqual(result["preservation"]["raw"]["status"], "failed")
+                    self.assertIn("synthetic raw seal write failure", result["preservation"]["raw"]["reason"])
+                    verified_host = cli.adjudicate(allocation, digest,
+                                                   expected_host_seal=result["host_seal_sha256"])
+                    self.assertEqual(verified_host["disposition"], "HOLD")
+                    self.assertIs(verified_host["host_manifest_verified"], True)
+                    self.assertIs(verified_host["partial_manifests_verified"], False)
+                    continue
+                raw = cli.audit.read(allocation / "partial-raw-seal.json")
+                hosts = cli.audit.read(allocation / "partial-host-seal.json")
+                self.assertIn("display-end.json", hosts["snapshot"]["missing"] if failure != "still_alive"
+                              else hosts["snapshot"]["unsealed"])
+                if failure == "still_alive":
+                    self.assertEqual(raw["snapshot"]["state"], "unsettled")
+                    self.assertEqual(raw["snapshot"]["files"], {})
+                    continue
+                if failure == "windows_unsettled":
+                    self.assertEqual(raw["snapshot"]["state"], "unsettled")
+                    self.assertEqual(raw["snapshot"]["files"], {})
+                    self.assertEqual(raw["snapshot"]["unsealed"]["."], "windows_job_retirement_unverified")
+                    self.assertIn("service-result.json", hosts["snapshot"]["files"])
+                    continue
+                if failure == "before_raw":
+                    self.assertEqual(raw["snapshot"]["state"], "absent")
+                    self.assertIn("capture-plan.json", raw["snapshot"]["missing"])
+                    continue
+                self.assertIn("capture-plan.json", raw["snapshot"]["files"])
+                self.assertIn("capture.json", raw["snapshot"]["missing"])
+                if failure == "partial":
+                    self.assertEqual(raw["snapshot"]["unsealed"]["unexpected-link"], "non_regular_artifact")
+                verified = cli.adjudicate(allocation, digest, expected_seal=result["seal_sha256"],
+                    expected_host_seal=result["host_seal_sha256"])
+                self.assertIs(verified["partial_manifests_verified"], True)
+                host_log = allocation / "service.stderr"
+                before = host_log.read_bytes()
+                host_log.write_bytes(b"changed out of band\n")
+                changed_host = cli.adjudicate(allocation, digest, expected_seal=result["seal_sha256"],
+                    expected_host_seal=result["host_seal_sha256"])
+                self.assertIn("changed after preservation", changed_host["reason"])
+                host_log.write_bytes(before)
+                available.write_text('{"changed": true}\n', encoding="utf-8")
+                changed = cli.adjudicate(allocation, digest, expected_seal=result["seal_sha256"],
+                    expected_host_seal=result["host_seal_sha256"])
+                self.assertEqual(changed["disposition"], "HOLD")
+                self.assertIn("changed after preservation", changed["reason"])
+
     def test_missing_job_or_display_receipt_is_hold(self):
         with TemporaryDirectory() as directory:
             root = Path(directory)
