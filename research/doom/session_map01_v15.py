@@ -128,7 +128,19 @@ class _GameProxy:
             raise self._close_error
         return result
 
+def validate_door_runtime_options(argv):
+    door_flags=[item for item in argv if item=='--door-task-arm' or item.startswith('--door-task-arm=')]
+    if not door_flags:
+        return
+    required=('--target-process-identity','--owned-input-service',
+              '--renewal-passive-observer','--post-load-clock-gate')
+    if (door_flags!=['--door-task-arm'] or any(argv.count(flag)!=1 for flag in required)
+            or '--target-window-lifecycle' in argv):
+        raise ValueError('door trial requires owned process identity, observer and clock gate')
+
+
 def main():
+    validate_door_runtime_options(sys.argv[1:])
     owned_input_service='--owned-input-service' in sys.argv[1:]
     process_identity='--target-process-identity' in sys.argv[1:]
     window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
