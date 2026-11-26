@@ -133,6 +133,8 @@ def main():
     process_identity='--target-process-identity' in sys.argv[1:]
     window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
     clock_gate_requested = "--post-load-clock-gate" in sys.argv[1:]
+    if '--fresh-neutral-fixture-setup' in sys.argv[1:] and (clock_gate_requested or not owned_input_service or not process_identity or '--renewal-passive-observer' not in sys.argv[1:]):
+        raise ValueError('fresh neutral setup requires process identity, owned service and observer without post-load gate')
     if clock_gate_requested and not owned_input_service:
         raise ValueError("post-load clock gate requires the owned input service")
     if owned_input_service and (not process_identity or window_lifecycle):
