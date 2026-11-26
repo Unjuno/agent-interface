@@ -21,6 +21,13 @@ def complete_capture():
             "reason": "independent_raw_audit_required", "arms": dict.fromkeys(cli.audit.ARMS, "captured")}
 
 
+def persistent_incomplete_capture():
+    result = complete_capture()
+    result["reason"] = "task_or_independent_effect_incomplete"
+    result["arms"]["persistent"] = "incomplete"
+    return result
+
+
 def service_proof(unit):
     uid = os.getuid()
     return {"KillMode": "control-group", "RuntimeMaxUSec": "30min", "TimeoutStopUSec": "8s", "MainPID": "110",
@@ -400,7 +407,19 @@ class NativeComparisonCliTests(unittest.TestCase):
             self.assertFalse((allocation / "audit-anchor.json").exists())
             self.assertFalse((allocation / "raw/capture-seal.json").exists())
 
-    def test_worker_returns_nonzero_for_normally_returned_interruption(self):
+    def test_worker_reports_stop_when_capture_cannot_be_adjudicated(self):
+        interruption = {**complete_capture(), "reason": "preflight_interrupted",
+                        "arms": {"plain": "interrupted", "ephemeral": "not_run", "persistent": "not_run"}}
+        reference_incomplete = {**persistent_incomplete_capture(),
+                                "arms": {"plain": "incomplete", "ephemeral": "not_run", "persistent": "not_run"}}
+        for result in (interruption, reference_incomplete):
+            with self.subTest(result=result):
+                self.check_worker_exit(result, 2)
+
+    def test_worker_passes_closed_persistent_failure_to_adjudication(self):
+        self.check_worker_exit(persistent_incomplete_capture(), 0)
+
+    def check_worker_exit(self, result, expected_code):
         with TemporaryDirectory() as directory:
             allocation = Path(directory)
             settings, host, _ = self.source_and_host(allocation)
@@ -409,8 +428,6 @@ class NativeComparisonCliTests(unittest.TestCase):
             cli.audit.write_record(allocation / "claim.json", {
                 "token": token, "unit": unit, "launch_plan_sha256": digest,
             })
-            result = {**complete_capture(), "reason": "preflight_interrupted",
-                      "arms": {"plain": "interrupted", "ephemeral": "not_run", "persistent": "not_run"}}
             plan = {"settings": settings, "host": host, "registration_sha256": "c" * 64}
 
             @contextmanager
@@ -426,7 +443,7 @@ class NativeComparisonCliTests(unittest.TestCase):
                  patch.object(cli, "owned_display", display), \
                  patch.object(cli.audit, "capture_registered", return_value={"capture": result}), \
                  patch.object(cli.audit, "seal_capture") as full:
-                self.assertEqual(cli.run_service(allocation, digest, token), 2)
+                self.assertEqual(cli.run_service(allocation, digest, token), expected_code)
             full.assert_not_called()
             self.assertFalse((allocation / "audit-anchor.json").exists())
             self.assertEqual(cli.audit.read(allocation / "capture-worker-result.json")["capture"], result)
@@ -495,44 +512,77 @@ class NativeComparisonCliTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "outside the claimed"):
                     x11.guarded_session(DummySession, context, raw / "other/runtime")
 
+    def completed_service_records(self, allocation, result):
+        capture = SyntheticCapture(allocation)
+        capture.populate()
+        self.assertTrue(cli.failure_evidence.native_writers_retired(capture.out, require_all=True))
+        plan = allocation / "launch-plan.json"
+        cli.audit.write_record(plan, {
+            "schema": "native_comparison_launch_plan_v1", "allocation": str(allocation),
+            "service": cli.SERVICE_POLICY, "registration_sha256": capture.registration_digest,
+        })
+        plan_sha = cli.audit.digest(plan)
+        token = "c" * 32
+        unit = f"agent-interface-native-comparison-{token}.service"
+        service = {**service_proof(unit), "unit": unit, "claim_token": token, "launch_plan_sha256": plan_sha}
+        cli.audit.write_record(allocation / "claim.json", {
+            "token": token, "unit": unit, "launch_plan_sha256": plan_sha, "automatic_retry": False,
+        })
+        cli.audit.write_record(allocation / "service-start.json", service)
+        cli.audit.write_record(allocation / "service-result.json",
+                               {"unit": unit, "claim_token": token, "returncode": 0})
+        (capture.out / "capture.json").write_text(json.dumps(result), encoding="utf-8")
+        cli.audit.write_record(allocation / "capture-worker-result.json", {
+            "unit": unit, "claim_token": token, "capture": result,
+        })
+        display = display_proof(service)
+        cli.audit.write_record(allocation / "display-start.json", display)
+        cli.audit.write_record(allocation / "display-end.json", retire(display))
+        (allocation / "service.stdout").touch()
+        (allocation / "service.stderr").touch()
+        for index, arm in enumerate(cli.audit.ARMS, start=1):
+            runtime = capture.out / "arms" / arm / "runtime"
+            timing = cli.audit.read(capture.out / "capture-arms" / arm / "arm-timing.json")
+            proof = display_proof(service, number=121, pid=300 + index * 10, arm=arm,
+                                  started=timing["arm_started_ns"] + 10)
+            cli.audit.write_record(runtime / "comparison-display-start.json", proof)
+            cli.audit.write_record(runtime / "comparison-display-end.json",
+                {**retire(proof), "finished_monotonic_ns": timing["arm_finished_ns"] - 1})
+        return capture, service, plan_sha
+
+    def test_settled_persistent_failure_requires_independent_rejection_evidence(self):
+        for wrong, settled in ((True, True), (False, True), (True, False)):
+            with self.subTest(wrong=wrong, settled=settled), TemporaryDirectory() as directory:
+                allocation = Path(directory)
+                capture, service, plan_sha = self.completed_service_records(allocation, persistent_incomplete_capture())
+                if wrong:
+                    history = capture.out / "arms/persistent/runtime/submission-history.jsonl"
+                    events = cli.audit.records(history)
+                    events[3].update(submitted_values=["wrong"], exact=False)
+                    history.write_text("".join(json.dumps(event) + "\n" for event in events), encoding="utf-8")
+                if not settled:
+                    (capture.out / "native-app-server" / "persistent" / cli.audit.APP_SERVER_JOB_RECEIPT).unlink()
+                with (
+                    patch.object(cli, "ROOT", capture.repo),
+                    patch.object(cli, "failed_service_retired", return_value=True),
+                    patch.object(cli, "cgroup_retired", return_value=True),
+                ):
+                    if not settled:
+                        with self.assertRaisesRegex(ValueError, "all allocated native Windows writers"):
+                            cli.seal_settled_capture(allocation, plan_sha, service["unit"], service["claim_token"])
+                        self.assertFalse((capture.out / "capture-seal.json").exists())
+                        continue
+                    raw_sha, host_sha = cli.seal_settled_capture(
+                        allocation, plan_sha, service["unit"], service["claim_token"])
+                    outcome = cli.adjudicate(allocation, plan_sha, expected_seal=raw_sha, expected_host_seal=host_sha)
+                self.assertEqual(outcome["disposition"], "REJECT" if wrong else "HOLD", outcome)
+                if wrong:
+                    self.assertEqual(outcome["reason"], "confirmed_persistent_safety_or_effect_failure")
+
     def test_actual_comparison_auditor_cannot_skip_invalid_host_or_missing_arm_proof(self):
         with TemporaryDirectory() as directory:
             allocation = Path(directory)
-            capture = SyntheticCapture(allocation)
-            capture.populate()
-            self.assertTrue(cli.failure_evidence.native_writers_retired(capture.out, require_all=True))
-            plan = allocation / "launch-plan.json"
-            cli.audit.write_record(plan, {
-                "schema": "native_comparison_launch_plan_v1", "allocation": str(allocation),
-                "service": cli.SERVICE_POLICY, "registration_sha256": capture.registration_digest,
-            })
-            plan_sha = cli.audit.digest(plan)
-            token = "c" * 32
-            unit = f"agent-interface-native-comparison-{token}.service"
-            service = {**service_proof(unit), "unit": unit, "claim_token": token, "launch_plan_sha256": plan_sha}
-            cli.audit.write_record(allocation / "claim.json", {
-                "token": token, "unit": unit, "launch_plan_sha256": plan_sha, "automatic_retry": False,
-            })
-            cli.audit.write_record(allocation / "service-start.json", service)
-            cli.audit.write_record(allocation / "service-result.json",
-                                   {"unit": unit, "claim_token": token, "returncode": 0})
-            (capture.out / "capture.json").write_text(json.dumps(complete_capture()), encoding="utf-8")
-            cli.audit.write_record(allocation / "capture-worker-result.json", {
-                "unit": unit, "claim_token": token, "capture": complete_capture(),
-            })
-            display = display_proof(service)
-            cli.audit.write_record(allocation / "display-start.json", display)
-            cli.audit.write_record(allocation / "display-end.json", retire(display))
-            (allocation / "service.stdout").touch()
-            (allocation / "service.stderr").touch()
-            for index, arm in enumerate(cli.audit.ARMS, start=1):
-                runtime = capture.out / "arms" / arm / "runtime"
-                timing = cli.audit.read(capture.out / "capture-arms" / arm / "arm-timing.json")
-                proof = display_proof(service, number=121, pid=300 + index * 10, arm=arm,
-                                      started=timing["arm_started_ns"] + 10)
-                cli.audit.write_record(runtime / "comparison-display-start.json", proof)
-                cli.audit.write_record(runtime / "comparison-display-end.json",
-                    {**retire(proof), "finished_monotonic_ns": timing["arm_finished_ns"] - 1})
+            capture, service, plan_sha = self.completed_service_records(allocation, complete_capture())
             seal = cli.audit.seal_capture(capture.out)
             cli.audit.write_record(allocation / "audit-anchor.json", {"seal_sha256": seal})
             host_seal = cli.seal_host(allocation, plan_sha)

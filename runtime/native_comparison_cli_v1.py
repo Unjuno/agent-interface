@@ -396,24 +396,32 @@ def run_service(allocation, expected_sha, token):
                                               registration_sha256=plan["registration_sha256"])
             audit.write_record(allocation / "capture-worker-result.json",
                                {"unit": claim["unit"], "claim_token": token, "capture": result["capture"]})
-    return 0 if capture_complete(result["capture"]) else 2
+    return 0 if capture_adjudicable(result["capture"]) else 2
 
 
-def capture_complete(result):
-    return audit.same(result, {
+def capture_adjudicable(result):
+    """Report whether the worker reached a terminal state the auditor can assess."""
+    expected = {
         "schema": "native_comparison_capture_v1", "disposition": "HOLD",
         "reason": "independent_raw_audit_required", "arms": dict.fromkeys(audit.ARMS, "captured"),
-    })
+    }
+    if audit.same(result, expected):
+        return True
+    # A semantic stop in the last arm can have independently verified failure evidence.
+    # The caller must still prove retirement and the auditor decides the outcome.
+    expected["reason"] = "task_or_independent_effect_incomplete"
+    expected["arms"]["persistent"] = "incomplete"
+    return audit.same(result, expected)
 
 
 def verify_worker_capture(allocation, unit, token):
     worker = audit.read(allocation / "capture-worker-result.json")
     result = audit.read(allocation / "raw" / "capture.json")
     audit.require(audit.same(worker, {"unit": unit, "claim_token": token, "capture": result})
-                  and capture_complete(result), "comparison capture did not complete every arm")
+                  and capture_adjudicable(result), "comparison capture cannot be independently adjudicated")
 
 
-def seal_completed_capture(allocation, expected_sha, unit, token):
+def seal_settled_capture(allocation, expected_sha, unit, token):
     verify_worker_capture(allocation, unit, token)
     audit.require(failed_service_retired(allocation, unit), "comparison service retirement is unverified")
     raw = allocation / "raw"
@@ -503,7 +511,7 @@ def run_once(allocation, expected_sha, *, confirm_live):
         if completed.returncode != 0:
             return retain_failed_capture(allocation, expected_sha, unit, "claimed comparison service exited nonzero")
         try:
-            raw_digest, host_digest = seal_completed_capture(allocation, expected_sha, unit, token)
+            raw_digest, host_digest = seal_settled_capture(allocation, expected_sha, unit, token)
         except (OSError, ValueError, KeyError, TypeError, AttributeError) as error:
             result = retain_failed_capture(allocation, expected_sha, unit, "full capture custody unavailable")
             result["diagnostics"] = [str(error)]
