@@ -41,14 +41,19 @@ def file_sha256(path):
 
 
 def validate_verified_fixture_setup(args, post_load_gate):
-    if not args.verified_fixture_setup:
+    fresh = getattr(args, 'fresh_neutral_fixture_setup', False)
+    loaded = args.verified_fixture_setup
+    if not fresh and not loaded:
         if post_load_gate is not None and (args.load_fixture_manifest is None or args.fixture_out is not None):
             raise ValueError("post-load clock gate requires a fixed loaded fixture")
         return
-    if post_load_gate is None or args.load_fixture_manifest is None or args.fixture_out is None:
+    if fresh:
+        if loaded or post_load_gate is not None or args.load_fixture_manifest is not None or args.fixture_out is None:
+            raise ValueError("fresh fixture setup requires a new game and new output")
+    elif post_load_gate is None or args.load_fixture_manifest is None or args.fixture_out is None:
         raise ValueError("verified fixture setup requires a loaded fixture, clock gate and new output")
     if not args.renewal_passive_observer:
-        raise ValueError("verified fixture setup requires renewal owner identity")
+        raise ValueError("fixture setup requires renewal owner identity")
     if (type(args.fixture_setup_program_sha256) is not str or
             re.fullmatch(r'[0-9a-f]{64}', args.fixture_setup_program_sha256) is None):
         raise ValueError("verified fixture setup requires a fixed program hash")
@@ -88,6 +93,114 @@ def admit_verified_setup_program(steps, expected_hash, input_claimed):
             or program_sha256(steps) != expected_hash):
         raise ValueError('fixture setup movement is not the one predeclared attempt')
     return True
+
+
+def admit_fresh_neutral_program(steps, expected_hash, claimed):
+    if (claimed or type(steps) is not list or not steps or len(steps) > 16
+            or any(type(step) is not dict or set(step) != {'op', 'duration_ms', 'sample_ms'}
+                   or step['op'] != 'coast' or type(step['duration_ms']) is not int
+                   or not 1 <= step['duration_ms'] <= 5000
+                   or type(step['sample_ms']) is not int or not 50 <= step['sample_ms'] <= 1000
+                   for step in steps)
+            or sum(step['duration_ms'] for step in steps) > 12000
+            or program_sha256(steps) != expected_hash):
+        raise ValueError('fresh fixture requires one fixed passive coast')
+    return True
+
+
+def validate_fresh_neutral_completed(events, sources, program_hash, last_accepted, last_terminal, backend):
+    accepted = [row for row in events if row.get('event') == 'accepted']
+    terminals = [row for row in events if row.get('event') == 'terminal']
+    forbidden = {'input_admission', 'pointer_admission', 'input_release_transition', 'input_released'}
+    if (len(accepted) != 1 or len(terminals) != 1
+            or type(last_accepted) is not dict or type(last_terminal) is not dict
+            or accepted[0] != {k: v for k, v in last_accepted.items() if k != 'emit_ns'}
+            or terminals[0] != {k: v for k, v in last_terminal.items() if k != 'emit_ns'} or accepted[0].get('program_sha256') != program_hash
+            or any(row.get('event') in forbidden for row in events)):
+        raise ValueError('fresh fixture coast or input evidence differs')
+    identifier = accepted[0].get('id')
+    source = sources.get(identifier)
+    terminal = terminals[0]
+    if (type(identifier) is not str or not identifier or terminal.get('id') != identifier
+            or terminal.get('status') != 'completed' or type(source) is not dict
+            or type(source.get('renewal_owner_id')) is not str or not source['renewal_owner_id']
+            or type(source.get('input_owner_generation')) is not int
+            or getattr(getattr(backend, 'owner', None), 'owner_id', None) != source['renewal_owner_id']
+            or type(getattr(backend, '_owner_generation', None)) is not int
+            or backend._owner_generation != source['input_owner_generation']
+            or terminal.get('input_owner_id') != source['renewal_owner_id']
+            or type(terminal.get('input_owner_generation')) is not int
+            or terminal['input_owner_generation'] != source['input_owner_generation']
+            or not operation_release_verified(identifier, events)):
+        raise ValueError('fresh fixture coast completion or release is unverified')
+
+
+def require_fresh_neutral_deadline(source, owner_state, checked_ns, clock_deadline_ns, *, now):
+    capture = source.get('capture_ns') if type(source) is dict else None
+    sampled = owner_state.get('sample_finished_ns') if type(owner_state) is dict else None
+    if (any(type(value) is not int for value in (capture, sampled, checked_ns, clock_deadline_ns, now))
+            or not capture <= checked_ns <= sampled <= now
+            or now >= min(clock_deadline_ns, checked_ns + 1_000_000_000,
+                          sampled + 1_000_000_000, capture + 2_000_000_000)):
+        raise ValueError('fresh fixture source or owner evidence expired')
+
+
+def validate_fresh_neutral_snapshot(events, latest):
+    typed = [row for row in events if row.get('event') == 'typed_observation']
+    frames = [row for row in events if row.get('event') == 'observation']
+    if (len(typed) < 2 or len(typed) != len(frames) or type(latest) is not dict
+            or frames[-1] != {k: v for k, v in latest.items() if k != 'emit_ns'}
+            or frames[0].get('id') != 'initial' or frames[-1].get('id') != 'fixture-source'):
+        raise ValueError('fresh fixture observation coverage incomplete')
+    baseline = None
+    previous_capture = previous_sequence = None
+    owner = generation = surface = process_digest = window_digest = None
+    for early, frame in zip(typed, frames):
+        fields = ('id', 'sequence', 'capture_ns', 'frame_rgb_sha256', 'pointer_binding',
+                  'input_owner_generation', 'renewal_owner_id', 'target_process_identity',
+                  'target_renewal_window_identity')
+        if any(early.get(key) != frame.get(key) for key in fields):
+            raise ValueError('fresh fixture typed and full observations differ')
+        seq, capture = frame.get('sequence'), frame.get('capture_ns')
+        binding, identity = frame.get('pointer_binding'), frame.get('target_process_identity')
+        window = frame.get('target_renewal_window_identity')
+        rgb = frame.get('frame_rgb_sha256')
+        if (type(seq) is not int or type(capture) is not int or capture <= 0
+                or type(rgb) is not str or re.fullmatch('[0-9a-f]{64}', rgb) is None
+                or type(binding) is not dict or type(binding.get('surface')) is not int
+                or binding.get('focus') != binding['surface'] or type(identity) is not dict
+                or identity.get('sequence') != seq or identity.get('surface') != binding['surface']
+                or type(identity.get('digest')) is not str or re.fullmatch('[0-9a-f]{64}', identity['digest']) is None
+                or type(window) is not dict or window.get('sequence') != seq
+                or window.get('surface') != binding['surface'] or type(window.get('digest')) is not str
+                or re.fullmatch('[0-9a-f]{64}', window['digest']) is None or frame.get('exact') is not True
+                or frame.get('focus_samples_match') is not True
+                or frame.get('input_focus_before') != binding['focus']
+                or frame.get('input_focus_after') != binding['focus']
+                or type(frame.get('renewal_owner_id')) is not str or not frame['renewal_owner_id']
+                or type(frame.get('input_owner_generation')) is not int):
+            raise ValueError('fresh fixture observation identity is invalid')
+        if previous_capture is not None and (seq != previous_sequence + 1 or capture <= previous_capture
+                                             or capture - previous_capture > 3_000_000_000):
+            raise ValueError('fresh fixture observation sequence has a gap')
+        if owner is None:
+            owner, generation, surface = frame['renewal_owner_id'], frame['input_owner_generation'], binding['surface']
+            process_digest, window_digest = identity['digest'], window['digest']
+        if (frame['renewal_owner_id'], frame['input_owner_generation'], binding['surface']) != (owner, generation, surface) or identity['digest'] != process_digest or window['digest'] != window_digest:
+            raise ValueError('fresh fixture owner, target or surface changed')
+        signals = early.get('signals', {})
+        for name in ('health', 'ammo'):
+            signal = signals.get(name, {})
+            if (signal.get('status') != 'observed' or type(signal.get('value')) is not int
+                    or signal.get('signal_id') != name or signal.get('sequence') != seq
+                    or signal.get('capture_ns') != capture or signal.get('binding') != binding):
+                raise ValueError('fresh fixture HUD is unreadable or mismatched')
+        health = signals['health']['value']
+        if health <= 0 or (baseline is not None and health < baseline):
+            raise ValueError('fresh fixture health decreased')
+        if baseline is None:
+            baseline = health
+        previous_capture, previous_sequence = capture, seq
 
 
 def write_verified_fixture(save_path, expected_directory, engine_save, source_image, fixture):
@@ -265,6 +378,7 @@ def main(*, post_load_gate=None):
     parser.add_argument("--fixture-out", type=Path)
     parser.add_argument("--load-fixture-manifest", type=Path)
     parser.add_argument("--verified-fixture-setup", action="store_true")
+    parser.add_argument("--fresh-neutral-fixture-setup", action="store_true")
     parser.add_argument("--fixture-setup-program-sha256")
     parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
@@ -282,6 +396,7 @@ def main(*, post_load_gate=None):
     owner_generation_protocol = InputOwnerGenerationProtocol()
 
     probe_delivery = None
+    fresh_gate = None
     last_terminal = None
     last_accepted = None
     setup_events = []
@@ -309,7 +424,7 @@ def main(*, post_load_gate=None):
                     rejected = json.dumps(row, allow_nan=False, sort_keys=True)
                     raise RuntimeError(f"post-load gate rejected event: {rejected}; "
                                        f"{type(error).__name__}: {error}") from error
-            if args.verified_fixture_setup:
+            if args.verified_fixture_setup or args.fresh_neutral_fixture_setup:
                 if row.get('event') == 'accepted':
                     setup_sources[row['id']] = deepcopy(latest_observation)
                 setup_events.append(deepcopy(row))
@@ -349,17 +464,17 @@ def main(*, post_load_gate=None):
                  HERE / "doom_hud_signal_v2.py",
                  HERE / "doom_hud_signal_v1.py"):
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
-    if post_load_gate is not None:
+    if post_load_gate is not None or args.fresh_neutral_fixture_setup:
         sources["doom/map01_post_load_gate_v1.py"] = file_sha256(HERE / "map01_post_load_gate_v1.py")
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
-            if post_load_gate is not None:
+            if post_load_gate is not None or args.fresh_neutral_fixture_setup:
                 # An unset bus address invites X11 autolaunch. Suppress it
                 # before Xvfb/Openbox inherit the environment.
                 os.environ["DBUS_SESSION_BUS_ADDRESS"] = "disabled:"
             session = suite.Session()
-            if post_load_gate is not None:
+            if post_load_gate is not None or args.fresh_neutral_fixture_setup:
                 # The shared X11 helper strips the inherited address from its
                 # copied environment. Keep subsequent session subprocesses isolated.
                 session.env["DBUS_SESSION_BUS_ADDRESS"] = os.environ["DBUS_SESSION_BUS_ADDRESS"]
@@ -414,13 +529,22 @@ def main(*, post_load_gate=None):
         if len(candidates) != 1:
             raise RuntimeError("Expected one Doom window: " + repr(windows))
         session.focus(" ".join(candidates[0].split()[3:]))
-        game.advance_action(1, True)
-        before = game.get_episode_time()
-        wall = time.perf_counter()
-        time.sleep(2)
-        game.advance_action(1, True)
-        after = game.get_episode_time()
-        elapsed = time.perf_counter() - wall
+        if args.fresh_neutral_fixture_setup:
+            from map01_post_load_gate_v1 import PostLoadGate
+            fresh_gate = PostLoadGate(args.out, args.timeout_seconds)
+            fresh_gate.path = args.out / 'fresh-start-clock-gate.jsonl'
+            before = game.get_episode_time()
+            fresh_start = fresh_gate.after_load(game, session, expected_tic=before)
+            after = fresh_start['last_refresh_tic']
+            elapsed = fresh_start['delayed_elapsed_ns'] / 1e9
+        else:
+            game.advance_action(1, True)
+            before = game.get_episode_time()
+            wall = time.perf_counter()
+            time.sleep(2)
+            game.advance_action(1, True)
+            after = game.get_episode_time()
+            elapsed = time.perf_counter() - wall
         iwad = Path(vd.__file__).parent / "freedoom2.wad"
         iwad_sha256 = file_sha256(iwad)
         loaded_fixture = None
@@ -449,12 +573,12 @@ def main(*, post_load_gate=None):
             "iwad_sha256": iwad_sha256,
             "loaded_fixture": loaded_fixture,
             "sound_for_controller": False, "episode_timeout_seconds": args.timeout_seconds}
-        if post_load_gate is not None:
+        if post_load_gate is not None or args.fresh_neutral_fixture_setup:
             environment["dbus_session_bus_address"] = session.env["DBUS_SESSION_BUS_ADDRESS"]
         (args.out / "environment.json").write_text(json.dumps(environment, indent=2))
         emit({"event": "clock_probe", "before_tic": before, "after_tic": after,
               "wall_seconds": elapsed, "no_advance_calls_during_wait": True,
-              "refresh_calls_before_control": 2})
+              "refresh_calls_before_control": 4 if args.fresh_neutral_fixture_setup else 2})
         with (args.out / "backend-setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
             signal_readers = {
                 name: DoomStatusNumberReader(iwad, signal_id=name)
@@ -480,6 +604,8 @@ def main(*, post_load_gate=None):
             operations.append("refresh_owner_source")
         if args.fixture_out is not None:
             operations.append("save_fixture")
+        if args.fresh_neutral_fixture_setup:
+            operations = ["submit", "cancel", "clock", "finish", "save_fixture"]
         prohibited = ["pause", "API action selection", "automap", "object labels", "sector labels"]
         if args.fixture_out is None:
             prohibited.append("save state")
@@ -489,9 +615,10 @@ def main(*, post_load_gate=None):
                   "submit": {"op": "submit", "id": "new nonempty string",
                       "expected_sequence": "latest integer observation sequence",
                       "valid_until_ns": "runtime monotonic ns, at most 30s ahead",
-                      "steps": [{"op": "hold", "keys": ["1-4 exact binding names"],
-                                 "duration_ms": "1-5000"},
-                                {"op": "observe"}]},
+                      "steps": ([{"op": "coast", "duration_ms": "1-5000", "sample_ms": "50-1000"}]
+                                if args.fresh_neutral_fixture_setup else
+                                [{"op": "hold", "keys": ["1-4 exact binding names"],
+                                  "duration_ms": "1-5000"}, {"op": "observe"}])},
                   "coast": {"op": "coast", "duration_ms": "1-5000",
                             "sample_ms": "50-1000", "input_authority": False},
                   "rotate_input_owner": {"op": "rotate_input_owner",
@@ -525,12 +652,28 @@ def main(*, post_load_gate=None):
                 command = json.loads(line)
                 emit({"event": "command", "command": command,
                       "received_ns": time.perf_counter_ns()})
+                if args.fresh_neutral_fixture_setup and command.get('op') not in ('submit', 'cancel', 'clock', 'finish', 'save_fixture'):
+                    raise ValueError('operation unavailable in fresh neutral setup')
                 if command["op"] == "probe_cover_renewal" and probe_delivery is not None:
                     probe_delivery.start(command)
                 elif command["op"] == "submit":
                     if args.verified_fixture_setup:
                         setup_input_claimed = admit_verified_setup_program(
                             command['steps'], args.fixture_setup_program_sha256, setup_input_claimed)
+                    if args.fresh_neutral_fixture_setup:
+                        setup_input_claimed = admit_fresh_neutral_program(
+                            command['steps'], args.fixture_setup_program_sha256, setup_input_claimed)
+                        checked_ns = time.perf_counter_ns()
+                        if checked_ns >= fresh_gate.clock_reserve_deadline_ns:
+                            raise ValueError('fresh setup start clock reserve expired')
+                        owner_id, generation, owner_state, engine_state = fresh_gate._owner_and_source(
+                            backend, latest_observation, command, checked_ns)
+                        if time.perf_counter_ns() >= fresh_gate.clock_reserve_deadline_ns:
+                            raise ValueError('fresh setup start clock reserve expired')
+                        emit({'event': 'fresh_start_admission', 'id': command['id'],
+                              'checked_ns': checked_ns, 'owner_id': owner_id, 'generation': generation,
+                              'owner_state': owner_state, 'engine_state': engine_state,
+                              'clock_deadline_ns': fresh_gate.clock_reserve_deadline_ns})
                     approval = {}
                     if probe_delivery is not None:
                         if type(command.get("id")) is str and RENEWAL_ID.fullmatch(command["id"]):
@@ -548,6 +691,10 @@ def main(*, post_load_gate=None):
                             approval["admission_deadline_ns"] = min(
                                 approval.get("admission_deadline_ns", first_press_deadline),
                                 first_press_deadline)
+                    if args.fresh_neutral_fixture_setup:
+                        require_fresh_neutral_deadline(latest_observation, owner_state, checked_ns,
+                                                       fresh_gate.clock_reserve_deadline_ns,
+                                                       now=time.perf_counter_ns())
                     executor.submit(command["id"], command["steps"],
                                     command["expected_sequence"], command["valid_until_ns"], **approval)
                 elif command["op"] == "cancel":
@@ -586,28 +733,58 @@ def main(*, post_load_gate=None):
                         validate_setup_completed(setup_events, setup_sources, post_load_gate,
                                                  args.fixture_setup_program_sha256,
                                                  last_accepted, last_terminal, backend)
+                    if args.fresh_neutral_fixture_setup:
+                        validate_fresh_neutral_completed(setup_events, setup_sources,
+                            args.fixture_setup_program_sha256, last_accepted, last_terminal, backend)
+                    if args.fresh_neutral_fixture_setup:
+                        from map01_post_load_gate_v1 import PostLoadGate
+                        end_gate = PostLoadGate(args.out, args.timeout_seconds)
+                        end_gate.path = args.out / 'fresh-end-clock-gate.jsonl'
+                        end_gate.after_load(game, session, expected_tic=game.get_episode_time())
+                        if end_gate.display != fresh_gate.display:
+                            raise ValueError('fresh fixture display changed')
                     backend.snapshot("fixture-source", 0)
-                    save_path = (Path(os.path.abspath(args.fixture_out)) if args.verified_fixture_setup
+                    if args.fresh_neutral_fixture_setup:
+                        validate_fresh_neutral_snapshot(setup_events, latest_observation)
+                        checked_ns = time.perf_counter_ns()
+                        if checked_ns >= end_gate.clock_reserve_deadline_ns:
+                            raise ValueError('fresh fixture end clock reserve expired')
+                        owner_id, generation, owner_state, engine_state = end_gate._owner_and_source(
+                            backend, latest_observation,
+                            {'expected_sequence': latest_observation['sequence']}, checked_ns)
+                        if (owner_id != setup_sources[last_accepted['id']]['renewal_owner_id']
+                                or generation != setup_sources[last_accepted['id']]['input_owner_generation']
+                                or time.perf_counter_ns() >= end_gate.clock_reserve_deadline_ns):
+                            raise ValueError('fresh fixture end owner or clock changed')
+                        emit({'event': 'fresh_end_admission', 'checked_ns': checked_ns,
+                              'owner_id': owner_id, 'generation': generation, 'owner_state': owner_state,
+                              'engine_state': engine_state, 'clock_deadline_ns': end_gate.clock_reserve_deadline_ns})
+                    candidate_setup = args.verified_fixture_setup or args.fresh_neutral_fixture_setup
+                    save_path = (Path(os.path.abspath(args.fixture_out)) if candidate_setup
                                  else args.fixture_out.resolve())
-                    if not args.verified_fixture_setup:
+                    if not candidate_setup:
                         save_path.parent.mkdir(parents=True, exist_ok=True)
                     engine_save_path = session.tmp / "fixture-save.png"
+                    if args.fresh_neutral_fixture_setup:
+                        require_fresh_neutral_deadline(latest_observation, owner_state, checked_ns,
+                                                       end_gate.clock_reserve_deadline_ns,
+                                                       now=time.perf_counter_ns())
                     game.save(str(engine_save_path))
                     game.advance_action(1, True)
                     wait_for_stable_file(engine_save_path)
-                    if not args.verified_fixture_setup:
+                    if not candidate_setup:
                         shutil.copy2(engine_save_path, save_path)
                     source_frame = save_path.with_name(save_path.stem + ".source.png")
-                    if not args.verified_fixture_setup:
+                    if not candidate_setup:
                         shutil.copy2(Path(latest_observation["image"]), source_frame)
                     fixture = {
-                        "schema": CANDIDATE_FIXTURE_SCHEMA if args.verified_fixture_setup else FIXTURE_SCHEMA,
+                        "schema": CANDIDATE_FIXTURE_SCHEMA if candidate_setup else FIXTURE_SCHEMA,
                         "map": "MAP01", "skill": args.skill, "seed": args.seed,
                         "vizdoom": vd.__version__, "iwad_sha256": iwad_sha256,
                         "save_file": save_path.name,
-                        "save_sha256": None if args.verified_fixture_setup else file_sha256(save_path),
+                        "save_sha256": None if candidate_setup else file_sha256(save_path),
                         "source_frame": source_frame.name,
-                        "source_frame_sha256": None if args.verified_fixture_setup else file_sha256(source_frame),
+                        "source_frame_sha256": None if candidate_setup else file_sha256(source_frame),
                         "episode_tic": game.get_episode_time(),
                         "source_observation": latest_observation,
                         "setup_input_contract": SETUP_INPUT_CONTRACT,
@@ -620,11 +797,12 @@ def main(*, post_load_gate=None):
                             "source_episode_tic": loaded_fixture["source_episode_tic"],
                             "loaded_episode_tic": loaded_fixture["after_load_tic"],
                         }
-                    if args.verified_fixture_setup:
-                        fixture["setup_mode"] = "verified_loaded_fixture_setup_v1"
+                    if candidate_setup:
+                        fixture["setup_mode"] = ("fresh_neutral_fixture_setup_v1" if args.fresh_neutral_fixture_setup
+                                                 else "verified_loaded_fixture_setup_v1")
                         fixture["qualification"] = "pending"
                     manifest_path = save_path.with_suffix(".json")
-                    if args.verified_fixture_setup:
+                    if candidate_setup:
                         write_verified_fixture(save_path, setup_directory_identity, engine_save_path,
                                                Path(latest_observation["image"]), fixture)
                     else:
@@ -682,7 +860,7 @@ def main(*, post_load_gate=None):
                 else:
                     raise ValueError("unsupported command")
             except (ValueError, TypeError, KeyError, Expired) as error:
-                if args.verified_fixture_setup and command.get('op') == 'save_fixture':
+                if args.fresh_neutral_fixture_setup or (args.verified_fixture_setup and command.get('op') == 'save_fixture'):
                     raise
                 emit({"event": "rejected", "id": command.get("id"),
                       "reason": str(error)})

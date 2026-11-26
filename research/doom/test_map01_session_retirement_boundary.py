@@ -59,7 +59,7 @@ class RetirementBoundaryTests(unittest.TestCase):
             get_ticrate=lambda: 35,
             save=save)
         arguments = SimpleNamespace(out=backend.out, fixture_out=backend.out/'fixture.png',
-                                    timeout_seconds=600, skill=1, seed=7, verified_fixture_setup=False)
+                                    timeout_seconds=600, skill=1, seed=7, verified_fixture_setup=False, fresh_neutral_fixture_setup=False)
         observations = [r for r in events if r.get('event') == 'observation']
         run = command_loop(json.dumps({'op': operation}) + '\n')
         try:
