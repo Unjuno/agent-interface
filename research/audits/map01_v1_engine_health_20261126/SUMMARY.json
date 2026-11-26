@@ -1,0 +1,104 @@
+{
+  "schema": "map01-v1-engine-health-posthoc-public-v1",
+  "source_revision": "8c91dba33f8e159f9399ba482cc8a25d18c70789",
+  "conditions": {
+    "formal_trials": 1,
+    "fixture": "map01-threat-contact-v1",
+    "seed": 26011261,
+    "skill": 1,
+    "maximum_up_hold_seconds": 4.5,
+    "fire_commands": 0,
+    "damage_injection": false,
+    "provider_calls": 0,
+    "model_calls": 0,
+    "engine_witness_visible_to_controller": false,
+    "additional_control_time_refreshes": 0
+  },
+  "dispositions": {
+    "screen": "PASS_SCOPED_DISPLAYED_HUD_DROP_CANCEL_RELEASE",
+    "engine_damage_interval": "PASS_SCOPED_ENGINE_COUNTER_INCREMENT",
+    "engine_health_at_trigger": "HOLD_NO_FRESH_TRIGGER_TIC",
+    "attack_source": "HOLD_NO_UNAMBIGUOUS_ATTACKER_IMPACT_CHAIN"
+  },
+  "engine": {
+    "pre_control": {
+      "tic": 1339,
+      "health": 100,
+      "hits_taken": 0,
+      "damage_taken": 0
+    },
+    "post_control": {
+      "tic": 1387,
+      "health": 100,
+      "hits_taken": 1,
+      "damage_taken": 3
+    },
+    "interval_ms": 1367.271578,
+    "periodic_getter_rows": 36,
+    "periodic_rows_after_input_ack_before_terminal": 27,
+    "distinct_tics_in_those_rows": [
+      1339
+    ],
+    "reason_for_display_return_to_100": "UNRESOLVED"
+  },
+  "screen": {
+    "controller_frames": 7,
+    "controller_trigger_sequence": 7,
+    "controller_health": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      97
+    ],
+    "passive_frames": 19,
+    "passive_frame_indices": [
+      13,
+      14,
+      15
+    ],
+    "passive_health": [
+      100,
+      97,
+      100
+    ]
+  },
+  "input": {
+    "admissions": 1,
+    "matched_cancel_commands": 1,
+    "key": "Up",
+    "keymap_down_before_release": true,
+    "keymap_up_after_release": true,
+    "owner_verified_neutral": true,
+    "release_published_before_terminal": true,
+    "terminal": "cancelled",
+    "capture_to_verified_neutral_ms": 97.674894,
+    "cancel_request_to_verified_neutral_ms": 2.343551
+  },
+  "independent_progress_scorer": {
+    "samples": 36,
+    "kills": 0,
+    "deaths": 0,
+    "map_exit": false
+  },
+  "retirement": {
+    "verified_process_roles": [
+      "game",
+      "input_owner",
+      "window_manager",
+      "Xvfb"
+    ],
+    "control_group_gone": true,
+    "display_lock_gone": true,
+    "passive_witness_joined": true,
+    "runner_exit": 0,
+    "service_exit": 0
+  },
+  "integrity": {
+    "registration_sha256": "ad551b51b42a61484be90dbc3d82777f877498ba1c094b627bae96957f26a16c",
+    "raw_manifest_sha256": "302c4a1a73261569b01ac803498a783acf9ad22a9236ea3e13ccf440d9636d67",
+    "raw_manifest_entries": 8266
+  }
+}
