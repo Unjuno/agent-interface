@@ -186,7 +186,8 @@ class SyntheticCapture:
 
             def program(program_id, steps, begin, end, emitted=(), before_accept=()):
                 observations.extend([
-                    {"event": "command", "command": {"op": "submit", "id": program_id, "steps": steps}},
+                    {"event": "command", "received_ns": begin - 1,
+                     "command": {"op": "submit", "id": program_id, "steps": steps}},
                     *before_accept,
                     {"event": "accepted", "id": program_id, "accepted_ns": begin, "steps": len(steps),
                      "coordinate_resolutions": sum(step["op"] == "pointer_click_target" for step in steps)},
@@ -622,6 +623,32 @@ class NativeComparisonAuditTests(unittest.TestCase):
                 write(terminal, settled)
                 result = capture.verify()
                 self.assertEqual(result["disposition"], "HOLD", result)
+
+    def test_completed_model_must_precede_plain_command_or_compiled_mint_acceptance(self):
+        for arm, shift in (("plain", 43), ("ephemeral", 12), ("persistent", 12)):
+            with self.subTest(arm=arm), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                session = capture.out / "native-app-server" / arm
+                protocol = session / "protocol.jsonl"
+                stream = audit.records(protocol)
+                thread_starts = [i for i, row in enumerate(stream) if row["direction"] == "send_prepared"
+                                 and row["message"].get("method") == "thread/start"]
+                for row in stream[thread_starts[0]:thread_starts[1]]:
+                    row["observed_ns"] += shift
+                lines(protocol, stream)
+                start = session / "attempts/01/start.json"
+                started = audit.read(start)
+                started["started_monotonic_ns"] += shift
+                write(start, started)
+                terminal = session / "attempts/01/terminal.json"
+                settled = audit.read(terminal)
+                for key in ("result_returned_monotonic_ns", "finished_monotonic_ns"):
+                    settled[key] += shift
+                write(terminal, settled)
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD", result.get("reason"))
+                self.assertIn("before the first dependent", result["reason"])
 
     def test_late_usage_cannot_replace_observation_at_return(self):
         for mode, expected in (("moved", "HOLD"), ("changed", "HOLD"), ("identical", "RETAIN")):

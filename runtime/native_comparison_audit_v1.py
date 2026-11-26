@@ -393,7 +393,7 @@ def verify_executed_grounding(events, details, seed, arm):
         if kind == "command" and row["command"].get("op") == "submit":
             command = row["command"]
             require(command["id"] not in commands, "duplicate runtime submit command")
-            commands[command["id"]] = (index, command["steps"])
+            commands[command["id"]] = (index, command["steps"], row.get("received_ns"))
         elif kind in {"accepted", "terminal"}:
             store = accepted if kind == "accepted" else terminals
             require(row["id"] not in store, "duplicate runtime program receipt")
@@ -406,7 +406,7 @@ def verify_executed_grounding(events, details, seed, arm):
             "runtime commands and their accepted and terminal receipts do not close")
 
     def steps_for(program):
-        command_index, steps = commands[program]
+        command_index, steps, _received = commands[program]
         accepted_index, begin = accepted[program]
         terminal_index, end = terminals[program]
         resolutions = sum(step["op"] == "pointer_click_target" for step in steps)
@@ -416,6 +416,13 @@ def verify_executed_grounding(events, details, seed, arm):
                 and same(end["steps_completed"], len(steps)) and end["status"] == "completed",
                 "runtime command does not match its accepted and terminal receipts")
         return steps
+
+    def grounding_boundary(program):
+        received = commands[program][2]
+        admitted = accepted[program][1]["accepted_ns"]
+        require(type(received) is int and type(admitted) is int and 0 <= received <= admitted,
+                "grounding-dependent command receipt time is unverified")
+        return {"program_id": program, "received_ns": received, "accepted_ns": admitted}
 
     def evidence(program, event):
         return [(index, row) for index, row in observations[program] if row["event"] == event]
@@ -439,6 +446,7 @@ def verify_executed_grounding(events, details, seed, arm):
     allocation = list(accepted)
     minted = {}
     proof = []
+    boundaries = {}
     cursor = 0
     point_kinds = ("field", "submit")
     dimensions = {"field": (38, [12, 19]), "submit": (14, [12, 7])}
@@ -467,6 +475,7 @@ def verify_executed_grounding(events, details, seed, arm):
                     and len(evidence(program, "pointer_admission")) == 4
                     and not evidence(program, "target_handle_revalidated"),
                     "plain click command differs from the validated grounding")
+            boundaries[task["task_id"]] = grounding_boundary(program)
             proof.extend((check_move_and_press(program, 0, points["field"]),
                           check_move_and_press(program, 4, points["submit"])))
             continue
@@ -478,6 +487,7 @@ def verify_executed_grounding(events, details, seed, arm):
         require(same(target["aliases"], aliases) and len(clicks) == 2 and len(mints) == (2 if fresh else 0),
                 "compiled arm mint or action aliases differ from the task allocation")
         if fresh:
+            boundaries[task["task_id"]] = grounding_boundary(mints[0])
             for kind, program in zip(point_kinds, mints, strict=True):
                 alias, point = aliases[kind], points[kind]
                 height, offset = dimensions[kind]
@@ -530,7 +540,7 @@ def verify_executed_grounding(events, details, seed, arm):
             require(same(resolved["point"], point) and same(resolved["observed_box"], box),
                     "revalidated alias resolved to unexpected window coordinates")
             proof.append(check_move_and_press(program, 0, point))
-    return proof
+    return {"commands": proof, "grounding_boundaries": boundaries}
 
 
 def verify_task_sources(events, details, seed):
@@ -801,6 +811,7 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
     absolute_target = absolute_windows(plan["windows_run_root"])
     workspace = absolute_target / "workspaces" / arm
     threads, images, provider_calls, normalized_by_index = [], set(), [], {}
+    grounding_finished = {}
     for index, slot in enumerate(slots, start=1):
         task_id = slot.parent.name
         task_index = TASKS.index(task_id)
@@ -853,6 +864,7 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
         require(same(result.get("grounding"), normalized),
                 "recorded grounding differs from the runner's semantic normalization")
         normalized_by_index[task_index] = normalized
+        grounding_finished[task_id] = terminal["finished_monotonic_ns"]
         require((slot / "prompt.txt").read_bytes() == GROUNDING_PROMPT.encode(),
                 "grounding prompt differs from the registered task")
         thread_request = {"model": MODEL, "cwd": str(workspace), "approvalPolicy": "never",
@@ -875,7 +887,7 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
             "unexpected grounding result outside the allocated slots")
     verify_protocol(records(session / "protocol.jsonl"), owner, threads)
     verify_resolved_grounding(details, normalized_by_index)
-    return provider_calls, [thread["thread_id"] for thread in threads], owner["run_nonce"]
+    return provider_calls, [thread["thread_id"] for thread in threads], owner["run_nonce"], grounding_finished
 
 
 def measured_decision(arms):
@@ -931,7 +943,8 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             effects = audit_local_effects(out, plan["seed"], arm)
             prior_arm_end, task_times = verify_arm_timing(out, arm, effects, prior_arm_end)
             preflight, preflight_nonce = audit_exec(repo, out, plan, arm, contract)
-            calls, threads, session_nonce = audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects)
+            calls, threads, session_nonce, grounding_finished = audit_app_server(
+                repo, out, plan, arm, contract, rows, task_times, effects)
             nonces.extend((preflight_nonce, session_nonce))
             call_ids.extend([preflight["call_id"], *threads, *(call["call_id"] for call in calls)])
             summary = accounting([preflight, *calls])
@@ -964,6 +977,10 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
                               for filename in ("events.jsonl", "delivered.jsonl")]
             require(command_proofs[0] == command_proofs[1],
                     "grounding input command proof differs across the runtime streams")
+            boundaries = command_proofs[0]["grounding_boundaries"]
+            require(boundaries.keys() == grounding_finished.keys()
+                    and all(grounding_finished[task] < boundary["received_ns"] for task, boundary in boundaries.items()),
+                    "grounding result did not settle before the first dependent input or mint command")
             tokens, cumulative = preflight["usage"]["input_tokens"], []
             for row in rows:
                 tokens += sum(call["usage"]["input_tokens"] for call in row["model_calls"])
