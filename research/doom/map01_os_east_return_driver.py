@@ -309,6 +309,7 @@ def run():
                         guard_spec=importlib.util.spec_from_file_location('registered_visual_guard',root/'visual_guard.py')
                         guard=importlib.util.module_from_spec(guard_spec);guard_spec.loader.exec_module(guard)
                         try:
+                            east_gate_module.require_new_frame(protocol.latest,'reverse-turn-3')
                             receipt=guard.check(protocol.latest,reference=root/'reference.png',
                                 reference_sha256=registered['reference_png_sha256'],runtime_dir=runtime,clock=uptime_ns)
                         except Exception as error:

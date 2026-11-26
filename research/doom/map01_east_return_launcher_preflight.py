@@ -83,6 +83,10 @@ def validate_runtime_inputs(root, spec, *, expected_checkout, baseline_path, bas
               'map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py')
     if not all(str(checkout/'research/doom'/name) in files for name in required):
         raise ValueError('runtime source pins missing')
+    for key,name in (('driver_sha256','map01_os_east_return_driver.py'),('launcher_sha256','map01_east_return_launcher.py'),
+                     ('preflight_sha256','map01_east_return_launcher_preflight.py'),('auditor_sha256','map01_east_return_audit.py')):
+        if files.get(str(checkout/'research/doom'/name))!=spec.get(key):
+            raise ValueError('artifact source and copied digest differ')
     try:
         baseline_path=Path(baseline_path)
         if baseline_path.is_symlink() or not baseline_path.is_file():

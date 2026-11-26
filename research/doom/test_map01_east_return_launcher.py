@@ -14,7 +14,7 @@ class LauncherPreflightTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as temp:
    base=Path(temp);checkout=base/'source';checkout.mkdir();trial=base/'trial';trial.mkdir()
    subprocess.run(['git','init','-q',str(checkout)],check=True)
-   names=('session_map01_v12.py','session_map01_v15.py','map01_door_driver_protocol.py','map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py','map01_reverse_program.py','map01_candidate_setup_evidence_v1.py','map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py')
+   names=('session_map01_v12.py','session_map01_v15.py','map01_door_driver_protocol.py','map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py','map01_reverse_program.py','map01_candidate_setup_evidence_v1.py','map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py','map01_os_east_return_driver.py','map01_east_return_launcher.py','map01_east_return_launcher_preflight.py','map01_east_return_audit.py')
    folder=checkout/'research/doom';folder.mkdir(parents=True)
    for name in names:(folder/name).write_text(name)
    subprocess.run(['git','-C',str(checkout),'add','.'],check=True)
@@ -26,6 +26,8 @@ class LauncherPreflightTests(unittest.TestCase):
    candidate='/home/user/issue59-grandchild-bound-setup-yzkdlh9q/candidate/fixture.json'
    argv=[python,str(folder/'session_map01_v15.py'),'--out',str(trial/'runtime'),'--seed','990619','--timeout-seconds','75','--skill','1','--load-fixture-manifest',candidate,'--target-process-identity','--owned-input-service','--renewal-passive-observer','--post-load-clock-gate','--door-task-arm','use','--door-task-traverse','--door-task-reverse-arm','east-return','--candidate-setup-evidence',str(trial/'evidence.json'),'--candidate-setup-evidence-sha256',evidence,'--door-expected-manifest-sha256',manifest,'--door-expected-save-sha256',save,'--door-expected-iwad-sha256',wad,'--door-expected-restore-tic','870']
    spec={'arm':'east-return','checkout':str(checkout),'python':python,'runtime_argv':argv,'pythonpath':':'.join(str(checkout/x) for x in ('','research/doom','research/live_control','research/observation_gating','research/observation_tiles')),'candidate_manifest_sha256':manifest,'candidate_save_sha256':save,'candidate_evidence_sha256':evidence,'candidate_restore_tic':870,'revision':git('rev-parse','HEAD'),'tree':git('rev-parse','HEAD^{tree}'),'files':{str(folder/name):hashlib.sha256((folder/name).read_bytes()).hexdigest() for name in names}}
+   for artifact,source in (('driver_sha256','map01_os_east_return_driver.py'),('launcher_sha256','map01_east_return_launcher.py'),('preflight_sha256','map01_east_return_launcher_preflight.py'),('auditor_sha256','map01_east_return_audit.py')):
+    spec[artifact]=spec['files'][str(folder/source)]
    external=base/'external.dat';external.write_bytes(b'pinned external')
    external_sha=hashlib.sha256(external.read_bytes()).hexdigest();spec['files'][str(external)]=external_sha
    baseline=base/'baseline.json';baseline.write_text(json.dumps({'checkout':'/old/source','files':{**{'/old/source/research/doom/'+name:spec['files'][str(folder/name)] for name in names},str(external):external_sha}}))
@@ -38,6 +40,8 @@ class LauncherPreflightTests(unittest.TestCase):
    with self.assertRaisesRegex(ValueError,'baseline registration digest'):validate_runtime_inputs(trial,spec,expected_checkout=checkout,baseline_path=baseline,baseline_sha256='0'*64)
    changed_external=dict(spec,files=dict(spec['files'],**{str(external):'0'*64}))
    with self.assertRaisesRegex(ValueError,'baseline external'):validate_runtime_inputs(trial,changed_external,expected_checkout=checkout,baseline_path=baseline,baseline_sha256=baseline_sha)
+   changed_copy=dict(spec,driver_sha256='0'*64)
+   with self.assertRaisesRegex(ValueError,'artifact source'):validate_runtime_inputs(trial,changed_copy,expected_checkout=checkout,baseline_path=baseline,baseline_sha256=baseline_sha)
    missing_external=dict(spec,files={k:v for k,v in spec['files'].items() if k!=str(external)})
    with self.assertRaisesRegex(ValueError,'baseline'):validate_runtime_inputs(trial,missing_external,expected_checkout=checkout,baseline_path=baseline,baseline_sha256=baseline_sha)
    (folder/names[0]).write_text('changed')

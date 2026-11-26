@@ -6,6 +6,10 @@ The caller MUST independently verify sealed raw data, inputs and retirement firs
 import math
 
 STAGES=('reverse-cross','east-turn-1','east-turn-2','east-turn-3','east-advance-1','east-advance-2')
+SCOPED_RULES={'schema':'map01-east-return-endpoint-rules-v1','west_x_inclusive_min':600,'west_x_exclusive_max':688,
+              'west_angle_inclusive':[170,190],'west_door_gap_positive':True,'corridor_y_inclusive':[-224,-96],
+              'east_x_inclusive':[752,900],'east_angle_max_circular_degrees':15,'sampled_east_boundary_max':900,
+              'health_exact':100,'death_count_exact':0,'player_floor_status':'unmeasured','continuous_path_proven':False}
 
 
 def classify_endpoint(samples):

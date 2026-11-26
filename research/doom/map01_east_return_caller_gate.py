@@ -4,6 +4,7 @@ Feed only rows already accepted by the single standard-protocol reader. This
 bridge does not replace the runtime contract's live admission or focus checks.
 """
 from copy import deepcopy
+from pathlib import Path
 from map01_east_return_visual_guard import check, MAX_FRAME_AGE_NS
 
 
@@ -11,6 +12,14 @@ def require_no_pending_output(buffer, selector):
     """Fail closed if a received or readable runtime row is unprocessed."""
     if type(buffer) is not bytes or buffer or selector.select(0):
         raise ValueError('runtime output pending before input write')
+
+
+def require_new_frame(source, expected_stage):
+    if (type(source) is not dict or source.get('event')!='observation' or source.get('id')!=expected_stage
+            or type(source.get('sequence')) is not int or source['sequence']<1
+            or source.get('image_reused') is not False or type(source.get('image')) is not str
+            or Path(source['image']).name!=f"{source['sequence']:03d}.png"):
+        raise ValueError('guard requires a newly captured source frame')
 
 
 class EastReturnCallerGate:
@@ -90,6 +99,7 @@ class EastReturnCallerGate:
                 or self.transition is None or self.terminal is None
                 or not self._protocol_matches(protocol,command)):
             raise ValueError('cross or caller state incomplete')
+        require_new_frame(self.full,'reverse-cross')
         expected=dict(self.identity,sequence=self.full['sequence'])
         receipt=check(self.full,reference=self.reference,reference_sha256=self.reference_sha256,
                       runtime_dir=self.runtime_dir,terminal=self.terminal,transition=self.transition,

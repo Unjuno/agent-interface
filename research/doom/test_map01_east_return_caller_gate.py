@@ -12,9 +12,14 @@ from types import SimpleNamespace
 import unittest
 from pathlib import Path
 from PIL import Image
-from map01_east_return_caller_gate import EastReturnCallerGate, require_no_pending_output
+from map01_east_return_caller_gate import EastReturnCallerGate, require_no_pending_output, require_new_frame
 
 class CallerGateTests(unittest.TestCase):
+ def test_new_frame_gate_rejects_reuse_and_mismatched_image_number(self):
+  source={'event':'observation','id':'reverse-cross','sequence':4,'image_reused':False,'image':'/tmp/004.png'}
+  self.assertIsNone(require_new_frame(source,'reverse-cross'))
+  for wrong in (dict(source,image_reused=True),dict(source,image='/tmp/003.png'),dict(source,id='other')):
+   with self.assertRaises(ValueError):require_new_frame(wrong,'reverse-cross')
  def test_buffered_or_readable_stdout_refuses_before_any_write(self):
   read_fd,write_fd=os.pipe()
   try:
@@ -56,11 +61,11 @@ class CallerGateTests(unittest.TestCase):
    for fd in (runtime_read,runtime_write,input_read,input_write):os.close(fd)
  def test_guard_binds_settled_last_frame_and_is_consumed_at_write(self):
   with tempfile.TemporaryDirectory() as tmp:
-   root=Path(tmp);ref=root/'ref.png';frame=root/'frame.png'
+   root=Path(tmp);ref=root/'ref.png';frame=root/'004.png'
    Image.new('RGB',(1280,800),(10,20,30)).save(ref);Image.new('RGB',(1280,800),(10,20,30)).save(frame)
    digest=hashlib.sha256(ref.read_bytes()).hexdigest()
    with Image.open(frame) as im:rgb=hashlib.sha256(im.convert('RGB').tobytes()).hexdigest()
-   full={'event':'observation','id':'reverse-cross','step':0,'sequence':4,'capture_ns':100,'image':str(frame),'frame_rgb_sha256':rgb,
+   full={'event':'observation','id':'reverse-cross','step':0,'sequence':4,'capture_ns':100,'image':str(frame),'image_reused':False,'frame_rgb_sha256':rgb,
     'pointer_binding':{'surface':7,'focus':7,'geometry':[321,180,640,480]},'input_focus_before':7,'input_focus_after':7,
     'exact':True,'focus_samples_match':True,'renewal_owner_id':'owner','input_owner_generation':3,
     'target_process_identity':{'sequence':4,'surface':7,'digest':'proc'},'target_renewal_window_identity':{'sequence':4,'surface':7,'digest':'window'}}
