@@ -12,6 +12,37 @@ def pair(identifier,seq,stamp):
  return (dict(base,event='typed_observation',signals=signals),
          dict(base,event='observation',exact=True,focus_samples_match=True,input_focus_before=7,input_focus_after=7))
 
+class ReverseProtocolTests(unittest.TestCase):
+ def test_reverse_program_is_driven_only_after_settled_observations(self):
+  from map01_reverse_program import reverse_stages
+  for arm in ('control','use','calibrate'):
+   p=DoorDriverProtocol('use','d'*64,'e'*64,'f'*64,870,traverse=True,reverse_arm=arm)
+   from map01_reverse_program import reverse_manifest
+   ready={'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,
+      'after_load_tic':870,'setup_candidate_evidence':{'evidence_sha256':'f'*64}},
+      'post_load_clock_gate':{'passed':True},'reverse_door_program':reverse_manifest(arm)}
+   wrong=dict(ready,reverse_door_program=reverse_manifest('control' if arm!='control' else 'use'))
+   with self.assertRaises(ValueError):p.receive(wrong,1_000_000_000)
+   p.receive(ready,1_000_000_000)
+   for x in pair('initial',1,1_000_000_000):cmd=p.receive(x,1_100_000_000)
+   prefix=[('cover-0',[{'op':'coast','duration_ms':200,'sample_ms':100}])]
+   prefix += [('approach-'+str(i),[{'op':'hold','keys':['Up'],'duration_ms':600}]) for i in range(1,5)]
+   prefix += [('intervention',[{'op':'hold','keys':['e'],'duration_ms':120}]),('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':300}])]
+   program=prefix+reverse_stages(arm)
+   for sequence,(identifier,steps) in enumerate(program,2):
+    self.assertEqual((cmd['id'],cmd['steps']),(identifier,steps))
+    for x in pair(identifier,sequence,1_000_000_000):p.receive(x,1_100_000_000)
+    self.assertEqual(p.receive({'event':'terminal','id':identifier,'status':'completed'},1_100_000_000),{'op':'door-settle'})
+    cmd=p.receive({'event':'door_settle','operation_id':identifier,'status':'DONE'},1_100_000_000)
+   self.assertEqual(cmd,{'op':'finish'});self.assertEqual(p.stage,'finish')
+ def test_legacy_driver_rejects_reverse_runtime_before_initial_input(self):
+  from map01_reverse_program import reverse_manifest
+  p=DoorDriverProtocol('use','d'*64,'e'*64,'f'*64,870,traverse=True)
+  ready={'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,
+    'after_load_tic':870,'setup_candidate_evidence':{'evidence_sha256':'f'*64}},
+    'post_load_clock_gate':{'passed':True},'reverse_door_program':reverse_manifest('calibrate')}
+  with self.assertRaises(ValueError):p.receive(ready,1_000_000_000)
+  self.assertFalse(p.ready);self.assertIsNone(p.pending)
 class ProtocolTests(unittest.TestCase):
  def test_two_arms_advance_only_after_terminal_and_settle(self):
   for arm in ('control','use'):

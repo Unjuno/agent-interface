@@ -65,6 +65,43 @@ def finish(gate,c,mutate=None):
  if mutate is not None:mutate(rows)
  gate.completed(identifier,dict(t,emit_ns=1_700_000_000),dict(a,emit_ns=1_100_000_001),rows)
 
+class ReverseContractTests(unittest.TestCase):
+ def test_reverse_suffix_requires_every_prior_release_and_fixed_command(self):
+  from map01_reverse_program import reverse_stages
+  for arm in ('control','use','calibrate'):
+   gate=DoorTaskContract('use',traverse=True,reverse_arm=arm)
+   gate.index=6; gate.identity=('owner',0,7,'abc','def');gate.last_sequence=6
+   previous='traverse-1';prior_steps=[{'op':'hold','keys':['Up'],'duration_ms':300}]
+   for i,(identifier,steps) in enumerate(reverse_stages(arm),7):
+    source=state(i);source['id']=previous
+    prior=release(previous)
+    if prior_steps[0]['op']=='coast':prior['release']['intent_token']=None
+    bad=command(identifier+'-wrong',steps,i)
+    with self.assertRaises(ValueError):gate.authorize(bad,source,1_100_000_000,prior,accepted(previous))
+    c=command(identifier,steps,i)
+    gate.authorize(c,source,1_100_000_000,prior,accepted(previous));finish(gate,c)
+    previous=identifier;prior_steps=steps
+   self.assertTrue(gate.finished)
+ def test_reverse_prefix_requires_open_use_and_short_traverse(self):
+  for arm in ('control','use','calibrate'):
+   gate=DoorTaskContract('use',traverse=True,reverse_arm=arm)
+   prior='cover-0'
+   for i in range(4):
+    identifier='approach-'+str(i+1);src=state(i+1);src['id']=prior
+    c=command(identifier,[{'op':'hold','keys':['Up'],'duration_ms':600}],i+1)
+    gate.authorize(c,src,1_100_000_000,release(prior),accepted(prior));finish(gate,c);prior=identifier
+   src=state(5);src['id']=prior
+   opening=command('intervention',[{'op':'hold','keys':['e'],'duration_ms':120}],5)
+   gate.authorize(opening,src,1_100_000_000,release(prior),accepted(prior));finish(gate,opening)
+   src=state(6);src['id']='intervention'
+   crossing=command('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':300}],6)
+   gate.authorize(crossing,src,1_100_000_000,release('intervention'),accepted('intervention'));finish(gate,crossing)
+   self.assertFalse(gate.finished)
+ def test_reverse_requires_explicit_traverse_and_no_exit_probe(self):
+  with self.assertRaises(ValueError):DoorTaskContract('use',reverse_arm='use')
+  with self.assertRaises(ValueError):DoorTaskContract('control',traverse=True,reverse_arm='use')
+  with self.assertRaises(ValueError):DoorTaskContract('use',traverse=True,exit_probe=True,exit_arm='use',reverse_arm='use')
+
 class DoorTaskContractTests(unittest.TestCase):
  def test_initial_cover_requires_fixed_coast_and_proven_completion(self):
   from map01_door_task_contract import validate_initial_cover

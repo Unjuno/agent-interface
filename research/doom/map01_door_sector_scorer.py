@@ -8,6 +8,7 @@ import math
 import os
 import time
 from pathlib import Path
+from map01_reverse_program import reverse_stages
 
 
 class DoorSectorScorer:
@@ -15,12 +16,14 @@ class DoorSectorScorer:
     TARGET={frozenset(((704.0,-96.0),(704.0,-224.0))),
             frozenset(((720.0,-96.0),(720.0,-224.0)))}
 
-    def __init__(self, path, *, clock=time.perf_counter_ns, traverse=False, exit_probe=False):
+    def __init__(self, path, *, clock=time.perf_counter_ns, traverse=False, exit_probe=False, reverse_arm=None):
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         if type(exit_probe) is not bool or exit_probe and not traverse:raise ValueError('invalid exit probe mode')
+        if reverse_arm is not None and (reverse_arm not in ('control','use','calibrate') or not traverse or exit_probe):
+            raise ValueError('reverse scorer requires traversal without exit probe')
         self.traverse=traverse
         self.exit_probe=exit_probe
-        self.STAGES=type(self).STAGES+(('traverse-1',) if traverse else ())+(('exit-probe',) if exit_probe else ())
+        self.STAGES=type(self).STAGES+(('traverse-1',) if traverse else ())+(('exit-probe',) if exit_probe else ())+(tuple(stage for stage,_ in reverse_stages(reverse_arm)) if reverse_arm is not None else ())
         self.path=Path(path)
         self.clock=clock
         self.index=0
