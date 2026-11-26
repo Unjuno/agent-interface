@@ -28,6 +28,30 @@ class SectorScorerTests(unittest.TestCase):
    self.assertEqual(game.refreshes,1)
    row=__import__('json').loads(path.read_text());self.assertEqual(row['gap'],0)
    with self.assertRaises(ValueError):scorer.sample('cover-0',game,1_000_000_000,lambda:True)
+ def test_traversal_records_private_same_state_position_and_extra_stage(self):
+  import inspect,json
+  self.assertIn('traverse',inspect.signature(DoorSectorScorer).parameters)
+  with tempfile.TemporaryDirectory() as temp:
+   path=Path(temp)/'private';game=Game()
+   def state():
+    result=State(game.sectors,game.tic,game.refreshes);result.game_variables=[0,0,687.9,-192,0,100];return result
+   game.get_state=state
+   scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True)
+   for stage in ('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'):
+    self.assertIsNone(scorer.sample(stage,game,1_000_000_000,lambda:True))
+   rows=[json.loads(line) for line in path.read_text().splitlines()]
+   self.assertEqual(rows[-1]['position_x'],687.9);self.assertEqual(rows[-1]['position_y'],-192)
+   self.assertEqual(rows[-1]['health'],100);self.assertEqual(rows[-1]['death_count'],0)
+ def test_traverse_holds_when_same_state_position_is_missing_or_nonfinite(self):
+  import json
+  for values in (None,[0,0,float('nan'),-192,0,100],[0,0,1]):
+   with self.subTest(values=values),tempfile.TemporaryDirectory() as temp:
+    path=Path(temp)/'private';game=Game()
+    def state():
+     result=State(game.sectors,game.tic,game.refreshes);result.game_variables=values;return result
+    game.get_state=state;scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True)
+    with self.assertRaises(ValueError):scorer.sample('cover-0',game,1_000_000_000,lambda:True)
+    self.assertEqual(json.loads(path.read_text())['status'],'HOLD')
  def test_stale_state_and_physical_input_are_rejected(self):
   with tempfile.TemporaryDirectory() as temp:
    game=Game();scorer=DoorSectorScorer(Path(temp)/'stale',clock=lambda:1_100_000_000)

@@ -26,10 +26,12 @@ from doom_controller_failure_cleanup_v1 import operation_release_verified, owner
 
 
 class DoorTaskContract:
-    def __init__(self, arm):
+    def __init__(self, arm, *, traverse=False):
         if arm not in ('control','use'):
             raise ValueError('invalid arm')
+        if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         self.arm=arm
+        self.traverse=traverse
         self.index=0
         self.inflight=None
         self.identity=None
@@ -37,13 +39,16 @@ class DoorTaskContract:
 
     @property
     def finished(self):
-        return self.index==5 and self.inflight is None
+        return self.index==(6 if self.traverse else 5) and self.inflight is None
 
     def authorize(self, command, source, now, terminal, accepted):
         if self.inflight is not None or self.finished or type(command) is not dict or type(source) is not dict:
             raise ValueError('unexpected submission')
-        identifier='approach-'+str(self.index+1) if self.index<4 else 'intervention'
+        identifier=('approach-'+str(self.index+1) if self.index<4 else
+                    'intervention' if self.index==4 else 'traverse-1')
         if self.index<4:
+            steps=[{'op':'hold','keys':['Up'],'duration_ms':600}]
+        elif self.index==5:
             steps=[{'op':'hold','keys':['Up'],'duration_ms':600}]
         elif self.arm=='use':
             steps=[{'op':'hold','keys':['e'],'duration_ms':120}]
@@ -54,12 +59,14 @@ class DoorTaskContract:
         pointer=source.get('pointer_binding');process=source.get('target_process_identity')
         window=source.get('target_renewal_window_identity')
         valid=command.get('valid_until_ns')
+        previous=('approach-'+str(self.index) if 0<self.index<=4 else
+                  'intervention' if self.index==5 else 'cover-0')
         if (command.get('op')!='submit' or command.get('id')!=identifier or command.get('steps')!=steps
             or type(seq) is not int or seq<=self.last_sequence or command.get('expected_sequence')!=seq
             or type(capture) is not int or type(now) is not int or not 0<=now-capture<2_000_000_000
             or type(valid) is not int or not now<valid<=now+30_000_000_000
             or type(owner) is not str or not owner or type(generation) is not int or generation<0
-            or source.get('id')!=('approach-'+str(self.index) if self.index else 'cover-0')
+            or source.get('id')!=previous
             or source.get('exact') is not True or source.get('focus_samples_match') is not True
             or type(pointer) is not dict or type(pointer.get('focus')) is not int
             or pointer.get('focus')!=pointer.get('surface')
@@ -73,8 +80,8 @@ class DoorTaskContract:
         identity=(owner,generation,pointer['surface'],process['digest'],window['digest'])
         if self.identity is not None and identity!=self.identity:
             raise ValueError('input target changed')
-        prior='approach-'+str(self.index) if self.index else 'cover-0'
-        if not _release_matches(prior,identity,terminal,accepted,allow_no_token=self.index==0):
+        prior=previous
+        if not _release_matches(prior,identity,terminal,accepted,allow_no_token=self.index==0 or (self.index==5 and self.arm=='control')):
             raise ValueError('previous release unavailable')
         self.identity=identity
         self.last_sequence=seq

@@ -96,6 +96,25 @@ class DoorTaskContractTests(unittest.TestCase):
    self.assertTrue(gate.finished)
    with self.assertRaises(ValueError):
     gate.authorize(c,state(6),1_100_000_000,release('intervention'),accepted('intervention'))
+ def test_opt_in_traverse_requires_verified_intervention_and_keyup(self):
+  import inspect
+  self.assertIn('traverse',inspect.signature(DoorTaskContract).parameters)
+  for arm in ('control','use'):
+   gate=DoorTaskContract(arm,traverse=True)
+   for i in range(4):
+    c=command('approach-'+str(i+1),[{'op':'hold','keys':['Up'],'duration_ms':600}],i+1)
+    gate.authorize(c,state(i+1),1_100_000_000,release('cover-0' if i==0 else 'approach-'+str(i)),accepted('cover-0' if i==0 else 'approach-'+str(i)));finish(gate,c)
+   step=[{'op':'hold','keys':['e'],'duration_ms':120}] if arm=='use' else [{'op':'coast','duration_ms':120,'sample_ms':100}]
+   c=command('intervention',step,5);gate.authorize(c,state(5),1_100_000_000,release('approach-4'),accepted('approach-4'));finish(gate,c)
+   self.assertFalse(gate.finished)
+   source=state(6);source['id']='intervention'
+   c=command('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':600}],6)
+   with self.assertRaises(ValueError):gate.authorize(c,source,1_100_000_000,release('wrong'),accepted('wrong'))
+   prior=release('intervention')
+   if arm=='control':prior['release']['intent_token']=None
+   gate.authorize(c,source,1_100_000_000,prior,accepted('intervention'))
+   with self.assertRaises(ValueError):gate.completed('traverse-1',release('traverse-1'),accepted('traverse-1'),[])
+   finish(gate,c);self.assertTrue(gate.finished)
  def test_each_submit_requires_new_source_and_same_target(self):
   gate=DoorTaskContract('use')
   c=command('approach-1',[{'op':'hold','keys':['Up'],'duration_ms':600}])
