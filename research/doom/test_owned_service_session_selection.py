@@ -71,6 +71,34 @@ class OwnedSessionTests(unittest.TestCase):
             self.assertIn('research/doom/session_owned_owner_backend.py',manifest['files'])
             ROWS.append(dict(case='v15-selection',flags_stripped=True,wrapper_selected=True,manifest=manifest,files=saved(temp)))
 
+    def test_post_load_flag_requires_owned_service_and_reaches_v12(self):
+        import map01_overlap_controller_v39 as controller
+        import session_map01_v15 as session
+        from map01_post_load_gate_v1 import PostLoadGate
+        args = NS(measurement_session=True, target_process_identity=True, target_window_lifecycle=False,
+                  owned_input_service=True, post_load_clock_gate=True, seed=7, episode_timeout_seconds=75,
+                  load_fixture_manifest=Path("fixture.json"))
+        command = controller.session_command(args, Path("runtime"))
+        self.assertEqual(command[-2:], ["--owned-input-service", "--post-load-clock-gate"])
+        with self.assertRaisesRegex(ValueError, "owned input service"):
+            controller.session_command(NS(**{**vars(args), "owned_input_service": False}), Path("runtime"))
+
+        with tempfile.TemporaryDirectory() as temp:
+            base = ModuleType("session_map01_v12")
+            base.vd = NS(DoomGame=object, GameVariable=object)
+            base.sys = NS(stdin=object())
+            seen = []
+            base.main = lambda *, post_load_gate: seen.append((post_load_gate, list(sys.argv)))
+            argv = ["session", "--out", temp, "--timeout-seconds", "75", "--target-process-identity",
+                    "--owned-input-service", "--post-load-clock-gate"]
+            with patch.dict(sys.modules, {"session_map01_v12": base}), patch.object(
+                    session, "MainThreadScorerStdin", return_value=Mock()), patch.object(
+                    session, "ScorerFileSink", return_value=Mock()), patch.object(sys, "argv", argv):
+                session.main()
+            self.assertIsInstance(seen[0][0], PostLoadGate)
+            self.assertEqual(seen[0][0].timeout_seconds, 75)
+            self.assertNotIn("--post-load-clock-gate", seen[0][1])
+
     def run_session(self,blocked):
         with tempfile.TemporaryDirectory() as temp:
             row=dict(case='blocked-close' if blocked else 'normal-close');backend=executor=None

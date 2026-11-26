@@ -132,12 +132,19 @@ def main():
     owned_input_service='--owned-input-service' in sys.argv[1:]
     process_identity='--target-process-identity' in sys.argv[1:]
     window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
+    clock_gate_requested = "--post-load-clock-gate" in sys.argv[1:]
+    if clock_gate_requested and not owned_input_service:
+        raise ValueError("post-load clock gate requires the owned input service")
     if owned_input_service and (not process_identity or window_lifecycle):
         raise ValueError('owned input service requires process identity without window lifecycle')
     if window_lifecycle and '--target-process-identity' not in sys.argv[1:]:
         raise ValueError('target window lifecycle requires target process identity')
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
     if timeout_seconds<10:raise ValueError('timeout must leave scoring slack')
+    post_load_gate = None
+    if clock_gate_requested:
+        from map01_post_load_gate_v1 import PostLoadGate
+        post_load_gate = PostLoadGate(out, timeout_seconds)
     import session_map01_v12 as base
     from executor_v13 import Executor as ReleaseOrderedExecutor
     from doom_owner_thread_release_batch_backend_v1 import Backend as TelemetryBackend
@@ -165,8 +172,13 @@ def main():
     base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
     original_argv = sys.argv
     if process_identity:
-        sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle','--owned-input-service')]
-    try:base.main()
+        sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle','--owned-input-service',
+                                                           '--post-load-clock-gate')]
+    try:
+        if post_load_gate is None:
+            base.main()
+        else:
+            base.main(post_load_gate=post_load_gate)
     finally:
         sys.argv = original_argv
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin

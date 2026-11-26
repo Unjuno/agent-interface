@@ -44,6 +44,7 @@ def load_actual_emit(output, clock):
         "time": clock,
         "owner_generation_protocol": types.SimpleNamespace(record_terminal=lambda row, backend: None),
         "backend": None,
+        "post_load_gate": None,
     }
     exec(compile(module, str(SOURCE), "exec"), namespace)
     return namespace["build_emit"]()

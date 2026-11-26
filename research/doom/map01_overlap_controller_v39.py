@@ -1267,6 +1267,10 @@ def session_command(args, runtime):
     if getattr(args,'owned_input_service',False):command.append('--owned-input-service')
     if getattr(args, "renewal_passive_observer", False):
         command.append("--renewal-passive-observer")
+    if getattr(args, "post_load_clock_gate", False):
+        if not getattr(args, "owned_input_service", False):
+            raise ValueError("post-load clock gate requires the owned input service")
+        command.append("--post-load-clock-gate")
     return command
 
 
@@ -1688,6 +1692,8 @@ def main():
     parser.add_argument('--owned-input-service',action='store_true',
                         help='explicit independent input service; requires measurement and process identity')
     parser.add_argument("--episode-timeout-seconds", type=int, default=600)
+    parser.add_argument("--post-load-clock-gate", action="store_true",
+                        help="qualify the loaded spectator clock before initial cover")
     parser.add_argument("--renewal-passive-observer", action="store_true",
                         help="observe the process-bound viewport before each renewal submission")
     args = parser.parse_args()
@@ -1698,6 +1704,8 @@ def main():
         if args.renewal_passive_observer and not args.target_process_identity:
             raise ValueError("renewal observer requires --target-process-identity")
         validate_input_service_selection(args)
+        if args.post_load_clock_gate and not args.owned_input_service:
+            raise ValueError("post-load clock gate requires the owned input service")
         if args.target_window_lifecycle and not args.target_process_identity:
             raise ValueError('target window lifecycle requires --target-process-identity')
     except ValueError as error:
@@ -1781,6 +1789,10 @@ def main():
         ready = wait(lambda r:r["event"] == "ready")
         if args.renewal_passive_observer and "probe_cover_renewal" not in ready.get("operations", []):
             raise RuntimeError("required passive renewal transport is unavailable")
+        if args.post_load_clock_gate:
+            gate = ready.get("post_load_clock_gate")
+            if type(gate) is not dict or gate.get("passed") is not True:
+                raise RuntimeError("required post-load clock evidence is unavailable")
         runtime_fixture = ready.get("fixture")
         if runtime_fixture is None:
             raise RuntimeError("v28 requires a loaded fixture receipt")

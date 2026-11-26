@@ -160,6 +160,26 @@ class OwnerRpcTests(unittest.TestCase):
                     client.close()
                     thread.join(3)
 
+    def test_first_press_refuses_new_physical_key_without_releasing_it(self):
+        with backend_fixture() as (backend, events, generation, fake):
+            backend.snapshot("startup", 0)
+            lease = bound(backend)
+            lease.first_press_deadline_ns = time.perf_counter_ns() + 1_000_000_000
+            client, wire, peer, receipts, thread = self.session(backend, fake=fake)
+            fake.down.add(99)
+            try:
+                with self.assertRaises(rpc().RpcOutcomeUnknown) as refused:
+                    client.call("down", lease, "a")
+                self.assertEqual(refused.exception.remote_error,
+                                 {"type": "DecisionRequired", "message":
+                                  "first press requires independently neutral X11 input"})
+                self.assertEqual(fake.rpc_edges, [])
+                self.assertEqual(fake.down, {99})
+            finally:
+                fake.down.discard(99)
+                client.close()
+                thread.join(3)
+
     def test_first_press_with_late_sync_is_unknown_and_neutralized(self):
         with backend_fixture() as (backend, events, generation, fake):
             backend.snapshot("renewal", 0)
