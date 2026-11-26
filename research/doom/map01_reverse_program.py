@@ -16,10 +16,8 @@ def reverse_stages(arm):
                   for i,duration in enumerate((600,600,400),1))
     if arm=='calibrate':
         return stages
-    stages.append(('reverse-approach',hold('Up',400)))
     stages.append(('reverse-probe',hold('e',120) if arm=='use' else coast(120)))
     stages.append(('reverse-open-wait',coast(1000)))
-    stages.append(('reverse-align',hold('Right',80)))
     stages.append(('reverse-cross',hold('Up',600)))
     return stages
 
