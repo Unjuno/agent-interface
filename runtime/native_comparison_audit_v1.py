@@ -23,7 +23,7 @@ from research.live_control.native_codex_usage_v1 import accounting, normalize_us
 from research.live_control.native_preflight_job_v1 import RECEIPT, START_RECORD, completed_receipt, valid_hex
 from research.live_control.schema_preflight_v1 import EFFORT, MODEL
 from runtime.native_comparison_candidate_v1 import (
-    audit_local_effects, bind_golden_runner, capture_block, capture_plan_values,
+    audit_local_effects, bind_golden_runner, capture_block, capture_plan_values, comparison_arm_order,
     repair_window, scheduled_grounding_roots, write_record,
 )
 
@@ -125,7 +125,7 @@ def source_snapshot(repo):
     return {"revision": revision, "files": result}
 
 
-def registration_values(repo, out, seed, *, native, windows_repo, windows_out):
+def registration_values(repo, out, seed, *, native, windows_repo, windows_out, arm_order=ARMS):
     """Describe conditions before any call. Independent audit uses this exact record."""
     repo = Path(repo).resolve(strict=True)
     out = Path(out).resolve()
@@ -136,7 +136,7 @@ def registration_values(repo, out, seed, *, native, windows_repo, windows_out):
             and native["version"].startswith("codex-cli "), "native provider identity is incomplete")
     return {
         "schema": "native_comparison_registration_v1", "seed": seed,
-        "arms": list(ARMS), "tasks": workload(seed), "model": MODEL, "effort": EFFORT,
+        "arms": list(comparison_arm_order(arm_order)), "tasks": workload(seed), "model": MODEL, "effort": EFFORT,
         "retry": False, "source": source_snapshot(repo),
         "run_root": out.as_posix(), "windows_run_root": str(absolute_windows(windows_out)),
         "windows_source_root": str(absolute_windows(windows_repo)),
@@ -213,7 +213,7 @@ def capture_registered(repo, out, registration_file, *, registration_sha256):
     require(digest(registration_file) == registration_sha256, "registration digest has changed")
     plan = read(registration_file)
     require(same(plan, registration_values(repo, out, plan["seed"], native=plan["native"],
-                windows_repo=windows_arg(repo), windows_out=windows_arg(out))),
+                windows_repo=windows_arg(repo), windows_out=windows_arg(out), arm_order=plan["arms"])),
             "comparison registration differs from the clean checkout or runtime paths")
     with bind_golden_runner(out) as (doctor, bindings):
         require(same(doctor.get("native_codex"), plan["native"]), "native doctor differs from registration")
@@ -933,23 +933,26 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             "sealed comparison evidence has changed")
         plan = read(registration_file)
         stored = read(out / "capture-plan.json")
+        arm_order = comparison_arm_order(plan["arms"])
         require(plan["schema"] == "native_comparison_registration_v1"
                 and type(plan["seed"]) is int and plan["seed"] >= 0
-                and plan["arms"] == list(ARMS) and same(plan["tasks"], workload(plan["seed"]))
+                and same(plan["tasks"], workload(plan["seed"]))
                 and plan["model"] == MODEL and plan["effort"] == EFFORT and plan["retry"] is False
                 and same(plan["source"], source_snapshot(repo))
                 and same(stored, capture_plan_values(plan["seed"], plan, registration_sha256)),
                 "capture differs from the frozen plan or source")
         statuses = read(out / "capture.json").get("arms")
+        persistent_states = ("captured", "incomplete", "interrupted") if arm_order[-1] == "persistent" else ("captured",)
         require(type(statuses) is dict and set(statuses) == set(ARMS)
                 and all(statuses[arm] == "captured" for arm in ("plain", "ephemeral"))
-                and statuses["persistent"] in {"captured", "incomplete", "interrupted"}
+                and statuses["persistent"] in persistent_states
                 and plan["preflight_count"] == 3 and plan["grounding_count"] == 14,
                 "the retained block lacks the two reference arms or persistent attempt")
         verify_all_provider_paths(out)
         arms, call_ids, nonces = {}, [], []
         prior_arm_end = -1
-        for arm in ARMS:
+        persistent_failure = None
+        for arm in arm_order:
             contract = "plain" if arm == "plain" else "compiled"
             saved = read(out / "capture-arms" / arm / "task-results.json")
             rows = saved["tasks"]
@@ -983,24 +986,22 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             if arm == "persistent" and (effects["confirmed_wrong_submissions"]
                     or effects["confirmed_duplicate_exact_submissions"]
                     or (effects["repair_window_verified"] and effects["pre_repair_button_down_admissions"] > 0)):
-                require(len(set(nonces)) == len(nonces) == 6 and len(set(call_ids)) == len(call_ids) == 31,
-                        "provider or Windows Job identities are duplicated across the matched block")
-                return {"disposition": "REJECT", "reason": "confirmed_persistent_safety_or_effect_failure",
-                        "accounting_verified": True, "effects": effects}
-            require(saved["independent"].get("success") is True
-                    and effects["exact_once_in_allocation_order"] and effects["all_accepted_programs_released"]
-                    and all(row["typed_outcome"] == "completed" and row["exact_submission"] is True
-                            and row["releases_verified"] is True and row["submission_count"] == 1
-                            and row["old_target_pointer_admissions"] == 0 for row in checked)
-                    and effects["old_check_program_button_down_admissions"] == 0
-                    and effects["old_layout_missing_checks"] == (1 if arm == "persistent" else 0)
-                    and (arm != "persistent" or effects["repair_window_verified"]
-                         and effects["pre_repair_button_down_admissions"] == 0)
-                    and statuses[arm] == "captured",
-                    "task effects or input settlement do not verify")
-            if arm == "persistent":
-                require(checked[3]["repair"]["succeeded"] is True,
-                        "persistent repair did not complete")
+                persistent_failure = effects
+            else:
+                require(saved["independent"].get("success") is True
+                        and effects["exact_once_in_allocation_order"] and effects["all_accepted_programs_released"]
+                        and all(row["typed_outcome"] == "completed" and row["exact_submission"] is True
+                                and row["releases_verified"] is True and row["submission_count"] == 1
+                                and row["old_target_pointer_admissions"] == 0 for row in checked)
+                        and effects["old_check_program_button_down_admissions"] == 0
+                        and effects["old_layout_missing_checks"] == (1 if arm == "persistent" else 0)
+                        and (arm != "persistent" or effects["repair_window_verified"]
+                             and effects["pre_repair_button_down_admissions"] == 0)
+                        and statuses[arm] == "captured",
+                        "task effects or input settlement do not verify")
+                if arm == "persistent":
+                    require(checked[3]["repair"]["succeeded"] is True,
+                            "persistent repair did not complete")
             tokens, cumulative = preflight["usage"]["input_tokens"], []
             for row in rows:
                 tokens += sum(call["usage"]["input_tokens"] for call in row["model_calls"])
@@ -1012,6 +1013,9 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
                 and len(set(call_ids)) == len(call_ids) == 31
                 and sum(arm["provider_calls"] for arm in arms.values()) == 17,
                 "provider or Windows Job identities are duplicated across the matched block")
+        if persistent_failure is not None:
+            return {"disposition": "REJECT", "reason": "confirmed_persistent_safety_or_effect_failure",
+                    "accounting_verified": True, "effects": persistent_failure}
         return measured_decision(arms)
     except (OSError, ValueError, TypeError, KeyError, IndexError, AttributeError,
             subprocess.SubprocessError, SchemaError) as error:

@@ -289,6 +289,41 @@ class NativeComparisonCandidateTests(unittest.TestCase):
                 self.assertEqual(result["arms"]["plain"], "incomplete")
                 self.assertEqual(result["arms"]["ephemeral"], "not_run")
 
+    def test_reverse_capture_stops_at_first_persistent_effect_failure(self):
+        with TemporaryDirectory() as directory:
+            out = Path(directory) / "fresh"
+            preflights = []
+
+            def preflight(arm, contract, workspace):
+                preflights.append(arm)
+                return {"usage": USAGE}
+
+            @contextmanager
+            def grounding(*args):
+                yield None
+
+            def run_arm(arm, seed, workspace, model_call):
+                stage_fake_effects(out, arm, seed)
+                runtime = out / "arms" / arm / "runtime"
+                history = [json.loads(line) for line in (runtime / "submission-history.jsonl").read_text().splitlines()]
+                history[0].update(submitted_values=["incorrect"], exact=False)
+                (runtime / "submission-history.jsonl").write_text("\n".join(map(json.dumps, history)))
+                return [{"typed_outcome": "completed", "exact_submission": True,
+                         "submission_count": 1, "releases_verified": True}] * 6, {"success": True}
+
+            order = list(candidate.ARMS[::-1])
+            result = candidate.capture_block(out, 991032, preflight=preflight, run_arm=run_arm,
+                                             open_grounding=grounding, registration={"arms": order})
+            self.assertEqual(preflights, ["persistent"])
+            self.assertEqual(result["arms"], {"persistent": "incomplete", "ephemeral": "not_run", "plain": "not_run"})
+            self.assertEqual(result["disposition"], "HOLD")
+            raw_plan = json.loads((out / "capture-plan.json").read_text())
+            self.assertEqual(raw_plan["arms"], order)
+            effect = json.loads((out / "capture-arms/persistent/effect-release-audit.json").read_text())
+            self.assertEqual(effect["confirmed_wrong_submissions"], 1)
+            self.assertFalse((out / "capture-arms/ephemeral").exists())
+            self.assertFalse((out / "capture-arms/plain").exists())
+
     def test_capture_preserves_first_failure_and_explicitly_marks_unstarted_arms(self):
         def fail(arm, contract, workspace):
             raise TimeoutError("preflight result unobserved")
