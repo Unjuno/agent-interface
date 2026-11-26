@@ -56,6 +56,14 @@ class Tests(unittest.TestCase):
    game=Fake();game.finished=True;game.action[0]=1.0
    result=synchronize_terminal(game,Path(temp),lambda:True,lambda:{'verified':True},deadline_ns=2_000_000_000,clock=lambda:1_100_000_000)
    self.assertEqual(game.calls,0);self.assertEqual(result['before']['last_action'][0],1.0)
+ def test_natural_finish_between_samples_skips_synchronization(self):
+  with tempfile.TemporaryDirectory() as temp:
+   game=Fake(); reads=[False,True]
+   game.is_episode_finished=lambda:reads.pop(0)
+   result=synchronize_terminal(game,Path(temp),lambda:True,lambda:{'verified':True},deadline_ns=2_000_000_000,clock=lambda:1_100_000_000)
+   self.assertEqual(game.calls,0);self.assertEqual(result['disposition'],'already_finished')
+   rows=[json.loads(line) for line in (Path(temp)/'synthetic-terminal-refresh.jsonl').read_text().splitlines()]
+   self.assertEqual([r['event'] for r in rows],['before','attempt','pre_call','already_finished_before_call'])
  def test_non_neutral_engine_action_does_not_advance(self):
   with tempfile.TemporaryDirectory() as temp:
    game=Fake();game.action[0]=1.0
