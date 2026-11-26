@@ -68,7 +68,7 @@ def finish(gate,c,mutate=None):
 class ReverseContractTests(unittest.TestCase):
  def test_reverse_suffix_requires_every_prior_release_and_fixed_command(self):
   from map01_reverse_program import reverse_stages
-  for arm in ('control','use','calibrate'):
+  for arm in ('control','use','calibrate','east-return'):
    gate=DoorTaskContract('use',traverse=True,reverse_arm=arm)
    gate.index=6; gate.identity=('owner',0,7,'abc','def');gate.last_sequence=6
    previous='traverse-1';prior_steps=[{'op':'hold','keys':['Up'],'duration_ms':300}]
@@ -83,7 +83,7 @@ class ReverseContractTests(unittest.TestCase):
     previous=identifier;prior_steps=steps
    self.assertTrue(gate.finished)
  def test_reverse_prefix_requires_open_use_and_short_traverse(self):
-  for arm in ('control','use','calibrate'):
+  for arm in ('control','use','calibrate','east-return'):
    gate=DoorTaskContract('use',traverse=True,reverse_arm=arm)
    prior='cover-0'
    for i in range(4):

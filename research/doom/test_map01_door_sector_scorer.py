@@ -168,6 +168,25 @@ class SectorScorerTests(unittest.TestCase):
      if bad=='keys':game.action[7]=1
      with self.assertRaises(ValueError):scorer.sample('cover-0',game,1_000_000_000,lambda:True)
 class ReverseScorerConfigurationTests(unittest.TestCase):
+ def test_east_return_scores_each_suffix_stage_in_order(self):
+  import json
+  from map01_reverse_program import reverse_stages
+  with tempfile.TemporaryDirectory() as temp:
+   path=Path(temp)/'private.jsonl';game=Game()
+   def state():
+    result=State(game.sectors,game.tic,game.refreshes)
+    result.game_variables=[0,0,800,-192,0,100]
+    return result
+   game.get_state=state
+   scorer=DoorSectorScorer(path,clock=lambda:1_100_000_000,traverse=True,reverse_arm='east-return')
+   expected=('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1')+tuple(stage for stage,_ in reverse_stages('east-return'))
+   for stage in expected:
+    self.assertIsNone(scorer.sample(stage,game,1_000_000_000,lambda:True))
+   rows=[json.loads(line) for line in path.read_text().splitlines()]
+   self.assertEqual([row['stage'] for row in rows],list(expected))
+   self.assertEqual([row['stage'] for row in rows[-5:]],['east-turn-1','east-turn-2','east-turn-3','east-advance-1','east-advance-2'])
+   self.assertTrue(all(row['physical_neutral_before_after'] for row in rows))
+   with self.assertRaises(ValueError):scorer.sample('east-advance-2',game,1_000_000_000,lambda:True)
  def test_reverse_stages_are_explicitly_opt_in(self):
   from map01_reverse_program import reverse_stages
   with tempfile.TemporaryDirectory() as temp:

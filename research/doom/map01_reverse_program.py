@@ -7,7 +7,7 @@ for every individual stage. These durations are a hypothesis, not a route.
 
 
 def reverse_stages(arm):
-    if arm not in ('control', 'use', 'calibrate'):
+    if arm not in ('control', 'use', 'calibrate', 'east-return'):
         raise ValueError('invalid reverse arm')
     coast=lambda duration: [{'op':'coast','duration_ms':duration,'sample_ms':100}]
     hold=lambda key,duration: [{'op':'hold','keys':[key],'duration_ms':duration}]
@@ -16,9 +16,14 @@ def reverse_stages(arm):
                   for i,duration in enumerate((600,600,400),1))
     if arm=='calibrate':
         return stages
-    stages.append(('reverse-probe',hold('e',120) if arm=='use' else coast(120)))
+    stages.append(('reverse-probe',hold('e',120) if arm in ('use','east-return') else coast(120)))
     stages.append(('reverse-open-wait',coast(1000)))
     stages.append(('reverse-cross',hold('Up',600)))
+    if arm=='east-return':
+        stages.extend((f'east-turn-{i}',hold('Right',duration))
+                      for i,duration in enumerate((600,600,400),1))
+        stages.extend((f'east-advance-{i}',hold('Up',duration))
+                      for i,duration in enumerate((600,400),1))
     return stages
 
 
