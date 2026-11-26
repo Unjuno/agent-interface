@@ -1,0 +1,210 @@
+{
+  "schema": "issue57_three_arm_wsl_public_summary_v1",
+  "date_jst": "2026-11-26",
+  "source_commit": "128feed3f6b3d1e3c4c20c79728b86b3be9e0ce4",
+  "conditions": {
+    "host_context": "WSL2 with Windows native Codex executable",
+    "native_cli_version": "codex-cli 0.171.0-alpha.13.2",
+    "browser": "Google Chrome for Testing 156.0.8078.4",
+    "windows_python_version": "Python 3.11.9",
+    "model": "gpt-5.6-luna",
+    "effort": "low",
+    "authentication": "existing_chatgpt_session",
+    "seed": 991032,
+    "formal_runs": 1,
+    "automatic_retry": false,
+    "arm_order": [
+      "persistent",
+      "ephemeral",
+      "plain"
+    ],
+    "workload": [
+      {
+        "layout": "A",
+        "phase": "cold"
+      },
+      {
+        "layout": "A",
+        "phase": "warm"
+      },
+      {
+        "layout": "A",
+        "phase": "warm"
+      },
+      {
+        "layout": "B",
+        "phase": "invalidation_repair"
+      },
+      {
+        "layout": "B",
+        "phase": "post_repair_warm"
+      },
+      {
+        "layout": "B",
+        "phase": "post_repair_warm"
+      }
+    ],
+    "session_policy": "one_owned_app_server_per_arm_fresh_ephemeral_thread_per_grounding",
+    "schema_preflight_budget": 3,
+    "grounding_budget": 14
+  },
+  "decision": {
+    "disposition": "RETAIN",
+    "reason": "matched_token_and_generation_gate",
+    "observed_input_break_even_task": 2,
+    "block_interval_ns": 146076879497,
+    "total_provider_calls": 17
+  },
+  "arms": {
+    "persistent": {
+      "exact_tasks": 6,
+      "submission_count": 6,
+      "accepted_programs": 57,
+      "verified_terminal_releases": 57,
+      "provider_calls": 3,
+      "usage": {
+        "input_tokens": 29216,
+        "cached_input_tokens": 6784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 487,
+        "reasoning_output_tokens": 142
+      },
+      "usage_coverage": {
+        "input_tokens": 3,
+        "cached_input_tokens": 3,
+        "cache_write_input_tokens": 3,
+        "output_tokens": 3,
+        "reasoning_output_tokens": 3
+      },
+      "usage_status": "complete",
+      "cumulative_input": [
+        19220,
+        19220,
+        19220,
+        29216,
+        29216,
+        29216
+      ],
+      "task_elapsed_ns": 26559334595,
+      "grounding_calls": 2,
+      "schema_preflight_calls": 1,
+      "preflight_interval_ns": 10113270832,
+      "arm_interval_ns": 30411029380
+    },
+    "ephemeral": {
+      "exact_tasks": 6,
+      "submission_count": 6,
+      "accepted_programs": 48,
+      "verified_terminal_releases": 48,
+      "provider_calls": 7,
+      "usage": {
+        "input_tokens": 69220,
+        "cached_input_tokens": 27136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1120,
+        "reasoning_output_tokens": 315
+      },
+      "usage_coverage": {
+        "input_tokens": 7,
+        "cached_input_tokens": 7,
+        "cache_write_input_tokens": 7,
+        "output_tokens": 7,
+        "reasoning_output_tokens": 7
+      },
+      "usage_status": "complete",
+      "cumulative_input": [
+        19225,
+        29224,
+        39223,
+        49222,
+        59221,
+        69220
+      ],
+      "task_elapsed_ns": 48927921840,
+      "grounding_calls": 6,
+      "schema_preflight_calls": 1,
+      "preflight_interval_ns": 8256276117,
+      "arm_interval_ns": 50864427604
+    },
+    "plain": {
+      "exact_tasks": 6,
+      "submission_count": 6,
+      "accepted_programs": 18,
+      "verified_terminal_releases": 18,
+      "provider_calls": 7,
+      "usage": {
+        "input_tokens": 68569,
+        "cached_input_tokens": 13568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 756,
+        "reasoning_output_tokens": 308
+      },
+      "usage_coverage": {
+        "input_tokens": 7,
+        "cached_input_tokens": 7,
+        "cache_write_input_tokens": 7,
+        "output_tokens": 7,
+        "reasoning_output_tokens": 7
+      },
+      "usage_status": "complete",
+      "cumulative_input": [
+        19034,
+        28941,
+        38848,
+        48755,
+        58662,
+        68569
+      ],
+      "task_elapsed_ns": 34388297775,
+      "grounding_calls": 6,
+      "schema_preflight_calls": 1,
+      "preflight_interval_ns": 8753910714,
+      "arm_interval_ns": 37633473098
+    }
+  },
+  "repair": {
+    "verified_reference_invalidation": true,
+    "old_layout_missing_checks": 1,
+    "old_check_program_button_down_admissions": 0,
+    "pre_repair_button_down_admissions": 0
+  },
+  "settlement": {
+    "worker_exit_code": 0,
+    "runner_exit_code": 0,
+    "windows_jobs_empty": 6,
+    "windows_jobs_remaining_active_processes": 0,
+    "private_displays_retired": 4,
+    "service_kill_mode": "control-group",
+    "service_runtime_limit_seconds": 1800,
+    "service_stop_timeout_seconds": 8
+  },
+  "evidence_commitments": {
+    "registration_sha256": "3ebde3b1e8e46518aef812737b28e30f15cf3c111c9a8915bce5352245b263b4",
+    "launch_plan_sha256": "3e14c86061e546871350809187535d58bb1f3e329933b215f1b2c5d951816716",
+    "raw_seal_sha256": "81a3288480291a1447767063d1f842daec60dedbf1ba5f8a65e0f924a67edccf",
+    "host_seal_sha256": "ca53db61237c9ca49d1945a9d494832efb6ddd1ac5d292029552c62e215407f1",
+    "raw_files_sealed": 751,
+    "host_files_sealed": 9
+  },
+  "forward_reference": {
+    "source_commit": "69a46db1a83c3080ea17b2d5e4ad3d766142848b",
+    "summary": "../native_three_arm_57_wsl_69a46db1_20261126/SUMMARY.json",
+    "arm_order": [
+      "plain",
+      "ephemeral",
+      "persistent"
+    ],
+    "same_registered_seed_tasks_model_and_host_settings": true,
+    "forward_input_tokens": {
+      "persistent": 29224,
+      "ephemeral": 69240,
+      "plain": 68589
+    },
+    "forward_cached_input_tokens": {
+      "persistent": 0,
+      "ephemeral": 6784,
+      "plain": 6784
+    },
+    "forward_observed_input_break_even_task": 2
+  }
+}
