@@ -5,6 +5,8 @@ import json
 from types import SimpleNamespace
 import unittest
 from pathlib import Path
+from test_map01_v39_cancel_recovery_composition import (
+    controller, write_test_cover_command)
 
 
 SOURCE = Path(__file__).with_name("map01_overlap_controller_v39.py")
@@ -18,7 +20,9 @@ NAMES = {
 FUNCTIONS = [node for node in TREE.body
              if isinstance(node, ast.FunctionDef) and node.name in NAMES]
 assert {node.name for node in FUNCTIONS} == NAMES
-NAMESPACE = {"json": json, "RuntimeError": RuntimeError, "deepcopy": copy.deepcopy, "Path": Path}
+NAMESPACE = {"json": json, "RuntimeError": RuntimeError, "deepcopy": copy.deepcopy, "Path": Path,
+             "send_bounded_cover_command": write_test_cover_command,
+             "COVER_RENEWAL_IO_SECONDS": controller.COVER_RENEWAL_IO_SECONDS}
 exec(compile(ast.Module(body=FUNCTIONS, type_ignores=[]), str(SOURCE), "exec"),
      NAMESPACE)
 
@@ -60,7 +64,7 @@ def terminal(release=None, status="cancelled"):
 
 
 def wait_for(event):
-    def wait(predicate):
+    def wait(predicate, *, timeout=None):
         if predicate(event):
             return event
         raise AssertionError("expected event did not match wait predicate")

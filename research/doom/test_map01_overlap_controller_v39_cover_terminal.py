@@ -17,6 +17,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
+from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 
 
 NEUTRAL = {"event": "owner_release", "verified": True,
@@ -358,6 +359,7 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertIn("abort_transport", trace["timeline"])
         self.assertLess(trace["main_elapsed_ns"], 100_000_000)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_cover_cancel_is_written_before_planner_interrupt_can_block(self):
         trace = []
         interrupt_entered = threading.Event()
@@ -393,7 +395,7 @@ class CoverTerminalTests(unittest.TestCase):
                 trace.append("interrupt_return")
                 return {"status": "interrupted"}
 
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             trace.append("terminal_wait")
             testcase.assertTrue(predicate(terminal))
             return terminal
@@ -421,6 +423,7 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertEqual(trace, ["write:cancel", "flush", "terminal_wait",
                                  "interrupt_enter", "interrupt_return"])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_planner_interrupt_is_attempted_if_cover_cancel_write_fails(self):
         trace = []
 
@@ -453,7 +456,7 @@ class CoverTerminalTests(unittest.TestCase):
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                     "release": dict(NEUTRAL)}
 
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             trace.append("terminal_wait")
             return terminal if predicate(terminal) else None
 
@@ -463,6 +466,7 @@ class CoverTerminalTests(unittest.TestCase):
 
         self.assertEqual(trace, ["cancel_write", "terminal_wait", "planner_interrupt"])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
         trace = []
 
@@ -489,7 +493,7 @@ class CoverTerminalTests(unittest.TestCase):
 
         with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
             controller.cancel_invalidated_cover(
-                Planner(), object(), Process(), lambda predicate: {
+                Planner(), object(), Process(), lambda predicate, *, timeout=None: {
                     "event": "terminal", "id": "cover-0", "status": "cancelled",
                     "release": dict(NEUTRAL)}, "cover-0")
 

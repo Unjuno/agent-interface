@@ -2,16 +2,19 @@ import json
 import sys
 import threading
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
+from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 
 
 class CancelOrderingTests(unittest.TestCase):
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait(self):
         events = []
         interrupt_entered = threading.Event()
@@ -63,7 +66,7 @@ class CancelOrderingTests(unittest.TestCase):
         }
         result = {}
 
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             self.assertTrue(predicate(terminal))
             terminal_inspected.set()
             return terminal
@@ -89,6 +92,7 @@ class CancelOrderingTests(unittest.TestCase):
         self.assertEqual(events[-1], "interrupt_response")
         self.assertIs(result["value"][1], terminal)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_cancel_write_error_still_interrupts_and_waits_for_verified_release(self):
         events = []
 
@@ -126,7 +130,7 @@ class CancelOrderingTests(unittest.TestCase):
                         "keys_unknown": [], "key_state_errors": []},
         }
 
-        def wait(_predicate):
+        def wait(_predicate, *, timeout=None):
             events.append("terminal_wait")
             return terminal
 
@@ -136,6 +140,7 @@ class CancelOrderingTests(unittest.TestCase):
 
         self.assertEqual(events, ["terminal_wait", "interrupt_request"])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_ready_failed_terminal_is_inspected_without_entering_planner_interrupt(self):
         """Failure retires the pending turn without a remote interrupt ACK."""
         entered = threading.Event()
@@ -184,7 +189,7 @@ class CancelOrderingTests(unittest.TestCase):
         planner.start_session()
         handle = planner.begin_turn("observe", output_schema={"type": "object"})
 
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             if not predicate(terminal):
                 raise AssertionError("failed terminal was excluded")
             events.append("failed_terminal_inspected")

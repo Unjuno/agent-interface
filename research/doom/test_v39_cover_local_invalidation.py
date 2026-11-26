@@ -13,6 +13,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / 'live_control')]
 import map01_overlap_controller_v39 as controller
+from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter, PlannerProtocolError
 
 
@@ -44,6 +45,7 @@ def planner():
 
 
 class LocalInvalidationTests(unittest.TestCase):
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_selected_executor_stalled_release_is_saved_before_native_resume(self):
         from test_map01_process_identity_backend import backend_fixture, Executor, native
         with backend_fixture() as (backend, events, generation, fake), tempfile.TemporaryDirectory() as root:
@@ -66,7 +68,7 @@ class LocalInvalidationTests(unittest.TestCase):
                 self.assertEqual(row, {'op': 'cancel', 'id': 'stalled-cover'})
                 self.assertTrue(value._cancellation_requested)
                 executor.cancel(row['id'])
-            def wait(predicate):
+            def wait(predicate, *, timeout=None):
                 deadline = time.monotonic() + 3
                 while time.monotonic() < deadline:
                     try: row = incoming.get(timeout=max(.001, deadline - time.monotonic()))
@@ -153,13 +155,14 @@ class LocalInvalidationTests(unittest.TestCase):
         self.assertEqual(value.interrupt(handle)['outcome'], 'already_aborted')
         self.assertEqual(client.interrupts, [])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_failed_release_saved_before_abort_without_remote_interrupt(self):
         value, handle, client = planner()
         terminal = {'event': 'terminal', 'id': 'cover', 'status': 'failed',
                     'release': {'event': 'owner_release', 'verified': False, 'keys_down': [38]}}
         writes = []
         process = SimpleNamespace(stdin=SimpleNamespace(write=writes.append, flush=lambda: None))
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             self.assertTrue(value._cancellation_requested)
             self.assertEqual(len(writes), 1)
             self.assertEqual(client.interrupts, [])
@@ -178,16 +181,18 @@ class LocalInvalidationTests(unittest.TestCase):
         self.assertEqual(client.interrupts, [])
         self.assertEqual(client.closed, [5])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_wait_failure_aborts_with_local_invalidation_retained(self):
         value, handle, client = planner()
         process = SimpleNamespace(stdin=SimpleNamespace(write=lambda row: None, flush=lambda: None))
-        def wait(predicate): raise TimeoutError('no terminal')
+        def wait(predicate, *, timeout=None): raise TimeoutError('no terminal')
         with self.assertRaisesRegex(TimeoutError, 'no terminal'):
             controller.cancel_invalidated_cover(value, handle, process, wait, 'cover')
         self.assertTrue(value._cancellation_requested)
         self.assertEqual(client.interrupts, [])
         self.assertEqual(client.closed, [5])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_existing_failure_evidence_and_primary_error_survive_abort_error(self):
         value, handle, client = planner()
         process = SimpleNamespace(stdin=SimpleNamespace(write=lambda row: None, flush=lambda: None))
@@ -198,7 +203,7 @@ class LocalInvalidationTests(unittest.TestCase):
             path = Path(root)/'cover-cancel-failure.json'
             path.write_text('original evidence\n')
             with self.assertRaisesRegex(RuntimeError, 'verify empty release') as caught:
-                controller.cancel_invalidated_cover(value, handle, process, lambda predicate: terminal,
+                controller.cancel_invalidated_cover(value, handle, process, lambda predicate, *, timeout=None: terminal,
                                                     'cover', failure_root=root)
             self.assertEqual(path.read_text(), 'original evidence\n')
             self.assertIn('cover failure receipt save failed: FileExistsError', caught.exception.__notes__)

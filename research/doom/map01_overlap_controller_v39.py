@@ -446,12 +446,15 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id, *
             raise error from cause
         raise error
     try:
-        process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-        process.stdin.flush()
+        send_bounded_cover_command(process.stdin, {"op": "cancel", "id": cover_id})
     except BaseException as error:
         cancel_error = error
+    # A delivered cancel retains the session's normal terminal horizon.
+    # If delivery failed, only allow a short wait for independent closure.
+    terminal_timeout = 40 if cancel_error is None else COVER_RENEWAL_IO_SECONDS
     try:
-        terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+        terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id,
+                        timeout=terminal_timeout)
     except BaseException as terminal_error:
         if cancel_error is not None:
             cancel_error.add_note("cover terminal wait also failed: " + type(terminal_error).__name__)
