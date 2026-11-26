@@ -64,6 +64,18 @@ class ProtocolTests(unittest.TestCase):
      self.assertEqual(command['id'],'exit-probe');self.assertEqual(command['steps'],expected)
     if identifier=='exit-probe':self.assertEqual(command,{'op':'finish'})
    self.assertEqual(p.stage,'finish')
+ def test_direct_exit_probe_has_only_cover_and_final(self):
+  import inspect
+  self.assertIn('direct_exit',inspect.signature(DoorDriverProtocol).parameters)
+  p=DoorDriverProtocol('use','d'*64,'e'*64,'f'*64,870,traverse=True,exit_probe=True,exit_arm='use',direct_exit=True)
+  p.receive({'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,'after_load_tic':870,'setup_candidate_evidence':{'evidence_sha256':'f'*64}},'post_load_clock_gate':{'passed':True}},1_000_000_000)
+  for row in pair('initial',1,1_000_000_000):p.receive(row,1_100_000_000)
+  for seq,identifier in ((2,'cover-0'),(3,'exit-probe')):
+   for row in pair(identifier,seq,1_000_000_000):p.receive(row,1_100_000_000)
+   p.receive({'event':'terminal','id':identifier,'status':'completed'},1_100_000_000)
+   cmd=p.receive({'event':'door_settle','operation_id':identifier,'status':'DONE'},1_100_000_000)
+   if identifier=='cover-0':self.assertEqual(cmd['id'],'exit-probe')
+   else:self.assertEqual(cmd,{'op':'finish'})
  def test_unknown_hud_before_final_probe_is_rejected(self):
   p=DoorDriverProtocol('use','d'*64,'e'*64,'f'*64,870,traverse=True,exit_probe=True,exit_arm='use')
   p.receive({'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,'after_load_tic':870,'setup_candidate_evidence':{'evidence_sha256':'f'*64}},'post_load_clock_gate':{'passed':True}},1_000_000_000)

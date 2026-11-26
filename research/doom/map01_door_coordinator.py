@@ -19,8 +19,8 @@ class _CoverValidator:
 
 
 class DoorCoordinator:
-    def __init__(self, arm, gate, backend, executor, clock, *, traverse=False, exit_probe=False, exit_arm=None):
-        self.contract=DoorTaskContract(arm,traverse=traverse,exit_probe=exit_probe,exit_arm=exit_arm)
+    def __init__(self, arm, gate, backend, executor, clock, *, traverse=False, exit_probe=False, exit_arm=None, direct_exit=False):
+        self.contract=DoorTaskContract(arm,traverse=traverse,exit_probe=exit_probe,exit_arm=exit_arm,direct_exit=direct_exit)
         self.journal=DoorEventJournal()
         self.gate=gate
         self.backend=backend
@@ -94,7 +94,7 @@ class DoorCoordinator:
         try:
             deadline=self.contract.authorize_live(command,source,started,terminal,accepted,
                                                   self.gate,self.backend)
-            if self.contract.index==0:
+            if self.contract.index==0 or self.contract.direct_exit and self.contract.exit_arm=='use':
                 startup=self.gate.check_submit(command,self.backend,source,terminal=terminal,accepted=accepted)
                 if type(startup) is not int:
                     raise ValueError('first-input gate did not produce a deadline')

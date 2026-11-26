@@ -47,6 +47,85 @@ def door_game_variables(variable, traverse):
     return result
 
 
+SYNTHETIC_EXIT_PWAD_SHA256 = 'bd634d97942e6c88f5474d58f4181245d0f7475c9c2ec4595952f3657c5681f3'
+
+
+def copy_pinned_calibration_file(source, destination, expected_sha256):
+    source=Path(source);destination=Path(destination)
+    if source.is_symlink() or not source.is_file():raise ValueError('synthetic scenario unavailable')
+    data=source.read_bytes()
+    if hashlib.sha256(data).hexdigest()!=expected_sha256:
+        raise ValueError('calibration input bytes differ')
+    with destination.open('xb') as stream:
+        stream.write(data);stream.flush();os.fsync(stream.fileno())
+    if file_sha256(destination)!=expected_sha256:
+        raise ValueError('private calibration input differs')
+    return destination
+
+
+def copy_synthetic_exit_scenario(source, destination):
+    return copy_pinned_calibration_file(source,destination,SYNTHETIC_EXIT_PWAD_SHA256)
+
+
+def validate_synthetic_exit_calibration(args, post_load_gate):
+    path=getattr(args,'synthetic_exit_pwad',None)
+    arm=getattr(args,'synthetic_exit_arm',None)
+    if path is None:
+        if arm is not None:raise ValueError('synthetic exit arm requires the fixed scenario')
+        return None
+    if (arm not in ('control','use') or post_load_gate is not None
+            or args.door_task_arm is not None or getattr(args,'door_task_traverse',False)
+            or getattr(args,'door_task_exit',False) or getattr(args,'door_task_exit_arm',None) is not None
+            or args.load_fixture_manifest is not None or args.fixture_out is not None
+            or args.verified_fixture_setup or args.fresh_neutral_fixture_setup
+            or getattr(args,'candidate_setup_evidence',None) is not None
+            or getattr(args,'candidate_setup_evidence_sha256',None) is not None
+            or not args.renewal_passive_observer or args.timeout_seconds!=75 or args.seed!=990619 or args.skill!=1
+            or not Path(path).is_file() or Path(path).is_symlink()
+            or file_sha256(path)!=SYNTHETIC_EXIT_PWAD_SHA256):
+        raise ValueError('synthetic exit calibration requires fixed isolated scenario and arm')
+    return None
+
+
+def synthetic_neutral_heartbeat(backend, gate, session, source, *, clock=time.perf_counter_ns, started=None, expected_revision=None):
+    """Read owner and physical input state without a lease or input authority."""
+    if started is None:started=clock()
+    try:
+        owner=backend.owner;service=backend.owned_service
+        binding=source['pointer_binding'];identity=source['target_process_identity']
+        if (type(started) is not int or type(source) is not dict or type(binding) is not dict
+                or type(identity) is not dict or type(source.get('sequence')) is not int
+                or source['sequence']!=backend.sequence or identity.get('sequence')!=source['sequence']
+                or identity.get('surface')!=binding.get('surface') or binding.get('focus')!=binding.get('surface')
+                or backend._source_identity!=(source['sequence'],binding['surface'],identity.get('digest'))
+                or source.get('input_owner_generation')!=backend._owner_generation
+                or source.get('renewal_owner_id')!=owner.owner_id or owner.service_id!=service.service_id
+                or service.process is None or not service.process.is_alive() or owner.obligation_snapshot() is not None):
+            raise ValueError('owner or source identity differs')
+        state=owner.call('input_state')
+        if (type(state) is not dict or state.get('owner_id')!=owner.owner_id
+                or type(state.get('revision')) is not int or state['revision']<0
+                or expected_revision is not None and (type(expected_revision) is not int or state['revision']!=expected_revision)
+                or state.get('owned_keycodes')!=[] or state.get('owned_buttons')!=[]
+                or type(state.get('physical_pointer_mask')) is not int or state['physical_pointer_mask']!=0
+                or type(state.get('focus')) is not int or state['focus']!=binding['surface']
+                or state.get('release_pending') is not False or state.get('cancel_requested') is not False
+                or 'active_lease_deadline_ns' not in state or state['active_lease_deadline_ns'] is not None
+                or type(state.get('sample_started_ns')) is not int or type(state.get('sample_finished_ns')) is not int
+                or not started<=state['sample_started_ns']<=state['sample_finished_ns']
+                or gate.neutral(session) is not True):
+            raise ValueError('owner or physical state is not neutral')
+        ended=clock()
+        if (type(ended) is not int or not state['sample_finished_ns']<=ended<started+1_000_000_000
+                or not service.process.is_alive() or owner.obligation_snapshot() is not None):
+            raise ValueError('owner heartbeat timed out or lost custody')
+        return {'verified':True,'started_ns':started,'finished_ns':ended,'owner_id':owner.owner_id,
+                'owner_generation':backend._owner_generation,'source_sequence':source['sequence'],
+                'owner_state':state,'physical_neutral':True,'grants_input_authority':False}
+    except Exception as error:
+        raise RuntimeError('synthetic neutral heartbeat unavailable') from error
+
+
 def validate_verified_fixture_setup(args, post_load_gate):
     fresh = getattr(args, 'fresh_neutral_fixture_setup', False)
     loaded = args.verified_fixture_setup
@@ -509,6 +588,8 @@ def main(*, post_load_gate=None):
     parser.add_argument("--fixture-setup-program-sha256")
     parser.add_argument("--candidate-setup-evidence", type=Path)
     parser.add_argument("--candidate-setup-evidence-sha256")
+    parser.add_argument("--synthetic-exit-pwad", type=Path)
+    parser.add_argument("--synthetic-exit-arm", choices=("control","use"))
     parser.add_argument("--door-task-arm", choices=("control","use"))
     parser.add_argument("--door-task-traverse", action="store_true")
     parser.add_argument("--door-task-exit", action="store_true")
@@ -520,6 +601,7 @@ def main(*, post_load_gate=None):
     parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
     try:
+        validate_synthetic_exit_calibration(args, post_load_gate)
         setup_directory_identity = validate_verified_fixture_setup(args, post_load_gate)
     except ValueError as error:
         parser.error(str(error))
@@ -536,6 +618,8 @@ def main(*, post_load_gate=None):
         if args.door_task_arm is not None:
             validate_door_candidate_binding(args,candidate_preflight[2],file_sha256(candidate_iwad))
     args.out.mkdir(parents=True, exist_ok=False)
+    private_scenario=(copy_synthetic_exit_scenario(args.synthetic_exit_pwad,args.out/'synthetic-exit-calibration.wad')
+                      if args.synthetic_exit_pwad is not None else None)
     lock = threading.RLock()
     session = game = executor = backend = None
     control_started_ns = None
@@ -549,9 +633,14 @@ def main(*, post_load_gate=None):
     setup_events = []
     setup_sources = {}
     setup_input_claimed = False
+    synthetic_heartbeat_count = 0
+    synthetic_heartbeat_revision = None
     door_coordinator = None
     door_scorer = None
-    if args.door_task_arm is not None:
+    if args.synthetic_exit_pwad is not None:
+        from map01_synthetic_exit_scorer import SyntheticExitScorer
+        door_scorer=SyntheticExitScorer(args.out / 'door-sector-private.jsonl')
+    elif args.door_task_arm is not None:
         from map01_door_sector_scorer import DoorSectorScorer
         door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl',traverse=args.door_task_traverse,exit_probe=args.door_task_exit)
 
@@ -566,9 +655,10 @@ def main(*, post_load_gate=None):
             if row.get("event") == "observation":
                 latest_observation = dict(row)
             owner_generation_protocol.record_terminal(row, backend)
-            if post_load_gate is not None:
+            event_gate=post_load_gate if post_load_gate is not None else (fresh_gate if args.synthetic_exit_pwad is not None else None)
+            if event_gate is not None:
                 try:
-                    post_load_gate.record(row)
+                    event_gate.record(row)
                 except Exception as error:
                     # The executor releases input after emit raises. Do not do
                     # disk I/O here: attach the receipt to the exception that
@@ -618,22 +708,24 @@ def main(*, post_load_gate=None):
                  HERE / "doom_hud_signal_v2.py",
                  HERE / "doom_hud_signal_v1.py"):
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
-    if post_load_gate is not None or args.fresh_neutral_fixture_setup:
+    if post_load_gate is not None or args.fresh_neutral_fixture_setup or args.synthetic_exit_pwad is not None:
         sources["doom/map01_post_load_gate_v1.py"] = file_sha256(HERE / "map01_post_load_gate_v1.py")
     if candidate_preflight is not None:
         sources["doom/map01_candidate_setup_evidence_v1.py"] = file_sha256(HERE / "map01_candidate_setup_evidence_v1.py")
-    if args.door_task_arm is not None:
+    if args.door_task_arm is not None or args.synthetic_exit_pwad is not None:
         for name in ('map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py'):
             sources['doom/'+name] = file_sha256(HERE/name)
+    if args.synthetic_exit_pwad is not None:
+        sources['doom/map01_synthetic_exit_scorer.py']=file_sha256(HERE/'map01_synthetic_exit_scorer.py')
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
-            if post_load_gate is not None or args.fresh_neutral_fixture_setup:
+            if post_load_gate is not None or args.fresh_neutral_fixture_setup or args.synthetic_exit_pwad is not None:
                 # An unset bus address invites X11 autolaunch. Suppress it
                 # before Xvfb/Openbox inherit the environment.
                 os.environ["DBUS_SESSION_BUS_ADDRESS"] = "disabled:"
             session = suite.Session()
-            if post_load_gate is not None or args.fresh_neutral_fixture_setup:
+            if post_load_gate is not None or args.fresh_neutral_fixture_setup or args.synthetic_exit_pwad is not None:
                 # The shared X11 helper strips the inherited address from its
                 # copied environment. Keep subsequent session subprocesses isolated.
                 session.env["DBUS_SESSION_BUS_ADDRESS"] = os.environ["DBUS_SESSION_BUS_ADDRESS"]
@@ -647,6 +739,10 @@ def main(*, post_load_gate=None):
             os.environ.pop("WAYLAND_DISPLAY", None)
             package = Path(vd.__file__).parent
             iwad = package / "freedoom2.wad"
+            if args.synthetic_exit_pwad is not None:
+                if vd.__version__!='1.3.0':raise ValueError('synthetic calibration engine differs')
+                iwad=copy_pinned_calibration_file(iwad,args.out/'synthetic-iwad.wad',
+                    'a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b')
             config = session.tmp / "doom.ini"
             config.write_text(
                 "[Doom.Bindings]\n"
@@ -657,7 +753,7 @@ def main(*, post_load_gate=None):
                 "shift=+speed\n", encoding="utf-8")
             game = vd.DoomGame()
             game.set_doom_game_path(str(iwad))
-            game.set_doom_scenario_path("")
+            game.set_doom_scenario_path(str(private_scenario) if private_scenario is not None else '')
             game.set_doom_map("MAP01")
             game.set_doom_config_path(str(config))
             game.set_mode(vd.Mode.ASYNC_SPECTATOR)
@@ -690,7 +786,7 @@ def main(*, post_load_gate=None):
         if len(candidates) != 1:
             raise RuntimeError("Expected one Doom window: " + repr(windows))
         session.focus(" ".join(candidates[0].split()[3:]))
-        if args.fresh_neutral_fixture_setup:
+        if args.fresh_neutral_fixture_setup or args.synthetic_exit_pwad is not None:
             from map01_post_load_gate_v1 import PostLoadGate
             fresh_gate = PostLoadGate(args.out, args.timeout_seconds)
             fresh_gate.path = args.out / 'fresh-start-clock-gate.jsonl'
@@ -706,10 +802,15 @@ def main(*, post_load_gate=None):
             game.advance_action(1, True)
             after = game.get_episode_time()
             elapsed = time.perf_counter() - wall
-        iwad = Path(vd.__file__).parent / "freedoom2.wad"
+        if args.synthetic_exit_pwad is None:
+            iwad = Path(vd.__file__).parent / "freedoom2.wad"
         iwad_sha256 = file_sha256(iwad)
         loaded_fixture = None
         startup_gate = {}
+        if args.synthetic_exit_pwad is not None:
+            startup_gate['post_load_clock_gate']=fresh_start
+            startup_gate['synthetic_exit_calibration']={'pwad_sha256':SYNTHETIC_EXIT_PWAD_SHA256,
+                'iwad_sha256':iwad_sha256,'arm':args.synthetic_exit_arm,'scope':'synthetic calibration only'}
         if args.load_fixture_manifest is not None:
             loaded_fixture, gate_result = load_bound_fixture(
                 game, session, args.load_fixture_manifest, vd.__version__, iwad_sha256, args.skill,
@@ -718,16 +819,17 @@ def main(*, post_load_gate=None):
                 startup_gate['post_load_clock_gate'] = gate_result
         environment = {"vizdoom": vd.__version__, "mode": str(game.get_mode()),
             "ticrate": game.get_ticrate(), "seed": args.seed, "map": "MAP01", "skill": args.skill,
-            "scenario_path": None, "iwad": str(iwad),
+            "scenario_path": str(private_scenario) if private_scenario is not None else None,
+            "scenario_sha256": SYNTHETIC_EXIT_PWAD_SHA256 if args.synthetic_exit_pwad is not None else None, "iwad": str(iwad),
             "iwad_sha256": iwad_sha256,
             "loaded_fixture": loaded_fixture,
             "sound_for_controller": False, "episode_timeout_seconds": args.timeout_seconds}
-        if post_load_gate is not None or args.fresh_neutral_fixture_setup:
+        if post_load_gate is not None or args.fresh_neutral_fixture_setup or args.synthetic_exit_pwad is not None:
             environment["dbus_session_bus_address"] = session.env["DBUS_SESSION_BUS_ADDRESS"]
         (args.out / "environment.json").write_text(json.dumps(environment, indent=2))
         emit({"event": "clock_probe", "before_tic": before, "after_tic": after,
               "wall_seconds": elapsed, "no_advance_calls_during_wait": True,
-              "refresh_calls_before_control": 4 if args.fresh_neutral_fixture_setup else 2})
+              "refresh_calls_before_control": 4 if args.fresh_neutral_fixture_setup or args.synthetic_exit_pwad is not None else 2})
         with (args.out / "backend-setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
             signal_readers = {
                 name: DoomStatusNumberReader(iwad, signal_id=name)
@@ -735,14 +837,17 @@ def main(*, post_load_gate=None):
             backend = Backend(session, args.out, emit, signal_readers)
         executor_factory = make_executor_factory(emit)
         executor = executor_factory(backend)
-        if args.door_task_arm is not None:
+        if args.door_task_arm is not None or args.synthetic_exit_pwad is not None:
             from map01_door_coordinator import DoorCoordinator
-            if (post_load_gate is None or getattr(backend,'owned_service',None) is None
+            coordinator_gate=fresh_gate if args.synthetic_exit_pwad is not None else post_load_gate
+            if (coordinator_gate is None or getattr(backend,'owned_service',None) is None
                     or getattr(backend,'owner',None) is None):
                 raise ValueError('door trial requires the owned input service and post-load gate')
-            door_coordinator=DoorCoordinator(args.door_task_arm,post_load_gate,backend,executor,time.perf_counter_ns,
-                                             traverse=args.door_task_traverse,exit_probe=args.door_task_exit,
-                                             exit_arm=args.door_task_exit_arm)
+            door_coordinator=DoorCoordinator(args.door_task_arm or 'use',coordinator_gate,backend,executor,time.perf_counter_ns,
+                                             traverse=args.door_task_traverse or args.synthetic_exit_pwad is not None,
+                                             exit_probe=args.door_task_exit or args.synthetic_exit_pwad is not None,
+                                             exit_arm=args.synthetic_exit_arm if args.synthetic_exit_pwad is not None else args.door_task_exit_arm,
+                                             direct_exit=args.synthetic_exit_pwad is not None)
         operations = ["submit", "cancel", "clock", "finish"]
         if args.renewal_passive_observer:
             if (not callable(getattr(backend, "capture_cover_renewal", None))
@@ -797,7 +902,7 @@ def main(*, post_load_gate=None):
                   "early": "lease-bound input_released after independent owner verifies empty input",
                   "terminal": "program lifecycle closes separately after in-flight work and final cleanup",
                   "early_grants_input_authority": False},
-              "task": "Exit continuously advancing Freedoom MAP01",
+              "task": ("Synthetic exit calibration" if args.synthetic_exit_pwad is not None else "Exit continuously advancing Freedoom MAP01"),
               "bindings": {"Left/Right": "turn", "Up or w": "forward",
                            "Down or s": "back", "a/d": "strafe",
                            "e or Return": "use", "space": "attack",
@@ -827,7 +932,7 @@ def main(*, post_load_gate=None):
                             try:
                                 _,door_terminal=door_coordinator.journal.completion(operation_id)
                                 door_scorer.sample(operation_id,game,door_terminal['terminal_ns'],
-                                                   lambda:post_load_gate.neutral(session))
+                                                   lambda:door_coordinator.gate.neutral(session))
                             except Exception:
                                 emit({'event':'door_settle','status':'HOLD',
                                       'operation_id':operation_id,'reason':'sector_sample_failed'})
@@ -887,6 +992,21 @@ def main(*, post_load_gate=None):
                         probe_delivery.cancel()
                     executor.cancel(command["id"])
                 elif command["op"] == "clock":
+                    if args.synthetic_exit_pwad is not None and door_coordinator is not None and door_coordinator.finished:
+                        started=time.perf_counter_ns()
+                        _,last_probe=door_coordinator.journal.completion('exit-probe')
+                        if (synthetic_heartbeat_count>=4 or executor.active is not None
+                                or type(last_probe.get('terminal_ns')) is not int
+                                or not 0<=started-last_probe['terminal_ns']<12_000_000_000):
+                            raise RuntimeError('synthetic heartbeat window unavailable')
+                        synthetic_heartbeat_count+=1
+                        with lock:
+                            heartbeat_source=deepcopy(latest_observation)
+                        receipt=synthetic_neutral_heartbeat(backend,door_coordinator.gate,session,
+                            heartbeat_source,started=started,expected_revision=synthetic_heartbeat_revision)
+                        if synthetic_heartbeat_revision is None:
+                            synthetic_heartbeat_revision=receipt['owner_state']['revision']
+                        emit({'event':'synthetic_owner_heartbeat','count':synthetic_heartbeat_count,**receipt})
                     emit({"event": "clock", "runtime_ns": time.perf_counter_ns(),
                           "sequence": backend.sequence})
                 elif command["op"] == "rotate_input_owner":
@@ -1011,7 +1131,7 @@ def main(*, post_load_gate=None):
                     finished_before_refresh = game.is_episode_finished()
                     if type(finished_before_refresh) is not bool:
                         raise ValueError('initial terminal state is not a boolean')
-                    if finished_before_refresh is False and not getattr(args,'door_task_exit',False):
+                    if finished_before_refresh is False and not (getattr(args,'door_task_exit',False) or getattr(args,'synthetic_exit_pwad',None) is not None):
                         game.advance_action(1, True)
                         scorer_refresh_calls = 1
                     finished = game.is_episode_finished()
@@ -1041,7 +1161,7 @@ def main(*, post_load_gate=None):
                         raise ValueError('game counter is invalid')
                     deaths = int(raw_deaths)
                     kills = int(raw_kills)
-                    score = {"event": "post_control_score", "map": "MAP01", "skill": args.skill,
+                    score = {"event": "post_control_score", "map": ("SYNTHETIC_EXIT" if getattr(args,'synthetic_exit_pwad',None) is not None else "MAP01"), "skill": args.skill,
                         "map_exit": map_exit, "episode_finished": finished,
                         "episode_timeout_reached": timeout_reached,
                         "episode_timeout_source": timeout_source,
