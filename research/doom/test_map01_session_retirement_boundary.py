@@ -30,6 +30,7 @@ def command_loop(stdin):
     definitions = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name != 'main']
     module = ast.fix_missing_locations(ast.Module(body=definitions + [function], type_ignores=[]))
     namespace = dict(json=json, Path=Path, time=time, hashlib=hashlib, shutil=shutil,
+                     probe_delivery=None,
                      sys=SimpleNamespace(stdin=io.StringIO(stdin)),
                      Expired=type('Expired', (Exception,), {}),
                      vd=SimpleNamespace(__version__='fake', GameVariable=SimpleNamespace(DEATHCOUNT=1, KILLCOUNT=2)),
@@ -55,9 +56,10 @@ class RetirementBoundaryTests(unittest.TestCase):
             get_game_variable=lambda v: 0,
             get_total_reward=lambda: 0,
             get_episode_time=lambda: 1,
+            get_ticrate=lambda: 35,
             save=save)
         arguments = SimpleNamespace(out=backend.out, fixture_out=backend.out/'fixture.png',
-                                    timeout_seconds=600, skill=1, seed=7)
+                                    timeout_seconds=600, skill=1, seed=7, verified_fixture_setup=False)
         observations = [r for r in events if r.get('event') == 'observation']
         run = command_loop(json.dumps({'op': operation}) + '\n')
         try:

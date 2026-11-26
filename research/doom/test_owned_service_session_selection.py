@@ -99,6 +99,30 @@ class OwnedSessionTests(unittest.TestCase):
             self.assertEqual(seen[0][0].timeout_seconds, 75)
             self.assertNotIn("--post-load-clock-gate", seen[0][1])
 
+    def test_verified_fixture_setup_reaches_v12_with_owned_gate(self):
+        import session_map01_v15 as session
+        from map01_post_load_gate_v1 import PostLoadGate
+        with tempfile.TemporaryDirectory() as temp:
+            base = ModuleType('session_map01_v12')
+            base.vd = NS(DoomGame=object, GameVariable=object)
+            base.sys = NS(stdin=object())
+            seen = []
+            base.main = lambda *, post_load_gate: seen.append((post_load_gate, list(sys.argv)))
+            argv = ['session', '--out', temp, '--timeout-seconds', '75', '--target-process-identity',
+                    '--owned-input-service', '--post-load-clock-gate', '--verified-fixture-setup',
+                    '--renewal-passive-observer', '--fixture-setup-program-sha256', 'a' * 64,
+                    '--load-fixture-manifest', 'parent.json', '--fixture-out', 'new.png']
+            with patch.dict(sys.modules, {'session_map01_v12': base}), patch.object(
+                    session, 'MainThreadScorerStdin', return_value=Mock()), patch.object(
+                    session, 'ScorerFileSink', return_value=Mock()), patch.object(sys, 'argv', argv):
+                session.main()
+            self.assertIsInstance(seen[0][0], PostLoadGate)
+            self.assertIn('--verified-fixture-setup', seen[0][1])
+            self.assertIn('--fixture-out', seen[0][1])
+            self.assertIn('--fixture-setup-program-sha256', seen[0][1])
+            self.assertIn('--renewal-passive-observer', seen[0][1])
+            self.assertNotIn('--post-load-clock-gate', seen[0][1])
+
     def run_session(self,blocked):
         with tempfile.TemporaryDirectory() as temp:
             row=dict(case='blocked-close' if blocked else 'normal-close');backend=executor=None
