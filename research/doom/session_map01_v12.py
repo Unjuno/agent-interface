@@ -40,12 +40,22 @@ def file_sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def door_game_variables(variable, traverse):
+    result=[variable.DEATHCOUNT,variable.KILLCOUNT]
+    if traverse:
+        result.extend((variable.POSITION_X,variable.POSITION_Y,variable.ANGLE,variable.HEALTH))
+    return result
+
+
 def validate_verified_fixture_setup(args, post_load_gate):
     fresh = getattr(args, 'fresh_neutral_fixture_setup', False)
     loaded = args.verified_fixture_setup
     candidate_evidence = getattr(args, 'candidate_setup_evidence', None)
     candidate_evidence_sha = getattr(args, 'candidate_setup_evidence_sha256', None)
     door_arm=getattr(args,'door_task_arm',None)
+    traverse=getattr(args,'door_task_traverse',False)
+    if type(traverse) is not bool or traverse and door_arm is None:
+        raise ValueError('door traversal requires explicit door task mode')
     if door_arm is not None:
         if (door_arm not in ('control','use') or fresh or loaded or post_load_gate is None
                 or args.load_fixture_manifest is None or args.fixture_out is not None
@@ -495,6 +505,7 @@ def main(*, post_load_gate=None):
     parser.add_argument("--candidate-setup-evidence", type=Path)
     parser.add_argument("--candidate-setup-evidence-sha256")
     parser.add_argument("--door-task-arm", choices=("control","use"))
+    parser.add_argument("--door-task-traverse", action="store_true")
     parser.add_argument("--door-expected-manifest-sha256")
     parser.add_argument("--door-expected-save-sha256")
     parser.add_argument("--door-expected-iwad-sha256")
@@ -535,7 +546,7 @@ def main(*, post_load_gate=None):
     door_scorer = None
     if args.door_task_arm is not None:
         from map01_door_sector_scorer import DoorSectorScorer
-        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl')
+        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl',traverse=args.door_task_traverse)
 
     def emit(row):
         nonlocal last_terminal, last_accepted
@@ -660,8 +671,7 @@ def main(*, post_load_gate=None):
                 vd.Button.TURN_LEFT, vd.Button.TURN_RIGHT, vd.Button.MOVE_FORWARD,
                 vd.Button.MOVE_BACKWARD, vd.Button.MOVE_LEFT, vd.Button.MOVE_RIGHT,
                 vd.Button.ATTACK, vd.Button.USE, vd.Button.SPEED])
-            game.set_available_game_variables([vd.GameVariable.DEATHCOUNT,
-                                               vd.GameVariable.KILLCOUNT])
+            game.set_available_game_variables(door_game_variables(vd.GameVariable,args.door_task_traverse))
             candidate_init_started_ns = time.perf_counter_ns() if candidate_preflight is not None else None
             game.init()
         from PIL import ImageGrab
@@ -723,7 +733,8 @@ def main(*, post_load_gate=None):
             if (post_load_gate is None or getattr(backend,'owned_service',None) is None
                     or getattr(backend,'owner',None) is None):
                 raise ValueError('door trial requires the owned input service and post-load gate')
-            door_coordinator=DoorCoordinator(args.door_task_arm,post_load_gate,backend,executor,time.perf_counter_ns)
+            door_coordinator=DoorCoordinator(args.door_task_arm,post_load_gate,backend,executor,time.perf_counter_ns,
+                                             traverse=args.door_task_traverse)
         operations = ["submit", "cancel", "clock", "finish"]
         if args.renewal_passive_observer:
             if (not callable(getattr(backend, "capture_cover_renewal", None))

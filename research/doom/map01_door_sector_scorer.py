@@ -15,7 +15,10 @@ class DoorSectorScorer:
     TARGET={frozenset(((704.0,-96.0),(704.0,-224.0))),
             frozenset(((720.0,-96.0),(720.0,-224.0)))}
 
-    def __init__(self, path, *, clock=time.perf_counter_ns):
+    def __init__(self, path, *, clock=time.perf_counter_ns, traverse=False):
+        if type(traverse) is not bool:raise ValueError('invalid traversal mode')
+        self.traverse=traverse
+        self.STAGES=type(self).STAGES+(('traverse-1',) if traverse else ())
         self.path=Path(path)
         self.clock=clock
         self.index=0
@@ -77,7 +80,14 @@ class DoorSectorScorer:
             if len(matches)!=1:
                 raise ValueError('door sector is missing or ambiguous')
             sector,floor,ceiling=matches[0]
-            self._write({'schema':'map01-door-sector-sample-v1','status':'observed','stage':stage,
+            position={}
+            if self.traverse:
+                values=getattr(state,'game_variables',None)
+                if values is None or len(values)!=6 or not all(math.isfinite(float(value)) for value in values):
+                    raise ValueError('same-state position or health unavailable')
+                death,kills,x,y,angle,health=map(float,values)
+                position={'death_count':death,'kill_count':kills,'position_x':x,'position_y':y,'angle':angle,'health':health}
+            self._write(dict(position,**{'schema':'map01-door-sector-sample-v1','status':'observed','stage':stage,
                          'started_ns':started,'finished_ns':finished,'terminal_ns':terminal_ns,
                          'terminal_to_sample_ns':started-terminal_ns,
                          'terminal_to_refresh_ns':refresh_started-terminal_ns,
@@ -86,7 +96,7 @@ class DoorSectorScorer:
                          'state_number':state.number,'getter_after_state':getter_after,
                          'refresh_count':1,'physical_neutral_before_after':True,
                          'last_action':[0.0]*9,'sector_index':sector,
-                         'floor_d':floor,'ceiling_d':ceiling,'gap':floor+ceiling})
+                         'floor_d':floor,'ceiling_d':ceiling,'gap':floor+ceiling}))
             self.last_tic=state.tic
             self.last_state_number=state.number
             self.index+=1

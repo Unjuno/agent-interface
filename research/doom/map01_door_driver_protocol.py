@@ -4,10 +4,12 @@ This is not an evidence verifier: it sends the fixed commands only after the
 runtime's own settlement gate reports DONE. Private scorer data is never read.
 """
 class DoorDriverProtocol:
-    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic):
+    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False):
         if arm not in ('control','use') or type(restore_tic) is not int:
             raise ValueError('invalid registered trial')
+        if type(traverse) is not bool:raise ValueError('invalid traversal mode')
         self.arm=arm
+        self.traverse=traverse
         self.manifest_sha=manifest_sha
         self.save_sha=save_sha
         self.evidence_sha=evidence_sha
@@ -113,7 +115,9 @@ class DoorDriverProtocol:
                 steps=([{'op':'hold','keys':['e'],'duration_ms':120}] if self.arm=='use'
                        else [{'op':'coast','duration_ms':120,'sample_ms':100}])
                 return self._submit('intervention',steps,now)
-            if self.index==6:
+            if self.index==6 and self.traverse:
+                return self._submit('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':600}],now)
+            if self.index==(7 if self.traverse else 6):
                 self.stage='finish'
                 return {'op':'finish'}
             raise ValueError('too many operations')

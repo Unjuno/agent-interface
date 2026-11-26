@@ -32,6 +32,19 @@ class ProtocolTests(unittest.TestCase):
     if identifier=='intervention':self.assertEqual(next_cmd,{'op':'finish'})
     else:self.assertEqual(next_cmd['id'],'approach-'+str(i-1) if identifier!='approach-4' else 'intervention')
    self.assertEqual(p.stage,'finish')
+ def test_opt_in_traversal_requires_seventh_settlement(self):
+  import inspect
+  self.assertIn('traverse',inspect.signature(DoorDriverProtocol).parameters)
+  for arm in ('control','use'):
+   p=DoorDriverProtocol(arm,'d'*64,'e'*64,'f'*64,870,traverse=True)
+   p.receive({'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,'after_load_tic':870,'setup_candidate_evidence':{'evidence_sha256':'f'*64}},'post_load_clock_gate':{'passed':True}},1_000_000_000)
+   for row in pair('initial',1,1_000_000_000):p.receive(row,1_100_000_000)
+   for seq,identifier in enumerate(('cover-0','approach-1','approach-2','approach-3','approach-4','intervention','traverse-1'),2):
+    for row in pair(identifier,seq,1_000_000_000):p.receive(row,1_100_000_000)
+    p.receive({'event':'terminal','id':identifier,'status':'completed'},1_100_000_000)
+    command=p.receive({'event':'door_settle','operation_id':identifier,'status':'DONE'},1_100_000_000)
+    if identifier=='intervention':self.assertEqual(command['id'],'traverse-1');self.assertEqual(command['steps'],[{'op':'hold','keys':['Up'],'duration_ms':600}])
+    if identifier=='traverse-1':self.assertEqual(command,{'op':'finish'})
  def test_settlement_without_terminal_and_mismatched_observation_stop(self):
   p=DoorDriverProtocol('use','d'*64,'e'*64,'f'*64,870)
   ready={'event':'ready','fixture':{'manifest_sha256':'d'*64,'save_sha256':'e'*64,

@@ -30,6 +30,13 @@ class DoorModeTests(unittest.TestCase):
    session.validate_verified_fixture_setup(args(door_task_arm=None,candidate_setup_evidence=None,
       candidate_setup_evidence_sha256=None),object())
 
+ def test_traverse_option_requires_door_mode_and_adds_private_variables(self):
+  session=session_module()
+  with self.assertRaises(ValueError):
+   session.validate_verified_fixture_setup(args(door_task_arm=None,door_task_traverse=True,candidate_setup_evidence=None,candidate_setup_evidence_sha256=None,door_expected_manifest_sha256=None,door_expected_save_sha256=None,door_expected_iwad_sha256=None,door_expected_restore_tic=None),object())
+  fake=types.SimpleNamespace(**{name:name for name in ('DEATHCOUNT','KILLCOUNT','POSITION_X','POSITION_Y','ANGLE','HEALTH')})
+  self.assertEqual(session.door_game_variables(fake,True),['DEATHCOUNT','KILLCOUNT','POSITION_X','POSITION_Y','ANGLE','HEALTH'])
+  self.assertEqual(session.door_game_variables(fake,False),['DEATHCOUNT','KILLCOUNT'])
  def test_binding_must_match_preregistered_candidate(self):
   session=session_module()
   binding={'candidate_manifest_sha256':'b'*64,'candidate_save_sha256':'c'*64,'expected_restore_tic':870}
