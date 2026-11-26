@@ -63,6 +63,9 @@ class IdentityReader:
             raise RuntimeError('identity proof unavailable')
         return value
 
+    def read_renewal_target(self, xid, *, perf_deadline_ns, cancelled):
+        return self._query("renewal_target", xid, perf_deadline_ns, cancelled)
+
     def read_window(self, xid, *, perf_deadline_ns, cancelled=lambda: False):
         if type(perf_deadline_ns) is not int:
             raise ValueError('original window-query deadline required')

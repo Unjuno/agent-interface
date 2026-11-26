@@ -148,6 +148,11 @@ def main():
             TelemetryBackend = partial(TelemetryBackend, window_lifecycle=True)
     if owned_input_service:
         from session_owned_owner_backend import Backend as TelemetryBackend
+    if "--renewal-passive-observer" in sys.argv[1:]:
+        if not process_identity:
+            raise ValueError("passive renewal requires target process identity")
+        from functools import partial
+        TelemetryBackend = partial(TelemetryBackend, renewal_passive_observer=True)
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')

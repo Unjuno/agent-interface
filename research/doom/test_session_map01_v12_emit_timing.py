@@ -24,7 +24,8 @@ def load_actual_emit(output, clock):
         args=ast.arguments(posonlyargs=[], args=[], vararg=None,
                            kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
         body=[
-            ast.Assign(targets=[ast.Name(id="latest_observation", ctx=ast.Store())],
+            ast.Assign(targets=[ast.Name(id=name, ctx=ast.Store()) for name in
+                                ("latest_observation", "last_terminal", "last_accepted")],
                        value=ast.Constant(value=None)),
             ast.Assign(targets=[ast.Name(id="lock", ctx=ast.Store())],
                        value=ast.Call(func=ast.Attribute(

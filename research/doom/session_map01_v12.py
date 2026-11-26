@@ -20,6 +20,8 @@ from executor_v12 import Executor
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
+from doom_cover_renewal_probe_v1 import (
+    IDENTIFIER as RENEWAL_ID, PassiveProbeDelivery, settled_cover_probe_source)
 from input_owner_generation_protocol_v1 import InputOwnerGenerationProtocol
 
 
@@ -131,6 +133,7 @@ def main():
     parser.add_argument("--skill", type=int, choices=range(1,6), default=1)
     parser.add_argument("--fixture-out", type=Path)
     parser.add_argument("--load-fixture-manifest", type=Path)
+    parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
@@ -141,7 +144,16 @@ def main():
     latest_observation = None
     owner_generation_protocol = InputOwnerGenerationProtocol()
 
+    probe_delivery = None
+    last_terminal = None
+    last_accepted = None
+
     def emit(row):
+        nonlocal last_terminal, last_accepted
+        if row.get("event") == "accepted":
+            last_accepted = row
+        if row.get("event") == "terminal":
+            last_terminal = row
         nonlocal latest_observation
         with lock:
             if row.get("event") == "observation":
@@ -281,6 +293,16 @@ def main():
         executor_factory = make_executor_factory(emit)
         executor = executor_factory(backend)
         operations = ["submit", "cancel", "clock", "finish"]
+        if args.renewal_passive_observer:
+            if (not callable(getattr(backend, "capture_cover_renewal", None))
+                    or getattr(backend, "renewal_window_identity", None) is None):
+                raise ValueError("renewal observer requires the process/window identity backend")
+
+            def check_probe_source(command):
+                return settled_cover_probe_source(executor, backend, last_terminal, last_accepted, command)
+
+            probe_delivery = PassiveProbeDelivery(check_probe_source, backend.capture_cover_renewal, emit)
+            operations.append("probe_cover_renewal")
         if (callable(getattr(backend, "rotate_input_owner_after_cancel", None))
                      and getattr(backend, "window_identity", None) is None
                      and getattr(backend, "_provided_input_owner", None) is None):
@@ -333,10 +355,21 @@ def main():
                 command = json.loads(line)
                 emit({"event": "command", "command": command,
                       "received_ns": time.perf_counter_ns()})
-                if command["op"] == "submit":
+                if command["op"] == "probe_cover_renewal" and probe_delivery is not None:
+                    probe_delivery.start(command)
+                elif command["op"] == "submit":
+                    approval = {}
+                    if probe_delivery is not None:
+                        if type(command.get("id")) is str and RENEWAL_ID.fullmatch(command["id"]):
+                            approval["admission_deadline_ns"] = probe_delivery.consume(command)
+                        probe_delivery.cancel()
+                    if "renewal_approval" in command and not approval:
+                        raise ValueError("unexpected renewal approval")
                     executor.submit(command["id"], command["steps"],
-                                    command["expected_sequence"], command["valid_until_ns"])
+                                    command["expected_sequence"], command["valid_until_ns"], **approval)
                 elif command["op"] == "cancel":
+                    if probe_delivery is not None:
+                        probe_delivery.cancel()
                     executor.cancel(command["id"])
                 elif command["op"] == "clock":
                     emit({"event": "clock", "runtime_ns": time.perf_counter_ns(),
@@ -401,6 +434,8 @@ def main():
                           "source_sequence": latest_observation["sequence"]})
                     break
                 elif command["op"] == "finish":
+                    if probe_delivery is not None:
+                        probe_delivery.cancel()
                     close_before_control_effect(executor, args.out, emit, "finish")
                     scorer_refresh_calls = 0
                     if not game.is_episode_finished():
@@ -448,6 +483,8 @@ def main():
                 emit({"event": "rejected", "id": command.get("id"),
                       "reason": str(error)})
     finally:
+        if probe_delivery is not None:
+            probe_delivery.cancel()
         # A close or evidence-save error must not skip later owned resources.
         # Each finally preserves failure reporting and the existing close order.
         try:

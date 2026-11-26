@@ -17,11 +17,12 @@ class Executor(Previous):
         super().__init__(backend, emit)
         self.release_watch_stops = {}
 
-    def submit(self, identifier, steps, expected_sequence, valid_until_ns):
+    def submit(self, identifier, steps, expected_sequence, valid_until_ns, *, admission_deadline_ns=None):
         stop = threading.Event()
         self.release_watch_stops[identifier] = stop
         try:
-            super().submit(identifier, steps, expected_sequence, valid_until_ns)
+            super().submit(identifier, steps, expected_sequence, valid_until_ns,
+                           admission_deadline_ns=admission_deadline_ns)
         except BaseException:
             self.release_watch_stops.pop(identifier, None)
             raise
