@@ -43,6 +43,15 @@ def file_sha256(path):
 def validate_verified_fixture_setup(args, post_load_gate):
     fresh = getattr(args, 'fresh_neutral_fixture_setup', False)
     loaded = args.verified_fixture_setup
+    candidate_evidence = getattr(args, 'candidate_setup_evidence', None)
+    candidate_evidence_sha = getattr(args, 'candidate_setup_evidence_sha256', None)
+    if candidate_evidence is not None or candidate_evidence_sha is not None:
+        if (not loaded or fresh or candidate_evidence is None
+                or type(candidate_evidence_sha) is not str
+                or re.fullmatch(r'[0-9a-f]{64}', candidate_evidence_sha) is None
+                or type(getattr(args, 'timeout_seconds', None)) is not int
+                or args.timeout_seconds != 75):
+            raise ValueError('candidate evidence is restricted to verified loaded setup with a fixed hash')
     if not fresh and not loaded:
         if post_load_gate is not None and (args.load_fixture_manifest is None or args.fixture_out is not None):
             raise ValueError("post-load clock gate requires a fixed loaded fixture")
@@ -76,6 +85,32 @@ def validate_verified_fixture_setup(args, post_load_gate):
 def copy_file_exclusive(source, destination):
     with Path(source).open('rb') as src, Path(destination).open('xb') as dst:
         shutil.copyfileobj(src, dst)
+
+
+def load_setup_candidate(game, source, destination, binding, before_tic, init_started_ns):
+    expected_tic = binding.get('expected_restore_tic') if type(binding) is dict else None
+    expected_sha = binding.get('candidate_save_sha256') if type(binding) is dict else None
+    if (type(expected_tic) is not int or expected_tic < 0 or type(expected_sha) is not str
+            or re.fullmatch(r'[0-9a-f]{64}', expected_sha) is None
+            or type(before_tic) is not int or before_tic < 0 or before_tic >= expected_tic
+            or type(init_started_ns) is not int or init_started_ns <= 0):
+        raise ValueError('candidate load binding is invalid')
+    copy_file_exclusive(source, destination)
+    if file_sha256(destination) != expected_sha:
+        raise ValueError('candidate save changed after setup preflight')
+    load_started_ns = time.perf_counter_ns()
+    game.load(str(destination))
+    load_returned_ns = time.perf_counter_ns()
+    observed_tic = game.get_episode_time()
+    finished_ns = time.perf_counter_ns()
+    natural_upper = before_tic + ((finished_ns - init_started_ns)*45 + 999_999_999)//1_000_000_000 + 1
+    if (type(observed_tic) is not int or observed_tic != expected_tic or finished_ns < init_started_ns
+            or natural_upper >= expected_tic):
+        raise ValueError('candidate restored tic differs or load effect is unverified')
+    return observed_tic, {'before_load_tic': before_tic, 'init_started_ns': init_started_ns,
+        'load_started_ns': load_started_ns, 'load_returned_ns': load_returned_ns,
+        'getter_finished_ns': finished_ns, 'observed_restore_tic': observed_tic,
+        'natural_progress_upper_tic': natural_upper, 'assumed_max_tics_per_second': 45}
 
 
 def admit_verified_setup_program(steps, expected_hash, input_claimed):
@@ -339,6 +374,44 @@ def validate_fixture_manifest(manifest_path, vizdoom_version, iwad_sha256, skill
     return fixture, save_path
 
 
+def load_bound_fixture(game, session, manifest_path, engine, iwad_sha, skill,
+                       candidate_preflight, post_load_gate, candidate_init_started_ns):
+    manifest_path = Path(manifest_path).resolve()
+    if candidate_preflight is None:
+        fixture, save_path = validate_fixture_manifest(manifest_path, engine, iwad_sha, skill)
+        binding = None
+        expected_load_tic = fixture['episode_tic']
+    else:
+        if post_load_gate is None:
+            raise ValueError('candidate setup requires a post-load clock gate')
+        fixture, save_path, binding = candidate_preflight
+        expected_load_tic = binding['expected_restore_tic']
+        if file_sha256(manifest_path) != binding['candidate_manifest_sha256']:
+            raise ValueError('candidate manifest changed after setup preflight')
+    before_load_tic = game.get_episode_time()
+    engine_load_path = session.tmp / 'fixture-load.png'
+    if binding is None:
+        shutil.copy2(save_path, engine_load_path)
+        game.load(str(engine_load_path))
+        observed_load_tic = game.get_episode_time()
+    else:
+        observed_load_tic, candidate_load_check = load_setup_candidate(
+            game, save_path, engine_load_path, binding, before_load_tic, candidate_init_started_ns)
+    loaded = {'manifest': str(manifest_path),
+              'manifest_sha256': file_sha256(manifest_path) if binding is None else binding['candidate_manifest_sha256'],
+              'save': str(save_path), 'save_sha256': fixture['save_sha256'],
+              'before_load_tic': before_load_tic, 'after_load_tic': observed_load_tic,
+              'source_episode_tic': fixture['episode_tic'] if binding is None else None,
+              'setup_input_contract': fixture['setup_input_contract']}
+    if binding is not None:
+        loaded['setup_candidate_evidence'] = binding
+        loaded['observed_restore_tic'] = observed_load_tic
+        loaded['candidate_load_check'] = candidate_load_check
+    gate_result = (post_load_gate.after_load(game, session, expected_tic=expected_load_tic)
+                   if post_load_gate is not None else None)
+    return loaded, gate_result
+
+
 def close_before_control_effect(executor, out, emit, operation):
     """Retire the owned intent before engine refresh or fixture publication.
 
@@ -389,6 +462,8 @@ def main(*, post_load_gate=None):
     parser.add_argument("--verified-fixture-setup", action="store_true")
     parser.add_argument("--fresh-neutral-fixture-setup", action="store_true")
     parser.add_argument("--fixture-setup-program-sha256")
+    parser.add_argument("--candidate-setup-evidence", type=Path)
+    parser.add_argument("--candidate-setup-evidence-sha256")
     parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
     try:
@@ -397,6 +472,14 @@ def main(*, post_load_gate=None):
         parser.error(str(error))
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
+    candidate_preflight = None
+    if args.candidate_setup_evidence is not None:
+        from map01_candidate_setup_evidence_v1 import verify_setup_candidate
+        candidate_iwad = Path(vd.__file__).parent / "freedoom2.wad"
+        candidate_preflight = verify_setup_candidate(
+            args.load_fixture_manifest, args.candidate_setup_evidence,
+            args.candidate_setup_evidence_sha256, vd.__version__, file_sha256(candidate_iwad),
+            args.skill, args.seed, args.timeout_seconds, candidate_iwad)
     args.out.mkdir(parents=True, exist_ok=False)
     lock = threading.RLock()
     session = game = executor = backend = None
@@ -475,6 +558,8 @@ def main(*, post_load_gate=None):
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
     if post_load_gate is not None or args.fresh_neutral_fixture_setup:
         sources["doom/map01_post_load_gate_v1.py"] = file_sha256(HERE / "map01_post_load_gate_v1.py")
+    if candidate_preflight is not None:
+        sources["doom/map01_candidate_setup_evidence_v1.py"] = file_sha256(HERE / "map01_candidate_setup_evidence_v1.py")
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
@@ -528,6 +613,7 @@ def main(*, post_load_gate=None):
                 vd.Button.ATTACK, vd.Button.USE, vd.Button.SPEED])
             game.set_available_game_variables([vd.GameVariable.DEATHCOUNT,
                                                vd.GameVariable.KILLCOUNT])
+            candidate_init_started_ns = time.perf_counter_ns() if candidate_preflight is not None else None
             game.init()
         from PIL import ImageGrab
         time.sleep(0.3)
@@ -559,23 +645,11 @@ def main(*, post_load_gate=None):
         loaded_fixture = None
         startup_gate = {}
         if args.load_fixture_manifest is not None:
-            manifest_path = args.load_fixture_manifest.resolve()
-            fixture, save_path = validate_fixture_manifest(
-                manifest_path, vd.__version__, iwad_sha256, args.skill)
-            before_load_tic = game.get_episode_time()
-            engine_load_path = session.tmp / "fixture-load.png"
-            shutil.copy2(save_path, engine_load_path)
-            game.load(str(engine_load_path))
-            loaded_fixture = {
-                "manifest": str(manifest_path), "manifest_sha256": file_sha256(manifest_path),
-                "save": str(save_path), "save_sha256": fixture["save_sha256"],
-                "before_load_tic": before_load_tic, "after_load_tic": game.get_episode_time(),
-                "source_episode_tic": fixture["episode_tic"],
-                "setup_input_contract": fixture["setup_input_contract"],
-            }
+            loaded_fixture, gate_result = load_bound_fixture(
+                game, session, args.load_fixture_manifest, vd.__version__, iwad_sha256, args.skill,
+                candidate_preflight, post_load_gate, candidate_init_started_ns)
             if post_load_gate is not None:
-                startup_gate["post_load_clock_gate"] = post_load_gate.after_load(
-                    game, session, expected_tic=fixture["episode_tic"])
+                startup_gate['post_load_clock_gate'] = gate_result
         environment = {"vizdoom": vd.__version__, "mode": str(game.get_mode()),
             "ticrate": game.get_ticrate(), "seed": args.seed, "map": "MAP01", "skill": args.skill,
             "scenario_path": None, "iwad": str(iwad),
@@ -806,6 +880,10 @@ def main(*, post_load_gate=None):
                             "source_episode_tic": loaded_fixture["source_episode_tic"],
                             "loaded_episode_tic": loaded_fixture["after_load_tic"],
                         }
+                        if 'setup_candidate_evidence' in loaded_fixture:
+                            fixture["parent_fixture"]["setup_candidate_evidence"] = loaded_fixture['setup_candidate_evidence']
+                            fixture["parent_fixture"]["observed_restore_tic"] = loaded_fixture['observed_restore_tic']
+                            fixture["parent_fixture"]["candidate_load_check"] = loaded_fixture['candidate_load_check']
                     if candidate_setup:
                         fixture["setup_mode"] = ("fresh_neutral_fixture_setup_v1" if args.fresh_neutral_fixture_setup
                                                  else "verified_loaded_fixture_setup_v1")
