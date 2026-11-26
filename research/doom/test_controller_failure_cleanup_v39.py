@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 
 from doom_controller_failure_cleanup_v1 import (
-    ControllerFailureCleanup, load_controller_event, reject_duplicate_json_members)
+    ControllerFailureCleanup, load_controller_event, operation_release_verified,
+    reject_duplicate_json_members)
 
 OMIT_TOKEN = object()
 
@@ -176,6 +177,49 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 self.assertEqual(receipt["input_recovery_required"], reported != token)
                 self.assertEqual(receipt["cover_renewal"]["admission"], "UNKNOWN")
                 self.assertEqual(receipt["task_effect"], "unknown")
+
+    def test_release_verification_requires_ordered_owned_events(self):
+        identifier = "renew-1"
+        token = "renewed-lease"
+        empty = {"verified": True, "keys_down": [], "buttons_down": [],
+                 "keys_unknown": [], "key_state_errors": [], "intent_token": token}
+        accepted = {"event": "accepted", "id": identifier, "intent_token": token}
+        first = {"event": "input_admission", "id": identifier, "intent_token": token, "key": "Up"}
+        second = {**first, "key": "Left"}
+        transition = {"event": "input_release_transition", "id": identifier,
+                      "intent_token": token}
+        released = {"event": "input_released", "id": identifier, "intent_token": token,
+                    "owner_release": empty}
+        terminal = {"event": "terminal", "id": identifier, "status": "cancelled",
+                    "release": {**empty, "intent_token": None}}
+        local = {"id": identifier, "admission": "UNKNOWN", "input_recovery_required": False,
+                 "verified_empty_release": True, "verified_release_intent_token": token}
+        ordered = [accepted, first, transition, second, released, terminal]
+        self.assertTrue(operation_release_verified(identifier, ordered, require_intent=True))
+        self.assertTrue(self.run_cleanup_events(ordered, renewal=local)["input_releases_verified_empty"])
+        cases = {
+            "early release": [accepted, first, released, second, terminal],
+            "post-terminal admission": [accepted, first, released, terminal, second],
+            "pre-acceptance admission": [first, accepted, released, terminal],
+            "post-terminal release": [accepted, first, terminal, released],
+            "terminal before acceptance": [terminal, accepted],
+        }
+        for name, events in cases.items():
+            with self.subTest(name=name):
+                self.assertFalse(operation_release_verified(identifier, events, require_intent=True))
+                receipt = self.run_cleanup_events(events, renewal=local)
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertTrue(receipt["input_recovery_required"])
+                self.assertEqual(receipt["task_effect"], "unknown")
+
+    def test_ordinary_terminal_release_cannot_precede_admission(self):
+        accepted = {"event": "accepted", "id": "ordinary-1", "intent_token": "lease-1"}
+        admission = {**accepted, "event": "input_admission"}
+        terminal = {**accepted, "event": "terminal", "status": "completed",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [], "intent_token": "lease-1"}}
+        self.assertTrue(self.run_cleanup_events([accepted, admission, terminal])["input_releases_verified_empty"])
+        self.assertFalse(self.run_cleanup_events([accepted, terminal, admission])["input_releases_verified_empty"])
 
     def test_nonfinite_ack_values_are_rejected_by_reader_and_cleanup(self):
         for numeral in ("NaN", "Infinity", "-Infinity", "1e9999"):

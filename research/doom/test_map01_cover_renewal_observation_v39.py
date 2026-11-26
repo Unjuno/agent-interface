@@ -141,7 +141,7 @@ class RenewalObservationTests(unittest.TestCase):
         future_time = {**accepted, "accepted_ns": 10**30}
         nonfinite_time = {**accepted, "accepted_ns": float("nan")}
         for response, terminal_kind in ((timeout, "missing"), (accepted, "released"),
-                                        (timeout, "no_ack"), (timeout, "late_ack"),
+                                        (timeout, "no_ack"), (timeout, "late_ack"), (timeout, "early_release"),
                                         (reverse_time, "not_empty"),
                                         (future_time, "released"), (accepted, "wrong_token"),
                                         (nonfinite_time, "malformed_ack")):
@@ -169,14 +169,14 @@ class RenewalObservationTests(unittest.TestCase):
                         cancellations.append(json.loads(messages.readline()))
                         if terminal_kind == "missing":
                             raise TimeoutError("renewal terminal missing")
-                        if terminal_kind == "late_ack":
-                            owner_release = {**ending["release"], "intent_token": "renewed-lease"}
-                            options["consumed_events"].extend([
-                                {**accepted, "accepted_ns": 200},
-                                {"event": "input_admission", "id": RENEWED, "intent_token": "renewed-lease"},
-                                {"event": "input_released", "id": RENEWED, "intent_token": "renewed-lease",
-                                 "owner_release": owner_release},
-                            ])
+                        if terminal_kind in {"late_ack", "early_release"}:
+                            admission = {"event": "input_admission", "id": RENEWED,
+                                         "intent_token": "renewed-lease"}
+                            released = {"event": "input_released", "id": RENEWED,
+                                        "intent_token": "renewed-lease",
+                                        "owner_release": dict(ending["release"])}
+                            activity = (admission, released) if terminal_kind == "late_ack" else (released, admission)
+                            options["consumed_events"].extend([{**accepted, "accepted_ns": 200}, *activity])
                             ending["release"]["intent_token"] = None
                         return ending
 

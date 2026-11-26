@@ -54,18 +54,22 @@ def _empty_release(record):
 
 
 def operation_release_verified(identifier, events, *, require_intent=False):
-    rows = [row for row in events if type(row) is dict and row.get("id") == identifier]
-    accepted = [row for row in rows if row.get("event") == "accepted"]
-    terminals = [row for row in rows if row.get("event") == "terminal"]
-    if len(accepted) != 1 or len(terminals) != 1:
+    release_scope = INPUT_RELEASE_EVENTS | {"accepted", "terminal"}
+    rows = [row for row in events if type(row) is dict and row.get("id") == identifier
+            and type(row.get("event")) is str and row["event"] in release_scope]
+    kinds = [row["event"] for row in rows]
+    # The serialized event stream preserves publication order, including any
+    # contradictory input evidence read after the program's terminal.
+    if (kinds.count("accepted") != 1 or kinds.count("terminal") != 1 or
+            kinds[0] != "accepted" or kinds[-1] != "terminal"):
         return False
-    terminal = terminals[0]
+    accepted, terminal = rows[0], rows[-1]
     release = terminal.get("release")
     if not _empty_release(release):
         return False
-    token = accepted[0].get("intent_token")
+    token = accepted.get("intent_token")
     token_verified = type(token) is str and bool(token)
-    if ("intent_token" in accepted[0] or require_intent) and not token_verified:
+    if ("intent_token" in accepted or require_intent) and not token_verified:
         return False
     release_token = release.get("intent_token")
     if release_token is not None and (not token_verified or release_token != token):
@@ -83,6 +87,10 @@ def operation_release_verified(identifier, events, *, require_intent=False):
         return False
     matching_release = False
     if releases:
+        # Release-only cleanup transitions may follow the owner release, but
+        # no further input may be admitted under that same accepted intent.
+        if "input_admission" in kinds[kinds.index("input_released") + 1:]:
+            return False
         row = releases[0]
         owner = row.get("owner_release")
         matching_release = (token_verified and row.get("intent_token") == token and
