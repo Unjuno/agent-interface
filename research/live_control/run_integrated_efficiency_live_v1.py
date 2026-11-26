@@ -231,9 +231,8 @@ def run_arm(arm, seed, workspace, model_call=call_model):
             # later fail-closed reuse validation must not erase the prior
             # task's adaptive outcome or evidence.
             dump(OUT / "arms" / arm / "task-details.partial.json", details)
-            # Do not navigate or reacquire after an incomplete operation: its
-            # external effect may be unknown and replay is not authorized.
-            if row["typed_outcome"] != "completed":
+            # An incomplete operation or unverified input release ends the arm.
+            if row["typed_outcome"] != "completed" or row.get("releases_verified") is not True:
                 break
         independent = client.finish("finish-integrated-live-01-" + arm)
         final_history = records(client.runtime / "submission-history.jsonl")
