@@ -19,6 +19,7 @@ from research.live_control.integrated_efficiency_app_server_model_v1 import (
 from research.live_control.integrated_efficiency_fixture_v1 import workload
 from research.live_control.integrated_efficiency_protocol_v1 import ARMS, EXPECTED_MODEL_CALLS, TASKS, USAGE_FIELDS
 from research.live_control.native_app_server_job_v1 import WindowsAppServerOwner
+from research.live_control.native_comparison_arm_x11_v1 import CONTEXT_ENV
 from research.live_control.native_codex_usage_v1 import normalize_usage
 from research.live_control.schema_preflight_v1 import EFFORT, MODEL
 
@@ -313,6 +314,20 @@ def bind_golden_runner(out):
                         self.release_failed = True
                         raise RuntimeError("input release is unverified")
                     return program
+
+                def finish(self, request_id):
+                    evaluation = super().finish(request_id)
+                    if CONTEXT_ENV in os.environ:
+                        receipt = self.runtime / "comparison-display-end.json"
+                        deadline = time.monotonic() + 10
+                        while not receipt.is_file() and time.monotonic() < deadline:
+                            time.sleep(.05)
+                        if not receipt.is_file():
+                            raise RuntimeError("actual arm Xvfb exit receipt did not arrive")
+                        observed = json.loads(receipt.read_bytes())
+                        if observed.get("retired") is not True or observed.get("input_neutral_at_end") is not True:
+                            raise RuntimeError("actual arm Xvfb retirement or input neutrality did not verify")
+                    return evaluation
 
             implementation.OUT = Path(out).resolve()
             implementation.RuntimeClient = ReleaseCheckedRuntime
