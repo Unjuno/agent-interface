@@ -50,12 +50,14 @@ def job_receipt(schema, owner, completed):
             **{key: owner[key] for key in ("run_nonce", "owner_sha256")}}
 
 
-def answer_for(contract):
-    point = {"point_space": "source_observation_pixels", "point": {"x": 24, "y": 26}}
+def answer_for(contract, *, horizontal_offset=0):
+    field = {"point_space": "source_observation_pixels", "point": {"x": 4 + horizontal_offset, "y": 6}}
+    submit = {"point_space": "source_observation_pixels", "point": {"x": 15 + horizontal_offset, "y": 12}}
     if contract == "plain":
-        return {"format": "plain-form-points-v1", "field": point, "submit": point}
-    point = {**point, "motion_model": "surface_origin_translation"}
-    return {"format": "compiled-form-grounding-v1", "field": point, "submit": point,
+        return {"format": "plain-form-points-v1", "field": field, "submit": submit}
+    return {"format": "compiled-form-grounding-v1",
+            "field": {**field, "motion_model": "surface_origin_translation"},
+            "submit": {**submit, "motion_model": "surface_origin_translation"},
             "method": {"first_action": "enter_exact_token",
                        "continue_when": "field_pixels_changed_and_submit_revalidated",
                        "second_action": "activate_submit",
@@ -141,6 +143,9 @@ class SyntheticCapture:
             (self.out / "workspaces" / arm).mkdir(parents=True)
             contract = "plain" if arm == "plain" else "compiled"
             answer = answer_for(contract)
+            grounding = {"field_point": [4, 6], "submit_point": [15, 12]}
+            if contract == "compiled":
+                grounding["method"] = answer["method"]
             self.exec_arm(arm, contract, answer, arm_index)
             stage_fake_effects(self.out, arm, SEED)
             runtime = self.out / "arms" / arm / "runtime"
@@ -180,6 +185,9 @@ class SyntheticCapture:
             neutral = {"verified": True, "keys_down": [], "buttons_down": []}
             generation = 0
             for i, (task, route) in enumerate(zip(TASKS, EXPECTED_ROUTES[arm], strict=True), start=1):
+                if i == 4:
+                    answer = answer_for(contract, horizontal_offset=2)
+                    grounding = {**grounding, "field_point": [6, 6], "submit_point": [17, 12]}
                 calls = []
                 repair = route == "repair"
                 stamp = base_ns + i * 1000
@@ -221,7 +229,8 @@ class SyntheticCapture:
                     write(attempt / "terminal.json", {"status": "completed", "provider_turn_observed": True,
                           "thread_id": thread, "call_id": turn, "usage": tokens,
                           "result_returned_monotonic_ns": stamp + 54, "finished_monotonic_ns": stamp + 56})
-                    write(slot / "result.json", {"raw": answer, "usage": tokens, "provider_usage": provider_usage,
+                    write(slot / "result.json", {"raw": answer, "grounding": grounding,
+                          "usage": tokens, "provider_usage": provider_usage,
                           "turn_status": "completed", "answer_eligible": True, "requested_model": "gpt-5.6-luna",
                           "requested_effort": "low", "thread_id": thread, "call_id": turn, "turn_id": turn})
                     calls = [{"call_id": turn, "stage": "expanded_model" if repair else "anchor_model",
@@ -258,7 +267,9 @@ class SyntheticCapture:
                        "repair": {"required": repair, "old_reference_status": "missing" if repair else None,
                                   "old_reference_pointer_admissions": 0, "attempted": repair, "succeeded": repair}}
                 tasks.append(row)
-                details.append({"trace": row, "source": observation, "program_count": 4 if repair else 3})
+                target = {"grounding": grounding, "layout": row["layout"]}
+                details.append({"trace": row, "source": observation, "program_count": 4 if repair else 3,
+                                "resolved_target": target, "adaptive": {"selected_target": target}})
                 if repair:
                     observations.extend([
                         {"event": "target_handle_checked", "id": "old-check",
@@ -308,6 +319,51 @@ class SyntheticCapture:
 
 
 class NativeComparisonAuditTests(unittest.TestCase):
+    def test_schema_valid_but_semantically_invalid_grounding_cannot_compare(self):
+        for arm, flaw in (("plain", "same_point"), ("ephemeral", "same_point"),
+                          ("plain", "bounds"), ("persistent", "bounds")):
+            with self.subTest(arm=arm, flaw=flaw), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                outcome = capture.out / "model-calls" / arm / "task-1" / "anchor" / "result.json"
+                acquired = audit.read(outcome)
+                raw = acquired["raw"]
+                if flaw == "same_point":
+                    raw["submit"]["point"] = raw["field"]["point"].copy()
+                else:
+                    raw["submit"]["point"]["x"] = 1280
+                write(outcome, acquired)
+                protocol = capture.out / "native-app-server" / arm / "protocol.jsonl"
+                records = audit.records(protocol)
+                ending = next(row["message"]["params"]["turn"] for row in records
+                              if row["message"].get("method") == "turn/completed")
+                ending["items"][0]["text"] = json.dumps(raw)
+                lines(protocol, records)
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD", result.get("reason"))
+
+    def test_normalization_and_resolved_task_geometry_match_the_provider_answer(self):
+        for flaw in ("stored_grounding", "resolved", "selected", "reused"):
+            with self.subTest(flaw=flaw), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                if flaw == "stored_grounding":
+                    path = capture.out / "model-calls/plain/task-1/anchor/result.json"
+                    result = audit.read(path)
+                    result["grounding"]["field_point"] = [7, 6]
+                    write(path, result)
+                else:
+                    path = capture.out / "arms/persistent/task-details.json"
+                    details = audit.read(path)
+                    if flaw == "selected":
+                        target = details[0]["adaptive"]["selected_target"]
+                    else:
+                        target = details[1 if flaw == "reused" else 0]["resolved_target"]
+                    target["grounding"]["submit_point"] = [14, 12]
+                    write(path, details)
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD", result.get("reason"))
+
     def test_complete_native_evidence_uses_observed_usage_for_both_decisions(self):
         for persistent_tokens, expected in ((20, "RETAIN"), (120, "REJECT")):
             with self.subTest(expected=expected), TemporaryDirectory() as directory:

@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 import hashlib
+import inspect
 import json
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import subprocess
@@ -10,7 +11,7 @@ from urllib.parse import urlsplit
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError
 
-from research.live_control.integrated_efficiency_app_server_model_v1 import per_turn_usage
+from research.live_control.integrated_efficiency_app_server_model_v1 import CONTRACTS, per_turn_usage
 from research.live_control.integrated_efficiency_fixture_v1 import workload
 from research.live_control.integrated_efficiency_protocol_v1 import (
     ARMS, EXPECTED_MODEL_CALLS, TASKS, USAGE_FIELDS, validate_task,
@@ -36,11 +37,15 @@ RESPONDERS = {
     "plain": RESEARCH / "plain_form_points_responder_v1.txt",
     "compiled": RESEARCH / "compiled_form_grounding_responder_v1.txt",
 }
+VALIDATORS = {
+    "plain": RESEARCH / "plain_form_points_v1.py",
+    "compiled": RESEARCH / "compiled_form_grounding_v1.py",
+}
 EXEC_RUNNER = RESEARCH / "target_handle_model_runner_v2.py"
 PREFLIGHT_RESPONDER = RESEARCH / "schema_preflight_responder_v1.txt"
 EXEC_OWNER = RESEARCH / "native_preflight_job_v1.py"
 APP_OWNER = RESEARCH / "native_app_server_job_v1.py"
-REQUIRED_ASSETS = (*SCHEMAS.values(), *RESPONDERS.values(), EXEC_RUNNER,
+REQUIRED_ASSETS = (*SCHEMAS.values(), *RESPONDERS.values(), *VALIDATORS.values(), EXEC_RUNNER,
                    PREFLIGHT_RESPONDER, EXEC_OWNER, APP_OWNER,
                    RESEARCH / "run_integrated_efficiency_live_v1.py",
                    PurePosixPath("runtime/native_comparison_candidate_v1.py"),
@@ -359,6 +364,25 @@ def read_applicable_schema(repo, contract):
     return schema
 
 
+def semantic_validator(repo, contract):
+    validator = CONTRACTS[contract][2]
+    loaded = inspect.getsourcefile(validator)
+    require(loaded is not None and digest(Path(loaded)) == digest(scoped_path(repo, VALIDATORS[contract])),
+            "loaded grounding validator differs from the registered source")
+    return validator
+
+
+def verify_resolved_grounding(details, normalized_by_index):
+    grounding = None
+    for index, detail in enumerate(details):
+        grounding = normalized_by_index.get(index, grounding)
+        targets = (detail["resolved_target"], detail["adaptive"]["selected_target"])
+        require(grounding is not None and all(type(target) is dict
+                and target.get("layout") == detail["trace"]["layout"]
+                and same(target.get("grounding"), grounding) for target in targets),
+                "task selected or resolved grounding differs from the validated model result")
+
+
 def verify_task_sources(events, details, seed):
     """Join each source frame to its own settled navigation and observe program."""
     ready = [row for row in events if row.get("event") == "ready"]
@@ -617,6 +641,7 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
     details = read(out / "arms" / arm / "task-details.json")
     require(same([detail["trace"] for detail in details], rows), "task detail trace differs from arm result")
     schema = read_applicable_schema(repo, contract)
+    validate = semantic_validator(repo, contract)
     instructions = scoped_path(repo, RESPONDERS[contract]).read_text(encoding="utf-8")
     runtime = out / "arms" / arm / "runtime"
     bindings = verify_task_sources(records(runtime / "events.jsonl"), details, plan["seed"])
@@ -625,7 +650,7 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
     absolute_source = PurePosixPath(plan["run_root"])
     absolute_target = absolute_windows(plan["windows_run_root"])
     workspace = absolute_target / "workspaces" / arm
-    threads, images, provider_calls = [], set(), []
+    threads, images, provider_calls, normalized_by_index = [], set(), [], {}
     for index, slot in enumerate(slots, start=1):
         task_id = slot.parent.name
         task_index = TASKS.index(task_id)
@@ -674,6 +699,10 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
                 and terminal["call_id"] == result["call_id"] == result["turn_id"] == call["call_id"]
                 and Draft202012Validator(schema).is_valid(result["raw"]),
                 "grounding attempt, result and usage do not agree")
+        normalized = validate(result["raw"])
+        require(same(result.get("grounding"), normalized),
+                "recorded grounding differs from the runner's semantic normalization")
+        normalized_by_index[task_index] = normalized
         require((slot / "prompt.txt").read_bytes() == GROUNDING_PROMPT.encode(),
                 "grounding prompt differs from the registered task")
         thread_request = {"model": MODEL, "cwd": str(workspace), "approvalPolicy": "never",
@@ -695,6 +724,7 @@ def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
             == sorted(slot.relative_to(out) / "result.json" for slot in slots),
             "unexpected grounding result outside the allocated slots")
     verify_protocol(records(session / "protocol.jsonl"), owner, threads)
+    verify_resolved_grounding(details, normalized_by_index)
     return provider_calls, [thread["thread_id"] for thread in threads], owner["run_nonce"]
 
 
