@@ -203,6 +203,15 @@ def validate_fresh_neutral_snapshot(events, latest):
         previous_capture, previous_sequence = capture, seq
 
 
+def fixture_clock_fields(candidate_setup, post_save_refresh_tic):
+    if type(post_save_refresh_tic) is not int or post_save_refresh_tic < 0:
+        raise ValueError('post-save refresh tic must be a nonnegative integer')
+    if not candidate_setup:
+        return {'episode_tic': post_save_refresh_tic}
+    return {'episode_tic': None, 'post_save_refresh_episode_tic': post_save_refresh_tic,
+            'restored_episode_tic': None, 'restored_episode_tic_status': 'unmeasured'}
+
+
 def write_verified_fixture(save_path, expected_directory, engine_save, source_image, fixture):
     parent = save_path.parent
     flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
@@ -785,7 +794,7 @@ def main(*, post_load_gate=None):
                         "save_sha256": None if candidate_setup else file_sha256(save_path),
                         "source_frame": source_frame.name,
                         "source_frame_sha256": None if candidate_setup else file_sha256(source_frame),
-                        "episode_tic": game.get_episode_time(),
+                        **fixture_clock_fields(candidate_setup, game.get_episode_time()),
                         "source_observation": latest_observation,
                         "setup_input_contract": SETUP_INPUT_CONTRACT,
                         "runtime_events": str((args.out / "events.jsonl").resolve()),
@@ -810,7 +819,8 @@ def main(*, post_load_gate=None):
                                                  encoding="utf-8", newline="\n")
                     emit({"event": "fixture_saved", "manifest": str(manifest_path),
                           "save": str(save_path), "save_sha256": fixture["save_sha256"],
-                          "episode_tic": fixture["episode_tic"],
+                          **{key: fixture[key] for key in ("episode_tic", "post_save_refresh_episode_tic",
+                                                            "restored_episode_tic", "restored_episode_tic_status") if key in fixture},
                           "source_sequence": latest_observation["sequence"]})
                     break
                 elif command["op"] == "finish":
