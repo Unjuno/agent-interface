@@ -12,6 +12,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
+from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 
 
 class Map01V39CoastTests(unittest.TestCase):
@@ -216,6 +217,7 @@ class Map01V39CoastTests(unittest.TestCase):
             controller.rotate_retired_owner_after_cancel(
                 Namespace(stdin=io.StringIO()), wait, terminal, minimum_sequence=10)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_pending_observation_hard_crossing_cancels_old_cover_after_model_wait(self):
         from observable_signal_guard_v2 import (
             ObservableSignalGuard, ObservableSignalPolicyMonitor)
@@ -281,7 +283,7 @@ class Map01V39CoastTests(unittest.TestCase):
         process, planner, pending_turn = Process(), Planner(), object()
         interruption, closed = controller.cancel_invalidated_cover(
             planner, pending_turn, process,
-            lambda predicate: terminal if predicate(terminal) else None,
+            lambda predicate, *, timeout=None: terminal if predicate(terminal) else None,
             "cover-7")
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
         self.assertEqual(planner.interrupted, [pending_turn])
@@ -533,6 +535,7 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(receipt["monitor_mode"], "authored_policy_guard")
         self.assertEqual(receipt["authored"], authored)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_running_invalidation_interrupts_planner_and_requires_verified_empty_release(self):
         class Stdin:
             def __init__(self): self.writes = []
@@ -555,7 +558,7 @@ class Map01V39CoastTests(unittest.TestCase):
         process, planner, handle = Process(), Planner(), object()
 
         interruption, result = controller.cancel_invalidated_cover(
-            planner, handle, process, lambda predicate: terminal, "cover-0")
+            planner, handle, process, lambda predicate, *, timeout=None: terminal, "cover-0")
 
         self.assertIs(result, terminal)
         self.assertEqual(planner.interrupted, [handle])
@@ -802,6 +805,7 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertLess(guard_admission, replay)
         self.assertLess(replay, terminal_wait)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
         class Stdin:
             def write(self, value): pass
@@ -819,7 +823,7 @@ class Map01V39CoastTests(unittest.TestCase):
             unrelated = dict(terminal, id="other-cover")
             rows = (unrelated, terminal)
 
-            def wait(predicate):
+            def wait(predicate, *, timeout=None):
                 return next((row for row in rows if predicate(row)), None)
 
             return wait
@@ -857,6 +861,7 @@ class Map01V39CoastTests(unittest.TestCase):
                         Planner(), object(), Process(), wait_for_matching_terminal(terminal),
                         "cover-0")
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_running_invalidation_rejects_nonempty_or_unverified_release(self):
         class Stdin:
             def write(self, value): pass
@@ -882,7 +887,7 @@ class Map01V39CoastTests(unittest.TestCase):
             with self.subTest(release=release):
                 with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                     controller.cancel_invalidated_cover(
-                        Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
+                        Planner(), object(), Process(), lambda predicate, *, timeout=None: terminal, "cover-0")
 
 
 if __name__ == "__main__":

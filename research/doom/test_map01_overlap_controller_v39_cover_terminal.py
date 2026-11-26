@@ -17,6 +17,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
+from test_map01_v39_cancel_recovery_composition import write_test_cover_command
 
 
 NEUTRAL = {"event": "owner_release", "verified": True,
@@ -82,34 +83,36 @@ class CoverTerminalTests(unittest.TestCase):
 
             executor = Executor(ErrorBackend(), emit)
 
+        def consume_command(value):
+            command = json.loads(value)
+            trace["commands"].append(command)
+            trace["timeline"].append("write:" + command["op"])
+            if command["op"] == "submit":
+                count = sum(row["op"] == "submit" for row in trace["commands"])
+                stop_after_ack = count > (2 if renewed else 1)
+                identifier = command["id"]
+                if reject_renewal and count == 2:
+                    incoming.put({"event": "rejected", "id": identifier,
+                                  "reason": "latest observation sequence required before input"})
+                    return
+                if executor is not None:
+                    executor.submit(identifier, command["steps"], 1,
+                                    time.perf_counter_ns() + 1_000_000_000)
+                    return
+                incoming.put({"event": "accepted", "id": identifier,
+                              "accepted_ns": 105 + (count - 1) * 100, "steps": [],
+                              "program_sha256": "synthetic", "intent_token": "test"})
+                if stop_after_ack:
+                    trace["stop_after_renewal_ack"] = True
+                elif pending:
+                    result = (dict(terminal, status="completed", release=NEUTRAL)
+                              if renewed and count == 1 else terminal)
+                    incoming.put(dict(result, id=identifier, terminal_ns=120 + (count - 1) * 100))
+            elif command["op"] == "cancel":
+                incoming.put(dict(terminal, id=command["id"]))
         class Stdin:
-            def write(self, value):
-                command = json.loads(value)
-                trace["commands"].append(command)
-                trace["timeline"].append("write:" + command["op"])
-                if command["op"] == "submit":
-                    count = sum(row["op"] == "submit" for row in trace["commands"])
-                    if count > (2 if renewed else 1):
-                        complete.set()
-                        raise NextBoundary("renewal")
-                    identifier = command["id"]
-                    if reject_renewal and count == 2:
-                        incoming.put({"event": "rejected", "id": identifier,
-                                      "reason": "latest observation sequence required before input"})
-                        return
-                    if executor is not None:
-                        executor.submit(identifier, command["steps"], 1,
-                                        time.perf_counter_ns() + 1_000_000_000)
-                        return
-                    incoming.put({"event": "accepted", "id": identifier,
-                                  "accepted_ns": 105, "steps": [],
-                                  "program_sha256": "synthetic", "intent_token": "test"})
-                    if pending:
-                        result = (dict(terminal, status="completed", release=NEUTRAL)
-                                  if renewed and count == 1 else terminal)
-                        incoming.put(dict(result, id=identifier))
-                elif command["op"] == "cancel":
-                    incoming.put(dict(terminal, id=command["id"]))
+            def fileno(self): return pipe_write
+            def write(self, value): return os.write(pipe_write, value.encode("utf-8"))
             def flush(self): pass
 
         process = SimpleNamespace(stdin=Stdin(), stdout=iter(()),
@@ -225,7 +228,25 @@ class CoverTerminalTests(unittest.TestCase):
                 if path.name == "map01_motor_responder_v10.txt": return "synthetic"
                 return original_read(path, *args, **kwargs)
 
+            pipe_read, pipe_write = os.pipe()
+            raw_write = os.write
+            real_observe_cover = controller.observe_cover_submission_events
+
+            def pipe_write_and_deliver(fd, value):
+                count = raw_write(fd, value)
+                if fd == pipe_write:
+                    consume_command(os.read(pipe_read, count))
+                return count
+
+            def observe_until_boundary(events, monitor, **options):
+                if options.get("fail_closed") and trace.get("stop_after_renewal_ack"):
+                    complete.set()
+                    raise NextBoundary("renewal")
+                return real_observe_cover(events, monitor, **options)
+
             replacements = [
+                patch.object(os, "write", side_effect=pipe_write_and_deliver),
+                patch.object(controller, "observe_cover_submission_events", side_effect=observe_until_boundary),
                 patch.object(sys, "argv", argv),
                 patch.object(controller, "app_server_command", return_value=["offline-app-server"]),
                 patch.object(controller, "CodexAppServerClient", return_value=planner),
@@ -247,6 +268,8 @@ class CoverTerminalTests(unittest.TestCase):
                 patch.object(Path, "read_text", read_text),
             ]
             with ExitStack() as stack:
+                stack.callback(os.close, pipe_read)
+                stack.callback(os.close, pipe_write)
                 for replacement in replacements: stack.enter_context(replacement)
                 started_ns = time.perf_counter_ns()
                 try:
@@ -336,6 +359,7 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertIn("abort_transport", trace["timeline"])
         self.assertLess(trace["main_elapsed_ns"], 100_000_000)
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_cover_cancel_is_written_before_planner_interrupt_can_block(self):
         trace = []
         interrupt_entered = threading.Event()
@@ -371,7 +395,7 @@ class CoverTerminalTests(unittest.TestCase):
                 trace.append("interrupt_return")
                 return {"status": "interrupted"}
 
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             trace.append("terminal_wait")
             testcase.assertTrue(predicate(terminal))
             return terminal
@@ -399,6 +423,7 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertEqual(trace, ["write:cancel", "flush", "terminal_wait",
                                  "interrupt_enter", "interrupt_return"])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_planner_interrupt_is_attempted_if_cover_cancel_write_fails(self):
         trace = []
 
@@ -431,7 +456,7 @@ class CoverTerminalTests(unittest.TestCase):
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                     "release": dict(NEUTRAL)}
 
-        def wait(predicate):
+        def wait(predicate, *, timeout=None):
             trace.append("terminal_wait")
             return terminal if predicate(terminal) else None
 
@@ -441,6 +466,7 @@ class CoverTerminalTests(unittest.TestCase):
 
         self.assertEqual(trace, ["cancel_write", "terminal_wait", "planner_interrupt"])
 
+    @patch.object(controller, "send_bounded_cover_command", new=write_test_cover_command)
     def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
         trace = []
 
@@ -467,7 +493,7 @@ class CoverTerminalTests(unittest.TestCase):
 
         with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
             controller.cancel_invalidated_cover(
-                Planner(), object(), Process(), lambda predicate: {
+                Planner(), object(), Process(), lambda predicate, *, timeout=None: {
                     "event": "terminal", "id": "cover-0", "status": "cancelled",
                     "release": dict(NEUTRAL)}, "cover-0")
 

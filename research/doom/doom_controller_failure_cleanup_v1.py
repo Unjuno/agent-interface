@@ -1,5 +1,5 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
-import atexit,json,os,select,threading,time
+import atexit,json,math,os,select,threading,time
 from collections import Counter
 from copy import deepcopy
 
@@ -26,6 +26,82 @@ def reject_duplicate_json_members(pairs):
             raise ValueError(f"duplicate JSON member: {key!r}")
         result[key] = value
     return result
+
+
+def _reject_nonfinite_json(value):
+    raise ValueError("non-finite JSON number: " + value)
+
+
+def _finite_float(value):
+    number = float(value)
+    if not math.isfinite(number):
+        _reject_nonfinite_json(value)
+    return number
+
+
+def load_controller_event(line):
+    return json.loads(line, object_pairs_hook=reject_duplicate_json_members,
+                      parse_constant=_reject_nonfinite_json, parse_float=_finite_float)
+
+
+INPUT_RELEASE_EVENTS = {"input_admission", "input_released", "input_release_transition"}
+
+
+def _empty_release(record):
+    return (type(record) is dict and record.get("verified") is True and
+            record.get("keys_down") == [] and record.get("buttons_down") == [] and
+            record.get("keys_unknown") == [] and record.get("key_state_errors") == [])
+
+
+def operation_release_verified(identifier, events, *, require_intent=False):
+    release_scope = INPUT_RELEASE_EVENTS | {"accepted", "terminal"}
+    rows = [row for row in events if type(row) is dict and row.get("id") == identifier
+            and type(row.get("event")) is str and row["event"] in release_scope]
+    kinds = [row["event"] for row in rows]
+    # The serialized event stream preserves publication order, including any
+    # contradictory input evidence read after the program's terminal.
+    if (kinds.count("accepted") != 1 or kinds.count("terminal") != 1 or
+            kinds[0] != "accepted" or kinds[-1] != "terminal"):
+        return False
+    accepted, terminal = rows[0], rows[-1]
+    release = terminal.get("release")
+    if not _empty_release(release):
+        return False
+    token = accepted.get("intent_token")
+    token_verified = type(token) is str and bool(token)
+    if ("intent_token" in accepted or require_intent) and not token_verified:
+        return False
+    release_token = release.get("intent_token")
+    if release_token is not None and (not token_verified or release_token != token):
+        return False
+
+    admissions = [row for row in rows if row.get("event") == "input_admission"]
+    transitions = [row for row in rows if row.get("event") == "input_release_transition"]
+    releases = [row for row in rows if row.get("event") == "input_released"]
+    if any(row.get("intent_token") != token or not token_verified for row in admissions):
+        return False
+    if any("intent_token" in row and (not token_verified or row["intent_token"] != token)
+           for row in transitions):
+        return False
+    if len(releases) > 1:
+        return False
+    matching_release = False
+    if releases:
+        # Release-only cleanup transitions may follow the owner release, but
+        # no further input may be admitted under that same accepted intent.
+        if "input_admission" in kinds[kinds.index("input_released") + 1:]:
+            return False
+        row = releases[0]
+        owner = row.get("owner_release")
+        matching_release = (token_verified and row.get("intent_token") == token and
+                            _empty_release(owner) and owner.get("intent_token") == token)
+        if not matching_release:
+            return False
+    if terminal.get("status") == "cancelled" and (admissions or transitions or releases):
+        return matching_release
+    if "intent_token" in release and release_token is None and (admissions or transitions or releases):
+        return False
+    return not require_intent or release_token == token or matching_release
 
 
 def owner_event_verified(row):
@@ -293,83 +369,52 @@ class ControllerFailureCleanup:
                                  for row in terminal_rows)
         accepted_ids=set(accepted_id_counts)
         terminal_ids=set(terminal_id_counts)
-        accepted_by_id={row.get('id'):row for row in events if type(row) is dict and
-                        row.get('event')=='accepted' and type(row.get('id')) is str}
-        terminal_by_id={row.get('id'):row for row in events if type(row) is dict and
-                        row.get('event')=='terminal' and type(row.get('id')) is str}
+        input_rows=[row for row in events if type(row) is dict and
+                    type(row.get('event')) is str and row['event'] in INPUT_RELEASE_EVENTS]
+        invalid_input_ids=sum(not (type(row.get('id')) is str and row.get('id'))
+                              for row in input_rows)
+        orphan_input_ids=sorted({row['id'] for row in input_rows
+                                 if type(row.get('id')) is str and row['id']
+                                 and row['id'] not in accepted_ids})
         identities_unambiguous=(event_collection_valid and invalid_event_records==0 and
-                                not duplicate_accepted_ids and
-                                not duplicate_terminal_ids and
+                                not duplicate_accepted_ids and not duplicate_terminal_ids and
                                 invalid_accepted_ids==0 and invalid_terminal_ids==0 and
+                                invalid_input_ids==0 and not orphan_input_ids and
                                 accepted_ids==terminal_ids)
+        receipt['orphan_input_event_ids']=orphan_input_ids
+        receipt['invalid_input_event_id_count']=invalid_input_ids
         receipt['duplicate_accepted_ids']=duplicate_accepted_ids
         receipt['duplicate_terminal_ids']=duplicate_terminal_ids
         receipt['invalid_event_record_count']=invalid_event_records
         receipt['invalid_accepted_event_id_count']=invalid_accepted_ids
         receipt['invalid_terminal_event_id_count']=invalid_terminal_ids
         receipt['input_event_identities_unambiguous']=identities_unambiguous
-        admissions_by_id={identifier:[row for row in events if type(row) is dict and
-                                      row.get('event')=='input_admission' and
-                                      row.get('id')==identifier]
-                          for identifier in accepted_ids}
-        released_by_id={identifier:[row for row in events if type(row) is dict and
-                                    row.get('event')=='input_released' and
-                                    row.get('id')==identifier]
-                        for identifier in accepted_ids}
-        transitions_by_id={identifier:[row for row in events if type(row) is dict and
-                                       row.get('event')=='input_release_transition' and
-                                       row.get('id')==identifier]
-                           for identifier in accepted_ids}
-        def empty_release(record):
-            return (type(record) is dict and record.get('verified') is True and
-                    record.get('keys_down')==[] and record.get('buttons_down')==[] and
-                    record.get('keys_unknown')==[] and record.get('key_state_errors')==[])
-        def matching_input_release(identifier, token):
-            rows=released_by_id[identifier]
-            if len(rows)!=1:
-                return False
-            row=rows[0]
-            owner=row.get('owner_release')
-            return (row.get('intent_token')==token and type(owner) is dict and
-                    owner.get('intent_token')==token and empty_release(owner))
-        def release_is_verified(identifier):
-            terminal=terminal_by_id[identifier]
-            release=terminal.get('release')
-            if not empty_release(release):
-                return False
-            accepted_token=accepted_by_id[identifier].get('intent_token')
-            if ('intent_token' in accepted_by_id[identifier] and
-                    (type(accepted_token) is not str or not accepted_token)):
-                return False
-            if ('intent_token' in release and
-                    release.get('intent_token') not in (None, accepted_token)):
-                return False
-            admissions=admissions_by_id[identifier]
-            transitions=transitions_by_id[identifier]
-            released=released_by_id[identifier]
-            has_active_input=bool(admissions or transitions or released)
-            if admissions and (type(accepted_token) is not str or not accepted_token or
-                               any(row.get('intent_token')!=accepted_token
-                                   for row in admissions)):
-                return False
-            if terminal.get('status')=='cancelled' and has_active_input:
-                return (type(accepted_token) is str and bool(accepted_token) and
-                        matching_input_release(identifier, accepted_token))
-            if 'intent_token' in release and release.get('intent_token') is None and has_active_input:
-                return False
-            if 'intent_token' in release and release.get('intent_token') is not None:
-                return (type(accepted_token) is str and bool(accepted_token) and
-                        release.get('intent_token')==accepted_token)
-            return True
+        renewal=getattr(error, 'cover_renewal_receipt', None)
+        renewal_terminal_bound=renewal_scope_verified=renewal is None
+        if type(renewal) is dict:
+            receipt['cover_renewal']=deepcopy(renewal)
+            receipt['task_effect']='unknown'
+            identifier=renewal.get('id')
+            token=renewal.get('verified_release_intent_token')
+            renewal_terminal_bound=(type(identifier) is str and
+                                     identifier in accepted_ids and identifier in terminal_ids)
+            renewal_scope_verified=(renewal_terminal_bound and
+                renewal.get('input_recovery_required') is False and
+                renewal.get('verified_empty_release') is True and
+                type(token) is str and bool(token) and any(
+                    row.get('id')==identifier and row.get('intent_token')==token for row in accepted_rows) and
+                operation_release_verified(identifier, events, require_intent=True))
         event_set_complete=(receipt['stdout_reader_retired'] and
                             not receipt['stdout_reader_errors'])
         receipt['input_terminals_complete']=(event_set_complete and
-                                              identities_unambiguous)
+                                              identities_unambiguous and renewal_terminal_bound)
         receipt['input_releases_verified_empty']=(
             receipt['input_terminals_complete'] and
-            not receipt['control_boundary_failed'] and
-            all(release_is_verified(identifier) for identifier in accepted_ids))
+            not receipt['control_boundary_failed'] and renewal_scope_verified and
+            all(operation_release_verified(identifier, events) for identifier in accepted_ids))
         receipt['input_release_verified_empty']=receipt['input_releases_verified_empty']
+        if renewal is not None:
+            receipt['input_recovery_required']=not receipt['input_releases_verified_empty']
         receipt['scorer_terminal_observed']=any(
             type(row) is dict and row.get('event')=='post_control_score' for row in events)
         score_path=None if self.runtime is None else self.runtime/'score.json'
@@ -404,5 +449,5 @@ class ControllerFailureCleanup:
             receipt['input_releases_verified_empty'],receipt['scorer_terminal_observed'],
             receipt['score_file_present'],receipt['owner_events_closed'],
             all(row.get('status')=='returned' for row in receipt['stages'])))
-        attempt('failure_receipt_write',lambda:(self.out/'controller-failure.json').write_text(json.dumps(receipt,indent=2)+'\n'))
+        attempt('failure_receipt_write',lambda:(self.out/'controller-failure.json').write_text(json.dumps(receipt,indent=2,allow_nan=False)+'\n'))
         return False

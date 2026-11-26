@@ -11,7 +11,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from doom_controller_failure_cleanup_v1 import (
-    reject_duplicate_json_members, reject_control_boundary_failure,
+    load_controller_event, reject_control_boundary_failure,
     SessionControlBoundaryFailure)
 
 ROWS = []
@@ -49,7 +49,7 @@ def load_reader_and_wait(incoming, process, all_events, reader_errors):
     )
     module = ast.fix_missing_locations(ast.Module(body=[outer], type_ignores=[]))
     namespace = {"json": json, "queue": queue, "time": time,
-                 "reject_duplicate_json_members": reject_duplicate_json_members,
+                 "load_controller_event": load_controller_event,
                  "reject_control_boundary_failure": reject_control_boundary_failure}
     exec(compile(module, str(SOURCE), "exec"), namespace)
     return namespace["build_dispatch"](incoming, process, all_events, reader_errors)

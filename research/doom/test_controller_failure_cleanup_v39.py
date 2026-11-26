@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 
 from doom_controller_failure_cleanup_v1 import (
-    ControllerFailureCleanup, reject_duplicate_json_members)
+    ControllerFailureCleanup, load_controller_event, operation_release_verified,
+    reject_duplicate_json_members)
 
 OMIT_TOKEN = object()
 
@@ -50,7 +51,7 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         }
         return self.run_cleanup_events([accepted, *extra_events, terminal])
 
-    def run_cleanup_events(self, events):
+    def run_cleanup_events(self, events, *, renewal=None):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
             scope = ControllerFailureCleanup(Planner(), output)
@@ -60,7 +61,10 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "refresh refused"):
                 with scope:
                     scope.set_stage("source_refresh")
-                    raise RuntimeError("refresh refused: release token mismatch")
+                    error = RuntimeError("refresh refused: release token mismatch")
+                    if renewal is not None:
+                        error.cover_renewal_receipt = renewal
+                    raise error
             return json.loads((output / "controller-failure.json").read_text())
 
     def run_cleanup_jsonl(self, lines):
@@ -70,8 +74,7 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             reader_errors = []
             try:
                 for line in lines:
-                    row = json.loads(
-                        line, object_pairs_hook=reject_duplicate_json_members)
+                    row = load_controller_event(line)
                     events.append(row)
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
@@ -132,6 +135,101 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate JSON member: 'id'"):
             json.loads('{"id":"first","\\u0069d":"second"}',
                        object_pairs_hook=reject_duplicate_json_members)
+
+    def test_orphan_renewal_input_cannot_certify_empty_release(self):
+        receipt = self.run_cleanup_events([{"event": "input_admission", "id": "renew-1",
+                                           "intent_token": "renewed-lease"}],
+            renewal={"id": "renew-1", "admission": "UNKNOWN",
+                     "input_recovery_required": True, "verified_empty_release": False})
+        self.assertEqual(receipt["orphan_input_event_ids"], ["renew-1"])
+        self.assertEqual(receipt["cover_renewal"]["id"], "renew-1")
+        self.assertEqual(receipt["cover_renewal"]["admission"], "UNKNOWN")
+        self.assertEqual(receipt["task_effect"], "unknown")
+        self.assertTrue(receipt["input_recovery_required"])
+        self.assertFalse(receipt["input_terminals_complete"])
+        self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_unresolved_renewal_with_no_runtime_rows_stays_unknown(self):
+        receipt = self.run_cleanup_events([], renewal={"id": "renew-1", "admission": "UNKNOWN",
+            "input_recovery_required": True, "verified_empty_release": False})
+        self.assertEqual(receipt["cover_renewal"]["id"], "renew-1")
+        self.assertTrue(receipt["input_recovery_required"])
+        self.assertFalse(receipt["input_terminals_complete"])
+        self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_global_renewal_release_rechecks_bound_intent_against_events(self):
+        token = "renewed-lease"
+        accepted = {"event": "accepted", "id": "renew-1", "intent_token": token}
+        admitted = {"event": "input_admission", "id": "renew-1", "intent_token": token}
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "key_state_errors": []}
+        released = {"event": "input_released", "id": "renew-1", "intent_token": token,
+                    "owner_release": {**release, "intent_token": token}}
+        terminal = {"event": "terminal", "id": "renew-1", "status": "cancelled",
+                    "release": {**release, "intent_token": None}}
+        for reported in (token, "different-lease"):
+            with self.subTest(reported=reported):
+                receipt = self.run_cleanup_events([accepted, admitted, released, terminal],
+                    renewal={"id": "renew-1", "admission": "UNKNOWN",
+                             "input_recovery_required": False, "verified_empty_release": True,
+                             "verified_release_intent_token": reported})
+                self.assertEqual(receipt["input_releases_verified_empty"], reported == token)
+                self.assertEqual(receipt["input_recovery_required"], reported != token)
+                self.assertEqual(receipt["cover_renewal"]["admission"], "UNKNOWN")
+                self.assertEqual(receipt["task_effect"], "unknown")
+
+    def test_release_verification_requires_ordered_owned_events(self):
+        identifier = "renew-1"
+        token = "renewed-lease"
+        empty = {"verified": True, "keys_down": [], "buttons_down": [],
+                 "keys_unknown": [], "key_state_errors": [], "intent_token": token}
+        accepted = {"event": "accepted", "id": identifier, "intent_token": token}
+        first = {"event": "input_admission", "id": identifier, "intent_token": token, "key": "Up"}
+        second = {**first, "key": "Left"}
+        transition = {"event": "input_release_transition", "id": identifier,
+                      "intent_token": token}
+        released = {"event": "input_released", "id": identifier, "intent_token": token,
+                    "owner_release": empty}
+        terminal = {"event": "terminal", "id": identifier, "status": "cancelled",
+                    "release": {**empty, "intent_token": None}}
+        local = {"id": identifier, "admission": "UNKNOWN", "input_recovery_required": False,
+                 "verified_empty_release": True, "verified_release_intent_token": token}
+        ordered = [accepted, first, transition, second, released, terminal]
+        self.assertTrue(operation_release_verified(identifier, ordered, require_intent=True))
+        self.assertTrue(self.run_cleanup_events(ordered, renewal=local)["input_releases_verified_empty"])
+        cases = {
+            "early release": [accepted, first, released, second, terminal],
+            "post-terminal admission": [accepted, first, released, terminal, second],
+            "pre-acceptance admission": [first, accepted, released, terminal],
+            "post-terminal release": [accepted, first, terminal, released],
+            "terminal before acceptance": [terminal, accepted],
+        }
+        for name, events in cases.items():
+            with self.subTest(name=name):
+                self.assertFalse(operation_release_verified(identifier, events, require_intent=True))
+                receipt = self.run_cleanup_events(events, renewal=local)
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertTrue(receipt["input_recovery_required"])
+                self.assertEqual(receipt["task_effect"], "unknown")
+
+    def test_ordinary_terminal_release_cannot_precede_admission(self):
+        accepted = {"event": "accepted", "id": "ordinary-1", "intent_token": "lease-1"}
+        admission = {**accepted, "event": "input_admission"}
+        terminal = {**accepted, "event": "terminal", "status": "completed",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                                "keys_unknown": [], "key_state_errors": [], "intent_token": "lease-1"}}
+        self.assertTrue(self.run_cleanup_events([accepted, admission, terminal])["input_releases_verified_empty"])
+        self.assertFalse(self.run_cleanup_events([accepted, terminal, admission])["input_releases_verified_empty"])
+
+    def test_nonfinite_ack_values_are_rejected_by_reader_and_cleanup(self):
+        for numeral in ("NaN", "Infinity", "-Infinity", "1e9999"):
+            with self.subTest(numeral=numeral):
+                receipt = self.run_cleanup_jsonl([
+                    '{"event":"accepted","id":"renew-1","intent_token":"renewed-lease","accepted_ns":'
+                    + numeral + '}',
+                ])
+                self.assertIn("non-finite JSON number", receipt["stdout_reader_errors"][0])
+                self.assertFalse(receipt["input_releases_verified_empty"])
 
     def test_matching_release_token_is_retained_as_empty(self):
         receipt = self.run_cleanup("accepted-lease")

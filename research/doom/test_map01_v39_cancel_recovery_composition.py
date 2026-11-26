@@ -9,6 +9,7 @@ import sys
 import time
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 HERE=Path(__file__).resolve().parent
 sys.path[:0]=[str(HERE),str(HERE.parent/'live_control')]
@@ -39,6 +40,12 @@ class Process:
         self.events.append({'op':'cancel','command':json.loads(text)})
         if self.fail_write:raise OSError('synthetic cancel write unknown')
     def flush(self):self.events.append({'op':'flush'})
+
+def write_test_cover_command(stream, command):
+    """Keep in-memory transport spies separate from the production pipe writer."""
+    stream.write(json.dumps(command) + "\n")
+    stream.flush()
+
 
 class Planner:
     def __init__(self,events):self.events=events
@@ -80,7 +87,9 @@ class CancelRecoveryCompositionTests(unittest.TestCase):
         incoming.put(terminal);events=[];process=Process(events,fault=='cancel-write');planner=Planner(events)
         handle=SimpleNamespace(turn_id='still-eligible-old-turn')
         wait,latest=current_wait(incoming,process);error=None;returned=None
-        try:returned=controller.cancel_invalidated_cover(planner,handle,process,wait,'cover-0')
+        try:
+            with patch.object(controller, 'send_bounded_cover_command', new=write_test_cover_command):
+                returned=controller.cancel_invalidated_cover(planner,handle,process,wait,'cover-0')
         except Exception as exc:error=dict(type=type(exc).__name__,receipt=getattr(exc,'cover_cancellation_receipt',None))
         # Deliberately answer-eligible old result: final gate must use original invalidation.
         answer=SimpleNamespace(handle=handle,status='completed',answer_eligible=True)
