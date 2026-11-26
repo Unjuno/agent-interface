@@ -12,7 +12,7 @@ SOURCE = Path(__file__).with_name("session_map01_v12.py")
 MISSING_TIMEOUT_API = object()
 
 
-def load_finish(out, wall_seconds, close, emit):
+def load_finish(out, wall_seconds, close, emit, *, exit_probe=False):
     tree = ast.parse(SOURCE.read_bytes(), filename=str(SOURCE))
     main = next(node for node in tree.body
                 if isinstance(node, ast.FunctionDef) and node.name == "main")
@@ -27,7 +27,7 @@ def load_finish(out, wall_seconds, close, emit):
         body=finish.body[:-1], decorator_list=[])
     wrapper = ast.fix_missing_locations(ast.Module(body=[function], type_ignores=[]))
     namespace = {
-        "args": SimpleNamespace(out=out, timeout_seconds=100, skill=1),
+        "args": SimpleNamespace(out=out, timeout_seconds=100, skill=1, door_task_exit=exit_probe),
         "control_started_ns": 0, "executor": object(),
         "vd": SimpleNamespace(GameVariable=SimpleNamespace(DEATHCOUNT="deaths", KILLCOUNT="kills")),
         "time": SimpleNamespace(perf_counter_ns=lambda: wall_seconds * 1_000_000_000),
@@ -165,6 +165,41 @@ class FinishScoringTests(unittest.TestCase):
             with self.assertRaises(ValueError):load_finish(out,5,Mock(),lambda row:None)(game)
             game.advance_action.assert_not_called()
             self.assertFalse((out/'score.json').exists())
+
+    def test_actual_exit_probe_finish_loop_remains_passive(self):
+        import threading
+        tree=ast.parse(SOURCE.read_bytes())
+        main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
+        loop=next(n for n in ast.walk(main) if isinstance(n,ast.For) and isinstance(n.iter,ast.Attribute) and n.iter.attr=='stdin')
+        wrapper=ast.parse('def run(executor):\n pass\n');wrapper.body[0].body=[loop];ast.fix_missing_locations(wrapper)
+        game=SimpleNamespace(is_episode_finished=lambda:False,is_player_dead=lambda:False,
+            is_episode_timeout_reached=lambda:False,get_game_variable=lambda key:0,
+            get_total_reward=lambda:0.0,advance_action=Mock())
+        with TemporaryDirectory() as directory:
+            out=Path(directory);events=[]
+            scope={'sys':SimpleNamespace(stdin=['{"op":"finish"}']), 'json':json,
+              'args':SimpleNamespace(out=out,timeout_seconds=100,skill=1,door_task_exit=True,
+                       fresh_neutral_fixture_setup=False,verified_fixture_setup=False),
+              'time':SimpleNamespace(perf_counter_ns=lambda:5_000_000_000),'control_started_ns':0,
+              'door_coordinator':SimpleNamespace(finished=True,pending=None),
+              'door_scorer':SimpleNamespace(failed=False,index=1,STAGES=('exit-probe',)),
+              'latest_observation':None,'lock':threading.RLock(),'deepcopy':lambda value:value,
+              'probe_delivery':None,'game':game,'close_before_control_effect':lambda *args:None,
+              'vd':SimpleNamespace(GameVariable=SimpleNamespace(DEATHCOUNT='deaths',KILLCOUNT='kills')),
+              'emit':events.append,'Expired':type('Expired',(Exception,),{})}
+            exec(compile(wrapper,str(SOURCE),'exec'),scope);scope['run'](object())
+            game.advance_action.assert_not_called()
+            self.assertFalse(json.loads((out/'score.json').read_text())['map_exit'])
+
+    def test_exit_probe_finish_never_advances_unfinished_game(self):
+        game=SimpleNamespace(is_episode_finished=lambda:False,is_player_dead=lambda:False,
+            is_episode_timeout_reached=lambda:False,get_game_variable=lambda key:0,
+            get_total_reward=lambda:0.0,advance_action=Mock())
+        with TemporaryDirectory() as directory:
+            out=Path(directory);load_finish(out,5,Mock(),lambda row:None,exit_probe=True)(game)
+            game.advance_action.assert_not_called()
+            score=json.loads((out/'score.json').read_text())
+            self.assertFalse(score['map_exit']);self.assertEqual(score['scorer_refresh_calls_after_control'],0)
 
     def test_scorer_refresh_failure_preserves_error_without_publishing_score(self):
         failure = RuntimeError("synthetic engine refresh failed")

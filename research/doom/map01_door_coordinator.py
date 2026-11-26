@@ -19,8 +19,8 @@ class _CoverValidator:
 
 
 class DoorCoordinator:
-    def __init__(self, arm, gate, backend, executor, clock, *, traverse=False):
-        self.contract=DoorTaskContract(arm,traverse=traverse)
+    def __init__(self, arm, gate, backend, executor, clock, *, traverse=False, exit_probe=False, exit_arm=None):
+        self.contract=DoorTaskContract(arm,traverse=traverse,exit_probe=exit_probe,exit_arm=exit_arm)
         self.journal=DoorEventJournal()
         self.gate=gate
         self.backend=backend

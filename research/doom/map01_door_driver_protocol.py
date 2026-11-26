@@ -4,12 +4,16 @@ This is not an evidence verifier: it sends the fixed commands only after the
 runtime's own settlement gate reports DONE. Private scorer data is never read.
 """
 class DoorDriverProtocol:
-    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False):
+    def __init__(self, arm, manifest_sha, save_sha, evidence_sha, restore_tic, *, traverse=False, exit_probe=False, exit_arm=None):
         if arm not in ('control','use') or type(restore_tic) is not int:
             raise ValueError('invalid registered trial')
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
+        if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
+                or not exit_probe and exit_arm is not None):raise ValueError('invalid exit probe mode')
         self.arm=arm
         self.traverse=traverse
+        self.exit_probe=exit_probe
+        self.exit_arm=exit_arm
         self.manifest_sha=manifest_sha
         self.save_sha=save_sha
         self.evidence_sha=evidence_sha
@@ -72,8 +76,10 @@ class DoorDriverProtocol:
                 raise ValueError('HUD signals missing')
             for name,value in (('health',100),('ammo',50)):
                 item=signals.get(name)
-                if (type(item) is not dict or item.get('status')!='observed' or type(item.get('value')) is not int
-                        or item['value']!=value or item.get('sequence')!=seq or item.get('capture_ns')!=capture
+                known=(type(item) is dict and item.get('status')=='observed' and type(item.get('value')) is int and item['value']==value)
+                terminal_unknown=(self.exit_probe and self.pending=='exit-probe' and type(item) is dict
+                                  and item.get('status')=='unknown' and item.get('value') is None)
+                if (not (known or terminal_unknown) or item.get('sequence')!=seq or item.get('capture_ns')!=capture
                         or item.get('binding')!=binding or item.get('signal_id')!=name):
                     raise ValueError('HUD signal differs')
             self.identity=identity
@@ -117,7 +123,11 @@ class DoorDriverProtocol:
                 return self._submit('intervention',steps,now)
             if self.index==6 and self.traverse:
                 return self._submit('traverse-1',[{'op':'hold','keys':['Up'],'duration_ms':600}],now)
-            if self.index==(7 if self.traverse else 6):
+            if self.index==7 and self.exit_probe:
+                steps=([{'op':'hold','keys':['e'],'duration_ms':120}] if self.exit_arm=='use'
+                       else [{'op':'coast','duration_ms':120,'sample_ms':100}])
+                return self._submit('exit-probe',steps,now)
+            if self.index==(8 if self.exit_probe else 7 if self.traverse else 6):
                 self.stage='finish'
                 return {'op':'finish'}
             raise ValueError('too many operations')

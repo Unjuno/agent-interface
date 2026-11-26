@@ -37,6 +37,13 @@ class DoorModeTests(unittest.TestCase):
   fake=types.SimpleNamespace(**{name:name for name in ('DEATHCOUNT','KILLCOUNT','POSITION_X','POSITION_Y','ANGLE','HEALTH')})
   self.assertEqual(session.door_game_variables(fake,True),['DEATHCOUNT','KILLCOUNT','POSITION_X','POSITION_Y','ANGLE','HEALTH'])
   self.assertEqual(session.door_game_variables(fake,False),['DEATHCOUNT','KILLCOUNT'])
+ def test_exit_probe_requires_explicit_traversal_and_door_mode(self):
+  session=session_module()
+  self.assertIsNone(session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=True,door_task_exit_arm='control'),object()))
+  with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=False,door_task_exit=True,door_task_exit_arm='control'),object())
+  with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=True),object())
+  with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_traverse=True,door_task_exit=False,door_task_exit_arm='control'),object())
+  with self.assertRaises(ValueError):session.validate_verified_fixture_setup(args(door_task_arm=None,door_task_traverse=False,door_task_exit=True),object())
  def test_binding_must_match_preregistered_candidate(self):
   session=session_module()
   binding={'candidate_manifest_sha256':'b'*64,'candidate_save_sha256':'c'*64,'expected_restore_tic':870}

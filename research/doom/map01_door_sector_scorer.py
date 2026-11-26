@@ -15,10 +15,12 @@ class DoorSectorScorer:
     TARGET={frozenset(((704.0,-96.0),(704.0,-224.0))),
             frozenset(((720.0,-96.0),(720.0,-224.0)))}
 
-    def __init__(self, path, *, clock=time.perf_counter_ns, traverse=False):
+    def __init__(self, path, *, clock=time.perf_counter_ns, traverse=False, exit_probe=False):
         if type(traverse) is not bool:raise ValueError('invalid traversal mode')
+        if type(exit_probe) is not bool or exit_probe and not traverse:raise ValueError('invalid exit probe mode')
         self.traverse=traverse
-        self.STAGES=type(self).STAGES+(('traverse-1',) if traverse else ())
+        self.exit_probe=exit_probe
+        self.STAGES=type(self).STAGES+(('traverse-1',) if traverse else ())+(('exit-probe',) if exit_probe else ())
         self.path=Path(path)
         self.clock=clock
         self.index=0
@@ -47,6 +49,32 @@ class DoorSectorScorer:
                     or not callable(physical_neutral) or physical_neutral() is not True
                     or list(game.get_last_action())!=[0.0]*9):
                 raise ValueError('scorer refresh requires fresh physical neutral input')
+            if self.exit_probe and stage=='exit-probe':
+                from vizdoom import GameVariable
+                tic_before=game.get_episode_time()
+                finished=game.is_episode_finished();dead=game.is_player_dead()
+                timeout=getattr(game,'is_episode_timeout_reached',None)
+                timeout=timeout() if callable(timeout) else None
+                deaths=game.get_game_variable(GameVariable.DEATHCOUNT)
+                if (type(finished) is not bool or type(dead) is not bool or type(timeout) is not bool
+                        or type(deaths) not in (int,float) or not math.isfinite(deaths) or deaths<0 or deaths%1!=0):
+                    raise ValueError('terminal facts unavailable')
+                finished_again=game.is_episode_finished();tic_after=game.get_episode_time()
+                neutral_after=physical_neutral() is True
+                last_action_neutral=list(game.get_last_action())==[0.0]*9
+                ended=self.clock()
+                if (type(tic_before) is not int or tic_before<0 or type(tic_after) is not int
+                        or tic_after!=tic_before or finished_again is not finished or type(ended) is not int
+                        or not started<=ended<=terminal_ns+1_000_000_000
+                        or not neutral_after or not last_action_neutral):
+                    raise ValueError('terminal facts or neutral input changed')
+                self._write({'schema':'map01-door-terminal-sample-v1','status':'terminal_probe_observed','stage':stage,
+                             'terminal_ns':terminal_ns,'started_ns':started,'finished_ns':ended,
+                             'episode_finished':finished,'player_dead':dead,'native_timeout':timeout,
+                             'death_count':int(deaths),'tic_before':tic_before,'tic_after':tic_after,
+                             'physical_neutral_before_after':True,'refresh_count':0})
+                self.index+=1
+                return
             before=game.get_episode_time()
             refresh_started=self.clock()
             if type(refresh_started) is not int or not started<=refresh_started<=terminal_ns+1_000_000_000:

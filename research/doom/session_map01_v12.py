@@ -54,6 +54,11 @@ def validate_verified_fixture_setup(args, post_load_gate):
     candidate_evidence_sha = getattr(args, 'candidate_setup_evidence_sha256', None)
     door_arm=getattr(args,'door_task_arm',None)
     traverse=getattr(args,'door_task_traverse',False)
+    exit_probe=getattr(args,'door_task_exit',False)
+    exit_arm=getattr(args,'door_task_exit_arm',None)
+    if (type(exit_probe) is not bool or exit_probe and (not traverse or exit_arm not in ('control','use'))
+            or not exit_probe and exit_arm is not None):
+        raise ValueError('exit probe requires explicit door traversal')
     if type(traverse) is not bool or traverse and door_arm is None:
         raise ValueError('door traversal requires explicit door task mode')
     if door_arm is not None:
@@ -506,6 +511,8 @@ def main(*, post_load_gate=None):
     parser.add_argument("--candidate-setup-evidence-sha256")
     parser.add_argument("--door-task-arm", choices=("control","use"))
     parser.add_argument("--door-task-traverse", action="store_true")
+    parser.add_argument("--door-task-exit", action="store_true")
+    parser.add_argument("--door-task-exit-arm", choices=("control","use"))
     parser.add_argument("--door-expected-manifest-sha256")
     parser.add_argument("--door-expected-save-sha256")
     parser.add_argument("--door-expected-iwad-sha256")
@@ -546,7 +553,7 @@ def main(*, post_load_gate=None):
     door_scorer = None
     if args.door_task_arm is not None:
         from map01_door_sector_scorer import DoorSectorScorer
-        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl',traverse=args.door_task_traverse)
+        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl',traverse=args.door_task_traverse,exit_probe=args.door_task_exit)
 
     def emit(row):
         nonlocal last_terminal, last_accepted
@@ -734,7 +741,8 @@ def main(*, post_load_gate=None):
                     or getattr(backend,'owner',None) is None):
                 raise ValueError('door trial requires the owned input service and post-load gate')
             door_coordinator=DoorCoordinator(args.door_task_arm,post_load_gate,backend,executor,time.perf_counter_ns,
-                                             traverse=args.door_task_traverse)
+                                             traverse=args.door_task_traverse,exit_probe=args.door_task_exit,
+                                             exit_arm=args.door_task_exit_arm)
         operations = ["submit", "cancel", "clock", "finish"]
         if args.renewal_passive_observer:
             if (not callable(getattr(backend, "capture_cover_renewal", None))
@@ -1003,7 +1011,7 @@ def main(*, post_load_gate=None):
                     finished_before_refresh = game.is_episode_finished()
                     if type(finished_before_refresh) is not bool:
                         raise ValueError('initial terminal state is not a boolean')
-                    if finished_before_refresh is False:
+                    if finished_before_refresh is False and not getattr(args,'door_task_exit',False):
                         game.advance_action(1, True)
                         scorer_refresh_calls = 1
                     finished = game.is_episode_finished()
