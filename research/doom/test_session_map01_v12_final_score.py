@@ -74,12 +74,12 @@ class FinishScoringTests(unittest.TestCase):
         self.assertEqual(record["episode_timeout_source"], "engine_api")
         self.assertIsNone(record["engine_tic_limit_reached"])
 
-    def test_engine_tick_fallback_catches_timeout_at_final_refresh(self):
+    def test_engine_tick_limit_does_not_prove_terminal_timeout(self):
         for tic in (3500, 3501):
             with self.subTest(tic=tic):
                 record = self.finish(tic=tic, refresh=True)
                 self.assertFalse(record["map_exit"])
-                self.assertTrue(record["episode_timeout_reached"])
+                self.assertIsNone(record["episode_timeout_reached"])
                 self.assertEqual(record["episode_timeout_source"], "engine_tic_limit")
                 self.assertTrue(record["engine_tic_limit_reached"])
 
@@ -107,13 +107,14 @@ class FinishScoringTests(unittest.TestCase):
         self.assertEqual(record["episode_timeout_source"], "engine_tic_limit")
         self.assertIsNone(record["engine_tic_limit_reached"])
 
-    def test_finished_alive_before_timeout_can_exit(self):
-        for native in (MISSING_TIMEOUT_API, False):
-            with self.subTest(native=native):
-                record = self.finish(native_timeout=native, tic=3499)
-                self.assertTrue(record["map_exit"])
-                self.assertTrue(record["one_life_map_exit"])
-                self.assertFalse(record["episode_timeout_reached"])
+    def test_finished_alive_needs_native_non_timeout_evidence(self):
+        record=self.finish(native_timeout=False,tic=3499)
+        self.assertTrue(record['map_exit']);self.assertTrue(record['one_life_map_exit'])
+        for tic in (0,3499,3500,3501):
+            with self.subTest(tic=tic):
+                record=self.finish(tic=tic)
+                self.assertFalse(record['map_exit'])
+                self.assertIsNone(record['episode_timeout_reached'])
 
     def test_unknown_terminal_values_cannot_be_scored_as_exit(self):
         for finished, dead in ((True, None), (True, 0)):

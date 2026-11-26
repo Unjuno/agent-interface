@@ -65,9 +65,14 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
         if type(tic_before) is not int or tic_before<0 or type(ticrate) is not int or ticrate<=0:
             raise ValueError('engine clock is invalid')
         timeout_method=getattr(game,'is_episode_timeout_reached',None)
-        timeout_reached=timeout_method() if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
-        if type(timeout_reached) is not bool:
-            raise ValueError('timeout state is not a boolean')
+        if callable(timeout_method):
+            timeout_reached=timeout_method()
+            if type(timeout_reached) is not bool:
+                raise ValueError('timeout state is not a boolean')
+        else:
+            if finished and not dead:
+                raise ValueError('terminal timeout is unknown without native evidence')
+            timeout_reached=None if finished else tic_before>=timeout_seconds*ticrate
         tic_after=game.get_episode_time()
         if type(tic_after) is not int or tic_after<0:
             raise ValueError('engine clock is invalid')
