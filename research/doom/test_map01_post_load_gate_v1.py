@@ -108,6 +108,38 @@ class PostLoadGateTests(unittest.TestCase):
         rows = [json.loads(line) for line in (self.output / "post-load-clock-gate.jsonl").read_text().splitlines()]
         self.assertEqual(sum(row["event"] == "refresh" for row in rows), 4)
 
+    def accept_initial_cover(self):
+        self.qualify()
+        self.submit("cover-0", "coast")
+        self.gate.record({"event": "accepted", **self.accepted})
+
+    def test_refuses_initial_hold_after_projected_reserve_expires_with_stale_tic(self):
+        self.accept_initial_cover()
+        last_tic = self.game.get_episode_time()
+        self.clock.sleep(60)
+        self.assertEqual(self.game.get_episode_time(), last_tic)
+        with self.assertRaisesRegex(ValueError, "clock reserve"):
+            self.submit("action-0", "hold", terminal=self.terminal, accepted=self.accepted)
+        self.assertIsNone(self.gate.first_press)
+
+    def test_refuses_initial_hold_with_less_than_fifteen_game_seconds_left(self):
+        self.accept_initial_cover()
+        self.game.tic = 2400
+        with self.assertRaisesRegex(ValueError, "clock reserve"):
+            self.submit("action-0", "hold", terminal=self.terminal, accepted=self.accepted)
+        self.assertIsNone(self.gate.first_press)
+
+    def test_near_clock_reserve_limits_the_owner_first_press_deadline(self):
+        self.accept_initial_cover()
+        last_observed = self.clock()
+        self.clock.sleep(16.5)
+        deadline = self.submit("action-0", "hold", terminal=self.terminal, accepted=self.accepted)
+        wall_deadline = last_observed + (2625 - 1337 - 15 * 35) * 1_000_000_000 // 45
+        self.assertEqual(deadline, wall_deadline)
+        self.assertGreater(deadline, self.clock())
+        self.assertLess(deadline, self.clock() + 1_000_000_000)
+        self.assertEqual(self.game.advances, [(1, True)] * 4)
+
     def test_refuses_stationary_clock_and_held_input(self):
         self.game.running = False
         with self.assertRaisesRegex(ValueError, "clock"):

@@ -11,6 +11,8 @@ import time
 
 GATE_MAX_AGE_NS = 2_000_000_000
 FIRST_PRESS_WINDOW_NS = 1_000_000_000
+MIN_FIRST_INPUT_REMAINING_SECONDS = 15
+MAX_QUALIFIED_TICS_PER_SECOND = 45
 PASSIVE_STEPS = {"observe", "coast"}
 
 
@@ -54,6 +56,7 @@ class PostLoadGate:
         self.clock, self.sleep = clock, sleep
         self.display_proof, self.neutral = display_proof, neutral
         self.game = self.session = self.display = self.validated_ns = None
+        self.clock_reserve_deadline_ns = None
         self.initial_cover_pending = False
         self.initial_cover_accepted = False
         self.first_press = None
@@ -88,6 +91,14 @@ class PostLoadGate:
             raise ValueError("engine action and physical X11 input must be neutral")
         return dict(state, x11_input_neutral=True, last_action=list(last))
 
+    @staticmethod
+    def _clock_reserve_deadline(state, sample_started_ns):
+        reserve_tics = MIN_FIRST_INPUT_REMAINING_SECONDS * state["rate"]
+        usable_tics = state["limit"] - state["tic"] - reserve_tics
+        # The cached game getter need not advance between refreshes. Project
+        # from the beginning of the sample using the gate's upper clock rate.
+        return sample_started_ns + usable_tics * 1_000_000_000 // MAX_QUALIFIED_TICS_PER_SECOND
+
     def after_load(self, game, session, *, expected_tic):
         self.game, self.session, self.loaded_tic = game, session, expected_tic
         with self.path.open("x", encoding="utf-8") as stream:
@@ -113,32 +124,44 @@ class PostLoadGate:
                     end_ns = self.clock()
                     record("refresh", series=series, side=side, requested_tics=1, update_state=True,
                            before=before, after=after, start_ns=start_ns, end_ns=end_ns)
-                    return after["tic"], end_ns
+                    return after, start_ns, end_ns
 
                 def pair(series, seconds):
-                    left, left_ns = refreshed(series, "left")
+                    left, _, left_end_ns = refreshed(series, "left")
                     wait_start = self.clock()
                     if seconds:
                         self.sleep(seconds)
                     waited = self.clock() - wait_start
-                    right, right_ns = refreshed(series, "right")
-                    return right - left, right_ns - left_ns, waited
+                    right, right_start_ns, right_end_ns = refreshed(series, "right")
+                    return (right["tic"] - left["tic"], right_end_ns - left_end_ns, waited,
+                            right, right_start_ns)
 
-                immediate, _, immediate_wait = pair("immediate", 0)
-                delayed, delayed_elapsed, delayed_wait = pair("delayed", 2)
-                finish_ns = self.clock()
+                immediate, _, immediate_wait, _, _ = pair("immediate", 0)
+                delayed, delayed_elapsed, delayed_wait, last_clock, last_clock_ns = pair("delayed", 2)
+                observed_ns = self.clock()
                 if (not 0 <= immediate <= 5 or not 0 <= immediate_wait < 100_000_000
                         or delayed_wait < 1_950_000_000 or delayed_elapsed <= 0
                         or delayed - 2 < 35 or delayed - immediate < 35
-                        or not 25 <= delayed * 1e9 / delayed_elapsed <= 45
-                        or finish_ns - started > 5_000_000_000
-                        or self.display_proof(session) != self.display):
+                        or not 25 <= delayed * 1e9 / delayed_elapsed <= MAX_QUALIFIED_TICS_PER_SECOND
+                        or self.display_proof(session) != self.display
+                        or self.clock() - started > 5_000_000_000):
                     raise ValueError("post-load spectator clock did not qualify")
+                deadline = self._clock_reserve_deadline(last_clock, last_clock_ns)
+                finish_ns = self.clock()
+                if finish_ns >= deadline:
+                    raise ValueError("post-load clock reserve expired")
                 evidence = {"passed": True, "validated_ns": finish_ns,
                             "immediate_delta": immediate, "delayed_delta": delayed,
-                            "delayed_elapsed_ns": delayed_elapsed, "grants_input_authority": False}
+                            "delayed_elapsed_ns": delayed_elapsed, "grants_input_authority": False,
+                            "last_refresh_tic": last_clock["tic"],
+                            "last_refresh_started_ns": last_clock_ns,
+                            "last_refresh_observed_ns": observed_ns,
+                            "first_input_clock_deadline_ns": deadline,
+                            "remaining_game_seconds_required": MIN_FIRST_INPUT_REMAINING_SECONDS,
+                            "projection_tics_per_second": MAX_QUALIFIED_TICS_PER_SECOND}
                 record("gate", **evidence)
                 self.validated_ns = finish_ns
+                self.clock_reserve_deadline_ns = deadline
                 return evidence
             except BaseException as error:
                 record("gate", passed=False, error_type=type(error).__name__, grants_input_authority=False)
@@ -165,7 +188,7 @@ class PostLoadGate:
                 or type(source.get("capture_ns")) is not int
                 or not 0 <= started - source["capture_ns"] < GATE_MAX_AGE_NS):
             raise ValueError("fresh source owner binding required")
-        self._active_neutral()
+        engine_state = self._active_neutral()
         state = owner.call("input_state")
         now = self.clock()
         if (type(state) is not dict or state.get("owner_id") != owner.owner_id
@@ -180,7 +203,7 @@ class PostLoadGate:
                 or now - started >= FIRST_PRESS_WINDOW_NS or service.process.poll() is not None
                 or owner.obligation_snapshot() is not None):
             raise ValueError("fresh neutral input owner state required")
-        return owner.owner_id, backend._owner_generation, state
+        return owner.owner_id, backend._owner_generation, state, engine_state
 
     def check_submit(self, command, backend, source, *, terminal, accepted):
         if self.first_press_observed:
@@ -203,11 +226,17 @@ class PostLoadGate:
         if initial and (self.validated_ns is None
                         or not 0 <= started - self.validated_ns < GATE_MAX_AGE_NS):
             raise ValueError("stale post-load clock proof before initial cover")
-        owner, generation, state = self._owner_and_source(backend, source, command, started)
+        if self.clock_reserve_deadline_ns is None or started >= self.clock_reserve_deadline_ns:
+            raise ValueError("first input clock reserve expired")
+        owner, generation, state, engine_state = self._owner_and_source(backend, source, command, started)
+        clock_deadline = min(self.clock_reserve_deadline_ns,
+                             self._clock_reserve_deadline(engine_state, started))
+        if self.clock() >= clock_deadline:
+            raise ValueError("first input clock reserve expired")
         if initial:
             if self.clock() - self.validated_ns >= GATE_MAX_AGE_NS:
                 raise ValueError("stale post-load clock proof before initial cover")
-            deadline = self.validated_ns + GATE_MAX_AGE_NS
+            deadline = min(self.validated_ns + GATE_MAX_AGE_NS, clock_deadline)
         else:
             release = terminal.get("release") if type(terminal) is dict else None
             if (type(release) is not dict or terminal.get("status") not in ("completed", "expired", "cancelled")
@@ -221,7 +250,7 @@ class PostLoadGate:
                     or any(release.get(field) != [] for field in
                            ("keys_down", "buttons_down", "keys_unknown", "key_state_errors"))):
                 raise ValueError("latest passive cover release and owner proof required")
-            deadline = started + FIRST_PRESS_WINDOW_NS
+            deadline = min(started + FIRST_PRESS_WINDOW_NS, clock_deadline)
         with self.path.open("a", encoding="utf-8") as stream:
             stream.write(json.dumps({"event": "submission_gate", "id": identifier,
                                      "observed_ns": self.clock(), "owner_id": owner,
@@ -229,6 +258,8 @@ class PostLoadGate:
                                      "source_sequence": source["sequence"], "terminal_id":
                                          terminal.get("id") if type(terminal) is dict else None,
                                      "admission_deadline_ns": deadline,
+                                     "first_input_clock_deadline_ns": clock_deadline,
+                                     "observed_engine_tic": engine_state["tic"],
                                      "grants_input_authority": False}, allow_nan=False) + "\n")
         if initial:
             self.initial_cover_pending = True

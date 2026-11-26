@@ -729,13 +729,6 @@ class InputOwner:
                             lease.check()
                             if lease.cancel.is_set():
                                 raise Cancelled()
-                            if not identity_matches(lease):
-                                lease.focus_invalid = True
-                                raise DecisionRequired('target process identity unavailable or changed')
-                            if self.identity_reader is not None and invalid_focus(lease):
-                                lease.focus_invalid = True
-                                raise DecisionRequired('focus changed during identity read')
-                            final_identity_fence(lease)
                             first_press_deadline = getattr(lease, 'first_press_deadline_ns', None)
                             first_press = first_press_deadline is not None and not getattr(lease, '_first_press_applied', False)
                             if first_press:
@@ -745,7 +738,17 @@ class InputOwner:
                                         or any(neutral_keymap) or type(neutral_pointer) is not int
                                         or neutral_pointer != 0):
                                     raise DecisionRequired('first press requires independently neutral X11 input')
-                                final_identity_fence(lease)
+                            if not identity_matches(lease):
+                                lease.focus_invalid = True
+                                raise DecisionRequired('target process identity unavailable or changed')
+                            if (first_press or self.identity_reader is not None) and invalid_focus(lease):
+                                lease.focus_invalid = True
+                                raise DecisionRequired('focus changed during identity read')
+                            final_identity_fence(lease)
+                            if first_press:
+                                lease.check()
+                                if lease.cancel.is_set():
+                                    raise Cancelled()
                             admitted = time.perf_counter_ns()
                             if first_press and (type(first_press_deadline) is not int or admitted >= first_press_deadline):
                                 raise DecisionRequired('renewal first press deadline expired')

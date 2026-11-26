@@ -180,6 +180,48 @@ class OwnerRpcTests(unittest.TestCase):
                 client.close()
                 thread.join(3)
 
+    def test_first_press_rechecks_target_and_deadline_after_neutral_queries(self):
+        for change in ("focus", "identity", "deadline"):
+            with self.subTest(change=change), backend_fixture() as (backend, events, generation, fake):
+                backend.snapshot("startup", 0)
+                lease = bound(backend)
+                now = [time.perf_counter_ns()]
+                lease.first_press_deadline_ns = now[0] + 1_000_000_000
+                client, wire, peer, receipts, thread = self.session(backend, fake=fake)
+                original_query = fake.query_keymap
+                original_focus = fake.get_input_focus
+                target = [41]
+
+                def neutral_query():
+                    value = original_query()
+                    if change == "focus":
+                        target[0] = 73
+                    elif change == "identity":
+                        generation[0] = "c" * 64
+                    else:
+                        now[0] = lease.first_press_deadline_ns
+                    return value
+
+                def current_focus():
+                    result = original_focus()
+                    result.focus = target[0]
+                    return result
+
+                try:
+                    with patch.object(fake, "query_keymap", side_effect=neutral_query), \
+                         patch.object(fake, "get_input_focus", side_effect=current_focus), \
+                         patch.object(native, "time", wraps=time) as owner_clock:
+                        owner_clock.perf_counter_ns.side_effect = lambda: now[0]
+                        with self.assertRaises(rpc().RpcOutcomeUnknown) as refused:
+                            client.call("down", lease, "a")
+                    self.assertEqual(refused.exception.remote_error["type"], "DecisionRequired")
+                    self.assertEqual(fake.rpc_edges, [])
+                    self.assertEqual(fake.down, set())
+                finally:
+                    generation[0] = "a" * 64
+                    client.close()
+                    thread.join(3)
+
     def test_first_press_with_late_sync_is_unknown_and_neutralized(self):
         with backend_fixture() as (backend, events, generation, fake):
             backend.snapshot("renewal", 0)
