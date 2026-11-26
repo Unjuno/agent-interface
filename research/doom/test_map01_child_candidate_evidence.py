@@ -213,8 +213,7 @@ class DerivedCandidateTests(unittest.TestCase):
     with patch('doom_hud_signal_v3.DoomStatusNumberReader',FakeHud):
      reason=('derived headless preregistration differs' if fault=='headless_registration'
        else 'derived owner release journal differs' if fault=='extra_keyup'
-       else 'derived movement deadline calculation differs' if fault=='stale_bypass'
-       else 'derived movement source was stale at gate start' if fault=='stale_image'
+       else 'derived movement source or deadline calculation differs' if fault in ('stale_image','stale_bypass')
        else 'derived submission gate chronology or neutral owner differs')
      with self.assertRaisesRegex(EvidenceError,reason):
       verify_setup_candidate(manifest,proof,digest_file(proof),'1.3.0',digest_file(wad),1,990619,75,wad)
