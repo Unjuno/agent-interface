@@ -4,10 +4,12 @@ import atexit
 from collections import Counter
 from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 import hashlib
 import json
 import os
 import queue
+import select
 import subprocess
 import sys
 import threading
@@ -55,6 +57,7 @@ DISABLED_FEATURES = [
 ]
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
+COVER_RENEWAL_IO_SECONDS = 2.0
 
 
 def reusable_cover(decisions):
@@ -490,6 +493,84 @@ def cancel_initial_cover_before_planner(process, wait, cover_id):
                     row.get("id") == cover_id)
     require_cover_terminal(terminal, cancellation_requested=True)
     return terminal
+
+
+def send_bounded_cover_command(stream, command, *, timeout=COVER_RENEWAL_IO_SECONDS):
+    """Write one whole protocol line on the single-writer Linux session pipe."""
+    fd = stream.fileno()
+    data = (json.dumps(command) + "\n").encode("utf-8")
+    if len(data) > os.fpathconf(fd, "PC_PIPE_BUF"):
+        raise ValueError("cover command exceeds the atomic pipe write limit")
+    was_blocking = os.get_blocking(fd)
+    deadline = time.monotonic() + timeout
+    os.set_blocking(fd, False)
+    try:
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or not select.select([], [fd], [], remaining)[1]:
+                raise TimeoutError("cover command pipe did not become writable")
+            if time.monotonic() >= deadline:
+                raise TimeoutError("cover command pipe became writable after its deadline")
+            try:
+                if os.write(fd, data) != len(data):
+                    raise OSError("cover command pipe write did not complete atomically")
+            except BlockingIOError:
+                continue
+            return
+    finally:
+        os.set_blocking(fd, was_blocking)
+
+
+def retire_uncertain_cover_renewal(planner, planner_handle, process, wait, cover_id, ack, error, out):
+    """Attempt release and stop the planner even though renewal admission is unknown."""
+    receipt = {"schema": "cover-renewal-unverified-v1", "id": cover_id,
+               "admission": "UNKNOWN", "ack": ack, "verified_empty_release": False,
+               "terminal": None, "failure_type": type(error).__name__,
+               "grants_input_authority": False, "task_effect": "unknown"}
+    try:
+        receipt["local_invalidation"] = planner.invalidate_turn(planner_handle)
+    except BaseException as invalidation_error:
+        receipt["local_invalidation_error"] = type(invalidation_error).__name__
+    try:
+        send_bounded_cover_command(process.stdin, {"op": "cancel", "id": cover_id})
+        receipt["cancel_write"] = "sent"
+    except BaseException as cancel_error:
+        receipt["cancel_write"] = "uncertain"
+        receipt["cancel_error"] = type(cancel_error).__name__
+    try:
+        terminal = wait(lambda row: row.get("event") == "terminal" and row.get("id") == cover_id,
+                        timeout=COVER_RENEWAL_IO_SECONDS)
+        receipt["terminal"] = terminal
+        require_cover_terminal(terminal, cancellation_requested=True)
+        receipt["verified_empty_release"] = True
+    except BaseException as release_error:
+        receipt["release_error"] = type(release_error).__name__
+    try:
+        receipt["planner_abort"] = planner.abort_pending_turn()
+    except BaseException as abort_error:
+        receipt["planner_abort_error"] = type(abort_error).__name__
+    receipt["input_recovery_required"] = not receipt["verified_empty_release"]
+    error.cover_renewal_receipt = receipt
+    try:
+        with (Path(out) / "cover-renewal-unverified.json").open(
+                "x", encoding="utf-8", newline="\n") as stream:
+            json.dump(receipt, stream, indent=2, allow_nan=False)
+            stream.write("\n")
+    except BaseException as save_error:
+        error.add_note("cover renewal receipt save failed: " + type(save_error).__name__)
+
+
+@contextmanager
+def pending_cover_planner_pool():
+    pool = ThreadPoolExecutor(max_workers=1)
+    try:
+        yield pool
+    except BaseException as error:
+        # The outer cleanup must run even when abort could not wake this waiter.
+        pool.shutdown(wait=not hasattr(error, "cover_renewal_receipt"), cancel_futures=True)
+        raise
+    else:
+        pool.shutdown(wait=True)
 
 
 def retire_failed_cover(planner, planner_handle, future, terminal, error, out):
@@ -1251,13 +1332,25 @@ def prefer_observation_invalidation(current, candidate):
     return current
 
 
-def observe_cover_submission_events(events, observation_monitor):
+def observe_cover_submission_events(events, observation_monitor, *, fail_closed=False):
     event_types = getattr(observation_monitor, "event_types", {"observation"})
     invalidation = None
     for row in events:
-        if row.get("event") in event_types:
-            invalidation = prefer_observation_invalidation(
-                invalidation, observation_monitor.observe(row))
+        try:
+            if row.get("event") in event_types:
+                invalidation = prefer_observation_invalidation(
+                    invalidation, observation_monitor.observe(row))
+        except Exception as error:
+            if not fail_closed:
+                raise
+            if invalidation is None:
+                invalidation = {
+                    "event": "policy_invalidation",
+                    "reason": "renewal_observation_unverified",
+                    "requires_new_decision": True,
+                    "grants_input_authority": False,
+                }
+            return dict(invalidation, observation_error_type=type(error).__name__)
     return invalidation
 
 
@@ -1688,14 +1781,18 @@ def main():
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             cover_submission_recovery=None
             cover_submission_invalidation=None
-            def submit_cover(identifier, consumed_events=None):
+            def submit_cover(identifier, consumed_events=None, *, renewal=False):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
-                process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
+                if renewal:
+                    send_bounded_cover_command(process.stdin, command)
+                else:
+                    process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
                               (r.get("id")==identifier or r["event"]=="rejected"),
+                              timeout=COVER_RENEWAL_IO_SECONDS if renewal else 40,
                               consumed_events=consumed_events)
                 if accepted["event"]!="accepted":return accepted
                 cover_ids.append(identifier);return accepted
@@ -1767,7 +1864,7 @@ def main():
                 source_health_signal["value"],source_ammo_signal["value"],
                 prior_soft_event_summary,output_schema)
             planner_interrupt=None
-            with ThreadPoolExecutor(max_workers=1) as pool:
+            with pending_cover_planner_pool() as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)
                 current_cover=cover
                 current_terminal=None
@@ -1792,7 +1889,22 @@ def main():
                         next_cover = f"cover-{index}-renew-{len(cover_ids)}"
                         # Keep observations until the ACK identifies the cover to cancel.
                         consumed_events = []
-                        next_accepted = submit_cover(next_cover, consumed_events)
+                        next_accepted = None
+                        try:
+                            next_accepted = submit_cover(next_cover, consumed_events, renewal=True)
+                            if (type(next_accepted) is not dict or next_accepted.get("id") != next_cover
+                                    or next_accepted.get("event") not in ("accepted", "rejected")):
+                                raise ValueError("unverified cover renewal acknowledgement")
+                            if next_accepted["event"] == "accepted" and (
+                                    type(next_accepted.get("accepted_ns")) is not int
+                                    or type(current_terminal.get("terminal_ns")) is not int
+                                    or not 0 < current_terminal["terminal_ns"] <= next_accepted["accepted_ns"]
+                                        <= time.perf_counter_ns()):
+                                raise ValueError("unverified cover renewal acknowledgement time")
+                        except BaseException as error:
+                            retire_uncertain_cover_renewal(
+                                planner, planner_handle, process, wait, next_cover, next_accepted, error, args.out)
+                            raise
                         if next_accepted["event"] != "accepted":
                             error = RuntimeError(next_accepted)
                             retire_failed_cover(planner, planner_handle, future,
@@ -1801,17 +1913,8 @@ def main():
                         cover_renewal_gaps_ms.append((next_accepted["accepted_ns"] -
                             current_terminal["terminal_ns"]) / 1e6)
                         current_cover, current_terminal = next_cover, None
-                        try:
-                            invalidation = observe_cover_submission_events(
-                                consumed_events, invalidation_monitor)
-                        except Exception as error:
-                            invalidation = {
-                                "event": "policy_invalidation",
-                                "reason": "renewal_observation_unverified",
-                                "error_type": type(error).__name__,
-                                "requires_new_decision": True,
-                                "grants_input_authority": False,
-                            }
+                        invalidation = observe_cover_submission_events(
+                            consumed_events, invalidation_monitor, fail_closed=True)
                         if invalidation is None:
                             continue
                     planner_interrupt, current_terminal = cancel_invalidated_cover(
