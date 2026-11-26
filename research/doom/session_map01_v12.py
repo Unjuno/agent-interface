@@ -402,27 +402,43 @@ def main():
                     break
                 elif command["op"] == "finish":
                     close_before_control_effect(executor, args.out, emit, "finish")
+                    scorer_refresh_calls = 0
                     if not game.is_episode_finished():
                         game.advance_action(1, True)
+                        scorer_refresh_calls = 1
                     finished = game.is_episode_finished()
                     dead = game.is_player_dead()
                     wall_ns = time.perf_counter_ns() - control_started_ns
                     timeout_check = getattr(game, "is_episode_timeout_reached", None)
-                    timeout_reached = (bool(timeout_check()) if callable(timeout_check) else
-                                       int(game.get_episode_time()) >= args.timeout_seconds * int(game.get_ticrate()))
-                    map_exit = bool(finished and not dead and not timeout_reached
+                    timeout_reached = tic_limit_reached = None
+                    if callable(timeout_check):
+                        timeout_source = "engine_api"
+                        status = timeout_check()
+                        if type(status) is bool:
+                            timeout_reached = status
+                    else:
+                        timeout_source = "engine_tic_limit"
+                        tic = game.get_episode_time()
+                        ticrate = game.get_ticrate()
+                        if type(tic) is int and tic >= 0 and type(ticrate) is int and ticrate > 0:
+                            tic_limit_reached = tic >= args.timeout_seconds * ticrate
+                            if finished or not tic_limit_reached:
+                                timeout_reached = tic_limit_reached
+                    map_exit = bool(finished and not dead and timeout_reached is False
                                     and wall_ns < (args.timeout_seconds - 5) * 1_000_000_000)
                     deaths = int(game.get_game_variable(vd.GameVariable.DEATHCOUNT))
                     kills = int(game.get_game_variable(vd.GameVariable.KILLCOUNT))
                     score = {"event": "post_control_score", "map": "MAP01", "skill": args.skill,
                         "map_exit": map_exit, "episode_finished": finished,
                         "episode_timeout_reached": timeout_reached,
+                        "episode_timeout_source": timeout_source,
+                        "engine_tic_limit_reached": tic_limit_reached,
                         "player_dead": dead, "wall_control_ns": wall_ns,
                         "death_count": deaths, "kill_count": kills,
                         "one_life_map_exit": bool(map_exit and deaths == 0),
                         "episode_timeout_seconds": args.timeout_seconds,
                         "reward": game.get_total_reward(),
-                        "scorer_refresh_calls_after_control": 1}
+                        "scorer_refresh_calls_after_control": scorer_refresh_calls}
                     (args.out / "score.json").write_text(json.dumps(score, indent=2))
                     emit(score)
                     break
