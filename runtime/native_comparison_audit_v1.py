@@ -383,6 +383,156 @@ def verify_resolved_grounding(details, normalized_by_index):
                 "task selected or resolved grounding differs from the validated model result")
 
 
+def verify_executed_grounding(events, details, seed, arm):
+    """Bind validated grounding to admitted, completed runtime command steps."""
+    commands, terminals, accepted = {}, {}, {}
+    observations = defaultdict(list)
+    relevant = {"pointer_admission", "target_handle_revalidated", "target_handle_minted_from_point"}
+    for index, row in enumerate(events):
+        kind = row["event"]
+        if kind == "command" and row["command"].get("op") == "submit":
+            command = row["command"]
+            require(command["id"] not in commands, "duplicate runtime submit command")
+            commands[command["id"]] = (index, command["steps"])
+        elif kind in {"accepted", "terminal"}:
+            store = accepted if kind == "accepted" else terminals
+            require(row["id"] not in store, "duplicate runtime program receipt")
+            store[row["id"]] = (index, row)
+        elif kind in relevant:
+            observations[row["id"]].append((index, row))
+    require(commands.keys() == accepted.keys() == terminals.keys()
+            and observations.keys() <= accepted.keys()
+            and len(accepted) == sum(detail["program_count"] for detail in details),
+            "runtime commands and their accepted and terminal receipts do not close")
+
+    def steps_for(program):
+        command_index, steps = commands[program]
+        accepted_index, begin = accepted[program]
+        terminal_index, end = terminals[program]
+        resolutions = sum(step["op"] == "pointer_click_target" for step in steps)
+        require(command_index < accepted_index < terminal_index
+                and same(begin["steps"], len(steps))
+                and same(begin["coordinate_resolutions"], resolutions)
+                and same(end["steps_completed"], len(steps)) and end["status"] == "completed",
+                "runtime command does not match its accepted and terminal receipts")
+        return steps
+
+    def evidence(program, event):
+        return [(index, row) for index, row in observations[program] if row["event"] == event]
+
+    def check_move_and_press(program, step, point):
+        rows = [(index, row) for index, row in evidence(program, "pointer_admission")
+                if row.get("step") == step]
+        require(len(rows) == 2, "click lacks a unique admitted move and press")
+        (move_index, move), (press_index, press) = rows
+        stamps = [accepted[program][1]["accepted_ns"], move["admitted_ns"], move["input_ack_ns"],
+                  press["admitted_ns"], press["input_ack_ns"], terminals[program][1]["terminal_ns"]]
+        require(same(move.get("step"), step) and same(press.get("step"), step)
+                and accepted[program][0] < move_index < press_index < terminals[program][0]
+                and all(type(stamp) is int for stamp in stamps) and stamps == sorted(stamps)
+                and move["operation"] == "move" and press["operation"] == "button_down"
+                and type(press["payload"]) is int and press["payload"] == 1
+                and same(move["payload"], {"x": point[0], "y": point[1]}),
+                "admitted pointer move or press differs from the resolved command step")
+        return (program, step, tuple(point))
+
+    allocation = list(accepted)
+    minted = {}
+    proof = []
+    cursor = 0
+    point_kinds = ("field", "submit")
+    dimensions = {"field": (38, [12, 19]), "submit": (14, [12, 7])}
+    settle = {"op": "settle", "quiet_ms": 80, "timeout_ms": 500}
+    for task, detail in zip(workload(seed), details, strict=True):
+        task_programs = allocation[cursor:cursor + detail["program_count"]]
+        cursor += detail["program_count"]
+        submitted = {program: steps_for(program) for program in task_programs}
+        clicks = [program for program, steps in submitted.items()
+                  if any(step["op"].startswith("pointer_") for step in steps)
+                  or evidence(program, "pointer_admission") or evidence(program, "target_handle_revalidated")]
+        mints = [program for program, steps in submitted.items()
+                 if any(step["op"] == "target_handle_mint_from_point" for step in steps)
+                 or evidence(program, "target_handle_minted_from_point")]
+        target = detail["resolved_target"]
+        points = {kind: target["grounding"][kind + "_point"] for kind in point_kinds}
+        token_entry = [{"op": "chord", "modifier": "Control_L", "key": "a"},
+                       {"op": "text", "text": task["token"]}, settle]
+        if arm == "plain":
+            require(len(clicks) == 1 and not mints and target["aliases"] is None,
+                    "plain arm did not execute a single coordinate batch")
+            program = clicks[0]
+            field, submit = ({"op": "pointer_click", "x": points[kind][0], "y": points[kind][1],
+                              "button": 1, "duration_ms": 80} for kind in point_kinds)
+            require(same(submitted[program], [field, *token_entry, submit, settle])
+                    and len(evidence(program, "pointer_admission")) == 4
+                    and not evidence(program, "target_handle_revalidated"),
+                    "plain click command differs from the validated grounding")
+            proof.extend((check_move_and_press(program, 0, points["field"]),
+                          check_move_and_press(program, 4, points["submit"])))
+            continue
+        layout = task["layout"].lower()
+        prefix = (f"persistent_{layout}" if arm == "persistent"
+                  else f"ephemeral_{task['task_id'].replace('-', '_')}_{layout}")
+        aliases = {kind: f"{prefix}_{kind}" for kind in point_kinds}
+        fresh = detail["trace"]["route"] != "reuse"
+        require(same(target["aliases"], aliases) and len(clicks) == 2 and len(mints) == (2 if fresh else 0),
+                "compiled arm mint or action aliases differ from the task allocation")
+        if fresh:
+            for kind, program in zip(point_kinds, mints, strict=True):
+                alias, point = aliases[kind], points[kind]
+                height, offset = dimensions[kind]
+                seq = detail["source"]["sequence"]
+                step = {"op": "target_handle_mint_from_point", "name": alias, "coordinate_frame": "window_content",
+                        "source_sequence": seq, "point": point, "region_size": [24, height], "ttl_ms": 300000,
+                        "freshness_ms": 1500, "search_radius": 0, "allowed_transformations": ["window_translation"]}
+                rows = evidence(program, "target_handle_minted_from_point")
+                require(same(submitted[program], [step]) and len(rows) == 1 and alias not in minted,
+                        "compiled mint command differs from the task's grounding and observation")
+                index, mint = rows[0]
+                box = [point[0] - offset[0], point[1] - offset[1], 24, height]
+                require(accepted[program][0] < index < terminals[program][0]
+                        and type(mint["minted_ns"]) is int
+                        and accepted[program][1]["accepted_ns"] <= mint["minted_ns"]
+                        <= terminals[program][1]["terminal_ns"]
+                        and box[0] >= 0 and box[1] >= 0 and box[0] + 24 <= 1280 and box[1] + height <= 800
+                        and same(mint["step"], 0) and mint["status"] == "VALID"
+                        and mint["handle"] == mint["name"] == alias and mint["reference_kind"] == "session_alias"
+                        and mint["fresh_patch_exact"] is True and same(mint["source_sequence"], seq)
+                        and same(mint["source_point"], point) and same(mint["derived_box"], box)
+                        and same(mint["derived_offset"], offset)
+                        and valid_hex(mint["patch_sha256"], 64),
+                        "mint result differs from the validated grounding and scoped alias")
+                minted[alias] = (program, mint)
+                proof.append((program, alias, tuple(point), mint["patch_sha256"]))
+        for kind, program in zip(point_kinds, clicks, strict=True):
+            alias = aliases[kind]
+            height, offset = dimensions[kind]
+            step = {"op": "pointer_click_target", "target_handle": alias,
+                    "offset": offset, "button": 1, "duration_ms": 80}
+            tail = token_entry if kind == "field" else [settle]
+            rows = evidence(program, "target_handle_revalidated")
+            require(same(submitted[program], [step, *tail]) and len(rows) == 1 and alias in minted
+                    and len(evidence(program, "pointer_admission")) == 2,
+                    "compiled click command uses a different alias or action from the task")
+            index, resolved = rows[0]
+            mint_program, mint = minted[alias]
+            shift = resolved["binding_translation"]
+            require(same(resolved["step"], 0) and resolved["eligible"] is True and resolved["status"] == "VALID"
+                    and resolved["handle"] == resolved["name"] == alias
+                    and resolved["reference_kind"] == "session_alias"
+                    and resolved["patch_sha256"] == mint["patch_sha256"]
+                    and type(shift) is list and len(shift) == 2 and all(type(value) is int for value in shift)
+                    and same(resolved["local_translation"], [0, 0])
+                    and terminals[mint_program][0] < commands[program][0] < index < accepted[program][0],
+                    "compiled click lacks an ordered revalidation of its minted alias")
+            point = [value + displacement for value, displacement in zip(points[kind], shift, strict=True)]
+            box = [point[0] - offset[0], point[1] - offset[1], 24, height]
+            require(same(resolved["point"], point) and same(resolved["observed_box"], box),
+                    "revalidated alias resolved to unexpected window coordinates")
+            proof.append(check_move_and_press(program, 0, point))
+    return proof
+
+
 def verify_task_sources(events, details, seed):
     """Join each source frame to its own settled navigation and observe program."""
     ready = [row for row in events if row.get("event") == "ready"]
@@ -807,6 +957,13 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             if arm == "persistent":
                 require(checked[3]["repair"]["succeeded"] is True,
                         "persistent repair did not complete")
+            arm_root = out / "arms" / arm
+            details = read(arm_root / "task-details.json")
+            command_proofs = [verify_executed_grounding(records(arm_root / "runtime" / filename),
+                              details, plan["seed"], arm)
+                              for filename in ("events.jsonl", "delivered.jsonl")]
+            require(command_proofs[0] == command_proofs[1],
+                    "grounding input command proof differs across the runtime streams")
             tokens, cumulative = preflight["usage"]["input_tokens"], []
             for row in rows:
                 tokens += sum(call["usage"]["input_tokens"] for call in row["model_calls"])

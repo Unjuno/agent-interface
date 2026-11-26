@@ -51,8 +51,8 @@ def job_receipt(schema, owner, completed):
 
 
 def answer_for(contract, *, horizontal_offset=0):
-    field = {"point_space": "source_observation_pixels", "point": {"x": 4 + horizontal_offset, "y": 6}}
-    submit = {"point_space": "source_observation_pixels", "point": {"x": 15 + horizontal_offset, "y": 12}}
+    field = {"point_space": "source_observation_pixels", "point": {"x": 24 + horizontal_offset, "y": 26}}
+    submit = {"point_space": "source_observation_pixels", "point": {"x": 36 + horizontal_offset, "y": 28}}
     if contract == "plain":
         return {"format": "plain-form-points-v1", "field": field, "submit": submit}
     return {"format": "compiled-form-grounding-v1",
@@ -143,7 +143,7 @@ class SyntheticCapture:
             (self.out / "workspaces" / arm).mkdir(parents=True)
             contract = "plain" if arm == "plain" else "compiled"
             answer = answer_for(contract)
-            grounding = {"field_point": [4, 6], "submit_point": [15, 12]}
+            grounding = {"field_point": [24, 26], "submit_point": [36, 28]}
             if contract == "compiled":
                 grounding["method"] = answer["method"]
             self.exec_arm(arm, contract, answer, arm_index)
@@ -183,12 +183,34 @@ class SyntheticCapture:
             observations.append({"event": "ready", "goal": {"tasks": ready_tasks},
                                  "emit_started_ns": base_ns + 150})
             neutral = {"verified": True, "keys_down": [], "buttons_down": []}
+
+            def program(program_id, steps, begin, end, emitted=(), before_accept=()):
+                observations.extend([
+                    {"event": "command", "command": {"op": "submit", "id": program_id, "steps": steps}},
+                    *before_accept,
+                    {"event": "accepted", "id": program_id, "accepted_ns": begin, "steps": len(steps),
+                     "coordinate_resolutions": sum(step["op"] == "pointer_click_target" for step in steps)},
+                    *emitted,
+                    {"event": "terminal", "id": program_id, "terminal_ns": end,
+                     "status": "completed", "steps_completed": len(steps), "release": neutral},
+                ])
+
+            def pointer(program_id, step, point, down_ns):
+                return [
+                    {"event": "pointer_admission", "id": program_id, "step": step, "operation": "move",
+                     "payload": {"x": point[0], "y": point[1]},
+                     "admitted_ns": down_ns - 2, "input_ack_ns": down_ns - 1},
+                    {"event": "pointer_admission", "id": program_id, "step": step, "operation": "button_down",
+                     "payload": 1, "admitted_ns": down_ns, "input_ack_ns": down_ns + 1},
+                ]
+
             generation = 0
             for i, (task, route) in enumerate(zip(TASKS, EXPECTED_ROUTES[arm], strict=True), start=1):
                 if i == 4:
                     answer = answer_for(contract, horizontal_offset=2)
-                    grounding = {**grounding, "field_point": [6, 6], "submit_point": [17, 12]}
+                    grounding = {**grounding, "field_point": [26, 26], "submit_point": [38, 28]}
                 calls = []
+                before = len(observations)
                 repair = route == "repair"
                 stamp = base_ns + i * 1000
                 source_id, nav_id = f"source-{i}", f"navigation-{i}"
@@ -198,18 +220,8 @@ class SyntheticCapture:
                               {"op": "text", "text": ready_tasks[i - 1]["url"]},
                               {"op": "key", "key": "Return"},
                               {"op": "settle", "quiet_ms": 80, "timeout_ms": 500}]
-                observations.extend([
-                    {"event": "command", "command": {"op": "submit", "id": nav_id, "steps": navigation}},
-                    {"event": "accepted", "id": nav_id, "accepted_ns": stamp + 1},
-                    {"event": "terminal", "id": nav_id, "terminal_ns": stamp + 9,
-                     "status": "completed", "release": neutral},
-                    {"event": "command", "command": {"op": "submit", "id": source_id,
-                                                     "steps": [{"op": "observe"}]}},
-                    {"event": "accepted", "id": source_id, "accepted_ns": stamp + 10},
-                    observation,
-                    {"event": "terminal", "id": source_id, "terminal_ns": stamp + 30,
-                     "status": "completed", "release": neutral},
-                ])
+                program(nav_id, navigation, stamp + 1, stamp + 9)
+                program(source_id, [{"op": "observe"}], stamp + 10, stamp + 30, [observation])
                 if route != "reuse":
                     generation += 1
                     slot = self.out / "model-calls" / arm / task / ("repair" if repair else "anchor")
@@ -218,7 +230,7 @@ class SyntheticCapture:
                     tokens = usage(persistent_tokens if arm == "persistent" else 20)
                     provider_usage = {"last": {raw: tokens[field] for raw, field in USAGE_MAP.items()}}
                     image = runtime / f"{i:03d}.png"
-                    Image.new("RGB", (20, 20), (i * 10, arm_index * 10, 0)).save(image)
+                    Image.new("RGB", (128, 80), (i * 10, arm_index * 10, 0)).save(image)
                     windows_image = str(WINDOWS_OUT.joinpath(*image.relative_to(self.out).parts))
                     write(slot / "request.json", {"source_image": observation["image"],
                           "provider_image": windows_image, "image_sha256": audit.digest(image)})
@@ -267,36 +279,79 @@ class SyntheticCapture:
                        "repair": {"required": repair, "old_reference_status": "missing" if repair else None,
                                   "old_reference_pointer_admissions": 0, "attempted": repair, "succeeded": repair}}
                 tasks.append(row)
-                target = {"grounding": grounding, "layout": row["layout"]}
-                details.append({"trace": row, "source": observation, "program_count": 4 if repair else 3,
-                                "resolved_target": target, "adaptive": {"selected_target": target}})
+                layout = row["layout"].lower()
+                if arm == "plain":
+                    aliases = None
+                else:
+                    prefix = f"persistent_{layout}" if arm == "persistent" else f"ephemeral_task_{i}_{layout}"
+                    aliases = {kind: f"{prefix}_{kind}" for kind in ("field", "submit")}
+                target = {"grounding": grounding, "layout": row["layout"], "aliases": aliases}
                 if repair:
-                    observations.extend([
+                    program("old-check", [{"op": "observe_target_handle", "target_handle": "persistent_a_field",
+                                           "offset": [12, 19]}], stamp + 31, stamp + 39, [
                         {"event": "target_handle_checked", "id": "old-check",
                          "handle": "persistent_a_field", "status": "MISSING", "eligible": False,
-                         "observation_sequence": i * 10 + 1, "checked_ns": stamp + 35},
-                        {"event": "accepted", "id": "different-program", "accepted_ns": stamp + 42},
-                        {"event": "terminal", "id": "different-program", "terminal_ns": stamp + 59,
-                         "status": "completed", "release": neutral},
-                        {"event": "target_handle_minted_from_point", "handle": "persistent_b_field",
-                         "status": "VALID", "source_sequence": i * 10, "fresh_sequence": i * 10 + 2,
-                         "created_sequence": i * 10 + 2, "minted_ns": stamp + 60, "fresh_patch_exact": True},
-                        {"event": "target_handle_minted_from_point", "handle": "persistent_b_submit",
-                         "status": "VALID", "source_sequence": i * 10, "fresh_sequence": i * 10 + 3,
-                         "created_sequence": i * 10 + 3, "minted_ns": stamp + 70, "fresh_patch_exact": True},
-                        {"event": "target_handle_checked", "id": "fresh-check", "handle": "persistent_b_field",
-                         "eligible": True, "status": "VALID", "observation_sequence": i * 10 + 4,
-                         "checked_ns": stamp + 80},
+                         "observation_sequence": i * 10 + 1, "checked_ns": stamp + 35}
                     ])
-                action_id = f"input-{i}"
-                observations.extend([{"event": "accepted", "id": action_id, "accepted_ns": stamp + 91},
-                    {"event": "pointer_admission", "id": action_id, "operation": "button_down",
-                     "admitted_ns": stamp + 100, "input_ack_ns": stamp + 101},
-                    {"event": "pointer_admission", "id": action_id, "operation": "button_down",
-                     "admitted_ns": stamp + 110, "input_ack_ns": stamp + 111},
-                    {"event": "terminal", "id": action_id, "terminal_ns": stamp + 150,
-                     "status": "completed", "release": neutral},
-                ])
+                    program("different-program", [{"op": "observe"}], stamp + 42, stamp + 57)
+                settle = {"op": "settle", "quiet_ms": 80, "timeout_ms": 500}
+                entry = [{"op": "chord", "modifier": "Control_L", "key": "a"},
+                         {"op": "text", "text": ready_tasks[i - 1]["token"]}, settle]
+                field, submit = grounding["field_point"], grounding["submit_point"]
+                if arm == "plain":
+                    action_id = f"input-{i}"
+                    click = lambda point: {"op": "pointer_click", "x": point[0], "y": point[1],
+                                            "button": 1, "duration_ms": 80}
+                    program(action_id, [click(field), *entry, click(submit), settle], stamp + 91, stamp + 150,
+                            [*pointer(action_id, 0, field, stamp + 100),
+                             *pointer(action_id, 4, submit, stamp + 110)])
+                else:
+                    for n, (kind, point, height, offset, emitted) in enumerate((
+                        ("field", field, 38, [12, 19], 60),
+                        ("submit", submit, 14, [12, 7], 70),
+                    )):
+                        alias = aliases[kind]
+                        box = [point[0] - offset[0], point[1] - offset[1], 24, height]
+                        identity = {"handle": alias, "name": alias, "status": "VALID", "patch_sha256": "1" * 64,
+                                    "reference_kind": "session_alias", "private_registry_id_exposed": False}
+                        if route != "reuse":
+                            mint_id = f"mint-{i}-{kind}"
+                            action = {"op": "target_handle_mint_from_point", "name": alias,
+                                      "coordinate_frame": "window_content", "source_sequence": i * 10,
+                                      "point": point, "region_size": [24, height], "ttl_ms": 300000,
+                                      "freshness_ms": 1500, "search_radius": 0,
+                                      "allowed_transformations": ["window_translation"]}
+                            minted = {"event": "target_handle_minted_from_point", "id": mint_id, "step": 0,
+                                      **identity, "source_sequence": i * 10, "fresh_sequence": i * 10 + n + 2,
+                                      "created_sequence": i * 10 + n + 2, "minted_ns": stamp + emitted,
+                                      "source_point": point, "fresh_patch_exact": True, "derived_box": box,
+                                      "derived_offset": offset, "allowed_transformations": ["window_translation"]}
+                            program(mint_id, [action], stamp + emitted - 2, stamp + emitted + 1, [minted])
+                    for n, (kind, point, height, offset, check, down, tail) in enumerate((
+                        ("field", field, 38, [12, 19], 80, 100, entry),
+                        ("submit", submit, 14, [12, 7], 105, 110, [settle]),
+                    )):
+                        alias = aliases[kind]
+                        check_id, action_id = f"check-{i}-{kind}", f"input-{i}-{kind}"
+                        check_row = {"event": "target_handle_checked", "id": check_id,
+                                     "handle": alias, "eligible": True, "status": "VALID",
+                                     "observation_sequence": i * 10 + 4 + n, "checked_ns": stamp + check}
+                        program(check_id, [{"op": "observe_target_handle", "target_handle": alias, "offset": offset}],
+                                stamp + check - 1, stamp + check + 1, [check_row])
+                        validated = {"event": "target_handle_revalidated", "id": action_id, "step": 0,
+                                     "handle": alias, "name": alias, "status": "VALID", "eligible": True,
+                                     "patch_sha256": "1" * 64, "reference_kind": "session_alias",
+                                     "private_registry_id_exposed": False, "binding_translation": [0, 0],
+                                     "local_translation": [0, 0], "point": point, "sequence": i * 10 + 4 + n,
+                                     "observed_box": [point[0] - offset[0], point[1] - offset[1], 24, height]}
+                        click = {"op": "pointer_click_target", "target_handle": alias,
+                                 "offset": offset, "button": 1, "duration_ms": 80}
+                        program(action_id, [click, *tail], stamp + down - 3,
+                                stamp + (down + 3 if kind == "field" else 150),
+                                pointer(action_id, 0, point, stamp + down), [validated])
+                details.append({"trace": row, "source": observation, "resolved_target": target,
+                                "adaptive": {"selected_target": target},
+                                "program_count": sum(event["event"] == "accepted" for event in observations[before:])})
             for name in ("events.jsonl", "delivered.jsonl"):
                 path = runtime / name
                 lines(path, observations)
@@ -319,6 +374,45 @@ class SyntheticCapture:
 
 
 class NativeComparisonAuditTests(unittest.TestCase):
+    def test_grounding_cannot_be_replaced_by_another_coordinate_or_old_alias_at_dispatch(self):
+        for flaw in ("plain_coordinate", "admitted_move", "old_alias", "mint_point", "detached_command"):
+            with self.subTest(flaw=flaw), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                arm = "plain" if flaw in {"plain_coordinate", "admitted_move", "detached_command"} else "persistent"
+                for leaf in ("events.jsonl", "delivered.jsonl"):
+                    path = capture.out / "arms" / arm / "runtime" / leaf
+                    events = audit.records(path)
+                    if flaw == "mint_point":
+                        identifier = "mint-1-field"
+                    elif flaw == "old_alias":
+                        identifier = "input-5-field"
+                    else:
+                        identifier = "input-1"
+                    command = next(row["command"] for row in events if row["event"] == "command"
+                                   and row["command"].get("id") == identifier)
+                    if flaw in {"plain_coordinate", "admitted_move"}:
+                        if flaw == "plain_coordinate":
+                            command["steps"][0]["x"] += 1
+                        move = next(row for row in events if row["event"] == "pointer_admission"
+                                    and row["id"] == identifier and row["operation"] == "move")
+                        move["payload"]["x"] += 1
+                    elif flaw == "old_alias":
+                        command["steps"][0]["target_handle"] = "persistent_a_field"
+                        row = next(row for row in events if row["event"] == "target_handle_revalidated"
+                                   and row["id"] == identifier)
+                        row["handle"] = row["name"] = "persistent_a_field"
+                    elif flaw == "mint_point":
+                        command["steps"][0]["point"][0] += 1
+                        row = next(row for row in events if row["event"] == "target_handle_minted_from_point"
+                                   and row["id"] == identifier)
+                        row["source_point"] = command["steps"][0]["point"]
+                    else:
+                        command["id"] = "unadmitted-program"
+                    lines(path, events)
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD", result.get("reason"))
+
     def test_schema_valid_but_semantically_invalid_grounding_cannot_compare(self):
         for arm, flaw in (("plain", "same_point"), ("ephemeral", "same_point"),
                           ("plain", "bounds"), ("persistent", "bounds")):
