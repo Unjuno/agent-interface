@@ -74,30 +74,11 @@ class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None,
                  windows_owner=None):
         _require_pipe_runtime()
-        self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
-        self._owns_process_streams = process_factory is subprocess.Popen
+        self._owns_process_streams = windows_owner is not None or process_factory is subprocess.Popen
         self._windows_owner = windows_owner
         self._owns_process_group = (windows_owner is None and os.name == "posix"
                                     and process_factory is subprocess.Popen)
-        process_options = {
-            "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
-            "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
-            "errors": "strict", "bufsize": 1,
-        }
-        interop_environment = wsl_environment_for_windows_executable(
-            command, getattr(os, "environ", {}))
-        if interop_environment is not None:
-            process_options["env"] = interop_environment
-        if self._owns_process_group:
-            process_options["start_new_session"] = True
-        try:
-            self.process = (windows_owner.launch(command, process_options, self._record)
-                            if windows_owner is not None else process_factory(command, **process_options))
-        except BaseException:
-            if self._journal is not None:
-                self._journal.close()
-            raise
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._journal_order_lock = threading.Lock()
@@ -113,14 +94,43 @@ class CodexAppServerClient:
         self._stderr_tail = b""
         self._stderr_bytes = 0
         self._stderr_error = None
-        self._stderr_complete = getattr(self.process, "stderr", None) is None
+        self._stderr_complete = False
         self._stderr_reader = None
-        if getattr(self.process, "stderr", None) is not None:
-            self._stderr_reader = threading.Thread(
-                target=self._drain_stderr, daemon=True)
-            self._stderr_reader.start()
-        self._reader = threading.Thread(target=self._read, daemon=True)
-        self._reader.start()
+        self._reader = None
+        process_options = {
+            "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
+            "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
+            "errors": "strict", "bufsize": 1,
+        }
+        interop_environment = wsl_environment_for_windows_executable(
+            command, getattr(os, "environ", {}))
+        if interop_environment is not None:
+            process_options["env"] = interop_environment
+        if self._owns_process_group:
+            process_options["start_new_session"] = True
+        self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
+        try:
+            self.process = (windows_owner.launch(command, process_options, self._record)
+                            if windows_owner is not None else process_factory(command, **process_options))
+        except BaseException as error:
+            try:
+                self._close_journal(lambda: 0)
+            except BaseException as cleanup_error:
+                error.add_note("app-server startup journal close failed: " + type(cleanup_error).__name__)
+            raise
+        try:
+            self._stderr_complete = getattr(self.process, "stderr", None) is None
+            if not self._stderr_complete:
+                self._stderr_reader = threading.Thread(target=self._drain_stderr, daemon=True)
+                self._stderr_reader.start()
+            self._reader = threading.Thread(target=self._read, daemon=True)
+            self._reader.start()
+        except BaseException as error:
+            try:
+                self.close(timeout=5)
+            except BaseException as cleanup_error:
+                error.add_note("app-server startup cleanup failed: " + type(cleanup_error).__name__)
+            raise
 
     def _drain_stderr(self):
         """Drain diagnostics independently while retaining only a bounded raw tail."""
@@ -483,32 +493,36 @@ class CodexAppServerClient:
             except subprocess.TimeoutExpired:
                 self.process.kill()
                 self.process.wait(timeout=partial_budget())
+        local_error = None
         try:
             self._close_local_transport(remaining, owns_process_group)
-        except BaseException as cleanup_error:
-            if retirement_error is not None:
-                raise retirement_error from cleanup_error
-            raise
+        except BaseException as error:
+            local_error = error
+        try:
+            self._close_journal(remaining)
+        except BaseException as error:
+            if local_error is None:
+                local_error = error
+            else:
+                local_error.add_note("app-server journal close failed: " + type(error).__name__)
         if retirement_error is not None:
+            if local_error is not None:
+                raise retirement_error from local_error
             raise retirement_error
+        if local_error is not None:
+            raise local_error
 
     def _close_local_transport(self, remaining, owns_process_group):
-        self._reader.join(timeout=remaining())
-        if self._reader.is_alive():
-            if owns_process_group:
+        for reader, name in ((self._reader, "reader"), (getattr(self, "_stderr_reader", None), "stderr reader")):
+            # Thread.start can fail before a corresponding worker exists.
+            if reader is None or getattr(reader, "ident", True) is None:
+                continue
+            reader.join(timeout=remaining())
+            if reader.is_alive() and owns_process_group:
                 self._signal_owned_group(signal.SIGKILL)
-                self._reader.join(timeout=remaining())
-            if self._reader.is_alive():
-                raise TimeoutError("app-server reader close timed out")
-        stderr_reader = getattr(self, "_stderr_reader", None)
-        if stderr_reader is not None:
-            stderr_reader.join(timeout=remaining())
-            if stderr_reader.is_alive():
-                if owns_process_group:
-                    self._signal_owned_group(signal.SIGKILL)
-                    stderr_reader.join(timeout=remaining())
-                if stderr_reader.is_alive():
-                    raise TimeoutError("app-server stderr reader close timed out")
+                reader.join(timeout=remaining())
+            if reader.is_alive():
+                raise TimeoutError(f"app-server {name} close timed out")
         # Custom process factories own their stream wrappers and may provide
         # lightweight proxies without the IOBase ``closed``/``close`` API.
         if getattr(self, "_owns_process_streams", owns_process_group):
@@ -526,6 +540,7 @@ class CodexAppServerClient:
                 self._stdin_fd = None
             finally:
                 write_lock.release()
+    def _close_journal(self, remaining):
         if self._journal is not None and not self._journal.closed:
             journal_timeout = remaining()
             if not self._journal_lock.acquire(timeout=-1 if journal_timeout is None else journal_timeout):

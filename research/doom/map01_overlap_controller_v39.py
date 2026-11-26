@@ -34,7 +34,10 @@ from doom_typed_observation_v1 import (
 from doom_action_validity_contract_v1 import (
     bindings_equal_exact, build_contract as build_action_contract)
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
-from codex_app_server_client_v2 import CodexAppServerClient, AppServerConditionFenceTimeout
+from codex_app_server_client_v2 import (
+    CodexAppServerClient, AppServerConditionFenceTimeout,
+    wsl_environment_for_windows_executable)
+from native_app_server_job_v1 import WindowsAppServerOwner
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 from final_action_admission_v2 import (
     decide_final_admission, record_controller_no_input,
@@ -1198,6 +1201,36 @@ def app_server_command_for_run(output):
         raise
 
 
+def canonical_windows_executable(value, variable):
+    path = Path(value)
+    message = f"{variable} must resolve from an absolute WSL path to an existing .exe file"
+    if not path.is_absolute():
+        raise ValueError(message)
+    try:
+        executable = path.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise ValueError(message) from error
+    if executable.suffix.lower() != ".exe" or not executable.is_file():
+        raise ValueError(message)
+    return executable
+
+
+def start_planner_client(output):
+    command = app_server_command_for_run(output)
+    windows_owner = None
+    if os.name == "posix" and command[1:3] == ["app-server", "--stdio"]:
+        if not os.environ.get("WSL_INTEROP"):
+            raise ValueError("native Windows Codex requires WSL interop")
+        executable = canonical_windows_executable(command[0], "AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+        command = [str(executable), *command[1:]]
+        wsl_environment_for_windows_executable(command, os.environ)
+        python_variable = "AGENT_INTERFACE_WINDOWS_PYTHON"
+        python = canonical_windows_executable(os.environ.get(python_variable, ""), python_variable)
+        windows_owner = WindowsAppServerOwner(python, win, output.resolve())
+    return CodexAppServerClient(command, cwd=REPO, journal_path=output / "planner-protocol.jsonl",
+                                windows_owner=windows_owner)
+
+
 def validate_input_service_selection(args):
     if getattr(args,'owned_input_service',False):
         if not getattr(args,'measurement_session',False) or not getattr(args,'target_process_identity',False):
@@ -1658,9 +1691,7 @@ def main():
     except ValueError as error:
         parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
-    planner_client = CodexAppServerClient(
-        app_server_command_for_run(args.out), cwd=REPO,
-        journal_path=args.out / "planner-protocol.jsonl")
+    planner_client = start_planner_client(args.out)
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
         failure_cleanup.set_stage("planner_initialize")
