@@ -18,6 +18,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 from map01_stagnation_v1 import descriptor, normalized_mae
+from map01_cover_cycle_experiment_v1 import split_repeated_cover
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
@@ -29,6 +30,7 @@ from doom_controller_failure_cleanup_v1 import (
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_cover_renewal_probe_v1 import (
     EVENT as RENEWAL_PROBE_EVENT, request_passive_probe, verify_probe_frame)
+from executor_v11 import program_sha256
 from verified_interruption_release_v1 import qualified_interruption_release
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -588,6 +590,81 @@ def retire_uncertain_cover_renewal(planner, planner_handle, process, wait, cover
             stream.write("\n")
     except BaseException as save_error:
         error.add_note("cover renewal receipt save failed: " + type(save_error).__name__)
+
+
+class CoverCycleBudgetExhausted(RuntimeError):
+    """The experiment stopped after its bounded, released cover budget."""
+
+
+def qualify_cycle_terminal(accepted, terminal, events, source, steps, *, cancellation_requested=False):
+    require_cover_terminal(terminal, cancellation_requested=cancellation_requested)
+    identifier = terminal.get("id")
+    admissions = [row for row in events if type(row) is dict and row.get("id") == identifier
+                  and row.get("event") == "input_admission"]
+    if (type(accepted) is not dict or type(identifier) is not str
+            or accepted.get("id") != identifier or accepted.get("event") != "accepted"
+            or accepted.get("program_sha256") != program_sha256(steps)
+            or type(source) is not dict
+            or type(source.get("renewal_owner_id")) is not str
+            or not source["renewal_owner_id"]
+            or type(source.get("input_owner_generation")) is not int
+            or type(terminal.get("input_owner_generation")) is not int
+            or terminal.get("input_owner_id") != source["renewal_owner_id"]
+            or terminal.get("input_owner_generation") != source["input_owner_generation"]
+            or any(row.get("owner_id") != source["renewal_owner_id"] for row in admissions)
+            or not operation_release_verified(identifier, events, require_intent=True)):
+        raise ValueError("cycle terminal custody or release unverified")
+
+
+def stop_exhausted_cover_budget(planner, planner_handle, terminal, out, *,
+                                accepted_count=None, maximum_submissions=None,
+                                reason="budget_exhausted", renewal_response=None):
+    if reason not in ("terminal_release_unverified", "renewal_rejected"):
+        require_cover_terminal(terminal, cancellation_requested=reason == "cycle_custody_unverified")
+    latched_ns = time.perf_counter_ns()
+    error = CoverCycleBudgetExhausted("experimental cover-cycle HOLD: " + reason)
+    # The waiter pool must not join a transport that cannot be retired.
+    renewal_submit = "rejected" if reason == "renewal_rejected" else "not_sent"
+    error.cover_probe_failure_receipt = {"renewal_submit": renewal_submit}
+    results = queue.Queue(maxsize=1)
+
+    def retire():
+        result = {}
+        try:
+            result["invalidation"] = planner.invalidate_turn(planner_handle)
+        except BaseException as exc:
+            result["invalidation_error_type"] = type(exc).__name__
+        try:
+            result["abort"] = planner.abort_pending_turn()
+        except BaseException as exc:
+            result["abort_error_type"] = type(exc).__name__
+        results.put_nowait(result)
+
+    if reason in ("terminal_release_unverified", "renewal_rejected"):
+        # Reach child/input cleanup immediately when physical release is unknown.
+        retirement = {"outcome": "unknown", "reason": "deferred_to_failure_cleanup"}
+    else:
+        try:
+            threading.Thread(target=retire, daemon=True).start()
+        except Exception as exc:
+            retirement = {"outcome": "unknown", "reason": "thread_start_failed",
+                          "error_type": type(exc).__name__}
+        else:
+            try:
+                retirement = results.get(timeout=0.5)
+            except queue.Empty:
+                retirement = {"outcome": "unknown", "reason": "retirement_timeout"}
+    receipt = {"schema": "cover-cycle-budget-hold-v1", "outcome": "HOLD",
+               "reason": reason,
+               "physical_input_state": ("verified_empty" if reason == "budget_exhausted" else "unknown"),
+               "terminal": deepcopy(terminal), "renewal_submit": renewal_submit,
+               "renewal_response": deepcopy(renewal_response),
+               "accepted_count": accepted_count, "maximum_submissions": maximum_submissions,
+               "planner_turn_id": getattr(planner_handle, "turn_id", None),
+               "observation_ended_ns": latched_ns,
+               "retirement_observed_ns": time.perf_counter_ns(), "retirement": retirement}
+    error.cycle_budget_receipt = receipt
+    raise error
 
 
 @contextmanager
@@ -1696,6 +1773,8 @@ def main():
                         help="qualify the loaded spectator clock before initial cover")
     parser.add_argument("--renewal-passive-observer", action="store_true",
                         help="observe the process-bound viewport before each renewal submission")
+    parser.add_argument("--experimental-cover-cycle", action="store_true",
+                        help="run authored cover one identical cycle at a time, with a fixed budget")
     args = parser.parse_args()
     try:
         require_release_receipt_session(args)
@@ -1703,6 +1782,9 @@ def main():
             raise ValueError("episode timeout must be between 10 and 600 seconds")
         if args.renewal_passive_observer and not args.target_process_identity:
             raise ValueError("renewal observer requires --target-process-identity")
+        if args.experimental_cover_cycle and not (args.renewal_passive_observer
+                                                  and args.post_load_clock_gate):
+            raise ValueError("cycle experiment requires passive observer and post-load clock gate")
         validate_input_service_selection(args)
         if args.post_load_clock_gate and not args.owned_input_service:
             raise ValueError("post-load clock gate requires the owned input service")
@@ -1865,7 +1947,12 @@ def main():
                 cover_policy_source_iteration)
             failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
+            args._cycle_max_submissions = None
+            if args.experimental_cover_cycle and cover_semantic:
+                cover_steps, args._cycle_max_submissions = split_repeated_cover(
+                    cover_steps, hold_count=len(cover_semantic))
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
+            cover_submission_source = deepcopy(latest)
             cover_submission_recovery=None
             cover_submission_invalidation=None
             def submit_cover(identifier, consumed_events=None, *, renewal=False, approval=None):
@@ -1957,6 +2044,7 @@ def main():
                 future=pool.submit(planner.await_turn,planner_handle,90)
                 current_cover=cover
                 current_cover_accepted=cover_ack
+                current_cover_source=cover_submission_source
                 current_terminal=None
                 while not future.done():
                     try:
@@ -1972,10 +2060,38 @@ def main():
                         current_terminal = boundary
                         cover_terminals.append(current_terminal)
                         failure_cleanup.set_stage("cover_terminal_validation")
+                        if getattr(args, "_cycle_max_submissions", None) is not None:
+                            try:
+                                require_cover_terminal(current_terminal)
+                            except RuntimeError:
+                                stop_exhausted_cover_budget(
+                                    planner, planner_handle, current_terminal, args.out,
+                                    accepted_count=len(cover_ids),
+                                    maximum_submissions=args._cycle_max_submissions,
+                                    reason="terminal_release_unverified")
                         validate_planner_cover_terminal(planner, planner_handle, future,
                                                         current_terminal, args.out)
+                        if getattr(args, "_cycle_max_submissions", None) is not None:
+                            try:
+                                qualify_cycle_terminal(current_cover_accepted, current_terminal,
+                                                       all_events, current_cover_source, cover_steps)
+                            except ValueError as error:
+                                try:
+                                    stop_exhausted_cover_budget(
+                                        planner, planner_handle, current_terminal, args.out,
+                                        accepted_count=len(cover_ids),
+                                        maximum_submissions=args._cycle_max_submissions,
+                                        reason="cycle_custody_unverified")
+                                except CoverCycleBudgetExhausted as hold:
+                                    raise hold from error
                         if future.done():
                             break
+                        cycle_limit = getattr(args, "_cycle_max_submissions", None)
+                        if cycle_limit is not None and len(cover_ids) >= cycle_limit:
+                            stop_exhausted_cover_budget(planner, planner_handle,
+                                                        current_terminal, args.out,
+                                                        accepted_count=len(cover_ids),
+                                                        maximum_submissions=cycle_limit)
                         next_cover = f"cover-{index}-renew-{len(cover_ids)}"
                         approval = {}
                         if getattr(args, "renewal_passive_observer", False):
@@ -2041,6 +2157,12 @@ def main():
                                 consumed_events, error, args.out)
                             raise
                         if next_accepted["event"] != "accepted":
+                            if cycle_limit is not None:
+                                stop_exhausted_cover_budget(
+                                    planner, planner_handle, current_terminal, args.out,
+                                    accepted_count=len(cover_ids),
+                                    maximum_submissions=cycle_limit,
+                                    reason="renewal_rejected", renewal_response=next_accepted)
                             error = RuntimeError(next_accepted)
                             retire_failed_cover(planner, planner_handle, future,
                                                 current_terminal, error, args.out)
@@ -2048,6 +2170,8 @@ def main():
                         cover_renewal_gaps_ms.append((next_accepted["accepted_ns"] -
                             current_terminal["terminal_ns"]) / 1e6)
                         current_cover, current_cover_accepted = next_cover, next_accepted
+                        if cycle_limit is not None:
+                            current_cover_source = deepcopy(source_at_probe)
                         current_terminal = None
                         invalidation = observe_cover_submission_events(
                             consumed_events, invalidation_monitor, fail_closed=True)
@@ -2067,6 +2191,15 @@ def main():
                         current_terminal = drained["terminal"]
                         cover_terminals.append(current_terminal)
                         failure_cleanup.set_stage("cover_terminal_validation")
+                        if getattr(args, "_cycle_max_submissions", None) is not None:
+                            try:
+                                require_cover_terminal(current_terminal)
+                            except RuntimeError:
+                                stop_exhausted_cover_budget(
+                                    planner, planner_handle, current_terminal, args.out,
+                                    accepted_count=len(cover_ids),
+                                    maximum_submissions=args._cycle_max_submissions,
+                                    reason="terminal_release_unverified")
                         validate_planner_cover_terminal(planner, planner_handle, future,
                                                         current_terminal, args.out)
                     if drained["invalidation"] is not None:
@@ -2120,8 +2253,31 @@ def main():
                     }
             failure_cleanup.set_stage("cover_terminal_validation")
             if current_cover is not None:
+                if getattr(args, "_cycle_max_submissions", None) is not None:
+                    try:
+                        require_cover_terminal(current_terminal, cancellation_requested=True)
+                    except RuntimeError:
+                        stop_exhausted_cover_budget(
+                            planner, planner_handle, current_terminal, args.out,
+                            accepted_count=len(cover_ids),
+                            maximum_submissions=args._cycle_max_submissions,
+                            reason="terminal_release_unverified")
                 validate_planner_cover_terminal(planner, planner_handle, future,
                     current_terminal, args.out, cancellation_requested=True)
+                if getattr(args, "_cycle_max_submissions", None) is not None:
+                    try:
+                        qualify_cycle_terminal(current_cover_accepted, current_terminal,
+                                               all_events, current_cover_source, cover_steps,
+                                               cancellation_requested=True)
+                    except ValueError as error:
+                        try:
+                            stop_exhausted_cover_budget(
+                                planner, planner_handle, current_terminal, args.out,
+                                accepted_count=len(cover_ids),
+                                maximum_submissions=args._cycle_max_submissions,
+                                reason="cycle_custody_unverified")
+                        except CoverCycleBudgetExhausted as hold:
+                            raise hold from error
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())

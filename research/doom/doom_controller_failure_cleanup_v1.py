@@ -449,5 +449,8 @@ class ControllerFailureCleanup:
             receipt['input_releases_verified_empty'],receipt['scorer_terminal_observed'],
             receipt['score_file_present'],receipt['owner_events_closed'],
             all(row.get('status')=='returned' for row in receipt['stages'])))
+        cycle_hold = getattr(error, 'cycle_budget_receipt', None)
+        if type(cycle_hold) is dict:
+            receipt['cover_cycle_hold'] = deepcopy(cycle_hold)
         attempt('failure_receipt_write',lambda:(self.out/'controller-failure.json').write_text(json.dumps(receipt,indent=2,allow_nan=False)+'\n'))
         return False
