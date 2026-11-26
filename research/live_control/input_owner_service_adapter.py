@@ -86,13 +86,25 @@ class OwnedOwnerAdapter:
                 if self.obligation_snapshot() is not None:raise ValueError('external owner release unverified')
                 token=getattr(lease,'intent_token',None)
                 if self._leases.get(token) is not lease:raise ValueError('original backend-bound lease required')
-                self._attempted.add(token)
         if operation=='release' and lease is not None and lease.cancel.is_set():
             token=lease.intent_token
             if token in self._attempted:
                 try:self.control.wait(token,self.timeout)
                 except Exception as error:self._retain('cancellation_outcome_unknown',dict(error=type(error).__name__))
-        try:result=self.client.call(operation,lease,key)
+        def mark_attempted():
+            with self._lock:self._attempted.add(token)
+        try:
+            if operation in ('down','up','up_batch'):
+                result=self.client.call(operation,lease,key,on_dispatch=mark_attempted)
+            else:
+                result=self.client.call(operation,lease,key)
+        except rpc.RpcCapacityExhausted as error:
+            if operation in ('surface_context','input_state','down'):
+                raise
+            self._retain('ordinary_rpc_unknown',dict(operation=operation,error=type(error).__name__))
+            if operation=='release':
+                return dict(verified=False,error=type(error).__name__,owner_service_obligation=self.obligation_snapshot())
+            raise
         except BaseException as error:
             self._retain('ordinary_rpc_unknown',dict(operation=operation,error=type(error).__name__))
             if operation=='release' and isinstance(error,Exception):
@@ -105,6 +117,9 @@ class OwnedOwnerAdapter:
             return dict(result if type(result) is dict else {},verified=False,owner_service_obligation=obligation,
                         underlying_cleanup_verified=type(result) is dict and result.get('verified') is True)
         return result
+
+    def release_state(self,lease):
+        return self.call('release_state',lease)
 
     def close(self):
         with self._lock:

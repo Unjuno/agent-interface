@@ -1,5 +1,6 @@
 """Current strict owner through real private sockets; X11 is entirely fake."""
 import importlib.util
+import copy
 import json
 from pathlib import Path
 import socket
@@ -47,6 +48,12 @@ class Wire:
         if self.fault == 'bad-capabilities' and row.get('schema') == 'input-owner-rpc-ready-v2':
             row['capabilities']['process_identity'] = 1
             data = (json.dumps(row)+'\n').encode()
+        if self.fault == 'old-capabilities' and row.get('schema') == 'input-owner-rpc-ready-v2':
+            row['capabilities'].pop('max_requests');row['capabilities'].pop('cleanup_reserve')
+            data = (json.dumps(row)+'\n').encode()
+        if self.fault == 'float-budget' and row.get('schema') == 'input-owner-rpc-ready-v2':
+            row['capabilities']['max_requests']=float(row['capabilities']['max_requests'])
+            data = (json.dumps(row)+'\n').encode()
         if self.fault == 'bad-ready' and row.get('schema') == 'input-owner-rpc-ready-v2':
             row['service_id'] = 'wrong-service'
             data = (json.dumps(row)+'\n').encode()
@@ -72,6 +79,64 @@ class OwnerRpcTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('input_owner_rpc_v2'),
                              'Current-generation sticky-quarantine RPC implementation is absent')
 
+    def test_read_capacity_exhaustion_reserves_release_and_close_without_sending(self):
+        c=rpc()
+        with patch.object(c,'MAX_REQUESTS',8), patch.object(c,'CLEANUP_RESERVE',4), backend_fixture() as (backend,events,generation,fake):
+            backend.snapshot('capacity',0);lease=bound(backend)
+            client,wire,peer,receipts,thread=self.session(backend,fake=fake)
+            try:
+                client.call('down',lease,'a')
+                for _ in range(3):client.call('input_state')
+                sent=list(wire.sent)
+                with self.assertRaises(c.RpcCapacityExhausted):client.call('input_state')
+                with self.assertRaises(c.RpcCapacityExhausted):client.call('down',lease,'d')
+                self.assertEqual(wire.sent,sent)
+                self.assertEqual(fake.down,{38})
+                client.call('up',lease,'a')
+                with self.assertRaises(c.RpcCapacityExhausted):client.call('input_state')
+                other=copy.copy(lease);other.intent_token='different-token'
+                with self.assertRaises(c.RpcCapacityExhausted):client.call('release_state',other)
+                self.assertEqual(client.call('release_state',lease)['owned_keycodes'],[])
+                with self.assertRaises(c.RpcCapacityExhausted):client.call('release_state',lease)
+                self.assertTrue(client.call('release',lease)['verified'])
+                self.assertEqual(fake.down,set())
+                with self.assertRaises(c.RpcCapacityExhausted):client.call('release',lease)
+                self.assertTrue(client.close()['verified'])
+                self.assertEqual([row['request_id'] for row in wire.sent],list(range(1,9)))
+                thread.join(3);self.assertFalse(thread.is_alive())
+            finally:client.close();thread.join(5)
+
+    def test_more_than_256_reads_still_leave_orderly_close(self):
+        c=rpc()
+        with backend_fixture() as (backend,events,generation,fake):
+            backend.snapshot('long-observation',0)
+            client,wire,peer,receipts,thread=self.session(backend,fake=fake)
+            try:
+                for _ in range(260):client.call('input_state')
+                self.assertEqual(wire.sent[-1]['request_id'],260)
+                self.assertTrue(client.close()['verified'])
+                thread.join(3);self.assertFalse(thread.is_alive())
+            finally:client.close();thread.join(5)
+
+    def test_release_state_does_not_decode_or_mutate_registry(self):
+        c=rpc()
+        class Registry:
+            def __init__(self):self.leases={};self.calls=0
+            def decode(self,dto):self.calls+=1;return c.decode_lease(dto,self.leases)
+        registry=Registry()
+        with backend_fixture() as (backend,events,generation,fake):
+            backend.snapshot('release-state-read',0);lease=bound(backend)
+            client,wire,peer,receipts,thread=self.session(backend,fake=fake,lease_registry=registry)
+            try:
+                client.call('down',lease,'a');client.call('up',lease,'a')
+                self.assertEqual(registry.calls,2)
+                remote=registry.leases[lease.intent_token];self.assertFalse(remote.cancel.is_set())
+                lease.cancel.set()
+                self.assertEqual(client.call('release_state',lease)['owned_keycodes'],[])
+                self.assertEqual(registry.calls,2);self.assertFalse(remote.cancel.is_set())
+                self.assertTrue(client.close()['verified']);thread.join(3)
+            finally:client.close();thread.join(5)
+
     def test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel(self):
         c = rpc()
         with backend_fixture() as (backend, events, generation, fake):
@@ -94,7 +159,7 @@ class OwnerRpcTests(unittest.TestCase):
                              window=list(decoded.target_window_identity), cancel_sticky=decoded.cancel.is_set(),
                              changed_source_refused=True))
 
-    def session(self, backend, fault=None, *, fake):
+    def session(self, backend, fault=None, *, fake, lease_registry=None):
         c = rpc()
         fake.keysym_to_keycode = lambda value: {ord('a'):38, ord('d'):40}.get(value,0)
         fake.rpc_edges = []
@@ -110,7 +175,7 @@ class OwnerRpcTests(unittest.TestCase):
         client_wire, server_wire = Wire(left), Wire(right, fault)
         results = []
         def serve():
-            try: results.append(c.serve_owner(server_wire, backend.owner, display=':fake', service_id='owned-service-v2'))
+            try: results.append(c.serve_owner(server_wire, backend.owner, display=':fake', service_id='owned-service-v2', lease_registry=lease_registry))
             except BaseException as exc: results.append(dict(thread_error=repr(exc)))
         thread = threading.Thread(target=serve, name='owned-rpc-v2-test-service')
         thread.start()
@@ -413,7 +478,7 @@ class OwnerRpcTests(unittest.TestCase):
 
     def test_readiness_is_bound_to_exact_service_before_any_input(self):
         c=rpc()
-        for fault in ('bad-ready','bad-capabilities'):
+        for fault in ('bad-ready','bad-capabilities','old-capabilities','float-budget'):
             with self.subTest(fault=fault), backend_fixture() as (backend,events,generation,fake):
                 backend.snapshot('ready',0)
                 refused=False;session=None

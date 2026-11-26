@@ -47,6 +47,13 @@ def child_geometry(*,display,out,service_id):
 
 
 @contextmanager
+def child_geometry_two_keys(*,display,out,service_id):
+    with child_geometry(display=display,out=out,service_id=service_id) as owner:
+        native.display.Display.return_value.keysym_to_keycode=lambda value:{ord('a'):38,ord('d'):40}.get(value,0)
+        yield owner
+
+
+@contextmanager
 def child_geometry_inflight(*,display,out,service_id):
     with fake_owner_inflight(display=display,out=out,service_id=service_id) as owner:
         configure_geometry(native.display.Display.return_value)
@@ -258,6 +265,65 @@ class OwnedBackendTests(unittest.TestCase):
                             sha256=hashlib.sha256(raw).hexdigest(),bytes_b64=base64.b64encode(raw).decode('ascii'))
                 ROWS.append(row)
                 self.assertFalse(service.process.is_alive(),'owned service still alive')
+
+    def test_partial_up_then_terminal_release_keeps_post_release_sample(self):
+        from lease_release_v1 import Lease
+        with tempfile.TemporaryDirectory() as temp:
+            service=launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=child_geometry_two_keys,cancellation=True)
+            try:
+                with parent_backend(temp,service) as (backend,events,generation):
+                    backend.snapshot('partial-source',0)
+                    lease=Lease(time.perf_counter_ns()+10_000_000_000);lease.intent_token='partial-capacity-test'
+                    backend.bind_lease_source(lease,backend.sequence);backend.lease=lease
+                    backend._input_event_context=('partial',0)
+                    backend._release_batch.context={'rows':[],'identifier':'partial','step':0,'pending_ups':[]}
+                    backend.raw('a',True);backend.raw('d',True);backend.raw('a',False)
+                    result=backend.release_all()
+                    self.assertTrue(result['verified'],result)
+                    rows=[e for e in events if e.get('event')=='input_release_transition']
+                    self.assertEqual([x['key'] for x in rows],['a'])
+                    self.assertTrue(rows[0]['owner_transition_verified'],rows[0])
+                    self.assertIsNone(backend.owner.obligation_snapshot())
+                    self.assertTrue(backend.close()['verified'])
+            finally:
+                service.close_channel();report=service.wait(6)
+                self.assertFalse(service.process.is_alive());self.assertTrue(report['verified'],report)
+
+    def test_capacity_boundary_preserves_real_backend_release_and_close(self):
+        import input_owner_rpc_v2 as rpc
+        with tempfile.TemporaryDirectory() as temp:
+            service=launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=child_geometry,cancellation=True)
+            executor=None
+            try:
+                with parent_backend(temp,service) as (backend,events,generation):
+                    backend.snapshot('capacity-source',0)
+                    client=backend.owner.client;original=client.call;poll_blocked=[]
+                    def near_boundary(operation,lease=None,key=None,**kwargs):
+                        if operation=='down':
+                            while client._next_id < rpc.MAX_REQUESTS-rpc.CLEANUP_RESERVE:
+                                original('input_state')
+                        if operation=='release_state':
+                            try:original('input_state')
+                            except rpc.RpcCapacityExhausted:poll_blocked.append(True)
+                            else:raise AssertionError('ordinary poll consumed cleanup capacity')
+                        return original(operation,lease,key,**kwargs)
+                    client.call=near_boundary
+                    executor=Executor(backend,events.append)
+                    executor.submit('capacity',[{'op':'hold','keys':['a'],'duration_ms':5}],backend.sequence,time.perf_counter_ns()+10_000_000_000)
+                    worker=executor.active[2] if executor.active else None
+                    if worker:worker.join(4)
+                    self.assertFalse(worker and worker.is_alive())
+                    terminal=[e for e in events if e.get('event')=='terminal'][-1]
+                    self.assertTrue(terminal['release']['verified'],terminal)
+                    self.assertEqual(poll_blocked,[True])
+                    self.assertEqual(edges(service.out)[-1]['event'],3)
+                    self.assertIsNone(backend.owner.obligation_snapshot())
+                    executor.close();self.assertTrue(backend.close()['verified'])
+            finally:
+                if executor:executor.close()
+                service.close_channel();report=service.wait(6)
+                self.assertFalse(service.process.is_alive())
+                self.assertTrue(report['verified'],report)
 
     def test_actual_binding_and_executor_normal(self):self.run_case('normal')
     def test_actual_executor_cancel_before_worker_resume(self):self.run_case('cancel')

@@ -18,9 +18,11 @@ SCHEMA = 'input-owner-rpc-v2'
 READY = 'input-owner-rpc-ready-v2'
 RESPONSE = 'input-owner-rpc-response-v2'
 MAX_FRAME = 1_048_576
-MAX_REQUESTS = 256
+MAX_REQUESTS = 1024
+# Keep a finite tail for release and close after ordinary work stops.
+CLEANUP_RESERVE = 16
 MAX_LEASES = 64
-OPERATIONS = frozenset({'down', 'up', 'up_batch', 'release', 'input_state', 'surface_context', 'close'})
+OPERATIONS = frozenset({'down', 'up', 'up_batch', 'release', 'input_state', 'release_state', 'surface_context', 'close'})
 KEYS = frozenset({'Left', 'Right', 'Up', 'Down', 'a', 'd', 'e', 'space', 'Shift_L'})
 LEASE_FIELDS = frozenset({'deadline_ns', 'intent_token', 'expected_focus', 'expected_surface',
     'expected_geometry', 'cancel_requested', 'focus_invalid', 'target_process_identity',
@@ -40,6 +42,10 @@ class RpcQuarantined(RuntimeError):
 
 class RpcBusy(RuntimeError):
     pass
+
+
+class RpcCapacityExhausted(RpcBusy):
+    """The local request budget refused an operation before sending it."""
 
 
 def _timeout(value):
@@ -187,7 +193,8 @@ def _read_frame(sock, buffer, deadline):
 
 
 def _capabilities():
-    return dict(process_identity=True, window_lifecycle=False, operations=sorted(OPERATIONS))
+    return dict(process_identity=True, window_lifecycle=False, operations=sorted(OPERATIONS),
+                max_requests=MAX_REQUESTS, cleanup_reserve=CLEANUP_RESERVE)
 
 
 def _request(value, expected_id, service_id):
@@ -199,7 +206,7 @@ def _request(value, expected_id, service_id):
     op, dto, key = value['op'], value['lease'], value['key']
     if type(op) is not str or op not in OPERATIONS:
         raise ValueError('unsupported RPC operation')
-    if op in ('down', 'up', 'up_batch', 'release'):
+    if op in ('down', 'up', 'up_batch', 'release', 'release_state'):
         _validate_lease(dto)
     elif dto is not None:
         _validate_lease(dto)
@@ -282,6 +289,7 @@ class OwnerRpcClient:
         self._gate = threading.Lock()
         self._records = []
         self._next_id = 1
+        self._cleanup_state_credit = None
         self._quarantined = False
         self._closed = False
         self._close_result = None
@@ -292,7 +300,9 @@ class OwnerRpcClient:
                     or ready['service_id'] != self.service_id or ready['capabilities'] != _capabilities()
                     or type(ready['capabilities']) is not dict
                     or ready['capabilities'].get('process_identity') is not True
-                    or ready['capabilities'].get('window_lifecycle') is not False):
+                    or ready['capabilities'].get('window_lifecycle') is not False
+                    or type(ready['capabilities'].get('max_requests')) is not int
+                    or type(ready['capabilities'].get('cleanup_reserve')) is not int):
                 raise ValueError('strict process-owner readiness mismatch')
             if self._buffer:
                 raise ValueError('unsolicited bytes after owner readiness')
@@ -305,7 +315,7 @@ class OwnerRpcClient:
     def records(self):
         return copy.deepcopy(self._records)
 
-    def call(self, op, lease=None, key=None):
+    def call(self, op, lease=None, key=None, *, on_dispatch=None):
         deadline = time.monotonic()+self.timeout
         if not self._gate.acquire(timeout=self.timeout):
             raise RpcBusy('RPC caller slot deadline; no request sent')
@@ -315,12 +325,27 @@ class OwnerRpcClient:
             if self._buffer:
                 self._quarantined = True
                 raise RpcQuarantined('unsolicited buffered reply; no request sent')
+            wire_lease=encode_lease(lease)
+            identity=({k:v for k,v in wire_lease.items() if k not in ('cancel_requested','focus_invalid')}
+                      if wire_lease is not None else None)
+            cleanup_read = op=='release_state' and identity is not None and identity==self._cleanup_state_credit
+            reserve = self._next_id > MAX_REQUESTS-CLEANUP_RESERVE
+            if (op=='release_state' and not cleanup_read or self._next_id > MAX_REQUESTS
+                    or op in ('up','up_batch') and self._next_id > MAX_REQUESTS-3
+                    or op in ('release','input_state','release_state') and self._next_id > MAX_REQUESTS-1
+                    or reserve and op not in ('up','up_batch','release','close') and not cleanup_read):
+                raise RpcCapacityExhausted('RPC budget reserved for cleanup; no request sent')
+            if on_dispatch is not None and not callable(on_dispatch):
+                raise ValueError('dispatch hook must be callable')
             request = dict(schema=SCHEMA, service_id=self.service_id, request_id=self._next_id,
-                           op=op, lease=encode_lease(lease), key=copy.deepcopy(key))
+                           op=op, lease=wire_lease, key=copy.deepcopy(key))
             _request(request, self._next_id, self.service_id)
             # Consume identity before an uncertain send. No retry on this connection.
             self._next_id += 1
+            if op in ('release_state','down','close') or op=='release' and identity!=self._cleanup_state_credit:
+                self._cleanup_state_credit=None
             try:
+                if on_dispatch is not None:on_dispatch()
                 _send_frame(self._sock, request, deadline)
                 response = _read_frame(self._sock, self._buffer, deadline)
                 if self._buffer:
@@ -342,6 +367,8 @@ class OwnerRpcClient:
                     if (type(geometry) is not list or len(geometry)!=4
                             or any(type(v) is not int for v in geometry) or geometry[2]<=0 or geometry[3]<=0):
                         raise ValueError('read-only surface geometry invalid')
+                if op in ('up','up_batch'):
+                    self._cleanup_state_credit=copy.deepcopy(identity)
                 if op == 'close':
                     _validate_close_result(response['result'], self._records, self.display, self.service_id)
                     self._close_result = self._unverified_close_result()
@@ -422,6 +449,7 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_regis
     if native.display_name != display:
         raise ValueError('owner/display identity mismatch')
     buffer, leases, next_id = bytearray(), {}, 1
+    cleanup_identity = None
     receipt = None
     protocol_error = None
     try:
@@ -431,14 +459,23 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_regis
             request = _read_frame(sock, buffer, time.monotonic()+idle_timeout)
             op = _request(request, next_id, service_id)
             next_id += 1
+            identity=({k:v for k,v in request['lease'].items() if k not in ('cancel_requested','focus_invalid')}
+                      if request['lease'] is not None else None)
+            if op=='release_state' and (identity is None or identity!=cleanup_identity):
+                raise ValueError('release state requires the matching completed keyup')
             lease = ((lease_registry.decode(request['lease']) if lease_registry is not None
-                      else decode_lease(request['lease'], leases)) if request['lease'] is not None else None)
+                      else decode_lease(request['lease'], leases))
+                     if request['lease'] is not None and op!='release_state' else None)
+            if op in ('release_state','down','close') or op=='release' and identity!=cleanup_identity:
+                cleanup_identity=None
             error = None
             if op == 'close':
                 receipt = _close_owner(owner, native, display, service_id, None)
                 result = receipt
             else:
-                try: result = owner.call(op, lease, request['key'])
+                try:
+                    result = owner.call('input_state' if op=='release_state' else op, lease, request['key'])
+                    if op in ('up','up_batch'):cleanup_identity=copy.deepcopy(identity)
                 except Exception as exc:
                     error = dict(type=type(exc).__name__, message=str(exc)[:1000])
                     result = None
