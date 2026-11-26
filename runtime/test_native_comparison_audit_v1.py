@@ -220,7 +220,7 @@ class SyntheticCapture:
                           "source_image": observation["image"]})
                     write(attempt / "terminal.json", {"status": "completed", "provider_turn_observed": True,
                           "thread_id": thread, "call_id": turn, "usage": tokens,
-                          "result_returned_monotonic_ns": stamp + 75, "finished_monotonic_ns": stamp + 90})
+                          "result_returned_monotonic_ns": stamp + 54, "finished_monotonic_ns": stamp + 56})
                     write(slot / "result.json", {"raw": answer, "usage": tokens, "provider_usage": provider_usage,
                           "turn_status": "completed", "answer_eligible": True, "requested_model": "gpt-5.6-luna",
                           "requested_effort": "low", "thread_id": thread, "call_id": turn, "turn_id": turn})
@@ -414,7 +414,8 @@ class NativeComparisonAuditTests(unittest.TestCase):
                 self.assertEqual(result["disposition"], "HOLD", result)
 
     def test_failure_evidence_plan_mismatch_or_exec_tool_item_prevents_retain(self):
-        for flaw in ("unallocated_failure", "arm_failure", "plan", "exec_tool"):
+        for flaw in ("unallocated_failure", "arm_failure", "unallocated_model_result",
+                     "unallocated_arm_receipt", "plan", "exec_tool"):
             with self.subTest(flaw=flaw), TemporaryDirectory() as directory:
                 capture = SyntheticCapture(Path(directory))
                 capture.populate()
@@ -423,6 +424,11 @@ class NativeComparisonAuditTests(unittest.TestCase):
                     write(out / "model-calls/persistent/task-2/anchor/failure.json", {"failed": True})
                 elif flaw == "arm_failure":
                     write(out / "capture-arms/persistent/failure.json", {"failed": True})
+                elif flaw == "unallocated_model_result":
+                    write(out / "model-calls/pilot/task-1/anchor/result.json",
+                          {"status": "completed", "usage": usage(20)})
+                elif flaw == "unallocated_arm_receipt":
+                    write(out / "capture-arms/pilot/task-results.json", {"tasks": []})
                 elif flaw == "plan":
                     path = out / "capture-plan.json"
                     write(path, {**audit.read(path), "seed": SEED + 1, "arms": ["persistent"],
@@ -441,6 +447,31 @@ class NativeComparisonAuditTests(unittest.TestCase):
                 self.assertEqual(result["disposition"], "HOLD", result)
                 if flaw == "exec_tool":
                     self.assertIn("unregistered item", result["reason"])
+
+    def test_completed_repair_model_cannot_be_moved_after_its_task_or_next_task(self):
+        for shift in (-8, 12, 200, 1500):
+            with self.subTest(shift=shift), TemporaryDirectory() as directory:
+                capture = SyntheticCapture(Path(directory))
+                capture.populate()
+                session = capture.out / "native-app-server/persistent"
+                protocol = session / "protocol.jsonl"
+                stream = audit.records(protocol)
+                threads = [i for i, row in enumerate(stream) if row["direction"] == "send_prepared"
+                           and row["message"].get("method") == "thread/start"]
+                for row in stream[threads[1]:]:
+                    row["observed_ns"] += shift
+                lines(protocol, stream)
+                start = session / "attempts/02/start.json"
+                plan = audit.read(start)
+                plan["started_monotonic_ns"] += shift
+                write(start, plan)
+                terminal = session / "attempts/02/terminal.json"
+                settled = audit.read(terminal)
+                for key in ("result_returned_monotonic_ns", "finished_monotonic_ns"):
+                    settled[key] += shift
+                write(terminal, settled)
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD", result)
 
     def test_late_usage_cannot_replace_observation_at_return(self):
         for mode, expected in (("moved", "HOLD"), ("changed", "HOLD"), ("identical", "RETAIN")):

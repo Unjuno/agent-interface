@@ -180,9 +180,10 @@ def verify_all_provider_paths(out):
     } for path in out.rglob("*")), "capture has additional failure evidence")
     for name, expected in paths.items():
         require(set(out.rglob(name)) == expected, "provider artifacts differ from the allocated paths")
-    require({path.name for path in (out / "native-app-server").iterdir()} == set(ARMS)
-            and {path.name for path in (out / "preflight").iterdir()} == set(ARMS),
-            "unallocated provider session or preflight directory")
+    for directory in ("native-app-server", "preflight", "model-calls", "capture-arms", "arms", "workspaces"):
+        entries = list((out / directory).iterdir())
+        require({path.name for path in entries} == set(ARMS) and all(path.is_dir() for path in entries),
+                "unallocated or missing arm directory in " + directory)
     require({path.name for path in out.iterdir()} == {
         "capture-plan.json", "capture.json", "capture-seal.json", "capture-arms",
         "preflight", "native-app-server", "arms", "model-calls", "workspaces",
@@ -477,8 +478,12 @@ def task_effect_times(events, details, history, unplanned_repair_presses):
         require(all(program_begins[row["id"]] <= row["admitted_ns"] < row["input_ack_ns"]
                     <= stop[row["id"]]["terminal_ns"] for row in (field, submit)),
                 "task pointer input is outside its accepted program")
-        timeline.append((ids[0], entries[0]["accepted_ns"], source_ns,
-                         field["admitted_ns"], submit["admitted_ns"], tuple(receipts), previous_end))
+        timeline.append({
+            "first_program_id": ids[0], "first_accepted_ns": entries[0]["accepted_ns"],
+            "source_captured_ns": source_ns, "field_button_down_ns": field["admitted_ns"],
+            "submit_button_down_ns": submit["admitted_ns"], "submission_receipts_ns": receipts,
+            "last_program_terminal_ns": previous_end,
+        })
     return timeline
 
 
@@ -506,10 +511,10 @@ def verify_arm_timing(out, arm, effects, prior_arm_end):
     protocol = records(out / "native-app-server" / arm / "protocol.jsonl")
     ready = [row.get("emit_started_ns") for row in events if row.get("event") == "ready"]
     require(len(ready) == 1 and type(ready[0]) is int
-            and opened <= protocol[0]["observed_ns"] <= ready[0] <= scope[0][1]
-            and max(scope[-1][-1], protocol[-1]["observed_ns"]) <= closed,
+            and opened <= protocol[0]["observed_ns"] <= ready[0] <= scope[0]["first_accepted_ns"]
+            and max(scope[-1]["last_program_terminal_ns"], protocol[-1]["observed_ns"]) <= closed,
             "runtime or provider activity is outside the sealed arm interval")
-    return closed
+    return closed, scope
 
 
 def audit_exec(repo, out, plan, arm, contract):
@@ -595,7 +600,7 @@ def audit_exec(repo, out, plan, arm, contract):
     return row, owner["run_nonce"]
 
 
-def audit_app_server(repo, out, plan, arm, contract, rows):
+def audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects):
     session = out / "native-app-server" / arm
     owner = read(session / APP_SERVER_JOB_START)
     receipt = read(session / APP_SERVER_JOB_RECEIPT)
@@ -650,6 +655,14 @@ def audit_app_server(repo, out, plan, arm, contract, rows):
                 and terminal["finished_monotonic_ns"] >= terminal["result_returned_monotonic_ns"]
                 >= start["started_monotonic_ns"] >= bindings[task_index][3],
                 "grounding attempt ledger did not settle")
+        require(terminal["finished_monotonic_ns"] < task_times[task_index]["field_button_down_ns"],
+                "grounding result did not settle before its task field input")
+        if slot.name == "repair":
+            missing, mint = effects["repair_missing_ns"], effects["repair_first_fresh_mint_ns"]
+            require(effects["repair_window_verified"] and type(missing) is int and type(mint) is int
+                    and missing < start["started_monotonic_ns"]
+                    and terminal["finished_monotonic_ns"] < mint,
+                    "repair grounding is outside the old-target refusal and first fresh mint")
         usage = normalize_usage(result["usage"])
         require(same(usage, normalize_usage(terminal["usage"])) and same(usage, normalize_usage(call["usage"]))
                 and same(usage, per_turn_usage(result["provider_usage"], allow_missing_cache_write=True))
@@ -736,9 +749,9 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             require(len(rows) == len(TASKS), "arm task schedule is incomplete")
             checked = [validate_task(row, arm, i) for i, row in enumerate(rows)]
             effects = audit_local_effects(out, plan["seed"], arm)
-            prior_arm_end = verify_arm_timing(out, arm, effects, prior_arm_end)
+            prior_arm_end, task_times = verify_arm_timing(out, arm, effects, prior_arm_end)
             preflight, preflight_nonce = audit_exec(repo, out, plan, arm, contract)
-            calls, threads, session_nonce = audit_app_server(repo, out, plan, arm, contract, rows)
+            calls, threads, session_nonce = audit_app_server(repo, out, plan, arm, contract, rows, task_times, effects)
             nonces.extend((preflight_nonce, session_nonce))
             call_ids.extend([preflight["call_id"], *threads, *(call["call_id"] for call in calls)])
             summary = accounting([preflight, *calls])

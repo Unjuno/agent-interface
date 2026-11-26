@@ -59,6 +59,7 @@ def repair_window(events, task_source_sequence):
             or refused_sequence < task_source_sequence):
         return None
     lower_index, lower_ns, lower_sequence = start, start_ns, refused_sequence
+    first_mint_ns = None
     for alias in ("persistent_b_field", "persistent_b_submit"):
         matches = [(i, row) for i, row in enumerate(events)
                    if row.get("event") == "target_handle_minted_from_point" and row.get("handle") == alias
@@ -72,6 +73,8 @@ def repair_window(events, task_source_sequence):
                 or mint.get("source_sequence") != task_source_sequence or mint.get("fresh_patch_exact") is not True):
             return None
         lower_index, lower_ns, lower_sequence = index, stamp, sequence
+        if first_mint_ns is None:
+            first_mint_ns = stamp
     checked = next(((i, row) for i, row in enumerate(events)
                     if i > lower_index and row.get("event") == "target_handle_checked"
                     and row.get("handle") == "persistent_b_field" and row.get("eligible") is True
@@ -99,7 +102,7 @@ def repair_window(events, task_source_sequence):
                 return None
             pointers.append((program, admitted))
     return {"refusal_id": refusal["id"], "revalidation_id": verified["id"],
-            "begin_ns": start_ns, "end_ns": end_ns,
+            "begin_ns": start_ns, "first_fresh_mint_ns": first_mint_ns, "end_ns": end_ns,
             "pointer_admissions": pointers}
 
 
@@ -159,6 +162,8 @@ def audit_local_effects(out, seed, arm):
         "all_accepted_programs_released": released_all, "old_layout_missing_checks": len(missing_checks),
         "old_check_program_button_down_admissions": old_target_admissions,
         "repair_window_verified": consistent,
+        "repair_missing_ns": window["begin_ns"] if consistent else None,
+        "repair_first_fresh_mint_ns": window["first_fresh_mint_ns"] if consistent else None,
         "pre_repair_button_down_admissions": len(window["pointer_admissions"]) if consistent else None,
         "confirmed_wrong_submissions": len(wrong),
         "confirmed_duplicate_exact_submissions": len(exact) - len(set(exact)),
