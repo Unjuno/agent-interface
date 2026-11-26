@@ -297,6 +297,38 @@ def validate_close_receipt(owner, service, startup_sha256, startup, expected_own
         raise ValueError('service close evidence missing') from error
 
 
+
+def validate_failure_cleanup(runtime, *, process_exited, drain_eof):
+    """Accept a failed caller's release only after runtime exit and bound receipts."""
+    if process_exited is not True or drain_eof is not True:
+        raise ValueError('runtime exit and output EOF required')
+    from input_owner_process_v3 import read_service_receipt
+    runtime=Path(runtime);service_dir=runtime/'input-owner-service'
+    try:
+        def read(name):
+            path=runtime/name
+            if path.is_symlink():raise ValueError('cleanup evidence is a symlink')
+            raw=path.read_bytes()
+            return raw,json.loads(raw,parse_constant=lambda value: (_ for _ in ()).throw(ValueError('non-finite JSON')))
+        startup_bytes,startup=read('session-owner-service-startup.json')
+        _,service=read('session-owner-service-close.json')
+        _,owner=read('owner-events.json')
+        if service_dir.is_symlink():raise ValueError('owner service path is a symlink')
+        inner=service_dir/'startup.json'
+        if inner.is_symlink():raise ValueError('owner startup is a symlink')
+        inner_bytes=inner.read_bytes()
+        expected=startup['startup']
+        saved=read_service_receipt(service_dir,expected)
+        validate_close_receipt(owner,service,hashlib.sha256(startup_bytes).hexdigest(),startup,
+                               expected['owner_id'],saved,hashlib.sha256(inner_bytes).hexdigest())
+        releases=[row for row in owner if row.get('event')=='owner_release']
+        if (not releases or releases[-1].get('reason')!='close' or releases[-1].get('verified') is not True
+                or any(releases[-1].get(key)!=[] for key in ('keys_down','buttons_down','keys_unknown','key_state_errors'))):
+            raise ValueError('final release is not verified neutral')
+    except (KeyError,TypeError,IndexError,OSError) as error:
+        raise ValueError('cleanup evidence unavailable') from error
+
+
 def validate_retirement(service, active, retired, launch):
     """Require the observed service and every captured display child to retire."""
     try:

@@ -404,6 +404,15 @@ def run():
             finally:
                 if status.get('cleanup_drain_error_type') or not status.get('cleanup_drain_eof',False):
                     status['passed']=False
+                if status.get('cleanup_release_status')=='unknown' and game is not None:
+                    try:
+                        from map01_east_return_audit import validate_failure_cleanup
+                        validate_failure_cleanup(runtime,process_exited=game.poll() is not None,
+                                                 drain_eof=status.get('cleanup_drain_eof') is True)
+                    except Exception as error:
+                        status['cleanup_receipt_error_type']=type(error).__name__
+                    else:
+                        status['cleanup_release_status']='verified'
                 try:
                     if not status['passed'] and descriptors and lock is not None and auth is not None:
                         try:
