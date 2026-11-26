@@ -16,6 +16,7 @@ sys.path.insert(0, str(LIVE_CONTROL))
 
 import map01_overlap_controller_v39 as controller
 import codex_app_server_client_v2 as app_server_client
+from native_app_server_job_v1 import WindowsAppServerOwner
 
 
 class AppServerCommandTests(unittest.TestCase):
@@ -50,7 +51,7 @@ class AppServerCommandTests(unittest.TestCase):
                     environment["CODEX_HOME"] = codex_home
                 with self.assertRaisesRegex(
                         app_server_client.AppServerError,
-                        "requires CODEX_HOME as an absolute WSL path"):
+                        "CODEX_HOME as an absolute WSL path"):
                     app_server_client.wsl_environment_for_windows_executable(
                         command, environment)
 
@@ -68,6 +69,53 @@ class AppServerCommandTests(unittest.TestCase):
         except app_server_client.AppServerError as error:
             self.fail(f"legacy Node/npm fallback was rejected: {error}")
         self.assertIsNone(result)
+
+    @unittest.skipUnless(os.name == "posix", "WSL launcher selection")
+    def test_v39_main_requires_owned_windows_app_server_before_launch(self):
+        class LauncherBoundary(RuntimeError):
+            pass
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            executable = root / "codex.exe"
+            windows_python = root / "python.exe"
+            executable.write_bytes(b"synthetic PE selection")
+            windows_python.write_bytes(b"synthetic Python selection")
+            common = {
+                "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": str(executable),
+                "CODEX_HOME": str(root / "profile"),
+                "WSL_INTEROP": "/run/WSL/fixture_interop",
+            }
+            for name, overrides, expected_error in (
+                ("missing-python", {}, "AGENT_INTERFACE_WINDOWS_PYTHON"),
+                ("missing-interop", {"WSL_INTEROP": "",
+                                     "AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)}, "WSL interop"),
+                ("owned", {"AGENT_INTERFACE_WINDOWS_PYTHON": str(windows_python)}, None),
+            ):
+                with self.subTest(name=name):
+                    output = root / name
+                    argv = ["controller", "--out", str(output), "--model", "dummy", "--effort", "low",
+                            "--load-fixture-manifest", str(root / "fixture.json"), "--measurement-session"]
+                    with patch.dict(os.environ, {**common, **overrides}, clear=True), \
+                         patch.object(sys, "argv", argv), \
+                         patch.object(controller, "CodexAppServerClient",
+                                      side_effect=LauncherBoundary("client launcher boundary")) as client:
+                        if expected_error is not None:
+                            with self.assertRaisesRegex(ValueError, expected_error):
+                                controller.main()
+                            client.assert_not_called()
+                            continue
+                        with self.assertRaisesRegex(LauncherBoundary, "client launcher boundary"):
+                            controller.main()
+                    command = client.call_args.args[0]
+                    options = client.call_args.kwargs
+                    self.assertEqual(command[:3], [str(executable), "app-server", "--stdio"])
+                    self.assertEqual(options["journal_path"], output / "planner-protocol.jsonl")
+                    owner = options.get("windows_owner")
+                    self.assertIsInstance(owner, WindowsAppServerOwner)
+                    self.assertEqual(owner.windows_python, windows_python)
+                    self.assertEqual(owner.root, output.resolve())
+                    self.assertIs(owner.convert, controller.win)
 
     def test_direct_codex_executable_disables_configured_mcps_individually(self):
         executable = str(Path(controller.__file__).resolve())
@@ -100,6 +148,7 @@ class AppServerCommandTests(unittest.TestCase):
                 command = controller.app_server_command()
         self.assertFalse(any(arg.startswith("mcp_servers.") for arg in command))
 
+    @unittest.skipUnless(os.name == "nt", "desktop CODEX_CLI_PATH fallback is Windows-only")
     def test_codex_cli_path_is_used_when_explicit_override_is_absent(self):
         with tempfile.TemporaryDirectory() as codex_home:
             executable = str(Path(codex_home, "codex.exe"))
