@@ -1375,8 +1375,12 @@ def validate_action(action):
         raise ValueError("contingency indices must be unique primary command indices")
 
 
+def short_primary_for_turn(enabled, index):
+    return enabled is True and type(index) is int and index == 0
+
+
 def begin_model_turn(planner, root, image, effect_memory, source_health, source_ammo,
-                     prior_soft_event_summary, output_schema):
+                     prior_soft_event_summary, output_schema, *, short_experiment=False):
     prompt_text = ("Select the next bounded MAP01 action from the new temporal sheet.\n"
                    + f"Current locally verified health: {source_health}.\n"
                    + f"Current locally verified ammo: {source_ammo}.\n"
@@ -1384,6 +1388,12 @@ def begin_model_turn(planner, root, image, effect_memory, source_health, source_
                    + json.dumps(prior_soft_event_summary, separators=(",", ":")) + "\n"
                    + "Previous no-visible-effect actions: "
                    + json.dumps(effect_memory, separators=(",", ":")) + "\n")
+    if short_experiment:
+        prompt_text += ("For this experiment, when safe, prefer one short or pulse primary "
+                        "command. If a threat is visible and brief cover is appropriate, "
+                        "prefer one short or pulse next-cover command. Choose actions and "
+                        "validity from the current image; use empty cover or another plan "
+                        "when appropriate. Do not compromise safety.\n")
     (root / "prompt.txt").write_text(prompt_text)
     return planner.begin_turn(prompt_text, output_schema=output_schema,
                               image_path=win(image))
@@ -1775,6 +1785,8 @@ def main():
                         help="observe the process-bound viewport before each renewal submission")
     parser.add_argument("--experimental-cover-cycle", action="store_true",
                         help="run authored cover one identical cycle at a time, with a fixed budget")
+    parser.add_argument("--experimental-short-primary", action="store_true",
+                        help="request a short first action when safe for the cycle experiment")
     args = parser.parse_args()
     try:
         require_release_receipt_session(args)
@@ -1785,6 +1797,8 @@ def main():
         if args.experimental_cover_cycle and not (args.renewal_passive_observer
                                                   and args.post_load_clock_gate):
             raise ValueError("cycle experiment requires passive observer and post-load clock gate")
+        if args.experimental_short_primary and not args.experimental_cover_cycle:
+            raise ValueError("short-primary experiment requires cover-cycle experiment")
         validate_input_service_selection(args)
         if args.post_load_clock_gate and not args.owned_input_service:
             raise ValueError("post-load clock gate requires the owned input service")
@@ -2038,7 +2052,8 @@ def main():
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
-                prior_soft_event_summary,output_schema)
+                prior_soft_event_summary,output_schema,
+                short_experiment=short_primary_for_turn(args.experimental_short_primary, index))
             planner_interrupt=None
             with pending_cover_planner_pool() as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)

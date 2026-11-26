@@ -6,14 +6,57 @@ from unittest.mock import Mock
 from unittest.mock import patch
 import threading
 import time
+import sys
+import io
+from contextlib import redirect_stderr
 
 from map01_cover_cycle_experiment_v1 import split_repeated_cover
 from map01_overlap_controller_v39 import (compile_cover, CoverCycleBudgetExhausted,
-                                           stop_exhausted_cover_budget, qualify_cycle_terminal)
+                                           stop_exhausted_cover_budget, qualify_cycle_terminal,
+                                           begin_model_turn, short_primary_for_turn)
 from executor_v11 import program_sha256
+import map01_overlap_controller_v39 as controller
 
 
 class CoverCycleExperimentTests(unittest.TestCase):
+    def test_short_hint_applies_only_to_first_enabled_turn(self):
+        self.assertTrue(short_primary_for_turn(True, 0))
+        self.assertFalse(short_primary_for_turn(True, 1))
+        self.assertFalse(short_primary_for_turn(False, 0))
+
+    def test_short_hint_cannot_run_without_cycle_safety_gates(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / 'out'
+            argv = ['controller', '--out', str(output), '--model', 'example', '--effort', 'low',
+                    '--load-fixture-manifest', str(Path(temporary) / 'fixture.json'),
+                    '--measurement-session', '--target-process-identity', '--owned-input-service',
+                    '--post-load-clock-gate', '--renewal-passive-observer',
+                    '--experimental-short-primary']
+            stderr = io.StringIO()
+            with patch.object(sys, 'argv', argv), redirect_stderr(stderr):
+                with self.assertRaises(SystemExit) as stopped:
+                    controller.main()
+            self.assertEqual(stopped.exception.code, 2)
+            self.assertIn('short-primary experiment requires cover-cycle experiment', stderr.getvalue())
+            self.assertFalse(output.exists())
+
+    def test_short_hint_is_opt_in_and_does_not_force_unsafe_action(self):
+        planner = SimpleNamespace(begin_turn=Mock())
+        with tempfile.TemporaryDirectory() as temporary, \
+             patch('map01_overlap_controller_v39.win', return_value='image'):
+            root = Path(temporary)
+            begin_model_turn(planner, root, root / 'frame.png', [], 100, 50, None, {})
+            ordinary = (root / 'prompt.txt').read_text()
+            begin_model_turn(planner, root, root / 'frame.png', [], 100, 50, None, {},
+                             short_experiment=True)
+            experimental = (root / 'prompt.txt').read_text()
+        self.assertNotIn('experiment', ordinary.lower())
+        self.assertIn('when safe', experimental.lower())
+        self.assertIn('do not compromise safety', experimental.lower())
+        self.assertIn('threat is visible', experimental.lower())
+        self.assertIn('empty cover', experimental.lower())
+        self.assertTrue(experimental.startswith(ordinary))
+
     def test_release_requires_matching_program_owner_and_intent(self):
         steps = [{"op": "hold", "keys": ["a"], "duration_ms": 350},
                  {"op": "coast", "duration_ms": 100, "sample_ms": 250}]
