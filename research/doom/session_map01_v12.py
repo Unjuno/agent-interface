@@ -45,6 +45,27 @@ def validate_verified_fixture_setup(args, post_load_gate):
     loaded = args.verified_fixture_setup
     candidate_evidence = getattr(args, 'candidate_setup_evidence', None)
     candidate_evidence_sha = getattr(args, 'candidate_setup_evidence_sha256', None)
+    door_arm=getattr(args,'door_task_arm',None)
+    if door_arm is not None:
+        if (door_arm not in ('control','use') or fresh or loaded or post_load_gate is None
+                or args.load_fixture_manifest is None or args.fixture_out is not None
+                or candidate_evidence is None or type(candidate_evidence_sha) is not str
+                or re.fullmatch(r'[0-9a-f]{64}',candidate_evidence_sha) is None
+                or type(getattr(args,'timeout_seconds',None)) is not int or args.timeout_seconds!=75
+                or type(getattr(args,'seed',None)) is not int or args.seed!=990619
+                or type(getattr(args,'skill',None)) is not int or args.skill!=1
+                or any(type(getattr(args,name,None)) is not str or
+                       re.fullmatch(r'[0-9a-f]{64}',getattr(args,name,'')) is None
+                       for name in ('door_expected_manifest_sha256','door_expected_save_sha256','door_expected_iwad_sha256'))
+                or args.door_expected_iwad_sha256!='a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b'
+                or type(getattr(args,'door_expected_restore_tic',None)) is not int
+                or args.door_expected_restore_tic<1
+                or not getattr(args,'renewal_passive_observer',False)):
+            raise ValueError('door task requires a fixed candidate proof, owner and clock gate')
+        return None
+    if any(getattr(args,name,None) is not None for name in
+           ('door_expected_manifest_sha256','door_expected_save_sha256','door_expected_iwad_sha256','door_expected_restore_tic')):
+        raise ValueError('door candidate pins require explicit door task mode')
     if candidate_evidence is not None or candidate_evidence_sha is not None:
         if (not loaded or fresh or candidate_evidence is None
                 or type(candidate_evidence_sha) is not str
@@ -80,6 +101,15 @@ def validate_verified_fixture_setup(args, post_load_gate):
         if os.path.lexists(path):
             raise ValueError("verified fixture output already exists")
     return info.st_dev, info.st_ino
+
+
+def validate_door_candidate_binding(args, binding, iwad_sha):
+    if (type(binding) is not dict
+            or binding.get('candidate_manifest_sha256')!=args.door_expected_manifest_sha256
+            or binding.get('candidate_save_sha256')!=args.door_expected_save_sha256
+            or binding.get('expected_restore_tic')!=args.door_expected_restore_tic
+            or iwad_sha!=args.door_expected_iwad_sha256):
+        raise ValueError('door candidate differs from preregistered binding')
 
 
 def copy_file_exclusive(source, destination):
@@ -464,6 +494,11 @@ def main(*, post_load_gate=None):
     parser.add_argument("--fixture-setup-program-sha256")
     parser.add_argument("--candidate-setup-evidence", type=Path)
     parser.add_argument("--candidate-setup-evidence-sha256")
+    parser.add_argument("--door-task-arm", choices=("control","use"))
+    parser.add_argument("--door-expected-manifest-sha256")
+    parser.add_argument("--door-expected-save-sha256")
+    parser.add_argument("--door-expected-iwad-sha256")
+    parser.add_argument("--door-expected-restore-tic", type=int)
     parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
     try:
@@ -480,6 +515,8 @@ def main(*, post_load_gate=None):
             args.load_fixture_manifest, args.candidate_setup_evidence,
             args.candidate_setup_evidence_sha256, vd.__version__, file_sha256(candidate_iwad),
             args.skill, args.seed, args.timeout_seconds, candidate_iwad)
+        if args.door_task_arm is not None:
+            validate_door_candidate_binding(args,candidate_preflight[2],file_sha256(candidate_iwad))
     args.out.mkdir(parents=True, exist_ok=False)
     lock = threading.RLock()
     session = game = executor = backend = None
@@ -494,6 +531,11 @@ def main(*, post_load_gate=None):
     setup_events = []
     setup_sources = {}
     setup_input_claimed = False
+    door_coordinator = None
+    door_scorer = None
+    if args.door_task_arm is not None:
+        from map01_door_sector_scorer import DoorSectorScorer
+        door_scorer=DoorSectorScorer(args.out / 'door-sector-private.jsonl')
 
     def emit(row):
         nonlocal last_terminal, last_accepted
@@ -516,6 +558,8 @@ def main(*, post_load_gate=None):
                     rejected = json.dumps(row, allow_nan=False, sort_keys=True)
                     raise RuntimeError(f"post-load gate rejected event: {rejected}; "
                                        f"{type(error).__name__}: {error}") from error
+            if door_coordinator is not None:
+                door_coordinator.record(row)
             if args.verified_fixture_setup or args.fresh_neutral_fixture_setup:
                 if row.get('event') == 'accepted':
                     setup_sources[row['id']] = deepcopy(latest_observation)
@@ -560,6 +604,9 @@ def main(*, post_load_gate=None):
         sources["doom/map01_post_load_gate_v1.py"] = file_sha256(HERE / "map01_post_load_gate_v1.py")
     if candidate_preflight is not None:
         sources["doom/map01_candidate_setup_evidence_v1.py"] = file_sha256(HERE / "map01_candidate_setup_evidence_v1.py")
+    if args.door_task_arm is not None:
+        for name in ('map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py'):
+            sources['doom/'+name] = file_sha256(HERE/name)
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
@@ -603,6 +650,8 @@ def main(*, post_load_gate=None):
             game.set_window_visible(True)
             game.set_console_enabled(False)
             game.set_sound_enabled(False)
+            if args.door_task_arm is not None:
+                game.set_sectors_info_enabled(True)
             game.set_screen_resolution(vd.ScreenResolution.RES_640X480)
             game.set_render_hud(True)
             game.set_render_crosshair(True)
@@ -669,6 +718,12 @@ def main(*, post_load_gate=None):
             backend = Backend(session, args.out, emit, signal_readers)
         executor_factory = make_executor_factory(emit)
         executor = executor_factory(backend)
+        if args.door_task_arm is not None:
+            from map01_door_coordinator import DoorCoordinator
+            if (post_load_gate is None or getattr(backend,'owned_service',None) is None
+                    or getattr(backend,'owner',None) is None):
+                raise ValueError('door trial requires the owned input service and post-load gate')
+            door_coordinator=DoorCoordinator(args.door_task_arm,post_load_gate,backend,executor,time.perf_counter_ns)
         operations = ["submit", "cancel", "clock", "finish"]
         if args.renewal_passive_observer:
             if (not callable(getattr(backend, "capture_cover_renewal", None))
@@ -689,6 +744,8 @@ def main(*, post_load_gate=None):
             operations.append("save_fixture")
         if args.fresh_neutral_fixture_setup:
             operations = ["submit", "cancel", "clock", "finish", "save_fixture"]
+        if door_coordinator is not None:
+            operations = ["submit", "door-settle", "cancel", "clock", "finish"]
         prohibited = ["pause", "API action selection", "automap", "object labels", "sector labels"]
         if args.fixture_out is None:
             prohibited.append("save state")
@@ -737,6 +794,32 @@ def main(*, post_load_gate=None):
                       "received_ns": time.perf_counter_ns()})
                 if args.fresh_neutral_fixture_setup and command.get('op') not in ('submit', 'cancel', 'clock', 'finish', 'save_fixture'):
                     raise ValueError('operation unavailable in fresh neutral setup')
+                if door_coordinator is not None:
+                    from map01_door_coordinator import route_door_command
+                    with lock:
+                        door_source=deepcopy(latest_observation)
+                    operation_id=door_coordinator.pending
+                    if (command.get('op')=='finish'
+                            and (door_scorer.failed or door_scorer.index!=len(door_scorer.STAGES))):
+                        raise ValueError('door sector observations are incomplete')
+                    result=route_door_command(command,door_coordinator,door_source)
+                    if result!='passthrough':
+                        if command.get('op')=='door-settle' and result=='DONE':
+                            try:
+                                _,door_terminal=door_coordinator.journal.completion(operation_id)
+                                door_scorer.sample(operation_id,game,door_terminal['terminal_ns'],
+                                                   lambda:post_load_gate.neutral(session))
+                            except Exception:
+                                emit({'event':'door_settle','status':'HOLD',
+                                      'operation_id':operation_id,'reason':'sector_sample_failed'})
+                                raise
+                        if command.get('op')=='door-settle':
+                            emit({'event':'door_settle','status':result,
+                                  'operation_id':operation_id,
+                                  'reason':door_coordinator.journal.failure if result=='HOLD' else None})
+                        if result=='HOLD':
+                            raise RuntimeError('door trial evidence or completion is unverified')
+                        continue
                 if command["op"] == "probe_cover_renewal" and probe_delivery is not None:
                     probe_delivery.start(command)
                 elif command["op"] == "submit":
@@ -948,10 +1031,16 @@ def main(*, post_load_gate=None):
                 else:
                     raise ValueError("unsupported command")
             except (ValueError, TypeError, KeyError, Expired) as error:
-                if args.fresh_neutral_fixture_setup or (args.verified_fixture_setup and command.get('op') == 'save_fixture'):
+                if (door_coordinator is not None or args.fresh_neutral_fixture_setup
+                        or (args.verified_fixture_setup and command.get('op') == 'save_fixture')):
                     raise
                 emit({"event": "rejected", "id": command.get("id"),
                       "reason": str(error)})
+        else:
+            if door_coordinator is not None:
+                emit({'event':'door_settle','status':'HOLD','operation_id':door_coordinator.pending,
+                      'reason':'stdin_eof_before_finish'})
+                raise RuntimeError('door trial ended before finish')
     finally:
         if probe_delivery is not None:
             probe_delivery.cancel()
