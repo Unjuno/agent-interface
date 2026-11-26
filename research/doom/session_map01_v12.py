@@ -204,7 +204,15 @@ def main(*, post_load_gate=None):
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
+            if post_load_gate is not None:
+                # An unset bus address invites X11 autolaunch. Suppress it
+                # before Xvfb/Openbox inherit the environment.
+                os.environ["DBUS_SESSION_BUS_ADDRESS"] = "disabled:"
             session = suite.Session()
+            if post_load_gate is not None:
+                # The shared X11 helper strips the inherited address from its
+                # copied environment. Keep subsequent session subprocesses isolated.
+                session.env["DBUS_SESSION_BUS_ADDRESS"] = os.environ["DBUS_SESSION_BUS_ADDRESS"]
             atom = session.d.intern_atom("_NET_SUPPORTING_WM_CHECK")
             session._wait(lambda: session.d.screen().root.get_full_property(atom, 0) is not None,
                           4, "WM readiness")
@@ -291,6 +299,8 @@ def main(*, post_load_gate=None):
             "iwad_sha256": iwad_sha256,
             "loaded_fixture": loaded_fixture,
             "sound_for_controller": False, "episode_timeout_seconds": args.timeout_seconds}
+        if post_load_gate is not None:
+            environment["dbus_session_bus_address"] = session.env["DBUS_SESSION_BUS_ADDRESS"]
         (args.out / "environment.json").write_text(json.dumps(environment, indent=2))
         emit({"event": "clock_probe", "before_tic": before, "after_tic": after,
               "wall_seconds": elapsed, "no_advance_calls_during_wait": True,

@@ -1,7 +1,10 @@
 """Check the actual session emitter separates log start from stdout handoff."""
 import ast
 import builtins
+import importlib.util
 import json
+import os
+import sys
 import tempfile
 import threading
 import types
@@ -51,6 +54,44 @@ def load_actual_emit(output, clock):
 
 
 class EmitTimingTests(unittest.TestCase):
+    def test_opt_in_private_bus_policy_applies_before_and_after_x11_setup(self):
+        spec = importlib.util.spec_from_file_location("offline_session_map01_v12", SOURCE)
+        runtime = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, {"vizdoom": types.ModuleType("vizdoom")}):
+            spec.loader.exec_module(runtime)
+
+        class StopBeforeGame(Exception):
+            pass
+
+        key = "DBUS_SESSION_BUS_ADDRESS"
+        for gate, expected_before, expected_session in (
+                (None, "existing:", None), (object(), "disabled:", "disabled:")):
+            with self.subTest(gated=gate is not None), tempfile.TemporaryDirectory() as temp:
+                workspace = Path(temp)
+                private = workspace / "private"
+                private.mkdir()
+                seen = []
+
+                def stop_before_game(_atom):
+                    seen.append((os.environ.get(key), session.env.get(key)))
+                    raise StopBeforeGame
+
+                session = types.SimpleNamespace(
+                    env={}, d=types.SimpleNamespace(intern_atom=stop_before_game),
+                    tmp=private, close=lambda: None)
+
+                def construct():
+                    seen.append(os.environ.get(key))
+                    return session
+
+                args = [str(SOURCE), "--out", str(workspace / "out"), "--seed", "7",
+                        "--load-fixture-manifest", str(workspace / "manifest.json")]
+                with patch.object(runtime.suite, "Session", side_effect=construct), \
+                     patch.object(sys, "argv", args), patch.dict(os.environ, {key: "existing:"}):
+                    with self.assertRaises(StopBeforeGame):
+                        runtime.main(post_load_gate=gate)
+                self.assertEqual(seen, [expected_before, (expected_before, expected_session)])
+
     def test_stdout_handoff_timestamp_follows_both_raw_log_appends(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
