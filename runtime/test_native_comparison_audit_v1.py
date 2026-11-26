@@ -65,7 +65,7 @@ def answer_for(contract, *, horizontal_offset=0):
 
 
 class SyntheticCapture:
-    def __init__(self, root):
+    def __init__(self, root, *, arm_order=ARMS):
         self.repo = root / "source"
         self.out = root / "raw"
         self.registration_path = root / "registration.json"
@@ -78,7 +78,7 @@ class SyntheticCapture:
                          "commit", "--quiet", "-m", "synthetic source"]):
             subprocess.run(["git", "-C", str(self.repo), *command], check=True, capture_output=True, timeout=15)
         self.plan = audit.registration_values(self.repo, self.out, SEED, native=NATIVE,
-                    windows_repo=str(WINDOWS_REPO), windows_out=str(WINDOWS_OUT))
+                    windows_repo=str(WINDOWS_REPO), windows_out=str(WINDOWS_OUT), arm_order=arm_order)
         write(self.registration_path, self.plan)
         self.registration_digest = audit.digest(self.registration_path)
         write(self.out / "capture-plan.json",
@@ -138,7 +138,7 @@ class SyntheticCapture:
                "requested_model": "gpt-5.6-luna", "requested_effort": "low", "usage": usage(20)})
 
     def populate(self, persistent_tokens=20):
-        for arm_index, arm in enumerate(ARMS):
+        for arm_index, arm in enumerate(self.plan["arms"]):
             base_ns = arm_index * 100_000
             (self.out / "workspaces" / arm).mkdir(parents=True)
             contract = "plain" if arm == "plain" else "compiled"
@@ -468,6 +468,31 @@ class NativeComparisonAuditTests(unittest.TestCase):
                 self.assertEqual(result["disposition"], expected, result)
                 self.assertEqual([r["provider_calls"] for r in result["arms"].values()], [7, 7, 3])
                 self.assertEqual(result["arms"]["persistent"]["usage"]["input_tokens"], 20 + 2 * persistent_tokens)
+
+    def test_reverse_block_audits_the_registered_physical_order(self):
+        for tamper in (None, "forward_clocks", "capture_plan"):
+            with self.subTest(tamper=tamper), TemporaryDirectory() as directory:
+                order = ARMS if tamper == "forward_clocks" else ARMS[::-1]
+                capture = SyntheticCapture(Path(directory), arm_order=order)
+                capture.populate()
+                if tamper == "forward_clocks":
+                    capture.plan["arms"] = list(ARMS[::-1])
+                    write(capture.registration_path, capture.plan)
+                    capture.registration_digest = audit.digest(capture.registration_path)
+                    write(capture.out / "capture-plan.json",
+                          audit.capture_plan_values(SEED, capture.plan, capture.registration_digest))
+                elif tamper == "capture_plan":
+                    plan_file = capture.out / "capture-plan.json"
+                    outer = audit.read(plan_file)
+                    outer["arms"] = list(ARMS)
+                    write(plan_file, outer)
+                result = capture.verify()
+                self.assertEqual(result["disposition"], "HOLD" if tamper else "RETAIN", result)
+                if tamper == "forward_clocks":
+                    self.assertIn("arm clocks overlap", result["reason"])
+                if tamper is None:
+                    self.assertEqual(list(result["arms"]), list(ARMS[::-1]))
+                    self.assertEqual([row["provider_calls"] for row in result["arms"].values()], [3, 7, 7])
 
     def test_resealed_wrong_image_extra_send_missing_usage_or_job_do_not_compare(self):
         for flaw in ("image", "extra_send", "unreported_reasoning", "job", "unknown_start",

@@ -55,8 +55,8 @@ def retire(proof):
     return record
 
 
-def add_arm_proofs(allocation, service):
-    for index, arm in enumerate(cli.audit.ARMS, start=1):
+def add_arm_proofs(allocation, service, *, arm_order=cli.audit.ARMS):
+    for index, arm in enumerate(arm_order, start=1):
         runtime = allocation / "raw" / "arms" / arm / "runtime"
         runtime.mkdir(parents=True)
         begin = index * 1000
@@ -85,6 +85,11 @@ class NativeComparisonCliTests(unittest.TestCase):
         return config, host, source
 
     def test_cli_one_shot_dry_end_to_end(self):
+        for order in (cli.audit.ARMS, cli.audit.ARMS[::-1]):
+            with self.subTest(order=order):
+                self.check_cli_one_shot(order)
+
+    def check_cli_one_shot(self, arm_order):
         with TemporaryDirectory() as directory:
             root = Path(directory)
             allocation = root / "allocation"
@@ -95,7 +100,8 @@ class NativeComparisonCliTests(unittest.TestCase):
             def register(repo, out, seed, **host_data):
                 self.assertEqual(out, allocation / "raw")
                 self.assertEqual(seed, 654321)
-                return {"source": source}
+                self.assertEqual(host_data["arm_order"], arm_order)
+                return {"source": source, "arms": list(host_data["arm_order"])}
 
             @contextmanager
             def display(allocated, service):
@@ -110,8 +116,9 @@ class NativeComparisonCliTests(unittest.TestCase):
 
             def capture(repo, out, registration, *, registration_sha256):
                 self.assertEqual(registration_sha256, cli.audit.digest(registration))
+                self.assertEqual(cli.audit.read(registration)["arms"], list(arm_order))
                 out.mkdir()
-                add_arm_proofs(allocation, cli.audit.read(allocation / "service-start.json"))
+                add_arm_proofs(allocation, cli.audit.read(allocation / "service-start.json"), arm_order=arm_order)
                 result = complete_capture()
                 cli.audit.write_record(out / "capture.json", result)
                 actions.append("capture-dummy")
@@ -149,6 +156,8 @@ class NativeComparisonCliTests(unittest.TestCase):
                  patch.object(cli.audit, "audit_comparison", side_effect=judge), \
                  patch.object(cli.subprocess, "run", side_effect=launch):
                 args = [opt for name, value in config.items() for opt in ("--" + name.replace("_", "-"), value)]
+                if arm_order != cli.audit.ARMS:
+                    args += ["--arm-order", "reverse"]
                 stdout = io.StringIO()
                 with redirect_stdout(stdout):
                     self.assertEqual(cli.main(["prepare", str(allocation), "--seed", "654321", *args]), 0)
@@ -203,7 +212,7 @@ class NativeComparisonCliTests(unittest.TestCase):
             config, host, source = self.source_and_host(root)
             with patch.object(cli, "host_inputs", return_value=host), \
                  patch.object(cli, "windows_path", return_value=r"C:\dummy"), \
-                 patch.object(cli.audit, "registration_values", return_value={"source": source}):
+                 patch.object(cli.audit, "registration_values", return_value={"source": source, "arms": list(cli.audit.ARMS)}):
                 plan = cli.prepare(allocation, 2, config)
             with (allocation / "registration.json").open("a", encoding="utf8") as stream:
                 stream.write("\n")
@@ -222,7 +231,7 @@ class NativeComparisonCliTests(unittest.TestCase):
                 config, host, source = self.source_and_host(root)
                 with patch.object(cli, "host_inputs", return_value=host), \
                      patch.object(cli, "windows_path", return_value=r"C:\dummy"), \
-                     patch.object(cli.audit, "registration_values", return_value={"source": source}):
+                     patch.object(cli.audit, "registration_values", return_value={"source": source, "arms": list(cli.audit.ARMS)}):
                     plan = cli.prepare(allocation, 2, config)
                 digest = plan["launch_plan_sha256"]
                 available = allocation / "raw" / "capture-plan.json"
@@ -331,7 +340,7 @@ class NativeComparisonCliTests(unittest.TestCase):
             out = root / "raw"
             registration = root / "registration.json"
             native = {"version": "codex-cli dummy"}
-            plan = {"seed": 2, "native": native}
+            plan = {"seed": 2, "native": native, "arms": list(cli.audit.ARMS)}
             cli.audit.write_record(registration, plan)
 
             def timeout(arm, contract, workspace):
@@ -375,7 +384,7 @@ class NativeComparisonCliTests(unittest.TestCase):
             config, host, source = self.source_and_host(root)
             with patch.object(cli, "host_inputs", return_value=host), \
                  patch.object(cli, "windows_path", return_value=r"C:\dummy"), \
-                 patch.object(cli.audit, "registration_values", return_value={"source": source}):
+                 patch.object(cli.audit, "registration_values", return_value={"source": source, "arms": list(cli.audit.ARMS)}):
                 prepared = cli.prepare(allocation, 2, config)
 
             def exited_without_native_retirement(command, **kwargs):
@@ -418,8 +427,14 @@ class NativeComparisonCliTests(unittest.TestCase):
 
     def test_worker_passes_closed_persistent_failure_to_adjudication(self):
         self.check_worker_exit(persistent_incomplete_capture(), 0)
+        order = cli.audit.ARMS[::-1]
+        reverse = persistent_incomplete_capture()
+        reverse["arms"] = {"persistent": "incomplete", "ephemeral": "not_run", "plain": "not_run"}
+        self.check_worker_exit(reverse, 2, arm_order=order)
+        # A final-arm failure receipt cannot be reused for a first-arm stop.
+        self.check_worker_exit(persistent_incomplete_capture(), 2, arm_order=order)
 
-    def check_worker_exit(self, result, expected_code):
+    def check_worker_exit(self, result, expected_code, *, arm_order=cli.audit.ARMS):
         with TemporaryDirectory() as directory:
             allocation = Path(directory)
             settings, host, _ = self.source_and_host(allocation)
@@ -429,6 +444,7 @@ class NativeComparisonCliTests(unittest.TestCase):
                 "token": token, "unit": unit, "launch_plan_sha256": digest,
             })
             plan = {"settings": settings, "host": host, "registration_sha256": "c" * 64}
+            cli.audit.write_record(allocation / "registration.json", {"arms": list(arm_order)})
 
             @contextmanager
             def display(folder, service):
@@ -455,7 +471,7 @@ class NativeComparisonCliTests(unittest.TestCase):
             config, host, source = self.source_and_host(root)
             with patch.object(cli, "host_inputs", return_value=host), \
                  patch.object(cli, "windows_path", return_value=r"C:\dummy"), \
-                 patch.object(cli.audit, "registration_values", return_value={"source": source}):
+                 patch.object(cli.audit, "registration_values", return_value={"source": source, "arms": list(cli.audit.ARMS)}):
                 plan = cli.prepare(allocation, 2, config)
             self.assertEqual(cli.adjudicate(allocation, plan["launch_plan_sha256"])["disposition"], "HOLD")
 
@@ -512,8 +528,8 @@ class NativeComparisonCliTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "outside the claimed"):
                     x11.guarded_session(DummySession, context, raw / "other/runtime")
 
-    def completed_service_records(self, allocation, result):
-        capture = SyntheticCapture(allocation)
+    def completed_service_records(self, allocation, result, *, arm_order=cli.audit.ARMS):
+        capture = SyntheticCapture(allocation, arm_order=arm_order)
         capture.populate()
         self.assertTrue(cli.failure_evidence.native_writers_retired(capture.out, require_all=True))
         plan = allocation / "launch-plan.json"
@@ -540,7 +556,7 @@ class NativeComparisonCliTests(unittest.TestCase):
         cli.audit.write_record(allocation / "display-end.json", retire(display))
         (allocation / "service.stdout").touch()
         (allocation / "service.stderr").touch()
-        for index, arm in enumerate(cli.audit.ARMS, start=1):
+        for index, arm in enumerate(arm_order, start=1):
             runtime = capture.out / "arms" / arm / "runtime"
             timing = cli.audit.read(capture.out / "capture-arms" / arm / "arm-timing.json")
             proof = display_proof(service, number=121, pid=300 + index * 10, arm=arm,
@@ -578,6 +594,22 @@ class NativeComparisonCliTests(unittest.TestCase):
                 self.assertEqual(outcome["disposition"], "REJECT" if wrong else "HOLD", outcome)
                 if wrong:
                     self.assertEqual(outcome["reason"], "confirmed_persistent_safety_or_effect_failure")
+
+    def test_reverse_full_seal_uses_registered_display_chronology(self):
+        order = cli.audit.ARMS[::-1]
+        with TemporaryDirectory() as directory:
+            allocation = Path(directory)
+            capture, service, plan_sha = self.completed_service_records(allocation, complete_capture(), arm_order=order)
+            with (
+                patch.object(cli, "ROOT", capture.repo),
+                patch.object(cli, "failed_service_retired", return_value=True),
+                patch.object(cli, "cgroup_retired", return_value=True),
+            ):
+                raw_sha, host_sha = cli.seal_settled_capture(
+                    allocation, plan_sha, service["unit"], service["claim_token"])
+                result = cli.adjudicate(allocation, plan_sha, expected_seal=raw_sha, expected_host_seal=host_sha)
+                self.assertEqual(result["disposition"], "RETAIN", result)
+                self.assertEqual(list(result["arms"]), list(order))
 
     def test_actual_comparison_auditor_cannot_skip_invalid_host_or_missing_arm_proof(self):
         with TemporaryDirectory() as directory:

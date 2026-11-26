@@ -113,7 +113,8 @@ def host_inputs(settings):
     }
 
 
-def prepare(allocation, seed, settings):
+def prepare(allocation, seed, settings, *, arm_order=audit.ARMS):
+    arm_order = audit.comparison_arm_order(arm_order)
     allocation = Path(allocation).resolve()
     audit.require(not allocation.is_relative_to(ROOT) and not allocation.exists(),
                   "fresh allocation outside the source checkout required")
@@ -121,7 +122,8 @@ def prepare(allocation, seed, settings):
     host = host_inputs(settings)
     out = allocation / "raw"
     registration = audit.registration_values(ROOT, out, seed, native=host["native"],
-                                             windows_repo=windows_path(ROOT), windows_out=windows_path(out))
+                                             windows_repo=windows_path(ROOT), windows_out=windows_path(out),
+                                             arm_order=arm_order)
     allocation.mkdir(mode=0o700)
     private_directory(allocation)
     record = allocation / "registration.json"
@@ -302,12 +304,12 @@ def verify_host_receipts(allocation, expected_sha):
     return service
 
 
-def verify_actual_arm_displays(allocation, service):
+def verify_actual_arm_displays(allocation, service, arm_order):
     out = allocation / "raw"
     outer = audit.read(allocation / "display-start.json")
     previous_end = -1
     pids = set(outer["pids"])
-    for arm in audit.ARMS:
+    for arm in arm_order:
         runtime = out / "arms" / arm / "runtime"
         started = audit.read(runtime / "comparison-display-start.json")
         settled = audit.read(runtime / "comparison-display-end.json")
@@ -371,6 +373,7 @@ def owned_display(allocation, service):
 
 def run_service(allocation, expected_sha, token):
     allocation, plan, registration = load_plan(allocation, expected_sha)
+    arm_order = audit.comparison_arm_order(audit.read(registration)["arms"])
     claim = audit.read(allocation / "claim.json")
     audit.require(audit.valid_hex(token, 32) and claim["token"] == token
                   and not (allocation / "service-result.json").exists() and not (allocation / "raw").exists()
@@ -396,10 +399,10 @@ def run_service(allocation, expected_sha, token):
                                               registration_sha256=plan["registration_sha256"])
             audit.write_record(allocation / "capture-worker-result.json",
                                {"unit": claim["unit"], "claim_token": token, "capture": result["capture"]})
-    return 0 if capture_adjudicable(result["capture"]) else 2
+    return 0 if capture_adjudicable(result["capture"], arm_order) else 2
 
 
-def capture_adjudicable(result):
+def capture_adjudicable(result, arm_order):
     """Report whether the worker reached a terminal state the auditor can assess."""
     expected = {
         "schema": "native_comparison_capture_v1", "disposition": "HOLD",
@@ -409,26 +412,30 @@ def capture_adjudicable(result):
         return True
     # A semantic stop in the last arm can have independently verified failure evidence.
     # The caller must still prove retirement and the auditor decides the outcome.
+    if arm_order[-1] != "persistent":
+        return False
     expected["reason"] = "task_or_independent_effect_incomplete"
     expected["arms"]["persistent"] = "incomplete"
     return audit.same(result, expected)
 
 
-def verify_worker_capture(allocation, unit, token):
+def verify_worker_capture(allocation, unit, token, arm_order):
     worker = audit.read(allocation / "capture-worker-result.json")
     result = audit.read(allocation / "raw" / "capture.json")
     audit.require(audit.same(worker, {"unit": unit, "claim_token": token, "capture": result})
-                  and capture_adjudicable(result), "comparison capture cannot be independently adjudicated")
+                  and capture_adjudicable(result, arm_order), "comparison capture cannot be independently adjudicated")
 
 
 def seal_settled_capture(allocation, expected_sha, unit, token):
-    verify_worker_capture(allocation, unit, token)
+    allocation, _, registration = load_plan(allocation, expected_sha)
+    arm_order = audit.comparison_arm_order(audit.read(registration)["arms"])
+    verify_worker_capture(allocation, unit, token, arm_order)
     audit.require(failed_service_retired(allocation, unit), "comparison service retirement is unverified")
     raw = allocation / "raw"
     audit.require(failure_evidence.native_writers_retired(raw, require_all=True),
                   "all allocated native Windows writers must have settled before full sealing")
     service = verify_host_receipts(allocation, expected_sha)
-    verify_actual_arm_displays(allocation, service)
+    verify_actual_arm_displays(allocation, service, arm_order)
     raw_digest = audit.seal_capture(raw)
     audit.write_record(allocation / "audit-anchor.json", {"seal_sha256": raw_digest})
     return raw_digest, seal_host(allocation, expected_sha)
@@ -446,12 +453,13 @@ def adjudicate(allocation, expected_sha, *, expected_seal=None, expected_host_se
                       and audit.same(audit.read(host_seal), host_seal_values(allocation, expected_sha)),
                       "host ownership evidence differs from the retained host seal")
         service = verify_host_receipts(allocation, expected_sha)
-        verify_worker_capture(allocation, service["unit"], service["claim_token"])
+        arm_order = audit.comparison_arm_order(audit.read(registration)["arms"])
+        verify_worker_capture(allocation, service["unit"], service["claim_token"], arm_order)
         anchor = audit.read(allocation / "audit-anchor.json")
         seal = anchor["seal_sha256"]
         audit.require(audit.valid_hex(seal, 64) and seal == expected_seal,
                       "post-capture seal differs from the retained anchor")
-        verify_actual_arm_displays(allocation, service)
+        verify_actual_arm_displays(allocation, service, arm_order)
         outcome = audit.audit_comparison(ROOT, allocation / "raw", registration,
                                          registration_sha256=plan["registration_sha256"], seal_sha256=seal)
         return {**outcome, "seal_sha256": seal, "host_seal_sha256": host_digest}
@@ -465,7 +473,9 @@ def run_once(allocation, expected_sha, *, confirm_live):
     with exclusive_launch():
         audit.require(not (allocation / "claim.json").exists() and not (allocation / "raw").exists(),
                       "comparison allocation has already been claimed")
-        audit.require(audit.same(audit.source_snapshot(ROOT), audit.read(registration)["source"])
+        registered = audit.read(registration)
+        audit.comparison_arm_order(registered["arms"])
+        audit.require(audit.same(audit.source_snapshot(ROOT), registered["source"])
                       and audit.same(host_inputs(plan["settings"]), plan["host"]),
                       "registered source or host inputs changed")
         with exclusive_launch("service"):
@@ -525,6 +535,7 @@ def main(argv=None):
     setup = commands.add_parser("prepare", help="freeze source, host dependencies and the allocation")
     setup.add_argument("allocation", type=Path)
     setup.add_argument("--seed", type=int, required=True)
+    setup.add_argument("--arm-order", choices=("forward", "reverse"), default="forward")
     for name in VARIABLES:
         setup.add_argument("--" + name.replace("_", "-"), required=True)
     launch = commands.add_parser("run", help="explicitly execute the prepared block once")
@@ -542,7 +553,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command == "prepare":
-            result = prepare(args.allocation, args.seed, {name: getattr(args, name) for name in VARIABLES})
+            arm_order = audit.ARMS[::-1] if args.arm_order == "reverse" else audit.ARMS
+            result = prepare(args.allocation, args.seed, {name: getattr(args, name) for name in VARIABLES},
+                             arm_order=arm_order)
         elif args.command == "run":
             result = run_once(args.allocation, args.launch_plan_sha256, confirm_live=args.confirm_live)
         elif args.command == "audit":

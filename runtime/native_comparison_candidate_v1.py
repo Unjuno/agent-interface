@@ -171,10 +171,18 @@ def audit_local_effects(out, seed, arm):
     }
 
 
+def comparison_arm_order(arms):
+    """Validate the physical order independently of the fixed arm membership."""
+    if not isinstance(arms, (list, tuple)) or tuple(arms) not in (ARMS, ARMS[::-1]):
+        raise ValueError("comparison arm order must be forward or reverse")
+    return tuple(arms)
+
+
 def capture_plan_values(seed, registration, registration_sha256):
+    arms = ARMS if registration is None else comparison_arm_order(registration["arms"])
     return {
         "schema": "native_comparison_capture_plan_v1", "seed": seed,
-        "arms": list(ARMS), "tasks": workload(seed), "requested_model": MODEL,
+        "arms": list(arms), "tasks": workload(seed), "requested_model": MODEL,
         "requested_effort": EFFORT, "automatic_retry": False,
         "expected_grounding_turns": {arm: sum(EXPECTED_MODEL_CALLS[arm]) for arm in ARMS},
         "schema_preflight_calls_per_arm": 1,
@@ -191,13 +199,14 @@ def capture_block(out, seed, *, preflight, run_arm, open_grounding,
     out = Path(out).resolve()
     if out.is_relative_to(Path(__file__).resolve().parents[1]):
         raise ValueError("comparison output must be outside the source checkout")
+    plan = capture_plan_values(seed, registration, registration_sha256)
     out.mkdir(parents=True, exist_ok=False)
-    write_record(out / "capture-plan.json", capture_plan_values(seed, registration, registration_sha256))
-    statuses = dict.fromkeys(ARMS, "not_run")
+    write_record(out / "capture-plan.json", plan)
+    statuses = dict.fromkeys(plan["arms"], "not_run")
     disposition = {"schema": "native_comparison_capture_v1", "disposition": "HOLD",
                    "reason": "independent_raw_audit_required", "arms": statuses}
     try:
-        for arm in ARMS:
+        for arm in plan["arms"]:
             contract = "plain" if arm == "plain" else "compiled"
             workspace = out / "workspaces" / arm
             arm_receipts = out / "capture-arms" / arm
