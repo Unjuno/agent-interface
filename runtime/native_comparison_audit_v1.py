@@ -219,7 +219,7 @@ def capture_registered(repo, out, registration_file, *, registration_sha256):
         require(same(doctor.get("native_codex"), plan["native"]), "native doctor differs from registration")
         result = capture_block(out, plan["seed"], registration=plan,
                                registration_sha256=registration_sha256, **bindings)
-    return {"capture": result, "seal_sha256": seal_capture(out)}
+    return {"capture": result}
 
 
 def verify_protocol(protocol, owner, attempts):

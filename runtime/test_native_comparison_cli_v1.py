@@ -16,6 +16,11 @@ from runtime import native_comparison_cli_v1 as cli
 from runtime.test_native_comparison_audit_v1 import SyntheticCapture
 
 
+def complete_capture():
+    return {"schema": "native_comparison_capture_v1", "disposition": "HOLD",
+            "reason": "independent_raw_audit_required", "arms": dict.fromkeys(cli.audit.ARMS, "captured")}
+
+
 def service_proof(unit):
     uid = os.getuid()
     return {"KillMode": "control-group", "RuntimeMaxUSec": "30min", "TimeoutStopUSec": "8s", "MainPID": "110",
@@ -100,8 +105,10 @@ class NativeComparisonCliTests(unittest.TestCase):
                 self.assertEqual(registration_sha256, cli.audit.digest(registration))
                 out.mkdir()
                 add_arm_proofs(allocation, cli.audit.read(allocation / "service-start.json"))
+                result = complete_capture()
+                cli.audit.write_record(out / "capture.json", result)
                 actions.append("capture-dummy")
-                return {"seal_sha256": seal}
+                return {"capture": result}
 
             def launch(command, **kwargs):
                 claim = cli.audit.read(allocation / "claim.json")
@@ -112,8 +119,8 @@ class NativeComparisonCliTests(unittest.TestCase):
                 actions.append("launch-dummy")
                 with patch.dict(os.environ), patch.object(cli, "effective_service",
                         return_value=service_proof(claim["unit"])):
-                    cli.run_service(*command[-3:])
-                return subprocess.CompletedProcess(command, 0)
+                    exit_code = cli.run_service(*command[-3:])
+                return subprocess.CompletedProcess(command, exit_code)
 
             def judge(repo, out, registration, *, registration_sha256, seal_sha256):
                 self.assertEqual(registration_sha256, cli.audit.digest(registration))
@@ -128,6 +135,9 @@ class NativeComparisonCliTests(unittest.TestCase):
                  patch.object(cli, "exclusive_launch", side_effect=lambda role="caller": nullcontext()), \
                  patch.object(cli, "owned_display", display), \
                  patch.object(cli.audit, "capture_registered", side_effect=capture), \
+                 patch.object(cli.audit, "seal_capture", return_value=seal), \
+                 patch.object(cli.failure_evidence, "native_writers_retired", return_value=True), \
+                 patch.object(cli, "failed_service_retired", return_value=True), \
                  patch.object(cli, "cgroup_retired", return_value=True), \
                  patch.object(cli.audit, "audit_comparison", side_effect=judge), \
                  patch.object(cli.subprocess, "run", side_effect=launch):
@@ -306,6 +316,121 @@ class NativeComparisonCliTests(unittest.TestCase):
                 self.assertEqual(changed["disposition"], "HOLD")
                 self.assertIn("changed after preservation", changed["reason"])
 
+    def test_registered_capture_interrupted_after_native_start_has_no_full_seal(self):
+        from runtime import golden_desktop_demo
+
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            out = root / "raw"
+            registration = root / "registration.json"
+            native = {"version": "codex-cli dummy"}
+            plan = {"seed": 2, "native": native}
+            cli.audit.write_record(registration, plan)
+
+            def timeout(arm, contract, workspace):
+                home = out / "preflight" / arm / "gate" / (contract + "-form-grounding")
+                home.mkdir(parents=True)
+                cli.audit.write_record(home / cli.audit.START_RECORD,
+                                       {"run_nonce": "a" * 32, "owner_sha256": "b" * 64})
+                raise TimeoutError("synthetic native owner did not return")
+
+            bindings = {"preflight": timeout, "run_arm": None, "open_grounding": None}
+            with patch.object(cli.audit, "registration_values", return_value=plan), \
+                 patch.object(golden_desktop_demo, "windows_arg", return_value=r"C:\dummy"), \
+                 patch.object(cli.audit, "bind_golden_runner", return_value=nullcontext(({"native_codex": native}, bindings))):
+                result = cli.audit.capture_registered(cli.ROOT, out, registration,
+                                                      registration_sha256=cli.audit.digest(registration))
+            self.assertEqual(result["capture"]["arms"]["plain"], "interrupted")
+            self.assertNotIn("seal_sha256", result)
+            self.assertFalse((out / "capture-seal.json").exists())
+
+    def test_missing_native_markers_are_unsettled_if_runtime_traces_exist(self):
+        from runtime import native_comparison_failure_v1 as retained
+
+        for kind in ("exec", "appserver"):
+            with self.subTest(kind=kind), TemporaryDirectory() as directory:
+                raw = Path(directory)
+                self.assertTrue(retained.native_writers_retired(raw))
+                if kind == "exec":
+                    artifact = raw / "preflight/plain/gate/plain-form-grounding/model-call/events.jsonl"
+                    event = {"type": "thread.started", "thread_id": "dummy"}
+                else:
+                    artifact = raw / "native-app-server/plain/protocol.jsonl"
+                    event = {"direction": "windows_job_owner", "message": {"run_nonce": "a" * 32}}
+                artifact.parent.mkdir(parents=True)
+                artifact.write_text(json.dumps(event) + "\n", encoding="utf-8")
+                self.assertFalse(retained.native_writers_retired(raw))
+
+    def test_zero_exit_with_unsettled_native_writer_cannot_publish_full_seal(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            allocation = root / "allocation"
+            config, host, source = self.source_and_host(root)
+            with patch.object(cli, "host_inputs", return_value=host), \
+                 patch.object(cli, "windows_path", return_value=r"C:\dummy"), \
+                 patch.object(cli.audit, "registration_values", return_value={"source": source}):
+                prepared = cli.prepare(allocation, 2, config)
+
+            def exited_without_native_retirement(command, **kwargs):
+                claim = cli.audit.read(allocation / "claim.json")
+                raw = allocation / "raw"
+                raw.mkdir()
+                result = complete_capture()
+                cli.audit.write_record(raw / "capture.json", result)
+                cli.audit.write_record(allocation / "capture-worker-result.json", {
+                    "unit": claim["unit"], "claim_token": claim["token"], "capture": result,
+                })
+                scope = raw / "native-app-server/plain"
+                scope.mkdir(parents=True)
+                cli.audit.write_record(scope / cli.audit.APP_SERVER_JOB_START, {
+                    "run_nonce": "a" * 32, "owner_sha256": "b" * 64,
+                })
+                return subprocess.CompletedProcess(command, 0)
+
+            with patch.object(cli, "host_inputs", return_value=host), \
+                 patch.object(cli.audit, "source_snapshot", return_value=source), \
+                 patch.object(cli, "exclusive_launch", side_effect=lambda role="caller": nullcontext()), \
+                 patch.object(cli, "failed_service_retired", return_value=True), \
+                 patch.object(cli.subprocess, "run", side_effect=exited_without_native_retirement), \
+                 patch.object(cli.audit, "seal_capture") as full:
+                result = cli.run_once(allocation, prepared["launch_plan_sha256"], confirm_live=True)
+            full.assert_not_called()
+            self.assertEqual(result["disposition"], "HOLD")
+            self.assertEqual(result["preservation"]["raw"]["state"], "unsettled")
+            self.assertFalse((allocation / "audit-anchor.json").exists())
+            self.assertFalse((allocation / "raw/capture-seal.json").exists())
+
+    def test_worker_returns_nonzero_for_normally_returned_interruption(self):
+        with TemporaryDirectory() as directory:
+            allocation = Path(directory)
+            settings, host, _ = self.source_and_host(allocation)
+            token, digest = "a" * 32, "b" * 64
+            unit = f"agent-interface-native-comparison-{token}.service"
+            cli.audit.write_record(allocation / "claim.json", {
+                "token": token, "unit": unit, "launch_plan_sha256": digest,
+            })
+            result = {**complete_capture(), "reason": "preflight_interrupted",
+                      "arms": {"plain": "interrupted", "ephemeral": "not_run", "persistent": "not_run"}}
+            plan = {"settings": settings, "host": host, "registration_sha256": "c" * 64}
+
+            @contextmanager
+            def display(folder, service):
+                cli.audit.write_record(folder / "display-start.json", display_proof(service))
+                yield
+
+            with patch.dict(os.environ), patch.object(cli, "load_plan",
+                    return_value=(allocation, plan, allocation / "registration.json")), \
+                 patch.object(cli, "effective_service", return_value=service_proof(unit)), \
+                 patch.object(cli, "host_inputs", return_value=host), \
+                 patch.object(cli, "exclusive_launch", side_effect=lambda role="caller": nullcontext()), \
+                 patch.object(cli, "owned_display", display), \
+                 patch.object(cli.audit, "capture_registered", return_value={"capture": result}), \
+                 patch.object(cli.audit, "seal_capture") as full:
+                self.assertEqual(cli.run_service(allocation, digest, token), 2)
+            full.assert_not_called()
+            self.assertFalse((allocation / "audit-anchor.json").exists())
+            self.assertEqual(cli.audit.read(allocation / "capture-worker-result.json")["capture"], result)
+
     def test_missing_job_or_display_receipt_is_hold(self):
         with TemporaryDirectory() as directory:
             root = Path(directory)
@@ -375,6 +500,7 @@ class NativeComparisonCliTests(unittest.TestCase):
             allocation = Path(directory)
             capture = SyntheticCapture(allocation)
             capture.populate()
+            self.assertTrue(cli.failure_evidence.native_writers_retired(capture.out, require_all=True))
             plan = allocation / "launch-plan.json"
             cli.audit.write_record(plan, {
                 "schema": "native_comparison_launch_plan_v1", "allocation": str(allocation),
@@ -390,6 +516,10 @@ class NativeComparisonCliTests(unittest.TestCase):
             cli.audit.write_record(allocation / "service-start.json", service)
             cli.audit.write_record(allocation / "service-result.json",
                                    {"unit": unit, "claim_token": token, "returncode": 0})
+            (capture.out / "capture.json").write_text(json.dumps(complete_capture()), encoding="utf-8")
+            cli.audit.write_record(allocation / "capture-worker-result.json", {
+                "unit": unit, "claim_token": token, "capture": complete_capture(),
+            })
             display = display_proof(service)
             cli.audit.write_record(allocation / "display-start.json", display)
             cli.audit.write_record(allocation / "display-end.json", retire(display))

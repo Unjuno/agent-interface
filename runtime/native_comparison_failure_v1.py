@@ -1,6 +1,7 @@
 """Retain the observable evidence from an interrupted one-shot comparison."""
 
 import hashlib
+import json
 import os
 from pathlib import Path
 import stat
@@ -51,24 +52,64 @@ def expected_raw_paths():
     return results
 
 
-def native_writers_retired(root):
+def native_job_paths(root):
+    exec_paths, app_paths = set(), set()
+
+    def fail(error):
+        raise error
+
+    for folder, directories, files in os.walk(root, onerror=fail, followlinks=False):
+        path = Path(folder)
+        names = set(files)
+        # These are produced at the native Exec worker boundary, including in
+        # a directory the planned allocation may later reject.
+        if "model-call" in directories or names & {"windows-runner-stdout.txt", "windows-runner-stderr.txt"}:
+            exec_paths.add(path)
+        if "protocol.jsonl" in names:
+            stream = (path / "protocol.jsonl").lstat()
+            if not stat.S_ISREG(stream.st_mode) or stream.st_size:
+                app_paths.add(path)
+    return exec_paths, app_paths
+
+
+def read_job_record(root, relative):
+    path = audit.scoped_path(root, relative)
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    with os.fdopen(fd, "rb") as stream:
+        info = os.fstat(stream.fileno())
+        audit.require(stat.S_ISREG(info.st_mode) and info.st_size <= 64_000,
+                      "invalid native owner receipt file")
+        data = stream.read(64_001)
+        audit.require(data.endswith(b"\n") or path.name in {audit.START_RECORD, audit.APP_SERVER_JOB_START},
+                      "native owner terminal receipt write is incomplete")
+        return json.loads(data)
+
+
+def native_writers_retired(root, *, require_all=False):
     if root.is_symlink():
         return False
     if not root.exists():
-        return True
+        return not require_all
     try:
-        for start_name, receipt_name, schema in (
-            (audit.START_RECORD, audit.RECEIPT, "native-preflight-windows-job-v1"),
-            (audit.APP_SERVER_JOB_START, audit.APP_SERVER_JOB_RECEIPT, "native-app-server-windows-job-v1"),
+        exec_paths, app_paths = native_job_paths(root)
+        planned_exec = {
+            root / "preflight" / arm / "gate" / (("plain" if arm == "plain" else "compiled") + "-form-grounding")
+            for arm in audit.ARMS
+        }
+        planned_apps = {root / "native-app-server" / arm for arm in audit.ARMS}
+        for start_name, receipt_name, schema, observed, planned in (
+            (audit.START_RECORD, audit.RECEIPT, "native-preflight-windows-job-v1", exec_paths, planned_exec),
+            (audit.APP_SERVER_JOB_START, audit.APP_SERVER_JOB_RECEIPT,
+             "native-app-server-windows-job-v1", app_paths, planned_apps),
         ):
             starts = {path.parent for path in root.rglob(start_name)}
             receipts = {path.parent for path in root.rglob(receipt_name)}
-            if starts != receipts:
+            if starts != receipts or not observed <= starts or (require_all and starts != planned):
                 return False
             for directory in starts:
                 relative = directory.relative_to(root)
-                start = audit.read(audit.scoped_path(root, relative / start_name))
-                receipt = audit.read(audit.scoped_path(root, relative / receipt_name))
+                start = read_job_record(root, relative / start_name)
+                receipt = read_job_record(root, relative / receipt_name)
                 if not (audit.valid_hex(start.get("run_nonce"), 32)
                         and audit.valid_hex(start.get("owner_sha256"), 64)
                         and receipt.get("run_nonce") == start["run_nonce"]

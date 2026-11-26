@@ -26,7 +26,7 @@ RUNTIME_SECONDS = 1800
 STOP_SECONDS = 8
 HOST_FILES = (
     "claim.json", "service-start.json", "service-result.json", "display-start.json",
-    "display-end.json", "audit-anchor.json", "service.stdout", "service.stderr",
+    "display-end.json", "capture-worker-result.json", "audit-anchor.json", "service.stdout", "service.stderr",
 )
 SERVICE_POLICY = {"kill_mode": "control-group", "runtime_limit_seconds": RUNTIME_SECONDS,
                   "stop_timeout_seconds": STOP_SECONDS}
@@ -394,7 +394,36 @@ def run_service(allocation, expected_sha, token):
             })
             result = audit.capture_registered(ROOT, allocation / "raw", registration,
                                               registration_sha256=plan["registration_sha256"])
-            audit.write_record(allocation / "audit-anchor.json", result)
+            audit.write_record(allocation / "capture-worker-result.json",
+                               {"unit": claim["unit"], "claim_token": token, "capture": result["capture"]})
+    return 0 if capture_complete(result["capture"]) else 2
+
+
+def capture_complete(result):
+    return audit.same(result, {
+        "schema": "native_comparison_capture_v1", "disposition": "HOLD",
+        "reason": "independent_raw_audit_required", "arms": dict.fromkeys(audit.ARMS, "captured"),
+    })
+
+
+def verify_worker_capture(allocation, unit, token):
+    worker = audit.read(allocation / "capture-worker-result.json")
+    result = audit.read(allocation / "raw" / "capture.json")
+    audit.require(audit.same(worker, {"unit": unit, "claim_token": token, "capture": result})
+                  and capture_complete(result), "comparison capture did not complete every arm")
+
+
+def seal_completed_capture(allocation, expected_sha, unit, token):
+    verify_worker_capture(allocation, unit, token)
+    audit.require(failed_service_retired(allocation, unit), "comparison service retirement is unverified")
+    raw = allocation / "raw"
+    audit.require(failure_evidence.native_writers_retired(raw, require_all=True),
+                  "all allocated native Windows writers must have settled before full sealing")
+    service = verify_host_receipts(allocation, expected_sha)
+    verify_actual_arm_displays(allocation, service)
+    raw_digest = audit.seal_capture(raw)
+    audit.write_record(allocation / "audit-anchor.json", {"seal_sha256": raw_digest})
+    return raw_digest, seal_host(allocation, expected_sha)
 
 
 def adjudicate(allocation, expected_sha, *, expected_seal=None, expected_host_seal=None):
@@ -409,6 +438,7 @@ def adjudicate(allocation, expected_sha, *, expected_seal=None, expected_host_se
                       and audit.same(audit.read(host_seal), host_seal_values(allocation, expected_sha)),
                       "host ownership evidence differs from the retained host seal")
         service = verify_host_receipts(allocation, expected_sha)
+        verify_worker_capture(allocation, service["unit"], service["claim_token"])
         anchor = audit.read(allocation / "audit-anchor.json")
         seal = anchor["seal_sha256"]
         audit.require(audit.valid_hex(seal, 64) and seal == expected_seal,
@@ -473,14 +503,11 @@ def run_once(allocation, expected_sha, *, confirm_live):
         if completed.returncode != 0:
             return retain_failed_capture(allocation, expected_sha, unit, "claimed comparison service exited nonzero")
         try:
-            host_digest = seal_host(allocation, expected_sha)
-        except (OSError, ValueError) as error:
-            return retain_failed_capture(allocation, expected_sha, unit,
-                                         "full host seal unavailable: " + type(error).__name__)
-        try:
-            raw_digest = audit.read(allocation / "audit-anchor.json").get("seal_sha256")
-        except (OSError, ValueError, AttributeError):
-            raw_digest = None
+            raw_digest, host_digest = seal_completed_capture(allocation, expected_sha, unit, token)
+        except (OSError, ValueError, KeyError, TypeError, AttributeError) as error:
+            result = retain_failed_capture(allocation, expected_sha, unit, "full capture custody unavailable")
+            result["diagnostics"] = [str(error)]
+            return result
         return adjudicate(allocation, expected_sha, expected_seal=raw_digest, expected_host_seal=host_digest)
 
 
@@ -514,8 +541,7 @@ def main(argv=None):
             result = adjudicate(args.allocation, args.launch_plan_sha256, expected_seal=args.seal_sha256,
                                 expected_host_seal=args.host_seal_sha256)
         else:
-            run_service(args.allocation, args.launch_plan_sha256, args.token)
-            return 0
+            return run_service(args.allocation, args.launch_plan_sha256, args.token)
     except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:
         result = {"disposition": "HOLD", "reason": str(error), "accounting_verified": False}
     print(json.dumps(result, indent=2))
