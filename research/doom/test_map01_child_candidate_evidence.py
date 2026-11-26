@@ -65,7 +65,7 @@ def derive(root, retry=False):
  ready_gate={k:v for k,v in parent_gate[-1].items() if k!='event'}
  parent_gate.extend([{'event':'submission_gate','id':name,'owner_id':'owner','owner_generation':0,
    'source_sequence':seq,'terminal_id':terminal,'observed_ns':stamp,'observed_engine_tic':last['after']['tic'],
-   'admission_deadline_ns':(3_000_000_260 if name=='cover-0' else 4_000_000_220),'first_input_clock_deadline_ns':5_000_000_000,
+   'admission_deadline_ns':(3_000_000_260 if name=='cover-0' else 4_000_000_220),'first_input_clock_deadline_ns':reserve,
    'owner_state':{'owner_id':'owner','sample_started_ns':stamp-2,'sample_finished_ns':stamp-1,
       'owned_buttons':[],'owned_keycodes':[],'physical_pointer_mask':0,'focus':11,
       'active_lease_deadline_ns':None,'active_lease_time_valid':False,'cancel_requested':False,'release_pending':False},
@@ -151,10 +151,10 @@ class DerivedCandidateTests(unittest.TestCase):
     self.assertEqual(binding['expected_restore_tic'],715)
 
  def test_resealed_inconsistent_evidence_is_rejected(self):
-  for fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image','headless_registration','extra_keyup'):
+  for fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image','stale_bypass','headless_registration','extra_keyup'):
    with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temp:
     manifest,proof,wad,creation,gui,headless=derive(Path(temp))
-    if fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image'):
+    if fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image','stale_bypass'):
      path=creation/'runtime/post-load-clock-gate.jsonl'
      rows=[json.loads(line) for line in path.read_text().splitlines()]
      gate=rows[-1]
@@ -165,7 +165,8 @@ class DerivedCandidateTests(unittest.TestCase):
      elif fault=='reserve':gate['first_input_clock_deadline_ns']=10**15
      elif fault=='late_tic':gate['observed_engine_tic']=2100
      elif fault=='reset_tic':gate['observed_engine_tic']=0
-     elif fault=='stale_image':
+     elif fault in ('stale_image','stale_bypass'):
+      if fault=='stale_bypass':gate['first_input_clock_deadline_ns']=gate['admission_deadline_ns']
       event_path=creation/'runtime/events.jsonl'
       events=[json.loads(line) for line in event_path.read_text().splitlines()]
       for row in events:
@@ -212,6 +213,7 @@ class DerivedCandidateTests(unittest.TestCase):
     with patch('doom_hud_signal_v3.DoomStatusNumberReader',FakeHud):
      reason=('derived headless preregistration differs' if fault=='headless_registration'
        else 'derived owner release journal differs' if fault=='extra_keyup'
+       else 'derived movement deadline calculation differs' if fault=='stale_bypass'
        else 'derived movement source was stale at gate start' if fault=='stale_image'
        else 'derived submission gate chronology or neutral owner differs')
      with self.assertRaisesRegex(EvidenceError,reason):

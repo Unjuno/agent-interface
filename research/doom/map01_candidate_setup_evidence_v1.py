@@ -510,12 +510,21 @@ def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, i
                                                 else state['sample_started_ns']+1_000_000_000),
                         'derived submission gate chronology or neutral owner differs')
             move_gate=parent_gate[7]
-            if move_gate['admission_deadline_ns']<move_gate['first_input_clock_deadline_ns']:
+            move_source=next(row for row in frames if row.get('sequence')==move_gate['source_sequence'])
+            if move_gate['first_input_clock_deadline_ns']<reserve_deadline:
+                projection=(2100-move_gate['observed_engine_tic'])*1_000_000_000//45
+                move_started=move_gate['first_input_clock_deadline_ns']-projection
+                require(move_gate['admission_deadline_ns']==min(move_started+1_000_000_000,
+                            move_gate['first_input_clock_deadline_ns']),
+                        'derived movement deadline calculation differs')
+            elif move_gate['admission_deadline_ns']<move_gate['first_input_clock_deadline_ns']:
                 move_started=move_gate['admission_deadline_ns']-1_000_000_000
-                move_source=next(row for row in frames if row.get('sequence')==move_gate['source_sequence'])
-                require(move_started<=move_gate['owner_state']['sample_started_ns']
-                        and 0<=move_started-move_source['capture_ns']<2_000_000_000,
-                        'derived movement source was stale at gate start')
+            else:
+                move_started=max(parent_summary['validated_ns'],move_source['capture_ns'],
+                                 move_gate['owner_state']['sample_started_ns']-1_000_000_000)
+            require(parent_summary['validated_ns']<=move_started<=move_gate['owner_state']['sample_started_ns']
+                    and 0<=move_started-move_source['capture_ns']<2_000_000_000,
+                    'derived movement source was stale at gate start')
             require(admission['first_press_deadline_ns']==parent_gate[7]['admission_deadline_ns']
                     and admission['input_ack_ns']<parent_gate[7]['first_input_clock_deadline_ns'],
                     'derived movement admission exceeds gate deadline')
