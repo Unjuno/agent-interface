@@ -41,7 +41,7 @@ def load_actual_emit(output, clock, gate=None):
     )
     module = ast.fix_missing_locations(ast.Module(body=[outer], type_ignores=[]))
     namespace = {
-        "args": types.SimpleNamespace(out=output),
+        "args": types.SimpleNamespace(out=output, verified_fixture_setup=False),
         "json": json,
         "os": os,
         "threading": threading,

@@ -5,10 +5,13 @@ import contextlib
 import hashlib
 import json
 import os
+import re
 import shutil
+import stat
 import sys
 import threading
 import time
+from copy import deepcopy
 from pathlib import Path
 
 import vizdoom as vd
@@ -17,21 +20,145 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "observation_gating"))
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from executor_v12 import Executor
+from executor_v11 import program_sha256
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_cover_renewal_probe_v1 import (
     IDENTIFIER as RENEWAL_ID, PassiveProbeDelivery, settled_cover_probe_source)
 from input_owner_generation_protocol_v1 import InputOwnerGenerationProtocol
+from doom_controller_failure_cleanup_v1 import operation_release_verified
 
 
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
+CANDIDATE_FIXTURE_SCHEMA = "map01_os_input_fixture_candidate_v1"
 SETUP_INPUT_CONTRACT = ("fixture state reached through the same X11 Executor and "
                         "recorded OS-input/coast programs; save is setup-only")
 
 
 def file_sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def validate_verified_fixture_setup(args, post_load_gate):
+    if not args.verified_fixture_setup:
+        if post_load_gate is not None and (args.load_fixture_manifest is None or args.fixture_out is not None):
+            raise ValueError("post-load clock gate requires a fixed loaded fixture")
+        return
+    if post_load_gate is None or args.load_fixture_manifest is None or args.fixture_out is None:
+        raise ValueError("verified fixture setup requires a loaded fixture, clock gate and new output")
+    if not args.renewal_passive_observer:
+        raise ValueError("verified fixture setup requires renewal owner identity")
+    if (type(args.fixture_setup_program_sha256) is not str or
+            re.fullmatch(r'[0-9a-f]{64}', args.fixture_setup_program_sha256) is None):
+        raise ValueError("verified fixture setup requires a fixed program hash")
+    if os.path.lexists(args.fixture_out):
+        raise ValueError("verified fixture output already exists")
+    destination = Path(os.path.abspath(args.fixture_out))
+    parent = destination.parent
+    if parent.resolve() != parent:
+        raise ValueError("verified fixture directory must not use symlinks")
+    info = parent.stat(follow_symlinks=False)
+    if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o077:
+        raise ValueError("verified fixture directory must be private and owned")
+    for path in (destination, destination.with_suffix('.json'),
+                 destination.with_name(destination.stem + '.source.png')):
+        if os.path.lexists(path):
+            raise ValueError("verified fixture output already exists")
+    return info.st_dev, info.st_ino
+
+
+def copy_file_exclusive(source, destination):
+    with Path(source).open('rb') as src, Path(destination).open('xb') as dst:
+        shutil.copyfileobj(src, dst)
+
+
+def admit_verified_setup_program(steps, expected_hash, input_claimed):
+    if type(steps) is not list or not steps or any(type(step) is not dict for step in steps):
+        raise ValueError('invalid verified fixture setup program')
+    if any(step.get('op') not in ('hold', 'coast', 'observe') for step in steps):
+        raise ValueError('verified fixture setup only permits movement and passive steps')
+    holds = [step for step in steps if step.get('op') == 'hold']
+    if not holds:
+        return input_claimed
+    if (input_claimed or len(holds) != 1 or type(holds[0].get('keys')) is not list
+            or holds[0]['keys'] not in ([key] for key in ('a', 'd', 'Up', 'Down', 'Left', 'Right'))
+            or type(holds[0].get('duration_ms')) is not int
+            or not 1 <= holds[0]['duration_ms'] <= 600
+            or program_sha256(steps) != expected_hash):
+        raise ValueError('fixture setup movement is not the one predeclared attempt')
+    return True
+
+
+def write_verified_fixture(save_path, expected_directory, engine_save, source_image, fixture):
+    parent = save_path.parent
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    fd = os.open(parent, flags)
+    try:
+        current = os.fstat(fd)
+        if (current.st_dev, current.st_ino) != expected_directory:
+            raise ValueError('verified fixture directory changed')
+        pinned = Path('/proc/self/fd') / str(fd)
+        saved = pinned / save_path.name
+        source = pinned / (save_path.stem + '.source.png')
+        manifest = pinned / save_path.with_suffix('.json').name
+        copy_file_exclusive(engine_save, saved)
+        copy_file_exclusive(source_image, source)
+        fixture['save_sha256'] = file_sha256(saved)
+        fixture['source_frame_sha256'] = file_sha256(source)
+        with manifest.open('x', encoding='utf-8', newline='\n') as stream:
+            json.dump(fixture, stream, indent=2)
+            stream.write('\n')
+        current_path = parent.stat(follow_symlinks=False)
+        if (current_path.st_dev, current_path.st_ino) != expected_directory:
+            raise ValueError('verified fixture directory changed before publication')
+    finally:
+        os.close(fd)
+
+
+def validate_setup_completed(events, sources, gate, program_hash, last_accepted, last_terminal, backend):
+    if getattr(gate, 'first_press_observed', False) is not True:
+        raise ValueError("verified fixture setup requires a confirmed first press")
+    matches = [row for row in events if row.get('event') == 'accepted'
+               and row.get('program_sha256') == program_hash]
+    if len(matches) != 1:
+        raise ValueError("verified fixture setup requires the exact accepted movement")
+    accepted = matches[0]
+    identifier = accepted.get('id')
+    terminal_rows = [row for row in events if row.get('event') == 'terminal' and row.get('id') == identifier]
+    source = sources.get(identifier)
+    admissions = [row for row in events if row.get('event') == 'input_admission' and row.get('id') == identifier]
+    if (len(terminal_rows) != 1 or terminal_rows[0].get('status') != 'completed'
+            or type(source) is not dict or type(source.get('renewal_owner_id')) is not str
+            or not source['renewal_owner_id'] or type(source.get('input_owner_generation')) is not int
+            or getattr(getattr(backend, 'owner', None), 'owner_id', None) != source['renewal_owner_id']
+            or type(getattr(backend, '_owner_generation', None)) is not int
+            or backend._owner_generation != source['input_owner_generation']
+            or type(getattr(gate, 'first_press', None)) is not tuple
+            or len(gate.first_press) != 3 or gate.first_press[:2] != (identifier, source['renewal_owner_id'])
+            or getattr(gate, 'first_press_intent', None) != accepted.get('intent_token')
+            or terminal_rows[0].get('input_owner_id') != source['renewal_owner_id']
+            or type(terminal_rows[0].get('input_owner_generation')) is not int
+            or terminal_rows[0]['input_owner_generation'] != source['input_owner_generation']
+            or any(row.get('event') == 'input_admission' and row.get('id') != identifier for row in events)
+            or not admissions or any(row.get('owner_id') != source['renewal_owner_id'] for row in admissions)
+            or not operation_release_verified(identifier, events, require_intent=True)):
+        raise ValueError("verified fixture movement or its release is unverified")
+    last_source = sources.get(last_terminal.get('id')) if type(last_terminal) is dict else None
+    last_has_input = any(row.get('id') == last_terminal.get('id') and
+                         row.get('event') in ('input_admission', 'input_release_transition', 'input_released')
+                         for row in events) if type(last_terminal) is dict else False
+    if (type(last_accepted) is not dict or type(last_terminal) is not dict
+            or last_accepted.get('id') != last_terminal.get('id')
+            or last_terminal.get('status') != 'completed'
+            or type(last_source) is not dict or type(last_source.get('renewal_owner_id')) is not str
+            or not last_source['renewal_owner_id']
+            or type(last_source.get('input_owner_generation')) is not int
+            or type(last_terminal.get('input_owner_generation')) is not int
+            or last_terminal.get('input_owner_id') != last_source['renewal_owner_id']
+            or last_terminal['input_owner_generation'] != last_source['input_owner_generation']
+            or not operation_release_verified(last_terminal.get('id'), events, require_intent=last_has_input)):
+        raise ValueError("last fixture setup program did not complete and release")
 
 
 def make_executor_factory(emit):
@@ -57,8 +184,12 @@ def wait_for_stable_file(path, timeout=5):
 def validate_fixture_manifest(manifest_path, vizdoom_version, iwad_sha256, skill):
     manifest_path = Path(manifest_path).resolve()
     fixture = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if fixture.get('schema') == CANDIDATE_FIXTURE_SCHEMA:
+        raise ValueError('fixture candidate is not qualified for loading')
     if fixture.get("schema") != FIXTURE_SCHEMA:
         raise ValueError("unsupported fixture manifest")
+    if fixture.get('setup_mode') == 'verified_loaded_fixture_setup_v1':
+        raise ValueError('fixture candidate is not qualified for loading')
     if fixture.get("map") != "MAP01" or fixture.get("skill") != skill:
         raise ValueError("fixture map/skill mismatch")
     if fixture.get("vizdoom") != vizdoom_version or fixture.get("iwad_sha256") != iwad_sha256:
@@ -133,10 +264,14 @@ def main(*, post_load_gate=None):
     parser.add_argument("--skill", type=int, choices=range(1,6), default=1)
     parser.add_argument("--fixture-out", type=Path)
     parser.add_argument("--load-fixture-manifest", type=Path)
+    parser.add_argument("--verified-fixture-setup", action="store_true")
+    parser.add_argument("--fixture-setup-program-sha256")
     parser.add_argument("--renewal-passive-observer", action="store_true")
     args = parser.parse_args()
-    if post_load_gate is not None and (args.load_fixture_manifest is None or args.fixture_out is not None):
-        parser.error("post-load clock gate requires a fixed loaded fixture")
+    try:
+        setup_directory_identity = validate_verified_fixture_setup(args, post_load_gate)
+    except ValueError as error:
+        parser.error(str(error))
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
     args.out.mkdir(parents=True, exist_ok=False)
@@ -149,6 +284,9 @@ def main(*, post_load_gate=None):
     probe_delivery = None
     last_terminal = None
     last_accepted = None
+    setup_events = []
+    setup_sources = {}
+    setup_input_claimed = False
 
     def emit(row):
         nonlocal last_terminal, last_accepted
@@ -171,6 +309,10 @@ def main(*, post_load_gate=None):
                     rejected = json.dumps(row, allow_nan=False, sort_keys=True)
                     raise RuntimeError(f"post-load gate rejected event: {rejected}; "
                                        f"{type(error).__name__}: {error}") from error
+            if args.verified_fixture_setup:
+                if row.get('event') == 'accepted':
+                    setup_sources[row['id']] = deepcopy(latest_observation)
+                setup_events.append(deepcopy(row))
             row["emit_ns"] = time.perf_counter_ns()
             encoded = json.dumps(row)
             with (args.out / "events.jsonl").open("a") as stream:
@@ -386,6 +528,9 @@ def main(*, post_load_gate=None):
                 if command["op"] == "probe_cover_renewal" and probe_delivery is not None:
                     probe_delivery.start(command)
                 elif command["op"] == "submit":
+                    if args.verified_fixture_setup:
+                        setup_input_claimed = admit_verified_setup_program(
+                            command['steps'], args.fixture_setup_program_sha256, setup_input_claimed)
                     approval = {}
                     if probe_delivery is not None:
                         if type(command.get("id")) is str and RENEWAL_ID.fullmatch(command["id"]):
@@ -413,11 +558,15 @@ def main(*, post_load_gate=None):
                     emit({"event": "clock", "runtime_ns": time.perf_counter_ns(),
                           "sequence": backend.sequence})
                 elif command["op"] == "rotate_input_owner":
+                    if args.verified_fixture_setup:
+                        raise ValueError('owner rotation is unavailable in verified fixture setup')
                     executor, rotation = owner_generation_protocol.rotate(
                         command, executor=executor, backend=backend,
                         executor_factory=executor_factory)
                     emit(rotation)
                 elif command["op"] == "refresh_owner_source":
+                    if args.verified_fixture_setup:
+                        raise ValueError('owner rotation is unavailable in verified fixture setup')
                     try:
                         refreshed = owner_generation_protocol.refresh_source(
                             command, backend=backend)
@@ -433,24 +582,32 @@ def main(*, post_load_gate=None):
                     if args.fixture_out is None:
                         raise ValueError("save_fixture is unavailable in measured control")
                     close_before_control_effect(executor, args.out, emit, "save_fixture")
+                    if args.verified_fixture_setup:
+                        validate_setup_completed(setup_events, setup_sources, post_load_gate,
+                                                 args.fixture_setup_program_sha256,
+                                                 last_accepted, last_terminal, backend)
                     backend.snapshot("fixture-source", 0)
-                    save_path = args.fixture_out.resolve()
-                    save_path.parent.mkdir(parents=True, exist_ok=True)
+                    save_path = (Path(os.path.abspath(args.fixture_out)) if args.verified_fixture_setup
+                                 else args.fixture_out.resolve())
+                    if not args.verified_fixture_setup:
+                        save_path.parent.mkdir(parents=True, exist_ok=True)
                     engine_save_path = session.tmp / "fixture-save.png"
                     game.save(str(engine_save_path))
                     game.advance_action(1, True)
                     wait_for_stable_file(engine_save_path)
-                    shutil.copy2(engine_save_path, save_path)
+                    if not args.verified_fixture_setup:
+                        shutil.copy2(engine_save_path, save_path)
                     source_frame = save_path.with_name(save_path.stem + ".source.png")
-                    shutil.copy2(Path(latest_observation["image"]), source_frame)
+                    if not args.verified_fixture_setup:
+                        shutil.copy2(Path(latest_observation["image"]), source_frame)
                     fixture = {
-                        "schema": FIXTURE_SCHEMA,
+                        "schema": CANDIDATE_FIXTURE_SCHEMA if args.verified_fixture_setup else FIXTURE_SCHEMA,
                         "map": "MAP01", "skill": args.skill, "seed": args.seed,
                         "vizdoom": vd.__version__, "iwad_sha256": iwad_sha256,
                         "save_file": save_path.name,
-                        "save_sha256": file_sha256(save_path),
+                        "save_sha256": None if args.verified_fixture_setup else file_sha256(save_path),
                         "source_frame": source_frame.name,
-                        "source_frame_sha256": file_sha256(source_frame),
+                        "source_frame_sha256": None if args.verified_fixture_setup else file_sha256(source_frame),
                         "episode_tic": game.get_episode_time(),
                         "source_observation": latest_observation,
                         "setup_input_contract": SETUP_INPUT_CONTRACT,
@@ -463,9 +620,16 @@ def main(*, post_load_gate=None):
                             "source_episode_tic": loaded_fixture["source_episode_tic"],
                             "loaded_episode_tic": loaded_fixture["after_load_tic"],
                         }
+                    if args.verified_fixture_setup:
+                        fixture["setup_mode"] = "verified_loaded_fixture_setup_v1"
+                        fixture["qualification"] = "pending"
                     manifest_path = save_path.with_suffix(".json")
-                    manifest_path.write_text(json.dumps(fixture, indent=2) + "\n",
-                                             encoding="utf-8", newline="\n")
+                    if args.verified_fixture_setup:
+                        write_verified_fixture(save_path, setup_directory_identity, engine_save_path,
+                                               Path(latest_observation["image"]), fixture)
+                    else:
+                        manifest_path.write_text(json.dumps(fixture, indent=2) + "\n",
+                                                 encoding="utf-8", newline="\n")
                     emit({"event": "fixture_saved", "manifest": str(manifest_path),
                           "save": str(save_path), "save_sha256": fixture["save_sha256"],
                           "episode_tic": fixture["episode_tic"],
@@ -518,6 +682,8 @@ def main(*, post_load_gate=None):
                 else:
                     raise ValueError("unsupported command")
             except (ValueError, TypeError, KeyError, Expired) as error:
+                if args.verified_fixture_setup and command.get('op') == 'save_fixture':
+                    raise
                 emit({"event": "rejected", "id": command.get("id"),
                       "reason": str(error)})
     finally:
