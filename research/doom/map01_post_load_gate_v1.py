@@ -169,9 +169,10 @@ class PostLoadGate:
 
     def _owner_and_source(self, backend, source, command, started):
         owner, service = backend.owner, backend.owned_service
+        process = service.process
         identity = source.get("target_process_identity")
         binding = source.get("pointer_binding")
-        if (self.display_proof(self.session) != self.display or service.process.poll() is not None
+        if (self.display_proof(self.session) != self.display or process is None or not process.is_alive()
                 or self.session.name != service.startup.get("display")
                 or owner.owner_id != service.startup.get("owner_id")
                 or owner.service_id != service.service_id or owner.obligation_snapshot() is not None):
@@ -200,7 +201,8 @@ class PostLoadGate:
                 or type(state.get("sample_started_ns")) is not int
                 or type(state.get("sample_finished_ns")) is not int
                 or not started <= state["sample_started_ns"] <= state["sample_finished_ns"] <= now
-                or now - started >= FIRST_PRESS_WINDOW_NS or service.process.poll() is not None
+                or now - started >= FIRST_PRESS_WINDOW_NS or service.process is not process
+                or not process.is_alive()
                 or owner.obligation_snapshot() is not None):
             raise ValueError("fresh neutral input owner state required")
         return owner.owner_id, backend._owner_generation, state, engine_state

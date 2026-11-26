@@ -1,5 +1,6 @@
 """Clock qualification and first-input gates with inert engine and X11 fixtures."""
 import json
+import multiprocessing
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
@@ -74,7 +75,7 @@ class PostLoadGateTests(unittest.TestCase):
                                   obligation_snapshot=lambda: None, call=self.owner_state),
             owned_service=SimpleNamespace(service_id="service",
                 startup={"display": ":120", "owner_id": "owner-a"},
-                process=SimpleNamespace(pid=8, poll=lambda: None)))
+                process=SimpleNamespace(pid=8, is_alive=lambda: True)))
 
     def qualify(self):
         return self.gate.after_load(self.game, self.session, expected_tic=1263)
@@ -112,6 +113,40 @@ class PostLoadGateTests(unittest.TestCase):
         self.qualify()
         self.submit("cover-0", "coast")
         self.gate.record({"event": "accepted", **self.accepted})
+
+    def test_real_spawn_process_must_remain_alive_across_owner_state_read(self):
+        context = multiprocessing.get_context("spawn")
+        stop = context.Event()
+        process = context.Process(target=stop.wait, args=(10,))
+        process.start()
+
+        def cleanup():
+            stop.set()
+            process.join(timeout=3)
+            if process.is_alive():
+                process.terminate()
+                process.join(timeout=3)
+            process.close()
+
+        self.addCleanup(cleanup)
+        self.backend.owned_service.process = process
+        self.assertTrue(process.is_alive())
+        self.accept_initial_cover()
+
+        def stop_during_state_read(*args):
+            stop.set()
+            process.join(timeout=3)
+            self.assertEqual(process.exitcode, 0)
+            return self.owner_state.return_value
+
+        self.owner_state.side_effect = stop_during_state_read
+        with self.assertRaisesRegex(ValueError, "fresh neutral input owner state"):
+            self.submit("action-0", "hold", terminal=self.terminal, accepted=self.accepted)
+        self.assertIsNone(self.gate.first_press)
+        requests = self.owner_state.call_count
+        with self.assertRaisesRegex(ValueError, "owned input service identity"):
+            self.submit("action-1", "hold", terminal=self.terminal, accepted=self.accepted)
+        self.assertEqual(self.owner_state.call_count, requests)
 
     def test_refuses_initial_hold_after_projected_reserve_expires_with_stale_tic(self):
         self.accept_initial_cover()
