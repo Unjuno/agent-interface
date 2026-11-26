@@ -24,7 +24,7 @@ from research.live_control.native_preflight_job_v1 import RECEIPT, START_RECORD,
 from research.live_control.schema_preflight_v1 import EFFORT, MODEL
 from runtime.native_comparison_candidate_v1 import (
     audit_local_effects, bind_golden_runner, capture_block, capture_plan_values,
-    scheduled_grounding_roots, write_record,
+    repair_window, scheduled_grounding_roots, write_record,
 )
 
 
@@ -406,11 +406,13 @@ def verify_executed_grounding(events, details, seed, arm):
             "runtime commands and their accepted and terminal receipts do not close")
 
     def steps_for(program):
-        command_index, steps, _received = commands[program]
+        command_index, steps, received = commands[program]
         accepted_index, begin = accepted[program]
         terminal_index, end = terminals[program]
         resolutions = sum(step["op"] == "pointer_click_target" for step in steps)
         require(command_index < accepted_index < terminal_index
+                and all(type(stamp) is int for stamp in (received, begin["accepted_ns"], end["terminal_ns"]))
+                and 0 <= received <= begin["accepted_ns"] <= end["terminal_ns"]
                 and same(begin["steps"], len(steps))
                 and same(begin["coordinate_resolutions"], resolutions)
                 and same(end["steps_completed"], len(steps)) and end["status"] == "completed",
@@ -420,12 +422,21 @@ def verify_executed_grounding(events, details, seed, arm):
     def grounding_boundary(program):
         received = commands[program][2]
         admitted = accepted[program][1]["accepted_ns"]
-        require(type(received) is int and type(admitted) is int and 0 <= received <= admitted,
-                "grounding-dependent command receipt time is unverified")
         return {"program_id": program, "received_ns": received, "accepted_ns": admitted}
 
     def evidence(program, event):
         return [(index, row) for index, row in observations[program] if row["event"] == event]
+
+    repair = repair_window(events, details[3]["source"]["sequence"]) if arm == "persistent" else None
+    repair_presses = set(repair["pointer_admissions"]) if repair else set()
+
+    def has_unexpected_pointer(program):
+        # A press during repair remains a safety violation even if the admitted
+        # program did not request a click. Keep it distinct from the task clicks.
+        return any(row["operation"] != "button_down"
+                   or (program, row["admitted_ns"]) not in repair_presses
+                   or not accepted[program][0] < index < terminals[program][0]
+                   for index, row in evidence(program, "pointer_admission"))
 
     def check_move_and_press(program, step, point):
         rows = [(index, row) for index, row in evidence(program, "pointer_admission")
@@ -447,6 +458,7 @@ def verify_executed_grounding(events, details, seed, arm):
     minted = {}
     proof = []
     boundaries = {}
+    submit_programs = {}
     cursor = 0
     point_kinds = ("field", "submit")
     dimensions = {"field": (38, [12, 19]), "submit": (14, [12, 7])}
@@ -457,7 +469,7 @@ def verify_executed_grounding(events, details, seed, arm):
         submitted = {program: steps_for(program) for program in task_programs}
         clicks = [program for program, steps in submitted.items()
                   if any(step["op"].startswith("pointer_") for step in steps)
-                  or evidence(program, "pointer_admission") or evidence(program, "target_handle_revalidated")]
+                  or has_unexpected_pointer(program) or evidence(program, "target_handle_revalidated")]
         mints = [program for program, steps in submitted.items()
                  if any(step["op"] == "target_handle_mint_from_point" for step in steps)
                  or evidence(program, "target_handle_minted_from_point")]
@@ -476,6 +488,7 @@ def verify_executed_grounding(events, details, seed, arm):
                     and not evidence(program, "target_handle_revalidated"),
                     "plain click command differs from the validated grounding")
             boundaries[task["task_id"]] = grounding_boundary(program)
+            submit_programs[task["task_id"]] = program
             proof.extend((check_move_and_press(program, 0, points["field"]),
                           check_move_and_press(program, 4, points["submit"])))
             continue
@@ -486,6 +499,7 @@ def verify_executed_grounding(events, details, seed, arm):
         fresh = detail["trace"]["route"] != "reuse"
         require(same(target["aliases"], aliases) and len(clicks) == 2 and len(mints) == (2 if fresh else 0),
                 "compiled arm mint or action aliases differ from the task allocation")
+        submit_programs[task["task_id"]] = clicks[1]
         if fresh:
             boundaries[task["task_id"]] = grounding_boundary(mints[0])
             for kind, program in zip(point_kinds, mints, strict=True):
@@ -540,7 +554,7 @@ def verify_executed_grounding(events, details, seed, arm):
             require(same(resolved["point"], point) and same(resolved["observed_box"], box),
                     "revalidated alias resolved to unexpected window coordinates")
             proof.append(check_move_and_press(program, 0, point))
-    return {"commands": proof, "grounding_boundaries": boundaries}
+    return {"commands": proof, "grounding_boundaries": boundaries, "submit_programs": submit_programs}
 
 
 def verify_task_sources(events, details, seed):
@@ -665,6 +679,7 @@ def task_effect_times(events, details, history, unplanned_repair_presses):
         timeline.append({
             "first_program_id": ids[0], "first_accepted_ns": entries[0]["accepted_ns"],
             "source_captured_ns": source_ns, "field_button_down_ns": field["admitted_ns"],
+            "submit_program_id": submit["id"],
             "submit_button_down_ns": submit["admitted_ns"], "submission_receipts_ns": receipts,
             "last_program_terminal_ns": previous_end,
         })
@@ -949,6 +964,22 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             call_ids.extend([preflight["call_id"], *threads, *(call["call_id"] for call in calls)])
             summary = accounting([preflight, *calls])
             require(summary["usage_status"] == "complete", "required provider usage field is unreported")
+            arm_root = out / "arms" / arm
+            details = read(arm_root / "task-details.json")
+            command_proofs = [verify_executed_grounding(records(arm_root / "runtime" / filename),
+                              details, plan["seed"], arm)
+                              for filename in ("events.jsonl", "delivered.jsonl")]
+            require(command_proofs[0] == command_proofs[1],
+                    "grounding input command proof differs across the runtime streams")
+            command_proof = command_proofs[0]
+            boundaries = command_proof["grounding_boundaries"]
+            require(boundaries.keys() == grounding_finished.keys()
+                    and all(grounding_finished[task] < boundary["received_ns"] for task, boundary in boundaries.items()),
+                    "grounding result did not settle before the first dependent input or mint command")
+            submit_programs = {row["task_id"]: timing["submit_program_id"]
+                               for row, timing in zip(checked, task_times, strict=True)}
+            require(command_proof["submit_programs"] == submit_programs,
+                    "task submission receipts are detached from the validated submit commands")
             if arm == "persistent" and (effects["confirmed_wrong_submissions"]
                     or effects["confirmed_duplicate_exact_submissions"]
                     or (effects["repair_window_verified"] and effects["pre_repair_button_down_admissions"] > 0)):
@@ -970,17 +1001,6 @@ def audit_comparison(repo, out, registration_file, *, registration_sha256, seal_
             if arm == "persistent":
                 require(checked[3]["repair"]["succeeded"] is True,
                         "persistent repair did not complete")
-            arm_root = out / "arms" / arm
-            details = read(arm_root / "task-details.json")
-            command_proofs = [verify_executed_grounding(records(arm_root / "runtime" / filename),
-                              details, plan["seed"], arm)
-                              for filename in ("events.jsonl", "delivered.jsonl")]
-            require(command_proofs[0] == command_proofs[1],
-                    "grounding input command proof differs across the runtime streams")
-            boundaries = command_proofs[0]["grounding_boundaries"]
-            require(boundaries.keys() == grounding_finished.keys()
-                    and all(grounding_finished[task] < boundary["received_ns"] for task, boundary in boundaries.items()),
-                    "grounding result did not settle before the first dependent input or mint command")
             tokens, cumulative = preflight["usage"]["input_tokens"], []
             for row in rows:
                 tokens += sum(call["usage"]["input_tokens"] for call in row["model_calls"])

@@ -519,17 +519,31 @@ class NativeComparisonAuditTests(unittest.TestCase):
                 self.assertEqual(result["disposition"], "HOLD", result)
 
     def test_confirmed_wrong_effect_or_cross_program_pointer_rejects_but_uncertainty_holds(self):
-        for failure, expected in (("wrong_token", "REJECT"), ("pointer", "REJECT"), ("release", "HOLD")):
+        for failure, expected in (("wrong_token", "REJECT"), ("pointer", "REJECT"), ("release", "HOLD"),
+                                  ("wrong_token_missing_command", "HOLD"), ("wrong_token_late_command", "HOLD")):
             with self.subTest(failure=failure), TemporaryDirectory() as directory:
                 capture = SyntheticCapture(Path(directory))
                 capture.populate()
                 runtime = capture.out / "arms/persistent/runtime"
-                if failure == "wrong_token":
+                if failure.startswith("wrong_token"):
                     history = runtime / "submission-history.jsonl"
                     events = audit.records(history)
                     events[3]["submitted_values"] = ["wrong"]
                     events[3]["exact"] = False
                     lines(history, events)
+                    if failure != "wrong_token":
+                        for name in ("events.jsonl", "delivered.jsonl"):
+                            path = runtime / name
+                            stream = audit.records(path)
+                            command = next(row for row in stream if row.get("event") == "command"
+                                           and row["command"].get("id") == "input-4-submit")
+                            if failure == "wrong_token_missing_command":
+                                stream.remove(command)
+                            else:
+                                opened = next(row for row in stream if row.get("event") == "accepted"
+                                              and row["id"] == "input-4-submit")
+                                command["received_ns"] = opened["accepted_ns"] + 1
+                            lines(path, stream)
                 else:
                     for name in ("events.jsonl", "delivered.jsonl"):
                         path = runtime / name
@@ -551,6 +565,10 @@ class NativeComparisonAuditTests(unittest.TestCase):
                 self.assertEqual(result["disposition"], expected, result)
                 if expected == "REJECT":
                     self.assertEqual(result["reason"], "confirmed_persistent_safety_or_effect_failure")
+                elif failure == "wrong_token_missing_command":
+                    self.assertIn("commands and their accepted and terminal receipts", result["reason"])
+                elif failure == "wrong_token_late_command":
+                    self.assertIn("command does not match its accepted and terminal receipts", result["reason"])
 
     def test_changed_source_or_changed_raw_after_seal_are_blocked(self):
         for flaw in ("source", "raw"):
