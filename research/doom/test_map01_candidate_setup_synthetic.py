@@ -1,5 +1,5 @@
 """Synthetic closed-loop proof verifies semantic joins, not only hashes."""
-import hashlib,json,tempfile,unittest
+import hashlib,json,tempfile,unittest,struct,zlib,io
 from pathlib import Path
 from unittest.mock import patch
 from PIL import Image
@@ -45,7 +45,11 @@ def fixture(root):
  creation=root/'creation';gui=root/'gui';headless=root/'headless'
  for p in (creation,gui,headless):p.mkdir()
  wad=root/'wad';wad.write_bytes(b'test-wad');wad_sha=digest_file(wad)
- c=creation/'candidate';c.mkdir();(c/'fixture.png').write_bytes(b'save')
+ c=creation/'candidate';c.mkdir()
+ buffer=io.BytesIO();Image.new('RGB',(1,1)).save(buffer,format='PNG')
+ data=buffer.getvalue();payload=struct.pack('>II',35,714)
+ ptic=struct.pack('>I',len(payload))+b'ptIc'+payload+struct.pack('>I',zlib.crc32(b'ptIc'+payload)&0xffffffff)
+ save_bytes=data[:-12]+ptic+data[-12:];(c/'fixture.png').write_bytes(save_bytes)
  source_image=Image.new('RGB',(640,480));source_image.save(c/'fixture.source.png')
  source_rgb=hashlib.sha256(source_image.tobytes()).hexdigest()
  candidate={'schema':'map01_os_input_fixture_candidate_v1','setup_mode':'fresh_neutral_fixture_setup_v1',
@@ -83,7 +87,7 @@ def fixture(root):
   'candidate_status':'unqualified','model_calls':0,'input_admissions_observed':0,
   'admission_observation_complete':True,'owner_close_verified':True,'display_retired':True})
  creation_sha=seal(creation,True)
- (headless/'isolated-save.png').write_bytes(b'save')
+ (headless/'isolated-save.png').write_bytes(save_bytes)
  h={'disposition':'HOLD','expected_tic':529,'actual_tic_before_any_refresh':528,
     'candidate_save_sha256':candidate['save_sha256'],'model_calls':0,'input_commands':0,'game_close':'returned',
     'init_started_ns':1,'before_sample_started_ns':2,'before_load_tic':1,'load_started_ns':4,
@@ -111,7 +115,7 @@ def fixture(root):
  identity['process_generation']=digest_identity('xres-linux-process-v1',identity)
  identity['process_incarnation']=digest_identity('xres-linux-process-incarnation-v1',{'pid':4,'start_ticks':5})
  target={'focus':11,'surface':11,'geometry':[0,0,640,480],'pid':4,'identity':identity}
- (gui/'isolated-save.png').write_bytes(b'save')
+ (gui/'isolated-save.png').write_bytes(save_bytes)
  image=Image.new('RGB',(640,480));image.save(gui/'loaded.png')
  rgb=hashlib.sha256(image.tobytes()).hexdigest();image_sha=digest_file(gui/'loaded.png')
  obs={'before':target,'after':target,'capture_started_ns':2_030_000_501,'capture_ns':2_030_000_502,
@@ -156,6 +160,27 @@ class SyntheticEvidenceTests(unittest.TestCase):
     write(gui,'display-retired.json',retired);newseal=seal(gui,True)
     spec=json.loads(proof.read_text());spec['gui_seal_sha256']=newseal;proof.write_text(json.dumps(spec))
     with self.assertRaises(EvidenceError):verify()
+
+ def test_fresh_metadata_if_present_must_match_saved_png(self):
+  for fields,accepted in (({},True),
+      ({'saved_ptic_words':[35,714],'saved_ptic_raw_hex':'00000023000002ca'},True),
+      ({'saved_ptic_words':[35,714]},False),
+      ({'saved_ptic_words':[35,714],'saved_ptic_raw_hex':'0000002300000365'},False),
+      ({'saved_ptic_words':[35,869],'saved_ptic_raw_hex':'0000002300000365'},False)):
+   with self.subTest(fields=fields), tempfile.TemporaryDirectory() as temp:
+    manifest,proof,wad,creation,gui,headless=fixture(Path(temp))
+    outcome=json.loads((headless/'worker-outcome.json').read_text());outcome.update(fields)
+    write(headless,'worker-outcome.json',outcome);headless_sha=seal(headless,False)
+    greg=json.loads((gui/'registration.json').read_text())
+    greg.update(headless_seal_sha256=headless_sha,headless_outcome_sha256=digest_file(headless/'worker-outcome.json'))
+    custody(gui,greg,'30s',0);gui_sha=seal(gui,True)
+    spec=json.loads(proof.read_text());spec['gui_seal_sha256']=gui_sha;proof.write_text(json.dumps(spec))
+    with patch('doom_hud_signal_v3.DoomStatusNumberReader',FakeHud):
+     if accepted:
+      self.assertEqual(verify_setup_candidate(manifest,proof,digest_file(proof),'1.3.0',digest_file(wad),1,990619,75,wad)[2]['expected_restore_tic'],528)
+     else:
+      with self.assertRaisesRegex(EvidenceError,'headless saved clock metadata differs from PNG'):
+       verify_setup_candidate(manifest,proof,digest_file(proof),'1.3.0',digest_file(wad),1,990619,75,wad)
 
  def test_resealed_different_loaded_save_is_rejected(self):
   with tempfile.TemporaryDirectory() as temp:

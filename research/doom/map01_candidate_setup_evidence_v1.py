@@ -3,6 +3,8 @@ import hashlib
 import io
 import json
 import re
+import struct
+import zlib
 from pathlib import Path
 
 
@@ -57,6 +59,53 @@ def _movement_gate_start_consistent(validated_ns, capture_ns, sample_started_ns,
     return (started<=sample_started_ns and 0<=started-capture_ns<2_000_000_000
             and min(reserve_deadline_ns,started+projection)==clock_deadline_ns
             and min(started+1_000_000_000,clock_deadline_ns)==admission_deadline_ns)
+
+
+def headless_clock_metadata_consistent(row):
+    words=row.get('saved_ptic_words') if type(row) is dict else None
+    if (type(words) is not list or len(words)!=2
+            or any(type(x) is not int or not 0<=x<=0xffffffff for x in words)):
+        return False
+    return row.get('saved_ptic_raw_hex')==struct.pack('>II',*words).hex()
+
+
+def png_clock_words(data):
+    if not data.startswith(b'\x89PNG\r\n\x1a\n'):
+        raise EvidenceError('invalid save PNG')
+    offset=8
+    clock=None
+    ended=False
+    has_image_data=False
+    first=True
+    while offset<len(data):
+        if offset+12>len(data):
+            raise EvidenceError('truncated save PNG')
+        size=struct.unpack_from('>I',data,offset)[0]
+        end=offset+12+size
+        if end>len(data):
+            raise EvidenceError('truncated save PNG chunk')
+        kind=data[offset+4:offset+8]
+        payload=data[offset+8:offset+8+size]
+        if first and (kind!=b'IHDR' or size!=13):
+            raise EvidenceError('save PNG header differs')
+        if not first and kind==b'IHDR':
+            raise EvidenceError('save PNG header duplicated')
+        first=False
+        if zlib.crc32(kind+payload)&0xffffffff != struct.unpack_from('>I',data,offset+8+size)[0]:
+            raise EvidenceError('save PNG CRC differs')
+        if kind==b'IDAT':
+            has_image_data=True
+        if kind==b'ptIc':
+            if clock is not None or size!=8:
+                raise EvidenceError('save PNG clock ambiguous')
+            clock=list(struct.unpack('>II',payload))
+        offset=end
+        if kind==b'IEND':
+            ended=size==0 and offset==len(data)
+            break
+    if not ended or clock is None or not has_image_data:
+        raise EvidenceError('save PNG clock missing')
+    return clock
 
 
 def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, iwad_sha, skill, seed, timeout_seconds, iwad_path, *, _depth=0, _seen=frozenset()):
@@ -231,6 +280,10 @@ def verify_setup_candidate(manifest_path, evidence_path, evidence_sha, engine, i
                     and headless_reg.get('repeat_limit')==1
                     and headless_reg.get('input_commands')==0 and headless_reg.get('model_calls')==0,
                     'derived headless preregistration differs')
+        if derived or 'saved_ptic_words' in headless_out or 'saved_ptic_raw_hex' in headless_out:
+            require(headless_clock_metadata_consistent(headless_out)
+                    and headless_out['saved_ptic_words']==png_clock_words(sealed_bytes(headless,'isolated-save.png')),
+                    'headless saved clock metadata differs from PNG')
         headless_attempt=read(headless,'load-attempt.json')
         headless_return=read(headless,'load-returned.json')
         headless_times=[headless_out['init_started_ns'],headless_attempt['before_sample_started_ns'],

@@ -101,7 +101,8 @@ def derive(root, retry=False):
  custody(creation,registration,'1min',0)
  out=json.loads((creation/'worker-outcome.json').read_text());out.update(candidate_manifest_sha256=manifest_sha,keyed_commands=1)
  write(creation,'worker-outcome.json',out);creation_sha=seal(creation,True)
- h=json.loads((headless/'worker-outcome.json').read_text());h.update(disposition='PASS',comparison='PASS',expected_tic=715,actual_tic_before_any_refresh=715)
+ h=json.loads((headless/'worker-outcome.json').read_text());h.update(disposition='PASS',comparison='PASS',expected_tic=715,actual_tic_before_any_refresh=715,
+  saved_ptic_words=[35,714],saved_ptic_raw_hex='00000023000002ca')
  write(headless,'worker-outcome.json',h);ret=json.loads((headless/'load-returned.json').read_text());ret['actual_tic_before_any_refresh']=715
  write(headless,'load-returned.json',ret)
  hreg=json.loads((headless/'registration.json').read_text());hreg.update(expected_tic=715,
@@ -136,7 +137,8 @@ class DerivedCandidateTests(unittest.TestCase):
     hreg=json.loads((headless/'registration.json').read_text());hreg['candidate_seal_sha256']=creation_sha
     custody(headless,hreg,'30s',0);headless_sha=seal(headless,True)
     greg=json.loads((gui/'registration.json').read_text())
-    greg.update(candidate_seal_sha256=creation_sha,headless_seal_sha256=headless_sha)
+    greg.update(candidate_seal_sha256=creation_sha,headless_seal_sha256=headless_sha,
+     headless_outcome_sha256=digest_file(headless/'worker-outcome.json'))
     custody(gui,greg,'30s',0);gui_sha=seal(gui,True)
     spec=json.loads(proof.read_text());spec.update(creation_seal_sha256=creation_sha,gui_seal_sha256=gui_sha)
     proof.write_text(json.dumps(spec))
@@ -159,7 +161,7 @@ class DerivedCandidateTests(unittest.TestCase):
     self.assertEqual(binding['expected_restore_tic'],715)
 
  def test_resealed_inconsistent_evidence_is_rejected(self):
-  for fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image','stale_bypass','headless_registration','extra_keyup'):
+  for fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image','stale_bypass','headless_registration','clock_metadata','clock_png','extra_keyup'):
    with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temp:
     manifest,proof,wad,creation,gui,headless=derive(Path(temp))
     if fault in ('gate_source','gate_owner','gate_after_accept','deadline','wrong_focus','reserve','late_gate','late_tic','reset_tic','stale_source','stale_image','stale_bypass'):
@@ -212,14 +214,21 @@ class DerivedCandidateTests(unittest.TestCase):
     elif fault!='extra_keyup' or creation_sha:
      reg=json.loads((headless/'registration.json').read_text());reg['candidate_seal_sha256']=creation_sha
      custody(headless,reg,'30s',0)
+    if fault in ('clock_metadata','clock_png'):
+     outcome=json.loads((headless/'worker-outcome.json').read_text())
+     outcome['saved_ptic_raw_hex']='0000002300000365'
+     if fault=='clock_png':outcome['saved_ptic_words']=[35,869]
+     write(headless,'worker-outcome.json',outcome)
     headless_sha=seal(headless,True)
     greg=json.loads((gui/'registration.json').read_text())
-    greg.update(candidate_seal_sha256=creation_sha,headless_seal_sha256=headless_sha)
+    greg.update(candidate_seal_sha256=creation_sha,headless_seal_sha256=headless_sha,
+     headless_outcome_sha256=digest_file(headless/'worker-outcome.json'))
     custody(gui,greg,'30s',0);gui_sha=seal(gui,True)
     spec=json.loads(proof.read_text());spec.update(creation_seal_sha256=creation_sha,gui_seal_sha256=gui_sha)
     proof.write_text(json.dumps(spec))
     with patch('doom_hud_signal_v3.DoomStatusNumberReader',FakeHud):
      reason=('derived headless preregistration differs' if fault=='headless_registration'
+       else 'headless saved clock metadata differs from PNG' if fault in ('clock_metadata','clock_png')
        else 'derived owner release journal differs' if fault=='extra_keyup'
        else 'derived movement source or deadline calculation differs' if fault in ('stale_image','stale_bypass')
        else 'derived submission gate chronology or neutral owner differs')
