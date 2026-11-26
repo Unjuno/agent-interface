@@ -1022,8 +1022,8 @@ def main(*, post_load_gate=None):
                         ticrate = game.get_ticrate()
                         if type(tic) is int and tic >= 0 and type(ticrate) is int and ticrate > 0:
                             tic_limit_reached = tic >= args.timeout_seconds * ticrate
-                            if finished or not tic_limit_reached:
-                                timeout_reached = tic_limit_reached
+                            if finished is False and not tic_limit_reached:
+                                timeout_reached = False
                     map_exit = bool(finished is True and dead is False and timeout_reached is False
                                     and wall_ns < (args.timeout_seconds - 5) * 1_000_000_000)
                     raw_deaths = game.get_game_variable(vd.GameVariable.DEATHCOUNT)

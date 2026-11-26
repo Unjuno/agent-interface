@@ -257,8 +257,13 @@ class ProgressExitValidationTests(unittest.TestCase):
             def get_episode_time(self): return self.tic
             def get_ticrate(self): return self.rate
         with patch.object(candidate, 'ProgressSample', side_effect=lambda *args: args):
-            self.assertTrue(candidate._coherent_progress_sample(Fallback(100,35), self.Variables,75)[-1])
-            self.assertFalse(candidate._coherent_progress_sample(Fallback(2625,35), self.Variables,75)[-1])
+            for tic in (0,100,2625,2626):
+                with self.subTest(tic=tic), self.assertRaises(ValueError):
+                    candidate._coherent_progress_sample(Fallback(tic,35), self.Variables,75)
+            dead=Fallback(100,35);dead.dead=True
+            self.assertFalse(candidate._coherent_progress_sample(dead, self.Variables,75)[-1])
+            running=Fallback(100,35);running.finished=False
+            self.assertFalse(candidate._coherent_progress_sample(running, self.Variables,75)[-1])
             for tic,rate in ((-1,35),(100,0),(100,-1),(False,35),(100,True),('100',35),(100.1,35)):
                 with self.subTest(tic=tic,rate=rate), self.assertRaises(ValueError):
                     candidate._coherent_progress_sample(Fallback(tic,rate), self.Variables,75)
