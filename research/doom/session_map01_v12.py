@@ -1000,7 +1000,10 @@ def main(*, post_load_gate=None):
                         probe_delivery.cancel()
                     close_before_control_effect(executor, args.out, emit, "finish")
                     scorer_refresh_calls = 0
-                    if not game.is_episode_finished():
+                    finished_before_refresh = game.is_episode_finished()
+                    if type(finished_before_refresh) is not bool:
+                        raise ValueError('initial terminal state is not a boolean')
+                    if finished_before_refresh is False:
                         game.advance_action(1, True)
                         scorer_refresh_calls = 1
                     finished = game.is_episode_finished()
@@ -1021,10 +1024,15 @@ def main(*, post_load_gate=None):
                             tic_limit_reached = tic >= args.timeout_seconds * ticrate
                             if finished or not tic_limit_reached:
                                 timeout_reached = tic_limit_reached
-                    map_exit = bool(finished and not dead and timeout_reached is False
+                    map_exit = bool(finished is True and dead is False and timeout_reached is False
                                     and wall_ns < (args.timeout_seconds - 5) * 1_000_000_000)
-                    deaths = int(game.get_game_variable(vd.GameVariable.DEATHCOUNT))
-                    kills = int(game.get_game_variable(vd.GameVariable.KILLCOUNT))
+                    raw_deaths = game.get_game_variable(vd.GameVariable.DEATHCOUNT)
+                    raw_kills = game.get_game_variable(vd.GameVariable.KILLCOUNT)
+                    if any(type(value) not in (int, float) or value < 0 or value % 1 != 0
+                           for value in (raw_deaths, raw_kills)):
+                        raise ValueError('game counter is invalid')
+                    deaths = int(raw_deaths)
+                    kills = int(raw_kills)
                     score = {"event": "post_control_score", "map": "MAP01", "skill": args.skill,
                         "map_exit": map_exit, "episode_finished": finished,
                         "episode_timeout_reached": timeout_reached,
@@ -1043,6 +1051,7 @@ def main(*, post_load_gate=None):
                     raise ValueError("unsupported command")
             except (ValueError, TypeError, KeyError, Expired) as error:
                 if (door_coordinator is not None or args.fresh_neutral_fixture_setup
+                        or command.get('op') == 'finish'
                         or (args.verified_fixture_setup and command.get('op') == 'save_fixture')):
                     raise
                 emit({"event": "rejected", "id": command.get("id"),
@@ -1053,34 +1062,36 @@ def main(*, post_load_gate=None):
                       'reason':'stdin_eof_before_finish'})
                 raise RuntimeError('door trial ended before finish')
     finally:
-        if probe_delivery is not None:
-            probe_delivery.cancel()
-        # A close or evidence-save error must not skip later owned resources.
-        # Each finally preserves failure reporting and the existing close order.
         try:
-            try:
-                if executor is not None:
-                    executor.close()
-            finally:
-                if backend is not None:
-                    try:
-                        backend.close()
-                    finally:
-                        (args.out / "owner-events.json").write_text(
-                            json.dumps(getattr(backend, "owner_records", backend.owner.records), indent=2))
+            if probe_delivery is not None:
+                probe_delivery.cancel()
         finally:
+            # A close or evidence-save error must not skip later owned resources.
+            # Each finally preserves failure reporting and the existing close order.
             try:
-                if game is not None:
-                    game.close()
+                try:
+                    if executor is not None:
+                        executor.close()
+                finally:
+                    if backend is not None:
+                        try:
+                            backend.close()
+                        finally:
+                            (args.out / "owner-events.json").write_text(
+                                json.dumps(getattr(backend, "owner_records", backend.owner.records), indent=2))
             finally:
-                if session is not None:
-                    try:
-                        if (session.tmp / "doom.ini").exists():
-                            shutil.copy2(session.tmp / "doom.ini", args.out / "doom.ini")
-                    finally:
-                        session.close()
-                    # Preserve the directory if config saving or close fails.
-                    shutil.rmtree(session.tmp)
+                try:
+                    if game is not None:
+                        game.close()
+                finally:
+                    if session is not None:
+                        try:
+                            if (session.tmp / "doom.ini").exists():
+                                shutil.copy2(session.tmp / "doom.ini", args.out / "doom.ini")
+                        finally:
+                            session.close()
+                        # Preserve the directory if config saving or close fails.
+                        shutil.rmtree(session.tmp)
 
 
 if __name__ == "__main__":
