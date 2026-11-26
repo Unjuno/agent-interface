@@ -177,6 +177,10 @@ class DoorModeTests(unittest.TestCase):
   required=['--synthetic-exit-pwad','/tmp/map.wad','--synthetic-exit-arm','use',
             '--target-process-identity','--owned-input-service','--renewal-passive-observer']
   self.assertIsNone(module.validate_synthetic_runtime_options(required))
+  self.assertIsNone(module.validate_synthetic_runtime_options(required+['--synthetic-exit-refresh']))
+  with self.assertRaises(ValueError):module.validate_synthetic_runtime_options(['--synthetic-exit-refresh'])
+  with self.assertRaises(ValueError):module.validate_synthetic_runtime_options(required+['--synthetic-exit-refresh','--synthetic-exit-refresh'])
+  with self.assertRaises(ValueError):module.validate_synthetic_runtime_options(required+['--synthetic-exit-ref'])
   for flag in ('--target-process-identity','--owned-input-service','--renewal-passive-observer'):
    with self.subTest(flag=flag),self.assertRaises(ValueError):module.validate_synthetic_runtime_options([x for x in required if x!=flag])
   with self.assertRaises(ValueError):module.validate_synthetic_runtime_options(required+['--post-load-clock-gate'])

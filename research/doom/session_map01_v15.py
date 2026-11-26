@@ -157,15 +157,15 @@ def validate_door_runtime_options(argv):
 
 
 def validate_synthetic_runtime_options(argv):
-    flags=('--synthetic-exit-pwad','--synthetic-exit-arm')
+    flags=('--synthetic-exit-pwad','--synthetic-exit-arm','--synthetic-exit-refresh')
     for item in argv:
         name=item.split('=',1)[0]
         if name.startswith('--') and name not in flags and any(flag.startswith(name) for flag in flags):
             raise ValueError('synthetic options must be spelled in full')
-    synthetic=[item for item in argv if item.startswith('--synthetic-exit-pwad') or item.startswith('--synthetic-exit-arm')]
+    synthetic=[item for item in argv if any(item.startswith(flag) for flag in flags)]
     if not synthetic:return
     required=('--target-process-identity','--owned-input-service','--renewal-passive-observer')
-    if (synthetic!=['--synthetic-exit-pwad','--synthetic-exit-arm']
+    if (synthetic not in (['--synthetic-exit-pwad','--synthetic-exit-arm'], ['--synthetic-exit-pwad','--synthetic-exit-arm','--synthetic-exit-refresh'])
             or any(argv.count(flag)!=1 for flag in required)
             or '--post-load-clock-gate' in argv or '--target-window-lifecycle' in argv
             or any(item.startswith('--door-task-') for item in argv)):
