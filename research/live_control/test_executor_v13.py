@@ -34,6 +34,31 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_unverified_release_preserves_original_execution_error(self):
+        backend, events = Backend(), []
+        terminal_ready = threading.Event()
+        def execute(*_args):
+            raise RuntimeError('rejected receipt: {"owner_id":"unexpected"}')
+        backend.execute = execute
+        backend.release_all = lambda: {"verified": False, "keys_down": ["a"]}
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_ready.set()
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("cover-1", [{"op": "hold"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_ready.wait(3))
+            terminal = next(row for row in events if row.get("event") == "terminal")
+            self.assertEqual(terminal["status"], "failed")
+            self.assertFalse(terminal["release"]["verified"])
+            self.assertIn("rejected receipt", terminal["error"])
+            self.assertIn("unexpected", terminal["error"])
+            self.assertIn("input release not verified", terminal["error"])
+        finally:
+            executor.close()
+
     def test_renewal_expiring_during_accepted_publication_never_starts_input(self):
         backend, events = Backend(), []
         wall = time.perf_counter_ns()

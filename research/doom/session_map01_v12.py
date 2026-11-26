@@ -162,7 +162,15 @@ def main(*, post_load_gate=None):
                 latest_observation = dict(row)
             owner_generation_protocol.record_terminal(row, backend)
             if post_load_gate is not None:
-                post_load_gate.record(row)
+                try:
+                    post_load_gate.record(row)
+                except Exception as error:
+                    # The executor releases input after emit raises. Do not do
+                    # disk I/O here: attach the receipt to the exception that
+                    # becomes the terminal error after the release attempt.
+                    rejected = json.dumps(row, allow_nan=False, sort_keys=True)
+                    raise RuntimeError(f"post-load gate rejected event: {rejected}; "
+                                       f"{type(error).__name__}: {error}") from error
             row["emit_ns"] = time.perf_counter_ns()
             encoded = json.dumps(row)
             with (args.out / "events.jsonl").open("a") as stream:

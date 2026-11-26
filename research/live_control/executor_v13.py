@@ -179,7 +179,9 @@ class Executor(Previous):
                         release, release_batch_publication, cleanup_publication
                     )
                 if release.get("verified") is not True:
-                    status = "failed"; error = "input release not verified"
+                    status = "failed"
+                    error = (f"{error}; input release not verified" if error
+                             else "input release not verified")
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
                 cancelled_pending = getattr(exc, "cancelled_pending_ups", None)

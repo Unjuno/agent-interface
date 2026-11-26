@@ -16,7 +16,7 @@ from unittest.mock import patch
 SOURCE = Path(__file__).with_name("session_map01_v12.py")
 
 
-def load_actual_emit(output, clock):
+def load_actual_emit(output, clock, gate=None):
     tree = ast.parse(SOURCE.read_bytes(), filename=str(SOURCE))
     main = next(node for node in tree.body
                 if isinstance(node, ast.FunctionDef) and node.name == "main")
@@ -43,17 +43,34 @@ def load_actual_emit(output, clock):
     namespace = {
         "args": types.SimpleNamespace(out=output),
         "json": json,
+        "os": os,
         "threading": threading,
         "time": clock,
         "owner_generation_protocol": types.SimpleNamespace(record_terminal=lambda row, backend: None),
         "backend": None,
-        "post_load_gate": None,
+        "post_load_gate": gate,
     }
     exec(compile(module, str(SOURCE), "exec"), namespace)
     return namespace["build_emit"]()
 
 
 class EmitTimingTests(unittest.TestCase):
+    def test_rejected_admission_is_attached_without_io_or_delivery(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            def reject(_row):
+                raise RuntimeError("first key admission proof unverified")
+            clock = types.SimpleNamespace(perf_counter_ns=lambda: 123)
+            emit = load_actual_emit(output, clock, types.SimpleNamespace(record=reject))
+            receipt = {"event": "input_admission", "id": "cover-1", "owner_id": "unexpected"}
+            with patch.object(builtins, "print") as printed, \
+                 patch.object(Path, "open", side_effect=AssertionError("unexpected I/O")):
+                with self.assertRaisesRegex(RuntimeError, "admission proof") as caught:
+                    emit(receipt)
+            self.assertIn(json.dumps(receipt, sort_keys=True), str(caught.exception))
+            self.assertFalse((output / "delivered.jsonl").exists())
+            printed.assert_not_called()
+
     def test_opt_in_private_bus_policy_applies_before_and_after_x11_setup(self):
         spec = importlib.util.spec_from_file_location("offline_session_map01_v12", SOURCE)
         runtime = importlib.util.module_from_spec(spec)
