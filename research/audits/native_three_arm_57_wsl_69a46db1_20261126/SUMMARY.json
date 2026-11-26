@@ -1,0 +1,189 @@
+{
+  "schema": "issue57_three_arm_wsl_public_summary_v1",
+  "date_jst": "2026-11-26",
+  "source_commit": "69a46db1a83c3080ea17b2d5e4ad3d766142848b",
+  "conditions": {
+    "host_context": "WSL2 with Windows native Codex executable",
+    "native_cli_version": "codex-cli 0.171.0-alpha.13.2",
+    "browser": "Google Chrome for Testing 156.0.8078.4",
+    "windows_python_version": "Python 3.11.9",
+    "model": "gpt-5.6-luna",
+    "effort": "low",
+    "authentication": "existing_chatgpt_session",
+    "seed": 991032,
+    "formal_runs": 1,
+    "automatic_retry": false,
+    "arm_order": [
+      "plain",
+      "ephemeral",
+      "persistent"
+    ],
+    "workload": [
+      {
+        "layout": "A",
+        "phase": "cold"
+      },
+      {
+        "layout": "A",
+        "phase": "warm"
+      },
+      {
+        "layout": "A",
+        "phase": "warm"
+      },
+      {
+        "layout": "B",
+        "phase": "invalidation_repair"
+      },
+      {
+        "layout": "B",
+        "phase": "post_repair_warm"
+      },
+      {
+        "layout": "B",
+        "phase": "post_repair_warm"
+      }
+    ],
+    "session_policy": "one_owned_app_server_per_arm_fresh_ephemeral_thread_per_grounding",
+    "schema_preflight_budget": 3,
+    "grounding_budget": 14
+  },
+  "decision": {
+    "disposition": "RETAIN",
+    "reason": "matched_token_and_generation_gate",
+    "observed_input_break_even_task": 2,
+    "block_interval_ns": 139766636980,
+    "total_provider_calls": 17
+  },
+  "arms": {
+    "plain": {
+      "exact_tasks": 6,
+      "submission_count": 6,
+      "accepted_programs": 18,
+      "verified_terminal_releases": 18,
+      "provider_calls": 7,
+      "usage": {
+        "input_tokens": 68589,
+        "cached_input_tokens": 6784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 763,
+        "reasoning_output_tokens": 315
+      },
+      "usage_coverage": {
+        "input_tokens": 7,
+        "cached_input_tokens": 7,
+        "cache_write_input_tokens": 7,
+        "output_tokens": 7,
+        "reasoning_output_tokens": 7
+      },
+      "usage_status": "complete",
+      "cumulative_input": [
+        19039,
+        28949,
+        38859,
+        48769,
+        58679,
+        68589
+      ],
+      "task_elapsed_ns": 32553618465,
+      "grounding_calls": 6,
+      "schema_preflight_calls": 1,
+      "preflight_interval_ns": 11097782438,
+      "arm_interval_ns": 36638740265
+    },
+    "ephemeral": {
+      "exact_tasks": 6,
+      "submission_count": 6,
+      "accepted_programs": 48,
+      "verified_terminal_releases": 48,
+      "provider_calls": 7,
+      "usage": {
+        "input_tokens": 69240,
+        "cached_input_tokens": 6784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1112,
+        "reasoning_output_tokens": 307
+      },
+      "usage_coverage": {
+        "input_tokens": 7,
+        "cached_input_tokens": 7,
+        "cache_write_input_tokens": 7,
+        "output_tokens": 7,
+        "reasoning_output_tokens": 7
+      },
+      "usage_status": "complete",
+      "cumulative_input": [
+        19230,
+        29232,
+        39234,
+        49236,
+        59238,
+        69240
+      ],
+      "task_elapsed_ns": 42858878814,
+      "grounding_calls": 6,
+      "schema_preflight_calls": 1,
+      "preflight_interval_ns": 8805405936,
+      "arm_interval_ns": 44805263090
+    },
+    "persistent": {
+      "exact_tasks": 6,
+      "submission_count": 6,
+      "accepted_programs": 57,
+      "verified_terminal_releases": 57,
+      "provider_calls": 3,
+      "usage": {
+        "input_tokens": 29224,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 496,
+        "reasoning_output_tokens": 151
+      },
+      "usage_coverage": {
+        "input_tokens": 3,
+        "cached_input_tokens": 3,
+        "cache_write_input_tokens": 3,
+        "output_tokens": 3,
+        "reasoning_output_tokens": 3
+      },
+      "usage_status": "complete",
+      "cumulative_input": [
+        19225,
+        19225,
+        19225,
+        29224,
+        29224,
+        29224
+      ],
+      "task_elapsed_ns": 27503546520,
+      "grounding_calls": 2,
+      "schema_preflight_calls": 1,
+      "preflight_interval_ns": 9021240569,
+      "arm_interval_ns": 29378461224
+    }
+  },
+  "repair": {
+    "verified_reference_invalidation": true,
+    "old_layout_missing_checks": 1,
+    "old_check_program_button_down_admissions": 0,
+    "pre_repair_button_down_admissions": 0
+  },
+  "settlement": {
+    "worker_exit_code": 0,
+    "runner_exit_code": 0,
+    "windows_jobs_empty": 6,
+    "windows_jobs_remaining_active_processes": 0,
+    "private_displays_retired": 4,
+    "service_kill_mode": "control-group",
+    "service_runtime_limit_seconds": 1800,
+    "service_stop_timeout_seconds": 8
+  },
+  "evidence_commitments": {
+    "registration_sha256": "7ecb61fdaf6d617621b3ee8fe24e49445e55b20378bd98fe7675fecdc6c3a75c",
+    "launch_plan_sha256": "538fdc7c8e8384d6e110d175330d11b226a7c8a1c6095731e33dcdddb90d07ac",
+    "raw_seal_sha256": "c9bd54e4a20760d644fade244ea887432229f63b00c0eb7cc76863b8fe803072",
+    "host_seal_sha256": "0cca8b210850be97b74c3567586c81ed959110fd0230c9507dfdc736d553224b",
+    "raw_files_sealed": 792,
+    "host_files_sealed": 9
+  }
+}
