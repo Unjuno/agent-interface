@@ -28,6 +28,7 @@ from doom_cover_renewal_probe_v1 import (
     IDENTIFIER as RENEWAL_ID, PassiveProbeDelivery, settled_cover_probe_source)
 from input_owner_generation_protocol_v1 import InputOwnerGenerationProtocol
 from doom_controller_failure_cleanup_v1 import operation_release_verified
+from map01_synthetic_exit_refresh import synchronize_terminal
 
 
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
@@ -71,7 +72,7 @@ def validate_synthetic_exit_calibration(args, post_load_gate):
     path=getattr(args,'synthetic_exit_pwad',None)
     arm=getattr(args,'synthetic_exit_arm',None)
     if path is None:
-        if arm is not None:raise ValueError('synthetic exit arm requires the fixed scenario')
+        if arm is not None or getattr(args, 'synthetic_exit_refresh', False):raise ValueError('synthetic exit options require the fixed scenario')
         return None
     if (arm not in ('control','use') or post_load_gate is not None
             or args.door_task_arm is not None or getattr(args,'door_task_traverse',False)
@@ -590,6 +591,7 @@ def main(*, post_load_gate=None):
     parser.add_argument("--candidate-setup-evidence-sha256")
     parser.add_argument("--synthetic-exit-pwad", type=Path)
     parser.add_argument("--synthetic-exit-arm", choices=("control","use"))
+    parser.add_argument("--synthetic-exit-refresh", action="store_true")
     parser.add_argument("--door-task-arm", choices=("control","use"))
     parser.add_argument("--door-task-traverse", action="store_true")
     parser.add_argument("--door-task-exit", action="store_true")
@@ -700,6 +702,7 @@ def main(*, post_load_gate=None):
                  HERE.parent / "live_control/session_v9.py",
                  HERE.parent / "live_control/session_v10.py",
                  HERE.parent / "live_control/coast_backend_v1.py",
+                 HERE / "map01_synthetic_exit_refresh.py",
                  HERE / "doom_typed_release_backend_v1.py",
                  HERE / "doom_typed_coast_backend_v1.py",
                  HERE / "doom_typed_observation_v1.py",
@@ -1128,6 +1131,23 @@ def main(*, post_load_gate=None):
                         probe_delivery.cancel()
                     close_before_control_effect(executor, args.out, emit, "finish")
                     scorer_refresh_calls = 0
+                    if getattr(args, 'synthetic_exit_refresh', False):
+                        if (door_coordinator is None or not door_coordinator.finished
+                                or synthetic_heartbeat_count != 4 or synthetic_heartbeat_revision is None):
+                            raise ValueError('synthetic synchronization prerequisites unavailable')
+                        with lock:
+                            refresh_source = deepcopy(latest_observation)
+                        def verify_refresh_owner():
+                            return synthetic_neutral_heartbeat(
+                                backend, door_coordinator.gate, session, refresh_source,
+                                expected_revision=synthetic_heartbeat_revision)
+                        refresh_deadline = min(time.perf_counter_ns() + 1_000_000_000,
+                            control_started_ns + (args.timeout_seconds - 5) * 1_000_000_000)
+                        refresh_result = synchronize_terminal(
+                            game, args.out, lambda: door_coordinator.gate.neutral(session),
+                            verify_refresh_owner, deadline_ns=refresh_deadline)
+                        scorer_refresh_calls = refresh_result['refresh_calls']
+                        emit({'event': 'synthetic_terminal_refresh', **refresh_result})
                     finished_before_refresh = game.is_episode_finished()
                     if type(finished_before_refresh) is not bool:
                         raise ValueError('initial terminal state is not a boolean')

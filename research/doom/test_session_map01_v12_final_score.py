@@ -65,6 +65,46 @@ class FinishScoringTests(unittest.TestCase):
         self.assertEqual(record["scorer_refresh_calls_after_control"], game.advance_action.call_count)
         return record
 
+    def test_synthetic_refresh_is_fenced_and_counted_in_finish(self):
+        import threading
+        game = SimpleNamespace(is_episode_finished=lambda: True, is_player_dead=lambda: False,
+            is_episode_timeout_reached=lambda: False,
+            get_game_variable={"deaths": 0, "kills": 0}.__getitem__, get_total_reward=lambda: 0.0)
+        with TemporaryDirectory() as directory:
+            out = Path(directory)
+            emitted, close = [], Mock()
+            finish = load_finish(out, 5, close, emitted.append)
+            scope = finish.__globals__
+            scope['args'].synthetic_exit_refresh = True
+            scope['args'].synthetic_exit_pwad = Path('/fixed.wad')
+            scope.update(door_coordinator=SimpleNamespace(finished=True, gate=SimpleNamespace(neutral=lambda session: True)),
+                synthetic_heartbeat_count=4, synthetic_heartbeat_revision=7,
+                lock=threading.Lock(), latest_observation={'sequence': 1}, deepcopy=lambda value: dict(value),
+                backend=object(), session=object(),
+                synthetic_neutral_heartbeat=Mock(return_value={'verified': True}))
+            def refresh(engine, directory, neutral, owner, *, deadline_ns):
+                close.assert_called_once()
+                self.assertTrue(neutral())
+                self.assertTrue(owner()['verified'])
+                self.assertEqual(deadline_ns, 6_000_000_000)
+                return {'disposition': 'refreshed', 'refresh_calls': 1}
+            scope['synchronize_terminal'] = refresh
+            finish(game)
+            self.assertEqual(json.loads((out / 'score.json').read_text())['scorer_refresh_calls_after_control'], 1)
+            self.assertEqual(emitted[0]['event'], 'synthetic_terminal_refresh')
+            self.assertEqual(scope['synthetic_neutral_heartbeat'].call_args.kwargs['expected_revision'], 7)
+
+    def test_synthetic_refresh_requires_all_four_heartbeats(self):
+        with TemporaryDirectory() as directory:
+            close = Mock()
+            finish = load_finish(Path(directory), 5, close, lambda row: None)
+            scope = finish.__globals__
+            scope['args'].synthetic_exit_refresh = True
+            scope.update(door_coordinator=SimpleNamespace(finished=True), synthetic_heartbeat_count=3,
+                         synthetic_heartbeat_revision=7)
+            with self.assertRaises(ValueError): finish(object())
+            close.assert_called_once()
+
     def test_native_timeout_is_not_map_exit_before_wall_cutoff(self):
         record = self.finish(native_timeout=True)
         self.assertTrue(record["episode_finished"])
