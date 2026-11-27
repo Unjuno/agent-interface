@@ -94,6 +94,15 @@ or install the runtime package. A combined first-run flow is acceptable only whe
 is independently disclosed and selected before it starts.
 
 `doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
+
+The retained comparison and its independent recount include byte-pinned files.
+The repository attributes preserve those bytes in new checkouts even when Git
+is configured to convert line endings. Existing checkouts may still contain
+previously converted files; use a fresh checkout with the current attributes
+rather than editing retained evidence. A provenance audit that checks commit
+ancestry also needs enough Git history to verify the pinned commit; a shallow
+checkout may be unable to prove that relation.
+
 `audit-retained` verifies source hashes and the published fixed comparison without
 making a model call or opening a GUI. `run` creates a new timestamped directory
 under the ignored `artifacts-local/` directory, performs a fresh schema preflight, then runs only the
