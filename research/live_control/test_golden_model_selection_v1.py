@@ -10,6 +10,7 @@ from unittest import mock
 import schema_preflight_v1 as preflight
 import schema_preflight_gate_v1 as gate
 import target_handle_model_runner_v2 as runner
+import native_preflight_job_v1 as native_job
 
 
 class GoldenModelSelectionTests(unittest.TestCase):
@@ -30,6 +31,14 @@ class GoldenModelSelectionTests(unittest.TestCase):
         for invalid in ('', '  ', '--other'):
             with self.subTest(model=invalid), self.assertRaises(ValueError):
                 runner.parse_runner_arguments(original + [invalid])
+
+    def test_native_owner_accepts_only_valid_builtin_request_shape(self):
+        request=["--native-codex-exe", "codex.exe", "prompt", "workspace", "output", "handle", "-", "instructions", "schema"]
+        native_job.validate_request(request)
+        native_job.validate_request(request + ["gpt-6.1-terra"])
+        for bad in (request[:-1], ["other"] + request[1:], request + ["--unsafe"], request + ["model", "extra"]):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                native_job.validate_request(bad)
 
     def test_runner_uses_and_records_explicit_model(self):
         with tempfile.TemporaryDirectory() as tmp:
