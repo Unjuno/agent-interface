@@ -45,8 +45,8 @@ _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
 # read back. This caps its post-start response wait; process creation remains
 # outside that worker budget. Timeout still means UNKNOWN, never release.
 _RETIRED_RELEASE_TIMEOUT_S = 1.5
-# Give a completed release worker 250 ms to exit cleanly before classifying its
-# result UNKNOWN; an accepted release still requires a retired worker.
+# After the response deadline, bound terminate/kill cleanup by 250 ms per step.
+# A release worker must exit cleanly within the original response budget.
 _RETIRED_RELEASE_TERMINATE_GRACE_S = 0.25
 _CANCEL_TRANSACTION_DEADLINE_S = 3.0
 _OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
@@ -710,7 +710,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 (self.display_name, keys, buttons),
                 timeout_s=_RETIRED_RELEASE_TIMEOUT_S,
                 terminate_grace_s=_RETIRED_RELEASE_TERMINATE_GRACE_S,
-                accepted_statuses=('released', 'unknown'))
+                accepted_statuses=('released', 'unknown'),
+                wait_for_exit_until_deadline=True)
         except Exception as error:
             return {'status':'unknown', 'reason':'release_supervisor_failed',
                     'error':repr(error), 'worker_retired':None}

@@ -63,6 +63,14 @@ def _release_then_delayed_shutdown_worker(send_connection):
     time.sleep(0.15)
 
 
+def _release_then_longer_delayed_shutdown_worker(send_connection, _display, _keys, _buttons):
+    send_connection.send({
+        'status':'released',
+        'release':{'verified':True, 'keys_down':[], 'buttons_down':[]},
+    })
+    time.sleep(0.35)
+
+
 def _fake_prestarted_cancel_worker(request):
     """Independent Fake X effect log for the public supervisor composition."""
     root = Path(request['owner_data_directory'])
@@ -2543,7 +2551,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             return supervise_xres_worker(
                 _delayed_release_worker, (), timeout_s=kwargs['timeout_s'],
                 terminate_grace_s=kwargs['terminate_grace_s'],
-                accepted_statuses=kwargs['accepted_statuses'])
+                accepted_statuses=kwargs['accepted_statuses'],
+                wait_for_exit_until_deadline=kwargs['wait_for_exit_until_deadline'])
 
         with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
                    side_effect=run_delayed_worker):
@@ -2569,7 +2578,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 _release_then_delayed_shutdown_worker, (),
                 timeout_s=kwargs['timeout_s'],
                 terminate_grace_s=kwargs['terminate_grace_s'],
-                accepted_statuses=kwargs['accepted_statuses'])
+                accepted_statuses=kwargs['accepted_statuses'],
+                wait_for_exit_until_deadline=kwargs['wait_for_exit_until_deadline'])
 
         with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
                    side_effect=run_worker) as supervisor:
@@ -2582,6 +2592,17 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result['worker_retired'], result)
         self.assertEqual(result['worker_exitcode'], 0)
         self.assertEqual(supervisor.call_args.kwargs['terminate_grace_s'], 0.25)
+        self.assertIs(supervisor.call_args.kwargs['wait_for_exit_until_deadline'], True)
+
+    def test_retired_release_accepts_clean_exit_within_response_budget(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = 'fake-display'
+        with patch('runtime.cli_v1.owned_guarded_session._release_retired_inputs_worker',
+                   _release_then_longer_delayed_shutdown_worker):
+            result = owner._release_retired_owner_inputs({'keys':{'a':38}, 'buttons':[]})
+        self.assertEqual(result['status'], 'readback_verified', result)
+        self.assertTrue(result['worker_retired'], result)
+        self.assertEqual(result['worker_exitcode'], 0, result)
 
     def test_retired_release_preserves_shutdown_diagnostics_without_accepting_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)

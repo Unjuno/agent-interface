@@ -13,16 +13,23 @@ def _validate_duration(name, value, *, allow_zero=False):
 
 
 def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
-                           accepted_statuses=('disconnected', 'still_connected', 'unknown')):
+                           accepted_statuses=('disconnected', 'still_connected', 'unknown'),
+                           wait_for_exit_until_deadline=False):
     """Run one worker under an external process deadline.
 
     A synchronous X request can exceed the worker's cooperative deadline. This
     supervisor bounds the query wait after process creation and reports UNKNOWN
     unless the worker returned a result and exited cleanly. Process creation and
     OS scheduling are outside that query budget. It does not prove input release.
+    When wait_for_exit_until_deadline is true, a 'released' reply may use the
+    remaining response budget for clean exit; exit must be observed before that
+    same deadline. Other replies retain the normal termination-grace behavior.
+    This local deadline is not the caller's cancellation transaction deadline.
     """
     _validate_duration('timeout_s', timeout_s)
     _validate_duration('terminate_grace_s', terminate_grace_s)
+    if type(wait_for_exit_until_deadline) is not bool:
+        raise ValueError('wait_for_exit_until_deadline must be boolean')
     if not callable(target) or not isinstance(args, tuple):
         raise TypeError('target must be callable and args must be a tuple')
     if (not isinstance(accepted_statuses, tuple) or not accepted_statuses
@@ -63,8 +70,16 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         error_text = None
 
     forced_stop = False
+    wait_for_released_exit = (wait_for_exit_until_deadline
+                              and 'released' in accepted_statuses
+                              and isinstance(result, dict)
+                              and result.get('status') == 'released')
+    exit_observed_in_budget = not wait_for_released_exit
     if process_started:
-        process.join(terminate_grace_s if result is not None else 0)
+        if wait_for_released_exit:
+            process.join(max(0.0, deadline - time.monotonic()))
+        else:
+            process.join(terminate_grace_s if result is not None else 0)
         if process.is_alive():
             forced_stop = True
             process.terminate()
@@ -77,6 +92,9 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         except (AssertionError, ValueError):
             worker_retired = False
         exitcode = process.exitcode
+        if wait_for_released_exit:
+            # Bound the observation itself, not just the preceding join.
+            exit_observed_in_budget = time.monotonic() < deadline
     else:
         worker_retired = None
         exitcode = None
@@ -91,7 +109,7 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
 
     elapsed_ms = (time.monotonic() - started) * 1000.0
     if (isinstance(result, dict) and worker_retired and not forced_stop
-            and exitcode == 0
+            and exit_observed_in_budget and exitcode == 0
             and result.get('status') in accepted_statuses):
         outcome = dict(result)
         outcome.update(worker_retired=True, worker_exitcode=exitcode,
@@ -100,6 +118,8 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         if forced_stop:
             reason = ('worker_did_not_exit_cleanly' if result is not None
                       else 'supervision_timeout')
+        elif result is not None and not exit_observed_in_budget:
+            reason = 'worker_exit_not_observed_before_deadline'
         elif result is not None and (
                 not isinstance(result, dict)
                 or result.get('status') not in accepted_statuses):
