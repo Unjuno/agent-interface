@@ -367,6 +367,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._starting_process = None
         self._close_during_startup = False
         self._unregistered_startup_unknown = False
+        self._unclosed_startup_handles = []
         self._rpc_lock = threading.Lock()
         self._control_lock = threading.Lock()
         self._snapshot_cache = super().snapshot()
@@ -459,23 +460,38 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if self.state != 'unopened':
             raise RuntimeError('owned guarded session unavailable: ' + self.state)
         context = multiprocessing.get_context('spawn')
-        rpc_parent, rpc_child = context.Pipe(duplex=True)
-        control_parent, control_child = context.Pipe(duplex=True)
-        input_obligations_state = context.RawArray(
-            'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
-        self._owner_input_obligations_state = input_obligations_state
-        _publish_owner_input_obligations(input_obligations_state, {}, [])
-        process = context.Process(
-            target=_serve_owned_guarded_session,
-            args=(rpc_child, control_child, self.targets, str(self._owner_root),
-                  self.display_name,
-                  {'process_identity':self.process_identity,
-                   'query_worker':self.query_worker,
-                   'observation_worker':self.observation_worker,
-                   'window_lifecycle':self.window_lifecycle,
-                   'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
-            name='guarded-x11-owner-' + self.session_id[:8])
+        allocated = []
+        try:
+            rpc_parent, rpc_child = context.Pipe(duplex=True)
+            allocated.extend((rpc_parent, rpc_child))
+            control_parent, control_child = context.Pipe(duplex=True)
+            allocated.extend((control_parent, control_child))
+            input_obligations_state = context.RawArray(
+                'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
+            self._owner_input_obligations_state = input_obligations_state
+            _publish_owner_input_obligations(input_obligations_state, {}, [])
+            process = context.Process(
+                target=_serve_owned_guarded_session,
+                args=(rpc_child, control_child, self.targets, str(self._owner_root),
+                      self.display_name,
+                      {'process_identity':self.process_identity,
+                       'query_worker':self.query_worker,
+                       'observation_worker':self.observation_worker,
+                       'window_lifecycle':self.window_lifecycle,
+                       'retention_mode':self.retention_mode},
+                      self._owner_factory, input_obligations_state),
+                name='guarded-x11-owner-' + self.session_id[:8])
+        except BaseException as allocation_error:
+            for connection in allocated:
+                try:
+                    connection.close()
+                except Exception as cleanup_error:
+                    # Close can fail after changing handle state. Retain the
+                    # reference and do not retry an ambiguous close implicitly.
+                    self._unclosed_startup_handles.append(connection)
+                    allocation_error.add_note(
+                        'startup handle close failed: ' + type(cleanup_error).__name__)
+            raise
         # Publish the exact Process object before start. Its PID may remain
         # unavailable while spawn is incomplete; that state remains UNKNOWN.
         with self._lifecycle_lock:
@@ -509,8 +525,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         except BaseException as startup_error:
             try:
                 process_pid = process.pid
-            except (AssertionError, ValueError, OSError):
+            except Exception as identity_error:
                 process_pid = None
+                startup_error.add_note(
+                    'startup process identity unavailable: ' + type(identity_error).__name__)
             if process_pid is not None:
                 # start() may raise after spawning but before registration. Keep
                 # the exact Process object even if it already exited.

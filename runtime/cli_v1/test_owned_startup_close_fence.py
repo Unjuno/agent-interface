@@ -217,6 +217,61 @@ class StartupCloseFenceTests(unittest.TestCase):
             self.assertIn('RuntimeError', ' '.join(getattr(caught.exception,'__notes__',[])))
             self.assertTrue(owner.review_required)
 
+    def test_second_pipe_failure_closes_previously_allocated_handles(self):
+        class Tracked:
+            def __init__(self): self.closed=False
+            def close(self): self.closed=True
+        class FailingContext:
+            def __init__(self): self.calls=0; self.first=(Tracked(),Tracked())
+            def Pipe(self, duplex=True):
+                self.calls+=1
+                if self.calls==1:return self.first
+                raise OSError('second pipe failed')
+        context=FailingContext()
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            with patch('runtime.cli_v1.owned_guarded_session.multiprocessing.get_context',return_value=context):
+                with self.assertRaisesRegex(OSError,'second pipe failed'):owner._ensure_started()
+            self.assertTrue(all(handle.closed for handle in context.first))
+            self.assertIsNot(owner.close()['verified'],True)
+
+    def test_ambiguous_allocation_handle_close_is_retained_without_retry(self):
+        class Tracked:
+            def __init__(self, fail=False): self.calls=0; self.fail=fail
+            def close(self):
+                self.calls+=1
+                if self.fail:raise OSError('ambiguous close')
+        class FailingContext:
+            def __init__(self): self.calls=0; self.first=(Tracked(True),Tracked())
+            def Pipe(self, duplex=True):
+                self.calls+=1
+                if self.calls==1:return self.first
+                raise OSError('second pipe failed')
+        context=FailingContext()
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            with patch('runtime.cli_v1.owned_guarded_session.multiprocessing.get_context',return_value=context):
+                with self.assertRaisesRegex(OSError,'second pipe failed') as caught:owner._ensure_started()
+            self.assertEqual([h.calls for h in context.first],[1,1])
+            self.assertIn(context.first[0],owner._unclosed_startup_handles)
+            self.assertIn('OSError',' '.join(getattr(caught.exception,'__notes__',[])))
+            self.assertIsNot(owner.close()['verified'],True)
+            self.assertEqual(context.first[0].calls,1)
+
+    def test_start_error_survives_unreadable_process_identity(self):
+        class UnreadableAfterStart:
+            @property
+            def pid(self): raise RuntimeError('identity unavailable')
+            def start(self): raise OSError('original start error')
+        child=UnreadableAfterStart()
+        with tempfile.TemporaryDirectory() as root:
+            owner=OwnedGuardedSessionOwner({'app':20},root)
+            with patch('runtime.cli_v1.owned_guarded_session.multiprocessing.get_context',return_value=Context(child)):
+                with self.assertRaisesRegex(OSError,'original start error') as caught: owner._ensure_started()
+            self.assertIs(owner._starting_process,child)
+            self.assertIn('RuntimeError',' '.join(getattr(caught.exception,'__notes__',[])))
+            self.assertIsNot(owner.close()['verified'],True)
+
     def test_failed_partial_allocation_does_not_report_verified_close(self):
         class FailingContext:
             def Pipe(self, duplex=True): raise OSError('allocation failed')
