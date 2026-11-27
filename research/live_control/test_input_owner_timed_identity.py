@@ -116,4 +116,27 @@ class TimedIdentityTests(unittest.TestCase):
                 self.assertNotEqual(result["status"],"released", "identity timeout cannot claim normal timed completion")
             finally:reader.resume.set()
 
+
+class TimedDeadlineBoundaryDecisionTests(unittest.TestCase):
+    def test_due_timed_release_never_starts_a_new_focus_query(self):
+        from types import SimpleNamespace
+        import threading
+        from input_owner_v12 import _defer_timed_focus_query
+        lease=SimpleNamespace(deadline=200_000_000,cancel=threading.Event())
+        timed={'status':'armed','lease':lease,'deadline_ns':100_000_000}
+        reader=object()
+        self.assertFalse(_defer_timed_focus_query(lease,reader,timed,94_999_999))
+        self.assertTrue(_defer_timed_focus_query(lease,reader,timed,95_000_000))
+        self.assertTrue(_defer_timed_focus_query(lease,reader,timed,100_000_000))
+        self.assertTrue(_defer_timed_focus_query(lease,reader,timed,100_000_001))
+        self.assertFalse(_defer_timed_focus_query(lease,reader,timed,200_000_000))
+        lease.cancel.set()
+        self.assertFalse(_defer_timed_focus_query(lease,reader,timed,99_000_000))
+        lease.cancel.clear()
+        self.assertFalse(_defer_timed_focus_query(lease,None,timed,99_000_000))
+        other=SimpleNamespace(deadline=200_000_000,cancel=threading.Event())
+        self.assertFalse(_defer_timed_focus_query(other,reader,timed,99_000_000))
+        timed['status']='released'
+        self.assertFalse(_defer_timed_focus_query(lease,reader,timed,99_000_000))
+
 if __name__=="__main__":unittest.main()
