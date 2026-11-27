@@ -1,0 +1,94 @@
+{
+  "a07_context": "A07 stopped at 48 rows after model emitted common_success as an output claim kind; the prompt had not specified general kind mapping.",
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A08-KIND-MAPPING-20261008",
+  "base_main_sha": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "branch": "research/8406-schedule-t1-a08-kind-mapping-20261008",
+  "companion_to": 7418,
+  "construction_tests": "8/8 PASS before freeze; no A08 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED only for >=0.10 consistent paired contrast across seeds and a clean full transition/raw audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED only within the margin and all audits pass; failed transition/method gate => FAIL_METHOD; otherwise UNCERTAIN",
+  "delta_from_A07": [
+    "fresh allocation and seeds 4801/4802/4803",
+    "adds generic episode-kind mapping to allowed claim kinds",
+    "no fixture-specific IDs/keys/values; literal-leakage regression retained",
+    "same transition auditor; no predecessor outputs reused"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 2048,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4801,
+      4802,
+      4803
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "6677bad3d163e7459f14a51c9dc3989c18aef7142e62c0fac24dfc0db661503a",
+    "PROTOCOL.md": "a4e6b42be9a5c728504e598b84fdb28e458e24d3817dc9b44c03b037de0c6c87",
+    "README.md": "194d8e64e97fd681b0fb4be5b3a4c916da732aa5f5e1dc175651d442a5515a80",
+    "auditor.py": "af358919026d3a65ff88ead21096a63bd7dbb6588f403218939f1de0438a0419",
+    "candidate.py": "39d57de8d666867737707da2676d7225e448ae8a274348526154fd77035303e1",
+    "episode_ledger.json": "97da04bdf08432ca9a76f076f19e07d425a08c944f03537387a4ad4b49d9780e",
+    "prompts.json": "b062773f67cb59c1d5dd9978560b1090648c689df0b5786b49037ce0eb7e7a55",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "aa346d8fbf44aff8d73b6040b09cd4f671ab3595abc058ff27015d20cc429ad7"
+  },
+  "identity_gate": "Exact private tag digest before/after all calls; runner empty only before first, otherwise exactly one correct digest before/after each call.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a08-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a08_kind_mapping_20261008",
+  "pre_freeze_HEAD": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a08_kind_mapping_20261008/results/FORMAL_T1_A08/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  },
+  "transition_contract": [
+    "cumulative evidence coverage and exact source provenance",
+    "general input-kind to allowed claim-kind mapping",
+    "exact and forbidden effects retained when both are supplied",
+    "conflict only after two contradictory values are present, UNKNOWN with exact union of sources",
+    "baseline-to-current history delta and exact paired sources"
+  ]
+}
