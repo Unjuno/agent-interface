@@ -22,7 +22,14 @@ def dump(path: Path, value: object) -> None:
 
 def run_step(root: Path, out: Path, index: int, name: str, command: list[str]) -> dict:
     started = time.time_ns()
-    completed = subprocess.run(command, cwd=root, capture_output=True, text=True)
+    launch_error = None
+    try:
+        completed = subprocess.run(command, cwd=root, capture_output=True, text=True)
+    except OSError as error:
+        # No child was started, so there is no exit code to report.
+        launch_error = {"type": type(error).__name__, "message": str(error)}
+        completed = subprocess.CompletedProcess(
+            command, None, stdout="", stderr=f"{type(error).__name__}: {error}\n")
     ended = time.time_ns()
     stem = f"{index:02d}-{name}"
     (out / f"{stem}.stdout.txt").write_text(completed.stdout, encoding="utf-8", newline="\n")
@@ -44,6 +51,8 @@ def run_step(root: Path, out: Path, index: int, name: str, command: list[str]) -
         "elapsed_ns": ended - started,
         "parsed_json": parsed,
     }
+    if launch_error is not None:
+        row["launch_error"] = launch_error
     dump(out / f"{stem}.json", row)
     return row
 

@@ -16,6 +16,42 @@ class FakeCompleted:
         self.returncode=returncode; self.stdout=stdout; self.stderr=stderr
 
 class AcceptanceHelpers(unittest.TestCase):
+    def test_missing_command_retains_launch_failure_without_returncode(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'; out.mkdir()
+            row = mod.run_step(root, out, 1, 'doctor', ['./missing-command'])
+            self.assertIsNone(row['returncode'])
+            self.assertEqual(row['launch_error']['type'], 'FileNotFoundError')
+            self.assertIn('FileNotFoundError', (out / '01-doctor.stderr.txt').read_text())
+            self.assertEqual(json.loads((out / '01-doctor.json').read_text()), row)
+
+    def test_nonexecutable_command_retains_permission_failure(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'; out.mkdir()
+            program = root / 'not-executable'; program.write_text('#!/bin/sh\n'); program.chmod(0o644)
+            row = mod.run_step(root, out, 1, 'doctor', ['./not-executable'])
+            self.assertIsNone(row['returncode'])
+            self.assertEqual(row['launch_error']['type'], 'PermissionError')
+            self.assertIn('PermissionError', (out / '01-doctor.stderr.txt').read_text())
+
+    def test_setup_launch_failure_retains_acceptance_and_stops(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); out = root / 'out'
+            def run(command, **kwargs):
+                if any('preflight.py' in part for part in command): return FakeCompleted()
+                raise FileNotFoundError('setup missing')
+            with (mock.patch.object(mod.subprocess, 'run', side_effect=run) as call,
+                  mock.patch.object(sys, 'argv', ['accept', '--root', str(root),
+                                                 '--out', str(out), '--live']),
+                  mock.patch('builtins.print')):
+                self.assertEqual(mod.main(), 1)
+            self.assertEqual(call.call_count, 2)
+            report = json.loads((out / 'acceptance.json').read_text())
+            self.assertEqual(report['failed_step'], 'setup')
+            self.assertFalse(report['passed'])
+            self.assertIsNone(report['steps'][-1]['returncode'])
+            self.assertEqual(report['steps'][-1]['launch_error']['type'], 'FileNotFoundError')
+
     @mock.patch.object(mod, 'run_step')
     def test_incomplete_existing_venv_stops_before_doctor_or_install(self, run_step):
         for mode in ('missing', 'not_executable', 'broken_link'):
