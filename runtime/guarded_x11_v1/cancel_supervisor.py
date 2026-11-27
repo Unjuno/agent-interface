@@ -312,7 +312,10 @@ class PrestartedCancellationSupervisor:
                                        'error': repr(error)}}
             process = self._process
             remaining_s = max(0, deadline_monotonic_ns - time.monotonic_ns()) / 1e9
-            process.join(min(self._terminate_grace_s, remaining_s))
+            # A successful receipt still requires clean process retirement.
+            # Wait only within the original transaction deadline; termination
+            # grace applies to forced cleanup, not this normal exit.
+            process.join(remaining_s)
             retired = not process.is_alive()
             result = envelope.get('result') if isinstance(envelope, dict) else None
             if (not retired or process.exitcode != 0 or not isinstance(result, dict)

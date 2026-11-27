@@ -44,6 +44,42 @@ def _blocked_worker_with_start_receipt(request):
             'session_id':request['session_id']}
 
 
+def _worker_with_delayed_process_exit(request):
+    from multiprocessing.util import Finalize
+    Finalize(None, time.sleep, args=(0.25,), exitpriority=10)
+    return {'status':'accepted', 'operation_id':request['operation_id'],
+            'session_id':request['session_id']}
+
+
+class SupervisorRetirementBudgetTests(unittest.TestCase):
+    def test_receipt_waits_for_clean_exit_within_transaction_deadline(self):
+        supervisor = PrestartedCancellationSupervisor(
+            _worker_with_delayed_process_exit, terminate_grace_s=0.1)
+        try:
+            deadline = time.monotonic_ns() + 2_000_000_000
+            result = supervisor.run({'operation_id':'op', 'session_id':'session'},
+                                    deadline_monotonic_ns=deadline)
+            self.assertEqual(result['status'], 'accepted', result)
+            self.assertTrue(result['worker_retired'], result)
+            self.assertEqual(result['worker_exitcode'], 0)
+            self.assertLessEqual(time.monotonic_ns(), deadline)
+        finally:
+            supervisor.close()
+
+
+    def test_exit_after_deadline_remains_unknown(self):
+        supervisor = PrestartedCancellationSupervisor(
+            _worker_with_delayed_process_exit, terminate_grace_s=0.1)
+        try:
+            deadline = time.monotonic_ns() + 100_000_000
+            result = supervisor.run({'operation_id':'late', 'session_id':'session'},
+                                    deadline_monotonic_ns=deadline)
+            self.assertEqual(result['status'], 'unknown', result)
+            self.assertNotEqual(result['status'], 'accepted')
+        finally:
+            supervisor.close()
+
+
 class SupervisorTimeoutValidationTests(unittest.TestCase):
     def test_nonfinite_durations_are_refused_before_process_creation(self):
         for name in ('startup_timeout_s', 'terminate_grace_s'):
