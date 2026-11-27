@@ -53,10 +53,17 @@ sources unchanged.
 ./runtime/setup-golden-demo-v3.sh --install-dependencies
 ./runtime/golden-demo-v3.sh doctor
 ./runtime/golden-demo-v3.sh audit-retained
-./runtime/golden-demo-v3.sh run
-./runtime/golden-demo-v3.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
+agent_golden_run="$HOME/agent-interface-runs/golden-$(date -u +%Y%m%dT%H%M%SZ)-$$"
+./runtime/golden-demo-v3.sh run --out "$agent_golden_run"
+./runtime/golden-demo-v3.sh audit-live "$agent_golden_run"
 ```
 
+The example puts output in the Linux filesystem even if the source checkout is
+under `/mnt/c`; the output directory must be new and the runner will not reuse
+it. This can avoid cross-filesystem I/O delays during bounded GUI waits, but is
+not a guarantee that the demo will pass. A failed run remains evidence; inspect
+its terminal and release records before choosing a new attempt. The default
+without `--out` remains `artifacts-local/` under the checkout.
 ### Runtime acquisition, dependency preparation, and model access are separate
 
 **Nothing is downloaded or installed merely by reading this guide or invoking a setup
@@ -94,6 +101,15 @@ or install the runtime package. A combined first-run flow is acceptable only whe
 is independently disclosed and selected before it starts.
 
 `doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
+
+The retained comparison and its independent recount include byte-pinned files.
+The repository attributes preserve those bytes in new checkouts even when Git
+is configured to convert line endings. Existing checkouts may still contain
+previously converted files; use a fresh checkout with the current attributes
+rather than editing retained evidence. A provenance audit that checks commit
+ancestry also needs enough Git history to verify the pinned commit; a shallow
+checkout may be unable to prove that relation.
+
 `audit-retained` verifies source hashes and the published fixed comparison without
 making a model call or opening a GUI. `run` creates a new timestamped directory
 under the ignored `artifacts-local/` directory, performs a fresh schema preflight, then runs only the
@@ -119,6 +135,13 @@ export AGENT_INTERFACE_WINDOWS_CODEX_JS=/mnt/c/Users/you/AppData/Roaming/npm/nod
 export AGENT_INTERFACE_CHROMIUM=/usr/bin/google-chrome
 ```
 
+For an existing native Windows Codex executable instead of the Node entrypoint,
+set `AGENT_INTERFACE_WINDOWS_CODEX_EXE` to its absolute WSL `/mnt/c/.../codex.exe`
+path. The native path takes precedence over the Node/JS pair and uses the
+separately configured `CODEX_HOME`; it does not install or authenticate Codex.
+When a user service launches the demo, Windows interop must also be available in
+that service for its whole lifetime. Run `doctor` in the same environment as
+`run` to check this before making a model call.
 This is a Research Preview path. A fresh persistent-only run checks mechanics and
 correctness; it does not reproduce the three-arm efficiency comparison or prove
 human-level speed and general GUI reliability.
