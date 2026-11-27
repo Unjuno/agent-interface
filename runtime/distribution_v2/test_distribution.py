@@ -13,6 +13,21 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_bundled_primary_stdio_starts_and_rejects_missing_config(self):
+        import shutil
+        node = shutil.which('node')
+        if node is None:
+            self.skipTest('Node.js is required for the host bundle')
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            build(root, td/'runtime.pyz', td/'manifest.json', td/'sums', host_directory=td/'host')
+            result = subprocess.run([node, str(td/'host/primary_stdio.mjs')], cwd=td,
+                                    capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn('Usage: node primary_stdio.mjs --config', result.stderr)
+            self.assertEqual(result.stdout, '')
+
     def test_optional_host_bundle_uses_exact_committed_files_and_refuses_conflict(self):
         import hashlib
         from runtime.distribution_v2.build import HOST_SOURCE_FILES
