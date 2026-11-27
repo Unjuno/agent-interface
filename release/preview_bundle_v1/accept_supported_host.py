@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import platform
 import subprocess
@@ -59,6 +60,19 @@ def setup_step(root: Path, out: Path, index: int, *, install_dependencies: bool)
     started = time.time_ns()
     ended = time.time_ns()
     stem = f"{index:02d}-setup"
+    python = venv / "bin" / "python"
+    if not python.is_file() or not os.access(python, os.X_OK):
+        note = (f"Existing runtime venv has no executable interpreter: {python}. "
+                "Inspect or remove it explicitly before rerunning setup.\n")
+        (out / f"{stem}.stdout.txt").write_text("", encoding="utf-8", newline="\n")
+        (out / f"{stem}.stderr.txt").write_text(note, encoding="utf-8", newline="\n")
+        row = {
+            "name": "setup", "status": "invalid_existing_venv", "command": None,
+            "returncode": 2, "started_ns": started, "ended_ns": ended,
+            "elapsed_ns": ended - started, "parsed_json": None, "venv_path": str(venv),
+        }
+        dump(out / f"{stem}.json", row)
+        return row
     note = f"Reused existing runtime venv: {venv}\n"
     (out / f"{stem}.stdout.txt").write_text(note, encoding="utf-8", newline="\n")
     (out / f"{stem}.stderr.txt").write_text("", encoding="utf-8", newline="\n")

@@ -40,7 +40,10 @@ You can run the gates individually:
 ```
 
 Run the setup command only when `runtime/.venv` does not already exist. The
-acceptance runner reuses an existing `runtime/.venv`. If it is absent, pass
+acceptance runner reuses an existing `runtime/.venv` when its interpreter is
+executable. If the directory exists without an executable `bin/python`, the
+runner stops at setup; inspect or remove that environment explicitly before
+trying again. If it is absent, pass
 `--install-dependencies` to authorize the pinned Python package install;
 without that flag the runner records setup refusal and stops before `doctor`.
 This option installs only the pinned Python dependencies. It does not acquire

@@ -16,6 +16,24 @@ class FakeCompleted:
         self.returncode=returncode; self.stdout=stdout; self.stderr=stderr
 
 class AcceptanceHelpers(unittest.TestCase):
+    @mock.patch.object(mod, 'run_step')
+    def test_incomplete_existing_venv_stops_before_doctor_or_install(self, run_step):
+        for mode in ('missing', 'not_executable', 'broken_link'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as td:
+                root = Path(td); out = root / 'out'; out.mkdir()
+                venv = root / 'runtime' / '.venv'; venv.mkdir(parents=True)
+                if mode != 'missing':
+                    python = venv / 'bin' / 'python'; python.parent.mkdir()
+                    if mode == 'broken_link':
+                        python.symlink_to('missing-python')
+                    else:
+                        python.touch(); python.chmod(0o644)
+                row = mod.setup_step(root, out, 2, install_dependencies=True)
+                self.assertNotEqual(row['returncode'], 0)
+                self.assertEqual(row['status'], 'invalid_existing_venv')
+                self.assertEqual(json.loads((out / '02-setup.json').read_text()), row)
+                run_step.assert_not_called()
+
     @mock.patch.object(mod.subprocess, 'run')
     def test_run_step_retains_stdout_stderr_and_json(self, run):
         run.return_value=FakeCompleted(stdout='{"passed": true}\n', stderr='note\n')
@@ -37,6 +55,8 @@ class AcceptanceHelpers(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); out = root / 'out'; out.mkdir()
             venv = root / 'runtime' / '.venv'; venv.mkdir(parents=True)
+            python = venv / 'bin' / 'python'; python.parent.mkdir()
+            python.touch(); python.chmod(0o755)
             row = mod.setup_step(root, out, 2, install_dependencies=True)
             self.assertEqual(row['status'], 'skipped_existing_venv')
             self.assertEqual(row['venv_path'], str(venv))
@@ -71,6 +91,8 @@ class AcceptanceHelpers(unittest.TestCase):
                 root = Path(td)
                 out = root / "out"
                 (root / "runtime" / ".venv").mkdir(parents=True)
+                python = root / "runtime" / ".venv" / "bin" / "python"
+                python.parent.mkdir(); python.touch(); python.chmod(0o755)
 
                 def step(_root, _out, _index, name, _command):
                     if name == "run":
