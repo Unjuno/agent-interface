@@ -513,6 +513,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_cancel_transaction_timeout_s=(
                       _GUARDED_CANCEL_TRANSACTION_TIMEOUT_S),
                   _guarded_owner_factory=None,
+                  _guarded_owned_display_owner=None,
+                  _guarded_xauthority=None,
                   _calc_preparation_ttl_ns=300_000_000_000,
                   _calc_launch_factory=None,
                   _calc_launch_title_hint='task-artifact.fods',
@@ -632,6 +634,17 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded_owned_process and (session_mode != 'guarded-x11'
             or not guarded_process_identity or not guarded_query_worker):
         raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
+    if _guarded_owned_display_owner is not None:
+        display_session = getattr(_guarded_owned_display_owner, '_session', None)
+        if (session_mode != 'guarded-x11' or not guarded_owned_process
+                or not guarded_prestarted_cancel_supervisor
+                or display_session is None
+                or display_session.display != display_name
+                or type(_guarded_xauthority) is not str
+                or str(display_session.authority) != _guarded_xauthority):
+            raise ValueError('private Xvfb requires matching guarded owned-process and prestarted-cancel custody')
+    elif _guarded_xauthority is not None:
+        raise ValueError('Xauthority requires an owned private display')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -746,7 +759,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 **owner_options,
                 prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
                 _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
-                _owner_factory=_guarded_owner_factory)
+                _owner_factory=_guarded_owner_factory,
+                _owned_display_owner=_guarded_owned_display_owner,
+                _xauthority=_guarded_xauthority)
         else:
             owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False
@@ -838,6 +853,21 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                             clean_exits[prepared_id])
             if calc_lifecycle:
                 report['calc_target_lifecycle']=calc_lifecycle
+            if _guarded_owned_display_owner is not None:
+                try:
+                    display_cleanup = _guarded_owned_display_owner.close(timeout_s=5.0)
+                except BaseException as error:
+                    display_cleanup = {'status':'unknown',
+                        'reason':'owned_display_close_failed',
+                        'error_type':type(error).__name__}
+                report['owned_display_close'] = deepcopy(display_cleanup)
+                if display_cleanup.get('status') != 'retired':
+                    report.update(status='cleanup_failed', verified=False,
+                        release_confirmed=False, cleanup_status='UNKNOWN',
+                        task_success=None, replay_allowed=False,
+                        owned_display_cleanup_verified=False)
+                else:
+                    report['owned_display_cleanup_verified'] = True
             _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
             return report
         finally:
@@ -2608,6 +2638,8 @@ def main():
                         help='run the complete guarded-X11 session in one spawned owner process; requires process identity and query worker')
     parser.add_argument('--guarded-prestarted-cancel-supervisor',action='store_true',
                         help='prestart a one-shot cancellation supervisor; requires --guarded-owned-process')
+    parser.add_argument('--guarded-private-xvfb', action='store_true',
+                        help='launch a private Xvfb for the configured Calc task; retire that display after any uncertain owned-session cancellation')
     parser.add_argument('--calc-launcher-executable', type=Path,
                         help='fixed absolute Debian LibreOffice oosplash executable; enables parent-custodied Calc launch')
     parser.add_argument('--calc-gui-executable', type=Path,
@@ -2643,6 +2675,15 @@ def main():
         parser.error('--guarded-retention-mode journal requires --session-mode guarded-x11')
     if args.guarded_prestarted_cancel_supervisor and not args.guarded_owned_process:
         parser.error('--guarded-prestarted-cancel-supervisor requires --guarded-owned-process')
+    if args.guarded_private_xvfb and not (
+            args.session_mode == 'guarded-x11'
+            and args.guarded_process_identity
+            and args.guarded_query_worker
+            and args.guarded_window_lifecycle
+            and args.guarded_owned_process
+            and args.guarded_prestarted_cancel_supervisor
+            and args.calc_launcher_executable is not None):
+        parser.error('--guarded-private-xvfb requires guarded owned-process Calc launch with identity, query, lifecycle and cancellation supervision')
     calc_paths=(args.calc_launcher_executable,args.calc_gui_executable)
     if any(value is not None for value in calc_paths):
         if any(value is None for value in calc_paths):
@@ -2684,9 +2725,38 @@ def main():
             gui_executable=args.calc_gui_executable)
         options['_calc_launch_title_hint'] = args.calc_window_title_hint
         options['_calc_discovery_deadline_s'] = args.calc_discovery_deadline_s
-    create_server(json.loads(args.targets.read_text(encoding='utf-8')),
-                  args.output_directory, display_name=args.display, session_mode=args.session_mode,
-                  **options).run(transport='stdio')
+    targets = json.loads(args.targets.read_text(encoding='utf-8'))
+    owned_display = None
+    if args.guarded_private_xvfb:
+        if (not isinstance(targets, dict) or set(targets) != {'root'}
+                or type(targets.get('root')) is not int or targets['root'] <= 0):
+            parser.error('--guarded-private-xvfb requires --targets JSON with exactly one positive root placeholder')
+        args.output_directory.mkdir(parents=True, exist_ok=True)
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        owned_display = PrivateDisplayOwner(args.output_directory / 'private-x-display')
+        try:
+            private = owned_display.start(timeout_s=5.0)
+            args.display = private.display
+            os.environ['DISPLAY'] = private.display
+            os.environ['XAUTHORITY'] = str(private.authority)
+            from Xlib.display import Display
+            connection = Display(private.display)
+            try:
+                root_window = connection.screen().root.id
+            finally:
+                connection.close()
+            targets = {'root':root_window}
+            options['_guarded_owned_display_owner'] = owned_display
+            options['_guarded_xauthority'] = str(private.authority)
+        except BaseException:
+            owned_display.close(timeout_s=3.0)
+            raise
+    try:
+        create_server(targets, args.output_directory, display_name=args.display,
+                      session_mode=args.session_mode, **options).run(transport='stdio')
+    finally:
+        if owned_display is not None:
+            owned_display.close(timeout_s=3.0)
 
 
 if __name__ == '__main__':

@@ -240,6 +240,59 @@ class OwnedSupervisorCapabilityTests(unittest.TestCase):
                         if process.is_alive(): process.terminate(); process.join(3)
                         ready.close(); stop.close()
 
+    def test_owned_session_retires_private_display_after_unknown_owner(self):
+        from Xlib import X, XK, display
+        from Xlib.ext import xtest
+        from runtime.cli_v1.owned_guarded_session import (
+            OwnedGuardedSessionOwner, _publish_owner_input_obligations)
+        from runtime.guarded_x11_v1.private_display_owner import PrivateDisplayOwner
+        with tempfile.TemporaryDirectory() as tmp:
+            display_owner = PrivateDisplayOwner(Path(tmp) / 'display')
+            session = display_owner.start(timeout_s=5)
+            owner = None
+            observer = None
+            try:
+                with patch.dict(os.environ, {'XAUTHORITY':str(session.authority)}):
+                    observer = display.Display(session.display)
+                root_id = observer.screen().root.id
+                owner = OwnedGuardedSessionOwner(
+                    {'root':root_id}, Path(tmp) / 'session', session.display,
+                    process_identity=True, query_worker=True,
+                    prestarted_cancel_supervisor=True,
+                    _owned_display_owner=display_owner,
+                    _xauthority=str(session.authority))
+                owner.get()
+                code = observer.keysym_to_keycode(XK.string_to_keysym('a'))
+                xtest.fake_input(observer, X.KeyPress, code)
+                observer.sync()
+                self.assertTrue(_key_down(observer, code))
+                _publish_owner_input_obligations(
+                    owner._owner_input_obligations_state, {'a':code}, [])
+                retirement = owner.retire('forced uncertain owner retirement')
+                self.assertTrue(retirement['retired'], retirement)
+                disconnect, release = owner._cleanup_after_owner_retirement(retirement)
+                receipt = owner._owner_input_obligations_result_fields()
+                self.assertEqual(disconnect['status'], 'disconnected', disconnect)
+                self.assertEqual(release['status'], 'readback_verified', release)
+                self.assertFalse(release.get('release_confirmed', False))
+                self.assertEqual(receipt['owned_display_retirement']['status'],
+                                 'retired', receipt)
+                self.assertEqual(receipt['owned_display_retirement']['input_state'],
+                                 'unobservable_after_server_retirement', receipt)
+                self.assertFalse(receipt['owned_display_retirement']['release_confirmed'])
+                self.assertIsNone(receipt['owned_display_retirement']['task_success'])
+                self.assertFalse(receipt['owned_display_retirement']['replay_allowed'])
+                self.assertIsNotNone(display_owner._process.poll())
+            finally:
+                if owner is not None:
+                    owner.close()
+                if observer is not None:
+                    try:
+                        observer.close()
+                    except Exception:
+                        pass
+                display_owner.close(timeout_s=3)
+
     def test_readiness_failure_retires_started_child_and_keeps_caller_fd(self):
         fd = os.pidfd_open(os.getpid())
         self.addCleanup(os.close, fd)

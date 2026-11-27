@@ -88,6 +88,24 @@ no retirement record exists, `true` only when retirement was confirmed, and
 `null` when a retirement record exists but confirmation is unavailable. This
 field does not confirm input release, task success, or future server-side effects.
 
+For a disposable Calc task, --guarded-private-xvfb starts a fresh,
+authenticated Xvfb owned by the stdio server. It requires the guarded owned
+process/query/window-lifecycle/prestarted-cancel options, both configured Calc
+executables, and a targets.json containing exactly {"root": 1} as a
+placeholder; the server discovers the actual root XID after startup. Xvfb uses
+a private authority file and disables TCP listening. The option is opt-in and
+does not redirect the user's existing desktop.
+
+After any uncertain owner retirement, the standard X11 cleanup first records
+the existing bounded disconnect/release evidence, then retires this isolated
+display. The result separately records owned_display_retirement; input state
+is marked unobservable after server termination. Source cancellation remains
+UNKNOWN, release_confirmed=false, task_success=null, and replay denied.
+The old application state is discarded. This is late-input containment, not
+task recovery or automatic migration; a fresh task requires a new server/session
+and independent task-effect verification. Ordinary shared-display sessions
+never terminate their X server.
+
 For one explicitly configured Windows HWND, the stdio server also provides the
 opt-in `--session-mode supervised-win32` standard MCP route. It binds the
 generation returned by public observation through admission and a gated native

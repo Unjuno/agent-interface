@@ -220,12 +220,15 @@ def _control_loop(connection, stop, owner, pid):
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                                  directory, display_name, options, owner_factory,
-                                 input_obligations_state):
+                                 input_obligations_state, xauthority=None):
     owner = None
     control_stop = threading.Event()
     control_thread = None
     ready_sent = False
     try:
+        if xauthority is not None:
+            import os
+            os.environ['XAUTHORITY'] = xauthority
         owner = (owner_factory(targets, directory, display_name, options)
                  if owner_factory is not None else
                  GuardedSessionOwner(targets, directory, display_name, **options))
@@ -332,7 +335,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                  prestarted_cancel_supervisor=False,
                  _cleanup_supervisor_target=None,
                  _calc_process_group_cleanup_target=None,
-                 _owner_factory=None):
+                 _owner_factory=None,
+                 _owned_display_owner=None,
+                 _xauthority=None):
         super().__init__(targets, directory, display_name,
                          process_identity=process_identity,
                          query_worker=query_worker,
@@ -341,6 +346,21 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                          retention_mode=retention_mode)
         self._owner_root = Path(directory)
         self._owner_factory = _owner_factory
+        if _owned_display_owner is not None:
+            session = getattr(_owned_display_owner, '_session', None)
+            if (not callable(getattr(_owned_display_owner,
+                                     'duplicate_server_pidfd', None))
+                    or not callable(getattr(_owned_display_owner, 'retire', None))
+                    or not callable(getattr(_owned_display_owner, 'close', None))
+                    or session is None or session.display != display_name
+                    or type(_xauthority) is not str or not _xauthority
+                    or str(session.authority) != _xauthority):
+                raise ValueError('owned display custody does not match the guarded session')
+        elif _xauthority is not None:
+            raise ValueError('Xauthority override requires an owned display')
+        self._owned_display_owner = _owned_display_owner
+        self._xauthority = _xauthority
+        self._owned_display_retirement = None
         if type(prestarted_cancel_supervisor) is not bool:
             raise ValueError('prestarted_cancel_supervisor must be a boolean')
         if _cleanup_supervisor_target is not None and not callable(_cleanup_supervisor_target):
@@ -428,7 +448,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'observation_worker':self.observation_worker,
                    'window_lifecycle':self.window_lifecycle,
                    'retention_mode':self.retention_mode},
-                  self._owner_factory, input_obligations_state),
+                  self._owner_factory, input_obligations_state,
+                  self._xauthority),
             name='guarded-x11-owner-' + self.session_id[:8])
         self.state = 'opening'
         try:
@@ -448,9 +469,29 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 raise RuntimeError(self.error)
             self._apply_snapshot(response['snapshot'])
             if self._prestarted_cancel_enabled:
-                self._cleanup_supervisor = PrestartedCancellationSupervisor(
-                    self._cleanup_supervisor_target,
-                    expected_session_id=self.session_id)
+                supervisor_options = {'expected_session_id':self.session_id}
+                if getattr(self, '_owned_display_owner', None) is not None:
+                    display_fd, display_pid = (
+                        self._owned_display_owner.duplicate_server_pidfd(
+                            timeout_s=_STARTUP_TIMEOUT_S))
+                    try:
+                        supervisor_options.update(
+                            xauthority=self._xauthority,
+                            pinned_display_name=self.display_name,
+                            expected_owner={
+                                'pid':self._snapshot_cache.get('owner_process_pid'),
+                                'resource_base':self._snapshot_cache.get(
+                                    'owner_x_client_resource_base')},
+                            owned_server_pidfd=display_fd,
+                            owned_server_pid=display_pid)
+                        self._cleanup_supervisor = PrestartedCancellationSupervisor(
+                            self._cleanup_supervisor_target, **supervisor_options)
+                    finally:
+                        import os
+                        os.close(display_fd)
+                else:
+                    self._cleanup_supervisor = PrestartedCancellationSupervisor(
+                        self._cleanup_supervisor_target, **supervisor_options)
             self.state = 'open'
         except BaseException:
             try:
@@ -841,6 +882,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             self._owner_release_attempt = deepcopy(release_attempt)
             self._prestarted_cleanup_result = (deepcopy(client_disconnect),
                                                deepcopy(release_attempt))
+            if retirement.get('retired') is True and getattr(self, '_owned_display_owner', None) is not None:
+                self._retire_owned_display()
             return client_disconnect, release_attempt
         if retirement.get('retired') is True:
             live_read = _read_owner_input_obligations(
@@ -877,7 +920,35 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                                    if client_disconnect.get('status') != 'disconnected' else
                                    'owner_input_obligations_unavailable')}
         self._owner_release_attempt = release_attempt
+        if retirement.get('retired') is True and getattr(self, '_owned_display_owner', None) is not None:
+            self._retire_owned_display()
         return client_disconnect, release_attempt
+
+    def _retire_owned_display(self):
+        owner = getattr(self, '_owned_display_owner', None)
+        if owner is None:
+            return None
+        if getattr(self, '_owned_display_retirement', None) is not None:
+            return deepcopy(self._owned_display_retirement)
+        try:
+            retirement = owner.retire(timeout_s=_CLOSE_TIMEOUT_S)
+        except BaseException as error:
+            retirement = {'status':'unknown','reason':'owned_display_retire_failed',
+                          'error_type':type(error).__name__}
+        try:
+            descriptor_cleanup = owner.close(timeout_s=_CLOSE_TIMEOUT_S)
+        except BaseException as error:
+            descriptor_cleanup = {'status':'unknown','reason':'owned_display_close_failed',
+                                  'error_type':type(error).__name__}
+        status = ('retired' if retirement.get('status') == 'retired'
+                  and descriptor_cleanup.get('status') == 'retired' else 'unknown')
+        self._owned_display_retirement = {
+            'status':status,'reason':'uncertain X11 operation; retire isolated display',
+            'server_retirement':deepcopy(retirement),
+            'descriptor_cleanup':deepcopy(descriptor_cleanup),
+            'input_state':'unobservable_after_server_retirement',
+            'release_confirmed':False,'task_success':None,'replay_allowed':False}
+        return deepcopy(self._owned_display_retirement)
 
     def _retirement_cleanup_result_fields(self, retirement):
         client_disconnect, release_attempt = (
@@ -886,10 +957,12 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             'owner_client_disconnect':deepcopy(client_disconnect),
             **self._owner_input_obligations_result_fields(),
             'owner_release_attempt':deepcopy(release_attempt),
+            **({'owned_display_retirement':deepcopy(self._owned_display_retirement)}
+               if getattr(self, '_owned_display_retirement', None) is not None else {}),
         }
 
     def _owner_input_obligations_result_fields(self):
-        return {
+        fields = {
             'owner_input_obligations':deepcopy(getattr(
                 self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
             'owner_input_obligations_source':getattr(
@@ -897,6 +970,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             'owner_input_obligations_live_read':deepcopy(getattr(
                 self, '_owner_input_obligations_live_read', {'status':'not_read'})),
         }
+        if getattr(self, '_owned_display_retirement', None) is not None:
+            fields['owned_display_retirement'] = deepcopy(
+                self._owned_display_retirement)
+        return fields
 
     def invoke_guarded(self, operation, arguments, call_root):
         return self._call('invoke_guarded', operation=operation,
@@ -1010,6 +1087,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         'reason':'owner_exited_before_cancel'}
                 self._owner_release_attempt = {'status':'not_attempted',
                     'reason':'owner_exited_before_cancel'}
+            if retirement.get('retired') is True and getattr(self, '_owned_display_owner', None) is not None:
+                self._retire_owned_display()
             return {'status':'cancel_unconfirmed', 'input_dispatched':False,
                     'owner_process_retired':retirement.get('retired') is True,
                     'owner_process_exitcode':retirement.get('exitcode'),
