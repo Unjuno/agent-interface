@@ -25,7 +25,7 @@ class LauncherPreflightTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as temp:
    base=Path(temp);checkout=base/'source';checkout.mkdir();trial=base/'trial';trial.mkdir()
    subprocess.run(['git','init','-q',str(checkout)],check=True)
-   names=('session_map01_v12.py','session_map01_v15.py','map01_door_driver_protocol.py','map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py','map01_reverse_program.py','map01_candidate_setup_evidence_v1.py','map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py','map01_os_east_return_driver.py','map01_east_return_launcher.py','map01_east_return_launcher_preflight.py','map01_east_return_audit.py')
+   names=('session_map01_v12.py','session_map01_v15.py','map01_door_driver_protocol.py','map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py','map01_door_sector_scorer.py','map01_reverse_program.py','map01_candidate_setup_evidence_v1.py','map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py','map01_post_cross_diagnostic.py','map01_os_east_return_driver.py','map01_east_return_launcher.py','map01_east_return_launcher_preflight.py','map01_east_return_audit.py')
    folder=checkout/'research/doom';folder.mkdir(parents=True)
    for name in names:(folder/name).write_text(name)
    subprocess.run(['git','-C',str(checkout),'add','.'],check=True)
@@ -47,6 +47,9 @@ class LauncherPreflightTests(unittest.TestCase):
    node=next(x for x in ast.parse(driver.read_text()).body if isinstance(x,ast.FunctionDef) and x.name=='expected_runtime_argv')
    scope={'Path':Path,'root':trial};exec(compile(ast.Module(body=[node],type_ignores=[]),str(driver),'exec'),scope)
    self.assertEqual(scope['expected_runtime_argv'](spec),argv)
+   missing_diagnostic=dict(spec,files={k:v for k,v in spec['files'].items() if k!=str(folder/'map01_post_cross_diagnostic.py')})
+   with self.assertRaisesRegex(ValueError,'runtime source pins missing'):
+    validate_runtime_inputs(trial,missing_diagnostic,expected_checkout=checkout,baseline_path=baseline,baseline_sha256=baseline_sha)
    timed=dict(spec,owner_timed_hold=True,runtime_argv=argv+['--owner-timed-hold'])
    self.assertEqual(scope['expected_runtime_argv'](timed),timed['runtime_argv'])
    with self.assertRaisesRegex(ValueError,'timed owner source pins missing'):

@@ -58,7 +58,7 @@ def prepare(*, timed_hold=False, arm='east-return'):
         pins[str(path)]=sha(path)
     for name in ('map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py',
                  'map01_door_sector_scorer.py','map01_door_driver_protocol.py','map01_reverse_program.py',
-                 'map01_east_return_caller_gate.py','map01_east_return_visual_guard.py',
+                 'map01_east_return_caller_gate.py','map01_east_return_visual_guard.py','map01_post_cross_diagnostic.py',
                  'map01_east_return_registration.py','map01_east_return_classification.py',
                  'map01_east_return_launcher.py','map01_east_return_launcher_preflight.py',
                  'map01_east_return_audit.py','map01_os_east_return_driver.py'):

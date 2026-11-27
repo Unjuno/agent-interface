@@ -99,7 +99,8 @@ def validate_runtime_inputs(root, spec, *, expected_checkout, baseline_path, bas
     required=('session_map01_v12.py','session_map01_v15.py','map01_door_driver_protocol.py',
               'map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py',
               'map01_door_sector_scorer.py','map01_reverse_program.py','map01_candidate_setup_evidence_v1.py',
-              'map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py')
+              'map01_post_load_gate_v1.py','map01_east_return_caller_gate.py','map01_east_return_visual_guard.py',
+              'map01_post_cross_diagnostic.py')
     if not all(str(checkout/'research/doom'/name) in files for name in required):
         raise ValueError('runtime source pins missing')
     if timed:

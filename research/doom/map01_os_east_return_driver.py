@@ -139,6 +139,35 @@ def capture_display(runtime, group, process, ready, fds):
     return lock, auth
 
 
+def record_post_cross_diagnostic(auth, gate, deadline):
+    """Capture passive evidence only after a verified empty release; grants no authority."""
+    from PIL import ImageGrab
+    from Xlib import display as xdisplay
+    from map01_post_cross_diagnostic import collect
+    release=gate.terminal.get("release",{}) if type(gate.terminal) is dict else {}
+    require(release.get("verified") is True and all(release.get(k)==[] for k in
+            ("keys_down","buttons_down","keys_unknown","key_state_errors")), "diagnostic release unavailable")
+    display=read_json(root/"display-active.json")["display"]
+    prior=os.environ.get("XAUTHORITY")
+    os.environ["XAUTHORITY"]=str(auth)
+    connection=None
+    try:
+        connection=xdisplay.Display(display)
+        def neutral():
+            bitmap=connection.query_keymap()
+            return len(bitmap)==32 and not any(bitmap) and connection.screen().root.query_pointer().mask==0
+        def wait(seconds):
+            require(uptime_ns()+int(seconds*1e9)<deadline,"diagnostic deadline exceeded")
+            time.sleep(seconds)
+        result=collect(root,capture=lambda:ImageGrab.grab(xdisplay=display),neutral=neutral,
+                       clock=uptime_ns,wait=wait)
+        record("post-cross-diagnostic.json",result)
+    finally:
+        if connection is not None:connection.close()
+        if prior is None:os.environ.pop("XAUTHORITY",None)
+        else:os.environ["XAUTHORITY"]=prior
+
+
 def read_stream(process, raw, log, buffer, selector, deadline):
     remaining = (deadline - uptime_ns()) / 1e9
     require(remaining > 0, "bounded runtime protocol read timed out")
@@ -227,7 +256,7 @@ def run():
               ('session_map01_v12.py','session_map01_v15.py','map01_door_driver_protocol.py',
                'map01_door_coordinator.py','map01_door_journal.py','map01_door_task_contract.py',
                'map01_door_sector_scorer.py','map01_reverse_program.py','map01_candidate_setup_evidence_v1.py','map01_post_load_gate_v1.py',
-               'map01_east_return_caller_gate.py','map01_east_return_visual_guard.py')]
+               'map01_east_return_caller_gate.py','map01_east_return_visual_guard.py','map01_post_cross_diagnostic.py')]
     require(type(registered.get('files')) is dict and all(str(path) in registered['files'] for path in required)
             and all(sha(Path(name))==digest for name,digest in registered['files'].items()),'pinned bytes differ')
     require(not subprocess.check_output(['git','status','--porcelain'],cwd=checkout,text=True).strip(),
@@ -333,6 +362,11 @@ def run():
                             failure=deepcopy(east_gate.receipt) if east_gate.receipt is not None else {'passed':False}
                             failure.update(error_type=type(error).__name__,observed_ns=uptime_ns())
                             record('east-visual-guard.json',failure)
+                            if east_gate.receipt is not None and east_gate.receipt.get('passed') is False:
+                                try:
+                                    record_post_cross_diagnostic(auth,east_gate,deadline)
+                                except Exception as diagnostic_error:
+                                    status['diagnostic_error_type']=type(diagnostic_error).__name__
                             raise
                         record('east-visual-guard.json',east_receipt)
                     if command.get('op')=='finish':finish_sent=True
